@@ -1,89 +1,67 @@
-From: Yann Dirson <ydirson@free.fr>
-Subject: Bulk move and some of its close relatives
-Date: Tue, 26 Oct 2010 20:13:14 +0200
-Message-ID: <20101026181314.GA5695@home.lan>
-References: <1287868022-24872-1-git-send-email-ydirson@altern.org>
- <1287868022-24872-2-git-send-email-ydirson@altern.org>
- <7veibeitip.fsf@alter.siamese.dyndns.org>
- <20101025201227.GB3347@home.lan>
+From: Vitaliy Semochkin <vitaliy.se@gmail.com>
+Subject: history missing
+Date: Tue, 26 Oct 2010 23:47:39 +0400
+Message-ID: <AANLkTikFB5HNOmg0iTdjHxtrhU9vdua5O8btgFzpg-2F@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Oct 26 20:30:42 2010
+X-From: git-owner@vger.kernel.org Tue Oct 26 21:47:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAoIB-0003Zp-IU
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 20:30:39 +0200
+	id 1PApUn-0007hx-Nw
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 21:47:46 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933503Ab0JZSa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Oct 2010 14:30:29 -0400
-Received: from smtp5-g21.free.fr ([212.27.42.5]:59765 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756909Ab0JZSa1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Oct 2010 14:30:27 -0400
-Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 65B63D4811D
-	for <git@vger.kernel.org>; Tue, 26 Oct 2010 20:30:20 +0200 (CEST)
-Received: from yann by home.lan with local (Exim 4.72)
-	(envelope-from <ydirson@free.fr>)
-	id 1PAo1K-0001nU-5L
-	for git@vger.kernel.org; Tue, 26 Oct 2010 20:13:14 +0200
-Content-Disposition: inline
-In-Reply-To: <20101025201227.GB3347@home.lan>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755194Ab0JZTrk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Oct 2010 15:47:40 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:38195 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754295Ab0JZTrj (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Oct 2010 15:47:39 -0400
+Received: by yxt33 with SMTP id 33so76527yxt.19
+        for <git@vger.kernel.org>; Tue, 26 Oct 2010 12:47:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=Ob+RmzPoKF47Wh9cLCcOkAehZuOBE2p/vFKMRCriFuw=;
+        b=sNf3njVUv4urOWGMNrxnJYfjRuxKm9t9k/Fk0p1fLMda1OwXsWasdVNqKqP2maVpan
+         zeRqQ5sQ4Rj5Sufflw9YUjbyMx3rlQlA1pEgU1X1TNA5WqiGO9S3+eBqRqys9UhoVgZz
+         P2ME9miu7M8aKjB3ldN5z0tobYthPjs+b+USs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=uqxI4E/ykuWZQRce3ixMfXYtbT2xW/iZzq+B26BToPtSA5DwloBbPwzPM2xPQ9sbB8
+         NiXDt53J+skwaXM6pJXQ2yWzWK9JArAVDImiAwelFsLChM1laWgvOMYYNyGc4gxB2sxl
+         TSFEh5sX3hUTQNZz9jmfBnRDkm17vFsY8VfZY=
+Received: by 10.100.194.3 with SMTP id r3mr111575anf.9.1288122459086; Tue, 26
+ Oct 2010 12:47:39 -0700 (PDT)
+Received: by 10.101.70.16 with HTTP; Tue, 26 Oct 2010 12:47:39 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160003>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160004>
 
-On Mon, Oct 25, 2010 at 10:12:27PM +0200, Yann Dirson wrote:
-> It is only later that I realized that the larger picture was about
-> bulk moves, and directory renames were only a subset of those.
+Hi,
 
-I had a couple of thoughts about this dir-rename -> bulk-moves shift
-today while riding to/from work.  So here are some of the fresh air I
-got...
+I cloned a remote repository
+to check recent changes in origin/master I do:
+git fetch origin master
+git log origin master
 
-Is a bulk-move finally so special ?  There is a close relative to it
-which may be of interest too: bulk deletion.  If we implement
-detection of bulk deletion, we can build on it to get:
+recently I found out that log doesn't show recent commits
+I know that on server there were several commits let's say on the 19th
+but log shows that recent commit was done on the 17th
+the most strange thing I'm sure I have seen those commits fetched already
+I did git fetch origin master several times but it didn't help
+the log says that recent commit was done on 17th
+after I performed git remote update
+log again shows recent commits on 19th
+Has anyone faced such behaviour?
+I'm relatively new git user, what do I do wrong?
 
-* detection of a new type of conflict: addition in a branch of a new
-  file in a dir which is deleted in the other branch (quite similar to
-  the one we were talking about, of a new file in a dir that got moved in
-  other branch)
-* split a good part of the current bulk-move patch in a standalone
-  patch, which is something I wondered how to do
-* probably a much better base for directory-split detection
-
-
-Then, since a bulk-move is made of a bulk deletion, and addition
-somewhere else of those deleted files, it became tempting to
-contemplate the concept of "bulk addition".  At first sight it seems
-awkward, I confess, especially "bulk addition into a preexisting dir",
-which is a bit hard to define with precision.  OTOH, "bulk addition of
-a brand new dir" could bring goodies as well:
-
-* new conflict type: creation in both branches of a new directory with
-  same name
-
-That confict type made me think of another one.  Some of you may have
-noticed in the v7 commit message a suggestion for future developments
-labelled "support other types of bluk-grouping, like prefixes, and
-maybe config-specified patterns".  Now if we get the capability of
-specifying how we define a "group of files" with something other than
-the directory hierarchy (let's say eg. that in t/ every "t[0-9]{4}-"
-is a prefix), the "bulk-add/bulk-add" conflict generated by 2 tests
-with same numeric ID would be detected as a conflict.
-
-Another grouping example would be by file suffix - source-code reorgs
-eg. bulk-moving header files into their own dir are not rare either.
-
-
-Does that sound sane ?
--- 
-Yann
+Thanks in advance,
+Vitaliy S
