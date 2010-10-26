@@ -1,93 +1,70 @@
-From: Bron Gondwana <brong@fastmail.fm>
-Subject: Re: Why /var/cache/git?
-Date: Wed, 27 Oct 2010 07:58:00 +1100
-Organization: brong.net
-Message-ID: <20101026205800.GA6544@brong.net>
-References: <20101025103006.GA18782@brong.net>
- <4CC5A13F.2090702@eaglescrag.net>
- <20101026012224.GA3360@brong.net>
- <1288099299.8291.6.camel@drew-northup.unet.maine.edu>
- <20101026152218.3931.qmail@d862ae2b10e11a.315fe32.mid.smarden.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 09/10] user-manual.txt: explain better the remote(-tracking) branch terms
+Date: Wed, 27 Oct 2010 00:13:34 +0200
+Message-ID: <vpqwrp438mp.fsf@bauges.imag.fr>
+References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
+	<1287986922-16308-10-git-send-email-Matthieu.Moy@imag.fr>
+	<AANLkTiky=FiLX=FQL5V66FW_t4yeHjAxE_JJyovTTw5u@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Drew Northup <drew.northup@maine.edu>,
-	Bron Gondwana <brong@fastmail.fm>,
-	"J.H." <warthog19@eaglescrag.net>, git@vger.kernel.org
-To: Gerrit Pape <pape@smarden.org>
-X-From: git-owner@vger.kernel.org Tue Oct 26 22:58:12 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, gitster@pobox.com,
+	Thore Husfeldt <thore.husfeldt@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 27 00:13:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAqax-000060-JU
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 22:58:11 +0200
+	id 1PArmF-0005cH-4w
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 00:13:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756235Ab0JZU6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Oct 2010 16:58:05 -0400
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:52156 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753080Ab0JZU6E (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 26 Oct 2010 16:58:04 -0400
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 3A797544;
-	Tue, 26 Oct 2010 16:58:04 -0400 (EDT)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute3.internal (MEProxy); Tue, 26 Oct 2010 16:58:04 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=date:from:to:cc:subject:message-id:references:mime-version:content-type:in-reply-to; s=smtpout; bh=KlrUvRUZ0XNEWHcoFksWc/TzRuI=; b=EFwDYIPwEKi8lydT07HCLuEezRO0A7m63zB9UCIwMkvcpdgjIfKwNC4qBjkK77N2TWZDOuc4fGrZUfPp+5w8knxZFNPDpN2ShRn7EY3rpgAtIMHXLVuM+H4GbnU7gQUYisPJvOAMAJsIySOxGruZpW8M9x4cvAbQuzf2jYwlu5g=
-X-Sasl-enc: efnBHKmkhOApi3HtY+zX6GVWHWZyAzfVHevL9PnqfyeA 1288126683
-Received: from launde (124-168-121-62.dyn.iinet.net.au [124.168.121.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id BC39440416B;
-	Tue, 26 Oct 2010 16:58:03 -0400 (EDT)
-Received: by launde (Postfix, from userid 1000)
-	id C28F541F97; Wed, 27 Oct 2010 07:58:00 +1100 (EST)
-Content-Disposition: inline
-In-Reply-To: <20101026152218.3931.qmail@d862ae2b10e11a.315fe32.mid.smarden.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1760594Ab0JZWNo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Oct 2010 18:13:44 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:59323 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1760591Ab0JZWNm (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Oct 2010 18:13:42 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o9QLwthI012339
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 26 Oct 2010 23:58:55 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PArlu-0003Vy-GK; Wed, 27 Oct 2010 00:13:34 +0200
+In-Reply-To: <AANLkTiky=FiLX=FQL5V66FW_t4yeHjAxE_JJyovTTw5u@mail.gmail.com> (Jay Soffian's message of "Tue\, 26 Oct 2010 02\:07\:08 -0400")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 26 Oct 2010 23:58:55 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o9QLwthI012339
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1288735135.85337@yX5if2YE4EVrwCP5o3l6EQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160008>
 
-On Tue, Oct 26, 2010 at 03:22:18PM +0000, Gerrit Pape wrote:
-> On Tue, Oct 26, 2010 at 09:21:39AM -0400, Drew Northup wrote:
-> > On Tue, 2010-10-26 at 12:22 +1100, Bron Gondwana wrote:
-> > > I have no problem with /var/git - it's /var/cache/git that worries
-> > > me, since the FHS quite clearly says that blowing away /var/cache/*
-> > > is not a problem.  It makes sense to back up /var/lib/ on any machine,
-> > > since that's somewhere that contains application data.  We already
-> > > back up a few things from /var/lib (like /var/lib/svn for example,
-> > > at least until we finish this switchover!)
-> > 
-> > Bron,
-> > Doing a 'git grep "/var"' on the git sources and then searching that
-> > output for "cache" turns up nothing. I think you'd best bring this up
-> > with the Debian package maintainer. Debian is well known for thinking it
-> > knows better than the original authors where stuff should be--and that's
-> > why I don't run Debian as a server (too much time spent transliterating
-> > paths just to make stuff work properly--when I'm lucky; it makes an
-> > excellent desktop for beginners).
-> 
-> Hi, it's also not my preference, but Debian adheres to the FHS.
-> Unfortunately /var/git is not allowed by the FHS, so a different
-> location must be chosen for Debian.  I chose /var/cache/git/, and
-> suggested to populate that directory with symlinks to the repositories
-> that should be available through git-daemon or gitweb, see
-> http://bugs.debian.org/483788
+Jay Soffian <jaysoffian@gmail.com> writes:
 
-Maybe you'd better read the FHS again to double check that you're
-adhering.
+> On Mon, Oct 25, 2010 at 2:08 AM, Matthieu Moy <Matthieu.Moy@imag.fr> =
+wrote:
+>> =A0You cannot check out these remote-tracking branches, but you can
+>> =A0examine them on a branch of your own, just as you would a tag:
+>
+> Suggestion: "You do not commit directly to remote-tracking branches,
+> but you can examine them or create a branch from them, just as you
+> would a tag:"
 
-http://www.pathname.com/fhs/pub/fhs-2.3.html#VARCACHEAPPLICATIONCACHEDATA
+There was already a patch by Jonathan to fix that. I've integrated it
+in my patch serie, it will be in the next resend.
 
-Purpose:
-
-  /var/cache is intended for cached data from applications. 
-  Such data is locally generated as a result of time-consuming 
-  I/O or calculation. The application must be able to regenerate 
-  or restore the data. 
-
-I fail to see how git can regenerate the symlinks...
-
-Bron.
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
