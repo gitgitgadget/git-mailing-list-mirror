@@ -1,70 +1,73 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [PATCH 09/10] user-manual.txt: explain better the
- remote(-tracking) branch terms
-Date: Tue, 26 Oct 2010 02:20:03 -0400
-Message-ID: <AANLkTinJQMSbW-bsEOS9610GXR7EtbESK_tLAfxt2ibK@mail.gmail.com>
-References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr> <1287986922-16308-10-git-send-email-Matthieu.Moy@imag.fr>
+From: "Rado Dr." <radodr@gmail.com>
+Subject: Fwd: git status & seg.fault
+Date: Tue, 26 Oct 2010 08:44:56 +0200
+Message-ID: <AANLkTinghepgdMRjEBhpAMz-Mr0g7szKyYEDfE=ttstS@mail.gmail.com>
+References: <AANLkTinymMtDKt1V9xb+adJiSoOKT8YSy1qHuHc_=yVq@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Thore Husfeldt <thore.husfeldt@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Oct 26 08:20:44 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Oct 26 08:45:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PActo-0001Vi-5I
-	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 08:20:44 +0200
+	id 1PAdHj-0002U6-Pu
+	for gcvg-git-2@lo.gmane.org; Tue, 26 Oct 2010 08:45:28 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754970Ab0JZGUg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Oct 2010 02:20:36 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:55004 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754637Ab0JZGUf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Oct 2010 02:20:35 -0400
-Received: by yxn35 with SMTP id 35so2629946yxn.19
-        for <git@vger.kernel.org>; Mon, 25 Oct 2010 23:20:35 -0700 (PDT)
+	id S1757262Ab0JZGpB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 26 Oct 2010 02:45:01 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:57701 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756817Ab0JZGo5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Oct 2010 02:44:57 -0400
+Received: by gyg4 with SMTP id 4so2606480gyg.19
+        for <git@vger.kernel.org>; Mon, 25 Oct 2010 23:44:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=MDU0BYypqpGnuJz8W5Cs80uIwDxKiv4z9mqL5OkaD6s=;
-        b=CulCsj1EuUxgX7FZu81Eg+DunmdSFzTZp8y4Bwoniq+em6Qvnnbn4fKLPd3lwjUcg3
-         2WCDghPeT53GWXqVarV4VJaoJzHSu5mE3K39RHYZNaLZNO3Xudf3lnHH5J1pw/N6ZyAw
-         PiDOPpo/yToxCgKDmjTvDuv7f+kcNLY3jW6ww=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=HQ7Fo5/v5M795J2ZqjKLzCjBRgp7ui3tCgxLqSpf21g=;
+        b=laaqzWFPqc0l1sT0BuQ0+TUNE6JiAwKU4pzKEWwxk5gb0IX2/JcVDJg4RWuythiZmi
+         RwtXDAFCrKtyEjAOHYateayyN9HX1E2du2hDEMdYd43H989IXhQXDWMms4N12LkmG0Ox
+         9vUQiSH+DgDGK/wwuW2UdKK3/ERoWt/V8PEcE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=dxFy2CMv03sbJMceZAv4Q8bBqFZ/gAC0h29VXwKWAKwMbhYrlLRFowZAKwngkVRv+2
-         R1c522NwtdQcV6TKfIwvqwMz86VlWq2uNKRyZtgfNfef58PTj1sUb2lD5Pwl+6Whj14T
-         N372/JqPRBGWseAd1+0VjykIvbOH6OP+y18Fk=
-Received: by 10.42.115.138 with SMTP id k10mr2768816icq.335.1288074034789;
- Mon, 25 Oct 2010 23:20:34 -0700 (PDT)
-Received: by 10.231.150.201 with HTTP; Mon, 25 Oct 2010 23:20:03 -0700 (PDT)
-In-Reply-To: <1287986922-16308-10-git-send-email-Matthieu.Moy@imag.fr>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=aogYUeXJDqD4+pA66Vzq6XDTje2UfPiLC82TwaPE6BMLBD/FHswELiIhDZF9F2/JZz
+         M+sY05j1xUb03Oylx6nAsXbkE6F/skTODXVZdrMeBKKqVS5VfzY2Lk2hgrlRvdAcxXHy
+         utlzky4rJBhuCzEde5C1hOVW7GtJit6rzsPXs=
+Received: by 10.151.83.13 with SMTP id k13mr2758945ybl.54.1288075496318; Mon,
+ 25 Oct 2010 23:44:56 -0700 (PDT)
+Received: by 10.151.49.3 with HTTP; Mon, 25 Oct 2010 23:44:56 -0700 (PDT)
+In-Reply-To: <AANLkTinymMtDKt1V9xb+adJiSoOKT8YSy1qHuHc_=yVq@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/159982>
 
-On Mon, Oct 25, 2010 at 2:08 AM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
-> +In this case, "origin" is called a remote repository, or "remote" for
-> +short. The branches of this repository are called "remote branches"
-> +from our point of view, and Git will keep a copy of these
-> +branches, called "remote-tracking branches" in the local repository.
-> +These remote-tracking branches are references that will be updated by
-> +"git fetch" (hence by "git pull"). See
-> +<<Updating-a-repository-With-git-fetch>> for details.
+Hi there,
 
-"...and Git will initially clone these branches into so-called
-"remote-tracking branches" in the local repository. Thereafter, the
-remote-tracking branches are updated upon fetching from[1] or pushing
-to the remote. ([1] which also includes pulling.)
+I have "Segmentation fault" error after "git status" command in one of
+my local repos. Just i one repo, other repos are OK. I can't find any
+clue how to fix it, and as usually I need work with that repo ;-)
 
-j.
+I tried this:
+=A0- git gc =A0-> OK
+=A0- git fsck ->
+missing blob 0000000000000000000000000000000000000000
+dangling blob 2f1f0144f786ca887c4911a064bbb28a047f1f77
+dangling blob 7ffb0f4e430cd60261661138df61ecb50cf1d0a4
+
+Is this the reason of fault? If yes, how can=A0I fix it.
+
+My system info:
+Linux 32bit,=A0Ubuntu 10.04 LTS - Lucid Lynx,
+git version 1.7.0.4
+
+Thank you for help
+Rado Dr.
