@@ -1,102 +1,166 @@
-From: =?UTF-8?q?Jan=20St=C4=99pie=C5=84?= 
-	<jstepien@users.sourceforge.net>
-Subject: [PATCH] fetch-pack: make the ssh connection quiet
-Date: Wed, 27 Oct 2010 16:27:08 +0200
-Message-ID: <1288189628-4883-1-git-send-email-jstepien@users.sourceforge.net>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 01/34] builtins: print setup info if repo is found
+Date: Wed, 27 Oct 2010 21:49:04 +0700
+Message-ID: <1288190977-30875-2-git-send-email-pclouds@gmail.com>
+References: <1288190977-30875-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Jan=20St=C4=99pie=C5=84?= 
-	<jstepien@users.sourceforge.net>
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 27 16:36:16 2010
+X-From: git-owner@vger.kernel.org Wed Oct 27 16:49:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PB76s-000670-JQ
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 16:36:14 +0200
+	id 1PB7K9-00064J-Iu
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 16:49:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758922Ab0J0OgI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Oct 2010 10:36:08 -0400
-Received: from r245-52.iq.pl ([86.111.245.52]:53074 "EHLO stepien.cc"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757239Ab0J0OgH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Oct 2010 10:36:07 -0400
-X-Greylist: delayed 492 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Oct 2010 10:36:07 EDT
-Received: from localhost.localdomain (chello089074007129.chello.pl [89.74.7.129])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by stepien.cc (Postfix) with ESMTPSA id 1AEBD2A10378;
-	Wed, 27 Oct 2010 16:27:54 +0200 (CEST)
-X-Mailer: git-send-email 1.7.0.4
+	id S932445Ab0J0Otv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Oct 2010 10:49:51 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:61352 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760628Ab0J0Ott (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Oct 2010 10:49:49 -0400
+Received: by mail-yx0-f174.google.com with SMTP id 8so64577yxk.19
+        for <git@vger.kernel.org>; Wed, 27 Oct 2010 07:49:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=03dUfx7jjeX/CS84vY077VyLG0mSLZ/BxTeOSfxlIro=;
+        b=tHJkCQatHVcey/KDC72bB/p9b9TemC417OzcdpUXUQmiGCkLbMSm4Pfqa16vqqbMoe
+         0isB08l87+6ANB7wGNt/6qqxi1Cml8gkRaPe8+LlLIFspg0QEfzVsYEUKtmJUIRtE5Hj
+         8pUFnHeuuUmiBN2SMEMCHaBqf2VGjYtBdxd4Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=EsjdmR4IiLJhUVpOKEWDe/qwRrDnE5/ngF0OU2gnJWn8BIEui10Rnoob3BY+3YWodF
+         1TSEMYF9xcwIpS5ciNtN24gc6KxHTKEMOyCgzBQoNeXiUpH3LzvZqWks7m/BDsImIlUA
+         4oRhWR6lJHmKuy7cVMmZM+hUcLKUzyg3/2F3Y=
+Received: by 10.151.157.21 with SMTP id j21mr5359825ybo.50.1288190989108;
+        Wed, 27 Oct 2010 07:49:49 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.73.235.0])
+        by mx.google.com with ESMTPS id q36sm8779344ybk.6.2010.10.27.07.49.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 27 Oct 2010 07:49:48 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 27 Oct 2010 21:49:46 +0700
+X-Mailer: git-send-email 1.7.0.2.445.gcbdb3
+In-Reply-To: <1288190977-30875-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160040>
 
-The --quiet option passed to fetch-pack did not affect the ssh child
-process. When an ssh server sent a motd it was displayed because the ss=
-h
-client wasn't launched with the -q option. This patch makes ssh run qui=
-etly
-when fetch-pack is called with -q.
 
-An analogous change should be made to other commands which accept --qui=
-et
-and connect to remotes using ssh.
-
-Signed-off-by: Jan St=C4=99pie=C5=84 <jstepien@users.sourceforge.net>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
- builtin/fetch-pack.c |    3 ++-
- cache.h              |    1 +
- connect.c            |    2 ++
- 3 files changed, 5 insertions(+), 1 deletions(-)
+ It's not perfect. "setup: " lines won't always appear. That can be
+ done once setup code is cleaned up a bit.
 
-diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
-index dbd8b7b..ede1c34 100644
---- a/builtin/fetch-pack.c
-+++ b/builtin/fetch-pack.c
-@@ -876,7 +876,8 @@ int cmd_fetch_pack(int argc, const char **argv, con=
-st char *prefix)
- 		fd[1] =3D 1;
- 	} else {
- 		conn =3D git_connect(fd, (char *)dest, args.uploadpack,
--				   args.verbose ? CONNECT_VERBOSE : 0);
-+				   (args.verbose ? CONNECT_VERBOSE : 0) |
-+				   (args.quiet ? CONNECT_QUIET : 0));
- 	}
-=20
- 	get_remote_heads(fd[0], &ref, 0, NULL, 0, NULL);
+ cache.h |    1 +
+ git.c   |   36 ++++++++++++++++++++++++++++++++++++
+ trace.c |   11 +++++++++++
+ 3 files changed, 48 insertions(+), 0 deletions(-)
+
 diff --git a/cache.h b/cache.h
-index 33decd9..8622a78 100644
+index 33decd9..d5ccf40 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -938,6 +938,7 @@ struct ref {
- extern struct ref *find_ref_by_name(const struct ref *list, const char=
- *name);
+@@ -1058,6 +1058,7 @@ extern void *alloc_object_node(void);
+ extern void alloc_report(void);
 =20
- #define CONNECT_VERBOSE       (1u << 0)
-+#define CONNECT_QUIET         (1u << 1)
- extern char *git_getpass(const char *prompt);
- extern struct child_process *git_connect(int fd[2], const char *url, c=
-onst char *prog, int flags);
- extern int finish_connect(struct child_process *conn);
-diff --git a/connect.c b/connect.c
-index 57dc20c..709601e 100644
---- a/connect.c
-+++ b/connect.c
-@@ -585,6 +585,8 @@ struct child_process *git_connect(int fd[2], const =
-char *url_orig,
- 			*arg++ =3D putty ? "-P" : "-p";
- 			*arg++ =3D port;
- 		}
-+		if (!putty && flags & CONNECT_QUIET)
-+			*arg++ =3D "-q";
- 		*arg++ =3D host;
+ /* trace.c */
++int has_trace_fd();
+ __attribute__((format (printf, 1, 2)))
+ extern void trace_printf(const char *format, ...);
+ __attribute__((format (printf, 2, 3)))
+diff --git a/git.c b/git.c
+index 50a1401..22ade18 100644
+--- a/git.c
++++ b/git.c
+@@ -244,6 +244,29 @@ struct cmd_struct {
+ 	int option;
+ };
+=20
++static const char *quote_crnl(const char *path)
++{
++	static char new_path[PATH_MAX];
++	const char *p2 =3D path;
++	char *p1 =3D new_path;
++
++	if (!path)
++		return NULL;
++
++	while (*p2) {
++		switch (*p2) {
++		case '\\': *p1++ =3D '\\'; *p1++ =3D '\\'; break;
++		case '\n': *p1++ =3D '\\'; *p1++ =3D 'n'; break;
++		case '\r': *p1++ =3D '\\'; *p1++ =3D 'r'; break;
++		default:
++			*p1++ =3D *p2;
++		}
++		p2++;
++	}
++	*p1 =3D '\0';
++	return new_path;
++}
++
+ static int run_builtin(struct cmd_struct *p, int argc, const char **ar=
+gv)
+ {
+ 	int status, help;
+@@ -264,6 +287,19 @@ static int run_builtin(struct cmd_struct *p, int a=
+rgc, const char **argv)
+ 			use_pager =3D check_pager_config(p->cmd);
+ 		if (use_pager =3D=3D -1 && p->option & USE_PAGER)
+ 			use_pager =3D 1;
++
++		if ((p->option & (RUN_SETUP | RUN_SETUP_GENTLY)) &&
++		    startup_info->have_repository && /* get_git_dir() may set up rep=
+o, avoid that */
++		    has_trace_fd()) {
++			char cwd[PATH_MAX];
++			if (!getcwd(cwd, PATH_MAX))
++				die("Unable to get current working directory");
++
++			trace_printf("setup: git_dir: %s\n", quote_crnl(get_git_dir()));
++			trace_printf("setup: worktree: %s\n", quote_crnl(get_git_work_tree(=
+)));
++			trace_printf("setup: cwd: %s\n", quote_crnl(cwd));
++			trace_printf("setup: prefix: %s\n", quote_crnl(prefix));
++		}
  	}
- 	else {
+ 	commit_pager_choice();
+=20
+diff --git a/trace.c b/trace.c
+index 1e560cb..fbf7de0 100644
+--- a/trace.c
++++ b/trace.c
+@@ -29,6 +29,17 @@ void do_nothing(size_t unused)
+ {
+ }
+=20
++int has_trace_fd()
++{
++	char *trace =3D getenv("GIT_TRACE");
++
++	if (!trace || !strcmp(trace, "") ||
++	    !strcmp(trace, "0") || !strcasecmp(trace, "false"))
++		return 0;
++
++	return 1;
++}
++
+ /* Get a trace file descriptor from GIT_TRACE env variable. */
+ static int get_trace_fd(int *need_close)
+ {
 --=20
-1.7.0.4
+1.7.0.2.445.gcbdb3
