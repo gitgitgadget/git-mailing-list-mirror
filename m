@@ -1,103 +1,94 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 7/7] new failures
-Date: Wed, 27 Oct 2010 21:58:16 +0700
-Message-ID: <1288191496-31176-7-git-send-email-pclouds@gmail.com>
-References: <1288190977-30875-1-git-send-email-pclouds@gmail.com>
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 27 16:59:26 2010
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Git terminology: remote, add, track, stage, etc.
+Date: Wed, 27 Oct 2010 20:33:19 +0530
+Message-ID: <20101027150314.GB1136@kytes>
+References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
+ <AANLkTimkovH9OysLSxA+=di89Xi+dTCYL5hRPmNaADDH@mail.gmail.com>
+ <20101019175103.GA28847@kytes>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Thore Husfeldt <thore.husfeldt@gmail.com>, git@vger.kernel.org,
+	Scott Chacon <schacon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Oct 27 17:03:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PB7TI-0003OT-LW
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 16:59:25 +0200
+	id 1PB7Xb-0005pW-9C
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 17:03:51 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761143Ab0J0O7K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Oct 2010 10:59:10 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:46831 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761134Ab0J0O7J (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Oct 2010 10:59:09 -0400
-Received: by mail-yw0-f46.google.com with SMTP id 9so451893ywk.19
-        for <git@vger.kernel.org>; Wed, 27 Oct 2010 07:59:08 -0700 (PDT)
+	id S1756870Ab0J0PDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Oct 2010 11:03:46 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:60965 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752013Ab0J0PDp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Oct 2010 11:03:45 -0400
+Received: by gxk23 with SMTP id 23so439396gxk.19
+        for <git@vger.kernel.org>; Wed, 27 Oct 2010 08:03:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references;
-        bh=mqjQFHx+Fs8DZkPmuc8M2YZ4Yfugg3XmF1zs1I0yr8w=;
-        b=dw5VIrpjlssn2G3yZ3IYhbwWAuIbFiJ/9ny19d1k1vk/e4HGLALS3odL2Sl7SPcVcj
-         psZP+D+5A9DAXIdAwnirW6F4+eTFrbLiBoEHmskyJ26dcc861t3u+aiT+rhGUDBN9RqA
-         U7J3+u3y5RwkkDmG/+ow/qMSMWjMjav6emn0s=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=xTEU5RgflG/3J8udj2VwXSt1sIi3gr8gA23fnbuRGXs=;
+        b=ZY/l5wc2X33b6t3ld2kq4JGV4+dWPxEoUqbCWXrwmvPZ4fWigtFuoGYQmIA8/EtZEr
+         9DiIsDUxhJ/C5OAYO/aBV4PQyZpxTcC2KeiFYxsImPIeoue67Ci98m7TKtIFfMede5xJ
+         jMZPPKOyNaNLyqOrgQ3wXYV7Jzjvz7FGPCIRU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=mAYKvERHP/ZzmMhgAeOZJfwQ0xIoE7Kw43GYUo3YH0aTtttkOQG00rFTeDVr9aKdv9
-         JDKvjiWDl+bwre14xBKyj7TualHh0Y7I5SbGW77JOln2pgfgWsZcq9gBLfYudtqIf3KA
-         O57aFD4pLZjwcEB7lqTNgBrtH/YpuCU5I5fd0=
-Received: by 10.100.34.19 with SMTP id h19mr7965626anh.88.1288191548815;
-        Wed, 27 Oct 2010 07:59:08 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.73.235.0])
-        by mx.google.com with ESMTPS id w3sm11921765anw.25.2010.10.27.07.59.05
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=V3gDPOEUch9esYTTM/yyPCeOZoT3nZwwITwzmFjqfsmOP6HeEaQU8swdbR8KOELjIv
+         W75pbO7huk79t4tv2X/jMo/pdxc7wYPEh4rgmqOyyJrRsnAWIOW8ZIlXFC4zfNvo/rFA
+         cFbHXEw22AsqasScwoO/H6K0RmVNuHGoxa9CE=
+Received: by 10.151.42.9 with SMTP id u9mr13115071ybj.418.1288191824365;
+        Wed, 27 Oct 2010 08:03:44 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id p30sm8788099ybk.8.2010.10.27.08.03.38
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 27 Oct 2010 07:59:08 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 27 Oct 2010 21:59:06 +0700
-X-Mailer: git-send-email 1.7.0.2.445.gcbdb3
-In-Reply-To: <1288190977-30875-1-git-send-email-pclouds@gmail.com>
+        Wed, 27 Oct 2010 08:03:42 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20101019175103.GA28847@kytes>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160083>
 
+Hi,
 
-git_dir changes are acceptable. The other two, hm...
----
- t/t1510-repo-setup.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+Ramkumar Ramachandra writes:
+> From a863e58d240956191c2fa9cbe992aaca5786730b Mon Sep 17 00:00:00 2001
+> From: Ramkumar Ramachandra <artagnon@gmail.com>
+> Date: Tue, 19 Oct 2010 22:42:05 +0530
+> Subject: [PATCH] Documentation: Consistently use the hyphenated "remote-tracking"
+> 
+> Replace instances of the term "remote tracking" with "remote-tracking"
+> in the documentation for clarity.
+> 
+> Reported-by: Thore Husfeldt <thore.husfeldt@gmail.com>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 
-diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
-index 9d24a0f..7dbccf4 100755
---- a/t/t1510-repo-setup.sh
-+++ b/t/t1510-repo-setup.sh
-@@ -781,7 +781,7 @@ EOF
- 
- test_expect_success '#6: GIT_DIR(rel), core.worktree=../.. at root' '
- 	cat >6/expected <<EOF &&
--setup: git_dir: .git
-+setup: git_dir: $TRASH_DIRECTORY/6/.git
- setup: worktree: $TRASH_DIRECTORY
- setup: cwd: $TRASH_DIRECTORY
- setup: prefix: 6/
-@@ -792,7 +792,7 @@ EOF
- 
- test_expect_success '#6: GIT_DIR(rel), core.worktree=../..(rel) at root' '
- 	cat >6/expected <<EOF &&
--setup: git_dir: .git
-+setup: git_dir: $TRASH_DIRECTORY/6/.git
- setup: worktree: $TRASH_DIRECTORY
- setup: cwd: $TRASH_DIRECTORY
- setup: prefix: 6/
-@@ -3713,7 +3713,7 @@ EOF
- 	test_repo 24
- '
- 
--test_expect_success '#24: in subdir' '
-+test_expect_failure '#24: in subdir' '
- 	cat >24/sub/expected <<EOF &&
- setup: git_dir: $TRASH_DIRECTORY/24.git
- setup: worktree: (null)
-@@ -4147,7 +4147,7 @@ EOF
- 	test_repo 28
- '
- 
--test_expect_success '#28: in subdir' '
-+test_expect_failure '#28: in subdir' '
- 	cat >28/sub/expected <<EOF &&
- setup: git_dir: $TRASH_DIRECTORY/28.git
- setup: worktree: (null)
--- 
-1.7.0.2.445.gcbdb3
+and
+
+> From 7422c2af1ef40c922d8f628715ad96172e4a5734 Mon Sep 17 00:00:00 2001
+> From: Ramkumar Ramachandra <artagnon@gmail.com>
+> Date: Tue, 19 Oct 2010 23:16:04 +0530
+> Subject: [PATCH] UI: Don't say "working directory" when we really mean "working tree"
+> 
+> While in some places "working directory" is used to refer to the
+> (current) working directory, it's incorrectly used in places where Git
+> actually means "working tree" or worktree. Weed out and replace these
+> instances in the UI.
+> 
+> Reported-by: Thore Husfeldt <thore.husfeldt@gmail.com>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+
+Junio: Are these patches suitable for inclusion?
+
+-- Ram
