@@ -1,73 +1,70 @@
-From: Joshua Juran <jjuran@gmail.com>
-Subject: Re: How do I get a list of all unmerged files?
-Date: Wed, 27 Oct 2010 11:39:02 -0700
-Message-ID: <DD284F82-88E1-44D8-B2B7-C11ED9F3F7DE@gmail.com>
-References: <20101026143245.11433.qmail@science.horizon.com> <AANLkTi=JipA6P72hY5_FSvohCruf8hqsJc8Rh53FzAzT@mail.gmail.com> <4CC85AA2.1050406@nextest.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Jay Soffian <jaysoffian@gmail.com>,
-	George Spelvin <linux@horizon.com>, <git@vger.kernel.org>
-To: Eric Raible <raible@nextest.com>
-X-From: git-owner@vger.kernel.org Wed Oct 27 20:39:19 2010
+From: Jan =?UTF-8?B?U3TEmXBpZcWE?= <jan@stepien.cc>
+Subject: Re: [PATCH] fetch-pack: make the ssh connection quiet
+Date: Wed, 27 Oct 2010 20:40:23 +0200
+Message-ID: <20101027204023.729808c8.jan@stepien.cc>
+References: <1288189628-4883-1-git-send-email-jstepien@users.sourceforge.net>
+	<1288193069.15518.40.camel@drew-northup.unet.maine.edu>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Wed Oct 27 20:51:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBAu4-0005vR-6p
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 20:39:16 +0200
+	id 1PBB5i-0003eq-9I
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 20:51:18 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755189Ab0J0SjJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Oct 2010 14:39:09 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:54217 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755015Ab0J0SjI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Oct 2010 14:39:08 -0400
-Received: by eye27 with SMTP id 27so955201eye.19
-        for <git@vger.kernel.org>; Wed, 27 Oct 2010 11:39:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:mime-version
-         :subject:date:references:x-mailer;
-        bh=otBM8XIX8Yo1EoqwM24Cn0BLO+2HXp9+rqX8NxMpBwU=;
-        b=YQUZBwm8MPSpq2wYXxvuIxXVBz1Cr1z4KspWN7zkCN8/rgP9etpvyx6fHPc7Q8UXwh
-         jdMX3b6UzMdexkm/Y5SZEWVZ7ONxOaZoJAcbwAAkWev4moCibzRtGaiv+CSkUiff9xca
-         2hsiK7pNAYS/T4jRQI995G722DvI4o+00LD4M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=q8kxOKlb5Rt/ZlZv/S8YaXes5cV8DEBKcxZPdRkolsDmDS75Mu+lfDoh7W2Subcn0V
-         5P7SFG6+No8Di8qhSerrAPkylSXcINw3CmlQGhVt2E2hI5IATqCHZHB0aWMK/QUKwNjQ
-         piQGIQB8MLr/mMzt6moGSG6mQ5R/Z7YTrhOm4=
-Received: by 10.213.16.84 with SMTP id n20mr1494809eba.0.1288204747332;
-        Wed, 27 Oct 2010 11:39:07 -0700 (PDT)
-Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
-        by mx.google.com with ESMTPS id y8sm42369vch.5.2010.10.27.11.39.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 27 Oct 2010 11:39:05 -0700 (PDT)
-In-Reply-To: <4CC85AA2.1050406@nextest.com>
-X-Mailer: Apple Mail (2.936)
+	id S1752299Ab0J0SvJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Oct 2010 14:51:09 -0400
+Received: from r245-52.iq.pl ([86.111.245.52]:52086 "EHLO stepien.cc"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751782Ab0J0SvI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Oct 2010 14:51:08 -0400
+X-Greylist: delayed 642 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Oct 2010 14:51:07 EDT
+Received: from jan-sl300-ubuntu (chello089074090017.chello.pl [89.74.90.17])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by stepien.cc (Postfix) with ESMTPSA id 5218A2A10378;
+	Wed, 27 Oct 2010 20:40:24 +0200 (CEST)
+In-Reply-To: <1288193069.15518.40.camel@drew-northup.unet.maine.edu>
+X-Mailer: Sylpheed 3.0.2 (GTK+ 2.20.1; i486-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160112>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160113>
 
-On Oct 27, 2010, at 10:00 AM, Eric Raible wrote:
+On Wed, 27 Oct 2010 11:24:29 -0400
+Drew Northup <drew.northup@maine.edu> wrote:
+> On Wed, 2010-10-27 at 16:27 +0200, Jan St=C4=99pie=C5=84 wrote:
+> > The --quiet option passed to fetch-pack did not affect the ssh chil=
+d
+> > process. When an ssh server sent a motd it was displayed because th=
+e ssh
+> > client wasn't launched with the -q option. This patch makes ssh run=
+ quietly
+> > when fetch-pack is called with -q.
+> >=20
+> > An analogous change should be made to other commands which accept -=
+-quiet
+> > and connect to remotes using ssh.
+>=20
+> I'm not so sure that's a good idea. Quoting from the (Open)SSH man pa=
+ge:
+>=20
+> -q      Quiet mode.  Causes all warning and diagnostic messages to be=
+ suppressed.
+>=20
+> Somehow I doubt that's what you intended or a good idea.
 
-> On 11:59 AM, Jay Soffian wrote:
->> $ git help unmerged
->> `git unmerged' is aliased to `!git ls-files --unmerged | cut -f2 |  
->> uniq'
->>
->> If there's a better way to do it, I don't know what it is.
->
-> How about: git diff --name-only | uniq
+That's right, but according to the same source all fatal error messages
+still get displayed. It's a question of how quiet should fetch-pack be
+when --quiet is enabled.
 
-I use `git diff --stat`, via alias `git ds`.
-
-Josh
+Thanks for the comment,
+--=20
+Jan St=C4=99pie=C5=84 <jan@stepien.cc>
