@@ -1,74 +1,68 @@
-From: Jan Engelhardt <jengelh@medozas.de>
-Subject: Annoated tag not found on git describe
-Date: Wed, 27 Oct 2010 20:00:51 +0200 (CEST)
-Message-ID: <alpine.LNX.2.01.1010271957520.28381@obet.zrqbmnf.qr>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Re: Why the default action for pull is merge, but not rebase?
+Date: Wed, 27 Oct 2010 13:05:41 -0500
+Message-ID: <20101027180541.GA20527@burratino>
+References: <20101027173644.GB15657@burratino>
+ <0016e645b8c87a160804939cdc5e@google.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 27 20:01:03 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Euguess@gmail.com
+X-From: git-owner@vger.kernel.org Wed Oct 27 20:05:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBAJ0-0003IO-JX
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 20:00:58 +0200
+	id 1PBANn-0005Xw-C1
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 20:05:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753979Ab0J0SAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Oct 2010 14:00:54 -0400
-Received: from borg.medozas.de ([188.40.89.202]:54628 "EHLO borg.medozas.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753762Ab0J0SAw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Oct 2010 14:00:52 -0400
-Received: by borg.medozas.de (Postfix, from userid 25121)
-	id 58019F0C32A90; Wed, 27 Oct 2010 20:00:51 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
-	by borg.medozas.de (Postfix) with ESMTP id 4A1D964E3
-	for <git@vger.kernel.org>; Wed, 27 Oct 2010 20:00:51 +0200 (CEST)
-User-Agent: Alpine 2.01 (LNX 1266 2009-07-14)
+	id S1754017Ab0J0SFv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Oct 2010 14:05:51 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:34308 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752978Ab0J0SFu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Oct 2010 14:05:50 -0400
+Received: by gwj21 with SMTP id 21so621563gwj.19
+        for <git@vger.kernel.org>; Wed, 27 Oct 2010 11:05:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=PuQnu07m19EKYysMvch3ASpKRRChJHncUBxpIvOguJY=;
+        b=cr/ucl5Xs0lg99QNuquvx6TPBP3Ctk79lPOISwwjv98frNoeKV3Q7pNTbQWEiFEdwd
+         GGkqlhoFPDogT1HTv9Ns5eH+glmp1X2JrO2N5iZr//GMbHPVCyn3iNfGbLlAg5/+0Umf
+         aqm170M+nbI+9NcovG1FVAeUcFoG/djZzuiC4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=a7WlVDU9Y3SFHqBCV9bV+6YHKsXAUi9a6/7qZLDQM/wyQ5FNedoh05B6bTLgdDTIzW
+         +VvZ5CyGX/0tV5fcCPwfi7cCNjiiTiK431PxafD0mKnvYDKxtOeNyzBSvdnZ2Mzjrqkv
+         Z7NeCnIi4tkBx36/wcddYVXUYd+b1RQbiM7fY=
+Received: by 10.91.203.34 with SMTP id f34mr1328620agq.132.1288202749603;
+        Wed, 27 Oct 2010 11:05:49 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id n49sm19691yha.34.2010.10.27.11.05.47
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 27 Oct 2010 11:05:48 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <0016e645b8c87a160804939cdc5e@google.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160110>
 
-Hi,
+Eugene Sajine wrote:
 
+> So, I just have to run git pull --rebase to get my scenario working, =
+right?
 
-in the linux-manpages repository at 
-git://git.kernel.org/pub/scm/docs/man-pages/man-pages , running git 
-describe on the current HEAD (8482c7b836) produces
-
-fatal: No annotated tags can describe 
-'8482c7b836a66f874e7dfea9c35fee4a82ad817b'.
-However, there were unannotated tags: try --tags.
-
-Which seems strange, given there is an annotated tag:
-
-(.git/refs/packed-refs)
-45aba08f23aea4baf9ff5603cb5ec4ce148be2cc refs/tags/man-pages-3.29
-^80786722b116f5002c28e9e0200044f825b236f6
-
-==>
-object 80786722b116f5002c28e9e0200044f825b236f6
-type commit
-tag man-pages-3.29
-tagger Michael Kerrisk <mtk.manpages@gmail.com> 1287508632 +0200
-
-This is man-pages-3.29
-
-commit 80786722b116f5002c28e9e0200044f825b236f6
-tree 65ca9b696771fba53902a1342dc982066c9467e0
-parent 435070082d2694737825491cc47973626f352645
-author Michael Kerrisk <mtk.manpages@gmail.com> 1287508632 +0200
-committer Michael Kerrisk <mtk.manpages@gmail.com> 1287508632 +0200
-
-    Ready for 3.29
-
-
-
-So what caused git 1.7.1 to get confused here?
-
-
-thanks,
-Jan
+Maybe the =E2=80=9C[branch "<name>"] rebase=E2=80=9D and =E2=80=9C[bran=
+ch] autosetuprebase=E2=80=9D
+configuration items could help.
