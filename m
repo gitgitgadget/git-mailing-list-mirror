@@ -1,111 +1,102 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] user-manual.txt: explain better the remote(-tracking) branch terms
-Date: Wed, 27 Oct 2010 02:06:05 +0200
-Message-ID: <1288137965-22950-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpqocag33mn.fsf@bauges.imag.fr>
-Cc: jaysoffian@gmail.com, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Wed Oct 27 02:06:17 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC PATCH] Makefile: new prove target for running the tests
+ with TAP
+Date: Tue, 26 Oct 2010 17:18:22 -0700
+Message-ID: <7vmxq0ebe9.fsf@alter.siamese.dyndns.org>
+References: <5c46df95f93b56aa2fce56c7efe7b2be80642c8b.1287045908.git.git@drmicha.warpmail.net> <20101014172301.GA2770@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 27 02:18:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAtWz-0001sg-9C
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 02:06:17 +0200
+	id 1PAtiy-0005AM-JJ
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 02:18:40 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760391Ab0J0AGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Oct 2010 20:06:12 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:59393 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752577Ab0J0AGL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Oct 2010 20:06:11 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o9QNpSES001009
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 27 Oct 2010 01:51:28 +0200
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1PAtWp-00045N-Fx; Wed, 27 Oct 2010 02:06:07 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1PAtWp-0005yk-9e; Wed, 27 Oct 2010 02:06:07 +0200
-X-Mailer: git-send-email 1.7.3.2.183.g2e7b0
-In-Reply-To: <vpqocag33mn.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 27 Oct 2010 01:51:28 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o9QNpSES001009
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1288741888.47791@JbbNnD4f3EvUAHE173m3Zg
+	id S1758196Ab0J0ASf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Oct 2010 20:18:35 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38670 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754604Ab0J0ASe (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Oct 2010 20:18:34 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A2B2E2683;
+	Tue, 26 Oct 2010 20:18:33 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=lez5AHjO/y+LJwGqyIV048SRR6I=; b=lJ6pYNJYssCVF8IL0a5VGK7
+	3KuojAFC5YMi4KM+CdCwwLW+291MW+cpcClecfWW6Te8KTuwlKD5SVQT8yRBj7Qh
+	W9LO/jHdyfApArXE9x6A0YlDvD7rtBPctp5qLDBZqh+GzOnntOkmDART5kazYvky
+	u+L0e497k7P7rHPaoeg4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=JBS76sqW2IVDJ0Hcq5aDl4EVdvhwiu9g1Oa0otcbHTDHhp9+b
+	ncda7u21iSbzYn/L4WrTP/BQRQ0/9S9qfKhbU0yXWrDDvod+CnimTOl7U974KSs6
+	fAuD3t0b6HZqwDg/5jitG9745wgdxLTjHClNfFr2Wx3i5eM1v/9PVEmNwE=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B45FCE267B;
+	Tue, 26 Oct 2010 20:18:28 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.169.49]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A8384E267A; Tue, 26 Oct
+ 2010 20:18:23 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B90B36C4-E15F-11DF-A1FE-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160014>
 
-Now that the documentation is mostly consistant in the use of "remote
-branch" Vs "remote-tracking branch", let's make this distinction explicit
-early in the user-manual.
+Jeff King <peff@peff.net> writes:
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+> On Thu, Oct 14, 2010 at 10:53:36AM +0200, Michael J Gruber wrote:
+>
+>> +prove: pre-clean
+>> +	@echo "*** prove ***"; GIT_CONFIG=.git/config $(PROVE) --exec '$(SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
+>> +	$(MAKE) clean
+>> +
+>
+> I like the idea. I think the prove output is a little nicer for things
+> like -j16, but it's a pain to construct the command line (especially as
+> I use --root in GIT_TEST_OPTS to get a significant speedup).
+>
+> I wonder if anybody is really interested in switching between the
+> "prove" and regular test targets, though. I would think you either like
+> to use prove or not. So perhaps it makes more sense to put a
+> configurable switch for the default target, like the patch below. Then
+> you can just "make test" (or "make" in the test directory) as usual.
+
+I kind of like this.  Perhaps with something like this squashed in?
+
+-- >8 --
+test: allow "prove" to be used as the main test harness
+
+The prove output is a little easier to read for things like -j16.
+
 ---
- Documentation/user-manual.txt |   20 +++++++++++++++++---
- 1 files changed, 17 insertions(+), 3 deletions(-)
+ t/README |    6 ++++++
+ 1 files changed, 6 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index d70f3e0..62b3788 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -344,7 +344,8 @@ Examining branches from a remote repository
- The "master" branch that was created at the time you cloned is a copy
- of the HEAD in the repository that you cloned from.  That repository
- may also have had other branches, though, and your local repository
--keeps branches which track each of those remote branches, which you
-+keeps branches which track each of those remote branches, called
-+remote-tracking branches, which you
- can view using the "-r" option to linkgit:git-branch[1]:
+diff --git a/t/README b/t/README
+index a1eb7c8..c548bf1 100644
+--- a/t/README
++++ b/t/README
+@@ -50,6 +50,12 @@ prove and other harnesses come with a lot of useful options. The
+     # Repeat until no more failures
+     $ prove -j 15 --state=failed,save ./t[0-9]*.sh
  
- ------------------------------------------------
-@@ -359,6 +360,14 @@ $ git branch -r
-   origin/todo
- ------------------------------------------------
- 
-+In this case, "origin" is called a remote repository, or "remote" for
-+short. The branches of this repository are called "remote branches"
-+from our point of view. The remote-tracking branches are created in
-+the local repository at clone time, as a copy of the remote branches.
-+They are references that will be updated by "git fetch" (hence by "git
-+pull"), and by "git push". See
-+<<Updating-a-repository-With-git-fetch>> for details.
++You can give DEFAULT_TEST_TARGET=prove on the make command (or define it
++in config.mak) to cause "make test" to run tests under prove.
++GIT_PROVE_OPTS can be used to pass additional options, e.g.
 +
- You cannot check out these remote-tracking branches, but you can
- examine them on a branch of your own, just as you would a tag:
- 
-@@ -1716,14 +1725,19 @@ one step:
- $ git pull origin master
- -------------------------------------------------
- 
--In fact, if you have "master" checked out, then by default "git pull"
--merges from the HEAD branch of the origin repository.  So often you can
-+In fact, if you have "master" checked out, then this branch has been
-+configured by "git clone" to get changes from the HEAD branch of the
-+origin repository.  So often you can
- accomplish the above with just a simple
- 
- -------------------------------------------------
- $ git pull
- -------------------------------------------------
- 
-+This command will fetch the changes from the remote branches to your
-+remote-tracking branches `origin/*`, and merge default branch in the
-+current branch.
++    $ make DEFAULT_TEST_TARGET=prove GIT_PROVE_OPTS='--timer --jobs 16' test
 +
- More generally, a branch that is created from a remote-tracking branch
- will pull
- by default from that branch.  See the descriptions of the
--- 
-1.7.3.2.183.g2e7b0
+ You can also run each test individually from command line, like this:
+ 
+     $ sh ./t3010-ls-files-killed-modified.sh
