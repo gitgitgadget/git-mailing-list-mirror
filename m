@@ -1,89 +1,77 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [BUG?] t9500 --debug prints "sh: ++GIT_BINDIR++/git: not found"
-Date: Wed, 27 Oct 2010 15:32:01 -0700 (PDT)
-Message-ID: <m3k4l3i7y9.fsf@localhost.localdomain>
-References: <20101027204954.GA31386@burratino>
-	<m3ocafib6z.fsf@localhost.localdomain>
-	<20101027213405.GA10263@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fetch-pack: make the ssh connection quiet
+Date: Wed, 27 Oct 2010 15:35:41 -0700
+Message-ID: <7v1v7bclhe.fsf@alter.siamese.dyndns.org>
+References: <1288189628-4883-1-git-send-email-jstepien@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 28 00:32:14 2010
+To: Jan =?utf-8?B?U3TEmXBpZcWE?= <jstepien@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Thu Oct 28 00:35:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBEXU-0003qS-RL
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 00:32:13 +0200
+	id 1PBEb4-0005Ko-JZ
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 00:35:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755091Ab0J0WcG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Oct 2010 18:32:06 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:50311 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752256Ab0J0WcF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Oct 2010 18:32:05 -0400
-Received: by fxm16 with SMTP id 16so1208005fxm.19
-        for <git@vger.kernel.org>; Wed, 27 Oct 2010 15:32:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=QDCQ4mbRQ0kxwGn2p3g2BVZLRZxc3o/zs0HjIwTiGv0=;
-        b=lGqiYfiU0NGCYpax+t7qPLkKsLXVC+D6C3iL+DXuX7gJ2/B7KvuAoHAhpTz2s6C9nM
-         0NEoh7Mg+oQwX4HK1yTR/ilq00I8kgxWS3xpPOuk8h5OltSJC+VVWTpP80JOgR4f+9Ph
-         F99M9PeUsS3dYWTaKxT2wtEMfD0q9a+NiVr9c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=BjWEWLMR6tfV1vLaCDYKlJFwAC7uKWFUI7AdmQfMCyN+ZL/fVmaJKSZy0hoi2ZH5nM
-         +birwInEq548gmcaTBWdhw+AD6HFiJIrIi1tPXCjoViMOKYFRuGT5C5OJYrPs5bB7hZG
-         F9u9dODLZz7AEL3YNj0s9ZOCbGJ7kFcbX/bPs=
-Received: by 10.223.83.198 with SMTP id g6mr3049676fal.69.1288218722915;
-        Wed, 27 Oct 2010 15:32:02 -0700 (PDT)
-Received: from localhost.localdomain (abvr250.neoplus.adsl.tpnet.pl [83.8.215.250])
-        by mx.google.com with ESMTPS id p2sm177226fak.22.2010.10.27.15.32.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 27 Oct 2010 15:32:01 -0700 (PDT)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o9RMVbIZ031959;
-	Thu, 28 Oct 2010 00:31:47 +0200
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id o9RMVQQH031956;
-	Thu, 28 Oct 2010 00:31:26 +0200
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20101027213405.GA10263@burratino>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1757360Ab0J0Wfu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Oct 2010 18:35:50 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:50778 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756171Ab0J0Wft convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Oct 2010 18:35:49 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E05521137;
+	Wed, 27 Oct 2010 18:35:47 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=uzfrr+cwmIxDiNE4FE915X6lg
+	H8=; b=ykenYDXEoqJHGJ2eSamATld9ntlp05UlrWYQoYYChwlhmZYCSDIzyhTHH
+	YAWhLy4UCdMLxK1jNmBafnURUjP/ox+UB0JppC/9fTUYbBajgT54GYRgmJoAALlD
+	gu+tpmP+cgFlb46Wng+Y/F/ix6Pfel/8m+J2NAdyAq85aoZBMw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=N4UpysvEBkcM+0NqzVR
+	glLmikWWWem5tv3cSKR3DBilEA97KjNX5F7kKZBFyTn5ss9o26nqySClTMUccUBj
+	jFz9Yb6KQGqiBL3pBkm0ZRUUkO+0fymbIB4AS0h3A4tuH7av0H/OlnDt0Nlr4yov
+	PgFK6XLnSDLWOuZ13tHLPCyI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BC9711122;
+	Wed, 27 Oct 2010 18:35:45 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.169.49]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 1D78E111B; Wed, 27 Oct
+ 2010 18:35:42 -0400 (EDT)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8A0B965A-E21A-11DF-926B-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160128>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160129>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-> Jakub Narebski wrote:
->> Jonathan Nieder <jrnieder@gmail.com> writes:
->> 
->>>  sh: ++GIT_BINDIR++/git: not found
->>>  ok 3 - no commits: .git summary (implicit)
->>>  [...]
-> [...]
->> Fixed in 8ff76f4 (gitweb: Move call to evaluate_git_version after
->> evaluate_gitweb_config, 2010-09-26):
-> 
-> Oh!  Yes, that works.  Thanks and sorry for the noise.
+Jan St=C4=99pie=C5=84  <jstepien@users.sourceforge.net> writes:
 
-You are welcome.
+> The --quiet option passed to fetch-pack did not affect the ssh child
+> process. When an ssh server sent a motd it was displayed because the =
+ssh
+> client wasn't launched with the -q option.
 
-I should have perhaps choose comit title differently, e.g.:
+This is curious for a couple of reasons:
 
-  gitweb: Fix ./t950* --debug
+1. "-q" option to "ssh" is not meant to supress "motd"; it is about
+   warning and diagnostics.  From man ssh(1):
 
-or something like that.
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+     -q Quiet mode.  Causes most warning and diagnostic messages to be
+        suppressed.  Only fatal errors are displayed.  If a second -q i=
+s
+        given then even fatal errors are suppressed, except for those
+        produced due solely to bad argu=E2=80=90 ments.
+
+2. "PrintMotd" defaults to "yes" but it is to specify whether the daemo=
+n
+   should print /etc/motd when a user logs in interactively.  I didn't
+   think fetch-pack logged in interactively, so why should this matter?
