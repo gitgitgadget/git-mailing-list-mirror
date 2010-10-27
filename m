@@ -1,136 +1,169 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: Create a new commit from patches without using any worktree?
-Date: Wed, 27 Oct 2010 12:28:58 +0200
-Message-ID: <AANLkTimykD+2Y9WKs2gXE+1Q2SS=5DaN+Kf4sW2dhegB@mail.gmail.com>
-References: <AANLkTi=Xi13_0+bC-TVRP3uVDmGWVdM3a708=SSzCR88@mail.gmail.com>
-	<4CC7EBEA.9070804@viscovery.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC PATCH v2 0/3] Documentation: refactor config variable descriptions
+Date: Wed, 27 Oct 2010 12:56:15 +0200
+Message-ID: <201010271256.16836.jnareb@gmail.com>
+References: <cover.1287690696.git.trast@student.ethz.ch> <20101025151125.GD28278@sigill.intra.peff.net> <201010251749.04784.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Klas Lindberg <klas.lindberg@gmail.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Oct 27 12:29:12 2010
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	=?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
+	<avarab@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Oct 27 12:56:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PB3Fj-0000sJ-UL
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 12:29:08 +0200
+	id 1PB3gI-0005tz-7y
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 12:56:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760778Ab0J0K3B convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Oct 2010 06:29:01 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:43019 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750889Ab0J0K27 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Oct 2010 06:28:59 -0400
-Received: by wwe15 with SMTP id 15so604136wwe.1
-        for <git@vger.kernel.org>; Wed, 27 Oct 2010 03:28:58 -0700 (PDT)
+	id S1754910Ab0J0K4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Oct 2010 06:56:31 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:42225 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754351Ab0J0K4a (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Oct 2010 06:56:30 -0400
+Received: by bwz11 with SMTP id 11so400860bwz.19
+        for <git@vger.kernel.org>; Wed, 27 Oct 2010 03:56:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Xbnjt+jqiS6ENAVyuqBrAQMXWtj1yLQBafXu3HUIgbM=;
-        b=aroZ+n7ZviPtdrr5iXqjip65XbFprxZVWDN8GpZyCIs27UOuOlFvD9Q0ilIuGfGkqT
-         DB0y57V/B5E8GU8hd5Rh1GKg8NZLQQVx/tOTjoBq74GhrVanNMwwY6Csx1zfDC+n/zFh
-         X1jazyosbdl3Y9+D1Cl3LanzkWVvjiGwcADaQ=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=asLsj3iICJtayTXIO59atNq6JtdbNBUE672pFi245U8=;
+        b=H2c6ZOuW9rTcFm0k8XnJFpl6q/dpgO/qlwaOn5PTlJtymkaG3PVYTil3SjUydpg1oT
+         k/mqWrHNZR4UXPjYwZUlHUpRhnhvcFI/9WB15v8qEq4H21rvv8IlAF0aDQhdWvHbmr2O
+         eePQ2NHALhVtm8Sp1SwMXKwWIR1FZQlZucE+Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=xS9Qys+Ege2tBQmVPE4lO+Y6XXGV/v3/aGi8ayqXmjADcIdOFyqnm1cQgP1GLhthaS
-         f0qDgmEAbCEwx2ymIjplrVQpioIgVw4V4sc1e1c2cpAiQt7b+phUTdU1Yo4qVZsMB29L
-         JAotmqUy7TFolPxuh5vwkGIAHOnoBlxl1eqDc=
-Received: by 10.227.69.202 with SMTP id a10mr9281557wbj.81.1288175338621; Wed,
- 27 Oct 2010 03:28:58 -0700 (PDT)
-Received: by 10.227.136.76 with HTTP; Wed, 27 Oct 2010 03:28:58 -0700 (PDT)
-In-Reply-To: <4CC7EBEA.9070804@viscovery.net>
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=DFkxVn53rWXjY/XJzIu23RikWFJWgs2O19SbVGxgVncvJHZC8DaOHcRicnT64or1sI
+         wYqzqWXA4b+ffkr2NcnKRtQhfrmlgdu6ejYsBw4sDvmVZZKM/rPCnXEvLuVRKxPoeDPF
+         No+9Eyco/Z67yoAE2htVO07EtQsm15N5g71UM=
+Received: by 10.204.163.142 with SMTP id a14mr6281911bky.126.1288176988394;
+        Wed, 27 Oct 2010 03:56:28 -0700 (PDT)
+Received: from [192.168.1.13] (abvr250.neoplus.adsl.tpnet.pl [83.8.215.250])
+        by mx.google.com with ESMTPS id t10sm6854511bkj.16.2010.10.27.03.56.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 27 Oct 2010 03:56:24 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201010251749.04784.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160033>
 
-On Wed, Oct 27, 2010 at 11:07, Johannes Sixt <j.sixt@viscovery.net> wro=
-te:
-> Am 10/27/2010 3:49, schrieb Klas Lindberg:
->> Is there any way to record a new commit based on contents in a patch
->> without going through a worktree?
->
-> This script may be a starter. It takes a commit on the command line
-> instead of a patch, but it processes that commit as a patch ("diff-tr=
-ee -p"),
-> so the script should be easy to adapt.
->
-> -- Hannes
->
-> -- 8< --
-> #!/bin/sh
->
-> OPTIONS_SPEC=3D"\
-> git post to-ref [from-rev]
-> --
-> "
-> . git-sh-setup
->
-> while test $# !=3D 0
-> do
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0case "$1" in
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0--) =C2=A0 =C2=A0 shift; break;;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0-*) =C2=A0 =C2=A0 usage;;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0*) =C2=A0 =C2=A0 =C2=A0break;;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0esac
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0shift
-> done
->
-> FROM=3D$(git rev-parse --verify --symbolic-full-name "$1") || exit
-> shift
-> if test $# =3D 0; then
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0set -- HEAD
-> fi
-> test $# =3D 1 || usage
->
-> # populate a temporary index
-> tmpidx=3D$GIT_DIR/index-post-$$
+On Mon, 25 Oct 2010, Jakub Narebski wrote:
+> On Mon, 25 Oct 2010, Jeff King wrote:
+>> On Mon, Oct 25, 2010 at 02:44:06PM +0200, Jakub Narebski wrote:
 
-I think you should honor GIT_INDEX_FILE here, so that you can
-guarantee that tmpidx is on the same device as the index file used by
-git read-tree.
+>>>>   2. You recursively follow includes via include::. This means that the
+>>>>      make rule is not accurate. E.g., try:
+>>> [...]
+>>> We do that: see 'doc.dep' target in Documentation/Makefile.  We just
+>>> need for this target to also add dependencies for config-vars.txt
+>>> (perhaps separate mode for make-config-list.perl, or perhaps 
+>>> build-docdep.perl should be config-vars-src.txt aware...).
+>> 
+>> Yeah, that would definitely work.
 
-Bert
+The part of patch (commit) touching Documentation/Makefile could look
+like this:
 
-> git read-tree --index-output=3D"$tmpidx" "$FROM" || exit
-> GIT_INDEX_FILE=3D$tmpidx
-> export GIT_INDEX_FILE
-> trap 'rm -f "$tmpidx"' 0 1 2 15
->
-> git diff-tree -p -M -C "$@" | git apply --cached || exit
->
-> newtree=3D$(git write-tree) &&
-> newrev=3D$(
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0eval "$(get_author_ident_from_commit "$1")=
-"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git-cat-file commit "$1" | sed -e '1,/^$/d=
-' |
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git commit-tree $newtree -p "$FROM"
-> ) || exit
->
-> if git check-ref-format "$FROM"
-> then
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0set_reflog_action post
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0subject=3D$(git log --no-walk --pretty=3D%=
-s "$newrev") &&
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git update-ref -m "$GIT_REFLOG_ACTION: $su=
-bject" "$FROM" $newrev || exit
-> fi
-> if test -z "$GIT_QUIET"
-> then
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git rev-list -1 --oneline $newrev
-> fi
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+-- 8< --
+diff --git a/Documentation/Makefile b/Documentation/Makefile
+index e117bc4..351aa9c 100644
+--- a/Documentation/Makefile
++++ b/Documentation/Makefile
+@@ -212,9 +212,12 @@ install-html: html
+ #
+ # Determine "include::" file references in asciidoc files.
+ #
+-doc.dep : $(wildcard *.txt) build-docdep.perl
++doc.dep : $(wildcard *.txt) build-docdep.perl make-config-list.perl
+ 	$(QUIET_GEN)$(RM) $@+ $@ && \
+ 	$(PERL_PATH) ./build-docdep.perl >$@+ $(QUIET_STDERR) && \
++	$(PERL_PATH) ./make-config-list.perl --deps=config-vars.txt \
++		--mainlist=config-vars-src.txt $(MAN_TXT) \
++		>>$@+ $(QUIET_STDERR) && \
+ 	mv $@+ $@
+ 
+ -include doc.dep
+@@ -320,6 +323,11 @@ howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
+ 	'$(SHELL_PATH_SQ)' ./howto-index.sh $(wildcard howto/*.txt) >$@+ && \
+ 	mv $@+ $@
+ 
++config-vars.txt: config-vars-src.txt $(MAN_TXT) make-config-list.perl
++	$(PERL_PATH) ./make-config-list.perl \
++		--mainlist=$< --ignore=$@ $(MAN_TXT) >$@+ && \
++	mv $@+ $@
++
+ $(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
+ 	$(QUIET_ASCIIDOC)$(ASCIIDOC) $(ASCIIDOC_EXTRA) -b xhtml11 $*.txt
+ 
+-- >8 --
+
+Note that while in rule for config-vars.txt target we can use automatic
+variables, we have to spell filenames in full in the part of doc.dep
+rules that generate dependency for config-vars.txt.  Note also that we
+have to keep those explicit and implicit filenames in sync across those
+two rules.
+ 
+> Though simpler would be just to not use or turn off following includes,
+> as it turned out that it doesn't matter to follow includes in manpages:
+> if we include with config variables, it is to also include it in 
+> config-vars-src.txt.
+> 
+> Well, assuming that we don't have to follow includes in config-vars-src.txt;
+> otherwise we have to generate line in doc.dep for that include anyway.
+
+Decision time!!!
+
+There are two possible approaches:
+
+1. Don't follow includes in manpages (in manpage sources), and don't follow
+   includes in config-vars-src.txt
+
+   Advantages:
+   * Less code to write and maintain
+   * No need to keep filenames in rule for config-vars.txt and for doc.dep
+     in sync.
+
+   Disadvantages:
+   * Theoretically fragile: it depends on two assumptions:
+
+     A. If file included in manpage contains description of config vars,
+        then this file would be included also in config-vars-src.txt
+
+     B. For config variables inside file(s) included by config-vars-src.txt,
+        if they are present in individual manpage, it is done by inclusion
+        of said file.
+
+     Those assumptions are two sides of the same coin, and can be written
+     as: file included in manpagee can contain config variables if and only
+     if it is included in config-vars-src.txt
+
+2. Follow includes both in manpages and in config-vars-src.txt, and
+   generate dependencies for config-vars.txt
+
+   Advantages:
+   * More generic solution
+
+   Disadvantages:
+   * Need to keep rules for doc.dep and for config-vars.txt in sync, as
+     described above
+   * config-vars.txt rule has more dependencies.
+
+Now, which one to choose?
+-- 
+Jakub Narebski
+Poland
