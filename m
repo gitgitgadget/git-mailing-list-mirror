@@ -1,87 +1,98 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH v3] Porcelain scripts: Rewrite cryptic "needs update"
- error message
-Date: Wed, 27 Oct 2010 20:25:51 +0530
-Message-ID: <20101027145548.GA1136@kytes>
-References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
- <1287499168-26569-1-git-send-email-artagnon@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Joshua Jensen <jjensen@workspacewhiz.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Thore Husfeldt <thore.husfeldt@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Oct 27 16:56:30 2010
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 1/7] setup: support setting GIT_DIR=.git file
+Date: Wed, 27 Oct 2010 21:58:10 +0700
+Message-ID: <1288191496-31176-1-git-send-email-pclouds@gmail.com>
+References: <1288190977-30875-1-git-send-email-pclouds@gmail.com>
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 27 16:58:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PB7QQ-0001he-M4
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 16:56:27 +0200
+	id 1PB7SX-0002wu-C3
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 16:58:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760919Ab0J0O4T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Oct 2010 10:56:19 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:40723 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760898Ab0J0O4R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Oct 2010 10:56:17 -0400
-Received: by ywk9 with SMTP id 9so449340ywk.19
-        for <git@vger.kernel.org>; Wed, 27 Oct 2010 07:56:17 -0700 (PDT)
+	id S1761078Ab0J0O6X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Oct 2010 10:58:23 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:48504 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1761067Ab0J0O6V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Oct 2010 10:58:21 -0400
+Received: by gxk23 with SMTP id 23so433771gxk.19
+        for <git@vger.kernel.org>; Wed, 27 Oct 2010 07:58:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=2Uwa68IfJ9CEUJSxOLmsZThhFk+sYwwEuOtffs3MfQs=;
-        b=e5d4uD8kkedkQj/3ypY5iHec1si/2Qfcw95rlQmvxmbGemsDCfJxHjglaS2i6PwkxI
-         80mxCqDOu//89uecP9pMi4Xog+B9LUPmH+vkOm9+Pw4dejQhz6TqN3LENFxClsFyGev9
-         CNp+z5+xPM3u6Wri3AO4B7OafUI49j3/DSmhA=
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references;
+        bh=YPPIYpjxiokY8dx6NBJSE+AKEywH4hPnEKLBk3RXf1Q=;
+        b=nW8ghTP12pP1uxqGNgN8ssGK2CHXgsSt714i2hAsHg1zfeLXnTc/6d/rjzXy2c23uq
+         RDBdVyhgxCLzg/wXwgP0OBLlzu4Kwyxtv2vMuKLupjdigrqvWI+GkcIJDqAVLgpW5tAn
+         3PeoB+WHJp1ksRhw9E2pk035c5JOGKy+7pweo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=xeU7lVxG76oLaphlmBXDQKu4nmiesYd+gNOgg4HigXdd9jNCX0c+Tiw+sA4wyTXGvd
-         wMGR01gqWoCbW3Jp8pH/yGYJ3Lwtk+fVT2F0gimnFtt3e1Peab1E0SzZq2v5wSHZSkiL
-         L+Ra4kscKrrkR9m3eoIxL6xQ7D94NTPkFXk+A=
-Received: by 10.150.211.19 with SMTP id j19mr301878ybg.446.1288191376999;
-        Wed, 27 Oct 2010 07:56:16 -0700 (PDT)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id z33sm7715134yhc.33.2010.10.27.07.56.10
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=hbxX+KZmHU3SE/va/ufFMrWmL3jZ+ikSaUUHAIAY1pBEBC57jY2hpgchNHfEIrxlTc
+         LNxChlgBwk6RlNk/3lpE+OrmC6YAhv0on+R+pz/ZbplE5N6hGz47zFminTVNhZqw7ND2
+         yWQ0PZN/tMcvBc/p3HqKf1MMt/JS5qijzAdo4=
+Received: by 10.150.182.11 with SMTP id e11mr9908468ybf.210.1288191501155;
+        Wed, 27 Oct 2010 07:58:21 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.73.235.0])
+        by mx.google.com with ESMTPS id f46sm7721825yhc.17.2010.10.27.07.58.17
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 27 Oct 2010 07:56:14 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1287499168-26569-1-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        Wed, 27 Oct 2010 07:58:20 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 27 Oct 2010 21:58:18 +0700
+X-Mailer: git-send-email 1.7.0.2.445.gcbdb3
+In-Reply-To: <1288190977-30875-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160076>
 
-Hi,
+---
+ setup.c |   10 +++++++---
+ 1 files changed, 7 insertions(+), 3 deletions(-)
 
-Ramkumar Ramachandra writes:
-> Although Git interally has the facility to differentiate between
-> porcelain and plubmbing commands and appropriately print errors,
-> several shell scripts invoke plubming commands triggering cryptic
-> plumbing errors to be displayed on a porcelain interface. This patch
-> replaces the "needs update" message in git-pull and git-rebase, when
-> `git update-index` is run, with a more friendly message.
-> 
-> Reported-by: Joshua Jensen <jjensen@workspacewhiz.com>
-> Reported-by: Thore Husfeldt <thore.husfeldt@gmail.com>
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> ---
->  Ref: <1285877017-8060-1-git-send-email-artagnon@gmail.com> for v2.
->  Ref: <1285514516-5112-1-git-send-email-artagnon@gmail.com> for v1.
-> 
->  Thanks to Matthieu for reviewing v1 and Junio for reviewing v2: I've
->  tried to attack the problem more conservatively in this patch. It
->  doesn't list paths, and doesn't print "generic" advice.
-
-Junio: Is this patch alright?
-
--- Ram
+diff --git a/setup.c b/setup.c
+index a3b76de..2e7387d 100644
+--- a/setup.c
++++ b/setup.c
+@@ -317,17 +317,20 @@ static const char *setup_explicit_git_dir(const char *gitdirenv,
+ 				const char *work_tree_env, int *nongit_ok)
+ {
+ 	static char buffer[1024 + 1];
+-	const char *retval;
++	const char *retval, *gitfile;
+ 
+ 	if (PATH_MAX - 40 < strlen(gitdirenv))
+ 		die("'$%s' too big", GIT_DIR_ENVIRONMENT);
+-	if (!is_git_directory(gitdirenv)) {
++	gitfile = read_gitfile_gently(gitdirenv);
++	if (!gitfile && !is_git_directory(gitdirenv)) {
+ 		if (nongit_ok) {
+ 			*nongit_ok = 1;
+ 			return NULL;
+ 		}
+ 		die("Not a git repository: '%s'", gitdirenv);
+ 	}
++	if (gitfile)
++		set_git_dir(gitfile);
+ 	if (!work_tree_env) {
+ 		retval = set_work_tree(gitdirenv);
+ 		/* config may override worktree */
+@@ -341,7 +344,8 @@ static const char *setup_explicit_git_dir(const char *gitdirenv,
+ 			get_git_work_tree());
+ 	if (!retval || !*retval)
+ 		return NULL;
+-	set_git_dir(make_absolute_path(gitdirenv));
++	if (!gitfile)
++		set_git_dir(make_absolute_path(gitdirenv));
+ 	if (chdir(work_tree_env) < 0)
+ 		die_errno ("Could not chdir to '%s'", work_tree_env);
+ 	strcat(buffer, "/");
+-- 
+1.7.0.2.445.gcbdb3
