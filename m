@@ -1,143 +1,74 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: Re: Why the default action for pull is merge, but not rebase?
-Date: Wed, 27 Oct 2010 13:58:45 -0400
-Message-ID: <AANLkTinDaYr8fsZiit4VYH-vptO7LtwRggkFGLKMnAhY@mail.gmail.com>
-References: <20101027173644.GB15657@burratino>
-	<0016e645b8c87a160804939cdc5e@google.com>
+From: Jan Engelhardt <jengelh@medozas.de>
+Subject: Annoated tag not found on git describe
+Date: Wed, 27 Oct 2010 20:00:51 +0200 (CEST)
+Message-ID: <alpine.LNX.2.01.1010271957520.28381@obet.zrqbmnf.qr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 27 19:59:01 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 27 20:01:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBAH6-0002F8-9Q
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 19:59:00 +0200
+	id 1PBAJ0-0003IO-JX
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 20:00:58 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754031Ab0J0R6t convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Oct 2010 13:58:49 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:49338 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752978Ab0J0R6r convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Oct 2010 13:58:47 -0400
-Received: by ywk9 with SMTP id 9so632026ywk.19
-        for <git@vger.kernel.org>; Wed, 27 Oct 2010 10:58:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=MU1RALUvlrjy2AHDWSQQkybMBfmRMLsVJmEJR46BCtw=;
-        b=ChgccO7wReAOFw/TLK9FVBboZ+8Mf9Zet1ncgMw+ChhjGUTJgBynq7g3NZymemcq8x
-         qxbqe0PngjK0O7OghTnDGkc0PNxAJVqjjKxA5bqrf0Yo4nDV63v2NCzLGjUk4AuFbtRB
-         KtcrDUXN0doAfJcRgqLTytWK6UFvC1SEh2wk8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=p46FoxKUDnomtDpa8cteYB1+UTWr4PbHgmJA8WIywhsC44HajnJfwsf5kTbmfab6AF
-         dMFBrbZ0X82+alxxyHUFcE7EbRnFvgghH3N7qpWlaVIIV2pYUPM81HEJOlVh34DhfXfX
-         jPfgSXowbme+YwKDtMULxAyACsqrIWeIL02Oo=
-Received: by 10.204.142.92 with SMTP id p28mr7830624bku.2.1288202325668; Wed,
- 27 Oct 2010 10:58:45 -0700 (PDT)
-Received: by 10.204.46.207 with HTTP; Wed, 27 Oct 2010 10:58:45 -0700 (PDT)
-In-Reply-To: <0016e645b8c87a160804939cdc5e@google.com>
+	id S1753979Ab0J0SAy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Oct 2010 14:00:54 -0400
+Received: from borg.medozas.de ([188.40.89.202]:54628 "EHLO borg.medozas.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753762Ab0J0SAw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Oct 2010 14:00:52 -0400
+Received: by borg.medozas.de (Postfix, from userid 25121)
+	id 58019F0C32A90; Wed, 27 Oct 2010 20:00:51 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+	by borg.medozas.de (Postfix) with ESMTP id 4A1D964E3
+	for <git@vger.kernel.org>; Wed, 27 Oct 2010 20:00:51 +0200 (CEST)
+User-Agent: Alpine 2.01 (LNX 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160108>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160109>
 
-On Wed, Oct 27, 2010 at 1:50 PM,  <Euguess@gmail.com> wrote:
-> On Oct 27, 2010 1:36pm, Jonathan Nieder <jrnieder@gmail.com> wrote:
->> Eugene Sajine wrote:
->>
->>
->>
->> > Thanks for prompt answer. But let me clarify:
->>
->> >
->>
->> > When you do pull git performs:
->>
->> >
->>
->> > fetch of the remote branch to the FETCH_HEAD
->>
->> > and then merge of FETCH_HEAD into the local branch
->>
->> >
->>
->> > What I'm saying is that your local branch should be rebased on top=
- of
->>
->> > FETCH_HEAD instead
->>
->> >
->>
->> > In this case there is no such thing as "often rebased public branc=
-h".
->>
->>
->>
->> Ah, but there is.
->>
->>
->>
->> Imagine you are Junio and just received a pull request from Pat.
->>
->> Then you might try:
->>
->>
->>
->> =C2=A0$ git pull pat for-junio
->>
->>
->>
->> which will do all the fetching and merging magic that "git pull"
->>
->> is known for. =C2=A0Now if pat's for-junio branch is based on the ti=
-p
->>
->> of your current branch, this will be a fast-forward and it doesn't
->>
->> matter whether you merge or rebase. =C2=A0But what if there are some
->>
->> intervening commits?
->>
->>
->>
->> =C2=A0$ git pull eric for-junio
->>
->> =C2=A0$ git pull pat for-junio
->>
->>
->>
->> If this pull were the rebasing kind, the result would be for Eric's
->>
->> commits to be rewritten based on Pat's.
->>
->
-> Oh, I see. In this case you're right.
-> My scenario is probably making more sense for the "centralized approa=
-ch",
-> where the exchange goes via some blessed bare repo on the server.
-> So, I just have to run git pull --rebase to get my scenario working, =
-right?
->
->
-> Thanks!
-> Eugene
+Hi,
 
-Actually it seems that it will not work as i would expect...
-git pull --rebase is going to rebase the upstream on top of my local
-branch, right? Is this really intended behavior? Shouldn't it rebase
-my local on top of the upstream instead?
 
-Thanks,
-Eugene
+in the linux-manpages repository at 
+git://git.kernel.org/pub/scm/docs/man-pages/man-pages , running git 
+describe on the current HEAD (8482c7b836) produces
+
+fatal: No annotated tags can describe 
+'8482c7b836a66f874e7dfea9c35fee4a82ad817b'.
+However, there were unannotated tags: try --tags.
+
+Which seems strange, given there is an annotated tag:
+
+(.git/refs/packed-refs)
+45aba08f23aea4baf9ff5603cb5ec4ce148be2cc refs/tags/man-pages-3.29
+^80786722b116f5002c28e9e0200044f825b236f6
+
+==>
+object 80786722b116f5002c28e9e0200044f825b236f6
+type commit
+tag man-pages-3.29
+tagger Michael Kerrisk <mtk.manpages@gmail.com> 1287508632 +0200
+
+This is man-pages-3.29
+
+commit 80786722b116f5002c28e9e0200044f825b236f6
+tree 65ca9b696771fba53902a1342dc982066c9467e0
+parent 435070082d2694737825491cc47973626f352645
+author Michael Kerrisk <mtk.manpages@gmail.com> 1287508632 +0200
+committer Michael Kerrisk <mtk.manpages@gmail.com> 1287508632 +0200
+
+    Ready for 3.29
+
+
+
+So what caused git 1.7.1 to get confused here?
+
+
+thanks,
+Jan
