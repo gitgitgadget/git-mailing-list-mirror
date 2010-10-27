@@ -1,81 +1,111 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 09/10] user-manual.txt: explain better the remote(-tracking) branch terms
-Date: Wed, 27 Oct 2010 02:01:36 +0200
-Message-ID: <vpqocag33mn.fsf@bauges.imag.fr>
-References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1287986922-16308-10-git-send-email-Matthieu.Moy@imag.fr>
-	<AANLkTinJQMSbW-bsEOS9610GXR7EtbESK_tLAfxt2ibK@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Thore Husfeldt <thore.husfeldt@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 27 02:02:10 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] user-manual.txt: explain better the remote(-tracking) branch terms
+Date: Wed, 27 Oct 2010 02:06:05 +0200
+Message-ID: <1288137965-22950-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpqocag33mn.fsf@bauges.imag.fr>
+Cc: jaysoffian@gmail.com, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Oct 27 02:06:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAtT0-0000eg-1u
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 02:02:10 +0200
+	id 1PAtWz-0001sg-9C
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 02:06:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758635Ab0J0ACD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Oct 2010 20:02:03 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:44821 "EHLO rominette.imag.fr"
+	id S1760391Ab0J0AGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Oct 2010 20:06:12 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:59393 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753940Ab0J0ACC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Oct 2010 20:02:02 -0400
+	id S1752577Ab0J0AGL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 26 Oct 2010 20:06:11 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o9QNtCat006758
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o9QNpSES001009
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 27 Oct 2010 01:55:12 +0200
+	Wed, 27 Oct 2010 01:51:28 +0200
 Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PAtST-00043g-AW; Wed, 27 Oct 2010 02:01:37 +0200
-In-Reply-To: <AANLkTinJQMSbW-bsEOS9610GXR7EtbESK_tLAfxt2ibK@mail.gmail.com> (Jay Soffian's message of "Tue\, 26 Oct 2010 02\:20\:03 -0400")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 27 Oct 2010 01:55:12 +0200 (CEST)
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1PAtWp-00045N-Fx; Wed, 27 Oct 2010 02:06:07 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1PAtWp-0005yk-9e; Wed, 27 Oct 2010 02:06:07 +0200
+X-Mailer: git-send-email 1.7.3.2.183.g2e7b0
+In-Reply-To: <vpqocag33mn.fsf@bauges.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 27 Oct 2010 01:51:28 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o9QNtCat006758
+X-MailScanner-ID: o9QNpSES001009
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1288742116.77201@yqURDqC+pOc64Fm9tJexhQ
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1288741888.47791@JbbNnD4f3EvUAHE173m3Zg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160013>
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+Now that the documentation is mostly consistant in the use of "remote
+branch" Vs "remote-tracking branch", let's make this distinction explicit
+early in the user-manual.
 
-> On Mon, Oct 25, 2010 at 2:08 AM, Matthieu Moy <Matthieu.Moy@imag.fr> wrote:
->> +In this case, "origin" is called a remote repository, or "remote" for
->> +short. The branches of this repository are called "remote branches"
->> +from our point of view, and Git will keep a copy of these
->> +branches, called "remote-tracking branches" in the local repository.
->> +These remote-tracking branches are references that will be updated by
->> +"git fetch" (hence by "git pull"). See
->> +<<Updating-a-repository-With-git-fetch>> for details.
->
-> "...and Git will initially clone these branches into so-called
-> "remote-tracking branches" in the local repository.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/user-manual.txt |   20 +++++++++++++++++---
+ 1 files changed, 17 insertions(+), 3 deletions(-)
 
-I don't thinks it's a good idea to use the word "clone" here. "clone"
-is used for repository cloning, and I find it confusing to overload
-the word for branches.
-
-> Thereafter, the
-> remote-tracking branches are updated upon fetching from[1] or pushing
-> to the remote. ([1] which also includes pulling.)
-
-I don't like the [1] kind of footnote within the text, but I forgot to
-mention that "git push" updates the remote-tracking in my text.
-That'll be fixed in next version.
-
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index d70f3e0..62b3788 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -344,7 +344,8 @@ Examining branches from a remote repository
+ The "master" branch that was created at the time you cloned is a copy
+ of the HEAD in the repository that you cloned from.  That repository
+ may also have had other branches, though, and your local repository
+-keeps branches which track each of those remote branches, which you
++keeps branches which track each of those remote branches, called
++remote-tracking branches, which you
+ can view using the "-r" option to linkgit:git-branch[1]:
+ 
+ ------------------------------------------------
+@@ -359,6 +360,14 @@ $ git branch -r
+   origin/todo
+ ------------------------------------------------
+ 
++In this case, "origin" is called a remote repository, or "remote" for
++short. The branches of this repository are called "remote branches"
++from our point of view. The remote-tracking branches are created in
++the local repository at clone time, as a copy of the remote branches.
++They are references that will be updated by "git fetch" (hence by "git
++pull"), and by "git push". See
++<<Updating-a-repository-With-git-fetch>> for details.
++
+ You cannot check out these remote-tracking branches, but you can
+ examine them on a branch of your own, just as you would a tag:
+ 
+@@ -1716,14 +1725,19 @@ one step:
+ $ git pull origin master
+ -------------------------------------------------
+ 
+-In fact, if you have "master" checked out, then by default "git pull"
+-merges from the HEAD branch of the origin repository.  So often you can
++In fact, if you have "master" checked out, then this branch has been
++configured by "git clone" to get changes from the HEAD branch of the
++origin repository.  So often you can
+ accomplish the above with just a simple
+ 
+ -------------------------------------------------
+ $ git pull
+ -------------------------------------------------
+ 
++This command will fetch the changes from the remote branches to your
++remote-tracking branches `origin/*`, and merge default branch in the
++current branch.
++
+ More generally, a branch that is created from a remote-tracking branch
+ will pull
+ by default from that branch.  See the descriptions of the
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.3.2.183.g2e7b0
