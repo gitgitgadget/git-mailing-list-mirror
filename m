@@ -1,102 +1,557 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC PATCH] Makefile: new prove target for running the tests
- with TAP
-Date: Tue, 26 Oct 2010 17:18:22 -0700
-Message-ID: <7vmxq0ebe9.fsf@alter.siamese.dyndns.org>
-References: <5c46df95f93b56aa2fce56c7efe7b2be80642c8b.1287045908.git.git@drmicha.warpmail.net> <20101014172301.GA2770@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv6 10/10] gitweb: group remote heads by remote
+Date: Wed, 27 Oct 2010 02:32:34 +0200
+Message-ID: <201010270232.37961.jnareb@gmail.com>
+References: <1287917136-26103-1-git-send-email-giuseppe.bilotta@gmail.com> <1287917136-26103-11-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 27 02:18:43 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 27 02:32:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PAtiy-0005AM-JJ
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 02:18:40 +0200
+	id 1PAtwh-0001tC-9b
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 02:32:52 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758196Ab0J0ASf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 26 Oct 2010 20:18:35 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:38670 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754604Ab0J0ASe (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 26 Oct 2010 20:18:34 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1A2B2E2683;
-	Tue, 26 Oct 2010 20:18:33 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=lez5AHjO/y+LJwGqyIV048SRR6I=; b=lJ6pYNJYssCVF8IL0a5VGK7
-	3KuojAFC5YMi4KM+CdCwwLW+291MW+cpcClecfWW6Te8KTuwlKD5SVQT8yRBj7Qh
-	W9LO/jHdyfApArXE9x6A0YlDvD7rtBPctp5qLDBZqh+GzOnntOkmDART5kazYvky
-	u+L0e497k7P7rHPaoeg4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=JBS76sqW2IVDJ0Hcq5aDl4EVdvhwiu9g1Oa0otcbHTDHhp9+b
-	ncda7u21iSbzYn/L4WrTP/BQRQ0/9S9qfKhbU0yXWrDDvod+CnimTOl7U974KSs6
-	fAuD3t0b6HZqwDg/5jitG9745wgdxLTjHClNfFr2Wx3i5eM1v/9PVEmNwE=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B45FCE267B;
-	Tue, 26 Oct 2010 20:18:28 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.169.49]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A8384E267A; Tue, 26 Oct
- 2010 20:18:23 -0400 (EDT)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B90B36C4-E15F-11DF-A1FE-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1760652Ab0J0Aco (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 26 Oct 2010 20:32:44 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:47190 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754975Ab0J0Acm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 26 Oct 2010 20:32:42 -0400
+Received: by bwz11 with SMTP id 11so92540bwz.19
+        for <git@vger.kernel.org>; Tue, 26 Oct 2010 17:32:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=6oEII6vYtkPgAMBu/M5PE7+xjm+PPBQwPuQ8e8pdzag=;
+        b=T71KO1oNldIWkvab49Nqs1K7BoEaOtI68jLGT+fPGuPZelhzloC4RZA2iou7FNFkhq
+         1Cc1hGFQIeP+u0Ii18iKx5plLOkJlfJ8oAaz1yldxOJi1/h77QHsqMQQhaTAou7f2Sl9
+         Z3aMtJhJLiy5f0MB2y8ckQK6DuRXqKzNvscZk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=dpMi1At0uySvTzciX6FIzFhysq8dO6GHbbdccL86gG7xtLVfpN1aNXuiacHLRwCEQD
+         teOmhLhr1K7GDZ6GtN0ncPGpvzmq06tUOpWre+HK5qK6eLyiHpZZ1/evs/NyJmOOBkEk
+         GjIxFurQDELKeUDVci5V0CL+6BhUKD0d+ftiA=
+Received: by 10.204.50.211 with SMTP id a19mr6787485bkg.130.1288139560229;
+        Tue, 26 Oct 2010 17:32:40 -0700 (PDT)
+Received: from [192.168.1.13] (abwo92.neoplus.adsl.tpnet.pl [83.8.238.92])
+        by mx.google.com with ESMTPS id g8sm6454448bkg.11.2010.10.26.17.32.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 26 Oct 2010 17:32:38 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1287917136-26103-11-git-send-email-giuseppe.bilotta@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160014>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160015>
 
-Jeff King <peff@peff.net> writes:
+On Sun, 24 Oct 2010, Giuseppe Bilotta wrote:
 
-> On Thu, Oct 14, 2010 at 10:53:36AM +0200, Michael J Gruber wrote:
->
->> +prove: pre-clean
->> +	@echo "*** prove ***"; GIT_CONFIG=.git/config $(PROVE) --exec '$(SHELL_PATH_SQ)' $(GIT_PROVE_OPTS) $(T) :: $(GIT_TEST_OPTS)
->> +	$(MAKE) clean
->> +
->
-> I like the idea. I think the prove output is a little nicer for things
-> like -j16, but it's a pain to construct the command line (especially as
-> I use --root in GIT_TEST_OPTS to get a significant speedup).
->
-> I wonder if anybody is really interested in switching between the
-> "prove" and regular test targets, though. I would think you either like
-> to use prove or not. So perhaps it makes more sense to put a
-> configurable switch for the default target, like the patch below. Then
-> you can just "make test" (or "make" in the test directory) as usual.
+> In remote and summary view, display a block for each remote, with the
+> fetch and push URL(s) as well as the list of the remote heads.
+> 
+> In summary view, if the number of remotes is higher than a prescribed
+> limit, only display the first <limit> remotes and their fetch and push
+> urls, without any heads information and without grouping.
 
-I kind of like this.  Perhaps with something like this squashed in?
+I like this idea.
 
--- >8 --
-test: allow "prove" to be used as the main test harness
+I guess that we can always implement more fancy limiting in the future
+(e.g. taking into account total number of displayed remote heads).
 
-The prove output is a little easier to read for things like -j16.
+> 
+> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+> ---
+>  gitweb/gitweb.perl       |  185 +++++++++++++++++++++++++++++++++++++++++-----
+>  gitweb/static/gitweb.css |    6 ++
+>  2 files changed, 172 insertions(+), 19 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index feca8bc..5f08dcc 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -2772,6 +2772,66 @@ sub git_get_last_activity {
+>  	return (undef, undef);
+>  }
+>  
+> +# Returns a hash ref mapping remote names to their fetch and push URLs.
+> +# We return a hash ref rather than a hash so that a simple check with defined
+> +# can be used to tell apart the "no remotes" case from other kinds of
+> +# failures.
 
----
- t/README |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+Just an idea (it is not necessary to implement it; it has its own
+drawbacks): we could implement here
 
-diff --git a/t/README b/t/README
-index a1eb7c8..c548bf1 100644
---- a/t/README
-+++ b/t/README
-@@ -50,6 +50,12 @@ prove and other harnesses come with a lot of useful options. The
-     # Repeat until no more failures
-     $ prove -j 15 --state=failed,save ./t[0-9]*.sh
- 
-+You can give DEFAULT_TEST_TARGET=prove on the make command (or define it
-+in config.mak) to cause "make test" to run tests under prove.
-+GIT_PROVE_OPTS can be used to pass additional options, e.g.
+  return wantsarray ? %remotes : \%remotes;
+
+so the caller that wants hash, would get hash; and the one wanting
+reference (to distinguish error from no remotes), would get hash
+reference.
+
+> +#
+> +# It is possible to limit the retrieved remotes either by number
+> +# (specifying a -limit parameter) or by name (-wanted parameter).
+
+I don't quite like limiting when generating, and would prefer do limiting
+on display, especially if not doing limiting would not affect performance
+much (git command invoked doesn't do limiting, like in case of 
+git_get_heads_list / git_get_tags_list or *most important* parse_commits).
+
+Especially if it complicates code that much (see below).
+
+Not doing limiting here, in git_get_remotes_list (or just git_get_remotes)
+would also make API simpler; the single optional argument would be name of
+remote we want to retrieve.
+
++# It is possible to limit the retrieved remotes to only single remote
++# by passing its name as a parameter to git_get_remotes_list.
+
+
+> +#
+> +# When a single remote is wanted, we cannot use 'git remote show -n' because
+> +# that command always work (assuming it's a remote URL if it's not defined),
+> +# and we cannot use 'git remote show' because that would try to make a network
+> +# roundtrip. So the only way to find if that particular remote is defined is to
+> +# walk the list provided by 'git remote -v' and stop if and when we find what
+> +# we want.
+
+I would add 'Implemetation note: ' here, which means start with
+'Implementation note: When ..." -- but it is not necessary.
+
+> +sub git_get_remotes_list {
+> +	my %params = @_;
+> +	my $limit = $params{-limit};
+> +	my $wanted = $params{-wanted};
+> +	my %remotes = ();
+> +
+> +	open my $fd, '-|' , git_cmd(), 'remote', '-v';
+> +	return unless $fd;
+> +	while (my $remote = <$fd>) {
+> +		chomp $remote;
+> +		$remote =~ s!\t(.*?)\s+\((\w+)\)$!!;
+> +		next if $wanted and not $remote eq $wanted;
+> +		my ($url, $key) = ($1, $2);
+> +
+> +		# a remote may appear more than once because of multiple URLs,
+> +		# so if this is a remote we know already, be sure to continue,
+> +		# lest we end up with a remote for which we get the fetch URL
+> +		# bot not the push URL, for example
+> +		my $more = exists $remotes{$remote};
+> +		$more ||= defined $limit ? (keys(%remotes) <= $limit) : 1;
+> +		if ($more) {
+> +			$remotes{$remote} ||= { 'heads' => () };
+> +			$remotes{$remote}{$key} = $url;
+> +		} else {
+> +			last;
+> +		}
+> +	}
+> +	close $fd or return;
+> +	return \%remotes;
+> +}
+
+Without implementing limiting in git_get_remotes_list(), but leaving it
+for the display subroutine, it would reduce to:
+
++sub git_get_remotes_list {
++	my $wanted = shift;
++	my %remotes = ();
 +
-+    $ make DEFAULT_TEST_TARGET=prove GIT_PROVE_OPTS='--timer --jobs 16' test
++	open my $fd, '-|' , git_cmd(), 'remote', '-v';
++	return unless $fd;
++	while (my $remote = <$fd>) {
++		chomp $remote;
++		next unless ($remote =~ s!\t(.*?)\s+\((\w+)\)$!!);
++		# $wanted remote might be present multiple times in output
++		next if ($wanted && $remote ne $wanted);
++		my ($url, $key) = ($1, $2);
 +
- You can also run each test individually from command line, like this:
++		$remotes{$remote}{$key} = $url;
++	}
++	close $fd or return;
++	return \%remotes;
++}
+
+> +
+> +# Takes a hash of remotes as first parameter and fills it by adding the
+> +# available remote heads for each of the indicated remotes.
+> +# A maximum number of heads can also be specified.
+
+All git_get_* subroutines _return_ something; this looks more like fill_*
+function for me.
+
+> +sub git_get_remote_heads {
+> +	my ($remotes, $limit) = @_;
+> +	my @heads = map { "remotes/$_" } keys %$remotes;
+> +	my @remoteheads = git_get_heads_list($limit, @heads);
+> +	foreach (keys %$remotes) {
+> +		my $remote = $_;
+> +		$remotes->{$remote}{'heads'} = [ grep {
+> +			$_->{'name'} =~ s!^$remote/!!
+> +			} @remoteheads ];
+> +	}
+> +}
+
+We could remove limiting number of heads shown per remote also from here,
+but this time 1.) the $limit parameter is passed down to git_get_heads_list
+which in turn uses $limit as parameter to git command  2.) it doesn't
+simplify code almost at all:
+
++sub fill_remote_heads {
++	my $remotes = shift;
++
++	my @heads = map { "remotes/$_" } keys %$remotes;
++	## A QUESTION: perhaps it would be better to pass @remoteheads as parameter?
++	my @remoteheads = git_get_heads_list(undef, @heads);
++	foreach my $remote (keys %$remotes) {
++		$remotes->{$remote}{'heads'} =
++			[ grep { $_->{'name'} =~ s!^$remote/!! } @remoteheads ];
++	}
++}
+
+
+A QUESTION: perhaps it would be better to pass @remoteheads as parameter?
+I wonder if won't end up with calling git_get_heads_list multiple times...
+well, the improvement can be left for later.  Answering this question
+should not affect accepting this patch series.
+
+> +
+>  sub git_get_references {
+>  	my $type = shift || "";
+>  	my %refs;
+> @@ -5054,6 +5114,100 @@ sub git_heads_body {
+>  	print "</table>\n";
+>  }
+>  
+> +# Display a single remote block
+
+Note that you would end up with two very similarly named subrotines:
+git_remote_body and git_remotes_body.  Perhaps it would be better to
+call this one git_remote_block, or git_describe_remote?
+
+> +sub git_remote_body {
+> +	my ($remote, $rdata, $limit, $head) = @_;
+> +
+> +	my $heads = $rdata->{'heads'};
+> +	my $fetch = $rdata->{'fetch'};
+> +	my $push = $rdata->{'push'};
+
+We could have used the following Perl shortcut
+
++	my ($heads, $fetch, $push) = @{$rdata}{qw(heads fetch push)};
+
+but it isn't needed, and I guess it even could hurt readibility...
+
+> +
+> +	my $urls = "<table class=\"projects_list\">\n" ;
+> +
+> +	if (defined $fetch) {
+> +		if ($fetch eq $push) {
+> +			$urls .= format_repo_url("URL", $fetch);
+> +		} else {
+> +			$urls .= format_repo_url("Fetch URL", $fetch);
+> +			$urls .= format_repo_url("Push URL", $push) if defined $push;
+> +		}
+> +	} elsif (defined $push) {
+> +		$urls .= format_repo_url("Push URL", $push);
+> +	} else {
+> +		$urls .= format_repo_url("", "No remote URL");
+> +	}
+> +
+> +	$urls .= "</table>\n";
+
+I'm not sure about naming this variable $urls...
+
+> +
+> +	my ($maxheads, $dots);
+> +	if (defined $limit) {
+> +		$maxheads = $limit - 1;
+> +		if ($#{$heads} > $maxheads) {
+> +			$dots = $cgi->a({-href => href(action=>"remotes", hash=>$remote)}, "...");
+> +		}
+> +	}
+> +
+> +	print $urls;
+> +	git_heads_body($heads, $head, 0, $maxheads, $dots);
+
+Wouldn't this be simpler:
+
++	my $dots;
++	if (defined $limit && $limit < @$heads) {
++		$dots = $cgi->a({-href => href(action=>"remotes", hash=>$remote)}, "...");
++	}
++
++	print $urls;
++	git_heads_body($heads, $head, 0, $limit, $dots);
+
+We would do similar trick as in other parts: request one item more than we
+display to check if there is more data.
+
+> +}
+> +
+> +# Display a list of remote names with the respective fetch and push URLs
+> +# This routine only gets called when there are more remotes than the given
+> +# limit, so we know that we have to append an ellipsis to the table and
+> +# that we have to pop one of the keys.
+
+I think it would be a better idea to make this subroutine generic: display
+only list of remotes, limited to $limit remotes maximum.
+
++# Display a list of remote names with the respective fetch and push URLs,
++# without displaying remote heads (used when there are too many remotes).
+
+> +sub git_remotes_list {
+> +	my ($remotedata) = @_;
+> +	print "<table class=\"heads\">\n";
+> +	my $alternate = 1;
+> +	my @keys = sort keys %$remotedata;
+> +	pop @keys;
+> +
+> +	while (my $remote = shift @keys) {
+> +		my $rdata = $remotedata->{$remote};
+> +		my $fetch = $rdata->{'fetch'};
+> +		my $push = $rdata->{'push'};
+
+If we do explicit limiting (not assuming that $remotedata is already
+limited on generation), it could look like the following:
+
++sub git_remotes_list {
++	my ($remotedata, $limit) = @_;
++
++	print "<table class=\"heads\">\n";
++	my $alternate = 1;
++	my @remotes = sort keys %$remotedata;
++	$limit = scalar @remotes
++		unless defined $limit;
++
++	for (my $i = 0; $i < $limit; $i++) {
++		my $remote = $remotes[$i];
++		my $rdata = $remotedata->{$remote};
++		my $fetch = $rdata->{'fetch'};
++		my $push  = $rdata->{'push'};
+
+> +		if ($alternate) {
+> +			print "<tr class=\"dark\">\n";
+> +		} else {
+> +			print "<tr class=\"light\">\n";
+> +		}
+> +		$alternate ^= 1;
+> +		print "<td>" .
+> +		      $cgi->a({-href=> href(action=>'remotes', hash=>$remote),
+> +			       -class=> "list name"},esc_html($remote)) . "</td>";
+
+Very, very minor nitpick: if "<td>" is on separate line, why "</td>"
+isn't?
+
+> +		print "<td class=\"link\">" .
+> +		      (defined $fetch ? $cgi->a({-href=> $fetch}, "fetch") : "fetch") .
+> +		      " | " .
+> +		      (defined $push ? $cgi->a({-href=> $push}, "push") : "push") .
+> +		      "</td>";
+> +
+> +		print "</tr>\n";
+> +	}
+> +	print "<tr>\n" .
+> +	      "<td colspan=\"3\">" .
+> +	      $cgi->a({-href => href(action=>"remotes")}, "...") .
+> +	      "</td>\n" . "</tr>\n";
+
+With explicit limiting this would be:
+
++	if ($limit < @remotes) {
++		print "<tr>\n" .
++		      "<td colspan=\"3\">" .
++		      $cgi->a({-href => href(action=>"remotes")}, "...") .
++		      "</td>\n" .
++		      "</tr>\n";
++	}
+
+> +	print "</table>";
+> +}
+> +
+> +# Display remote heads grouped by remote, unless there are too many
+> +# remotes ($have_all is false), in which case we only display the remote
+> +# names
+
+This of course also would have to be changed if limiting is done at
+display time, not at generation time (at least for limiting list of
+remotes, if not for generating list of refs).
+
+> +sub git_remotes_body {
+> +	my ($remotedata, $limit, $head) = @_;
+> +	if (not defined $limit or scalar keys %$remotedata <= $limit) {
+> +		git_get_remote_heads($remotedata, $limit);
+> +		while (my ($remote, $rdata) = each %$remotedata) {
+> +			git_print_section({-class=>"remote", -id=>$remote},
+> +				["remotes", $remote, $remote], sub {
+> +					git_remote_body($remote, $rdata, $limit, $head);
+> +				});
+> +		}
+> +	} else {
+> +		git_remotes_list($remotedata, $limit);
+> +	}
+
+Minor issue: wouldn't it make for easier reading to have less code in
+the 'if' part of if { ... } else { ... } clause, and more code in 'else'
+part.
+
+> +}
+
+The rewritten function, which makes invoked display subroutines to do
+the limiting by themselves, could look like this:
+
++# Display remote heads grouped by remote, unless there are too many
++# remotes, in which case we only display the remote names
++sub git_remotes_body {
++	my ($remotedata, $limit, $head) = @_;
++
++	if (defined $limit && $limit < scalar keys %$remotedata) {
++		# $limit limits number of displayed remotes
++		git_remotes_list($remotedata, $limit);
++
++	} else {
++		# $limit limits number of displayed heads in each remote
++		fill_remote_heads($remotedata); ## or fill_remote_heads($remotedata, $limit+1);
++		while (my ($remote, $rdata) = each %$remotedata) {
++			git_print_section(
++				{-class=>"remote", -id=>$remote},
++				["remotes", $remote, $remote],
++				sub { git_remote_block($remote, $rdata, $limit, $head) }
++			);
++		}
++	}
++}
+
+
+> +
+>  sub git_search_grep_body {
+>  	my ($commitlist, $from, $to, $extra) = @_;
+>  	$from = 0 unless defined $from;
+> @@ -5200,7 +5354,7 @@ sub git_summary {
+>  	# there are more ...
+>  	my @taglist  = git_get_tags_list(16);
+>  	my @headlist = git_get_heads_list(16, 'heads');
+> -	my @remotelist = $remote_heads ? git_get_heads_list(16, 'remotes') : ();
+> +	my $remotedata = $remote_heads ? git_get_remotes_list(-limit => 16) : undef;
+
+If git_get_remotes_list wouldn't do limiting, it would simply be
+
+-	my @remotelist = $remote_heads ? git_get_heads_list(16, 'remotes') : ();
++	my $remotedata = $remote_heads ? git_get_remotes_list() : undef;
+
+>  	my @forklist;
+>  	my $check_forks = gitweb_check_feature('forks');
+>  
+> @@ -5278,11 +5432,9 @@ sub git_summary {
+>  		               $cgi->a({-href => href(action=>"heads")}, "..."));
+>  	}
+>  
+> -	if (@remotelist) {
+> +	if ($remotedata) {
+>  		git_print_header_div('remotes');
+> -		git_heads_body(\@remotelist, $head, 0, 15,
+> -		               $#remotelist <= 15 ? undef :
+> -		               $cgi->a({-href => href(action=>"remotes")}, "..."));
+> +		git_remotes_body($remotedata, 16, $head);
+>  	}
+>  
+>  	if (@forklist) {
+
+This wouldn't change, and would be the same even if git_get_remotes_list
+wouldn't do limiting.
+
+
+Perhaps it would be worth adding comment about git_remotes:
+
+@@ -5599,6 +5740,7 @@ sub git_heads {
+ 	git_footer_html();
+ }
  
-     $ sh ./t3010-ls-files-killed-modified.sh
++# dual lived: used both for single remote view, and for list of all remotes
+ sub git_remotes {
+ 	gitweb_check_feature('remote_heads')
+ 		or die_error(403, "Remote heads view is disabled");
+
+
+Though I am not sure if it is good public API.  Perhaps it is...
+
+> @@ -5606,31 +5758,26 @@ sub git_remotes {
+>  	my $head = git_get_head_hash($project);
+>  	my $remote = $input_params{'hash'};
+>  
+> -	my @remotelist;
+> +	my $remotedata = git_get_remotes_list(-wanted => $remote);
+> +	die_error(500, "Unable to get remote information") unless defined $remotedata;
+
+It would be little simpler with git_get_remotes_list not doing the
+limiting, because of which we can use slightly simpler API.
+
++	my $remotedata = git_get_remotes_list($remote);
++	die_error(500, "Unable to get remote information")
++		unless defined $remotedata;
+
+>  
+> -	if (defined $remote) {
+> -		# only display the heads in a given remote
+> -		@remotelist = map {
+> -			my $ref = $_ ;
+> -			$ref->{'name'} =~ s!^$remote/!!;
+> -			$ref
+> -		} git_get_heads_list(undef, "remotes/$remote");
+> -	} else {
+> -		@remotelist = git_get_heads_list(undef, 'remotes');
+> +	if (keys(%$remotedata) == 0) {
+
+You can write simply
+
++	unless (%$remotedata) {
+
+>From perldata(1):  "If you evaluate a hash in scalar context, it returns
+false if the hash is empty."
+
+> +		die_error(404, defined $remote ?
+> +			"Remote $remote not found" :
+> +			"No remotes found");
+>  	}
+>  
+>  	git_header_html(undef, undef, -action_extra => $remote);
+>  	git_print_page_nav('', '',  $head, undef, $head,
+>  		format_ref_views($remote ? '' : 'remotes'));
+>  
+> +	git_get_remote_heads($remotedata, undef);
+
++	fill_remote_heads($remotedata, undef);
+
+>  	if (defined $remote) {
+>  		git_print_header_div('remotes', "$remote remote for $project");
+> +		git_remote_body($remote, $remotedata->{$remote}, undef, $head);
+>  	} else {
+>  		git_print_header_div('summary', "$project remotes");
+> -	}
+> -
+> -	if (@remotelist) {
+> -		git_heads_body(\@remotelist, $head);
+> +		git_remotes_body($remotedata, undef $head);
+>  	}
+
+You are missing comma after 'undef' here
+
+-	if (@remotelist) {
+-		git_heads_body(\@remotelist, $head);
++		git_remotes_body($remotedata, undef, $head);
+ 	}
+
+-- 
+Jakub Narebski
+ShadeHawk on #git
