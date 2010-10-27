@@ -1,169 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC PATCH v2 0/3] Documentation: refactor config variable descriptions
-Date: Wed, 27 Oct 2010 12:56:15 +0200
-Message-ID: <201010271256.16836.jnareb@gmail.com>
-References: <cover.1287690696.git.trast@student.ethz.ch> <20101025151125.GD28278@sigill.intra.peff.net> <201010251749.04784.jnareb@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [RFC PATCH] Makefile: new prove target for running the tests with TAP
+Date: Wed, 27 Oct 2010 13:00:15 +0200
+Message-ID: <AANLkTimH=fbRAdz-F-V-9WTKzAyVvpzRHC06e+94a2wJ@mail.gmail.com>
+References: <5c46df95f93b56aa2fce56c7efe7b2be80642c8b.1287045908.git.git@drmicha.warpmail.net>
+	<20101014172301.GA2770@sigill.intra.peff.net>
+	<7vmxq0ebe9.fsf@alter.siamese.dyndns.org>
+	<20101027045709.GA11250@idm.gtisc.gatech.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	=?utf-8?q?=C3=86var_Arnfj=C3=B6r=C3=B0_Bjarmason?= 
-	<avarab@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Oct 27 12:56:37 2010
+X-From: git-owner@vger.kernel.org Wed Oct 27 13:00:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PB3gI-0005tz-7y
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 12:56:34 +0200
+	id 1PB3kE-00088I-Dt
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 13:00:38 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754910Ab0J0K4b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Oct 2010 06:56:31 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:42225 "EHLO
+	id S1760917Ab0J0LAW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Oct 2010 07:00:22 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:61306 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754351Ab0J0K4a (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Oct 2010 06:56:30 -0400
-Received: by bwz11 with SMTP id 11so400860bwz.19
-        for <git@vger.kernel.org>; Wed, 27 Oct 2010 03:56:28 -0700 (PDT)
+	with ESMTP id S1754964Ab0J0LAR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Oct 2010 07:00:17 -0400
+Received: by bwz11 with SMTP id 11so404555bwz.19
+        for <git@vger.kernel.org>; Wed, 27 Oct 2010 04:00:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=asLsj3iICJtayTXIO59atNq6JtdbNBUE672pFi245U8=;
-        b=H2c6ZOuW9rTcFm0k8XnJFpl6q/dpgO/qlwaOn5PTlJtymkaG3PVYTil3SjUydpg1oT
-         k/mqWrHNZR4UXPjYwZUlHUpRhnhvcFI/9WB15v8qEq4H21rvv8IlAF0aDQhdWvHbmr2O
-         eePQ2NHALhVtm8Sp1SwMXKwWIR1FZQlZucE+Y=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=pBOCLaunGLjUiQjx2B+OA+k2PrQGS47Y2qfdgBWNe8o=;
+        b=GNxUU3arRr4bXhnW8mryyl6KZBCNfME7cb9t7ku6MJu/NqaYU2dD8JttTZbVtOYnZb
+         OIsiRIu2xfmsjPLi0ZVHZG+2aqCKcq5lMDbCz3VbYEkB4NKIShkRUtz98+gjGkfysmxT
+         /E5fPEtc3BE0FGiJGIZF5cGPli+Ffx4/KTP3E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=DFkxVn53rWXjY/XJzIu23RikWFJWgs2O19SbVGxgVncvJHZC8DaOHcRicnT64or1sI
-         wYqzqWXA4b+ffkr2NcnKRtQhfrmlgdu6ejYsBw4sDvmVZZKM/rPCnXEvLuVRKxPoeDPF
-         No+9Eyco/Z67yoAE2htVO07EtQsm15N5g71UM=
-Received: by 10.204.163.142 with SMTP id a14mr6281911bky.126.1288176988394;
-        Wed, 27 Oct 2010 03:56:28 -0700 (PDT)
-Received: from [192.168.1.13] (abvr250.neoplus.adsl.tpnet.pl [83.8.215.250])
-        by mx.google.com with ESMTPS id t10sm6854511bkj.16.2010.10.27.03.56.23
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 27 Oct 2010 03:56:24 -0700 (PDT)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201010251749.04784.jnareb@gmail.com>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=aTxGxbtP4ipk2p1g7CuMq1wQfinVMPzdWXREt/vDj1vxiDHYGNhBUIyZatlLlpehvc
+         bzkYaDcwgkK0yFX3JkuWVUWCfpGqu8LEip39Jq+FkfLMe81jUFRqlmeRQM9cFvyyPVJ5
+         leH5k/JjnJygu2bv89FIunydyKB/EXq3+uSgY=
+Received: by 10.204.24.144 with SMTP id v16mr7300868bkb.137.1288177215908;
+ Wed, 27 Oct 2010 04:00:15 -0700 (PDT)
+Received: by 10.204.163.69 with HTTP; Wed, 27 Oct 2010 04:00:15 -0700 (PDT)
+In-Reply-To: <20101027045709.GA11250@idm.gtisc.gatech.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160034>
 
-On Mon, 25 Oct 2010, Jakub Narebski wrote:
-> On Mon, 25 Oct 2010, Jeff King wrote:
->> On Mon, Oct 25, 2010 at 02:44:06PM +0200, Jakub Narebski wrote:
+On Wed, Oct 27, 2010 at 06:57, Jeff King <peff@peff.net> wrote:
+> On Tue, Oct 26, 2010 at 05:18:22PM -0700, Junio C Hamano wrote:
+>
+>> > like -j16, but it's a pain to construct the command line (especial=
+ly as
+>> > I use --root in GIT_TEST_OPTS to get a significant speedup).
+>> [..]
+>> I kind of like this. =C2=A0Perhaps with something like this squashed=
+ in?
+>
+> Yeah, looks good to me. I guess you can steal the commit message and
+> authorship from Michael's original.
+>
+> =C3=86var mentioned something about t/harness, which I honestly have =
+no idea
+> about (I don't have the right perl modules installed to run it). But
+> maybe that could be an alternate DEFAULT_TEST_TARGET. I dunno.
 
->>>>   2. You recursively follow includes via include::. This means that the
->>>>      make rule is not accurate. E.g., try:
->>> [...]
->>> We do that: see 'doc.dep' target in Documentation/Makefile.  We just
->>> need for this target to also add dependencies for config-vars.txt
->>> (perhaps separate mode for make-config-list.perl, or perhaps 
->>> build-docdep.perl should be config-vars-src.txt aware...).
->> 
->> Yeah, that would definitely work.
+The non-standard module there is only needed for the smoke testing.
 
-The part of patch (commit) touching Documentation/Makefile could look
-like this:
+If we used t/harness for running "make test" that code could be
+modified to run anywhere prove itself does.
 
--- 8< --
-diff --git a/Documentation/Makefile b/Documentation/Makefile
-index e117bc4..351aa9c 100644
---- a/Documentation/Makefile
-+++ b/Documentation/Makefile
-@@ -212,9 +212,12 @@ install-html: html
- #
- # Determine "include::" file references in asciidoc files.
- #
--doc.dep : $(wildcard *.txt) build-docdep.perl
-+doc.dep : $(wildcard *.txt) build-docdep.perl make-config-list.perl
- 	$(QUIET_GEN)$(RM) $@+ $@ && \
- 	$(PERL_PATH) ./build-docdep.perl >$@+ $(QUIET_STDERR) && \
-+	$(PERL_PATH) ./make-config-list.perl --deps=config-vars.txt \
-+		--mainlist=config-vars-src.txt $(MAN_TXT) \
-+		>>$@+ $(QUIET_STDERR) && \
- 	mv $@+ $@
- 
- -include doc.dep
-@@ -320,6 +323,11 @@ howto-index.txt: howto-index.sh $(wildcard howto/*.txt)
- 	'$(SHELL_PATH_SQ)' ./howto-index.sh $(wildcard howto/*.txt) >$@+ && \
- 	mv $@+ $@
- 
-+config-vars.txt: config-vars-src.txt $(MAN_TXT) make-config-list.perl
-+	$(PERL_PATH) ./make-config-list.perl \
-+		--mainlist=$< --ignore=$@ $(MAN_TXT) >$@+ && \
-+	mv $@+ $@
-+
- $(patsubst %,%.html,$(ARTICLES)) : %.html : %.txt
- 	$(QUIET_ASCIIDOC)$(ASCIIDOC) $(ASCIIDOC_EXTRA) -b xhtml11 $*.txt
- 
--- >8 --
-
-Note that while in rule for config-vars.txt target we can use automatic
-variables, we have to spell filenames in full in the part of doc.dep
-rules that generate dependency for config-vars.txt.  Note also that we
-have to keep those explicit and implicit filenames in sync across those
-two rules.
- 
-> Though simpler would be just to not use or turn off following includes,
-> as it turned out that it doesn't matter to follow includes in manpages:
-> if we include with config variables, it is to also include it in 
-> config-vars-src.txt.
-> 
-> Well, assuming that we don't have to follow includes in config-vars-src.txt;
-> otherwise we have to generate line in doc.dep for that include anyway.
-
-Decision time!!!
-
-There are two possible approaches:
-
-1. Don't follow includes in manpages (in manpage sources), and don't follow
-   includes in config-vars-src.txt
-
-   Advantages:
-   * Less code to write and maintain
-   * No need to keep filenames in rule for config-vars.txt and for doc.dep
-     in sync.
-
-   Disadvantages:
-   * Theoretically fragile: it depends on two assumptions:
-
-     A. If file included in manpage contains description of config vars,
-        then this file would be included also in config-vars-src.txt
-
-     B. For config variables inside file(s) included by config-vars-src.txt,
-        if they are present in individual manpage, it is done by inclusion
-        of said file.
-
-     Those assumptions are two sides of the same coin, and can be written
-     as: file included in manpagee can contain config variables if and only
-     if it is included in config-vars-src.txt
-
-2. Follow includes both in manpages and in config-vars-src.txt, and
-   generate dependencies for config-vars.txt
-
-   Advantages:
-   * More generic solution
-
-   Disadvantages:
-   * Need to keep rules for doc.dep and for config-vars.txt in sync, as
-     described above
-   * config-vars.txt rule has more dependencies.
-
-Now, which one to choose?
--- 
-Jakub Narebski
-Poland
+Anyway, if there's a patch now to invoke prove(1) let's use that. We
+can change it to t/harness later if that makes sense.
