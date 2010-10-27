@@ -1,65 +1,71 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 02/34] Add t1510 and basic rules that run repo setup
-Date: Wed, 27 Oct 2010 22:37:51 +0700
-Message-ID: <AANLkTiknZEp8EoHr6auqUQQsMj+MvLwhUYxzUD9N-6L4@mail.gmail.com>
-References: <1288190977-30875-1-git-send-email-pclouds@gmail.com> <1288190977-30875-3-git-send-email-pclouds@gmail.com>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH] help.c: Pull cmd_version out of this file.
+Date: Wed, 27 Oct 2010 14:06:50 -0200
+Message-ID: <AANLkTinxG-=EKeNH3--34Ya4w0E=i_bdmJ7iv2em8C+8@mail.gmail.com>
+References: <2ae543604216146b742253584d8393c5e3179697.1283114573.git.tfransosi@gmail.com>
+	<20100830023812.GA4010@burratino>
+	<20100830024020.GB4010@burratino>
+	<AANLkTimDjRz=JmiVn+ybQ5ewaj=7N5tp48fUArD5vG_H@mail.gmail.com>
+	<7v1v9e803a.fsf@alter.siamese.dyndns.org>
+	<AANLkTinHJHzcoFFjv-TaQ+DYVyqn46fqA802m8Lq5anp@mail.gmail.com>
+	<20100902043500.GF29713@burratino>
+	<7vvd6o14zz.fsf@alter.siamese.dyndns.org>
+	<AANLkTimX2NhXGdK0vVMaw-Fm6fpg4i5pbOZGA8Cc-+ui@mail.gmail.com>
+	<20101027151832.GA10614@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Oct 27 17:38:21 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 27 18:07:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PB84y-00085A-3B
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 17:38:20 +0200
+	id 1PB8Wh-0007q5-UO
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 18:07:00 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753273Ab0J0PiP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Oct 2010 11:38:15 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:59430 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752503Ab0J0PiN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 27 Oct 2010 11:38:13 -0400
-Received: by wwe15 with SMTP id 15so923766wwe.1
-        for <git@vger.kernel.org>; Wed, 27 Oct 2010 08:38:12 -0700 (PDT)
+	id S1760894Ab0J0QGy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Oct 2010 12:06:54 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:51084 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758267Ab0J0QGw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Oct 2010 12:06:52 -0400
+Received: by bwz11 with SMTP id 11so724018bwz.19
+        for <git@vger.kernel.org>; Wed, 27 Oct 2010 09:06:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=0PmM0Evtz4jqP3SVg5ENw4dP5Qk0tdxjYIj37NXdbV8=;
-        b=lEGfG5pQMnqjSjER7kDpVgLHtAcYP5+y1ACn6ixGNB9i3xzvQj8h8zpaG9Jbm0UMnn
-         uGOIXKdS0v5zjoZXVdld9Fg5U4B519SJ7ijqjz84A1248p9nBnP91JPwjNc+AB5MZuZU
-         la56uXMI/GvllciUcGB08llyJ112n7WhC5qLY=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=t1p01mzl5YNyDrAxNRykKDydUutY0LJ/7qJc83O9Lfk=;
+        b=Ve/JlP07Trh2xE1OeMfdMFX9UmEdeKW3ksjkSXC0EtgB7Od2Im78EZvRVeBTnkfg6a
+         oFRVMXgMqRLjJqsHpcEm2h0xfq0paxxHX2jzenVVNZGR15A3ptCgVhGRkqoTiB3Mqy4M
+         JcyccND/JZ9EGm5s5caYz1aD93PF+LmTNBaSs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        b=J2KFBm7DptxLLwf0sgW8GRgHXE3DA02aKcD/iOVgH4LkQr1ik6w0BBn3vUrgtINOA+
-         V4qGn80yNgXD+iUnzwKFtOOyGjywiDq2CFzYxXuYbxoRouBBtNVnI3YpKB+FlvEB6VH2
-         hRI0+NfCrzkFwoU6/kv0y04wIspydjH2R7lCY=
-Received: by 10.216.180.74 with SMTP id i52mr1009373wem.79.1288193892328; Wed,
- 27 Oct 2010 08:38:12 -0700 (PDT)
-Received: by 10.216.241.138 with HTTP; Wed, 27 Oct 2010 08:37:51 -0700 (PDT)
-In-Reply-To: <1288190977-30875-3-git-send-email-pclouds@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=lPi9RR9jGBn0lq8wfCyozRUgftWyypVlgCItbzuJhKrf/5zYUm7kEmnpzeBH0yxVnV
+         WwBLSch1PSX6yJrMUVXGJBoNBPQNsxI8T0SjoFPJAGCsoGcE1nfekWHa+u8hxQIrxQN+
+         wAC2nx5aulMe0OlWwH09etHyZDuenvZmIGV2E=
+Received: by 10.204.102.78 with SMTP id f14mr937205bko.30.1288195610617; Wed,
+ 27 Oct 2010 09:06:50 -0700 (PDT)
+Received: by 10.204.69.206 with HTTP; Wed, 27 Oct 2010 09:06:50 -0700 (PDT)
+In-Reply-To: <20101027151832.GA10614@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160093>
 
-2010/10/27 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
->:
-> +# 2. .git file is relative to git_dir. .git file is basically symlin=
-k
-> +# =C2=A0 =C2=A0in disguise.
+On Wed, Oct 27, 2010 at 1:18 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Thiago Farina wrote:
+>
+>> What happened to this patch? I can't see it on any branch (master, pu, maint).
+>
+> I thought there was some discussion about another binary in
+> /usr/lib/git-core being a bad thing?
+>
 
-This is not completely followed in my tests. If .git is a true
-symlink, its link is relative to .git itself. When .git is a file, it
-would be more difficult to calculate path relative to .git (you can't
-chdir to a file). In my tests, the link is relative to .git's parent
-directory, not .git.
---=20
-Duy
+I don't recall, why it's a bad thing?
