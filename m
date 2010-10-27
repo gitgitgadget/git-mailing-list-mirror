@@ -1,83 +1,88 @@
-From: Mathias Lafeldt <misfire@debugon.org>
-Subject: Re: [PATCH 1/3] GIT-VERSION-GEN: make use of git describe --dirty
-Date: Wed, 27 Oct 2010 09:50:34 +0200
-Message-ID: <4CC7D9CA.1080609@debugon.org>
-References: <cover.1287746107.git.misfire@debugon.org> <4CC1745C.70506@debugon.org> <20101022151140.GC9224@burratino> <4CC2D3B4.5030607@debugon.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv6 10/10] gitweb: group remote heads by remote
+Date: Wed, 27 Oct 2010 10:07:44 +0200
+Message-ID: <201010271007.45508.jnareb@gmail.com>
+References: <1287917136-26103-1-git-send-email-giuseppe.bilotta@gmail.com> <1287917136-26103-11-git-send-email-giuseppe.bilotta@gmail.com> <201010270232.37961.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 27 09:50:43 2010
+Cc: git@vger.kernel.org
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 27 10:08:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PB0mR-0000LB-Cn
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 09:50:43 +0200
+	id 1PB13I-0007vu-B0
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 10:08:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754781Ab0J0Hui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Oct 2010 03:50:38 -0400
-Received: from moutng.kundenserver.de ([212.227.17.9]:52534 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754467Ab0J0Huh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Oct 2010 03:50:37 -0400
-Received: from [172.20.2.23] (p578D1A1A.dip.t-dialin.net [87.141.26.26])
-	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
-	id 0MQcnt-1P2zt01T01-00UbEN; Wed, 27 Oct 2010 09:50:35 +0200
-User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
-In-Reply-To: <4CC2D3B4.5030607@debugon.org>
-X-Provags-ID: V02:K0:DIsDnHptF2P8soSyO3/ef6BUD0Cr30eL9QvR7LCcIGY
- 1stcP2V0K1K6Rw5G8YkvTVTeqtx7mgQwP4ZT6Hy55K2xrmLUvd
- D3wTdzdaISB6HYPcp2I4s0/gy6vOzivl6Hk/RO9I3v1syD38al
- 7JgPdhXONwYL1WIUuv3//5JwXiAGIZJJ8lEalu2+hiAerfgz2i
- SoyAahRnZajoksh1OIfPkVqRRgLrasWPr7A4Y3UaV0=
+	id S1755260Ab0J0IIB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Oct 2010 04:08:01 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:49313 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752302Ab0J0IH7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Oct 2010 04:07:59 -0400
+Received: by bwz11 with SMTP id 11so288268bwz.19
+        for <git@vger.kernel.org>; Wed, 27 Oct 2010 01:07:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=OAN4uF7RQmQrDh/dmR+v1onmhPNeNQ5lvt08ftM/Btk=;
+        b=ios4/ZKzHfyT4WKQE82cVuTRXZiyfMXlmyPfB2ZQUhBeLaMKmZNHLLF3fJHgPhjh6o
+         bCho0NjScI+AD1vhnrv3zd9lo+hAcwML6lXgVUoj4AcUpLiNFfeuBY68HmdtTYEm9Tpm
+         Z8Megx2xb/Uscsx3jkeYrPTlhYPRdnMo64kR8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=M1IjxhNuOMYffd5h0OJKyolbHMCbxvQxRxx8u4CLQyoKmDJuHp9WEoNF298lzcSJAB
+         Yj4ZZqngvglftfO5iANJE+DV+z6C10UXDD1Yt5+r/9kvhHvLDpS014hreaWlNhUiK3CT
+         PK/4QuLnm6YPYlIXuqg04p6IRkC+a8JxtAi+k=
+Received: by 10.204.127.94 with SMTP id f30mr7068758bks.1.1288166876366;
+        Wed, 27 Oct 2010 01:07:56 -0700 (PDT)
+Received: from [192.168.1.13] (abvr250.neoplus.adsl.tpnet.pl [83.8.215.250])
+        by mx.google.com with ESMTPS id f21sm6346801bkf.12.2010.10.27.01.07.53
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 27 Oct 2010 01:07:54 -0700 (PDT)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201010270232.37961.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160026>
 
-Mathias Lafeldt wrote:
-> On 10/22/2010 05:11 PM, Jonathan Nieder wrote:
->> Mathias Lafeldt wrote:
->>
->>> Currently, GIT-VERSION-GEN invokes the plumbing commands "git update-index" and
->>> "git diff-index" to determine if the working tree is dirty. It then appends
->>> "-dirty" to the version string returned by "git describe".
->>>
->>> However, as of Git v1.6.6, "git describe" can be told to do all that with the
->>> "--dirty" option, saving us the plumbing.
->> This has a minor downside, which is avoiding the nice version numbers when
->> building Git with git 1.5.6 installed.  What is the upside?
-> 
-> The upside is that the number of executed commands to get the version string
-> is reduced from three to one.
-> 
-> I understand your point, though it would only be a "problem" once when
-> doing the upgrade.
-> 
-> If backwards compatibility is more important here, I'd at least add a comment
-> to GIT-VERSION-GEN. Something like:
-> 
-> diff --git a/GIT-VERSION-GEN b/GIT-VERSION-GEN
-> index d441d88..5c226f6 100755
-> --- a/GIT-VERSION-GEN
-> +++ b/GIT-VERSION-GEN
-> @@ -16,6 +16,10 @@ elif test -d .git -o -f .git &&
->         case "$VN" in
->         *$LF*) (exit 1) ;;
->         v[0-9]*)
-> +               # As of Git v1.6.6, we can use "git describe --dirty" to
-> +               # determine if the working tree is dirty. However, to still
-> +               # have nice version numbers when building Git with older
-> +               # versions of git installed, we keep using plumbing.
->                 git update-index -q --refresh
->                 test -z "$(git diff-index --name-only HEAD --)" ||
->                 VN="$VN-dirty" ;;
-> 
+On Wed, 27 Oct 2010, Jakub Narebski wrote:
+> On Sun, 24 Oct 2010, Giuseppe Bilotta wrote:
 
-Any feedback would be welcome.
+> > +# It is possible to limit the retrieved remotes either by number
+> > +# (specifying a -limit parameter) or by name (-wanted parameter).
+> 
+> I don't quite like limiting when generating, and would prefer do limiting
+> on display, especially if not doing limiting would not affect performance
+> much (git command invoked doesn't do limiting, like in case of 
+> git_get_heads_list / git_get_tags_list or *most important* parse_commits).
+> 
+> Especially if it complicates code that much (see below).
+> 
+> Not doing limiting here, in git_get_remotes_list (or just git_get_remotes)
+> would also make API simpler; the single optional argument would be name of
+> remote we want to retrieve.
 
--Mathias
+Note that you can see the changes I have mentioned here:
+
+  git://repo.or.cz/git/jnareb-git.git  gitweb/allheads-jn
+
+  http://repo.or.cz/w/git/jnareb-git.git/shortlog/refs/heads/gitweb/allheads-jn
+  http://github.com/jnareb/git/commits/gitweb%2Fallheads-jn
+  
+
+-- 
+Jakub Narebski
+Poland
