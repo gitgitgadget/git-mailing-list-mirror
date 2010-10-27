@@ -1,75 +1,74 @@
-From: Peter van der Does <peter@ourvirtualhome.com>
-Subject: Re: What's cooking in git.git (Oct 2010, #02; Tue, 26)
-Date: Wed, 27 Oct 2010 10:33:52 -0400
-Message-ID: <20101027103352.32ffccaf@MonteCarlo>
-References: <7v62woduyp.fsf@alter.siamese.dyndns.org>
+From: Mathias Lafeldt <misfire@debugon.org>
+Subject: Re: svn repository URL and git
+Date: Wed, 27 Oct 2010 17:31:58 +0200
+Message-ID: <4CC845EE.5040602@debugon.org>
+References: <loom.20101027T170254-268@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Oct 27 17:30:47 2010
+To: H Krishnan <hetchkay@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 27 17:32:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PB7xa-0004GD-VI
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 17:30:43 +0200
+	id 1PB7z4-00055N-5B
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 17:32:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753895Ab0J0Pah (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Oct 2010 11:30:37 -0400
-Received: from bellona.lunarservers.com ([74.50.21.190]:38448 "EHLO
-	bellona.lunarservers.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752763Ab0J0Pag (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Oct 2010 11:30:36 -0400
-X-Greylist: delayed 3395 seconds by postgrey-1.27 at vger.kernel.org; Wed, 27 Oct 2010 11:30:36 EDT
-Received: from c-69-248-103-68.hsd1.nj.comcast.net ([69.248.103.68] helo=monza.grandprix.int)
-	by bellona.lunarservers.com with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.69)
-	(envelope-from <peter@ourvirtualhome.com>)
-	id 1PB74d-0005Mo-L8; Wed, 27 Oct 2010 07:33:55 -0700
-Received: from MonteCarlo (montecarlo.grandprix.int [192.168.1.102])
-	by monza.grandprix.int (Postfix) with ESMTPA id 335C3101F82;
-	Wed, 27 Oct 2010 10:33:53 -0400 (EDT)
-In-Reply-To: <7v62woduyp.fsf@alter.siamese.dyndns.org>
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.22.0; i486-pc-linux-gnu)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - bellona.lunarservers.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - ourvirtualhome.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1754829Ab0J0PcI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Oct 2010 11:32:08 -0400
+Received: from moutng.kundenserver.de ([212.227.126.171]:52629 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752503Ab0J0PcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Oct 2010 11:32:07 -0400
+Received: from [172.20.2.23] (p578D1A1A.dip.t-dialin.net [87.141.26.26])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0MLA1p-1PBOxm0Euv-0004I6; Wed, 27 Oct 2010 17:32:03 +0200
+User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
+In-Reply-To: <loom.20101027T170254-268@post.gmane.org>
+X-Provags-ID: V02:K0:su9Fa+7hlnWplXpsV1hUuAU6rImRywE49EaKQ07y4d8
+ Kd45fHjQ0B4Dg2W8yfwyz8QvEDjiHnEPLB4jmFHVmx9VdLWtRR
+ ufV9dqL/YYjHeiJv1FyzvHxwdT0cdGPRQ5vx3CETUzXfeXWZX5
+ 8QfwKAbR8zJKHwzADsCJq81ByPILN7viDnsJr04Lvw63KbGstw
+ rpf/DBwJGVuSnRhzesVJJzq3tZhLmmnq/2audls8OI=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160091>
 
-On Tue, 26 Oct 2010 23:13:18 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
+H Krishnan wrote:
+> Hi, 
+> We have started using git and git-svn. 
+> I was thrilled to see that two people cloning using "git svn clone" 
+> from the same repository got the same sha1 IDs for the commits which 
+> meant that each of us could sync with svn independently while still 
+> being able to share code among ourselves. 
+> But my excitement was shortlived as the sha1 IDs were different if we 
+> refer to the svn server using an alias. For example, using 
+> http://mysvnserver.mydomain.com/repos/myproject/trunk gave different 
+> sha1 IDs from using http://mysvnserver/repos/myproject/trunk even 
+> though both refer to the same repository. This also disallowed using 
+> mirrors of the repository for cloning. 
+> Apparently the sha1 ID is generated from the full path of the URL. 
+> Instead of this, could git-svn init be made to accept an optional 
+> "prefix" argument as well which is filtered out of the URL before 
+> building the sha1 ID. This will allow easy support for the oft 
+> requested support for "svn switch --relocate". How much of an effort 
+> is this? I don't know perl or git internals well enough for me to take 
+> a stab at it but I am willing to learn if someone can give me some 
+> pointers. 
+> Krishnan
 
-> * ml/completion-zsh (2010-09-06) 1 commit
->   (merged to 'next' on 2010-09-22 at d62d10e)
->  + completion: make compatible with zsh
-> 
-> Reported as breaking people with "set -u".
-> 
+The problem is the "git-svn-id" which is automatically appended to each
+commit done with git-svn. This ID consists of the URL and the UUID of
+the corresponding SVN repository. A different git-svn-id value results
+in a different commit SHA1 (i.e. a different commit to git).
 
-With the patch "Make git-completion Bash 4 compatible" in mind, it
-might be useful to start looking into a different way to distribute the
-completion script to accommodate different shells. Adding compatibility
-for each shell into one script can get nasty. We could have a different
-completion script for each shell.
+I guess git-svn's --rewrite-root option might help here. Also, you have
+to make sure that your SVN repos have the same UUID (with svnadmin
+setuuid), of course.
 
-As of right now the completion script is compatible with Bash 3 and
-zsh. I don't know if the new code provided with the proposed patch "Make
-git-completion Bash 4 compatible" is zsh compatible.
-
--- 
-Peter van der Does
-
-GPG key: E77E8E98
-Twitter: @petervanderdoes
+-Mathias
