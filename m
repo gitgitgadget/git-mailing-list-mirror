@@ -1,79 +1,43 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Why the default action for pull is merge, but not rebase?
-Date: Wed, 27 Oct 2010 11:57:24 -0500
-Message-ID: <20101027165723.GC11069@burratino>
-References: <AANLkTinLbaE6He-bxA_+CT6J5uWmZSgodGs6SXO7eqnr@mail.gmail.com>
+From: Eric Raible <raible@nextest.com>
+Subject: Re: Re: How do I get a list of all unmerged files?
+Date: Wed, 27 Oct 2010 10:00:18 -0700
+Message-ID: <4CC85AA2.1050406@nextest.com>
+References: <20101026143245.11433.qmail@science.horizon.com> <AANLkTi=JipA6P72hY5_FSvohCruf8hqsJc8Rh53FzAzT@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 27 18:57:40 2010
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: George Spelvin <linux@horizon.com>, <git@vger.kernel.org>
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Oct 27 19:00:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PB9Jg-00035g-9D
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 18:57:36 +0200
+	id 1PB9MU-0004et-DA
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 19:00:30 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752046Ab0J0Q5a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Oct 2010 12:57:30 -0400
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:60852 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751403Ab0J0Q53 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Oct 2010 12:57:29 -0400
-Received: by iwn10 with SMTP id 10so1069826iwn.19
-        for <git@vger.kernel.org>; Wed, 27 Oct 2010 09:57:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=SwJGQkd1qRMkUftuhGK3ZVVmjXgXJpM/5ZQ74GTHifc=;
-        b=udTn2gzAXnwddSBPGEozvmbe7jM2b+VQozHxy256iSgF2o7o+tNI9b9+YyIiHqYbx6
-         Qs2jNYVHVkFrzm/T9ETYsV/dJGnYeIBRNZsshfZ/6rUWr/fDEa1/cyCzX9iI8AvzqX2P
-         Vn4OrTM18kFlgJpLlabB4eLkrxyVWvaA8cT24=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=SMTNOb25agq9omyfv4GyX7NO0f1/iXoqRhH/goolXkmxD2mmTwrUvR/JQaUK12z8ZT
-         UX7/RxewG6T3LWR26tAzDaSamQadbpaVFYtgR5DZ2LNHYKqwgxaHiCg/C6jnvFl/25bw
-         KL3kM+vtCiTE4rOrNb27k8/jsXUDhEJgf6HSc=
-Received: by 10.231.173.138 with SMTP id p10mr642994ibz.143.1288198649350;
-        Wed, 27 Oct 2010 09:57:29 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id 34sm11612796ibi.20.2010.10.27.09.57.27
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 27 Oct 2010 09:57:28 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTinLbaE6He-bxA_+CT6J5uWmZSgodGs6SXO7eqnr@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752299Ab0J0RAX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Oct 2010 13:00:23 -0400
+Received: from exchange.domain1.nextest.com ([12.96.234.114]:38375 "EHLO
+	Exchange.DOMAIN1.nextest.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752294Ab0J0RAV (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Oct 2010 13:00:21 -0400
+Received: from [131.101.151.88] (131.101.151.88) by
+ Exchange.DOMAIN1.nextest.com (131.101.21.39) with Microsoft SMTP Server (TLS)
+ id 8.2.254.0; Wed, 27 Oct 2010 10:00:19 -0700
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.9) Gecko/20100915 Lightning/1.0b2 Thunderbird/3.1.4
+In-Reply-To: <AANLkTi=JipA6P72hY5_FSvohCruf8hqsJc8Rh53FzAzT@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160101>
 
-Eugene Sajine wrote:
+On 11:59 AM, Jay Soffian wrote:
+> $ git help unmerged
+> `git unmerged' is aliased to `!git ls-files --unmerged | cut -f2 | uniq'
+> 
+> If there's a better way to do it, I don't know what it is.
 
->               So, why not to rebase?
-
-An interesting question.
-
-Rebasing results in untested commits.  If this is a patch series
-for submission, that's fine, because you will be extensively
-testing each patch anyway or indicating to reviewers that that
-needs to be done (right?).  But if it's a long-lived branch then
-such repeated testing work can be a serious hassle.
-https://git.wiki.kernel.org/index.php/GitFaq#What_is_the_difference_between_a_merge_and_a_rebase.3F
-
-A public branch that is regularly rebased is hard to follow
-("git log foo@{1}..foo") and build on.
-http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html#_recovering_from_upstream_rebase
-
-Code consumers often want clean history, but that really means
-(a) clean and (b) history.
-http://thread.gmane.org/gmane.comp.video.dri.devel/34739/focus=34744
-
-Hope that helps.
+How about: git diff --name-only | uniq
