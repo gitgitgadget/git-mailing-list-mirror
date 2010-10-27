@@ -1,69 +1,89 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [BUG?] t9500 --debug prints "sh: ++GIT_BINDIR++/git: not found"
-Date: Wed, 27 Oct 2010 16:34:05 -0500
-Message-ID: <20101027213405.GA10263@burratino>
-References: <20101027204954.GA31386@burratino>
- <m3ocafib6z.fsf@localhost.localdomain>
+From: Darren Hart <dvhart@linux.intel.com>
+Subject: mutt aliases file not working
+Date: Wed, 27 Oct 2010 14:38:12 -0700
+Message-ID: <4CC89BC4.8080009@linux.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Oct 27 23:34:21 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Oct 27 23:38:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBDdT-0004dt-SZ
-	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 23:34:20 +0200
+	id 1PBDhN-0006Jx-DN
+	for gcvg-git-2@lo.gmane.org; Wed, 27 Oct 2010 23:38:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932406Ab0J0VeP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Oct 2010 17:34:15 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:52502 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757236Ab0J0VeO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Oct 2010 17:34:14 -0400
-Received: by wwe15 with SMTP id 15so1295200wwe.1
-        for <git@vger.kernel.org>; Wed, 27 Oct 2010 14:34:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=C7ExXKej1QE0OzoiviYbXifdz2/g8+f0xq0bo2CXkeU=;
-        b=cjmm8D4q9MaRjNqsRZwn2Rq3lExYqtbwg+odPJ+i8BPoT1kHPOtCOlmFwrwJJIgi36
-         NR2MZM5eimc1RiNWSDfc24hQBwNUJsM5NfARfL0P/b4sVM9YdRKspyO0m8tuVLHdcHYW
-         FKOkkLSkopHtyMexhlXjTSkogmzF8xGxdEVnQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=E2V24MUGicV6TAqWaisg+R74ekNMq//h/lj7tjwRZVWys7HTMrwK4Cq9a9dbV/pZpZ
-         IRa8TBAEXmMVywTnUItG4ixGwjnavFDy3Z2AVF26iRZKXeXuoXm75BsVmGzJoiXwxEbn
-         0jq7f3w3b1F06ZPVwM8ElzN/pQ7E2Lv4/SmDY=
-Received: by 10.227.156.202 with SMTP id y10mr2595230wbw.48.1288215252855;
-        Wed, 27 Oct 2010 14:34:12 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id f14sm227198wbe.20.2010.10.27.14.34.11
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 27 Oct 2010 14:34:12 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <m3ocafib6z.fsf@localhost.localdomain>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932528Ab0J0ViM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 27 Oct 2010 17:38:12 -0400
+Received: from mga09.intel.com ([134.134.136.24]:19891 "EHLO mga09.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932447Ab0J0ViK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 27 Oct 2010 17:38:10 -0400
+Received: from orsmga002.jf.intel.com ([10.7.209.21])
+  by orsmga102.jf.intel.com with ESMTP; 27 Oct 2010 14:38:10 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.58,248,1286175600"; 
+   d="scan'208";a="567982679"
+Received: from unknown (HELO [10.255.12.195]) ([10.255.12.195])
+  by orsmga002.jf.intel.com with ESMTP; 27 Oct 2010 14:38:10 -0700
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.11) Gecko/20101006 Lightning/1.0b2 Thunderbird/3.1.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160126>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160127>
 
-Jakub Narebski wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-> 
->>  sh: ++GIT_BINDIR++/git: not found
->>  ok 3 - no commits: .git summary (implicit)
->>  [...]
-[...]
-> Fixed in 8ff76f4 (gitweb: Move call to evaluate_git_version after
-> evaluate_gitweb_config, 2010-09-26):
+For whatever reason, which I'm sure is user error, I haven't been
+able to get mutt aliases to work, while mailrc works fine:
 
-Oh!  Yes, that works.  Thanks and sorry for the noise.
+$ mkdir aliases.git
+$ cd !$
+$ git init
+Initialized empty Git repository in /home/dvhart/aliases.git/.git/
+$ echo "joe Joe Blow joe@foobar.com" > muttaliases
+$ git add muttaliases
+$ git commit -m "aliases file"
+[master (root-commit) b71ae4a] aliases file
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+ create mode 100644 muttaliases
+$ git config sendemail.aliasesfile `pwd`/muttaliases
+$ git config sendemail.aliasfiletype mutt
+$ cat .git/config
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[sendemail]
+	aliasesfile = /home/dvhart/aliases.git/muttaliases
+	aliasfiletype = mutt
+$ git send-email --to joe -1 
+/tmp/l0xCEC7o3d/0001-aliases-file.patch
+Who should the emails appear to be from? [Darren Hart <darren@dvhart.com>] 
+Emails will be sent from: Darren Hart <darren@dvhart.com>
+Message-ID to be used as In-Reply-To for the first email? 
+(mbox) Adding cc: Darren Hart <darren@dvhart.com> from line 'From: Darren Hart <darren@dvhart.com>'
+
+From: Darren Hart <darren@dvhart.com>
+To: joe
+
+    ^ when using a mailrc fail this expands to joe@foobar.com
+
+Cc: Darren Hart <darren@dvhart.com>
+Subject: [PATCH] aliases file
+Date: Wed, 27 Oct 2010 14:29:10 -0700
+Message-Id: <1288214950-13695-1-git-send-email-darren@dvhart.com>
+X-Mailer: git-send-email 1.7.1
+
+Send this email? ([y]es|[n]o|[q]uit|[a]ll): ^C
+
+$ stty: standard input: Input/output error
+^C
+
+Am I doing something obviously wrong?
+
+-- 
+Darren Hart
+Embedded Linux Kernel
