@@ -1,45 +1,42 @@
 From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 01/10] Better "Changed but not updated" message in git-status
-Date: Fri, 29 Oct 2010 01:39:57 +0200
-Message-ID: <vpqpqut7upe.fsf@bauges.imag.fr>
+Subject: Re: [PATCH 08/10] user-manual.txt: explain better the remote(-tracking) branch terms
+Date: Fri, 29 Oct 2010 01:40:17 +0200
+Message-ID: <vpqocad7uou.fsf@bauges.imag.fr>
 References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1288290117-6734-2-git-send-email-Matthieu.Moy@imag.fr>
-	<20101028183513.GC14212@burratino>
-	<7vaaly9eji.fsf@alter.siamese.dyndns.org>
-	<20101028220956.GC16125@burratino> <vpqfwvqdjes.fsf@bauges.imag.fr>
-	<7vsjzp9a69.fsf@alter.siamese.dyndns.org>
+	<1288290117-6734-9-git-send-email-Matthieu.Moy@imag.fr>
+	<20101028194252.GF14212@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+Cc: git@vger.kernel.org, gitster@pobox.com,
 	Thore Husfeldt <thore.husfeldt@gmail.com>,
 	Jakub Narebski <jnareb@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 29 01:43:10 2010
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 29 01:44:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBc7h-0003OM-Gj
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 01:43:09 +0200
+	id 1PBc8R-0003l5-J8
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 01:43:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758227Ab0J1XnF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 19:43:05 -0400
-Received: from imag.imag.fr ([129.88.30.1]:60698 "EHLO imag.imag.fr"
+	id S1758077Ab0J1Xnw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 19:43:52 -0400
+Received: from imag.imag.fr ([129.88.30.1]:60846 "EHLO imag.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756171Ab0J1XnD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Oct 2010 19:43:03 -0400
+	id S1756171Ab0J1Xnu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Oct 2010 19:43:50 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o9SNdwFq022827
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o9SNeHxC022872
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 29 Oct 2010 01:39:58 +0200 (CEST)
+	Fri, 29 Oct 2010 01:40:17 +0200 (CEST)
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtp (Exim 4.69)
 	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PBc4c-0006Q1-9M; Fri, 29 Oct 2010 01:39:58 +0200
-In-Reply-To: <7vsjzp9a69.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Thu\, 28 Oct 2010 16\:20\:30 -0700")
+	id 1PBc4v-0006QG-E8; Fri, 29 Oct 2010 01:40:17 +0200
+In-Reply-To: <20101028194252.GF14212@burratino> (Jonathan Nieder's message of "Thu\, 28 Oct 2010 14\:42\:52 -0500")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 29 Oct 2010 01:39:58 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 29 Oct 2010 01:40:17 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
@@ -48,37 +45,70 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160252>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Well, I was aiming for the same.  It is not the "files" but the changes
-> that matter, but what we list are files.
-
-Not only. We also list "pairs of files" in the case of a rename, and
-list symlinks (which are technically files on unix, but not
-necessarily seen as such by all users).
-
->> I second that. Furthermore, keeping it short increase the changes that
->> user will actually read the message.
+>>  $ git branch -r
+>>    origin/HEAD
+>>    origin/html
+>>    origin/maint
+>>    origin/man
+>>    origin/master
+>>    origin/next
+>>    origin/pu
+>>    origin/todo
+>>  ------------------------------------------------
+>>
+>> +In this case, "origin" is called a remote repository, or "remote" for
+>> +short.
 >
-> You could do s/Files with/With/ to shorten them.  Or perhaps
+> "In this case" seems redundant (since we did not explain what other
+> case it is being opposed to).
+
+The wording was unfortunate, but what I meant was to explain the
+example right above while defining the vocabulary.
+
+I've changed it to "In this example".
+
+>  The repository of origin is called a remote repository, or a "remote" for
+>  short.
 >
->     Changes to be committed are in:
->         new file: foo.c
->     Changes that will be left out are in:
->         modified: foo.c
+> would improve it?
 
-I don't like the wording, and it would be worse in the case of
-renames :
+It removes the link between the explanation and the example right
+above. I prefer the quotes around "origin" to really show that it's
+the string that appear in `git branch -r`.
 
-Changes to be commited are in:
-   renamed: foo -> bar
+>>         The branches of this repository are called "remote branches"
+>> +from our point of view. The remote-tracking branches are created in
+>> +the local repository at clone time, as a copy of the remote branches.
+>
+> Sentence structure.  Maybe
+>
+>           The branches of this repository are called "remote branches"
+>   from our point of view. The remote-tracking branches listed above
+>   were created based on the remote branches at clone time and will be
+>   updated by "git fetch" and "git push".
+>   See <<Updating -a-repository-With-git-fetch>> for details.
 
-Anyway, I don't think we have a problem to solve here. While the
-"changed but not updated" was really confusing, I didn't see complains
-about the "Changes to be committed", and I really think this one is
-fine as it is.
+I've taken this (I like the "listed above" in particular), except I'm
+keeping the (hence "git pull"), since "git pull" is probably more
+likely to be used than "git fetch" by beginners.
+
+>> +This command will fetch the changes from the remote branches to your
+>> +remote-tracking branches `origin/*`, and merge default branch in the
+>> +current branch.
+>> +
+>
+> Article use.  Probably something like
+>
+> 	s/the changes/changes/
+> 	s/merge default branch in/merge the default branch into/
+>
+> would do.
+
+Taken, thanks.
 
 -- 
 Matthieu Moy
