@@ -1,86 +1,124 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: `git status --porcelain` disagrees with documentation about quoting filenames with spaces
-Date: Thu, 28 Oct 2010 14:17:31 -0700
-Message-ID: <EFFE2D68-BBA3-4EF4-B56A-AA4882EDE1E4@sb.org>
-References: <4AC7298E-73D7-4074-91CD-7C10DE414532@sb.org> <7v39rqb1ji.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1081)
+From: Yann Dirson <ydirson@free.fr>
+Subject: Re: [PATCH v7 1/3] Introduce bulk-move detection in diffcore.
+Date: Thu, 28 Oct 2010 23:42:40 +0200
+Message-ID: <20101028214240.GF3347@home.lan>
+References: <1287868022-24872-1-git-send-email-ydirson@altern.org>
+ <1287868022-24872-2-git-send-email-ydirson@altern.org>
+ <7veibeitip.fsf@alter.siamese.dyndns.org>
+ <20101025201227.GB3347@home.lan>
+ <7vr5fa9ij3.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Git mailing list <git@vger.kernel.org>
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 28 23:18:09 2010
+X-From: git-owner@vger.kernel.org Thu Oct 28 23:42:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBZrN-0004BU-9w
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 23:18:09 +0200
+	id 1PBaFL-0006wJ-RW
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 23:42:56 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760203Ab0J1VRg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 17:17:36 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:39252 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760149Ab0J1VRf convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Oct 2010 17:17:35 -0400
-Received: by gyg4 with SMTP id 4so1593779gyg.19
-        for <git@vger.kernel.org>; Thu, 28 Oct 2010 14:17:34 -0700 (PDT)
-Received: by 10.91.10.20 with SMTP id n20mr3296036agi.56.1288300654383;
-        Thu, 28 Oct 2010 14:17:34 -0700 (PDT)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id z43sm1081298yhc.12.2010.10.28.14.17.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 28 Oct 2010 14:17:33 -0700 (PDT)
-In-Reply-To: <7v39rqb1ji.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1081)
+	id S933803Ab0J1Vmt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 17:42:49 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:60751 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933157Ab0J1Vms (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Oct 2010 17:42:48 -0400
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 99796D48052;
+	Thu, 28 Oct 2010 23:42:41 +0200 (CEST)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1PBaF6-0003Ak-FV; Thu, 28 Oct 2010 23:42:40 +0200
+Content-Disposition: inline
+In-Reply-To: <7vr5fa9ij3.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160229>
 
-On Oct 28, 2010, at 11:44 AM, Junio C Hamano wrote:
-
-> Kevin Ballard <kevin@sb.org> writes:
+On Thu, Oct 28, 2010 at 01:20:00PM -0700, Junio C Hamano wrote:
+> Yann Dirson <ydirson@free.fr> writes:
 > 
-> [jc: why do you send messages with toooooooooooo loooooong lines sometimes
-> and normal line lengths some other times...?]
-
-I use a GUI mail client to write email. Anything I copy&paste is hard-wrapped,
-anything I write directly tends to not include hard linebreaks at all. Would it
-be better if I hard-wrapped my lines?
-
->> Given that the removal of quoting for filenames with spaces was an
->> intentional change, does anybody have any strong opinions about whether
->> we should restore the quotes in this scenario? The alternative is to
->> simply change the documentation, but the un-parsability of the
->> --porcelain format has me worried.
+> > OTOH, the quoting rules for diff output are quite minimalist, I don't
+> > know whether adding "*" as a character that requires quotes around the
+> > filename would be acceptable.
 > 
-> 28fba29 (Do not quote SP., 2005-10-17) explicitly addressed a breakage
-> that quoted pathnames in contexts like this one:
+> I suspect that would be an unacceptable entry to a slippery slope.
+
+OK.  I have thought of only 2 remaining options:
+
+* keep using 0{40} sha1 as differentiator
+  => will prevent us to ever use this sha1 for something useful
+* introducing a new change-type letter
+  => another slippery slope, with at least bulk removals and bulk
+  copies in sight, with already too few letters to keep them meaningful
+  to human reader
+* introducing a "bulk" flag
+  => needs extension of the raw format
+  Would could want to extend the <letter><score> group, for things like
+  "RB100" (bulk rename), "CB090" (imperfect bulk copy), "DB096" (imperfect
+  bulk removal, meaning there were some files left in source directory)
+
+> >> IOW, is the goal of this series
+> >> to use the "A/* -> B/" to label the change as bulk directory rename, if
+> >> the preimage has A/{1,2,3} and the postimage has their moved contents in
+> >> B/{one,two,three}?
+> >
+> > Yes.  But --hide-bulk-move-details would not hide them, as they would
+> > not be strictly included in the bulk move.  Desite their name change,
+> > they are however a confirmation that the contents of A/ was move to B/.
+> >
+> >> I am wondering about the utility of such an extra information.  If there
+> >> were no "a/file0 -> b/file3" entry in the example, I would imagine that we
+> >> could use this "a/* -> b/" information to move "a/file5" to "b/file5" when
+> >> rebasing this patch to apply to a different preimage that had files other
+> >> than file{1,2} in directory "a", and I would further imagine that might be
+> >> a wonderful thing.
+> >
+> > I imagined that as well, and that situation would not be a problem:
+> > since "a/file0 -> b/file3" would be there in the rebased patch,
+> > "apply" would be able to spot the possible conflict.
+> >
+> > OTOH, I had the vision of "merge does automatic moves" when starting
+> > this project, but got convinced on-list that there are always cases
+> > where the "automatic move" on merge would be wrong, and that we should
+> > report a conflict instead.
+> >
+> > That would mostly shift the problem to...
 > 
->    diff --git a/My Documents/hello.txt b/My Documents/hello.txt
-> 
-> I personally think people who add SP to their pathnames need to get their
-> head examined, and in that sense I do not strongly mind if the pathnames
-> in the above are quoted (that is why the original quotation before the
-> said commit quoted them), but apparently other people did mind.  I also
-> think people who have " -> " in their pathnames are even less sane beyond
-> salvation, and between the two insanity, I'd rather help less insane ones
-> by not quoting the above.
+> That would mostly make this patch not worth worrying about, wouldn't it?
 
-I agree that SP in pathnames in source is insane, but it's perfectly common to
-do when working with non-source files. For example, in the project I'm using
-right now, I have a file named "Application 1.0.xcdatamodel" and another named
-"Application 1.1.xcdatamodel". These are data files and their name on disk
-matches the name given to them in the IDE. In this case, I think the SP is
-perfectly justified. Granted, having " -> " in your pathname is also pretty
-insane, but my motivation here is just ensuring that the --porcelain format
-is parseable even if you are insane.
+(assuming "that" refers to not doing automatic moves on merge)
 
-> The best would probably be to special case SP (which is normally not to be
-> quoted) _only_ in the context of "something" -> "something".
+No, at least the "avoid hiding useful info among less-relevant stuff"
+provided by the human-targetted --hide-bulk-move-details would stay
+regardless of what we decide here.
 
-That's what I was thinking. I'll look into doing just that.
+> What's the point of spending extra cycles to say "many things have moved
+> in the same direction" without turning it into a usable information?
 
--Kevin Ballard
+If we issue a conflict, we have already gone farther than where we are
+now.  Deciding to have this particular type of conflict auto-resolved
+in the way useful to a wider audience could be done (having "adds"
+follow the bulkmove), with obviously the option of not auto-resolving,
+and possibly, the option of auto-resolving "adds" as they are
+(ie. keep current behaviour).
+
+But my feeling is "automatically solving the conflict" would be be
+only marginally different from applying a patch generated with (what
+in current series is) --hide-bulk-move-details where you cannot know
+which individual files were moved in the patch author's tree, and has
+no info to decide if his own added files are at the right place or
+need to follow the move (which I understood to be your point in [1]).
+
+Or did I miss your point ?
+
+[1] http://marc.info/?l=git&m=122610146506413
+
+-- 
+Yann
