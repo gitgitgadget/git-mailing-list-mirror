@@ -1,140 +1,83 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 06/10] Change incorrect "remote branch" to "remote
- tracking branch" in C code
-Date: Thu, 28 Oct 2010 14:13:03 -0500
-Message-ID: <20101028191303.GE14212@burratino>
-References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
- <1288290117-6734-7-git-send-email-Matthieu.Moy@imag.fr>
+From: Mathias Lafeldt <misfire@debugon.org>
+Subject: Re: svn repository URL and git
+Date: Thu, 28 Oct 2010 21:31:18 +0200
+Message-ID: <4CC9CF86.7040307@debugon.org>
+References: <loom.20101027T170254-268@post.gmane.org> <4CC845EE.5040602@debugon.org> <loom.20101027T180316-38@post.gmane.org> <loom.20101028T184823-831@post.gmane.org> <20101028190227.GC46314@acme.spoerlein.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Thore Husfeldt <thore.husfeldt@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Oct 28 21:13:20 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: H Krishnan <hetchkay@gmail.com>, git@vger.kernel.org
+To: =?ISO-8859-1?Q?Ulrich_Sp=F6rlein?= <uqs@spoerlein.net>
+X-From: git-owner@vger.kernel.org Thu Oct 28 21:31:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBXuW-0006ZR-Bh
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 21:13:16 +0200
+	id 1PBYCE-0008Ix-01
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 21:31:34 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760202Ab0J1TNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 15:13:12 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:52579 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755840Ab0J1TNK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Oct 2010 15:13:10 -0400
-Received: by gxk23 with SMTP id 23so1514884gxk.19
-        for <git@vger.kernel.org>; Thu, 28 Oct 2010 12:13:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=565TiticDwlIAxxLBgG/Co/zEopaez05bVGWNdzlQF4=;
-        b=vWetlShJ6soWTdBiarXqg5w4OO3JgtDVEkbVnSQ2OO+DZL2sNnR9gasJr3k4kKMQZ/
-         wbU7whOLYiuqDKrfTKooIrLEsA6jEhlVzYF7iDiCLIaSlznBAC3GaDsR/scmccIMKpMh
-         DnqClOzxQa5xvuQX0tLrRNvP4s7QwrfEOO12E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=D4mx9uw9FQJxtBJTpKKGceoZC/35J6CkkOnjyuRYjARPSS2n9Dz7CctTXroQhmC3LU
-         EfN1Ld0tLp6LuliIeN3PAiNOGSQtOc4z1wC+oSgGDC86Oq+/Nlz15RG860xungzpY/LB
-         D2M4s7A41L63JEtkC78nKvKcUPFUq2UkzA9Z8=
-Received: by 10.223.79.68 with SMTP id o4mr4353862fak.0.1288293188974;
-        Thu, 28 Oct 2010 12:13:08 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id n8sm665546faa.7.2010.10.28.12.13.07
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 28 Oct 2010 12:13:08 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1288290117-6734-7-git-send-email-Matthieu.Moy@imag.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758933Ab0J1Tb3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Oct 2010 15:31:29 -0400
+Received: from moutng.kundenserver.de ([212.227.126.187]:53763 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757330Ab0J1Tb2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Oct 2010 15:31:28 -0400
+Received: from [192.168.2.7] (p54B972C0.dip.t-dialin.net [84.185.114.192])
+	by mrelayeu.kundenserver.de (node=mrbap2) with ESMTP (Nemesis)
+	id 0MUClm-1P3GUC1m2k-00QUGS; Thu, 28 Oct 2010 21:31:24 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.14) Gecko/20101006 Thunderbird/3.0.9
+In-Reply-To: <20101028190227.GC46314@acme.spoerlein.net>
+X-Provags-ID: V02:K0:pDboHSpJbWCGjIdLpLl9hMss+oI+/Fr2Jg60+vLObgQ
+ 9dQiccNnQd7GQjKfZXIv7GyBOZLJTtQRQkApAgfXpQaKdA6wAC
+ DPmiyFPBgeEcx9b9x+rLK2avVfJWIW372b4aXONs5sukJWMZ+/
+ Ph6bUi9OEakdM8VzuHzCwdK48Wr+XLvshJAsGYWw9qbH/LTrql
+ f5ckmNzlxbX2axFmGyVl9I1gKKHiwcQKqWSwV+H/mQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160212>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160213>
 
-Matthieu Moy wrote:
+On 10/28/2010 09:02 PM, Ulrich Sp=F6rlein wrote:
+> On Thu, 28.10.2010 at 16:58:28 +0000, H Krishnan wrote:
+>>
+>> Hi,
+>> I think I resolved this problem by using --rewrite-root as suggested=
+=2E I used a=20
+>> dummy root during the git-svn clone:
+>>
+>> git-svn clone --rewrite-root http://git.is.great <myrepo>
+>>
+>> All my commit messages now have http://git.is.great but I am able to=
+ change the=20
+>> repository URL and continue.
+>>
+>> Could this approach be used as an insurance against svn url changes?=
+ When=20
+>> initializing the repository, we could use --rewrite-root. Subsequent=
+ly, if the=20
+>> svn repository relocates, we need to edit only .git/config.=20
+>=20
+> Yes, that's exactly what the rewrite-url was introduced for, you can
+> even clone from a local svnsync mirror (iff the UUID matches, you hav=
+e
+> to setup the mirror in a special way ...).
+>=20
+> So, every developer must use:
+>=20
+> $ git svn clone --rewrite-root CANONICAL-URL-NEVER-TO-CHANGE <whateve=
+r-url-is-convenient>
+>=20
+> Oh, and all devs must use the same authormap (or no authormap at all)=
+=2E
+>=20
+> hth,
+> Uli
 
-> --- a/branch.h
-> +++ b/branch.h
-> @@ -22,7 +22,7 @@ void create_branch(const char *head, const char *name, const char *start_name,
->  void remove_branch_state(void);
->  
->  /*
-> - * Configure local branch "local" to merge remote branch "remote"
-> + * Configure local branch "local" to merge remote-tracking branch "remote"
->   * taken from origin "origin".
->   */
->  #define BRANCH_CONFIG_VERBOSE 01
+=46YI, I just learned [1] that git-svn even has a --rewrite-uuid option=
+=2E
 
-This still seems inaccurate (and even misleading).  Presumably you mean
+[1] http://www.kernel.org/pub/software/scm/git/docs/git-svn.html
 
-	             ... to merge remote-tracking branch "origin/remote"
-	based on origin "origin".
-
-or
-
-	             ... to merge remote branch "remote"
-	taken from origin "origin"
-
-or even better,
-
-	Configure local branch "local" as downstream to branch "remote"
-	from remote "origin".  Used by git branch --set-upstream.
-
-More confusion could presumably be avoided by renaming the parameters.
-
-> --- a/builtin/fetch.c
-> +++ b/builtin/fetch.c
-> @@ -359,7 +359,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
->  			what = rm->name + 10;
->  		}
->  		else if (!prefixcmp(rm->name, "refs/remotes/")) {
-> -			kind = "remote branch";
-> +			kind = "remote-tracking branch";
->  			what = rm->name + 13;
-
-I didn't follow before --- what concrete effect does this have?  Are
-scripts affected?  Is fmt-merge-msg affected?
-
-> --- a/builtin/remote.c
-> +++ b/builtin/remote.c
-> @@ -791,9 +791,9 @@ static int rm(int argc, const char **argv)
->  
->  	if (skipped.nr) {
->  		fprintf(stderr, skipped.nr == 1 ?
-> -			"Note: A non-remote branch was not removed; "
-> +			"Note: A branch outside the refs/remotes/ hierarchy was not removed;\n"
->  			"to delete it, use:\n" :
-> -			"Note: Non-remote branches were not removed; "
-> +			"Note: Some branches outside the refs/remotes/ hierarchy were not removed;\n"
->  			"to delete them, use:\n");
->  		for (i = 0; i < skipped.nr; i++)
->  			fprintf(stderr, "  git branch -d %s\n",
-
-Nice.
-
-Maybe the commit message should explain the reasoning, something like:
-
- The non-deleted branch is somehow remote-tracking since "fetch" feeds
- it, and the code detecting this case is:
-
-	/* don't delete non-remote-tracking refs */
-	if (prefixcmp(refname, "refs/remotes")) {
-		/* advise user how to delete local branches */
-		if (!prefixcmp(refname, "refs/heads/"))
-			string_list_append(branches->skipped,
-					   abbrev_branch(refname));
-		/* silently skip over other non-remote refs */
-		return 0;
-	}
- 
- hence, really "branches outside the refs/remotes/ hierarchy".
-
-Thanks for your tireless work.  Everything not mentioned above looks good.
+-Mathias
