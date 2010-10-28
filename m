@@ -1,146 +1,280 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Minimum git commit abbrev length (Was Re: -tip: origin tree build
- failure (was: [GIT PULL] ext4 update) for 2.6.37)
-Date: Thu, 28 Oct 2010 11:28:04 -0700
-Message-ID: <AANLkTi=8tq1zu_RWjmk5rLOWvP_KPH5UQioQ6wEkc0Ob@mail.gmail.com>
-References: <E1PBKT9-0004Uk-Sm@tytso-glaptop> <20101028075631.GA7690@elte.hu>
- <AANLkTi=8SbOZizWpxLg=Bgp7atdgr8MsR6tnRDYr1+eW@mail.gmail.com>
- <20101028163854.GA15450@elte.hu> <AANLkTin62vAwJxcsrFk6Yn7Q6tzr-D=EmKKwPazuAJ11@mail.gmail.com>
- <20101028171701.GA18368@elte.hu> <20101028172725.GA6814@thunk.org>
-Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=20cf301d3a20038f050493b182c9
-To: "Ted Ts'o" <tytso@mit.edu>, Ingo Molnar <mingo@elte.hu>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	git@vger.kernel.org, linux-kernel@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 28 20:29:20 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 04/10] Change "tracking branch" to "remote-tracking branch"
+Date: Thu, 28 Oct 2010 20:21:51 +0200
+Message-ID: <1288290117-6734-5-git-send-email-Matthieu.Moy@imag.fr>
+References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Thore Husfeldt <thore.husfeldt@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Thu Oct 28 20:30:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBXDv-0008Ua-RD
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 20:29:16 +0200
+	id 1PBXEl-0000SY-4X
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 20:30:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934100Ab0J1S3I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 14:29:08 -0400
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:60932 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S934045Ab0J1S3F (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Oct 2010 14:29:05 -0400
-Received: from mail-yx0-f174.google.com (mail-yx0-f174.google.com [209.85.213.174])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id o9SISYbK023717
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=FAIL);
-	Thu, 28 Oct 2010 11:28:35 -0700
-Received: by yxk8 with SMTP id 8so1131610yxk.19
-        for <multiple recipients>; Thu, 28 Oct 2010 11:28:26 -0700 (PDT)
-Received: by 10.42.215.68 with SMTP id hd4mr8511883icb.372.1288290506608; Thu,
- 28 Oct 2010 11:28:26 -0700 (PDT)
-Received: by 10.231.14.134 with HTTP; Thu, 28 Oct 2010 11:28:04 -0700 (PDT)
-In-Reply-To: <20101028172725.GA6814@thunk.org>
-X-Spam-Status: No, hits=-2.911 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1761327Ab0J1S3b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 14:29:31 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:60828 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1761298Ab0J1S30 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Oct 2010 14:29:26 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o9SIG7ma011846
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 28 Oct 2010 20:16:07 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1PBX7W-0003hi-Eb; Thu, 28 Oct 2010 20:22:38 +0200
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1PBX7W-0001lm-C9; Thu, 28 Oct 2010 20:22:38 +0200
+X-Mailer: git-send-email 1.7.3.2.183.g2e7b0
+In-Reply-To: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 28 Oct 2010 20:16:07 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o9SIG7ma011846
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1288894569.84758@WV1qmrgvqrhSHCwB28DUIA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160203>
 
---20cf301d3a20038f050493b182c9
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+One more step towards consistancy. We change the documentation and the C
+code in a single patch, since the only instances in the C code are in
+comment and usage strings.
 
-On Thu, Oct 28, 2010 at 10:27 AM, Ted Ts'o <tytso@mit.edu> wrote:
-> On Thu, Oct 28, 2010 at 07:17:01PM +0200, Ingo Molnar wrote:
->> > Linus Torvalds <torvalds@linux-foundation.org> wrote:
->> > Yes. Except for the kernel the default git commit abbreviation is
->> > borderline too short. Seven hex-chars can easily alias with a few
->> > more pulls from me: git will not give aliases at the time it gives
->> > a shorthand, but a month or two later the abbreviated commit may
->> > no longer be unique.
->> >
->> > So I suggest using --abbrev=3D12 or similar.
->>
->> ok. A helper script i use does this:
->>
->> =A0 =A0git log --pretty=3Dformat:"%h: %s" $@
->>
->> I have added --abbrev=3D12. Might make sense to lengthen the %h
->> default in upstream Git as well?
->
-> Maybe the right thing to do is add a git config option which allows
-> for a configurable minimum git commit abbreviation length?
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/config.txt           |    4 ++--
+ Documentation/git-fetch.txt        |    2 +-
+ Documentation/git-pull.txt         |    6 +++---
+ Documentation/git-remote.txt       |    2 +-
+ Documentation/git-tag.txt          |    4 ++--
+ Documentation/glossary-content.txt |   20 ++++++++++----------
+ Documentation/user-manual.txt      |    2 +-
+ builtin/checkout.c                 |    2 +-
+ builtin/fetch.c                    |    4 ++--
+ remote.c                           |    2 +-
+ 10 files changed, 24 insertions(+), 24 deletions(-)
 
-Yes. The default of 7 (I think) comes from fairly early in git
-development, when seven hex digits was a lot (it covers about 250+
-million hash values). Back then I thought that 65k revisions was a lot
-(it was what we were about to hit in BK), and each revision tends to
-be about 5-10 new objects or so, so a million objects was a big
-number.
-
-These days, the kernel isn't even the largest git project, and even
-the kernel has about 220k revisions (_much_ bigger than the BK tree
-ever was) and we are approaching two million objects. At that point,
-seven hex digits is still unique for a lot of them, but when we're
-talking about just two orders of magnitude difference between number
-of objects and the hash size, there _will_ be hash collisions. It's no
-longer even close to unrealistic - it happens all the time.
-
-So I suspect we should both increase the default abbrev that was
-unrealistically small, _and_ add a way for people to set their own
-default per-project in the git config file.
-
-Maybe something like the attached (not necessarily well-thought-out or
-well-tested: I also didn't actually change the default, although I
-suspect we should up it from 7 to at least 10).
-
-                        Linus
-
---20cf301d3a20038f050493b182c9
-Content-Type: text/x-patch; charset=US-ASCII; name="patch.diff"
-Content-Disposition: attachment; filename="patch.diff"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_gftyvcrf0
-
-IGJ1aWx0aW4vZGVzY3JpYmUuYyB8ICAgIDIgKy0KIGNhY2hlLmggICAgICAgICAgICB8ICAgIDUg
-KysrLS0KIGNvbmZpZy5jICAgICAgICAgICB8ICAgIDggKysrKysrKysKIGVudmlyb25tZW50LmMg
-ICAgICB8ICAgIDEgKwogNCBmaWxlcyBjaGFuZ2VkLCAxMyBpbnNlcnRpb25zKCspLCAzIGRlbGV0
-aW9ucygtKQoKZGlmZiAtLWdpdCBhL2J1aWx0aW4vZGVzY3JpYmUuYyBiL2J1aWx0aW4vZGVzY3Jp
-YmUuYwppbmRleCA0M2NhZmYyLi4yZDk4NzAyIDEwMDY0NAotLS0gYS9idWlsdGluL2Rlc2NyaWJl
-LmMKKysrIGIvYnVpbHRpbi9kZXNjcmliZS5jCkBAIC0yMCw3ICsyMCw3IEBAIHN0YXRpYyBpbnQg
-ZGVidWc7CS8qIERpc3BsYXkgbG90cyBvZiB2ZXJib3NlIGluZm8gKi8KIHN0YXRpYyBpbnQgYWxs
-OwkvKiBBbnkgdmFsaWQgcmVmIGNhbiBiZSB1c2VkICovCiBzdGF0aWMgaW50IHRhZ3M7CS8qIEFs
-bG93IGxpZ2h0d2VpZ2h0IHRhZ3MgKi8KIHN0YXRpYyBpbnQgbG9uZ2Zvcm1hdDsKLXN0YXRpYyBp
-bnQgYWJicmV2ID0gREVGQVVMVF9BQkJSRVY7CitzdGF0aWMgaW50IGFiYnJldiA9IDc7CS8qIE5P
-VEUhIE5vdCBERUZBVUxUX0FCQlJFViAqLwogc3RhdGljIGludCBtYXhfY2FuZGlkYXRlcyA9IDEw
-Owogc3RhdGljIGludCBmb3VuZF9uYW1lczsKIHN0YXRpYyBjb25zdCBjaGFyICpwYXR0ZXJuOwpk
-aWZmIC0tZ2l0IGEvY2FjaGUuaCBiL2NhY2hlLmgKaW5kZXggMzNkZWNkOS4uNmMyOGE4MSAxMDA2
-NDQKLS0tIGEvY2FjaGUuaAorKysgYi9jYWNoZS5oCkBAIC01NDAsNiArNTQwLDcgQEAgZXh0ZXJu
-IGludCB0cnVzdF9leGVjdXRhYmxlX2JpdDsKIGV4dGVybiBpbnQgdHJ1c3RfY3RpbWU7CiBleHRl
-cm4gaW50IHF1b3RlX3BhdGhfZnVsbHk7CiBleHRlcm4gaW50IGhhc19zeW1saW5rczsKK2V4dGVy
-biBpbnQgbWluaW11bV9hYmJyZXYsIGRlZmF1bHRfYWJicmV2OwogZXh0ZXJuIGludCBpZ25vcmVf
-Y2FzZTsKIGV4dGVybiBpbnQgYXNzdW1lX3VuY2hhbmdlZDsKIGV4dGVybiBpbnQgcHJlZmVyX3N5
-bWxpbmtfcmVmczsKQEAgLTc1Nyw4ICs3NTgsOCBAQCBzdGF0aWMgaW5saW5lIHVuc2lnbmVkIGlu
-dCBoZXh2YWwodW5zaWduZWQgY2hhciBjKQogfQogCiAvKiBDb252ZXJ0IHRvL2Zyb20gaGV4L3No
-YTEgcmVwcmVzZW50YXRpb24gKi8KLSNkZWZpbmUgTUlOSU1VTV9BQkJSRVYgNAotI2RlZmluZSBE
-RUZBVUxUX0FCQlJFViA3CisjZGVmaW5lIE1JTklNVU1fQUJCUkVWIG1pbmltdW1fYWJicmV2Cisj
-ZGVmaW5lIERFRkFVTFRfQUJCUkVWIGRlZmF1bHRfYWJicmV2CiAKIHN0cnVjdCBvYmplY3RfY29u
-dGV4dCB7CiAJdW5zaWduZWQgY2hhciB0cmVlWzIwXTsKZGlmZiAtLWdpdCBhL2NvbmZpZy5jIGIv
-Y29uZmlnLmMKaW5kZXggNGIwYTgyMC4uNDc0MzYxYyAxMDA2NDQKLS0tIGEvY29uZmlnLmMKKysr
-IGIvY29uZmlnLmMKQEAgLTUxNCw2ICs1MTQsMTQgQEAgc3RhdGljIGludCBnaXRfZGVmYXVsdF9j
-b3JlX2NvbmZpZyhjb25zdCBjaGFyICp2YXIsIGNvbnN0IGNoYXIgKnZhbHVlKQogCQlyZXR1cm4g
-MDsKIAl9CiAKKwlpZiAoIXN0cmNtcCh2YXIsICJjb3JlLmFiYnJldiIpKSB7CisJCWludCBhYmJy
-ZXYgPSBnaXRfY29uZmlnX2ludCh2YXIsIHZhbHVlKTsKKwkJaWYgKGFiYnJldiA8IG1pbmltdW1f
-YWJicmV2IHx8IGFiYnJldiA+IDQwKQorCQkJcmV0dXJuIC0xOworCQlkZWZhdWx0X2FiYnJldiA9
-IGFiYnJldjsKKwkJcmV0dXJuIDA7CisJfQorCiAJaWYgKCFzdHJjbXAodmFyLCAiY29yZS5sb29z
-ZWNvbXByZXNzaW9uIikpIHsKIAkJaW50IGxldmVsID0gZ2l0X2NvbmZpZ19pbnQodmFyLCB2YWx1
-ZSk7CiAJCWlmIChsZXZlbCA9PSAtMSkKZGlmZiAtLWdpdCBhL2Vudmlyb25tZW50LmMgYi9lbnZp
-cm9ubWVudC5jCmluZGV4IGRlNTU4MWYuLmI5ODAwM2MgMTAwNjQ0Ci0tLSBhL2Vudmlyb25tZW50
-LmMKKysrIGIvZW52aXJvbm1lbnQuYwpAQCAtMTUsNiArMTUsNyBAQCBpbnQgdXNlcl9pZGVudF9l
-eHBsaWNpdGx5X2dpdmVuOwogaW50IHRydXN0X2V4ZWN1dGFibGVfYml0ID0gMTsKIGludCB0cnVz
-dF9jdGltZSA9IDE7CiBpbnQgaGFzX3N5bWxpbmtzID0gMTsKK2ludCBtaW5pbXVtX2FiYnJldiA9
-IDQsIGRlZmF1bHRfYWJicmV2ID0gNzsKIGludCBpZ25vcmVfY2FzZTsKIGludCBhc3N1bWVfdW5j
-aGFuZ2VkOwogaW50IHByZWZlcl9zeW1saW5rX3JlZnM7Cg==
---20cf301d3a20038f050493b182c9--
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index e625d6a..e4f16d8 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -680,7 +680,7 @@ color.branch::
+ color.branch.<slot>::
+ 	Use customized color for branch coloration. `<slot>` is one of
+ 	`current` (the current branch), `local` (a local branch),
+-	`remote` (a tracking branch in refs/remotes/), `plain` (other
++	`remote` (a remote-tracking branch in refs/remotes/), `plain` (other
+ 	refs).
+ +
+ The value for these configuration variables is a list of colors (at most
+@@ -1102,7 +1102,7 @@ gui.newbranchtemplate::
+ 	linkgit:git-gui[1].
+ 
+ gui.pruneduringfetch::
+-	"true" if linkgit:git-gui[1] should prune tracking branches when
++	"true" if linkgit:git-gui[1] should prune remote-tracking branches when
+ 	performing a fetch. The default value is "false".
+ 
+ gui.trustmtime::
+diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
+index d159e88..c76e313 100644
+--- a/Documentation/git-fetch.txt
++++ b/Documentation/git-fetch.txt
+@@ -26,7 +26,7 @@ The ref names and their object names of fetched refs are stored
+ in `.git/FETCH_HEAD`.  This information is left for a later merge
+ operation done by 'git merge'.
+ 
+-When <refspec> stores the fetched result in tracking branches,
++When <refspec> stores the fetched result in remote-tracking branches,
+ the tags that point at these branches are automatically
+ followed.  This is done by first fetching from the remote using
+ the given <refspec>s, and if the repository has objects that are
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index 33e8438..54e7013 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -134,7 +134,7 @@ and if there is not any such variable, the value on `URL: ` line
+ in `$GIT_DIR/remotes/<origin>` file is used.
+ 
+ In order to determine what remote branches to fetch (and
+-optionally store in the tracking branches) when the command is
++optionally store in the remote-tracking branches) when the command is
+ run without any refspec parameters on the command line, values
+ of the configuration variable `remote.<origin>.fetch` are
+ consulted, and if there aren't any, `$GIT_DIR/remotes/<origin>`
+@@ -147,9 +147,9 @@ refs/heads/*:refs/remotes/origin/*
+ ------------
+ 
+ A globbing refspec must have a non-empty RHS (i.e. must store
+-what were fetched in tracking branches), and its LHS and RHS
++what were fetched in remote-tracking branches), and its LHS and RHS
+ must end with `/*`.  The above specifies that all remote
+-branches are tracked using tracking branches in
++branches are tracked using remote-tracking branches in
+ `refs/remotes/origin/` hierarchy under the same name.
+ 
+ The rule to determine which remote branch to merge after
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 5e4989d..c258ea4 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -146,7 +146,7 @@ With `-n` option, the remote heads are not queried first with
+ 
+ 'prune'::
+ 
+-Deletes all stale tracking branches under <name>.
++Deletes all stale remote-tracking branches under <name>.
+ These stale branches have already been removed from the remote repository
+ referenced by <name>, but are still locally available in
+ "remotes/<name>".
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 31c78a8..8b169e3 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -177,7 +177,7 @@ On Automatic following
+ ~~~~~~~~~~~~~~~~~~~~~~
+ 
+ If you are following somebody else's tree, you are most likely
+-using tracking branches (`refs/heads/origin` in traditional
++using remote-tracking branches (`refs/heads/origin` in traditional
+ layout, or `refs/remotes/origin/master` in the separate-remote
+ layout).  You usually want the tags from the other end.
+ 
+@@ -232,7 +232,7 @@ this case.
+ It may well be that among networking people, they may want to
+ exchange the tags internal to their group, but in that workflow
+ they are most likely tracking with each other's progress by
+-having tracking branches.  Again, the heuristic to automatically
++having remote-tracking branches.  Again, the heuristic to automatically
+ follow such tags is a good thing.
+ 
+ 
+diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
+index 1f029f8..ba96b32 100644
+--- a/Documentation/glossary-content.txt
++++ b/Documentation/glossary-content.txt
+@@ -131,7 +131,7 @@ to point at the new commit.
+ 	you have. In such these cases, you do not make a new <<def_merge,merge>>
+ 	<<def_commit,commit>> but instead just update to his
+ 	revision. This will happen frequently on a
+-	<<def_tracking_branch,tracking branch>> of a remote
++	<<def_remote_tracking_branch,remote-tracking branch>> of a remote
+ 	<<def_repository,repository>>.
+ 
+ [[def_fetch]]fetch::
+@@ -260,7 +260,7 @@ This commit is referred to as a "merge commit", or sometimes just a
+ 	The default upstream <<def_repository,repository>>. Most projects have
+ 	at least one upstream project which they track. By default
+ 	'origin' is used for that purpose. New upstream updates
+-	will be fetched into remote <<def_tracking_branch,tracking branches>> named
++	will be fetched into remote <<def_remote_tracking_branch,remote-tracking branches>> named
+ 	origin/name-of-upstream-branch, which you can see using
+ 	`git branch -r`.
+ 
+@@ -349,6 +349,14 @@ This commit is referred to as a "merge commit", or sometimes just a
+ 	master branch head as to-upstream branch at $URL". See also
+ 	linkgit:git-push[1].
+ 
++[[def_remote_tracking_branch]]remote-tracking branch::
++	A regular git <<def_branch,branch>> that is used to follow changes from
++	another <<def_repository,repository>>. A tracking
++	branch should not contain direct modifications or have local commits
++	made to it. A remote-tracking branch can usually be
++	identified as the right-hand-side <<def_ref,ref>> in a Pull:
++	<<def_refspec,refspec>>.
++
+ [[def_repository]]repository::
+ 	A collection of <<def_ref,refs>> together with an
+ 	<<def_object_database,object database>> containing all objects
+@@ -418,14 +426,6 @@ This commit is referred to as a "merge commit", or sometimes just a
+ 	that each contain very well defined concepts or small incremental yet
+ 	related changes.
+ 
+-[[def_tracking_branch]]tracking branch::
+-	A regular git <<def_branch,branch>> that is used to follow changes from
+-	another <<def_repository,repository>>. A tracking
+-	branch should not contain direct modifications or have local commits
+-	made to it. A tracking branch can usually be
+-	identified as the right-hand-side <<def_ref,ref>> in a Pull:
+-	<<def_refspec,refspec>>.
+-
+ [[def_tree]]tree::
+ 	Either a <<def_working_tree,working tree>>, or a <<def_tree_object,tree
+ 	object>> together with the dependent <<def_blob_object,blob>> and tree objects
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index d5505e8..d7835ca 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -435,7 +435,7 @@ linux-nfs/master
+ origin/master
+ -------------------------------------------------
+ 
+-If you run "git fetch <remote>" later, the tracking branches for the
++If you run "git fetch <remote>" later, the remote-tracking branches for the
+ named <remote> will be updated.
+ 
+ If you examine the file .git/config, you will see that git has added
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 9a934af..1fa9ce4 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -784,7 +784,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	 *   between A and B, A...B names that merge base.
+ 	 *
+ 	 *   With no paths, if <something> is _not_ a commit, no -t nor -b
+-	 *   was given, and there is a tracking branch whose name is
++	 *   was given, and there is a remote-tracking branch whose name is
+ 	 *   <something> in one and only one remote, then this is a short-hand
+ 	 *   to fork local <something> from that remote-tracking branch.
+ 	 *
+diff --git a/builtin/fetch.c b/builtin/fetch.c
+index d35f000..3b0b614 100644
+--- a/builtin/fetch.c
++++ b/builtin/fetch.c
+@@ -52,7 +52,7 @@ static struct option builtin_fetch_options[] = {
+ 	OPT_SET_INT('n', NULL, &tags,
+ 		    "do not fetch all tags (--no-tags)", TAGS_UNSET),
+ 	OPT_BOOLEAN('p', "prune", &prune,
+-		    "prune tracking branches no longer on remote"),
++		    "prune remote-tracking branches no longer on remote"),
+ 	OPT_BOOLEAN(0, "dry-run", &dry_run,
+ 		    "dry run"),
+ 	OPT_BOOLEAN('k', "keep", &keep, "keep downloaded pack"),
+@@ -98,7 +98,7 @@ static void add_merge_config(struct ref **head,
+ 			continue;
+ 
+ 		/*
+-		 * Not fetched to a tracking branch?  We need to fetch
++		 * Not fetched to a remote-tracking branch?  We need to fetch
+ 		 * it anyway to allow this branch's "branch.$name.merge"
+ 		 * to be honored by 'git pull', but we do not have to
+ 		 * fail if branch.$name.merge is misconfigured to point
+diff --git a/remote.c b/remote.c
+index 9143ec7..ca42a12 100644
+--- a/remote.c
++++ b/remote.c
+@@ -493,7 +493,7 @@ static void read_config(void)
+ }
+ 
+ /*
+- * We need to make sure the tracking branches are well formed, but a
++ * We need to make sure the remote-tracking branches are well formed, but a
+  * wildcard refspec in "struct refspec" must have a trailing slash. We
+  * temporarily drop the trailing '/' while calling check_ref_format(),
+  * and put it back.  The caller knows that a CHECK_REF_FORMAT_ONELEVEL
+-- 
+1.7.3.2.183.g2e7b0
