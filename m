@@ -1,90 +1,70 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 04/10] Change "tracking branch" to "remote-tracking
- branch"
-Date: Thu, 28 Oct 2010 14:56:41 -0500
-Message-ID: <20101028195641.GB16006@burratino>
+Subject: Re: [PATCH 10/10] git-branch.txt: mention --set-upstream as a way to
+ change upstream configuration
+Date: Thu, 28 Oct 2010 15:08:15 -0500
+Message-ID: <20101028200815.GA16125@burratino>
 References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
- <1288290117-6734-5-git-send-email-Matthieu.Moy@imag.fr>
+ <1288290117-6734-11-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, gitster@pobox.com,
 	Thore Husfeldt <thore.husfeldt@gmail.com>,
 	Jakub Narebski <jnareb@gmail.com>
 To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Oct 28 21:57:00 2010
+X-From: git-owner@vger.kernel.org Thu Oct 28 22:08:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBYam-0004kN-6y
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 21:56:56 +0200
+	id 1PBYlz-000629-Aj
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 22:08:31 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754495Ab0J1T4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 15:56:50 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:34340 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751982Ab0J1T4s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Oct 2010 15:56:48 -0400
-Received: by fxm16 with SMTP id 16so2307846fxm.19
-        for <git@vger.kernel.org>; Thu, 28 Oct 2010 12:56:47 -0700 (PDT)
+	id S1761490Ab0J1UI0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 16:08:26 -0400
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:58042 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759802Ab0J1UIY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Oct 2010 16:08:24 -0400
+Received: by wwe15 with SMTP id 15so2435243wwe.1
+        for <git@vger.kernel.org>; Thu, 28 Oct 2010 13:08:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=n6Cv2OBv+REZMFFEmZ7Y6BV4rtemlSnIE79IPKBIegk=;
-        b=bmybxi/6UraiiUownYKRY8TiGdtzjMc5sUCrJgYzce+4yxO3IZs72HLROl9xLtf6Re
-         Qm0YPWVDE6GuWJ1FLGn9zATQvghixXlz2PxynGl1WvzwmQZqrB8yFFoJdk0VsEDL7XXi
-         EE4IyktkHP23McwgIHJuIXTqq+A18ev7nHDG8=
+        bh=3+CTLfjN8m37U1FJrN4lCpAbIOX5PssxYj5FC4Zi2Z0=;
+        b=OYzEclDGEox0UFtIwnfCHwH4W1M7+5REH114uIkj/KP6i+C7RtOGonsuRKC8jgvq+5
+         P93s+WWmMcw4NXV7hK8gIq5miNa5RMwZX6jmKkjEwuTWYu8L1qIhv8Gemtj2ok+kShrO
+         mpTs1SakiCbk00Y8pZ2iJizApQ2eo571lXG7g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=Q6rwo9RXdjSE5c70ruX24Iwl7/IsAYTM1A0ob3cPWRc2XS+kbLmJryxtVNb63ldMuy
-         MNb3JmbWd41UPZn2rOPJswqmBzQkqSFwXKrsPTHtPdtbx1oGjexkrNGm9lUS3I2VLNpu
-         RLHBkeR4Z7+20cWNqHl6Dq1NdaCpxef0a/uNc=
-Received: by 10.223.116.9 with SMTP id k9mr4448161faq.124.1288295806879;
-        Thu, 28 Oct 2010 12:56:46 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id a10sm687645fak.27.2010.10.28.12.56.44
+        b=xNU5gNTBlt/sLZqicaRg+wuGU9CYRUlBVpPlbAlVKvqomTkAl35XCmxet43XH+gMEg
+         WApo3p9AawOUGQXo/wVIEtqLTumD56eOXkUMj6MwkpN9GeU0CV4A0TLTfCf5txQNCHp5
+         l0TB0hUcZEeEiWlU6RuKozAJeFNskX6r9am6U=
+Received: by 10.227.59.133 with SMTP id l5mr5639224wbh.222.1288296502793;
+        Thu, 28 Oct 2010 13:08:22 -0700 (PDT)
+Received: from burratino ([68.255.106.176])
+        by mx.google.com with ESMTPS id ga16sm1276881wbb.19.2010.10.28.13.08.20
         (version=SSLv3 cipher=RC4-MD5);
-        Thu, 28 Oct 2010 12:56:46 -0700 (PDT)
+        Thu, 28 Oct 2010 13:08:21 -0700 (PDT)
 Content-Disposition: inline
-In-Reply-To: <1288290117-6734-5-git-send-email-Matthieu.Moy@imag.fr>
+In-Reply-To: <1288290117-6734-11-git-send-email-Matthieu.Moy@imag.fr>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160218>
 
 Matthieu Moy wrote:
 
-> One more step towards consistancy. We change the documentation and the C
-> code in a single patch, since the only instances in the C code are in
-> comment and usage strings.
+> Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 
-For what it's worth:
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+Patches 5, 9, and 10 look good, too.
 
-> --- a/Documentation/glossary-content.txt
-> +++ b/Documentation/glossary-content.txt
-> @@ -349,6 +349,14 @@ This commit is referred to as a "merge commit", or sometimes just a
->  	master branch head as to-upstream branch at $URL". See also
->  	linkgit:git-push[1].
->  
-> +[[def_remote_tracking_branch]]remote-tracking branch::
-> +	A regular git <<def_branch,branch>> that is used to follow changes from
-> +	another <<def_repository,repository>>. A tracking
-> +	branch should not contain direct modifications or have local commits
-> +	made to it. A remote-tracking branch can usually be
-> +	identified as the right-hand-side <<def_ref,ref>> in a Pull:
-> +	<<def_refspec,refspec>>.
-> +
->  [[def_repository]]repository::
-
-In particular, your explanation for this hunk makes sense.  Any links
-out in the world to "gitglossary.html#def_tracking_branch" would go to
-the top of the page after this change.  Once there, the reader can
-easily search for "tracking branch" to find the right entry.
+Thanks again.
+Jonathan
+who is wishing his inbox were not so full.
