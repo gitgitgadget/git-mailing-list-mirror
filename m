@@ -1,75 +1,99 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Restart submodule update --recursive
-Date: Thu, 28 Oct 2010 12:35:14 +0200
-Message-ID: <201010281235.14313.johan@herland.net>
-References: <loom.20101028T090353-376@post.gmane.org>
+From: Sven Eckelmann <sven.eckelmann@gmx.de>
+Subject: Re: [PATCH] contrib/ciabot: git-describe commit instead of HEAD
+Date: Thu, 28 Oct 2010 13:16:18 +0200
+Message-ID: <201010281316.28104.sven.eckelmann@gmx.de>
+References: <1286179362-23597-1-git-send-email-sven.eckelmann@gmx.de> <201010111243.25375.sven.eckelmann@gmx.de> <7vzkuhlwva.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: multipart/signed;
+  boundary="nextPart36809936.IpjJNzArU2";
+  protocol="application/pgp-signature";
+  micalg=pgp-sha512
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Lukasz Palczewski <l.palczewski@prevac.pl>
-X-From: git-owner@vger.kernel.org Thu Oct 28 12:35:43 2010
+Cc: esr@thyrsus.com, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Oct 28 13:16:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBPpc-0008Q7-KW
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 12:35:40 +0200
+	id 1PBQT7-0004oC-5Y
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 13:16:29 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757825Ab0J1Kfg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 06:35:36 -0400
-Received: from smtp.opera.com ([213.236.208.81]:48573 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757061Ab0J1Kfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Oct 2010 06:35:34 -0400
-Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o9SAZEee004344
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 28 Oct 2010 10:35:15 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <loom.20101028T090353-376@post.gmane.org>
-Content-Disposition: inline
+	id S1758449Ab0J1LQY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 07:16:24 -0400
+Received: from mailout-de.gmx.net ([213.165.64.22]:35587 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1758433Ab0J1LQX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Oct 2010 07:16:23 -0400
+Received: (qmail invoked by alias); 28 Oct 2010 11:16:21 -0000
+Received: from camo58-60.hrz.tu-chemnitz.de (EHLO sven-laptop.lazhur.ath.cx) [134.109.58.60]
+  by mail.gmx.net (mp034) with SMTP; 28 Oct 2010 13:16:21 +0200
+X-Authenticated: #15668376
+X-Provags-ID: V01U2FsdGVkX1+IqM4X6IiIAJkeHGy/y02hsXDZ/ewIVvrMUAgbkT
+	qXgdAXqN9STFfT
+User-Agent: KMail/1.13.5 (Linux/2.6.36-rc6-686; KDE/4.4.5; i686; ; )
+In-Reply-To: <7vzkuhlwva.fsf@alter.siamese.dyndns.org>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160169>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160170>
 
-On Thursday 28 October 2010, Lukasz Palczewski wrote:
-> Hi.
-> I have a problem with the time and the stoping of the submodule
-> update command when the error occures.
-> In our project we have lots of submodules with submodules in them. So
-> I use git command: git submodule update --recursive, to update all
-> the submodules, but it take some time to do it. I have to do it quite
-> often becouse I'm a tester of the software and I usually don't know
-> which submodule I need to update, to have the newest version. If I
-> have some local changes in some submodule, the command stops and I
-> have to revert the changes and start the submodule update from the
-> begining again.
-> Is there a way to start the submodule update from the place, where
-> the error occured and the command stop? Something like:
-> git submodule update --recursive --restart_form_last_error
+--nextPart36809936.IpjJNzArU2
+Content-Type: Text/Plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
 
-No, but you can use 'git submodule foreach --recursive "$SCRIPT"', where 
-$SCRIPT is a command (or list of commands) for updating your current 
-submodule. As long as the SCRIPT returns successfully (exit value 0), 
-the submodule foreach will keep going into each submodule. You can the 
-look at the output from your script to deduce which submodules need to 
-be updated manually. Or you may even be able to solve your problem 
-automatically.
+On Wednesday 13 October 2010 21:24:09 Junio C Hamano wrote:
+> Sven Eckelmann <sven.eckelmann@gmx.de> writes:
+> >> Anyway, Ok, so it _is_ used.  And it needs to be fixed.
+> >=20
+> > Yes, it is a little bit confusing when reading through it, but still it
+> > is used. :)
+> >=20
+> >> I was hoping that Eric who took over the maintainership of
+> >> contrib/ciabot/ directory in April would give his blessing sooner,
+> >> without me having to look at the script.
+> >>=20
+> >> Ack?
+> >=20
+> > Hm, just be sure, because I saw no other replies since this message: You
+> > expected reaction after that "Ack?" from Eric Raymond and not from me,
+> > or?
+>=20
+> Yeah, Pinging ESR again now...
 
-You could for example try something like (all on one line):
+I am sure that he is still alive because he writes stuff=20
+http://esr.ibiblio.org/
+=2E.. but I am not sure about the rest.
 
-git submodule foreach --recursive "git fetch && git stash && git 
-checkout $sha1 && git stash pop; true"
+And yes, this is just another ping for ESR
 
+thanks,
+	Sven
 
-...Johan
+--nextPart36809936.IpjJNzArU2
+Content-Type: application/pgp-signature; name=signature.asc 
+Content-Description: This is a digitally signed message part.
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQIcBAABCgAGBQJMyVuEAAoJEF2HCgfBJntGtvQP/iEVvTaKp9gOCvIFOrrOzwVr
+glO+DH6CDftOoTA6cfZ3WllBIyx4BwVMSDOvozXsXa5o1FdepsL6HkgW2Ehx0YnG
+CJZiS4hGZdNTp3LHa0YC+5xpY7WRRE6wQ/TnOU16tN6rPO/M6nUiXCm6ToN+OjP9
+IVe5WuJtZcDjFKLWB+MYYHru13F5ahCOjgeqWIevdLl47egZKtEogAKfYZggfmG2
+rGiOVO74DluadoFK6XNWzCvKfL5PpBechnmxO2GHX6AKebeEwv3M4A8y964ELmkA
+dteAvrqxDUXoV57VczCVnFMpmj7xGVeRywm5/Fx+kbhwerdqH1Tv9Q8Q+Z0YwcNc
+cCi89u8Jyt0w52X7C7MYUCeE6q1ls0b2D5TzR9oQY9Mdh2KVEV5A9pSsh5x6e8TT
+zQqL34S+7Ahb30GrW+Op4Mz9KTNdzTx+WxCTMejebPtwAe39uGVUIQKRGGgnnX9K
+AXpuQDwOdz/86i5ZyboaJP9fiTp12h8LLbnExSKefOIXOZcYE+YjkOXqQHCVbI/Q
+jr4/a3rmzfuvEcS63pYOqwPYORiQ1E06tZDnsWerdKfhI8SUX3XtwlNZ6Ybv9ovr
+VJGMhbLNBcHOAouRmMvNZsGkoaB65qy4IDKAZR224D+hEH1OJQ1x/RuxlC2EKBNQ
+5UOgy5dLTiDpaO73mEzM
+=470C
+-----END PGP SIGNATURE-----
+
+--nextPart36809936.IpjJNzArU2--
