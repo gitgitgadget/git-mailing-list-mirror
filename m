@@ -1,79 +1,181 @@
-From: Tim Mazid <timmazid@hotmail.com>
-Subject: RE: git merge-tree segfault
-Date: Fri, 29 Oct 2010 06:25:31 +1000
-Message-ID: <SNT124-w295B9D20AA43A06DEFD13BC4440@phx.gbl>
-References: <AANLkTinJQCqwRZpbO66VHrgxezedS1Ay3nr9kayiODi9@mail.gmail.com>
+From: "H.Merijn Brand" <h.m.brand@xs4all.nl>
+Subject: Re: git-svn tests fail since 1.7.2.2
+Date: Thu, 28 Oct 2010 22:32:54 +0200
+Message-ID: <20101028223254.25c0241a@pc09.procura.nl>
+References: <20101028122857.3c8d3f4d@pc09.procura.nl>
+	<20101028175648.GA14212@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: <klas.lindberg@gmail.com>, Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 28 22:31:48 2010
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 28 22:33:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBZ8W-0004Vr-6f
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 22:31:48 +0200
+	id 1PBZ9p-00054P-OY
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 22:33:10 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933741Ab0J1Ubm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 16:31:42 -0400
-Received: from snt0-omc1-s33.snt0.hotmail.com ([65.55.90.44]:56124 "EHLO
-	snt0-omc1-s33.snt0.hotmail.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S933685Ab0J1Ubm convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Oct 2010 16:31:42 -0400
-X-Greylist: delayed 370 seconds by postgrey-1.27 at vger.kernel.org; Thu, 28 Oct 2010 16:31:42 EDT
-Received: from SNT124-W29 ([65.55.90.8]) by snt0-omc1-s33.snt0.hotmail.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Thu, 28 Oct 2010 13:25:32 -0700
-X-Originating-IP: [60.241.190.75]
-Importance: Normal
-In-Reply-To: <AANLkTinJQCqwRZpbO66VHrgxezedS1Ay3nr9kayiODi9@mail.gmail.com>
-X-OriginalArrivalTime: 28 Oct 2010 20:25:32.0068 (UTC) FILETIME=[44E22640:01CB76DE]
+	id S933797Ab0J1UdF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 16:33:05 -0400
+Received: from smtp-vbr7.xs4all.nl ([194.109.24.27]:1253 "EHLO
+	smtp-vbr7.xs4all.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933685Ab0J1UdD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Oct 2010 16:33:03 -0400
+Received: from pc09.procura.nl (procura.xs4all.nl [82.95.216.29])
+	(authenticated bits=0)
+	by smtp-vbr7.xs4all.nl (8.13.8/8.13.8) with ESMTP id o9SKWtn1032194
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NO);
+	Thu, 28 Oct 2010 22:32:56 +0200 (CEST)
+	(envelope-from h.m.brand@xs4all.nl)
+In-Reply-To: <20101028175648.GA14212@burratino>
+X-Mailer: Claws Mail 3.7.6cvs59 (GTK+ 2.18.6; x86_64-unknown-linux-gnu)
+Face: iVBORw0KGgoAAAANSUhEUgAAADAAAAAwEAIAAACI8LKTAAAACXBIWXMAAABIAAAASABGyWs+AAAC
+ JElEQVRo3u2aMY4CMQxFczZ6RItEzRm4DBINDbRUSPRInIRbsNK6+dJfezN4kokn48IaCSjysL8d
+ e9Knoj2fr9f9/gllqQ6U9/vxWK3EdwdIEGjRIVCu18NhuxUfK46SH81+fzrdbuKPx/P5ctHQdAdI
+ TKAgpvV6s9ntBEfXEYSGgMQzIHnuFBBjkshCNJ2KtJZ04hHNAugP8bZr3NIHhbcF0AKoK0CoaHXU
+ LUWBIs1n+jV+Fl8CVqOApEXAwyMO/DSR4XVntoAYDR7eBjQupuYAYTMph8Rj21D4m7MChN02tpqs
+ NSnb/KqU2oHCXu5xDCgflj/RAgBiKBIXnICzAsSjWBsTz5K4/HeXYvb8yK5lY3VGEwPi2aONKT+5
+ AlcxrTPOwcTiraGRChgMEKJh0bVVifGVTq6qgBiNVl8QE29EsK6VE+YJAOG2wz5AvsqUS6uqgHCA
+ n4NGvBYpnJ64Jgg27sCtxtBk1CJIA4S/GhdWKh07QxUB48jWGhZ4jKamRRr/T8/M0AaEyctry6YB
+ 4dTGj9iWZNs3DahES5kPCJOu0RQbF/fQOBprsB9gaO9JtPDzII9U5ySXX7AnuIt91y54AAW7rPpT
+ LCe5gt3F+CLqr2UarGB3MXvMylWGq4+9RCx3TW1oJq1t3HPQlFs6N1fFNEB4s8dn7Ne7ACSm7TPQ
+ I5quAWmw6qBpulHM33B0Csge4Nd8JTTYG2b1XyRe3lH8x34ABJ6aePuQ2N4AAAAASUVORK5CYII=
+X-Virus-Scanned: by XS4ALL Virus Scanner
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160222>
+
+On Thu, 28 Oct 2010 12:56:48 -0500, Jonathan Nieder
+<jrnieder@gmail.com> wrote:
+
+> Hi,
+> 
+> H.Merijn Brand wrote [snipped somewhat]:
+> 
+> > Up to and including 1.7.2.1, all went smooth and fine, but as of
+> > 1.7.2.2 (and 1.7.3.1 and 1.7.3.2), the tests started to fail on svn
+> > issues.
+> >
+> > t9101-git-svn-props.sh                           (Wstat: 256 Tests: 26 Failed: 3)
+> >   Failed tests:  24-26
+> > t9143-git-svn-gc.sh                              (Wstat: 256 Tests: 11 Failed: 1)
+> >   Failed test:  10
+> >
+> > These tests fail on *all* my Linux boxes, which happen to be OpenSUSE
+> > ranging from 11.0 to 11.3.
+> >
+> > OpenSUSE 11.0/64:
+> > + svn, version 1.5.7 (r36142)
+> > 
+> > OpenSUSE 11.2/64:
+> > + svn, version 1.6.6 (r40053)
+> > 
+> > OpenSUSE 11.3/32:
+> > + svn, version 1.6.9 (r901367)
+> 
+> Any idea what error message or command they fail at?  Useful commands
+> to try might be
+> 
+>  sh t9101-git-svn-props.sh -v
+
+ok 23 - test show-ignore
+
+expecting success:
+        git svn fetch && git pull . remotes/git-svn &&
+        git svn create-ignore &&
+        cmp ./.gitignore create-ignore.expect &&
+        cmp ./deeply/.gitignore create-ignore.expect &&
+        cmp ./deeply/nested/.gitignore create-ignore.expect &&
+        cmp ./deeply/nested/directory/.gitignore create-ignore.expect &&
+        git ls-files -s | grep gitignore | cmp - create-ignore-index.expect
+
+        A       deeply/nested/directory/.keep
+r8 = ddf07d64e9879c7d8f730b781596e1a6cf5d413b (refs/remotes/git-svn)
+From .
+ * remote branch     git-svn    -> FETCH_HEAD
+Updating eff953b..ddf07d6
+Fast-forward
+ 0 files changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 deeply/nested/directory/.keep
+-: No such file or directory
+not ok - 24 test create-ignore
+#
+#               git svn fetch && git pull . remotes/git-svn &&
+#               git svn create-ignore &&
+#               cmp ./.gitignore create-ignore.expect &&
+#               cmp ./deeply/.gitignore create-ignore.expect &&
+#               cmp ./deeply/nested/.gitignore create-ignore.expect &&
+#               cmp ./deeply/nested/directory/.gitignore create-ignore.expect &&
+#               git ls-files -s | grep gitignore | cmp - create-ignore-index.expect
+#
+
+expecting success:
+        git svn propget svn:ignore . | cmp - prop.expect &&
+        cd deeply &&
+        git svn propget svn:ignore . | cmp - ../prop.expect &&
+        git svn propget svn:entry:committed-rev nested/directory/.keep    | cmp - ../prop2.expect &&
+        git svn propget svn:ignore .. | cmp - ../prop.expect &&
+        git svn propget svn:ignore nested/ | cmp - ../prop.expect &&
+        git svn propget svn:ignore ./nested | cmp - ../prop.expect &&
+        git svn propget svn:ignore .././deeply/nested | cmp - ../prop.expect
+
+-: No such file or directory
+error: git-svn died of signal 13
+not ok - 25 test propget
+#
+#               git svn propget svn:ignore . | cmp - prop.expect &&
+#               cd deeply &&
+#               git svn propget svn:ignore . | cmp - ../prop.expect &&
+#               git svn propget svn:entry:committed-rev nested/directory/.keep   | cmp - ../prop2.expect &&
+#               git svn propget svn:ignore .. | cmp - ../prop.expect &&
+#               git svn propget svn:ignore nested/ | cmp - ../prop.expect &&
+#               git svn propget svn:ignore ./nested | cmp - ../prop.expect &&
+#               git svn propget svn:ignore .././deeply/nested | cmp - ../prop.expect
+#
+
+expecting success:
+        git svn proplist . | cmp - prop.expect &&
+        git svn proplist nested/directory/.keep | cmp - prop2.expect
+
+-: No such file or directory
+error: git-svn died of signal 13
+not ok - 26 test proplist
+#
+#               git svn proplist . | cmp - prop.expect &&
+#               git svn proplist nested/directory/.keep | cmp - prop2.expect
+#
+
+# failed 3 among 26 test(s)
+1..26
+Exit 1
+
+Right, If I would have thought of that myself, I would not have had to report
+the issue. My system seems to have a non-standard "cmp" that seems to
+have been chosen over the system one. That cmp does not handle -.
+
+Problem solved:
+
+ok 26 - test proplist
+
+# passed all 26 test(s)
+1..26
+
+> and
+> 
+>  sh -x t9101-git-svn-props.sh -v -i
+> 
+> Thanks for reporting,
+> Jonathan
 
 
-> Date: Thu, 28 Oct 2010 22:16:03 +0200
-> Subject: git merge-tree segfault
-> From: klas.lindberg@gmail.com
-> To: git@vger.kernel.org
->
-> I haven't tried this on newer versions of git, but the release notes
-> for later releases don't mention merge-tree anywhere, so...
->
-> git version: 1.7.0
-> uname -a: Linux tor 2.6.32-trunk-amd64 #1 SMP Sun Jan 10 22:40:40 UTC
-> 2010 x86_64 GNU/Linux
-> distro: Debian GNU/Linux squeeze/sid
->
-> Unpack the attached tree, cd into it and run:
-> git merge-tree common master other
->
-> I get the following result:
-> added in local
-> our 100644 d68dd4031d2ad5b7a3829ad7df6635e27a7daa22 t1.txt
-> Segmentation fault
->
-> The exit code:
-> 139
->
-> BR / Klas
-
-
-Confirm this bug with arbitrary repository and arbitrary revs.
-
-git version: 1.7.1
-uname -a: Linux Imperial-SSD-Overlord 2.6.35-trunk-amd64 #1 SMP
-Tue Aug 17 08:22:25 UTC 2010 x86_64 GNU/Linux
-distro: Debian GNU/Linux unstable/experimental
-
-Same exit code; 139.
-
-Regards,
-Tim.
-
- 		 	   		  
+-- 
+H.Merijn Brand  http://tux.nl      Perl Monger  http://amsterdam.pm.org/
+using 5.00307 through 5.12 and porting perl5.13.x on HP-UX 10.20, 11.00,
+11.11, 11.23 and 11.31, OpenSuSE 10.1, 11.0 .. 11.3 and AIX 5.2 and 5.3.
+http://mirrors.develooper.com/hpux/           http://www.test-smoke.org/
+http://qa.perl.org      http://www.goldmark.org/jeff/stupid-disclaimers/
