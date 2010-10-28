@@ -1,92 +1,83 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 03/10] Change remote tracking to remote-tracking in
- non-trivial places
-Date: Thu, 28 Oct 2010 13:39:19 -0500
-Message-ID: <20101028183919.GD14212@burratino>
-References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
- <1288290117-6734-4-git-send-email-Matthieu.Moy@imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: `git status --porcelain` disagrees with documentation about
+ quoting filenames with spaces
+Date: Thu, 28 Oct 2010 11:44:01 -0700
+Message-ID: <7v39rqb1ji.fsf@alter.siamese.dyndns.org>
+References: <4AC7298E-73D7-4074-91CD-7C10DE414532@sb.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Thore Husfeldt <thore.husfeldt@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Thu Oct 28 20:39:34 2010
+Cc: Git mailing list <git@vger.kernel.org>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Thu Oct 28 20:44:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBXNt-0005Uh-6f
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 20:39:33 +0200
+	id 1PBXSS-0007sY-Fb
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 20:44:16 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1761383Ab0J1Sj1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 14:39:27 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:43135 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1761382Ab0J1Sj0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Oct 2010 14:39:26 -0400
-Received: by fxm16 with SMTP id 16so2235258fxm.19
-        for <git@vger.kernel.org>; Thu, 28 Oct 2010 11:39:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=yqS0WLtoWCnoKnHNDnz49ocF/1wUANZCKbw2E3GqSjA=;
-        b=w7h4mopppddAHDzbSYrmvGx5WcPjrtjmfSk4lwJtaRIA3g1t76lTiWPNmHq4W9OAGH
-         0tpp5cwyyAMxIyszRthzIgnynSIBco1i0Rnt4pX+6vXJjog5mAZqVfqByJnE7HTCyTnD
-         NSCwvkPBhUo+BarER06ey5FRKZkeIQf526mBI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=d0oH4ivpPRpczF53uBxZQMoU+frgnGzxUFniZjWgg/R4qlp4gytQPmpcTEZPQLz84a
-         U6yAigFJ4DmovdstIVqVnDPFMT0ZrIIvxaWQY3MI4XjVJKkA++U7LafwZLOETl72LDEa
-         ZpK1UDkoI80/yWgn6tNpE++L/+gDbxZ46tfNk=
-Received: by 10.223.101.142 with SMTP id c14mr4348683fao.94.1288291164902;
-        Thu, 28 Oct 2010 11:39:24 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id 10sm645286fax.18.2010.10.28.11.39.23
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 28 Oct 2010 11:39:24 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1288290117-6734-4-git-send-email-Matthieu.Moy@imag.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757173Ab0J1SoM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 14:44:12 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:35551 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755776Ab0J1SoK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Oct 2010 14:44:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id B32DD1C2A;
+	Thu, 28 Oct 2010 14:44:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TB8RsHuB0JmnZ7n7G7cGiyl4fpA=; b=lsYtsX
+	ANeq7uaDY8Y2OGkx8WqtTtWGMUxK+KXli8Ccjm7xuA8tETd72g5KuNkHQYxebxx/
+	E2DhKu7iZpGijp3vplUbTkXOLsRsyX/HEucTEW/or5X5KSOOXG9Ujx17brAAMs00
+	Nclm7LpbrbkNmSePLOrUjamHrMtHoUNKI85qE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qnqqyG3uYHwPM+nsmGxhmWO1skF2JhvK
+	DPP/O8plRILyI+6z9jqkDsyvGY/586FaUgSffOWryluVTY9fAkrme0qSE/viGgih
+	tE9w/JedCYjf1TovFaYtd96p5Qx22J+bTKVkUa7jTRBvWdNRxI1Mryn1Mpo5e57u
+	a8XLCW/Wz3E=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 904201C25;
+	Thu, 28 Oct 2010 14:44:06 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.169.49]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id DEDB91C24; Thu, 28 Oct
+ 2010 14:44:03 -0400 (EDT)
+In-Reply-To: <4AC7298E-73D7-4074-91CD-7C10DE414532@sb.org> (Kevin Ballard's
+ message of "Wed\, 27 Oct 2010 16\:57\:52 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 57E5FF90-E2C3-11DF-95A0-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160207>
 
-Matthieu Moy wrote:
+Kevin Ballard <kevin@sb.org> writes:
 
-> --- a/Documentation/everyday.txt
-> +++ b/Documentation/everyday.txt
-> @@ -180,12 +180,12 @@ directory; clone from it to start a repository on the satellite
->  machine.
->  <2> clone sets these configuration variables by default.
->  It arranges `git pull` to fetch and store the branches of mothership
-> -machine to local `remotes/origin/*` tracking branches.
-> +machine to local `remotes/origin/*` remote-tracking branches.
->  <3> arrange `git push` to push local `master` branch to
->  `remotes/satellite/master` branch of the mothership machine.
->  <4> push will stash our work away on `remotes/satellite/master`
-> -tracking branch on the mothership machine.  You could use this as
-> -a back-up method.
-> +remote-tracking branch on the mothership machine.  You could use this
-> +as a back-up method.
->  <5> on mothership machine, merge the work done on the satellite
->  machine into the master branch.
+[jc: why do you send messages with toooooooooooo loooooong lines sometimes
+and normal line lengths some other times...?]
 
-Just for the record: I still don't think this hunk fits with the rest
-of the patch, and I think it just switches from one bad wording to
-another.
+> Given that the removal of quoting for filenames with spaces was an
+> intentional change, does anybody have any strong opinions about whether
+> we should restore the quotes in this scenario? The alternative is to
+> simply change the documentation, but the un-parsability of the
+> --porcelain format has me worried.
 
-This is the "Everyday git" document, one of the first pages a new user
-might read.  Using jargon that does not explain itself (whether it is
-"tracking branches" or "remote-tracking branches") is not really a
-good idea.
+28fba29 (Do not quote SP., 2005-10-17) explicitly addressed a breakage
+that quoted pathnames in contexts like this one:
 
-Wouldn't it be possible to split this into a separate patch, so it
-does not hold back the other "add hyphen" changes?
+    diff --git a/My Documents/hello.txt b/My Documents/hello.txt
+
+I personally think people who add SP to their pathnames need to get their
+head examined, and in that sense I do not strongly mind if the pathnames
+in the above are quoted (that is why the original quotation before the
+said commit quoted them), but apparently other people did mind.  I also
+think people who have " -> " in their pathnames are even less sane beyond
+salvation, and between the two insanity, I'd rather help less insane ones
+by not quoting the above.
+
+The best would probably be to special case SP (which is normally not to be
+quoted) _only_ in the context of "something" -> "something".
