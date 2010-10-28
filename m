@@ -1,95 +1,160 @@
-From: Jan =?UTF-8?B?U3TEmXBpZcWE?= <jan@stepien.cc>
-Subject: Re: [PATCH] fetch-pack: make the ssh connection quiet
-Date: Thu, 28 Oct 2010 11:14:03 +0200
-Message-ID: <20101028111403.db0f8593.jan@stepien.cc>
-References: <1288189628-4883-1-git-send-email-jstepien@users.sourceforge.net>
-	<7v1v7bclhe.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/3] gitweb: Add option to force version match
+Date: Thu, 28 Oct 2010 02:52:44 -0700 (PDT)
+Message-ID: <m3fwvqir0o.fsf@localhost.localdomain>
+References: <1288226574-19068-1-git-send-email-warthog9@eaglescrag.net>
+	<1288226574-19068-2-git-send-email-warthog9@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Oct 28 11:14:19 2010
+To: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Thu Oct 28 11:53:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBOYn-0000rX-Ub
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 11:14:14 +0200
+	id 1PBPAj-0002aZ-ED
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 11:53:25 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752858Ab0J1JOI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Oct 2010 05:14:08 -0400
-Received: from r245-52.iq.pl ([86.111.245.52]:44127 "EHLO stepien.cc"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752525Ab0J1JOH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Oct 2010 05:14:07 -0400
-Received: from jan-sl300-ubuntu (coi-nat.rtr.pw.edu.pl [194.29.130.100])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by stepien.cc (Postfix) with ESMTPSA id 967F72A10378;
-	Thu, 28 Oct 2010 11:14:04 +0200 (CEST)
-In-Reply-To: <7v1v7bclhe.fsf@alter.siamese.dyndns.org>
-X-Mailer: Sylpheed 3.0.2 (GTK+ 2.20.1; i486-pc-linux-gnu)
+	id S1753367Ab0J1Jwt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 05:52:49 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:41595 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751420Ab0J1Jwr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Oct 2010 05:52:47 -0400
+Received: by bwz11 with SMTP id 11so1367160bwz.19
+        for <git@vger.kernel.org>; Thu, 28 Oct 2010 02:52:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=aEA9oIB+FMo/DSYbEs2O143emTEEJKF0sVjgTdMfl9E=;
+        b=EBrz43YAut5qkts7g911txquA2tQQDOpjlblmQ0ff5ywW/AJ9j5j08EOcXOe9zrjaD
+         iIOMl6jfD2Fc25EMTmIEQ79P22Kbv6w/BX0Ml33fESY3SDKXdaMWeCCso4pC9yLxbdaT
+         ihtynxzA2kfqMfM3hvnGlD1T5pidzBejdLgNg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=mjbRIdUUEeUQHNbwQiGwn9XmHcI/z8iS7gJmXiFXwy+iqpbFKExBY4+ZQRMLUI9HjV
+         L3n8B47rckkGHQPortUe1bS3CKhbVcBSQLk94wlCztMp66bmE0zlnEd7I7Ey/hjlXcSS
+         G4ibgPSDpv/Ca0UWiI8xzsQvzpO6/GZe4r2I4=
+Received: by 10.204.156.9 with SMTP id u9mr2017640bkw.202.1288259565839;
+        Thu, 28 Oct 2010 02:52:45 -0700 (PDT)
+Received: from localhost.localdomain (abvj108.neoplus.adsl.tpnet.pl [83.8.207.108])
+        by mx.google.com with ESMTPS id f21sm7449357bkf.12.2010.10.28.02.52.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 28 Oct 2010 02:52:44 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id o9S9q9U6006614;
+	Thu, 28 Oct 2010 11:52:20 +0200
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id o9S9prgu006609;
+	Thu, 28 Oct 2010 11:51:53 +0200
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1288226574-19068-2-git-send-email-warthog9@eaglescrag.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160164>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160165>
 
-On Wed, 27 Oct 2010 15:35:41 -0700
-Junio C Hamano <gitster@pobox.com> wrote:
-> Jan St=C4=99pie=C5=84  <jstepien@users.sourceforge.net> writes:
-> > The --quiet option passed to fetch-pack did not affect the ssh chil=
-d
-> > process. When an ssh server sent a motd it was displayed because th=
-e ssh
-> > client wasn't launched with the -q option.
->=20
-> This is curious for a couple of reasons:
->=20
-> 1. "-q" option to "ssh" is not meant to supress "motd"; it is about
->    warning and diagnostics.  From man ssh(1):
->=20
->      -q Quiet mode.  Causes most warning and diagnostic messages to b=
-e
->         suppressed.  Only fatal errors are displayed.  If a second -q=
- is
->         given then even fatal errors are suppressed, except for those
->         produced due solely to bad argu=E2=80=90 ments.
->=20
-> 2. "PrintMotd" defaults to "yes" but it is to specify whether the dae=
-mon
->    should print /etc/motd when a user logs in interactively.  I didn'=
-t
->    think fetch-pack logged in interactively, so why should this matte=
-r?
->=20
+"John 'Warthog9' Hawley" <warthog9@eaglescrag.net> writes:
 
-You're right, fetch-pack doesn't log in interactively so the actual mot=
-d
-is not displayed. I made some research and it turned out that what I
-described in the commit message as the "motd" was in fact the Banner.
-Quoting man sshd_config(5):
+> This adds $git_versions_must_match variable, which is set to true,
+> checks that we are running on the same version of git that we
+> shipped with, and if not throw '500 Internal Server Error' error.
+> What is checked is the version of gitweb (embedded in building
+> gitweb.cgi), against version of runtime git binary used.
+> 
+> Gitweb can usually run with a mismatched git install.  This is more
+> here to give an obvious warning as to whats going on vs. silently
+> failing.
 
-  Banner  The contents of the specified file are sent to the remote
-          user before authentication is allowed.  If the argument is
-          =E2=80=9Cnone=E2=80=9D then no banner is displayed.  This opt=
-ion is only
-          available for protocol version 2.  By default, no banner
-          is displayed.
+Were you bitten by mismatch between git version and gitweb version?
+Just how serious is that (hypothetical?) situation?
 
-=46rom what I've read it seems that the Banner is generally used to
-display some legal information, such as "this system can be used by
-authorised personnel only, others will be prosecuted".
+Should it be warning, or erroring out?
 
-I'd say that suppressing such information along with diagnostic
-messages might be expected after adding the "-q" flag to fetch-pack
-and other similar commands. Fatal errors will be printed anyway. The
-question is whether "--quiet" should suppress warnings as well. From my
-point of view it is reasonable or at least acceptable. An alternative
-solution might be to add another level of verbosity, namely "--silent".
+> 
+> By default this feature is turned on.
 
-Thanks,
---=20
-Jan St=C4=99pie=C5=84 <jan@stepien.cc>
+I think last time this patch stalled on discussion whether this
+feature should be turned on by default, where it can break some
+setups; or be turned off by default, where it is much less useful
+protecting against errors.
+
+> 
+> Signed-off-by: John 'Warthog9' Hawley <warthog9@kernel.org>
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> ---
+>  gitweb/README      |    4 ++++
+>  gitweb/gitweb.perl |   27 +++++++++++++++++++++++++++
+>  2 files changed, 31 insertions(+), 0 deletions(-)
+
+For me, if $git_versions_must_match is to be on by default, I would
+prefer also update to t/gitweb-lib.sh, so hat I don't have to
+recompile git to test new version of gitweb...  
+
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index 8d7e4c5..215a4e9 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -232,6 +232,9 @@ our %avatar_size = (
+>  	'double'  => 32
+>  );
+>  
+> +# If it is true, exit if gitweb version and git binary version don't match
+> +our $git_versions_must_match = 1;
+> +
+>  # Used to set the maximum load that we will still respond to gitweb queries.
+>  # If server load exceed this value then return "503 server busy" error.
+>  # If gitweb cannot determined server load, it is taken to be 0.
+> @@ -649,6 +652,29 @@ sub check_loadavg {
+>  	}
+>  }
+>  
+> +sub check_versionmatch {
+> +	# Throw an error if git versions does not match, if $git_versions_must_match is true.
+> +	if ($git_versions_must_match &&
+> +	    $git_version ne $version) {
+> +		my $admin_contact =
+> +			defined $ENV{'SERVER_ADMIN'} ? ", $ENV{'SERVER_ADMIN'}," : '';
+> +		my $err_msg = <<EOT;
+> +<h1 align="center">*** Warning ***</h1>
+> +<p>
+> +This version of gitweb was compiled for <b>@{[esc_html($version)]}</b>,
+> +however git version <b>@{[esc_html($git_version)]}</b> was found on server,
+> +and administrator requested strict version checking.
+> +</p>
+> +<p>
+> +Please contact the server administrator${admin_contact} to either configure
+> +gitweb to allow mismatched versions, or update git or gitweb installation.
+> +</p>
+> +EOT
+> +		die_error(500, 'Internal server error', $err_msg);
+> +	}
+> +
+> +}
+
+Nice.
+
+> +
+>  # ======================================================================
+>  # input validation and dispatch
+>  
+> @@ -1075,6 +1101,7 @@ sub run_request {
+>  	evaluate_uri();
+>  	evaluate_gitweb_config();
+>  	check_loadavg();
+> +	check_versionmatch();
+
+Shouldn't it be before check_loadavg()?
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
