@@ -1,71 +1,63 @@
-From: "Olsen, Alan R" <alan.r.olsen@intel.com>
-Subject: RE: Bugs in Gitosis
-Date: Thu, 28 Oct 2010 15:22:19 -0700
-Message-ID: <26E9B811E137AB4B95200FD4C950886BA9665E50@orsmsx507.amr.corp.intel.com>
-References: <26E9B811E137AB4B95200FD4C950886BA9665D70@orsmsx507.amr.corp.intel.com>
- <vpq8w1if0yy.fsf@bauges.imag.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] Gitweb caching v7
+Date: Thu, 28 Oct 2010 15:29:06 -0700
+Message-ID: <7vwrp27xzh.fsf@alter.siamese.dyndns.org>
+References: <1288226574-19068-1-git-send-email-warthog9@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Oct 29 00:22:25 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Fri Oct 29 00:29:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBarY-0007rj-VM
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 00:22:25 +0200
+	id 1PBayF-0001sc-D1
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 00:29:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755091Ab0J1WWU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 18:22:20 -0400
-Received: from mga03.intel.com ([143.182.124.21]:10219 "EHLO mga03.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752140Ab0J1WWT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Oct 2010 18:22:19 -0400
-Received: from azsmga001.ch.intel.com ([10.2.17.19])
-  by azsmga101.ch.intel.com with ESMTP; 28 Oct 2010 15:22:17 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="4.58,254,1286175600"; 
-   d="scan'208";a="341855625"
-Received: from orsmsx603.amr.corp.intel.com ([10.22.226.49])
-  by azsmga001.ch.intel.com with ESMTP; 28 Oct 2010 15:22:17 -0700
-Received: from orsmsx601.amr.corp.intel.com (10.22.226.213) by
- orsmsx603.amr.corp.intel.com (10.22.226.49) with Microsoft SMTP Server (TLS)
- id 8.2.254.0; Thu, 28 Oct 2010 15:22:17 -0700
-Received: from orsmsx507.amr.corp.intel.com ([10.22.226.41]) by
- orsmsx601.amr.corp.intel.com ([10.22.226.213]) with mapi; Thu, 28 Oct 2010
- 15:22:16 -0700
-Thread-Topic: Bugs in Gitosis
-Thread-Index: Act26RKAd0IVVcOtRByyhbTfFjsWSwABT55w
-In-Reply-To: <vpq8w1if0yy.fsf@bauges.imag.fr>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1756969Ab0J1W3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 18:29:15 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51975 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751924Ab0J1W3N (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Oct 2010 18:29:13 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 1E5181C7B;
+	Thu, 28 Oct 2010 18:29:13 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wFqMpyNWoKO+8gbSl9pWVXcj7Vg=; b=uvN9tk
+	/b/OiqmiekBiS3UOA2d/VL4JQcPz8UGSXpM0GHwsbRFPa4HT0vXCMsNO94O/lm4u
+	69OjFlEXRbdMzatnx80wZLM+GxgfHn0zhbY5B+IiarRu6VGp9y6Io9k5fecpXxuV
+	V2Y9rcgZTKkVrD7oXiY3+1mj8WdIMko+zKdQk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iISUaruvMD36JDAIKya2IWCwgAvhXtu+
+	+FbEqGLAdjqwvFEUpfVK6tbT85gPjwl6FchDuOEm1oo6rigzk/WBoeEyUzybGHJx
+	0HS5KJ2Z38J//Fzka/B6oO6ojoq0sMOjL5ojdOqi8l0ilqJy2V+Qdho2IEkKkdoA
+	HK5zqfpiDTI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E882F1C7A;
+	Thu, 28 Oct 2010 18:29:10 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.169.49]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 50C371C79; Thu, 28 Oct
+ 2010 18:29:08 -0400 (EDT)
+In-Reply-To: <1288226574-19068-1-git-send-email-warthog9@eaglescrag.net>
+ (John Hawley's message of "Wed\, 27 Oct 2010 17\:42\:51 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C91FBCC2-E2E2-11DF-AFF0-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160243>
 
->From: Matthieu Moy [mailto:Matthieu.Moy@grenoble-inp.fr] 
->Sent: Thursday, October 28, 2010 2:43 PM
->To: Olsen, Alan R
->Cc: git@vger.kernel.org
->Subject: Re: Bugs in Gitosis
+"John 'Warthog9' Hawley" <warthog9@eaglescrag.net> writes:
 
->"Olsen, Alan R" <alan.r.olsen@intel.com> writes:
+> v7:
+> 	- Rework output system, now central STDOUT redirect
 
->> Here is my list of current outstanding issues with Gitosis.  I do
->> not have fixes for these at the moment, but people and web indexes
->> should be aware of the problems. The author of Gitosis seems to have
->> been taken off-line. (The list may not be complete. I may have
->> forgotten something.)
-
->For completeness (but I think you know it already): gitolite is an
->alternative to gitosis, and it is maintained.
-
-Does gitolite play well with Gerrit? I note in the docs that it does not react well to files under its control being messed with.
+Yeah, when I saw your print-to-variable-assignment that was one of the
+things that came to my mind.  Sounds like a reasonable thing to do.
