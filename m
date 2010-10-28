@@ -1,85 +1,106 @@
-From: Mike Herrick <mike.herrick@gmail.com>
-Subject: Re: fsck errors on newly cloned, newly imported git repository
-Date: Thu, 28 Oct 2010 19:40:15 -0400
-Message-ID: <AANLkTimr_11_F7WJK3Uv8N=ORqDYfrLTGyHB7c-npNaU@mail.gmail.com>
-References: <AANLkTimxXXNxUOMQyDDoW9+vT9aKL5C5m+VD51jk0zL9@mail.gmail.com>
-	<1288004282.819.26.camel@drew-northup.unet.maine.edu>
-	<AANLkTi=7mg-1Q1hHPA52MiHa3BXF95SGTTTTLFR9+VZ3@mail.gmail.com>
-	<AANLkTinfDh5_-u6nJc=MMs_vPQGuBPhOT-TqgVOvAMPo@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: `git status --porcelain` disagrees with documentation about
+ quoting filenames with spaces
+Date: Thu, 28 Oct 2010 16:41:59 -0700
+Message-ID: <7vocad996g.fsf@alter.siamese.dyndns.org>
+References: <4AC7298E-73D7-4074-91CD-7C10DE414532@sb.org>
+ <7v39rqb1ji.fsf@alter.siamese.dyndns.org>
+ <EFFE2D68-BBA3-4EF4-B56A-AA4882EDE1E4@sb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Fri Oct 29 01:40:24 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git mailing list <git@vger.kernel.org>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Fri Oct 29 01:42:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBc51-0002B9-Dk
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 01:40:23 +0200
+	id 1PBc6q-0002tk-NV
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 01:42:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759576Ab0J1XkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 19:40:18 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:39513 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758456Ab0J1XkQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Oct 2010 19:40:16 -0400
-Received: by wwe15 with SMTP id 15so2620962wwe.1
-        for <git@vger.kernel.org>; Thu, 28 Oct 2010 16:40:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=T+yw/OlrIjNafuZaK+liYBTbYtAja5N0iZ4272zDMv4=;
-        b=uIUD3THOYUVs9VA5IUXNTsgkB0vPn0OKxCnvaGMe++YH/h/+7V6YVojt9yy1zB9Z1E
-         /Gdz0m+baGqDNiE8lQ3/2R5RhDm5HhP285eo3ODFOcJY2ytrKF2ly8IN567nLDzYZX13
-         q/TywPLYBHRyeHLHe3aNYe4Mnkv8ULDCEtSQ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Fl97+++1L07BafcIk5Tx+9arh+vwOiI+EPJFsoa3nLFzV/QrVidUyLMQlORz40QXOo
-         k7H9hRsORD1mvj9C1r2BgM5BDLfuDBiXrh8UsRI0umhpLEv/V3DE1pgziCOEldiaCkbD
-         nkSdbX7bYOLIrOyUwVK+toyIQeuTgfp5r6XMI=
-Received: by 10.227.129.83 with SMTP id n19mr10189358wbs.33.1288309215173;
- Thu, 28 Oct 2010 16:40:15 -0700 (PDT)
-Received: by 10.216.255.143 with HTTP; Thu, 28 Oct 2010 16:40:15 -0700 (PDT)
-In-Reply-To: <AANLkTinfDh5_-u6nJc=MMs_vPQGuBPhOT-TqgVOvAMPo@mail.gmail.com>
+	id S1758717Ab0J1XmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 19:42:12 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49123 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756830Ab0J1XmL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Oct 2010 19:42:11 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E68A71630;
+	Thu, 28 Oct 2010 19:42:05 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ivU1mkNhA/FXwzUXo5GNijsIxKs=; b=L60Jj/
+	m9VnhOCO+JTCofnFaqHh3SJv5LDcpoCr809AS9BXjHO8rg+a9mpVs2dNOw8UBet4
+	f1unciTAWh/N/bUDQaWtAnxhCnnKRQy5+lukzzFQ3xyuCoejCdZEjZZViSLOxLyn
+	Il5WTn/ksCQyyEZ/yD4OKymTWAjb4qvDz0YzU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=iXXdD4VU0FCYOOoIMPatoXC3nJDGLfb6
+	ZjtHMFjuPazadYh3Ecua++Qqx1oE7elu8JNV1WRBgrJKQUdiL3i76Ln2uMs4YoRb
+	AWaOTTy1zwuJrXoYNLOD1ysP7A4anvxhQdEWev+DOqe0rGxAZ0PxrxXdrhjKQ2bf
+	zAtxat8Yp+w=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id BAE1E162F;
+	Thu, 28 Oct 2010 19:42:03 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.169.49]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 04C91162E; Thu, 28 Oct
+ 2010 19:42:00 -0400 (EDT)
+In-Reply-To: <EFFE2D68-BBA3-4EF4-B56A-AA4882EDE1E4@sb.org> (Kevin Ballard's
+ message of "Thu\, 28 Oct 2010 14\:17\:31 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F786E22A-E2EC-11DF-AB4B-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160249>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160250>
 
-Following up to my own post, after some serious debugging, it turned
-out that the libcrypto library was to blame.
+Kevin Ballard <kevin@sb.org> writes:
 
-I found that after the clone, a git index-pack on the pack-file would
-generate a different index each time (from the same pack-file).  I
-narrowed it down to this routine returning an incorrect sha1 on "bad"
-machines:
+> On Oct 28, 2010, at 11:44 AM, Junio C Hamano wrote:
+>
+>> Kevin Ballard <kevin@sb.org> writes:
+>> 
+>> [jc: why do you send messages with toooooooooooo loooooong lines sometimes
+>> and normal line lengths some other times...?]
+>
+> I use a GUI mail client to write email. Anything I copy&paste is hard-wrapped,
+> anything I write directly tends to not include hard linebreaks at all. Would it
+> be better if I hard-wrapped my lines?
 
-static void write_sha1_file_prepare(const void *buf, unsigned long len,
-                                    const char *type, unsigned char *sha1,
-                                    char *hdr, int *hdrlen)
-{
-        git_SHA_CTX c;
+It is not better vs worse but is acceptable vs unacceptable, as hard
+wrapped messages have been the norm around here from day one.  As far as I
+remember you only recently started sending messages with long lines, so I
+suspected perhaps you changed your environment and are doing so without
+realizing the pain you are causing to others.
 
-        /* Generate the header */
-        *hdrlen = sprintf(hdr, "%s %lu", type, len)+1;
+> ... Granted, having " -> " in your pathname is also pretty
+> insane, but my motivation here is just ensuring that the --porcelain format
+> is parseable even if you are insane.
 
-        /* Sha1.. */
-        git_SHA1_Init(&c);
-        git_SHA1_Update(&c, hdr, *hdrlen);
-        git_SHA1_Update(&c, buf, len);
-        git_SHA1_Final(sha1, &c);
-}
+It is not just "also" but order of magnitude more insane ;-)
 
-Upgrading the libcrypto solved the problem on both machines.
+Just in case you misunderstood me, even though I think SP in path is
+already insane, I am sympathetic enough to them to stand behind 28fba29
+(Do not quote SP., 2005-10-17); they were the ones who complained when
+they saw
 
-FYI, the offending versions were openssl-0.9.7a-26 and
-openssl-0.9.7a-35 (these were Fedora Core 2 vintage).  Hopefully
-no-one has any systems this old lying around any longer.
+    diff --git "a/My Documents/hello.txt" "b/My Documents/hello.txt"
 
-Mike.
+and complained.  As 
+
+    diff --git a/My Documents/hello.txt b/My Documents/hello.txt
+
+is perfectly parsable (and no, don't worry about renames---we have extra
+headers to keep them unambiguous), it is easier on their eyes if we did
+not quote these paths that are "normal" to them ;-)
+
+>> The best would probably be to special case SP (which is normally not to be
+>> quoted) _only_ in the context of "something" -> "something".
+>
+> That's what I was thinking. I'll look into doing just that.
+
+Yeah, if we wanted to be perfect, it would be better to do so without
+causing unnecessary pain.
