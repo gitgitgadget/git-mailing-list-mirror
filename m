@@ -1,65 +1,101 @@
-From: Ron Rondis <ron.rondis@gmail.com>
-Subject: duplicate commit entries
-Date: Thu, 28 Oct 2010 16:42:08 +0200
-Message-ID: <4CC98BC0.9070003@gmail.com>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Git terminology: remote, add, track, stage, etc.
+Date: Thu, 28 Oct 2010 20:50:56 +0530
+Message-ID: <20101028152053.GA29091@kytes>
+References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
+ <AANLkTimkovH9OysLSxA+=di89Xi+dTCYL5hRPmNaADDH@mail.gmail.com>
+ <20101019175103.GA28847@kytes>
+ <20101027150314.GB1136@kytes>
+ <1288192595.15518.37.camel@drew-northup.unet.maine.edu>
+ <vpqwrp3y5wp.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 28 16:42:20 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Drew Northup <drew.northup@maine.edu>,
+	Junio C Hamano <gitster@pobox.com>,
+	Thore Husfeldt <thore.husfeldt@gmail.com>, git@vger.kernel.org,
+	Scott Chacon <schacon@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Oct 28 17:21:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBTgJ-0004K3-Nr
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 16:42:20 +0200
+	id 1PBUIG-0002iT-T6
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 17:21:33 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758995Ab0J1OmO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 10:42:14 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:39695 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758817Ab0J1OmM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Oct 2010 10:42:12 -0400
-Received: by wyf28 with SMTP id 28so2028827wyf.19
-        for <git@vger.kernel.org>; Thu, 28 Oct 2010 07:42:11 -0700 (PDT)
+	id S1755621Ab0J1PV2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 11:21:28 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:56209 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757093Ab0J1PV1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Oct 2010 11:21:27 -0400
+Received: by vws13 with SMTP id 13so329300vws.19
+        for <git@vger.kernel.org>; Thu, 28 Oct 2010 08:21:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:subject:content-type
-         :content-transfer-encoding;
-        bh=zTno7tFz6uz/NPcYIZPiK/9jbNdqV4/F9K0M5QfLTwk=;
-        b=vuKh28UQSiE+S54dptNWhw9ckockHDVKOpWWg6aZHNdKZjXC9BMuEMNwxBIR3t27UH
-         mg5ANyBJ8ZqCbU4+wOZ3juNllYE9CnMxsKYrbL7GE+AZ+rRNRQvmlKeSbgeB6B5L6koY
-         m0zuceJFkjzAuaUSBG6pfCRdTPi/3wW32a3Wc=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=Y+xh8TiYAfvNpDE2c039/DdZPqK3ioRk9fLwc5zfrWk=;
+        b=FTR3ZZwo/DarzwL+GPSuSj0+i56t6HOv1+aa38geOMgO9zvIUiw2LTr3KUjLnwZLnD
+         pc9uckfXsV3r3V58EK1DengNqBuAFo1PMhoGUw9gk0i18ITlwuTnRBYpdIBJP8Mzc1SO
+         E0ix1Sc26tboLOmEGfenqWFgna4jLr0xFglIQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=GMR2TjggaGVIuSNjH9Y71QgubTLSgAAISirdlWRW7glYeYxJfJmB0o+VokTbTXMGKi
-         gyBNqT8Zx91aMJrnUEJvGwi0gifUfVeS/fek0AZ4mMAYlZm5FQEiRXYQKQFAnb8QRKgi
-         tMTe4DmrEdqpMsChUiHCnTldwyOe4a3fGn+Dw=
-Received: by 10.227.157.79 with SMTP id a15mr2568903wbx.208.1288276931648;
-        Thu, 28 Oct 2010 07:42:11 -0700 (PDT)
-Received: from [192.168.2.51] (line132-250.adsl.actcom.co.il [192.115.132.250])
-        by mx.google.com with ESMTPS id h29sm998988wbc.21.2010.10.28.07.42.09
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 28 Oct 2010 07:42:10 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100907 Fedora/3.1.3-1.fc13 Thunderbird/3.1.3
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=AzDj/5rcKIilA9nVIYuAaZd0US7BCpMwxCMZfP+Tl60t6KrxdhXZnwYmRs89/uz6AS
+         ADDRozjEwJLLZozqR/nDiEcPh3+LFI4XTHw89mGHSoIhPyXh8sO0PBG/LzvyygiCruww
+         +oigxYuVh0y2YgwF9jk4Qqy77Y/Q20Ato5R9w=
+Received: by 10.142.179.21 with SMTP id b21mr261132wff.432.1288279285159;
+        Thu, 28 Oct 2010 08:21:25 -0700 (PDT)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id p8sm15218258wff.16.2010.10.28.08.21.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 28 Oct 2010 08:21:22 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <vpqwrp3y5wp.fsf@bauges.imag.fr>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160181>
 
-  Hi,
+Hi Matthieu,
 
-Why do I get duplicate commit entries after the following steps
-1. git am to master repo
-2. git pull from master repo
+Matthieu Moy writes:
+> Drew Northup <drew.northup@maine.edu> writes:
+> 
+> > Matthieu has been working on a more comprehensive set of documentation
+> > patches
+> 
+> Right. I had missed your patches and our works overlapped.
 
-And if it is the expected result than how, when working with
-patches, one can keep its repo in a healthy condition?
+Ah, I saw your huge series on the list. Looks like it needs to be
+re-rolled after the reviews?
 
-Thanks,
-Ron
+> > --which I'm pretty sure include all of the changes you just
+> > mentioned.
+> 
+> Not all:
+> 
+> >> > Subject: [PATCH] Documentation: Consistently use the hyphenated "remote-tracking"
+> 
+> This (and other "synonyms" of remote-tracking) is addressed by my
+> patch, but
+
+Ok, we can drop this patch then- your version is more complete.
+
+> >> > Subject: [PATCH] UI: Don't say "working directory" when we really
+> >> > mean "working tree"
+> 
+> this isn't.
+
+You might like to include it in your next re-roll or just leave it as
+an independent patch for Junio to pick up.
+
+-- Ram
