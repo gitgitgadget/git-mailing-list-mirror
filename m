@@ -1,83 +1,88 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 04/10] Change "tracking branch" to "remote-tracking branch"
-Date: Thu, 28 Oct 2010 03:55:21 +0200
-Message-ID: <vpq1v7b84ja.fsf@bauges.imag.fr>
-References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1287851481-27952-5-git-send-email-Matthieu.Moy@imag.fr>
-	<20101023184853.GH21040@burratino>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH] help.c: Pull cmd_version out of this file.
+Date: Thu, 28 Oct 2010 00:13:25 -0200
+Message-ID: <AANLkTinGomS0OS-ZpOQun7E_KVRkL4A-w7MU1AG0bBAH@mail.gmail.com>
+References: <20100830023812.GA4010@burratino>
+	<20100830024020.GB4010@burratino>
+	<AANLkTimDjRz=JmiVn+ybQ5ewaj=7N5tp48fUArD5vG_H@mail.gmail.com>
+	<7v1v9e803a.fsf@alter.siamese.dyndns.org>
+	<AANLkTinHJHzcoFFjv-TaQ+DYVyqn46fqA802m8Lq5anp@mail.gmail.com>
+	<20100902043500.GF29713@burratino>
+	<7vvd6o14zz.fsf@alter.siamese.dyndns.org>
+	<AANLkTimX2NhXGdK0vVMaw-Fm6fpg4i5pbOZGA8Cc-+ui@mail.gmail.com>
+	<20101027151832.GA10614@burratino>
+	<AANLkTinxG-=EKeNH3--34Ya4w0E=i_bdmJ7iv2em8C+8@mail.gmail.com>
+	<20101027164508.GB11069@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Thore Husfeldt <thore.husfeldt@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Oct 28 03:58:30 2010
+X-From: git-owner@vger.kernel.org Thu Oct 28 04:13:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBHl6-0000b3-UG
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 03:58:29 +0200
+	id 1PBHzk-0005cv-VG
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 04:13:37 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932469Ab0J1B6Y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 27 Oct 2010 21:58:24 -0400
-Received: from imag.imag.fr ([129.88.30.1]:57579 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757555Ab0J1B6W (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 27 Oct 2010 21:58:22 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o9S1tMim021030
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 28 Oct 2010 03:55:22 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PBHi6-0005NC-04; Thu, 28 Oct 2010 03:55:22 +0200
-In-Reply-To: <20101023184853.GH21040@burratino> (Jonathan Nieder's message of "Sat\, 23 Oct 2010 13\:48\:53 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Thu, 28 Oct 2010 03:55:22 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S932627Ab0J1CN2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 27 Oct 2010 22:13:28 -0400
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:39181 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757632Ab0J1CN0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 27 Oct 2010 22:13:26 -0400
+Received: by bwz11 with SMTP id 11so1181114bwz.19
+        for <git@vger.kernel.org>; Wed, 27 Oct 2010 19:13:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=+unNOBJaJrYiYBLzb+zwRs9OY5EkryL9EbjSrgl2uBU=;
+        b=LKdl/oAqLXzegstLOdkRED7tPYPleOve73FR/6LeiOelVAwXW+3eVWs2eqVGwLJuX7
+         ap6+By9F04VU1Wl+I984r7yFqgPBa3pwzrFoX1hNYKMDZYTaECunx/q2FpWd5+GFBvQe
+         lUN2lQqZ3o/JQTg9UauJBdVAOjgYjbz+gGPdo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Lyin9XbTXsVZHsK35emcdL8jl/qK5IQ/YyWT7i2jkNrkgICkQuPmM7NJN0R78HBZjk
+         +R7XLl+RRlvGsUTzp9DTp3yvxo3nCIkJDjX+V5s6duncrgQdOfvJSmA3yt3ZWlGEDrEK
+         QALXF4qN0zMEBx5c2TpQw3pMosUeznIBfdE7Q=
+Received: by 10.204.119.136 with SMTP id z8mr7824375bkq.167.1288232005170;
+ Wed, 27 Oct 2010 19:13:25 -0700 (PDT)
+Received: by 10.204.69.206 with HTTP; Wed, 27 Oct 2010 19:13:25 -0700 (PDT)
+In-Reply-To: <20101027164508.GB11069@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160152>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> Matthieu Moy wrote:
+On Wed, Oct 27, 2010 at 2:45 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Ah, found it.[1]
 >
->> --- a/Documentation/glossary-content.txt
->> +++ b/Documentation/glossary-content.txt
->> @@ -131,7 +131,7 @@ to point at the new commit.
->>  	you have. In such these cases, you do not make a new <<def_merge,merge>>
->>  	<<def_commit,commit>> but instead just update to his
->>  	revision. This will happen frequently on a
->> -	<<def_tracking_branch,tracking branch>> of a remote
->> +	<<def_remote_tracking_branch,remote-tracking branch>> of a remote
->>  	<<def_repository,repository>>.
+> | At this point, adding the dashed-form "git-version" to the filesyst=
+em is
+> | going backwards. =C2=A0These files are only to help people who have=
+ old scripts
+> | from pre 1.6.0 days with "PATH=3D$(git --exec-path):$PATH" with the=
+ir
+> | environment.
+> |
+> | We should instead try to not adding them (which would probably need=
+ tweak
+> | in the command list generation code in "git help"), as nobody from =
+pre
+> | 1.6.0 era would have called "git-version" binary.
 >
-> Why not keep the anchor name, like so:
+> Hope that helps.
 >
-> 	<<def_tracking_branch,remote-tracking branch>>
->
-> (for brevity and to keep old links valid)?
+Nope, sorry. I don't fully understand his explanation.
 
-(sorry, I had overlooked this message)
-
-We could do that, but I don't think there are many links to the anchor
-from outside
-(http://www.google.com/search?q=link%3Ahttp%3A%2F%2Fwww.kernel.org%2Fpub%2Fsoftware%2Fscm%2Fgit%2Fdocs%2Fgitglossary.html
-suggests there are none, but it seems to have missed at least the one
-in git(1)), and links would still point to the right page, if not to
-the right anchor.
-
-Your proposal would break the regularity of anchor names, which I
-think is more important than brievety.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Also, Junio, thanks for the "I don't like
+churning-for-the-sake-of-churning". This is very incentive.
