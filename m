@@ -1,115 +1,156 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 08/10] user-manual.txt: explain better the remote(-tracking) branch terms
-Date: Fri, 29 Oct 2010 01:40:17 +0200
-Message-ID: <vpqocad7uou.fsf@bauges.imag.fr>
-References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
-	<1288290117-6734-9-git-send-email-Matthieu.Moy@imag.fr>
-	<20101028194252.GF14212@burratino>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: Bugs in Gitosis
+Date: Fri, 29 Oct 2010 05:24:54 +0530
+Message-ID: <AANLkTi=pdSyjd5ACu8D_Yio5KX68W2n0e=LXXeTw70mS@mail.gmail.com>
+References: <26E9B811E137AB4B95200FD4C950886BA9665D70@orsmsx507.amr.corp.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com,
-	Thore Husfeldt <thore.husfeldt@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 29 01:44:01 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: "Olsen, Alan R" <alan.r.olsen@intel.com>
+X-From: git-owner@vger.kernel.org Fri Oct 29 01:56:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBc8R-0003l5-J8
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 01:43:55 +0200
+	id 1PBcKk-00082d-OM
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 01:56:39 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758077Ab0J1Xnw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 19:43:52 -0400
-Received: from imag.imag.fr ([129.88.30.1]:60846 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756171Ab0J1Xnu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Oct 2010 19:43:50 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o9SNeHxC022872
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 29 Oct 2010 01:40:17 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PBc4v-0006QG-E8; Fri, 29 Oct 2010 01:40:17 +0200
-In-Reply-To: <20101028194252.GF14212@burratino> (Jonathan Nieder's message of "Thu\, 28 Oct 2010 14\:42\:52 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Fri, 29 Oct 2010 01:40:17 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1759377Ab0J1Xy5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Oct 2010 19:54:57 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:65167 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759139Ab0J1Xyz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Oct 2010 19:54:55 -0400
+Received: by yxk8 with SMTP id 8so1342162yxk.19
+        for <git@vger.kernel.org>; Thu, 28 Oct 2010 16:54:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=vbSVMHg24hYKN2M3pAz72neUYmAadtN4bmjn9uO+pSI=;
+        b=Na3OniKU9IOkroGa28UoFI/OLfFX6exAZsawb4wBbPjC+6xGL6e6XYzDh9v6TbIiPl
+         Gtt4iOyUsZcUNLQnKFT9vbnHqx5AD5o8RgDcTcL0LyJacuQ1Wfh+/rQwnxCyMhrkEsTO
+         yAo6VEWLnmJ7g/JA5EB8qoM/kMoBdl2pwAIdc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=YwRDEMAsyx6GOKBvqEFlCozXVXygLAvgOvVvCFw5EIMAg9B73sNQUetfR9YP5N1q4i
+         b/XSU1Fr3aKMGEkungrA/gluynmrWraPR0IAT3GwABZhs/Nl44p443f6LSTcHF1vN1u6
+         gYOHxeubwVZ0P52KA4BHeTw3keWr+AgZlDhRs=
+Received: by 10.90.8.40 with SMTP id 40mr3518409agh.17.1288310094785; Thu, 28
+ Oct 2010 16:54:54 -0700 (PDT)
+Received: by 10.90.70.7 with HTTP; Thu, 28 Oct 2010 16:54:54 -0700 (PDT)
+In-Reply-To: <26E9B811E137AB4B95200FD4C950886BA9665D70@orsmsx507.amr.corp.intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160253>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+I can't speak for gitosis -- I thank my stars every day that
+the gitosis author did not reply to my emails back then,
+because otherwise there may not have been a gitolite.
 
->>  $ git branch -r
->>    origin/HEAD
->>    origin/html
->>    origin/maint
->>    origin/man
->>    origin/master
->>    origin/next
->>    origin/pu
->>    origin/todo
->>  ------------------------------------------------
->>
->> +In this case, "origin" is called a remote repository, or "remote" for
->> +short.
->
-> "In this case" seems redundant (since we did not explain what other
-> case it is being opposed to).
+But I will try and address a couple of points which strike
+me as important, especially ones that affect gitolite also,
+just for completeness.
 
-The wording was unfortunate, but what I meant was to explain the
-example right above while defining the vocabulary.
+On Fri, Oct 29, 2010 at 2:28 AM, Olsen, Alan R <alan.r.olsen@intel.com>=
+ wrote:
+> [Sorry this has taken so long. Work was been eating my time.]
 
-I've changed it to "In this example".
+> Here is my list of current outstanding issues with
+> Gitosis. =C2=A0I do not have fixes for these at the moment, but
+> people and web indexes should be aware of the problems.
+> The author of Gitosis seems to have been taken off-line.
 
->  The repository of origin is called a remote repository, or a "remote" for
->  short.
->
-> would improve it?
+<wink, wink> I think that is the first issue ;-)
 
-It removes the link between the explanation and the example right
-above. I prefer the quotes around "origin" to really show that it's
-the string that appear in `git branch -r`.
+> (The list may not be complete. I may have forgotten
+> something.)
 
->>         The branches of this repository are called "remote branches"
->> +from our point of view. The remote-tracking branches are created in
->> +the local repository at clone time, as a copy of the remote branches.
->
-> Sentence structure.  Maybe
->
->           The branches of this repository are called "remote branches"
->   from our point of view. The remote-tracking branches listed above
->   were created based on the remote branches at clone time and will be
->   updated by "git fetch" and "git push".
->   See <<Updating -a-repository-With-git-fetch>> for details.
+> 1. Multiple duplicate keys parsing problem
 
-I've taken this (I like the "listed above" in particular), except I'm
-keeping the (hence "git pull"), since "git pull" is probably more
-likely to be used than "git fetch" by beginners.
+> This can happen when you have multiple people
+> administering a repository. (Especially when those people
+> are responsible for separate projects on the same server.
 
->> +This command will fetch the changes from the remote branches to your
->> +remote-tracking branches `origin/*`, and merge default branch in the
->> +current branch.
->> +
->
-> Article use.  Probably something like
->
-> 	s/the changes/changes/
-> 	s/merge default branch in/merge the default branch into/
->
-> would do.
+> You have a.pub and b.pub. These are both the public key
+> for "Bob". (The same exact key in two files.) =C2=A0Any group
+> that a.pub is added to Bob will have access to. Any group
+> that b.pub is added to that does not contain a.pub Bob
+> will not have access to. =C2=A0(It seems to sort the keys and
+> only sees the first occurrence of the key, not all
+> occurrences.
 
-Taken, thanks.
+Gitolite will do the same thing.  This is an artifact of the
+fact that neither of them is looking *inside* the key and
+comparing with others, coupled with the fact that sshd does
+a linear scan, and when it finds a match it goes with it.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+I can tell you that in gitolite, I have no intention of
+adding that check by comparing the contents of the keys.
+
+However, gitolite does have "sshkeys-lint" which will catch
+the problem and tell you that second key will be ignored by
+sshd.  You have to run this manually though.
+
+> 2. Trees with working directories kills Gitosis
+
+> If any of the repositories in the repository have a
+> working directory, Gitosis will fail on a push to
+> gitosis-admin with a bunch of Python barfage. =C2=A0(I don't
+> have an example at hand, but if you look at the code, it
+> is looking at ".git".) This usually happens when someone
+> tries to shortcut the process by cloning code into the
+> repo on the local machine.
+
+Good.  A server side repo has no business having a working
+tree ;-)
+
+Gitolite was modelled after gitosis, although it's hard to
+imagine that now, seeing how far apart they are today.
+
+Server side repos =3D=3D bare repos.  Bare repos =3D=3D .git suffix
+as a convention in git-land.  This convention becomes
+"standard" in gitolite.
+
+"cloning code into the repo on the local machine" -- if I
+assume git clone, just add --bare maybe?
+
+> 3. Gitosis needs to have access to everything.
+
+> If your mount point for the repository is /repo you have
+> to create a directory under this, else /repo/lost+found
+> prevents Gitosis for initializing correctly. It is a
+> permissions issue.
+
+Gitolite will only care about directories ending in ".git".
+
+> 4. Typos are deadly.
+
+> If you push a gitosis.conf file to gitosis-admin that has
+> a non-parseable typo, gitosis will have problems. The
+> immediate effect is that the authorized-keys file does not
+> get updated. (New keys do not get added to the file, but
+> existing ones work up except for the typo areas.) The only
+> way to fix this is to hand-correct the copy on the server.
+> Rerunning the gitosis-init script on the server will fix a
+> lot of problems and does not overwrite existing configs.
+
+What I found more problematic was it would silently ignore
+typos such as "member" instead of "members".
+
+Gitolite will show you lots of errors.
+
+You can still push up a botched-config (syntactically
+correct but you managed to lock yourself out by typoing your
+own name!), but you don't have to throw in the towel --
+there is "gl-dont-panic" (written 2 months after "towel
+day", to my eternal regret ;-)
+
+Sitaram
