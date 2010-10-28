@@ -1,74 +1,102 @@
-From: "Olsen, Alan R" <alan.r.olsen@intel.com>
-Subject: Bugs in Gitosis
-Date: Thu, 28 Oct 2010 13:58:11 -0700
-Message-ID: <26E9B811E137AB4B95200FD4C950886BA9665D70@orsmsx507.amr.corp.intel.com>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: [PATCH] git-gui: handle symlink replaced by file
+Date: Thu, 28 Oct 2010 13:27:09 +0100
+Message-ID: <8739rqqb4m.fsf@fox.patthoyts.tk>
+References: <AANLkTi=dA+mj1KDpAgGAtg1S5Gt5wXAJ4zLd-tLob=DH@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Oct 28 22:58:21 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Thu Oct 28 23:08:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBZYC-0002CV-0p
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 22:58:20 +0200
+	id 1PBZhp-00081E-KN
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 23:08:17 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933754Ab0J1U6K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 16:58:10 -0400
-Received: from mga01.intel.com ([192.55.52.88]:15786 "EHLO mga01.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S933674Ab0J1U6I convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 28 Oct 2010 16:58:08 -0400
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga101.fm.intel.com with ESMTP; 28 Oct 2010 13:58:08 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="4.58,254,1286175600"; 
-   d="scan'208";a="852028189"
-Received: from orsmsx602.amr.corp.intel.com ([10.22.226.211])
-  by fmsmga001.fm.intel.com with ESMTP; 28 Oct 2010 13:58:08 -0700
-Received: from orsmsx605.amr.corp.intel.com (10.22.226.10) by
- orsmsx602.amr.corp.intel.com (10.22.226.211) with Microsoft SMTP Server (TLS)
- id 8.2.254.0; Thu, 28 Oct 2010 13:58:08 -0700
-Received: from orsmsx507.amr.corp.intel.com ([10.22.226.41]) by
- orsmsx605.amr.corp.intel.com ([10.22.226.10]) with mapi; Thu, 28 Oct 2010
- 13:58:07 -0700
-Thread-Topic: Bugs in Gitosis
-Thread-Index: Act24tTeyA9L9hqPQrCv9DMOLG3ewA==
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1760119Ab0J1VIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 17:08:09 -0400
+Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:32935 "EHLO
+	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1758684Ab0J1VIH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Oct 2010 17:08:07 -0400
+Received: from [172.23.144.248] (helo=asmtp-out4.blueyonder.co.uk)
+	by smtp-out3.blueyonder.co.uk with esmtp (Exim 4.52)
+	id 1PBZhT-0005FA-4H; Thu, 28 Oct 2010 22:07:55 +0100
+Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
+	by asmtp-out4.blueyonder.co.uk with esmtpa (Exim 4.52)
+	id 1PBZhS-0002m4-OS; Thu, 28 Oct 2010 22:07:54 +0100
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id 10840250F2; Thu, 28 Oct 2010 22:07:54 +0100 (BST)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+In-Reply-To: <AANLkTi=dA+mj1KDpAgGAtg1S5Gt5wXAJ4zLd-tLob=DH@mail.gmail.com>
+	(Bert Wesarg's message of "Mon, 25 Oct 2010 14:59:00 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160226>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160227>
 
-[Sorry this has taken so long. Work was been eating my time.]
+If a symlink is replaced by a regular file an error message was emitted
+on stdout. This patch adds recognition of this case.
 
-Here is my list of current outstanding issues with Gitosis.  I do not have fixes for these at the moment, but people and web indexes should be aware of the problems. The author of Gitosis seems to have been taken off-line. (The list may not be complete. I may have forgotten something.)
+Reported-by: Bert Wesarg <bert.wesarg@googlemail.com>
+Signed-off-by: Pat Thoyts <patthoyts@users.sourceforge.net>
+---
 
-1. Multiple duplicate keys parsing problem
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
+>Hi,
+>
+>I get this error from git gui after I changed a symlink to a file:
+>
+>error: Unhandled 2 way diff marker: {d}
+>
+>To reproduce:
+>
+>$ git init
+>$ ln -s bar foo
+>$ git add foo
+>$ git commit -m "add foo link"
+>$ rm foo
+>$ echo bar >foo
+>$ git gui
+>error: Unhandled 2 way diff marker: {d}
+>
+>I may have a look into this by my self in the long term, but maybe
+>someone is faster than me.
 
-This can happen when you have multiple people administering a repository. (Especially when those people are responsible for separate projects on the same server.
+This patch just handles the second segment without generating the error
+really. It doesn't attempt to do any pretty output.
 
-You have a.pub and b.pub. These are both the public key for "Bob". (The same exact key in two files.)  Any group that a.pub is added to Bob will have access to. Any group that b.pub is added to that does not contain a.pub Bob will not have access to.  (It seems to sort the keys and only sees the first occurrence of the key, not all occurrences. 
+ lib/diff.tcl |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
 
-2. Trees with working directories kills Gitosis
-
-If any of the repositories in the repository have a working directory, Gitosis will fail on a push to gitosis-admin with a bunch of Python barfage.  (I don't have an example at hand, but if you look at the code, it is looking at ".git".) This usually happens when someone tries to shortcut the process by cloning code into the repo on the local machine.
-
-3. Gitosis needs to have access to everything.
-
-If your mount point for the repository is /repo you have to create a directory under this, else /repo/lost+found prevents Gitosis for initializing correctly. It is a permissions issue.
-
-4. Typos are deadly.
-
-If you push a gitosis.conf file to gitosis-admin that has a non-parseable typo, gitosis will have problems. The immediate effect is that the authorized-keys file does not get updated. (New keys do not get added to the file, but existing ones work up except for the typo areas.) The only way to fix this is to hand-correct the copy on the server. Rerunning the gitosis-init script on the server will fix a lot of problems and does not overwrite existing configs.
-
-Those are the ones I can remember at the moment.  As soon as I send this I will remember more.
-
-Hope this helps.
+diff --git a/lib/diff.tcl b/lib/diff.tcl
+index c628750..4d041fa 100644
+--- a/lib/diff.tcl
++++ b/lib/diff.tcl
+@@ -428,6 +428,14 @@ proc read_diff {fd cont_info} {
+ 					set tags d_+
+ 				}
+ 			}
++			{d} {
++				if {[string match {diff --git *} $line]} {
++					set ::current_diff_inheader 1
++					continue
++				} else {
++					puts "error: unrecognized operation: '$line'"
++				}
++			}
+ 			default {
+ 				puts "error: Unhandled 2 way diff marker: {$op}"
+ 				set tags {}
+-- 
+1.7.3.1.msysgit.0
