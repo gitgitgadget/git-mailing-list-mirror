@@ -1,62 +1,357 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] gitweb: Add option to force version match
-Date: Thu, 28 Oct 2010 15:08:46 -0700
-Message-ID: <7vy69i7yxd.fsf@alter.siamese.dyndns.org>
-References: <1288226574-19068-1-git-send-email-warthog9@eaglescrag.net>
- <1288226574-19068-2-git-send-email-warthog9@eaglescrag.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH v8 3/5] Add testcases for the --detect-bulk-moves diffcore flag.
+Date: Fri, 29 Oct 2010 00:08:30 +0200
+Message-ID: <1288303712-14662-4-git-send-email-ydirson@altern.org>
+References: <1288303712-14662-1-git-send-email-ydirson@altern.org>
+Cc: Yann Dirson <ydirson@altern.org>, Yann Dirson <ydirson@free.fr>
+To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Fri Oct 29 00:09:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBaf0-0002AX-JM
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 00:09:26 +0200
+	id 1PBaf1-0002AX-4n
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 00:09:27 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760171Ab0J1WJC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 18:09:02 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:63994 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757099Ab0J1WIz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Oct 2010 18:08:55 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 009BB19F8;
-	Thu, 28 Oct 2010 18:08:53 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YeL4jzdsAfcFeAuDsQQANXLTPng=; b=Bjk90F
-	FiEF0IxjlimU6tgDjtB2nXjwibyltU+/4oNpv1xeX8rVx2i7O8UMj5FpuHLeWLpO
-	lXO+/SJTX6IfEIMeqOL6mUPgM/FlhdnfVz0EbdN081Si/fyQ6BNSGlJH/pffdkya
-	V2j0OdJxbIhofKdulm7nAvd6lKRCtAq8WeV6Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=c/ZxEaA8zq0L1T8inmq6SmId+LvT+XBB
-	aIAlzxipmA1NSrPN6+vdo4LgBj8I4/tOQreeFLLd5nF3jvfGUvVtkPgcRg73Qzn8
-	hB375yk5ZbSWoNqHzp36F2By5FKTbTFDID6BAFUCADRNpjHE9J3JXQBcMtc1QtVf
-	/l65Tgr348Y=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CEDD119F4;
-	Thu, 28 Oct 2010 18:08:50 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.169.49]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 2DEBD19F3; Thu, 28 Oct
- 2010 18:08:48 -0400 (EDT)
-In-Reply-To: <1288226574-19068-2-git-send-email-warthog9@eaglescrag.net>
- (John Hawley's message of "Wed\, 27 Oct 2010 17\:42\:52 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F1E2EBA0-E2DF-11DF-958D-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1760293Ab0J1WJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 18:09:06 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:60599 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754409Ab0J1WI5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Oct 2010 18:08:57 -0400
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 9B036D48056;
+	Fri, 29 Oct 2010 00:08:50 +0200 (CEST)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1PBaeJ-0003pC-EF; Fri, 29 Oct 2010 00:08:43 +0200
+X-Mailer: git-send-email 1.7.2.3
+In-Reply-To: <1288303712-14662-1-git-send-email-ydirson@altern.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160236>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160237>
 
-I do not understand why this variable needs to be turned _on_ by default,
-but more importantly, isn't this more or less independent from what we
-discussed at GitTogether, which is to get your battle-tested caching layer
-that will tremendously help any nontrivial site merged earlier rather than
-later by reducing load average from 1000 to 3-or-4?
+This notably includes a couple of tests for cases known not to be
+working correctly yet.
+
+This patch has been improved by the following contributions:
+- Jonathan Nieder: reworked style of test script
+- Jonathan Nieder: use "git commit" in test instead of only plumbing,
+  and use test_tick
+- Sverre Rabbelier: anonymize hashes
+
+Thanks-to: Jonathan Nieder <jrnieder@gmail.com>
+Thanks-to: Sverre Rabbelier <srabbelier@gmail.com>
+Signed-off-by: Yann Dirson <ydirson@free.fr>
+---
+ t/t4046-diff-bulk-move.sh |  296 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 296 insertions(+), 0 deletions(-)
+ create mode 100755 t/t4046-diff-bulk-move.sh
+
+diff --git a/t/t4046-diff-bulk-move.sh b/t/t4046-diff-bulk-move.sh
+new file mode 100755
+index 0000000..4b1c78e
+--- /dev/null
++++ b/t/t4046-diff-bulk-move.sh
+@@ -0,0 +1,296 @@
++#!/bin/sh
++#
++# Copyright (c) 2008,2010 Yann Dirson
++# Copyright (c) 2005 Junio C Hamano
++#
++
++# TODO for dir renames:
++# * two dirs or more moving all their files to a single dir
++# * simultaneous bulkmove and rename
++
++test_description='Test rename factorization in diff engine.
++
++'
++. ./test-lib.sh
++. "$TEST_DIRECTORY"/diff-lib.sh
++
++test_expect_success 'setup' '
++	git commit --allow-empty -m "original empty commit"
++
++	mkdir a &&
++	printf "Line %s\n" 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 >a/path0 &&
++	sed <a/path0 >a/path1 s/Line/Record/ &&
++	sed <a/path0 >a/path2 s/Line/Stuff/ &&
++	sed <a/path0 >a/path3 s/Line/Blurb/ &&
++
++	git update-index --add a/path* &&
++	test_tick &&
++	git commit -m "original set of files" &&
++
++	: rename the directory &&
++	git mv a b
++'
++test_expect_success 'diff-index --detect-bulk-moves after directory move.' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	a/*	b/
++	:100644 100644 X X R#	a/path0	b/path0
++	:100644 100644 X X R#	a/path1	b/path1
++	:100644 100644 X X R#	a/path2	b/path2
++	:100644 100644 X X R#	a/path3	b/path3
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup non-100% rename' '
++	echo "Line 16" >>b/path0 &&
++	git mv b/path2 b/2path &&
++	git rm -f b/path3 &&
++	echo anything >b/path100 &&
++	git add b/path100
++'
++test_expect_success 'diff-index --detect-bulk-moves after content changes.' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	a/*	b/
++	:100644 000000 X X D#	a/path3
++	:100644 100644 X X R#	a/path2	b/2path
++	:100644 100644 X X R#	a/path0	b/path0
++	:100644 100644 X X R#	a/path1	b/path1
++	:000000 100644 X X A#	b/path100
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup bulk move that is not directory move' '
++	git reset -q --hard &&
++
++	mkdir c &&
++	(
++		for i in 0 1 2; do
++			cp a/path$i c/apath$i || exit
++		done
++	) &&
++	git update-index --add c/apath* &&
++	test_tick &&
++	git commit -m "first set of changes" &&
++
++	git mv c/* a/
++'
++test_expect_success 'diff-index --detect-bulk-moves without full-dir rename.' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	c/*	a/
++	:100644 100644 X X R#	c/apath0	a/apath0
++	:100644 100644 X X R#	c/apath1	a/apath1
++	:100644 100644 X X R#	c/apath2	a/apath2
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup bulk move with new file in source dir' '
++	echo > c/anotherpath "How much wood?" &&
++	git update-index --add c/another*
++'
++test_expect_success 'diff-index --detect-bulk-moves with new file in source dir.' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	c/*	a/
++	:100644 100644 X X R#	c/apath0	a/apath0
++	:100644 100644 X X R#	c/apath1	a/apath1
++	:100644 100644 X X R#	c/apath2	a/apath2
++	:000000 100644 X X A#	c/anotherpath
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup bulk move with interfering copy' '
++	rm c/anotherpath &&
++	git update-index --remove c/anotherpath &&
++	mkdir b &&
++	cp a/apath0 b/apath9 &&
++	echo >> a/apath0 "more" &&
++	git update-index --add a/apath0 b/apath9
++'
++# scores select the "wrong" one as "moved" (only a suboptimal detection)
++test_expect_failure 'diff-index --detect-bulk-moves with interfering copy.' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	c/*	a/
++	:100644 100644 X X R#	c/apath0	a/apath0
++	:100644 100644 X X R#	c/apath1	a/apath1
++	:100644 100644 X X R#	c/apath2	a/apath2
++	:100644 100644 X X C#	c/apath0	b/apath9
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup bulk move to toplevel' '
++	git reset -q --hard &&
++	git mv c/* .
++'
++test_expect_success 'diff-index --detect-bulk-moves bulk move to toplevel.' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	c/*	./
++	:100644 100644 X X R#	c/apath0	apath0
++	:100644 100644 X X R#	c/apath1	apath1
++	:100644 100644 X X R#	c/apath2	apath2
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup move including a subdir, with some content changes' '
++	git reset -q --hard &&
++	mv c a/ &&
++	git update-index --add --remove a/c/* c/apath0 c/apath1 c/apath2 &&
++	test_tick &&
++	git commit -m "move as subdir" &&
++
++	git mv a b &&
++	echo foo >>b/c/apath0 &&
++	git update-index --add b/c/apath*
++'
++test_expect_success 'diff-index --detect-bulk-moves on a move including a subdir.' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	a/*	b/
++	:040000 040000 X X R#	a/c/*	b/c/
++	:100644 100644 X X R#	a/c/apath0	b/c/apath0
++	:100644 100644 X X R#	a/c/apath1	b/c/apath1
++	:100644 100644 X X R#	a/c/apath2	b/c/apath2
++	:100644 100644 X X R#	a/path0	b/path0
++	:100644 100644 X X R#	a/path1	b/path1
++	:100644 100644 X X R#	a/path2	b/path2
++	:100644 100644 X X R#	a/path3	b/path3
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup move of only a subdir' '
++	git reset -q --hard &&
++	: rename a subdirectory of a/. &&
++	git mv a/c a/d
++'
++test_expect_success 'moving a subdir only' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	a/c/*	a/d/
++	:100644 100644 X X R#	a/c/apath0	a/d/apath0
++	:100644 100644 X X R#	a/c/apath1	a/d/apath1
++	:100644 100644 X X R#	a/c/apath2	a/d/apath2
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup move without a subdir' '
++	git reset -q --hard &&
++	mkdir b &&
++	: rename files in the directory but not subdir. &&
++	git mv a/path* b/
++'
++test_expect_success 'moving files but not subdirs is not mistaken for dir move' '
++	cat >expected <<-EOF &&
++	:100644 100644 X X R#	a/path0	b/path0
++	:100644 100644 X X R#	a/path1	b/path1
++	:100644 100644 X X R#	a/path2	b/path2
++	:100644 100644 X X R#	a/path3	b/path3
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup move of files and subdirs to different places' '
++	git reset -q --hard &&
++	git mv a/c b &&
++	git mv a d
++'
++test_expect_success 'moving subdirs into one dir and files into another is not mistaken for dir move' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	a/c/*	b/
++	:100644 100644 X X R#	a/c/apath0	b/apath0
++	:100644 100644 X X R#	a/c/apath1	b/apath1
++	:100644 100644 X X R#	a/c/apath2	b/apath2
++	:100644 100644 X X R#	a/path0	d/path0
++	:100644 100644 X X R#	a/path1	d/path1
++	:100644 100644 X X R#	a/path2	d/path2
++	:100644 100644 X X R#	a/path3	d/path3
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++# the same with different ordering
++test_expect_success 'setup move of files and subdirs to different places' '
++	git mv d 0
++'
++test_expect_success 'moving subdirs into one dir and files into another is not mistaken for dir move' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	a/c/*	b/
++	:100644 100644 X X R#	a/path0	0/path0
++	:100644 100644 X X R#	a/path1	0/path1
++	:100644 100644 X X R#	a/path2	0/path2
++	:100644 100644 X X R#	a/path3	0/path3
++	:100644 100644 X X R#	a/c/apath0	b/apath0
++	:100644 100644 X X R#	a/c/apath1	b/apath1
++	:100644 100644 X X R#	a/c/apath2	b/apath2
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_expect_success 'setup move of dir with only subdirs' '
++	git reset -q --hard &&
++	mkdir a/b &&
++	mv a/path* a/b/ &&
++	git update-index --add --remove a/path0 a/path1 a/path2 a/path3 a/b/path* &&
++	test_tick &&
++	git commit -m "move all toplevel files down one level" &&
++
++	git mv a z
++'
++# TODO: only a suboptimal non-detection
++test_expect_failure 'moving a dir with no direct children files' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	a/*	z/
++	:040000 040000 X X R#	a/b/*	z/b/
++	:040000 040000 X X R#	a/c/*	z/c/
++	:100644 100644 X X R#	a/b/path0	z/b/path0
++	:100644 100644 X X R#	a/b/path1	z/b/path1
++	:100644 100644 X X R#	a/b/path2	z/b/path2
++	:100644 100644 X X R#	a/b/path3	z/b/path3
++	:100644 100644 X X R#	a/c/apath0	z/c/apath0
++	:100644 100644 X X R#	a/c/apath1	z/c/apath1
++	:100644 100644 X X R#	a/c/apath2	z/c/apath2
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++# now test moving all files from toplevel into subdir (does not hides file moves) (needs consensus on syntax)
++# Note: this is a special case of move of a dir into one of its own subdirs, which in
++# turn is a variant of new files/dirs being added into a dir after all its contents
++# are moved away
++
++test_expect_success 'setup move from toplevel to subdir' '
++	git reset -q --hard HEAD~3 &&
++	mv a/* . &&
++	git update-index --add --remove a/path0 a/path1 a/path2 a/path3 path* &&
++	test_tick &&
++	git commit -m "move all files to toplevel" &&
++
++	mkdir z &&
++	git mv path* z/
++'
++test_expect_success '--detect-bulk-moves everything from toplevel.' '
++	cat >expected <<-EOF &&
++	:040000 040000 X X R#	./*	z/
++	:100644 100644 X X R#	path0	z/path0
++	:100644 100644 X X R#	path1	z/path1
++	:100644 100644 X X R#	path2	z/path2
++	:100644 100644 X X R#	path3	z/path3
++	EOF
++	git diff-index --detect-bulk-moves HEAD >current &&
++	compare_diff_raw expected current
++'
++
++test_done
+-- 
+1.7.2.3
