@@ -1,209 +1,96 @@
-From: Klas Lindberg <klas.lindberg@gmail.com>
-Subject: git merge-tree segfault
-Date: Thu, 28 Oct 2010 22:16:03 +0200
-Message-ID: <AANLkTinJQCqwRZpbO66VHrgxezedS1Ay3nr9kayiODi9@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v7 1/3] Introduce bulk-move detection in diffcore.
+Date: Thu, 28 Oct 2010 13:20:00 -0700
+Message-ID: <7vr5fa9ij3.fsf@alter.siamese.dyndns.org>
+References: <1287868022-24872-1-git-send-email-ydirson@altern.org>
+ <1287868022-24872-2-git-send-email-ydirson@altern.org>
+ <7veibeitip.fsf@alter.siamese.dyndns.org> <20101025201227.GB3347@home.lan>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary=0016367fbb7ce159420493b30231
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Oct 28 22:16:18 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Yann Dirson <ydirson@free.fr>
+X-From: git-owner@vger.kernel.org Thu Oct 28 22:20:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBYtV-0005NN-Gt
-	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 22:16:18 +0200
+	id 1PBYxR-0007H5-0r
+	for gcvg-git-2@lo.gmane.org; Thu, 28 Oct 2010 22:20:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933782Ab0J1UQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 16:16:09 -0400
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:65113 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759718Ab0J1UQG (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Oct 2010 16:16:06 -0400
-Received: by qyk12 with SMTP id 12so5855741qyk.19
-        for <git@vger.kernel.org>; Thu, 28 Oct 2010 13:16:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=7U6YSiOKHyMnt7mJHqhtLyCdoP/aRhSMsiYYkOWVOQI=;
-        b=xD/TIfw8+nyKl6zcoKCnbEK/fU4GX89werkKq53wnVOcFZ1Se2W4IWBfZWCBvbS5Z9
-         Taae/SWMudsY8OoljUqF2+bZN8RvgUPIhQ9sEiIq7eeb1N3JRMid0Ib1WhgZJ2cVth+M
-         f5J7LCSg0wSdm2SbepFd5rB0k+7ggyyslnh6U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=o/+RjE/1GbEhiqKgPMzB4vSQss4uxG9CcBsqmence6IiHOAhMWslDPdmNK5LwfzrlN
-         0d0B9S/ypo0UGRperlwT9CWAybX1JxdoR7QhrVBiy+BU9uGnEkMe6CsPosq5GcA3hTaz
-         6DSFXDpkg9gJmq8YeJYldTOy37FDfgyL+B5dU=
-Received: by 10.229.81.148 with SMTP id x20mr85970qck.18.1288296963594; Thu,
- 28 Oct 2010 13:16:03 -0700 (PDT)
-Received: by 10.229.182.209 with HTTP; Thu, 28 Oct 2010 13:16:03 -0700 (PDT)
+	id S934544Ab0J1UUM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 16:20:12 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:45418 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934541Ab0J1UUK (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Oct 2010 16:20:10 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 7C5871A57;
+	Thu, 28 Oct 2010 16:20:08 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=/zLvuDhMhucw4SSamN25tdeIvVA=; b=JHpoK9
+	Tf/NN+/oRVXZf5kLY9nZkMoLqqWMVa4Qtv8ujVPG4dDCIqhA45Oe2qVjFhpKgu6E
+	rGajp2PznaiFQU4U1uTH7LxBmc/l7ZRXNElzWn9xvuCrPSoh5kV/ZujJ6+nZ73Rs
+	DNR8Om1WCAqsvFStYXHpLP9QrSV/1Pttf7BEk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=H3wZZmuJ3U3iiCyOD10XJ2PSPviUMSUF
+	wfe4FKb5gZaLp84+7hPXIGaQ+25mRRHuF9drOxcBPyp0MFPwX0X7h6eREvnAEliw
+	c3Fhbj/xGB2h9lO/pofl6rZW9piorY3snc52S8uF0DZiRpdFj8e/qO+V6KR7yi1b
+	1EcSlj6V13Y=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 5791D1A55;
+	Thu, 28 Oct 2010 16:20:06 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.169.49]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 8022C1A4E; Thu, 28 Oct
+ 2010 16:20:02 -0400 (EDT)
+In-Reply-To: <20101025201227.GB3347@home.lan> (Yann Dirson's message of
+ "Mon\, 25 Oct 2010 22\:12\:27 +0200")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C0FD60BA-E2D0-11DF-8C63-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160220>
 
---0016367fbb7ce159420493b30231
-Content-Type: text/plain; charset=UTF-8
+Yann Dirson <ydirson@free.fr> writes:
 
-I haven't tried this on newer versions of git, but the release notes
-for later releases don't mention merge-tree anywhere, so...
+> OTOH, the quoting rules for diff output are quite minimalist, I don't
+> know whether adding "*" as a character that requires quotes around the
+> filename would be acceptable.
 
-git version: 1.7.0
-uname -a: Linux tor 2.6.32-trunk-amd64 #1 SMP Sun Jan 10 22:40:40 UTC
-2010 x86_64 GNU/Linux
-distro: Debian GNU/Linux squeeze/sid
+I suspect that would be an unacceptable entry to a slippery slope.
 
-Unpack the attached tree, cd into it and run:
-git merge-tree common master other
+>> IOW, is the goal of this series
+>> to use the "A/* -> B/" to label the change as bulk directory rename, if
+>> the preimage has A/{1,2,3} and the postimage has their moved contents in
+>> B/{one,two,three}?
+>
+> Yes.  But --hide-bulk-move-details would not hide them, as they would
+> not be strictly included in the bulk move.  Desite their name change,
+> they are however a confirmation that the contents of A/ was move to B/.
+>
+>> I am wondering about the utility of such an extra information.  If there
+>> were no "a/file0 -> b/file3" entry in the example, I would imagine that we
+>> could use this "a/* -> b/" information to move "a/file5" to "b/file5" when
+>> rebasing this patch to apply to a different preimage that had files other
+>> than file{1,2} in directory "a", and I would further imagine that might be
+>> a wonderful thing.
+>
+> I imagined that as well, and that situation would not be a problem:
+> since "a/file0 -> b/file3" would be there in the rebased patch,
+> "apply" would be able to spot the possible conflict.
+>
+> OTOH, I had the vision of "merge does automatic moves" when starting
+> this project, but got convinced on-list that there are always cases
+> where the "automatic move" on merge would be wrong, and that we should
+> report a conflict instead.
+>
+> That would mostly shift the problem to...
 
-I get the following result:
-added in local
-  our    100644 d68dd4031d2ad5b7a3829ad7df6635e27a7daa22 t1.txt
-Segmentation fault
-
-The exit code:
-139
-
-BR / Klas
-
---0016367fbb7ce159420493b30231
-Content-Type: application/x-gzip; name="merge-tree_segfault.tar.gz"
-Content-Disposition: attachment; filename="merge-tree_segfault.tar.gz"
-Content-Transfer-Encoding: base64
-X-Attachment-Id: f_gfu24s920
-
-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
---0016367fbb7ce159420493b30231--
+That would mostly make this patch not worth worrying about, wouldn't it?
+What's the point of spending extra cycles to say "many things have moved
+in the same direction" without turning it into a usable information?
