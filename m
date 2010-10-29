@@ -1,82 +1,79 @@
-From: Dun Peal <dunpealer@gmail.com>
-Subject: Re: Inconsistent behavior of the path disambiguator
-Date: Fri, 29 Oct 2010 19:54:10 +0100
-Message-ID: <AANLkTikc+pBe31j9tA88HwGz2kBouW_0S9oU6PtSQEzj@mail.gmail.com>
-References: <AANLkTinM863uZfRxy_1BW1fnfEPsPo8A2m86=Wxh7XGd@mail.gmail.com>
-	<7vbp6c7ski.fsf@alter.siamese.dyndns.org>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: gittogether session notes
+Date: Fri, 29 Oct 2010 15:22:03 -0400
+Message-ID: <4CCB1EDB.5080207@gmail.com>
+References: <20101029180530.GA18997@sigill.intra.peff.net> <4CCB0E67.60605@gmail.com> <20101029182153.GA19160@sigill.intra.peff.net> <AANLkTi=Hr_Bwu7WYi5PBAphzW+NC_qWR6NN=VuBUsZ83@mail.gmail.com>
+Reply-To: gitzilla@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 29 20:54:22 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Tom Preston-Werner <tom@github.com>
+X-From: git-owner@vger.kernel.org Fri Oct 29 21:22:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBu5h-0003dP-04
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 20:54:17 +0200
+	id 1PBuWk-000776-FQ
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 21:22:14 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757050Ab0J2SyM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Oct 2010 14:54:12 -0400
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:45360 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751516Ab0J2SyL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Oct 2010 14:54:11 -0400
-Received: by yxk8 with SMTP id 8so1854304yxk.19
-        for <git@vger.kernel.org>; Fri, 29 Oct 2010 11:54:10 -0700 (PDT)
+	id S1752584Ab0J2TWI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Oct 2010 15:22:08 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:61802 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752138Ab0J2TWH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Oct 2010 15:22:07 -0400
+Received: by gxk23 with SMTP id 23so2217000gxk.19
+        for <git@vger.kernel.org>; Fri, 29 Oct 2010 12:22:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:received:message-id
+         :disposition-notification-to:date:from:reply-to:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
          :content-transfer-encoding;
-        bh=MpGam3Y2wQ6iexCrD5rFZ/1iC+putOi2o673nJ8JdYQ=;
-        b=jWNbuqA/97DhBuE1Elb3ki35bg65RBWGjJr/xUpOHk7TPKUDHqilVz2QQTfsOpJt0H
-         ppTtg0eACn1f1efYhZEKfey8oabBNgZ6MXTQc0H+CanI5wzNS8p6inmNkNMsSmbbT6Tk
-         8ANsQcfhndOaTe0EH5yA3IZM+OvNBxrtX8kos=
+        bh=o/0+BxtbrjGjt6X6c7jyipH0klRPh6v2hURf/CRdk4I=;
+        b=lcpxT4Uej8hcXw1PXYfvgZkv4RxZBOxOOeNQTCpWDtb8xt6ahOd7wEZ7cTFCxtYanV
+         GLc6ks6j6os0Z9/V2OFH/IxVq5PfIIXJ9n/ZiHJEFY4BRFwcaGPdYRTlHRib7Uz+E352
+         p60RRGjyvvNlGkzg8l7ruTKpzJ7nK10Z8BKrY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=NV1fxIF0zM5PD0ww1EoWiD6qsfDKASeD81wLODblRusawiPoXrcqZ28ii20xaCmGA3
-         JjmZO+/FNfHrbLP5CDSwGCvqttVc6Rm+wITCNAjCuVq+DVARNBQsou/5lJVI2kqEuszn
-         /ZrtS4dZLAGomN4WGRRSw5UlGHkjCvv9QtC3E=
-Received: by 10.42.203.68 with SMTP id fh4mr9831005icb.287.1288378450270; Fri,
- 29 Oct 2010 11:54:10 -0700 (PDT)
-Received: by 10.220.201.13 with HTTP; Fri, 29 Oct 2010 11:54:10 -0700 (PDT)
-In-Reply-To: <7vbp6c7ski.fsf@alter.siamese.dyndns.org>
+        h=message-id:disposition-notification-to:date:from:reply-to
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        b=GCeIfP9QE1bDddsczINBileyBP2pNZCPdmY4aq30EbcfPACO1kRdjG/YJbyZ6hwppb
+         gRnprvSlA842jo+bwfLSrzCiZzlczABqCnlRz791hGt3NZqPs1D5f2BsrpO5X5QdDQco
+         xny6MtJFNAF/v/OwdVsl42NbFNhblKXvbsIp4=
+Received: by 10.42.177.65 with SMTP id bh1mr189260icb.102.1288380126173;
+        Fri, 29 Oct 2010 12:22:06 -0700 (PDT)
+Received: from [10.0.1.131] (cpe-67-248-185-165.nycap.res.rr.com [67.248.185.165])
+        by mx.google.com with ESMTPS id p22sm968429vcf.20.2010.10.29.12.22.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 29 Oct 2010 12:22:05 -0700 (PDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.12) Gecko/20100913 Icedove/3.0.7
+In-Reply-To: <AANLkTi=Hr_Bwu7WYi5PBAphzW+NC_qWR6NN=VuBUsZ83@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160356>
 
-On Fri, Oct 29, 2010 at 7:38 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> I do not think there is any bug. =A0You were being bitten by folks wh=
-o tried
-> to be helpful for newbies by introducing a(n arguably confusing) spec=
-ial
-> case; I can see why this is confusing, though.
+On 10/29/2010 02:33 PM, Tom Preston-Werner wrote:
+> On Fri, Oct 29, 2010 at 11:21 AM, Jeff King<peff@peff.net>  wrote:
+>> On Fri, Oct 29, 2010 at 02:11:51PM -0400, A Large Angry SCM wrote:
+>>> Did the GitHub folks do the their Git scalability presentation? I was
+>>> hoping to see notes and/or slides from that.
+>>
+>> Yeah, Tom talked about it, but there don't seem to be any notes. He did
+>> have pretty slides, though. Tom, are your slides available anywhere? If
+>> they're not super-secret, do you mind posting a link on the wiki?
+>
+> I've added a link to the PDF slides on the wiki. For easy reference
+> here's the link:
+>
+> http://dl.dropbox.com/u/61881/GitHub-Infrastructure.pdf
 
-Thanks.
+Thanks Tom.
 
-We just switched to Git, and our developers got used to being able to
-just `git checkout branch` to create a local remote-tracking one for
-that remote branch.
-
-Then we were bitten by a branch `foo` when path `./foo` existed.
-
-I think the syntactic sugar needs to either be removed, or
-(preferably) be made consistent.
-
-The current behavior is that if I try to checkout a branch that
-doesn't exist, but does exist on the remote, git creates a local
-remote tracking branch for the one I tried to check out.
-
-It makes no sense IMHO for the disambiguating syntax to break that
-behavior, especially since in some cases, the disambiguating syntax is
-necessary.
-
-Thanks, D
+Unfortunately the slides don't stand on their own (they look nice, 
+though). Is there a write up that describes what's the slides are showing?
