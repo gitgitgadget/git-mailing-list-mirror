@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 07/42] t1510: setup case #4
-Date: Fri, 29 Oct 2010 13:48:19 +0700
-Message-ID: <1288334934-17216-8-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 08/42] t1510: setup case #5
+Date: Fri, 29 Oct 2010 13:48:20 +0700
+Message-ID: <1288334934-17216-9-git-send-email-pclouds@gmail.com>
 References: <1288334934-17216-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -17,73 +17,72 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBinH-00066q-KQ
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 08:50:31 +0200
+	id 1PBinI-00066q-4e
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 08:50:32 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756135Ab0J2GuU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Oct 2010 02:50:20 -0400
+	id S1756035Ab0J2Gu1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Oct 2010 02:50:27 -0400
 Received: from mail-pw0-f46.google.com ([209.85.160.46]:64522 "EHLO
 	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755673Ab0J2GuS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Oct 2010 02:50:18 -0400
+	with ESMTP id S1754358Ab0J2GuZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Oct 2010 02:50:25 -0400
 Received: by mail-pw0-f46.google.com with SMTP id 3so692674pwj.19
-        for <git@vger.kernel.org>; Thu, 28 Oct 2010 23:50:17 -0700 (PDT)
+        for <git@vger.kernel.org>; Thu, 28 Oct 2010 23:50:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=ORMW+KmNvtB6sgjHd8uYAoNrkoijbhN3Z2Ki2Foi74s=;
-        b=gvh4+YS2J8xbNKuOiT95y2a9UHBSFKg/nJLzX2qIW/BZ0Y/5h0J2PP5emrGvpbXXbF
-         F7bWOIOcHNPdrmm4oc9l53M3AiPf9zzY44nxG7RK2fZMqWY5AlW8rqbOVoghgIEBKO0g
-         NxlwtH7dgsX10w0sVK1ccZv86cCRepn4QjETs=
+        bh=yC7plGrZGe46QhFLjVUzBX1jzKVn00gMvPfj1txRjb0=;
+        b=vYlTR2lmzIqll/uC9JSu9RrV59KvJoDUzMzyb9RfQksQXQ71Cuj2ewv5vTRwMuoJOa
+         mV0cyQ2MqpNDJ18zKXaGDQmFuhsQ53cEmEbXtYCY0m4rpw7kmUJCiENArPQ7ttK8UO6F
+         BSu0tTWxFzBEBo1TjZb63rcWpdJc4XZm5IMAE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=oHMuBo//NbCQSDGA9aXVAg5VJfE0K6vHXlUG5QXr5mZPtYalN9lsEJV6SCX0Hmyt8M
-         5ZmhpWAorNtPOtLCtUncrtmaCz+tenyJI1iIpizzC2CWvPuH5iYCwdzG53U2Epi60MaV
-         UY1SD2LUakB2o/dYZjf7b0I9zCgua342IHi+w=
-Received: by 10.142.81.2 with SMTP id e2mr1041729wfb.180.1288335017849;
-        Thu, 28 Oct 2010 23:50:17 -0700 (PDT)
+        b=holmQ/JQuAKkrOqhWGHO+pkh8y7DlyQ2lGhgllUVagAp1FTKQweSxFkBhZjOcXGi9r
+         X4NW0C7m8e5iyxHxuU/GpOaCKx+Mz2Kn8u8/w62731P6ypvYbLEDCCangIjDefQf7Anl
+         c2pqIct8ePAQFlmgdZ/ySbonEp+GBSuTF1G8I=
+Received: by 10.142.165.4 with SMTP id n4mr796365wfe.121.1288335025025;
+        Thu, 28 Oct 2010 23:50:25 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.73.235.0])
-        by mx.google.com with ESMTPS id x18sm1022704wfa.11.2010.10.28.23.50.14
+        by mx.google.com with ESMTPS id w22sm1019060wfd.19.2010.10.28.23.50.21
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 28 Oct 2010 23:50:16 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 29 Oct 2010 13:50:17 +0700
+        Thu, 28 Oct 2010 23:50:24 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 29 Oct 2010 13:50:24 +0700
 X-Mailer: git-send-email 1.7.0.2.445.gcbdb3
 In-Reply-To: <1288334934-17216-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160275>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160276>
 
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- t/t1510-repo-setup.sh |   46 +++++++++++++++++++++++++++++++++++++++++=
-+++++
- 1 files changed, 46 insertions(+), 0 deletions(-)
+ t/t1510-repo-setup.sh |   47 +++++++++++++++++++++++++++++++++++++++++=
+++++++
+ 1 files changed, 47 insertions(+), 0 deletions(-)
 
 diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
-index 3a163d0..93cc9fb 100755
+index 93cc9fb..a216849 100755
 --- a/t/t1510-repo-setup.sh
 +++ b/t/t1510-repo-setup.sh
-@@ -483,4 +483,50 @@ EOF
- 	GIT_DIR=3D"$TRASH_DIRECTORY/3/.git" GIT_WORK_TREE=3D"$TRASH_DIRECTORY=
-" test_repo 3/sub/sub
+@@ -529,4 +529,51 @@ EOF
+ 	test_repo 4/sub
  '
 =20
 +#
-+# case #4
++# case #5
 +#
 +############################################################
 +#
 +# Input:
 +#
-+#  - GIT_WORK_TREE is not set
++#  - GIT_WORK_TREE is set
 +#  - GIT_DIR is not set
 +#  - core.worktree is set
 +#  - .git is a directory
@@ -91,35 +90,36 @@ index 3a163d0..93cc9fb 100755
 +#
 +# Output:
 +#
-+# core.worktree is ignored -> #0
++# GIT_WORK_TREE/core.worktree are ignored -> #0
 +
-+test_expect_success '#4: setup' '
++test_expect_success '#5: setup' '
 +	unset GIT_DIR GIT_WORK_TREE &&
-+	mkdir 4 4/sub &&
-+	cd 4 &&
++	mkdir 5 5/sub &&
++	cd 5 &&
 +	git init &&
 +	git config core.worktree non-existent &&
++	export GIT_WORK_TREE=3Dnon-existent-too &&
 +	cd ..
 +'
 +
-+test_expect_failure '#4: at root' '
-+	cat >4/expected <<EOF &&
++test_expect_failure '#5: at root' '
++	cat >5/expected <<EOF &&
 +setup: git_dir: .git
-+setup: worktree: $TRASH_DIRECTORY/4
-+setup: cwd: $TRASH_DIRECTORY/4
++setup: worktree: $TRASH_DIRECTORY/5
++setup: cwd: $TRASH_DIRECTORY/5
 +setup: prefix: (null)
 +EOF
-+	test_repo 4
++	test_repo 5
 +'
 +
-+test_expect_failure '#4: in subdir' '
-+	cat >4/sub/expected <<EOF &&
++test_expect_failure '#5: in subdir' '
++	cat >5/sub/expected <<EOF &&
 +setup: git_dir: .git
-+setup: worktree: $TRASH_DIRECTORY/4
-+setup: cwd: $TRASH_DIRECTORY/4
++setup: worktree: $TRASH_DIRECTORY/5
++setup: cwd: $TRASH_DIRECTORY/5
 +setup: prefix: sub/
 +EOF
-+	test_repo 4/sub
++	test_repo 5/sub
 +'
 +
  test_done
