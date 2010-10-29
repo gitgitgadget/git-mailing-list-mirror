@@ -1,62 +1,54 @@
-From: Markus Duft <mduft@gentoo.org>
-Subject: Re: [PATCH 1/2] add support for the SUA layer (interix; windows)
-Date: Fri, 29 Oct 2010 07:27:44 +0200
-Message-ID: <4CCA5B50.2040208@gentoo.org>
-References: <1288168793-11159-1-git-send-email-markus.duft@salomon.at> <1288168793-11159-2-git-send-email-markus.duft@salomon.at> <7veib99608.fsf@alter.siamese.dyndns.org>
+From: Joshua Jensen <jjensen@workspacewhiz.com>
+Subject: git diff-tree against the root commit
+Date: Fri, 29 Oct 2010 00:13:55 -0600
+Message-ID: <4CCA6623.8090705@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Oct 29 07:51:47 2010
+To: "git@vger.kernel.org" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Oct 29 08:13:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBhsR-0002kl-Av
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 07:51:47 +0200
+	id 1PBiDt-0001iG-2Y
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 08:13:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753409Ab0J2Fvm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Oct 2010 01:51:42 -0400
-Received: from smtp.salomon.at ([193.186.16.13]:50645 "EHLO sauxb.salomon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752484Ab0J2Fvl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Oct 2010 01:51:41 -0400
-X-Greylist: delayed 1308 seconds by postgrey-1.27 at vger.kernel.org; Fri, 29 Oct 2010 01:51:40 EDT
-Received: from servex01.wamas.com (servex01.salomon.at [172.28.2.2])
-	by sauxb.salomon.at (8.12.10/8.12.10) with ESMTP id o9T5Smh9029785;
-	Fri, 29 Oct 2010 07:28:48 +0200 (METDST)
-Received: from [172.28.8.166] ([172.28.8.166]) by servex01.wamas.com with Microsoft SMTPSVC(6.0.3790.4675);
-	 Fri, 29 Oct 2010 07:28:48 +0200
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.9) Gecko/20100913 Lightning/1.0b3pre Thunderbird/3.1.3
-In-Reply-To: <7veib99608.fsf@alter.siamese.dyndns.org>
-X-OriginalArrivalTime: 29 Oct 2010 05:28:48.0351 (UTC) FILETIME=[29C836F0:01CB772A]
-X-Scanned-By: MIMEDefang 2.54 on 172.28.2.13
+	id S1753619Ab0J2GNw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Oct 2010 02:13:52 -0400
+Received: from hsmail.qwknetllc.com ([208.71.137.138]:35221 "EHLO
+	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752265Ab0J2GNv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Oct 2010 02:13:51 -0400
+Received: (qmail 6028 invoked by uid 399); 29 Oct 2010 00:13:50 -0600
+Received: from unknown (HELO ?192.168.1.100?) (jjensen@workspacewhiz.com@76.27.116.215)
+  by hsmail.qwknetllc.com with ESMTPAM; 29 Oct 2010 00:13:50 -0600
+X-Originating-IP: 76.27.116.215
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.11) Gecko/20101013 Lightning/1.0b3pre Thunderbird/3.1.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160266>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160267>
 
-On 10/29/2010 02:50 AM, Junio C Hamano wrote:
-> mduft@s01en22.salomon.at writes:
-[snip]
-> 
-> It would be much nicer to do this:
-> 
->         #ifdef NO_INITGROUPS
->         #define initgroups(x,y) (0) /* nothing */
->         #endif
-> 
-> near the beginning of the file.  That would make life of people who have
-> changes in flight that would touch the same area of the code a lot easier.
+I am mirroring a Git repository into another SCM.  I am using 'git 
+diff-tree' to tell me what changes I need to make to the other SCM.
 
-ok, i see the point, thanks for your suggestion! I'll change this.
+Today, I attempted to mirror a new submodule.  'git diff-tree' reported 
+two SHAs... 0000000000000000000000000000000000000000 and the revision 
+the submodule currently resides at.  I attempted to run a 'git 
+diff-tree' within the submodule for the all zero SHA and the revision 
+specified, but apparently, 0000000000000000000000000000000000000000 does 
+not really represent the root commit and does not work.  I then 
+discovered the --root option, but that doesn't seem to give me the 
+complete file list either.
 
-may i ask where i should send v3 of the patch so it gets processed further?
-just the ml again, or is there a specific maintainer i should send this to?
+'git diff-tree' has been working great for everything else, but I really 
+need a root commit diff-tree listing for proper automation.
 
-regards,
-thanks for the help :)
-Markus
+What are my options?
+
+Thanks!
+
+Josh
