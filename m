@@ -1,149 +1,61 @@
-From: Yann Dirson <ydirson@free.fr>
-Subject: Re: [PATCH v8 1/5] Introduce bulk-move detection in diffcore.
-Date: Fri, 29 Oct 2010 23:18:52 +0200
-Message-ID: <20101029211852.GB5695@home.lan>
-References: <1288303712-14662-1-git-send-email-ydirson@altern.org>
- <1288303712-14662-2-git-send-email-ydirson@altern.org>
- <20101029014540.GB28984@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] Gitweb caching v7
+Date: Fri, 29 Oct 2010 15:25:54 -0700
+Message-ID: <7vbp6c63gt.fsf@alter.siamese.dyndns.org>
+References: <1288226574-19068-1-git-send-email-warthog9@eaglescrag.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 29 23:19:07 2010
+To: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Sat Oct 30 00:26:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBwLr-0005rq-4N
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 23:19:07 +0200
+	id 1PBxOl-000861-Q3
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Oct 2010 00:26:12 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932964Ab0J2VTB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Oct 2010 17:19:01 -0400
-Received: from smtp5-g21.free.fr ([212.27.42.5]:59425 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932921Ab0J2VTA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Oct 2010 17:19:00 -0400
-Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 5D9E1D48103;
-	Fri, 29 Oct 2010 23:18:53 +0200 (CEST)
-Received: from yann by home.lan with local (Exim 4.72)
-	(envelope-from <ydirson@free.fr>)
-	id 1PBwLc-0005RY-5Q; Fri, 29 Oct 2010 23:18:52 +0200
-Content-Disposition: inline
-In-Reply-To: <20101029014540.GB28984@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932980Ab0J2W0G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Oct 2010 18:26:06 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:51604 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932472Ab0J2W0F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Oct 2010 18:26:05 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 144522C1E;
+	Fri, 29 Oct 2010 18:26:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=e1/Byok8sNYZV5WKD7brbLkMmw4=; b=byVx6N
+	a3/0PthklXkuhPEkix+iPmSQ3hxVXRBiS94cKWS5DAoNzywWTIRp3LypJmU74gJ0
+	ZrbMv0Le/YnXSBjMRm+8ILNVme4NJ7M00unbfs2dkV8pn5KIoADxmW+1R5KD8dKF
+	k9wJhq2hZKPFRVkjGUeKBkS2rPahkTvZQq5Rw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=NlP1+Ju70tnrsAObKrvMSrykd5Bk9Hcc
+	T3W+gMBxs8cQaXlLt0ZOsZ8Ts89ZtqUA0kEzRjNJCANw0MU3xnBgNOY34Scgio7x
+	0vQM0AOryCxMUHbJpAao2RXQ//rRRh2Ie9/81Dg+J4AAgp3e2OYrS1SNbX050JOa
+	SykbWDqrIVI=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E4E372C1D;
+	Fri, 29 Oct 2010 18:25:58 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.169.49]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 4A7B72C1C; Fri, 29 Oct
+ 2010 18:25:56 -0400 (EDT)
+In-Reply-To: <1288226574-19068-1-git-send-email-warthog9@eaglescrag.net>
+ (John Hawley's message of "Wed\, 27 Oct 2010 17\:42\:51 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 811692A6-E3AB-11DF-B111-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160365>
 
-On Thu, Oct 28, 2010 at 08:45:40PM -0500, Jonathan Nieder wrote:
-> Yann Dirson wrote:
-> 
-> > Possible optimisations to this code include:
-> > * avoid use of i_am_not_single by using a separate list
-> 
-> I think that would help code clarity, too. It is tempting to try to
-> split this patch into micropatches:
+I am getting this in the gitweb.log:
 
-Hm, I fear too much granularity would become meaningless :)
+    [Fri Oct 29 22:21:12 2010] gitweb.perl: Undefined subroutine &main::cache_fetch called at .../t/../gitweb/gitweb.perl line 1124.
 
-A number of the steps you suggest (notably 8 and 9) would cause the
-code to be plain wrong at some points, since those are part of what
-makes the algorithm (appear to be) correct.  This would not be a
-problem only because that code would not be reachable throught any
-means, right ?  If the code needs to be easier to understand, I'd
-rather add some more doc, than added commits that are basically
-"useless for bisect".
-
-I'm much more tempted to split into fully-functionnal patches that do
-adds reachable code paths (eg. bulk removal - although it's much more
-than just a split of the patch).
-
-> 1. introduce DETECT_DIRECTORY_RENAMES flag and hidden UI for it.
-
-What do you mean by "hidden UI" ?
-
-[...]
-> 8. disqualify directories with stragglers left behind.
-> 
-> 9. disqualify directories for which the contents are not unanimous
->    about where to go.
-
-[...]
-
-> Trivial comments on the patch:
-> 
-> [...]
-> > +++ b/diffcore-rename.c
-> > @@ -6,14 +6,34 @@
-> >  #include "diffcore.h"
-> >  #include "hash.h"
-> >  
-> > +#define DEBUG_BULKMOVE 0
-> > +
-> > +#if DEBUG_BULKMOVE
-> > +#define debug_bulkmove(args) __debug_bulkmove args
-> > +void __debug_bulkmove(const char *fmt, ...)
-> > +{
-> > +	va_list ap;
-> > +	va_start(ap, fmt);
-> > +	fprintf(stderr, "[DBG] ");
-> > +	vfprintf(stderr, fmt, ap);
-> > +	va_end(ap);
-> > +}
-> > +#else
-> > +#define debug_bulkmove(args) do { /*nothing */ } while (0)
-> > +#endif
-> 
-> Is the debugging output infrequent enough to just use a function
-> unconditionally?
-
-You mean, keep funccalls even with DEBUG_BULKMOVE is not set ?  No,
-there are too many traces for that.
-
-> [...]
-> > + * Supports in-place modification of src by passing dst == src.
-> > + */
-> > +static const char *copy_dirname(char *dst, const char *src)
-> [...]
-> > +	end = mempcpy(dst, src, slash - src + 1);
-> 
-> I suppose this should read:
-> 
-> 	if (dst != src)
-> 		memcpy(dst, src, slash - src + 1);
-> 	dst[slash - src + 1] = '\0';
-> 	return dst;
-
-Ah, sure the dst==src case can be improved.  But I'm not sure
-factorizing writing NUL is worth the cost of re-computing where to put
-it when using mempcpy would avoid.  Wouldn't the following be more
-adequate ?
-
-	if (dst != src) {
-		end = mempcpy(dst, src, slash - src + 1);
-		*end = '\0';
-	} else
-		dst[slash - src + 1] = '\0';
-	return dst;
-
-> Style: '{' for functions goes in column 0.
-
-> Can get some depth reduction by dropping the else here (since in
-> the trivial case we have already returned).
-
-Right, thanks.
-
-> > +static void diffcore_bulk_moves(void)
-> > +{
-> > +	int i;
-> > +	for (i = 0; i < rename_dst_nr; i++)
-> > +		check_one_bulk_move(rename_dst[i].pair);
-> > +}
-> 
-> Yay. :)
-
-Isn't that nice and pretty :)
+which seems to cause t9500 to fail.
