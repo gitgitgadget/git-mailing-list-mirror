@@ -1,126 +1,77 @@
-From: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
-Subject: Re: [PATCH] CodingGuidelines: Add a section on writing documentation
-Date: Fri, 29 Oct 2010 13:54:23 +0200
-Message-ID: <87wrp12p00.fsf@gmail.com>
-References: <20101021222129.GA13262@burratino> <20101024155121.GA9503@headley>
-	<AANLkTimpJbuZAPfvVOedstV7=UiLiDMnDaYWQLVNQ+Yc@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [RFC PATCH] Makefile: new prove target for running the tests
+ with TAP
+Date: Fri, 29 Oct 2010 15:19:20 +0200
+Message-ID: <4CCAC9D8.20501@drmicha.warpmail.net>
+References: <5c46df95f93b56aa2fce56c7efe7b2be80642c8b.1287045908.git.git@drmicha.warpmail.net>	<20101014172301.GA2770@sigill.intra.peff.net>	<7vmxq0ebe9.fsf@alter.siamese.dyndns.org>	<20101027045709.GA11250@idm.gtisc.gatech.edu> <AANLkTimH=fbRAdz-F-V-9WTKzAyVvpzRHC06e+94a2wJ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Mark Lodato <lodatom@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 29 13:55:56 2010
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 29 15:19:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBnYo-0005rM-1q
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 13:55:54 +0200
+	id 1PBorH-0005LI-SS
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 15:19:04 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751991Ab0J2Lzu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Oct 2010 07:55:50 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:53056 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758022Ab0J2Lzs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Oct 2010 07:55:48 -0400
-Received: by bwz11 with SMTP id 11so2410554bwz.19
-        for <git@vger.kernel.org>; Fri, 29 Oct 2010 04:55:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject
-         :in-reply-to:references:user-agent:date:message-id:mime-version
-         :content-type:content-transfer-encoding;
-        bh=p3HpYcx4K7xq1x4TwIDQfhovRaebHkArDTSdKRO2bxc=;
-        b=lQIcpj2L7tCrP3jKeDVPHOSKk76SSLSG4/fsRUBjhHd9kUQhZoa+4OKdqLA2D1JhKl
-         oWBgnMNSmGPOuFcpVSe550vU6V/0cSk1kwT7fG8Sby1R/DrvL4C34G+KhR1kMmt/egbb
-         Dzw4EzVJNza052dUy+jukXSvvY/Ft93IYL65s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type:content-transfer-encoding;
-        b=k5PBA2GkS7S1RfzFbZklZixaFR6cHe91+RAB2T6G0HmAoEUF3fjObeQyaan/V5zOCT
-         3xLBkqG9RsPWPnW8nw/Cs3uVBNCmC3MBjFWPnbS4wPtk6QMwbPeQWjt0JwWSpW6BQ5ml
-         GHt2EeYdlk7BatmLsY1HADFH6IiAh9DY5c0a0=
-Received: by 10.204.100.17 with SMTP id w17mr9415021bkn.43.1288353346596;
-        Fri, 29 Oct 2010 04:55:46 -0700 (PDT)
-Received: from localhost (176.119.broadband10.iol.cz [90.177.119.176])
-        by mx.google.com with ESMTPS id p22sm780690bkp.9.2010.10.29.04.55.43
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 29 Oct 2010 04:55:44 -0700 (PDT)
-In-Reply-To: <AANLkTimpJbuZAPfvVOedstV7=UiLiDMnDaYWQLVNQ+Yc@mail.gmail.com>
-	(Mark Lodato's message of "Thu, 28 Oct 2010 22:56:14 -0400")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+	id S932695Ab0J2NS7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Oct 2010 09:18:59 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:48400 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1756182Ab0J2NS5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Oct 2010 09:18:57 -0400
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 5EF3F734;
+	Fri, 29 Oct 2010 09:18:57 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Fri, 29 Oct 2010 09:18:57 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=tMSbu2WZjACdwTGv2rBVqXuhom8=; b=pAMC8R0cin8lBFMyZ/I8tf+hoKfw83jPxX+CVEYUT31ppjNPPseQePwnvz7Iu11lFZ7yreXNoSPyRocP7pMuG4RX2b4KWacskKww15tjNex4OUOpWMkizhZrIjII/gqU9p89nzi2t4ao9rpbemJEwjrLB9EDGoDY/i2v1fP8DXs=
+X-Sasl-enc: 1IoyCkTKHe0yXtEFWcg8WW+DaWR8cEwKhyL7E48fEEoF 1288358337
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id A22235EA6FD;
+	Fri, 29 Oct 2010 09:18:56 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100921 Fedora/3.1.4-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.4
+In-Reply-To: <AANLkTimH=fbRAdz-F-V-9WTKzAyVvpzRHC06e+94a2wJ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160331>
 
-Mark Lodato <lodatom@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason venit, vidit, dixit 27.10.2010 1=
+3:00:
+> On Wed, Oct 27, 2010 at 06:57, Jeff King <peff@peff.net> wrote:
+>> On Tue, Oct 26, 2010 at 05:18:22PM -0700, Junio C Hamano wrote:
+>>
+>>>> like -j16, but it's a pain to construct the command line (especial=
+ly as
+>>>> I use --root in GIT_TEST_OPTS to get a significant speedup).
+>>> [..]
+>>> I kind of like this.  Perhaps with something like this squashed in?
+>>
+>> Yeah, looks good to me. I guess you can steal the commit message and
+>> authorship from Michael's original.
+>>
+>> =C3=86var mentioned something about t/harness, which I honestly have=
+ no idea
+>> about (I don't have the right perl modules installed to run it). But
+>> maybe that could be an alternate DEFAULT_TEST_TARGET. I dunno.
+>=20
+> The non-standard module there is only needed for the smoke testing.
+>=20
+> If we used t/harness for running "make test" that code could be
+> modified to run anywhere prove itself does.
+>=20
+> Anyway, if there's a patch now to invoke prove(1) let's use that. We
+> can change it to t/harness later if that makes sense.
 
-> On Sun, Oct 24, 2010 at 11:51 AM, =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <s=
-tepnem@gmail.com> wrote:
->> + Specific number of occurences is indicated as follows:
->> +   <commit>{0,2}
->> +   (Up to two <commit>s.)
->
-> I suggest removing this notation - it is confusing and is only used b=
-y
-> git-diff.txt and git-difftool.txt.  We already have notation to serve
-> this purpose:
->
->     [<commit> [<commit>]]
+Thanks, Junio, for taking this up (and others for discussing it), I've
+been out of the loop a bit. I'll try and keep up with my other
+half-baked patches ;)
 
-Yeah, it's kind of an oddball, although I don't really find it
-confusing. I guess it might be useful in cases where you have a bigger
-number of "things", say 4 or more, where the brackets could get
-unwieldy.
-
-But given that it's only used as {0,2} at the two places right now
-(disregarding occurences of "0{40}" in the documentation), I agree it
-might be better to get rid of it, although I don't feel strongly about
-it. Any other opinions?
-
->> + Parentheses are used for grouping, often combined with vertical ba=
-r
->> + to indicate alternatives:
->> +   [(<rev>|<range>)...]
->> +   (Any number of either <rev> or <range>.  Parens are needed to ma=
-ke
->> +   it clear that "..." pertains to both <rev> and <range>.)
->
-> You could also mention that parentheses are not needed if square
-> brackets will do:
->     [-q | --quiet]
-
-Good point, will do.
-
-> Also, should there be a standard for spacing and for whether the shor=
-t
-> or the long option comes first?
->
-> git-add.txt:
->     [--patch | -p]
-> git-commit.txt:
->     [-a | --interactive]
-> git-stash.txt:
->     [-q|--quiet]
-
-I thought about this already when preparing the recent unification
-series, and came to the conclusion "no, there shouldn't". :-) As the
-examples you give show, the current usage is inconsistent, but given
-that it brings no semantic ambiguity, I don't think it is a problem. Yo=
-u
-could find more similar cosmetic inconsistencies and I don't think it
-makes much sense to mandate any rules for such things. (But again, I
-don't feel _too_ strongly about this either, so if more people think
-it's worth it, I can prepare a patch that unifies them and mention the
-preference in CodingGuidelines.)
-
-> Otherwise, I think this patch looks good.
-
-Thank you for the feedback!
-
-=C5=A0t=C4=9Bp=C3=A1n
+Michael
