@@ -1,119 +1,98 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] diff: support --root --cached combination
-Date: Fri, 29 Oct 2010 05:19:59 -0500
-Message-ID: <20101029101959.GA27662@burratino>
-References: <1288346087-20263-1-git-send-email-pclouds@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: mutt aliases file not working
+Date: Fri, 29 Oct 2010 12:51:33 +0200
+Message-ID: <4CCAA735.1030805@drmicha.warpmail.net>
+References: <4CC89BC4.8080009@linux.intel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 29 12:20:17 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Darren Hart <dvhart@linux.intel.com>
+X-From: git-owner@vger.kernel.org Fri Oct 29 12:51:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBm4G-0001tC-Hv
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 12:20:16 +0200
+	id 1PBmYI-0005li-SH
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 12:51:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756659Ab0J2KUK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Oct 2010 06:20:10 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:63121 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753417Ab0J2KUI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Oct 2010 06:20:08 -0400
-Received: by qyk10 with SMTP id 10so3235220qyk.19
-        for <git@vger.kernel.org>; Fri, 29 Oct 2010 03:20:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=vdDyBLXuFlL9qOAqD+EsOnwFuJVNbqT7vX5BvD+AAyM=;
-        b=jsfpzlS/vjp1hFiZwSLC38jMK8InSMUTZuDrkQEZa5bHxfZkM7uglt7dI9KPYPbitv
-         0tIeWE/cKJsL8zclsYXa+XkEN8M2Hq7+XkI43pa4wHWNkv/1SDitJjkWYr2mdtBhrASB
-         81CgITPpoB/eADWFhd5yxa9b3gWPqaD5Qcipo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=XvWIwXilz65OTB67w5g+wwFKxwf2vjLj8Hla84ocQr7VXuC4hNnA7+KRmlumX+eeVW
-         WT0mB1zB6ktqITAn9EpmaX+eoH8C71RFNJfmhnUXjvpHq3BWMhHlO0XSHKxWLu7aaeDw
-         +WuVTYpGbIr+JKzqw9VeB44MeNUA0cozKVrww=
-Received: by 10.229.183.21 with SMTP id ce21mr578783qcb.197.1288347607433;
-        Fri, 29 Oct 2010 03:20:07 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id c8sm1596289yha.13.2010.10.29.03.20.05
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 29 Oct 2010 03:20:06 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1288346087-20263-1-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757293Ab0J2KvM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Oct 2010 06:51:12 -0400
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:51049 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753029Ab0J2KvL (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Oct 2010 06:51:11 -0400
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 3BD3C6EB;
+	Fri, 29 Oct 2010 06:51:10 -0400 (EDT)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Fri, 29 Oct 2010 06:51:10 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=E9oQ+a8NlhWcYAvVqXhR5Fwv8Kc=; b=Q5L7tVQRmgG9smsDTueqeh6XACBbuWiXEM101pgof9PT8RH3J6Q2EDfGSS5j+o/ccV9L/L7UNKMjpc83JAGmIN+bUIE84Y7lRGh6l2cNp6RHqdWcs+lLydEkU7q3khOoNB6eodTPJ9Fk8Fh2KokK1JT9avJ1qL23xeS74genyr0=
+X-Sasl-enc: S6DsJaFcKGcmD+N833tJmcOYgNiUuxS8tEN1IMIFKXuL 1288349469
+Received: from localhost.localdomain (heawood.math.tu-clausthal.de [139.174.44.4])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B7DF75E2BE9;
+	Fri, 29 Oct 2010 06:51:09 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.9) Gecko/20100921 Fedora/3.1.4-1.fc13 Lightning/1.0b3pre Thunderbird/3.1.4
+In-Reply-To: <4CC89BC4.8080009@linux.intel.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160326>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Darren Hart venit, vidit, dixit 27.10.2010 23:38:
+> For whatever reason, which I'm sure is user error, I haven't been
+> able to get mutt aliases to work, while mailrc works fine:
+> 
+> $ mkdir aliases.git
+> $ cd !$
+> $ git init
+> Initialized empty Git repository in /home/dvhart/aliases.git/.git/
+> $ echo "joe Joe Blow joe@foobar.com" > muttaliases
 
->  I have a ritual of doing "git dic" (short for diff --cached) before
->  committing and does not want to break it, even on new repos.
->=20
->  Looks like a good thing and no harm to the rest of the world.
+How about:
 
-This explanation belongs in the commit message, methinks.
+echo 'alias joe Joe Blow <joe@foobar.com>' > muttaliases
 
-> --- a/builtin/diff.c
-> +++ b/builtin/diff.c
-> @@ -330,8 +330,13 @@ int cmd_diff(int argc, const char **argv, const =
-char *prefix)
->  			else if (!strcmp(arg, "--cached") ||
->  				 !strcmp(arg, "--staged")) {
->  				add_head_to_pending(&rev);
-> -				if (!rev.pending.nr)
-> -					die("No HEAD commit to compare with (yet)");
-> +				if (!rev.pending.nr) {
-> +					struct object *obj;
-> +					if (!rev.show_root_diff)
-> +						die("No HEAD commit to compare with (yet)");
-
-How does this condition get tripped?  The code allowing "[log]
-showroot" to be set to false is only invoked by the log family of
-commands.
-
-Using --root as the backward-compatibility option seems like
-an abuse of language, anyway.  "git diff --cached" has two
-meanings:
-
- 1. show changes to be committed
-
-    1b. show what git show --format=3D" " would say after a commit
-
- 2. show differences between the index and the commit named by the
-    (implicit) HEAD argument
-
-With interpretation (1b), --root should be respected, and the output
-should be empty (!), not an error, when "[log] showroot" is false.
-
-With interpretation (2), --root should not be respected, and an
-attempt to diff --cached in an unborn branch should be an error.
-
-(1a) and (1b) are the only useful interpretations.  So for simplicity,
-would it make sense to drop the "if ()" for --root and make
-
-> +test_expect_success 'diff --cached' '
-> +	test_must_fail git diff --cached
-> +'
-
-fail?
-
-> +					obj =3D (struct object*)lookup_tree((unsigned char*)EMPTY_TREE_=
-SHA1_BIN);
-
-	struct tree *tree =3D lookup_tree((const unsigned char *) ...
-	obj =3D &tree->object;
-
-might be more clear (and robust against future layout changes).
+> $ git add muttaliases
+> $ git commit -m "aliases file"
+> [master (root-commit) b71ae4a] aliases file
+>  1 files changed, 1 insertions(+), 0 deletions(-)
+>  create mode 100644 muttaliases
+> $ git config sendemail.aliasesfile `pwd`/muttaliases
+> $ git config sendemail.aliasfiletype mutt
+> $ cat .git/config
+> [core]
+> 	repositoryformatversion = 0
+> 	filemode = true
+> 	bare = false
+> 	logallrefupdates = true
+> [sendemail]
+> 	aliasesfile = /home/dvhart/aliases.git/muttaliases
+> 	aliasfiletype = mutt
+> $ git send-email --to joe -1 
+> /tmp/l0xCEC7o3d/0001-aliases-file.patch
+> Who should the emails appear to be from? [Darren Hart <darren@dvhart.com>] 
+> Emails will be sent from: Darren Hart <darren@dvhart.com>
+> Message-ID to be used as In-Reply-To for the first email? 
+> (mbox) Adding cc: Darren Hart <darren@dvhart.com> from line 'From: Darren Hart <darren@dvhart.com>'
+> 
+> From: Darren Hart <darren@dvhart.com>
+> To: joe
+> 
+>     ^ when using a mailrc fail this expands to joe@foobar.com
+> 
+> Cc: Darren Hart <darren@dvhart.com>
+> Subject: [PATCH] aliases file
+> Date: Wed, 27 Oct 2010 14:29:10 -0700
+> Message-Id: <1288214950-13695-1-git-send-email-darren@dvhart.com>
+> X-Mailer: git-send-email 1.7.1
+> 
+> Send this email? ([y]es|[n]o|[q]uit|[a]ll): ^C
+> 
+> $ stty: standard input: Input/output error
+> ^C
+> 
+> Am I doing something obviously wrong?
+> 
