@@ -1,57 +1,83 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] diff: support --root --cached combination
-Date: Fri, 29 Oct 2010 11:40:51 -0400
-Message-ID: <20101029154051.GA3022@sigill.intra.peff.net>
-References: <1288346087-20263-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 29 17:40:11 2010
+From: "Nathan W. Panike" <nathan.panike@gmail.com>
+Subject: [PATCH] Fix a formatting error in git-merge.txt
+Date: Fri, 29 Oct 2010 10:33:54 -0500
+Message-ID: <4ccaebae.e91dec0a.1ac5.ffff8876@mx.google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 29 17:44:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBr3r-0005lx-2y
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 17:40:11 +0200
+	id 1PBr7X-0008O7-4n
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 17:43:59 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934084Ab0J2PkF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Oct 2010 11:40:05 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:53401 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932752Ab0J2PkD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Oct 2010 11:40:03 -0400
-Received: (qmail 5999 invoked by uid 111); 29 Oct 2010 15:40:00 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 29 Oct 2010 15:40:00 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Oct 2010 11:40:51 -0400
-Content-Disposition: inline
-In-Reply-To: <1288346087-20263-1-git-send-email-pclouds@gmail.com>
+	id S934067Ab0J2Pnp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Oct 2010 11:43:45 -0400
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:42647 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932511Ab0J2Pnn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Oct 2010 11:43:43 -0400
+Received: by gyg4 with SMTP id 4so2038718gyg.19
+        for <git@vger.kernel.org>; Fri, 29 Oct 2010 08:43:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:from:date:subject
+         :to;
+        bh=8KKX+9f0mvEs8K+6pbjk8H33mCYYqxKG5X8bbJPuSfc=;
+        b=kJd2+WTRkmd55p/GuPBgt13fRRGg+jSytCNwmiY6QbAU53ogelfEO6osUbs95EndEB
+         1UuG0wwSCdw/eeramquGyxZ6CDJ3DSPqYqWidV2OLOZ2x5x6FEViG+LWkaSyTKkjuCid
+         PZ/46KDmpyZNs4nZyER2dzPgK2wW7vdAmdBMA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:from:date:subject:to;
+        b=qJjb7lRRubksTOamNRMIpdXfjgB/jTiIMid7e59V9Nr3Kjage392rCqwidp0Ak9fEI
+         dpLXRPhA834mtmlMnQDRmkvogGJkVSE7Q7QWwp0idQINLg4/FXODRaOCMerMgDoBuW9i
+         rHeb/TW8qhvVrLIygwgVSb9pDVcfAG3IkOSAU=
+Received: by 10.150.217.4 with SMTP id p4mr21251937ybg.167.1288367022773;
+        Fri, 29 Oct 2010 08:43:42 -0700 (PDT)
+Received: from localhost ([144.92.149.221])
+        by mx.google.com with ESMTPS id i69sm1803150yha.8.2010.10.29.08.43.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 29 Oct 2010 08:43:42 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160334>
 
-On Fri, Oct 29, 2010 at 04:54:47PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
-=BB=8Dc Duy wrote:
+Signed-off-by: Nathan W. Panike <nathan.panike@gmail.com>
+---
+Without this patch, the lines below get set in typewriter mode, which
+just looks wrong.
 
->=20
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
->  I have a ritual of doing "git dic" (short for diff --cached) before
->  committing and does not want to break it, even on new repos.
->=20
->  Looks like a good thing and no harm to the rest of the world.
+ Documentation/git-merge.txt |   14 +++++++-------
+ 1 files changed, 7 insertions(+), 7 deletions(-)
 
-Hmm. What's new is old, I suppose. You might want to read the comments
-on my very similar patch here:
-
-  http://thread.gmane.org/gmane.comp.version-control.git/95935/focus=3D=
-96187
-
--Peff
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index 84043cc..d43416d 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -59,13 +59,13 @@ include::merge-options.txt[]
+ -m <msg>::
+ 	Set the commit message to be used for the merge commit (in
+ 	case one is created).
+-
+-	If `--log` is specified, a shortlog of the commits being merged
+-	will be appended to the specified message.
+-
+-	The 'git fmt-merge-msg' command can be
+-	used to give a good default for automated 'git merge'
+-	invocations.
+++
++If `--log` is specified, a shortlog of the commits being merged
++will be appended to the specified message.
+++
++The 'git fmt-merge-msg' command can be
++used to give a good default for automated 'git merge'
++invocations.
+ 
+ --rerere-autoupdate::
+ --no-rerere-autoupdate::
+-- 
+1.7.3.2.148.g04a2.dirty
