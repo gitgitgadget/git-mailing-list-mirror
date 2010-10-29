@@ -1,116 +1,93 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] git-am: create a config setting for reject control.
-Date: Thu, 28 Oct 2010 21:11:48 -0500
-Message-ID: <20101029021148.GC28984@burratino>
-References: <1288315650-2488-1-git-send-email-paul.gortmaker@windriver.com>
+From: Mark Lodato <lodatom@gmail.com>
+Subject: Re: [PATCH] CodingGuidelines: Add a section on writing documentation
+Date: Thu, 28 Oct 2010 22:56:14 -0400
+Message-ID: <AANLkTimpJbuZAPfvVOedstV7=UiLiDMnDaYWQLVNQ+Yc@mail.gmail.com>
+References: <20101021222129.GA13262@burratino> <20101024155121.GA9503@headley>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Paul Gortmaker <paul.gortmaker@windriver.com>
-X-From: git-owner@vger.kernel.org Fri Oct 29 04:12:04 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 29 04:56:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBeRn-0008Ue-2J
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 04:12:03 +0200
+	id 1PBf9C-0003iW-UW
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 04:56:55 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757142Ab0J2CL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 22:11:57 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:40111 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753202Ab0J2CL4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Oct 2010 22:11:56 -0400
-Received: by gyg4 with SMTP id 4so1698507gyg.19
-        for <git@vger.kernel.org>; Thu, 28 Oct 2010 19:11:55 -0700 (PDT)
+	id S1759935Ab0J2C4g convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 28 Oct 2010 22:56:36 -0400
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:43267 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757462Ab0J2C4e convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Oct 2010 22:56:34 -0400
+Received: by iwn10 with SMTP id 10so3080747iwn.19
+        for <git@vger.kernel.org>; Thu, 28 Oct 2010 19:56:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=fqiuHdIGZ5TRqQrFk10c4e+5+4uGQKQLeWl6Rz09xQk=;
-        b=vzfyz72qRi+sjAwqvKQ/QRkTIrbeGmF8iJkBA3tmjUibC190sJM8vC4sqFvclUqyFc
-         lQq+hCRAsDSq+mIPeBsk5y1XxZ1zeUIu/kTKwsD9SWFtpce034Rg2y1KnMlUCU4TpdbW
-         6gXogU6TPvaJGyJt2WvYW/sj662pesAb5SWjo=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        bh=qy1MHcS+lEwAcsX49FmMi0z35Ocy3Y4t2LH1UklRDFQ=;
+        b=CL3or1YDZ19iAUwjmiQi+GakAqQBhNJ8trIlyKeP5gssck8gLqvs4m1aB99jLvs48J
+         fyQeMNTyr4DVf+OHyJQd3byvbZCY65+uH5Qr6J/a0PV9WVwrJKWwURQumzn3vRSOA5bc
+         7HxHu4I9+QlXhs6VXglCicsNgxmCK71FEDeMk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=jCksQuBGasIL4COxpmeWzQh5JutXwrcmXR0BG1Ngcmv+xl+8AqShsqV3RXX379HA++
-         99V4aalA2/sI6fGeH23jXyFEmi3aWXqsNtarYQl0Id+we632U5IJEgI7iSU4Fwjzj/PP
-         sIgwTqUPRimu7xABMn7BkENtUYYFK8sRHT8VI=
-Received: by 10.90.91.16 with SMTP id o16mr3602995agb.173.1288318315037;
-        Thu, 28 Oct 2010 19:11:55 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id m46sm1274615yha.44.2010.10.28.19.11.53
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 28 Oct 2010 19:11:53 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1288315650-2488-1-git-send-email-paul.gortmaker@windriver.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type:content-transfer-encoding;
+        b=F0MRI3FBsvaIZv3zAzHw2U44XwpfEH5D849omi8Zi3nl+f8PfYEkvnngDGy21ZU3Sf
+         l6DnoPKLRsng+y2MPzAvwebF9ks0cts88H4jtdqUEe/rSKGqcWimVmkajI2l35rR3+E5
+         Bmg0I1x/h1M+UqSRS/y2akban5wbdAdN7+Q9g=
+Received: by 10.42.197.72 with SMTP id ej8mr7993605icb.196.1288320994184; Thu,
+ 28 Oct 2010 19:56:34 -0700 (PDT)
+Received: by 10.42.174.9 with HTTP; Thu, 28 Oct 2010 19:56:14 -0700 (PDT)
+In-Reply-To: <20101024155121.GA9503@headley>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160262>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160263>
 
-Paul Gortmaker wrote:
+On Sun, Oct 24, 2010 at 11:51 AM, =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <ste=
+pnem@gmail.com> wrote:
+> Provide a few examples on argument and option notation in usage strin=
+gs
+> and command synopses.
 
->             This adds a config option for it, and a --no-reject
-> so that you can manually override it.
+I think this is a great idea.
 
-Documentation?  (to put in Documentation/config.txt)  A test or two
-would be nice, too --- see 6d8d8e0d for example.
+> + Specific number of occurences is indicated as follows:
+> +   <commit>{0,2}
+> +   (Up to two <commit>s.)
 
-[...]
-> +++ b/git-am.sh
-> @@ -306,6 +307,11 @@ then
->      keepcr=t
->  fi
->  
-> +if test "$(git config --bool --get am.reject)" = true
-> +then
-> +    reject=t
-> +fi
+I suggest removing this notation - it is confusing and is only used by
+git-diff.txt and git-difftool.txt.  We already have notation to serve
+this purpose:
 
-Something like the following is tempting, but I suspect "git rebase"
-already copes.  Another potential test. :)
+    [<commit> [<commit>]]
 
-Hope that helps.
-Jonathan
+> + Parentheses are used for grouping, often combined with vertical bar
+> + to indicate alternatives:
+> +   [(<rev>|<range>)...]
+> +   (Any number of either <rev> or <range>.  Parens are needed to mak=
+e
+> +   it clear that "..." pertains to both <rev> and <range>.)
 
-diff --git a/git-am.sh b/git-am.sh
-index 43a510f..b9fdb5a 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -307,10 +307,7 @@ then
-     keepcr=t
- fi
- 
--if test "$(git config --bool --get am.reject)" = true
--then
--    reject=t
--fi
-+reject=config
- 
- while test $# != 0
- do
-@@ -378,6 +375,17 @@ do
- 	shift
- done
- 
-+if test "$reject" = config
-+then
-+	if test "$rebasing" != t &&
-+	   "$(git config --bool --get am.reject)" = true
-+	then
-+		reject=t
-+	else
-+		reject=
-+	fi
-+fi
-+
- if test "$reject" = t
- then
- 	git_apply_opt="$git_apply_opt --reject"
+You could also mention that parentheses are not needed if square
+brackets will do:
+    [-q | --quiet]
+
+Also, should there be a standard for spacing and for whether the short
+or the long option comes first?
+
+git-add.txt:
+    [--patch | -p]
+git-commit.txt:
+    [-a | --interactive]
+git-stash.txt:
+    [-q|--quiet]
+
+Otherwise, I think this patch looks good.
