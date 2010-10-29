@@ -1,142 +1,170 @@
-From: Paul Gortmaker <paul.gortmaker@windriver.com>
-Subject: [PATCH] git-am: create a config setting for reject control.
-Date: Thu, 28 Oct 2010 21:27:30 -0400
-Message-ID: <1288315650-2488-1-git-send-email-paul.gortmaker@windriver.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Oct 29 03:32:58 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v8 1/5] Introduce bulk-move detection in diffcore.
+Date: Thu, 28 Oct 2010 20:45:40 -0500
+Message-ID: <20101029014540.GB28984@burratino>
+References: <1288303712-14662-1-git-send-email-ydirson@altern.org>
+ <1288303712-14662-2-git-send-email-ydirson@altern.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Yann Dirson <ydirson@free.fr>
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Fri Oct 29 03:45:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBdpu-0004Dw-KF
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 03:32:54 +0200
+	id 1PBe2T-0007x2-GZ
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 03:45:53 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754449Ab0J2B1d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 21:27:33 -0400
-Received: from mail.windriver.com ([147.11.1.11]:34958 "EHLO
-	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753192Ab0J2B1c (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Oct 2010 21:27:32 -0400
-Received: from ALA-MAIL03.corp.ad.wrs.com (ala-mail03 [147.11.57.144])
-	by mail.windriver.com (8.14.3/8.14.3) with ESMTP id o9T1RV57028304
-	for <git@vger.kernel.org>; Thu, 28 Oct 2010 18:27:31 -0700 (PDT)
-Received: from ala-mail06.corp.ad.wrs.com ([147.11.57.147]) by ALA-MAIL03.corp.ad.wrs.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 28 Oct 2010 18:27:31 -0700
-Received: from yow-pgortmak-d1.corp.ad.wrs.com ([128.224.146.65]) by ala-mail06.corp.ad.wrs.com with Microsoft SMTPSVC(6.0.3790.1830);
-	 Thu, 28 Oct 2010 18:27:31 -0700
-X-Mailer: git-send-email 1.7.3.2.146.g2d444
-X-OriginalArrivalTime: 29 Oct 2010 01:27:31.0755 (UTC) FILETIME=[750EF7B0:01CB7708]
+	id S1759289Ab0J2Bps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 21:45:48 -0400
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:38967 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759127Ab0J2Bpr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Oct 2010 21:45:47 -0400
+Received: by qwf7 with SMTP id 7so1798888qwf.19
+        for <git@vger.kernel.org>; Thu, 28 Oct 2010 18:45:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=qT+ABQ1DVF46dDoMRWzBBgdncA4j0YmUaBWxP85MgW8=;
+        b=UppFMSz6rqvhEa59LHYpYA03kxEdTaUEBy+XEJtaXYO2oThk0E6oPm956XYsrejDHG
+         xZV9Y/dGE3B9gL/xLw6PHkW3MyHu0hfu3JHXLQSDH8+ddNaAoHRn9UJfP0s3cRYT22Wk
+         73489uNGfUm+gmj9E8A4SbwUyLW/rPixJ9v9w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=STG5aI4XMKoTKcqr6s2W/MeR2RbEdl+s7aNiVbGV0cekQ7X3QjCxdZLKu39ILaVnVd
+         6loRR0/KMv6t0n6asqMP2PQbKyVwxYR5VErQN8hUNQ1QKktz/4iJD/eqqLjRF0UoNW71
+         9EiLYRKbaHm+k1Bu+dCnOWWptdAW3m+t6k6C8=
+Received: by 10.224.186.143 with SMTP id cs15mr1274298qab.259.1288316746637;
+        Thu, 28 Oct 2010 18:45:46 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id t35sm1722214qco.6.2010.10.28.18.45.44
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 28 Oct 2010 18:45:45 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <1288303712-14662-2-git-send-email-ydirson@altern.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160260>
 
-git am already accepts a "--reject" switch, which basically means
-apply the bits you can, but you can't set it as enabled by default
-currently.  This adds a config option for it, and a --no-reject
-so that you can manually override it.  The implementation copies
-from the one and only existing git-am config option -- "keepcr".
+Yann Dirson wrote:
 
-Signed-off-by: Paul Gortmaker <paul.gortmaker@windriver.com>
----
- Documentation/git-am.txt |   12 +++++++++---
- git-am.sh                |   19 +++++++++++++++++--
- 2 files changed, 26 insertions(+), 5 deletions(-)
+> Possible optimisations to this code include:
+> * avoid use of i_am_not_single by using a separate list
 
-diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
-index 51297d0..5158e20 100644
---- a/Documentation/git-am.txt
-+++ b/Documentation/git-am.txt
-@@ -13,8 +13,8 @@ SYNOPSIS
- 	 [--3way] [--interactive] [--committer-date-is-author-date]
- 	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
- 	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
--	 [--reject] [-q | --quiet] [--scissors | --no-scissors]
--	 [(<mbox> | <Maildir>)...]
-+	 [--reject | --no-reject] [-q | --quiet]
-+	 [--scissors | --no-scissors] [(<mbox> | <Maildir>)...]
- 'git am' (--continue | --skip | --abort)
- 
- DESCRIPTION
-@@ -87,11 +87,17 @@ default.   You can use `--no-utf8` to override this.
- -C<n>::
- -p<n>::
- --directory=<dir>::
----reject::
- 	These flags are passed to the 'git apply' (see linkgit:git-apply[1])
- 	program that applies
- 	the patch.
- 
-+--reject::
-+--no-reject::
-+	With `--reject`, call 'git apply' (see linkgit:git-apply[1]) with
-+	the same option, to have it apply whatever parts of the commit it
-+	can. `am.reject` configuration variable can be used to specify the
-+	default behaviour.  `--no-reject` is useful to override `am.reject`.
-+
- -i::
- --interactive::
- 	Run interactively.
-diff --git a/git-am.sh b/git-am.sh
-index df09b42..43a510f 100755
---- a/git-am.sh
-+++ b/git-am.sh
-@@ -26,6 +26,7 @@ C=              pass it through git-apply
- p=              pass it through git-apply
- patch-format=   format the patch(es) are in
- reject          pass it through git-apply
-+no-reject       do not pass it through git-apply, independent of am.reject
- resolvemsg=     override error message when patch failure occurs
- continue        continue applying patches after resolving a conflict
- r,resolved      synonyms for --continue
-@@ -295,7 +296,7 @@ split_patches () {
- prec=4
- dotest="$GIT_DIR/rebase-apply"
- sign= utf8=t keep= keepcr= skip= interactive= resolved= rebasing= abort=
--resolvemsg= resume= scissors= no_inbody_headers=
-+resolvemsg= resume= scissors= no_inbody_headers= reject=
- git_apply_opt=
- committer_date_is_author_date=
- ignore_date=
-@@ -306,6 +307,11 @@ then
-     keepcr=t
- fi
- 
-+if test "$(git config --bool --get am.reject)" = true
-+then
-+    reject=t
-+fi
-+
- while test $# != 0
- do
- 	case "$1" in
-@@ -346,8 +352,12 @@ do
- 		git_apply_opt="$git_apply_opt $(sq "$1$2")"; shift ;;
- 	--patch-format)
- 		shift ; patch_format="$1" ;;
--	--reject|--ignore-whitespace|--ignore-space-change)
-+	--ignore-whitespace|--ignore-space-change)
- 		git_apply_opt="$git_apply_opt $1" ;;
-+	--reject)
-+		reject=t ;;
-+	--no-reject)
-+		reject=f ;;
- 	--committer-date-is-author-date)
- 		committer_date_is_author_date=t ;;
- 	--ignore-date)
-@@ -368,6 +378,11 @@ do
- 	shift
- done
- 
-+if test "$reject" = t
-+then
-+	git_apply_opt="$git_apply_opt --reject"
-+fi
-+
- # If the dotest directory exists, but we have finished applying all the
- # patches in them, clear it out.
- if test -d "$dotest" &&
--- 
-1.7.3.2.146.g2d444
+I think that would help code clarity, too. It is tempting to try to
+split this patch into micropatches:
+
+1. introduce DETECT_DIRECTORY_RENAMES flag and hidden UI for it.
+
+2. if detecting bulk relocations, do not simplify input for
+   diffcore by omitting unchanged files (just like when
+   finding copies harder).
+
+3. introduce "rename target candidate" flag in rename_dsts.
+    - if detecting copies, all diff targets are potential rename
+      targets
+
+    - if detecting bulk relocations but not copies, all diff
+      targets are rename_dsts, but only file creation diff
+      targets are potential rename targets
+
+    - if detecting neither bulk reloc nor copies, only file
+      creation diff targets are rename_dsts (and all are
+      potential rename targets).
+
+   Alternatively, rename_dsts that are not potential rename targets
+   could be put in a different list (which is simpler and probably
+   faster, while using a little more memory).
+
+4. honor rename_target_candidate flag (not needed if the
+   non-candidates get their own list).
+
+5. introduce a list of potential directory relocations and functions
+   to manipulate it.
+
+6. pass the (empty) list of relocated directories back to diffcore.
+
+7. populate the list of directory relocation candidates.  If a file
+   has been renamed to go from directory a/ to directory b/, we have a
+   directory rename candidate.
+
+8. disqualify directories with stragglers left behind.
+
+9. disqualify directories for which the contents are not unanimous
+   about where to go.
+
+10. add documentation and stop hiding the UI.
+
+Trivial comments on the patch:
+
+[...]
+> +++ b/diffcore-rename.c
+> @@ -6,14 +6,34 @@
+>  #include "diffcore.h"
+>  #include "hash.h"
+>  
+> +#define DEBUG_BULKMOVE 0
+> +
+> +#if DEBUG_BULKMOVE
+> +#define debug_bulkmove(args) __debug_bulkmove args
+> +void __debug_bulkmove(const char *fmt, ...)
+> +{
+> +	va_list ap;
+> +	va_start(ap, fmt);
+> +	fprintf(stderr, "[DBG] ");
+> +	vfprintf(stderr, fmt, ap);
+> +	va_end(ap);
+> +}
+> +#else
+> +#define debug_bulkmove(args) do { /*nothing */ } while (0)
+> +#endif
+
+Is the debugging output infrequent enough to just use a function
+unconditionally?
+
+[...]
+> + * Supports in-place modification of src by passing dst == src.
+> + */
+> +static const char *copy_dirname(char *dst, const char *src)
+[...]
+> +	end = mempcpy(dst, src, slash - src + 1);
+
+I suppose this should read:
+
+	if (dst != src)
+		memcpy(dst, src, slash - src + 1);
+	dst[slash - src + 1] = '\0';
+	return dst;
+
+[...]
+> +static int discard_if_outside(struct diff_bulk_rename *candidate,
+> +			 struct diff_bulk_rename *seen) {
+
+Style: '{' for functions goes in column 0.
+
+> +	if (!prefixcmp(candidate->two->path, seen->two->path)) {
+> +		debug_bulkmove((" 'dstpair' conforts 'seen'\n"));
+> +		return 0;
+> +	} else {
+
+Can get some depth reduction by dropping the else here (since in
+the trivial case we have already returned).
+
+> +static void diffcore_bulk_moves(void)
+> +{
+> +	int i;
+> +	for (i = 0; i < rename_dst_nr; i++)
+> +		check_one_bulk_move(rename_dst[i].pair);
+> +}
+
+Yay. :)
