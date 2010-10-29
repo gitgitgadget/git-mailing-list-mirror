@@ -1,68 +1,51 @@
-From: Mathias Lafeldt <misfire@debugon.org>
-Subject: Re: Unable to remove git branch
-Date: Fri, 29 Oct 2010 09:56:50 +0200
-Message-ID: <4CCA7E42.7080906@debugon.org>
-References: <201010290943.13177.sasch.pe@gmx.de> <4CCA7DA8.3020607@debugon.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 1/2] read_sha1_file(): report correct name of packfile
+ with a corrupt object
+Date: Fri, 29 Oct 2010 10:08:44 +0200
+Message-ID: <4CCA810C.5090202@viscovery.net>
+References: <1288299210-27092-1-git-send-email-gitster@pobox.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-15
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Sascha Peilicke <sasch.pe@gmx.de>
-X-From: git-owner@vger.kernel.org Fri Oct 29 09:56:58 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 29 10:08:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBjpZ-0007Wu-DQ
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 09:56:57 +0200
+	id 1PBk1B-0003q7-07
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 10:08:57 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760134Ab0J2H4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Oct 2010 03:56:53 -0400
-Received: from moutng.kundenserver.de ([212.227.17.9]:50334 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755200Ab0J2H4w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Oct 2010 03:56:52 -0400
-Received: from [172.20.2.23] (p578D1B63.dip.t-dialin.net [87.141.27.99])
-	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
-	id 0M5tNd-1ONSdH3YtN-00xRH6; Fri, 29 Oct 2010 09:56:51 +0200
-User-Agent: Thunderbird 2.0.0.24 (X11/20100411)
-In-Reply-To: <4CCA7DA8.3020607@debugon.org>
-X-Provags-ID: V02:K0:VgemFF5zekv+r6C4PkBbT99Db9ieARtgT/BqlNRjbhX
- HwRs9SGehbAQvaiZILMurOscf90/zIir/NWFUCrwn7p0GwLyLo
- l7U0dIiCoiMdt92H/BcOn9cae3aHiAoWsGHuAkaZEt477pFdMw
- GEXAdqm2JiZnhRx23wj7bVFFjfE7jhG9SCIhBZjC98uPSm/EJs
- HaXK2dEgVUe84XKpCgmgFLRryPo1PmZhNQT+doUjbM=
+	id S1754567Ab0J2IIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Oct 2010 04:08:52 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:65032 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753175Ab0J2IIt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Oct 2010 04:08:49 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1PBk0z-0006qB-Bm; Fri, 29 Oct 2010 10:08:45 +0200
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 046D11660F;
+	Fri, 29 Oct 2010 10:08:44 +0200 (CEST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.11) Gecko/20101013 Thunderbird/3.1.5
+In-Reply-To: <1288299210-27092-1-git-send-email-gitster@pobox.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160315>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160316>
 
-Mathias Lafeldt wrote:
-> Sascha Peilicke wrote:
->> Hi guys,
->>
->> I accidentally did an 'git co -b --track origin/foo' ending up with a local 
->> branch '--track'. Sadly, git is unable to remove or rename that branch because 
->> it always interprets it as a parameter. 
->>
->> As a consequence, 'git br -d "--track"' does nothing and 'git br -m "--track" 
->> foo' even renames the current branch, say, master,  to 'foo'. Any hints on how 
->> to get rid of that pesky branch?
->>
->> BTW please CC me as I'm not subscribed to this list.
-> 
-> Try:
-> 
-> $ git br -D -- --track
+Am 10/28/2010 22:53, schrieb Junio C Hamano:
+> "Corrupt" is already an adjective, ... we do not
+> have to say "corrupted".
 
-It really should be:
+> + * This function dies on corrupted objects; the callers who want to
 
-$ git branch -D -- --track
+Except sometimes. ;)
 
-('br' is an alias of mine)
-
-Sorry for the noise.
-
--Mathias
+-- Hannes
