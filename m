@@ -1,67 +1,142 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v8] Detection of directory renames
-Date: Thu, 28 Oct 2010 20:05:04 -0500
-Message-ID: <20101029010504.GA28984@burratino>
-References: <1288303712-14662-1-git-send-email-ydirson@altern.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Fri Oct 29 03:05:30 2010
+From: Paul Gortmaker <paul.gortmaker@windriver.com>
+Subject: [PATCH] git-am: create a config setting for reject control.
+Date: Thu, 28 Oct 2010 21:27:30 -0400
+Message-ID: <1288315650-2488-1-git-send-email-paul.gortmaker@windriver.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Oct 29 03:32:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBdPI-0004gM-Su
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 03:05:25 +0200
+	id 1PBdpu-0004Dw-KF
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 03:32:54 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756359Ab0J2BFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 21:05:16 -0400
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:34972 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755196Ab0J2BFO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Oct 2010 21:05:14 -0400
-Received: by qyk10 with SMTP id 10so2787500qyk.19
-        for <git@vger.kernel.org>; Thu, 28 Oct 2010 18:05:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=swXZnGsev7vs05BBzHWP4/ILE2zHTQhFD08WxGiHTcg=;
-        b=RfgUR7h8Aic8URNHfPuV13haHfsX76d6rElZ8CfUTWUmpMm8i8DBcAC1ClmmY0upib
-         Hnu+eBSX73UlDGxLzfwCKOPSafRRD0nZJM2gafLSa6chimt1Z0q/XTX6elasXk5H/3mN
-         G5VKXBep0du8rKjUZEEEsfpub55lFB0VsO5Lg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=lnv4ksWuzHp16tUyKoH7wgqdh/vn9OeFIDf/msEJO1mMOVMgHUqKxVsk1WYDmR3mSe
-         fM4kGAAB2UflW/vMmyqYPy3eShOKkn0VOsU9tTT3ixG3hTpkjkg2f1arcT6FXwLLMIOn
-         wYyvyZWkobmC40yO5It9AsskgYD0KFFoFoCjg=
-Received: by 10.229.219.136 with SMTP id hu8mr6737386qcb.171.1288314313373;
-        Thu, 28 Oct 2010 18:05:13 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id s28sm1677692qcp.33.2010.10.28.18.05.10
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 28 Oct 2010 18:05:11 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <1288303712-14662-1-git-send-email-ydirson@altern.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754449Ab0J2B1d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 21:27:33 -0400
+Received: from mail.windriver.com ([147.11.1.11]:34958 "EHLO
+	mail.windriver.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753192Ab0J2B1c (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 28 Oct 2010 21:27:32 -0400
+Received: from ALA-MAIL03.corp.ad.wrs.com (ala-mail03 [147.11.57.144])
+	by mail.windriver.com (8.14.3/8.14.3) with ESMTP id o9T1RV57028304
+	for <git@vger.kernel.org>; Thu, 28 Oct 2010 18:27:31 -0700 (PDT)
+Received: from ala-mail06.corp.ad.wrs.com ([147.11.57.147]) by ALA-MAIL03.corp.ad.wrs.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 28 Oct 2010 18:27:31 -0700
+Received: from yow-pgortmak-d1.corp.ad.wrs.com ([128.224.146.65]) by ala-mail06.corp.ad.wrs.com with Microsoft SMTPSVC(6.0.3790.1830);
+	 Thu, 28 Oct 2010 18:27:31 -0700
+X-Mailer: git-send-email 1.7.3.2.146.g2d444
+X-OriginalArrivalTime: 29 Oct 2010 01:27:31.0755 (UTC) FILETIME=[750EF7B0:01CB7708]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160258>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160259>
 
-Yann Dirson wrote:
+git am already accepts a "--reject" switch, which basically means
+apply the bits you can, but you can't set it as enabled by default
+currently.  This adds a config option for it, and a --no-reject
+so that you can manually override it.  The implementation copies
+from the one and only existing git-am config option -- "keepcr".
 
-> Changes since v7:
+Signed-off-by: Paul Gortmaker <paul.gortmaker@windriver.com>
+---
+ Documentation/git-am.txt |   12 +++++++++---
+ git-am.sh                |   19 +++++++++++++++++--
+ 2 files changed, 26 insertions(+), 5 deletions(-)
 
-More history for new readers:
-
- - v7: http://thread.gmane.org/gmane.comp.version-control.git/159825
- - v6: http://thread.gmane.org/gmane.comp.version-control.git/159081
- - v5: http://thread.gmane.org/gmane.comp.version-control.git/158623
- - v1-4: http://thread.gmane.org/gmane.comp.version-control.git/157917/focus=157981
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 51297d0..5158e20 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -13,8 +13,8 @@ SYNOPSIS
+ 	 [--3way] [--interactive] [--committer-date-is-author-date]
+ 	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
+ 	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
+-	 [--reject] [-q | --quiet] [--scissors | --no-scissors]
+-	 [(<mbox> | <Maildir>)...]
++	 [--reject | --no-reject] [-q | --quiet]
++	 [--scissors | --no-scissors] [(<mbox> | <Maildir>)...]
+ 'git am' (--continue | --skip | --abort)
+ 
+ DESCRIPTION
+@@ -87,11 +87,17 @@ default.   You can use `--no-utf8` to override this.
+ -C<n>::
+ -p<n>::
+ --directory=<dir>::
+---reject::
+ 	These flags are passed to the 'git apply' (see linkgit:git-apply[1])
+ 	program that applies
+ 	the patch.
+ 
++--reject::
++--no-reject::
++	With `--reject`, call 'git apply' (see linkgit:git-apply[1]) with
++	the same option, to have it apply whatever parts of the commit it
++	can. `am.reject` configuration variable can be used to specify the
++	default behaviour.  `--no-reject` is useful to override `am.reject`.
++
+ -i::
+ --interactive::
+ 	Run interactively.
+diff --git a/git-am.sh b/git-am.sh
+index df09b42..43a510f 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -26,6 +26,7 @@ C=              pass it through git-apply
+ p=              pass it through git-apply
+ patch-format=   format the patch(es) are in
+ reject          pass it through git-apply
++no-reject       do not pass it through git-apply, independent of am.reject
+ resolvemsg=     override error message when patch failure occurs
+ continue        continue applying patches after resolving a conflict
+ r,resolved      synonyms for --continue
+@@ -295,7 +296,7 @@ split_patches () {
+ prec=4
+ dotest="$GIT_DIR/rebase-apply"
+ sign= utf8=t keep= keepcr= skip= interactive= resolved= rebasing= abort=
+-resolvemsg= resume= scissors= no_inbody_headers=
++resolvemsg= resume= scissors= no_inbody_headers= reject=
+ git_apply_opt=
+ committer_date_is_author_date=
+ ignore_date=
+@@ -306,6 +307,11 @@ then
+     keepcr=t
+ fi
+ 
++if test "$(git config --bool --get am.reject)" = true
++then
++    reject=t
++fi
++
+ while test $# != 0
+ do
+ 	case "$1" in
+@@ -346,8 +352,12 @@ do
+ 		git_apply_opt="$git_apply_opt $(sq "$1$2")"; shift ;;
+ 	--patch-format)
+ 		shift ; patch_format="$1" ;;
+-	--reject|--ignore-whitespace|--ignore-space-change)
++	--ignore-whitespace|--ignore-space-change)
+ 		git_apply_opt="$git_apply_opt $1" ;;
++	--reject)
++		reject=t ;;
++	--no-reject)
++		reject=f ;;
+ 	--committer-date-is-author-date)
+ 		committer_date_is_author_date=t ;;
+ 	--ignore-date)
+@@ -368,6 +378,11 @@ do
+ 	shift
+ done
+ 
++if test "$reject" = t
++then
++	git_apply_opt="$git_apply_opt --reject"
++fi
++
+ # If the dotest directory exists, but we have finished applying all the
+ # patches in them, clear it out.
+ if test -d "$dotest" &&
+-- 
+1.7.3.2.146.g2d444
