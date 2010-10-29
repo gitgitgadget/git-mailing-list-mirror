@@ -1,70 +1,81 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 35/42] rev-parse: prints --git-dir relative to user's cwd
-Date: Fri, 29 Oct 2010 10:06:27 -0700
-Message-ID: <AANLkTikO5N3JWYCJ0c8AQXra274NfAx9X0aUQTwsOGiw@mail.gmail.com>
-References: <1288334934-17216-1-git-send-email-pclouds@gmail.com> <1288334934-17216-36-git-send-email-pclouds@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 00/42] repo setup test cases and fixes
+Date: Fri, 29 Oct 2010 12:09:06 -0500
+Message-ID: <20101029170906.GA29249@burratino>
+References: <1288334934-17216-1-git-send-email-pclouds@gmail.com>
+ <AANLkTikJJnTXfWXKe5bm_Qyjmgna9g3vChdkPzoiAb4i@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 29 19:06:55 2010
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 29 19:09:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBsPm-0001jQ-Dn
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 19:06:54 +0200
+	id 1PBsSC-0002kv-CG
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 19:09:24 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933901Ab0J2RGu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Oct 2010 13:06:50 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:37902 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932458Ab0J2RGs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 29 Oct 2010 13:06:48 -0400
-Received: by ywk9 with SMTP id 9so2126764ywk.19
-        for <git@vger.kernel.org>; Fri, 29 Oct 2010 10:06:48 -0700 (PDT)
+	id S934083Ab0J2RJU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Oct 2010 13:09:20 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:44551 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932458Ab0J2RJS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Oct 2010 13:09:18 -0400
+Received: by ewy7 with SMTP id 7so2403309ewy.19
+        for <git@vger.kernel.org>; Fri, 29 Oct 2010 10:09:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=aDeqj4aRY+D6vKflXtv2oLwgKnBdK0X/zMvmRPz0mDU=;
-        b=kZFKobHTmLNH95PNWYVPXPCkYOqkH+aCP/mvCEAREId85Q3dYLMbPCsfpqiAiXAMsz
-         i1jdAjwRbmzDVqFvLTq71JuBNMcDfBnoY0b/OtpaAp/+JZH8T5iXi1RNH2gS2b8YW/LP
-         iOzirKFvGlAsy2jhjfJD6vDTII/ezvbcfw66c=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=NYQp0pcBiFrjkYiraSM6dQWdwrbxBsf6Kqh5Fx/ZsHE=;
+        b=b+Mo8R3JFGJGtbOcxv2TnyDbif5kpTmLgM3kug/L0DZJ2RI2ywMDNvUrABkGo+caGK
+         Y9uWysrQXnOnSswWQyYCX7i0H5+C4BTQS/TqGqkIAq2JaJpVTMo3bbG/wJzm7yrHbZnp
+         N1EHb+5ejU8UrlbKidxPHQM5VqD/6MeKeE0fM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=ubzQJZI3OKR2fhIuKC253AUvKPc3ZC/xZdiGEWUID8tWsAhOpx0BBdWq9LHZd9DxG4
-         EpoaRE+Ue7b0HsQK8cwOoxF+97cq0VbKMC3SR6PvW0mtkzlYrzFRLCHidSM0U85HHeWE
-         OquSOVK3//mzuI4xSWruMdpIkTkq4B2Fcbbx0=
-Received: by 10.150.196.2 with SMTP id t2mr4385112ybf.205.1288372008012; Fri,
- 29 Oct 2010 10:06:48 -0700 (PDT)
-Received: by 10.151.45.12 with HTTP; Fri, 29 Oct 2010 10:06:27 -0700 (PDT)
-In-Reply-To: <1288334934-17216-36-git-send-email-pclouds@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=fVcJOS1LUhWsFYEaylH+z/VE5DM+5ymIzT3bRqoCyO12ImmbaBrU9xc4KmGMWN1iPO
+         NtMb5bDjLDjohc74PMRPLg/OgUc3ea9yq0dt85uwk41iiO3JRV5Ikb1fArhYLtVERq0f
+         OopM6K0iB+cXT+01w6gsPDsGjKDaIexDhuME8=
+Received: by 10.216.49.145 with SMTP id x17mr1163665web.55.1288372157295;
+        Fri, 29 Oct 2010 10:09:17 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id x12sm1737999weq.18.2010.10.29.10.09.14
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 29 Oct 2010 10:09:15 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikJJnTXfWXKe5bm_Qyjmgna9g3vChdkPzoiAb4i@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160343>
 
-Heya,
+Sverre Rabbelier wrote:
+> 2010/10/28 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>:
 
-2010/10/28 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
->:
-> git-rev-parse.txt does not say much about this. But I'm sure
-> git-sh-setup.sh wants "git rev-parse --git-dir" be relative to user's
-> cwd.
+>> This series includes setup coverage tests (180/376 fail). Then the f=
+ixes,
+>> which bring down to zero failed test in the end. 02/42 describes the
+>> rules. New rules are:
+>
+> Shouldn't the fixes come first (for bisectability?).
 
-We don't usually use "I" in commit messages, was this meant for after
-the triple dash, or does this commit message just need work?
+Good point.  Ideally the tests would come first if the fixes are
+contraversial, or be squashed with the fixes if neither is
+contraversial, or after if the tests are contraversial but the fixes
+are not.
 
---=20
-Cheers,
-
-Sverre Rabbelier
+=46or bisectability and clarity, the tests should use test_expect_failu=
+re
+when they fail (like this patch series does) and change that to
+test_expect_success in the patch that fixes them.
