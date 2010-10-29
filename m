@@ -1,201 +1,124 @@
-From: Brandon Casey <casey@nrlssc.navy.mil>
-Subject: Re: Minimum git commit abbrev length (Was Re: -tip: origin tree build failure
-Date: Thu, 28 Oct 2010 19:14:47 -0500
-Message-ID: <hLlFGy1hpSTOvcrpvhJQRcAUG1VZkpE60VKEYdmOahsCx20NXHe-iEJGidVS1iD1R38bnTIIrwU@cipher.nrlssc.navy.mil>
-References: <AANLkTin=EeQx4pEPk9ST27kcRpDP65NQvL1c1m8UcRmO@mail.gmail.com>
-Cc: tytso@mit.edu, mingo@elte.hu, git@vger.kernel.org,
-	Brandon Casey <drafnel@gmail.com>
-To: torvalds@linux-foundation.org
-X-From: git-owner@vger.kernel.org Fri Oct 29 02:16:08 2010
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: `git status --porcelain` disagrees with documentation about quoting filenames with spaces
+Date: Thu, 28 Oct 2010 17:41:01 -0700
+Message-ID: <CAA0934C-A48A-4E45-9875-7629BF6D909F@sb.org>
+References: <4AC7298E-73D7-4074-91CD-7C10DE414532@sb.org> <7v39rqb1ji.fsf@alter.siamese.dyndns.org> <EFFE2D68-BBA3-4EF4-B56A-AA4882EDE1E4@sb.org> <7vocad996g.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Git mailing list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Oct 29 02:41:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBcdb-0006Ms-Fo
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 02:16:07 +0200
+	id 1PBd1y-0005nq-NF
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 02:41:19 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759764Ab0J2AQE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 28 Oct 2010 20:16:04 -0400
-Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:38471 "EHLO
-	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759034Ab0J2AP4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 28 Oct 2010 20:15:56 -0400
-Received: by mail.nrlssc.navy.mil id o9T0FBa4018548; Thu, 28 Oct 2010 19:15:11 -0500
-In-Reply-To: <AANLkTin=EeQx4pEPk9ST27kcRpDP65NQvL1c1m8UcRmO@mail.gmail.com>
-X-OriginalArrivalTime: 29 Oct 2010 00:15:11.0178 (UTC) FILETIME=[59DF7AA0:01CB76FE]
-X-Virus-Scanned: clamav-milter 0.95.3 at mail1
-X-Virus-Status: Clean
+	id S1758542Ab0J2AlH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 28 Oct 2010 20:41:07 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:48584 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755663Ab0J2AlF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 28 Oct 2010 20:41:05 -0400
+Received: by yxk8 with SMTP id 8so1356986yxk.19
+        for <git@vger.kernel.org>; Thu, 28 Oct 2010 17:41:04 -0700 (PDT)
+Received: by 10.100.171.9 with SMTP id t9mr7575794ane.151.1288312864208;
+        Thu, 28 Oct 2010 17:41:04 -0700 (PDT)
+Received: from [10.8.0.89] ([69.170.160.74])
+        by mx.google.com with ESMTPS id 25sm1784578anq.8.2010.10.28.17.41.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 28 Oct 2010 17:41:03 -0700 (PDT)
+In-Reply-To: <7vocad996g.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160256>
 
-From: Brandon Casey <drafnel@gmail.com>
+On Oct 28, 2010, at 4:41 PM, Junio C Hamano wrote:
 
-[dropped linux-kernel list from discussion]
-
-On 10/28/2010 01:54 PM, Linus Torvalds wrote:
-
-> and in fact git itself has a few collisions (but currently just 44
-> objects ending up sharing 22 SHA1 buckets in 7 digits).
+>>> Kevin Ballard <kevin@sb.org> writes:
+>>> 
+>>> [jc: why do you send messages with toooooooooooo loooooong lines sometimes
+>>> and normal line lengths some other times...?]
+>> 
+>> I use a GUI mail client to write email. Anything I copy&paste is hard-wrapped,
+>> anything I write directly tends to not include hard linebreaks at all. Would it
+>> be better if I hard-wrapped my lines?
 > 
-> With each digit, you'd expect the collisions to decrease by a factor
-> of 16, and that is indeed exactly what happens. For my current kernel
-> tree I get:
+> It is not better vs worse but is acceptable vs unacceptable, as hard
+> wrapped messages have been the norm around here from day one.  As far as I
+> remember you only recently started sending messages with long lines, so I
+> suspected perhaps you changed your environment and are doing so without
+> realizing the pain you are causing to others.
+
+I apologize, I did not realize it caused a problem to others. I'm not used
+to interacting with people using terminal mail clients (e.g. mutt). I didn't
+give it much thought, but I just assumed the ML was hard-wrapping everybody's
+messages (of course this is obviously wrong, as evidenced by my own messages).
+I will bear this in mind for future emails.
+
+>>> The best would probably be to special case SP (which is normally not to be
+>>> quoted) _only_ in the context of "something" -> "something".
+>> 
+>> That's what I was thinking. I'll look into doing just that.
 > 
->  - 7 digits: 5823 buckets with duplicates (ie 11646 objects that aren't unique)
->  - 8: 406
->  - 9: 30
->  - 10: 1
->  - 11: 0
-> 
-> so 12 hex digits is indeed pretty safe for the kernel, and is likely
-> to remain so until the kernel history grows by a factor of 16.
+> Yeah, if we wanted to be perfect, it would be better to do so without
+> causing unnecessary pain.
 
+Turns out it's fairly simple to do.
 
-Perhaps we should calculate DEFAULT_ABBREV dynamically?
+BTW, I'm trying an experiment here to see if I can just paste the patch into
+Mail.app without it being mangled. I sent it to myself first, and Mail.app
+is applying quoted-printable encoding to the patch, but it appears git-am
+can still understand it. Please let me know if this isn't acceptable and I
+will send it separately.
 
-Something like the code down below would use 11 digits for the current
-kernel repo, and would bump up to 12 digits once it hit 4M objects.
+---8<---
+Subject: status: Quote renamed/copied paths with spaces in short format
 
-It would use 9 digits for git.git.
+According to the documentation for git-status, in short output mode,
+paths with spaces or unprintable characters are quoted. However
+28fba29 (Do not quote SP., 2005-10-17) removed the behavior that quotes
+paths that have spaces but not unprintable characters. Unfortunately this
+makes the output of `git status --porcelain` non-parseable in certain
+(rather unusual) edge cases. In the interest of removing ambiguity when
+parsing the output of `git status --porcelain`, restore the behavior of
+quoting paths with spaces but only for renamed/copied paths.
 
-The digits of abbrev are bumped up for each factor of 4 objects.
-This seems to produce a desirable number for the git.git and
-linux-2.6.git repos.
-
-estimate_loose_objects() quickly estimates the number of loose
-objects using Junio's code extracted from gc.c.
-
-default_abbrev() estimates the loose objects, counts the number of
-packed objects, and calculates a default abbreviation width.
-Subsequent calls to default_abbrev() return the previously calculated
-value.
-
-This is obviously not a patch meant for inclusion, just an example.
-
+Signed-off-by: Kevin Ballard <kevin@sb.org>
 ---
- builtin/describe.c |    4 ++-
- cache.h            |    3 +-
- sha1_name.c        |   61 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 3 files changed, 66 insertions(+), 2 deletions(-)
+wt-status.c |   10 ++++++++++
+1 files changed, 10 insertions(+), 0 deletions(-)
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 43caff2..551b491 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -20,7 +20,7 @@ static int debug;	/* Display lots of verbose info */
- static int all;	/* Any valid ref can be used */
- static int tags;	/* Allow lightweight tags */
- static int longformat;
--static int abbrev = DEFAULT_ABBREV;
-+static int abbrev;
- static int max_candidates = 10;
- static int found_names;
- static const char *pattern;
-@@ -386,6 +386,8 @@ int cmd_describe(int argc, const char **argv, const char *prefix)
- 		OPT_END(),
- 	};
- 
-+	abbrev = DEFAULT_ABBREV;
-+
- 	argc = parse_options(argc, argv, prefix, options, describe_usage, 0);
- 	if (max_candidates < 0)
- 		max_candidates = 0;
-diff --git a/cache.h b/cache.h
-index 33decd9..049ef2b 100644
---- a/cache.h
-+++ b/cache.h
-@@ -758,7 +758,7 @@ static inline unsigned int hexval(unsigned char c)
- 
- /* Convert to/from hex/sha1 representation */
- #define MINIMUM_ABBREV 4
--#define DEFAULT_ABBREV 7
-+#define DEFAULT_ABBREV default_abbrev()
- 
- struct object_context {
- 	unsigned char tree[20];
-@@ -766,6 +766,7 @@ struct object_context {
- 	unsigned mode;
- };
- 
-+extern int default_abbrev(void);
- extern int get_sha1(const char *str, unsigned char *sha1);
- extern int get_sha1_with_mode_1(const char *str, unsigned char *sha1, unsigned *mode, int gently, const char *prefix);
- static inline int get_sha1_with_mode(const char *str, unsigned char *sha1, unsigned *mode)
-diff --git a/sha1_name.c b/sha1_name.c
-index 484081d..8d622fe 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -7,6 +7,67 @@
- #include "refs.h"
- #include "remote.h"
- 
-+static unsigned long estimate_loose_objects(unsigned threshold)
-+{
-+	/*
-+	 * Quickly estimate how many loose objects there are.
-+	 * Because SHA-1 is evenly distributed, we can check
-+	 * only one and get a reasonable estimate.
-+	 */
-+	char path[PATH_MAX];
-+	const char *objdir = get_object_directory();
-+	DIR *dir;
-+	struct dirent *ent;
-+	unsigned long num_loose = 0;
-+
-+	if (sizeof(path) <= snprintf(path, sizeof(path), "%s/17", objdir)) {
-+		warning("insanely long object directory %.*s", 50, objdir);
-+		return 0;
-+	}
-+
-+	dir = opendir(path);
-+	if (!dir)
-+		return 0;
-+
-+	threshold = (threshold + 255) / 256;
-+	while ((ent = readdir(dir)) != NULL) {
-+		if (strspn(ent->d_name, "0123456789abcdef") != 38 ||
-+		    ent->d_name[38] != '\0')
-+			continue;
-+		num_loose++;
-+		if (threshold && num_loose > threshold)
-+			break;
-+	}
-+	closedir(dir);
-+	return num_loose * 256;
-+}
-+
-+int default_abbrev(void)
-+{
-+	static int default_abbrev;
-+	unsigned long count;
-+	struct packed_git *p;
-+
-+	if (default_abbrev)
-+		return default_abbrev;
-+
-+	count = estimate_loose_objects(0);
-+
-+	prepare_packed_git();
-+	for (p = packed_git; p; p = p->next)
-+		if (!open_pack_index(p))
-+			count += p->num_objects;
-+
-+	default_abbrev = 1;
-+	while ((count >>= 2))
-+		default_abbrev++;
-+
-+	if (default_abbrev < MINIMUM_ABBREV)
-+		default_abbrev = MINIMUM_ABBREV;
-+
-+	return default_abbrev;
-+}
-+
- static int find_short_object_filename(int len, const char *name, unsigned char *sha1)
- {
- 	struct alternate_object_database *alt;
+diff --git a/wt-status.c b/wt-status.c
+index fc2438f..9624865 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -744,10 +744,20 @@ static void wt_shortstatus_status(int null_termination, struct string_list_item
+		const char *one;
+		if (d->head_path) {
+			one = quote_path(d->head_path, -1, &onebuf, s->prefix);
++			if (*one != '"' && strchr(one, ' ') != NULL) {
++				putchar('"');
++				strbuf_addch(&onebuf, '"');
++				one = onebuf.buf;
++			}
+			printf("%s -> ", one);
+			strbuf_release(&onebuf);
+		}
+		one = quote_path(it->string, -1, &onebuf, s->prefix);
++		if (*one != '"' && strchr(one, ' ') != NULL) {
++			putchar('"');
++			strbuf_addch(&onebuf, '"');
++			one = onebuf.buf;
++		}
+		printf("%s\n", one);
+		strbuf_release(&onebuf);
+	}
 -- 
-1.7.3.1
+1.7.3.2.195.ge42d1.dirty
