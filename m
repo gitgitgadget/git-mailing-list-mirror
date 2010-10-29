@@ -1,96 +1,57 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv5 20/23] git notes merge: Add testcases for merging notes
- trees at different fanouts
-Date: Fri, 29 Oct 2010 08:01:10 -0700
-Message-ID: <7vwrp16o21.fsf@alter.siamese.dyndns.org>
-References: <1287965333-5099-1-git-send-email-johan@herland.net>
- <1287965333-5099-21-git-send-email-johan@herland.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] diff: support --root --cached combination
+Date: Fri, 29 Oct 2010 11:40:51 -0400
+Message-ID: <20101029154051.GA3022@sigill.intra.peff.net>
+References: <1288346087-20263-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, jrnieder@gmail.com, bebarino@gmail.com,
-	avarab@gmail.com, srabbelier@gmail.com
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Oct 29 17:01:42 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 29 17:40:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBqSb-0001KW-JV
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 17:01:41 +0200
+	id 1PBr3r-0005lx-2y
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 17:40:11 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933942Ab0J2PBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Oct 2010 11:01:31 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46935 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933917Ab0J2PB2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Oct 2010 11:01:28 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 705D02A1B;
-	Fri, 29 Oct 2010 11:01:26 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hFHioMzxfKoRXrjijzKWWZ1fnu4=; b=eITFvN
-	Ab2118XW9pRO1JfYs2V8ns/G3LSWR0amJvrMa8SWQ2g+WO7XIUWb+iB3urTEEAkG
-	lzX93sMWNqE20w4+1NFHjyXKuDsm1FObg08iyAqWHtdPTlXaI0MPt1RlUX8rrSCg
-	vhpilmB4YX7d1FdKBTUvqWrBMQIFFcFXA8+KU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HFUMOoluhVLfchk/AHtKaxcH9Bf2smWM
-	7EQpIBYiiH/IaXgW6vFtIiSnys13XbkgQOejwdAkb29dUnEkBU2KFRsJ1VuV94DS
-	FadCGVlexGwu2RXNTtpKz621ksqLm2XjLDv6ZauxVO+l6GX5ozoCGZSGaULm4VfW
-	LDeCkhCuXvQ=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id EF19C2A1A;
-	Fri, 29 Oct 2010 11:01:19 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.169.49]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C1C802A19; Fri, 29 Oct
- 2010 11:01:12 -0400 (EDT)
-In-Reply-To: <1287965333-5099-21-git-send-email-johan@herland.net> (Johan
- Herland's message of "Mon\, 25 Oct 2010 02\:08\:50 +0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 632A2A70-E36D-11DF-A6AD-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S934084Ab0J2PkF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Oct 2010 11:40:05 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:53401 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932752Ab0J2PkD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Oct 2010 11:40:03 -0400
+Received: (qmail 5999 invoked by uid 111); 29 Oct 2010 15:40:00 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 29 Oct 2010 15:40:00 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 29 Oct 2010 11:40:51 -0400
+Content-Disposition: inline
+In-Reply-To: <1288346087-20263-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160332>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160333>
 
-Subject: [PATCH] portability fix for [20/23]
+On Fri, Oct 29, 2010 at 04:54:47PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
 
-    test "$(line generator | wc -l)" = $expected_number_of_lines (bad)
+>=20
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  I have a ritual of doing "git dic" (short for diff --cached) before
+>  committing and does not want to break it, even on new repos.
+>=20
+>  Looks like a good thing and no harm to the rest of the world.
 
-is not portable, as "wc -l" can prefix the number with whitespaces.
+Hmm. What's new is old, I suppose. You might want to read the comments
+on my very similar patch here:
 
-Either write the $(... | wc -l) without enclosing in a dq pair, i.e.
+  http://thread.gmane.org/gmane.comp.version-control.git/95935/focus=3D=
+96187
 
-    test $(line generator | wc -l) = $expected_number_of_lines (good)
-
-or compare them numerically with 
-
-    test "$(... | wc -l)" -eq $num (ok)
-
-The former is preferred for readability.
-
----
- t/t3311-notes-merge-fanout.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/t/t3311-notes-merge-fanout.sh b/t/t3311-notes-merge-fanout.sh
-index d1c7b69..93516ef 100755
---- a/t/t3311-notes-merge-fanout.sh
-+++ b/t/t3311-notes-merge-fanout.sh
-@@ -123,8 +123,8 @@ test_expect_success 'Add a few hundred commits w/notes to trigger fanout (x -> y
- 	done &&
- 	test "$(git rev-parse refs/notes/y)" != "$(git rev-parse refs/notes/x)" &&
- 	# Expected number of commits and notes
--	test "$(git rev-list HEAD | wc -l)" = "$num" &&
--	test "$(git notes list | wc -l)" = "$num" &&
-+	test $(git rev-list HEAD | wc -l) = $num &&
-+	test $(git notes list | wc -l) = $num &&
- 	# 5 first notes unchanged
- 	verify_notes y commit5
- '
--- 
-1.7.3.2.193.g78bbb
+-Peff
