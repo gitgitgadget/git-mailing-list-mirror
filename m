@@ -1,81 +1,72 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 00/42] repo setup test cases and fixes
-Date: Fri, 29 Oct 2010 12:09:06 -0500
-Message-ID: <20101029170906.GA29249@burratino>
-References: <1288334934-17216-1-git-send-email-pclouds@gmail.com>
- <AANLkTikJJnTXfWXKe5bm_Qyjmgna9g3vChdkPzoiAb4i@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH 38/42] Remove all logic from get_git_work_tree()
+Date: Fri, 29 Oct 2010 10:09:38 -0700
+Message-ID: <AANLkTim-uW4Esk1bkPzNNGRb8svZoNwCUvXF3Fqb4QmR@mail.gmail.com>
+References: <1288334934-17216-1-git-send-email-pclouds@gmail.com> <1288334934-17216-39-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Oct 29 19:09:31 2010
+Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Oct 29 19:10:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBsSC-0002kv-CG
-	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 19:09:24 +0200
+	id 1PBsSs-00038i-21
+	for gcvg-git-2@lo.gmane.org; Fri, 29 Oct 2010 19:10:06 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934083Ab0J2RJU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Oct 2010 13:09:20 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:44551 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932458Ab0J2RJS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Oct 2010 13:09:18 -0400
-Received: by ewy7 with SMTP id 7so2403309ewy.19
-        for <git@vger.kernel.org>; Fri, 29 Oct 2010 10:09:17 -0700 (PDT)
+	id S934143Ab0J2RKA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 29 Oct 2010 13:10:00 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:36268 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932342Ab0J2RJ7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 29 Oct 2010 13:09:59 -0400
+Received: by yxk8 with SMTP id 8so1782142yxk.19
+        for <git@vger.kernel.org>; Fri, 29 Oct 2010 10:09:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=NYQp0pcBiFrjkYiraSM6dQWdwrbxBsf6Kqh5Fx/ZsHE=;
-        b=b+Mo8R3JFGJGtbOcxv2TnyDbif5kpTmLgM3kug/L0DZJ2RI2ywMDNvUrABkGo+caGK
-         Y9uWysrQXnOnSswWQyYCX7i0H5+C4BTQS/TqGqkIAq2JaJpVTMo3bbG/wJzm7yrHbZnp
-         N1EHb+5ejU8UrlbKidxPHQM5VqD/6MeKeE0fM=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=dLDAAZ0kTNCIYOVlitcw1JplNc5GAxND8oJQNQXPWYA=;
+        b=Mzk4dtGmTpW48SvCzDpfoHnb7bPvcUoKcM2BvPovZP17RKL9mD2FuX7JozWgwfCUcw
+         Zope5NDJvNMf6v2oMKn9D4WOdieG0TVz9EBbhswjXEJNNWYRfsC+qk0hc/kmKXI+xlP4
+         VyPbCP5TAXHI4KWBfm5EW9Y3mH9MOlx2+Q7Xw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=fVcJOS1LUhWsFYEaylH+z/VE5DM+5ymIzT3bRqoCyO12ImmbaBrU9xc4KmGMWN1iPO
-         NtMb5bDjLDjohc74PMRPLg/OgUc3ea9yq0dt85uwk41iiO3JRV5Ikb1fArhYLtVERq0f
-         OopM6K0iB+cXT+01w6gsPDsGjKDaIexDhuME8=
-Received: by 10.216.49.145 with SMTP id x17mr1163665web.55.1288372157295;
-        Fri, 29 Oct 2010 10:09:17 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id x12sm1737999weq.18.2010.10.29.10.09.14
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 29 Oct 2010 10:09:15 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <AANLkTikJJnTXfWXKe5bm_Qyjmgna9g3vChdkPzoiAb4i@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=OoANWbvCH7P9/HD3WDkN3X9F6FMyCQM0Drs+LDwAk01tz7ylrbXdvI2TFhQGdh02pc
+         5uMwH/MS6hQPA2LjIy7DNUFM9UPxq9YCj9ldRRmJa8pYbHdpUaJkAMDb4JcFY67qS+SR
+         7qSn3o9HwuhXC6GPzV3ah9VevFhLr7Yy6qXaQ=
+Received: by 10.150.177.7 with SMTP id z7mr10283300ybe.433.1288372198482; Fri,
+ 29 Oct 2010 10:09:58 -0700 (PDT)
+Received: by 10.151.45.12 with HTTP; Fri, 29 Oct 2010 10:09:38 -0700 (PDT)
+In-Reply-To: <1288334934-17216-39-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160344>
 
-Sverre Rabbelier wrote:
-> 2010/10/28 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
-om>:
+Heya,
 
->> This series includes setup coverage tests (180/376 fail). Then the f=
-ixes,
->> which bring down to zero failed test in the end. 02/42 describes the
->> rules. New rules are:
->
-> Shouldn't the fixes come first (for bisectability?).
+2010/10/28 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
+>:
+> This helps break things some more. Eventually all repo setup logic
+> should be centralized in setup_* functions. This helps push all the
+> bugs back to setup_* functions.
 
-Good point.  Ideally the tests would come first if the fixes are
-contraversial, or be squashed with the fixes if neither is
-contraversial, or after if the tests are contraversial but the fixes
-are not.
+I don't know about this, do we really want to willingly break the test
+suite (and fixing it later)? Perhaps we can review this as-is and then
+squash the commits before they are merged to next so that there is no
+breakage? We could even attach the original commits as notes :).
 
-=46or bisectability and clarity, the tests should use test_expect_failu=
-re
-when they fail (like this patch series does) and change that to
-test_expect_success in the patch that fixes them.
+--=20
+Cheers,
+
+Sverre Rabbelier
