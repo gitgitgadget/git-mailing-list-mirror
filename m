@@ -1,198 +1,129 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Buglet in i18n?
-Date: Sat, 30 Oct 2010 09:14:26 +0000
-Message-ID: <AANLkTikOgMGqw5fc95c2VGwXxKu9rmsA+=z5_jykD92=@mail.gmail.com>
-References: <4CC13AC1.7080402@viscovery.net>
-	<AANLkTimqzmPLCj=JeSGWFcY829gxct9ANGt+CCjB2jy=@mail.gmail.com>
-	<20101022083450.GA8289@burratino>
-	<AANLkTi=Q91mQ9ucLZw1E+1MuA+niXJFvmx1xw8JVYuuH@mail.gmail.com>
-	<20101023182940.GD21040@burratino>
+From: demerphq <demerphq@gmail.com>
+Subject: Re: non-US-ASCII file names (e.g. Hiragana) on Windows
+Date: Sat, 30 Oct 2010 11:52:54 +0200
+Message-ID: <AANLkTi=EPN+NrcTFP_wjmE_-VQk=bEo2UdMJOJ1uVNwB@mail.gmail.com>
+References: <4B1168D4.5010902@syntevo.com>
+	<4B11AD43.3070307@gmail.com>
+	<4B123C80.30607@syntevo.com>
+	<4B14CA79.6040408@syntevo.com>
+	<4B14D381.3010706@viscovery.net>
+	<4B14DA1A.4060505@syntevo.com>
+	<4B14E934.9090304@viscovery.net>
+	<4B150747.2030900@syntevo.com>
+	<m3k4x6na81.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 30 11:15:26 2010
+Cc: Thomas Singer <thomas.singer@syntevo.com>,
+	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 30 11:53:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PC7X3-0007uh-GT
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Oct 2010 11:15:26 +0200
+	id 1PC87f-0005jq-KQ
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Oct 2010 11:53:15 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751967Ab0J3JOa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Oct 2010 05:14:30 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:58381 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751103Ab0J3JO2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 30 Oct 2010 05:14:28 -0400
-Received: by fxm16 with SMTP id 16so3772487fxm.19
-        for <git@vger.kernel.org>; Sat, 30 Oct 2010 02:14:27 -0700 (PDT)
+	id S1752839Ab0J3Jw5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Oct 2010 05:52:57 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:62040 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752462Ab0J3Jwz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Oct 2010 05:52:55 -0400
+Received: by vws13 with SMTP id 13so1027440vws.19
+        for <git@vger.kernel.org>; Sat, 30 Oct 2010 02:52:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:content-type
+         :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=bvk7EcuG7d6fTDU6batevhKgJyE4sqV5NbhqIsk1f5U=;
-        b=OAi9yqVF713+12ONLLnRU2L6QzrGQpSxsP3MSSrTdTzOz4/XVlj5VERKCMTLfPmfTI
-         t7BKNKHUbbehlSQe7ANLeAvwv11gGyDzLSPDCdnAeL/kATuJgBqEUZs2ss+pXB0VKNdV
-         WR+hfgb9nNHAZ1vUrCg8b6qiS96lGuLIiIuYI=
+        bh=AMl9+3qV0XKrNdKop86qEyXghiwhNrBsTzZprNZ29Zg=;
+        b=lbxXhaH0m/fLz3bvi6xe7ogNI4aKTUFAEFkyzeAt963Hejh4Mm1TR9y7+72cnZ3Pdi
+         trX93my94a3A11SjXcZUypSuvnS51cHzvCLpXI7ZE5LaeDK7gpEqHEFSejKzJDs+NVGu
+         FtOkrxwPQCAG2XTHBK3Vmzlk81aNmgYv+W5q8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=PRvStzjlOwP50T7lKM+11zwEAubpcxQtq0UaXAV41T5fbI8kP8UzUwJaStIakJvh4E
-         5F4h0nyv5bB5jA/UdwpemmTYiYVd1FkQhzAwgQMFt960mSNoRdiNstTX02DbdkiiLtqY
-         yoqgdWwFZ+fuwkXBYwyaskaHiGscKlUsjYob0=
-Received: by 10.223.115.203 with SMTP id j11mr426843faq.35.1288430067042; Sat,
- 30 Oct 2010 02:14:27 -0700 (PDT)
-Received: by 10.223.123.203 with HTTP; Sat, 30 Oct 2010 02:14:26 -0700 (PDT)
-In-Reply-To: <20101023182940.GD21040@burratino>
+         :cc:content-type:content-transfer-encoding;
+        b=Tqds2DDUJuo8LpYTvL5T8i8wzH1JjoNBxBLWfwUw8OVUcXqj0csAhbX/rtnR76KXjr
+         M6nLm46f7ExwcLgavwh8IpaXeQRU6uhNv/qakfItccB2lwY5jFWGKpx8A6SEMzkeB4Uc
+         WvBHQZfmxGDn2EOTZwBn/VrCBH0QIxmE8Dkxk=
+Received: by 10.224.80.133 with SMTP id t5mr811644qak.117.1288432374292; Sat,
+ 30 Oct 2010 02:52:54 -0700 (PDT)
+Received: by 10.229.228.136 with HTTP; Sat, 30 Oct 2010 02:52:54 -0700 (PDT)
+In-Reply-To: <m3k4x6na81.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160397>
 
-On Sat, Oct 23, 2010 at 18:29, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->> On Fri, Oct 22, 2010 at 08:34, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
+On 1 December 2009 18:24, Jakub Narebski <jnareb@gmail.com> wrote:
+> Thomas Singer <thomas.singer@syntevo.com> writes:
 >
->>> Now eval_gettext is supposed to just interpolate $variable
->>> substitutions, right? =C2=A0In particular, the quotation marks
->>> ought to be preserved.
+>> Johannes Sixt wrote:
+>>> Thomas Singer schrieb:
+>>>>
+>>>> Is it a German Windows limitation, that far-east characters are no=
+t
+>>>> supported on it (but work fine on a Japanese Windows), are there d=
+ifferent
+>>>> (mysys)Git versions available or is this a configuration issue?
+>>>
+>>> It is a matter of configuration.
+>>>
+>>> Since 8 bits are not sufficient to support Japanese alphabet in add=
+ition
+>>> to the German alphabet, programs that are not Unicode aware -- such=
+ as git
+>>> -- have to make a decision which alphabet they support. The decisio=
+n is
+>>> made by picking a "codepage".
+>>>
+>>> On German Windows, you are in codepage 850 (in the console). The fi=
+lenames
+>>> =A0(that actually are in Unicode) are converted to bytes according =
+to
+>>> codepage 850 *before* git sees them. If your filenames contain Hira=
+gana,
+>>> they are substituted by the "unknown character" marker because ther=
+e is no
+>>> place for them in codepage 850.
 > [...]
->> That prints:
+>
+>>> Corollary: Stick to ASCII file names.
+>>>
+>>> There have been suggestions to switch the console to codepage 65001
+>>> (UTF-8), but I have never heard of success reports. I'm not saying =
+it does
+>>> not work, though.
 >>
->> =C2=A0 =C2=A0 foo "bar baz"
->>
->> (with double quotes)
->>
->> But what we want is:
->>
->> =C2=A0 =C2=A0 foo bar baz
-> [...]
->> Have I got that right
+>> Thanks for the detailed explanation. I know the differences between =
+bytes
+>> and characters and the needed *encoding* to convert from one to anot=
+her, but
+>> I did not know how Git handles it. I'm quite surprised, that -- as I
+>> understand you -- msys-Git (or Git at all?) is not able to handle al=
+l
+>> characters (aka unicode) at the same time. I expected it would be be=
+tter
+>> than older tools, e.g. SVN.
 >
-> No, I don't think so. =C2=A0Checking /usr/bin/gettext.sh, I see that =
-it
-> uses envsubst:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0# Note: This use of envsubst is much safer=
- than using the shell built-in 'eval'
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0# would be.
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0# 1) The security problem with Chinese tra=
-nslations that happen to use a
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0# =C2=A0 =C2=A0character such as \xe0\x60 =
-is avoided.
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0# 2) The security problem with malevolent =
-translators who put in command lists
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0# =C2=A0 =C2=A0like "$(...)" or "`...`" is=
- avoided.
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0# 3) The translations can only refer to sh=
-ell variables that are already
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0# =C2=A0 =C2=A0mentioned in MSGID or MSGID=
--PLURAL.
->
-> And:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0; echo '"foo"' | envsubst
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0"foo"
->
-> envsubst(1) has more details.
->
-> The idea: translators do not have to worry about quoting at all.
-> $var is presumably rare enough in messages as to not matter.
->
-> One problem with my mockup: it makes it hard to talk about $5.00
-> solutions, unlike envsubst:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0; echo '$3.00' | envsubst
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$3.00
+> The problem is not with Git, as Git is (currently) agnostic with
+> respect to filename encoding; for Git filenames are opaque NUL ('\0)
+> terminated binary data. =A0There is some infrastructure to convert
+> between filename encodings and other filename quirks (like
+> case-insensivity), though...
 
-Sorry for the late reply. Yes, envsubst is the way to go. What I'm
-going to do when I get around to it is to pull (the GPLv2 version of)
-envsubst out of gettext.git and modify it to be a minimal
-git-sh-i18n--helper command.
+"You can use whatever encoding you want. So long as it looks like a
+standard UNIX filename."
 
-Then just do:
 
-    diff --git a/git-sh-i18n.sh b/git-sh-i18n.sh
-    index f8dd43a..c65f9ec 100644
-    --- a/git-sh-i18n.sh
-    +++ b/git-sh-i18n.sh
-    @@ -55,8 +55,7 @@ then
-                    }
 
-                    eval_gettext () {
-    -                       gettext_eval=3D"printf '%s' \"$1\""
-    -                       printf "%s" "`eval \"$gettext_eval\"`"
-    +                       printf "%s" "$1" | git-sh-i18n--helper envs=
-ubst
-                    }
-            fi
-     else
 
-Along with this test:
 
-    commit 42f2eabad4434875f3dd123844461ccfc4ad220b
-    Author: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com>
-    Date:   Sat Oct 30 08:59:51 2010 +0000
 
-        t/t0201-gettext-fallbacks.sh: test for broken eval_gettext
-
-        Add a test for the broken eval_gettext() variable interpolation
-        behavior.
-
-        Reported-by: Johannes Sixt <j.sixt@viscovery.net>
-        Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@g=
-mail.com>
-
-    diff --git a/t/t0201-gettext-fallbacks.sh b/t/t0201-gettext-fallbac=
-ks.sh
-    index 7a85d9b..682c602 100755
-    --- a/t/t0201-gettext-fallbacks.sh
-    +++ b/t/t0201-gettext-fallbacks.sh
-    @@ -46,4 +46,27 @@ test_expect_success NO_GETTEXT_POISON
-'eval_gettext: our eval_gettext() fallback
-         test_cmp expect actual
-     '
-
-    +test_expect_success NO_GETTEXT_POISON 'eval_gettext: our
-eval_gettext() fallback can interpolate whitespace variables' '
-    +    git_am_cmdline=3D"git am" &&
-    +    export git_am_cmdline &&
-    +    printf "test git am" >expect &&
-    +    eval_gettext "test \$git_am_cmdline" >actual &&
-    +    test_cmp expect actual
-    +'
-    +
-    +test_expect_success NO_GETTEXT_POISON 'eval_gettext: git am $cmdli=
-ne bug' '
-    +    cmdline=3D"git am -3" &&
-    +    export cmdline &&
-    +    cat >expect <<EOF &&
-    +When you have resolved this problem run "git am -3 --resolved".
-    +If you would prefer to skip this patch, instead run "git am -3 --s=
-kip".
-    +To restore the original branch and stop patching run "git am -3 --=
-abort".
-    +EOF
-    +    eval_gettext "When you have resolved this problem run
-\"\$cmdline --resolved\".
-    +If you would prefer to skip this patch, instead run \"\$cmdline --=
-skip\".
-    +To restore the original branch and stop patching run \"\$cmdline
---abort\"." >actual &&
-    +    echo >>actual &&
-    +    test_cmp expect actual
-    +'
-    +
-     test_done
-
-The latter of which starts passing with envsubst.
+--=20
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
