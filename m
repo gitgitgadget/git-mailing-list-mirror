@@ -1,73 +1,72 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] checkout: apply Dscho's dwim even with "--" present
-Date: Fri, 29 Oct 2010 19:41:44 -0500
-Message-ID: <20101030004144.GA25927@burratino>
-References: <AANLkTinM863uZfRxy_1BW1fnfEPsPo8A2m86=Wxh7XGd@mail.gmail.com>
- <7vbp6c7ski.fsf@alter.siamese.dyndns.org>
- <20101029194639.GA1738@burratino>
- <7vsjzo691r.fsf@alter.siamese.dyndns.org>
- <20101029235358.GA21410@burratino>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH 0/2] Documentation: kicking the "reset --hard" habit
+Date: Sat, 30 Oct 2010 03:55:50 +0200
+Message-ID: <vpqzktwv3yx.fsf@bauges.imag.fr>
+References: <20101029083516.GA26290@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Dun Peal <dunpealer@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Oct 30 02:42:00 2010
+Cc: git@vger.kernel.org, bebarino@gmail.com, srabbelier@gmail.com,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 30 03:56:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PBzWB-0000Wb-Qg
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Oct 2010 02:42:00 +0200
+	id 1PC0g8-0002YO-PU
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Oct 2010 03:56:21 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1762201Ab0J3Alz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 29 Oct 2010 20:41:55 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:62581 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758843Ab0J3Aly (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 29 Oct 2010 20:41:54 -0400
-Received: by vws13 with SMTP id 13so541126vws.19
-        for <git@vger.kernel.org>; Fri, 29 Oct 2010 17:41:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=JS2PMv71VpbvtC1C/H8LMxxgeOjgnVm59uDPJva5VIY=;
-        b=L1VfG3fGg1S7c4Ux/PlCCVdohhvp/tayN2GJHg5Bg73UxXaOlYUBdl4H1qXevfjIGh
-         LteM3mJv6Qa3inyF9lPIwQAtyE39yXFnOu5bEQ92ypT9URXNPC5CZUgvbat4HHpUXAR8
-         8DHFCrg+DhG9WcNPTEYIjpvPeEvPUJCTRoxoE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=K1Ghf/UaukEVqv7tqPFXvccsKI62b90sfucRWZqayjLj1bxP3SsAtdR7pEDibYeSma
-         oMAN7GKEIjYC+V97XgAzqrZfldaDvp34cbNSE+d0kF/0LbOSOMYM/ArEqiOffo3KppU8
-         XSwMZ8vVH1OSsgNuxgUM/ibw6iNQeP0SvOgxU=
-Received: by 10.224.180.76 with SMTP id bt12mr5723529qab.252.1288399313217;
-        Fri, 29 Oct 2010 17:41:53 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id m7sm2909036qck.25.2010.10.29.17.41.49
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 29 Oct 2010 17:41:51 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20101029235358.GA21410@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751780Ab0J3Bz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 29 Oct 2010 21:55:58 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:38635 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751368Ab0J3Bz5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 29 Oct 2010 21:55:57 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o9U1nFAA007143
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sat, 30 Oct 2010 03:49:16 +0200
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PC0fe-00076f-Pc; Sat, 30 Oct 2010 03:55:50 +0200
+In-Reply-To: <20101029083516.GA26290@burratino> (Jonathan Nieder's message of "Fri\, 29 Oct 2010 03\:35\:16 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 30 Oct 2010 03:49:16 +0200 (CEST)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o9U1nFAA007143
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1289008156.7361@aisjB6fJ5+vlpamlXZg/Pw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160370>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160371>
 
-Jonathan Nieder wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> --- a/builtin/checkout.c
-> +++ b/builtin/checkout.c
-> @@ -808,23 +814,24 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
->  			arg = "@{-1}";
->  
->  		if (get_sha1_mb(arg, rev)) {
-> +			trace_printf("trace: guess = %d\n", dwim_new_local_branch);
+> Sadly, at least the user manual change suggested below is probably
+> not suitable, since reset --keep and --merge have not been around
+> since git 1.5.3 days.  Ideas for working around that and other
+> comments would be welcome.
 
-Gah!  This line does not belong, sorry (though presumably it wouldn't interfere
-with testing).
+Do we really want to keep the user manual compatible with 1.5.3
+forever? It's nice to keep the user manual usable by slightly outdated
+Gits, but 1.5.3 starts being really old, and older docs are still
+available on the web (like
+http://www.kernel.org/pub/software/scm/git/docs/v1.5.3.8/git.html ).
+
+git reset --merge appeared in Git 1.6.2, it sounds reasonable to say
+the current user manual works from this version.
+
+git reset --keep appeared in 1.7.1, hence far more recently. But I
+think it can still be mentionned at least as an alternative to --hard.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
