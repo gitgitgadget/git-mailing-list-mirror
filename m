@@ -1,248 +1,219 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 01/11] Better "Changed but not updated" message in git-status
-Date: Sat, 30 Oct 2010 06:10:09 +0200
-Message-ID: <1288411819-24462-2-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH 02/11] Replace "remote tracking" with "remote-tracking"
+Date: Sat, 30 Oct 2010 06:10:10 +0200
+Message-ID: <1288411819-24462-3-git-send-email-Matthieu.Moy@imag.fr>
 References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: Thore Husfeldt <thore.husfeldt@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Jakub Narebski <jnareb@gmail.com>,
 	Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Oct 30 06:11:04 2010
+X-From: git-owner@vger.kernel.org Sat Oct 30 06:11:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PC2mT-00026r-Lq
+	id 1PC2mU-00026r-BT
 	for gcvg-git-2@lo.gmane.org; Sat, 30 Oct 2010 06:11:02 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750912Ab0J3EKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Oct 2010 00:10:43 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:60033 "EHLO rominette.imag.fr"
+	id S1751013Ab0J3EKq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Oct 2010 00:10:46 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:50024 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750752Ab0J3EKl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Oct 2010 00:10:41 -0400
+	id S1750966Ab0J3EKp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Oct 2010 00:10:45 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id o9U4430K022091
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o9U3tpcX011943
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 30 Oct 2010 06:04:03 +0200
+	Sat, 30 Oct 2010 05:55:51 +0200
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1PC2m6-0007pA-9c; Sat, 30 Oct 2010 06:10:38 +0200
+	id 1PC2m8-0007pd-6O; Sat, 30 Oct 2010 06:10:40 +0200
 Received: from moy by bauges.imag.fr with local (Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1PC2m6-0006Oc-7U; Sat, 30 Oct 2010 06:10:38 +0200
+	id 1PC2m8-0006Of-4W; Sat, 30 Oct 2010 06:10:40 +0200
 X-Mailer: git-send-email 1.7.3.2.183.g2e7b0
 In-Reply-To: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 30 Oct 2010 06:04:03 +0200 (CEST)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sat, 30 Oct 2010 05:55:51 +0200 (CEST)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: o9U4430K022091
+X-MailScanner-ID: o9U3tpcX011943
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1289016243.54456@DDKSyWWr2/df7ZseOEQ9Qw
+MailScanner-NULL-Check: 1289015752.40121@yxE7oIWy4zrbXoFAheNwHQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160376>
 
-Older Gits talked about "updating" a file to add its content to the
-index, but this terminology is confusing for new users. "to stage" is far
-more intuitive and already used in e.g. the "git stage" command name.
+"remote-tracking" branch makes it explicit that the branch is "tracking a
+remote", as opposed to "remote, and tracking something".
+
+See discussion in e.g.
+http://mid.gmane.org/8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com
+for more details.
+
+This patch is a straightforward application of
+
+  perl -pi -e 's/remote tracking branch/remote-tracking branch/'
+
+except in the RelNotes directory.
 
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- Documentation/gittutorial-2.txt |    2 +-
- t/t7508-status.sh               |   34 +++++++++++++++++-----------------
- wt-status.c                     |    2 +-
- 3 files changed, 19 insertions(+), 19 deletions(-)
+ Documentation/config.txt           |    2 +-
+ Documentation/fetch-options.txt    |    2 +-
+ Documentation/git-log.txt          |    2 +-
+ Documentation/git-pull.txt         |    2 +-
+ Documentation/git-remote.txt       |    4 ++--
+ Documentation/gittutorial.txt      |    2 +-
+ Documentation/rev-list-options.txt |    2 +-
+ Documentation/user-manual.txt      |    2 +-
+ builtin/checkout.c                 |    2 +-
+ t/t5513-fetch-track.sh             |    2 +-
+ 10 files changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/Documentation/gittutorial-2.txt b/Documentation/gittutorial-2.txt
-index ecab0c0..7fe5848 100644
---- a/Documentation/gittutorial-2.txt
-+++ b/Documentation/gittutorial-2.txt
-@@ -373,7 +373,7 @@ $ git status
- #
- #       new file: closing.txt
- #
--# Changed but not updated:
-+# Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #
- #       modified: file.txt
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index c9300f3..4de3e27 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -44,7 +44,7 @@ cat >expect <<\EOF
- #
- #	new file:   dir2/added
- #
--# Changed but not updated:
-+# Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working directory)
- #
-@@ -73,7 +73,7 @@ cat >expect <<\EOF
- # Changes to be committed:
- #	new file:   dir2/added
- #
--# Changed but not updated:
-+# Changes not staged for commit:
- #	modified:   dir1/modified
- #
- # Untracked files:
-@@ -140,7 +140,7 @@ cat >expect <<EOF
- #
- #	new file:   dir2/added
- #
--# Changed but not updated:
-+# Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working directory)
- #
-@@ -167,7 +167,7 @@ cat >expect <<EOF
- # Changes to be committed:
- #	new file:   dir2/added
- #
--# Changed but not updated:
-+# Changes not staged for commit:
- #	modified:   dir1/modified
- #
- # Untracked files not listed
-@@ -202,7 +202,7 @@ cat >expect <<EOF
- #
- #	new file:   dir2/added
- #
--# Changed but not updated:
-+# Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working directory)
- #
-@@ -260,7 +260,7 @@ cat >expect <<EOF
- #
- #	new file:   dir2/added
- #
--# Changed but not updated:
-+# Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working directory)
- #
-@@ -320,7 +320,7 @@ cat >expect <<\EOF
- #
- #	new file:   ../dir2/added
- #
--# Changed but not updated:
-+# Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working directory)
- #
-@@ -392,7 +392,7 @@ cat >expect <<\EOF
- #
- #	<GREEN>new file:   dir2/added<RESET>
- #
--# Changed but not updated:
-+# Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working directory)
- #
-@@ -521,7 +521,7 @@ cat >expect <<\EOF
- #
- #	new file:   dir2/added
- #
--# Changed but not updated:
-+# Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working directory)
- #
-@@ -614,7 +614,7 @@ cat >expect <<EOF
- #	new file:   dir2/added
- #	new file:   sm
- #
--# Changed but not updated:
-+# Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working directory)
- #
-@@ -673,7 +673,7 @@ cat >expect <<EOF
- #	new file:   dir2/added
- #	new file:   sm
- #
--# Changed but not updated:
-+# Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working directory)
- #
-@@ -718,7 +718,7 @@ test_expect_success 'status -s submodule summary' '
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 538ebb5..e625d6a 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -708,7 +708,7 @@ color.diff.<slot>::
+ color.decorate.<slot>::
+ 	Use customized color for 'git log --decorate' output.  `<slot>` is one
+ 	of `branch`, `remoteBranch`, `tag`, `stash` or `HEAD` for local
+-	branches, remote tracking branches, tags, stash and HEAD, respectively.
++	branches, remote-tracking branches, tags, stash and HEAD, respectively.
  
- cat >expect <<EOF
- # On branch master
--# Changed but not updated:
-+# Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working directory)
- #
-@@ -766,7 +766,7 @@ cat >expect <<EOF
- #	new file:   dir2/added
- #	new file:   sm
- #
--# Changed but not updated:
-+# Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working directory)
- #
-@@ -819,7 +819,7 @@ cat > expect << EOF
- #
- #	modified:   sm
- #
--# Changed but not updated:
-+# Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working directory)
- #
-@@ -931,7 +931,7 @@ cat > expect << EOF
- #
- #	modified:   sm
- #
--# Changed but not updated:
-+# Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working directory)
- #   (commit or discard the untracked or modified content in submodules)
-@@ -989,7 +989,7 @@ cat > expect << EOF
- #
- #	modified:   sm
- #
--# Changed but not updated:
-+# Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working directory)
- #
-@@ -1067,7 +1067,7 @@ test_expect_success ".git/config ignore=dirty doesn't suppress submodule summary
+ color.grep::
+ 	When set to `always`, always highlight matches.  When `false` (or
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 470ac31..a435c23 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -36,7 +36,7 @@ ifndef::git-pull[]
  
- cat > expect << EOF
- # On branch master
--# Changed but not updated:
-+# Changes not staged for commit:
- #   (use "git add <file>..." to update what will be committed)
- #   (use "git checkout -- <file>..." to discard changes in working directory)
- #
-diff --git a/wt-status.c b/wt-status.c
-index fc2438f..d9f3d9f 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -88,7 +88,7 @@ static void wt_status_print_dirty_header(struct wt_status *s,
- {
- 	const char *c = color(WT_STATUS_HEADER, s);
+ -p::
+ --prune::
+-	After fetching, remove any remote tracking branches which
++	After fetching, remove any remote-tracking branches which
+ 	no longer exist	on the remote.
+ endif::git-pull[]
  
--	color_fprintf_ln(s->fp, c, "# Changed but not updated:");
-+	color_fprintf_ln(s->fp, c, "# Changes not staged for commit:");
- 	if (!advice_status_hints)
- 		return;
- 	if (!has_deleted)
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 6d40f00..ff41784 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -116,7 +116,7 @@ git log --follow builtin-rev-list.c::
+ git log --branches --not --remotes=origin::
+ 
+ 	Shows all commits that are in any of local branches but not in
+-	any of remote tracking branches for 'origin' (what you have that
++	any of remote-tracking branches for 'origin' (what you have that
+ 	origin doesn't).
+ 
+ git log master --not --remotes=*/master::
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index c50f7dc..33e8438 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -26,7 +26,7 @@ With `--rebase`, it runs 'git rebase' instead of 'git merge'.
+ <repository> should be the name of a remote repository as
+ passed to linkgit:git-fetch[1].  <refspec> can name an
+ arbitrary remote ref (for example, the name of a tag) or even
+-a collection of refs with corresponding remote tracking branches
++a collection of refs with corresponding remote-tracking branches
+ (e.g., refs/heads/*:refs/remotes/origin/*), but usually it is
+ the name of a branch in the remote repository.
+ 
+diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
+index 0d28feb..5e4989d 100644
+--- a/Documentation/git-remote.txt
++++ b/Documentation/git-remote.txt
+@@ -75,7 +75,7 @@ was passed.
+ 
+ 'rename'::
+ 
+-Rename the remote named <old> to <new>. All remote tracking branches and
++Rename the remote named <old> to <new>. All remote-tracking branches and
+ configuration settings for the remote are updated.
+ +
+ In case <old> and <new> are the same, and <old> is a file under
+@@ -84,7 +84,7 @@ the configuration file format.
+ 
+ 'rm'::
+ 
+-Remove the remote named <name>. All remote tracking branches and
++Remove the remote named <name>. All remote-tracking branches and
+ configuration settings for the remote are removed.
+ 
+ 'set-head'::
+diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
+index 1c16066..f1f4086 100644
+--- a/Documentation/gittutorial.txt
++++ b/Documentation/gittutorial.txt
+@@ -385,7 +385,7 @@ alice$ git fetch bob
+ 
+ Unlike the longhand form, when Alice fetches from Bob using a
+ remote repository shorthand set up with 'git remote', what was
+-fetched is stored in a remote tracking branch, in this case
++fetched is stored in a remote-tracking branch, in this case
+ `bob/master`.  So after this:
+ 
+ -------------------------------------
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 7a42567..7a1b164 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -264,7 +264,7 @@ endif::git-rev-list[]
+ 
+ 	Pretend as if all the refs in `refs/remotes` are listed
+ 	on the command line as '<commit>'. If '<pattern>' is given, limit
+-	remote tracking branches to ones matching given shell glob.
++	remote-tracking branches to ones matching given shell glob.
+ 	If pattern lacks '?', '*', or '[', '/*' at the end is implied.
+ 
+ --glob=<glob-pattern>::
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index fc56da6..d5505e8 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -1700,7 +1700,7 @@ may wish to check the original repository for updates and merge them
+ into your own work.
+ 
+ We have already seen <<Updating-a-repository-With-git-fetch,how to
+-keep remote tracking branches up to date>> with linkgit:git-fetch[1],
++keep remote-tracking branches up to date>> with linkgit:git-fetch[1],
+ and how to merge two branches.  So you can merge in changes from the
+ original repository's master branch with:
+ 
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index 9240faf..9a934af 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -786,7 +786,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 	 *   With no paths, if <something> is _not_ a commit, no -t nor -b
+ 	 *   was given, and there is a tracking branch whose name is
+ 	 *   <something> in one and only one remote, then this is a short-hand
+-	 *   to fork local <something> from that remote tracking branch.
++	 *   to fork local <something> from that remote-tracking branch.
+ 	 *
+ 	 *   Otherwise <something> shall not be ambiguous.
+ 	 *   - If it's *only* a reference, treat it like case (1).
+diff --git a/t/t5513-fetch-track.sh b/t/t5513-fetch-track.sh
+index 9e74862..65d1e05 100755
+--- a/t/t5513-fetch-track.sh
++++ b/t/t5513-fetch-track.sh
+@@ -1,6 +1,6 @@
+ #!/bin/sh
+ 
+-test_description='fetch follows remote tracking branches correctly'
++test_description='fetch follows remote-tracking branches correctly'
+ 
+ . ./test-lib.sh
+ 
 -- 
 1.7.3.2.183.g2e7b0
