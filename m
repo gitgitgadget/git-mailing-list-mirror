@@ -1,278 +1,76 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 05/11] Change "tracking branch" to "remote-tracking branch"
-Date: Sat, 30 Oct 2010 06:10:13 +0200
-Message-ID: <1288411819-24462-6-git-send-email-Matthieu.Moy@imag.fr>
-References: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Thore Husfeldt <thore.husfeldt@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Sat Oct 30 06:14:41 2010
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 38/42] Remove all logic from get_git_work_tree()
+Date: Sat, 30 Oct 2010 11:38:38 +0700
+Message-ID: <AANLkTim1PBO3TELnRzAGXYK3B0cshzQCwj0udUncfpRb@mail.gmail.com>
+References: <1288334934-17216-1-git-send-email-pclouds@gmail.com>
+ <1288334934-17216-39-git-send-email-pclouds@gmail.com> <AANLkTim-uW4Esk1bkPzNNGRb8svZoNwCUvXF3Fqb4QmR@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Oct 30 06:39:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PC2pz-00032V-Fb
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Oct 2010 06:14:40 +0200
+	id 1PC3De-0008Lk-OB
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Oct 2010 06:39:07 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751413Ab0J3EOe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Oct 2010 00:14:34 -0400
-Received: from imag.imag.fr ([129.88.30.1]:46799 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751198Ab0J3EOc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Oct 2010 00:14:32 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id o9U4Ar24014356
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 30 Oct 2010 06:10:53 +0200 (CEST)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1PC2mL-0007rv-53; Sat, 30 Oct 2010 06:10:53 +0200
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1PC2mL-0006Oo-2i; Sat, 30 Oct 2010 06:10:53 +0200
-X-Mailer: git-send-email 1.7.3.2.183.g2e7b0
-In-Reply-To: <1287851481-27952-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Sat, 30 Oct 2010 06:10:53 +0200 (CEST)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
+	id S1750912Ab0J3EjB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Oct 2010 00:39:01 -0400
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:50665 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750731Ab0J3EjA convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 30 Oct 2010 00:39:00 -0400
+Received: by wyf28 with SMTP id 28so3784924wyf.19
+        for <git@vger.kernel.org>; Fri, 29 Oct 2010 21:38:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=g/Lt5tYbUJdwzHIYBr5y2ZJulAhN0eaMSHgjX6MPLag=;
+        b=ieKnDHBK6NurLmS+uLcZC9Ctd1BKsJxPUdj0o81KXuZeZMpfkWyQru/fflN9FFPk2Q
+         7nYRMMCFz9V9bPcxAK0EgP7qc6JlNDOkUoQp1kJ+6lIsfZ/FHt3w82wnue9FP2ju/mLX
+         EgZG5Iq+8ofZTjMvR+2bYLHEqSdyLu96QxZB4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=NY6hCvO1NsayFRxQDfQuNZHwfxxNt5DtQVrkjhZJQK+MwZ6PpICzq2TqErspZioEW9
+         m92QDiq5044CLEAcnEBQ0tXC8QDg/PcZSjJSfUx0hBAh3pgRSMC/v943zKEqvzojnsgb
+         38vrESWuYJ31QHyQ6mhFi44d64OgiOGi/9Bwc=
+Received: by 10.216.49.145 with SMTP id x17mr1720358web.55.1288413538758; Fri,
+ 29 Oct 2010 21:38:58 -0700 (PDT)
+Received: by 10.216.135.77 with HTTP; Fri, 29 Oct 2010 21:38:38 -0700 (PDT)
+In-Reply-To: <AANLkTim-uW4Esk1bkPzNNGRb8svZoNwCUvXF3Fqb4QmR@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160385>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160386>
 
-One more step towards consistancy. We change the documentation and the C
-code in a single patch, since the only instances in the C code are in
-comment and usage strings.
+2010/10/30 Sverre Rabbelier <srabbelier@gmail.com>:
+> Heya,
+>
+> 2010/10/28 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.c=
+om>:
+>> This helps break things some more. Eventually all repo setup logic
+>> should be centralized in setup_* functions. This helps push all the
+>> bugs back to setup_* functions.
+>
+> I don't know about this, do we really want to willingly break the tes=
+t
+> suite (and fixing it later)? Perhaps we can review this as-is and the=
+n
+> squash the commits before they are merged to next so that there is no
+> breakage? We could even attach the original commits as notes :).
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- Documentation/config.txt           |    4 ++--
- Documentation/git-fetch.txt        |    2 +-
- Documentation/git-pull.txt         |    6 +++---
- Documentation/git-remote.txt       |    2 +-
- Documentation/git-tag.txt          |    4 ++--
- Documentation/glossary-content.txt |   20 ++++++++++----------
- Documentation/user-manual.txt      |    2 +-
- builtin/checkout.c                 |    2 +-
- builtin/fetch.c                    |    4 ++--
- remote.c                           |    2 +-
- 10 files changed, 24 insertions(+), 24 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index e625d6a..e4f16d8 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -680,7 +680,7 @@ color.branch::
- color.branch.<slot>::
- 	Use customized color for branch coloration. `<slot>` is one of
- 	`current` (the current branch), `local` (a local branch),
--	`remote` (a tracking branch in refs/remotes/), `plain` (other
-+	`remote` (a remote-tracking branch in refs/remotes/), `plain` (other
- 	refs).
- +
- The value for these configuration variables is a list of colors (at most
-@@ -1102,7 +1102,7 @@ gui.newbranchtemplate::
- 	linkgit:git-gui[1].
- 
- gui.pruneduringfetch::
--	"true" if linkgit:git-gui[1] should prune tracking branches when
-+	"true" if linkgit:git-gui[1] should prune remote-tracking branches when
- 	performing a fetch. The default value is "false".
- 
- gui.trustmtime::
-diff --git a/Documentation/git-fetch.txt b/Documentation/git-fetch.txt
-index d159e88..c76e313 100644
---- a/Documentation/git-fetch.txt
-+++ b/Documentation/git-fetch.txt
-@@ -26,7 +26,7 @@ The ref names and their object names of fetched refs are stored
- in `.git/FETCH_HEAD`.  This information is left for a later merge
- operation done by 'git merge'.
- 
--When <refspec> stores the fetched result in tracking branches,
-+When <refspec> stores the fetched result in remote-tracking branches,
- the tags that point at these branches are automatically
- followed.  This is done by first fetching from the remote using
- the given <refspec>s, and if the repository has objects that are
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index 33e8438..54e7013 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -134,7 +134,7 @@ and if there is not any such variable, the value on `URL: ` line
- in `$GIT_DIR/remotes/<origin>` file is used.
- 
- In order to determine what remote branches to fetch (and
--optionally store in the tracking branches) when the command is
-+optionally store in the remote-tracking branches) when the command is
- run without any refspec parameters on the command line, values
- of the configuration variable `remote.<origin>.fetch` are
- consulted, and if there aren't any, `$GIT_DIR/remotes/<origin>`
-@@ -147,9 +147,9 @@ refs/heads/*:refs/remotes/origin/*
- ------------
- 
- A globbing refspec must have a non-empty RHS (i.e. must store
--what were fetched in tracking branches), and its LHS and RHS
-+what were fetched in remote-tracking branches), and its LHS and RHS
- must end with `/*`.  The above specifies that all remote
--branches are tracked using tracking branches in
-+branches are tracked using remote-tracking branches in
- `refs/remotes/origin/` hierarchy under the same name.
- 
- The rule to determine which remote branch to merge after
-diff --git a/Documentation/git-remote.txt b/Documentation/git-remote.txt
-index 5e4989d..c258ea4 100644
---- a/Documentation/git-remote.txt
-+++ b/Documentation/git-remote.txt
-@@ -146,7 +146,7 @@ With `-n` option, the remote heads are not queried first with
- 
- 'prune'::
- 
--Deletes all stale tracking branches under <name>.
-+Deletes all stale remote-tracking branches under <name>.
- These stale branches have already been removed from the remote repository
- referenced by <name>, but are still locally available in
- "remotes/<name>".
-diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
-index 31c78a8..8b169e3 100644
---- a/Documentation/git-tag.txt
-+++ b/Documentation/git-tag.txt
-@@ -177,7 +177,7 @@ On Automatic following
- ~~~~~~~~~~~~~~~~~~~~~~
- 
- If you are following somebody else's tree, you are most likely
--using tracking branches (`refs/heads/origin` in traditional
-+using remote-tracking branches (`refs/heads/origin` in traditional
- layout, or `refs/remotes/origin/master` in the separate-remote
- layout).  You usually want the tags from the other end.
- 
-@@ -232,7 +232,7 @@ this case.
- It may well be that among networking people, they may want to
- exchange the tags internal to their group, but in that workflow
- they are most likely tracking with each other's progress by
--having tracking branches.  Again, the heuristic to automatically
-+having remote-tracking branches.  Again, the heuristic to automatically
- follow such tags is a good thing.
- 
- 
-diff --git a/Documentation/glossary-content.txt b/Documentation/glossary-content.txt
-index 1f029f8..ba96b32 100644
---- a/Documentation/glossary-content.txt
-+++ b/Documentation/glossary-content.txt
-@@ -131,7 +131,7 @@ to point at the new commit.
- 	you have. In such these cases, you do not make a new <<def_merge,merge>>
- 	<<def_commit,commit>> but instead just update to his
- 	revision. This will happen frequently on a
--	<<def_tracking_branch,tracking branch>> of a remote
-+	<<def_remote_tracking_branch,remote-tracking branch>> of a remote
- 	<<def_repository,repository>>.
- 
- [[def_fetch]]fetch::
-@@ -260,7 +260,7 @@ This commit is referred to as a "merge commit", or sometimes just a
- 	The default upstream <<def_repository,repository>>. Most projects have
- 	at least one upstream project which they track. By default
- 	'origin' is used for that purpose. New upstream updates
--	will be fetched into remote <<def_tracking_branch,tracking branches>> named
-+	will be fetched into remote <<def_remote_tracking_branch,remote-tracking branches>> named
- 	origin/name-of-upstream-branch, which you can see using
- 	`git branch -r`.
- 
-@@ -349,6 +349,14 @@ This commit is referred to as a "merge commit", or sometimes just a
- 	master branch head as to-upstream branch at $URL". See also
- 	linkgit:git-push[1].
- 
-+[[def_remote_tracking_branch]]remote-tracking branch::
-+	A regular git <<def_branch,branch>> that is used to follow changes from
-+	another <<def_repository,repository>>. A tracking
-+	branch should not contain direct modifications or have local commits
-+	made to it. A remote-tracking branch can usually be
-+	identified as the right-hand-side <<def_ref,ref>> in a Pull:
-+	<<def_refspec,refspec>>.
-+
- [[def_repository]]repository::
- 	A collection of <<def_ref,refs>> together with an
- 	<<def_object_database,object database>> containing all objects
-@@ -418,14 +426,6 @@ This commit is referred to as a "merge commit", or sometimes just a
- 	that each contain very well defined concepts or small incremental yet
- 	related changes.
- 
--[[def_tracking_branch]]tracking branch::
--	A regular git <<def_branch,branch>> that is used to follow changes from
--	another <<def_repository,repository>>. A tracking
--	branch should not contain direct modifications or have local commits
--	made to it. A tracking branch can usually be
--	identified as the right-hand-side <<def_ref,ref>> in a Pull:
--	<<def_refspec,refspec>>.
--
- [[def_tree]]tree::
- 	Either a <<def_working_tree,working tree>>, or a <<def_tree_object,tree
- 	object>> together with the dependent <<def_blob_object,blob>> and tree objects
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index d5505e8..d7835ca 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -435,7 +435,7 @@ linux-nfs/master
- origin/master
- -------------------------------------------------
- 
--If you run "git fetch <remote>" later, the tracking branches for the
-+If you run "git fetch <remote>" later, the remote-tracking branches for the
- named <remote> will be updated.
- 
- If you examine the file .git/config, you will see that git has added
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 9a934af..1fa9ce4 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -784,7 +784,7 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 	 *   between A and B, A...B names that merge base.
- 	 *
- 	 *   With no paths, if <something> is _not_ a commit, no -t nor -b
--	 *   was given, and there is a tracking branch whose name is
-+	 *   was given, and there is a remote-tracking branch whose name is
- 	 *   <something> in one and only one remote, then this is a short-hand
- 	 *   to fork local <something> from that remote-tracking branch.
- 	 *
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index d35f000..3b0b614 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -52,7 +52,7 @@ static struct option builtin_fetch_options[] = {
- 	OPT_SET_INT('n', NULL, &tags,
- 		    "do not fetch all tags (--no-tags)", TAGS_UNSET),
- 	OPT_BOOLEAN('p', "prune", &prune,
--		    "prune tracking branches no longer on remote"),
-+		    "prune remote-tracking branches no longer on remote"),
- 	OPT_BOOLEAN(0, "dry-run", &dry_run,
- 		    "dry run"),
- 	OPT_BOOLEAN('k', "keep", &keep, "keep downloaded pack"),
-@@ -98,7 +98,7 @@ static void add_merge_config(struct ref **head,
- 			continue;
- 
- 		/*
--		 * Not fetched to a tracking branch?  We need to fetch
-+		 * Not fetched to a remote-tracking branch?  We need to fetch
- 		 * it anyway to allow this branch's "branch.$name.merge"
- 		 * to be honored by 'git pull', but we do not have to
- 		 * fail if branch.$name.merge is misconfigured to point
-diff --git a/remote.c b/remote.c
-index 9143ec7..ca42a12 100644
---- a/remote.c
-+++ b/remote.c
-@@ -493,7 +493,7 @@ static void read_config(void)
- }
- 
- /*
-- * We need to make sure the tracking branches are well formed, but a
-+ * We need to make sure the remote-tracking branches are well formed, but a
-  * wildcard refspec in "struct refspec" must have a trailing slash. We
-  * temporarily drop the trailing '/' while calling check_ref_format(),
-  * and put it back.  The caller knows that a CHECK_REF_FORMAT_ONELEVEL
--- 
-1.7.3.2.183.g2e7b0
+Squashing is no good in terms of readability when we look back in
+history. Can git-bisect be taught that "there is breakage in this
+segment of commits, consider the whole segment a single commit"?
+--=20
+Duy
