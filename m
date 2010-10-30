@@ -1,90 +1,77 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From: Mathias Lafeldt <misfire@debugon.org>
 Subject: Re: git merge-tree segfault
-Date: Sat, 30 Oct 2010 17:25:06 +0000
-Message-ID: <AANLkTi=mA5BUQN02r5ZUz_kHL+iC4J=4LFqe=tyCqg-q@mail.gmail.com>
+Date: Sat, 30 Oct 2010 19:26:26 +0200
+Message-ID: <4CCC5542.8020105@debugon.org>
 References: <AANLkTinJQCqwRZpbO66VHrgxezedS1Ay3nr9kayiODi9@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Klas Lindberg <klas.lindberg@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Oct 30 19:27:07 2010
+X-From: git-owner@vger.kernel.org Sat Oct 30 19:27:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PCFCt-0003B6-Bg
-	for gcvg-git-2@lo.gmane.org; Sat, 30 Oct 2010 19:27:07 +0200
+	id 1PCFCt-0003B6-SC
+	for gcvg-git-2@lo.gmane.org; Sat, 30 Oct 2010 19:27:08 +0200
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755353Ab0J3RZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 30 Oct 2010 13:25:27 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:65360 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755144Ab0J3RZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Oct 2010 13:25:26 -0400
-Received: by fxm16 with SMTP id 16so3970653fxm.19
-        for <git@vger.kernel.org>; Sat, 30 Oct 2010 10:25:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=HyOkPlifh3TwsBKXPtu+jsUxywdDN2MCcS3P6+NSd60=;
-        b=GhmdiYaePZV4EwbR6/P6b3nNsCL8mJceH/WOmEJrpMUr324pQFbrBzfEpodRBLvhZS
-         Z+KwLzDTLSHQ1JcGbgjrT2dcfEbX2Axwzg33g0/AK2Nb9vJsu/SAxY9viENOph2t1WsL
-         XZi4vL9Hcu9ygmbe+MC8iYpKeoVJri93FWAZ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=bqFE9Mb/Pv21S3wS7nytRKNcXZnFJt1B73OXkaDieEW3o7iHEZYCGCLovlTIH9ELji
-         XDS8m+eyM3oj2DrJbaozk2MY1PD5kQgjxRsJFeGJxyTa/+fnx+7gHFknegVAHe2jWWHy
-         07/3xcTcqd3Pmyc/o5tOmNTqUZeTP93lsv5sI=
-Received: by 10.223.125.136 with SMTP id y8mr5156595far.149.1288459506229;
- Sat, 30 Oct 2010 10:25:06 -0700 (PDT)
-Received: by 10.223.123.203 with HTTP; Sat, 30 Oct 2010 10:25:06 -0700 (PDT)
+	id S1755435Ab0J3R0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Oct 2010 13:26:30 -0400
+Received: from moutng.kundenserver.de ([212.227.17.9]:60679 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755144Ab0J3R03 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Oct 2010 13:26:29 -0400
+Received: from [192.168.2.102] (dslb-088-071-184-013.pools.arcor-ip.net [88.71.184.13])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0McRym-1OuZmt2GbQ-00I2mu; Sat, 30 Oct 2010 19:26:27 +0200
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.15) Gecko/20101027 Thunderbird/3.0.10
 In-Reply-To: <AANLkTinJQCqwRZpbO66VHrgxezedS1Ay3nr9kayiODi9@mail.gmail.com>
+X-Provags-ID: V02:K0:DY+VypdGADnnTLvhwJnf2AVYyyywes0W/mocQNTlLfG
+ OeU99G6SqbM5zDQ47V2p/yqwx9R8UcrFcAmZI94tY66WdhZyuY
+ /0jvqoQoWmvGz1Zthl1L8rVGTD1GVJIYLp3g/4KZdvbQ0x5Tmh
+ eWzqIwMgt3BowJfndGW2ydDZldVuN4ewrGuYPtf5u+BEmmpCaC
+ lEORpfoBo35KRmj6Ct/sqvFx4Op37NjIfzZJM4A9ik=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160403>
 
-On Thu, Oct 28, 2010 at 20:16, Klas Lindberg <klas.lindberg@gmail.com> wrote:
+On 10/28/2010 10:16 PM, Klas Lindberg wrote:
 > I haven't tried this on newer versions of git, but the release notes
 > for later releases don't mention merge-tree anywhere, so...
+> 
+> git version: 1.7.0
+> uname -a: Linux tor 2.6.32-trunk-amd64 #1 SMP Sun Jan 10 22:40:40 UTC
+> 2010 x86_64 GNU/Linux
+> distro: Debian GNU/Linux squeeze/sid
+> 
+> Unpack the attached tree, cd into it and run:
+> git merge-tree common master other
+> 
+> I get the following result:
+> added in local
+>   our    100644 d68dd4031d2ad5b7a3829ad7df6635e27a7daa22 t1.txt
+> Segmentation fault
+> 
+> The exit code:
+> 139
+> 
+> BR / Klas
 
-Doesn't segfault for me. Probably since my version has this commit:
+Looks like this has been fixed by 21baa6e (merge-tree: fix where two
+branches share no changes, 2010-07-14).
 
-commit 21baa6e0c56d229866c02c4b42b8b53af648d853
-Author: Will Palmer <wmpalmer@gmail.com>
-Date:   Wed Jul 14 18:04:07 2010 +0100
+$ git merge-tree common master other
+added in local
+  our    100644 d68dd4031d2ad5b7a3829ad7df6635e27a7daa22 t1.txt
 
-    merge-tree: fix where two branches share no changes
+$ echo $?
+0
 
-    15b4f7a (merge-tree: use ll_merge() not xdl_merge(), 2010-01-16)
-    introduced a regression to merge-tree to cause it to segfault when merging
-    files which existed in one branch, but not in the other or in the
-    merge-base. This was caused by referencing entry->path at a time when
-    entry was known to be possibly-NULL.
+$ git --version 
+git version 1.7.3.2
 
-    To correct the problem, we save the path of the entry we came in with,
-    as the path should be the same among all the stages no matter which
-    sides are involved in the merge.
-
-    Signed-off-by: Will Palmer <wmpalmer@gmail.com>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-$ git tag --contains 21baa6e0c56d229866c02c4b42b8b53af648d853|grep ^v
-v1.7.2
-v1.7.2.1
-v1.7.2.2
-v1.7.2.3
-v1.7.2.3.msysgit.0
-v1.7.3
-v1.7.3-rc0
-v1.7.3-rc1
-v1.7.3-rc2
-v1.7.3.1
-v1.7.3.1.msysgit.0
-v1.7.3.2
-v1.7.3.2.msysgit.0
+-Mathias
