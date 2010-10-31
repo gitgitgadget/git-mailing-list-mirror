@@ -1,73 +1,63 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Pete Wyckoff <pw@padd.com>
 Subject: Re: [PATCH] cherry-pick/revert: transparently refresh index
-Date: Sun, 31 Oct 2010 15:32:33 -0500
-Message-ID: <20101031203233.GA22937@burratino>
+Date: Sun, 31 Oct 2010 18:26:44 -0400
+Message-ID: <20101031222644.GA31257@arf.padd.com>
 References: <20101031174430.GA30236@arf.padd.com>
  <20101031195933.GA21240@burratino>
- <m24oc2p0rd.fsf@igel.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
 	Junio C Hamano <gitster@pobox.com>
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sun Oct 31 21:33:08 2010
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 31 23:27:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PCeaR-0006PU-99
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Oct 2010 21:33:07 +0100
+	id 1PCgMY-00048z-2Q
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Oct 2010 23:26:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756733Ab0JaUct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Oct 2010 16:32:49 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:62925 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754654Ab0JaUcr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Oct 2010 16:32:47 -0400
-Received: by vws13 with SMTP id 13so2749488vws.19
-        for <git@vger.kernel.org>; Sun, 31 Oct 2010 13:32:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=u1pzWhjgNqXfFDL8lUm2tHQfGOn/wcjZ8gsq0RSdEL8=;
-        b=lTYyMrFUdafCvTmwNuxNOZJynYEgmzt43DqTpJUAavoK4TpZ2q9V6JcoGPG2NPOG//
-         h4UlDVN+4wj1jntbVro3AYLUvqe79PJxmGXnO+iVmNUD+BTprx2qZLPIRiC2GpHHxrmH
-         IUAJLLiOBdqqXliYggeG01QrdRI/kvfDMgQEY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=JkpVz6yUf5NHqNI+tMVadloNrz5smK0lYkU2vD5A9upI3PYgNUrzwLlzfxXtBko/Gi
-         O2lj8mhRiQcGPTB9C+GWxfbGveHUr0A/k3wh6k8w/mIzI0oF4DmdeY7vVtpHmz0HSeQR
-         VBNi2/G1pH3n1lbVZCcfnZKhhxLwst/KJnKU4=
-Received: by 10.224.211.129 with SMTP id go1mr5514437qab.270.1288557165657;
-        Sun, 31 Oct 2010 13:32:45 -0700 (PDT)
-Received: from burratino ([68.255.106.176])
-        by mx.google.com with ESMTPS id k15sm4293636qcu.47.2010.10.31.13.32.43
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 31 Oct 2010 13:32:44 -0700 (PDT)
+	id S1756794Ab0JaW0t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Oct 2010 18:26:49 -0400
+Received: from honk.padd.com ([74.3.171.149]:36344 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753053Ab0JaW0s (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Oct 2010 18:26:48 -0400
+Received: from arf.padd.com (pool-71-111-208-86.rlghnc.dsl-w.verizon.net [71.111.208.86])
+	by honk.padd.com (Postfix) with ESMTPSA id E5E01276;
+	Sun, 31 Oct 2010 15:26:46 -0700 (PDT)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 7A11D319E9; Sun, 31 Oct 2010 18:26:44 -0400 (EDT)
 Content-Disposition: inline
-In-Reply-To: <m24oc2p0rd.fsf@igel.home>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20101031195933.GA21240@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160454>
 
-Andreas Schwab wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+jrnieder@gmail.com wrote on Sun, 31 Oct 2010 14:59 -0500:
+> A stat-dirty index is not a detail that ought to concern the operator
+> of porcelain such as "git cherry-pick".
+> 
+> Without this change, a cherry-pick after copying a worktree with rsync
+> errors out with a misleading message.
+> 
+> 	$ git cherry-pick build/top
+> 	error: Your local changes to 'file.h' would be overwritten by merge.  Aborting.
+> 	Please, commit your changes or stash them before you can merge.
+> 
+> Noticed-by: Pete Wyckoff <pw@padd.com>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
->> --- a/t/t3501-revert-cherry-pick.sh
->> +++ b/t/t3501-revert-cherry-pick.sh
->> @@ -83,4 +83,17 @@ test_expect_success 'revert after renaming branch' '
->>
->> +test_expect_success 'revert on stat-dirty working tree' '
->
-> ITYM s/revert/cherry-pick/
+Thanks, this works well.  I tested it and am happy with the
+change.  It is needed for correctness.
 
-Good eyes.  Yes, I do.
+Since I know that I just copied the repo, I'd prefer not to
+make people wait to refresh the index.  A new flag to
+update-index improves performance by avoiding the initial
+re-read of all files in the repository.  Patch follows in
+next mail.
+
+		-- Pete
