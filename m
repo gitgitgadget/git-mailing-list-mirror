@@ -1,121 +1,87 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH v2] diff: support --cached on unborn branches
-Date: Sun, 31 Oct 2010 10:24:13 +0700
-Message-ID: <20101031032413.GA27346@do>
-References: <7vhbg56i9s.fsf@alter.siamese.dyndns.org>
- <1288437377-30405-1-git-send-email-pclouds@gmail.com>
- <7vwroz3vj8.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH en/cascade-tests] tests: add missing &&
+Date: Sat, 30 Oct 2010 20:31:48 -0700
+Message-ID: <7vr5f73umz.fsf@alter.siamese.dyndns.org>
+References: <1286136014-7728-1-git-send-email-newren@gmail.com>
+ <1286136014-7728-16-git-send-email-newren@gmail.com>
+ <20101031014654.GC29456@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Oct 31 04:28:13 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
+	avarab@gmail.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 31 04:32:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PCOaa-0001zv-Lb
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Oct 2010 04:28:13 +0100
+	id 1PCOeV-0002t4-Ot
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Oct 2010 04:32:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754235Ab0JaDYQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 30 Oct 2010 23:24:16 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:56786 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753642Ab0JaDYO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 30 Oct 2010 23:24:14 -0400
-Received: by gxk23 with SMTP id 23so2649178gxk.19
-        for <git@vger.kernel.org>; Sat, 30 Oct 2010 20:24:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=uBaUd86s2u/gpfXuBdR+rseeXkcx4ZQiiAiA+g7FbgE=;
-        b=gAz3h6sk1mCQiaEv3tras5VIGJg9f6UB98YHgiAr7GoeDRwRxxkjsaLf/7Bg+j2Gr6
-         BiKKOvAWDz1tLhRVGS7G/olnOhydePtdh93G7710BhmeWRm3M79jCU3BqKkxfjoJ7+cg
-         uLElGEyVXW5DgGQ+wBurmpB0Zvw+jhe8c88LI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=wcBQEO4Et8RhWZRVfqQ9XJpFPNoZ9hFVtm+D5j4v3+667qNPcrRMjw4Tl/B8OMsoin
-         p5F8NS1cyChoM/bn9zq0y3YxTnUakQy7SCR/zrMVSRTTwoLmz53Rm2QP3Hy+jlqzTMO5
-         bFnsvkB+stLgPEBQm9aFVSE5evvKYYn6ZViEs=
-Received: by 10.151.78.6 with SMTP id f6mr12271489ybl.404.1288495453933;
-        Sat, 30 Oct 2010 20:24:13 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.73.235.0])
-        by mx.google.com with ESMTPS id k2sm856183ybj.20.2010.10.30.20.24.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 30 Oct 2010 20:24:12 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 31 Oct 2010 10:24:13 +0700
-Content-Disposition: inline
-In-Reply-To: <7vwroz3vj8.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754657Ab0JaDcB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 30 Oct 2010 23:32:01 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:53194 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753764Ab0JaDcA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 30 Oct 2010 23:32:00 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CE9202FA1;
+	Sat, 30 Oct 2010 23:31:59 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PKgPzA+pmCdAUIv0KNGBCePvvgc=; b=k5rt5R
+	6IvT0j6+j2q6X8EZ+VsTJSlaH8o44vbBEkufX1DCPcJKKpw8mijIjSKewXH1+rpJ
+	LM6VhdxvGl4F0kHt/m+dwCWQPfkiQBzonyxc30rpPALvl3uySgagSfSzs6aCmgx5
+	RtvQVIU2852xiQIVoiSm2jF7hpqElYUVcLMVE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=t05ccjCSnTqkLFjKYErcoJNMCSxuOxfu
+	W1s+dLZsVM2cbSoa7IFoVSHFkoCkGIKl25A39T7W1qy9Fieky8oJXCPZkDnB8I8t
+	zrG/zQT9sGpDDXrf05bDC7PAa9/w+XHqzUgtzRqWLUCFrH6zXOu8d00g0xMYhkYE
+	MeipQWLAd+o=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 8F1082FA0;
+	Sat, 30 Oct 2010 23:31:55 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.169.49]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id C39A72F9F; Sat, 30 Oct
+ 2010 23:31:50 -0400 (EDT)
+In-Reply-To: <20101031014654.GC29456@burratino> (Jonathan Nieder's message of
+ "Sat\, 30 Oct 2010 20\:46\:54 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 68EB37BE-E49F-11DF-AFE0-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160411>
 
-On Sat, Oct 30, 2010 at 08:12:27PM -0700, Junio C Hamano wrote:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
->=20
-> > "git diff --cached" (without revision) used to mean "git diff --cac=
-hed
-> > HEAD" (i.e. the user was too lazy to type HEAD). This "correctly"
-> > failed when there was no commit yet. But was that correctness usefu=
-l?
-> >
-> > This patch changes the definition of what particular command means.
-> > It is a request to show what _would_ be committed without further "=
-git
-> > add". The internal implementation is still the same "git diff
-> > --cached HEAD" when HEAD exists, but when there is no commit yet, i=
-t
-> > compares the index with an empty tree object to achieve the desired
-> > result.
-> >
-> > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@g=
-mail.com>
->=20
-> Will take a look at it, and queue.  Thanks.
->=20
-> >  "git diff --cached HEAD" does fail, but I don't really care.
->=20
-> I _do_ care, and so should you.  And I think it _should_ fail, if the=
- user
-> explicitly asked to compare the index with HEAD that does not exist y=
-et.
->=20
-> As we are updating the semantics of a Porcelain command, there should=
- be
-> an update that explains the new usage in the documentation, no?
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Yes.
+> @@ -27,7 +27,7 @@ test_expect_success 'see what we expect' '
+>  	>junk/"$auml" &&
+>  	case "$(cd junk && echo *)" in
+>  	"$aumlcdiar")
+> -		test_unicode=test_expect_failure
+> +		test_unicode=test_expect_failure &&
+>  		unibad=t
+>  		;;
+>  	*)	;;
 
---8<--
-diff --git a/Documentation/git-diff.txt b/Documentation/git-diff.txt
-index dd1fb32..518e46b 100644
---- a/Documentation/git-diff.txt
-+++ b/Documentation/git-diff.txt
-@@ -32,7 +32,9 @@ directories. This behavior can be forced by --no-inde=
-x.
- 	This form is to view the changes you staged for the next
- 	commit relative to the named <commit>.  Typically you
- 	would want comparison with the latest commit, so if you
--	do not give <commit>, it defaults to HEAD.
-+	do not give <commit>, it defaults to HEAD. If HEAD does
-+	not exist (e.g. unborn branches) and <commit> is not
-+	given, it shows all staged changes.
- 	--staged is a synonym of --cached.
-=20
- 'git diff' [--options] <commit> [--] [<path>...]::
---8<--
---=20
-Duy
+This seems to prepare for a case where a simple variable assignment fails
+for whategver reason, which is not too bad, but ...
+
+> @@ -36,7 +36,7 @@ test_expect_success 'see what we expect' '
+>  	{
+>  		ln -s x y 2> /dev/null &&
+>  		test -h y 2> /dev/null ||
+> -		no_symlinks=1
+> +		no_symlinks=1 &&
+>  		rm -f y
+
+... if you allowed such a simple assignment failure, no_symlinks=1 may
+fail, and we end up not running "rm -f y" to clean up, which might be
+somewhat undesirable ;-)
+
+Looked up to but not including t5302 and all looked Ok.
