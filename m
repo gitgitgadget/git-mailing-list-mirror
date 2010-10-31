@@ -1,96 +1,65 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Add support in sample hook script for denying annotated
- tags.
-Date: Sun, 31 Oct 2010 15:24:33 -0500
-Message-ID: <20101031202433.GB21240@burratino>
-References: <201010311457.17817.bss@iguanasuicide.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] cherry-pick/revert: transparently refresh index
+Date: Sun, 31 Oct 2010 21:26:14 +0100
+Message-ID: <m24oc2p0rd.fsf@igel.home>
+References: <20101031174430.GA30236@arf.padd.com>
+	<20101031195933.GA21240@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-X-From: git-owner@vger.kernel.org Sun Oct 31 21:24:52 2010
+Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Oct 31 21:26:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PCeSR-0002dp-7u
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Oct 2010 21:24:51 +0100
+	id 1PCeTw-0003J3-F9
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Oct 2010 21:26:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756730Ab0JaUYq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Oct 2010 16:24:46 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:55975 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751969Ab0JaUYo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Oct 2010 16:24:44 -0400
-Received: by gwj21 with SMTP id 21so2815913gwj.19
-        for <git@vger.kernel.org>; Sun, 31 Oct 2010 13:24:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=hicy7H830TQ70MZR7ZduaXACq//IBD6VizGTVGgSl9A=;
-        b=an5Uaszsc7mZgWW6JerSWUOJgK+3wOLsa7nN3xcwsPT/xXnF2+erE0sUuuI13GBR+w
-         537TIEefeICQtGI4PZ5+pTUMF52UmGgYnKX1Bkw6jFBwYy84emZC/KdLmXD+HutIIXHh
-         1Vwze88J/Z84XdITPbSoTFZZxiFbeneazOOck=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=LwoOlL0gjgnqEdIKqcwgOxt/Efg+a10SsEkWKJVZQAq+NIQQpts9xM+GftA9MuG2UM
-         k+0DkkCFZ75SUTit6UPpndVomwcu4tV+18H2JP0DlyOAWX+nerAu1xfrRp5ho2/z1clZ
-         YwNsbRpzzgKQy9wr4Vzb+IoT/nJODA0Ki56PY=
-Received: by 10.151.48.13 with SMTP id a13mr26706955ybk.55.1288556683935;
-        Sun, 31 Oct 2010 13:24:43 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id y21sm4384407yhc.14.2010.10.31.13.24.41
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 31 Oct 2010 13:24:42 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <201010311457.17817.bss@iguanasuicide.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751969Ab0JaU0T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Oct 2010 16:26:19 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:58890 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752771Ab0JaU0S (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Oct 2010 16:26:18 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 323E81C15828;
+	Sun, 31 Oct 2010 21:26:15 +0100 (CET)
+Received: from igel.home (ppp-88-217-112-158.dynamic.mnet-online.de [88.217.112.158])
+	by mail.mnet-online.de (Postfix) with ESMTP id 22D1B1C003BD;
+	Sun, 31 Oct 2010 21:26:15 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id D4C6FCA2A0; Sun, 31 Oct 2010 21:26:14 +0100 (CET)
+X-Yow: ..  I see TOILET SEATS...
+In-Reply-To: <20101031195933.GA21240@burratino> (Jonathan Nieder's message of
+	"Sun, 31 Oct 2010 14:59:33 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160451>
 
-Hi,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Boyd Stephen Smith Jr. wrote:
+> diff --git a/t/t3501-revert-cherry-pick.sh b/t/t3501-revert-cherry-pick.sh
+> index bc7aedd..b210188 100755
+> --- a/t/t3501-revert-cherry-pick.sh
+> +++ b/t/t3501-revert-cherry-pick.sh
+> @@ -81,6 +81,19 @@ test_expect_success 'revert after renaming branch' '
+>  
+>  '
+>  
+> +test_expect_success 'revert on stat-dirty working tree' '
 
-> Signed-off-by: "Boyd Stephen Smith Jr." <bss@iguanasuicide.net>
-> ---
->  templates/hooks--update.sample |    9 +++++++++
->  1 files changed, 9 insertions(+), 0 deletions(-)
-> 
-> In one project I'm in we are using a centralized Git repository that many 
-> developers have access to.  As such, we want to prevent tags from being 
-> created by push operations and have them created by the administrators.
-> 
-> This is a modification to the sample update hook to allow this to simply be 
-> a configuration option.
+ITYM s/revert/cherry-pick/
 
-This kind of justification belongs above the "---", I think.
+Andreas.
 
-No opinion on the functionality itself.  Just:
-
-> --- a/templates/hooks--update.sample
-> +++ b/templates/hooks--update.sample
-> @@ -7,6 +7,9 @@
->  #
->  # Config
->  # ------
-> +# hooks.allowannotated
-> +#   This boolean sets whether annotated tags will be allowed into the
-> +#   repository.  By default they won't be.
-
-hooks.denyannotated (defaulting to false) would be more consistent
-with hooks.denycreatebranch, no?
-
-Or maybe hooks.denycreatetag --- a situation in which unannotated
-tags should be allowed but annotated denied seems hard to imagine.
-
-Hope that helps,
-Jonathan
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
