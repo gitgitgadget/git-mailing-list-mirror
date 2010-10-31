@@ -1,76 +1,65 @@
-From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-Subject: Re: Pushing everything
-Date: Sun, 31 Oct 2010 15:30:32 +0300
-Message-ID: <20101031123031.GE18845@localhost.localdomain>
-References: <loom.20101031T064406-734@post.gmane.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [RFC/PATCH 0/2] Documentation: kicking the "reset --hard" habit
+Date: Sun, 31 Oct 2010 15:04:14 +0100
+Message-ID: <vpqaalujw69.fsf@bauges.imag.fr>
+References: <20101029083516.GA26290@burratino>
+	<vpqzktwv3yx.fsf@bauges.imag.fr>
+	<7vd3qr3tm8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Maaartin <grajcar1@seznam.cz>
-X-From: git-owner@vger.kernel.org Sun Oct 31 13:44:37 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	bebarino@gmail.com, srabbelier@gmail.com,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Oct 31 15:04:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PCXH2-0007Ag-Lp
-	for gcvg-git-2@lo.gmane.org; Sun, 31 Oct 2010 13:44:37 +0100
+	id 1PCYWY-0007nG-Cf
+	for gcvg-git-2@lo.gmane.org; Sun, 31 Oct 2010 15:04:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755526Ab0JaMno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 31 Oct 2010 08:43:44 -0400
-Received: from mailhub.007spb.ru ([84.204.203.130]:56089 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755466Ab0JaMnn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 31 Oct 2010 08:43:43 -0400
-X-Greylist: delayed 775 seconds by postgrey-1.27 at vger.kernel.org; Sun, 31 Oct 2010 08:43:42 EDT
-Received: from proxysrv.domain007.com ([10.8.0.42])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id o9VCUcja018277;
-	Sun, 31 Oct 2010 15:30:40 +0300
-Received: by proxysrv.domain007.com (Postfix, from userid 1000)
-	id C00D745A220; Sun, 31 Oct 2010 15:30:32 +0300 (MSK)
-Content-Disposition: inline
-In-Reply-To: <loom.20101031T064406-734@post.gmane.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Scanned-By: MIMEDefang 2.51 (www.roaringpenguin.com/mimedefang) on 192.168.2.20
-X-Antivirus: Dr.Web (R) for Mail Servers on proxysrv host
-X-Antivirus-Code: 100000
+	id S1755710Ab0JaOEd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 31 Oct 2010 10:04:33 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:52667 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752004Ab0JaOEb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 31 Oct 2010 10:04:31 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id o9VDnMLW030754
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 31 Oct 2010 14:49:22 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PCYW7-0002nm-DU; Sun, 31 Oct 2010 15:04:15 +0100
+In-Reply-To: <7vd3qr3tm8.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Sat\, 30 Oct 2010 20\:53\:51 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 31 Oct 2010 14:49:24 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: o9VDnMLW030754
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1289137766.44178@e8XCdyAUJt0617TO4+/m+g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160441>
 
-On Sun, Oct 31, 2010 at 05:47:38AM +0000, Maaartin wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I'd like to push all my branches and tags to the server, but for whatever reason 
-> "--all" ignores tags and is incompatible with "--tags". I could imagine there's 
-> a reason I'm not experienced enough to see?
-> 
-> It seems to me that "--mirror" is quite unusable, since it force-overwrites the 
-> remote repo and even deletes refs not locally present. Obviously, a mirror can't 
-> be shared, and it doesn't seem to me to be the ideal backup solution for a 
-> single person.
-> 
-> However, even if "git push -all -tags"  worked, I'm not sure it's a good idea 
-> for project with more collaborators. There may be conflicts or other problems 
-> and quite often the pushing occurs just before leaving so it's no good time to 
-> start resolving conflicts. Can a shared repo be used as a sort of backup as 
-> well? I'd like a possibility to backup all my work there anytime without needing 
-> to care about anything. This could work by creating sort of private refs in case 
-> of any problems, or whatever. Is there something like this, or am I thinking 
-> astray? I'd suppose, something like this could be very useful for a company 
-> where it'd provide a simple backup solution for everybody.
-You can have any number of remotes configured for your local repo.
-So you can easily have one "private" remote repo which you use solely
-for "backup" pushes and one "shared" remote repo to which you do careful
-selective pushes.
+> What is the oldest version of git that is shipped with _current_ distros,
+> by the way?
 
-Note that I'm obsessed with the "backup" idea no less than you and when
-I started using Git I learned about --mirror and did mirror push to my
-private remote repo before leaving office, just as you explained.
-But then I realized this was just a hangover from my Subversion
-backgrounds, and that to really need --mirror doing regular programming,
-you have to be fantastically, inhumanly productive. I mean, after a
-typical one work day programming session you usually have a clear idea
-about what branch(es) and what tags, if any, you have to push for backup
-purposes. So it really might be a non-issue.
+Debian stable has 1.5.6.5. Since there should be a Debian release
+within the next few months, that should be an upper bound on how old a
+package can get in a release (well, unless for RedHat users maybe).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
