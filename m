@@ -1,110 +1,90 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git-svn clone --stdlayout causes "fatal: refs/remotes/trunk: not
- a valid SHA1"
-Date: Mon, 1 Nov 2010 12:11:41 -0500
-Message-ID: <20101101171141.GA8853@burratino>
-References: <225342.86075.qm@web24105.mail.ird.yahoo.com>
+From: "Olsen, Alan R" <alan.r.olsen@intel.com>
+Subject: RE: Bugs in Gitosis
+Date: Mon, 1 Nov 2010 10:23:43 -0700
+Message-ID: <26E9B811E137AB4B95200FD4C950886BA96667EA@orsmsx507.amr.corp.intel.com>
+References: <26E9B811E137AB4B95200FD4C950886BA9665D70@orsmsx507.amr.corp.intel.com>
+	<vpq8w1if0yy.fsf@bauges.imag.fr>
+	<26E9B811E137AB4B95200FD4C950886BA9665E50@orsmsx507.amr.corp.intel.com>
+ <AANLkTik+CcuAtB=t5GgP9C-WrJRZt-LDNs3wUChhKTuz@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
-To: Klaus <klaus3b-gu@yahoo.de>
-X-From: git-owner@vger.kernel.org Mon Nov 01 18:12:05 2010
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 01 18:23:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PCxvP-0002uK-Py
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Nov 2010 18:12:04 +0100
+	id 1PCy6r-0001SU-NZ
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Nov 2010 18:23:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751158Ab0KARL7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Nov 2010 13:11:59 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:43480 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750746Ab0KARL5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Nov 2010 13:11:57 -0400
-Received: by eye27 with SMTP id 27so3284653eye.19
-        for <git@vger.kernel.org>; Mon, 01 Nov 2010 10:11:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=IXITlbsd7qbiUwH6IPnneiCEb7r2PA8EQbK0dHqfHBM=;
-        b=vWwYmcIskqad9UaPZ3cEVxg91nAXUoHdn9neX+FhdVvsxL6OBmnkNwQGkywjW4JHTZ
-         pTZ8FCV8zUR/yoNfdVatjwy87+zkyaPwRSkb+cf44CPXBslhs6rfy56nWZh/l0emnwAU
-         wW8Mf/24mK/XFJz6fUzUBrQX40oCPbQlfjMyo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=fGazW1JDJdhhHi0is6vNRUN+HSv/h44TvNtEmhSPplroMlansmhq8TX3FziuRRAwXt
-         WNXQ7mwN3pYnMcYB85mxBxgqo9NxDuGZbmSLcOl3PYNteWPbydEYb5TneRUZG+G8CgkX
-         g7quu1p9F0x8J6wET6RBjkQruLLlzm1veORvY=
-Received: by 10.216.12.82 with SMTP id 60mr3000684wey.42.1288631516342;
-        Mon, 01 Nov 2010 10:11:56 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id x65sm4013563weq.1.2010.11.01.10.11.54
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 01 Nov 2010 10:11:55 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <225342.86075.qm@web24105.mail.ird.yahoo.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751711Ab0KARXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Nov 2010 13:23:48 -0400
+Received: from mga11.intel.com ([192.55.52.93]:22708 "EHLO mga11.intel.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750746Ab0KARXr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Nov 2010 13:23:47 -0400
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga102.fm.intel.com with ESMTP; 01 Nov 2010 10:23:46 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="4.58,274,1286175600"; 
+   d="scan'208";a="853026773"
+Received: from orsmsx603.amr.corp.intel.com ([10.22.226.49])
+  by fmsmga001.fm.intel.com with ESMTP; 01 Nov 2010 10:23:47 -0700
+Received: from orsmsx601.amr.corp.intel.com (10.22.226.213) by
+ orsmsx603.amr.corp.intel.com (10.22.226.49) with Microsoft SMTP Server (TLS)
+ id 8.2.254.0; Mon, 1 Nov 2010 10:23:46 -0700
+Received: from orsmsx507.amr.corp.intel.com ([10.22.226.41]) by
+ orsmsx601.amr.corp.intel.com ([10.22.226.213]) with mapi; Mon, 1 Nov 2010
+ 10:23:46 -0700
+Thread-Topic: Bugs in Gitosis
+Thread-Index: Act2/I0TlsNK7IE6RGq4skCzQAV7aQC6TnBQ
+In-Reply-To: <AANLkTik+CcuAtB=t5GgP9C-WrJRZt-LDNs3wUChhKTuz@mail.gmail.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160487>
 
-Hi Klaus,
-
-Klaus wrote:
-
-> this works ok.
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 git svn clone svn://localhost/My=
-Prj MyPrj=C2=A0 --username=3DMyUserName
-> =C2=A0=C2=A0=C2=A0=20
-> this causes the error (I added "--stdlayout")
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 git svn clone svn://localhost/My=
-Prj MyPrj=C2=A0 --stdlayout=C2=A0--username=3DMyUserName
-> =C2=A0=C2=A0=C2=A0=20
-> last line of error output
-> =E2=80=A6
-> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 M=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0 Wiki/MyPrj_wiki/MyPrjHistory.wiki
-> W: -empty_dir: MyPrjAll/trunc/MyPrjGui/DotNet11MainMenu.cs
-> r141 =3D ad4166b68d89c4b795fb74a4fc09168160b2f60e=20
-> (refs/remotes/tags/LastGuiMonolit_071207@142)
-> W: +empty_dir: MyPrjAll/trunc/MyPrj.Gui
-> r142 =3D 0decd283bb36f9296172970eeab377b6f93777ba=20
-> (refs/remotes/tags/LastGuiMonolit_071207@142)
-> Found branch parent: (refs/remotes/tags/LastGuiMonolit_071207) 0decd2=
-83bb36f9296172970eeab377b6f93777ba
-> Following parent with do_switch
-> Successfully followed parent
-> r143 =3D a4861b50a5f1c067210b30951dc06012a7d2da25=20
-> (refs/remotes/tags/LastGuiMonolit_071207)
-> fatal: refs/remotes/trunk: not a valid SHA1
-> update-ref refs/heads/master refs/remotes/trunk: command returned err=
-or: 128
-
-Is your repository public?  If not, could you give a sketch of the proj=
-ect
-history, for example by running
-
- $ git log --oneline --name-status
-
-from a successful (non-stdlayout) clone?
-
-> note: although i am using ms-windows7 i mailed this report to the deb=
-ian=20
-> mailing-list because i think that=C2=A0=20
-
-Redirecting discussion to the git mailing list; maybe someone there wil=
-l
-have other ideas for debugging.
-
-Thanks for reporting,
-Jonathan
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IFNpdGFyYW0gQ2hhbWFydHkg
+W21haWx0bzpzaXRhcmFtY0BnbWFpbC5jb21dIA0KPlNlbnQ6IFRodXJzZGF5LCBPY3RvYmVyIDI4
+LCAyMDEwIDU6MDIgUE0NCj5UbzogT2xzZW4sIEFsYW4gUg0KPkNjOiBNYXR0aGlldSBNb3k7IGdp
+dEB2Z2VyLmtlcm5lbC5vcmcNCj5TdWJqZWN0OiBSZTogQnVncyBpbiBHaXRvc2lzDQoNCj5PbiBG
+cmksIE9jdCAyOSwgMjAxMCBhdCAzOjUyIEFNLCBPbHNlbiwgQWxhbiBSIDxhbGFuLnIub2xzZW5A
+aW50ZWwuY29tPiB3cm90ZToNCg0KPj4gRG9lcyBnaXRvbGl0ZSBwbGF5IHdlbGwgd2l0aCBHZXJy
+aXQ/IEkgbm90ZSBpbiB0aGUgZG9jcyB0aGF0IGl0IGRvZXMgbm90IHJlYWN0IHdlbGwgdG8gZmls
+ZXMgdW5kZXIgaXRzIGNvbnRyb2wgYmVpbmcgbWVzc2VkIHdpdGguDQoNCj5Gb3IgdGhlIHJlYWwg
+cmVhc29uIEkgYWRkZWQgdGhhdCBpbnRvIHRoZSBkb2NzLCBzZWUNCj5odHRwOi8vZ2l0aHViLmNv
+bS9zaXRhcmFtYy9naXRvbGl0ZS9jb21taXQvMTAyODljNmQ2NDk0ZTdhYTQyMDRkZmUyOWFmZWM3
+NTM1YzFhYTFhMg0KDQo+SWYgPGFueSBvdGhlciBzb2Z0d2FyZT4gd2FudHMgdG8gYWRkICpvdGhl
+ciogZmlsZXMgaW50byByZXBvcyB0aGF0DQo+Z2l0b2xpdGUgZG9lcyBub3QgbmVlZCwgdGhhdCBp
+cyBwZXJmZWN0bHkgZmluZS4gIEdpdG9saXRlIGRvZXMgbm90DQo+ZXhwZWN0IHRvIGJlICJzb2xl
+IGNvbnRyb2wiLCBidXQganVzdCAiZG9uJ3QgbWVzcyB3aXRoIG15IHN0dWZmIGFuZA0KPndlJ2xs
+IGdldCBhbG9uZyBmaW5lIi4NCg0KPkhvd2V2ZXIsIEkgd2Fzbid0IGF3YXJlIHRoYXQgaXQgaXMg
+ZXZlbiAqcG9zc2libGUqIHRvIHJ1biBnZXJyaXQgYW5kDQo+Z2l0b2xpdGUgdG9nZXRoZXIuICBH
+ZXJyaXQgaGFzIGl0cyBvd24gY3VzdG9taXNlZCBzc2ggZGFlbW9uLCBpdHMgb3duDQo+Y3VzdG9t
+aXNlZCAiZ2l0IiwgYW5kIHNvIG9uLg0KDQpHZXJyaXQgcnVucyBpdHMgc3NoIGRhZW1vbiBvbiBh
+bm90aGVyIHBvcnQuIElmIHlvdSBydW4gdGhlbSBib3RoIGFzIHRoZSBzYW1lIHVzZXIsIGl0IHdv
+cmtzIGZpbmUuDQoNCj5JIGFsc28gZmFpbCB0byB1bmRlcnN0YW5kIHdoeSB5b3UgbmVlZCBnaXRv
+bGl0ZSBpZiB5b3UncmUgdXNpbmcNCj5nZXJyaXQuICBJIGJlbGlldmUgZ2Vycml0IGNhbiBkbyBh
+bGwgdGhlIGFjY2VzcyBjb250cm9sIHRoYXQgZ2l0b2xpdGUNCj5jYW4gZG8uICBTZWUgaHR0cDov
+L2dpdGh1Yi5jb20vc2l0YXJhbWMvZ2l0b2xpdGUvYmxvYi9wdS9jb250cmliL2dlcnJpdC5ta2QN
+Cj5mb3IgYSBjb21wYXJpc2lvbg0KDQpXZSB1c2UgZ2l0b3NpcyBjdXJyZW50bHkgZm9yIGJhY2st
+ZW5kIG1hbmFnZW1lbnQuDQoNCkdlcnJpdCBkb2VzIG5vdCBhZGQgZXhpc3RpbmcgcHJvamVjdHMg
+d2VsbC4gUHVzaGluZyB0aGUga2VybmVsIHByb2plY3QgaW50byBHZXJyaXQgY2F1c2VzIG9uZSBl
+bnRyeSB0byBhcHByb3ZlIHBlciBjb21taXQuIFRoYXQgc3dhbXBzIHRoZSBzZXJ2ZXIuIEdlcnJp
+dCBkb2VzIG5vdCBoYXZlIGEgd2F5IG9mIGhhbmRsaW5nIHJlYmFzZXMgdmVyeSB3ZWxsLiAgKFdl
+IGhhdmUgcHJvamVjdHMgdGhhdCBoYXZlIGEgcmVndWxhciBjb25zb2xpZGF0aW9uIG9uIHRoZSBl
+bmQgb2YgdGhlIGRldmVsb3BtZW50IHRyZWVzLikNCg0KVGhlcmUgYXJlIGFsc28gc29tZSBwZW9w
+bGUgKG1lIGZvciBleGFtcGxlKSB3aG8gbG9hdGggdGhlIFJlcG8gY29tbWFuZCBhbmQgcHJlZmVy
+IHRvIHdvcmsgdXNpbmcgZ2l0Lg0KDQpJIGFtIGhvcGluZyB3ZSBjYW4gbWlncmF0ZSB0byBHaXRv
+bGl0ZS4gSSBhbSBnb2luZyB0byBzZXQgdXAgYSB0ZXN0IHNlcnZlciB0byBzZWUgaWYgSSBjYW4g
+aWRlbnRpZnkgcHJvYmxlbXMuDQoNCg==
