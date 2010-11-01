@@ -1,109 +1,110 @@
-From: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
-Subject: Re: [PATCH] CodingGuidelines: Add a section on writing documentation
-Date: Mon, 01 Nov 2010 18:00:02 +0100
-Message-ID: <87fwvl2d4d.fsf@gmail.com>
-References: <20101021222129.GA13262@burratino> <20101024155121.GA9503@headley>
-	<AANLkTimpJbuZAPfvVOedstV7=UiLiDMnDaYWQLVNQ+Yc@mail.gmail.com>
-	<87wrp12p00.fsf@gmail.com>
-	<AANLkTinyPkGmsgbGM9qpXMNcZRzOXvtjDDEkJ-i3nWXz@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git-svn clone --stdlayout causes "fatal: refs/remotes/trunk: not
+ a valid SHA1"
+Date: Mon, 1 Nov 2010 12:11:41 -0500
+Message-ID: <20101101171141.GA8853@burratino>
+References: <225342.86075.qm@web24105.mail.ird.yahoo.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mark Lodato <lodatom@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 01 18:01:35 2010
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>
+To: Klaus <klaus3b-gu@yahoo.de>
+X-From: git-owner@vger.kernel.org Mon Nov 01 18:12:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PCxlH-0004px-4Q
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Nov 2010 18:01:35 +0100
+	id 1PCxvP-0002uK-Py
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Nov 2010 18:12:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753257Ab0KARBa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Nov 2010 13:01:30 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:48265 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753221Ab0KARB2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Nov 2010 13:01:28 -0400
-Received: by fxm16 with SMTP id 16so5057558fxm.19
-        for <git@vger.kernel.org>; Mon, 01 Nov 2010 10:01:27 -0700 (PDT)
+	id S1751158Ab0KARL7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Nov 2010 13:11:59 -0400
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:43480 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750746Ab0KARL5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Nov 2010 13:11:57 -0400
+Received: by eye27 with SMTP id 27so3284653eye.19
+        for <git@vger.kernel.org>; Mon, 01 Nov 2010 10:11:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject
-         :in-reply-to:references:user-agent:date:message-id:mime-version
-         :content-type:content-transfer-encoding;
-        bh=ozLOKe6IPzEFLMI7iQHQmgdGM301SZQfnDjXGZ+wy74=;
-        b=SZ3YIxAJ4QoTA8ND5cfZSrjizOx5cXJV5oVCYywL91kNOL25++YKJXsM1plL3o/q2Q
-         86M/ze1Px8sQoiXz07Tc5OIl4iqM37I7B4ilc6qwX+xJoH/hA4EEOe2euucXEqPVnU1B
-         U1tGpxg9QUzzybdhNmSOo/T9s79DMRZu7lBbo=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=IXITlbsd7qbiUwH6IPnneiCEb7r2PA8EQbK0dHqfHBM=;
+        b=vWwYmcIskqad9UaPZ3cEVxg91nAXUoHdn9neX+FhdVvsxL6OBmnkNwQGkywjW4JHTZ
+         pTZ8FCV8zUR/yoNfdVatjwy87+zkyaPwRSkb+cf44CPXBslhs6rfy56nWZh/l0emnwAU
+         wW8Mf/24mK/XFJz6fUzUBrQX40oCPbQlfjMyo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type:content-transfer-encoding;
-        b=KrM7VEG46fwj0yhlofRFxAiMwr6ntv8dU3kQUANGLFajObi2njSA3zqSHm7cRs0hbB
-         ZQjZBntQIpbt5kh2zHFGWWXivteoHZW4NLLYP+XhXO4UpYLsvoG+IsM5Ml+3i3iLZXB1
-         Cm8RR7bHcNKC7qYv/U5Wk3ggpAsx+SLw/+ZL0=
-Received: by 10.223.101.206 with SMTP id d14mr7736066fao.128.1288630887635;
-        Mon, 01 Nov 2010 10:01:27 -0700 (PDT)
-Received: from localhost (176.119.broadband10.iol.cz [90.177.119.176])
-        by mx.google.com with ESMTPS id c25sm2546328fac.9.2010.11.01.10.01.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 01 Nov 2010 10:01:25 -0700 (PDT)
-In-Reply-To: <AANLkTinyPkGmsgbGM9qpXMNcZRzOXvtjDDEkJ-i3nWXz@mail.gmail.com>
-	(Sverre Rabbelier's message of "Fri, 29 Oct 2010 10:14:20 -0700")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=fGazW1JDJdhhHi0is6vNRUN+HSv/h44TvNtEmhSPplroMlansmhq8TX3FziuRRAwXt
+         WNXQ7mwN3pYnMcYB85mxBxgqo9NxDuGZbmSLcOl3PYNteWPbydEYb5TneRUZG+G8CgkX
+         g7quu1p9F0x8J6wET6RBjkQruLLlzm1veORvY=
+Received: by 10.216.12.82 with SMTP id 60mr3000684wey.42.1288631516342;
+        Mon, 01 Nov 2010 10:11:56 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id x65sm4013563weq.1.2010.11.01.10.11.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 01 Nov 2010 10:11:55 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <225342.86075.qm@web24105.mail.ird.yahoo.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160486>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+Hi Klaus,
 
-> Heya,
->
-> On Fri, Oct 29, 2010 at 04:54, =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <step=
-nem@gmail.com> wrote:
->> But given that it's only used as {0,2} at the two places right now
->> (disregarding occurences of "0{40}" in the documentation), I agree i=
-t
->> might be better to get rid of it, although I don't feel strongly abo=
-ut
->> it. Any other opinions?
->
-> Let's get rid of it for now, we can always resurrect it later if we
-> have a need for it.
+Klaus wrote:
 
-OK.
+> this works ok.
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 git svn clone svn://localhost/My=
+Prj MyPrj=C2=A0 --username=3DMyUserName
+> =C2=A0=C2=A0=C2=A0=20
+> this causes the error (I added "--stdlayout")
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 git svn clone svn://localhost/My=
+Prj MyPrj=C2=A0 --stdlayout=C2=A0--username=3DMyUserName
+> =C2=A0=C2=A0=C2=A0=20
+> last line of error output
+> =E2=80=A6
+> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 M=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0 Wiki/MyPrj_wiki/MyPrjHistory.wiki
+> W: -empty_dir: MyPrjAll/trunc/MyPrjGui/DotNet11MainMenu.cs
+> r141 =3D ad4166b68d89c4b795fb74a4fc09168160b2f60e=20
+> (refs/remotes/tags/LastGuiMonolit_071207@142)
+> W: +empty_dir: MyPrjAll/trunc/MyPrj.Gui
+> r142 =3D 0decd283bb36f9296172970eeab377b6f93777ba=20
+> (refs/remotes/tags/LastGuiMonolit_071207@142)
+> Found branch parent: (refs/remotes/tags/LastGuiMonolit_071207) 0decd2=
+83bb36f9296172970eeab377b6f93777ba
+> Following parent with do_switch
+> Successfully followed parent
+> r143 =3D a4861b50a5f1c067210b30951dc06012a7d2da25=20
+> (refs/remotes/tags/LastGuiMonolit_071207)
+> fatal: refs/remotes/trunk: not a valid SHA1
+> update-ref refs/heads/master refs/remotes/trunk: command returned err=
+or: 128
 
->> I thought about this already when preparing the recent unification
->> series, and came to the conclusion "no, there shouldn't". :-) As the
->> examples you give show, the current usage is inconsistent, but given
->> that it brings no semantic ambiguity, I don't think it is a problem.=
- You
->> could find more similar cosmetic inconsistencies and I don't think i=
-t
->> makes much sense to mandate any rules for such things. (But again, I
->> don't feel _too_ strongly about this either, so if more people think
->> it's worth it, I can prepare a patch that unifies them and mention t=
-he
->> preference in CodingGuidelines.)
->
-> Perhaps we can set a standard to do it, but just leave the existing
-> cases as is (to prevent unneeded churn)? That way we'll eventually
-> converge on something.
+Is your repository public?  If not, could you give a sketch of the proj=
+ect
+history, for example by running
 
-Hm... that seems like the worst solution to me -- if we do end up
-standardizing this after all, any occurence of non-standard usage would
-be a bug that needs fixing (think about it from the POV of a new
-contributor who reads CodingGuidelines but sees the actual usage being
-different).
+ $ git log --oneline --name-status
 
-I guess it wouldn't be so much of a code churn to unify the spacing, bu=
-t
-I'm still not convinced we should be enforcing this kind of thing.
+from a successful (non-stdlayout) clone?
 
-=C5=A0t=C4=9Bp=C3=A1n
+> note: although i am using ms-windows7 i mailed this report to the deb=
+ian=20
+> mailing-list because i think that=C2=A0=20
+
+Redirecting discussion to the git mailing list; maybe someone there wil=
+l
+have other ideas for debugging.
+
+Thanks for reporting,
+Jonathan
