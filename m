@@ -1,72 +1,60 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: [PATCH v3/RFC 1/2] Introduce functions from bash-completion project.
-Date: Mon, 01 Nov 2010 09:35:07 -0400
-Message-ID: <4CCEC20B.1020003@xiplink.com>
-References: <1288471350-5392-1-git-send-email-peter@avirtualhome.com> <1288471350-5392-2-git-send-email-peter@avirtualhome.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: can't redirect git's progress output (stderr)
+Date: Mon, 01 Nov 2010 15:42:10 +0100
+Message-ID: <m2r5f5cdh9.fsf@igel.home>
+References: <4CCEB53E.9080102@azabani.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Brian Gernhardt <brian@gernhardtsoftware.com>,
-	Kevin Ballard <kevin@sb.org>,
-	Mathias Lafeldt <misfire@debugon.org>
-To: Peter van der Does <peter@avirtualhome.com>
-X-From: git-owner@vger.kernel.org Mon Nov 01 14:35:01 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: delan@azabani.com
+X-From: git-owner@vger.kernel.org Mon Nov 01 15:42:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PCuXN-00006J-3J
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Nov 2010 14:35:01 +0100
+	id 1PCvaW-0002qU-GK
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Nov 2010 15:42:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757903Ab0KANes (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 1 Nov 2010 09:34:48 -0400
-Received: from smtp152.iad.emailsrvr.com ([207.97.245.152]:34730 "EHLO
-	smtp152.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757659Ab0KANej (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Nov 2010 09:34:39 -0400
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp35.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 7147F2C83CA;
-	Mon,  1 Nov 2010 09:34:38 -0400 (EDT)
-X-Virus-Scanned: OK
-Received: by smtp35.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id F2D452C83C6;
-	Mon,  1 Nov 2010 09:34:29 -0400 (EDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
-In-Reply-To: <1288471350-5392-2-git-send-email-peter@avirtualhome.com>
+	id S1755787Ab0KAOmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Nov 2010 10:42:13 -0400
+Received: from mail-out.m-online.net ([212.18.0.9]:54767 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753439Ab0KAOmM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Nov 2010 10:42:12 -0400
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 38E491C159F8;
+	Mon,  1 Nov 2010 15:42:10 +0100 (CET)
+Received: from igel.home (ppp-93-104-139-13.dynamic.mnet-online.de [93.104.139.13])
+	by mail.mnet-online.de (Postfix) with ESMTP id CCEEF1C00096;
+	Mon,  1 Nov 2010 15:42:10 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 63BCFCA2A0; Mon,  1 Nov 2010 15:42:10 +0100 (CET)
+X-Yow: Are we live or on tape?
+In-Reply-To: <4CCEB53E.9080102@azabani.com> (Delan Azabani's message of "Mon,
+	01 Nov 2010 20:40:30 +0800")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160483>
 
-On 10-10-30 04:42 PM, Peter van der Does wrote:
-> The completion script does not work as expected under Bash 4.
-> Bash: 3
-> output:
-> $ git log --pretty=<tab><tab>
-> email     full      medium    raw
-> format:   fuller    oneline   short
-> 
-> Bash: 4
-> output:
-> $ git log --pretty=<tab><tab>
-> .bash_logout         .local/
-> .bash_profile        Music/
-> --More--
-> 
-> With Bash 4 the way word breaking is done in the programmable completion
-> code has changed. The documentation at the bash project is not very
-> clear what was changed, the only reference found is in the NEWS section:
-> 
-> i.  The programmable completion code now uses the same set of characters
-> as readline when breaking the command line into a list of words.
-> 
-> The word breaking problem occurs with certain characters, like double
-> colon and equal sign.
+Delan Azabani <delan@azabani.com> writes:
 
-Nit: "double colon" is "::" -- the name of the character is just "colon".
+> TL;DR why can't I pipe git's stderr output?
 
-		M.
+git-clone(1):
+
+       --progress
+           Progress status is reported on the standard error stream by default
+           when it is attached to a terminal, unless -q is specified. This
+           flag forces progress status even if the standard error stream is
+           not directed to a terminal.
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
