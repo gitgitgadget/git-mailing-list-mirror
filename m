@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 2/9] rev-parse: prints --git-dir relative to user's cwd
-Date: Mon,  1 Nov 2010 13:26:27 +0700
-Message-ID: <1288592794-24221-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 4/9] Use git_config_early() instead of git_config() during repo setup
+Date: Mon,  1 Nov 2010 13:26:29 +0700
+Message-ID: <1288592794-24221-4-git-send-email-pclouds@gmail.com>
 References: <AANLkTim-uW4Esk1bkPzNNGRb8svZoNwCUvXF3Fqb4QmR@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -12,83 +12,184 @@ Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
 To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Jonathan Niedier <jrnieder@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 01 07:27:15 2010
+X-From: git-owner@vger.kernel.org Mon Nov 01 07:27:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PCnrO-0001mP-Nn
-	for gcvg-git-2@lo.gmane.org; Mon, 01 Nov 2010 07:27:15 +0100
+	id 1PCnrQ-0001mP-AO
+	for gcvg-git-2@lo.gmane.org; Mon, 01 Nov 2010 07:27:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753276Ab0KAG0r convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Nov 2010 02:26:47 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:61059 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751779Ab0KAG0q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 1 Nov 2010 02:26:46 -0400
-Received: by ywc21 with SMTP id 21so583893ywc.19
-        for <git@vger.kernel.org>; Sun, 31 Oct 2010 23:26:45 -0700 (PDT)
+	id S1753300Ab0KAG1F convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Nov 2010 02:27:05 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:36067 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751592Ab0KAG1E (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Nov 2010 02:27:04 -0400
+Received: by gxk23 with SMTP id 23so2961184gxk.19
+        for <git@vger.kernel.org>; Sun, 31 Oct 2010 23:27:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=U2U2CfZ7MHbTSeTdIeAYvOhJ9J4WDOd8vwXjUyH+JW4=;
-        b=JNCvPKEOPe4XL3HixAUCuo8Vvx3qsa8rf76ZPUK1JtKIfLmQoms1SOUrzLrxrZ7JkW
-         QrXj19wvyi9ALafLFXe4dCncSc64dfuQ6s1BpihwwCq6MPkvH38NspiDNq+i/oe0W6kh
-         Rzl1NpFx79SnTIlaAeWyBVsnmGLLviBpnu/G8=
+        bh=pRea7INpmra735PppRIXlGg3nEWsNwuBfHfA5vcSuto=;
+        b=QNbj11ptSQPNLwMiFXhourWcDvIJHVvZqJJGlku5JcxIOxktArqSZ/KsQZo2WyHaP1
+         lYCCq+wpxPL+fi1jD0knPU/X5FDv73wy/hUidT9mhu2LoFCowWOR6DlrGe3V35Bt9EMA
+         DOps/P+z26soWyE3k81pcEPD9Wgmda8EGHbF8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=PuDp+5ihWRlQNeHh6AVT698OsCZJu0XtqNvHqn65+sQYqVuaHJz3Y2N8oi/dXda0PC
-         khJeueavX7OgllCTvaH9fcPm7biZdRjGpwoKT6EbmIFHTz6y0dAeM6O1ESHcnmB+IwAV
-         GmnscyO2beRBnr5tlJj1Dm7gqXizfDqdHaqGA=
-Received: by 10.90.232.10 with SMTP id e10mr8308298agh.49.1288592805381;
-        Sun, 31 Oct 2010 23:26:45 -0700 (PDT)
+        b=OaLtjEndiMGG7oZxK2ALG+UcLrtLNRL0sq2N8lffkfK34NbSZfBDl1igYqPyg43M5T
+         PEciWuqX66z7KqUsOAaDsRSmgbpA8Pc2eACE93zv8iMAHWAWpSVbWDuSgSzbWj2UBrLk
+         ptKquy6w1RY2UvjD36kUgMmRlHpwOjEmE1h0U=
+Received: by 10.151.106.4 with SMTP id i4mr1406797ybm.226.1288592822889;
+        Sun, 31 Oct 2010 23:27:02 -0700 (PDT)
 Received: from pclouds@gmail.com ([115.73.235.0])
-        by mx.google.com with ESMTPS id m27sm4942576yha.29.2010.10.31.23.26.41
+        by mx.google.com with ESMTPS id x21sm4939063yhc.35.2010.10.31.23.26.57
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 31 Oct 2010 23:26:44 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 01 Nov 2010 13:26:47 +0700
+        Sun, 31 Oct 2010 23:27:01 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 01 Nov 2010 13:27:03 +0700
 X-Mailer: git-send-email 1.7.3.2.210.g045198
 In-Reply-To: <AANLkTim-uW4Esk1bkPzNNGRb8svZoNwCUvXF3Fqb4QmR@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160459>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160460>
 
-git_dir variable in environment.c is relative to git's cwd, not user's
-cwd. Convert the relative path (actualy by making it absolute path)
-before printing out.
+When git_config() is called, either git_dir has already been set (by
+$GIT_DIR env or set_git_dir()), or it will default git_dir to ".git".
+
+git_config_early() gives setup functions more freedom because it does
+not require git_dir. Give it a config path, it will happily examine
+it.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Unchanged, except the commit message.
+ Unchanged.
 
- builtin/rev-parse.c |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+ setup.c |   47 +++++++++++++++++++++++++++++++++++------------
+ 1 files changed, 35 insertions(+), 12 deletions(-)
 
-diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
-index a5a1c86..65c287b 100644
---- a/builtin/rev-parse.c
-+++ b/builtin/rev-parse.c
-@@ -647,7 +647,11 @@ int cmd_rev_parse(int argc, const char **argv, con=
-st char *prefix)
- 				static char cwd[PATH_MAX];
- 				int len;
- 				if (gitdir) {
--					puts(gitdir);
-+					if (is_absolute_path(gitdir) || !prefix) {
-+						puts(gitdir);
-+						continue;
-+					}
-+					puts(make_absolute_path(gitdir));
- 					continue;
- 				}
- 				if (!prefix) {
+diff --git a/setup.c b/setup.c
+index a3b76de..49a1a25 100644
+--- a/setup.c
++++ b/setup.c
+@@ -243,9 +243,21 @@ void setup_work_tree(void)
+ 	initialized =3D 1;
+ }
+=20
+-static int check_repository_format_gently(int *nongit_ok)
++static int check_repository_format_gently(const char *gitdir, int *non=
+git_ok)
+ {
+-	git_config(check_repository_format_version, NULL);
++	char repo_config[PATH_MAX+1];
++
++	/*
++	 * git_config() can't be used here because it calls git_pathdup()
++	 * to get $GIT_CONFIG/config. That call will make setup_git_env()
++	 * set git_dir to ".git".
++	 *
++	 * We are in gitdir setup, no git dir has been found useable yet.
++	 * Use a gentler version of git_config() to check if this repo
++	 * is a good one.
++	 */
++	snprintf(repo_config, PATH_MAX, "%s/config", gitdir);
++	git_config_early(check_repository_format_version, NULL, repo_config);
+ 	if (GIT_REPO_VERSION < repository_format_version) {
+ 		if (!nongit_ok)
+ 			die ("Expected git repo version <=3D %d, found %d",
+@@ -331,11 +343,11 @@ static const char *setup_explicit_git_dir(const c=
+har *gitdirenv,
+ 	if (!work_tree_env) {
+ 		retval =3D set_work_tree(gitdirenv);
+ 		/* config may override worktree */
+-		if (check_repository_format_gently(nongit_ok))
++		if (check_repository_format_gently(gitdirenv, nongit_ok))
+ 			return NULL;
+ 		return retval;
+ 	}
+-	if (check_repository_format_gently(nongit_ok))
++	if (check_repository_format_gently(gitdirenv, nongit_ok))
+ 		return NULL;
+ 	retval =3D get_relative_cwd(buffer, sizeof(buffer) - 1,
+ 			get_git_work_tree());
+@@ -357,11 +369,17 @@ static int cwd_contains_git_dir(const char **gitf=
+ile_dirp)
+ 			die("Repository setup failed");
+ 		return 1;
+ 	}
+-	return is_git_directory(DEFAULT_GIT_DIR_ENVIRONMENT);
++	if (is_git_directory(DEFAULT_GIT_DIR_ENVIRONMENT)) {
++		*gitfile_dirp =3D DEFAULT_GIT_DIR_ENVIRONMENT;
++		return 1;
++	}
++	return 0;
+ }
+=20
+ static const char *setup_discovered_git_dir(const char *work_tree_env,
+-		int offset, int len, char *cwd, int *nongit_ok)
++					    const char *gitdir,
++					    int offset, int len,
++					    char *cwd, int *nongit_ok)
+ {
+ 	int root_len;
+=20
+@@ -370,7 +388,7 @@ static const char *setup_discovered_git_dir(const c=
+har *work_tree_env,
+ 		inside_work_tree =3D 1;
+ 	root_len =3D offset_1st_component(cwd);
+ 	git_work_tree_cfg =3D xstrndup(cwd, offset > root_len ? offset : root=
+_len);
+-	if (check_repository_format_gently(nongit_ok))
++	if (check_repository_format_gently(gitdir, nongit_ok))
+ 		return NULL;
+ 	if (offset =3D=3D len)
+ 		return NULL;
+@@ -396,9 +414,12 @@ static const char *setup_bare_git_dir(const char *=
+work_tree_env,
+ 		root_len =3D offset_1st_component(cwd);
+ 		cwd[offset > root_len ? offset : root_len] =3D '\0';
+ 		set_git_dir(cwd);
+-	} else
++		check_repository_format_gently(cwd, nongit_ok);
++	}
++	else {
+ 		set_git_dir(".");
+-	check_repository_format_gently(nongit_ok);
++		check_repository_format_gently(".", nongit_ok);
++	}
+ 	return NULL;
+ }
+=20
+@@ -478,8 +499,10 @@ static const char *setup_git_directory_gently_1(in=
+t *nongit_ok)
+ 		current_device =3D get_device_or_die(".", NULL);
+ 	for (;;) {
+ 		if (cwd_contains_git_dir(&gitfile_dir))
+-			return setup_discovered_git_dir(work_tree_env, offset,
+-							len, cwd, nongit_ok);
++			return setup_discovered_git_dir(work_tree_env,
++							gitfile_dir,
++							offset, len,
++							cwd, nongit_ok);
+ 		if (is_git_directory("."))
+ 			return setup_bare_git_dir(work_tree_env, offset,
+ 							len, cwd, nongit_ok);
+@@ -590,7 +613,7 @@ int check_repository_format_version(const char *var=
+, const char *value, void *cb
+=20
+ int check_repository_format(void)
+ {
+-	return check_repository_format_gently(NULL);
++	return check_repository_format_gently(get_git_dir(), NULL);
+ }
+=20
+ /*
 --=20
 1.7.3.2.210.g045198
