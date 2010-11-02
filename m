@@ -1,83 +1,95 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 09/10] user-manual: remote-tracking can be checked out, with detached HEAD
-Date: Tue,  2 Nov 2010 16:31:27 +0100
-Message-ID: <1288711888-21528-10-git-send-email-Matthieu.Moy@imag.fr>
-References: <1288711888-21528-1-git-send-email-Matthieu.Moy@imag.fr>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Nov 02 17:01:42 2010
+From: Paul Drews <paul.drews@intel.com>
+Subject: Re: rebase not honoring core.worktree pointing elsewhere
+Date: Tue, 2 Nov 2010 16:26:49 +0000 (UTC)
+Message-ID: <loom.20101102T165800-486@post.gmane.org>
+References: <loom.20101101T182113-378@post.gmane.org> <AANLkTi=ejRcnz+83zc2Z-6etUGMsBSw1FFUY0JNFRFGB@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 02 17:27:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDJIl-00086C-9C
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Nov 2010 17:01:35 +0100
+	id 1PDJhX-0001rE-5e
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Nov 2010 17:27:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752842Ab0KBQBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Nov 2010 12:01:31 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:44196 "EHLO shiva.imag.fr"
+	id S1754008Ab0KBQ1F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Nov 2010 12:27:05 -0400
+Received: from lo.gmane.org ([80.91.229.12]:38619 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752548Ab0KBQB3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Nov 2010 12:01:29 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id oA2FGqtk006393
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 2 Nov 2010 16:16:52 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1PDIpz-00027Y-JD; Tue, 02 Nov 2010 16:31:51 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1PDIpz-0005cR-H4; Tue, 02 Nov 2010 16:31:51 +0100
-X-Mailer: git-send-email 1.7.3.2.183.g2e7b0
-In-Reply-To: <1288711888-21528-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 02 Nov 2010 16:16:52 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: oA2FGqtk006393
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1289315814.17565@GYVA1UqTg279LBHaPtnhVg
+	id S1752094Ab0KBQ1D (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Nov 2010 12:27:03 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PDJhN-0001lx-CQ
+	for git@vger.kernel.org; Tue, 02 Nov 2010 17:27:01 +0100
+Received: from jfdmzpr02-ext.jf.intel.com ([134.134.137.71])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 02 Nov 2010 17:27:01 +0100
+Received: from paul.drews by jfdmzpr02-ext.jf.intel.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 02 Nov 2010 17:27:01 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 134.134.137.71 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.3) Gecko/20100403 Fedora/3.6.3-4.fc13 Firefox/3.6.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160539>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160540>
 
-From: Jonathan Nieder <jrnieder@gmail.com>
+Nguyen Thai Ngoc Duy <pclouds <at> gmail.com> writes:
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- Documentation/user-manual.txt |    7 +++++--
- 1 files changed, 5 insertions(+), 2 deletions(-)
+> First of all, core.worktree should not matter because GIT_DIR has not
+> been set (No don't trust core.worktree documentation, it's equivalent
+> to --work-tree in "man git"). You need to set GIT_DIR (or --git-dir).
+> That's a bug I'm working on.
+> 
+> Then, yes, rebase should be updated to use worktree even if it's
+> outside cwd. I'm not sure how to do it properly in git-rebase.sh
+> though.  The requirement "require_work_tree" can be loosen a bit.
 
-diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
-index 6d6bd8d..3108b38 100644
---- a/Documentation/user-manual.txt
-+++ b/Documentation/user-manual.txt
-@@ -367,13 +367,16 @@ above were created based on the remote branches at clone time and will
- be updated by "git fetch" (hence "git pull) and "git push". See
- <<Updating -a-repository-With-git-fetch>> for details.
- 
--You cannot check out these remote-tracking branches, but you can
--examine them on a branch of your own, just as you would a tag:
-+You might want to build on one of these remote-tracking branches
-+on a branch of your own, just as you would for a tag:
- 
- ------------------------------------------------
- $ git checkout -b my-todo-copy origin/todo
- ------------------------------------------------
- 
-+You can also check out "origin/todo" directly to examine it or
-+write a one-off patch.  See <<detached-head,detached head>>.
-+
- Note that the name "origin" is just the name that git uses by default
- to refer to the repository that you cloned from.
- 
--- 
-1.7.3.2.183.g2e7b0
+Thanks,
+I can confirm that the following works:
+
+() have /abs/path/to/wheregitis/.git
+() have /abs/path/to/wherefilesare
+() export GIT_DIR=/abs/path/to/wheregitis/.git
+() DO NOT have core.worktree (or related items) set
+() cd /abs/path/to/wherefilesare
+() git rebase master
+
+This is a bit more dangerous than running git commands in GIT_DIR and pointing
+core.worktree elsewhere, since I could make the error of (1) leaving GIT_DIR
+unintentionally still set when doing something else, or (2) running git commands
+outside the (unmarked) root of the worktree.  Still... it works.
+
+BTW, the impetus for this is a big integrated cross-compilation build system
+that has a nasty habit of deleting and re-creating a chroot environment
+containing the directory structures including the work tree.  If the ".git"
+dir is at the "normal" place "inside" the work tree, it gets deleted along
+with all the work I have done.  Not good, which is why I want to keep the
+".git" somewhere else that's safe.  Solutions to this:
+
+(preferred) core.worktree pointing into worktree elsewhere, run all git
+commands from GIT_DIR.  Would be great if rebase worked under these
+circumstances.
+
+(best fallback) no core.worktree, export GIT_DIR pointing elsewhere, run all
+git commands from unmarked root of worktree.
+
+(complex) A complex scenario pushing and pulling stuff between a git repo
+inside the worktree and another git clone outside the worktree.
+
+(implementation dependent) Having the ".git" dir inside the worktree be a
+symbolic link to a dir somewhere outside the work tree.  Keeps the actual ".git"
+contents safe from deletion.  Works so far, but this is Tampering With The
+Implementation in a way that is likely to fail down the road somewhere,
+e.g., if an internal script does cd to the GIT_DIR, then cd relative to
+that to try to get back into somewhere else in the work tree.
