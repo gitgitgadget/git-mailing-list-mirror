@@ -1,77 +1,83 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: git check-attr -z and quoting
-Date: Tue, 2 Nov 2010 11:57:05 -0400
-Message-ID: <20101102155705.GA17207@gnu.kitenet.net>
-Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="Dxnq1zWXvFF0Q93v"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 02 16:57:35 2010
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH 09/10] user-manual: remote-tracking can be checked out, with detached HEAD
+Date: Tue,  2 Nov 2010 16:31:27 +0100
+Message-ID: <1288711888-21528-10-git-send-email-Matthieu.Moy@imag.fr>
+References: <1288711888-21528-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Nov 02 17:01:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDJEs-0005Gy-8j
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Nov 2010 16:57:34 +0100
+	id 1PDJIl-00086C-9C
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Nov 2010 17:01:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752634Ab0KBP5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Nov 2010 11:57:13 -0400
-Received: from wren.kitenet.net ([80.68.85.49]:38047 "EHLO kitenet.net"
+	id S1752842Ab0KBQBb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Nov 2010 12:01:31 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:44196 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752517Ab0KBP5M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Nov 2010 11:57:12 -0400
-Received: from gnu.kitenet.net (fttu-216-41-255-233.btes.tv [216.41.255.233])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id 24C1011936F
-	for <git@vger.kernel.org>; Tue,  2 Nov 2010 11:57:08 -0400 (EDT)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id CB79646679; Tue,  2 Nov 2010 11:57:05 -0400 (EDT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752548Ab0KBQB3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Nov 2010 12:01:29 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id oA2FGqtk006393
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 2 Nov 2010 16:16:52 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1PDIpz-00027Y-JD; Tue, 02 Nov 2010 16:31:51 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1PDIpz-0005cR-H4; Tue, 02 Nov 2010 16:31:51 +0100
+X-Mailer: git-send-email 1.7.3.2.183.g2e7b0
+In-Reply-To: <1288711888-21528-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 02 Nov 2010 16:16:52 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: oA2FGqtk006393
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1289315814.17565@GYVA1UqTg279LBHaPtnhVg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160539>
 
+From: Jonathan Nieder <jrnieder@gmail.com>
 
---Dxnq1zWXvFF0Q93v
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ Documentation/user-manual.txt |    7 +++++--
+ 1 files changed, 5 insertions(+), 2 deletions(-)
 
-First, thanks to all for supporting -z in various commands like=20
-git ls-files and git diff. Big help for plumbing, as I'm sure you know.
-
-But, git check-attr -z only enables NUL separation of its input; output
-always has munged pathnames. This bit me trying to use it as plumbing.
-
---=20
-see shy jo
-
---Dxnq1zWXvFF0Q93v
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQIVAwUBTNA0zckQ2SIlEuPHAQixAQ/9Gm+oMMBnLxUvLBKTXhM2kR361+5QSvKC
-10UxE8EhYF7plVwOEIbP7RkohN/F3INEe0kOELSpohDrjcYVhw9JW5DHGm3bIGL8
-4vHIzY9/PsRJjI9k5iQ3otVDOIRPJAKe2X7LUBw1og+z6bhy14NzFVftJTaZ795M
-poSFp8PAL0joYzQQ0mQFZt6BVMsh3U3PH4N6FTt30kurIagrW+UJmko8kKt4ekvJ
-x4rTF16oaVUhvYfNkoadEIhDbO5R/3S6o2r5/52aIUHhCHd6p9MEWZLUm0Eglzmv
-j/A8OZsrNT6E2WMx3HlkexxqgyhjKVkKIZhDlY2hM7CGK38xG/N9oQmNswSRUuUT
-7HHtT8GBogEnbpE0bD0NGCKSDgJvTH+CtFDFpjncTQZf112Vw7BJLJtHgHeCCTDJ
-xreq/pSXB/0tU03qDuDjxl1YYUmsRxtrM05VtpcQUe6IXAqRA2RWPKaaLLBvd8Xy
-x893/epmlm5mL0YcpN8GMxJdJyNklO0BonQq1oyPYlBQZU9KREvbFKuQ9U43s/MM
-nZ8yKd2hsDIlb0AOnkjh4ySn67ECz3Bd2jx5tPbzJd1cscrEoLjG/VNSzatN/846
-WzcJEydlWuZGGjK5QVyPEPREw99Gw7FqXtn51zFxYj/bE3JnVk2GyW1ikihsxEOc
-HJbbX+CRB74=
-=5RJs
------END PGP SIGNATURE-----
-
---Dxnq1zWXvFF0Q93v--
+diff --git a/Documentation/user-manual.txt b/Documentation/user-manual.txt
+index 6d6bd8d..3108b38 100644
+--- a/Documentation/user-manual.txt
++++ b/Documentation/user-manual.txt
+@@ -367,13 +367,16 @@ above were created based on the remote branches at clone time and will
+ be updated by "git fetch" (hence "git pull) and "git push". See
+ <<Updating -a-repository-With-git-fetch>> for details.
+ 
+-You cannot check out these remote-tracking branches, but you can
+-examine them on a branch of your own, just as you would a tag:
++You might want to build on one of these remote-tracking branches
++on a branch of your own, just as you would for a tag:
+ 
+ ------------------------------------------------
+ $ git checkout -b my-todo-copy origin/todo
+ ------------------------------------------------
+ 
++You can also check out "origin/todo" directly to examine it or
++write a one-off patch.  See <<detached-head,detached head>>.
++
+ Note that the name "origin" is just the name that git uses by default
+ to refer to the repository that you cloned from.
+ 
+-- 
+1.7.3.2.183.g2e7b0
