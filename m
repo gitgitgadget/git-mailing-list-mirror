@@ -1,133 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Support pthread with no recursive mutex (SunOS 5.6)
-Date: Tue, 2 Nov 2010 12:35:10 -0500
-Message-ID: <20101102173510.GB5636@burratino>
-References: <20101102141227.GA3991@thor.il.thewrittenword.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Remove restriction on notes ref base
+Date: Tue, 02 Nov 2010 10:41:10 -0700
+Message-ID: <7vsjzj1v49.fsf@alter.siamese.dyndns.org>
+References: <1288657003-17802-1-git-send-email-kroot@google.com>
+ <20101102065208.GA4280@burratino> <201011020948.22677.johan@herland.net>
+ <AANLkTinN1UXSmkxOg59pT_xVd2eWS0Ms2sgAweLv7hbg@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-To: "Gary V. Vaughan" <git@mlists.thewrittenword.com>
-X-From: git-owner@vger.kernel.org Tue Nov 02 18:36:34 2010
+Cc: Johan Herland <johan@herland.net>, Kenny Root <kroot@google.com>,
+	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Tue Nov 02 18:42:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDKmc-0000xC-6c
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Nov 2010 18:36:30 +0100
+	id 1PDKsK-0005EE-NN
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Nov 2010 18:42:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754258Ab0KBRfn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Nov 2010 13:35:43 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:53441 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752016Ab0KBRfl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Nov 2010 13:35:41 -0400
-Received: by fxm16 with SMTP id 16so6026031fxm.19
-        for <git@vger.kernel.org>; Tue, 02 Nov 2010 10:35:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=qp3wP7efOg4po3VrQuicdHIorM4Y/rJzryji8E2Hzug=;
-        b=HIWpDdzBKVVqJTTb8ULwIMc12Hgbu0yUe0iVbn5psZW8sSWquKXxEer8Wrr0TjbYmT
-         7vYctIWkE12odDPlmOjPdwgb5UcWAQnfPHyZdLft//zxQW3qz7dOpFopbl3VH2cILtwy
-         xTOGPqF9QYPVntJ9Dv0qPyruo5xSmuLToCwtk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=YK3m0xasD+fgM2HdIqvLUvehNQ+DBgOdh6WdElYKRJyin/PZDMbZ2EytNBzM9bzl6P
-         IkOQAhIN0oqZox04A/hKgTmxeb1I4h279vKYOUi6/HLO8RVOOUJbM9cpqpkQVPiqeuD0
-         NRHwvVlGVOXZkt1+4H56PF2ODv6CakTX+dszg=
-Received: by 10.223.87.6 with SMTP id u6mr11027109fal.6.1288719340354;
-        Tue, 02 Nov 2010 10:35:40 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id j14sm3203418faa.23.2010.11.02.10.35.25
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 02 Nov 2010 10:35:32 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <20101102141227.GA3991@thor.il.thewrittenword.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754464Ab0KBRmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Nov 2010 13:42:19 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49720 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754443Ab0KBRmS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Nov 2010 13:42:18 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 30F21278B;
+	Tue,  2 Nov 2010 13:42:14 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0fuHCYxbjl8byqCdoK1BlYVXBQw=; b=XP5UJN
+	Ny6HLYSauiAXwZ+m6d8tMphh9qYA9AOOtipHIiYcvR0x5A+XLO4qqVXNLxJ4/LBa
+	anYVZmexkrk+UxHQ4aX4NrKpJihkgnblVPZ4FHbkTSRv3qmcRYeasX77jtfDJNeY
+	KxfBMaZik6bvgHdIW1yebFBWpoJfV3wA+Pnvg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rvpiBAZiYIWKEApYSPL4kXCMoKd3mcng
+	cuOk7NwKWsCY2dEsejma+UDTC9DP4P+OiF9wpyHZZJf7BBIWGW+8IY2Dk+fX39vO
+	Fu1Qgm4ABD8LaIgmAMf7IOnzKi9YHQQ0nBc2M94ssque3NG2ijwqpD9i9PHffmzR
+	d1xDTrB2bz4=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A9B582773;
+	Tue,  2 Nov 2010 13:42:07 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 09CBB2717; Tue,  2 Nov
+ 2010 13:41:12 -0400 (EDT)
+In-Reply-To: <AANLkTinN1UXSmkxOg59pT_xVd2eWS0Ms2sgAweLv7hbg@mail.gmail.com>
+ (Shawn Pearce's message of "Tue\, 2 Nov 2010 07\:11\:45 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8353415E-E6A8-11DF-9073-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160543>
 
-Hi Gary,
+Shawn Pearce <spearce@spearce.org> writes:
 
-Gary V. Vaughan wrote:
+> I didn't want to use refs/notes/bad-commits because its not really an
+> annotation you would be looking at with git log.
 
-> Thanks for merging my last patch series into the new release.  git 1.7.3.2
-> now compiles correctly on all of our hosts, save Solaris 2.6 (SunOS 5.6)
-> which has no recursive mutex support in its pthreads.
+Why not?  Within a repository with bad commits, you would want an option
+to have them applied to bad commits you still have, no?
 
-Nice.
+I am still torn with this patch, and I say "still" for a reason.  Even
+though notes are implemented as commits, they are not commits on a part of
+normal histories, and restriction of them within refs/notes hierarchy at
+least is a safety measure (it is easy to loosen a restriction later, but
+it is hard to let people loose first and then later restrict).  While a
+purist in me says that GIT_NOTES_REF and command line option _should_
+enforce the same restriction, keeping the more obscure GIT_NOTES_REF
+interface a bit looser gives us an escape hatch.
 
-> --- a/builtin/pack-objects.c
-> +++ b/builtin/pack-objects.c
-> @@ -1561,7 +1561,11 @@ static pthread_cond_t progress_cond;
->   */
->  static void init_threaded_search(void)
->  {
-> +#ifndef NO_RECURSIVE_MUTEX
->  	init_recursive_mutex(&read_mutex);
-> +#else
-> +	pthread_mutex_init(&read_mutex, NULL);
-> +#endif
-
-Wouldn't that defeat the purpose of using a recursive mutex in the first
-place?  Let's see...
-
-$ git log -m --first-parent -S'init_recursive_mutex' -- builtin/pack-objects.c
-commit ea5f75a64ae52590b06713d45d84de03ca109ccc
-Merge: af65543 9374919
-Author: Junio C Hamano <gitster@pobox.com>
-Date:   Fri May 21 04:02:16 2010 -0700
-
-    Merge branch 'np/malloc-threading'
-    
-    * np/malloc-threading:
-      Thread-safe xmalloc and xrealloc needs a recursive mutex
-      Make xmalloc and xrealloc thread-safe
-$ git log -S'init_recursive_mutex' af65543..9374919
-commit 937491944292fa3303b565b9bd8914c6b644ab13
-Author: Johannes Sixt <j6t@kdbg.org>
-Date:   Thu Apr 8 09:15:39 2010 +0200
-
-    Thread-safe xmalloc and xrealloc needs a recursive mutex
-    
-    The mutex used to protect object access (read_mutex) may need to be
-    acquired recursively.  Introduce init_recursive_mutex() helper function
-    in thread-utils.c that constructs a mutex with the PHREAD_MUTEX_RECURSIVE
-    attribute.
-    
-    pthread_mutex_init() emulation on Win32 is already recursive as it is
-    implemented on top of the CRITICAL_SECTION type, which is recursive.
-    
-        http://msdn.microsoft.com/en-us/library/ms682530%28VS.85%29.aspx
-    
-    Add do-nothing compatibility wrappers for pthread_mutexattr* functions.
-    
-    Initial-version-by: Fredrik Kuivinen <frekui@gmail.com>
-    Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-    Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-Presumably the problem scenarios are something like this:
-
-	ll_find_deltas():
-	  init_threaded_search() [sets try_to_free_routine]
-	  threaded_find_deltas() ->
-	   find_deltas() ->
-	    try_delta() [acquires read_lock] ->
-	     read_sha1_file() ->
-	      read_object() ->
-	       xmemdupz() ->
-	        xmallocz() ->
-	         xmalloc() ->
-	          try_to_free_from_threads() ->
-	           read_lock() --- deadlock.
-
-Hope that helps,
-Jonathan
+As to remote interface, refs/remotes/$remotes/ hierarchy corresponds to
+the local refs/heads/ interface, so I do not think we will change the
+default mapping we document (and have "clone" prepare) to place notes
+obtained from elsewhere in refs/remotes/ hierarchy (we do not do that for
+tags neither), so I think Johan's point is an independent issue.
