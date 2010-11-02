@@ -1,82 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Remove restriction on notes ref base
-Date: Tue, 02 Nov 2010 10:41:10 -0700
-Message-ID: <7vsjzj1v49.fsf@alter.siamese.dyndns.org>
-References: <1288657003-17802-1-git-send-email-kroot@google.com>
- <20101102065208.GA4280@burratino> <201011020948.22677.johan@herland.net>
- <AANLkTinN1UXSmkxOg59pT_xVd2eWS0Ms2sgAweLv7hbg@mail.gmail.com>
+From: "Pat Notz" <patnotz@gmail.com>
+Subject: [PATCHv7 0/6] Add commit message options for rebase
+ --autosquash
+Date: Tue, 2 Nov 2010 13:59:06 -0600
+Message-ID: <1288727952-57498-1-git-send-email-patnotz@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johan Herland <johan@herland.net>, Kenny Root <kroot@google.com>,
-	git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Nov 02 18:42:30 2010
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 02 20:59:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDKsK-0005EE-NN
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Nov 2010 18:42:25 +0100
+	id 1PDN15-0007b2-6Q
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Nov 2010 20:59:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754464Ab0KBRmT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Nov 2010 13:42:19 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:49720 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754443Ab0KBRmS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Nov 2010 13:42:18 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id 30F21278B;
-	Tue,  2 Nov 2010 13:42:14 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0fuHCYxbjl8byqCdoK1BlYVXBQw=; b=XP5UJN
-	Ny6HLYSauiAXwZ+m6d8tMphh9qYA9AOOtipHIiYcvR0x5A+XLO4qqVXNLxJ4/LBa
-	anYVZmexkrk+UxHQ4aX4NrKpJihkgnblVPZ4FHbkTSRv3qmcRYeasX77jtfDJNeY
-	KxfBMaZik6bvgHdIW1yebFBWpoJfV3wA+Pnvg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rvpiBAZiYIWKEApYSPL4kXCMoKd3mcng
-	cuOk7NwKWsCY2dEsejma+UDTC9DP4P+OiF9wpyHZZJf7BBIWGW+8IY2Dk+fX39vO
-	Fu1Qgm4ABD8LaIgmAMf7IOnzKi9YHQQ0nBc2M94ssque3NG2ijwqpD9i9PHffmzR
-	d1xDTrB2bz4=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id A9B582773;
-	Tue,  2 Nov 2010 13:42:07 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 09CBB2717; Tue,  2 Nov
- 2010 13:41:12 -0400 (EDT)
-In-Reply-To: <AANLkTinN1UXSmkxOg59pT_xVd2eWS0Ms2sgAweLv7hbg@mail.gmail.com>
- (Shawn Pearce's message of "Tue\, 2 Nov 2010 07\:11\:45 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8353415E-E6A8-11DF-9073-030CEE7EF46B-77302942!a-pb-sasl-quonix.pobox.com
+	id S1751441Ab0KBT71 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Nov 2010 15:59:27 -0400
+Received: from sentry-three.sandia.gov ([132.175.109.17]:39617 "EHLO
+	sentry-three.sandia.gov" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750895Ab0KBT70 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Nov 2010 15:59:26 -0400
+X-WSS-ID: 0LB9WUY-0C-060-02
+X-M-MSG: 
+Received: from sentry.sandia.gov (sentry.sandia.gov [132.175.109.21])
+	by sentry-three.sandia.gov (Postfix) with ESMTP id 1086447FDC3
+	for <git@vger.kernel.org>; Tue,  2 Nov 2010 13:59:22 -0600 (MDT)
+Received: from [134.253.165.160] by sentry.sandia.gov with ESMTP (SMTP
+ Relay 01 (Email Firewall v6.3.2)); Tue, 02 Nov 2010 13:59:13 -0600
+X-Server-Uuid: AF72F651-81B1-4134-BA8C-A8E1A4E620FF
+Received: from localhost.localdomain (134.253.98.198) by
+ cas2.srn.sandia.gov (134.253.165.189) with Microsoft SMTP Server id
+ 8.2.254.0; Tue, 2 Nov 2010 13:59:13 -0600
+X-Mailer: git-send-email 1.7.3.2
+X-TMWD-Spam-Summary: TS=20101102195917; ID=1; SEV=2.3.1;
+ DFV=B2010110219; IFV=NA; AIF=B2010110219; RPD=5.03.0010; ENG=NA;
+ RPDID=7374723D303030312E30413031303230312E34434430364439362E303044432C73733D312C6667733D30;
+ CAT=NONE; CON=NONE; SIG=AAABAKR1FwAAAAAAAAAAAAAAAAAAAH0=
+X-MMS-Spam-Filter-ID: B2010110219_5.03.0010
+X-WSS-ID: 60CEB21B4KO1894680-01-01
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160543>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160544>
 
-Shawn Pearce <spearce@spearce.org> writes:
+This patch series adds new command line options to git-commit to make
+it easy to specify messages for commits correctly formatted for use
+with 'rebase -i --autosquash'.
 
-> I didn't want to use refs/notes/bad-commits because its not really an
-> annotation you would be looking at with git log.
+This iteration (v7) addresses criticisms about implementation details
+raised against the v6 series.  For details, see
 
-Why not?  Within a repository with bad commits, you would want an option
-to have them applied to bad commits you still have, no?
+http://thread.gmane.org/gmane.comp.version-control.git/159547
 
-I am still torn with this patch, and I say "still" for a reason.  Even
-though notes are implemented as commits, they are not commits on a part of
-normal histories, and restriction of them within refs/notes hierarchy at
-least is a safety measure (it is easy to loosen a restriction later, but
-it is hard to let people loose first and then later restrict).  While a
-purist in me says that GIT_NOTES_REF and command line option _should_
-enforce the same restriction, keeping the more obscure GIT_NOTES_REF
-interface a bit looser gives us an escape hatch.
+The first patch introduces minor refactorings that set the stage
+for subsequent patches, mostly preventing copy-n-paste coding in what
+follows.
 
-As to remote interface, refs/remotes/$remotes/ hierarchy corresponds to
-the local refs/heads/ interface, so I do not think we will change the
-default mapping we document (and have "clone" prepare) to place notes
-obtained from elsewhere in refs/remotes/ hierarchy (we do not do that for
-tags neither), so I think Johan's point is an independent issue.
+The second patch teaches format_commit_message to reencode the content
+if the caller's commit object uses an encoding different from the
+commit encoding.
+
+The remaining patches add the --fixup and --squash commands to
+git-commit including tests of commit, interactions with rebase and
+i18n encodings.  
+
+One issue which limits the testing (but not the implementation, I
+think) is that when 'rebase --autosquash' is comparing commit subject
+lines it does not first make sure that the commits use a common
+encoding.  That's follow-on work.
+
+Pat Notz (6):
+  commit: helper methods to reduce redundant blocks of code
+  pretty.c: teach format_commit_message() to reencode the output
+  commit: --fixup option for use with rebase --autosquash
+  add tests of commit --fixup
+  commit: --squash option for use with rebase --autosquash
+  add tests of commit --squash
+
+ Documentation/git-commit.txt |   21 +++++++++--
+ builtin/commit.c             |   81 ++++++++++++++++++++++++++++--------------
+ builtin/log.c                |    3 +-
+ builtin/mailinfo.c           |    2 +-
+ cache.h                      |    3 ++
+ commit.c                     |   13 +++++++
+ commit.h                     |    4 ++
+ environment.c                |   11 ++++++
+ pretty.c                     |   36 ++++++++++++-------
+ t/t3415-rebase-autosquash.sh |   29 ++++++++++++++-
+ t/t3900-i18n-commit.sh       |   29 +++++++++++++++
+ t/t7500-commit.sh            |   80 +++++++++++++++++++++++++++++++++++++++++
+ t/t7500/edit-content         |    4 ++
+ 13 files changed, 267 insertions(+), 49 deletions(-)
+ create mode 100755 t/t7500/edit-content
+
+-- 
+1.7.3.2
