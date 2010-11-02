@@ -1,109 +1,92 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: rebase not honoring core.worktree pointing elsewhere
-Date: Tue, 2 Nov 2010 07:11:16 +0700
-Message-ID: <AANLkTi=ejRcnz+83zc2Z-6etUGMsBSw1FFUY0JNFRFGB@mail.gmail.com>
-References: <loom.20101101T182113-378@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Paul Drews <paul.drews@intel.com>
-X-From: git-owner@vger.kernel.org Tue Nov 02 01:12:19 2010
+From: Kenny Root <kroot@google.com>
+Subject: [PATCH] Remove restriction on notes ref base
+Date: Mon,  1 Nov 2010 17:16:43 -0700
+Message-ID: <1288657003-17802-1-git-send-email-kroot@google.com>
+Cc: Kenny Root <kroot@google.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 02 01:16:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PD4U6-00064g-9C
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Nov 2010 01:12:18 +0100
+	id 1PD4YX-0000Dl-BN
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Nov 2010 01:16:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753008Ab0KBALk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 1 Nov 2010 20:11:40 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:46020 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751548Ab0KBALj convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 1 Nov 2010 20:11:39 -0400
-Received: by wwe15 with SMTP id 15so6750609wwe.1
-        for <git@vger.kernel.org>; Mon, 01 Nov 2010 17:11:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=bU+5xXY6HaiJaW7zh4GykcXLnR0ijAxW72kxWr6pEDQ=;
-        b=Vkf7DS/LL5ydNbHH/GtNIfDB3DOQOoSxA0GexsJst+QZ696nqhEERZyQMcqtJ6w/UX
-         mjKXrIugNrp97t/HelxP9g5G4zixzVKSWFh5zL6RR0hpkl4SVpPG/k1f20pWMwztIQtK
-         atEC3JF6ICJzkJRVjB9QhpuNd4RF8W2kxWNyM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Di02uDwl3XyGJ4STGp/Cy0C8ZGjTVyjPuGXwaXDCdxmfFvn75Q/gfhuPMU94vWB9BL
-         BqXgcbst7SvZqwsr0K1v6BFNl8xqDiIWKplefIOQzXoDGrTD01OCKfOx1tMA8HzIltoD
-         pDU6eENewIzx6UR3qI5BgRa14aGp5FvrPGCjs=
-Received: by 10.216.47.19 with SMTP id s19mr345577web.56.1288656697753; Mon,
- 01 Nov 2010 17:11:37 -0700 (PDT)
-Received: by 10.216.172.199 with HTTP; Mon, 1 Nov 2010 17:11:16 -0700 (PDT)
-In-Reply-To: <loom.20101101T182113-378@post.gmane.org>
+	id S1753131Ab0KBAQs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 1 Nov 2010 20:16:48 -0400
+Received: from smtp-out.google.com ([74.125.121.35]:55626 "EHLO
+	smtp-out.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752448Ab0KBAQr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 1 Nov 2010 20:16:47 -0400
+Received: from kpbe12.cbf.corp.google.com (kpbe12.cbf.corp.google.com [172.25.105.76])
+	by smtp-out.google.com with ESMTP id oA20Gjlk021375
+	for <git@vger.kernel.org>; Mon, 1 Nov 2010 17:16:45 -0700
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=google.com; s=beta;
+	t=1288657006; bh=5cUEzVrliSXqdCe/Qnd1WClrvIE=;
+	h=From:To:Cc:Subject:Date:Message-Id;
+	b=bzCDLYnXU2xbphN2ko8+SYAHxn+htVDGHNcu/mL6C2G21fD2+GwKnhHTMIXl0LMjD
+	 +CSq5pmktveUMU27ioJZg==
+DomainKey-Signature: a=rsa-sha1; s=beta; d=google.com; c=nofws; q=dns;
+	h=from:to:cc:subject:date:message-id:x-mailer;
+	b=eYVYk2d9S1xKsGo9zboEsh47wnIrGyWu+P2OsCvuykWdv/vtSDxyoMdO/xg7W6bM7
+	KnkzXf4gY/sg0pJcBGgnA==
+Received: from kroot.mtv.corp.google.com (kroot.mtv.corp.google.com [172.18.103.3])
+	by kpbe12.cbf.corp.google.com with ESMTP id oA20GhXt015285;
+	Mon, 1 Nov 2010 17:16:44 -0700
+X-Mailer: git-send-email 1.7.3.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160503>
 
-On Tue, Nov 2, 2010 at 12:22 AM, Paul Drews <paul.drews@intel.com> wrot=
-e:
-> Hello,
->
-> I'm observing an unexpected error from "git rebase" run from the dire=
-ctory
-> containing the ".git" directory:
->
-> $ git --version
->
-> git version 1.7.3.GIT
-> (includes up to commit ca2090 from git repository at
-> http://www.kernel.org/pub/scm/git/git.git)
->
-> $ mkdir wherefilesare
-> $ mkdir wheregitis
-> $ cd wherefilesare
-> $ echo "Here is a line from the original" > myfile.txt
-> $ cd ../wheregitis
-> $ git init
-> $ git config core.worktree /absolute/path/to/wherefilesare/
-> $ git add .
-> $ git commit
-> $ git branch mybranch
-> $ git checkout mybranch
-> $ vim ../wherefilesare/myfile.txt
-> $ git add .
-> $ git commit
-> $ git checkout master
-> $ vim ../wherefilesare/myfile.txt
-> $ git add .
-> $ git commit
-> $ git checkout mybranch
-> $ git rebase master
->
-> fatal: /usr/libexec/git-core/git-rebase cannot be used without a work=
-ing tree.
->
-> Since I'm in the directory containing ".git" at this point, the ".git=
-" directory
-> and the worktree can be unambiguously found. =C2=A0Other commands bes=
-ides "git
-> rebase" work. =C2=A0I would expect "git rebase" to work as well. =C2=A0=
-Is this a bug or an
-> unreasonable expectation on my part?
+Git notes were restricted to refs/notes/* in the command line utilities,
+but setting things like GIT_NOTES_REF to something outside of that
+structure would work.
 
-=46irst of all, core.worktree should not matter because GIT_DIR has not
-been set (No don't trust core.worktree documentation, it's equivalent
-to --work-tree in "man git"). You need to set GIT_DIR (or --git-dir).
-That's a bug I'm working on.
+This removes the restrictions on the git notes command line interface.
 
-Then, yes, rebase should be updated to use worktree even if it's
-outside cwd. I'm not sure how to do it properly in git-rebase.sh
-though.  The requirement "require_work_tree" can be loosen a bit.
---=20
-Duy
+Signed-off-by: Kenny Root <kroot@google.com>
+---
+ builtin/notes.c |   11 ++---------
+ 1 files changed, 2 insertions(+), 9 deletions(-)
+
+diff --git a/builtin/notes.c b/builtin/notes.c
+index 6d07aac..9acce7b 100644
+--- a/builtin/notes.c
++++ b/builtin/notes.c
+@@ -343,11 +343,7 @@ static int notes_rewrite_config(const char *k, const char *v, void *cb)
+ 	} else if (!c->refs_from_env && !strcmp(k, "notes.rewriteref")) {
+ 		/* note that a refs/ prefix is implied in the
+ 		 * underlying for_each_glob_ref */
+-		if (!prefixcmp(v, "refs/notes/"))
+-			string_list_add_refs_by_glob(c->refs, v);
+-		else
+-			warning("Refusing to rewrite notes in %s"
+-				" (outside of refs/notes/)", v);
++		string_list_add_refs_by_glob(c->refs, v);
+ 		return 0;
+ 	}
+ 
+@@ -473,9 +469,6 @@ static struct notes_tree *init_notes_check(const char *subcommand)
+ 	init_notes(NULL, NULL, NULL, 0);
+ 	t = &default_notes_tree;
+ 
+-	if (prefixcmp(t->ref, "refs/notes/"))
+-		die("Refusing to %s notes in %s (outside of refs/notes/)",
+-		    subcommand, t->ref);
+ 	return t;
+ }
+ 
+@@ -844,7 +837,7 @@ int cmd_notes(int argc, const char **argv, const char *prefix)
+ 
+ 	if (override_notes_ref) {
+ 		struct strbuf sb = STRBUF_INIT;
+-		if (!prefixcmp(override_notes_ref, "refs/notes/"))
++		if (!prefixcmp(override_notes_ref, "refs/"))
+ 			/* we're happy */;
+ 		else if (!prefixcmp(override_notes_ref, "notes/"))
+ 			strbuf_addstr(&sb, "refs/");
+-- 
+1.7.3.1
