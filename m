@@ -1,55 +1,77 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [PATCH 05/10] Change "tracking branch" to "remote-tracking branch"
-Date: Tue, 2 Nov 2010 16:43:28 +0100
-Message-ID: <AANLkTinwdDJKQMPx=Z_F7H9Nj=m0MYjQ8SnOjPV2J5x1@mail.gmail.com>
-References: <1288711888-21528-1-git-send-email-Matthieu.Moy@imag.fr> <1288711888-21528-6-git-send-email-Matthieu.Moy@imag.fr>
+From: Joey Hess <joey@kitenet.net>
+Subject: git check-attr -z and quoting
+Date: Tue, 2 Nov 2010 11:57:05 -0400
+Message-ID: <20101102155705.GA17207@gnu.kitenet.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@imag.fr>
-X-From: git-owner@vger.kernel.org Tue Nov 02 16:43:56 2010
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="Dxnq1zWXvFF0Q93v"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 02 16:57:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDJ1f-0003Qw-Ay
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Nov 2010 16:43:55 +0100
+	id 1PDJEs-0005Gy-8j
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Nov 2010 16:57:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753522Ab0KBPnu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Nov 2010 11:43:50 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:38065 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753334Ab0KBPnt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 2 Nov 2010 11:43:49 -0400
-Received: by pwj3 with SMTP id 3so1594502pwj.19
-        for <git@vger.kernel.org>; Tue, 02 Nov 2010 08:43:49 -0700 (PDT)
-Received: by 10.229.86.2 with SMTP id q2mr10437694qcl.188.1288712628638; Tue,
- 02 Nov 2010 08:43:48 -0700 (PDT)
-Received: by 10.229.105.76 with HTTP; Tue, 2 Nov 2010 08:43:28 -0700 (PDT)
-In-Reply-To: <1288711888-21528-6-git-send-email-Matthieu.Moy@imag.fr>
+	id S1752634Ab0KBP5N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Nov 2010 11:57:13 -0400
+Received: from wren.kitenet.net ([80.68.85.49]:38047 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752517Ab0KBP5M (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Nov 2010 11:57:12 -0400
+Received: from gnu.kitenet.net (fttu-216-41-255-233.btes.tv [216.41.255.233])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 24C1011936F
+	for <git@vger.kernel.org>; Tue,  2 Nov 2010 11:57:08 -0400 (EDT)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id CB79646679; Tue,  2 Nov 2010 11:57:05 -0400 (EDT)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160538>
 
-On Tue, Nov 2, 2010 at 4:31 PM, Matthieu Moy <Matthieu.Moy@imag.fr> wro=
-te:
-> +[[def_remote_tracking_branch]]remote-tracking branch::
-> + =A0 =A0 =A0 A regular git <<def_branch,branch>> that is used to fol=
-low changes from
-> + =A0 =A0 =A0 another <<def_repository,repository>>. A tracking
-> + =A0 =A0 =A0 branch should not contain direct modifications or have =
-local commits
-> + =A0 =A0 =A0 made to it. A remote-tracking branch can usually be
-> + =A0 =A0 =A0 identified as the right-hand-side <<def_ref,ref>> in a =
-Pull:
-> + =A0 =A0 =A0 <<def_refspec,refspec>>.
-> +
 
-You missed a tracking branch -> remote-tracking branch substitution in
-the third/fourth line.
+--Dxnq1zWXvFF0Q93v
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Santi
+First, thanks to all for supporting -z in various commands like=20
+git ls-files and git diff. Big help for plumbing, as I'm sure you know.
+
+But, git check-attr -z only enables NUL separation of its input; output
+always has munged pathnames. This bit me trying to use it as plumbing.
+
+--=20
+see shy jo
+
+--Dxnq1zWXvFF0Q93v
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQIVAwUBTNA0zckQ2SIlEuPHAQixAQ/9Gm+oMMBnLxUvLBKTXhM2kR361+5QSvKC
+10UxE8EhYF7plVwOEIbP7RkohN/F3INEe0kOELSpohDrjcYVhw9JW5DHGm3bIGL8
+4vHIzY9/PsRJjI9k5iQ3otVDOIRPJAKe2X7LUBw1og+z6bhy14NzFVftJTaZ795M
+poSFp8PAL0joYzQQ0mQFZt6BVMsh3U3PH4N6FTt30kurIagrW+UJmko8kKt4ekvJ
+x4rTF16oaVUhvYfNkoadEIhDbO5R/3S6o2r5/52aIUHhCHd6p9MEWZLUm0Eglzmv
+j/A8OZsrNT6E2WMx3HlkexxqgyhjKVkKIZhDlY2hM7CGK38xG/N9oQmNswSRUuUT
+7HHtT8GBogEnbpE0bD0NGCKSDgJvTH+CtFDFpjncTQZf112Vw7BJLJtHgHeCCTDJ
+xreq/pSXB/0tU03qDuDjxl1YYUmsRxtrM05VtpcQUe6IXAqRA2RWPKaaLLBvd8Xy
+x893/epmlm5mL0YcpN8GMxJdJyNklO0BonQq1oyPYlBQZU9KREvbFKuQ9U43s/MM
+nZ8yKd2hsDIlb0AOnkjh4ySn67ECz3Bd2jx5tPbzJd1cscrEoLjG/VNSzatN/846
+WzcJEydlWuZGGjK5QVyPEPREw99Gw7FqXtn51zFxYj/bE3JnVk2GyW1ikihsxEOc
+HJbbX+CRB74=
+=5RJs
+-----END PGP SIGNATURE-----
+
+--Dxnq1zWXvFF0Q93v--
