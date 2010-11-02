@@ -1,251 +1,113 @@
 From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH 07/10] Change incorrect "remote branch" to "remote tracking branch" in C code
-Date: Tue,  2 Nov 2010 16:31:25 +0100
-Message-ID: <1288711888-21528-8-git-send-email-Matthieu.Moy@imag.fr>
+Subject: [PATCH 03/10] Change remote tracking to remote-tracking in non-trivial places
+Date: Tue,  2 Nov 2010 16:31:21 +0100
+Message-ID: <1288711888-21528-4-git-send-email-Matthieu.Moy@imag.fr>
 References: <1288711888-21528-1-git-send-email-Matthieu.Moy@imag.fr>
 Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
 To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Nov 02 16:32:33 2010
+X-From: git-owner@vger.kernel.org Tue Nov 02 16:32:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDIqe-0003FI-05
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Nov 2010 16:32:32 +0100
+	id 1PDIr4-0003V7-9v
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Nov 2010 16:32:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753845Ab0KBPc0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Nov 2010 11:32:26 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:35345 "EHLO shiva.imag.fr"
+	id S1753771Ab0KBPcu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Nov 2010 11:32:50 -0400
+Received: from mx1.imag.fr ([129.88.30.5]:35364 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753808Ab0KBPcY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Nov 2010 11:32:24 -0400
+	id S1753624Ab0KBPct (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Nov 2010 11:32:49 -0400
 Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id oA2FGnOC006385
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id oA2FGhnT006336
 	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 2 Nov 2010 16:16:49 +0100
+	Tue, 2 Nov 2010 16:16:43 +0100
 Received: from bauges.imag.fr ([129.88.43.5])
 	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
 	(Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1PDIpw-00026c-OK; Tue, 02 Nov 2010 16:31:48 +0100
+	id 1PDIpq-00025a-EA; Tue, 02 Nov 2010 16:31:42 +0100
 Received: from moy by bauges.imag.fr with local (Exim 4.69)
 	(envelope-from <moy@imag.fr>)
-	id 1PDIpw-0005cK-MO; Tue, 02 Nov 2010 16:31:48 +0100
+	id 1PDIpq-0005c8-CK; Tue, 02 Nov 2010 16:31:42 +0100
 X-Mailer: git-send-email 1.7.3.2.183.g2e7b0
 In-Reply-To: <1288711888-21528-1-git-send-email-Matthieu.Moy@imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 02 Nov 2010 16:16:49 +0100 (CET)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 02 Nov 2010 16:16:43 +0100 (CET)
 X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: oA2FGnOC006385
+X-MailScanner-ID: oA2FGhnT006336
 X-IMAG-MailScanner: Found to be clean
 X-IMAG-MailScanner-SpamCheck: 
 X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1289315814.16784@fteF5iW1modf7XGU2+u3Lg
+MailScanner-NULL-Check: 1289315804.10079@RLvV6xbgr6FYJpJYMJpU9A
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160529>
 
-(Just like we did for documentation already)
-
-In the process, we change "non-remote branch" to "branch outside the
-refs/remotes/ hierarchy" to avoid the ugly "non-remote-tracking branch".
-The new formulation actually corresponds to how the code detects this
-case (i.e. prefixcmp(refname, "refs/remotes")).
-
-Also, we use 'remote-tracking branch' in generated merge messages (by
-merge an fmt-merge-msg).
+To complement the straightforward perl application in previous patch,
+this adds a few manual changes.
 
 Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
 ---
- branch.h                               |    4 ++--
- builtin/fetch.c                        |    2 +-
- builtin/fmt-merge-msg.c                |    6 +++---
- builtin/merge.c                        |    2 +-
- builtin/remote.c                       |    6 +++---
- contrib/examples/builtin-fetch--tool.c |    2 +-
- t/t1507-rev-parse-upstream.sh          |    2 +-
- t/t3409-rebase-preserve-merges.sh      |    2 +-
- t/t5505-remote.sh                      |    8 +++++---
- t/t7608-merge-messages.sh              |    4 ++--
- 10 files changed, 20 insertions(+), 18 deletions(-)
+ Documentation/git-gc.txt      |    6 +++---
+ Documentation/gittutorial.txt |    4 ++--
+ t/t5400-send-pack.sh          |    2 +-
+ 3 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/branch.h b/branch.h
-index eed817a..4026e38 100644
---- a/branch.h
-+++ b/branch.h
-@@ -22,8 +22,8 @@ void create_branch(const char *head, const char *name, const char *start_name,
- void remove_branch_state(void);
+diff --git a/Documentation/git-gc.txt b/Documentation/git-gc.txt
+index 315f07e..801aede 100644
+--- a/Documentation/git-gc.txt
++++ b/Documentation/git-gc.txt
+@@ -89,7 +89,7 @@ are not part of the current project most users will want to expire
+ them sooner.  This option defaults to '30 days'.
  
- /*
-- * Configure local branch "local" to merge remote branch "remote"
-- * taken from origin "origin".
-+ * Configure local branch "local" as downstream to branch "remote"
-+ * from remote "origin".  Used by git branch --set-upstream.
-  */
- #define BRANCH_CONFIG_VERBOSE 01
- extern void install_branch_config(int flag, const char *local, const char *origin, const char *remote);
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 3b0b614..4243ef0 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -359,7 +359,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 			what = rm->name + 10;
- 		}
- 		else if (!prefixcmp(rm->name, "refs/remotes/")) {
--			kind = "remote branch";
-+			kind = "remote-tracking branch";
- 			what = rm->name + 13;
- 		}
- 		else {
-diff --git a/builtin/fmt-merge-msg.c b/builtin/fmt-merge-msg.c
-index 78c7774..5189b16 100644
---- a/builtin/fmt-merge-msg.c
-+++ b/builtin/fmt-merge-msg.c
-@@ -100,8 +100,8 @@ static int handle_line(char *line)
- 		origin = line;
- 		string_list_append(&src_data->tag, origin + 4);
- 		src_data->head_status |= 2;
--	} else if (!prefixcmp(line, "remote branch ")) {
--		origin = line + 14;
-+	} else if (!prefixcmp(line, "remote-tracking branch ")) {
-+		origin = line + strlen("remote-tracking branch ");
- 		string_list_append(&src_data->r_branch, origin);
- 		src_data->head_status |= 2;
- 	} else {
-@@ -233,7 +233,7 @@ static void do_fmt_merge_msg_title(struct strbuf *out,
- 		if (src_data->r_branch.nr) {
- 			strbuf_addstr(out, subsep);
- 			subsep = ", ";
--			print_joined("remote branch ", "remote branches ",
-+			print_joined("remote-tracking branch ", "remote-tracking branches ",
- 					&src_data->r_branch, out);
- 		}
- 		if (src_data->tag.nr) {
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 10f091b..9ec13f1 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -403,7 +403,7 @@ static void merge_name(const char *remote, struct strbuf *msg)
- 			goto cleanup;
- 		}
- 		if (!prefixcmp(found_ref, "refs/remotes/")) {
--			strbuf_addf(msg, "%s\t\tremote branch '%s' of .\n",
-+			strbuf_addf(msg, "%s\t\tremote-tracking branch '%s' of .\n",
- 				    sha1_to_hex(branch_head), remote);
- 			goto cleanup;
- 		}
-diff --git a/builtin/remote.c b/builtin/remote.c
-index e9a6e09..6a06282 100644
---- a/builtin/remote.c
-+++ b/builtin/remote.c
-@@ -507,7 +507,7 @@ static int add_branch_for_removal(const char *refname,
- 			return 0;
- 	}
+ The above two configuration variables can be given to a pattern.  For
+-example, this sets non-default expiry values only to remote tracking
++example, this sets non-default expiry values only to remote-tracking
+ branches:
  
--	/* don't delete non-remote refs */
-+	/* don't delete non-remote-tracking refs */
- 	if (prefixcmp(refname, "refs/remotes")) {
- 		/* advise user how to delete local branches */
- 		if (!prefixcmp(refname, "refs/heads/"))
-@@ -791,9 +791,9 @@ static int rm(int argc, const char **argv)
+ ------------
+@@ -128,8 +128,8 @@ Notes
  
- 	if (skipped.nr) {
- 		fprintf(stderr, skipped.nr == 1 ?
--			"Note: A non-remote branch was not removed; "
-+			"Note: A branch outside the refs/remotes/ hierarchy was not removed;\n"
- 			"to delete it, use:\n" :
--			"Note: Non-remote branches were not removed; "
-+			"Note: Some branches outside the refs/remotes/ hierarchy were not removed;\n"
- 			"to delete them, use:\n");
- 		for (i = 0; i < skipped.nr; i++)
- 			fprintf(stderr, "  git branch -d %s\n",
-diff --git a/contrib/examples/builtin-fetch--tool.c b/contrib/examples/builtin-fetch--tool.c
-index cd10dbc..3140e40 100644
---- a/contrib/examples/builtin-fetch--tool.c
-+++ b/contrib/examples/builtin-fetch--tool.c
-@@ -148,7 +148,7 @@ static int append_fetch_head(FILE *fp,
- 		what = remote_name + 10;
- 	}
- 	else if (!strncmp(remote_name, "refs/remotes/", 13)) {
--		kind = "remote branch";
-+		kind = "remote-tracking branch";
- 		what = remote_name + 13;
- 	}
- 	else {
-diff --git a/t/t1507-rev-parse-upstream.sh b/t/t1507-rev-parse-upstream.sh
-index 8c8dfda..a455551 100755
---- a/t/t1507-rev-parse-upstream.sh
-+++ b/t/t1507-rev-parse-upstream.sh
-@@ -85,7 +85,7 @@ test_expect_success 'merge my-side@{u} records the correct name' '
- 	git branch -t new my-side@{u} &&
- 	git merge -s ours new@{u} &&
- 	git show -s --pretty=format:%s >actual &&
--	echo "Merge remote branch ${sq}origin/side${sq}" >expect &&
-+	echo "Merge remote-tracking branch ${sq}origin/side${sq}" >expect &&
- 	test_cmp expect actual
- )
- '
-diff --git a/t/t3409-rebase-preserve-merges.sh b/t/t3409-rebase-preserve-merges.sh
-index 74161a4..19341e5 100755
---- a/t/t3409-rebase-preserve-merges.sh
-+++ b/t/t3409-rebase-preserve-merges.sh
-@@ -72,7 +72,7 @@ test_expect_success 'rebase -p fakes interactive rebase' '
- 	git fetch &&
- 	git rebase -p origin/topic &&
- 	test 1 = $(git rev-list --all --pretty=oneline | grep "Modify A" | wc -l) &&
--	test 1 = $(git rev-list --all --pretty=oneline | grep "Merge remote branch " | wc -l)
-+	test 1 = $(git rev-list --all --pretty=oneline | grep "Merge remote-tracking branch " | wc -l)
- 	)
+ 'git gc' tries very hard to be safe about the garbage it collects. In
+ particular, it will keep not only objects referenced by your current set
+-of branches and tags, but also objects referenced by the index, remote
+-tracking branches, refs saved by 'git filter-branch' in
++of branches and tags, but also objects referenced by the index,
++remote-tracking branches, refs saved by 'git filter-branch' in
+ refs/original/, or reflogs (which may reference commits in branches
+ that were later amended or rewound).
+ 
+diff --git a/Documentation/gittutorial.txt b/Documentation/gittutorial.txt
+index f1f4086..0982f74 100644
+--- a/Documentation/gittutorial.txt
++++ b/Documentation/gittutorial.txt
+@@ -402,8 +402,8 @@ could merge the changes into her master branch:
+ alice$ git merge bob/master
+ -------------------------------------
+ 
+-This `merge` can also be done by 'pulling from her own remote
+-tracking branch', like this:
++This `merge` can also be done by 'pulling from her own remote-tracking
++branch', like this:
+ 
+ -------------------------------------
+ alice$ git pull . remotes/bob/master
+diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+index 5bcf0b8..b0b2684 100755
+--- a/t/t5400-send-pack.sh
++++ b/t/t5400-send-pack.sh
+@@ -129,7 +129,7 @@ test_expect_success 'denyNonFastforwards trumps --force' '
+ 	test "$victim_orig" = "$victim_head"
  '
  
-diff --git a/t/t5505-remote.sh b/t/t5505-remote.sh
-index 5d1c66e..d189add 100755
---- a/t/t5505-remote.sh
-+++ b/t/t5505-remote.sh
-@@ -107,16 +107,18 @@ test_expect_success 'remove remote' '
- )
- '
- 
--test_expect_success 'remove remote protects non-remote branches' '
-+test_expect_success 'remove remote protects local branches' '
- (
- 	cd test &&
- 	{ cat >expect1 <<EOF
--Note: A non-remote branch was not removed; to delete it, use:
-+Note: A branch outside the refs/remotes/ hierarchy was not removed;
-+to delete it, use:
-   git branch -d master
- EOF
- 	} &&
- 	{ cat >expect2 <<EOF
--Note: Non-remote branches were not removed; to delete them, use:
-+Note: Some branches outside the refs/remotes/ hierarchy were not removed;
-+to delete them, use:
-   git branch -d foobranch
-   git branch -d master
- EOF
-diff --git a/t/t7608-merge-messages.sh b/t/t7608-merge-messages.sh
-index 28d5679..9225fa6 100755
---- a/t/t7608-merge-messages.sh
-+++ b/t/t7608-merge-messages.sh
-@@ -47,14 +47,14 @@ test_expect_success 'ambiguous tag' '
- 	check_oneline "Merge commit QambiguousQ"
- '
- 
--test_expect_success 'remote branch' '
-+test_expect_success 'remote-tracking branch' '
- 	git checkout -b remote master &&
- 	test_commit remote-1 &&
- 	git update-ref refs/remotes/origin/master remote &&
- 	git checkout master &&
- 	test_commit master-5 &&
- 	git merge origin/master &&
--	check_oneline "Merge remote branch Qorigin/masterQ"
-+	check_oneline "Merge remote-tracking branch Qorigin/masterQ"
- '
- 
- test_done
+-test_expect_success 'push --all excludes remote tracking hierarchy' '
++test_expect_success 'push --all excludes remote-tracking hierarchy' '
+ 	mkdir parent &&
+ 	(
+ 	    cd parent &&
 -- 
 1.7.3.2.183.g2e7b0
