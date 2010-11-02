@@ -1,69 +1,101 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: Re: Restart submodule update --recursive
-Date: Tue, 02 Nov 2010 12:08:53 +0100
-Message-ID: <4CCFF145.1060300@web.de>
-References: <loom.20101028T090353-376@post.gmane.org> <20101028181515.GB14212@burratino> <loom.20101029T085153-262@post.gmane.org> <20101029091202.GA26442@burratino>, <4CCAB20A.1000408@prevac.pl> <212962199.646095.1288423075790.JavaMail.fmail@mwmweb046> <4CCFC94B.2010708@prevac.pl>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Refactoring git-rebase.sh and git-rebase--interactive.sh
+Date: Tue, 2 Nov 2010 08:33:07 -0400
+Message-ID: <AANLkTimeWDbJPor9PnKgW5sD7DLjqrm-vTzEtnARvP3M@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: Lukasz Palczewski <l.palczewski@prevac.pl>
-X-From: git-owner@vger.kernel.org Tue Nov 02 12:11:25 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Johannes.Schindelin@gmx.de, christian.couder@gmail.com,
+	trast@student.ethz.ch
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 02 13:33:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDElw-0003jQ-PT
-	for gcvg-git-2@lo.gmane.org; Tue, 02 Nov 2010 12:11:25 +0100
+	id 1PDG39-0003F5-Lw
+	for gcvg-git-2@lo.gmane.org; Tue, 02 Nov 2010 13:33:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752395Ab0KBLLX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Nov 2010 07:11:23 -0400
-Received: from fmmailgate01.web.de ([217.72.192.221]:50913 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752549Ab0KBLLV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Nov 2010 07:11:21 -0400
-Received: from smtp07.web.de  ( [172.20.5.215])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 739971739F1B6;
-	Tue,  2 Nov 2010 12:08:56 +0100 (CET)
-Received: from [93.246.52.168] (helo=[192.168.178.29])
-	by smtp07.web.de with asmtp (WEB.DE 4.110 #24)
-	id 1PDEjY-0000MS-00; Tue, 02 Nov 2010 12:08:56 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
-In-Reply-To: <4CCFC94B.2010708@prevac.pl>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX195RNOcL2VYF7Nk2gAcoPDegMvmSVH2W7ST88xU
-	M9m0Z/N+LC0yT6v8ODL0QLcvRxG0tL/BU0MX/NbhvH91xwV6mN
-	1lvp1+KS20AqGnvExvwA==
+	id S1751753Ab0KBMdJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 2 Nov 2010 08:33:09 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:62285 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751081Ab0KBMdI (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 2 Nov 2010 08:33:08 -0400
+Received: by vws13 with SMTP id 13so4977129vws.19
+        for <git@vger.kernel.org>; Tue, 02 Nov 2010 05:33:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=J8vyLVuQZ+BRDGppLNra4WxD4u9giVj6bwPQ6gArhM0=;
+        b=G9DgWquHOiM1Vgwd2JoyHqWsFAXjZ45F5/KAnZ/Vd2GAcq4aONcDvp9ff7850z3ayH
+         XIQYsb9op0NlX87zD+zMvq9oJzfmKfFBu8Z0Zbi8q4ioEfgwbuLXNupxCUzj1tkCvGDd
+         684pg2pbUvjGqd6wAJanJajHAF2b3U6ONGqAo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=nx3pBwxlb8TPIYLP3KcJCcUr1WQRQT9wBLuMjcj2E1U1eg21B662gdKYEyqvLILpaa
+         /J/fNmnlXVOad9uU/VvASmvV6i6H0XDFF2Fdwq/MWAQAm6eYT1gAAQ6JUF4TX8JGfrq4
+         zBGq+mGJP10TTjSRm20YNDI0p2un10wQTj9AE=
+Received: by 10.224.69.200 with SMTP id a8mr533054qaj.190.1288701187139; Tue,
+ 02 Nov 2010 05:33:07 -0700 (PDT)
+Received: by 10.224.20.82 with HTTP; Tue, 2 Nov 2010 05:33:07 -0700 (PDT)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160517>
 
-Am 02.11.2010 09:18, schrieb Lukasz Palczewski:
-> Well I will wait for it and see if it does, but it will not solve all the problems.
+(Resending as plain text. Sorry about the spam to the guys on the CC list.)
 
-Thanks, as we are moving more submodule functionality into the git
-commands I would rather avoid adding new stuff to git-submodule.sh
-unless it is something not handled by that move.
+Hi,
 
-> Once I had a problem, when someone forgot to push a commit in the
-> submodule, but pushed a commit in the main repository.
+I have now been using Git for something like 18 months, and I think it's
+about time that I try to contribute.
 
-Yes, this is a common problem. We'll add a test for that in "git push"
-soon, then it won't be possible to do that by accident anymore.
+So, after adding some features to git-rebase.sh (which I will send
+separate mails about), I realized I would have to add them to
+git-rebase--interactive.sh as well. Rather than doing that, I would
+prefer to first extract the common parts of these scripts and add the
+features in only one place. Since this is the first time I do anything
+on Git, I will need a lot of advice.
 
-> Becouse of it, I could not update that repository. If this problem
-> occours, I will have to update all the submodules with the one
-> command "git submodules update --recursive" (when someone finally
-> pushes the submodule). If the "git checkout" updates the rest
-> ( not updated) submodules, but not check the ones, that were updated
-> earlier, then it will work for me.
+My main goal is to extract the commonalities in command line parsing and
+interpretation as well as validation (of command line and repository
+state, and running the pre-rebase hook).
 
-As the functionality which is now done by "git submodule update"
-will be split into recursive fetch and recursive checkout, you would
-have to issue a "git fetch --recurse-submodules" to retrieve the
-missing commits. But that shouldn't be necessary when "git push"
-tests for all submodule commits to be pushed too before it pushes
-the superproject.
+First of all, do you agree that this should be done and is now a good
+time to do it (I'm thinking mostly about conflicts with other ongoing
+efforts)? While at GitTogether, I talked briefly to Thomas Rast about
+doing this, and he mentioned that resurrecting the git sequencer might
+be a better idea. However, I *think* much of what I was thinking about
+doing involves code that is run before the git sequencer is called. I
+wouldn't mind working on the git sequencer afterwards, unless Christian
+Couder or someone else is currently working on it.
+
+While I did put 'refactoring' in the subject line, this is not
+strictly true for I would like to do. There are currently quite some
+functional differences between 'git rebase' and 'git rebase -i' (not
+just the obvious one). While refactoring the code, it would be natural
+to remove some of these differences, because I would guess that most of
+them are not intentional. The following are some of the differences I
+have found so far.
+
+1. Several different error messages. For example, 'cannot rebase: you
+   have unstaged changes' versus 'Working tree is dirty'.
+2. Different order of validation of command line and current state. For
+   example, if the working tree is dirty and the upstream is invalid,
+   interactive rebase will report the dirty working tree, while non-
+   interactive rebase will report the invalid upstream.
+3. Different set of supported flags. For example, interactive rebase
+   does not support the '--stat' flag (and rebase.stat configuration)
+   and various versions of '--strategy'.
+
+The above are just some examples, and it is probably most efficient to
+decide which behavior to pick in each case while reviewing patches
+(provided, of course, that you think it is worthwhile to extract the
+shared functionality).
+
+
+/Martin
