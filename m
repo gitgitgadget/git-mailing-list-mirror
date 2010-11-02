@@ -1,78 +1,68 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: Re: git commit -C vs. prepare-commit-msg hook
-Date: Wed, 3 Nov 2010 00:01:12 +0100
-Message-ID: <20101102230112.GC2116@neumann>
-References: <20101102145059.GB2116@neumann>
-	<AANLkTimdjAc1ZKNkWAO_KU8CqorShMv0TNDvsy5qmSDw@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH v2] Remove restriction on notes ref base
+Date: Wed, 3 Nov 2010 00:03:18 +0100
+Message-ID: <AANLkTikxjBCAEFNBy0CYaB1fj7EqTGwSQHyuN1mQ8XoR@mail.gmail.com>
+References: <1288718532-11939-1-git-send-email-kroot@google.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Pat Notz <patnotz@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 03 00:01:21 2010
+To: Kenny Root <kroot@google.com>
+X-From: git-owner@vger.kernel.org Wed Nov 03 00:03:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDPqz-0003Ap-93
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 00:01:21 +0100
+	id 1PDPtI-0004Y7-5W
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 00:03:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751660Ab0KBXBQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Nov 2010 19:01:16 -0400
-Received: from moutng.kundenserver.de ([212.227.126.187]:65059 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750829Ab0KBXBP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Nov 2010 19:01:15 -0400
-Received: from localhost6.localdomain6 (p5B130B92.dip0.t-ipconnect.de [91.19.11.146])
-	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
-	id 0Lkism-1OfBYz2mmq-00aloj; Wed, 03 Nov 2010 00:01:13 +0100
-Content-Disposition: inline
-In-Reply-To: <AANLkTimdjAc1ZKNkWAO_KU8CqorShMv0TNDvsy5qmSDw@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Provags-ID: V02:K0:UWf5Q5eWG4lybvXP+O1K74VcS3GecWDcPnb4pw7ggX/
- OuoYygdZ1srkpaUC+LTZnxorXndXmr6oR2bNHG0tQa/3Db7XEJ
- vEIPxhfOB5x+LRjI3/aJcWOlMTnGJiIh5xWiHc5q1Kls0T57ry
- bqC6TDex2v08IC5HYFqyfZnKKORHmt+bJXMKb52kJE73MNhym0
- 6d0nZFF0uGzS6tAXTETdg==
+	id S1751336Ab0KBXDk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 2 Nov 2010 19:03:40 -0400
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:38393 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750829Ab0KBXDj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 2 Nov 2010 19:03:39 -0400
+Received: by yxk8 with SMTP id 8so4194459yxk.19
+        for <git@vger.kernel.org>; Tue, 02 Nov 2010 16:03:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Zbsek05pADw9WLf1HZx8dYeIE8c3MtXytFiqiHuSRBs=;
+        b=iRxTVWivc8agERl/Z9BB6rBZ+ecjKj1gK+fGyQNLQ9/IFKOg6H5V1siqz1NOH8fEsH
+         rTSUKDOkmZzYRi/HzPJq0Es8OR5eSmhQb5ydtmgHigWLkMHNVg74qUCXNwME2fsFB2PA
+         /y5Pq9BZAXvn2rs3Ypc7PLwIKb1ZmWkjG+NfQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=gNso+EUgLEawWOi+i4wZryfpimvDaNxT/y+Pd7XFjpHfE0JyyFUfZO/wh52NR4dYcO
+         iMdl9ww4xBUXVNSf4nQk4IAVLAgQd7S5QunX7iDmwgPdtMyyAIaHfDzxbhP4Qpodv/RE
+         +oK4tQ/rZ3k4mF5D9QQAEZsLAzuMALQTIo1K0=
+Received: by 10.151.49.5 with SMTP id b5mr260764ybk.84.1288739018358; Tue, 02
+ Nov 2010 16:03:38 -0700 (PDT)
+Received: by 10.150.58.11 with HTTP; Tue, 2 Nov 2010 16:03:18 -0700 (PDT)
+In-Reply-To: <1288718532-11939-1-git-send-email-kroot@google.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160563>
 
-Hi Pat,
+Heya,
 
+On Tue, Nov 2, 2010 at 18:22, Kenny Root <kroot@google.com> wrote:
+> + =C2=A0 =C2=A0 =C2=A0 /* If no notes and >0 non-notes, this is proba=
+bly not a notes tree */
+> + =C2=A0 =C2=A0 =C2=A0 if (empty_tree && t->first_non_note)
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die("'%s' doesn't =
+look like a valid notes tree", t->ref);
 
-Thanks for your reply.
+Do we want a '-f' like functionality to override this?
 
-On Tue, Nov 02, 2010 at 02:11:33PM -0600, Pat Notz wrote:
-> 2010/11/2 SZEDER G=E1bor <szeder@ira.uka.de>:
-> > Hi,
-> >
-> > Just noticed (read: got bitten by ;) that 'git commit' runs the
-> > prepare-commit-msg hook even if it was invoked with the -C option.
-> > This seems contradictory to me, because 'git commit -C' is to reuse=
- an
-> > already existing log message (and author info) as is, whereas
-> > prepare-commit-msg is there to automatically edit the commit messag=
-e.
-> >
->=20
-> Can your hook look for the presence of the third command line argumen=
-t
-> to catch this case?
+--=20
+Cheers,
 
-Yeah, this is what I tried as workaround ...
-
-> Granted, you won't be able to tell the difference between -C and -c
-> or --amend.
-
-=2E.. and this is why it didn't work out, i.e. I needed to differentiat=
-e
--C from -c or --amend.
-
-> > Is this desired and I'm missing something, or is this a bug? =A0(or=
- just
-> > accidental, but we can't do anything about it anyway because of
-> > backward compatibility?)
+Sverre Rabbelier
