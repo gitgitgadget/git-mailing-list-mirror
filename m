@@ -1,58 +1,80 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: .gitattributes escape character?
-Date: Wed, 3 Nov 2010 14:03:59 -0700
-Message-ID: <F6E88AB2-D512-45A3-87FF-46F2C9ED0092@sb.org>
-References: <4CD15461.9070201@syntevo.com> <AANLkTinNctmWpshBeSTzZRm6+EJ=Cjdpoaj4Aon+52_b@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH v6 00/16] daemon-win32
+Date: Wed, 03 Nov 2010 21:11:27 +0000
+Message-ID: <877hgunmdc.fsf@fox.patthoyts.tk>
+References: <1288801894-1168-1-git-send-email-kusmabite@gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Marc Strapetz <marc.strapetz@syntevo.com>, git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 03 22:04:16 2010
+Cc: git@vger.kernel.org, gitster@pobox.com
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 03 22:18:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDkVC-00018k-1R
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 22:04:14 +0100
+	id 1PDkio-0001El-Mu
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 22:18:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756238Ab0KCVEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Nov 2010 17:04:08 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:39998 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754413Ab0KCVEH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Nov 2010 17:04:07 -0400
-Received: by pxi15 with SMTP id 15so43351pxi.19
-        for <git@vger.kernel.org>; Wed, 03 Nov 2010 14:04:06 -0700 (PDT)
-Received: by 10.142.229.19 with SMTP id b19mr7775783wfh.217.1288818246624;
-        Wed, 03 Nov 2010 14:04:06 -0700 (PDT)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id w42sm14220690wfh.15.2010.11.03.14.04.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 03 Nov 2010 14:04:05 -0700 (PDT)
-In-Reply-To: <AANLkTinNctmWpshBeSTzZRm6+EJ=Cjdpoaj4Aon+52_b@mail.gmail.com>
-X-Mailer: Apple Mail (2.1081)
+	id S1751069Ab0KCVSN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Nov 2010 17:18:13 -0400
+Received: from smtp-out4.blueyonder.co.uk ([195.188.213.7]:59987 "EHLO
+	smtp-out4.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750880Ab0KCVSM (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Nov 2010 17:18:12 -0400
+Received: from [172.23.144.249] (helo=asmtp-out5.blueyonder.co.uk)
+	by smtp-out4.blueyonder.co.uk with esmtp (Exim 4.52)
+	id 1PDkiZ-00085h-W2; Wed, 03 Nov 2010 21:18:05 +0000
+Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
+	by asmtp-out5.blueyonder.co.uk with esmtpa (Exim 4.52)
+	id 1PDkcC-0006xM-Gs; Wed, 03 Nov 2010 21:11:28 +0000
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id 2F4E7218FE; Wed,  3 Nov 2010 21:11:27 +0000 (GMT)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+In-Reply-To: <1288801894-1168-1-git-send-email-kusmabite@gmail.com> (Erik
+	Faye-Lund's message of "Wed, 3 Nov 2010 17:31:18 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160641>
 
-On Nov 3, 2010, at 8:47 AM, Nguyen Thai Ngoc Duy wrote:
+Erik Faye-Lund <kusmabite@gmail.com> writes:
 
-> On Wed, Nov 3, 2010 at 7:24 PM, Marc Strapetz <marc.strapetz@syntevo.com> wrote:
->> Is there an escape character which may be used in .gitattributes to
->> escape e.g. the space-character? Could octal-escaping help here (I
->> didn't succeed)? Thanks for any hints.
-> 
-> You mean escape the path part in .gitattributes? Sorry, no.
-> 
-> I think we can teach git about path quoting though. A leading double
-> quote means the path is quoted, C-style.
+>Here's hopefully the last iteration of this series. The previous version
+>only got a single complain about a typo in the subject of patch 14/15, so
+>it seems like most controversies have been settled.
 
-I agree that gitattributes needs to learn about C-style quoting. However, in the
-meantime you can just replace a space with ? as it's actually a pattern. In
-other words, "test/file with spaces" can be represented as test/file?with?spaces
+I pulled this win32-daemon branch into my msysgit build tree and built
+it. I get the following warnings:
 
--Kevin Ballard
+    CC daemon.o
+daemon.c: In function 'service_loop':
+daemon.c:674: warning: dereferencing pointer 'ss.124' does break strict-aliasing rules
+daemon.c:676: warning: dereferencing pointer 'ss.124' does break strict-aliasing rules
+daemon.c:681: warning: dereferencing pointer 'ss.124' does break strict-aliasing rules
+daemon.c:919: note: initialized from here
+daemon.c:679: warning: dereferencing pointer 'sin_addr' does break strict-aliasing rules
+daemon.c:675: note: initialized from here
+daemon.c:691: warning: dereferencing pointer 'sin6_addr' does break strict-aliasing rules
+daemon.c:682: note: initialized from here
+
+Otherwise it builds clean. The daemon running on Windows7 seems to be
+working fine for both ipv4 and ipv6 connections (I tried both).
+
+However, monitoring the resource usage in procexp it looks like there is
+a handle leak. Each 'git ls-remote' over ipv6 is gaining 16 handles that
+do not appear to be released. They're all process handles for dead
+processes it looks like, so possibly there is a missing waitpid() or
+something similar for the 'git daemon -serve' subprocess. Doing this
+over ipv4 leaks 2 handles per request.
+
+-- 
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
