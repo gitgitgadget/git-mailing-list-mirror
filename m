@@ -1,107 +1,111 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH v6 15/16] daemon: make --inetd and --detach incompatible
-Date: Wed,  3 Nov 2010 17:31:33 +0100
-Message-ID: <1288801894-1168-16-git-send-email-kusmabite@gmail.com>
-References: <1288801894-1168-1-git-send-email-kusmabite@gmail.com>
-Cc: gitster@pobox.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 03 17:33:05 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Remove restriction on notes ref base
+Date: Wed, 3 Nov 2010 11:35:24 -0500
+Message-ID: <20101103163524.GB12934@burratino>
+References: <1288657003-17802-1-git-send-email-kroot@google.com>
+ <AANLkTinN1UXSmkxOg59pT_xVd2eWS0Ms2sgAweLv7hbg@mail.gmail.com>
+ <7vsjzj1v49.fsf@alter.siamese.dyndns.org>
+ <201011022358.11340.johan@herland.net>
+ <20101103064137.GC7606@burratino>
+ <7vsjzixty5.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Shawn Pearce <spearce@spearce.org>,
+	Kenny Root <kroot@google.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 03 17:35:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDgGX-0002aC-N0
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 17:32:50 +0100
+	id 1PDgJS-0004sV-0M
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 17:35:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932088Ab0KCQc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Nov 2010 12:32:27 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:37501 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755766Ab0KCQcZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Nov 2010 12:32:25 -0400
-Received: by mail-ew0-f46.google.com with SMTP id 7so391724ewy.19
-        for <git@vger.kernel.org>; Wed, 03 Nov 2010 09:32:24 -0700 (PDT)
+	id S1755699Ab0KCQfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Nov 2010 12:35:45 -0400
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:52689 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752055Ab0KCQfo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Nov 2010 12:35:44 -0400
+Received: by vws13 with SMTP id 13so1201971vws.19
+        for <git@vger.kernel.org>; Wed, 03 Nov 2010 09:35:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=c38H0jqTfvQ6HA1yVwfAcZU+4lgosMy6qse3ZDHsG4k=;
-        b=YuUP2X6QNazEL5+vhv1fXIAke8T6fWjR9W9ukPmAirkkquBAbgHlhLPxNSTTUjNb+n
-         rOKPdbuKfgoOVOXZwKv9f+qLRpEpa8g0uZPamWuo9tfIL72G1NdBCOqhYnxVDWS719qA
-         XruszoqwF4V/LgtYl3/nDilukJcsC9Sh8kD+k=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=/2PYXBX9qvB/qGbUrx4JJnDOBYRCOFP8E5Pd67XiOlE=;
+        b=hfGitSDSjfwzgpzRiJbSM7xp+zc+5BZOz9579MREyoAnK2Lkj4NZ1N2qRuIu5KTJQh
+         TjshJhsLLRLi6dtGLZZj4WK5lI/WCmwgjP+To5rM6f6hL0nER1VK0aIrnCRLlhPrlM3L
+         nkDdqOscz4T/Qly/U7FiE/WjMv85srVB4Qfs8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=VXPuDAuDCc3y88G6fBH1vw8bt99BerNVOSY+RG5Dkw1CbUgamEHthoauDKFJilG38h
-         jvxBiR/y6MJYbi8RvMsWFUHMmJSF8CTjpatHi6C31fkyRU8GC/yBscvtifBomOqO1Knm
-         b2NiKweB0KolAnFbQUh6+kYoQXb0sy0evi2tw=
-Received: by 10.213.22.66 with SMTP id m2mr699119ebb.56.1288801942096;
-        Wed, 03 Nov 2010 09:32:22 -0700 (PDT)
-Received: from localhost ([77.40.159.131])
-        by mx.google.com with ESMTPS id v56sm6712612eeh.20.2010.11.03.09.32.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 03 Nov 2010 09:32:19 -0700 (PDT)
-X-Mailer: git-send-email 1.7.2.3.msysgit.0.2.g22c0a
-In-Reply-To: <1288801894-1168-1-git-send-email-kusmabite@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=KoJTYqBqI1KsVDtdh+jK9qbLb7bCvTs4l5QxzxIgSPXbLPdeSX/prr6moOQg7S7E/B
+         FbYRk5VdLDHjcoff5CubBcE/xllxEXJ56OpoOgf3Ut9YmTLEifG2b4gxwGvskvMMvUd8
+         Tnv5MYf74OLgSI4LH3LaBKhHIKPq8sXY3mC5c=
+Received: by 10.220.189.136 with SMTP id de8mr507957vcb.30.1288802143341;
+        Wed, 03 Nov 2010 09:35:43 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id p32sm4574252vbl.5.2010.11.03.09.35.41
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 03 Nov 2010 09:35:42 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vsjzixty5.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160625>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160626>
 
-Since --inetd makes main return with the result of execute() before
-daemonize is gets called, these two options are already incompatible.
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Document it, and add an error if attempted.
+>> How about
+>>
+>>     refs/notes/*        refs/notes/$remote/*
+>>
+>> ?
+>
+> I was actually thinking more along the lines of "not keeping track of
+> remote state at all".  We don't do that for tags either.
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
- Documentation/git-daemon.txt |    3 ++-
- daemon.c                     |    8 ++++----
- 2 files changed, 6 insertions(+), 5 deletions(-)
+What would be the behavior when a remote and local notes ref have the
+same name?
 
-diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
-index 5054f79..d15cb6a 100644
---- a/Documentation/git-daemon.txt
-+++ b/Documentation/git-daemon.txt
-@@ -78,7 +78,8 @@ OPTIONS
- 
- --inetd::
- 	Have the server run as an inetd service. Implies --syslog.
--	Incompatible with --port, --listen, --user and --group options.
-+	Incompatible with --detach, --port, --listen, --user and --group
-+	options.
- 
- --listen=<host_or_ipaddr>::
- 	Listen on a specific IP address or hostname.  IP addresses can
-diff --git a/daemon.c b/daemon.c
-index 5b30a2e..485bec5 100644
---- a/daemon.c
-+++ b/daemon.c
-@@ -23,10 +23,10 @@ static const char daemon_usage[] =
- "           [--strict-paths] [--base-path=<path>] [--base-path-relaxed]\n"
- "           [--user-path | --user-path=<path>]\n"
- "           [--interpolated-path=<path>]\n"
--"           [--reuseaddr] [--detach] [--pid-file=<file>]\n"
-+"           [--reuseaddr] [--pid-file=<file>]\n"
- "           [--(enable|disable|allow-override|forbid-override)=<service>]\n"
- "           [--inetd | [--listen=<host_or_ipaddr>] [--port=<n>]\n"
--"                      [--user=<user> [--group=<group>]]\n"
-+"                      [--detach] [--user=<user> [--group=<group>]]\n"
- "           [<directory>...]";
- 
- /* List of acceptable pathname prefixes */
-@@ -1122,8 +1122,8 @@ int main(int argc, char **argv)
- 		/* avoid splitting a message in the middle */
- 		setvbuf(stderr, NULL, _IOFBF, 4096);
- 
--	if (inetd_mode && (group_name || user_name))
--		die("--user and --group are incompatible with --inetd");
-+	if (inetd_mode && (detach || group_name || user_name))
-+		die("--detach, --user and --group are incompatible with --inetd");
- 
- 	if (inetd_mode && (listen_port || (listen_addr.nr > 0)))
- 		die("--listen= and --port= are incompatible with --inetd");
--- 
-1.7.3.2.161.gd6e00
+Tags are supposed to be universal and never change, so that doesn't
+come up.  With branches and notes trees, one can impose a requirement
+that the remote and local refs never have the same name (the "no
+separate remotes" layout) but I think that runs into problems from
+both ends:
+
+When the remote and local notes are written by the same person, it
+seems like busy work to ask that person to give different names for
+the same branch at different installations.
+
+In a distributed world where many developers might not even know
+about each other's repositories, name conflicts on development
+branches would seem to be inevitable.
+
+ home> ... hack hack hack ...
+ home> git notes add some-commit;	# hmm, noticed something
+ home> ... hack hack hack ...
+
+ Time to go to work...
+
+ work> ... hack hack hack ...
+ work> git notes add another-commit
+ work> ... hack hack hack ...
+ work> git fetch home;			# grabbing notes from home.
+ work> git notes merge home/commits
+ work> git push;			# publish.
+
+Still, as long as the default can be overridden (even if only on a
+per-remote basis), I wouldn't mind.  Maybe this way of using notes
+would be unusual and the no-separate-remotes layout supports some
+other use case better.
