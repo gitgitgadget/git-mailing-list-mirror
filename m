@@ -1,111 +1,77 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Remove restriction on notes ref base
-Date: Wed, 3 Nov 2010 11:35:24 -0500
-Message-ID: <20101103163524.GB12934@burratino>
-References: <1288657003-17802-1-git-send-email-kroot@google.com>
- <AANLkTinN1UXSmkxOg59pT_xVd2eWS0Ms2sgAweLv7hbg@mail.gmail.com>
- <7vsjzj1v49.fsf@alter.siamese.dyndns.org>
- <201011022358.11340.johan@herland.net>
- <20101103064137.GC7606@burratino>
- <7vsjzixty5.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] Work around EMFILE when there are too many pack
+ files
+Date: Wed, 03 Nov 2010 10:06:55 -0700
+Message-ID: <7vaalqxro0.fsf@alter.siamese.dyndns.org>
+References: <1288652061-19614-1-git-send-email-spearce@spearce.org>
+ <1288652061-19614-3-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>,
-	Kenny Root <kroot@google.com>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 03 17:35:51 2010
+Cc: git@vger.kernel.org
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Nov 03 18:07:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDgJS-0004sV-0M
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 17:35:50 +0100
+	id 1PDgo3-0000Ta-Be
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 18:07:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755699Ab0KCQfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Nov 2010 12:35:45 -0400
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:52689 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752055Ab0KCQfo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Nov 2010 12:35:44 -0400
-Received: by vws13 with SMTP id 13so1201971vws.19
-        for <git@vger.kernel.org>; Wed, 03 Nov 2010 09:35:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=/2PYXBX9qvB/qGbUrx4JJnDOBYRCOFP8E5Pd67XiOlE=;
-        b=hfGitSDSjfwzgpzRiJbSM7xp+zc+5BZOz9579MREyoAnK2Lkj4NZ1N2qRuIu5KTJQh
-         TjshJhsLLRLi6dtGLZZj4WK5lI/WCmwgjP+To5rM6f6hL0nER1VK0aIrnCRLlhPrlM3L
-         nkDdqOscz4T/Qly/U7FiE/WjMv85srVB4Qfs8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=KoJTYqBqI1KsVDtdh+jK9qbLb7bCvTs4l5QxzxIgSPXbLPdeSX/prr6moOQg7S7E/B
-         FbYRk5VdLDHjcoff5CubBcE/xllxEXJ56OpoOgf3Ut9YmTLEifG2b4gxwGvskvMMvUd8
-         Tnv5MYf74OLgSI4LH3LaBKhHIKPq8sXY3mC5c=
-Received: by 10.220.189.136 with SMTP id de8mr507957vcb.30.1288802143341;
-        Wed, 03 Nov 2010 09:35:43 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id p32sm4574252vbl.5.2010.11.03.09.35.41
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 03 Nov 2010 09:35:42 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vsjzixty5.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755981Ab0KCRHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Nov 2010 13:07:04 -0400
+Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:46500 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754251Ab0KCRHC (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Nov 2010 13:07:02 -0400
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id F29A41D5F;
+	Wed,  3 Nov 2010 13:07:01 -0400 (EDT)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0SjjpDPN2MWC49fihNCJjFFrMAM=; b=OGE1a+
+	qlH0d7bavQOO/5Rbt4CWCM+ET6T7qfaaYVWOjSM7aQan1bQkqMbFRxixOwCNGZes
+	98ct8twh3m+IGN+d6FDyDU0J39YX+VGymKvpFNfT+QqDqBkQ4plk7x0eN8tStAHw
+	qyn+Llkl2yGaAp3pU1lekOHXi0tsKMuJJrsPM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=T2JGFcrioJYgIg146W9u1wqIT7kn1E+z
+	EJ0JhqSsUpBaFJcXRo1KZdAi/9ipDXmi0aox+dhmvNHZVuGesVjSHPuwp9/MPXmg
+	WdLkwWlWt0PB80BUXUpY6fljL1lxm/55VN5xFjNKGRwCAc0bog/41OR0OaXLX6/G
+	27JbxAn1T0Q=
+Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
+	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id CDB8B1D5E;
+	Wed,  3 Nov 2010 13:06:59 -0400 (EDT)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id 305741D5C; Wed,  3 Nov
+ 2010 13:06:57 -0400 (EDT)
+In-Reply-To: <1288652061-19614-3-git-send-email-spearce@spearce.org> (Shawn
+ O. Pearce's message of "Mon\,  1 Nov 2010 15\:54\:21 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C55DE62A-E76C-11DF-9C1A-B51D107BB6B6-77302942!a-pb-sasl-quonix.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160626>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160627>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+"Shawn O. Pearce" <spearce@spearce.org> writes:
 
->> How about
->>
->>     refs/notes/*        refs/notes/$remote/*
->>
->> ?
->
-> I was actually thinking more along the lines of "not keeping track of
-> remote state at all".  We don't do that for tags either.
+> @@ -876,7 +874,7 @@ static void prepare_packed_git_one(char *objdir, int local)
+>  	sprintf(path, "%s/pack", objdir);
+>  	len = strlen(path);
+>  	dir = opendir(path);
+> -	while (!dir && errno == EMFILE && unuse_one_window(packed_git, -1))
+> +	while (!dir && errno == EMFILE && unuse_one_window(NULL, -1))
 
-What would be the behavior when a remote and local notes ref have the
-same name?
+Hmmmm, why?
 
-Tags are supposed to be universal and never change, so that doesn't
-come up.  With branches and notes trees, one can impose a requirement
-that the remote and local refs never have the same name (the "no
-separate remotes" layout) but I think that runs into problems from
-both ends:
+> @@ -2314,7 +2325,7 @@ static int write_loose_object(const unsigned char *sha1, char *hdr, int hdrlen,
+>  
+>  	filename = sha1_file_name(sha1);
+>  	fd = create_tmpfile(tmpfile, sizeof(tmpfile), filename);
+> -	while (fd < 0 && errno == EMFILE && unuse_one_window(packed_git, -1))
+> +	while (fd < 0 && errno == EMFILE && unuse_one_window(NULL, -1))
 
-When the remote and local notes are written by the same person, it
-seems like busy work to ask that person to give different names for
-the same branch at different installations.
-
-In a distributed world where many developers might not even know
-about each other's repositories, name conflicts on development
-branches would seem to be inevitable.
-
- home> ... hack hack hack ...
- home> git notes add some-commit;	# hmm, noticed something
- home> ... hack hack hack ...
-
- Time to go to work...
-
- work> ... hack hack hack ...
- work> git notes add another-commit
- work> ... hack hack hack ...
- work> git fetch home;			# grabbing notes from home.
- work> git notes merge home/commits
- work> git push;			# publish.
-
-Still, as long as the default can be overridden (even if only on a
-per-remote basis), I wouldn't mind.  Maybe this way of using notes
-would be unusual and the no-separate-remotes layout supports some
-other use case better.
+Again, why?
