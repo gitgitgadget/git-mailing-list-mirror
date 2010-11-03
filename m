@@ -1,85 +1,62 @@
-From: Paul Drews <paul.drews@intel.com>
-Subject: Re: rebase not honoring core.worktree pointing elsewhere
-Date: Wed, 3 Nov 2010 15:41:06 +0000 (UTC)
-Message-ID: <loom.20101103T162424-483@post.gmane.org>
-References: <loom.20101101T182113-378@post.gmane.org> <AANLkTi=ejRcnz+83zc2Z-6etUGMsBSw1FFUY0JNFRFGB@mail.gmail.com> <loom.20101102T165800-486@post.gmane.org> <AANLkTi=T5kHfgNOpOtCDCoq7epEgwUrVayaUCbf35dSU@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: .gitattributes escape character?
+Date: Wed, 3 Nov 2010 22:47:37 +0700
+Message-ID: <AANLkTinNctmWpshBeSTzZRm6+EJ=Cjdpoaj4Aon+52_b@mail.gmail.com>
+References: <4CD15461.9070201@syntevo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 03 16:41:38 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Marc Strapetz <marc.strapetz@syntevo.com>
+X-From: git-owner@vger.kernel.org Wed Nov 03 16:48:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDfSy-0006uJ-GT
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 16:41:36 +0100
+	id 1PDfZH-0003QF-SE
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 16:48:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932213Ab0KCPlY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Nov 2010 11:41:24 -0400
-Received: from lo.gmane.org ([80.91.229.12]:56132 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755779Ab0KCPlX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Nov 2010 11:41:23 -0400
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PDfSh-0006ie-QP
-	for git@vger.kernel.org; Wed, 03 Nov 2010 16:41:19 +0100
-Received: from jfdmzpr04-ext.jf.intel.com ([134.134.139.73])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 03 Nov 2010 16:41:19 +0100
-Received: from paul.drews by jfdmzpr04-ext.jf.intel.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 03 Nov 2010 16:41:19 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 134.134.137.73 (Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.3) Gecko/20100403 Fedora/3.6.3-4.fc13 Firefox/3.6.3)
+	id S1755499Ab0KCPsB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Nov 2010 11:48:01 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:42081 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752617Ab0KCPsA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Nov 2010 11:48:00 -0400
+Received: by gwj21 with SMTP id 21so555890gwj.19
+        for <git@vger.kernel.org>; Wed, 03 Nov 2010 08:48:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=mjQSfrcha85V2GLXyLQbNyd+Sqb8+AZMXklBoUsHTMw=;
+        b=QBpcZsXe6DirrXR9rG03hLrLs+ChZ6anGz6VW44Vp76r8qqKriybbZaFjTzVOa8T0r
+         DEvidfj60ASXQJ/I3JGNF2y7Z5Izs0+BMFv7w03olNq68Xxp+Pb5ajWbn/25Gc9VTGa0
+         XHqutb8hXD8rcb/1Nv7qj9okNllpK39YkgNjk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=KbfpylR5tUAXTj/1IeoMbls7jwpqjV2F8QjBhoODF/jBbMs3vzxJFKaVBLNLoge1ZY
+         L1wuG8u7W77AZmfj3c7XovJkck2NgdvACesx28/nDODDCjydTQFqD1I5FkdM1zoamsOB
+         PEIARtsW2c55GfSBDkFFgfWiWcKEl1DFgTa38=
+Received: by 10.216.47.19 with SMTP id s19mr752328web.56.1288799278654; Wed,
+ 03 Nov 2010 08:47:58 -0700 (PDT)
+Received: by 10.216.172.199 with HTTP; Wed, 3 Nov 2010 08:47:37 -0700 (PDT)
+In-Reply-To: <4CD15461.9070201@syntevo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160603>
 
-Nguyen Thai Ngoc Duy <pclouds <at> gmail.com> writes:
+On Wed, Nov 3, 2010 at 7:24 PM, Marc Strapetz <marc.strapetz@syntevo.com> wrote:
+> Is there an escape character which may be used in .gitattributes to
+> escape e.g. the space-character? Could octal-escaping help here (I
+> didn't succeed)? Thanks for any hints.
 
-> > (implementation dependent) Having the ".git" dir inside the worktre=
-e be a
-> > symbolic link to a dir somewhere outside the work tree. =C2=A0Keeps=
- the actual
-> > ".git"
-> > contents safe from deletion. =C2=A0Works so far, but this is Tamper=
-ing With The
-> > Implementation in a way that is likely to fail down the road somewh=
-ere,
-> > e.g., if an internal script does cd to the GIT_DIR, then cd relativ=
-e to
-> > that to try to get back into somewhere else in the work tree.
->=20
-> Another one: create a .git file with this line and put it in worktree=
-'s
-> topdir
->=20
-> gitdir: /path/to/real/git.dir
->=20
-> See gitrepository-layout.txt.
+You mean escape the path part in .gitattributes? Sorry, no.
 
-Ooh!  That would be my favorite, since it's a documented legal usage.
-Unfortunately, although the rebase scenario works that way a local
-"git clone" doesn't work:
-
-# git clone /abs/path/to/proj
-Cloning into proj...
-fatal: failed to open '/abs/path/to/proj/objects': No such file or dire=
-ctory
-# git clone /abs/path/to/proj/
-Cloning into proj...
-fatal: failed to open '/abs/path/to/proj//objects': No such file or dir=
-ectory
-# git --version
-git version 1.7.3.GIT
-
-weird
+I think we can teach git about path quoting though. A leading double
+quote means the path is quoted, C-style.
+-- 
+Duy
