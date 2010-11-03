@@ -1,78 +1,163 @@
-From: Christian Couder <chriscool@tuxfamily.org>
-Subject: Re: Refactoring git-rebase.sh and git-rebase--interactive.sh
-Date: Wed, 3 Nov 2010 04:24:32 +0100
-Message-ID: <201011030424.33093.chriscool@tuxfamily.org>
-References: <AANLkTimeWDbJPor9PnKgW5sD7DLjqrm-vTzEtnARvP3M@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Johannes.Schindelin@gmx.de,
-	christian.couder@gmail.com, trast@student.ethz.ch
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 03 04:24:52 2010
+From: Kevin Ballard <kevin@sb.org>
+Subject: [PATCH 1/2] submodule: preserve all arguments exactly when recursing
+Date: Tue,  2 Nov 2010 21:34:41 -0700
+Message-ID: <1288758882-77286-1-git-send-email-kevin@sb.org>
+Cc: Junio C Hamano <gitster@pobox.com>, Kevin Ballard <kevin@sb.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 03 05:35:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDTxz-0004f3-JB
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 04:24:51 +0100
+	id 1PDV45-0002Wa-Vi
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 05:35:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752252Ab0KCDYn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 2 Nov 2010 23:24:43 -0400
-Received: from smtp3-g21.free.fr ([212.27.42.3]:41519 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751876Ab0KCDYm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 2 Nov 2010 23:24:42 -0400
-Received: from style.localnet (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 974A6A61C6;
-	Wed,  3 Nov 2010 04:24:34 +0100 (CET)
-User-Agent: KMail/1.13.2 (Linux/2.6.32-25-generic; KDE/4.4.2; x86_64; ; )
-In-Reply-To: <AANLkTimeWDbJPor9PnKgW5sD7DLjqrm-vTzEtnARvP3M@mail.gmail.com>
+	id S1751185Ab0KCEe5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Nov 2010 00:34:57 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:37565 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750793Ab0KCEe4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Nov 2010 00:34:56 -0400
+Received: by pwj3 with SMTP id 3so83909pwj.19
+        for <git@vger.kernel.org>; Tue, 02 Nov 2010 21:34:56 -0700 (PDT)
+Received: by 10.142.48.14 with SMTP id v14mr855916wfv.359.1288758896130;
+        Tue, 02 Nov 2010 21:34:56 -0700 (PDT)
+Received: from localhost.localdomain ([69.170.160.74])
+        by mx.google.com with ESMTPS id w42sm12496476wfh.15.2010.11.02.21.34.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 02 Nov 2010 21:34:55 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.2.200.ga1bd
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160572>
 
-On Tuesday 02 November 2010 13:33:07 Martin von Zweigbergk wrote:
-> (Resending as plain text. Sorry about the spam to the guys on the CC list.)
-> 
-> Hi,
-> 
-> I have now been using Git for something like 18 months, and I think it's
-> about time that I try to contribute.
+When performing a recursive status or update, any argments with whitespace
+would be split along that whitespace when passed to the recursive invocation
+of the update or status command.
 
-Great!
+This is caused by the special handling that sh provides to the $@ variable.
+Status and update stored "$@" into a separate variable, and passed that
+variable to the recursive invocation. Unfortunately, the special handling
+afforded to $@ isn't given to this new variable, and word-breaking occurs
+along whitespace boundaries.
 
-> So, after adding some features to git-rebase.sh (which I will send
-> separate mails about), I realized I would have to add them to
-> git-rebase--interactive.sh as well. Rather than doing that, I would
-> prefer to first extract the common parts of these scripts and add the
-> features in only one place. Since this is the first time I do anything
-> on Git, I will need a lot of advice.
-> 
-> My main goal is to extract the commonalities in command line parsing and
-> interpretation as well as validation (of command line and repository
-> state, and running the pre-rebase hook).
-> 
-> First of all, do you agree that this should be done and is now a good
-> time to do it (I'm thinking mostly about conflicts with other ongoing
-> efforts)? While at GitTogether, I talked briefly to Thomas Rast about
-> doing this, and he mentioned that resurrecting the git sequencer might
-> be a better idea. However, I *think* much of what I was thinking about
-> doing involves code that is run before the git sequencer is called. I
-> wouldn't mind working on the git sequencer afterwards, unless Christian
-> Couder or someone else is currently working on it.
+We can work around this by taking advantage of an easy technique to quote
+any arbitrary string in the shell. Because single-quoted strings don't
+support backslash-escapes, any arbitrary string can be quoted by wrapping
+it in single-quotes and replacing any single-quotes inside the string with
+the sequence '\''.
 
-Now that GTAC (http://www.gtac.biz) is over, I plan to work on options 
---continue, --abort and --skip for git cherry-pick/revert. After that I hope 
-to be able to refactor the code so that in the end common code is used by 
-cherry-pick/revert and rebase.
+This commit introduces a new shell function quote_words that uses the quote
+trick to produce a string containing the quoted version of all its
+arguments. This string can then be used with `set -` to restore the original
+value of $@. This shell function is used in cmd_status and in cmd_update
+to store the original value of $@, which is then restored before the
+recursive invocation takes place.
 
-And I agree that what you want to do does not conflict with my plan. On the 
-contrary it might help in the end. Go for it!
+Signed-off-by: Kevin Ballard <kevin@sb.org>
+---
+I tried to write tests for this, but there are only two ways to get args
+with spaces to be accepted and passed to the recursive invocation.
+The first is via the --reference flag, but I don't think it really makes
+sense to use that flag in connection with --recursive and was not comfortable
+using it in a test. The second is as a pathname after the flags, but it
+also doesn't make sense to pass these to recursive invocations, and in fact
+the subsequent commit fixes it so the pathnames are not passed to recursive
+invocations.
 
-Thanks,
-Christian.
+That said, despite the lack of tests I still believe this is a worthwhile
+change, and it will certainly future-proof the command in case new flags
+are added. It's also a reasonable model for how to handle this problem
+in other shell commands.
+ git-submodule.sh |   43 +++++++++++++++++++++++++++++++++++++++----
+ 1 files changed, 39 insertions(+), 4 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 9ebbab7..ec7a5e4 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -64,6 +64,39 @@ module_list()
+ }
+ 
+ #
++# Emit a quoted version of the all argument suitable for passing to `eval`
++# $@ = words to quote
++#
++# This is intended to be used like the following:
++#   orig_args="$(quote_words "$@")"
++#   # do some work that includes calling shift
++#   eval "set - $orig_args"
++#   # now $@ has been restored, suitable for passing to another command
++#
++# Note that you cannot simply save off $@ into another variable because
++# the shell gives $@ and $* special handling in parameter expansion
++#
++quote_words ()
++{
++	while test $# -ne 0; do
++		# this can be done using sed like so:
++		#   printf "'%s'" "$(printf "%s" "$1" | sed -e "s/'/'\\\\''/g")"
++		# but in an attempt to avoid spawning a process for every argument, we'll
++		# just use the prefix/suffix pattern matching stuff
++		local word= suffix="$1" prefix=
++		while test -n "$suffix"
++		do
++			prefix="${suffix%%\'*}"
++			test "$prefix" != "$suffix" || break
++			suffix="${suffix#*\'}"
++			word="$word$prefix'\\''"
++		done
++		printf "'%s' " "$word$suffix"
++		shift
++	done
++}
++
++#
+ # Map submodule path to submodule name
+ #
+ # $1 = path
+@@ -374,7 +407,7 @@ cmd_init()
+ cmd_update()
+ {
+ 	# parse $args after "submodule ... update".
+-	orig_args="$@"
++	orig_args="$(quote_words "$@")"
+ 	while test $# -ne 0
+ 	do
+ 		case "$1" in
+@@ -500,7 +533,8 @@ cmd_update()
+ 
+ 		if test -n "$recursive"
+ 		then
+-			(clear_local_git_env; cd "$path" && cmd_update $orig_args) ||
++			eval "set - $orig_args"
++			(clear_local_git_env; cd "$path" && cmd_update "$@") ||
+ 			die "Failed to recurse into submodule path '$path'"
+ 		fi
+ 	done
+@@ -733,7 +767,7 @@ cmd_summary() {
+ cmd_status()
+ {
+ 	# parse $args after "submodule ... status".
+-	orig_args="$@"
++	orig_args="$(quote_words "$@")"
+ 	while test $# -ne 0
+ 	do
+ 		case "$1" in
+@@ -788,9 +822,10 @@ cmd_status()
+ 		then
+ 			(
+ 				prefix="$displaypath/"
++				eval "set - $orig_args"
+ 				clear_local_git_env
+ 				cd "$path" &&
+-				cmd_status $orig_args
++				cmd_status "$@"
+ 			) ||
+ 			die "Failed to recurse into submodule path '$path'"
+ 		fi
+-- 
+1.7.3.2.200.ga1bd
