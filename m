@@ -1,77 +1,134 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] teach update-index --refresh about --data-unchanged
-Date: Wed, 3 Nov 2010 13:36:21 -0500
-Message-ID: <20101103183621.GA14019@burratino>
-References: <20101031174430.GA30236@arf.padd.com>
- <20101031195933.GA21240@burratino>
- <20101031222644.GA31257@arf.padd.com>
- <20101031222805.GB31257@arf.padd.com>
- <7vzktqwbob.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [RFC PATCH] clone: Deprecate the --recursive option in favor of --recurse-submodules
+Date: Wed, 03 Nov 2010 19:41:59 +0100
+Message-ID: <4CD1ACF7.6040108@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 03 19:37:20 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Chris Packham <judge.packham@gmail.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 03 19:42:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDiCx-0002lC-0a
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 19:37:15 +0100
+	id 1PDiHf-0006I7-IQ
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 19:42:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932486Ab0KCSgr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Nov 2010 14:36:47 -0400
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:49339 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932222Ab0KCSgo (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Nov 2010 14:36:44 -0400
-Received: by gxk23 with SMTP id 23so745574gxk.19
-        for <git@vger.kernel.org>; Wed, 03 Nov 2010 11:36:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=ZhpJttzmfMqnGkYqgmMe2f4c8emXSvPACSRBwn29/O8=;
-        b=srC0aGk1KZp8sm9QkIPGZYDWJbaiio2hlOeM9W5+Pw+n+vS4/7HrfhBuxTd83UtnRI
-         lO9r7bgMMtNS1bwe6Qhio79LOhKnZo98FdGNtHbASle/hC5GmxImSvbttca/fC/OXibr
-         ug+zGvebFxj6iXjWFG47J3WRzbKPbo2hzQMHU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=cn0fIfHU3TgnAEn/lfxgpit5N8vurOk8LTtJH+aUVjJS7XZLWnD1aDb+ZotJgS75mm
-         lVLkkloKjElDCC0fM2RcIRwdJn38IX7I0doJA52LHNRAmyE6j69y324YCr4mIfpyw1aK
-         2ozCK0jOpcVipA6twkeZf71s66dzh1BOTdAEg=
-Received: by 10.42.171.1 with SMTP id h1mr628602icz.352.1288809402046;
-        Wed, 03 Nov 2010 11:36:42 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id y14sm3670827vch.4.2010.11.03.11.36.39
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 03 Nov 2010 11:36:40 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vzktqwbob.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756372Ab0KCSmC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Nov 2010 14:42:02 -0400
+Received: from fmmailgate03.web.de ([217.72.192.234]:58849 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753399Ab0KCSmA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Nov 2010 14:42:00 -0400
+Received: from smtp08.web.de  ( [172.20.5.216])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 98F0916D0E4FE;
+	Wed,  3 Nov 2010 19:41:59 +0100 (CET)
+Received: from [93.240.112.6] (helo=[192.168.178.29])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1PDiHX-0007C0-00; Wed, 03 Nov 2010 19:41:59 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX18Sfn+GV1JZs/JW+8hVBRyBYWEH8HEJ/aWQJC2L
+	JgtfQQcqJ9FQor3juTPxRVUbnXGtBSshmYEbDBm46Cr5u3lLZW
+	+0q+gGNCiPXmMAlRHzTQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160634>
 
-On Wed, Nov 03, 2010 at 10:37:40AM -0700, Junio C Hamano wrote:
-> Pete Wyckoff <pw@padd.com> writes:
+Since 1.6.5 "git clone" honors the --recursive option to recursively check
+out submodules too. As this option can easily be misinterpreted when it is
+added to other commands like "git grep", add the new --recurse-submodules
+option to avoid confusing it with other types of recursion.
 
->> When a repository has been copied with rsync, or cloned using
->> a volume manager, the index can be incorrect even though the
->> data is unchanged.  This new flag tells update-index --refresh
->> that it is not necessary to reread the data contents.
->
-> I know our traditional attitude towards the plumbing commands have been
-> "give them long enough rope and let users hang themselves", but this
-> particular rope feels a bit too long for my taste.
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
-Pete, I think you mentioned the possibility of a special-case tool for
-contrib/ that just updates the inode, device number, and ctime fields?
-That sounds a little less worrying to use, as plumbing.
+
+At the GitTogether some of us were talking about a sane option name for
+recursing submodules which should then be used consistently by all
+commands (maybe with the exception of "git submodule", as --recursive
+there has a pretty obvious meaning). For my first recursion patches a
+few months ago I started with --recurse-submodules but then I noticed
+that "git clone" already used "--recursive" for the same purpose, and
+for consistency reasons I switched to using that too. But especially
+when looking at recursive grep it is really easy to misinterpret
+--recursive, so the idea came up to use --recurse-submodules everywhere.
+
+Opinions?
+
+
+ Documentation/git-clone.txt |    5 +++--
+ builtin/clone.c             |   10 ++++++++--
+ 2 files changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index ab72933..1768cef 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 'git clone' [--template=<template_directory>]
+ 	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
+ 	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
+-	  [--depth <depth>] [--recursive] [--] <repository> [<directory>]
++	  [--depth <depth>] [--recurse-submodules] [--] <repository> [<directory>]
+
+ DESCRIPTION
+ -----------
+@@ -166,13 +166,14 @@ objects from the source repository into a pack in the cloned repository.
+ 	with a long history, and would want to send in fixes
+ 	as patches.
+
+---recursive::
++--recurse-submodules::
+ 	After the clone is created, initialize all submodules within,
+ 	using their default settings. This is equivalent to running
+ 	`git submodule update --init --recursive` immediately after
+ 	the clone is finished. This option is ignored if the cloned
+ 	repository does not have a worktree/checkout (i.e. if any of
+ 	`--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
++	This option replaces the now deprecated `--recursive`.
+
+ <repository>::
+ 	The (possibly remote) repository to clone from.  See the
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 19ed640..91e7fab 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -43,7 +43,7 @@ static char *option_template, *option_reference, *option_depth;
+ static char *option_origin = NULL;
+ static char *option_branch = NULL;
+ static char *option_upload_pack = "git-upload-pack";
+-static int option_verbosity;
++static int option_verbosity, option_recurse_submodules;
+ static int option_progress;
+
+ static struct option builtin_clone_options[] = {
+@@ -65,6 +65,8 @@ static struct option builtin_clone_options[] = {
+ 	OPT_BOOLEAN('s', "shared", &option_shared,
+ 		    "setup as shared repository"),
+ 	OPT_BOOLEAN(0, "recursive", &option_recursive,
++		    "initialize submodules in the clone (deprecated)"),
++	OPT_BOOLEAN(0, "recurse_submodules", &option_recurse_submodules,
+ 		    "initialize submodules in the clone"),
+ 	OPT_STRING(0, "template", &option_template, "path",
+ 		   "path the template repository"),
+@@ -659,7 +661,11 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 				sha1_to_hex(our_head_points_at->old_sha1), "1",
+ 				NULL);
+
+-		if (!err && option_recursive)
++		if (option_recursive) {
++			warning("--recursive is deprecated; use --recurse-submodules instead.");
++			option_recurse_submodules = 1;
++		}
++		if (!err && option_recurse_submodules)
+ 			err = run_command_v_opt(argv_submodule, RUN_GIT_CMD);
+ 	}
+
+-- 
+1.7.3.2.213.g5fe186
