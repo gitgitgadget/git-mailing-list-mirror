@@ -1,202 +1,107 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH v6 05/16] mingw: use real pid
-Date: Wed,  3 Nov 2010 17:31:23 +0100
-Message-ID: <1288801894-1168-6-git-send-email-kusmabite@gmail.com>
+Subject: [PATCH v6 15/16] daemon: make --inetd and --detach incompatible
+Date: Wed,  3 Nov 2010 17:31:33 +0100
+Message-ID: <1288801894-1168-16-git-send-email-kusmabite@gmail.com>
 References: <1288801894-1168-1-git-send-email-kusmabite@gmail.com>
 Cc: gitster@pobox.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 03 17:33:04 2010
+X-From: git-owner@vger.kernel.org Wed Nov 03 17:33:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDgGV-0002aC-Gp
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 17:32:47 +0100
+	id 1PDgGX-0002aC-N0
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 17:32:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932098Ab0KCQcS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Nov 2010 12:32:18 -0400
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:51665 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932067Ab0KCQcM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Nov 2010 12:32:12 -0400
-Received: by eye27 with SMTP id 27so386627eye.19
-        for <git@vger.kernel.org>; Wed, 03 Nov 2010 09:32:11 -0700 (PDT)
+	id S932088Ab0KCQc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Nov 2010 12:32:27 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:37501 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755766Ab0KCQcZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Nov 2010 12:32:25 -0400
+Received: by mail-ew0-f46.google.com with SMTP id 7so391724ewy.19
+        for <git@vger.kernel.org>; Wed, 03 Nov 2010 09:32:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=9eShgi9HR2e9IpLqVmhMSFv9txCxv5WOryH6vHHl54E=;
-        b=EqwstuLxu5kqivkPDxO19THSA9jjKfiF4H1AybWDMpAnLlGVhI2rylFMwTNdlh33/v
-         eF6ECqwj73d6Y4YWHYTmepMrUYt7ZH5vjWFs9ALn1KIi2ZmnIRwSPIuH+NIoFjJ714vs
-         iqePmB2p+BmgTbVp+bFdQQVSnU+87uMjOfKZA=
+        bh=c38H0jqTfvQ6HA1yVwfAcZU+4lgosMy6qse3ZDHsG4k=;
+        b=YuUP2X6QNazEL5+vhv1fXIAke8T6fWjR9W9ukPmAirkkquBAbgHlhLPxNSTTUjNb+n
+         rOKPdbuKfgoOVOXZwKv9f+qLRpEpa8g0uZPamWuo9tfIL72G1NdBCOqhYnxVDWS719qA
+         XruszoqwF4V/LgtYl3/nDilukJcsC9Sh8kD+k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=fXVYjydlSfm975Dh4oJKk0a1oPRg6E4Bn2CG42/FX1I5yZUZLa6aNMvjeHZQG7rAfe
-         VegI0ZvByLYLOwYZT9Dvs4/FECAFUhqZqMBbg5wvxV0V9VMyfL6wNLWYTcVvi3u5IxhB
-         kyYOGirsxen3CkHFD+/K+YmLTOIDClRpZre8w=
-Received: by 10.213.19.13 with SMTP id y13mr3134136eba.28.1288801916735;
-        Wed, 03 Nov 2010 09:31:56 -0700 (PDT)
+        b=VXPuDAuDCc3y88G6fBH1vw8bt99BerNVOSY+RG5Dkw1CbUgamEHthoauDKFJilG38h
+         jvxBiR/y6MJYbi8RvMsWFUHMmJSF8CTjpatHi6C31fkyRU8GC/yBscvtifBomOqO1Knm
+         b2NiKweB0KolAnFbQUh6+kYoQXb0sy0evi2tw=
+Received: by 10.213.22.66 with SMTP id m2mr699119ebb.56.1288801942096;
+        Wed, 03 Nov 2010 09:32:22 -0700 (PDT)
 Received: from localhost ([77.40.159.131])
-        by mx.google.com with ESMTPS id v51sm6712362eeh.4.2010.11.03.09.31.54
+        by mx.google.com with ESMTPS id v56sm6712612eeh.20.2010.11.03.09.32.19
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 03 Nov 2010 09:31:55 -0700 (PDT)
+        Wed, 03 Nov 2010 09:32:19 -0700 (PDT)
 X-Mailer: git-send-email 1.7.2.3.msysgit.0.2.g22c0a
 In-Reply-To: <1288801894-1168-1-git-send-email-kusmabite@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160625>
 
-The Windows port have so far been using process handles in place
-of PID. However, this is not work consistent with what getpid
-returns.
+Since --inetd makes main return with the result of execute() before
+daemonize is gets called, these two options are already incompatible.
 
-PIDs are system-global identifiers, but process handles are local
-to a process. Using PIDs instead of process handles allows, for
-instance, a user to kill a hung process with the Task Manager,
-something that would have been impossible with process handles.
-
-Change the code to use the real PID, and use OpenProcess to get a
-process-handle. Store the PID and the process handle in a table
-protected by a critical section, so we can safely close the
-process handle later.
+Document it, and add an error if attempted.
 
 Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
 ---
- compat/mingw.c |   70 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
- compat/mingw.h |   10 ++-----
- 2 files changed, 72 insertions(+), 8 deletions(-)
+ Documentation/git-daemon.txt |    3 ++-
+ daemon.c                     |    8 ++++----
+ 2 files changed, 6 insertions(+), 5 deletions(-)
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index 701a555..e2e3c54 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -702,6 +702,13 @@ static int env_compare(const void *a, const void *b)
- 	return strcasecmp(*ea, *eb);
- }
+diff --git a/Documentation/git-daemon.txt b/Documentation/git-daemon.txt
+index 5054f79..d15cb6a 100644
+--- a/Documentation/git-daemon.txt
++++ b/Documentation/git-daemon.txt
+@@ -78,7 +78,8 @@ OPTIONS
  
-+struct {
-+	pid_t pid;
-+	HANDLE proc;
-+} *pinfo;
-+static int num_pinfo;
-+CRITICAL_SECTION pinfo_cs;
-+
- static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **env,
- 			      const char *dir,
- 			      int prepend_cmd, int fhin, int fhout, int fherr)
-@@ -794,7 +801,23 @@ static pid_t mingw_spawnve_fd(const char *cmd, const char **argv, char **env,
- 		return -1;
- 	}
- 	CloseHandle(pi.hThread);
--	return (pid_t)pi.hProcess;
-+
-+	/*
-+	 * The process ID is the human-readable identifier of the process
-+	 * that we want to present in log and error messages. The handle
-+	 * is not useful for this purpose. But we cannot close it, either,
-+	 * because it is not possible to turn a process ID into a process
-+	 * handle after the process terminated.
-+	 * Keep the handle in a list for waitpid.
-+	 */
-+	EnterCriticalSection(&pinfo_cs);
-+	num_pinfo++;
-+	pinfo = xrealloc(pinfo, sizeof(*pinfo) * num_pinfo);
-+	pinfo[num_pinfo - 1].pid = pi.dwProcessId;
-+	pinfo[num_pinfo - 1].proc = pi.hProcess;
-+	LeaveCriticalSection(&pinfo_cs);
-+
-+	return (pid_t)pi.dwProcessId;
- }
+ --inetd::
+ 	Have the server run as an inetd service. Implies --syslog.
+-	Incompatible with --port, --listen, --user and --group options.
++	Incompatible with --detach, --port, --listen, --user and --group
++	options.
  
- static pid_t mingw_spawnve(const char *cmd, const char **argv, char **env,
-@@ -1518,6 +1541,51 @@ char *getpass(const char *prompt)
- 	return strbuf_detach(&buf, NULL);
- }
+ --listen=<host_or_ipaddr>::
+ 	Listen on a specific IP address or hostname.  IP addresses can
+diff --git a/daemon.c b/daemon.c
+index 5b30a2e..485bec5 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -23,10 +23,10 @@ static const char daemon_usage[] =
+ "           [--strict-paths] [--base-path=<path>] [--base-path-relaxed]\n"
+ "           [--user-path | --user-path=<path>]\n"
+ "           [--interpolated-path=<path>]\n"
+-"           [--reuseaddr] [--detach] [--pid-file=<file>]\n"
++"           [--reuseaddr] [--pid-file=<file>]\n"
+ "           [--(enable|disable|allow-override|forbid-override)=<service>]\n"
+ "           [--inetd | [--listen=<host_or_ipaddr>] [--port=<n>]\n"
+-"                      [--user=<user> [--group=<group>]]\n"
++"                      [--detach] [--user=<user> [--group=<group>]]\n"
+ "           [<directory>...]";
  
-+pid_t waitpid(pid_t pid, int *status, unsigned options)
-+{
-+	HANDLE h = OpenProcess(SYNCHRONIZE | PROCESS_QUERY_INFORMATION,
-+	    FALSE, pid);
-+	if (!h) {
-+		errno = ECHILD;
-+		return -1;
-+	}
-+
-+	if (options == 0) {
-+		int i;
-+		if (WaitForSingleObject(h, INFINITE) != WAIT_OBJECT_0) {
-+			CloseHandle(h);
-+			return 0;
-+		}
-+
-+		if (status)
-+			GetExitCodeProcess(h, (LPDWORD)status);
-+
-+		EnterCriticalSection(&pinfo_cs);
-+
-+		for (i = 0; i < num_pinfo; ++i)
-+			if (pinfo[i].pid == pid)
-+				break;
-+
-+		if (i < num_pinfo) {
-+			CloseHandle(pinfo[i].proc);
-+			memmove(pinfo + i, pinfo + i + 1,
-+			    sizeof(*pinfo) * (num_pinfo - i - 1));
-+			num_pinfo--;
-+			pinfo = xrealloc(pinfo,
-+			    sizeof(*pinfo) * num_pinfo);
-+		}
-+
-+		LeaveCriticalSection(&pinfo_cs);
-+
-+		CloseHandle(h);
-+		return pid;
-+	}
-+	CloseHandle(h);
-+
-+	errno = EINVAL;
-+	return -1;
-+}
-+
- #ifndef NO_MINGW_REPLACE_READDIR
- /* MinGW readdir implementation to avoid extra lstats for Git */
- struct mingw_DIR
-diff --git a/compat/mingw.h b/compat/mingw.h
-index a5bde82..7c4eeea 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -140,13 +140,7 @@ static inline int mingw_unlink(const char *pathname)
- }
- #define unlink mingw_unlink
+ /* List of acceptable pathname prefixes */
+@@ -1122,8 +1122,8 @@ int main(int argc, char **argv)
+ 		/* avoid splitting a message in the middle */
+ 		setvbuf(stderr, NULL, _IOFBF, 4096);
  
--static inline pid_t waitpid(pid_t pid, int *status, unsigned options)
--{
--	if (options == 0)
--		return _cwait(status, pid, 0);
--	errno = EINVAL;
--	return -1;
--}
-+pid_t waitpid(pid_t pid, int *status, unsigned options);
+-	if (inetd_mode && (group_name || user_name))
+-		die("--user and --group are incompatible with --inetd");
++	if (inetd_mode && (detach || group_name || user_name))
++		die("--detach, --user and --group are incompatible with --inetd");
  
- #ifndef NO_OPENSSL
- #include <openssl/ssl.h>
-@@ -321,11 +315,13 @@ void free_environ(char **env);
- static int mingw_main(); \
- int main(int argc, const char **argv) \
- { \
-+	extern CRITICAL_SECTION pinfo_cs; \
- 	_fmode = _O_BINARY; \
- 	_setmode(_fileno(stdin), _O_BINARY); \
- 	_setmode(_fileno(stdout), _O_BINARY); \
- 	_setmode(_fileno(stderr), _O_BINARY); \
- 	argv[0] = xstrdup(_pgmptr); \
-+	InitializeCriticalSection(&pinfo_cs); \
- 	return mingw_main(argc, argv); \
- } \
- static int mingw_main(c,v)
+ 	if (inetd_mode && (listen_port || (listen_addr.nr > 0)))
+ 		die("--listen= and --port= are incompatible with --inetd");
 -- 
 1.7.3.2.161.gd6e00
