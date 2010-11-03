@@ -1,91 +1,107 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [RFC/PATCH 1/2] Documentation: suggest "reset --merge" more often
-Date: Wed, 03 Nov 2010 02:32:12 -0700
-Message-ID: <4CD12C1C.2020507@gmail.com>
-References: <20101029083516.GA26290@burratino> <20101029083836.GB26290@burratino>
+From: "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: git fetch -v not at all verbose?
+Date: Wed, 3 Nov 2010 11:52:49 +0200
+Message-ID: <20101103095249.GA9144@redhat.com>
+References: <20100121155136.17b59e8f.rctay89@gmail.com>
+ <20100121140054.GH18213@onerussian.com>
+ <20100121224100.624c9c9d.rctay89@gmail.com>
+ <20100121155637.GA19078@spearce.org>
+ <20100121160707.GA31276@glandium.org>
+ <20100121161016.GA16300@redhat.com>
+ <20100121161858.GC19078@spearce.org>
+ <20100121163518.GA16466@redhat.com>
+ <20100121165737.GG19078@spearce.org>
+ <7v8wbrtkvn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, srabbelier@gmail.com,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jakub Narebski <jnareb@gmail.com>,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Johan Herland <johan@herland.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 03 10:32:26 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 03 10:52:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDZhi-0003Iq-B2
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 10:32:26 +0100
+	id 1PDa1a-0006Zh-NJ
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 10:52:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753996Ab0KCJcV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Nov 2010 05:32:21 -0400
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:57008 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751940Ab0KCJcT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Nov 2010 05:32:19 -0400
-Received: by gyh4 with SMTP id 4so276796gyh.19
-        for <git@vger.kernel.org>; Wed, 03 Nov 2010 02:32:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=zm4Jiuqg9ebIkcOlIqT0A5tnk34iwDh6GT8vkgqnfeo=;
-        b=WAFIoiRH3o6RF1HbZCB2q6VqTPIk+u6FP9FzdFBEEDAL+1PLXev//FE/c7/yvuZKr5
-         840RiIWC2ph+t3v0ZPof95rKTgwCoE3KoRWZwjk5avvgOJYKWGCTK4/sAgAd+ExTZRw8
-         S3fEjAgtH7PWg4ciOi072DQ82f47ChCaKuTF0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=WGwy8uvvHbGAfEGHi4AwjCQ97X8frjM3/z/MDpHCerq/w2QA6ILiawq1g4zE8Gh5I8
-         KVMRpspQO277mildFVRsM362mGx1uTwT/QUXz2IJZpvfGqlOqncW7qsDfBoKk9MXFu2h
-         abtnN74XtVCClCNNrYjgSKDDrQRK7YS937Bao=
-Received: by 10.42.211.16 with SMTP id gm16mr6085231icb.326.1288776738446;
-        Wed, 03 Nov 2010 02:32:18 -0700 (PDT)
-Received: from [192.168.1.105] ([75.85.182.25])
-        by mx.google.com with ESMTPS id d21sm7850063ibg.15.2010.11.03.02.32.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 03 Nov 2010 02:32:17 -0700 (PDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.11) Gecko/20101025 Lightning/1.0b3pre Thunderbird/3.1.5
-In-Reply-To: <20101029083836.GB26290@burratino>
+	id S1752839Ab0KCJwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Nov 2010 05:52:54 -0400
+Received: from mx1.redhat.com ([209.132.183.28]:36551 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751282Ab0KCJww (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Nov 2010 05:52:52 -0400
+Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id oA39qnc6020718
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Wed, 3 Nov 2010 05:52:49 -0400
+Received: from redhat.com (vpn-6-164.tlv.redhat.com [10.35.6.164])
+	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id oA39qlMv019852;
+	Wed, 3 Nov 2010 05:52:47 -0400
+Content-Disposition: inline
+In-Reply-To: <7v8wbrtkvn.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160593>
 
-On 10/29/10 01:38, Jonathan Nieder wrote:
-> With its new semantics, "git reset --merge" is more suitable for
-> undoing a failed merge than "git reset --hard" is.  It is especially
-> nice if you forget that you are in a merge and make a change or two:
+On Thu, Jan 21, 2010 at 09:42:36AM -0800, Junio C Hamano wrote:
+> "Shawn O. Pearce" <spearce@spearce.org> writes:
 > 
->   git merge something-complicated
->   ... notice conflicts, walk away ...
->   vi foo.c
->   git commit; # fails because the index has unmerged entries
->   git reset --merge
+> >> > Are you fetching from a configured remote that has tracking branches,
+> >> > or are you fetching through a one-shot URL pasted onto the command
+> >> > line?
+> >> 
+> >> Configured remote.
+> >
+> > Hmm.  I wonder if we should try to shortcut the commit walking in
+> > a case like this and just feed the tracking branches we already have.
 > 
-> The modern (post-1.7.0) semantics of git reset --merge ensure that
-> the changes to foo.c will be preserved by this sequence of commands,
-> unless foo.c was one of the files with conflicts.
+> You mean that the main culprit is the presense of thousdands of commits
+> that fetcher has obtained through the other remotes (and his own) that the
+> uploader makes fetcher walk all the way, in the false hope that there
+> might be a commit among them that is closer to the commits being fetched
+> than the ones at the tip of tracking branch the fetcher has for this
+> uploader currently?
 > 
-> So in the spirit of ed4a6baa (Documentation: suggest `reset --merge`
-> in How Merge Works section, 2010-01-23), recommend it in place of
-> "reset --hard".
+> And the solution might be to tell only about the tips of remote tracking
+> branches fetcher has obtained from this particular uploader, not about
+> other remote tracking bracnesh it got from others or his own local
+> branches (which may have merged from other remotes)?
 > 
-> One caveat: for habitual adders-to-index, "git reset --merge" is
-> no better than "git reset --hard" (though still no worse).
+> It is a clever idea but I suspect it may not work well in practice.  For
+> example, suppose a project is two-tier, say, with top-level and subsystem
+> repositories, the former of which regularly merge from the latter, and you
+> are a participant primarily working on the subsystem.  You fetch daily
+> from the subsystem repository, but weekly from the top-level.
 > 
->   vi foo.c
->   git add -u
->   git diff --cached --check; # fails because conflict markers are present
->   git reset --merge; # equivalent to git reset --hard
+> Now, when you fetch from the top-level, the remote tracking refs you have
+> for it are much more stale than your other refs.  The top-level would have
+> acquired a lot more commits from the same subsystem repository since you
+> fetched from there the last time, and you already have many of them
+> through your daily fetch from the subsystem repository.  To minimize the
+> transfer in such a case, the fetcher does want to tell the uploader that
+> it has those commits from the same subsystem repository, so that the
+> commit walker can stop at a recent merge into the top-level from the
+> subsystem repository.
 > 
+> There was a discussion about updating the commit walk exchange to bisect
+> the history (skip and try a much older one to see if it is reachable, but
+> to avoid overshooting, step back and see if a newer one is still common).
+> It would be a lot more work and needs to be implemented as a new protocol
+> capability, but I think it is the right way to go in the longer term.
 
-Would it also be a good idea to fill in the hint in git status for the
-in_merge case with similar information?
+I thought about this some more: it seems that nothing in
+pack-protocol.txt dictates that client has to send have
+lines in order. The whole logic would be on client side.
+
+So a new capability will be there just in case we find a use for a
+server-side optimization later on, we don't need the client to behave
+differently in any way when this capability is enabled/disabled.
+Right?
+
+-- 
+MST
