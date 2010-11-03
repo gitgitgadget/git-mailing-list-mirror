@@ -1,122 +1,69 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH v6 00/16] daemon-win32
-Date: Wed, 3 Nov 2010 23:18:38 +0100
-Message-ID: <AANLkTin2BCxDoKhDCSgSRG1eVUGVeQh6Bq_=FfAe0M_M@mail.gmail.com>
-References: <1288801894-1168-1-git-send-email-kusmabite@gmail.com> <877hgunmdc.fsf@fox.patthoyts.tk>
-Reply-To: kusmabite@gmail.com
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [RFC PATCH] clone: Deprecate the --recursive option in favor of --recurse-submodules
+Date: Wed, 3 Nov 2010 23:24:30 +0100
+Message-ID: <AANLkTinLQdpPC-TYjd_8CAnbPjZFGmnvJ_8X5x-yuuwP@mail.gmail.com>
+References: <4CD1ACF7.6040108@web.de> <m3aalqgion.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Wed Nov 03 23:19:06 2010
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Chris Packham <judge.packham@gmail.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 03 23:25:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDlfe-0001lj-5m
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 23:19:06 +0100
+	id 1PDllQ-0005Ga-OS
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 23:25:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752636Ab0KCWTB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Nov 2010 18:19:01 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:38160 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751520Ab0KCWS7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Nov 2010 18:18:59 -0400
-Received: by fxm16 with SMTP id 16so956507fxm.19
-        for <git@vger.kernel.org>; Wed, 03 Nov 2010 15:18:58 -0700 (PDT)
+	id S1753014Ab0KCWYx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Nov 2010 18:24:53 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:47835 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752797Ab0KCWYw convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Nov 2010 18:24:52 -0400
+Received: by gwj21 with SMTP id 21so887943gwj.19
+        for <git@vger.kernel.org>; Wed, 03 Nov 2010 15:24:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=4jQmmXb6EJ4NIiXqdVvL0rQL/tjywtOdTj9LV0LFJOw=;
-        b=hEZxL6MQRd78FInazwqrAFTSpIgeovuc5Ms6xf5e++AyUpQ2FD8FXz5nBZoE63ZYvE
-         vGqrYNvrW5xdP4gM4fFNHGsDSfJPJQHMgLkcyguCVHyg3+Qu/nOxHSFyZ+ORgDsD7Ok+
-         qdREi5t+fS56BAGnXBFC8jGqnxotAvoEpByno=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xROXfl70yFYfxvyobVud/qk+TB0ppY7VFF9IFGyYN+s=;
+        b=ZwXBWZy85UTC0LeS/zdDo0bpywn8/b7x7BVvCV35uZ7BWy401GUKFHHDxrjv3I4ZYs
+         ZJdFQTpd2qtilNDx+nUPDozfp4rOMRya9rD8Xbavm1ya5Oo7t8q8fB8B41ZmG4EC2OJd
+         BU9gabjWwOHIV/R1I7WRJhlH+9bmXqUnxwcVo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=CzsH1hPIuOJwO/88Z8OfITOVViis+zb/h7RcqmLpC64K8kV5k3C4bpblj2iBNPgLL/
-         /FycRUsQNKOX7JTP6RZvtA3/g4cUBonq1D9PRtPMoDwiAA3pO36GIIfNUGnou/U0HqOT
-         n9bCuT7VjtIMVkz/zU5QGiTWlpggnB4apWXsU=
-Received: by 10.223.96.198 with SMTP id i6mr7357036fan.10.1288822738327; Wed,
- 03 Nov 2010 15:18:58 -0700 (PDT)
-Received: by 10.223.108.73 with HTTP; Wed, 3 Nov 2010 15:18:38 -0700 (PDT)
-In-Reply-To: <877hgunmdc.fsf@fox.patthoyts.tk>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=H5CX8A9KMle7G16PI1IUsuwr5AS3CUiq9WRjk5GnfR9elleaq45yY8vnMyDJ40rMvs
+         52kDB4W7ttI8+b3sYKArs/lGNxr+9M3+4y+92V5rnwWsyt28LWRgxQmEu5TuUUJvf26v
+         EP9mu6ZtKlws+dyPoHPKr8IBX746aUdqXMjZw=
+Received: by 10.150.217.7 with SMTP id p7mr2121399ybg.312.1288823090699; Wed,
+ 03 Nov 2010 15:24:50 -0700 (PDT)
+Received: by 10.150.58.11 with HTTP; Wed, 3 Nov 2010 15:24:30 -0700 (PDT)
+In-Reply-To: <m3aalqgion.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160644>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160645>
 
-On Wed, Nov 3, 2010 at 10:11 PM, Pat Thoyts
-<patthoyts@users.sourceforge.net> wrote:
-> Erik Faye-Lund <kusmabite@gmail.com> writes:
->
->>Here's hopefully the last iteration of this series. The previous vers=
-ion
->>only got a single complain about a typo in the subject of patch 14/15=
-, so
->>it seems like most controversies have been settled.
->
-> I pulled this win32-daemon branch into my msysgit build tree and buil=
-t
-> it. I get the following warnings:
->
-> =A0 =A0CC daemon.o
-> daemon.c: In function 'service_loop':
-> daemon.c:674: warning: dereferencing pointer 'ss.124' does break stri=
-ct-aliasing rules
-> daemon.c:676: warning: dereferencing pointer 'ss.124' does break stri=
-ct-aliasing rules
-> daemon.c:681: warning: dereferencing pointer 'ss.124' does break stri=
-ct-aliasing rules
-> daemon.c:919: note: initialized from here
-> daemon.c:679: warning: dereferencing pointer 'sin_addr' does break st=
-rict-aliasing rules
-> daemon.c:675: note: initialized from here
-> daemon.c:691: warning: dereferencing pointer 'sin6_addr' does break s=
-trict-aliasing rules
-> daemon.c:682: note: initialized from here
->
+Heya,
 
-Yeah, I'm aware of these. I thought those warnings were already
-present in the Linux build, but checking again I see that that's not
-the case. Need to investigate.
+On Wed, Nov 3, 2010 at 23:13, Jakub Narebski <jnareb@gmail.com> wrote:
+> Shouldn't we use PARSE_OPT_HIDDEN? =C2=A0Or should it be left for lat=
+er?
 
-> Otherwise it builds clean. The daemon running on Windows7 seems to be
-> working fine for both ipv4 and ipv6 connections (I tried both).
->
-> However, monitoring the resource usage in procexp it looks like there=
- is
-> a handle leak. Each 'git ls-remote' over ipv6 is gaining 16 handles t=
-hat
-> do not appear to be released. They're all process handles for dead
-> processes it looks like, so possibly there is a missing waitpid() or
-> something similar for the 'git daemon -serve' subprocess. Doing this
-> over ipv4 leaks 2 handles per request.
->
+I assumed we would add PARSE_OPT_HIDDEN in a few releases. Perhaps
+that patch should also be sent.
 
-Ah, thanks. For me it's leaking a variable amount of handles per
-ls-remote, but if I apply the following patch it's down to one. Need
-to find that one as well...
+--=20
+Cheers,
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index b780200..47e7d26 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1519,8 +1519,10 @@ pid_t waitpid(pid_t pid, int *status, unsigned o=
-ptions)
- 	}
-
- 	if (pid > 0 && options & WNOHANG) {
--		if (WAIT_OBJECT_0 !=3D WaitForSingleObject((HANDLE)pid, 0))
-+		if (WAIT_OBJECT_0 !=3D WaitForSingleObject((HANDLE)pid, 0)) {
-+			CloseHandle(h);
- 			return 0;
-+		}
- 		options &=3D ~WNOHANG;
- 	}
+Sverre Rabbelier
