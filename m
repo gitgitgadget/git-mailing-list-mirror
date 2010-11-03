@@ -1,85 +1,62 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: git stash and manually edited chunks
-Date: Wed, 03 Nov 2010 11:53:44 +0100
-Message-ID: <vpqr5f2ptjb.fsf@bauges.imag.fr>
-References: <AANLkTik6esqP2EkA6SFmfS0zdokG1iTKXqivA2wnpq=9@mail.gmail.com>
-	<vpqfwvlkmkv.fsf@bauges.imag.fr>
-	<AANLkTi=O8oPjcPN1j8513Kp+OtY7Cs5WgdiVhHnyzX=C@mail.gmail.com>
+From: =?UTF-8?q?Philip=20J=C3=A4genstedt?= <philip@foolip.org>
+Subject: [PATCH] Documentation: fix misnested -l and --contains in git-tag synopsis
+Date: Wed,  3 Nov 2010 12:17:09 +0100
+Message-ID: <1288783029-11226-1-git-send-email-philip@foolip.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Olivier Verdier <zelbier@gmail.com>, git@vger.kernel.org
-To: Gavin Guo <tuffkidtt@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 03 11:53:58 2010
+Cc: =?UTF-8?q?Philip=20J=C3=A4genstedt?= <philip@foolip.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 03 12:16:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDayb-0007Nd-V3
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 11:53:58 +0100
+	id 1PDbKN-0002dZ-5W
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 12:16:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754581Ab0KCKxw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Nov 2010 06:53:52 -0400
-Received: from mx2.imag.fr ([129.88.30.17]:59450 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754307Ab0KCKxu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Nov 2010 06:53:50 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id oA3AlEik019351
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 3 Nov 2010 11:47:14 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PDayO-00075w-Jw; Wed, 03 Nov 2010 11:53:44 +0100
-In-Reply-To: <AANLkTi=O8oPjcPN1j8513Kp+OtY7Cs5WgdiVhHnyzX=C@mail.gmail.com> (Gavin Guo's message of "Wed\, 3 Nov 2010 11\:06\:30 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 03 Nov 2010 11:47:14 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: oA3AlEik019351
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1289386037.39398@4OZqGf7TFvEbMJVI0VmZrg
+	id S1754543Ab0KCLQU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Nov 2010 07:16:20 -0400
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:61976 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754395Ab0KCLQS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Nov 2010 07:16:18 -0400
+Received: by ewy7 with SMTP id 7so157004ewy.19
+        for <git@vger.kernel.org>; Wed, 03 Nov 2010 04:16:17 -0700 (PDT)
+Received: by 10.14.48.74 with SMTP id u50mr555280eeb.49.1288782977244;
+        Wed, 03 Nov 2010 04:16:17 -0700 (PDT)
+Received: from localhost.localdomain ([83.218.67.122])
+        by mx.google.com with ESMTPS id v51sm6473578eeh.22.2010.11.03.04.16.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 03 Nov 2010 04:16:16 -0700 (PDT)
+X-Mailer: git-send-email 1.7.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160594>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160595>
 
-Gavin Guo <tuffkidtt@gmail.com> writes:
+This has been broken since the --contains option was added in
+commit 32c35cfb1e9c8523b9d60e5095f1c49ebaef0279
 
->> Let's say the state of your working tree here is A (and last commit =
-is
->> HEAD).
->>
->>> * git add -p my_file
->>> * I=A0edit a chunk *manually*=A0(using=A0e)
->>
->> Here, the index contains a state which is neither in the working tre=
-e
->> nor in the last commit. Let's call this state B.
->>
->>> * git stash --keep-index
->>
->> Here, the working tree takes state B.
->>
->>> * git stash pop
->>
->> Here, you're trying to apply the stash, which is somehow a diff
->> between HEAD and A, on your tree which is in state B. Hence the
->> conflicts.
->
-> I am confusing about the description here. Git stash --keep-index
-> exist after editing the hunk, so why stash will save the difference
-> between HEAD and A, I think it should be the state which is modified
-> by git add -p(using e), and as a result of no conflict.
+Signed-off-by: Philip J=C3=A4genstedt <philip@foolip.org>
+---
+ Documentation/git-tag.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-It's actually both. And indeed, "diff" is slightly oversimplified :
-stash saves the state of HEAD and of the index, as two commits. Try
-running "gitk --all" after stash to see what's going on.
-
+diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
+index 31c78a8..8ad89d7 100644
+--- a/Documentation/git-tag.txt
++++ b/Documentation/git-tag.txt
+@@ -12,7 +12,7 @@ SYNOPSIS
+ 'git tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]
+ 	<tagname> [<commit> | <object>]
+ 'git tag' -d <tagname>...
+-'git tag' [-n[<num>]] -l [--contains <commit>] [<pattern>]
++'git tag' [-n[<num>]] -l [<pattern>] [--contains <commit>]
+ 'git tag' -v <tagname>...
+=20
+ DESCRIPTION
 --=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.1
