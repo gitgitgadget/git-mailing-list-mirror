@@ -1,102 +1,90 @@
-From: Brian Riehman <briehman@gmail.com>
-Subject: git stash syntax error under AIX 5.3
-Date: Wed, 3 Nov 2010 09:05:38 -0500
-Message-ID: <AANLkTimSpPLfqv07+Tmcj-iM0W+p86V2-HRrq71Umdtr@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git stash syntax error under AIX 5.3
+Date: Wed, 3 Nov 2010 10:07:18 -0500
+Message-ID: <20101103150718.GA12733@burratino>
+References: <AANLkTimSpPLfqv07+Tmcj-iM0W+p86V2-HRrq71Umdtr@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 03 15:05:45 2010
+Cc: git@vger.kernel.org
+To: Brian Riehman <briehman@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 03 16:07:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDdyC-0001V7-GV
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 15:05:44 +0100
+	id 1PDewJ-0000ox-6Z
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 16:07:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752298Ab0KCOFk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Nov 2010 10:05:40 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:53229 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751488Ab0KCOFi convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Nov 2010 10:05:38 -0400
-Received: by ywc21 with SMTP id 21so468634ywc.19
-        for <git@vger.kernel.org>; Wed, 03 Nov 2010 07:05:38 -0700 (PDT)
+	id S1753603Ab0KCPHn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Nov 2010 11:07:43 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:46753 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753463Ab0KCPHm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Nov 2010 11:07:42 -0400
+Received: by fxm16 with SMTP id 16so545511fxm.19
+        for <git@vger.kernel.org>; Wed, 03 Nov 2010 08:07:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type:content-transfer-encoding;
-        bh=1bqxaV8sJcFcHcXQfkOIBv9IHaLiEX4pFcSbcXK8NKU=;
-        b=PUQ21IDRmeUqW+XLFEzG9IvABQmp8aHAIQuyuxT5dfSlX6xsmP/hDmFJO+ERoeEQuJ
-         XqFNgtOeiQj2zTcAs+xoQ8Ru188mJwn7atgFcOxFkD1xqI/w9E6QA5Ac2RbKD+jO2pLj
-         dDG0Cjq0QUPGRVW3LItZjXRFaExuua4HMnnbg=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=yhmZnwzjnPM8MD9KWKEbVwib6Uw2ZMKgrVUHoVFP5Bk=;
+        b=RkudSFmUPYbpLq/y8WLWwiVDVR9sXUDzWEqFw5hcVtVyjNGkoAfSrV+3Sykm9zbVEd
+         t02EVA+kh1hSYIRWz3bQ2blJhErv27ioGPurnNOFqLGTs1WC8RrLxFeBxh4CKEAjGdCK
+         ZHKA8ipTz2eKqh/LGasvZGDeKctTP8n8JttOw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=cOSXWMcT6uXXZaikcIBsmkmiQWoUhiQ+IES7BMUm6lI/TKWOBtHt+wYQt61bBsYTEd
-         ZjDdwRy5ZEim2xCvXR3SKN3FXWxb7WZZrQirFlc2ZfN/wMvto4KfBdAsgayM7z/DyO9+
-         s6/c3N4wG66L6aai3CtlAxUODSDETLM2Y1+dY=
-Received: by 10.150.199.10 with SMTP id w10mr1315478ybf.203.1288793138271;
- Wed, 03 Nov 2010 07:05:38 -0700 (PDT)
-Received: by 10.150.95.8 with HTTP; Wed, 3 Nov 2010 07:05:38 -0700 (PDT)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=UWG2KI+m6t+AFdOIzmxlBD6WanXTZpcojur0OOkGoeCDWUQwKrsBSjlN91fb3bB2Og
+         3ch6jvcsezUX3ZG2ZF8l4EHCzuFCmg2ERzW28vDL4K5nVi4zp31swFu6Lio83i4x9j2F
+         xOck6RBuM/zqxv2dCJXUyP3deF8L+PWi+yGtM=
+Received: by 10.223.86.16 with SMTP id q16mr2892144fal.58.1288796860777;
+        Wed, 03 Nov 2010 08:07:40 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id y19sm3727203fau.41.2010.11.03.08.07.38
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 03 Nov 2010 08:07:39 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <AANLkTimSpPLfqv07+Tmcj-iM0W+p86V2-HRrq71Umdtr@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160599>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160600>
 
-The stash command relies on bash-specific shell scripting techniques
-when the shebang line lists Bourne shell. =A0This was introduced in
-b0f0ecd97924ee775e7f3b29366133448f4f8e15. =A0The error was noticed when
-running under AIX 5.3:
+Hi Brian,
 
-$ /bin/sh -n git-stash.sh
-git-stash.sh[63]: syntax error at line 498 : `"' unmatched
-$ /bin/sh -n git-stash-modified.sh
-$ diff git-stash.sh git-stash-modified.sh
-314,321c314,321
-< =A0 =A0 =A0 if test "${REV}" !=3D "${REV%{*\}}"
-< =A0 =A0 =A0 then
-< =A0 =A0 =A0 =A0 =A0 =A0 =A0 # maintainers: it would be better if git =
-rev-parse indicated
-< =A0 =A0 =A0 =A0 =A0 =A0 =A0 # this condition with a non-zero status c=
-ode but as of
-1.7.2.1 it
-< =A0 =A0 =A0 =A0 =A0 =A0 =A0 # it did not. So, we use non-empty stderr=
- output as a
-proxy for the
-< =A0 =A0 =A0 =A0 =A0 =A0 =A0 # condition of interest.
-< =A0 =A0 =A0 =A0 =A0 =A0 =A0 test -z "$(git rev-parse "$REV" 2>&1 >/de=
-v/null)" ||
-die "$REV does not exist in the stash log"
-< =A0 =A0 =A0 fi
+Brian Riehman wrote:
+
+> The stash command relies on bash-specific shell scripting techniques
+
+Git actually uses the ${var%glob} syntax pretty widely, and it is
+fairly portable (see http://unix.org/2008edition/ and search for "sh -"
+for details).  I suspect the problem is rather the seemingly-unbalanced
+braces:
+
+> < =C2=A0 =C2=A0 =C2=A0 if test "${REV}" !=3D "${REV%{*\}}"
+
+How about this patch?
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-> # =A0 =A0 if test "${REV}" !=3D "${REV%{*\}}"
-> # =A0 =A0 then
-> # =A0 =A0 =A0 =A0 =A0 =A0 # maintainers: it would be better if git re=
-v-parse indicated
-> # =A0 =A0 =A0 =A0 =A0 =A0 # this condition with a non-zero status cod=
-e but as of 1.7.2.1 it
-> # =A0 =A0 =A0 =A0 =A0 =A0 # it did not. So, we use non-empty stderr o=
-utput as a proxy for the
-> # =A0 =A0 =A0 =A0 =A0 =A0 # condition of interest.
-> # =A0 =A0 =A0 =A0 =A0 =A0 test -z "$(git rev-parse "$REV" 2>&1 >/dev/=
-null)" || die "$REV does not exist in the stash log"
-> # =A0 =A0 fi
-$ head -1 git-stash.sh
-#!/bin/sh
-
-Removing the code from that commit causes the stash command to work
-properly. =A0I am not sure if other systems have /bin/sh symbolically
-linked to /bin/bash, but in AIX the /bin/sh fails to properly parse
-the default git-stash.sh.
-
-I am not sure how to correct this logic since Bourne shell does not
-have an equally powerful search and replace variable substitution
-operator nor do I know exactly what this is meant to filter out of the
-variable. =A0For now, I have simply patched the source to comment out
-those lines.
-
-Brian Riehman
+diff --git a/git-stash.sh b/git-stash.sh
+index 5fb1245..0a41226 100755
+--- a/git-stash.sh
++++ b/git-stash.sh
+@@ -311,7 +311,7 @@ parse_flags_and_rev()
+ 	test "$ref_stash" =3D "$(git rev-parse --symbolic-full-name "${REV%@*=
+}")" &&
+ 	IS_STASH_REF=3Dt
+=20
+-	if test "${REV}" !=3D "${REV%{*\}}"
++	if test "${REV}" !=3D "${REV%\{*\}}"
+ 	then
+ 		# maintainers: it would be better if git rev-parse indicated
+ 		# this condition with a non-zero status code but as of 1.7.2.1 it
