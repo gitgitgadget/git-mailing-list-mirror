@@ -1,107 +1,85 @@
-From: "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: git fetch -v not at all verbose?
-Date: Wed, 3 Nov 2010 11:52:49 +0200
-Message-ID: <20101103095249.GA9144@redhat.com>
-References: <20100121155136.17b59e8f.rctay89@gmail.com>
- <20100121140054.GH18213@onerussian.com>
- <20100121224100.624c9c9d.rctay89@gmail.com>
- <20100121155637.GA19078@spearce.org>
- <20100121160707.GA31276@glandium.org>
- <20100121161016.GA16300@redhat.com>
- <20100121161858.GC19078@spearce.org>
- <20100121163518.GA16466@redhat.com>
- <20100121165737.GG19078@spearce.org>
- <7v8wbrtkvn.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: git stash and manually edited chunks
+Date: Wed, 03 Nov 2010 11:53:44 +0100
+Message-ID: <vpqr5f2ptjb.fsf@bauges.imag.fr>
+References: <AANLkTik6esqP2EkA6SFmfS0zdokG1iTKXqivA2wnpq=9@mail.gmail.com>
+	<vpqfwvlkmkv.fsf@bauges.imag.fr>
+	<AANLkTi=O8oPjcPN1j8513Kp+OtY7Cs5WgdiVhHnyzX=C@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 03 10:52:59 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Olivier Verdier <zelbier@gmail.com>, git@vger.kernel.org
+To: Gavin Guo <tuffkidtt@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 03 11:53:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDa1a-0006Zh-NJ
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 10:52:59 +0100
+	id 1PDayb-0007Nd-V3
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 11:53:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752839Ab0KCJwy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Nov 2010 05:52:54 -0400
-Received: from mx1.redhat.com ([209.132.183.28]:36551 "EHLO mx1.redhat.com"
+	id S1754581Ab0KCKxw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Nov 2010 06:53:52 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:59450 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751282Ab0KCJww (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Nov 2010 05:52:52 -0400
-Received: from int-mx10.intmail.prod.int.phx2.redhat.com (int-mx10.intmail.prod.int.phx2.redhat.com [10.5.11.23])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id oA39qnc6020718
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
-	Wed, 3 Nov 2010 05:52:49 -0400
-Received: from redhat.com (vpn-6-164.tlv.redhat.com [10.35.6.164])
-	by int-mx10.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with SMTP id oA39qlMv019852;
-	Wed, 3 Nov 2010 05:52:47 -0400
-Content-Disposition: inline
-In-Reply-To: <7v8wbrtkvn.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.23
+	id S1754307Ab0KCKxu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Nov 2010 06:53:50 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id oA3AlEik019351
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 3 Nov 2010 11:47:14 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PDayO-00075w-Jw; Wed, 03 Nov 2010 11:53:44 +0100
+In-Reply-To: <AANLkTi=O8oPjcPN1j8513Kp+OtY7Cs5WgdiVhHnyzX=C@mail.gmail.com> (Gavin Guo's message of "Wed\, 3 Nov 2010 11\:06\:30 +0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 03 Nov 2010 11:47:14 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: oA3AlEik019351
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1289386037.39398@4OZqGf7TFvEbMJVI0VmZrg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160593>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160594>
 
-On Thu, Jan 21, 2010 at 09:42:36AM -0800, Junio C Hamano wrote:
-> "Shawn O. Pearce" <spearce@spearce.org> writes:
-> 
-> >> > Are you fetching from a configured remote that has tracking branches,
-> >> > or are you fetching through a one-shot URL pasted onto the command
-> >> > line?
-> >> 
-> >> Configured remote.
-> >
-> > Hmm.  I wonder if we should try to shortcut the commit walking in
-> > a case like this and just feed the tracking branches we already have.
-> 
-> You mean that the main culprit is the presense of thousdands of commits
-> that fetcher has obtained through the other remotes (and his own) that the
-> uploader makes fetcher walk all the way, in the false hope that there
-> might be a commit among them that is closer to the commits being fetched
-> than the ones at the tip of tracking branch the fetcher has for this
-> uploader currently?
-> 
-> And the solution might be to tell only about the tips of remote tracking
-> branches fetcher has obtained from this particular uploader, not about
-> other remote tracking bracnesh it got from others or his own local
-> branches (which may have merged from other remotes)?
-> 
-> It is a clever idea but I suspect it may not work well in practice.  For
-> example, suppose a project is two-tier, say, with top-level and subsystem
-> repositories, the former of which regularly merge from the latter, and you
-> are a participant primarily working on the subsystem.  You fetch daily
-> from the subsystem repository, but weekly from the top-level.
-> 
-> Now, when you fetch from the top-level, the remote tracking refs you have
-> for it are much more stale than your other refs.  The top-level would have
-> acquired a lot more commits from the same subsystem repository since you
-> fetched from there the last time, and you already have many of them
-> through your daily fetch from the subsystem repository.  To minimize the
-> transfer in such a case, the fetcher does want to tell the uploader that
-> it has those commits from the same subsystem repository, so that the
-> commit walker can stop at a recent merge into the top-level from the
-> subsystem repository.
-> 
-> There was a discussion about updating the commit walk exchange to bisect
-> the history (skip and try a much older one to see if it is reachable, but
-> to avoid overshooting, step back and see if a newer one is still common).
-> It would be a lot more work and needs to be implemented as a new protocol
-> capability, but I think it is the right way to go in the longer term.
+Gavin Guo <tuffkidtt@gmail.com> writes:
 
-I thought about this some more: it seems that nothing in
-pack-protocol.txt dictates that client has to send have
-lines in order. The whole logic would be on client side.
+>> Let's say the state of your working tree here is A (and last commit =
+is
+>> HEAD).
+>>
+>>> * git add -p my_file
+>>> * I=A0edit a chunk *manually*=A0(using=A0e)
+>>
+>> Here, the index contains a state which is neither in the working tre=
+e
+>> nor in the last commit. Let's call this state B.
+>>
+>>> * git stash --keep-index
+>>
+>> Here, the working tree takes state B.
+>>
+>>> * git stash pop
+>>
+>> Here, you're trying to apply the stash, which is somehow a diff
+>> between HEAD and A, on your tree which is in state B. Hence the
+>> conflicts.
+>
+> I am confusing about the description here. Git stash --keep-index
+> exist after editing the hunk, so why stash will save the difference
+> between HEAD and A, I think it should be the state which is modified
+> by git add -p(using e), and as a result of no conflict.
 
-So a new capability will be there just in case we find a use for a
-server-side optimization later on, we don't need the client to behave
-differently in any way when this capability is enabled/disabled.
-Right?
+It's actually both. And indeed, "diff" is slightly oversimplified :
+stash saves the state of HEAD and of the index, as two commits. Try
+running "gitk --all" after stash to see what's going on.
 
--- 
-MST
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
