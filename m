@@ -1,7 +1,7 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
 Subject: Re: [PATCH v6 00/16] daemon-win32
-Date: Wed, 3 Nov 2010 23:39:34 +0100
-Message-ID: <AANLkTin6120QbxyxHt=UM9Dpk_3C-vaD2z8RaRuut76r@mail.gmail.com>
+Date: Wed, 3 Nov 2010 23:58:42 +0100
+Message-ID: <AANLkTim4_5dgPGcw5B3U-3UH63REL4QWsWPV=mDSJJ6D@mail.gmail.com>
 References: <1288801894-1168-1-git-send-email-kusmabite@gmail.com>
  <877hgunmdc.fsf@fox.patthoyts.tk> <AANLkTin2BCxDoKhDCSgSRG1eVUGVeQh6Bq_=FfAe0M_M@mail.gmail.com>
 Reply-To: kusmabite@gmail.com
@@ -10,69 +10,119 @@ Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, gitster@pobox.com
 To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Wed Nov 03 23:40:01 2010
+X-From: git-owner@vger.kernel.org Wed Nov 03 23:59:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDlzs-0004bm-Vn
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 23:40:01 +0100
+	id 1PDmIS-0006PC-7L
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 23:59:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753345Ab0KCWj5 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Nov 2010 18:39:57 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:51963 "EHLO
+	id S1753718Ab0KCW7G convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 3 Nov 2010 18:59:06 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56249 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753311Ab0KCWjz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Nov 2010 18:39:55 -0400
-Received: by fxm16 with SMTP id 16so969038fxm.19
-        for <git@vger.kernel.org>; Wed, 03 Nov 2010 15:39:54 -0700 (PDT)
+	with ESMTP id S1753609Ab0KCW7F convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 3 Nov 2010 18:59:05 -0400
+Received: by fxm16 with SMTP id 16so980201fxm.19
+        for <git@vger.kernel.org>; Wed, 03 Nov 2010 15:59:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:mime-version:received:reply-to
          :in-reply-to:references:from:date:message-id:subject:to:cc
          :content-type:content-transfer-encoding;
-        bh=t1XLPjdS0p/1BiLUlRvT9yYQy3TtGKoTNcMnsFr2nQ4=;
-        b=KuMwfTIc4vqgVEB+Qhydpv1u6xLLniuU9nWRd3xzbo6b7U0X6zDiElsukoSupldgmp
-         13B2N13Gv9IzSsNr1gpQdoVDLLo5HNyLknLDG0GDZuDOwaZzFYqBorszg9qRqshwRzGa
-         e55MiLzyUj0izF2tYFL2KBtCcmQHhNfAh9SpM=
+        bh=fOZ69sOVKrTKGUIt7Qs+/VtfWDWtFF9lrUlolyvGN3k=;
+        b=bTgu5X74JEgp7g6UM2L9wFdSWXTB242LcIS395a1igVceRBU7TH5c+KxU0PwRr8N8K
+         tR6fjXiWSqeNRn/h9K9ZS4iyrOQm5EpKzquT3sm7QUEOmU+6nPpq/2fczPIs+Ge5hjC4
+         cWFwMOOyHMLsqPlkTX10OG98oCXuJiflbZq+Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:reply-to:in-reply-to:references:from:date:message-id
          :subject:to:cc:content-type:content-transfer-encoding;
-        b=rN+PDKpYU0CBbIgS80NsSAatgwNOCrz5oEC0uXitzDNHcN2gkn8f8SfiAfoY46TsyH
-         4gwzRAwtVIe8LgSuGqJocHs60VWT9NyklnrL25/RuzChG3Abkt+qejhYU8xCBsW+Sy9q
-         XEK1G3eO6SxrgkrLJfhBsZ+9ksy6Ayzcpt/Rg=
-Received: by 10.223.83.133 with SMTP id f5mr8544328fal.29.1288823994696; Wed,
- 03 Nov 2010 15:39:54 -0700 (PDT)
-Received: by 10.223.108.73 with HTTP; Wed, 3 Nov 2010 15:39:34 -0700 (PDT)
+        b=vnstdIvu+IJLGcYUussbj3uWx5wW9MnASTdGAFDkDBR+WxfHFfodzWsddahRFev9JF
+         AFIkw3nrwjfbNKdjG7mL/fQ7g/hc98GyaZGcjEbqRl7VJzKpJNkJh8Owlc4+cyocdJhc
+         ZKOLI9QxkbNdMSu2LUo+HwIixyLph9zSyL7O8=
+Received: by 10.223.114.202 with SMTP id f10mr134195faq.67.1288825142866; Wed,
+ 03 Nov 2010 15:59:02 -0700 (PDT)
+Received: by 10.223.108.73 with HTTP; Wed, 3 Nov 2010 15:58:42 -0700 (PDT)
 In-Reply-To: <AANLkTin2BCxDoKhDCSgSRG1eVUGVeQh6Bq_=FfAe0M_M@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160648>
 
 On Wed, Nov 3, 2010 at 11:18 PM, Erik Faye-Lund <kusmabite@gmail.com> w=
 rote:
-> Ah, thanks. For me it's leaking a variable amount of handles per
-> ls-remote, but if I apply the following patch it's down to one. Need
-> to find that one as well...
+> On Wed, Nov 3, 2010 at 10:11 PM, Pat Thoyts
+> <patthoyts@users.sourceforge.net> wrote:
+>> Erik Faye-Lund <kusmabite@gmail.com> writes:
+>>
+>>>Here's hopefully the last iteration of this series. The previous ver=
+sion
+>>>only got a single complain about a typo in the subject of patch 14/1=
+5, so
+>>>it seems like most controversies have been settled.
+>>
+>> I pulled this win32-daemon branch into my msysgit build tree and bui=
+lt
+>> it. I get the following warnings:
+>>
+>> =A0 =A0CC daemon.o
+>> daemon.c: In function 'service_loop':
+>> daemon.c:674: warning: dereferencing pointer 'ss.124' does break str=
+ict-aliasing rules
+>> daemon.c:676: warning: dereferencing pointer 'ss.124' does break str=
+ict-aliasing rules
+>> daemon.c:681: warning: dereferencing pointer 'ss.124' does break str=
+ict-aliasing rules
+>> daemon.c:919: note: initialized from here
+>> daemon.c:679: warning: dereferencing pointer 'sin_addr' does break s=
+trict-aliasing rules
+>> daemon.c:675: note: initialized from here
+>> daemon.c:691: warning: dereferencing pointer 'sin6_addr' does break =
+strict-aliasing rules
+>> daemon.c:682: note: initialized from here
+>>
 >
-> diff --git a/compat/mingw.c b/compat/mingw.c
-> index b780200..47e7d26 100644
-> --- a/compat/mingw.c
-> +++ b/compat/mingw.c
-> @@ -1519,8 +1519,10 @@ pid_t waitpid(pid_t pid, int *status, unsigned=
- options)
-> =A0 =A0 =A0 =A0}
+> Yeah, I'm aware of these. I thought those warnings were already
+> present in the Linux build, but checking again I see that that's not
+> the case. Need to investigate.
 >
-> =A0 =A0 =A0 =A0if (pid > 0 && options & WNOHANG) {
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (WAIT_OBJECT_0 !=3D WaitForSingleObj=
-ect((HANDLE)pid, 0))
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (WAIT_OBJECT_0 !=3D WaitForSingleObj=
-ect((HANDLE)pid, 0)) {
 
-AAAND the last one is right here as well:
--		if (WAIT_OBJECT_0 !=3D WaitForSingleObject((HANDLE)pid, 0))
-+		if (WAIT_OBJECT_0 !=3D WaitForSingleObject(h, 0)) {
+OK, it's the patch "daemon: use run-command api for async serving"
+that introduce the warning. But looking closer at the patch it doesn't
+seem the patch actually introduce the strict-aliasing violation, it's
+there already. The patch only seems to change the code enough for GCC
+to start realize there's a problem. Unless I'm misunderstanding
+something vital, that is.
+
+Anyway, here's a patch that makes it go away, I guess I'll squash it
+into the next round.
+
+diff --git a/daemon.c b/daemon.c
+index 6eee570..d636446 100644
+--- a/daemon.c
++++ b/daemon.c
+@@ -1159,14 +1159,13 @@ int main(int argc, char **argv)
+ 	}
+
+ 	if (inetd_mode || serve_mode) {
+-		struct sockaddr_storage ss;
+-		struct sockaddr *peer =3D (struct sockaddr *)&ss;
+-		socklen_t slen =3D sizeof(ss);
++		struct sockaddr sa;
++		socklen_t slen =3D sizeof(sa);
+
+-		if (getpeername(0, peer, &slen))
+-			peer =3D NULL;
+-
+-		return execute(peer);
++		if (getpeername(0, &sa, &slen))
++			return execute(NULL);
++		else
++			return execute(&sa);
+ 	}
+
+ 	if (detach) {
