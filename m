@@ -1,65 +1,62 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/2] Use git_open_noatime when accessing pack data
-Date: Wed, 03 Nov 2010 12:35:20 -0700
-Message-ID: <7vvd4ew687.fsf@alter.siamese.dyndns.org>
-References: <1288652061-19614-1-git-send-email-spearce@spearce.org>
- <1288652061-19614-2-git-send-email-spearce@spearce.org>
- <7v8w1axrnp.fsf@alter.siamese.dyndns.org> <20101103174148.GB13377@burratino>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: [PATCH] git-gui: handle symlink replaced by file
+Date: Wed, 3 Nov 2010 21:07:11 +0100
+Message-ID: <AANLkTi=P+sKzYSkeS2-N+DerP3zdRgrDnuNuXbK0O89s@mail.gmail.com>
+References: <AANLkTi=dA+mj1KDpAgGAtg1S5Gt5wXAJ4zLd-tLob=DH@mail.gmail.com>
+	<8739rqqb4m.fsf@fox.patthoyts.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 03 20:37:56 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Wed Nov 03 21:07:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDj9f-00080Q-Bn
-	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 20:37:55 +0100
+	id 1PDjc6-00013b-VP
+	for gcvg-git-2@lo.gmane.org; Wed, 03 Nov 2010 21:07:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753743Ab0KCTfc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Nov 2010 15:35:32 -0400
-Received: from a-pb-sasl-quonix.pobox.com ([208.72.237.25]:54484 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753371Ab0KCTfb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Nov 2010 15:35:31 -0400
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id E3E342490;
-	Wed,  3 Nov 2010 15:35:28 -0400 (EDT)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Gv++aoCVPtb6J80pDvICDQxPEAA=; b=YEAFV+
-	ymNt0ky7azBKWhKYpyKqEMu1PxmSJoQLp7+v3FkhHOl3yIb4JBTegnwe5yvbQxZl
-	XQMwI42MEFDihbxdk5jzxO6c3FC7uo9W58cts/TTNOZpnar4uYqyReQtKDftnveJ
-	2YsjaVKwegId7k6tBI06baHaYiwQ9Szp4fMGE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=O/vlUP4nePrrtPGrVMya24YWAfJ6go9z
-	ljks+qjnY32ugG8NuRTMDpYGszfelzKcIRB72CkT6Fh82PdUIuYkQkEEjaMC+GZw
-	c7zU8oAzT0x7nbK7djQSmrZnG7WbSMZU6c6Cn77XnG2nB21U40mbidbfCLdoV0JZ
-	DBRvnoyQE20=
-Received: from a-pb-sasl-quonix. (unknown [127.0.0.1])
-	by a-pb-sasl-quonix.pobox.com (Postfix) with ESMTP id AEFC7248F;
-	Wed,  3 Nov 2010 15:35:25 -0400 (EDT)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-quonix.pobox.com (Postfix) with ESMTPSA id A9768248D; Wed,  3 Nov
- 2010 15:35:21 -0400 (EDT)
-In-Reply-To: <20101103174148.GB13377@burratino> (Jonathan Nieder's message of
- "Wed\, 3 Nov 2010 12\:41\:48 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 81AE210A-E781-11DF-B691-B51D107BB6B6-77302942!a-pb-sasl-quonix.pobox.com
+	id S1754142Ab0KCUHO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Nov 2010 16:07:14 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:63011 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752397Ab0KCUHM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Nov 2010 16:07:12 -0400
+Received: by ywc21 with SMTP id 21so800753ywc.19
+        for <git@vger.kernel.org>; Wed, 03 Nov 2010 13:07:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=XACaRf1vMQpApyMpY1vP8/KKMyamGKcY/JkGjOvgVew=;
+        b=IROcz+0BWISKVC0mL+7LxPmUcbeIUcd3u7k4BvAnWUnnddL5W+6WCrLBOud154Sd6R
+         No9K/+CGfyMDYjPIROw+3aRTHnKK/tSjzT2oW8fDeWPClfYr+2MIuyxrmmBj1bIAG3oH
+         1N7Bp0RuPTp0vlt0LSJ3qrlxQzb2L3ZOfC9RA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=flNehr9OSVUkSGdrdArhWhJpxGwbV7D++dCLNCGEL6t7I9XhdWP2IWIt3A76sAvyaF
+         H21y38PS5F9MM2VTKoeAYYWmLQi8S3qVyu3glMQb+/g/ScWFs8leNA22dn/Q5d1CgNSJ
+         cIHPW/BUFZV2UU1vBatOj5xOTFjydENjD4jSk=
+Received: by 10.42.210.143 with SMTP id gk15mr13444544icb.509.1288814831455;
+ Wed, 03 Nov 2010 13:07:11 -0700 (PDT)
+Received: by 10.42.114.15 with HTTP; Wed, 3 Nov 2010 13:07:11 -0700 (PDT)
+In-Reply-To: <8739rqqb4m.fsf@fox.patthoyts.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160637>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Thu, Oct 28, 2010 at 14:27, Pat Thoyts
+<patthoyts@users.sourceforge.net> wrote:
+> This patch just handles the second segment without generating the error
+> really. It doesn't attempt to do any pretty output.
 
-> Judging from these three use cases, readonly open()s to the worktree
-> should indeed use noatime, but open()s of .git/config, say, should
-> not.  Hmm.
+Thanks for the patch. I haven't test it yet. Actually I can't find
+documentation, that git outputs two diffs when the path changes the
+type. And I have no idea how to present this in git gui.
 
-Why not, when you are talking about readonly open?
+Bert
