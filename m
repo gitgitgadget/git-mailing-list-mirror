@@ -1,93 +1,59 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 4/4] Remove remaining rename_dst references in _locate_element() and pass a pointer to it.
-Date: Thu,  4 Nov 2010 21:33:15 +0100
-Message-ID: <1288902795-8597-5-git-send-email-ydirson@altern.org>
-References: <1288902795-8597-1-git-send-email-ydirson@altern.org>
-Cc: Yann Dirson <ydirson@altern.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 04 21:34:03 2010
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: .git as file pointing to directory?
+Date: Thu, 04 Nov 2010 21:35:16 +0100
+Message-ID: <4CD31904.5040308@web.de>
+References: <AANLkTikB4p9=EQRsAJTe4-nAw5udz2pfcRd4WPsfms86@mail.gmail.com> <vpqpqulc52q.fsf@bauges.imag.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Brad Larson <bklarson@gmail.com>, git@vger.kernel.org
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Thu Nov 04 21:35:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PE6VU-0003Xr-NO
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 21:34:01 +0100
+	id 1PE6X7-0004jh-HP
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 21:35:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752737Ab0KDUdg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Nov 2010 16:33:36 -0400
-Received: from smtp5-g21.free.fr ([212.27.42.5]:44087 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752545Ab0KDUde (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Nov 2010 16:33:34 -0400
-Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 44669D480CC;
-	Thu,  4 Nov 2010 21:33:28 +0100 (CET)
-Received: from yann by home.lan with local (Exim 4.72)
-	(envelope-from <ydirson@free.fr>)
-	id 1PE6Uu-0002FY-LD; Thu, 04 Nov 2010 21:33:24 +0100
-X-Mailer: git-send-email 1.7.2.3
-In-Reply-To: <1288902795-8597-1-git-send-email-ydirson@altern.org>
+	id S1752880Ab0KDUfV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Nov 2010 16:35:21 -0400
+Received: from fmmailgate02.web.de ([217.72.192.227]:55083 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752807Ab0KDUfS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Nov 2010 16:35:18 -0400
+Received: from smtp05.web.de  ( [172.20.4.166])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 601AF17DE655F;
+	Thu,  4 Nov 2010 21:35:17 +0100 (CET)
+Received: from [93.246.52.145] (helo=[192.168.178.29])
+	by smtp05.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1PE6Wj-00030S-00; Thu, 04 Nov 2010 21:35:17 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <vpqpqulc52q.fsf@bauges.imag.fr>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19m4+lFPM2L31pnLmHNPmALG+aRXThiCMBfJxmq
+	dWP+xkvb7Qp6xTW+OfBEyWXrP3sGxwfWa8RwmF+/4R+jhIOYIf
+	HJoONBrl+0hDhOnmVwyQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160760>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160761>
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
- diffcore-rename.c |   15 +++++++--------
- 1 files changed, 7 insertions(+), 8 deletions(-)
+Am 04.11.2010 19:32, schrieb Matthieu Moy:
+> Brad Larson <bklarson@gmail.com> writes:
+> 
+>> Sorry if this is obvious, I can't figure out what term to search for.
+>>
+>> At gittogether there was some talk about having .git be a file, not a
+>> folder, with contents pointing to the real .git directory.  Similar to
+>> a symlink, but supported in Windows.  Is there a specific name for
+>> this feature?  Where can I find more details?  Which version of git
+>> introduced this?
+> 
+> It has been discussed under the name "gitlink", which was
+> unfortunately also used for something else in the subtree
+> implementation, but AFAIK, it has never been implemented.
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index a674fbb..a4e0a96 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -11,8 +11,8 @@
- struct dst_obj {
- 	struct diff_filespec *two;
- };
--#define locate_element(list,elem,insert_ok)			\
--	_locate_element(elem, &list##_nr, &list##_alloc,	\
-+#define locate_element(list,elem,insert_ok)				\
-+	_locate_element((void**)&list, elem, &list##_nr, &list##_alloc,	\
- 			sizeof(*list), insert_ok)
- 
- /* Table of rename/copy destinations, "subclass" of dst_obj */
-@@ -24,7 +24,7 @@ static int rename_dst_nr, rename_dst_alloc;
- #define locate_rename_dst(elem,insert_ok)		\
- 	locate_element(rename_dst, elem, insert_ok)
- 
--static void *_locate_element(struct diff_filespec *two,
-+static void *_locate_element(void **listp, struct diff_filespec *two,
- 			     int *elem_nr_p, int *elem_alloc_p,
- 			     size_t elem_size, int insert_ok)
- {
-@@ -35,7 +35,7 @@ static void *_locate_element(struct diff_filespec *two,
- 	last = (*elem_nr_p);
- 	while (last > first) {
- 		int next = (last + first) >> 1;
--		struct dst_obj *dst = (void*)rename_dst + (next * elem_size);
-+		struct dst_obj *dst = *listp + (next * elem_size);
- 		int cmp = strcmp(two->path, dst->two->path);
- 		if (!cmp)
- 			return dst;
-@@ -51,13 +51,12 @@ static void *_locate_element(struct diff_filespec *two,
- 	/* insert to make it at "first" */
- 	if ((*elem_alloc_p) <= (*elem_nr_p)) {
- 		(*elem_alloc_p) = alloc_nr(*elem_alloc_p);
--		rename_dst = xrealloc(rename_dst,
--				      (*elem_alloc_p) * elem_size);
-+		*listp = xrealloc(*listp, (*elem_alloc_p) * elem_size);
- 	}
- 	(*elem_nr_p)++;
--	first_elem_p = (void*)rename_dst + first * elem_size;
-+	first_elem_p = *listp + first * elem_size;
- 	if (first < (*elem_nr_p))
--		memmove((void*)rename_dst + (first + 1) * elem_size,
-+		memmove(*listp + (first + 1) * elem_size,
- 			first_elem_p,
- 			((*elem_nr_p) - first - 1) * elem_size);
- 	first_elem_p->two = alloc_filespec(two->path);
--- 
-1.7.2.3
+Hmm, AFAIK gitlinks are already in heavy use for submodule entries ...
