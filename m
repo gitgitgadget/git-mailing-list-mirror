@@ -1,203 +1,133 @@
-From: David Fries <david@fries.net>
-Subject: [PATCH] gitk: improve dark background support
-Date: Wed, 3 Nov 2010 19:35:24 -0500
-Message-ID: <20101104003524.GI7835@spacedout.fries.net>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [PATCH] Remove restriction on notes ref base
+Date: Thu, 04 Nov 2010 01:49:47 +0100
+Message-ID: <201011040149.47968.johan@herland.net>
+References: <1288657003-17802-1-git-send-email-kroot@google.com>
+ <7vsjzixty5.fsf@alter.siamese.dyndns.org>
+ <AANLkTin_NuzQocOab+w=B3Ka+n22j2-OXQu8=J6uzByS@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Kenny Root <kroot@google.com>,
+	Thomas Rast <trast@student.ethz.ch>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 04 01:42:16 2010
+X-From: git-owner@vger.kernel.org Thu Nov 04 01:50:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDnuA-000182-LF
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 01:42:15 +0100
+	id 1PDo1e-0004Jo-Pp
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 01:49:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754014Ab0KDAmH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Nov 2010 20:42:07 -0400
-Received: from SpacedOut.fries.net ([67.64.210.234]:37533 "EHLO
-	SpacedOut.fries.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753913Ab0KDAmG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Nov 2010 20:42:06 -0400
-X-Greylist: delayed 398 seconds by postgrey-1.27 at vger.kernel.org; Wed, 03 Nov 2010 20:42:06 EDT
-Received: from SpacedOut.fries.net (david@localhost [127.0.0.1])
-	by SpacedOut.fries.net (8.14.3/8.14.3/Debian-9.4) with ESMTP id oA40ZPLU007725
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 3 Nov 2010 19:35:25 -0500
-Received: (from david@localhost)
-	by SpacedOut.fries.net (8.14.3/8.14.3/Submit) id oA40ZO9h007724
-	for git@vger.kernel.org; Wed, 3 Nov 2010 19:35:24 -0500
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Greylist: Sender passed SPF test, not delayed by milter-greylist-4.3.7 (SpacedOut.fries.net [127.0.0.1]); Wed, 03 Nov 2010 19:35:25 -0500 (CDT)
+	id S1754162Ab0KDAty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Nov 2010 20:49:54 -0400
+Received: from smtp.getmail.no ([84.208.15.66]:64463 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753948Ab0KDAtx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Nov 2010 20:49:53 -0400
+Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LBC00EG44Z1JDD0@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 04 Nov 2010 01:49:49 +0100 (MET)
+Received: from get-mta-scan01.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 1B2D617993A6_CD2032DB	for <git@vger.kernel.org>; Thu,
+ 04 Nov 2010 00:49:49 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 9B7221799335_CD2032CF	for <git@vger.kernel.org>; Thu,
+ 04 Nov 2010 00:49:48 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LBC00KDP4Z0YK10@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 04 Nov 2010 01:49:48 +0100 (MET)
+User-Agent: KMail/1.13.5 (Linux/2.6.35-ARCH; KDE/4.5.2; x86_64; ; )
+In-reply-to: <AANLkTin_NuzQocOab+w=B3Ka+n22j2-OXQu8=J6uzByS@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160655>
 
-Replace most uses of black with $fgcolor as items such as a black
-outline on the tag or tag lines with a black background doesn't show
-up.  Use $fgcolor instead to make it contrast with the background.
+On Wednesday 03 November 2010, Sverre Rabbelier wrote:
+> On Wed, Nov 3, 2010 at 17:17, Junio C Hamano <gitster@pobox.com> wrote:
+> > I was actually thinking more along the lines of "not keeping track of
+> > remote state at all".  We don't do that for tags either.
+> 
+> I would rather see us go the other way (and make the tags refspec put
+> tags under refs/tags/remotes/.../). I can understand not scoping tags
+> (since they're supposed to be immutable, and are usually global), but
+> I don't think the same holds for notes. Notes _are_ versioned, and
+> it's expected that users will collaborate.
 
-Use diffcolor 2 for link as blue on a black background might as well
-look like dark blue on black and is very difficult to read.  The
-"Diff: hunk header" keeps the colors more consistent and both default
-to blue.
+Agreed. I don't see how you can easily share and manipulate notes between 
+repos _without_ keeping the remote state separate from the local state.
 
-If the foreground color is dark use light tags, branches, and
-remote fill colors.  If it is light use darker versions so the
-text is readable.
 
-Signed-off-by: David Fries <David@Fries.net>
----
- gitk-git/gitk |   40 ++++++++++++++++++++++++++++++++--------
- 1 files changed, 32 insertions(+), 8 deletions(-)
+I'm probably gonna be flamed for this, but I'd like to go even further, and 
+- for a future major version of Git - reconsider Git's default refspecs. 
+Currently we have:
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index 1b0e09a..ca9244f 100644
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -6233,6 +6233,7 @@ proc drawtags {id x xt y1} {
-     global idtags idheads idotherrefs mainhead
-     global linespc lthickness
-     global canv rowtextx curview fgcolor bgcolor ctxbut
-+    global tagcolor branchcolor remotecolor
- 
-     set marks {}
-     set ntags 0
-@@ -6270,7 +6271,7 @@ proc drawtags {id x xt y1} {
- 	set xt [expr {$xt + $delta + $wid + $lthickness + $linespc}]
-     }
-     set t [$canv create line $x $y1 [lindex $xvals end] $y1 \
--	       -width $lthickness -fill black -tags tag.$id]
-+	       -width $lthickness -fill $fgcolor -tags tag.$id]
-     $canv lower $t
-     foreach tag $marks x $xvals wid $wvals {
- 	set xl [expr {$x + $delta}]
-@@ -6280,13 +6281,13 @@ proc drawtags {id x xt y1} {
- 	    # draw a tag
- 	    set t [$canv create polygon $x [expr {$yt + $delta}] $xl $yt \
- 		       $xr $yt $xr $yb $xl $yb $x [expr {$yb - $delta}] \
--		       -width 1 -outline black -fill yellow -tags tag.$id]
-+		       -width 1 -outline $fgcolor -fill $tagcolor -tags tag.$id]
- 	    $canv bind $t <1> [list showtag $tag 1]
- 	    set rowtextx([rowofcommit $id]) [expr {$xr + $linespc}]
- 	} else {
- 	    # draw a head or other ref
- 	    if {[incr nheads -1] >= 0} {
--		set col green
-+		set col $branchcolor
- 		if {$tag eq $mainhead} {
- 		    set font mainfontbold
- 		}
-@@ -6295,14 +6296,14 @@ proc drawtags {id x xt y1} {
- 	    }
- 	    set xl [expr {$xl - $delta/2}]
- 	    $canv create polygon $x $yt $xr $yt $xr $yb $x $yb \
--		-width 1 -outline black -fill $col -tags tag.$id
-+		-width 1 -outline $fgcolor -fill $col -tags tag.$id
- 	    if {[regexp {^(remotes/.*/|remotes/)} $tag match remoteprefix]} {
- 	        set rwid [font measure mainfont $remoteprefix]
- 		set xi [expr {$x + 1}]
- 		set yti [expr {$yt + 1}]
- 		set xri [expr {$x + $rwid}]
- 		$canv create polygon $xi $yti $xri $yti $xri $yb $xi $yb \
--			-width 0 -fill "#ffddaa" -tags tag.$id
-+			-width 0 -fill $remotecolor -tags tag.$id
- 	    }
- 	}
- 	set t [$canv create text $xl $y1 -anchor w -text $tag -fill $fgcolor \
-@@ -6673,7 +6674,7 @@ proc appendwithlinks {text tags} {
- }
- 
- proc setlink {id lk} {
--    global curview ctext pendinglinks
-+    global curview ctext pendinglinks diffcolors
- 
-     set known 0
-     if {[string length $id] < 40} {
-@@ -6687,7 +6688,7 @@ proc setlink {id lk} {
- 	set known [commitinview $id $curview]
-     }
-     if {$known} {
--	$ctext tag conf $lk -foreground blue -underline 1
-+	$ctext tag conf $lk -foreground [lindex $diffcolors 2] -underline 1
- 	$ctext tag bind $lk <1> [list selbyid $id]
- 	$ctext tag bind $lk <Enter> {linkcursor %W 1}
- 	$ctext tag bind $lk <Leave> {linkcursor %W -1}
-@@ -8215,6 +8216,7 @@ proc linehover {} {
-     global hoverx hovery hoverid hovertimer
-     global canv linespc lthickness
-     global commitinfo
-+    global fgcolor
- 
-     set text [lindex $commitinfo($hoverid) 0]
-     set ymax [lindex [$canv cget -scrollregion] 3]
-@@ -8227,7 +8229,7 @@ proc linehover {} {
-     set x1 [expr {$x + [font measure mainfont $text] + 2 * $lthickness}]
-     set y1 [expr {$y + $linespc + 2 * $lthickness}]
-     set t [$canv create rectangle $x0 $y0 $x1 $y1 \
--	       -fill \#ffff80 -outline black -width 1 -tags hover]
-+	       -fill \#ffff80 -outline $fgcolor -width 1 -tags hover]
-     $canv raise $t
-     set t [$canv create text $x $y -anchor nw -text $text -tags hover \
- 	       -font mainfont]
-@@ -10877,6 +10879,23 @@ proc setbg {c} {
-     }
- }
- 
-+proc setfill {c} {
-+    global tagcolor branchcolor remotecolor
-+
-+    set fg [winfo rgb . $c]
-+    if {[lindex $fg 0] + 1.5 * [lindex $fg 1] + 0.5 * [lindex $fg 2] > 100000} {
-+	# dark fill to read a light foreground font
-+	set tagcolor yellow4
-+	set branchcolor green4
-+	set remotecolor "#806F55"
-+    } else {
-+	# light fill to read a dark foreground font
-+        set tagcolor yellow
-+        set branchcolor green
-+        set remotecolor "#ffddaa"
-+    }
-+}
-+
- proc setfg {c} {
-     global fglist canv
- 
-@@ -10886,6 +10905,8 @@ proc setfg {c} {
-     allcanvs itemconf text -fill $c
-     $canv itemconf circle -outline $c
-     $canv itemconf markid -outline $c
-+
-+    setfill $c
- }
- 
- proc prefscan {} {
-@@ -11381,11 +11402,13 @@ if {[tk windowingsystem] eq "win32"} {
-     set uicolor SystemButtonFace
-     set bgcolor SystemWindow
-     set fgcolor SystemButtonText
-+    setfill $fgcolor
-     set selectbgcolor SystemHighlight
- } else {
-     set uicolor grey85
-     set bgcolor white
-     set fgcolor black
-+    setfill $fgcolor
-     set selectbgcolor gray85
- }
- set diffcolors {red "#00a000" blue}
-@@ -11422,6 +11445,7 @@ namespace import ::msgcat::mc
- ::msgcat::mcload $gitk_msgsdir
- 
- catch {source ~/.gitk}
-+setfill $fgcolor
- 
- parsefont mainfont $mainfont
- eval font create mainfont [fontflags mainfont]
+  Remote repo    ->   Local repo
+  ------------------------------------------------
+  refs/heads/*        refs/remotes/$remote/*
+  refs/tags/*         refs/tags/*
+  refs/notes/*        ???
+
+Of these, the first is specified in the config, the second is 
+implicit/magic, and the third would be specified in the config.
+
+I'd probably suggest a more straightforward (and hopefully less confusing) 
+setup like this:
+
+  Remote repo    ->   Local repo
+  ------------------------------------------------
+  refs/heads/*        refs/remotes/$remote/heads/*
+  refs/tags/*         refs/remotes/$remote/tags/*
+  refs/notes/*        refs/remotes/$remote/notes/*
+
+...and these would all be set in the config, i.e. no implicit/magic 
+refspecs.
+
+Now, there would obviously need to be some accompanying changes:
+
+We would, for example, extend the ref disambiguation of <name> (as 
+documented in the "SPECIFYING REVISIONS" section of git-rev-parse(1)), so 
+that in the cases where <name> is of the form "<foo>/<bar>" AND <foo> is an 
+existing remote, we also check for the following refs (after none of the 
+existing checks have returned a match):
+
+  7. refs/remotes/<foo>/tags/<bar>
+  8. refs/remotes/<foo>/heads/<bar>
+
+We would also need similar disambiguation rules for notes refs, e.g.:
+
+  1. $GIT_DIR/<name>
+  2. refs/notes/<name>
+  3. refs/remotes/<foo>/notes/<bar> (when <name> is of the form <foo>/<bar>)
+
+With these rules, we could use "origin/master", "origin/v1.2.3" and 
+"origin/bugnotes" to refer to "refs/remotes/origin/heads/master", 
+"refs/remotes/origin/tags/v1.2.3" and "refs/remotes/origin/notes/bugnotes" 
+respectively.
+
+As a bonus, we'd get better handling of conflicting tag names: If e.g. 
+remotes "alice" and "bob" each have a tag "xyzzy" pointing to different 
+objects, you could reference and compare both tags (using "alice/xyzzy" and 
+"bob/xyzzy", respectively), and optionally set your own local tag 
+("refs/tags/xyzzy") to match either of them.
+
+
+...Johan (scrambles for a flame retardant suit)
+
+
 -- 
-1.7.1
+Johan Herland, <johan@herland.net>
+www.herland.net
