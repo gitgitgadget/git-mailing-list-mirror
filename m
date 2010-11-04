@@ -1,68 +1,122 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: .git as file pointing to directory?
-Date: Thu, 04 Nov 2010 19:32:45 +0100
-Message-ID: <vpqpqulc52q.fsf@bauges.imag.fr>
-References: <AANLkTikB4p9=EQRsAJTe4-nAw5udz2pfcRd4WPsfms86@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] diff,difftool: Don't use the {0,2} notation in usage
+ strings
+Date: Thu, 4 Nov 2010 13:38:51 -0500
+Message-ID: <20101104183851.GA16865@burratino>
+References: <20101021222129.GA13262@burratino>
+ <20101024155121.GA9503@headley>
+ <AANLkTimpJbuZAPfvVOedstV7=UiLiDMnDaYWQLVNQ+Yc@mail.gmail.com>
+ <87wrp12p00.fsf@gmail.com>
+ <AANLkTinyPkGmsgbGM9qpXMNcZRzOXvtjDDEkJ-i3nWXz@mail.gmail.com>
+ <87fwvl2d4d.fsf@gmail.com>
+ <87hbfxgg86.fsf_-_@gmail.com>
+ <20101104174917.GA30628@sigill.intra.peff.net>
+ <20101104180242.GA16431@burratino>
+ <20101104181357.GA31016@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Brad Larson <bklarson@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 04 19:33:03 2010
+Cc: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>,
+	git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	Mark Lodato <lodatom@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Nov 04 19:39:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PE4cL-0002nm-SH
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 19:32:58 +0100
+	id 1PE4ib-00070p-GO
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 19:39:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752480Ab0KDScw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Nov 2010 14:32:52 -0400
-Received: from mx1.imag.fr ([129.88.30.5]:52027 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750976Ab0KDScu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Nov 2010 14:32:50 -0400
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id oA4IHewU019734
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 4 Nov 2010 19:17:40 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PE4c9-0003pd-UO; Thu, 04 Nov 2010 19:32:46 +0100
-In-Reply-To: <AANLkTikB4p9=EQRsAJTe4-nAw5udz2pfcRd4WPsfms86@mail.gmail.com> (Brad Larson's message of "Thu\, 4 Nov 2010 13\:22\:25 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 04 Nov 2010 19:17:40 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: oA4IHewU019734
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1289499463.01465@9GLaS1OroRYUC5csDG2alQ
+	id S1752509Ab0KDSjV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Nov 2010 14:39:21 -0400
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:45586 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751106Ab0KDSjT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Nov 2010 14:39:19 -0400
+Received: by pvb32 with SMTP id 32so688280pvb.19
+        for <git@vger.kernel.org>; Thu, 04 Nov 2010 11:39:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=5cOe814ogrkRxWNprK1YmuCtmlqVpqRLLc4/dam8TQU=;
+        b=HiDBYrWV4vnBxZ7x2/BAyUEvrfK77sag38G2ct5KYnPBzpNbyvQxOppAa2WvKRupm1
+         PJuZO5alSS6GPNabc8qIhw6GgsTUmpSQtpoeFyr9wRUxoFbS0FtPRAZlDUW39bB7+1+Z
+         NGPab39Eg/xVQBBOg67KZ4jHNZHCjAAVUv/rs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=YV+l2GoIVHxhVrFM/PAHqsBHHN9O6WgvxOFGSK0ZBBlujz1sOrMnGiQHXPJnKKiKXI
+         E13dYsEK9c1oI/syZN+D66OoiRJceTxlXdXVdYCoyzYgi4tiZ9V/Vjmha8ir6g7CjpbD
+         ommDSzI3oeNLpLbGRUUzPqeaglCXaOlVmaGSg=
+Received: by 10.42.30.8 with SMTP id t8mr639759icc.269.1288895957082;
+        Thu, 04 Nov 2010 11:39:17 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id p22sm108547vcf.20.2010.11.04.11.39.14
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 04 Nov 2010 11:39:16 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <20101104181357.GA31016@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160745>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160746>
 
-Brad Larson <bklarson@gmail.com> writes:
+Jeff King wrote:
 
-> Sorry if this is obvious, I can't figure out what term to search for.
+> 	git diff [options] [<commit>] [--] [<path>...]
+> 	git diff [options] --cached [<commit>] [--] [<path>...]
+> 	git diff [options] <commit> <commit> [--] [<path>...]
+> 	git diff [options] [--no-index] [--] <path> <path>
+> 
+> which covers the four major modes.
+
+Makes sense.  There is just one particularity of
+
+	git diff --cached [<commit>]
+
+I am worried about.  Namely: according to a recent patch,
+
+	git diff --cached
+
+should not be considered as
+
+	git diff --cached HEAD
+
+with the "HEAD" implicit, but a distinct operation meaning
+"show me what changes git commit would store".
+
+> On Thu, Nov 04, 2010 at 01:02:42PM -0500, Jonathan Nieder wrote:
+
+>> I would rather treat --cached as one of the options ("instead of
+>> comparing the worktree, compare its cached content in the index to the
+>> specified commit"),
 >
-> At gittogether there was some talk about having .git be a file, not a
-> folder, with contents pointing to the real .git directory.  Similar to
-> a symlink, but supported in Windows.  Is there a specific name for
-> this feature?  Where can I find more details?  Which version of git
-> introduced this?
+> Except it is not quite that. For the first two that I listed above,
+> --cached makes that distinction. But --cached doesn't make sense at all
+> in the third or fourth ones. So I think in practice it ends up defining
+> a mode of operation more than simply an option.
 
-It has been discussed under the name "gitlink", which was
-unfortunately also used for something else in the subtree
-implementation, but AFAIK, it has never been implemented.
+Not sure I understand your logic.  Is your point that --cached in
+those cases does not print
 
-The closest equivalent is git-new-workdir, but it relies on symlinks,
-and shares a bit more than it should with the other repository (i.e.
-if you checkout the same branch is two workdirs, you're doomed).
+	fatal: --cached does not make sense in this operation mode
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+but
+
+	usage: git diff <options> <rev>{0,2} -- <path>*
+
+that implies the operation mode is not known?
+
+>                                   There are pretty few unix programs
+> that don't take [options] at the beginning, so it really is kind of
+> superfluous. But it's also pretty standard, and clues the user in that
+> we are a normal program.
+
+Yes, sorry about the tangent.
