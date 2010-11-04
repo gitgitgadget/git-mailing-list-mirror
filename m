@@ -1,83 +1,90 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Problems switching branches
-Date: Thu, 4 Nov 2010 21:39:49 +0700
-Message-ID: <AANLkTikK93Jt+dAkpp6K-hQEo6D67q5OKJSLs+g0YL4y@mail.gmail.com>
-References: <loom.20101103T032930-451@post.gmane.org> <loom.20101104T012032-963@post.gmane.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Remove restriction on notes ref base
+Date: Thu, 4 Nov 2010 10:58:17 -0400
+Message-ID: <20101104145817.GA27580@sigill.intra.peff.net>
+References: <1288657003-17802-1-git-send-email-kroot@google.com>
+ <7vsjzixty5.fsf@alter.siamese.dyndns.org>
+ <AANLkTin_NuzQocOab+w=B3Ka+n22j2-OXQu8=J6uzByS@mail.gmail.com>
+ <201011040149.47968.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Maaartin <grajcar1@seznam.cz>
-X-From: git-owner@vger.kernel.org Thu Nov 04 15:40:18 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Kenny Root <kroot@google.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Nov 04 15:57:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PE0zB-0004wn-Vk
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 15:40:18 +0100
+	id 1PE1G2-0008EP-Dg
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 15:57:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751978Ab0KDOkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Nov 2010 10:40:13 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:33538 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751475Ab0KDOkL (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Nov 2010 10:40:11 -0400
-Received: by ewy7 with SMTP id 7so996483ewy.19
-        for <git@vger.kernel.org>; Thu, 04 Nov 2010 07:40:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=onKUBUHxUjTQN+WnLy0kUo0+E/+qoZnTQOh9b3e/iF4=;
-        b=xr/CLUmNxPZ9oAb0FTXeQbE6wF+jPPgbzK7/8bPbjPmmki0U5VguNlbhsuA+BJ+MLL
-         H9Q72Rhg8lCe/ILnpcAatvrTJw3YgD8SHGWThd3cEBZfGTelRZtY9Nw1F3mdNdiXD4rr
-         uBLMdnUoMqTelBedBa+cNkT6w9r3HO7cBoMSc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=b+Y+S4xy0M7PYhJum4DaDjqcJoieXkIm4ck0xuL9e9njblTEvH4g4bdjdvzHyngVHg
-         Khi5LFxL8/KoyXOIPjfUl7DEPEDNvRQYrMnPPmgiAgSRb48ckiSYJdLTVo0Wll16ULXQ
-         t46A+FtmLlnLAbcwIneEXckr20z+TrLmf9Nk4=
-Received: by 10.216.47.19 with SMTP id s19mr1993522web.56.1288881609764; Thu,
- 04 Nov 2010 07:40:09 -0700 (PDT)
-Received: by 10.216.172.199 with HTTP; Thu, 4 Nov 2010 07:39:49 -0700 (PDT)
-In-Reply-To: <loom.20101104T012032-963@post.gmane.org>
+	id S1752233Ab0KDO5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Nov 2010 10:57:38 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:45197 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751758Ab0KDO5g (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Nov 2010 10:57:36 -0400
+Received: (qmail 31790 invoked by uid 111); 4 Nov 2010 14:57:35 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 04 Nov 2010 14:57:35 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Nov 2010 10:58:17 -0400
+Content-Disposition: inline
+In-Reply-To: <201011040149.47968.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160726>
 
-On Thu, Nov 4, 2010 at 7:23 AM, Maaartin <grajcar1@seznam.cz> wrote:
-> Maaartin <grajcar1 <at> seznam.cz> writes:
->
->>
->> I sometimes run in a problem similar to
->> http://kerneltrap.org/mailarchive/git/2008/10/15/3667644/thread
->> There are some ignored files which I want neither track nor throw away; I'm
-> just
->> happy to have them and keep them out of version control.
->>
->> Unfortunately, there weren't ignored in the old branch. I'd be quite happy
-> with
->> non-destructive switching like "checkout everything what doesn't overwrite an
->> untracked file", so I would end in the old branch with a dirty working tree.
-> Is
->> it possible?
->
-> No answer?
+On Thu, Nov 04, 2010 at 01:49:47AM +0100, Johan Herland wrote:
 
-Which means nobody is interested in. Well, not really.
+> I'd probably suggest a more straightforward (and hopefully less confusing) 
+> setup like this:
+> 
+>   Remote repo    ->   Local repo
+>   ------------------------------------------------
+>   refs/heads/*        refs/remotes/$remote/heads/*
+>   refs/tags/*         refs/remotes/$remote/tags/*
+>   refs/notes/*        refs/remotes/$remote/notes/*
+> 
+> ...and these would all be set in the config, i.e. no implicit/magic 
+> refspecs.
 
-I also get irritated by a similar situation, where the untracked files
-have the same content as the to-be-checked-out files. I have been
-tempted (but never got around) to make git compare the in-index
-content and the untracked file, if it's the same, no need to abort the
-checkout process.
+I have often considered that something like that would be simpler, too.
+But just specifying
 
-But your approach may be better. Yes, I think it's possible. Any
-suggestion for checkout's new argument? --no-overwrite-untracked seems
-too long.
--- 
-Duy
+  fetch = refs/tags/*:refs/remotes/$remote/tags/*
+
+would pull down _all_ tags from the remote. Right now we only pull down
+tags for things that we are actually fetching (i.e., auto-follow).
+
+Now you could argue that auto-follow is not worth the effort. It is
+somewhat confusing, and I can't think of a time when it ever actually
+reduced the set of objects I was fetching (as opposed to just fetching
+all tags). But maybe others have use cases where it matters.
+
+> We would, for example, extend the ref disambiguation of <name> (as 
+> documented in the "SPECIFYING REVISIONS" section of git-rev-parse(1)), so 
+> that in the cases where <name> is of the form "<foo>/<bar>" AND <foo> is an 
+> existing remote, we also check for the following refs (after none of the 
+> existing checks have returned a match):
+> 
+>   7. refs/remotes/<foo>/tags/<bar>
+>   8. refs/remotes/<foo>/heads/<bar>
+
+This codifies that refs for remote $foo are in refs/remotes/$foo, which
+is something we have avoided so far. For example, when finding the
+"upstream" branch, we have the name of the remote and the merge branch,
+look up the fetch refspecs in the config, and then figure out where that
+branch would be fetched to. Which of course turns out as you say (as
+remotes/$remote_name/$branch) in the default config, but we don't
+restrict people to that.
+
+-Peff
