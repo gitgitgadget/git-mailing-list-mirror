@@ -1,53 +1,62 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH 1/2] Use git_open_noatime when accessing pack data
-Date: Wed, 3 Nov 2010 22:23:26 -0700
-Message-ID: <95C8862A-11A8-436C-AAD9-C231DA2BC3E4@sb.org>
-References: <1288652061-19614-1-git-send-email-spearce@spearce.org> <1288652061-19614-2-git-send-email-spearce@spearce.org> <7v8w1axrnp.fsf@alter.siamese.dyndns.org> <20101103174148.GB13377@burratino> <7vvd4ew687.fsf@alter.siamese.dyndns.org> <20101104050437.GB15018@burratino>
-Mime-Version: 1.0 (Apple Message framework v1081)
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] git-rebase--interactive.sh: Add new command "shell"
+Date: Thu, 04 Nov 2010 09:42:22 +0100
+Message-ID: <vpq39rhzdht.fsf@bauges.imag.fr>
+References: <1288847836-84882-1-git-send-email-kevin@sb.org>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 04 06:23:36 2010
+Cc: git@vger.kernel.org
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Thu Nov 04 09:42:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDsIP-0000Vt-QW
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 06:23:34 +0100
+	id 1PDvP3-0001CR-Hc
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 09:42:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754031Ab0KDFXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Nov 2010 01:23:30 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:49277 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752022Ab0KDFX2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Nov 2010 01:23:28 -0400
-Received: by pzk28 with SMTP id 28so96837pzk.19
-        for <git@vger.kernel.org>; Wed, 03 Nov 2010 22:23:28 -0700 (PDT)
-Received: by 10.142.213.10 with SMTP id l10mr207085wfg.199.1288848208621;
-        Wed, 03 Nov 2010 22:23:28 -0700 (PDT)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id q13sm14807608wfc.17.2010.11.03.22.23.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 03 Nov 2010 22:23:27 -0700 (PDT)
-In-Reply-To: <20101104050437.GB15018@burratino>
-X-Mailer: Apple Mail (2.1081)
+	id S1752732Ab0KDImc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Nov 2010 04:42:32 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:60984 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751758Ab0KDImb (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Nov 2010 04:42:31 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id oA48ZoGJ001407
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 4 Nov 2010 09:35:50 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PDvOp-0007mb-6W; Thu, 04 Nov 2010 09:42:23 +0100
+In-Reply-To: <1288847836-84882-1-git-send-email-kevin@sb.org> (Kevin Ballard's message of "Wed\,  3 Nov 2010 22\:17\:16 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 04 Nov 2010 09:35:51 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: oA48ZoGJ001407
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1289464555.39492@fDxNWYjObJUTBhmDHjXU4w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160694>
 
-On Nov 3, 2010, at 10:04 PM, Jonathan Nieder wrote:
+Kevin Ballard <kevin@sb.org> writes:
 
-> I guess I should put it another way.  What if anything does readonly
-> have to do with O_NOATIME?  Why shouldn't we always use O_NOATIME?
-> Why should the operating system provide atime at all?
+> Add a new command "shell", which takes an option commit. It simply exits
+> to the shell with the commit (if given) and a message telling the user how
+> to resume the rebase.
 
-atime is useful for user-level files that are opened or modified as a
-direct result of actions the user took. I don't think a took like git
-has any reason to ever want to touch atime.
+"shell" sounds like you're going to execute something in a shell, not
+that you're going back to the shell. Looking at the commit message, I
+thought you had missed the "exec" command and re-implemented it.
 
--Kevin Ballard
+What about "pause", abbreviated as "p" for the command name?
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
