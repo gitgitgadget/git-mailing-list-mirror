@@ -1,90 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Remove restriction on notes ref base
-Date: Thu, 4 Nov 2010 10:58:17 -0400
-Message-ID: <20101104145817.GA27580@sigill.intra.peff.net>
-References: <1288657003-17802-1-git-send-email-kroot@google.com>
- <7vsjzixty5.fsf@alter.siamese.dyndns.org>
- <AANLkTin_NuzQocOab+w=B3Ka+n22j2-OXQu8=J6uzByS@mail.gmail.com>
- <201011040149.47968.johan@herland.net>
+From: Mattia Tomasoni <Mattia.Tomasoni.8371@student.uu.se>
+Subject: certificate problem for *.github.com
+Date: Thu, 04 Nov 2010 16:21:35 +0100
+Message-ID: <20101104162135.47chayboagwwkcc8@webmail.uu.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Kenny Root <kroot@google.com>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Nov 04 15:57:43 2010
+Content-Type: text/plain;
+	charset=ISO-8859-1;
+	DelSp="Yes";
+	format="flowed"
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 04 16:31:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PE1G2-0008EP-Dg
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 15:57:42 +0100
+	id 1PE1mH-0005vA-IF
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 16:31:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752233Ab0KDO5i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Nov 2010 10:57:38 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:45197 "EHLO peff.net"
+	id S1752412Ab0KDPa5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Nov 2010 11:30:57 -0400
+Received: from lyra.its.uu.se ([130.238.7.73]:39028 "EHLO lyra.its.uu.se"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751758Ab0KDO5g (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Nov 2010 10:57:36 -0400
-Received: (qmail 31790 invoked by uid 111); 4 Nov 2010 14:57:35 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 04 Nov 2010 14:57:35 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 04 Nov 2010 10:58:17 -0400
+	id S1752316Ab0KDPa4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Nov 2010 11:30:56 -0400
+X-Greylist: delayed 554 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Nov 2010 11:30:55 EDT
+X-Virus-Scanned: amavisd-new at uu.se
+X-DKIM: Sendmail DKIM Filter v2.8.3 lyra.its.uu.se D6F2939684
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=uu.se; s=centralsmtp;
+	t=1288884099; i=@uu.se;
+	bh=wOLtaTQoRVzz/6Jro0TVaL6vhB7G565vfILB6o3fR2w=;
+	h=Message-ID:Date:From:To:Subject:MIME-Version:Content-Type:
+	 Content-Transfer-Encoding;
+	b=TyJ3B6Jk2Ivsv4dgPBARVHwL68CN3SgdbGB0kHyKzlhvplhN0jub7yvzwFlcpZgU6
+	 akS+UhRKcp/79CP0qvL7ILxdghw75qL9HOu1lcsbE77ieBIE+78gaJK9sRRFcN79/0
+	 +Jp5IMoQWYJ5j577KfkSf4aAiQdV+m+ONoLjkAJg=
+Received: from rufa.its.uu.se (rufa.its.uu.se [130.238.4.225])
+	by lyra.its.uu.se (Postfix) with ESMTP id D6F2939684
+	for <git@vger.kernel.org>; Thu,  4 Nov 2010 16:21:38 +0100 (CET)
+Received: from jubula (localhost [127.0.0.1])
+	by rufa.its.uu.se (Postfix) with ESMTP id CDCBD1BEE5
+	for <git@vger.kernel.org>; Thu,  4 Nov 2010 16:21:35 +0100 (CET)
+Received: from dirac.dbb.su.se (dirac.dbb.su.se [130.237.190.37]) by
+	webmail.uu.se (Horde MIME library) with HTTP; Thu, 04 Nov 2010 16:21:35
+	+0100
 Content-Disposition: inline
-In-Reply-To: <201011040149.47968.johan@herland.net>
+User-Agent: Internet Messaging Program (IMP) H3 (4.1.6)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160727>
 
-On Thu, Nov 04, 2010 at 01:49:47AM +0100, Johan Herland wrote:
+Hello Git community!
+Here is my question: until a few days ago I used to be able to point  
+to a certain file in my git repository with the following url:
+http://github.com/percolator/percolator/raw/xml-1-1/src/xml/percolator_in.xsd
+Now this gets redirected to an https address.
+No problem opening it with the browser; but I do get an error with,  
+for instance, wget (...and, more important, with a program that  
+attempts to use that file as a schema against which some xml code is  
+validated...)
+I get:
+certificate common name `*.github.com' doesn't match requested host  
+name `github.com'
 
-> I'd probably suggest a more straightforward (and hopefully less confusing) 
-> setup like this:
-> 
->   Remote repo    ->   Local repo
->   ------------------------------------------------
->   refs/heads/*        refs/remotes/$remote/heads/*
->   refs/tags/*         refs/remotes/$remote/tags/*
->   refs/notes/*        refs/remotes/$remote/notes/*
-> 
-> ...and these would all be set in the config, i.e. no implicit/magic 
-> refspecs.
+wget --no-check-certificate works...
 
-I have often considered that something like that would be simpler, too.
-But just specifying
-
-  fetch = refs/tags/*:refs/remotes/$remote/tags/*
-
-would pull down _all_ tags from the remote. Right now we only pull down
-tags for things that we are actually fetching (i.e., auto-follow).
-
-Now you could argue that auto-follow is not worth the effort. It is
-somewhat confusing, and I can't think of a time when it ever actually
-reduced the set of objects I was fetching (as opposed to just fetching
-all tags). But maybe others have use cases where it matters.
-
-> We would, for example, extend the ref disambiguation of <name> (as 
-> documented in the "SPECIFYING REVISIONS" section of git-rev-parse(1)), so 
-> that in the cases where <name> is of the form "<foo>/<bar>" AND <foo> is an 
-> existing remote, we also check for the following refs (after none of the 
-> existing checks have returned a match):
-> 
->   7. refs/remotes/<foo>/tags/<bar>
->   8. refs/remotes/<foo>/heads/<bar>
-
-This codifies that refs for remote $foo are in refs/remotes/$foo, which
-is something we have avoided so far. For example, when finding the
-"upstream" branch, we have the name of the remote and the merge branch,
-look up the fetch refspecs in the config, and then figure out where that
-branch would be fetched to. Which of course turns out as you say (as
-remotes/$remote_name/$branch) in the default config, but we don't
-restrict people to that.
-
--Peff
+Thank you!
+Mattia
