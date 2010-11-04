@@ -1,74 +1,83 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] diff,difftool: Don't use the {0,2} notation in usage strings
-Date: Thu, 4 Nov 2010 18:22:38 +0100
-Message-ID: <AANLkTi=mhbxQZEZYn6cCu_O2xaE87U9OU=TQiX2CKSar@mail.gmail.com>
-References: <20101021222129.GA13262@burratino> <20101024155121.GA9503@headley>
- <AANLkTimpJbuZAPfvVOedstV7=UiLiDMnDaYWQLVNQ+Yc@mail.gmail.com>
- <87wrp12p00.fsf@gmail.com> <AANLkTinyPkGmsgbGM9qpXMNcZRzOXvtjDDEkJ-i3nWXz@mail.gmail.com>
- <87fwvl2d4d.fsf@gmail.com> <87hbfxgg86.fsf_-_@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] git-rebase--interactive.sh: Add new command "shell"
+Date: Thu, 04 Nov 2010 18:34:39 +0100
+Message-ID: <vpq62wddmc0.fsf@bauges.imag.fr>
+References: <9C0BAFB4-299E-459B-A64A-54D480C5445D@sb.org>
+	<20101104112530.5c0e444a@chalon.bertin.fr>
+	<4CD2E7B4.3000908@nextest.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Mark Lodato <lodatom@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: =?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 04 18:23:11 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Yann Dirson <dirson@bertin.fr>, <kevin@sb.org>,
+	<git@vger.kernel.org>
+To: Eric Raible <raible@nextest.com>
+X-From: git-owner@vger.kernel.org Thu Nov 04 18:35:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PE3Wn-00078D-9L
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 18:23:09 +0100
+	id 1PE3iH-0006zr-69
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 18:35:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751075Ab0KDRXA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Nov 2010 13:23:00 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:33051 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750779Ab0KDRW7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Nov 2010 13:22:59 -0400
-Received: by ywc21 with SMTP id 21so1581613ywc.19
-        for <git@vger.kernel.org>; Thu, 04 Nov 2010 10:22:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=rBNsZLe0QXi/Ixjexjvor/eevXNkuVvuUayyo37qbMM=;
-        b=cpYZml9MoJ0gzdeDRo4RY7m9LvzIGu4/KgVPMrpOPclBJzZfy1yoZH5wnOAz0kF2G6
-         bHa2a4KTwIHkkfqJKgVYL8czLnUicVNNu59NGNwRAR2L22+wJMyElQUgWplLiLmhUcED
-         wxOj2q2eS7TlsA09CzsTF/YfVo7hhhSi29/Ws=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=sFaoF2fuQ7ZjOCEM2VbW+ZpsHJWR5PoUMMo8gyjxtxhPwmuNbSPNbr93fwAdvawoIi
-         NqeO8Ve4EpJmJlnAFkVOyUMTs6tesHCm+W3KBSNfMfCC9fLQ3RG8alUlaED6U3yC07Pe
-         vIVsyA2Bs5K9+5ELnjch7g1m+PnPhf++h1NYE=
-Received: by 10.151.98.2 with SMTP id a2mr1641144ybm.426.1288891378611; Thu,
- 04 Nov 2010 10:22:58 -0700 (PDT)
-Received: by 10.150.58.11 with HTTP; Thu, 4 Nov 2010 10:22:38 -0700 (PDT)
-In-Reply-To: <87hbfxgg86.fsf_-_@gmail.com>
+	id S1751471Ab0KDRez (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Nov 2010 13:34:55 -0400
+Received: from mx2.imag.fr ([129.88.30.17]:56007 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751155Ab0KDRey (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Nov 2010 13:34:54 -0400
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id oA4HS6db009611
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 4 Nov 2010 18:28:06 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PE3hw-0003DY-8a; Thu, 04 Nov 2010 18:34:40 +0100
+In-Reply-To: <4CD2E7B4.3000908@nextest.com> (Eric Raible's message of "Thu\, 4 Nov 2010 10\:04\:52 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 04 Nov 2010 18:28:06 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: oA4HS6db009611
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1289496490.05616@caT0ePw2bDoDwd9xfZlNkQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160738>
 
-Heya,
+Eric Raible <raible@nextest.com> writes:
 
-2010/11/4 =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <stepnem@gmail.com>:
-> This was the only occurence of that usage, and square brackets are
-> sufficient and already well-established for that purpose.
+> On 11:59 AM, Yann Dirson wrote:
+>>>> I'm sorry if I'm missing something, but how is this different from
+>>>> "edit"?
+>>>
+>>> Edit cherry-picks a commit, then exits to the shell. I needed to exit
+>>> to the shell without cherry-picking a commit.
+>> 
+>> Indeed, before "x false" was available, I had found out that "edit"
+>> without an argument fails with a harmless error and indeed achieves that
+>> "pause" mechanism which was really missing.
+>> 
+>> What about just fixing this so we can use "edit" ?  Do we really need
+>> another command here ?
 >
-> Signed-off-by: =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <stepnem@gmail.com>
+> FWIW: +1 for edit.
 
-Not sure if it's appropriate for Documentation patches, but fwiw:
+I like the idea (and I won't fight for my "pause" proposal if others
+don't find it intuitive), but I'm wondering how to write the quick
+documentation (in the todo-list). And if we don't find a concise way
+to document it, it may reveal that it's a bad idea ...
 
-Acked by: Sverre Rabbelier <srabbelier@gmail.com>
+Maybe:
 
---=20
-Cheers,
+#  e <commit>, edit <commit> = use commit, but stop for amending
+#  e, edit = stop for amending
 
-Sverre Rabbelier
+but I find this rather ugly.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
