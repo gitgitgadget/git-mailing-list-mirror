@@ -1,123 +1,236 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: cherry-pick fail when a symbolic link has been changed into a
- file or directory
-Date: Thu, 4 Nov 2010 14:55:12 +0100
-Message-ID: <AANLkTimq8SP-gxZQiXW3Pxg3-1Z98zyPAoNA8JDn0=6A@mail.gmail.com>
-References: <20101104125641.2ef90853@cortex>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] attr: support quoting pathname patterns in C style
+Date: Thu,  4 Nov 2010 20:55:44 +0700
+Message-ID: <1288878944-14066-1-git-send-email-pclouds@gmail.com>
+References: <AANLkTinNctmWpshBeSTzZRm6+EJ=Cjdpoaj4Aon+52_b@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Camille Moncelier <moncelier@devlife.org>
-X-From: git-owner@vger.kernel.org Thu Nov 04 14:55:24 2010
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Marc Strapetz <marc.strapetz@syntevo.com>
+X-From: git-owner@vger.kernel.org Thu Nov 04 14:56:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PE0Hj-0008D0-Q7
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 14:55:24 +0100
+	id 1PE0J5-0000rs-PF
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 14:56:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751520Ab0KDNzQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Nov 2010 09:55:16 -0400
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:44986 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751240Ab0KDNzP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Nov 2010 09:55:15 -0400
-Received: by ewy7 with SMTP id 7so954544ewy.19
-        for <git@vger.kernel.org>; Thu, 04 Nov 2010 06:55:13 -0700 (PDT)
+	id S1751340Ab0KDN4m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Nov 2010 09:56:42 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:53579 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750945Ab0KDN4l (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Nov 2010 09:56:41 -0400
+Received: by pzk28 with SMTP id 28so156785pzk.19
+        for <git@vger.kernel.org>; Thu, 04 Nov 2010 06:56:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=k5OGbpHjD/ESqqEbz7h7EvobeKISh5kB8N7zDxASrFg=;
-        b=ZWNArL+cW6W2wnufP6RzIbRpiCDIufmVbZWs1lOookFVbU4WzA60iFGozOKJCBXNHq
-         tMxnWKq+sJpe5uOjb3TuqdszLKUGYnv7i2r0ExKyjXz7YZAYI+IT4sirunjc/JnC8QfX
-         78drteMoBS+2YZdDx7oVEEMu6DqsEkyyyM0PA=
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=3XDnSRlJgkmWbeIClqqcWt/Vfpm3svuX1oxUuhjmLFQ=;
+        b=GLx2xXjRMAXpQFJXcfepvObJHGCUu7+mnHSw7MRngM/288qcOYWLFCgKf1pWWX5EmP
+         jRyxXNeqQJwlIl4A1ExhOJLmUyzuVhr8drKC29uBXEFgnV/negqQzga+SPW3G0mJVbZz
+         +3oV1WWe5ZQkEn+RUX0BelKbW+ZeiOiHeaUM8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=qDt8au9d2zUhgCM7u+P1TWzCiKk51SSkgspmHsM9s3bVPEnrEzXSoFjOEreZsynTCd
-         kKQYvz1/E+tLx4SJGezKd4/zL7S2ECf4Gbzk58DA+EkCvx7zDJIf2PtWZTX0lSE+LyFH
-         32fLZKzhYdFZh2MGOP+fd+n+lef8UWyIEY/RA=
-Received: by 10.216.30.10 with SMTP id j10mr1961162wea.8.1288878912701; Thu,
- 04 Nov 2010 06:55:12 -0700 (PDT)
-Received: by 10.216.26.208 with HTTP; Thu, 4 Nov 2010 06:55:12 -0700 (PDT)
-In-Reply-To: <20101104125641.2ef90853@cortex>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=q/wDSBGyI2kMbHFwixEFEV2Lgu/A6qHEFrU5Bh6GMZo6fdDVimLtNBED3P4AI9syCm
+         7Lg5k5h1g7nS10Fhdw6blWRX56AUVCo6zt+1ZwZiCmn/RxEDGeUf6Rnv8bdk+aZkkoLA
+         pviZhUh5TGBJ7WPAgdUTAdxOeWvcEqp3zPRYQ=
+Received: by 10.143.41.8 with SMTP id t8mr654932wfj.89.1288879000720;
+        Thu, 04 Nov 2010 06:56:40 -0700 (PDT)
+Received: from pclouds@gmail.com ([115.73.226.181])
+        by mx.google.com with ESMTPS id w23sm3738625wfd.9.2010.11.04.06.56.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 04 Nov 2010 06:56:39 -0700 (PDT)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 04 Nov 2010 20:56:45 +0700
+X-Mailer: git-send-email 1.7.3.2.210.g045198
+In-Reply-To: <AANLkTinNctmWpshBeSTzZRm6+EJ=Cjdpoaj4Aon+52_b@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160720>
 
-Could you try to cherry-pick with other strategies?
-=46or example with:
+=46ull pattern must be quoted. So 'pat"t"ern attr' will give exactly
+'pat"t"ern', not 'pattern'. Also clarify that leading whitespaces are
+not part of the pattern and document comment syntax.
 
-git cherry-pick --strategy resolve test1
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ Obvious regression: patterns that begin with double quote will
+ now work differently.
 
-I remember there were some problems with the default "recursive"
-strategy and I am not sure they were fixed.
-By the way could you tell which version of git you are using?
+ Documentation/gitattributes.txt |    8 +++++---
+ attr.c                          |   25 +++++++++++++++++++++----
+ t/t0003-attributes.sh           |   25 ++++++++++++++++++++++++-
+ 3 files changed, 50 insertions(+), 8 deletions(-)
 
-Thanks,
-Christian.
-
-On Thu, Nov 4, 2010 at 12:56 PM, Camille Moncelier
-<moncelier@devlife.org> wrote:
-> I'm reposting this since I didn't get any responses and I think my
-> message didn't contained enought context.
->
-> I think I may have spotted a bug, or a unhandled case when doing a
-> cherry-pick
->
-> Consider a repository like this:
->
-> # Initialize a dummy repository
-> =A0 =A0mkdir -p repo1 ; cd repo1
-> =A0 =A0git init .
->
-> # Create a new directory `dir1' and a link to it `dir2'
-> =A0 =A0mkdir dir1
-> =A0 =A0echo file1 > dir1/file1
-> =A0 =A0ln -s dir1 dir2
-> =A0 =A0git add dir1 dir2
-> =A0 =A0git commit -m "Initial status: dir2 -> dir1"
->
-> # Create a branch named `test1' remove the `dir2' link and
-> # replace it by a new directory
-> =A0 =A0git checkout -b test1
-> =A0 =A0git rm dir2
-> =A0 =A0mkdir dir2
-> =A0 =A0touch file2 > dir2/file1
-> =A0 =A0git add dir2/file1
-> =A0 =A0git commit -m "Removing link: dir1/ and dir2/"
->
-> # Now create a new file in `test1' branch
-> =A0 =A0message=3D"New file in test1"
-> =A0 =A0echo $message > new_file_test1
-> =A0 =A0git add new_file_test1
-> =A0 =A0git commit -m "$message"
->
-> # Now try to cherry-pick last commit from `test1' into master
-> =A0 =A0git co master
-> =A0 =A0git cherry-pick test1
->
-> The cherry-pick fails saying if failed to merge `dir2' despite the fa=
-ct
-> that the commit doesn't affect `dir2' and
->
-> git diff test1~..test1 | git apply
->
-> is working. Am I doing something wrong ?
->
-> --
-> Camille Moncelier
-> http://devlife.org
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribu=
+tes.txt
+index c80ca5d..bc6c65c 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -21,9 +21,11 @@ Each line in `gitattributes` file is of form:
+ 	pattern	attr1 attr2 ...
+=20
+ That is, a pattern followed by an attributes list,
+-separated by whitespaces.  When the pattern matches the
+-path in question, the attributes listed on the line are given to
+-the path.
++separated by whitespaces. Leading and trailing whitespaces are
++ignored. Lines that begin with '#' are ignored. Patterns
++that begin with a double quote are quoted in C style.
++When the pattern matches the path in question, the attributes
++listed on the line are given to the path.
+=20
+ Each attribute can be in one of these states for a given path:
+=20
+diff --git a/attr.c b/attr.c
+index 6aff695..f3063d8 100644
+--- a/attr.c
++++ b/attr.c
+@@ -2,6 +2,7 @@
+ #include "cache.h"
+ #include "exec_cmd.h"
+ #include "attr.h"
++#include "quote.h"
+=20
+ const char git_attr__true[] =3D "(builtin)true";
+ const char git_attr__false[] =3D "\0(builtin)false";
+@@ -181,21 +182,33 @@ static struct match_attr *parse_attr_line(const c=
+har *line, const char *src,
+ {
+ 	int namelen;
+ 	int num_attr;
+-	const char *cp, *name;
++	const char *cp, *name, *ep;
+ 	struct match_attr *res =3D NULL;
+ 	int pass;
+ 	int is_macro;
++	struct strbuf pattern =3D STRBUF_INIT;
+=20
+ 	cp =3D line + strspn(line, blank);
+ 	if (!*cp || *cp =3D=3D '#')
+ 		return NULL;
+ 	name =3D cp;
+-	namelen =3D strcspn(name, blank);
++	if (*cp =3D=3D '"') {
++		if (unquote_c_style(&pattern, name, &ep))
++			die("Broken attribute line: %s", line);
++		namelen =3D ep - name;
++		name =3D pattern.buf;
++	}
++	else {
++		namelen =3D strcspn(name, blank);
++		ep =3D name + namelen;
++	}
++
+ 	if (strlen(ATTRIBUTE_MACRO_PREFIX) < namelen &&
+ 	    !prefixcmp(name, ATTRIBUTE_MACRO_PREFIX)) {
+ 		if (!macro_ok) {
+ 			fprintf(stderr, "%s not allowed: %s:%d\n",
+ 				name, src, lineno);
++			strbuf_release(&pattern);
+ 			return NULL;
+ 		}
+ 		is_macro =3D 1;
+@@ -206,6 +219,7 @@ static struct match_attr *parse_attr_line(const cha=
+r *line, const char *src,
+ 			fprintf(stderr,
+ 				"%.*s is not a valid attribute name: %s:%d\n",
+ 				namelen, name, src, lineno);
++			strbuf_release(&pattern);
+ 			return NULL;
+ 		}
+ 	}
+@@ -215,12 +229,14 @@ static struct match_attr *parse_attr_line(const c=
+har *line, const char *src,
+ 	for (pass =3D 0; pass < 2; pass++) {
+ 		/* pass 0 counts and allocates, pass 1 fills */
+ 		num_attr =3D 0;
+-		cp =3D name + namelen;
++		cp =3D ep;
+ 		cp =3D cp + strspn(cp, blank);
+ 		while (*cp) {
+ 			cp =3D parse_attr(src, lineno, cp, &num_attr, res);
+-			if (!cp)
++			if (!cp) {
++				strbuf_release(&pattern);
+ 				return NULL;
++			}
+ 		}
+ 		if (pass)
+ 			break;
+@@ -238,6 +254,7 @@ static struct match_attr *parse_attr_line(const cha=
+r *line, const char *src,
+ 		res->is_macro =3D is_macro;
+ 		res->num_attr =3D num_attr;
+ 	}
++	strbuf_release(&pattern);
+ 	return res;
+ }
+=20
+diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
+index 25205ac..a57f358 100755
+--- a/t/t0003-attributes.sh
++++ b/t/t0003-attributes.sh
+@@ -10,17 +10,37 @@ attr_check () {
+ 	expect=3D"$2"
+=20
+ 	git check-attr test -- "$path" >actual &&
+-	echo "$path: test: $2" >expect &&
++	echo "$path: test: $expect" >expect &&
+ 	test_cmp expect actual
+=20
+ }
+=20
++attr_check_quote () {
++
++	path=3D"$1"
++	quoted_path=3D"$2"
++	expect=3D"$3"
++
++	git check-attr test -- "$path" >actual &&
++	echo "\"$quoted_path\": test: $expect" >expect &&
++	test_cmp expect actual
++
++}
++
++test_expect_success 'open-quoted pathname' '
++	echo "\"a test=3Da" >.gitattributes &&
++	test_must_fail attr_check a a
++'
++
+=20
+ test_expect_success 'setup' '
+=20
+ 	mkdir -p a/b/d a/c &&
+ 	(
+ 		echo "[attr]notest !test"
++		echo "\" d \"	test=3Dd"
++		echo " e	test=3De"
++		echo " e\"	test=3De"
+ 		echo "f	test=3Df"
+ 		echo "a/i test=3Da/i"
+ 		echo "onoff test -test"
+@@ -44,6 +64,9 @@ test_expect_success 'setup' '
+=20
+ test_expect_success 'attribute test' '
+=20
++	attr_check " d " d &&
++	attr_check e e &&
++	attr_check_quote e\" e\\\" e &&
+ 	attr_check f f &&
+ 	attr_check a/f f &&
+ 	attr_check a/c/f f &&
+--=20
+1.7.3.2.210.g045198
