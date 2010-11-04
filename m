@@ -1,72 +1,93 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 2/2] rebase: teach --autosquash to match on sha1 in
- addition to message
-Date: Thu, 4 Nov 2010 11:44:46 +0100
-Message-ID: <AANLkTikA_46ZdrRBCnh-1Rx1jfqGb377jeg=9OO5T3Tr@mail.gmail.com>
-References: <1288838504-69114-1-git-send-email-kevin@sb.org>
- <1288838504-69114-2-git-send-email-kevin@sb.org> <5CCA000B-2178-4DF7-8D72-29F95A9BB360@sb.org>
+From: Camille Moncelier <moncelier@devlife.org>
+Subject: cherry-pick fail when a symbolic link has been changed into a file
+ or directory
+Date: Thu, 4 Nov 2010 12:56:41 +0100
+Message-ID: <20101104125641.2ef90853@cortex>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Git mailing list <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Thu Nov 04 11:45:15 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 04 12:57:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDxJi-0003d0-H9
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 11:45:14 +0100
+	id 1PDyRB-0002Vd-Mj
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 12:57:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754860Ab0KDKpK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Nov 2010 06:45:10 -0400
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:56834 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753808Ab0KDKpH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Nov 2010 06:45:07 -0400
-Received: by gwj21 with SMTP id 21so1242000gwj.19
-        for <git@vger.kernel.org>; Thu, 04 Nov 2010 03:45:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=h5Z8QZRa1gs0gQSNR6w9Olj5jSi0zsjVe6O3FP9HO3A=;
-        b=B+xbZmDmRg5gxxBpDe1WfKqfjXEWxTOFvB6vNPL6n+h1ayt+99hz1wDyR2hkUH0FO2
-         jnsCba1qBMoKftjrokk3sLlvAR1Mq7bzlLcwFQ4YW88Ivrpb7e1jOUM7CCcRtO9MdLeZ
-         EUjkoqugZITtl+Hx6C5bhS4TW8bhIgBeeD6tw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=iSNyWf6YDQjJY7/gjr9X/gSWjtAUwlz1Bth/xzWLpB5anoGRPux2Fibg9Hj+N3jw/i
-         KsQeoMIysxjLeZeS4OMOGuvvi4eAdkT6z0aRJpJo2ckDET8oM3dkWCVfJziCy62WkowH
-         M6evXEm0AjXZ3DocRpuKvLsDCfm17SYZ5eYVA=
-Received: by 10.150.206.11 with SMTP id d11mr1004318ybg.369.1288867506984;
- Thu, 04 Nov 2010 03:45:06 -0700 (PDT)
-Received: by 10.150.58.11 with HTTP; Thu, 4 Nov 2010 03:44:46 -0700 (PDT)
-In-Reply-To: <5CCA000B-2178-4DF7-8D72-29F95A9BB360@sb.org>
+	id S1750815Ab0KDL4z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Nov 2010 07:56:55 -0400
+Received: from lo.gmane.org ([80.91.229.12]:36757 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750782Ab0KDL4y (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Nov 2010 07:56:54 -0400
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PDyR3-0002Sd-A3
+	for git@vger.kernel.org; Thu, 04 Nov 2010 12:56:53 +0100
+Received: from arennes-258-1-39-42.w90-31.abo.wanadoo.fr ([90.31.190.42])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 04 Nov 2010 12:56:53 +0100
+Received: from moncelier by arennes-258-1-39-42.w90-31.abo.wanadoo.fr with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 04 Nov 2010 12:56:53 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: arennes-258-1-39-42.w90-31.abo.wanadoo.fr
+X-Newsreader: Claws Mail 3.7.6 (GTK+ 2.22.0; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160717>
 
-Heya,
+I'm reposting this since I didn't get any responses and I think my
+message didn't contained enought context.
 
-On Thu, Nov 4, 2010 at 05:49, Kevin Ballard <kevin@sb.org> wrote:
-> I just realized that this only works for sha1's of up to 7 characters.
-> If you provide more it won't match, as it's comparing against the sha1
-> given in the todo list. I wonder if it's worth resolving all sha1s to
-> their full length if the provided string is longer than 7 characters?
+I think I may have spotted a bug, or a unhandled case when doing a
+cherry-pick
 
-Well, not if you're resolving them based on the 7-character string
-from the rebase todo list. If you run in to ambiguity with those
-7-length hash we should instead increase the length of the hashes in
-the todo list.
+Consider a repository like this:
 
-So I'd say, solve this by doing a prefix match?
+# Initialize a dummy repository
+    mkdir -p repo1 ; cd repo1
+    git init .
+
+# Create a new directory `dir1' and a link to it `dir2'
+    mkdir dir1
+    echo file1 > dir1/file1
+    ln -s dir1 dir2
+    git add dir1 dir2
+    git commit -m "Initial status: dir2 -> dir1"
+
+# Create a branch named `test1' remove the `dir2' link and
+# replace it by a new directory
+    git checkout -b test1
+    git rm dir2
+    mkdir dir2
+    touch file2 > dir2/file1
+    git add dir2/file1
+    git commit -m "Removing link: dir1/ and dir2/"
+
+# Now create a new file in `test1' branch
+    message="New file in test1"
+    echo $message > new_file_test1
+    git add new_file_test1
+    git commit -m "$message"
+
+# Now try to cherry-pick last commit from `test1' into master
+    git co master
+    git cherry-pick test1
+
+The cherry-pick fails saying if failed to merge `dir2' despite the fact
+that the commit doesn't affect `dir2' and 
+
+git diff test1~..test1 | git apply
+
+is working. Am I doing something wrong ?
 
 -- 
-Cheers,
-
-Sverre Rabbelier
+Camille Moncelier
+http://devlife.org
