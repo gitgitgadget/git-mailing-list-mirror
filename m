@@ -1,63 +1,113 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH 2/2] rebase: teach --autosquash to match on sha1 in addition to message
-Date: Thu, 4 Nov 2010 14:35:14 -0700
-Message-ID: <F2547972-0FEF-4123-96AF-75F60967DAB5@sb.org>
-References: <1288838504-69114-1-git-send-email-kevin@sb.org> <1288838504-69114-2-git-send-email-kevin@sb.org> <5CCA000B-2178-4DF7-8D72-29F95A9BB360@sb.org> <AANLkTikA_46ZdrRBCnh-1Rx1jfqGb377jeg=9OO5T3Tr@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Git mailing list <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 04 22:35:22 2010
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Test failures in pu: 4046, 950[012]
+Date: Thu, 4 Nov 2010 22:37:01 +0100
+Message-ID: <201011042237.01801.trast@student.ethz.ch>
+References: <201010201148.51551.trast@student.ethz.ch> <7vvd4wvmv6.fsf@alter.siamese.dyndns.org> <201010201856.54756.trast@student.ethz.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
+	<pclouds@gmail.com>, Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Thu Nov 04 22:36:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PE7Ss-0007eI-6m
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 22:35:22 +0100
+	id 1PE7UJ-0000AL-9T
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 22:36:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753118Ab0KDVfR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Nov 2010 17:35:17 -0400
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:64199 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752574Ab0KDVfQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Nov 2010 17:35:16 -0400
-Received: by pwj7 with SMTP id 7so364103pwj.19
-        for <git@vger.kernel.org>; Thu, 04 Nov 2010 14:35:15 -0700 (PDT)
-Received: by 10.143.41.2 with SMTP id t2mr1219395wfj.156.1288906515827;
-        Thu, 04 Nov 2010 14:35:15 -0700 (PDT)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id p8sm517088wff.16.2010.11.04.14.35.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 04 Nov 2010 14:35:14 -0700 (PDT)
-In-Reply-To: <AANLkTikA_46ZdrRBCnh-1Rx1jfqGb377jeg=9OO5T3Tr@mail.gmail.com>
-X-Mailer: Apple Mail (2.1081)
+	id S1753195Ab0KDVgp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Nov 2010 17:36:45 -0400
+Received: from gwse.ethz.ch ([129.132.178.237]:16024 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753162Ab0KDVgo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Nov 2010 17:36:44 -0400
+Received: from CAS21.d.ethz.ch (172.31.51.111) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 4 Nov
+ 2010 22:36:43 +0100
+Received: from pctrast.inf.ethz.ch (129.132.208.43) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.218.12; Thu, 4 Nov
+ 2010 22:36:41 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.36-rc8-32-desktop; KDE/4.5.3; x86_64; ; )
+In-Reply-To: <201010201856.54756.trast@student.ethz.ch>
+X-Originating-IP: [129.132.208.43]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160774>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160775>
 
-On Nov 4, 2010, at 3:44 AM, Sverre Rabbelier wrote:
+=46ailures as of yesterday (it alternates between next and pu, so today
+was next which was clean):
 
-> On Thu, Nov 4, 2010 at 05:49, Kevin Ballard <kevin@sb.org> wrote:
->> I just realized that this only works for sha1's of up to 7 characters.
->> If you provide more it won't match, as it's comparing against the sha1
->> given in the todo list. I wonder if it's worth resolving all sha1s to
->> their full length if the provided string is longer than 7 characters?
-> 
-> Well, not if you're resolving them based on the 7-character string
-> from the rebase todo list. If you run in to ambiguity with those
-> 7-length hash we should instead increase the length of the hashes in
-> the todo list.
-> 
-> So I'd say, solve this by doing a prefix match?
+* 4046 has this valgrind failure:
 
-Prefix match of what against what? If the 7-character string used in the
-TODO list is already ambiguous, then the rebase itself would be expected
-to fail. I'm inclined to just try to resolve the message in the fixup!
-line itself to a full SHA1, and if that works, then try to match the
-7-character sha1 with a prefix comparison.
+  =3D=3D24237=3D=3D Source and destination overlap in mempcpy(0x7feffed=
+50, 0x7feffed50, 2)
+  =3D=3D24237=3D=3D    at 0x4C228DB: mempcpy (mc_replace_strmem.c:802)
+  =3D=3D24237=3D=3D    by 0x511AD6: copy_dirname (diffcore-rename.c:573=
+)
+  =3D=3D24237=3D=3D    by 0x512071: check_one_bulk_move (diffcore-renam=
+e.c:744)
+  =3D=3D24237=3D=3D    by 0x5120C0: diffcore_bulk_moves (diffcore-renam=
+e.c:756)
+  =3D=3D24237=3D=3D    by 0x512988: diffcore_rename (diffcore-rename.c:=
+961)
+  =3D=3D24237=3D=3D    by 0x4A48EF: diffcore_std (diff.c:4252)
+  =3D=3D24237=3D=3D    by 0x4974B5: run_diff_index (diff-lib.c:475)
+  =3D=3D24237=3D=3D    by 0x4267CD: cmd_diff_index (diff-index.c:50)
+  =3D=3D24237=3D=3D    by 0x404963: run_builtin (git.c:276)
+  =3D=3D24237=3D=3D    by 0x404AEE: handle_internal_command (git.c:435)
+  =3D=3D24237=3D=3D    by 0x404BD9: run_argv (git.c:479)
+  =3D=3D24237=3D=3D    by 0x404D3A: main (git.c:554)
+  =3D=3D24237=3D=3D=20
+  [snip suppression template]
+  not ok - 14 diff-index --detect-bulk-moves on a move including a subd=
+ir.
 
--Kevin Ballard
+
+* 950[012]: these are very strange.
+
+Running them interactively appears to work ok, so maybe it is some
+environment bug.  They appear to be "can't happen" style failures
+though, since they all look like (this one is from 9502)
+
+  Initialized empty Git repository in /local/home/trast/git/t/trash dir=
+ectory.t9502-gitweb-standalone-parse-output/.git/
+  expecting success:=20
+          test_commit first foo &&
+          git branch xx/test &&
+          FULL_ID=3D$(git rev-parse --verify HEAD) &&
+          SHORT_ID=3D$(git rev-parse --verify --short=3D7 HEAD)
+
+  fatal: This operation must be run in a work tree
+  not ok - 1 setup
+
+They are the only ones failing with this problem, though.  They all
+bisect to
+
+  commit e60cb38c7c4e0bdb8f9542f9925ba5cafd4cd33b
+  Author: Nguy=C3=A1=C2=BB=E2=80=A6n Th=C3=83=C2=A1i Ng=C3=A1=C2=BB=C2=8D=
+c Duy <pclouds@gmail.com>
+  Date:   Fri Oct 29 13:48:50 2010 +0700
+
+      Remove all logic from get_git_work_tree()
+     =20
+      This helps break things some more. Eventually all repo setup logi=
+c
+      should be centralized in setup_* functions. This helps push all t=
+he
+      bugs back to setup_* functions.
+     =20
+      Signed-off-by: Nguy=C3=A1=C2=BB=E2=80=A6n Th=C3=83=C2=A1i Ng=C3=A1=
+=C2=BB=C2=8Dc Duy <pclouds@gmail.com>
+      Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+(Sorry, the UTF was garbled in cron-email transit...)
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
