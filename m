@@ -1,92 +1,51 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git log --follow
-Date: Wed, 3 Nov 2010 23:18:27 -0400
-Message-ID: <20101104031827.GA20772@sigill.intra.peff.net>
-References: <AANLkTinEEtfxu=NbaGn=A88MrU7JCFztMzB-x3--FCdB@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git list <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 04 04:17:53 2010
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: [PATCH 2/2] rebase: teach --autosquash to match on sha1 in addition to message
+Date: Wed, 3 Nov 2010 21:49:10 -0700
+Message-ID: <5CCA000B-2178-4DF7-8D72-29F95A9BB360@sb.org>
+References: <1288838504-69114-1-git-send-email-kevin@sb.org> <1288838504-69114-2-git-send-email-kevin@sb.org>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: Git mailing list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Nov 04 05:49:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDqKk-0005Cz-Ua
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 04:17:51 +0100
+	id 1PDrlH-0001eZ-5N
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 05:49:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752725Ab0KDDRq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Nov 2010 23:17:46 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:39298 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752467Ab0KDDRp (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 3 Nov 2010 23:17:45 -0400
-Received: (qmail 22564 invoked by uid 111); 4 Nov 2010 03:17:44 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 04 Nov 2010 03:17:44 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 03 Nov 2010 23:18:27 -0400
-Content-Disposition: inline
-In-Reply-To: <AANLkTinEEtfxu=NbaGn=A88MrU7JCFztMzB-x3--FCdB@mail.gmail.com>
+	id S1753686Ab0KDEtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Nov 2010 00:49:14 -0400
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:40400 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751170Ab0KDEtN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Nov 2010 00:49:13 -0400
+Received: by pzk28 with SMTP id 28so93748pzk.19
+        for <git@vger.kernel.org>; Wed, 03 Nov 2010 21:49:12 -0700 (PDT)
+Received: by 10.142.164.4 with SMTP id m4mr179516wfe.184.1288846152566;
+        Wed, 03 Nov 2010 21:49:12 -0700 (PDT)
+Received: from [10.8.0.89] ([69.170.160.74])
+        by mx.google.com with ESMTPS id v19sm14771729wfh.0.2010.11.03.21.49.11
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 03 Nov 2010 21:49:11 -0700 (PDT)
+In-Reply-To: <1288838504-69114-2-git-send-email-kevin@sb.org>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160688>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160689>
 
-On Wed, Nov 03, 2010 at 08:00:23PM -0700, Scott Chacon wrote:
+On Nov 3, 2010, at 7:41 PM, Kevin Ballard wrote:
 
-> Is there any way to get 'git log --follow' to respect the -M[num]
-> option?  If I want to lower the boundary for rename detection when
-> printing file history, is there any way to do that?  It doesn't seem
-> to work if I just list them both.
+> Support lines of the form "fixup! 7a235b" that specify an exact commit
+> in addition to the normal "squash! Old commit message" form.
 
-No. But this patch would do it.
+I just realized that this only works for sha1's of up to 7 characters.
+If you provide more it won't match, as it's comparing against the sha1
+given in the todo list. I wonder if it's worth resolving all sha1s to
+their full length if the provided string is longer than 7 characters?
 
-diff --git a/tree-diff.c b/tree-diff.c
-index 12c9a88..378f049 100644
---- a/tree-diff.c
-+++ b/tree-diff.c
-@@ -351,6 +351,7 @@ static void try_to_follow_renames(struct tree_desc *t1, struct tree_desc *t2, co
- 	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
- 	diff_opts.single_follow = opt->paths[0];
- 	diff_opts.break_opt = opt->break_opt;
-+	diff_opts.rename_score = opt->rename_score;
- 	paths[0] = NULL;
- 	diff_tree_setup_paths(paths, &diff_opts);
- 	if (diff_setup_done(&diff_opts) < 0)
-
-You can see the difference with:
-
-  $ git log --oneline --follow --name-status \
-    Documentation/technical/api-string-list.txt
-  1d2f80f string_list: Fix argument order for string_list_append
-  M       Documentation/technical/api-string-list.txt
-  e242148 string-list: add unsorted_string_list_lookup()
-  M       Documentation/technical/api-string-list.txt
-  0dda1d1 Fix two leftovers from path_list->string_list
-  M       Documentation/technical/api-string-list.txt
-  c455c87 Rename path_list to string_list
-  A       Documentation/technical/api-string-list.txt
-
-  $ git log -M40 --oneline --follow --name-status \
-    Documentation/technical/api-string-list.txt
-  1d2f80f string_list: Fix argument order for string_list_append
-  M       Documentation/technical/api-string-list.txt
-  e242148 string-list: add unsorted_string_list_lookup()
-  M       Documentation/technical/api-string-list.txt
-  0dda1d1 Fix two leftovers from path_list->string_list
-  M       Documentation/technical/api-string-list.txt
-  c455c87 Rename path_list to string_list
-  R047    Documentation/technical/api-path-list.txt
-  Documentation/technical/api-string-list.txt
-  328a475 path-list documentation: document all functions and data structures
-  M       Documentation/technical/api-path-list.txt
-  530e741 Start preparing the API documents.
-  A       Documentation/technical/api-path-list.txt
-
-I think it's probably something we should be doing (as you can see, we
-already copy the break_opt).
-
--Peff
+-Kevin Ballard
