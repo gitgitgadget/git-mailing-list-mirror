@@ -1,51 +1,82 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH 2/2] rebase: teach --autosquash to match on sha1 in addition to message
-Date: Wed, 3 Nov 2010 21:49:10 -0700
-Message-ID: <5CCA000B-2178-4DF7-8D72-29F95A9BB360@sb.org>
-References: <1288838504-69114-1-git-send-email-kevin@sb.org> <1288838504-69114-2-git-send-email-kevin@sb.org>
-Mime-Version: 1.0 (Apple Message framework v1081)
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 1/2] Use git_open_noatime when accessing pack data
+Date: Thu, 4 Nov 2010 00:04:37 -0500
+Message-ID: <20101104050437.GB15018@burratino>
+References: <1288652061-19614-1-git-send-email-spearce@spearce.org>
+ <1288652061-19614-2-git-send-email-spearce@spearce.org>
+ <7v8w1axrnp.fsf@alter.siamese.dyndns.org>
+ <20101103174148.GB13377@burratino>
+ <7vvd4ew687.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: Git mailing list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 04 05:49:21 2010
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 04 06:05:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDrlH-0001eZ-5N
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 05:49:19 +0100
+	id 1PDs1A-0000Wn-8K
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 06:05:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753686Ab0KDEtO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Nov 2010 00:49:14 -0400
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:40400 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751170Ab0KDEtN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Nov 2010 00:49:13 -0400
-Received: by pzk28 with SMTP id 28so93748pzk.19
-        for <git@vger.kernel.org>; Wed, 03 Nov 2010 21:49:12 -0700 (PDT)
-Received: by 10.142.164.4 with SMTP id m4mr179516wfe.184.1288846152566;
-        Wed, 03 Nov 2010 21:49:12 -0700 (PDT)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id v19sm14771729wfh.0.2010.11.03.21.49.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 03 Nov 2010 21:49:11 -0700 (PDT)
-In-Reply-To: <1288838504-69114-2-git-send-email-kevin@sb.org>
-X-Mailer: Apple Mail (2.1081)
+	id S1753207Ab0KDFFB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Nov 2010 01:05:01 -0400
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:63195 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752942Ab0KDFFA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Nov 2010 01:05:00 -0400
+Received: by ywc21 with SMTP id 21so1063426ywc.19
+        for <git@vger.kernel.org>; Wed, 03 Nov 2010 22:04:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=HtEvhPiw2LTvdg+7LzZ+a+xzY5WuWacHyKWGTV/hw9s=;
+        b=CD0PB4EqpVNPaWGDEreSQJw6MjWq0BLQIv5YfvG6hg9KVbN0+eokly7pYWz6wXGSXg
+         KKOWqJacm71y9kWk8rETGvSSR1izOEYZHdBqVn4nIAhkPLjQsJIJa+Pl0jNsn2K2ZZWT
+         mQbM7UOSKH/Ef34ckRNIURZ+u1TxGcRIpjkMA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=YWVvn7J+PQp9Izdxit8rKtvnt0mjYG3mpaZiZr2L9yYzpsC6g8OhPHHT6PMEtNBaYJ
+         hNUuqSASJAeonLCrWahCvjau5Tj2ywoxY9v1L4c7urCgKM5971ZKIvo8puiT63c7kenx
+         6ihR4+Nr0LkX7zdRbNlVLobgMGqegMu8yBp+E=
+Received: by 10.91.9.1 with SMTP id m1mr624432agi.21.1288847099373;
+        Wed, 03 Nov 2010 22:04:59 -0700 (PDT)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id g29sm6296258anh.36.2010.11.03.22.04.56
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 03 Nov 2010 22:04:57 -0700 (PDT)
+Content-Disposition: inline
+In-Reply-To: <7vvd4ew687.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160690>
 
-On Nov 3, 2010, at 7:41 PM, Kevin Ballard wrote:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Support lines of the form "fixup! 7a235b" that specify an exact commit
-> in addition to the normal "squash! Old commit message" form.
+>> Judging from these three use cases, readonly open()s to the worktree
+>> should indeed use noatime, but open()s of .git/config, say, should
+>> not.  Hmm.
+>
+> Why not, when you are talking about readonly open?
 
-I just realized that this only works for sha1's of up to 7 characters.
-If you provide more it won't match, as it's comparing against the sha1
-given in the todo list. I wonder if it's worth resolving all sha1s to
-their full length if the provided string is longer than 7 characters?
+A .git/config frequently accessed by git is being used, so tmpwatch
+shouldn't delete it.  (Meanwhile, a worktree frequently accessed by
+git is not precious on that account, and letting git touch the atime
+there might mask more useful information about when other programs
+touched the files.)
 
--Kevin Ballard
+But that is all very fuzzy to me.  I tend to mount noatime except on
+/usr (for popularity-contest).
+
+I guess I should put it another way.  What if anything does readonly
+have to do with O_NOATIME?  Why shouldn't we always use O_NOATIME?
+Why should the operating system provide atime at all?
