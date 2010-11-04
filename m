@@ -1,54 +1,121 @@
-From: "Chris Forbes" <chrisf@farmworkspfs.co.nz>
-Subject: RE: [PATCH] Remove restriction on notes ref base
-Date: Wed, 3 Nov 2010 12:28:32 +1300
-Message-ID: <62BAFF6485708A40A8955546574E52655362DE@server01.FarmWorks.local>
-References: <1288657003-17802-1-git-send-email-kroot@google.com> <AANLkTinN1UXSmkxOg59pT_xVd2eWS0Ms2sgAweLv7hbg@mail.gmail.com> <7vsjzj1v49.fsf@alter.siamese.dyndns.org> <201011022358.11340.johan@herland.net>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH] clone: Add the  --recurse-submodules option as alias for
+ --recursive
+Date: Thu, 04 Nov 2010 21:27:12 +0100
+Message-ID: <4CD31720.7080104@web.de>
+References: <4CD1ACF7.6040108@web.de> <7vbp66vxuw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 04 21:19:03 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Chris Packham <judge.packham@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 04 21:27:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PE6Gz-0002u2-6a
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 21:19:01 +0100
+	id 1PE6P6-0007uG-Uu
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 21:27:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752696Ab0KDUSn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Nov 2010 16:18:43 -0400
-Received: from farmworkspfs.co.nz ([219.89.194.176]:24813 "EHLO
-	farmworkspfs.co.nz" rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752476Ab0KDUSl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Nov 2010 16:18:41 -0400
-X-Greylist: delayed 161406 seconds by postgrey-1.27 at vger.kernel.org; Thu, 04 Nov 2010 16:18:41 EDT
-In-Reply-To: <201011022358.11340.johan@herland.net>
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-Thread-Topic: [PATCH] Remove restriction on notes ref base
-Thread-Index: Act64SGVigrcJyTWQw2Pu23DHoz53QAA+FOA
-Content-class: urn:content-classes:message
-X-MimeOLE: Produced By Microsoft Exchange V6.5
+	id S1751955Ab0KDU1T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Nov 2010 16:27:19 -0400
+Received: from fmmailgate01.web.de ([217.72.192.221]:44250 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751598Ab0KDU1S (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Nov 2010 16:27:18 -0400
+Received: from smtp04.web.de  ( [172.20.0.225])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 05BE11747EAD5;
+	Thu,  4 Nov 2010 21:27:17 +0100 (CET)
+Received: from [93.246.52.145] (helo=[192.168.178.29])
+	by smtp04.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1PE6Oy-00058l-00; Thu, 04 Nov 2010 21:27:16 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <7vbp66vxuw.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+n/8m7Kd34a4STdvKE09+HPb0JbR00qHJkwATG
+	aw/I0k6xcECHIxxcx5Mqc5ORNQn/xYoUy46GRpbD+GPSk0PCYa
+	+Nu5j5IuEV/uwK/Ushqg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160753>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160754>
 
-Hi
+Since 1.6.5 "git clone" honors the --recursive option to recursively check
+out submodules too. As this option can easily be misinterpreted when it is
+added to other commands like "git grep", add the new --recurse-submodules
+option as an alias for --recursive so the same option can be used for all
+commands recursing into submodules.
 
-> Although I'm starting to wonder whether our remote -> local refspec
-mappings 
-> are getting too varied (i.e. confusing). Currently we have:
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
->  Remote repo    ->   Local repo
->  ------------------------------------------------
->  refs/heads/*        refs/remotes/$remote/*
->  refs/tags/*         refs/tags/*
+Am 03.11.2010 23:36, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+> 
+>> ... For my first recursion patches a
+>> few months ago I started with --recurse-submodules but then I noticed
+>> that "git clone" already used "--recursive" for the same purpose, and
+>> for consistency reasons I switched to using that too. But especially
+>> when looking at recursive grep it is really easy to misinterpret
+>> --recursive, so the idea came up to use --recurse-submodules everywhere.
+>>
+>> Opinions?
+> 
+> I think it would make sense to _add_ --recurse-submodules to "clone" to
+> make everybody consistent.
+> ... I
+> thing it is too strong to _deprecate_ the option in the context of that
+> command.
 
-What's the rationale for the implicit/magic behaviour for tags? It
-causes plenty of confusion for new users, etc.
+Fine by me, then what about this patch?
 
--- Chris Forbes
+And am I right to assume that there are no objections against using
+--recurse-submodule for fetch, checkout & friends?
+
+
+ Documentation/git-clone.txt |    4 +++-
+ builtin/clone.c             |    2 ++
+ 2 files changed, 5 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
+index ab72933..d69984b 100644
+--- a/Documentation/git-clone.txt
++++ b/Documentation/git-clone.txt
+@@ -12,7 +12,8 @@ SYNOPSIS
+ 'git clone' [--template=<template_directory>]
+ 	  [-l] [-s] [--no-hardlinks] [-q] [-n] [--bare] [--mirror]
+ 	  [-o <name>] [-b <name>] [-u <upload-pack>] [--reference <repository>]
+-	  [--depth <depth>] [--recursive] [--] <repository> [<directory>]
++	  [--depth <depth>] [--recursive|--recurse-submodules] [--] <repository>
++	  [<directory>]
+
+ DESCRIPTION
+ -----------
+@@ -167,6 +168,7 @@ objects from the source repository into a pack in the cloned repository.
+ 	as patches.
+
+ --recursive::
++--recurse-submodules::
+ 	After the clone is created, initialize all submodules within,
+ 	using their default settings. This is equivalent to running
+ 	`git submodule update --init --recursive` immediately after
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 19ed640..61e0989 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -66,6 +66,8 @@ static struct option builtin_clone_options[] = {
+ 		    "setup as shared repository"),
+ 	OPT_BOOLEAN(0, "recursive", &option_recursive,
+ 		    "initialize submodules in the clone"),
++	OPT_BOOLEAN(0, "recurse_submodules", &option_recursive,
++		    "initialize submodules in the clone"),
+ 	OPT_STRING(0, "template", &option_template, "path",
+ 		   "path the template repository"),
+ 	OPT_STRING(0, "reference", &option_reference, "repo",
+-- 
+1.7.3.2.194.ge0b67
