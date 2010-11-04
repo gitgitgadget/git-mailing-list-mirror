@@ -1,82 +1,91 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2] Use git_open_noatime when accessing pack data
-Date: Thu, 4 Nov 2010 00:04:37 -0500
-Message-ID: <20101104050437.GB15018@burratino>
-References: <1288652061-19614-1-git-send-email-spearce@spearce.org>
- <1288652061-19614-2-git-send-email-spearce@spearce.org>
- <7v8w1axrnp.fsf@alter.siamese.dyndns.org>
- <20101103174148.GB13377@burratino>
- <7vvd4ew687.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 04 06:05:46 2010
+From: Kevin Ballard <kevin@sb.org>
+Subject: [PATCH] git-rebase--interactive.sh: Add new command "shell"
+Date: Wed,  3 Nov 2010 22:17:16 -0700
+Message-ID: <1288847836-84882-1-git-send-email-kevin@sb.org>
+Cc: Kevin Ballard <kevin@sb.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 04 06:18:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDs1A-0000Wn-8K
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 06:05:44 +0100
+	id 1PDsD8-0006Zn-By
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 06:18:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753207Ab0KDFFB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Nov 2010 01:05:01 -0400
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:63195 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752942Ab0KDFFA (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Nov 2010 01:05:00 -0400
-Received: by ywc21 with SMTP id 21so1063426ywc.19
-        for <git@vger.kernel.org>; Wed, 03 Nov 2010 22:04:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=HtEvhPiw2LTvdg+7LzZ+a+xzY5WuWacHyKWGTV/hw9s=;
-        b=CD0PB4EqpVNPaWGDEreSQJw6MjWq0BLQIv5YfvG6hg9KVbN0+eokly7pYWz6wXGSXg
-         KKOWqJacm71y9kWk8rETGvSSR1izOEYZHdBqVn4nIAhkPLjQsJIJa+Pl0jNsn2K2ZZWT
-         mQbM7UOSKH/Ef34ckRNIURZ+u1TxGcRIpjkMA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=YWVvn7J+PQp9Izdxit8rKtvnt0mjYG3mpaZiZr2L9yYzpsC6g8OhPHHT6PMEtNBaYJ
-         hNUuqSASJAeonLCrWahCvjau5Tj2ywoxY9v1L4c7urCgKM5971ZKIvo8puiT63c7kenx
-         6ihR4+Nr0LkX7zdRbNlVLobgMGqegMu8yBp+E=
-Received: by 10.91.9.1 with SMTP id m1mr624432agi.21.1288847099373;
-        Wed, 03 Nov 2010 22:04:59 -0700 (PDT)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id g29sm6296258anh.36.2010.11.03.22.04.56
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 03 Nov 2010 22:04:57 -0700 (PDT)
-Content-Disposition: inline
-In-Reply-To: <7vvd4ew687.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753682Ab0KDFRa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Nov 2010 01:17:30 -0400
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:51103 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753020Ab0KDFR2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Nov 2010 01:17:28 -0400
+Received: by pwj7 with SMTP id 7so102020pwj.19
+        for <git@vger.kernel.org>; Wed, 03 Nov 2010 22:17:28 -0700 (PDT)
+Received: by 10.142.174.13 with SMTP id w13mr175891wfe.321.1288847848228;
+        Wed, 03 Nov 2010 22:17:28 -0700 (PDT)
+Received: from localhost.localdomain ([69.170.160.74])
+        by mx.google.com with ESMTPS id y42sm14805565wfd.22.2010.11.03.22.17.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 03 Nov 2010 22:17:27 -0700 (PDT)
+X-Mailer: git-send-email 1.7.3.2.202.g3b863.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160691>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Add a new command "shell", which takes an option commit. It simply exits
+to the shell with the commit (if given) and a message telling the user how
+to resume the rebase. This is effectively the same thing as "x false" but
+much friendlier to the user.
 
->> Judging from these three use cases, readonly open()s to the worktree
->> should indeed use noatime, but open()s of .git/config, say, should
->> not.  Hmm.
->
-> Why not, when you are talking about readonly open?
+Signed-off-by: Kevin Ballard <kevin@sb.org>
+---
+I discovered the need for this when I wanted to edit a commit, but apply
+a fixup first. The only way with the existing tools was an exec command
+that fails (e.g. "x false").
 
-A .git/config frequently accessed by git is being used, so tmpwatch
-shouldn't delete it.  (Meanwhile, a worktree frequently accessed by
-git is not precious on that account, and letting git touch the atime
-there might mask more useful information about when other programs
-touched the files.)
+ git-rebase--interactive.sh |   21 +++++++++++++++++++++
+ 1 files changed, 21 insertions(+), 0 deletions(-)
 
-But that is all very fuzzy to me.  I tend to mount noatime except on
-/usr (for popularity-contest).
-
-I guess I should put it another way.  What if anything does readonly
-have to do with O_NOATIME?  Why shouldn't we always use O_NOATIME?
-Why should the operating system provide atime at all?
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 9121bb6..3501757 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -566,6 +566,26 @@ do_next () {
+ 			exit 1
+ 		fi
+ 		;;
++	!|"shell")
++		read -r command comment < "$TODO"
++		mark_action_done
++		# can't use $sha1 here for same reason as "exec"
++		line=$(git rev-list --pretty=oneline -1 --abbrev-commit --abbrev=7 HEAD)
++		sha1="${line%% *}"
++		rest="${line#* }"
++		echo "$sha1" > "$DOTEST"/stopped-sha
++		warn "Stopped at $sha1... $rest"
++		if test -n "$comment"; then
++			warn
++			warn "	$comment"
++		fi
++		warn
++		warn "Once you are ready to continue, run"
++		warn
++		warn "	git rebase --continue"
++		warn
++		exit 0
++		;;
+ 	*)
+ 		warn "Unknown command: $command $sha1 $rest"
+ 		if git rev-parse --verify -q "$sha1" >/dev/null
+@@ -1007,6 +1027,7 @@ first and then run 'git rebase --continue' again."
+ #  s, squash = use commit, but meld into previous commit
+ #  f, fixup = like "squash", but discard this commit's log message
+ #  x <cmd>, exec <cmd> = Run a shell command <cmd>, and stop if it fails
++#  !, shell = Exit to the shell
+ #
+ # If you remove a line here THAT COMMIT WILL BE LOST.
+ # However, if you remove everything, the rebase will be aborted.
+-- 
+1.7.3.2.202.g3b863.dirty
