@@ -1,73 +1,75 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: can subversion 1.6 be made "just as distributed as git"?
-Date: Wed, 3 Nov 2010 17:58:29 -0700
-Message-ID: <BF8EE51A-AFE4-4EBA-82E8-4A8B32678FBF@sb.org>
-References: <loom.20101104T014408-903@post.gmane.org>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: MDellerus <mdellerus@yahoo.com>
-X-From: git-owner@vger.kernel.org Thu Nov 04 01:58:40 2010
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] Remove restriction on notes ref base
+Date: Thu, 4 Nov 2010 02:00:12 +0100
+Message-ID: <AANLkTimDyAatzEXGi_q+1+3x5p5SXGaap2Aqwr+d3Nhk@mail.gmail.com>
+References: <1288657003-17802-1-git-send-email-kroot@google.com>
+ <7vsjzixty5.fsf@alter.siamese.dyndns.org> <AANLkTin_NuzQocOab+w=B3Ka+n22j2-OXQu8=J6uzByS@mail.gmail.com>
+ <201011040149.47968.johan@herland.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	Kenny Root <kroot@google.com>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Thu Nov 04 02:00:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDoA3-0008HB-JN
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 01:58:39 +0100
+	id 1PDoC4-0000rJ-5P
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 02:00:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754172Ab0KDA6d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 3 Nov 2010 20:58:33 -0400
-Received: from mail-px0-f174.google.com ([209.85.212.174]:37781 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753913Ab0KDA6c convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 3 Nov 2010 20:58:32 -0400
-Received: by pxi15 with SMTP id 15so71317pxi.19
-        for <git@vger.kernel.org>; Wed, 03 Nov 2010 17:58:31 -0700 (PDT)
-Received: by 10.142.233.2 with SMTP id f2mr8164896wfh.395.1288832311628;
-        Wed, 03 Nov 2010 17:58:31 -0700 (PDT)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id e14sm14500329wfg.8.2010.11.03.17.58.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 03 Nov 2010 17:58:30 -0700 (PDT)
-In-Reply-To: <loom.20101104T014408-903@post.gmane.org>
-X-Mailer: Apple Mail (2.1081)
+	id S1754189Ab0KDBAh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 3 Nov 2010 21:00:37 -0400
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:48362 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753913Ab0KDBAg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 3 Nov 2010 21:00:36 -0400
+Received: by gxk23 with SMTP id 23so978190gxk.19
+        for <git@vger.kernel.org>; Wed, 03 Nov 2010 18:00:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=MIGQ4nTJjOF2T+yHufYPzLvRmemeRNgoYrMcL6U2kJg=;
+        b=kdZLYuFMr/WijRzmTa4DCMMfXC9wMSjDh/l2nVornsua/MUD1vIfJHGGK60CuvFrIZ
+         01zPqq6kNVFu010JtVrUgz6p4rE9NLKvlOrXbeCTcy81jLideIbBmgOMKUde095IktWF
+         JN3wXvkJni7olxhfvgww7Tez9E7yEVfK51VBQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=ZlRf3u3ZmF6eIor+dqgHEVHqIeD8fvsQheFSewfxlsAT7oWyPRUeZ+UvheUfAo5L24
+         0pnW80IwuNHhmPaA8cxqJ2qkYE5wxbr44A2iQQoDW97UR67ECuxZyT1rFaOB7URyp+s7
+         o/0rD09KXcXGj6sP51Z7KaL6q2vGgPR5dTxww=
+Received: by 10.150.206.11 with SMTP id d11mr135100ybg.369.1288832435304; Wed,
+ 03 Nov 2010 18:00:35 -0700 (PDT)
+Received: by 10.150.58.11 with HTTP; Wed, 3 Nov 2010 18:00:12 -0700 (PDT)
+In-Reply-To: <201011040149.47968.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160659>
 
-Using "svnadmin hotcopy" you could certainly get your own local repo, but I fail to
-see how you could easily join your history up with someone else's history using this
-mechanism. If you really want to use SVN in a distributed manner, I would recommend
-you simply use SVK.
+Heya,
 
--Kevin Ballard
+On Thu, Nov 4, 2010 at 01:49, Johan Herland <johan@herland.net> wrote:
+> ...Johan (scrambles for a flame retardant suit)
 
-On Nov 3, 2010, at 5:45 PM, MDellerus wrote:
+I for one, have thought about this design, and it's probably how I
+will represent refs for hg remotes (for git-remote-hg). E.g.:
 
-> I have a co-worker who has suggested that, using "svnadmin hotcopy", subversion 
-> can be
->    just as "distributed" a system as Git
-> 
-> While I see how this can be done, it hardly seems to me to qualify as "just as", 
-> making this "plausible" at best.
-> 
-> Can anyone give me a quick confirmation of this?  Confirmed? Plausible? Busted?
-> 
-> If this is confirmed or plausible, could someone give me a quick run-down?
-> 
-> (I would appreciate a response, no matter how long it takes, but I do have a 
-> meeting with this co-worker in another 16 hours... (10am Pacific).)
-> 
-> Thanks in advance!
-> 
-> (FYI - I have cross-posted this, just once, to an SVN forum, in the event they 
-> might have a different opinion.)
-> 
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+* refs/remotes/<some-hg-remote>/heads
+* refs/remotes/<some-hg-remote>/tags
+* refs/remotes/<some-hg-remote>/branches
+
+So, no retardant suit needed as far as I'm concerned :)
+
+-- 
+Cheers,
+
+Sverre Rabbelier
