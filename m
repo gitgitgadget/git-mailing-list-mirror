@@ -1,77 +1,79 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From: Kevin Ballard <kevin@sb.org>
 Subject: Re: [PATCH] git-rebase--interactive.sh: Add new command "shell"
-Date: Thu, 4 Nov 2010 10:23:28 +0100
-Message-ID: <AANLkTimzTzUvoHT9bHve-qvt8V_mvJHmQtgpqY6f_H3u@mail.gmail.com>
-References: <1288847836-84882-1-git-send-email-kevin@sb.org>
-	<vpq39rhzdht.fsf@bauges.imag.fr>
-	<914D7AE3-22D5-4069-B815-2B11A2897BE9@sb.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Date: Thu, 4 Nov 2010 02:25:13 -0700
+Message-ID: <EE792829-6A68-44FB-8C8D-2365DB4E5A5D@sb.org>
+References: <1288847836-84882-1-git-send-email-kevin@sb.org> <vpq39rhzdht.fsf@bauges.imag.fr> <914D7AE3-22D5-4069-B815-2B11A2897BE9@sb.org> <AANLkTimzTzUvoHT9bHve-qvt8V_mvJHmQtgpqY6f_H3u@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Thu Nov 04 10:23:38 2010
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 04 10:25:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PDw2k-0007kb-7c
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 10:23:38 +0100
+	id 1PDw4S-0000Eq-DT
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 10:25:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755546Ab0KDJXb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 4 Nov 2010 05:23:31 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:35888 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755418Ab0KDJXa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 4 Nov 2010 05:23:30 -0400
-Received: by fxm16 with SMTP id 16so1251192fxm.19
-        for <git@vger.kernel.org>; Thu, 04 Nov 2010 02:23:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=zj1nA9KmCfaDksny2YaygogBX/gPq3rAoUBAZ+TniXI=;
-        b=vAyxlBt5sXsrNZhMJu7xoK+gq679klCxnelHXhzXNYLNSs+/V/SlRBkfrLt0Xk+y2V
-         tYkUwVt9zHXhjSKRSup7fPl4Ty9/jHf52uTgdx4+mZU7TV55NtwFGplxxmAW9AMqoFky
-         GZfl/ZSBG/nYWcNKWwzZcb+ROuEgpX5t1L+Oc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=chmsmRHO4oBBnF98sgO00iVUhuq4Y1UqAZNef2FZ8XW9A9UgM/SZSUvtfcIRAFdzRZ
-         cxjw0bmU01y0yo2GXt59XIKbTKxJlQ+TefW+8Jd2djOBo2EDv1l0K3GHF8EnV7SmN7y6
-         gVbysuCj+UKDAqR6Yi9t/xTtCkVOfzN9orSXA=
-Received: by 10.223.115.203 with SMTP id j11mr413142faq.35.1288862608825; Thu,
- 04 Nov 2010 02:23:28 -0700 (PDT)
-Received: by 10.223.123.203 with HTTP; Thu, 4 Nov 2010 02:23:28 -0700 (PDT)
-In-Reply-To: <914D7AE3-22D5-4069-B815-2B11A2897BE9@sb.org>
+	id S932103Ab0KDJZR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Nov 2010 05:25:17 -0400
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:61781 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932096Ab0KDJZQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 4 Nov 2010 05:25:16 -0400
+Received: by gwj21 with SMTP id 21so1185808gwj.19
+        for <git@vger.kernel.org>; Thu, 04 Nov 2010 02:25:16 -0700 (PDT)
+Received: by 10.42.213.2 with SMTP id gu2mr152526icb.75.1288862715989;
+        Thu, 04 Nov 2010 02:25:15 -0700 (PDT)
+Received: from [10.0.1.14] (c-24-130-32-253.hsd1.ca.comcast.net [24.130.32.253])
+        by mx.google.com with ESMTPS id fw4sm2085582ibb.19.2010.11.04.02.25.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 04 Nov 2010 02:25:15 -0700 (PDT)
+In-Reply-To: <AANLkTimzTzUvoHT9bHve-qvt8V_mvJHmQtgpqY6f_H3u@mail.gmail.com>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160701>
 
-On Thu, Nov 4, 2010 at 09:53, Kevin Ballard <kevin@sb.org> wrote:
-> On Nov 4, 2010, at 1:42 AM, Matthieu Moy wrote:
->
->> Kevin Ballard <kevin@sb.org> writes:
->>
->>> Add a new command "shell", which takes an option commit. It simply exits
->>> to the shell with the commit (if given) and a message telling the user how
->>> to resume the rebase.
->>
->> "shell" sounds like you're going to execute something in a shell, not
->> that you're going back to the shell. Looking at the commit message, I
->> thought you had missed the "exec" command and re-implemented it.
->>
->> What about "pause", abbreviated as "p" for the command name?
->
-> That sounds like a reasonable suggestion, except "p" is already taken by "pick".
-> I suppose this command could simply omit the short version.
+On Nov 4, 2010, at 2:23 AM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
 
-I thought "shell" would do exactly what your patch does. And it has
-the "s" short version.
+> On Thu, Nov 4, 2010 at 09:53, Kevin Ballard <kevin@sb.org> wrote:
+>> On Nov 4, 2010, at 1:42 AM, Matthieu Moy wrote:
+>>=20
+>>> Kevin Ballard <kevin@sb.org> writes:
+>>>=20
+>>>> Add a new command "shell", which takes an option commit. It simply=
+ exits
+>>>> to the shell with the commit (if given) and a message telling the =
+user how
+>>>> to resume the rebase.
+>>>=20
+>>> "shell" sounds like you're going to execute something in a shell, n=
+ot
+>>> that you're going back to the shell. Looking at the commit message,=
+ I
+>>> thought you had missed the "exec" command and re-implemented it.
+>>>=20
+>>> What about "pause", abbreviated as "p" for the command name?
+>>=20
+>> That sounds like a reasonable suggestion, except "p" is already take=
+n by "pick".
+>> I suppose this command could simply omit the short version.
+>=20
+> I thought "shell" would do exactly what your patch does. And it has
+> the "s" short version.
+>=20
+> So +1 for "shell" from me and -1 for "pause", which *does* confuse me=
+=2E
+> I'd expect that
+> to just sleep for a few seconds.
 
-So +1 for "shell" from me and -1 for "pause", which *does* confuse me.
-I'd expect that
-to just sleep for a few seconds.
+"s" is actually taken by "squash". That's why my original patch used "!=
+",
+though a user might actually expect "!" to do what "x" does.
+
+-Kevin Ballard
