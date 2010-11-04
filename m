@@ -1,83 +1,84 @@
-From: Brad Larson <bklarson@gmail.com>
-Subject: Re: .git as file pointing to directory?
-Date: Thu, 4 Nov 2010 16:07:00 -0500
-Message-ID: <AANLkTinMiSNCC0EUDRvxiW0V+upjEemP_xYwjcWcNC6L@mail.gmail.com>
-References: <AANLkTikB4p9=EQRsAJTe4-nAw5udz2pfcRd4WPsfms86@mail.gmail.com> <20101104184321.GA16929@burratino>
+From: Yann Dirson <ydirson@free.fr>
+Subject: Re: Refactoring git-rebase.sh and git-rebase--interactive.sh
+Date: Thu, 4 Nov 2010 22:15:56 +0100
+Message-ID: <20101104211556.GB8911@home.lan>
+References: <AANLkTimeWDbJPor9PnKgW5sD7DLjqrm-vTzEtnARvP3M@mail.gmail.com>
+ <201011030424.33093.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 04 22:07:31 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	git@vger.kernel.org, Johannes.Schindelin@gmx.de,
+	christian.couder@gmail.com, trast@student.ethz.ch
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Thu Nov 04 22:16:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PE71t-0007QA-SL
-	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 22:07:30 +0100
+	id 1PE7AL-0003py-Ah
+	for gcvg-git-2@lo.gmane.org; Thu, 04 Nov 2010 22:16:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753135Ab0KDVHZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Nov 2010 17:07:25 -0400
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:43781 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753117Ab0KDVHY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Nov 2010 17:07:24 -0400
-Received: by bwz11 with SMTP id 11so2080815bwz.19
-        for <git@vger.kernel.org>; Thu, 04 Nov 2010 14:07:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=0OPhQahLJAge3qXhsmN0COgAfEtPwqghRfJlcz6a7ak=;
-        b=meG68XWonUpsTmLjSRgcMF2pJT26xLE8eIaE66957FWh1+kYI+D6wz5jUbMCrwSqN4
-         oEkM7qYhrfxJpRtvu5ueuWBpZFmkwOjU265vYrTY5/j81jx19Vf4PZM9TZfJzEp4PKxB
-         psOVs3td5O1z4qvbT609dMdJBfbHAGlJK2bg8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Pz7CQk6qs6glbgg4ZKQpyPupwDrfOEWSy3Kpk5okncpSjQMjCWtGUKThRUxdQQ/T5P
-         LSsRd1T7UYlt/4hJ2FpDj3WWhIIEArIouZdJueM+zqyWLjSqjNsxq5TgYu54+XjKzQg2
-         UEXp8RlNv3auQ7iuhu4skM18QHk/u4DybmJKo=
-Received: by 10.204.53.142 with SMTP id m14mr1101800bkg.147.1288904841147;
- Thu, 04 Nov 2010 14:07:21 -0700 (PDT)
-Received: by 10.204.75.72 with HTTP; Thu, 4 Nov 2010 14:07:00 -0700 (PDT)
-In-Reply-To: <20101104184321.GA16929@burratino>
+	id S1752763Ab0KDVQG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 4 Nov 2010 17:16:06 -0400
+Received: from smtp5-g21.free.fr ([212.27.42.5]:47428 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752340Ab0KDVQE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 4 Nov 2010 17:16:04 -0400
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 72ABBD48002;
+	Thu,  4 Nov 2010 22:15:57 +0100 (CET)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1PE7A4-0002KW-9n; Thu, 04 Nov 2010 22:15:56 +0100
+Content-Disposition: inline
+In-Reply-To: <201011030424.33093.chriscool@tuxfamily.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160769>
 
-On Thu, Nov 4, 2010 at 1:43 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
-> Hi Brad,
->
-> Brad Larson wrote:
->
->> At gittogether there was some talk about having .git be a file, not =
-a
->> folder, with contents pointing to the real .git directory. =A0Simila=
-r to
->> a symlink, but supported in Windows.
->
-> It is called a .git file. =A0See gitrepository-layout(5), v1.5.6-rc0~=
-93^2~3
-> (Add platform-independent .git "symlink", 2008-02-20), and the recent
-> rebase not handling core.worktree thread[1].
+Hi Christian,
 
-Thanks so much Jonathan.  We were just listing the location of the
-folder, but prepending it with "gitdir: " fixed things.
+On Wed, Nov 03, 2010 at 04:24:32AM +0100, Christian Couder wrote:
+> Now that GTAC (http://www.gtac.biz) is over, I plan to work on options 
+> --continue, --abort and --skip for git cherry-pick/revert. After that I hope 
+> to be able to refactor the code so that in the end common code is used by 
+> cherry-pick/revert and rebase.
 
-Thanks!
-Brad
+Sounds like "sequencer is coming back", great news :)
 
->
-> Hope that helps,
-> Jonathan
->
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/160488/foc=
-us=3D160567
->
+I don't know if you would like the idea enough, but something I often
+think would be good to have (and which could be useful for cherry-pick
+and other commands in need of a sequencer), would be more flexibility.
+The thing I find myself lacking most often, is the possibility to
+change my mind on an already-edited commit (ie, go back after
+--continue), the alternatives I can see today being:
+
+- keeping a note on what to do on next pass (but may be more work in case
+  of conflicts with further commits)
+- fast-forward --continue'ing to keep curent changes and add new ones in
+  next pass (same restriction)
+- --abort'ing the rebase and starting it again, possibly fetching the
+  changes from previous run via HEAD's reflog (not very handy either)
+- checkout back to where you want to re-amend and cherry-pick those you
+  already passed, essentially redoing an interactive rebase by hand
+
+If we could go back to previous commit, while keeping changes done to
+the current one (say, --previous), or reverting to the original one
+(say, --revert).  In the same way, continuing until another
+previously-unforeseen commit without the need to edit the todo file
+would be nice to have (eg. --next).
+
+While I'm at it, another somewhat loosely option I have thought of
+would be to seed the todo file with "edit" commands instead of "pick",
+to make it possible to validate a series of patches one by one before
+sending.  That could be generalized for running a test script
+automatically, that is inserting "x whatever" between all pick's - and
+my 1st idea would boil down to inserting arg-less "edit" or "x false"
+instead.  Maybe some --stepcmd=<command> flag ?
+
+-- 
+Yann
