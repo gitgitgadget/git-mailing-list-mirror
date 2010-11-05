@@ -1,83 +1,99 @@
-From: Elijah Newren <newren@gmail.com>
-Subject: Re: [PATCH en/cascade-tests] tests: add missing &&
-Date: Thu, 4 Nov 2010 22:57:08 -0600
-Message-ID: <AANLkTimYj3dW76QGdgx1F1PGxZ7_my9H=JV+FnB4aaVF@mail.gmail.com>
-References: <1286136014-7728-1-git-send-email-newren@gmail.com>
-	<1286136014-7728-16-git-send-email-newren@gmail.com>
-	<20101031014654.GC29456@burratino>
+From: Maaartin-1 <grajcar1@seznam.cz>
+Subject: Re: Problems switching branches
+Date: Fri, 05 Nov 2010 07:36:09 +0100
+Message-ID: <4CD3A5D9.6070802@seznam.cz>
+References: <loom.20101103T032930-451@post.gmane.org> <loom.20101104T012032-963@post.gmane.org> <AANLkTikK93Jt+dAkpp6K-hQEo6D67q5OKJSLs+g0YL4y@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 05 05:58:09 2010
+Content-Transfer-Encoding: 7bit
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 05 07:36:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PEENN-000072-94
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Nov 2010 05:58:09 +0100
+	id 1PEFuN-0002PZ-R4
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Nov 2010 07:36:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750932Ab0KEE5L convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Nov 2010 00:57:11 -0400
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:36771 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750868Ab0KEE5K convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Nov 2010 00:57:10 -0400
-Received: by fxm16 with SMTP id 16so2068351fxm.19
-        for <git@vger.kernel.org>; Thu, 04 Nov 2010 21:57:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=hyLT1Hjdk3PIuPe+sRH0UO7m1LZx6Uc5q2FfPHhCA98=;
-        b=pySGmHhbhSG1dqSJTmgjrzydfRqcQHRTbiiWOa4FEJB1C/0SckqUA/EszJZ88qibP9
-         t9IFHjKw9Ck1miNK6SCZKISII6tnhG/t9KvrL75Z8gS5jUfJ9uYYoAHi8Hy5Qk6Iy9mc
-         EgP/99tIaeOE3u3ToKqB7ajes1KBi36ant2/A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=asK5K98xiHL0silWLI4y1GpLJXdwpZcL+Www6PaqoKNveKfRIyeC5Qe/zXmpi4rmo+
-         tfIQiuzp9eVkA3LTRw4aYZvA8ETpOakj2PyUbn2rVop9c8Z9pCPAhgGYBnX9fMGCyqvh
-         nO2wZ+T6+PKiE3gsP7BhxTQF85eXAu6N3mXQ4=
-Received: by 10.223.102.79 with SMTP id f15mr511318fao.134.1288933029083; Thu,
- 04 Nov 2010 21:57:09 -0700 (PDT)
-Received: by 10.223.120.20 with HTTP; Thu, 4 Nov 2010 21:57:08 -0700 (PDT)
-In-Reply-To: <20101031014654.GC29456@burratino>
+	id S1751418Ab0KEGgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Nov 2010 02:36:14 -0400
+Received: from smtp.seznam.cz ([77.75.72.43]:55534 "EHLO smtp.seznam.cz"
+	rhost-flags-OK-FAIL-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750728Ab0KEGgN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Nov 2010 02:36:13 -0400
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=beta; d=seznam.cz;
+	h=X-Seznam-DomainKeys:X-Seznam-SPF:X-Virus-Info:Received:Message-ID:Date:From:User-Agent:MIME-Version:To:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Smtpd:X-Seznam-User:X-Session:X-Country:X-QM-Mark;
+	b=Y2Ns1me5D/QXQBw4msCqxBrpnEoxE6GUYbMncffWJi0o+xdFCU3EQmm0JHjDXz5Mp
+	pofnOJ+Dd21Rxxz5rs5+Tpoq8FlHtXxk/HMNI84LgsVoRwU+4sZUvRC/2Dng6lyqu/0
+	Cs+cM60MVJAnsGLy67drdg4RTyWluUDNCKGzCM0=
+X-Seznam-DomainKeys: unknown
+X-Seznam-SPF: neutral
+X-Virus-Info: is OK
+Received: from [10.0.3.100] (188-120-198-113.luckynet.cz [188.120.198.113])
+	by email-relay2.go.seznam.cz (Seznam SMTPD 1.2.14@16206) with ESMTP;
+	Fri, 05 Nov 2010 07:36:07 +0100 (CET)  
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <AANLkTikK93Jt+dAkpp6K-hQEo6D67q5OKJSLs+g0YL4y@mail.gmail.com>
+X-Smtpd: 1.2.14@16206
+X-Seznam-User: grajcar1@seznam.cz
+X-Session: 2590
+X-Country: CZ
+X-QM-Mark: email-qm5<560910070>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160800>
 
-Hi,
+On 10-11-04 15:39, Nguyen Thai Ngoc Duy wrote:
+> On Thu, Nov 4, 2010 at 7:23 AM, Maaartin <grajcar1@seznam.cz> wrote:
+>> Maaartin <grajcar1 <at> seznam.cz> writes:
+>>
+>>>
+>>> I sometimes run in a problem similar to
+>>> http://kerneltrap.org/mailarchive/git/2008/10/15/3667644/thread
+>>> There are some ignored files which I want neither track nor throw away; I'm
+>> just
+>>> happy to have them and keep them out of version control.
+>>>
+>>> Unfortunately, there weren't ignored in the old branch. I'd be quite happy
+>> with
+>>> non-destructive switching like "checkout everything what doesn't overwrite an
+>>> untracked file", so I would end in the old branch with a dirty working tree.
+>> Is
+>>> it possible?
+>>
+>> No answer?
+> 
+> Which means nobody is interested in. Well, not really.
+> 
+> I also get irritated by a similar situation, where the untracked files
+> have the same content as the to-be-checked-out files. I have been
+> tempted (but never got around) to make git compare the in-index
+> content and the untracked file, if it's the same, no need to abort the
+> checkout process.
 
-On Sat, Oct 30, 2010 at 7:46 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Breaks in a test assertion's && chain can potentially hide
-> failures from earlier commands in the chain.
->
-> Commands intended to fail should be marked with !, test_must_fail, or
-> test_might_fail. =C2=A0The examples in this patch do not require that=
-=2E
->
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> Hi,
->
-> Just found some time to work through reports from the && checker.
-> The examples below only add && to the end of lines in various tests.
-> Passes all tests there (though of course that does not mean much).
->
-> Thoughts?
+I was asked to provide a working example of the happening, but I haven't
+managed to reproduce it yet. However, it's not very rare (it just never
+happen when I need it).
 
-I haven't had a chance to look at this in detail, but this is really
-cool.  Thanks for working on it.  (And sorry for disappearing for over
-a month with some unfinished series; I'll try to update them this
-weekend.)
+> But your approach may be better. Yes, I think it's possible. Any
+> suggestion for checkout's new argument? --no-overwrite-untracked seems
+> too long.
 
+I would go even further: a switch called "ignorant" or "lenient"
+allowing to always switch branches in a non-destructible way. All files
+normally causing abort would be left unmodified, so you could do
+git checkout --ignorant forth; git checkout back
+and would (assuming you started in branch "back") land in the original
+state without loosing anything. Of course, this means, that the ignorant
+checkout doesn't lead you into a clean state, but that's why I'd like to
+use a switch instead of making it the default. :)
 
-Elijah
+I may be talking non-sense as I'm quite inexperienced user, however I'd
+love an easier way for switching branches. Quite often, I'd like to put
+a modified file onto a different branch. This sounds probably strange,
+but my work is really quite chaotic in this respect at the moment and
+I'd like to organize it better by using a couple of (quite similar)
+branches (with a lifespan of a few days at most).
