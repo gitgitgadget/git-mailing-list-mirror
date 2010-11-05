@@ -1,96 +1,68 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: cherry-pick fail when a symbolic link has been changed into a
- file or directory
-Date: Fri, 5 Nov 2010 09:34:46 +0100
-Message-ID: <AANLkTi=aGHvQhG3bOcqS-U04UjFeB7PVw9GTsSuf3UFA@mail.gmail.com>
-References: <20101104125641.2ef90853@cortex>
-	<AANLkTimq8SP-gxZQiXW3Pxg3-1Z98zyPAoNA8JDn0=6A@mail.gmail.com>
-	<20101104151637.076ac021@cortex>
-	<AANLkTi=cydcB2yRpWbSH7qZGHdjXEPjNvfBCJny7JcwJ@mail.gmail.com>
-	<20101104181537.5f866d42@cortex>
-	<AANLkTimDWM69qvY5wdyzFu=g6htg12-K542PRR4bdDYq@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: pretty format can't work on cron job
+Date: Fri, 05 Nov 2010 09:37:54 +0100
+Message-ID: <4CD3C262.6080108@viscovery.net>
+References: <7B2091481B9ED640A92789B0CA07059587CCF7@CDCEXMAIL02.tw.trendnet.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Camille Moncelier <moncelier@devlife.org>,
-	Nick <oinksocket@letterboxes.org>, git <git@vger.kernel.org>
-To: Elijah Newren <newren@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 05 09:34:53 2010
+Cc: git@vger.kernel.org, ellre923@gmail.com
+To: chen_wang@trendmicro.com.cn
+X-From: git-owner@vger.kernel.org Fri Nov 05 09:38:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PEHl7-0002kR-4N
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Nov 2010 09:34:53 +0100
+	id 1PEHoB-0004Pq-EN
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Nov 2010 09:38:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753387Ab0KEIet convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Nov 2010 04:34:49 -0400
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:59306 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753373Ab0KEIer convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Nov 2010 04:34:47 -0400
-Received: by wwb39 with SMTP id 39so1138685wwb.1
-        for <git@vger.kernel.org>; Fri, 05 Nov 2010 01:34:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=vI+IpC7TpeQnBP1QWXU7jP5jbG0zOzbQ/LEzfkAvbAI=;
-        b=EWwjCW5FnIdnf+DvJjoEdT5j8jmzYiCwxPevMHkZlCLWhztmzSYyMTW8LE5rI5V70+
-         JNyfn2IzdrBh7bNLaT4KXa+h/036Kw3MgdahnwWffTvQ5K4JPbLVmv2YhpInvcU87Ol1
-         G2gcjz20UBElZFMqoDMmXSsdJ7p3tz9E+KNG8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=aJ9k2v9YO0aCiJCYafH1ecVSwacQXyYuj787+IyIRFcK9EC5cNNKuw3tnIJ15Fsi1v
-         wXLOVdT3cTII6TxIwTH0qhVyZIyzTQyEySXQHsoi9rXyhHK61VhILxpOglPXWi9uUa7B
-         8xXthvGcLMHR6fO4TeRqk442D8/zBpET8L5Hw=
-Received: by 10.216.184.11 with SMTP id r11mr1813541wem.8.1288946086261; Fri,
- 05 Nov 2010 01:34:46 -0700 (PDT)
-Received: by 10.216.26.208 with HTTP; Fri, 5 Nov 2010 01:34:46 -0700 (PDT)
-In-Reply-To: <AANLkTimDWM69qvY5wdyzFu=g6htg12-K542PRR4bdDYq@mail.gmail.com>
+	id S1753425Ab0KEIh7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Nov 2010 04:37:59 -0400
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:32110 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1752043Ab0KEIh6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Nov 2010 04:37:58 -0400
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1PEHo3-0001pB-IF; Fri, 05 Nov 2010 09:37:55 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 479031660F;
+	Fri,  5 Nov 2010 09:37:55 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <7B2091481B9ED640A92789B0CA07059587CCF7@CDCEXMAIL02.tw.trendnet.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160804>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160805>
 
-On Fri, Nov 5, 2010 at 5:54 AM, Elijah Newren <newren@gmail.com> wrote:
-> Hi,
->
-> Sorry, I've been missing in action for about a month, but I'll have
-> some time this weekend to catch back up on git stuff...
->
-> On Thu, Nov 4, 2010 at 11:15 AM, Camille Moncelier
-> <moncelier@devlife.org> wrote:
->> On Thu, 4 Nov 2010 18:03:39 +0100
->> Christian Couder <christian.couder@gmail.com> wrote:
->>> Elijah Newren sent a patch series around September the 20th but I d=
-id
->>> not check to see if this series was merged into pu, next or master.
->>> And I don't know if it fixes your problem.
->>> Could you have a look?
->> I think I already took a look last week, and I think they were merge=
-d
->> in 1.7.1 or 1.7.2 although I'm not sure. I'll take another look. Thi=
-s
->> evening or maybe tomorrow.
+Am 11/5/2010 9:29, schrieb chen_wang@trendmicro.com.cn:
+>=20
+> For the command: git log 1da177e4c3f41524e886b7f1b8a0c1fc7321cac2.. -=
+M --date=3Dshort --pretty=3Dformat:"Author: %aN <%ae>; Date: %ad" --sho=
+rtstat --dirstat --no-merges
+>=20
+> I run it on shell by manual can create correct format of output, such=
+ as:
+> -------------------------------------------------
+> Author: Amit Shah <amit.shah@redhat.com>; Date: 2010-10-20
+>  1 files changed, 14 insertions(+), 3 deletions(-)
+>  100.0% drivers/char/
+> -------------------------------------------------
+>=20
+> But when I put that command on cron job, even I run =E2=80=9C. /etc/p=
+rofile=E2=80=9D and =E2=80=9C. ~/.bash_profile=E2=80=9D first, I can=E2=
+=80=99t get correct format of output.
+> -------------------------------------------------
+> Author: %aN <amit.shah@redhat.com>; Date: Wed Oct 20 13:45:43 2010 +1=
+030
+>  100.0% drivers/char/
+>  1 files changed, 14 insertions(+), 3 deletions(-)
+> -------------------------------------------------
 
-Great!
+% has a special meaning in a crontab. See man 5 crontab.
 
-> The patch series I posted in late September post-dates the related
-> series of mine that were merged in 1.7.3.
->
-> I'd also be happy to take a look and see if my newer merge-recursive
-> series fixes your case (or whether one of my other improvements to
-> that series since my September posting does). =A0If not, I'll track i=
-t
-> down and fix it and add that fix to the series.
-
-Great!
-
-Thanks both,
-Christian.
+-- Hannes
