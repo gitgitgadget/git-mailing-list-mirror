@@ -1,70 +1,76 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: pretty format can't work on cron job
-Date: Fri, 5 Nov 2010 09:14:44 -0400
-Message-ID: <20101105131444.GB11707@sigill.intra.peff.net>
-References: <7B2091481B9ED640A92789B0CA07059587CCF7@CDCEXMAIL02.tw.trendnet.org>
- <4CD3C262.6080108@viscovery.net>
- <7B2091481B9ED640A92789B0CA07059587CD03@CDCEXMAIL02.tw.trendnet.org>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Oldest Currently Distributed Git {Re: [RFC/PATCH 0/2]
+	Documentation: kicking the "reset --hard" habit}
+Date: Fri, 05 Nov 2010 10:39:34 -0400
+Message-ID: <1288967974.30670.13.camel@drew-northup.unet.maine.edu>
+References: <20101029083516.GA26290@burratino>
+	 <vpqzktwv3yx.fsf@bauges.imag.fr> <7vd3qr3tm8.fsf@alter.siamese.dyndns.org>
+	 <vpqaalujw69.fsf@bauges.imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: j.sixt@viscovery.net, git@vger.kernel.org, ellre923@gmail.com
-To: chen_wang@trendmicro.com.cn
-X-From: git-owner@vger.kernel.org Fri Nov 05 14:14:08 2010
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	bebarino@gmail.com, srabbelier@gmail.com,
+	Thomas Rast <trast@student.ethz.ch>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+X-From: git-owner@vger.kernel.org Fri Nov 05 15:40:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PEM7L-0006cS-Aa
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Nov 2010 14:14:07 +0100
+	id 1PENTO-0000bh-Lt
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Nov 2010 15:40:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754405Ab0KENOB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Nov 2010 09:14:01 -0400
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:53665 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751629Ab0KENOA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Nov 2010 09:14:00 -0400
-Received: (qmail 9503 invoked by uid 111); 5 Nov 2010 13:13:59 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 05 Nov 2010 13:13:59 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Nov 2010 09:14:44 -0400
-Content-Disposition: inline
-In-Reply-To: <7B2091481B9ED640A92789B0CA07059587CD03@CDCEXMAIL02.tw.trendnet.org>
+	id S1751265Ab0KEOkv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Nov 2010 10:40:51 -0400
+Received: from basalt.its.maine.edu ([130.111.32.66]:58436 "EHLO
+	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750894Ab0KEOkt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Nov 2010 10:40:49 -0400
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id oA5EdcTt012096
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 5 Nov 2010 10:39:43 -0400
+In-Reply-To: <vpqaalujw69.fsf@bauges.imag.fr>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=9
+	Fuz1=9 Fuz2=9
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: oA5EdcTt012096
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1289572789.31347@gN6YcRmBmwOtpGWBoYRi+w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160814>
 
-On Fri, Nov 05, 2010 at 04:47:05PM +0800, chen_wang@trendmicro.com.cn w=
-rote:
 
-> > > But when I put that command on cron job, even I run =E2=80=9C. /e=
-tc/profile=E2=80=9D and =E2=80=9C.
-> > ~/.bash_profile=E2=80=9D first, I can=E2=80=99t get correct format =
-of output.
-> > > -------------------------------------------------
-> > > Author: %aN <amit.shah@redhat.com>; Date: Wed Oct 20 13:45:43 201=
-0
-> > +1030
-> > >  100.0% drivers/char/
-> > >  1 files changed, 14 insertions(+), 3 deletions(-)
-> > > -------------------------------------------------
-> >=20
-> > % has a special meaning in a crontab. See man 5 crontab.
-> >=20
->=20
-> I warped this command in script and trigger script in crontab.
-> I think it's not the root cause, because %ae still works.
+On Sun, 2010-10-31 at 15:04 +0100, Matthieu Moy wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> > What is the oldest version of git that is shipped with _current_ distros,
+> > by the way?
+> 
+> Debian stable has 1.5.6.5. Since there should be a Debian release
+> within the next few months, that should be an upper bound on how old a
+> package can get in a release (well, unless for RedHat users maybe).
+> 
 
-I notice that the only placeholder that is broken is %aN, which convert=
-s
-using the .mailmap file. Maybe something in your environment is
-preventing reading that file properly?
+EPEL for RHEL5 is 1.5.5.6 (plus security/bugfix patches).
+RHEL5 itself doesn't have git (as if it did it wouldn't be in EPEL).
 
-Can you show us the exact script you're calling from your crontab file?
-I'm wondering if it's something to do with being in the same directory.
+We await RHEL6--granted it will take a while to upgrade things to that
+point after it comes out.
 
--Peff
+-- 
+-Drew Northup N1XIM
+   AKA RvnPhnx on OPN
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
