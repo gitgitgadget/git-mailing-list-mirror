@@ -1,60 +1,70 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [PATCH 2/2] rebase: teach --autosquash to match on sha1 in
- addition to message
-Date: Fri, 5 Nov 2010 14:04:26 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1011051401090.7611@ds9.cixit.se>
-References: <1288838504-69114-1-git-send-email-kevin@sb.org> <1288838504-69114-2-git-send-email-kevin@sb.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: pretty format can't work on cron job
+Date: Fri, 5 Nov 2010 09:14:44 -0400
+Message-ID: <20101105131444.GB11707@sigill.intra.peff.net>
+References: <7B2091481B9ED640A92789B0CA07059587CCF7@CDCEXMAIL02.tw.trendnet.org>
+ <4CD3C262.6080108@viscovery.net>
+ <7B2091481B9ED640A92789B0CA07059587CD03@CDCEXMAIL02.tw.trendnet.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Fri Nov 05 14:10:40 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: j.sixt@viscovery.net, git@vger.kernel.org, ellre923@gmail.com
+To: chen_wang@trendmicro.com.cn
+X-From: git-owner@vger.kernel.org Fri Nov 05 14:14:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PEM40-00045y-9S
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Nov 2010 14:10:40 +0100
+	id 1PEM7L-0006cS-Aa
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Nov 2010 14:14:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754226Ab0KENKe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 5 Nov 2010 09:10:34 -0400
-Received: from upper-gw.cixit.se ([92.43.32.133]:57005 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752129Ab0KENKd (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 5 Nov 2010 09:10:33 -0400
-X-Greylist: delayed 361 seconds by postgrey-1.27 at vger.kernel.org; Fri, 05 Nov 2010 09:10:32 EDT
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id oA5D4RtE022956
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 5 Nov 2010 14:04:27 +0100
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id oA5D4Qll022952;
-	Fri, 5 Nov 2010 14:04:27 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <1288838504-69114-2-git-send-email-kevin@sb.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Fri, 05 Nov 2010 14:04:27 +0100 (CET)
+	id S1754405Ab0KENOB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Nov 2010 09:14:01 -0400
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:53665 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751629Ab0KENOA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Nov 2010 09:14:00 -0400
+Received: (qmail 9503 invoked by uid 111); 5 Nov 2010 13:13:59 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 05 Nov 2010 13:13:59 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 05 Nov 2010 09:14:44 -0400
+Content-Disposition: inline
+In-Reply-To: <7B2091481B9ED640A92789B0CA07059587CD03@CDCEXMAIL02.tw.trendnet.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160812>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160813>
 
-Kevin Ballard:
+On Fri, Nov 05, 2010 at 04:47:05PM +0800, chen_wang@trendmicro.com.cn w=
+rote:
 
-> Support lines of the form "fixup! 7a235b" that specify an exact commit
-> in addition to the normal "squash! Old commit message" form.
+> > > But when I put that command on cron job, even I run =E2=80=9C. /e=
+tc/profile=E2=80=9D and =E2=80=9C.
+> > ~/.bash_profile=E2=80=9D first, I can=E2=80=99t get correct format =
+of output.
+> > > -------------------------------------------------
+> > > Author: %aN <amit.shah@redhat.com>; Date: Wed Oct 20 13:45:43 201=
+0
+> > +1030
+> > >  100.0% drivers/char/
+> > >  1 files changed, 14 insertions(+), 3 deletions(-)
+> > > -------------------------------------------------
+> >=20
+> > % has a special meaning in a crontab. See man 5 crontab.
+> >=20
+>=20
+> I warped this command in script and trigger script in crontab.
+> I think it's not the root cause, because %ae still works.
 
-The patch I posted for this in June (Message-Id: 
-<20100617125746.E86B42FC00@perkele>) also updated the manual page for 
-git-rebase. You may want to re-use parts of that.
+I notice that the only placeholder that is broken is %aN, which convert=
+s
+using the .mailmap file. Maybe something in your environment is
+preventing reading that file properly?
 
-http://www.spinics.net/lists/git/msg133571.html has an archived version of it.
+Can you show us the exact script you're calling from your crontab file?
+I'm wondering if it's something to do with being in the same directory.
 
--- 
-\\// Peter - http://www.softwolves.pp.se/
+-Peff
