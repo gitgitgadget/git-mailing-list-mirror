@@ -1,106 +1,83 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Test failures in pu: 4046, 950[012]
-Date: Fri, 5 Nov 2010 09:20:04 +0700
-Message-ID: <AANLkTinZJFb_sAH6AGD+ZMwj5boERAU3-NDkA3ve1+=F@mail.gmail.com>
-References: <201010201148.51551.trast@student.ethz.ch> <7vvd4wvmv6.fsf@alter.siamese.dyndns.org>
- <201010201856.54756.trast@student.ethz.ch> <201011042237.01801.trast@student.ethz.ch>
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: [PATCH en/cascade-tests] tests: add missing &&
+Date: Thu, 4 Nov 2010 22:57:08 -0600
+Message-ID: <AANLkTimYj3dW76QGdgx1F1PGxZ7_my9H=JV+FnB4aaVF@mail.gmail.com>
+References: <1286136014-7728-1-git-send-email-newren@gmail.com>
+	<1286136014-7728-16-git-send-email-newren@gmail.com>
+	<20101031014654.GC29456@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Nov 05 03:20:34 2010
+Cc: git@vger.kernel.org, gitster@pobox.com, avarab@gmail.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 05 05:58:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PEBur-0004Y9-LJ
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Nov 2010 03:20:33 +0100
+	id 1PEENN-000072-94
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Nov 2010 05:58:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752701Ab0KECU2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 4 Nov 2010 22:20:28 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:57889 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752087Ab0KECU1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 4 Nov 2010 22:20:27 -0400
-Received: by wyb36 with SMTP id 36so619678wyb.19
-        for <git@vger.kernel.org>; Thu, 04 Nov 2010 19:20:26 -0700 (PDT)
+	id S1750932Ab0KEE5L convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Nov 2010 00:57:11 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:36771 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750868Ab0KEE5K convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 5 Nov 2010 00:57:10 -0400
+Received: by fxm16 with SMTP id 16so2068351fxm.19
+        for <git@vger.kernel.org>; Thu, 04 Nov 2010 21:57:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=LRKoJgz3tp/KsR4vWenb9Eeh2req2gWAmHZHEqjtLkg=;
-        b=l5ZaOoQfXmMmAZR5cl0i5OxdvBQOFGjBRPn9N4MlyaTx0K168GaVmefzm2ZHkPCNZA
-         JlTfStJif0/bU5tm6FLvbN3nXPZuqtsc1LRiony8kEXf57dds5mma9Dkqw0De7pDTZJt
-         4ZvS6vYghEyMaZefsXMlz6/1vrOUY59DaDv1k=
+        bh=hyLT1Hjdk3PIuPe+sRH0UO7m1LZx6Uc5q2FfPHhCA98=;
+        b=pySGmHhbhSG1dqSJTmgjrzydfRqcQHRTbiiWOa4FEJB1C/0SckqUA/EszJZ88qibP9
+         t9IFHjKw9Ck1miNK6SCZKISII6tnhG/t9KvrL75Z8gS5jUfJ9uYYoAHi8Hy5Qk6Iy9mc
+         EgP/99tIaeOE3u3ToKqB7ajes1KBi36ant2/A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=rJpIhZAeREtfbTB0P3Zc0p5OZ1BKBhdBKbwHot1ILUibFMl/0hz0HOg5guH5M1RKsd
-         jOugwaKrAAJRbvXEZu2omLrA+AbAjiamRhTNLfjHVNrOicsUBoRysvJs5tuMDrV2Cc8P
-         ueDJImPLOJ+JlRsfWLcU/CCLoAKD8Aw07Ga9w=
-Received: by 10.216.47.19 with SMTP id s19mr587255web.56.1288923625939; Thu,
- 04 Nov 2010 19:20:25 -0700 (PDT)
-Received: by 10.216.172.199 with HTTP; Thu, 4 Nov 2010 19:20:04 -0700 (PDT)
-In-Reply-To: <201011042237.01801.trast@student.ethz.ch>
+        b=asK5K98xiHL0silWLI4y1GpLJXdwpZcL+Www6PaqoKNveKfRIyeC5Qe/zXmpi4rmo+
+         tfIQiuzp9eVkA3LTRw4aYZvA8ETpOakj2PyUbn2rVop9c8Z9pCPAhgGYBnX9fMGCyqvh
+         nO2wZ+T6+PKiE3gsP7BhxTQF85eXAu6N3mXQ4=
+Received: by 10.223.102.79 with SMTP id f15mr511318fao.134.1288933029083; Thu,
+ 04 Nov 2010 21:57:09 -0700 (PDT)
+Received: by 10.223.120.20 with HTTP; Thu, 4 Nov 2010 21:57:08 -0700 (PDT)
+In-Reply-To: <20101031014654.GC29456@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160798>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160799>
 
-2010/11/5 Thomas Rast <trast@student.ethz.ch>:
-> * 950[012]: these are very strange.
+Hi,
+
+On Sat, Oct 30, 2010 at 7:46 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Breaks in a test assertion's && chain can potentially hide
+> failures from earlier commands in the chain.
 >
-> Running them interactively appears to work ok, so maybe it is some
-> environment bug. =C2=A0They appear to be "can't happen" style failure=
-s
-
-Can you rerun it with GIT_TRACE=3D"$TRASH_DIRECTORY/trace" set on the
-failed tests?
-
-> though, since they all look like (this one is from 9502)
+> Commands intended to fail should be marked with !, test_must_fail, or
+> test_might_fail. =C2=A0The examples in this patch do not require that=
+=2E
 >
-> =C2=A0Initialized empty Git repository in /local/home/trast/git/t/tra=
-sh directory.t9502-gitweb-standalone-parse-output/.git/
-> =C2=A0expecting success:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0test_commit first foo &&
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0git branch xx/test &&
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0FULL_ID=3D$(git rev-parse --verify =
-HEAD) &&
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0SHORT_ID=3D$(git rev-parse --verify=
- --short=3D7 HEAD)
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+> Hi,
 >
-> =C2=A0fatal: This operation must be run in a work tree
-> =C2=A0not ok - 1 setup
+> Just found some time to work through reports from the && checker.
+> The examples below only add && to the end of lines in various tests.
+> Passes all tests there (though of course that does not mean much).
+>
+> Thoughts?
 
-This test is OK for me, although the next ones fail (pu db22585). How
-do I debug gitweb.perl? t9502.2 shows
+I haven't had a chance to look at this in detail, but this is really
+cool.  Thanks for working on it.  (And sorry for disappearing for over
+a month with some unfinished series; I'll try to update them this
+weekend.)
 
-=46ULL_ID  =3D 1005c80cc11c531d327b12195027cbbb4ff9e3cb
-SHORT_ID =3D 1005c80
-expecting success:
-        gitweb_run "p=3D.git;a=3Dsnapshot;h=3D$FULL_ID;sf=3Dtar" &&
-        check_snapshot ".git-$SHORT_ID"
 
-basename=3D.git-1005c80
-tar: This does not look like a tar archive
-tar: Exiting with failure status due to previous errors
-not ok - 2 snapshot: full sha1
-
-Not very helpful.
-
-On t9500.1, I get
-
-[Fri Nov  5 02:09:15 2010] gitweb.perl: Undefined subroutine
-&main::cache_fetch called at
-/home/pclouds/w/git/t/../gitweb/gitweb.perl line 1124.
-
-Setting PERLLIB makes it work, but shouldn't the test script have done
-that already?
---=20
-Duy
+Elijah
