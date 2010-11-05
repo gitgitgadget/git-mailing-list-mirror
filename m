@@ -1,106 +1,89 @@
-From: =?ISO-8859-1?Q?Philip_J=E4genstedt?= <philip@foolip.org>
-Subject: Re: [PATCH] Documentation: fix misnested -l and --contains in git-tag synopsis
-Date: Fri, 5 Nov 2010 10:28:12 +0100
-Message-ID: <AANLkTikXM4BjRHOeS=3mirr9=YRW8sdaHFt05D-9BDxL@mail.gmail.com>
-References: <1288783029-11226-1-git-send-email-philip@foolip.org> <7vmxpovq0r.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Test failures in pu: 4046, 950[012]
+Date: Fri, 05 Nov 2010 04:28:01 -0700 (PDT)
+Message-ID: <m3zktof1u0.fsf@localhost.localdomain>
+References: <201010201148.51551.trast@student.ethz.ch>
+	<7vvd4wvmv6.fsf@alter.siamese.dyndns.org>
+	<201010201856.54756.trast@student.ethz.ch>
+	<201011042237.01801.trast@student.ethz.ch>
+	<AANLkTinZJFb_sAH6AGD+ZMwj5boERAU3-NDkA3ve1+=F@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 05 10:28:52 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>,
+	Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 05 12:28:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PEIbG-0008QI-LL
-	for gcvg-git-2@lo.gmane.org; Fri, 05 Nov 2010 10:28:46 +0100
+	id 1PEKSr-00078o-Sc
+	for gcvg-git-2@lo.gmane.org; Fri, 05 Nov 2010 12:28:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753767Ab0KEJ2g convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 5 Nov 2010 05:28:36 -0400
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:42338 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752589Ab0KEJ2e convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 5 Nov 2010 05:28:34 -0400
-Received: by wyb36 with SMTP id 36so866293wyb.19
-        for <git@vger.kernel.org>; Fri, 05 Nov 2010 02:28:32 -0700 (PDT)
-Received: by 10.216.158.18 with SMTP id p18mr920828wek.2.1288949312452; Fri,
- 05 Nov 2010 02:28:32 -0700 (PDT)
-Received: by 10.216.51.137 with HTTP; Fri, 5 Nov 2010 02:28:12 -0700 (PDT)
-In-Reply-To: <7vmxpovq0r.fsf@alter.siamese.dyndns.org>
+	id S1752958Ab0KEL2H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 5 Nov 2010 07:28:07 -0400
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:47834 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751401Ab0KEL2F (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 5 Nov 2010 07:28:05 -0400
+Received: by fxm16 with SMTP id 16so2220532fxm.19
+        for <git@vger.kernel.org>; Fri, 05 Nov 2010 04:28:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=ZlzDOeGrtun2LeXtj47fGhZ8GAhVog0KEtafDvrNgDw=;
+        b=XBUyqBnjKEIndrPMU7ROcQb/QkYQnYp095rFQ59GIERhBdWno1IQS+6ofh09SNeOn9
+         tmKhkLO7Yn55qXCUMbjbZP2pNNDP97SwiExeRHzjbaBb/icLSF6QJSuXhQuh/cvPtD9L
+         MLLdmdsqyaUzu+7Afletmiw13wwJT0wc/UINI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=ePiE8obP8+Pv6teEQXMRcBsiC8FC9u8AzeTJYVBKW4dotKzs2T2Uif1Oppf3Sq3R/w
+         o6bNRy4YWnLoiWIxucwgIiLufTiS8pjtK3d0aYiWncMjszJXHco4qp/U1pZHMjOYgCCF
+         u5fSvZlk2Hyv6JSwC7wClY3PVpYMmM0FP2w+c=
+Received: by 10.223.97.10 with SMTP id j10mr823596fan.112.1288956483049;
+        Fri, 05 Nov 2010 04:28:03 -0700 (PDT)
+Received: from localhost.localdomain (abvw48.neoplus.adsl.tpnet.pl [83.8.220.48])
+        by mx.google.com with ESMTPS id k4sm543955faa.32.2010.11.05.04.28.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 05 Nov 2010 04:28:01 -0700 (PDT)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oA5BRH8I007515;
+	Fri, 5 Nov 2010 12:27:28 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id oA5BQlse007510;
+	Fri, 5 Nov 2010 12:26:47 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <AANLkTinZJFb_sAH6AGD+ZMwj5boERAU3-NDkA3ve1+=F@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160811>
 
-On Thu, Nov 4, 2010 at 20:37, Junio C Hamano <gitster@pobox.com> wrote:
-> Philip J=E4genstedt <philip@foolip.org> writes:
->
->> This has been broken since the --contains option was added in
->> commit 32c35cfb1e9c8523b9d60e5095f1c49ebaef0279
->>
->> Signed-off-by: Philip J=E4genstedt <philip@foolip.org>
->> ---
->> =A0Documentation/git-tag.txt | =A0 =A02 +-
->> =A01 files changed, 1 insertions(+), 1 deletions(-)
->>
->> diff --git a/Documentation/git-tag.txt b/Documentation/git-tag.txt
->> index 31c78a8..8ad89d7 100644
->> --- a/Documentation/git-tag.txt
->> +++ b/Documentation/git-tag.txt
->> @@ -12,7 +12,7 @@ SYNOPSIS
->> =A0'git tag' [-a | -s | -u <key-id>] [-f] [-m <msg> | -F <file>]
->> =A0 =A0 =A0 <tagname> [<commit> | <object>]
->> =A0'git tag' -d <tagname>...
->> -'git tag' [-n[<num>]] -l [--contains <commit>] [<pattern>]
->> +'git tag' [-n[<num>]] -l [<pattern>] [--contains <commit>]
->> =A0'git tag' -v <tagname>...
->
-> I do not think there is any "mis" nor "nesting" here. =A0The -l optio=
-n can
-> be used to tell the command to operate in "list tags" mode, and in th=
-at
-> mode it can use a pattern to limit the output (with or without --cont=
-ains
-> <commit>). =A0All of these are supported:
->
-> =A0 =A0git tag -l --contains v1.7.0 v\*
-> =A0 =A0git tag -l v\*
-> =A0 =A0git tag --contains v1.7.0 -l v\*
-> =A0 =A0git tag -l v\* --contains v1.7.0
->
-> IOW, <pattern> is _not_ an optional argument to the -l option. =A0In =
-fact, I
-> think we should support more than one patterns, even though currently=
- this
-> seems to silently ignore k\*:
->
-> =A0 =A0git tag --contains v1.7.0 -l v\* k\*
->
-> As I tend to consider that "limit by pattern" is like pathspecs (in t=
-his
-> case, it is _not_ a pathspec, though), having the pattern at the end =
-looks
-> the most natural, but it may be just me. =A0And that is why I think w=
-e ought
-> to accept and apply more than one patterns here.
->
-> I would further say that "git tag -l <pattern> --contains <commit>" s=
-hould
-> be an error, even though the command currently seems to take it; perh=
-aps
-> parameter reordering is in effect? =A0I didn't look closely enough.
->
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-=46rom the documentation it's not clear that -l and --contains are
-related at all, they look (and behave?) like orthogonal options. If
-they do in fact interact in some non-obvious way or if -l <pattern>
---contains <commit> means something different from -l --contains
-<commit> <pattern>, it would be great if that were made more clear. (I
-wouldn't have expected the later to work at all, thus my assumption
-that there was a typo in the documentation.)
+> On t9500.1, I get
+> 
+> [Fri Nov  5 02:09:15 2010] gitweb.perl: Undefined subroutine
+> &main::cache_fetch called at
+> /home/pclouds/w/git/t/../gitweb/gitweb.perl line 1124.
+> 
+> Setting PERLLIB makes it work, but shouldn't the test script have done
+> that already?
 
---=20
-Philip J=E4genstedt
+See http://article.gmane.org/gmane.comp.version-control.git/160395
+
+Fixed in http://thread.gmane.org/gmane.comp.version-control.git/160147/focus=160476
+(minimal fixup), not yet in 'pu'.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
