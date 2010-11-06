@@ -1,112 +1,105 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 5/5] tag: recognize rfc1991 signatures
-Date: Sat,  6 Nov 2010 12:04:10 +0100
-Message-ID: <553a88c4ac00e681e605b81f3ce10342a881ac2f.1289041051.git.git@drmicha.warpmail.net>
-References: <4CAB90EC.1080302@drmicha.warpmail.net>
-Cc: Stephan Hugel <urschrei@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 06 12:15:03 2010
+Subject: Re: [RFC/H] Makefile fix for FC13?
+Date: Sat, 06 Nov 2010 12:26:10 +0100
+Message-ID: <4CD53B52.8050805@drmicha.warpmail.net>
+References: <7vr5ezqsv9.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, John 'Warthog9' Hawley <warthog9@kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Nov 06 12:25:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PEgje-0006Ht-Dm
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Nov 2010 12:15:02 +0100
+	id 1PEgu6-0002bH-IG
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Nov 2010 12:25:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751019Ab0KFLO5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Nov 2010 07:14:57 -0400
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:50632 "EHLO
+	id S1752129Ab0KFLZp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Nov 2010 07:25:45 -0400
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:40266 "EHLO
 	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750817Ab0KFLO4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 6 Nov 2010 07:14:56 -0400
+	by vger.kernel.org with ESMTP id S1751969Ab0KFLZo (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Nov 2010 07:25:44 -0400
 Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 3FC2763C;
-	Sat,  6 Nov 2010 07:03:58 -0400 (EDT)
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 497AB54A;
+	Sat,  6 Nov 2010 07:25:44 -0400 (EDT)
 Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Sat, 06 Nov 2010 07:03:58 -0400
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references:in-reply-to:references; s=smtpout; bh=uBYaVM7uNNHX/Og+d85+oEapoLk=; b=svCEoUWDG3eD5HIB/fyB3FbtWKP26CpwbZtZYmiWZT+eCrGi5cYejni1p3YhaFlGVQK7/1Pt6NXqHXPiuBpdlwQOl2o9oueVBEVUpIDyaHKXkduOSY6M4X1H2pk9tthR0H0GQpvij4OXm6/hyouvNtRZvVuLJwLQ0CZbhf1kC/0=
-X-Sasl-enc: KFHkky4aFu0ekwQNOmvQfvaIndQf1JSnwpNQ5S8pWu2Z 1289041437
-Received: from localhost (p548596E8.dip0.t-ipconnect.de [84.133.150.232])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 6063440244A;
-	Sat,  6 Nov 2010 07:03:57 -0400 (EDT)
-X-Mailer: git-send-email 1.7.3.2.193.g78bbb
-In-Reply-To: <4CAB90EC.1080302@drmicha.warpmail.net>
-In-Reply-To: <cover.1289041051.git.git@drmicha.warpmail.net>
-References: <cover.1289041051.git.git@drmicha.warpmail.net>
+  by compute1.internal (MEProxy); Sat, 06 Nov 2010 07:25:44 -0400
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=jgRyuWJ1ndhtMCgCz87/IbgfT28=; b=YsXrMErC88svXPDKOmyAM96oUiax4e0nEIlrvMH9/0NhqPAFUO3oM7Gu7FndgpgYEU50bZC47MRxZXFBDOftV6rl51BfEEde3nP9Gpky0+2PYGgNCAY6JWofnIzVK2YqEWhprBTH+uo2MlDZ71r0mOgZLc92Nsi3b2qhG5cA7F0=
+X-Sasl-enc: HQGh/RBZJaewfzF34J0w+KYEgfqIrZgTmbjesd3bSk/j 1289042743
+Received: from localhost.localdomain (p548596E8.dip0.t-ipconnect.de [84.133.150.232])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 6E368404E94;
+	Sat,  6 Nov 2010 07:25:43 -0400 (EDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101027 Fedora/3.1.6-1.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
+In-Reply-To: <7vr5ezqsv9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160841>
 
-We have always been creating rfc1991 signatures for users with "rfc1991"
-in their gpg config but failed to recognize them (tag -l -n largenumber)
-and verify them (tag -v, verify-tag).
+Junio C Hamano venit, vidit, dixit 05.11.2010 23:59:
+> As k.org is migrating to FC13, I'm also adding an FC13 bochs to my
+> collection so that I can cut releases for 32-bit i?86 archs.  I noticed
+> that the compilation fails with this:
+> 
+>       LINK git-imap-send
+>   /usr/bin/ld: imap-send.o: undefined reference to symbol 'EVP_DecodeBlock'
+>   /usr/bin/ld: note: 'EVP_DecodeBlock' is defined in DSO
+>   /lib/libcrypto.so.10 so try adding it to the linker command line
+> 
+> I understand that this is because the linker policy changed in the release
+> to make things safer.  My understanding of the rationale for the change
+> goes like this:
+> 
+>   When a binary (e.g. imap-send) wants a symbol X (e.g. EVP_DecodeBlock)
+>   from a library A (e.g. -lcrypto), and the binary also wants a different
+>   symbol from another library B (e.g. -lssl), and if the library B happens
+>   to depend on library A, it used to be sufficient to link the binary with
+>   library B, without explicitly linking it with library A, as library A
+>   will be pulled in at the runtime because library B wants it anyway.
+> 
+>   This however would break if library B stops depending on library A
+>   (i.e. library B gets updated while remaining compatible with its own
+>   older version, but its implementation no longer requries library A).  It
+>   is therefore safer to force programs to list their dependencies
+>   explicitly at link time.
+> 
+> So, I need a patch like the following to make things compile on FC13.
+> 
+> Thoughts?  Ideas for doing this (specifically, "make rpm") in better ways?
 
-Make good use of the refactored signature detection and let us recognize
-and verify those signatures also.
+I was wondering why I never ran into this on F13 (nor F14). Must have
+something to do with "NO_OPENSSL=y" in my config.mak... But I realize
+that even with BLK_SHA1 we need openssl for imap+ssl.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- t/t7004-tag.sh |    6 +++---
- tag.c          |    3 ++-
- tag.h          |    1 +
- 3 files changed, 6 insertions(+), 4 deletions(-)
+I guess this goes to show that a statement like "tested on F13" depends
+quite a bit on the config.
 
-diff --git a/t/t7004-tag.sh b/t/t7004-tag.sh
-index 22dcc45..4fe45a4 100755
---- a/t/t7004-tag.sh
-+++ b/t/t7004-tag.sh
-@@ -1048,19 +1048,19 @@ cp "$1" actual
- EOF
- chmod +x fakeeditor
- 
--test_expect_failure GPG \
-+test_expect_success GPG \
- 	'reediting a signed tag body omits signature' '
- 	echo "RFC1991 signed tag" >expect &&
- 	GIT_EDITOR=./fakeeditor git tag -f -s rfc1991-signed-tag $commit &&
- 	test_cmp expect actual
- '
- 
--test_expect_failure GPG \
-+test_expect_success GPG \
- 	'verifying rfc1991 signature' '
- 	git tag -v rfc1991-signed-tag
- '
- 
--test_expect_failure GPG \
-+test_expect_success GPG \
- 	'list tag with rfc1991 signature' '
- 	echo "rfc1991-signed-tag RFC1991 signed tag" >expect &&
- 	git tag -l -n1 rfc1991-signed-tag >actual &&
-diff --git a/tag.c b/tag.c
-index 5f9626c..18a5142 100644
---- a/tag.c
-+++ b/tag.c
-@@ -138,7 +138,8 @@ size_t parse_signature(const char *buf, unsigned long size)
- {
- 	char *eol;
- 	size_t len = 0;
--	while (len < size && prefixcmp(buf + len, PGP_SIGNATURE)) {
-+	while (len < size && prefixcmp(buf + len, PGP_SIGNATURE)
-+			&& prefixcmp(buf + len, PGP_MESSAGE)) {
- 		eol = memchr(buf + len, '\n', size - len);
- 		len += eol ? eol - (buf + len) + 1 : size - len;
- 	}
-diff --git a/tag.h b/tag.h
-index 4ba2a42..134d572 100644
---- a/tag.h
-+++ b/tag.h
-@@ -4,6 +4,7 @@
- #include "object.h"
- 
- #define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
-+#define PGP_MESSAGE "-----BEGIN PGP MESSAGE-----"
- 
- extern const char *tag_type;
- 
--- 
-1.7.3.2.193.g78bbb
+The official Fedora packages are built with:
+
+BLK_SHA1 = 1
+NEEDS_CRYPTO_WITH_SSL = 1
+NO_PYTHON = 1
+
+
+> On my FC11 bochs and my other Linux boxes, the linker is loose but it does
+> not seem to hurt (and I do not think it should, as openssl-dev package
+> seems to have almost always shipped with both -lssl and -lcrypto) to add
+> this unconditionally.
+> 
+> diff --git a/Makefile b/Makefile
+> index 1f1ce04..18c7e8e 100644
+> --- a/Makefile
+> +++ b/Makefile
+> @@ -776,6 +776,7 @@ ifeq ($(uname_S),Linux)
+>  	NO_STRLCPY = YesPlease
+>  	NO_MKSTEMPS = YesPlease
+>  	HAVE_PATHS_H = YesPlease
+> +	NEEDS_CRYPTO_WITH_SSL = YesPlease
+>  endif
+>  ifeq ($(uname_S),GNU/kFreeBSD)
+>  	NO_STRLCPY = YesPlease
