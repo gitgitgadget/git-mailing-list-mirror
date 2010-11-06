@@ -1,128 +1,59 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH v2 2/3] Convert diffcore-rename's rename_src to the new sorted-array API.
-Date: Sat,  6 Nov 2010 22:00:34 +0100
-Message-ID: <1289077235-3208-3-git-send-email-ydirson@altern.org>
-References: <1289077235-3208-1-git-send-email-ydirson@altern.org>
-Cc: Yann Dirson <ydirson@altern.org>
+From: Manuel Strehl <manuel.strehl@physik.uni-regensburg.de>
+Subject: Checking out messes up execution bit
+Date: Sat, 06 Nov 2010 22:11:20 +0100
+Message-ID: <4CD5C478.1010604@physik.uni-regensburg.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 06 22:01:23 2010
+X-From: git-owner@vger.kernel.org Sat Nov 06 22:20:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PEpt5-0001XF-3p
-	for gcvg-git-2@lo.gmane.org; Sat, 06 Nov 2010 22:01:23 +0100
+	id 1PEqBp-0001My-SD
+	for gcvg-git-2@lo.gmane.org; Sat, 06 Nov 2010 22:20:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753676Ab0KFVAw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 6 Nov 2010 17:00:52 -0400
-Received: from smtp5-g21.free.fr ([212.27.42.5]:58185 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753663Ab0KFVAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 6 Nov 2010 17:00:50 -0400
-Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id B85C6D480FF;
-	Sat,  6 Nov 2010 22:00:44 +0100 (CET)
-Received: from yann by home.lan with local (Exim 4.72)
-	(envelope-from <ydirson@free.fr>)
-	id 1PEpsO-0000qX-74; Sat, 06 Nov 2010 22:00:40 +0100
-X-Mailer: git-send-email 1.7.2.3
-In-Reply-To: <1289077235-3208-1-git-send-email-ydirson@altern.org>
+	id S1753759Ab0KFVUk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 6 Nov 2010 17:20:40 -0400
+Received: from rrzmta5.rz.uni-regensburg.de ([194.94.155.56]:46008 "EHLO
+	rrzmta5.rz.uni-regensburg.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753701Ab0KFVUj (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 6 Nov 2010 17:20:39 -0400
+X-Greylist: delayed 555 seconds by postgrey-1.27 at vger.kernel.org; Sat, 06 Nov 2010 17:20:39 EDT
+Received: from rrzmta5.rz.uni-regensburg.de (localhost [127.0.0.1])
+	by localhost (Postfix) with SMTP id F1D192892
+	for <git@vger.kernel.org>; Sat,  6 Nov 2010 22:11:21 +0100 (CET)
+Received: from [192.168.178.23] (ppp-188-174-19-29.dynamic.mnet-online.de [188.174.19.29])
+	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
+	(Client did not present a certificate)
+	(Authenticated sender: stm01875)
+	by rrzmta5.rz.uni-regensburg.de (Postfix) with ESMTPSA id 8DF7F2891
+	for <git@vger.kernel.org>; Sat,  6 Nov 2010 22:11:20 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.12) Gecko/20101027 Lightning/1.0b2 Thunderbird/3.1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160860>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160861>
 
-Alas, this time we could not keep the same prototype :)
+Hello list,
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
- diffcore-rename.c |   53 ++++++++++++++++-------------------------------------
- 1 files changed, 16 insertions(+), 37 deletions(-)
+I asked a question over at superuser.com about git checkouts messing up 
+the execution bit of freshly committed files:
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 72a9b94..ec40cf7 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -30,46 +30,25 @@ declare_sorted_array(static, struct diff_rename_dst, rename_dst,
- 		     rename_dst_cmp, rename_dst_init)
- 
- /* Table of rename/copy src files */
--static struct diff_rename_src {
-+
-+struct diff_rename_src {
- 	struct diff_filespec *one;
- 	unsigned short score; /* to remember the break score */
--} *rename_src;
--static int rename_src_nr, rename_src_alloc;
-+};
- 
--static struct diff_rename_src *register_rename_src(struct diff_filespec *one,
--						   unsigned short score)
-+static int rename_src_cmp(void* data, struct diff_rename_src *elem)
- {
--	int first, last;
--
--	first = 0;
--	last = rename_src_nr;
--	while (last > first) {
--		int next = (last + first) >> 1;
--		struct diff_rename_src *src = &(rename_src[next]);
--		int cmp = strcmp(one->path, src->one->path);
--		if (!cmp)
--			return src;
--		if (cmp < 0) {
--			last = next;
--			continue;
--		}
--		first = next+1;
--	}
--
--	/* insert to make it at "first" */
--	if (rename_src_alloc <= rename_src_nr) {
--		rename_src_alloc = alloc_nr(rename_src_alloc);
--		rename_src = xrealloc(rename_src,
--				      rename_src_alloc * sizeof(*rename_src));
--	}
--	rename_src_nr++;
--	if (first < rename_src_nr)
--		memmove(rename_src + first + 1, rename_src + first,
--			(rename_src_nr - first - 1) * sizeof(*rename_src));
--	rename_src[first].one = one;
--	rename_src[first].score = score;
--	return &(rename_src[first]);
-+	struct diff_filepair *p = data;
-+	return strcmp(p->one->path, elem->one->path);
-+}
-+static void rename_src_init(struct diff_rename_src *elem, void* data)
-+{
-+	struct diff_filepair *p = data;
-+	elem->one = p->one;
-+	elem->score = p->score;
- }
-+declare_sorted_array(static, struct diff_rename_src, rename_src,
-+		     rename_src_cmp, rename_src_init)
- 
- static int basename_same(struct diff_filespec *src, struct diff_filespec *dst)
- {
-@@ -426,7 +405,7 @@ void diffcore_rename(struct diff_options *options)
- 			 */
- 			if (p->broken_pair && !p->score)
- 				p->one->rename_used++;
--			register_rename_src(p->one, p->score);
-+			locate_rename_src(p, 1);
- 		}
- 		else if (detect_rename == DIFF_DETECT_COPY) {
- 			/*
-@@ -434,7 +413,7 @@ void diffcore_rename(struct diff_options *options)
- 			 * one, to indicate ourselves as a user.
- 			 */
- 			p->one->rename_used++;
--			register_rename_src(p->one, p->score);
-+			locate_rename_src(p, 1);
- 		}
- 	}
- 	if (rename_dst_nr == 0 || rename_src_nr == 0)
--- 
-1.7.2.3
+http://superuser.com/questions/204757
+
+To put it in a nutshell: I edit and commit a file in branch "master", 
+then I check out branch "dev" and the edited file gets the execution bit 
+set. This leads to a working copy differing from the content of the 
+index. It's especially painful when I try to merge "master" into "dev", 
+which fails then. I'm working under ext4 and Samba/CIFS, respectively.
+
+One answerer at superuser thinks that this looks like a bug in git 
+itself. Therefore I'd like to check with you, if there is possibly 
+another explanation for my observation, before I issue a bug report.
+
+Best,
+Manuel
