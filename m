@@ -1,66 +1,52 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: cherry-pick fail when a symbolic link has been changed into a file or directory
-Date: Sun, 07 Nov 2010 11:19:44 +0100
-Message-ID: <m239rdv3jz.fsf@igel.home>
-References: <20101104125641.2ef90853@cortex>
-	<AANLkTimq8SP-gxZQiXW3Pxg3-1Z98zyPAoNA8JDn0=6A@mail.gmail.com>
-	<20101104151637.076ac021@cortex>
-	<AANLkTi=cydcB2yRpWbSH7qZGHdjXEPjNvfBCJny7JcwJ@mail.gmail.com>
-	<20101104181537.5f866d42@cortex>
-	<AANLkTimDWM69qvY5wdyzFu=g6htg12-K542PRR4bdDYq@mail.gmail.com>
-	<AANLkTi=aGHvQhG3bOcqS-U04UjFeB7PVw9GTsSuf3UFA@mail.gmail.com>
-	<20101107104209.3e497c5b@cortex>
+From: Christoph Mallon <christoph.mallon@gmx.de>
+Subject: Re: git diff-tree against the root commit
+Date: Sun, 07 Nov 2010 11:58:42 +0100
+Message-ID: <4CD68662.4060709@gmx.de>
+References: <4CCA6623.8090705@workspacewhiz.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <christian.couder@gmail.com>,
-	Elijah Newren <newren@gmail.com>,
-	Nick <oinksocket@letterboxes.org>, git <git@vger.kernel.org>
-To: Camille Moncelier <moncelier@devlife.org>
-X-From: git-owner@vger.kernel.org Sun Nov 07 11:20:00 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Joshua Jensen <jjensen@workspacewhiz.com>
+X-From: git-owner@vger.kernel.org Sun Nov 07 12:07:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PF2Lw-0006D0-IG
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Nov 2010 11:20:00 +0100
+	id 1PF35c-0007sr-RI
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Nov 2010 12:07:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751495Ab0KGKTs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Nov 2010 05:19:48 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:53676 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751358Ab0KGKTr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Nov 2010 05:19:47 -0500
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 44D451C001E6;
-	Sun,  7 Nov 2010 11:19:44 +0100 (CET)
-Received: from igel.home (ppp-88-217-124-121.dynamic.mnet-online.de [88.217.124.121])
-	by mail.mnet-online.de (Postfix) with ESMTP id C1F491C00351;
-	Sun,  7 Nov 2010 11:19:44 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 49117CA2A0; Sun,  7 Nov 2010 11:19:44 +0100 (CET)
-X-Yow: Vote for ME -- I'm well-tapered, half-cocked, ill-conceived and
- TAX-DEFERRED!
-In-Reply-To: <20101107104209.3e497c5b@cortex> (Camille Moncelier's message of
-	"Sun, 7 Nov 2010 10:42:09 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1751457Ab0KGK6s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Nov 2010 05:58:48 -0500
+Received: from mailout-de.gmx.net ([213.165.64.22]:43150 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1751482Ab0KGK6r (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Nov 2010 05:58:47 -0500
+Received: (qmail invoked by alias); 07 Nov 2010 10:58:43 -0000
+Received: from p5B14D520.dip.t-dialin.net (EHLO tron.homeunix.org) [91.20.213.32]
+  by mail.gmx.net (mp006) with SMTP; 07 Nov 2010 11:58:43 +0100
+X-Authenticated: #1673122
+X-Provags-ID: V01U2FsdGVkX1+4W7V93t+4o0IV0vEMt3Wv5Vf49coTnUIkh504kh
+	jrR4lWPgpXbRfV
+User-Agent: Mozilla/5.0 (X11; U; FreeBSD i386; de-DE; rv:1.9.2.12) Gecko/20101030 Thunderbird/3.1.6
+In-Reply-To: <4CCA6623.8090705@workspacewhiz.com>
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160874>
 
-Camille Moncelier <moncelier@devlife.org> writes:
+On 29.10.2010 08:13, Joshua Jensen wrote:
+> I am mirroring a Git repository into another SCM.  I am using 'git diff-tree' to tell me what changes I need to make to the other SCM.
+> 
+> Today, I attempted to mirror a new submodule.  'git diff-tree' reported two SHAs... 0000000000000000000000000000000000000000 and the revision the submodule currently resides at.  I attempted to run a 'git diff-tree' within the submodule for the all zero SHA and the revision specified, but apparently, 0000000000000000000000000000000000000000 does not really represent the root commit and does not work.  I then discovered the --root option, but that doesn't seem to give me the complete file list either.
+> 
+> 'git diff-tree' has been working great for everything else, but I really need a root commit diff-tree listing for proper automation.
+> 
+> What are my options?
 
-> BTW, Is there a way using git bisect to find the "last bad commit",
-> or maybe the "first good one" ?
-
-It works the same as "find first bad one", you just have to exchange
-"good" and "bad" (they really mean "before" and "after").
-
-Andreas.
-
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+Diff against the empty tree. This gives you the treeish of the empty tree:
+	git mktree < /dev/null
+The result is 4b825dc642cb6eb9a060e54bf8d69288fbee4904. This magic number is used in git in several places. git's behaviour with parentless commits is somewhat annoying and/or broken.
