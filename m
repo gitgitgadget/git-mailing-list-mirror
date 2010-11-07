@@ -1,77 +1,61 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: first para of man gitignore should refer to 'git rm --cached'
-Date: Mon, 8 Nov 2010 00:44:27 +0530
-Message-ID: <20101107191425.GA32302@kytes>
-References: <AANLkTim=QCcJDb0600Je-jePvXSXfFMe7FAQ0WMhZKn7@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: pretty format can't work on cron job
+Date: Sun, 7 Nov 2010 20:18:31 +0100
+Message-ID: <201011072018.31740.trast@student.ethz.ch>
+References: <7B2091481B9ED640A92789B0CA07059587CCF7@CDCEXMAIL02.tw.trendnet.org> <20101105131444.GB11707@sigill.intra.peff.net> <01c101cb7d6c$fd053cf0$f70fb6d0$@com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Sitaram Chamarty <sitaramc@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 07 20:14:35 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: 'Jeff King' <peff@peff.net>,
+	"Chen Wang (QA-CN)" <chen_wang@trendmicro.com.cn>,
+	<j.sixt@viscovery.net>, <git@vger.kernel.org>
+To: Chen WANG <ellre923@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 07 20:18:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFAhF-0006Mt-Hz
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Nov 2010 20:14:34 +0100
+	id 1PFAlG-0008HQ-Pz
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Nov 2010 20:18:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751230Ab0KGTO2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Nov 2010 14:14:28 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:39804 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750759Ab0KGTO1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Nov 2010 14:14:27 -0500
-Received: by yxk8 with SMTP id 8so2988770yxk.19
-        for <git@vger.kernel.org>; Sun, 07 Nov 2010 11:14:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=aYXHiaA5adReXlFcXqKdL2OZfbuIw1iXnAst3uUibyM=;
-        b=SPAZKzWaH4PF4SqEiSPZIo3OZpyiK24Y8OI4aJwcwSuN4Ei5yGy/w/wgvzdzoHN87v
-         /NTD18/UpKbNzyYPDIyfNRMjPwfmoEV3y2Fg7JCJtO6RBh5Rb7851IVNy7fID0o2sA+W
-         TELbuMtcmmeiD6+SeXsXrWwl5UR3NOnzgXtGA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=wQ/mTkZRsttEJHxtD+DiPINxldP8AxTdQ2bXsz//AbqycrG1wQXgw3BySWGksJbPuf
-         j3E5iIWI0LTxb0HWRgi62orLgQ4CGj6gQSPi9ptFyX8l0gsHvIQQeQnq76AdLgPnFnw/
-         Q16fIcX14tVBFX9585FGnHRy/fRM6s+mKSdrs=
-Received: by 10.151.46.1 with SMTP id y1mr7115415ybj.243.1289157267214;
-        Sun, 07 Nov 2010 11:14:27 -0800 (PST)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id t9sm2939532ybe.21.2010.11.07.11.14.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 07 Nov 2010 11:14:26 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTim=QCcJDb0600Je-jePvXSXfFMe7FAQ0WMhZKn7@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751540Ab0KGTSh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Nov 2010 14:18:37 -0500
+Received: from gwse.ethz.ch ([129.132.178.237]:59304 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750824Ab0KGTSg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Nov 2010 14:18:36 -0500
+Received: from CAS12.d.ethz.ch (172.31.38.212) by gws00.d.ethz.ch
+ (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Sun, 7 Nov
+ 2010 20:18:33 +0100
+Received: from pctrast.inf.ethz.ch (129.132.209.35) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.218.12; Sun, 7 Nov
+ 2010 20:18:34 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.36-90-desktop; KDE/4.5.3; x86_64; ; )
+In-Reply-To: <01c101cb7d6c$fd053cf0$f70fb6d0$@com>
+X-Originating-IP: [129.132.209.35]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160898>
 
-Hi Sitaram,
+Chen WANG wrote:
+> $ cat /home/wangchen/kps_update
+> #!/bin/bash
+> su wangchen -
 
-Sitaram Chamarty writes:
-> It's an FAQ that "why doesn't my gitignore work" when the files in
-> question had already been added earlier, usually in error.  The most
-> common remedy, I believe, is "git rm --cached" followed by a commit.
+What is this 'su' supposed to do?  AFAICS you would have to run
+another script with 'su' if you really want to change user.
 
-Er, no. The documentation says "in order to ignore uncommitted changes
-in already tracked files". `git rm --cached` removes the file from the
-index altogether- when the change is committed, Git will actually stop
-tracking it.
+> git log 1da177e4c3f41524e886b7f1b8a0c1fc7321cac2.. -M --date=short --pretty=format:"Author: %aN <%ae>; Date: %ad" --shortstat --dirstat --no-merges >/tmp/ChangeLog-all
+[%aN does not expand to anything within the cron runs]
 
-> "update-index" does not seem to be the right answer.
+Also, what git version(s) do you have installed?  %aN appeared in
+1.5.6.4 and 1.6.0, so it is entirely possible that the $PATH within
+your cronjob runs an older version which fails to expand it to
+anything.
 
->From the update-index documentation assume-unchanged section, "This
-option can be also used as a coarse file-level mechanism to ignore
-uncommitted changes in tracked files (akin to what .gitignore does for
-untracked files)". It seems to be right.
-
--- Ram
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
