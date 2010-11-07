@@ -1,58 +1,68 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH v2 0/4] make open/unlink failures user friendly on windows using retry/abort
-Date: Sun, 7 Nov 2010 16:49:20 +0100
-Message-ID: <201011071649.20617.j6t@kdbg.org>
-References: <87ocbitd33.fsf@fox.patthoyts.tk> <201009282252.25688.j6t@kdbg.org> <cover.1289139299.git.hvoigt@hvoigt.net>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: [PATCH 8/8] Remove pack file handling dependency from wrapper.o
+Date: Sun, 07 Nov 2010 17:10:01 +0100
+Message-ID: <4CD6CF59.5040801@lsrfire.ath.cx>
+References: <20101106113905.GA27405@burratino> <20101106115237.GH27641@burratino> <4CD5996F.6010809@lsrfire.ath.cx> <20101106184251.GA14288@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
-	msysgit@googlegroups.com, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Sun Nov 07 16:49:32 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	David Barr <david.barr@cordelta.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 07 17:10:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PF7Up-0002hf-8r
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Nov 2010 16:49:31 +0100
+	id 1PF7p8-0004BE-TV
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Nov 2010 17:10:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753390Ab0KGPtZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Nov 2010 10:49:25 -0500
-Received: from bsmtp.bon.at ([213.33.87.14]:38136 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753309Ab0KGPtY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Nov 2010 10:49:24 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 24CA1A7EB0;
-	Sun,  7 Nov 2010 16:49:21 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id D479419F5C0;
-	Sun,  7 Nov 2010 16:49:20 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <cover.1289139299.git.hvoigt@hvoigt.net>
-Content-Disposition: inline
+	id S1753396Ab0KGQKZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Nov 2010 11:10:25 -0500
+Received: from india601.server4you.de ([85.25.151.105]:58948 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752634Ab0KGQKY (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Nov 2010 11:10:24 -0500
+Received: from [10.0.1.100] (p4FC57E39.dip.t-dialin.net [79.197.126.57])
+	by india601.server4you.de (Postfix) with ESMTPSA id CC3052F807B;
+	Sun,  7 Nov 2010 17:10:17 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <20101106184251.GA14288@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160886>
 
-On Sonntag, 7. November 2010, Heiko Voigt wrote:
-> j6t: I have not changed your error code in mingw_rename since you
-> explicitely compare with the windows error code ERROR_ACCESS_DENIED and
-> do not use the err_win_to_posix() function. Did you do this on purpose or
-> should I also refer to ERROR_SHARING_VIOLATION ?
+Am 06.11.2010 19:42, schrieb Jonathan Nieder:
+> Ren=C3=A9 Scharfe wrote:
+>=20
+>> Ugh.  Having to remember setting this handler is tedious.
+>>
+>> Can it be set automatically once the first pack is loaded?  A quick =
+look
+>> suggests that use_pack() would be the right place to do it.
+>=20
+> Maybe add_packed_git()?
+>=20
+> use_pack() is called by:
+>=20
+>  pack-objects::check_pack_inflate
+>  pack-objects::copy_pack_data
+>  pack-objects::check_object
+>  check_pack_crc
+>  verify_pack
+>  get_size_from_delta
+>  sha1_file::get_delta_base
+>  sha1_file::unpack_object_header
+>  packed_object_info_detail
+>  sha1_file::unpack_compressed_entry
+>=20
+> some of which would make me worry about thread-safety.
 
-IIRC, I dumped the error code before I implemented the retry logic, and the 
-error was ERROR_ACCESS_DENIED. Did you verify that the occasions where you 
-want to retry the operations indeed fail due to ERROR_SHARING_VIOLATION, or 
-do you trust the documentation?
+Possibly, but if that's the case then we have a thread-safety issue
+already: use_pack() updates pack_mapped, which is used by
+release_pack_memory() to see how much can be freed.  Just saying.
 
-In any case, it is better to check for the Windows error code (which ever you 
-finally choose) rather than errno, IMO.
-
--- Hannes
+Ren=C3=A9
