@@ -1,90 +1,79 @@
-From: Camille Moncelier <moncelier@devlife.org>
-Subject: Re: cherry-pick fail when a symbolic link has been changed into a
- file or directory
-Date: Sun, 7 Nov 2010 10:42:09 +0100
-Message-ID: <20101107104209.3e497c5b@cortex>
-References: <20101104125641.2ef90853@cortex>
-	<AANLkTimq8SP-gxZQiXW3Pxg3-1Z98zyPAoNA8JDn0=6A@mail.gmail.com>
-	<20101104151637.076ac021@cortex>
-	<AANLkTi=cydcB2yRpWbSH7qZGHdjXEPjNvfBCJny7JcwJ@mail.gmail.com>
-	<20101104181537.5f866d42@cortex>
-	<AANLkTimDWM69qvY5wdyzFu=g6htg12-K542PRR4bdDYq@mail.gmail.com>
-	<AANLkTi=aGHvQhG3bOcqS-U04UjFeB7PVw9GTsSuf3UFA@mail.gmail.com>
+From: Zenaan Harkness <zen@freedbms.net>
+Subject: Re: merge two local mirrors with detached heads and similar remotes
+Date: Sun, 7 Nov 2010 20:42:46 +1100
+Message-ID: <AANLkTin5GOGO3sf7kTjOz8X-rfiFTW6rTD5cO6w4p2yA@mail.gmail.com>
+References: <AANLkTinidbrJjmt5w=TyFGMyNpaGobE1iDBm3VAWmZvX@mail.gmail.com> <AANLkTi=JmpXEiEe-7-ZicUp-QosWjTZQgK77-f=9iAtL@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Elijah Newren <newren@gmail.com>,
-	Nick <oinksocket@letterboxes.org>, git <git@vger.kernel.org>
-To: Christian Couder <christian.couder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 07 10:42:42 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 07 10:43:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PF1lp-00018J-8a
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Nov 2010 10:42:41 +0100
+	id 1PF1mf-0001Pf-LJ
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Nov 2010 10:43:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753716Ab0KGJmW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Nov 2010 04:42:22 -0500
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:44704 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753086Ab0KGJmV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Nov 2010 04:42:21 -0500
-Received: by ewy7 with SMTP id 7so2401804ewy.19
-        for <git@vger.kernel.org>; Sun, 07 Nov 2010 01:42:19 -0800 (PST)
+	id S1753874Ab0KGJnU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Nov 2010 04:43:20 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:57062 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753833Ab0KGJnT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Nov 2010 04:43:19 -0500
+Received: by bwz11 with SMTP id 11so3925533bwz.19
+        for <git@vger.kernel.org>; Sun, 07 Nov 2010 01:43:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:date:from:to:cc
-         :subject:message-id:in-reply-to:references:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=8JmjhKtimYMgSp2EY7B8tgQLDeMsIeDyFP59d7ZBjxs=;
-        b=gEHlJh/FW5kUzfLg5lJfpVUnZc0W6trgN2f9bSZgxpUnPwA9XEE8HYG33qZwa9b1n2
-         jP5LUP9K6eqDRU0PcEceKkqCKNNV+nhrxTTyvhpTKa4+YZdu+grS4p9STw8UfxViG5XW
-         uZkv+DoGkdHd7/7hhQqKt/HMNa5R7rNccJu/8=
+        h=domainkey-signature:received:mime-version:sender:received
+         :in-reply-to:references:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type:content-transfer-encoding;
+        bh=EWuYinBjtHoj+RXnGyyLnIUp2xZbJ1xqaKgSkt4EHo4=;
+        b=GZ3uz2ZgWHP/S2ys9gcy9cHnW9QAaf+nz2W9gxCpc5Gx4K8tJc17w00eryuW4n9+UE
+         E77guCi7XSgOCXMxi4v06Nuramox1ACghbsKPttSW9TxmaUYsGQmXx9+aDXS7g8gZ50/
+         zbJdgGWUqZl7wCa0c9V8FKpu2YLmULy6yviIY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:in-reply-to:references
-         :x-mailer:mime-version:content-type:content-transfer-encoding;
-        b=KyGsyfLGawj4kY6nJRRWpQULKMLlAFEtIPX3YfuQ8fBlpUwjByCPUBzyOy87K+R+Yx
-         sJOqSwA+cgc6B5t1F4CmRuEIUWt32fmoby/WV+GxRV46NxhE2Cy3N/jrFzaW2Rif1Z/w
-         SENwge2SuJGooTgFFwRHc2CS4x0c9YIWmFCl8=
-Received: by 10.213.17.132 with SMTP id s4mr3145888eba.73.1289122939794;
-        Sun, 07 Nov 2010 01:42:19 -0800 (PST)
-Received: from cortex (mal35-3-82-240-201-90.fbx.proxad.net [82.240.201.90])
-        by mx.google.com with ESMTPS id v51sm3001693eeh.22.2010.11.07.01.42.17
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 07 Nov 2010 01:42:18 -0800 (PST)
-In-Reply-To: <AANLkTi=aGHvQhG3bOcqS-U04UjFeB7PVw9GTsSuf3UFA@mail.gmail.com>
-X-Mailer: Claws Mail 3.7.6cvs62 (GTK+ 2.22.0; x86_64-pc-linux-gnu)
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        b=TbgmXLDaqZii/PkGfAJta8FPvIkXh2WGVfCds0eD0dWEksgjhIye1KqtcDGVF3/0T6
+         hseyRhsoLdrA/3m8ArJA9Dhbl6CvbU8GVmlCYpAInovPrb+ByWKIZWGb3EDxjONI1A+Q
+         xj3k3De/C21o1D44Z5MXnlVHtFpVlahll5p5w=
+Received: by 10.204.64.80 with SMTP id d16mr3707197bki.181.1289122997204; Sun,
+ 07 Nov 2010 01:43:17 -0800 (PST)
+Received: by 10.204.83.4 with HTTP; Sun, 7 Nov 2010 01:42:46 -0800 (PST)
+In-Reply-To: <AANLkTi=JmpXEiEe-7-ZicUp-QosWjTZQgK77-f=9iAtL@mail.gmail.com>
+X-Google-Sender-Auth: RTiMtBXTCbyCcrvpC45yFDNF5Y4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160872>
 
-> > The patch series I posted in late September post-dates the related
-> > series of mine that were merged in 1.7.3.
-> >
-> > I'd also be happy to take a look and see if my newer merge-recursiv=
-e
-> > series fixes your case (or whether one of my other improvements to
-> > that series since my September posting does). =C2=A0If not, I'll tr=
-ack it
-> > down and fix it and add that fix to the series.
->=20
-It's strange I've just tested on my laptop and it seems fixed in
-v1.7.3. I'll redo the test this week on the repository I've first
-experienced the problem, just to see if the problem is really gone or=20
-my testcase isn't sufficient.
+> In A) I modified .git/config to be as follows:
+> $ cat .git/config
+> [core]
+> =A0 =A0 =A0 =A0repositoryformatversion =3D 0
+> =A0 =A0 =A0 =A0filemode =3D true
+> =A0 =A0 =A0 =A0bare =3D false
+> =A0 =A0 =A0 =A0logallrefupdates =3D true
+> [remote "origin"]
+> =A0 =A0 =A0 =A0fetch =3D +refs/heads/*:refs/remotes/origin/*
+> =A0 =A0 =A0 =A0url =3D https://github.com/chad/gitjour.git
+> [branch "master"]
+> =A0 =A0 =A0 =A0remote =3D origin
+> =A0 =A0 =A0 =A0merge =3D refs/heads/master
+> [remote "lach"]
+> =A0 =A0 =A0 =A0url =3D ../u
+> # =A0 =A0 =A0 fetch =3D +refs/heads/*:refs/remotes/origin/*
+> =A0 =A0 =A0 =A0fetch =3D +refs/remotes/origin/*:refs/remotes/lach/*
 
-I've tried to use git bisect to check the patch which fixed the problem
-but, I didn't succeed.=20
+My final change, for reference, was updating [remote "latch"] section w=
+ith:
+   url =3D https://github.com/lachlanhardy/gitjour.git
+   fetch =3D +refs/heads/*:refs/remotes/lach/*
 
-BTW, Is there a way using git bisect to find the "last bad commit",
-or maybe the "first good one" ?
-
-> Great!
->=20
-> Thanks both,
-> Christian.
+Appears to work with  git fetch --all
+and finally followed by  git gc
