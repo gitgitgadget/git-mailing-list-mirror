@@ -1,79 +1,66 @@
-From: Zenaan Harkness <zen@freedbms.net>
-Subject: Re: merge two local mirrors with detached heads and similar remotes
-Date: Sun, 7 Nov 2010 20:42:46 +1100
-Message-ID: <AANLkTin5GOGO3sf7kTjOz8X-rfiFTW6rTD5cO6w4p2yA@mail.gmail.com>
-References: <AANLkTinidbrJjmt5w=TyFGMyNpaGobE1iDBm3VAWmZvX@mail.gmail.com> <AANLkTi=JmpXEiEe-7-ZicUp-QosWjTZQgK77-f=9iAtL@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: cherry-pick fail when a symbolic link has been changed into a file or directory
+Date: Sun, 07 Nov 2010 11:19:44 +0100
+Message-ID: <m239rdv3jz.fsf@igel.home>
+References: <20101104125641.2ef90853@cortex>
+	<AANLkTimq8SP-gxZQiXW3Pxg3-1Z98zyPAoNA8JDn0=6A@mail.gmail.com>
+	<20101104151637.076ac021@cortex>
+	<AANLkTi=cydcB2yRpWbSH7qZGHdjXEPjNvfBCJny7JcwJ@mail.gmail.com>
+	<20101104181537.5f866d42@cortex>
+	<AANLkTimDWM69qvY5wdyzFu=g6htg12-K542PRR4bdDYq@mail.gmail.com>
+	<AANLkTi=aGHvQhG3bOcqS-U04UjFeB7PVw9GTsSuf3UFA@mail.gmail.com>
+	<20101107104209.3e497c5b@cortex>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 07 10:43:37 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Elijah Newren <newren@gmail.com>,
+	Nick <oinksocket@letterboxes.org>, git <git@vger.kernel.org>
+To: Camille Moncelier <moncelier@devlife.org>
+X-From: git-owner@vger.kernel.org Sun Nov 07 11:20:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PF1mf-0001Pf-LJ
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Nov 2010 10:43:33 +0100
+	id 1PF2Lw-0006D0-IG
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Nov 2010 11:20:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753874Ab0KGJnU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Nov 2010 04:43:20 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:57062 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753833Ab0KGJnT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Nov 2010 04:43:19 -0500
-Received: by bwz11 with SMTP id 11so3925533bwz.19
-        for <git@vger.kernel.org>; Sun, 07 Nov 2010 01:43:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received
-         :in-reply-to:references:from:date:x-google-sender-auth:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        bh=EWuYinBjtHoj+RXnGyyLnIUp2xZbJ1xqaKgSkt4EHo4=;
-        b=GZ3uz2ZgWHP/S2ys9gcy9cHnW9QAaf+nz2W9gxCpc5Gx4K8tJc17w00eryuW4n9+UE
-         E77guCi7XSgOCXMxi4v06Nuramox1ACghbsKPttSW9TxmaUYsGQmXx9+aDXS7g8gZ50/
-         zbJdgGWUqZl7wCa0c9V8FKpu2YLmULy6yviIY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=TbgmXLDaqZii/PkGfAJta8FPvIkXh2WGVfCds0eD0dWEksgjhIye1KqtcDGVF3/0T6
-         hseyRhsoLdrA/3m8ArJA9Dhbl6CvbU8GVmlCYpAInovPrb+ByWKIZWGb3EDxjONI1A+Q
-         xj3k3De/C21o1D44Z5MXnlVHtFpVlahll5p5w=
-Received: by 10.204.64.80 with SMTP id d16mr3707197bki.181.1289122997204; Sun,
- 07 Nov 2010 01:43:17 -0800 (PST)
-Received: by 10.204.83.4 with HTTP; Sun, 7 Nov 2010 01:42:46 -0800 (PST)
-In-Reply-To: <AANLkTi=JmpXEiEe-7-ZicUp-QosWjTZQgK77-f=9iAtL@mail.gmail.com>
-X-Google-Sender-Auth: RTiMtBXTCbyCcrvpC45yFDNF5Y4
+	id S1751495Ab0KGKTs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Nov 2010 05:19:48 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:53676 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751358Ab0KGKTr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Nov 2010 05:19:47 -0500
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 44D451C001E6;
+	Sun,  7 Nov 2010 11:19:44 +0100 (CET)
+Received: from igel.home (ppp-88-217-124-121.dynamic.mnet-online.de [88.217.124.121])
+	by mail.mnet-online.de (Postfix) with ESMTP id C1F491C00351;
+	Sun,  7 Nov 2010 11:19:44 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 49117CA2A0; Sun,  7 Nov 2010 11:19:44 +0100 (CET)
+X-Yow: Vote for ME -- I'm well-tapered, half-cocked, ill-conceived and
+ TAX-DEFERRED!
+In-Reply-To: <20101107104209.3e497c5b@cortex> (Camille Moncelier's message of
+	"Sun, 7 Nov 2010 10:42:09 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160873>
 
-> In A) I modified .git/config to be as follows:
-> $ cat .git/config
-> [core]
-> =A0 =A0 =A0 =A0repositoryformatversion =3D 0
-> =A0 =A0 =A0 =A0filemode =3D true
-> =A0 =A0 =A0 =A0bare =3D false
-> =A0 =A0 =A0 =A0logallrefupdates =3D true
-> [remote "origin"]
-> =A0 =A0 =A0 =A0fetch =3D +refs/heads/*:refs/remotes/origin/*
-> =A0 =A0 =A0 =A0url =3D https://github.com/chad/gitjour.git
-> [branch "master"]
-> =A0 =A0 =A0 =A0remote =3D origin
-> =A0 =A0 =A0 =A0merge =3D refs/heads/master
-> [remote "lach"]
-> =A0 =A0 =A0 =A0url =3D ../u
-> # =A0 =A0 =A0 fetch =3D +refs/heads/*:refs/remotes/origin/*
-> =A0 =A0 =A0 =A0fetch =3D +refs/remotes/origin/*:refs/remotes/lach/*
+Camille Moncelier <moncelier@devlife.org> writes:
 
-My final change, for reference, was updating [remote "latch"] section w=
-ith:
-   url =3D https://github.com/lachlanhardy/gitjour.git
-   fetch =3D +refs/heads/*:refs/remotes/lach/*
+> BTW, Is there a way using git bisect to find the "last bad commit",
+> or maybe the "first good one" ?
 
-Appears to work with  git fetch --all
-and finally followed by  git gc
+It works the same as "find first bad one", you just have to exchange
+"good" and "bad" (they really mean "before" and "after").
+
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
