@@ -1,266 +1,174 @@
-From: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-Subject: [PATCH] attr: support quoting pathname patterns in C style
-Date: Sun, 7 Nov 2010 15:05:07 +0700
-Message-ID: <20101107080507.GA29738@do>
-References: <AANLkTinNctmWpshBeSTzZRm6+EJ=Cjdpoaj4Aon+52_b@mail.gmail.com>
- <1288878944-14066-1-git-send-email-pclouds@gmail.com>
- <7vvd4bu2pl.fsf@alter.siamese.dyndns.org>
+From: Zenaan Harkness <zen@freedbms.net>
+Subject: Re: merge two local mirrors with detached heads and similar remotes
+Date: Sun, 7 Nov 2010 20:27:50 +1100
+Message-ID: <AANLkTi=JmpXEiEe-7-ZicUp-QosWjTZQgK77-f=9iAtL@mail.gmail.com>
+References: <AANLkTinidbrJjmt5w=TyFGMyNpaGobE1iDBm3VAWmZvX@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Marc Strapetz <marc.strapetz@syntevo.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Nov 07 09:06:24 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 07 10:28:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PF0Gd-0000aG-Mj
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Nov 2010 09:06:24 +0100
+	id 1PF1Y8-0002Ep-LN
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Nov 2010 10:28:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752809Ab0KGIGQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Nov 2010 03:06:16 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:62598 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752526Ab0KGIGP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Nov 2010 03:06:15 -0500
-Received: by pzk28 with SMTP id 28so681334pzk.19
-        for <git@vger.kernel.org>; Sun, 07 Nov 2010 01:06:15 -0700 (PDT)
+	id S1753018Ab0KGJ2Y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Nov 2010 04:28:24 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:49584 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752102Ab0KGJ2W convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 7 Nov 2010 04:28:22 -0500
+Received: by bwz11 with SMTP id 11so3921293bwz.19
+        for <git@vger.kernel.org>; Sun, 07 Nov 2010 01:28:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:date:from:to:cc
-         :subject:message-id:references:mime-version:content-type
-         :content-disposition:content-transfer-encoding:in-reply-to
-         :user-agent;
-        bh=xtkcczhpJ2I6I6SVNcFMILJxo9C+9zRqgymbHhf3G88=;
-        b=bloCKQBJXRSw9svRy8XSQb2nSti/0wkPs+H/hpbDo5yfjC/6FAatFQvnv+9Hc0AQUg
-         +1bZkRI3TF99axYLc8zIBFJKyzLKI4+cQuDcTodj1BvIhScZN/EpMKSC0kkw8jHkKnh2
-         QG9CoKtQnmP0nJDWFXnecvZ409U6Khkbqgn7U=
+        h=domainkey-signature:received:mime-version:sender:received
+         :in-reply-to:references:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type:content-transfer-encoding;
+        bh=/QTxkN53luJ3MaMmjvD44mH+kXE1t7JM4b8bxX/PhZw=;
+        b=dNq8tPOgrBgrPssYnVtY42ZzBsaxK5Qf80RCWpmB09gXR2px939HpTyOgWtk6XiJZY
+         ruXTJxArPnsQRDSiuxUxYDcMBOaJJZHJmHD+S3KEXZZHNLiHNWspXnQKyE4rL5cCn8c7
+         C7g/wUMxi9uWSmS1fj5ZZ5CSM+pRt1BmXSIJk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=QthEVmOQCLyIF2q3YB6A6/KFiH1TBiNN/gSjlI3O3C3/3Mt3SXb4zMP/yxCZ7rRICy
-         9DLe5yb9qhGSkMJCbY1WewBhaga/O29TOZTgFOs3Rms4mN+nhaCV1OeoRju5YmO7AOZ6
-         jTPY/WhyvYcDgjMuySH5l2beaBBQqjQwPye38=
-Received: by 10.143.165.15 with SMTP id s15mr3780233wfo.154.1289117175162;
-        Sun, 07 Nov 2010 01:06:15 -0700 (PDT)
-Received: from pclouds@gmail.com ([115.73.233.195])
-        by mx.google.com with ESMTPS id w42sm5526509wfh.3.2010.11.07.01.06.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 07 Nov 2010 01:06:13 -0700 (PDT)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 07 Nov 2010 15:05:07 +0700
-Content-Disposition: inline
-In-Reply-To: <7vvd4bu2pl.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:content-type
+         :content-transfer-encoding;
+        b=TLhZ5zENFkdMiMTMKqwsUq0yLPvnfIJwKh4tSgEft8vLjXOoMZu71BpO++iQbyscFK
+         s2XVh9qrVvDXa2/PkLtRXvS+eKKDbR+qMqfWIo0ABtqIGQaTLTna61uV98fo2rQ+r48C
+         cWN+AuW+z9gcllwD1T2QQ6T3vsPYA3wcsouL0=
+Received: by 10.204.66.145 with SMTP id n17mr3751741bki.73.1289122101086; Sun,
+ 07 Nov 2010 01:28:21 -0800 (PST)
+Received: by 10.204.83.4 with HTTP; Sun, 7 Nov 2010 01:27:50 -0800 (PST)
+In-Reply-To: <AANLkTinidbrJjmt5w=TyFGMyNpaGobE1iDBm3VAWmZvX@mail.gmail.com>
+X-Google-Sender-Auth: 6A0aTqURadPig7Wmw-cHgN3lBeI
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160868>
 
-=46ull pattern must be quoted. So 'pat"t"ern attr' will give exactly
-'pat"t"ern', not 'pattern'.
+On Sun, Nov 7, 2010 at 13:40, Zenaan Harkness <zen@freedbms.net> wrote:
+> I wish to merge two local mirrors, which each should share the same
+> object store
+=2E..
+> So I want to achieve the same thing (multiple remotes in one local
+> repo) for an earlier clone of two separate repos, which really ought
+> to be just one, as follows:
+>
+> A)
+> $ cd gitjour.git/
+> $ cat .git/config
 
-If Git fails to unquote it, it warns users and takes the pattern
-literally. This keeps existing patterns that begin with a double
-quotation mark work until they get annoyed by the warnings and fix
-their patterns.
+> [remote "origin"]
+> =A0 =A0 =A0 =A0fetch =3D +refs/heads/*:refs/remotes/origin/*
+> =A0 =A0 =A0 =A0url =3D https://github.com/chad/gitjour.git
+> [branch "master"]
+> =A0 =A0 =A0 =A0remote =3D origin
+> =A0 =A0 =A0 =A0merge =3D refs/heads/master
 
-Also clarify that leading whitespaces are not part of the pattern and
-document comment syntax.
+> $ git branch -a
+> * master
+> =A0remotes/origin/HEAD -> origin/master
+> =A0remotes/origin/master
+>
+> B)
+> $ cd gitjour-new.git/
+> $ cat .git/config
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- On Fri, Nov 05, 2010 at 09:58:46AM -0700, Junio C Hamano wrote:
- > Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com> writes=
-:
- >=20
- > > Full pattern must be quoted. So 'pat"t"ern attr' will give exactly
- > > 'pat"t"ern', not 'pattern'. Also clarify that leading whitespaces =
-are
- > > not part of the pattern and document comment syntax.
- > >
- > > Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@=
-gmail.com>
- > > ---
- > >  Obvious regression: patterns that begin with double quote will
- > >  now work differently.
- >=20
- > I'm really hesitant to pursue this route and break people's existing
- > setups
+> [remote "origin"]
+> =A0 =A0 =A0 =A0fetch =3D +refs/heads/*:refs/remotes/origin/*
+> =A0 =A0 =A0 =A0url =3D https://github.com/lachlanhardy/gitjour.git
+> [branch "master"]
+> =A0 =A0 =A0 =A0remote =3D origin
+> =A0 =A0 =A0 =A0merge =3D refs/heads/master
+> $ git branch -a
+> * master
+> =A0remotes/origin/8.2.0
+> =A0remotes/origin/HEAD -> origin/master
+> =A0remotes/origin/lachlanhardy
+> =A0remotes/origin/master
+> =A0remotes/origin/v8.1.0
 
- How about this? No more breaking current setups.
- =20
- Documentation/gitattributes.txt |    8 +++++---
- attr.c                          |   32 ++++++++++++++++++++++++++++---=
--
- t/t0003-attributes.sh           |   21 ++++++++++++++++++++-
- 3 files changed, 53 insertions(+), 8 deletions(-)
+It looks to me like I finally solved the first half of the problem,
+with clarification from the following URL:
+http://www.gelato.unsw.edu.au/archives/git/0601/15567.html
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattribu=
-tes.txt
-index c80ca5d..f7954dd 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -21,9 +21,11 @@ Each line in `gitattributes` file is of form:
- 	pattern	attr1 attr2 ...
-=20
- That is, a pattern followed by an attributes list,
--separated by whitespaces.  When the pattern matches the
--path in question, the attributes listed on the line are given to
--the path.
-+separated by whitespaces. Leading and trailing whitespaces are
-+ignored. Lines that begin with '#' are ignored. Patterns
-+that begin with a double quotation mark are quoted in C style.
-+When the pattern matches the path in question, the attributes
-+listed on the line are given to the path.
-=20
- Each attribute can be in one of these states for a given path:
-=20
-diff --git a/attr.c b/attr.c
-index 6aff695..fdc4aae 100644
---- a/attr.c
-+++ b/attr.c
-@@ -2,6 +2,7 @@
- #include "cache.h"
- #include "exec_cmd.h"
- #include "attr.h"
-+#include "quote.h"
-=20
- const char git_attr__true[] =3D "(builtin)true";
- const char git_attr__false[] =3D "\0(builtin)false";
-@@ -181,21 +182,40 @@ static struct match_attr *parse_attr_line(const c=
-har *line, const char *src,
- {
- 	int namelen;
- 	int num_attr;
--	const char *cp, *name;
-+	const char *cp, *name, *ep;
- 	struct match_attr *res =3D NULL;
- 	int pass;
- 	int is_macro;
-+	struct strbuf pattern =3D STRBUF_INIT;
-=20
- 	cp =3D line + strspn(line, blank);
- 	if (!*cp || *cp =3D=3D '#')
- 		return NULL;
- 	name =3D cp;
--	namelen =3D strcspn(name, blank);
-+	if (*cp =3D=3D '"') {
-+		if (unquote_c_style(&pattern, name, &ep)) {
-+			fprintf(stderr, "Misquoted pattern at %s:%d\n"
-+				"Pattern is taken literally.\n",
-+				src, lineno);
-+			namelen =3D strcspn(name, blank);
-+			ep =3D name + namelen;
-+		}
-+		else {
-+			namelen =3D ep - name;
-+			name =3D pattern.buf;
-+		}
-+	}
-+	else {
-+		namelen =3D strcspn(name, blank);
-+		ep =3D name + namelen;
-+	}
-+
- 	if (strlen(ATTRIBUTE_MACRO_PREFIX) < namelen &&
- 	    !prefixcmp(name, ATTRIBUTE_MACRO_PREFIX)) {
- 		if (!macro_ok) {
- 			fprintf(stderr, "%s not allowed: %s:%d\n",
- 				name, src, lineno);
-+			strbuf_release(&pattern);
- 			return NULL;
- 		}
- 		is_macro =3D 1;
-@@ -206,6 +226,7 @@ static struct match_attr *parse_attr_line(const cha=
-r *line, const char *src,
- 			fprintf(stderr,
- 				"%.*s is not a valid attribute name: %s:%d\n",
- 				namelen, name, src, lineno);
-+			strbuf_release(&pattern);
- 			return NULL;
- 		}
- 	}
-@@ -215,12 +236,14 @@ static struct match_attr *parse_attr_line(const c=
-har *line, const char *src,
- 	for (pass =3D 0; pass < 2; pass++) {
- 		/* pass 0 counts and allocates, pass 1 fills */
- 		num_attr =3D 0;
--		cp =3D name + namelen;
-+		cp =3D ep;
- 		cp =3D cp + strspn(cp, blank);
- 		while (*cp) {
- 			cp =3D parse_attr(src, lineno, cp, &num_attr, res);
--			if (!cp)
-+			if (!cp) {
-+				strbuf_release(&pattern);
- 				return NULL;
-+			}
- 		}
- 		if (pass)
- 			break;
-@@ -238,6 +261,7 @@ static struct match_attr *parse_attr_line(const cha=
-r *line, const char *src,
- 		res->is_macro =3D is_macro;
- 		res->num_attr =3D num_attr;
- 	}
-+	strbuf_release(&pattern);
- 	return res;
- }
-=20
-diff --git a/t/t0003-attributes.sh b/t/t0003-attributes.sh
-index 25205ac..7c55482 100755
---- a/t/t0003-attributes.sh
-+++ b/t/t0003-attributes.sh
-@@ -10,17 +10,32 @@ attr_check () {
- 	expect=3D"$2"
-=20
- 	git check-attr test -- "$path" >actual &&
--	echo "$path: test: $2" >expect &&
-+	echo "$path: test: $expect" >expect &&
- 	test_cmp expect actual
-=20
- }
-=20
-+attr_check_quote () {
-+
-+	path=3D"$1"
-+	quoted_path=3D"$2"
-+	expect=3D"$3"
-+
-+	git check-attr test -- "$path" >actual &&
-+	echo "\"$quoted_path\": test: $expect" >expect &&
-+	test_cmp expect actual
-+
-+}
-=20
- test_expect_success 'setup' '
-=20
- 	mkdir -p a/b/d a/c &&
- 	(
- 		echo "[attr]notest !test"
-+		echo "\"c	test=3Dc"
-+		echo "\" d \"	test=3Dd"
-+		echo " e	test=3De"
-+		echo " e\"	test=3De"
- 		echo "f	test=3Df"
- 		echo "a/i test=3Da/i"
- 		echo "onoff test -test"
-@@ -44,6 +59,10 @@ test_expect_success 'setup' '
-=20
- test_expect_success 'attribute test' '
-=20
-+	attr_check_quote \"c \\\"c c &&
-+	attr_check " d " d &&
-+	attr_check e e &&
-+	attr_check_quote e\" e\\\" e &&
- 	attr_check f f &&
- 	attr_check a/f f &&
- 	attr_check a/c/f f &&
---=20
-1.7.3.2.210.g045198
+In A) I modified .git/config to be as follows:
+$ cat .git/config
+[core]
+        repositoryformatversion =3D 0
+        filemode =3D true
+        bare =3D false
+        logallrefupdates =3D true
+[remote "origin"]
+        fetch =3D +refs/heads/*:refs/remotes/origin/*
+        url =3D https://github.com/chad/gitjour.git
+[branch "master"]
+        remote =3D origin
+        merge =3D refs/heads/master
+[remote "lach"]
+        url =3D ../u
+#       fetch =3D +refs/heads/*:refs/remotes/origin/*
+        fetch =3D +refs/remotes/origin/*:refs/remotes/lach/*
+$ git fetch lach d
+remote: Counting objects: 583, done.
+remote: Compressing objects: 100% (303/303), done.
+remote: Total 568 (delta 229), reused 566 (delta 229)
+Receiving objects: 100% (568/568), 65.29 KiB, done.
+Resolving deltas: 100% (229/229), completed with 3 local objects.
+=46rom ../u
+ * [new branch]      origin/8.2.0 -> lach/8.2.0
+ * [new branch]      origin/HEAD -> lach/HEAD
+ * [new branch]      origin/lachlanhardy -> lach/lachlanhardy
+ * [new branch]      origin/v8.1.0 -> lach/v8.1.0
+
+# and finally:
+$ git branch -a
+* master
+  remotes/lach/8.2.0
+  remotes/lach/HEAD
+  remotes/lach/lachlanhardy
+  remotes/lach/master
+  remotes/lach/v8.1.0
+  remotes/origin/HEAD -> origin/master
+  remotes/origin/master
+
+---------
+Looks very much like success to me. Small thing I notice is this line:
+  remotes/origin/HEAD -> origin/master
+
+has become this:
+  remotes/lach/HEAD
+
+(ie it's not a link any more - probably not particularly relevant,
+perhaps git gc would automate tidying this?)
+----------
+So now I just update the remote URL for lach to point back to upstream
+and I think I'm done. Happy days.
+
+That tutorial email URL up top above might be old -
+http://www.gelato.unsw.edu.au/archives/git/0601/15567.html is from
+January 2006! - and is out of date a bit wrt the .git/config file
+format (eg remotes wildcards), BUT in that email, Junio explained this
+"local mirror" concept well enough that I could solve my problem here
+(it appears) - implementing a fixup of my "local mirror" use case -
+I'm a happy camper; thank you Junio!
+
+May be I missed how to do this somewhere in the docs already, but I've
+been reading and searching the web for two days, learning lots for
+sure, but frustrated that it took me so long to find out how to do
+this.
+
+Should something like Junio's tutorial go into
+Documentation/gitworkflows.xml(ARGGH!) ?
+If not, where else?
+Is there anything besides vim (about all I know) you can recommend for
+editing xml(ARGGH!) docs?
+
+Thanks
+Zenaan
