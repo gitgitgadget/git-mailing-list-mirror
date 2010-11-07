@@ -1,136 +1,144 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Status of the svn remote helper project (Nov, 2010)
-Date: Sun, 7 Nov 2010 18:20:56 +0530
-Message-ID: <20101107125054.GB16474@kytes>
-References: <20101107112129.GA30042@burratino>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH v2 0/4] make open/unlink failures user friendly on
+ windows using retry/abort
+Date: Sun,  7 Nov 2010 15:56:23 +0100
+Message-ID: <cover.1289139299.git.hvoigt@hvoigt.net>
+References: <87ocbitd33.fsf@fox.patthoyts.tk> <201009282252.25688.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	David Barr <david.barr@cordelta.com>,
-	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
-	Tomas Carnecky <tom@dbservice.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 07 13:52:33 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
+	msysgit@googlegroups.com,
+	git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: msysgit+bncCOrwtbejChCs_NrmBBoEX7Kf3A@googlegroups.com Sun Nov 07 15:57:09 2010
+Return-path: <msysgit+bncCOrwtbejChCs_NrmBBoEX7Kf3A@googlegroups.com>
+Envelope-to: gcvm-msysgit@m.gmane.org
+Received: from mail-fx0-f58.google.com ([209.85.161.58])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PF4jV-0003CU-Id
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Nov 2010 13:52:30 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751775Ab0KGMvF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 7 Nov 2010 07:51:05 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:32899 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751374Ab0KGMvE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 7 Nov 2010 07:51:04 -0500
-Received: by iwn41 with SMTP id 41so2848242iwn.19
-        for <git@vger.kernel.org>; Sun, 07 Nov 2010 04:51:03 -0800 (PST)
+	(envelope-from <msysgit+bncCOrwtbejChCs_NrmBBoEX7Kf3A@googlegroups.com>)
+	id 1PF6g8-0002Pc-3J
+	for gcvm-msysgit@m.gmane.org; Sun, 07 Nov 2010 15:57:08 +0100
+Received: by fxm11 with SMTP id 11sf1123881fxm.3
+        for <gcvm-msysgit@m.gmane.org>; Sun, 07 Nov 2010 06:57:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=CEXSoom6KD+I1AtaT44Q+v0/4C/ePkMolKclG7qSHyY=;
-        b=qV+Rxf1BKYUL0QU8tqV2iuaj+LrzGnu8q7QsxaxUOTjFbmTPxFdc2uVqK/fiXZbVsF
-         IwNgv21HfKVsySD+d5p2r+lAZ6Y+1+TL4WCbx9pZk+LppYW2OVwytJ4NfgEBevgUcKPy
-         lgzCpcEPxMtKwDPOsFNct8XgYB+UnFsLHgHKE=
+        d=googlegroups.com; s=beta;
+        h=domainkey-signature:received:mime-version:x-beenthere:received
+         :received:received:received:received-spf:received:received:from:to
+         :cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :x-original-sender:x-original-authentication-results:precedence
+         :mailing-list:list-id:list-post:list-help:list-archive:sender
+         :list-subscribe:list-unsubscribe;
+        bh=Ixj/PD3Uf0HMU8yK7SO66nQFhJnq9Kn684oZWza2YYg=;
+        b=a9Z3NrOXAfIZGyROtezQKF61MyXMXZ623Lq29IOvtyjUmPA6wg2jTsaH6RAluybR11
+         qgUFlmPwyr7gRmFaUYR7v2ebTyvUHVi1YmZuyxEJtylBzFxEOr0lD/aVh3Hizw0znDTX
+         YQ4p9rD+gELoKcCHRgDOD7Bjy3vr1cjflRUFY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=eNgkenQlGtCYfoG0tkrnUF2W2Y/VF/wchWsN3CDBKMVxw8tR/HFhYxtyNN8oVhToi7
-         l6gUUoSRuGp9LrXS5f5v5QFquZJgXv4nR9mqRotoOzH/SDzAVjtu9lztZMbggPhYhRHY
-         zOTBq8b9itL8aFzgYjI8Iwf6cB547b9yJgUlU=
-Received: by 10.42.176.200 with SMTP id bf8mr346482icb.286.1289134263741;
-        Sun, 07 Nov 2010 04:51:03 -0800 (PST)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id d21sm4510164ibg.3.2010.11.07.04.50.59
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 07 Nov 2010 04:51:02 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20101107112129.GA30042@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160879>
+        d=googlegroups.com; s=beta;
+        h=mime-version:x-beenthere:received-spf:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:x-original-sender
+         :x-original-authentication-results:precedence:mailing-list:list-id
+         :list-post:list-help:list-archive:sender:list-subscribe
+         :list-unsubscribe;
+        b=V9hz1ivDTaU0Ok34l/tnmryxVJnIUsdPWQgDf2HPdmq218VEoj7l3aB+QqkF5hMJol
+         dORo/+VdeOI0DhR6cNz/GI95z5BH/LA3BbsDo2pcaUIToPtJEBjdII2xgslqLrFL6oqa
+         cTvq7lisFhWP/9c0lZkKbXE88Ja8fss6EkRZw=
+Received: by 10.223.75.203 with SMTP id z11mr130882faj.22.1289141804085;
+        Sun, 07 Nov 2010 06:56:44 -0800 (PST)
+X-BeenThere: msysgit@googlegroups.com
+Received: by 10.223.145.130 with SMTP id d2ls1045493fav.1.p; Sun, 07 Nov 2010
+ 06:56:42 -0800 (PST)
+Received: by 10.223.114.146 with SMTP id e18mr231840faq.0.1289141802856;
+        Sun, 07 Nov 2010 06:56:42 -0800 (PST)
+Received: by 10.223.114.146 with SMTP id e18mr231839faq.0.1289141802809;
+        Sun, 07 Nov 2010 06:56:42 -0800 (PST)
+Received: from darksea.de (darksea.de [83.133.111.250])
+        by gmr-mx.google.com with SMTP id b12si947484fah.5.2010.11.07.06.56.42;
+        Sun, 07 Nov 2010 06:56:42 -0800 (PST)
+Received-SPF: neutral (google.com: 83.133.111.250 is neither permitted nor denied by best guess record for domain of hvoigt@hvoigt.net) client-ip=83.133.111.250;
+Received: (qmail 21193 invoked from network); 7 Nov 2010 15:56:41 +0100
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 7 Nov 2010 15:56:41 +0100
+X-Mailer: git-send-email 1.7.2.2.177.geec0d
+In-Reply-To: <201009282252.25688.j6t@kdbg.org>
+X-Original-Sender: hvoigt@hvoigt.net
+X-Original-Authentication-Results: gmr-mx.google.com; spf=neutral (google.com:
+ 83.133.111.250 is neither permitted nor denied by best guess record for
+ domain of hvoigt@hvoigt.net) smtp.mail=hvoigt@hvoigt.net
+Precedence: list
+Mailing-list: list msysgit@googlegroups.com; contact msysgit+owners@googlegroups.com
+List-ID: <msysgit.googlegroups.com>
+List-Post: <http://groups.google.com/group/msysgit/post?hl=en_US>, <mailto:msysgit@googlegroups.com>
+List-Help: <http://groups.google.com/support/?hl=en_US>, <mailto:msysgit+help@googlegroups.com>
+List-Archive: <http://groups.google.com/group/msysgit?hl=en_US>
+Sender: msysgit@googlegroups.com
+List-Subscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+subscribe@googlegroups.com>
+List-Unsubscribe: <http://groups.google.com/group/msysgit/subscribe?hl=en_US>, <mailto:msysgit+unsubscribe@googlegroups.com>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160880>
 
 Hi,
 
-Jonathan Nieder writes:
-> The svn remote helper project still has a long way to go.  In the
-> meantime, the svn-fe plumbing and Tomas's scripted prototype are
-> usable.
+here is a new iteration of my original patch series. This series
+replaces the newest patches currently present in 4msysgit.git's master
+and does not cleanly apply to git.git's master. Once everybody is happy
+with the outcome I will port it to git.git so msysgit can fetch it from
+upstream.
+
+On Tue, Sep 28, 2010 at 10:52:25PM +0200, Johannes Sixt wrote:
+> > Heiko Voigt (4):
+> >       mingw: work around irregular failures of unlink on windows
 > 
-> Here are some topics that might be roughly in their final form.  If
-> you would like to build on one of them, please let me know so I can
-> refrain from rewriting that piece of history.
+> The workaround is to retry the unlink() after a delay when it failed with 
+> EACCES. What happens if the EACCES is for a good reason? Doesn't this delay 
+> the process by 71ms per unlink() invocation? Can't this become a problem if 
+> many unlink()s are tried by git code?
+
+I have changed the triggering error code to be ERROR_SHARING_VIOLATION
+which seems to be the appropriate code for files that are in use by
+another process.
+
+http://msdn.microsoft.com/en-us/library/ms681382%28v=VS.85%29.aspx
+
+Thus we do not need to worry about whether we are retrying on a valid
+access error. I have tested this on my windows box and it works here.
+
+j6t: I have not changed your error code in mingw_rename since you
+explicitely compare with the windows error code ERROR_ACCESS_DENIED and
+do not use the err_win_to_posix() function. Did you do this on purpose or
+should I also refer to ERROR_SHARING_VIOLATION ?
+
+> >       mingw: make failures to unlink or move raise a question
 > 
-> A merge of these branches is available as
+> Gaah! But people seem to like it. Since the question is only triggered after 
+> all retries fail, I can live with this.
 > 
-> 	git://repo.or.cz/git/jrn.git vcs-svn-pu
+> But isn't the implementation a bit sloppy? Can strlen(answer)-2 be negative? 
+> What happens if the user typed more than 4 characters? Wouldn't it leave data 
+> in the buffer for the next question?
 
-Thanks for doing this! Now we have an up-to-date index that tracks all
-our work :)
+I have extracted reading of the answer into its own function and made
+the reading more robust which should now take care of the above issues.
 
-A note to the others: If we merge too early, we will be forced to
-either stick with bad decisions we made prematurely, or revert
-them. Therefore, we have decided to develop this on the side, while
-reporting progress on the list.
+> >       mingw: add fallback for rmdir in case directory is in use
+> 
+> Depends on the previous patch. OK.
 
-> * jn/svndiff0 (2010-11-06) 24 commits
+No changes.
 
-Yeah, this requires some rigorous testing with real-world deltas. I'll
-probably get some EC2 instaces to churn on it after my $EXAMS are over.
+During pick up of the series I had to gather my testing script which can
+only be used manually for testing. Is there any place in git.git where
+we can store such "manual testing tools" ?
 
-> * db/fast-import-cat-blob (2010-11-07) 3 commits
-> As David says: "it has some significant consequences".
+Cheers Heiko
 
-rr/remote-helper already uses this, but there might be a better way to
-do it- we should wait and see.
+Heiko Voigt (4):
+  mingw: move unlink wrapper to mingw.c
+  mingw: work around irregular failures of unlink on windows
+  mingw: make failures to unlink or move raise a question
+  mingw: add fallback for rmdir in case directory is in use
 
-> * db/svn-fe-dumpfile3 (2010-11-07) 6 commits
+ compat/mingw.c |  139 +++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ compat/mingw.h |   14 ++---
+ 2 files changed, 144 insertions(+), 9 deletions(-)
 
-You earlier said that it might be possible to justify merging this now
-provided we supply a wrapper script to make it easy to invoke.
-
-> * rr/svnfe-tests-no-perl (2010-11-07) 1 commit
-
-Ok.
-
-> * jn/wrappers-no-libz (2010-11-06) 7 commits
-> * xx/wrappers-no-libz-svndiff0 (2010-11-07) 2 commits
-
-These two are fairly independent of the rest of the series, no? Maybe
-get these merged separately?
-
-> * db/branch-mapper: $gmane/158375
-
-I've have some mapper ideas from the discussion thread following
-sb/svn-fe-example. I'll finish it after $EXAMS.
-
-> * tc/remote-helper-usability: $gmane/157860
-
-It has some good ideas that I'm re-using in rr/remote-helper.
-
-> * rr/remote-helper: http://github.com/artagnon/git
-
-First, it's the wrong approach: I've hardcoded FD 3 into run-command
-to mean backflow. This ugly inelegant design must be thrown
-away. Second, it's very messy, and half the commits aren't even
-used.
-
-Anyway, I hope it gets the idea across- there's some functionality I
-intend reuse from tc/remote-helper-usability. Also, the "fetch"
-command works so long as fetching from revision 0 is requested. So the
-immediate priority is to get svn-fe to support incremental imports.
-
-> * sb/svn-fe-example: $gmane/159054
-
-The discussion thread following this has some good observations/
-ideas.
-
--- Ram
+-- 
+1.7.2.2.177.geec0d
