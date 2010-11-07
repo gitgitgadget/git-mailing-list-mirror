@@ -1,97 +1,85 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: git diff-tree against the root commit
-Date: Sun, 7 Nov 2010 09:23:25 -0800
-Message-ID: <AANLkTimiyFhggBvK-AGqRnMXta65rEJvJSeQ+QGOnZWp@mail.gmail.com>
-References: <4CCA6623.8090705@workspacewhiz.com> <4CD68662.4060709@gmx.de>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Status of the svn remote helper project (Nov, 2010)
+Date: Sun, 7 Nov 2010 11:42:15 -0600
+Message-ID: <20101107174215.GA31242@burratino>
+References: <20101107112129.GA30042@burratino>
+ <20101107125054.GB16474@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Joshua Jensen <jjensen@workspacewhiz.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Christoph Mallon <christoph.mallon@gmx.de>
-X-From: git-owner@vger.kernel.org Sun Nov 07 18:24:23 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	David Barr <david.barr@cordelta.com>,
+	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 07 18:45:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PF8yc-00088d-G0
-	for gcvg-git-2@lo.gmane.org; Sun, 07 Nov 2010 18:24:23 +0100
+	id 1PF9JQ-0002EK-5K
+	for gcvg-git-2@lo.gmane.org; Sun, 07 Nov 2010 18:45:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752967Ab0KGRYR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Nov 2010 12:24:17 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:44159 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752121Ab0KGRYQ convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Sun, 7 Nov 2010 12:24:16 -0500
-Received: from mail-iw0-f174.google.com (mail-iw0-f174.google.com [209.85.214.174])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id oA7HNj9r028639
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Sun, 7 Nov 2010 09:23:46 -0800
-Received: by iwn41 with SMTP id 41so3066183iwn.19
-        for <git@vger.kernel.org>; Sun, 07 Nov 2010 09:23:45 -0800 (PST)
-Received: by 10.42.97.67 with SMTP id m3mr907721icn.343.1289150625349; Sun, 07
- Nov 2010 09:23:45 -0800 (PST)
-Received: by 10.231.13.203 with HTTP; Sun, 7 Nov 2010 09:23:25 -0800 (PST)
-In-Reply-To: <4CD68662.4060709@gmx.de>
-X-Spam-Status: No, hits=-2.916 required=5 tests=AWL,BAYES_00
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1753461Ab0KGRmb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 7 Nov 2010 12:42:31 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:50673 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753108Ab0KGRmb (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 7 Nov 2010 12:42:31 -0500
+Received: by gxk23 with SMTP id 23so2964931gxk.19
+        for <git@vger.kernel.org>; Sun, 07 Nov 2010 09:42:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=3kP1sVVFRB0gFniaJV2NqDIzN+slnaj/RfpZce0Z4qk=;
+        b=EedzN+C7IoXJo3tWZjiHbeRDIY4QTfrD/aJBoFTbpu5G239fdCEMT2llVvAZEzFGqy
+         yN7+DG2jQQh1QzP3aVzTmwvVWDiRqSniOq3LqObbC9OAUNGRjZVQ91DyCf9J5uDjAkFI
+         DLEoIXyDZoLMj3mn8rNS7FM/GM8njqFxSnLaM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=oEnZzWjIsOCjIPU0m8QU10GZ75v9fIMjRMw+vg4gDbMchjz8zgEDpnZw14e08BP45F
+         MUigNBWjpxIV4MdrhyvbePUKVeeZpibcL8gVA3R52ga/vfZYJoS0AvoNvKR3r6J5DBav
+         J7pUL+gsiJihsK+wlI1cLmuFfvBjnoIZkHNzM=
+Received: by 10.151.149.9 with SMTP id b9mr7192456ybo.114.1289151748288;
+        Sun, 07 Nov 2010 09:42:28 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id 43sm2875122yhl.37.2010.11.07.09.42.26
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 07 Nov 2010 09:42:27 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20101107125054.GB16474@kytes>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160890>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160891>
 
-On Sun, Nov 7, 2010 at 2:58 AM, Christoph Mallon
-<christoph.mallon@gmx.de> wrote:
-> On 29.10.2010 08:13, Joshua Jensen wrote:
->> I am mirroring a Git repository into another SCM. =A0I am using 'git=
- diff-tree' to tell me what changes I need to make to the other SCM.
->>
->> Today, I attempted to mirror a new submodule. =A0'git diff-tree' rep=
-orted two SHAs... 0000000000000000000000000000000000000000 and the revi=
-sion the submodule currently resides at. =A0I attempted to run a 'git d=
-iff-tree' within the submodule for the all zero SHA and the revision sp=
-ecified, but apparently, 0000000000000000000000000000000000000000 does =
-not really represent the root commit and does not work. =A0I then disco=
-vered the --root option, but that doesn't seem to give me the complete =
-file list either.
->>
->> 'git diff-tree' has been working great for everything else, but I re=
-ally need a root commit diff-tree listing for proper automation.
->>
->> What are my options?
+Ramkumar Ramachandra wrote:
+> Jonathan Nieder writes:
+
+>> 	git://repo.or.cz/git/jrn.git vcs-svn-pu
 >
-> Diff against the empty tree.
+> Thanks for doing this! Now we have an up-to-date index that tracks all
+> our work :)
+>
+> A note to the others: If we merge too early, we will be forced to
+> either stick with bad decisions we made prematurely, or revert
+> them. Therefore, we have decided to develop this on the side, while
+> reporting progress on the list.
 
-That works, but it's a bit too technical.
+More precisely: it would be nice to see the usual flow of patches into
+git.git; from my point of view, nothing is significantly different
+in that respect from before, and this is just a convenient place for
+remote-svn patches to park and be tested without bothering Junio too
+much.
 
-The traditional way to do it is to just
+This should make it easier to keep track of the current state of svn::
+support without regularly sending 46-commit patch series to the list.
 
-   git diff-tree --root <commit>
-
-where the magic "--root" option is just the flag to say "I want to see
-the root as a diff too". The reason it isn't the default is
-historical: since git started out for the kernel, and since the root
-is an import from another tree, showing the root as a patch was
-annoying.
-
-You have to realize that back in the original coding days (when git
-read-tree was introduced), it was meant for very basic scripting. What
-is now "git log -p" used to be basically
-
-  git-rev-list $(cat .git/HEAD) | git-diff-tree --stdin
-
-and with the target being the kernel, the default of not showing that
-first commit was a sane one (and going back even further,
-git-diff-tree really only worked on trees, so you had to give explicit
-beginning and end points).
-
-Of course, by the time we actually had a "git log" command, I think
-that default had already changed. But it still explains why there is a
-separate option to show the root commit with a patch.
-
-                                 Linus
+Thanks for the updates and kind words.
+Jonathan
