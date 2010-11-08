@@ -1,151 +1,72 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv6 10/10] gitweb: group remote heads by remote
-Date: Mon, 8 Nov 2010 09:28:45 +0100
-Message-ID: <AANLkTimxspcGLnv+F6uKAnFAhUO++iB10b5GxnLVg_v3@mail.gmail.com>
-References: <1287917136-26103-1-git-send-email-giuseppe.bilotta@gmail.com>
- <201011030058.53366.jnareb@gmail.com> <AANLkTi=8Qz3bFCc1qocpOqsCdSWtwUHQDiwkS7H2ypad@mail.gmail.com>
- <201011041141.58334.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 08 09:29:15 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH] t1020-subdirectory: test alias expansion in a subdirectory
+Date: Mon,  8 Nov 2010 09:32:03 +0100
+Message-ID: <627dc7921dc64a16063e77d542cf9edb22631ddd.1289205059.git.git@drmicha.warpmail.net>
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 08 09:34:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFN6H-0003fD-Is
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 09:29:13 +0100
+	id 1PFNAt-0005R7-32
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 09:33:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754089Ab0KHI3H convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Nov 2010 03:29:07 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:53742 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753457Ab0KHI3G convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Nov 2010 03:29:06 -0500
-Received: by iwn41 with SMTP id 41so3804425iwn.19
-        for <git@vger.kernel.org>; Mon, 08 Nov 2010 00:29:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KkTXMKRLgHTAo2kIvaNCz9yHPVm4W2sIDR0IjJAr9jM=;
-        b=Q2sGuuFVo7FMr4BYoYxaspW9MnqsEUiJesk1XLIYdiyRpArNZ0QGNZpuJ5J17OmDcS
-         ryxTZ5zxp1FhxgLGP2bMjGY3peJQT8qb6dHtyhGsX5oyiXlIP2hAPBpm29n4xBQyBVIl
-         JS10HJp9t341CR8/kSJv2PdCwuG26kKy5sBSQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=sgkBzxau5gY3/+as9wF8lSl+Gc9xAAFpbwz4SwSl8n5zZXjnC01CiVM4jhGw5XCP0j
-         o7o3J075AoKu11TFevqd6g64drUeuWuJCgTgcu63Nj8fdgZmZv2JtyK//TJqwgGbgS1E
-         8jAMsYBOEJR10qLkafJcHyo74v1rBdNZTQF8o=
-Received: by 10.42.174.2 with SMTP id t2mr3002295icz.104.1289204945698; Mon,
- 08 Nov 2010 00:29:05 -0800 (PST)
-Received: by 10.231.160.210 with HTTP; Mon, 8 Nov 2010 00:28:45 -0800 (PST)
-In-Reply-To: <201011041141.58334.jnareb@gmail.com>
+	id S1754191Ab0KHIdy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 03:33:54 -0500
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:45234 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753453Ab0KHIdx (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Nov 2010 03:33:53 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id E2C923BA;
+	Mon,  8 Nov 2010 03:33:52 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Mon, 08 Nov 2010 03:33:52 -0500
+X-Sasl-enc: KSnJRkU4TcGQEeXO07ewmaZffrm6tsMC9wRC9/3z2HCf 1289205232
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 630444091AE;
+	Mon,  8 Nov 2010 03:33:52 -0500 (EST)
+X-Mailer: git-send-email 1.7.3.2.193.g78bbb
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160914>
 
-On Thu, Nov 4, 2010 at 11:41 AM, Jakub Narebski <jnareb@gmail.com> wrot=
-e:
-> On Wed, 3 Nov 2010, Giuseppe Bilotta wrote:
->>
->> I think that in most cases there won't be any need for limiting.
->> Public cases of lots of remotes with lots of branches are, I suspect=
-,
->> rare.
->
-> It's not about _public_ cases; I think that it is in very rare cases
-> that public repository would want to display remotes and remote-track=
-ing
-> branches.
+Add a test for alias expansion in a subdirectory of the worktree.
 
-That's a good point.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 
-> I think remote_heads feature is more important for _local_ use, for
-> example browsing one own repository using git-instaweb. =A0In such ca=
-ses
-> number of remotes and of remote-tracking branches might be large (I h=
-ave
-> 11 remotes, not all active, and 58 remote-tracking branches).
->
-> BTW. would next version of this series include patch to git-instaweb
-> enabling 'remote_heads' feature for it (gitweb_conf function)?
+---
+    65f3a9e (Remove all logic from get_git_work_tree(), 2010-11-01) breaks this test,
+    which is why I am adding it.
+    
+    In fact, we don't really have tests for alias expansion at all, but that's a different issue.
 
-I will look into that.
+ t/t1020-subdirectory.sh |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
 
->> with all the remotes/<remotename> pathspecs as a single array
->> argument. This _does_ mean that when the total number of remote head=
-s
->> is greater than the limit some remotes will not display complete
->> information in summary view. The real issue here is, I think, that
->> there is no trivial way to tell which remotes have incomplete
->> information and which don't, meaning that in the subsequent
->> git_remote_block calls we'll have no way to provide visual feedback
->> (the ellipsis) when some heads are missing.
->
-> Errr... shouldn't we leave limiting number of heads to fill_remote_he=
-ads,
-> which can do limiting per remote (with each remote having up to $limi=
-t
-> remote-tracking branches / remote heads), instead of having
-> git_get_heads_list do it?
->
-> Something like this:
->
-> +sub fill_remote_heads {
-> + =A0 =A0 =A0 my ($remotes, $limit) =3D @_;
-> +
-> + =A0 =A0 =A0 my @heads =3D map { "remotes/$_" } keys %$remotes;
-> + =A0 =A0 =A0 my @remoteheads =3D git_get_heads_list(undef, @heads);
-> + =A0 =A0 =A0 foreach my $remote (keys %$remotes) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 $remotes->{$remote}{'heads'} =3D
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 [ grep { $_->{'name'} =3D=
-~ s!^$remote/!! } @remoteheads ];
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 $remotes->{$remote}{'heads'} =3D
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 [ @{$remotes->{$remote}=
-{'heads'}}[0..$limit-1] ]
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (@{$remotes->{$remot=
-e}{'heads'}} > $limit);
-> + =A0 =A0 =A0 }
-> +}
->
-> Though perhaps it will be more clear with if as statement, not as mod=
-ifier:
->
-> +sub fill_remote_heads {
-> + =A0 =A0 =A0 my ($remotes, $limit) =3D @_;
-> +
-> + =A0 =A0 =A0 my @heads =3D map { "remotes/$_" } keys %$remotes;
-> + =A0 =A0 =A0 my @remoteheads =3D git_get_heads_list(undef, @heads);
-> + =A0 =A0 =A0 foreach my $remote (keys %$remotes) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 $remotes->{$remote}{'heads'} =3D
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 [ grep { $_->{'name'} =3D=
-~ s!^$remote/!! } @remoteheads ];
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (@{$remotes->{$remote}{'heads'}} > $=
-limit) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 $remotes->{$remote}{'he=
-ads'} =3D
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 [ @{$re=
-motes->{$remote}{'heads'}}[0..$limit-1] ]
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
-> + =A0 =A0 =A0 }
-> +}
-
-Either solution is fine, but it would require grabbing all the remote
-heads. The real issue here is, I think understanding what is the
-purpose of limiting in gitweb. Is it to reduce runtime? is it to
-reduce clutter on the screen? In the first case, the limiting should
-be done as early as possible (i.e. during the git call that retrieves
-the data); in the latter case, is it _really_ needed at all?
-
-
---=20
-Giuseppe "Oblomov" Bilotta
+diff --git a/t/t1020-subdirectory.sh b/t/t1020-subdirectory.sh
+index a3ac338..1fd187c 100755
+--- a/t/t1020-subdirectory.sh
++++ b/t/t1020-subdirectory.sh
+@@ -110,6 +110,14 @@ test_expect_success 'read-tree' '
+ 	)
+ '
+ 
++test_expect_success 'alias expansion' '
++	(
++		git config alias.ss status &&
++		cd dir &&
++		git status &&
++		git ss
++	)
++'
+ test_expect_success 'no file/rev ambiguity check inside .git' '
+ 	git commit -a -m 1 &&
+ 	(
+-- 
+1.7.3.2.193.g78bbb
