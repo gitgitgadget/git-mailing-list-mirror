@@ -1,65 +1,72 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Git as a backup system?
-Date: Mon, 8 Nov 2010 12:04:27 -0600
-Message-ID: <20101108180427.GA4005@burratino>
-References: <AANLkTikcBvN+5hkcc9+xt291B4Gm+Yhe53R3qY0PNt97@mail.gmail.com>
+From: =?ISO-8859-15?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: [PATCH 7/7] verify-tag: document --verbose
+Date: Mon, 08 Nov 2010 19:04:51 +0100
+Message-ID: <4CD83BC3.6000606@lsrfire.ath.cx>
+References: <4CD83917.3040801@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eric Frederich <eric.frederich@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 08 19:04:52 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 08 19:05:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFW5J-00066z-A7
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 19:04:49 +0100
+	id 1PFW5Y-0006Et-Op
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 19:05:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755331Ab0KHSEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 13:04:44 -0500
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:38329 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755278Ab0KHSEn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 13:04:43 -0500
-Received: by pvb32 with SMTP id 32so1377896pvb.19
-        for <git@vger.kernel.org>; Mon, 08 Nov 2010 10:04:43 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=yY1FhTuDqCNxxp8GJrhSIGcaI5DE6agKyKb/zJKbp7M=;
-        b=v1/PU8iWd6YdlHSdBlKFz+wRV++a4AFLMDoKinHZUyg4SQ/69qeYCfkou+Sv/Beteq
-         azVB6oWCkGm/IngK3i6mpzl16KXixkEEh5nOD3ZjTyAZOLhbfR6mZtiYiyt3cHt+6PrQ
-         kGiI6TM77CnGpk/SvStyEtnUEjkwWkfFoYCDk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Ls5C87K49yTpbK9GVfVtLE5q/FfB6gN+rGTfA/3LgSkJuqcbBcVEj5w33+Fq8+mnJf
-         F4/Yrb3HMyI4ggtCPg/EDpJbrcwWSsqXZ3mX7iZ0L4HSrOnLMCH61gywi9X+1Ed9i+6Q
-         2Hh9lPwIg8cEqlEpipSpz1dVTGlTtpBXqn30c=
-Received: by 10.224.214.5 with SMTP id gy5mr4125251qab.215.1289239482922;
-        Mon, 08 Nov 2010 10:04:42 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id k15sm143198qcu.35.2010.11.08.10.04.41
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 08 Nov 2010 10:04:42 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTikcBvN+5hkcc9+xt291B4Gm+Yhe53R3qY0PNt97@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753597Ab0KHSE4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 13:04:56 -0500
+Received: from india601.server4you.de ([85.25.151.105]:45747 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753177Ab0KHSE4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 13:04:56 -0500
+Received: from [10.0.1.100] (p4FC56F37.dip.t-dialin.net [79.197.111.55])
+	by india601.server4you.de (Postfix) with ESMTPSA id E81732F807B;
+	Mon,  8 Nov 2010 19:04:54 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <4CD83917.3040801@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160959>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160960>
 
-Eric Frederich wrote:
+Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
+---
+ Documentation/git-verify-tag.txt |    4 ++++
+ builtin/verify-tag.c             |    2 +-
+ 2 files changed, 5 insertions(+), 1 deletions(-)
 
-> Am I insane?  Are there other tools more suited toward this?
-> I just thought of using Git since I looked at my 9G worth of data out
-> there in my backup directory that is almost exactly the same and said
-> "git could handle this well".
-
-You might like bup: https://github.com/apenwarr/bup#readme
+diff --git a/Documentation/git-verify-tag.txt b/Documentation/git-verify-tag.txt
+index dada212..7112197 100644
+--- a/Documentation/git-verify-tag.txt
++++ b/Documentation/git-verify-tag.txt
+@@ -15,6 +15,10 @@ Validates the gpg signature created by 'git tag'.
+ 
+ OPTIONS
+ -------
++-v::
++--verbose::
++	Print the contents of the tag object before validating it.
++
+ <tag>...::
+ 	SHA1 identifiers of git tag objects.
+ 
+diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
+index 6784846..8136dba 100644
+--- a/builtin/verify-tag.c
++++ b/builtin/verify-tag.c
+@@ -93,7 +93,7 @@ int cmd_verify_tag(int argc, const char **argv, const char *prefix)
+ {
+ 	int i = 1, verbose = 0, had_error = 0;
+ 	const struct option verify_tag_options[] = {
+-		OPT__VERBOSE(&verbose, "be verbose"),
++		OPT__VERBOSE(&verbose, "print tag contents"),
+ 		OPT_END()
+ 	};
+ 
+-- 
+1.7.3
