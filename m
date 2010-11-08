@@ -1,136 +1,131 @@
-From: Stefan Haller <lists@haller-berlin.de>
-Subject: [PATCH] gitk: Add "First parent" checkbox
-Date: Mon,  8 Nov 2010 11:42:59 +0100
-Message-ID: <1289212979-64246-1-git-send-email-lists@haller-berlin.de>
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Mon Nov 08 11:43:29 2010
+From: Kevin Ballard <kevin@sb.org>
+Subject: [PATCHv3 1/2] rebase: better rearranging of fixup!/squash! lines with --autosquash
+Date: Mon,  8 Nov 2010 02:48:02 -0800
+Message-ID: <1289213283-24294-1-git-send-email-kevin@sb.org>
+References: <alpine.DEB.2.00.1011051401090.7611@ds9.cixit.se>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Peter Krefting <peter@softwolves.pp.se>,
+	Kevin Ballard <kevin@sb.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 08 11:48:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFPC9-0002EC-OB
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 11:43:26 +0100
+	id 1PFPGt-0004Rd-1u
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 11:48:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754435Ab0KHKnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 05:43:06 -0500
-Received: from mail.ableton.net ([62.96.12.115]:42845 "EHLO mail.ableton.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754421Ab0KHKnE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 05:43:04 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
-	h=Message-Id:Date:Subject:Cc:To:From; bh=NCKpoAHvXsLV62AXQsxvuMNO0a228ouv5alonYIPyZs=;
-	b=OMpdl1gNZ3EpUKNEjXU+PdGyawnnfkfB62fpBSbz2WFgcl+GGnsbJtBVjxnJiYokHswQ7vMkM0wbLJDilHTBjfVMvlhISwsTyFNXutC2ElmsTSev06P0z9Owu4nuzizNoRxu3Yn+uDVXbS6aGREihcVnCtsut6HQSNE+ySpYKJc=;
-Received: from macbook-stk.office.ableton.com ([10.1.12.43])
-	by mail.ableton.net with esmtp (Exim 4.72)
-	(envelope-from <lists@haller-berlin.de>)
-	id 1PFPBl-0002Q7-3Y; Mon, 08 Nov 2010 11:43:01 +0100
-X-Mailer: git-send-email 1.7.3.2.153.g8250e
+	id S1754292Ab0KHKsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 05:48:13 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:45380 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752773Ab0KHKsM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 05:48:12 -0500
+Received: by iwn41 with SMTP id 41so3935366iwn.19
+        for <git@vger.kernel.org>; Mon, 08 Nov 2010 02:48:12 -0800 (PST)
+Received: by 10.42.149.66 with SMTP id u2mr3526097icv.408.1289213292073;
+        Mon, 08 Nov 2010 02:48:12 -0800 (PST)
+Received: from localhost.localdomain ([24.130.32.253])
+        by mx.google.com with ESMTPS id d21sm5901520ibg.9.2010.11.08.02.48.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 08 Nov 2010 02:48:10 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.195.gc69dde
+In-Reply-To: <alpine.DEB.2.00.1011051401090.7611@ds9.cixit.se>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160921>
 
-Sometimes it's desirable to see what changes were introduced by a
-merge commit, rather than how conflicts were resolved. This adds
-a checkbox which, when turned on, makes gitk show the equivalent
-of "git show --first-parent <commit>" for merge commits.
+The current behvaior of --autosquash can duplicate fixup!/squash! lines
+if they match multiple commits, and it can also apply them to commits
+that come after them in the todo list. Even more oddly, a commit that
+looks like "fixup! fixup!" will match itself and be duplicated in the
+todo list.
 
-Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
+Change the todo list rearranging to mark all commits as used as soon
+as they are emitted, and to avoid emitting a fixup/squash commit if the
+commit has already been marked as used.
+
+Signed-off-by: Kevin Ballard <kevin@sb.org>
 ---
-I realize this conflicts with Thomas Rast's recent patch to
-add a word-diff dropdown box; things are fighting for space
-in the diff pane header...
 
- gitk |   24 +++++++++++++++++++++---
- 1 files changed, 21 insertions(+), 3 deletions(-)
+This patch is unchanged from v2.
 
-diff --git a/gitk b/gitk
-index 45e3380..db0f022 100755
---- a/gitk
-+++ b/gitk
-@@ -2245,6 +2245,9 @@ proc makewindow {} {
-     ${NS}::checkbutton .bleft.mid.ignspace -text [mc "Ignore space change"] \
- 	-command changeignorespace -variable ignorespace
-     pack .bleft.mid.ignspace -side left -padx 5
-+    ${NS}::checkbutton .bleft.mid.firstparent -text [mc "First parent"] \
-+	-command changefirstparent -variable firstparent
-+    pack .bleft.mid.firstparent -side left -padx 5
-     set ctext .bleft.bottom.ctext
-     text $ctext -background $bgcolor -foreground $fgcolor \
- 	-state disabled -font textfont \
-@@ -6872,6 +6875,7 @@ proc selectline {l isnew {desired_loc {}}} {
-     global cmitmode showneartags allcommits
-     global targetrow targetid lastscrollrows
-     global autoselect jump_to_here
-+    global firstparent
+ git-rebase--interactive.sh   |    4 +++
+ t/t3415-rebase-autosquash.sh |   43 ++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+), 0 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index e29fd91..56cfdb5 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -707,8 +707,12 @@ rearrange_squash () {
+ 		*" $sha1 "*) continue ;;
+ 		esac
+ 		printf '%s\n' "$pick $sha1 $message"
++		used="$used$sha1 "
+ 		while read -r squash action msg
+ 		do
++			case " $used" in
++			*" $squash "*) continue ;;
++			esac
+ 			case "$message" in
+ 			"$msg"*)
+ 				printf '%s\n' "$action $squash $action! $msg"
+diff --git a/t/t3415-rebase-autosquash.sh b/t/t3415-rebase-autosquash.sh
+index fd2184c..712bbe8 100755
+--- a/t/t3415-rebase-autosquash.sh
++++ b/t/t3415-rebase-autosquash.sh
+@@ -94,4 +94,47 @@ test_expect_success 'misspelled auto squash' '
+ 	test 0 = $(git rev-list final-missquash...HEAD | wc -l)
+ '
  
-     catch {unset pending_select}
-     $canv delete hover
-@@ -7013,7 +7017,7 @@ proc selectline {l isnew {desired_loc {}}} {
-     init_flist [mc "Comments"]
-     if {$cmitmode eq "tree"} {
- 	gettree $id
--    } elseif {[llength $olds] <= 1} {
-+    } elseif {[llength $olds] <= 1 || $firstparent} {
- 	startdiff $id
-     } else {
- 	mergediff $id
-@@ -7416,7 +7420,7 @@ proc diffcmd {ids flags} {
- proc gettreediffs {ids} {
-     global treediff treepending
- 
--    if {[catch {set gdtf [open [diffcmd $ids {--no-commit-id}] r]}]} return
-+    if {[catch {set gdtf [open [diffcmd $ids {--no-commit-id -m --first-parent}] r]}]} return
- 
-     set treepending $ids
-     set treediff {}
-@@ -7504,11 +7508,19 @@ proc changeignorespace {} {
-     reselectline
- }
- 
-+proc changefirstparent {} {
-+    global treediffs
-+    catch {unset treediffs}
++test_expect_success 'auto squash that matches 2 commits' '
++	git reset --hard base &&
++	echo 4 >file4 &&
++	git add file4 &&
++	test_tick &&
++	git commit -m "first new commit" &&
++	echo 1 >file1 &&
++	git add -u &&
++	test_tick &&
++	git commit -m "squash! first" &&
++	git tag final-multisquash &&
++	test_tick &&
++	git rebase --autosquash -i HEAD~4 &&
++	git log --oneline >actual &&
++	test 4 = $(wc -l <actual) &&
++	git diff --exit-code final-multisquash &&
++	test 1 = "$(git cat-file blob HEAD^^:file1)" &&
++	test 2 = $(git cat-file commit HEAD^^ | grep first | wc -l) &&
++	test 1 = $(git cat-file commit HEAD | grep first | wc -l)
++'
 +
-+    reselectline
-+}
++test_expect_success 'auto squash that matches a commit after the squash' '
++	git reset --hard base &&
++	echo 1 >file1 &&
++	git add -u &&
++	test_tick &&
++	git commit -m "squash! third" &&
++	echo 4 >file4 &&
++	git add file4 &&
++	test_tick &&
++	git commit -m "third commit" &&
++	git tag final-presquash &&
++	test_tick &&
++	git rebase --autosquash -i HEAD~4 &&
++	git log --oneline >actual &&
++	test 5 = $(wc -l <actual) &&
++	git diff --exit-code final-presquash &&
++	test 0 = "$(git cat-file blob HEAD^^:file1)" &&
++	test 1 = "$(git cat-file blob HEAD^:file1)" &&
++	test 1 = $(git cat-file commit HEAD | grep third | wc -l) &&
++	test 1 = $(git cat-file commit HEAD^ | grep third | wc -l)
++'
 +
- proc getblobdiffs {ids} {
-     global blobdifffd diffids env
-     global diffinhdr treediffs
-     global diffcontext
-     global ignorespace
-+    global firstparent
-     global limitdiffs vfilelimit curview
-     global diffencoding targetline diffnparents
-     global git_version currdiffsubmod
-@@ -7521,10 +7533,15 @@ proc getblobdiffs {ids} {
-     if {[package vcompare $git_version "1.6.6"] >= 0} {
- 	set submodule "--submodule"
-     }
--    set cmd [diffcmd $ids "-p $textconv $submodule  -C --cc --no-commit-id -U$diffcontext"]
-+    set cmd [diffcmd $ids "-p $textconv $submodule  -C --no-commit-id -U$diffcontext"]
-     if {$ignorespace} {
- 	append cmd " -w"
-     }
-+    if {$firstparent} {
-+	append cmd " -m --first-parent"
-+    } else {
-+	append cmd " --cc"
-+    }
-     if {$limitdiffs && $vfilelimit($curview) ne {}} {
- 	set cmd [concat $cmd -- $vfilelimit($curview)]
-     }
-@@ -11393,6 +11410,7 @@ if {[tk windowingsystem] eq "win32"} {
- set diffcolors {red "#00a000" blue}
- set diffcontext 3
- set ignorespace 0
-+set firstparent 0
- set markbgcolor "#e0e0ff"
- 
- set circlecolors {white blue gray blue blue}
+ test_done
 -- 
-1.7.3.2.153.g8250e
+1.7.3.2.195.gc69dde
