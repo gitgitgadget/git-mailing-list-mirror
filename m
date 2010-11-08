@@ -1,61 +1,68 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: Understanding and improving --word-diff
-Date: Mon, 8 Nov 2010 17:33:06 +0100
-Message-ID: <201011081733.06502.trast@student.ethz.ch>
-References: <20101108151601.GF22067@login.drsnuggles.stderr.nl> <vpqlj53zuum.fsf@bauges.imag.fr>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v2] Run global hooks from the directory at hooks.dir
+Date: Mon, 8 Nov 2010 11:13:11 -0600
+Message-ID: <20101108171311.GA3619@burratino>
+References: <1289219520-37435-1-git-send-email-bricollins@gmail.com>
+ <4CD7FB37.4050107@viscovery.net>
+ <AANLkTi=kFuoaV5Ur_a7FJPg_oUs3svOpq=wEVhdpuoai@mail.gmail.com>
+ <AANLkTikJACZxf6socuvXFMu7WUZ0y+s0ZRA2kYEKb19q@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, <git@vger.kernel.org>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-To: Matthijs Kooijman <matthijs@stdin.nl>
-X-From: git-owner@vger.kernel.org Mon Nov 08 17:33:18 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>, s-beyer@gmx.net,
+	git@vger.kernel.org
+To: Brian Collins <bricollins@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 08 18:13:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFUei-0007eN-Pi
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 17:33:17 +0100
+	id 1PFVHj-0007PZ-Fq
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 18:13:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754224Ab0KHQdK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 11:33:10 -0500
-Received: from gwse.ethz.ch ([129.132.178.237]:53236 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754081Ab0KHQdJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 11:33:09 -0500
-Received: from CAS11.d.ethz.ch (172.31.38.211) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Mon, 8 Nov
- 2010 17:33:06 +0100
-Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.218.12; Mon, 8 Nov
- 2010 17:33:07 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.36-90-desktop; KDE/4.5.3; x86_64; ; )
-In-Reply-To: <vpqlj53zuum.fsf@bauges.imag.fr>
-X-Originating-IP: [129.132.153.233]
+	id S1754909Ab0KHRN3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 12:13:29 -0500
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:46445 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753869Ab0KHRN3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 12:13:29 -0500
+Received: by pvb32 with SMTP id 32so1333197pvb.19
+        for <git@vger.kernel.org>; Mon, 08 Nov 2010 09:13:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=zlJm0wXjnMRMFiCGhbB8G9jhFqJ9WztAlCyJQz3jgK8=;
+        b=B/ZCxH2AsaTlPNCTddNESiojPEbNwWODWtS2G5hy5L8vPxR4a7NZEdt3EYtvEHpjQa
+         GJjqkxD9kXO3xrXz9VlHeoGBVOG08lTAJe0nH9c3h8sqNnOYiwyEURo7ARgHJNmNF/pl
+         O2Qi6ANFIt3lnFUvZy+PHixWB+2BgRcTPaE9w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Od3T11P39sQBHH+Z1RuPkbCXff6OzVri06ZDdOYMAPGK+I8AljXDgqpHymcTZcmHGD
+         5Sp8zAnHxTNACDKHh0xKHi8BGwdd5KSrF2M6MwfsYVci8xiewu06Uf1tA/Cg7BTpA4gQ
+         otZnv+HIeFZF41qr+xXBj3BaDqBS11llp1GtQ=
+Received: by 10.229.84.203 with SMTP id k11mr5345545qcl.56.1289236407900;
+        Mon, 08 Nov 2010 09:13:27 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id v39sm2555166yba.19.2010.11.08.09.13.24
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 08 Nov 2010 09:13:25 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikJACZxf6socuvXFMu7WUZ0y+s0ZRA2kYEKb19q@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160947>
 
-Matthieu Moy wrote:
-> Matthijs Kooijman <matthijs@stdin.nl> writes:
-> 
-> > Lastly, the "porcelain" word-diff format seems a bit weird to me. Is
-> > the format specified somewhere, or are there any programs that use it
-> > currently? I couldn't find any users inside the git.git tree itself?
-> 
-> There's a pending patch for "gitk --color-words". Actually, the
-> porcelain format was precisely implemented to allow this patch to
-> exist IIRC.
+Brian Collins wrote:
 
-Also, my intent was to specify the format fully under its option
-description.  It's rather simple, but if you think the
-explanation/definition is inadequate, please provide a patch.  We'd
-really want the writers of consumers (GUIs and such) to be very clear
-about how it is formatted.
+>                                                     Using templates is not
+> ideal because it is system-wide and they still need to be renamed for every
+> clone or init.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Why do they have to be renamed?  And can we do better?
