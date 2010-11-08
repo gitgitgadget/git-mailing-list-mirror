@@ -1,102 +1,101 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: Newbie question: how to move bunch of files
-Date: Tue, 9 Nov 2010 11:14:22 +1300
-Message-ID: <AANLkTik9aQaV1OvARuPchekYpQFANu-+k3c2n3wamzXh@mail.gmail.com>
-References: <4CD86204.1000805@gmail.com>
+From: Yann Dirson <ydirson@free.fr>
+Subject: Re: [PATCH] git-rebase--interactive.sh: Add new command "shell"
+Date: Mon, 8 Nov 2010 23:29:37 +0100
+Message-ID: <20101108222937.GH3167@home.lan>
+References: <9C0BAFB4-299E-459B-A64A-54D480C5445D@sb.org>
+ <20101104112530.5c0e444a@chalon.bertin.fr>
+ <4CD2E7B4.3000908@nextest.com>
+ <vpq62wddmc0.fsf@bauges.imag.fr>
+ <20101104181020.GB16431@burratino>
+ <20101104205307.GA8911@home.lan>
+ <7vd3qfr7ki.fsf@alter.siamese.dyndns.org>
+ <663A3F43-5F64-41F0-B272-64EEE9775250@sb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: mat <matthieu.stigler@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 08 23:14:30 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, Yann Dirson <ydirson@free.fr>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Eric Raible <raible@nextest.com>,
+	Yann Dirson <dirson@bertin.fr>, git@vger.kernel.org
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Mon Nov 08 23:29:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFZyu-0007Aj-Jw
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 23:14:29 +0100
+	id 1PFaDo-0005qu-Ox
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 23:29:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755826Ab0KHWOX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Nov 2010 17:14:23 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:49023 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755690Ab0KHWOX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Nov 2010 17:14:23 -0500
-Received: by gxk23 with SMTP id 23so3803237gxk.19
-        for <git@vger.kernel.org>; Mon, 08 Nov 2010 14:14:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=F+g7HEpuIUwmiTpshVSBOBdszQbjvWdDah4XjSlcUwU=;
-        b=goXS2/08dzT9bCKq2WU+L+ktWPCEitU4ZyGFp0S8KWYTVDHKY+jcJQI1XGg1oTo4JF
-         mLbYj5bOy028UfZ0U2Yt5kyZPjPp6n3+vXMKvSGAUxoRzqiVvzGR7e9UDMKpaBDS5n+m
-         5/RVojbh80UUulth68/STIuYkRZPpB8idZb6k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Phad+1M9OGARdWqwkKgePe4nxgjhiEA4tCHFx9tYW1by15pE9Tnk1X4d6Q7gbg1EDy
-         bj3eBRGRepTPIIA0j6NKVlJfDEotwEVU4bKwmlnuMkzOx+MI6DZ8SZtPE6oqc/txHp+M
-         5QNBdwcXdYqMf1p+1BWa5urk5X+gi9Oo38aiI=
-Received: by 10.229.193.18 with SMTP id ds18mr5599903qcb.211.1289254462538;
- Mon, 08 Nov 2010 14:14:22 -0800 (PST)
-Received: by 10.229.13.8 with HTTP; Mon, 8 Nov 2010 14:14:22 -0800 (PST)
-In-Reply-To: <4CD86204.1000805@gmail.com>
+	id S1755792Ab0KHW3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 17:29:48 -0500
+Received: from smtp5-g21.free.fr ([212.27.42.5]:49021 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755445Ab0KHW3r (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 17:29:47 -0500
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 194B2D480DA;
+	Mon,  8 Nov 2010 23:29:38 +0100 (CET)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1PFaDZ-0001re-Oy; Mon, 08 Nov 2010 23:29:37 +0100
+Content-Disposition: inline
+In-Reply-To: <663A3F43-5F64-41F0-B272-64EEE9775250@sb.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160998>
 
-Hi,
+On Mon, Nov 08, 2010 at 01:49:44PM -0800, Kevin Ballard wrote:
+> On Nov 8, 2010, at 10:31 AM, Junio C Hamano wrote:
+> 
+> > Yann Dirson <ydirson@free.fr> writes:
+> > 
+> >> #  e, edit = use commit (if specified) but pause to amend/examine/test
+> > 
+> > When an end user is given
+> > 
+> >    pick one
+> >    pick two
+> >    pick three
+> >    ...
+> > 
+> > and told the above, would it be crystal clear that, if he changed the insn
+> > sheet to
+> > 
+> >    pick one
+> >    edit
+> >    pick three
+> >    ...
+> > 
+> > then he will _lose_ the change made by foo, or will the user come back
+> > here and complain that a precious change "two" is lost and it is git's
+> > fault?
+> 
+> On the one hand, once someone understands what the todo list is actually
+> doing, then it should be instantly obvious that removing the reference to
+> a commit will remove that commit entirely. On the other hand, I agree it
+> may be confusing to new git users (or new rebase users). Do you have an
+> alternative solution in mind?
 
-On Tue, Nov 9, 2010 at 9:48 AM, mat <matthieu.stigler@gmail.com> wrote:
-> Dear list
->
-> I am very sorry to bother you with such a simple question, but I sear=
-ched
-> for a while on the net and did not come up with any satisfying answer=
- :-(
->
-> I just want to move a bunch of files (from /R to /pkg/R ), but get th=
-e
-> error:
-> $ git mv R/*.R pkg/R/
-> fatal: not under version control, source=3DR/nll_MSAR3.R,
-> destination=3Dpkg/R/nll_MSAR3.R
+Maybe restating in an explanatory paragraph something like:
 
-This is the kind of error you get from asking git to move a file it
-isn't tracking.
+|Keep in mind that any commit in the original todo list, that would
+|not be there after your edits, would not be included in the resulting
+|rebased branch.  In case you realize afterwards that you need such a
+|commit, you can still access it as an ancestor of @{1}, see
+|git-reflog(1) for details.
 
-Have you got generated files in the same location as your repository?
-I get the same kind of thing if I ask git to move generated files
+Maybe we could list a copy of the todo list in the comments, as a
+reference for double-checking.  Such a list could even be used for a
+final check before applying, that would ask confirmation if the set of
+patches has changed, and offer to edit again.  The same config item
+(eg. advice.interactiveRebase ?) could be used to hide the note and
+the check.
 
-   git mv foo/*.pyc bar/
-   fatal: not under version control, source=3Dfoo/ast.pyc, destination=3D=
-bar/ast.pyc
-
-To get around this you could change your wildcard to only include
-files you are tracking or specify them individually. Alternatively you
-could just use 'mv R/*.R pkg/R/'  then 'git rm' the old files and 'git
-add' the new files you want to track, git should detect the renames
-after the 'git rm' and 'git add'. As a final alternative you could
-also 'git clean -d' to remove the untracked files but be careful with
-that as you may not have added some files you are meaning to track.
-
-> What do I do wrong? Would you kindly indicate me what I should do?
->
-> Thanks a lot and sorry again!
->
-> Matthieu
->
-> PS: I am using git 1.7.0.4 on Ubuntu 10.4
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+Now making "rebase -i" possibly interactive may cause problems, for
+any porcelain scripts above it.  Not sure it'd be the way to do it.
+Maybe add a "check" command to be inserted at bottom of todo list to
+activate it, that would be here by default but commented out ?
