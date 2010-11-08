@@ -1,164 +1,136 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] t0001: test git init when run via an alias
-Date: Mon,  8 Nov 2010 17:23:38 +0700
-Message-ID: <1289211818-12594-1-git-send-email-pclouds@gmail.com>
-References: <627dc7921dc64a16063e77d542cf9edb22631ddd.1289205059.git.git@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@drmicha.warpmail.net, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 08 11:25:07 2010
+From: Stefan Haller <lists@haller-berlin.de>
+Subject: [PATCH] gitk: Add "First parent" checkbox
+Date: Mon,  8 Nov 2010 11:42:59 +0100
+Message-ID: <1289212979-64246-1-git-send-email-lists@haller-berlin.de>
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Nov 08 11:43:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFOuM-0002Or-RB
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 11:25:03 +0100
+	id 1PFPC9-0002EC-OB
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 11:43:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754242Ab0KHKYw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Nov 2010 05:24:52 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:39328 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754215Ab0KHKYv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 05:24:51 -0500
-Received: by pzk28 with SMTP id 28so799002pzk.19
-        for <git@vger.kernel.org>; Mon, 08 Nov 2010 02:24:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=24OnRRw6Jj5P3qb0S1Y4tUyqgnVQqyuk3q3ZZtnx8uQ=;
-        b=FP0hwF3+4XSteLr5lLOZWIrQhW5s3jaerWDYUddqT2zcIWRBSklaZb5/O4qQB/o/c2
-         qKK/QJPHO6QPhMXL4+vXxXNd9s1+PQim7QfTu8LnCXwgW17yf5i4ir4jMq4Qa+WWADRP
-         CF6TreYN7Az6mjIdmLp+RyVaw7crxy/VuFON8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=kAqBvnRoZ5zFNdjzNlvzTHQAGea9B5tCREfh6OWgR1zmJ6ZhVlGOb/PHo5Yf3ujvcw
-         v5Mpbj4jb/IqDU95veNlSLCWNZsUQmm9cMLiT7YY68IjAJ5P5lJjU18NezV+e/4ttU+5
-         Qo/GSAL5hKvaKUWDFvngUvpeu4v1BbePfoeus=
-Received: by 10.142.253.21 with SMTP id a21mr4423624wfi.219.1289211890770;
-        Mon, 08 Nov 2010 02:24:50 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.196.139])
-        by mx.google.com with ESMTPS id p8sm7838748wff.4.2010.11.08.02.24.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 08 Nov 2010 02:24:49 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 08 Nov 2010 17:23:44 +0700
-X-Mailer: git-send-email 1.7.3.2.210.g045198
-In-Reply-To: <627dc7921dc64a16063e77d542cf9edb22631ddd.1289205059.git.git@drmicha.warpmail.net>
+	id S1754435Ab0KHKnG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 05:43:06 -0500
+Received: from mail.ableton.net ([62.96.12.115]:42845 "EHLO mail.ableton.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754421Ab0KHKnE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 05:43:04 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
+	h=Message-Id:Date:Subject:Cc:To:From; bh=NCKpoAHvXsLV62AXQsxvuMNO0a228ouv5alonYIPyZs=;
+	b=OMpdl1gNZ3EpUKNEjXU+PdGyawnnfkfB62fpBSbz2WFgcl+GGnsbJtBVjxnJiYokHswQ7vMkM0wbLJDilHTBjfVMvlhISwsTyFNXutC2ElmsTSev06P0z9Owu4nuzizNoRxu3Yn+uDVXbS6aGREihcVnCtsut6HQSNE+ySpYKJc=;
+Received: from macbook-stk.office.ableton.com ([10.1.12.43])
+	by mail.ableton.net with esmtp (Exim 4.72)
+	(envelope-from <lists@haller-berlin.de>)
+	id 1PFPBl-0002Q7-3Y; Mon, 08 Nov 2010 11:43:01 +0100
+X-Mailer: git-send-email 1.7.3.2.153.g8250e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160918>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160920>
 
-=46rom: Jonathan Nieder <jrnieder@gmail.com>
+Sometimes it's desirable to see what changes were introduced by a
+merge commit, rather than how conflicts were resolved. This adds
+a checkbox which, when turned on, makes gitk show the equivalent
+of "git show --first-parent <commit>" for merge commits.
 
-Add some tests to document the correct behavior of (possibly aliased)
-init when run within and outside a git directory.
-
-If I set up a simple git alias =E2=80=9Cquietinit =3D init --quiet=E2=80=
-=9D, usually it
-will work just like =E2=80=98git init --quiet=E2=80=99.
-
-There are some differences, unfortunately, since in the process of
-checking for aliases, git has to look for a .git/config file.  If =E2=80=
-=98git
-quietinit=E2=80=99 is run from a subdirectory of an existing git reposi=
-tory,
-that repository=E2=80=99s configuration will affect the configuration o=
-f the
-new repository.  In particular, the new repository can inherit
-bogus values for core.bare and core.worktree.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
+Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
 ---
- >     In fact, we don't really have tests for alias expansion at all, =
-but that's a different issue.
+I realize this conflicts with Thomas Rast's recent patch to
+add a word-diff dropdown box; things are fighting for space
+in the diff pane header...
 
- It reminds me of this old patch. Let's push them together.
+ gitk |   24 +++++++++++++++++++++---
+ 1 files changed, 21 insertions(+), 3 deletions(-)
 
- t/t0001-init.sh |   56 +++++++++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 56 insertions(+), 0 deletions(-)
-
-diff --git a/t/t0001-init.sh b/t/t0001-init.sh
-index 7fe8883..28c1858 100755
---- a/t/t0001-init.sh
-+++ b/t/t0001-init.sh
-@@ -33,6 +33,62 @@ test_expect_success 'plain' '
- 	check_config plain/.git false unset
- '
-=20
-+test_expect_success 'plain nested in bare' '
-+	(
-+		unset GIT_DIR GIT_WORK_TREE &&
-+		git init --bare bare-ancestor.git &&
-+		cd bare-ancestor.git &&
-+		mkdir plain-nested &&
-+		cd plain-nested &&
-+		git init
-+	) &&
-+	check_config bare-ancestor.git/plain-nested/.git false unset
-+'
+diff --git a/gitk b/gitk
+index 45e3380..db0f022 100755
+--- a/gitk
++++ b/gitk
+@@ -2245,6 +2245,9 @@ proc makewindow {} {
+     ${NS}::checkbutton .bleft.mid.ignspace -text [mc "Ignore space change"] \
+ 	-command changeignorespace -variable ignorespace
+     pack .bleft.mid.ignspace -side left -padx 5
++    ${NS}::checkbutton .bleft.mid.firstparent -text [mc "First parent"] \
++	-command changefirstparent -variable firstparent
++    pack .bleft.mid.firstparent -side left -padx 5
+     set ctext .bleft.bottom.ctext
+     text $ctext -background $bgcolor -foreground $fgcolor \
+ 	-state disabled -font textfont \
+@@ -6872,6 +6875,7 @@ proc selectline {l isnew {desired_loc {}}} {
+     global cmitmode showneartags allcommits
+     global targetrow targetid lastscrollrows
+     global autoselect jump_to_here
++    global firstparent
+ 
+     catch {unset pending_select}
+     $canv delete hover
+@@ -7013,7 +7017,7 @@ proc selectline {l isnew {desired_loc {}}} {
+     init_flist [mc "Comments"]
+     if {$cmitmode eq "tree"} {
+ 	gettree $id
+-    } elseif {[llength $olds] <= 1} {
++    } elseif {[llength $olds] <= 1 || $firstparent} {
+ 	startdiff $id
+     } else {
+ 	mergediff $id
+@@ -7416,7 +7420,7 @@ proc diffcmd {ids flags} {
+ proc gettreediffs {ids} {
+     global treediff treepending
+ 
+-    if {[catch {set gdtf [open [diffcmd $ids {--no-commit-id}] r]}]} return
++    if {[catch {set gdtf [open [diffcmd $ids {--no-commit-id -m --first-parent}] r]}]} return
+ 
+     set treepending $ids
+     set treediff {}
+@@ -7504,11 +7508,19 @@ proc changeignorespace {} {
+     reselectline
+ }
+ 
++proc changefirstparent {} {
++    global treediffs
++    catch {unset treediffs}
 +
-+test_expect_success 'plain through aliased command, outside any git re=
-po' '
-+	(
-+		unset GIT_DIR GIT_WORK_TREE GIT_CONFIG_NOGLOBAL &&
-+		HOME=3D$(pwd)/alias-config &&
-+		export HOME &&
-+		mkdir alias-config &&
-+		echo "[alias] aliasedinit =3D init" >alias-config/.gitconfig &&
++    reselectline
++}
 +
-+		GIT_CEILING_DIRECTORIES=3D$(pwd) &&
-+		export GIT_CEILING_DIRECTORIES &&
-+
-+		mkdir plain-aliased &&
-+		cd plain-aliased &&
-+		git aliasedinit
-+	) &&
-+	check_config plain-aliased/.git false unset
-+'
-+
-+test_expect_success 'plain nested through aliased command' '
-+	(
-+		unset GIT_DIR GIT_WORK_TREE &&
-+		git init plain-ancestor-aliased &&
-+		cd plain-ancestor-aliased &&
-+		echo "[alias] aliasedinit =3D init" >>.git/config &&
-+		mkdir plain-nested &&
-+		cd plain-nested &&
-+		git aliasedinit
-+	) &&
-+	check_config plain-ancestor-aliased/plain-nested/.git false unset
-+'
-+
-+test_expect_failure 'plain nested in bare through aliased command' '
-+	(
-+		unset GIT_DIR GIT_WORK_TREE &&
-+		git init --bare bare-ancestor-aliased.git &&
-+		cd bare-ancestor-aliased.git &&
-+		echo "[alias] aliasedinit =3D init" >>config &&
-+		mkdir plain-nested &&
-+		cd plain-nested &&
-+		git aliasedinit
-+	) &&
-+	check_config bare-ancestor-aliased.git/plain-nested/.git false unset
-+'
-+
- test_expect_success 'plain with GIT_WORK_TREE' '
- 	if (
- 		unset GIT_DIR
---=20
-1.7.3.2.210.g045198
+ proc getblobdiffs {ids} {
+     global blobdifffd diffids env
+     global diffinhdr treediffs
+     global diffcontext
+     global ignorespace
++    global firstparent
+     global limitdiffs vfilelimit curview
+     global diffencoding targetline diffnparents
+     global git_version currdiffsubmod
+@@ -7521,10 +7533,15 @@ proc getblobdiffs {ids} {
+     if {[package vcompare $git_version "1.6.6"] >= 0} {
+ 	set submodule "--submodule"
+     }
+-    set cmd [diffcmd $ids "-p $textconv $submodule  -C --cc --no-commit-id -U$diffcontext"]
++    set cmd [diffcmd $ids "-p $textconv $submodule  -C --no-commit-id -U$diffcontext"]
+     if {$ignorespace} {
+ 	append cmd " -w"
+     }
++    if {$firstparent} {
++	append cmd " -m --first-parent"
++    } else {
++	append cmd " --cc"
++    }
+     if {$limitdiffs && $vfilelimit($curview) ne {}} {
+ 	set cmd [concat $cmd -- $vfilelimit($curview)]
+     }
+@@ -11393,6 +11410,7 @@ if {[tk windowingsystem] eq "win32"} {
+ set diffcolors {red "#00a000" blue}
+ set diffcontext 3
+ set ignorespace 0
++set firstparent 0
+ set markbgcolor "#e0e0ff"
+ 
+ set circlecolors {white blue gray blue blue}
+-- 
+1.7.3.2.153.g8250e
