@@ -1,111 +1,65 @@
-From: Antonio Ospite <ospite@studenti.unina.it>
-Subject: Re: [PATCH v2] git-send-email.perl: fix In-Reply-To for second and
- subsequent patches
-Date: Mon, 8 Nov 2010 12:03:08 +0100
-Message-ID: <20101108120308.df67214e.ospite@studenti.unina.it>
-References: <20101015095651.b75c4b54.ospite@studenti.unina.it>
-	<1287481964-8883-1-git-send-email-ospite@studenti.unina.it>
-	<7v4oci11k6.fsf@alter.siamese.dyndns.org>
-	<20101020004533.b64d446c.ospite@studenti.unina.it>
-	<20101105214159.GA4457@burratino>
-Mime-Version: 1.0
-Content-Type: multipart/signed; protocol="application/pgp-signature";
- micalg="PGP-SHA1";
- boundary="Signature=_Mon__8_Nov_2010_12_03_08_+0100_6EnwV8g40VhFr_YL"
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Stephen Boyd <bebarino@gmail.com>,
-	Markus Heidelberg <markus.heidelberg@web.de>,
-	Nanako Shiraishi <nanako3@lavabit.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 08 12:06:48 2010
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: [PATCHv3 1/2] rebase: better rearranging of fixup!/squash! lines with --autosquash
+Date: Mon, 8 Nov 2010 03:10:05 -0800
+Message-ID: <FB418838-D9A9-4FA6-8C32-FDC5F51DE783@sb.org>
+References: <20101108115239.7309504f@chalon.bertin.fr>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Yann Dirson <dirson@bertin.fr>
+X-From: git-owner@vger.kernel.org Mon Nov 08 12:10:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFPYl-0005C4-1X
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 12:06:47 +0100
+	id 1PFPc9-0006oo-F9
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 12:10:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754296Ab0KHLGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 06:06:42 -0500
-Received: from smtp205.alice.it ([82.57.200.101]:43136 "EHLO smtp205.alice.it"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754190Ab0KHLGl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 06:06:41 -0500
-Received: from jcn (87.6.149.78) by smtp205.alice.it (8.5.124.08) (authenticated as fospite@alice.it)
-        id 4C1A264509B8EC7F; Mon, 8 Nov 2010 12:03:16 +0100
-In-Reply-To: <20101105214159.GA4457@burratino>
-X-Mailer: Sylpheed 3.0.2 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+
- ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+	id S1754376Ab0KHLKK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 06:10:10 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:64548 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753654Ab0KHLKJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 06:10:09 -0500
+Received: by iwn41 with SMTP id 41so3955140iwn.19
+        for <git@vger.kernel.org>; Mon, 08 Nov 2010 03:10:08 -0800 (PST)
+Received: by 10.231.144.197 with SMTP id a5mr3832363ibv.61.1289214607219;
+        Mon, 08 Nov 2010 03:10:07 -0800 (PST)
+Received: from [10.0.1.14] ([24.130.32.253])
+        by mx.google.com with ESMTPS id i16sm3922495ibl.6.2010.11.08.03.10.06
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 08 Nov 2010 03:10:06 -0800 (PST)
+In-Reply-To: <20101108115239.7309504f@chalon.bertin.fr>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160926>
 
---Signature=_Mon__8_Nov_2010_12_03_08_+0100_6EnwV8g40VhFr_YL
-Content-Type: text/plain; charset=US-ASCII
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On Nov 8, 2010, at 2:52 AM, Yann Dirson wrote:
 
-On Fri, 5 Nov 2010 16:41:59 -0500
-Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Kevin wrote:
+>> The current behvaior of --autosquash can duplicate fixup!/squash! lines
+>> if they match multiple commits, and it can also apply them to commits
+>> that come after them in the todo list.
+> 
+> That last part of the sentence does not match my experience - it looks
+> like you describe as a bug a nonexistent feature I miss :)
+> 
+> See http://marc.info/?l=git&m=128784082701920 for a testcase that
+> exhibits what I think is a problem.
 
-> Hi Antonio,
->=20
-> Antonio Ospite wrote:
-> > Junio C Hamano <gitster@pobox.com> wrote:
->=20
-> >> You are breaking the && chain here.
-> >
-> > Some other tests do that as well, the last line is a command by
-> > itself not and-chained with the git-send-email invocation. I guess the
-> > logic behind this is that the test succeeds if the _last_ command
-> > succeeds. If this is wrong then some other tests are affected too.
->=20
-> Yes, breaking the && chain is never a good thing.
->=20
-> See:
->=20
->  - t/README: "Chain your test assertions"
->  - v1.5.4~20 (t9001: add missing && operators, 2008-01-21)
->  - git log --grep=3D&&
->=20
+The bug is definitely present. It seems what you're describing is that you
+want it to continue to place that fixup! there, but you want it to skip the
+pick line that occurs earlier in the TODO list. My feeling is that this is
+purely a bug, and should be fixed to not place the fixup! line after the
+later commit.
 
-Thanks Jonathan, I am fixing that also to some other tests in t9001
-right now.
+If you do want the behavior where it skips the pick and places the fixup!
+line after the later commit, I would encourage you to file a separate patch
+for that.
 
-Let me know if the v3 in this series is going to be applied as is, so I
-can fix the newly added test too. If a v4 is needed than I'll fix my
-test there.
-
-I would also like to point your attention on tests like
-"confirm by default (due to cc)" and following in t9001, which are
-storing return value of an intermediate command, how to fix those?
-
-Thanks,
-   Antonio
-
---=20
-Antonio Ospite
-http://ao2.it
-
-PGP public key ID: 0x4553B001
-
-A: Because it messes up the order in which people normally read text.
-   See http://en.wikipedia.org/wiki/Posting_style
-Q: Why is top-posting such a bad thing?
-
---Signature=_Mon__8_Nov_2010_12_03_08_+0100_6EnwV8g40VhFr_YL
-Content-Type: application/pgp-signature
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEARECAAYFAkzX2OwACgkQ5xr2akVTsAGttQCeLDXlMY4yjl0xJTeXKRLIDLvh
-fF8AoK8OWF+7N9PwixeyeH/weP/j0a6+
-=PABH
------END PGP SIGNATURE-----
-
---Signature=_Mon__8_Nov_2010_12_03_08_+0100_6EnwV8g40VhFr_YL--
+-Kevin Ballard
