@@ -1,72 +1,79 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] t1020-subdirectory: test alias expansion in a subdirectory
-Date: Mon,  8 Nov 2010 09:32:03 +0100
-Message-ID: <627dc7921dc64a16063e77d542cf9edb22631ddd.1289205059.git.git@drmicha.warpmail.net>
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 08 09:34:00 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: add UTC option for pretty-formats
+Date: Mon, 8 Nov 2010 02:41:50 -0600
+Message-ID: <20101108084150.GB2430@burratino>
+References: <AANLkTikN_B-bUTyy5440AVwTD=KkUWdkf_ukRszTuhYG@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff Carr <basilarchia@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 08 09:42:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFNAt-0005R7-32
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 09:33:59 +0100
+	id 1PFNIq-0000GK-H7
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 09:42:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754191Ab0KHIdy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 03:33:54 -0500
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:45234 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753453Ab0KHIdx (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Nov 2010 03:33:53 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id E2C923BA;
-	Mon,  8 Nov 2010 03:33:52 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 08 Nov 2010 03:33:52 -0500
-X-Sasl-enc: KSnJRkU4TcGQEeXO07ewmaZffrm6tsMC9wRC9/3z2HCf 1289205232
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 630444091AE;
-	Mon,  8 Nov 2010 03:33:52 -0500 (EST)
-X-Mailer: git-send-email 1.7.3.2.193.g78bbb
+	id S1754232Ab0KHImG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 03:42:06 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:64468 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754167Ab0KHImF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 03:42:05 -0500
+Received: by gyh4 with SMTP id 4so3173013gyh.19
+        for <git@vger.kernel.org>; Mon, 08 Nov 2010 00:42:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=TASnfESlCVASdASQat3OPKliv+TOcWvMtEMKtXuP5+E=;
+        b=Jn+lKyVq2TzUVwQH6C5i1t85QKpXFfdFQwWPRYoxhgGmoo+f+AU3EnnNPRgMi36MVL
+         rz+AxSjgxd/OaKeEQtvUuC9viD6Q1tjR2QrTVYbWMfdkqjtaO7IsICaMf66HuLmdGqI+
+         jw5LxwbAHmtsj9B6H2u5R9tyPx0BuQCHk6Pgc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=E8R/UpaB+GU1Ld3nPYM0ToRs81hYVsXIcyOliXLJLRI1tv5aRD4P33toWWT2U+t00W
+         u1hUztogF5H0dmbVr+5luWj3i58LkIIGOvYsdTP1EauPqSbfag2rwjJVFuJwKbcojFQe
+         NDrxQqbdnlJ0gHmxdGgvkzhxnv5nQlOBdV030=
+Received: by 10.150.225.14 with SMTP id x14mr3314562ybg.433.1289205723956;
+        Mon, 08 Nov 2010 00:42:03 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id m25sm3518980yha.43.2010.11.08.00.42.02
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 08 Nov 2010 00:42:02 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikN_B-bUTyy5440AVwTD=KkUWdkf_ukRszTuhYG@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160914>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160915>
 
-Add a test for alias expansion in a subdirectory of the worktree.
+Hi Jeff,
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+Jeff Carr wrote:
 
----
-    65f3a9e (Remove all logic from get_git_work_tree(), 2010-11-01) breaks this test,
-    which is why I am adding it.
-    
-    In fact, we don't really have tests for alias expansion at all, but that's a different issue.
+> --- a/Documentation/pretty-formats.txt
+> +++ b/Documentation/pretty-formats.txt
+> @@ -114,6 +114,7 @@ The placeholders are:
+>  - '%ar': author date, relative
+>  - '%at': author date, UNIX timestamp
+>  - '%ai': author date, ISO 8601 format
+> +- '%au': author date, UTC
 
- t/t1020-subdirectory.sh |    8 ++++++++
- 1 files changed, 8 insertions(+), 0 deletions(-)
+Why not:
 
-diff --git a/t/t1020-subdirectory.sh b/t/t1020-subdirectory.sh
-index a3ac338..1fd187c 100755
---- a/t/t1020-subdirectory.sh
-+++ b/t/t1020-subdirectory.sh
-@@ -110,6 +110,14 @@ test_expect_success 'read-tree' '
- 	)
- '
- 
-+test_expect_success 'alias expansion' '
-+	(
-+		git config alias.ss status &&
-+		cd dir &&
-+		git status &&
-+		git ss
-+	)
-+'
- test_expect_success 'no file/rev ambiguity check inside .git' '
- 	git commit -a -m 1 &&
- 	(
--- 
-1.7.3.2.193.g78bbb
+	TZ=UTC git log --format=%ad --date=local
+
+or something like:
+
+	git log --format=%AD(rfc2822,tz=UTC)
+
+?  In other words, why should we provide this feature with date=rfc
+dates and not date=iso ones?
