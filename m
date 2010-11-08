@@ -1,95 +1,79 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'Unable to find remote helper'
-Date: Mon, 08 Nov 2010 10:54:42 -0800
-Message-ID: <7vzktjprwt.fsf@alter.siamese.dyndns.org>
-References: <F815EC90C848458886E418CB6DE1DA8B@ssipboulton>
- <20101104224010.GA18693@burratino>
+Subject: Re: [RFC] Using gitrevisions :/search style with other operators
+Date: Mon, 08 Nov 2010 11:09:56 -0800
+Message-ID: <7vpqufpr7f.fsf@alter.siamese.dyndns.org>
+References: <9D675671-693D-4B59-AF2A-0EFE4C537362@sb.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Philip Boulton <philipb@ssimicro.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 08 19:55:20 2010
+Cc: Git mailing list <git@vger.kernel.org>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Mon Nov 08 20:10:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFWsB-00025k-Uf
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 19:55:20 +0100
+	id 1PFX6b-00027N-Q9
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 20:10:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755066Ab0KHSyz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 13:54:55 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44930 "EHLO
+	id S1752057Ab0KHTKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 14:10:06 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61138 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754989Ab0KHSyx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 13:54:53 -0500
+	with ESMTP id S1751781Ab0KHTKF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 14:10:05 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7558B329C;
-	Mon,  8 Nov 2010 13:54:54 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3893934A2;
+	Mon,  8 Nov 2010 14:10:06 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=wYClGU5OS2waTmE86y09dBts6mA=; b=uBHjGr
-	5R1iZU61LTQtfVptCJ9uiw72kSnZMpSo3eYyRwz7wrcXMZUbu7PwL5H/cvIdYZeX
-	b7ghrKiIkybEWDzsiw3EuskT5KxbZL0W6NrN7bLZW6h4JauiTJZzyEza8lUx8spj
-	dwybLzi4UrC7s5GQMV0vW0JwCWPMuzrVFUKeo=
+	:content-type; s=sasl; bh=8Dmj95BDDN+sCxqj1a/JIt7sv1M=; b=phf2dw
+	OXYOkhQhbUtvx06tifAdK8mT5lUnpeaKzxQRwR0ldKitA8g4AS1qhMIfC7LHhMdV
+	kQOz10ybNjya2GF9GNt9MrQ4z8qwnNJFk3zJElP0Fp7M0tUG3osgztYePwzNX6Wy
+	OZFNm38uY7NzDAk0wtPmyVpShx7Ei6UiWDdyE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vUe8QR0+0M9MkscvEcptwWWDlx8QxeL8
-	xKt1NFDpRfx9oRHdt/F6v4YFxeXwbBEo9Vdmp4EuN8JyQSr6RrjM2k5lxlSWTzf6
-	Mj3dmnbOrDC0z+fDLWYyjT0kpvV7jIniyOTCRl5gYdpmEvWwDS+g8gCE9e63qSkR
-	Kr17UA5v+0s=
+	:content-type; q=dns; s=sasl; b=jN+XDr18ZGHkf78UAj3+1s5csUKFhGVQ
+	690ibFTVynCCFuq+JlRn8H+A182xamo9lAm+wR/8vs1C9koWkwnD/EDKKISXpssy
+	r+j1wYUuhdgklBe0tW+iGuqrl03kWXHClniIxUVcqCInaHp1HqVLv6UPyiDtpZg1
+	pXGiXNU7bmA=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 45BD1329A;
-	Mon,  8 Nov 2010 13:54:51 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 14A6934A1;
+	Mon,  8 Nov 2010 14:10:04 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 231073296; Mon,  8 Nov 2010
- 13:54:46 -0500 (EST)
-In-Reply-To: <20101104224010.GA18693@burratino> (Jonathan Nieder's message of
- "Thu\, 4 Nov 2010 17\:40\:10 -0500")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2723D349F; Mon,  8 Nov 2010
+ 14:10:00 -0500 (EST)
+In-Reply-To: <9D675671-693D-4B59-AF2A-0EFE4C537362@sb.org> (Kevin Ballard's
+ message of "Fri\, 5 Nov 2010 15\:38\:23 -0700")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AAB4C054-EB69-11DF-AE1F-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: CAC6BF94-EB6B-11DF-A5F0-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160970>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Kevin Ballard <kevin@sb.org> writes:
 
-> The "gmake clean" undoes the effect of "./configure".
+> There is one operator that doesn't allow this at all, and that's the commit
+> message search (e.g. :/foo). Every character after the :/ is taken to be
+> part of the regular expression. This is rather unfortunate as it prevents me
+> from doing something like :/foo^ to refer to the parent of the matching commit.
 >
-> Hope that helps.
->
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> Does anybody have any opinions on changing this operator?
 
-You diagnosed the problem correctly, but I do not think the patch is
-correct.  Why should the generated file *.autogen be kept around across
-"clean"?
+If you mean to change what ":/Merge branch 'kb/blame-author-email'" means,
+and make my scripts suddenly start breaking, I would be moderately unhappy.
 
-I do understand why we keep "configure" around (it is common for everybody
-once it is generated), though.
+It is fine if we can enhance the extended SHA-1 vocabulary by introducing
+a syntax that used to be illegal, hence there is no chance somebody was
+using it for other purposes.
 
-> ---
-> diff --git a/Makefile b/Makefile
-> index d3dcfb1..c693652 100644
-> --- a/Makefile
-> +++ b/Makefile
-> @@ -2229,7 +2229,7 @@ dist-doc:
->  ### Cleaning rules
->  
->  distclean: clean
-> -	$(RM) configure
-> +	$(RM) configure config.mak.autogen
->  
->  clean:
->  	$(RM) *.o block-sha1/*.o ppc/*.o compat/*.o compat/*/*.o xdiff/*.o vcs-svn/*.o \
-> @@ -2240,7 +2240,7 @@ clean:
->  	$(RM) -r $(dep_dirs)
->  	$(RM) *.spec *.pyc *.pyo */*.pyc */*.pyo common-cmds.h $(ETAGS_TARGET) tags cscope*
->  	$(RM) -r autom4te.cache
-> -	$(RM) config.log config.mak.autogen config.mak.append config.status config.cache
-> +	$(RM) config.log config.mak.append config.status config.cache
->  	$(RM) -r $(GIT_TARNAME) .doc-tmp-dir
->  	$(RM) $(GIT_TARNAME).tar.gz git-core_$(GIT_VERSION)-*.tar.gz
->  	$(RM) $(htmldocs).tar.gz $(manpages).tar.gz
+I wonder if we can introduce something like ':( ... )' to group things.
+E.g.
+
+    $ git log 'HEAD..:( :/Merge branch 'kb/blame-author-email' )^2'
+
+I haven't visited the particular codepath for some time, so I don't know
+offhand how involved the change would be, though.
