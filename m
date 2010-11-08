@@ -1,70 +1,71 @@
-From: Alex Riesen <raa.lkml@gmail.com>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 Subject: Re: history missing
-Date: Mon, 8 Nov 2010 12:29:40 +0100
-Message-ID: <AANLkTinzQodqYsy5pdE6wNPGFCD-Y0oj2w_u_U-CtOyz@mail.gmail.com>
+Date: Mon, 8 Nov 2010 06:56:51 -0500
+Message-ID: <AANLkTi=rT0S1H8pFt9d+FYVme4fjNNzY6O6evuBwo-ZB@mail.gmail.com>
 References: <AANLkTikFB5HNOmg0iTdjHxtrhU9vdua5O8btgFzpg-2F@mail.gmail.com>
+	<20101108090230.GC2430@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Vitaliy Semochkin <vitaliy.se@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 08 12:29:51 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Vitaliy Semochkin <vitaliy.se@gmail.com>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 08 12:57:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFPv2-0007HX-4k
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 12:29:48 +0100
+	id 1PFQLK-0002z0-PS
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 12:56:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754485Ab0KHL3m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 06:29:42 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:60718 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754402Ab0KHL3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 06:29:42 -0500
-Received: by gyh4 with SMTP id 4so3245279gyh.19
-        for <git@vger.kernel.org>; Mon, 08 Nov 2010 03:29:41 -0800 (PST)
+	id S1751303Ab0KHL4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 06:56:53 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:48915 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751222Ab0KHL4w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 06:56:52 -0500
+Received: by vws13 with SMTP id 13so1659219vws.19
+        for <git@vger.kernel.org>; Mon, 08 Nov 2010 03:56:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type;
-        bh=tnqvyqoCYnyX3CQi1qno7xiVDxxXI/Y5/2q1xX1Zdxc=;
-        b=P9OSRO0yawVUhzYxTSp8Y//hjn1eJwdkROIk6luzg3UzSWu7HoVv2PKArTLyqUCKGy
-         KlAX8I4vqOKCIln2x5iYPxdy7Wl90OJ0SURL7ffXeH1ASigpXomrHOAy1lWPyhQ2G5/f
-         6/NnMi2yr7ys/H3DbzqyPX9DaEYUR/+jjNpSo=
+        bh=qqGFWSJz2WiefhFCMd0qBo++H0CbsJMorTe6w6Vu9/8=;
+        b=ji35x8hMLEF2ZvdJTMpmQGt1Budok9GUKDrLVlwR6jd6m2TmayGk+Lc68QJfqA5/ru
+         DA8pBpgNZX+Tzka00qJktZo8AM/tizJCY9kfiH4gVcKlzETZPWU1uzulBa/GESUSGAT1
+         n8fOOrBn9mVfGLncWhiUI7REqqsWrijJmnrlo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type;
-        b=rFLVKImD4EkZCEyLVGocg1q+7uYLIKHjBWGOE0xDoU0plTgczO+gZtN0uI4xAzAWIe
-         G0zOf0tVFdfAExkuBwoeHDumAepVfP8VGWwSlU1qwxNSUrh4gJFphGbOEoQh6Xeak3RQ
-         SQepIHRGgqgUuEOlyOjl/9nu8lwefvJN08pGs=
-Received: by 10.90.4.6 with SMTP id 6mr5215161agd.16.1289215780515; Mon, 08
- Nov 2010 03:29:40 -0800 (PST)
-Received: by 10.90.6.32 with HTTP; Mon, 8 Nov 2010 03:29:40 -0800 (PST)
-In-Reply-To: <AANLkTikFB5HNOmg0iTdjHxtrhU9vdua5O8btgFzpg-2F@mail.gmail.com>
+        b=WEBtg3Fd7l12W412uQ1ZHMtWAUH2QMReGe+rX625fEkoYX+ttBifkyWY4ZYBQbpSt+
+         wN38lFX/aYJVJFdxzsJaZiHpR1GgW6er2zVfLHY2XeOW9mvZy4UD44I6fz8V4eth0Z1O
+         nq6kzDoRDifAhglNn0K/5RRKB2pLPX2v+/Mv0=
+Received: by 10.224.76.85 with SMTP id b21mr3669750qak.340.1289217411541; Mon,
+ 08 Nov 2010 03:56:51 -0800 (PST)
+Received: by 10.224.20.82 with HTTP; Mon, 8 Nov 2010 03:56:51 -0800 (PST)
+In-Reply-To: <20101108090230.GC2430@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160929>
 
-On Tue, Oct 26, 2010 at 21:47, Vitaliy Semochkin <vitaliy.se@gmail.com> wrote:
-> I cloned a remote repository
-> to check recent changes in origin/master I do:
-> git fetch origin master
-> git log origin master
+On Mon, Nov 8, 2010 at 4:02 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Hi Vitaliy,
 >
-> recently I found out that log doesn't show recent commits
+> Vitaliy Semochkin wrote:
+>
+>> I cloned a remote repository
+>> to check recent changes in origin/master I do:
+>> git fetch origin master
+>> git log origin master
+>>
+>> recently I found out that log doesn't show recent commits
+>
+> Yes, this can be confusing.
 
-The command "git log origin master" lists all commits
-of the branch "origin" affecting the file "master".
-Are you sure that is what you want?
-Maybe you meant:
-
-  $ git log origin/master # the history of upstream ("origin") branch "master"
-
-or
-
-  $ git log origin/master.. # changes in the active branch not merged
-into upstream
+I agree and I believe this has come up a lot of times before. I talked
+to Jeff and Junio about this at GitTogether and Jeff said he has a patch
+for it that he would try to get up to date in a while. (Thanks, Jeff!)
