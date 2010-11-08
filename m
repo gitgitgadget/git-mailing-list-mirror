@@ -1,262 +1,61 @@
-From: Matthijs Kooijman <matthijs@stdin.nl>
-Subject: Understanding and improving --word-diff
-Date: Mon, 8 Nov 2010 16:16:01 +0100
-Message-ID: <20101108151601.GF22067@login.drsnuggles.stderr.nl>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Understanding and improving --word-diff
+Date: Mon, 08 Nov 2010 16:41:05 +0100
+Message-ID: <vpqlj53zuum.fsf@bauges.imag.fr>
+References: <20101108151601.GF22067@login.drsnuggles.stderr.nl>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="e3pPbx9ftdeBsPoJ"
+Content-Type: text/plain; charset=us-ascii
 Cc: Thomas Rast <trast@student.ethz.ch>,
 	Johannes Schindelin <johannes.schindelin@gmx.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 08 16:16:22 2010
+X-From: git-owner@vger.kernel.org Mon Nov 08 16:41:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFTSB-0003GD-Ek
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 16:16:15 +0100
+	id 1PFTqp-0001tL-LF
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 16:41:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752719Ab0KHPQI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 10:16:08 -0500
-Received: from drsnuggles.stderr.nl ([94.142.244.14]:60554 "EHLO
-	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752479Ab0KHPQH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 10:16:07 -0500
-Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
-	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
-	(envelope-from <matthijs@stdin.nl>)
-	id 1PFTRx-0002rS-8U; Mon, 08 Nov 2010 16:16:03 +0100
-Received: (nullmailer pid 10999 invoked by uid 1000);
-	Mon, 08 Nov 2010 15:16:01 -0000
-Mail-Followup-To: git@vger.kernel.org, Thomas Rast <trast@student.ethz.ch>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>
-Content-Disposition: inline
-X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
-X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Score: -2.6 (--)
-X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
-	pts  rule name              description
-	---- ---------------------- -------------------------------------------
-	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1752985Ab0KHPlV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 10:41:21 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:39741 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752853Ab0KHPlT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 10:41:19 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id oA8FPmao031998
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 8 Nov 2010 16:25:48 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PFTqD-0000nJ-I8; Mon, 08 Nov 2010 16:41:05 +0100
+In-Reply-To: <20101108151601.GF22067@login.drsnuggles.stderr.nl> (Matthijs Kooijman's message of "Mon\, 8 Nov 2010 16\:16\:01 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 08 Nov 2010 16:25:48 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: oA8FPmao031998
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1289834752.1932@Fc0XPz5BYewBN1tbAWK2/Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160944>
 
+Matthijs Kooijman <matthijs@stdin.nl> writes:
 
---e3pPbx9ftdeBsPoJ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Lastly, the "porcelain" word-diff format seems a bit weird to me. Is
+> the format specified somewhere, or are there any programs that use it
+> currently? I couldn't find any users inside the git.git tree itself?
 
-Hi folks,
+There's a pending patch for "gitk --color-words". Actually, the
+porcelain format was precisely implemented to allow this patch to
+exist IIRC.
 
-I recently discovered --word-diff (or rather, --color-words and found
---word-diff when I started to hack on the git master version) and I had
-hoped it would make the unified diffs generated by git-diff more
-readable.
-
-More specifically, I had expected to get a normal unified diff, with
-colouring added to highlight the changes within the normal - and + lines
-(so you don't have to review the entire changed line to see that just a
-single word or character has changed).
-
-E.g., I would like to see:
-
--a <r>b</r> c
-+a <g>x</g> c
-
-Unfortunately, all --word-diff types currently departs from line-based -
-and + lines and show the new version of the file with the changed words
-(both old and new versions) shown inline, marked with coloring or
-{- ...  -} kind of syntax. E.g., with --word-diff=3Dcolor, the above would
-look like:
-
-a <r>b</r><g>x</g> c
-
-Personally, I think that the first example above is easier to read than
-the second one (at least for diffs of code).
-
-I was planning to let this mail be accompanied with a patch, so I've
-started hacking on this feature already. However, halfway through some
-cleanups and a prototype implementation of the above (breaking some of
-the other --word-diff formats in the process), I found that the current
-generalization of the different styles as stored in diff_words_styles[]
-does not apply cleanly enough to my intended output format. While trying
-to extend this generalization to something that would fit, I found that
-I don't actually understand the rationale behind --word-diff and the
-formats well enough to find a proper implemenation (see the link at the
-bottom of this email for the unfinished code I hacked up until now).
-
-So, here's some observations and questions about how --word-diff works
-or should work. Comments are welcome, both in general terms as well as
-in terms of the word-diff implementation (I know my way around there by
-now).
-
-Intended use
-------------
-First of all, it seems that the main intended use of --word-diff is for
-LaTeX or HTML documents or similar, where blocks of running text might
-be hard-wrapped (and thus rewrapped after a small change). In these
-cases, a small change in wording could cause a lot of whitespace to
-shift, resulting in a big normal diff. The current word-diff
-implementation therefore simply does not show the whitespace (or rather,
-non-word) changes, since they're usually not relevant to LaTeX anyway.
-
-Is this indeed the main usecase, or are there others I'm missing?
-
-Inexact output
---------------
-Secondly, the --word-diff output currently never displays any changes to
-the non-word (whitespace) parts of a file. This makes sense for the
-LaTeX case, but sometimes you might want to get exact diff output
-instead. At first glance this seems possible by specifiying a word-regex
-of "." or something similar (i.e., make sure that the word regex matches
-everything). But this is problematic for newlines. The documentation
-states that stuff gets silently ignored if a newline ends up inside a
-word. For the --word-diff=3Dcolor format, this is probably a fixed
-limitation of the otput format: you can't give a color to a newline (or
-a space, for that matter).
-
-Including a newline inside a {- ... -} block should not be a problem
-with the --word-diff=3Dplain format, and something similar can be argued
-for the porcelain format.
-
-An alternative approach would be to add a --word-diff-exact flag, which
-would cause the whitespace between to matches of the word regex to be
-treated as a word as well and have it included in the generate
-word-diff.
-
-This still leaves an implementation problem: To generate the word-diff,
-the current code looks at one patch hunk at a time, collecting all the
-plus and minus lines. It then splits those lines into words and
-generates two new "files" containing one word per line. It then applies
-a diff to this new document to get the word-diff.
-
-When a word would contain a newline, this would effectively mean the
-word would be split into two words for the word-diff, which will
-probably screw up the output. An obvious solution would be to use some
-escape sequence (e.g. \n) for a newline, though that might get messy and
-inefficient. An alternative that seems feasable is to use the empty word
-(i.e., an empty line in the word-diff "files") to mean a newline.
-
-This would mean that every newline always breaks a word into two,
-regardless of what the word regex is set to (but I guess that makes
-sense anyway?). I also think this would allow complete diff output wrt
-whitespace and newlines, for output formats that support it: plain,
-(modified) porcelain and my proposed format.
-
-Porcelain format
-----------------
-Lastly, the "porcelain" word-diff format seems a bit weird to me. Is
-the format specified somewhere, or are there any programs that use it
-currently? I couldn't find any users inside the git.git tree itself?
-
-Looking at the format itself, it's a bit unclear to me what the ~ lines
-mean exactly. Commit 882749, which introduced the format says the mean
-"newlines in the input", but I'm not sure if this means the old file,
-new file or both.
-
-In fact, it seems that this uncertainty makes the porcelain-format
-ambiguous wrt newlines. For example, these two diff hunks:
-
-@@ -1,3 +1,2 @@
- a
--b
- c
-
-@@ -1,3 +1,3 @@
- a
--b
-+
- c
-
-both look the same in porcelain format, except for the hunk header.
-
-@@ -1,3 +1,2 @@
- a
-~
--b
-~
- c
-~
-@@ -1,3 +1,3 @@
- a
-~
--b
-~
- c
-~
-
-This is somewhat expected, of course, since the --word-diff formats are
-documented to show only changes to words, not to non-words/whitespace.
-So I guess it is expected that the output is ambigious wrt whitespace,
-but if so, what is the use of this porcelain format? Wouldn't it be make
-a lot more sense to make the format unambiguous and make it do
-word-based diff at the same time? I think this should be possible
-because of the explicit notation used for the newline.
-
-For example, Specifying the ~ lines to mean a newline in the old, new or
-both files depending on the previous +, - or space prefixed line is
-probably enough for this. By generating empty +, - or space prefixed
-lines when needed, every occurence of ~ could be disambiguated.
-
-For example, the above two diff hunks would then become the following.
-The only difference is the near-empty line (just a space prefix) after
--b in the second hunk.
-
-@@ -1,3 +1,2 @@
- a
-~
--b
-~
- c
-~
-@@ -1,3 +1,3 @@
- a
-~
--b
-=20
-~
- c
-~
-
-
-
-
-So, these are some thoughts I've had while hacking on the code. As said,
-suggestions are welcome. I'd like my hacking to result in some useful
-patches, but right now I'm unsure what direction(s) I should be
-thinking/working in.
-
-In case you're interested in the hacking I've done so far, I've put it
-up here:
-
-http://git.stderr.nl/gitweb?p=3Dmatthijs/upstream/git.git;a=3Dshortlog;h=3D=
-refs/heads/word-diff
-
-Most of it is broken or not properly tested, but it gets an idea what
-kinds of cleanup I've been doing.
-
-Gr.
-
-Matthijs
-
---e3pPbx9ftdeBsPoJ
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkzYFDEACgkQz0nQ5oovr7w7uQCeNjox86/uHP9oVptjDorCJPXO
-mPIAnR1/jqR21tlznBOAIE+gIt0kgBqe
-=IW8v
------END PGP SIGNATURE-----
-
---e3pPbx9ftdeBsPoJ--
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
