@@ -1,62 +1,88 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Rebase problems
-Date: Mon, 08 Nov 2010 20:30:36 +0100
-Message-ID: <m2vd47iper.fsf@igel.home>
-References: <loom.20101108T190513-206@post.gmane.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: 'Unable to find remote helper'
+Date: Mon, 8 Nov 2010 13:37:27 -0600
+Message-ID: <20101108193727.GA6348@burratino>
+References: <F815EC90C848458886E418CB6DE1DA8B@ssipboulton>
+ <20101104224010.GA18693@burratino>
+ <7vzktjprwt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Maaartin <grajcar1@seznam.cz>
-X-From: git-owner@vger.kernel.org Mon Nov 08 20:30:47 2010
+Cc: Philip Boulton <philipb@ssimicro.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 08 20:38:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFXQS-0004uw-PE
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 20:30:45 +0100
+	id 1PFXXb-0000UH-6V
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 20:38:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753343Ab0KHTaj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 14:30:39 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:56733 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752231Ab0KHTai (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 14:30:38 -0500
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 7F1DD1C15F49;
-	Mon,  8 Nov 2010 20:30:36 +0100 (CET)
-Received: from igel.home (ppp-93-104-144-153.dynamic.mnet-online.de [93.104.144.153])
-	by mail.mnet-online.de (Postfix) with ESMTP id 739051C0043E;
-	Mon,  8 Nov 2010 20:30:36 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 424B6CA2A0; Mon,  8 Nov 2010 20:30:36 +0100 (CET)
-X-Yow: Look!!  Karl Malden!
-In-Reply-To: <loom.20101108T190513-206@post.gmane.org> (Maaartin's message of
-	"Mon, 8 Nov 2010 18:19:09 +0000 (UTC)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1754053Ab0KHThy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 14:37:54 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:62966 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753529Ab0KHThq (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 14:37:46 -0500
+Received: by bwz15 with SMTP id 15so299963bwz.19
+        for <git@vger.kernel.org>; Mon, 08 Nov 2010 11:37:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=HDeTuLSLGHH8ZjRPT294/vtvNCwJ7J624x5j29OVY1I=;
+        b=UQl4Q1RHGd+g8esdE656pouJZ/lpsTFdieJ3TVmHcyvYVaDNBzpj6QpsfV0Gsvjz7v
+         mMF9swrNeg3sk005mq2Om+TD+EVEf458zRzVCXmFbgZOgDtiQo7cSpCucAmyiXU6Ac6D
+         ZVlUo4h0VboMhMW6xM4ugrB4Ow5AXYoOBqcUk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=mfFRF1s6BxH+FYlzohmC0UO4d17Pyjua4fBKPCPNVmNjce8cBqCkKmx99eQ/AV/SV1
+         7kKVhSTEbXP9tjbE9iTX7yIedhSreE+uWw5GdiovCqbgN4XkJIFq/weQmAHV+STPfdwK
+         i7/4vPihV9RQso1UQKCGHng/l1g1l4w77KXZg=
+Received: by 10.204.24.144 with SMTP id v16mr5253596bkb.137.1289245065405;
+        Mon, 08 Nov 2010 11:37:45 -0800 (PST)
+Received: from burratino ([68.255.106.176])
+        by mx.google.com with ESMTPS id c40sm49446fay.0.2010.11.08.11.37.44
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 08 Nov 2010 11:37:44 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vzktjprwt.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160974>
 
-Maaartin <grajcar1@seznam.cz> writes:
+Junio C Hamano wrote:
 
-> There's a file containing the timestamp which gets compiled in, so the 
-> executable can show it's version. Sometimes, I need to set it couple of times a 
-> day, sometimes only once a week. For each such timestamp I create a tag, so I 
-> can track it to the source easily. The timestamp is an important piece of 
-> information, so I put the containing file under version control. The downside is 
-> that I often get a conflict in this file halting my rebase. Is there a way how 
-> to ignore or automatically resolve all conflicts in this file (any resolution 
-> strategy is fine, as it will be overwritten anyway).
+> You diagnosed the problem correctly, but I do not think the patch is
+> correct.  Why should the generated file *.autogen be kept around across
+> "clean"?
 
-If you already have a tag for every timestamp, why not autogenerate the
-timestamp from the tag?
+Fair enough.  The thought was that most autoconfiscated packages
+support
 
-Andreas.
+	./configure
+	make clean
+	make
+	make install
 
--- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+since "make clean" does not remove the generated Makefile.  But the
+patch was incomplete anyway, since it did not keep config.mak.append
+around.
+
+> I do understand why we keep "configure" around (it is common for everybody
+> once it is generated), though.
+
+Hmm, isn't the usual scheme something like
+
+ - "make clean" undoes the effect of "make"
+ - "make distclean" removes all generated files that are not common
+   to everyone
+ - "make maintainer-clean" removes all generated files
+
+?
