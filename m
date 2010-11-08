@@ -1,93 +1,70 @@
-From: Matthijs Kooijman <matthijs@stdin.nl>
-Subject: Re: [PATCH] gitk: improve dark background support
-Date: Mon, 8 Nov 2010 14:14:12 +0100
-Message-ID: <20101108131412.GE22067@login.drsnuggles.stderr.nl>
-References: <20101104003524.GI7835@spacedout.fries.net>
+From: =?UTF-8?q?Santi=20B=C3=A9jar?= <santi@agolina.net>
+Subject: [PATCH/resend] Doc: git-push: Specify the default mode in the description
+Date: Mon,  8 Nov 2010 14:20:35 +0100
+Message-ID: <1289222435-9610-1-git-send-email-santi@agolina.net>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="nz+5OzHEKtBHuvb9"
-Cc: git@vger.kernel.org
-To: David Fries <david@fries.net>
-X-From: git-owner@vger.kernel.org Mon Nov 08 14:14:28 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 08 14:20:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFRYJ-0007rb-N8
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 14:14:28 +0100
+	id 1PFReY-00030T-CK
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 14:20:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753101Ab0KHNOS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 08:14:18 -0500
-Received: from drsnuggles.stderr.nl ([94.142.244.14]:49595 "EHLO
-	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752539Ab0KHNOS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 08:14:18 -0500
-Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
-	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
-	(envelope-from <matthijs@stdin.nl>)
-	id 1PFRY4-0001Cg-NJ; Mon, 08 Nov 2010 14:14:13 +0100
-Received: (nullmailer pid 4625 invoked by uid 1000);
-	Mon, 08 Nov 2010 13:14:12 -0000
-Mail-Followup-To: David Fries <david@fries.net>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20101104003524.GI7835@spacedout.fries.net>
-X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
-X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Score: -2.6 (--)
-X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
-	pts  rule name              description
-	---- ---------------------- -------------------------------------------
-	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
+	id S1754214Ab0KHNUt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Nov 2010 08:20:49 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:54406 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754149Ab0KHNUs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 08:20:48 -0500
+Received: by ewy7 with SMTP id 7so2741171ewy.19
+        for <git@vger.kernel.org>; Mon, 08 Nov 2010 05:20:47 -0800 (PST)
+Received: by 10.216.235.41 with SMTP id t41mr33972weq.55.1289222446718;
+        Mon, 08 Nov 2010 05:20:46 -0800 (PST)
+Received: from localhost.localdomain (ub222011.pcb.ub.es [161.116.222.11])
+        by mx.google.com with ESMTPS id p4sm3099314wej.4.2010.11.08.05.20.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 08 Nov 2010 05:20:46 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.337.gc40334
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160934>
 
+Signed-off-by: Santi B=C3=A9jar <santi@agolina.net>
+---
+Hi *,
 
---nz+5OzHEKtBHuvb9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+  just resend a patch that maybe was missed inside this thread:
 
-Hi David,
+Subject:    possible bug when pushing with multiple remote repos.
+=46rom:       Arnaud Mouiche
+Date:       2010-10-22 9:12:51
+http://marc.info/?i=3D1287738771.13348.34.camel%20()%20amolinux
 
-I've been using gitk with a gray-on-black color-scheme for a while now,
-so I've given your patch a test drive. It seems to work as expected and
-indeed makes gitk a bit more pleasant to use with a dark color scheme.
+Santi
 
-I've reviewed the code a bit and it looks ok as well (though I'm hardly
-familiar with git internals, and not at all in this area).
+ Documentation/git-push.txt |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-I did encounter one minor issue, though: If you change the foreground
-color, the current view is not updated until you restart or switch views
-(or otherwise trigger a redraw, I guess). A quick look at the code shows
-that the "setfg" function contains some code that updates all canvases
-and all contexts in $fglist with the new fg color. I guess that
-something similar should be done for these tag colors to get them
-updated right away (though perhaps that should be a second patch)?
-
-A final note: There are still some other problems with working with
-grey-on-black color scheme. In case your interested in working on those,
-I've listed them at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=568470
-
-Gr.
-
-Matthijs
-
---nz+5OzHEKtBHuvb9
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAkzX96QACgkQz0nQ5oovr7wnhACdEQ6n0S/UdpalhG+QL/itFLry
-HcwAoJQKdeSBAlQMoXMXjL5IbJnfaQj1
-=cYvD
------END PGP SIGNATURE-----
-
---nz+5OzHEKtBHuvb9--
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index e11660a..9a2a93e 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -23,6 +23,8 @@ You can make interesting things happen to a repositor=
+y
+ every time you push into it, by setting up 'hooks' there.  See
+ documentation for linkgit:git-receive-pack[1].
+=20
++The default operation mode if no explicit refspec is found is
++to push "matching" branches, see below.
+=20
+ OPTIONS[[OPTIONS]]
+ ------------------
+--=20
+1.7.3.2.337.gc40334
