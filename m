@@ -1,90 +1,120 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Git as a backup system?
-Date: Mon, 8 Nov 2010 21:25:43 +0100
-Message-ID: <AANLkTikK+owARQoNxpF=CzcY_s-OChdkCgj6WbD=_eNW@mail.gmail.com>
-References: <AANLkTikcBvN+5hkcc9+xt291B4Gm+Yhe53R3qY0PNt97@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t1020-subdirectory: test alias expansion in a
+ subdirectory
+Date: Mon, 08 Nov 2010 12:25:39 -0800
+Message-ID: <7v7hgnpnp8.fsf@alter.siamese.dyndns.org>
+References: <627dc7921dc64a16063e77d542cf9edb22631ddd.1289205059.git.git@drmicha.warpmail.net> <20101108102056.GA12366@do>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Eric Frederich <eric.frederich@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 08 21:25:53 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 08 21:26:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFYHn-0001Au-Se
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 21:25:52 +0100
+	id 1PFYI0-0001IL-Up
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 21:26:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754735Ab0KHUZq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 15:25:46 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:34658 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754658Ab0KHUZp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 15:25:45 -0500
-Received: by fxm16 with SMTP id 16so4372178fxm.19
-        for <git@vger.kernel.org>; Mon, 08 Nov 2010 12:25:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=UOOwxaqVMxVpZOTeMQFilU2AC7cxtH44ZjNHOdBv5i0=;
-        b=YP24Ev03Nq6qwbcuAYWiaqGS8+bvJyVQcFW+mo5P87uPkFFjfx7tAT7YLmTZphz8u/
-         MmeW7HmlgH0gr1U85cy5gvoTpVZ0We9rQ77PzMeLNzXp3u2+Eu5RsJdGIQ/RsARwUzCl
-         mOR4323Li90D1QWpz2wJPPLYZa/n7j1rDcroU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=UqPm8UqCNekE9s+x+Q5c+Ll2+F+t+B0J/TLoo4xsioNcfPsGSkZKQHDm3JKh+S3zBb
-         mlZt7yYwji4drgrK1Uop3SSdY+x4nVneRtHFoEm9tCyCYcPHTl0LmKmh6J+Q4aHSszek
-         t7dWOhDMgvL+e5W7EIRJw2B1n4fcwkHzVxKGg=
-Received: by 10.223.69.134 with SMTP id z6mr4361291fai.19.1289247943812; Mon,
- 08 Nov 2010 12:25:43 -0800 (PST)
-Received: by 10.223.105.78 with HTTP; Mon, 8 Nov 2010 12:25:43 -0800 (PST)
-In-Reply-To: <AANLkTikcBvN+5hkcc9+xt291B4Gm+Yhe53R3qY0PNt97@mail.gmail.com>
+	id S1754764Ab0KHUZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 15:25:52 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48569 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754658Ab0KHUZv (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 15:25:51 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2FAA73E32;
+	Mon,  8 Nov 2010 15:25:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=x+liEETw7HHc/+hSxF5fwIffT+c=; b=nyDisZ
+	XfB5OkgHuEkEeKdeMngwWr2qdeyyGSfRn5NFg+4M74P0vw1lLrYhmlBkzaBynoWt
+	6PrMieseHDZSLMxe4FNiIjB90CKzj6nnP3bdAjhOE+ev6J/4VWCFICfqWLQgS7H1
+	Q5apdywCAMPiFaAp9ScQ57lf71xlOsttWKEGI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=At/a123KQtzn9wV1UWzNv+QOC5dMNiEp
+	3wfYm0fC9FKEAbD9r1NPBZYE/33jzQJSfOBK248RUZ3LwCsxHfgx429s/O0pxJrH
+	pEnHrPBVeS9W8wg9vSf4xcIQQzPfzn48vL+gnY41O3q+1tdf2XwA0jBneg1F/8AH
+	UAudLenEh7U=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 004BA3E31;
+	Mon,  8 Nov 2010 15:25:47 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BC2443E2E; Mon,  8 Nov 2010
+ 15:25:43 -0500 (EST)
+In-Reply-To: <20101108102056.GA12366@do> (Nguyen Thai Ngoc Duy's message of
+ "Mon\, 8 Nov 2010 17\:20\:56 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 5F296B1E-EB76-11DF-874E-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160984>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160985>
 
-On Mon, Nov 8, 2010 at 19:01, Eric Frederich <eric.frederich@gmail.com> wrote:
-> I maintain a corporate MediaWiki installation.
-> Currently I have a cron job that runs daily and tar's up the contents
-> of the installation directory and runs a mysqldump.
-> I keep backups of the past 45 days.
-> Each backup is about 200M, so all in all I always have about 9.0G of backups.
-> Most of the changes are in the database, so the mysqldump file is
-> changed every day.
-> Other than that, there can be new files uploaded but they never
-> change, just get added.
-> All configuration files stay the same.
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+
+> On Mon, Nov 08, 2010 at 09:32:03AM +0100, Michael J Gruber wrote:
+>> Add a test for alias expansion in a subdirectory of the worktree.
+>> 
+>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+>> 
+>> ---
+>>     65f3a9e (Remove all logic from get_git_work_tree(), 2010-11-01) breaks this test,
+>>     which is why I am adding it.
 >
-> I wrote a script that untar'd the contents each backup, gunziped the
-> mysql dump, and made a git commit.
-> The resulting .git directory wound up being 837M, but after running a
-> long (8 minute) "git gc" command, it went down to 204M.
+> How about squashing this in?
 >
-> == Questions ==
-> What mysqldump options would be good to use for storage in git?
-> Right now I'm not passing any parameters to mysqldump and its doing
-> all inserts for each table on a single huge line.
-> Would git handle it better if each insert was on its own line?
+> --8<--
+> Subject: Allow set_git_work_tree() to be called more than once
+>
+> Usually one of the setup functions is called once. However alias
+> handling code needs to look ahead in $GIT_DIR/config for aliases. So
+> set_git_work_tree() may be called twice: once when alias is searched,
+> once when the actual command is run.
+>
+> Loosen the condition and let it through. We can stricten it back when
+> alias handling is fixed.
 
-I use git to back up all my data. It works great. But how big the
-dumps get depends very much on the database.
+Sounds like sweeping something under rug.  
 
-Here's a graph of the size of my mysql backup directories:
-http://munin.nix.is/nix.is/v.nix.is/dirs_var_backup_mysql.html
+Without this hack, alias does not work, but if your plan is to rework this
+part right when alias is fixed, then what's the point of loosening it?
+Either way your alias is broken, no?
 
-I use this little wrapper script:
-https://github.com/avar/linode-etc/blob/master/bin/cron/mysqldump-to-git-all
+Shouldn't it at least make sure that the function is giving a consistent
+picture to the outside world between the time it was called for the first
+time and the second time?  E.g.  the second time around new-work-tree must
+be the same as whatever was given the first time, or something.
 
-Which calls this:
-https://github.com/avar/linode-etc/blob/master/bin/cron/sqldump-to-git
-
-I find with MySQL --skip-extended-insert and --compact work really well.
-
-Then I use this to repack + gc the repos:
-https://github.com/avar/linode-etc/blob/master/bin/cron/git-repack-and-gc-dir
+> ---
+> diff --git a/environment.c b/environment.c
+> index 6db00da..f0d0b07 100644
+> --- a/environment.c
+> +++ b/environment.c
+> @@ -128,8 +128,6 @@ const char *get_git_dir(void)
+>  	return git_dir;
+>  }
+>  
+> -static int git_work_tree_initialized;
+> -
+>  /*
+>   * Note.  This works only before you used a work tree.  This was added
+>   * primarily to support git-clone to work in a new repository it just
+> @@ -137,9 +135,7 @@ static int git_work_tree_initialized;
+>   */
+>  void set_git_work_tree(const char *new_work_tree)
+>  {
+> -	if (git_work_tree_initialized)
+> -		die("internal error: work tree has already been set");
+> -	git_work_tree_initialized = 1;
+> +	free(work_tree);
+>  	work_tree = xstrdup(make_absolute_path(new_work_tree));
+>  }
+>  
+> --8<--
+> -- 
+> Duy
