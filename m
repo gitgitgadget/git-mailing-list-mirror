@@ -1,77 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Run global hooks from the directory at hooks.dir
-Date: Mon, 08 Nov 2010 12:39:59 -0800
-Message-ID: <7v39rbpn1c.fsf@alter.siamese.dyndns.org>
-References: <1289219520-37435-1-git-send-email-bricollins@gmail.com>
+From: mat <matthieu.stigler@gmail.com>
+Subject: Newbie question: how to move bunch of files
+Date: Mon, 08 Nov 2010 21:48:04 +0100
+Message-ID: <4CD86204.1000805@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, s-beyer@gmx.net
-To: Brian Collins <bricollins@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 08 21:40:24 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 08 21:48:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFYVr-0000TQ-Hg
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 21:40:24 +0100
+	id 1PFYdo-00054q-T7
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 21:48:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753982Ab0KHUkO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 15:40:14 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64851 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753835Ab0KHUkN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 15:40:13 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C3A8B3FF2;
-	Mon,  8 Nov 2010 15:40:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=k4n2N7kB5pFnazNZzKv5H1V7J4A=; b=ABKoXr
-	Lped6y2kx98OQMEDFvFLgKDT54zvRf8LZMpqD1bl2A5+QuDIWWadzfT+pIICoixg
-	1xLQiC1ext3hHn5GyH7Lhl5l2r7Vr27Kk0zd0lewJj+PwDTrBRtPzaM79KQwNPub
-	94yu/PgLdYZxVL2gSSkL1dxIJ2soW4B+KGkVs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bw07fAsS68vU1WmcZ5KZWjbknqQCP9Hy
-	dA1RrdDU94XgDcDtYI+MdsXy6vTzdWeX4ARytSGlXR9FrTOjBQj2e7K0f0JtmJ3S
-	7hq/+iKJd/xd7ELvjDFs80kjhKLEYY7bTS/PFuP3q2lhkpoc9EVAvCJGcIp5roKm
-	W7i3f15tBpg=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 900163FF1;
-	Mon,  8 Nov 2010 15:40:08 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 823ED3FF0; Mon,  8 Nov 2010
- 15:40:04 -0500 (EST)
-In-Reply-To: <1289219520-37435-1-git-send-email-bricollins@gmail.com> (Brian
- Collins's message of "Mon\,  8 Nov 2010 04\:32\:00 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 601C2F78-EB78-11DF-BF34-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+	id S1754869Ab0KHUsN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 15:48:13 -0500
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:41162 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754858Ab0KHUsL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 15:48:11 -0500
+Received: by wwc33 with SMTP id 33so431365wwc.1
+        for <git@vger.kernel.org>; Mon, 08 Nov 2010 12:48:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=qw3sWOQJbW/6kSnNcIzdfCo9p4D6cb6iTaFZvgwfeWc=;
+        b=KL49qTfhF5ulYhM4WlSUehzt+w/5Dld14OgWZFRyRX4Nw//+ijGkq5FynTWGonbxu4
+         3DhxpFHq+A9IDmqsNponRCkvLb8lh9coJIn/KeX+P8gxCQ7VrgtSkAcue9ldzCkaIPop
+         NoRLPoXAwqEM65RBebDfkiDiTtJShGU5JVoKI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=hB8NTTN++wKFMkVnQDXRM18zCrL4+ttG3gOq5QV+vms9m5xJvzQrkJZ2uIARizO2Zg
+         iZzA6kVxhzIffBgy/JAEk3rdojsJE99MDXLzJLlklnfdLd/88UWI9YRTjD2s2F+G6qt5
+         AXoikpevMcOt34IQ+N8GR2MhdFlttZiG/6SQM=
+Received: by 10.227.138.71 with SMTP id z7mr5895138wbt.23.1289249289651;
+        Mon, 08 Nov 2010 12:48:09 -0800 (PST)
+Received: from [192.168.1.2] (93-40-144-119.ip39.fastwebnet.it [93.40.144.119])
+        by mx.google.com with ESMTPS id f14sm277749wbe.14.2010.11.08.12.48.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 08 Nov 2010 12:48:08 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Thunderbird/3.0.10
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160987>
 
-Brian Collins <bricollins@gmail.com> writes:
+Dear list
 
-> Run global hooks in the directory specified by the config variable
-> hooks.dir before every attempt at running a local hook. If the
-> global hook fails, the local hook will not run. If the global hook is
-> absent, the local hook runs normally.
+I am very sorry to bother you with such a simple question, but I 
+searched for a while on the net and did not come up with any satisfying 
+answer :-(
 
-It is left unspecified what happens when the global hook exists and it
-succeeds.  Watch out for hooks that read from their standard input.
+I just want to move a bunch of files (from /R to /pkg/R ), but get the 
+error:
+$ git mv R/*.R pkg/R/
+fatal: not under version control, source=R/nll_MSAR3.R, 
+destination=pkg/R/nll_MSAR3.R
 
-In any case, the above is totally backwards from the usual practice and
-expectation of local things overriding the global default.  If you want a
-site-wide policy suggestion, default templates would be a more acceptable
-way (and the implementation of hooks you install to developer repositories
-can choose to look at $GIT_DIR/hooks/local-foo-hook).
+What do I do wrong? Would you kindly indicate me what I should do?
 
-By the way, with a distributed scm, anything-wide policy enforcement at
-the level of developer's individual working repositories is a lost cause.
-You are giving freedom to do anything on their own copy of the history to
-the developers; the project-wide policy is to be enforced at the perimeter
-of your authoritative repository of the project.
+Thanks a lot and sorry again!
+
+Matthieu
+
+PS: I am using git 1.7.0.4 on Ubuntu 10.4
