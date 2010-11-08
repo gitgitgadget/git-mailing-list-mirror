@@ -1,71 +1,136 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: history missing
-Date: Mon, 8 Nov 2010 06:56:51 -0500
-Message-ID: <AANLkTi=rT0S1H8pFt9d+FYVme4fjNNzY6O6evuBwo-ZB@mail.gmail.com>
-References: <AANLkTikFB5HNOmg0iTdjHxtrhU9vdua5O8btgFzpg-2F@mail.gmail.com>
-	<20101108090230.GC2430@burratino>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Vitaliy Semochkin <vitaliy.se@gmail.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 08 12:57:00 2010
+From: Stefan Haller <lists@haller-berlin.de>
+Subject: [PATCH] gitk: Add "First parent" checkbox
+Date: Mon,  8 Nov 2010 12:58:14 +0100
+Message-ID: <1289217494-69931-1-git-send-email-lists@haller-berlin.de>
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Nov 08 12:58:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFQLK-0002z0-PS
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 12:56:59 +0100
+	id 1PFQMk-0003kP-Va
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 12:58:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751303Ab0KHL4x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 06:56:53 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:48915 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751222Ab0KHL4w (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 06:56:52 -0500
-Received: by vws13 with SMTP id 13so1659219vws.19
-        for <git@vger.kernel.org>; Mon, 08 Nov 2010 03:56:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=qqGFWSJz2WiefhFCMd0qBo++H0CbsJMorTe6w6Vu9/8=;
-        b=ji35x8hMLEF2ZvdJTMpmQGt1Budok9GUKDrLVlwR6jd6m2TmayGk+Lc68QJfqA5/ru
-         DA8pBpgNZX+Tzka00qJktZo8AM/tizJCY9kfiH4gVcKlzETZPWU1uzulBa/GESUSGAT1
-         n8fOOrBn9mVfGLncWhiUI7REqqsWrijJmnrlo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=WEBtg3Fd7l12W412uQ1ZHMtWAUH2QMReGe+rX625fEkoYX+ttBifkyWY4ZYBQbpSt+
-         wN38lFX/aYJVJFdxzsJaZiHpR1GgW6er2zVfLHY2XeOW9mvZy4UD44I6fz8V4eth0Z1O
-         nq6kzDoRDifAhglNn0K/5RRKB2pLPX2v+/Mv0=
-Received: by 10.224.76.85 with SMTP id b21mr3669750qak.340.1289217411541; Mon,
- 08 Nov 2010 03:56:51 -0800 (PST)
-Received: by 10.224.20.82 with HTTP; Mon, 8 Nov 2010 03:56:51 -0800 (PST)
-In-Reply-To: <20101108090230.GC2430@burratino>
+	id S1751417Ab0KHL6V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 06:58:21 -0500
+Received: from mail.ableton.net ([62.96.12.115]:39584 "EHLO mail.ableton.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751222Ab0KHL6V (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 06:58:21 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
+	h=Message-Id:Date:Subject:Cc:To:From; bh=ksEvXEckm79C0j600Hs8cy+f05hovWzoVIhK1ZwWey4=;
+	b=xAH5WGDx6V7sK4y5NzpUQgRhrWJLbOBuVcwFzLviiwlZgb6wen/GWNWHCvmVgHTgQMi/V+WMqvWjxMBkiDSE8Tyl4R3ewCdt6nW7NDcvd0dsZHqPxttepCOED9/szGOWE1X1GQPMFc4hUzGp9KotnFn9XXqCai7WV43yj1g8row=;
+Received: from macbook-stk.office.ableton.com ([10.1.12.43])
+	by mail.ableton.net with esmtpa (Exim 4.72)
+	(envelope-from <lists@haller-berlin.de>)
+	id 1PFQMd-0006F3-VV; Mon, 08 Nov 2010 12:58:20 +0100
+X-Mailer: git-send-email 1.7.3.2.153.g8250e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160930>
 
-On Mon, Nov 8, 2010 at 4:02 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Hi Vitaliy,
->
-> Vitaliy Semochkin wrote:
->
->> I cloned a remote repository
->> to check recent changes in origin/master I do:
->> git fetch origin master
->> git log origin master
->>
->> recently I found out that log doesn't show recent commits
->
-> Yes, this can be confusing.
+Sometimes it's desirable to see what changes were introduced by a
+merge commit, rather than how conflicts were resolved. This adds
+a checkbox which, when turned on, makes gitk show the equivalent
+of "git show --first-parent <commit>" for merge commits.
 
-I agree and I believe this has come up a lot of times before. I talked
-to Jeff and Junio about this at GitTogether and Jeff said he has a patch
-for it that he would try to get up to date in a while. (Thanks, Jeff!)
+Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
+---
+I realize this conflicts with Thomas Rast's recent path to add a
+word-diff dropdown box; things are fighting for space in the diff
+pane header...
+
+ gitk |   24 +++++++++++++++++++++---
+ 1 files changed, 21 insertions(+), 3 deletions(-)
+
+diff --git a/gitk b/gitk
+index 45e3380..db0f022 100755
+--- a/gitk
++++ b/gitk
+@@ -2245,6 +2245,9 @@ proc makewindow {} {
+     ${NS}::checkbutton .bleft.mid.ignspace -text [mc "Ignore space change"] \
+ 	-command changeignorespace -variable ignorespace
+     pack .bleft.mid.ignspace -side left -padx 5
++    ${NS}::checkbutton .bleft.mid.firstparent -text [mc "First parent"] \
++	-command changefirstparent -variable firstparent
++    pack .bleft.mid.firstparent -side left -padx 5
+     set ctext .bleft.bottom.ctext
+     text $ctext -background $bgcolor -foreground $fgcolor \
+ 	-state disabled -font textfont \
+@@ -6872,6 +6875,7 @@ proc selectline {l isnew {desired_loc {}}} {
+     global cmitmode showneartags allcommits
+     global targetrow targetid lastscrollrows
+     global autoselect jump_to_here
++    global firstparent
+ 
+     catch {unset pending_select}
+     $canv delete hover
+@@ -7013,7 +7017,7 @@ proc selectline {l isnew {desired_loc {}}} {
+     init_flist [mc "Comments"]
+     if {$cmitmode eq "tree"} {
+ 	gettree $id
+-    } elseif {[llength $olds] <= 1} {
++    } elseif {[llength $olds] <= 1 || $firstparent} {
+ 	startdiff $id
+     } else {
+ 	mergediff $id
+@@ -7416,7 +7420,7 @@ proc diffcmd {ids flags} {
+ proc gettreediffs {ids} {
+     global treediff treepending
+ 
+-    if {[catch {set gdtf [open [diffcmd $ids {--no-commit-id}] r]}]} return
++    if {[catch {set gdtf [open [diffcmd $ids {--no-commit-id -m --first-parent}] r]}]} return
+ 
+     set treepending $ids
+     set treediff {}
+@@ -7504,11 +7508,19 @@ proc changeignorespace {} {
+     reselectline
+ }
+ 
++proc changefirstparent {} {
++    global treediffs
++    catch {unset treediffs}
++
++    reselectline
++}
++
+ proc getblobdiffs {ids} {
+     global blobdifffd diffids env
+     global diffinhdr treediffs
+     global diffcontext
+     global ignorespace
++    global firstparent
+     global limitdiffs vfilelimit curview
+     global diffencoding targetline diffnparents
+     global git_version currdiffsubmod
+@@ -7521,10 +7533,15 @@ proc getblobdiffs {ids} {
+     if {[package vcompare $git_version "1.6.6"] >= 0} {
+ 	set submodule "--submodule"
+     }
+-    set cmd [diffcmd $ids "-p $textconv $submodule  -C --cc --no-commit-id -U$diffcontext"]
++    set cmd [diffcmd $ids "-p $textconv $submodule  -C --no-commit-id -U$diffcontext"]
+     if {$ignorespace} {
+ 	append cmd " -w"
+     }
++    if {$firstparent} {
++	append cmd " -m --first-parent"
++    } else {
++	append cmd " --cc"
++    }
+     if {$limitdiffs && $vfilelimit($curview) ne {}} {
+ 	set cmd [concat $cmd -- $vfilelimit($curview)]
+     }
+@@ -11393,6 +11410,7 @@ if {[tk windowingsystem] eq "win32"} {
+ set diffcolors {red "#00a000" blue}
+ set diffcontext 3
+ set ignorespace 0
++set firstparent 0
+ set markbgcolor "#e0e0ff"
+ 
+ set circlecolors {white blue gray blue blue}
+-- 
+1.7.3.2.153.g8250e
