@@ -1,63 +1,60 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 3/7] add description parameter to OPT__QUIET
-Date: Mon, 8 Nov 2010 13:18:01 -0500
-Message-ID: <20101108181801.GB30428@sigill.intra.peff.net>
-References: <4CD83917.3040801@lsrfire.ath.cx>
- <4CD83ABD.30804@lsrfire.ath.cx>
+From: Maaartin <grajcar1@seznam.cz>
+Subject: Rebase problems
+Date: Mon, 8 Nov 2010 18:19:09 +0000 (UTC)
+Message-ID: <loom.20101108T190513-206@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Nov 08 19:17:14 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 08 19:19:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFWHJ-0005du-N5
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 19:17:14 +0100
+	id 1PFWJT-0006jb-BB
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 19:19:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755387Ab0KHSRH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Nov 2010 13:17:07 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:48372 "EHLO peff.net"
+	id S1755414Ab0KHSTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 13:19:22 -0500
+Received: from lo.gmane.org ([80.91.229.12]:49497 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753621Ab0KHSRG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 13:17:06 -0500
-Received: (qmail 30907 invoked by uid 111); 8 Nov 2010 18:17:05 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 08 Nov 2010 18:17:05 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Nov 2010 13:18:01 -0500
-Content-Disposition: inline
-In-Reply-To: <4CD83ABD.30804@lsrfire.ath.cx>
+	id S1753708Ab0KHSTV (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 13:19:21 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PFWJM-0006g3-61
+	for git@vger.kernel.org; Mon, 08 Nov 2010 19:19:20 +0100
+Received: from 188-120-198-113.luckynet.cz ([188-120-198-113.luckynet.cz])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 08 Nov 2010 19:19:20 +0100
+Received: from grajcar1 by 188-120-198-113.luckynet.cz with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 08 Nov 2010 19:19:20 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 188.120.198.113 (Opera/9.80 (Windows NT 5.2; U; en) Presto/2.6.30 Version/10.63)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160962>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160963>
 
-On Mon, Nov 08, 2010 at 07:00:29PM +0100, Ren=C3=A9 Scharfe wrote:
+I'm using git for a project I'm working on alone (and I really like it), so I 
+could rebase a lot, if I hadn't the following problems.
 
-> Allows better help text to be defined than "be quiet".  Also make use
-> of the macro in a place that already had a different description.  No
-> object code changes intended.
+There's a file containing the timestamp which gets compiled in, so the 
+executable can show it's version. Sometimes, I need to set it couple of times a 
+day, sometimes only once a week. For each such timestamp I create a tag, so I 
+can track it to the source easily. The timestamp is an important piece of 
+information, so I put the containing file under version control. The downside is 
+that I often get a conflict in this file halting my rebase. Is there a way how 
+to ignore or automatically resolve all conflicts in this file (any resolution 
+strategy is fine, as it will be overwritten anyway).
 
-Maybe my "don't repeat yourself" spider sense is over-reacting, but of
-12 callsites, 11 of them will continue to use "be quiet". Maybe instead
-of:
-
-> -#define OPT__QUIET(var)    OPT_BOOLEAN('q', "quiet",   (var), "be qu=
-iet")
-> +#define OPT__QUIET(var, h)    OPT_BOOLEAN('q', "quiet",   (var), (h)=
-)
-
-we could have:
-
-  #define OPT__QUIET_H(var, h) OPT_BOOLEAN('q', "quiet", (var), (h))
-  #define OPT__QUIET(var) OPT__QUIET_H(var, "be quiet")
-
-which would limit your patch to changing a single callsite.
-
--Peff
+The second problem is problem of cygwin. While most of the operations git run in 
+fractions of seconds, the most trivial rebase may take one minute or alike. Any 
+idea what different things rebase do?
