@@ -1,81 +1,74 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: first para of man gitignore should refer to 'git rm --cached'
-Date: Mon, 8 Nov 2010 10:16:20 +0530
-Message-ID: <AANLkTinznLY3M4z7k-WeeFhGSR1xWHXj_zOrwMvZDfLQ@mail.gmail.com>
-References: <AANLkTim=QCcJDb0600Je-jePvXSXfFMe7FAQ0WMhZKn7@mail.gmail.com>
-	<20101107191425.GA32302@kytes>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Status of the svn remote helper project (Nov, 2010)
+Date: Mon, 8 Nov 2010 00:11:40 -0600
+Message-ID: <20101108061140.GB29738@burratino>
+References: <20101107112129.GA30042@burratino>
+ <6A74D35D-A065-44B7-8DA4-6CA78DE067CF@cordelta.com>
+ <201011081456.26618.david.barr@cordelta.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 08 05:46:37 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: David Barr <david.barr@cordelta.com>
+X-From: git-owner@vger.kernel.org Mon Nov 08 07:12:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFJcr-0003Ef-4P
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 05:46:37 +0100
+	id 1PFKxi-0001ru-Ad
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 07:12:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753198Ab0KHEqW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 7 Nov 2010 23:46:22 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:61319 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752604Ab0KHEqV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 7 Nov 2010 23:46:21 -0500
-Received: by ywc21 with SMTP id 21so3090651ywc.19
-        for <git@vger.kernel.org>; Sun, 07 Nov 2010 20:46:21 -0800 (PST)
+	id S1751232Ab0KHGLz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 01:11:55 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:36791 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750860Ab0KHGLz (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 01:11:55 -0500
+Received: by gyh4 with SMTP id 4so3137797gyh.19
+        for <git@vger.kernel.org>; Sun, 07 Nov 2010 22:11:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Ys7QLILmeHiR31SsdMsH1qViaqG+SlEA+/S3Rtf6w2U=;
-        b=n1tpfhd24il9L/IsSE1y/xAZsrhXOj5xQCHwKeqZljGH9rEEFNrvMmNq2zq7usZiy1
-         4H/VBz51sWDxlwrjkVq/J7Lo4jmZEqmvftQMfdePxaAngayQ/WK7qvtxf3xJL3wuQoLN
-         Himso6YVDy0UNpCD7UTZY4tWLfhSKbvcBSuo0=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=WFvElEmFRohj+uINlneCWEDm8zC0AyqFH5xSSEGdiHI=;
+        b=h1pT55v/U2Mvq3SzTGSWvExZ7CkYhU0acW+jiRP4rvhHQh+FKnmuJU+HfXBclW6Cr8
+         h4SOTuNGqXQMDD8oBMBj08nf9wIhCXnzJvEF9yRWu6bnCvWVdBWpIw+BoWXoSj+GFkO3
+         IilODmJIJRWQYqWIYI7o7HDX6tFrKVXLZQtxI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=X2ZD9nsfq8lbB+1sYtOaz47MH3CI6m3ivtexy/vGcFL9si60IW7QFF2Gb1EnixKfUG
-         zAkxHRQ/j5K9q5GZlMucIG2zyPLM5huXE3sQIJ+twCnw9y6BuqinRofIHyy1Dny6MF8b
-         N0YYnR6y33kbpor8MfwuVQUvIIqYs6QJwRGeg=
-Received: by 10.90.26.11 with SMTP id 11mr4650426agz.174.1289191580968; Sun,
- 07 Nov 2010 20:46:20 -0800 (PST)
-Received: by 10.90.52.8 with HTTP; Sun, 7 Nov 2010 20:46:20 -0800 (PST)
-In-Reply-To: <20101107191425.GA32302@kytes>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=QrplfxFhdTGySg0ztt++Vv+da7e4PbmMP4Lt9E1sbZFOQRlpLHQglySPe+WXMDi2BS
+         2UpAENwzPYj3rrDZZptjiOwEpMUmOuA5uRZdc5KL9sZXuKhqKJ2b8XuwumDqwXN6/v2o
+         e4M+hV4pLBMnAVHOdJLtiC539ujmtPXbF7BiI=
+Received: by 10.100.226.20 with SMTP id y20mr2224964ang.46.1289196714483;
+        Sun, 07 Nov 2010 22:11:54 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id d8sm392286ana.22.2010.11.07.22.11.52
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 07 Nov 2010 22:11:53 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <201011081456.26618.david.barr@cordelta.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160909>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160910>
 
-On Mon, Nov 8, 2010 at 12:44 AM, Ramkumar Ramachandra
-<artagnon@gmail.com> wrote:
-> Hi Sitaram,
->
-> Sitaram Chamarty writes:
->> It's an FAQ that "why doesn't my gitignore work" when the files in
->> question had already been added earlier, usually in error. =C2=A0The=
- most
->> common remedy, I believe, is "git rm --cached" followed by a commit.
->
-> Er, no. The documentation says "in order to ignore uncommitted change=
-s
-> in already tracked files". `git rm --cached` removes the file from th=
-e
-> index altogether- when the change is committed, Git will actually sto=
-p
-> tracking it.
+David Barr wrote:
 
-I agree.
+>>> [Cooking]
+>>> * jn/svndiff0 (2010-11-06) 24 commits
+[...]
+> I've successfully tested this series against the ASF repository
+> (940,166 revisions) and 5,636,613 blobs were faithfully reproduced.
 
-I'm just saying that ignoring uncommitted changes to already tracked
-files is *not* the most common question I see when it comes to
-gitignore, and am asking if it is worth putting what I believe is the
-real FAQ in the first para, and move the assume-unchanged stuff
-further down the page.
+Thanks!  Was that using svn-fe, test-svn-fe -d, or some other program
+using the vcs-svn lib?
 
-Sorry if I didn't say that clearly enough before.
+Jonathan
