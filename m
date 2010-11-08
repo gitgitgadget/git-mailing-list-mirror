@@ -1,101 +1,201 @@
-From: Yann Dirson <ydirson@free.fr>
-Subject: Re: [PATCH] git-rebase--interactive.sh: Add new command "shell"
-Date: Mon, 8 Nov 2010 23:29:37 +0100
-Message-ID: <20101108222937.GH3167@home.lan>
-References: <9C0BAFB4-299E-459B-A64A-54D480C5445D@sb.org>
- <20101104112530.5c0e444a@chalon.bertin.fr>
- <4CD2E7B4.3000908@nextest.com>
- <vpq62wddmc0.fsf@bauges.imag.fr>
- <20101104181020.GB16431@burratino>
- <20101104205307.GA8911@home.lan>
- <7vd3qfr7ki.fsf@alter.siamese.dyndns.org>
- <663A3F43-5F64-41F0-B272-64EEE9775250@sb.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] docs: give more hints about how "add -e" works
+Date: Mon, 8 Nov 2010 17:33:23 -0500
+Message-ID: <20101108223322.GA12258@sigill.intra.peff.net>
+References: <20101021143034.GA16083@sigill.intra.peff.net>
+ <7v4ocftbww.fsf@alter.siamese.dyndns.org>
+ <20101022192529.GA13059@sigill.intra.peff.net>
+ <7v8w1plwq0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Yann Dirson <ydirson@free.fr>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Eric Raible <raible@nextest.com>,
-	Yann Dirson <dirson@bertin.fr>, git@vger.kernel.org
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Mon Nov 08 23:29:56 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 08 23:32:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFaDo-0005qu-Ox
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 23:29:53 +0100
+	id 1PFaGO-00072J-SB
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 23:32:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755792Ab0KHW3s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 17:29:48 -0500
-Received: from smtp5-g21.free.fr ([212.27.42.5]:49021 "EHLO smtp5-g21.free.fr"
+	id S1754921Ab0KHWc2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 17:32:28 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:56129 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755445Ab0KHW3r (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 17:29:47 -0500
-Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 194B2D480DA;
-	Mon,  8 Nov 2010 23:29:38 +0100 (CET)
-Received: from yann by home.lan with local (Exim 4.72)
-	(envelope-from <ydirson@free.fr>)
-	id 1PFaDZ-0001re-Oy; Mon, 08 Nov 2010 23:29:37 +0100
+	id S1752583Ab0KHWc1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 17:32:27 -0500
+Received: (qmail 3085 invoked by uid 111); 8 Nov 2010 22:32:26 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 08 Nov 2010 22:32:26 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Nov 2010 17:33:23 -0500
 Content-Disposition: inline
-In-Reply-To: <663A3F43-5F64-41F0-B272-64EEE9775250@sb.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <7v8w1plwq0.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160999>
 
-On Mon, Nov 08, 2010 at 01:49:44PM -0800, Kevin Ballard wrote:
-> On Nov 8, 2010, at 10:31 AM, Junio C Hamano wrote:
+[long quote, since it has been a few weeks]
+
+On Fri, Oct 22, 2010 at 02:54:31PM -0700, Junio C Hamano wrote:
+
+> Jeff King <peff@peff.net> writes:
 > 
-> > Yann Dirson <ydirson@free.fr> writes:
-> > 
-> >> #  e, edit = use commit (if specified) but pause to amend/examine/test
-> > 
-> > When an end user is given
-> > 
-> >    pick one
-> >    pick two
-> >    pick three
-> >    ...
-> > 
-> > and told the above, would it be crystal clear that, if he changed the insn
-> > sheet to
-> > 
-> >    pick one
-> >    edit
-> >    pick three
-> >    ...
-> > 
-> > then he will _lose_ the change made by foo, or will the user come back
-> > here and complain that a precious change "two" is lost and it is git's
-> > fault?
+> > Perhaps the list should be structured not as "what you can do to each
+> > line" but rather "here are some _concepts_ you might see, here's how
+> > they are represented, and how you might want to edit them". So
+> > basically:
+> >
+> >   - added lines; represented by "+" lines. You can prevent staging any
+> >     addition lines by deleting them.
+> >
+> >   - removed lines; represented by "-" lines. You can prevent staging any
+> >     removal lines by converting "-" to " ".
+> >
+> >   - modified lines; represented by "-" followed by "+". You can prevent
+> >     staging the modification by converting the "-" to a " ", and
+> >     removing the "+" lines. And this would be a good place to warn that
+> >     just deleting half of the pair is going to cause problems.
+> >
+> >   - existing lines; represented by " " lines. You can:
+> >
+> >       - remove them, by converting " " to "-".
+> >
+> >       - modify them, by converting " " to "-", and adding a new "+" line
+> >         with the new content.
+> >
+> >   - adding new lines; do not yet exist in the patch. You can add new
+> >     lines by inserting "+" lines with the new content.
+> >
+> > which is perhaps better, as it directs the user according to what they
+> > actually want to accomplish.
 > 
-> On the one hand, once someone understands what the todo list is actually
-> doing, then it should be instantly obvious that removing the reference to
-> a commit will remove that commit entirely. On the other hand, I agree it
-> may be confusing to new git users (or new rebase users). Do you have an
-> alternative solution in mind?
+> Yes, the above reads much better than starting from "when you see a '+'
+> you can do..." (which I think is a wrong approach that is backwards).
+> 
+> >> Is there a way to move this note way upwards?  Once the reader understands
+> >> what this paragraph teaches, it becomes much easier to understand the
+> >> implication of "remove addition".
+> >
+> > I agree it would be better at the top, but I think formatting it as I
+> > just wrote above would mean we can actually explain the issue in a more
+> > appropriate place. And then this bottom warning can just go away.
+> 
+> Agreed, again.
 
-Maybe restating in an explanatory paragraph something like:
+I found a few minutes to look at this today. However, it looks like you
+already merged my original to next. :) The patch below implements the
+strategy I discussed above, and IMHO it ended up being much clearer.
 
-|Keep in mind that any commit in the original todo list, that would
-|not be there after your edits, would not be included in the resulting
-|rebased branch.  In case you realize afterwards that you need such a
-|commit, you can still access it as an ancestor of @{1}, see
-|git-reflog(1) for details.
+It should replace what's in next. You can either start a new branch and
+revert what's in next, or I can prepare it on top of what's in next if
+you prefer.
 
-Maybe we could list a copy of the todo list in the comments, as a
-reference for double-checking.  Such a list could even be used for a
-final check before applying, that would ask confirmation if the set of
-patches has changed, and offer to edit again.  The same config item
-(eg. advice.interactiveRebase ?) could be used to hide the note and
-the check.
+-- >8 --
+Subject: [PATCH] docs: give more hints about how "add -e" works
 
-Now making "rebase -i" possibly interactive may cause problems, for
-any porcelain scripts above it.  Not sure it'd be the way to do it.
-Maybe add a "check" command to be inserted at bottom of todo list to
-activate it, that would be here by default but commented out ?
+The previous text was not exactly accurate; it is OK to
+change space and minus lines, but only in certain ways.
+
+This patch takes a whole new approach, which is to describe
+the sorts of conceptual operations you might want to
+perform. It also includes a healthy dose of warnings about
+how things can go wrong.
+
+Since the size of the text is getting quite long, it also
+splits this out into an "editing patches" section. This
+makes more sense with the current structure, anyway, which
+already splits out the interactive mode description.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ Documentation/git-add.txt |   63 ++++++++++++++++++++++++++++++++++++++++++--
+ 1 files changed, 60 insertions(+), 3 deletions(-)
+
+diff --git a/Documentation/git-add.txt b/Documentation/git-add.txt
+index 73378b2..5048309 100644
+--- a/Documentation/git-add.txt
++++ b/Documentation/git-add.txt
+@@ -92,9 +92,11 @@ See ``Interactive mode'' for details.
+ 	edit it.  After the editor was closed, adjust the hunk headers
+ 	and apply the patch to the index.
+ +
+-*NOTE*: Obviously, if you change anything else than the first character
+-on lines beginning with a space or a minus, the patch will no longer
+-apply.
++The intent of this option is to pick and choose lines of the patch to
++apply, or even to modify the contents of lines to be staged. This can be
++quicker and more flexible than using the interactive hunk selector.
++However, it is easy to confuse oneself and create a patch that does not
++apply to the index. See EDITING PATCHES below.
+ 
+ -u::
+ --update::
+@@ -295,6 +297,61 @@ diff::
+   This lets you review what will be committed (i.e. between
+   HEAD and index).
+ 
++
++EDITING PATCHES
++---------------
++
++Invoking `git add -e` or selecting `e` from the interactive hunk
++selector will open a patch in your editor; after the editor exits, the
++result is applied to the index. You are free to make arbitrary changes
++to the patch, but note that only a small subset of possible changes will
++result in a patch that can be applied. If you want to abort the
++operation entirely (i.e., stage nothing new in the index), simply delete
++all lines of the patch. The list below describes common things you may
++see in a patch, and which editing operations make sense on them.
++
++added content::
++
++Added content is represented by lines beginning with "{plus}". You can
++prevent staging any addition lines by deleting them.
++
++removed content::
++
++Removed content is represented by lines beginning with "-". You can
++prevent staging their removal by converting the "-" to a " " (space).
++
++modified content::
++
++Modified content is represented by "-" lines (removing the old content)
++followed by "{plus}" lines (adding the replacement content). You can
++prevent staging the modification by converting "-" lines to " ", and
++removing "{plus}" lines. Beware that modifying only half of the pair is
++likely to introduce confusing changes to the index.
++
++untouched content::
++
++Untouched content exists in context lines, beginning with a " " (space).
++You can stage context lines for removal by converting the space to a
++"-".
++
++new content::
++
++You may also add new content that does not exist in the patch. Simply
++add new lines, each starting with "{plus}".
++
++You can also perform more complex operations, such as modifying the
++content to be staged by a "{plus}" line. However, note that this impacts
++_only_ the index; the working tree file will remain unchanged, and will
++appear to "undo" the content you have staged. Such operations should be
++performed only if you know what you are doing.
++
++There are also several operations which should be avoided entirely, as
++they will make the patch impossible to apply:
++
++* adding context (" ") or removal ("-") lines
++* deleting context or removal lines
++* modifying the contents of context or removal lines
++
+ SEE ALSO
+ --------
+ linkgit:git-status[1]
+-- 
+1.7.3.2.218.g4ee9d
