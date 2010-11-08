@@ -1,80 +1,68 @@
-From: Wincent Colaiuta <win@wincent.com>
-Subject: Re: Rebase problems
-Date: Mon, 8 Nov 2010 19:33:27 +0100
-Message-ID: <FA37BC66-64CF-4A62-80E9-EC45EAE392C4@wincent.com>
-References: <loom.20101108T190513-206@post.gmane.org>
-Mime-Version: 1.0 (Apple Message framework v1081)
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] attr: support quoting pathname patterns in C style
+Date: Mon, 08 Nov 2010 10:40:21 -0800
+Message-ID: <7v8w13r756.fsf@alter.siamese.dyndns.org>
+References: <AANLkTinNctmWpshBeSTzZRm6+EJ=Cjdpoaj4Aon+52_b@mail.gmail.com>
+ <1288878944-14066-1-git-send-email-pclouds@gmail.com>
+ <7vvd4bu2pl.fsf@alter.siamese.dyndns.org>
+ <15C4C111-824D-4657-B034-A1BE1DAD50D4@sb.org>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Maaartin <grajcar1@seznam.cz>
-X-From: git-owner@vger.kernel.org Mon Nov 08 19:33:53 2010
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Marc Strapetz <marc.strapetz@syntevo.com>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Mon Nov 08 19:40:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFWXR-0006NT-Ay
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 19:33:53 +0100
+	id 1PFWe0-0001zQ-45
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 19:40:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754827Ab0KHSdr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 13:33:47 -0500
-Received: from outmail148110.authsmtp.com ([62.13.148.110]:56147 "EHLO
-	outmail148110.authsmtp.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752720Ab0KHSdq convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Mon, 8 Nov 2010 13:33:46 -0500
-Received: from mail-c193.authsmtp.com (mail-c193.authsmtp.com [62.13.128.118])
-	by punt7.authsmtp.com (8.14.2/8.14.2/Kp) with ESMTP id oA8IXdEc087715;
-	Mon, 8 Nov 2010 18:33:39 GMT
-Received: from zenyatta.unixhosts.net (ec2-184-73-234-210.compute-1.amazonaws.com [184.73.234.210])
-	(authenticated bits=128)
-	by mail.authsmtp.com (8.14.2/8.14.2) with ESMTP id oA8IXVKg048100
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
-	Mon, 8 Nov 2010 18:33:32 GMT
-Received: from [192.168.1.6] (83.Red-88-5-247.dynamicIP.rima-tde.net [88.5.247.83])
-	(authenticated bits=0)
-	by zenyatta.unixhosts.net (8.14.2/8.14.2) with ESMTP id oA8IXS2u001946
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO);
-	Mon, 8 Nov 2010 13:33:30 -0500
-In-Reply-To: <loom.20101108T190513-206@post.gmane.org>
-X-Mailer: Apple Mail (2.1081)
-X-Server-Quench: b0c1d3df-eb66-11df-97bb-002264978518
-X-AuthReport-Spam: If SPAM / abuse - report it at: http://www.authsmtp.com/abuse
-X-AuthRoute: OCd3ZggRAFZKTQIy FSICByJGVUMuIRha BAIHMQpCJFdJD0VH ahYdCF1NdwdEHAkR Am4BWFdeU18/WGtx dQ1ScwdeZlRMXgV1 Uk1WQxwNZQ0RaXp6 UR4aWhhyd0tBfH9z KxRiDXEPXxAsaBMv REhJFGxSM3ppbzJN TUBYdQFSdApNdhpE Yh4dAXkdAzBVNzk1 VxcpODo1MDBEQEAA 
-X-Authentic-SMTP: 61633436303433.1014:706
-X-AuthFastPath: 0 (Was 255)
-X-AuthVirus-Status: No virus detected - but ensure you scan with your own anti-virus system.
+	id S1754875Ab0KHSke (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 13:40:34 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60653 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752720Ab0KHSkd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 13:40:33 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E688030F8;
+	Mon,  8 Nov 2010 13:40:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KwGdUDrIb1qYFUj/N6JKr76tKrs=; b=KzKLGG
+	S5gZUW2rMWxbkZSyhpqS90xprG13zlbRoSTh/4vdp7qT6gbsIx70tqNpHtgxKME3
+	2MgMZ68P728i5HYNGdl3kyWSsoZFkl+oZPBnUB1+lG1f+QYMDGTR2P1nlt0GB55e
+	OEI7qZpgjXw4wVvlI4/vHm50ha/FWTmeKcaCU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IpUvAyobnN3MWk35GIsw4P9rk6SyF2it
+	/chxWnSBkKc+hQFhA7oZeB3g444RlklmIWKW8kdE0Z0Qpwlgnhxg6YF090qcnAwW
+	37egcpL/aXPPapkQFKJr2igO9zU+Avx3fDliaYJkHUb0r0LCmA+hWJPFqHAMTALW
+	CPMWbtOcjGc=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A642D30F7;
+	Mon,  8 Nov 2010 13:40:31 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5C2C330F3; Mon,  8 Nov 2010
+ 13:40:26 -0500 (EST)
+In-Reply-To: <15C4C111-824D-4657-B034-A1BE1DAD50D4@sb.org> (Kevin Ballard's
+ message of "Fri\, 5 Nov 2010 14\:46\:32 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: AA5746E2-EB67-11DF-8D67-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160967>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160968>
 
-On 08/11/2010, at 19:19, Maaartin wrote:
+Kevin Ballard <kevin@sb.org> writes:
 
-> I'm using git for a project I'm working on alone (and I really like it), so I 
-> could rebase a lot, if I hadn't the following problems.
-> 
-> There's a file containing the timestamp which gets compiled in, so the 
-> executable can show it's version. Sometimes, I need to set it couple of times a 
-> day, sometimes only once a week. For each such timestamp I create a tag, so I 
-> can track it to the source easily. The timestamp is an important piece of 
-> information, so I put the containing file under version control. The downside is 
-> that I often get a conflict in this file halting my rebase. Is there a way how 
-> to ignore or automatically resolve all conflicts in this file (any resolution 
-> strategy is fine, as it will be overwritten anyway).
+> Would this actually break any existing setups? The only ones that are affected
+> are ones beginning with ", which I imagine would be rather rare.
 
-Rhetorical questions follow; no need for you to answer:
-
-- Why is the timestamp an "important" piece of information?
-
-- Have you considered that, for versioning purposes (ie. knowing _what_ source code was compiled to produce the product), the commit hash or the output of "git describe" may be much more useful than a disconnected timestamp?
-
-- Regardless of whether you use a timestamp, a commit hash, or the output of "git describe", why can't it be inserted at compile time rather than stored in the repo?
-
-- If you are really enamored of timestamps, would extracting the latest commit timestamp out of the repo be enough?
-
-- Do these repeated merge conflicts set off "code smell" alarm bells for you (really, "process smell"), and make you suspect that there might be something wrong with what you are trying to do?
-
-Cheers,
-Wincent
+No regression policy means just that.  We try not to break "rather rare"
+people, only to add support for different kinds of "rather rare" setups,
+especially when the latter have working workarounds.
