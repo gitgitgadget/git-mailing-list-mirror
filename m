@@ -1,52 +1,52 @@
 From: Brian Collins <bricollins@gmail.com>
-Subject: [PATCH] Run global hooks from the directory at hooks.dir
-Date: Mon,  8 Nov 2010 04:18:08 -0800
-Message-ID: <1289218688-36804-1-git-send-email-bricollins@gmail.com>
-Cc: Brian Collins <bricollins@gmail.com>
+Subject: [PATCH v2] Run global hooks from the directory at hooks.dir
+Date: Mon,  8 Nov 2010 04:32:00 -0800
+Message-ID: <1289219520-37435-1-git-send-email-bricollins@gmail.com>
+Cc: s-beyer@gmx.net, Brian Collins <bricollins@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 08 13:18:39 2010
+X-From: git-owner@vger.kernel.org Mon Nov 08 13:32:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFQgI-0008VD-I8
-	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 13:18:39 +0100
+	id 1PFQtZ-00066V-4u
+	for gcvg-git-2@lo.gmane.org; Mon, 08 Nov 2010 13:32:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752702Ab0KHMSc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 07:18:32 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:38681 "EHLO
+	id S1752294Ab0KHMcO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 07:32:14 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:38528 "EHLO
 	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752454Ab0KHMSb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 07:18:31 -0500
-Received: by pwj7 with SMTP id 7so819834pwj.19
-        for <git@vger.kernel.org>; Mon, 08 Nov 2010 04:18:31 -0800 (PST)
+	with ESMTP id S1751449Ab0KHMcN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 07:32:13 -0500
+Received: by pwj7 with SMTP id 7so821225pwj.19
+        for <git@vger.kernel.org>; Mon, 08 Nov 2010 04:32:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer;
-        bh=OL9k/YoffhQ989q7acxqVskCeV6fwI8xuvsdC8fLQmE=;
-        b=AgR3Z2yT4eKdhcicxYUgfa31fbHr7tzg6EigQRCzyE9NMPUS2nhahoTGbCtefxP3DT
-         iEM7X5QV3hh/TlExT5R5WzFx5KfmhsPPnJJq4XrkrSQk7BtheCeG+dfuGt/NoXZHQhZ+
-         IwFXaJkqG7O7FOhYIdaJAJy5Aw+iVxecvdxhM=
+        bh=3pWBcAgCmY+FELvnfmw8N4all2q0LGKCQamhSOJ03o8=;
+        b=shsjHDkiCNJ83aq3XXvkfWeyGkOpHiI263nIk9zg/oBhPq8Uyj4LRXhvk1QMWKimmX
+         jAmHXGRyPfWXmziE11PgmuLM+xsguAwGRpiRYcbD+1Vo45Ob9gnUhYcViptLdxE2Vl5n
+         ojiA8jJOmnHuybEOyD9xZE1yTiNBk11H+19IY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer;
-        b=VNrLF0Y/HiXKVKjrCM45g/blrA2QG9dyCPZq1w0kCzyzcp2AuEGs8T1nwzqW6Rc2ih
-         /xcwBxJZGqgYY3Nc9LycSkZbNGUlxvFl4nnmIx7Jp6esBO3jw2jfuBwVvutxK6RQMIeb
-         EE2PeV3M0HfRwbAHwMFxZ4jNfGa4PeOwFPyJg=
-Received: by 10.143.11.9 with SMTP id o9mr4658919wfi.134.1289218710945;
-        Mon, 08 Nov 2010 04:18:30 -0800 (PST)
+        b=XXphZoTn3g3fgGAUBF+rqyVjCCXfoGoGIe8JuWL11isdFZ4Rstv4aocV6Y4rArR8++
+         ACMY5bossnxitJ6TxJASfO6KJN6uc3PoKzOKboiXIWYu/88PtIIfn3KtuSi9KGl9ryVk
+         XTHo9A7w1dhtOQbcs0eOM3zaCJ7mrHwFHjzck=
+Received: by 10.142.238.15 with SMTP id l15mr4934215wfh.7.1289219532150;
+        Mon, 08 Nov 2010 04:32:12 -0800 (PST)
 Received: from localhost.localdomain ([207.81.88.166])
-        by mx.google.com with ESMTPS id e36sm8012109wfj.14.2010.11.08.04.18.26
+        by mx.google.com with ESMTPS id x35sm8024625wfd.1.2010.11.08.04.32.09
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 08 Nov 2010 04:18:29 -0800 (PST)
+        Mon, 08 Nov 2010 04:32:10 -0800 (PST)
 X-Mailer: git-send-email 1.7.3.2.162.g4671
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/160932>
 
 Run global hooks in the directory specified by the config variable
 hooks.dir before every attempt at running a local hook. If the
@@ -58,8 +58,11 @@ system-wide commit analytics.
 
 Signed-off-by: Brian Collins <bricollins@gmail.com>
 ---
+
 The possibility of adding this feature was previously discussed here:
 http://marc.info/?l=git&m=127808782807807&w=2
+
+Fixed some bad whitespace in contrib/completion/git-completion.bash
 
 Cheers,
 Brian
@@ -133,14 +136,14 @@ index 4b0a820..1a9d5ee 100644
  		pager_use_color = git_config_bool(var,value);
  		return 0;
 diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index 168669b..1dfc400 100755
+index 168669b..b266f83 100755
 --- a/contrib/completion/git-completion.bash
 +++ b/contrib/completion/git-completion.bash
 @@ -1913,6 +1913,7 @@ _git_config ()
  		help.autocorrect
  		help.browser
  		help.format
-+    hooks.dir
++		hooks.dir
  		http.lowSpeedLimit
  		http.lowSpeedTime
  		http.maxRequests
@@ -321,4 +324,4 @@ index 0000000..d2481ea
 +
 +test_done
 -- 
-1.7.3.2.162.g27ca2
+1.7.3.2.162.g4671
