@@ -1,57 +1,57 @@
-From: Casey McGinty <casey.mcginty@gmail.com>
-Subject: Git automatic stashing?
-Date: Mon, 8 Nov 2010 19:37:53 -1000
-Message-ID: <AANLkTinwftXiZxbs_=PeM-MxQmMF4VaBCPEufH=OG6iU@mail.gmail.com>
-References: <AANLkTim3MacQK6EtTPNJsYbqb=5bOM3W3BXC6p=hT+PU@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [RFC/PATCH 1/5] gettext: fix bug in git-sh-i18n's eval_gettext()
+ by using envsubst(1)
+Date: Tue, 09 Nov 2010 08:33:57 +0100
+Message-ID: <4CD8F965.6050402@viscovery.net>
+References: <AANLkTikOgMGqw5fc95c2VGwXxKu9rmsA+=z5_jykD92=@mail.gmail.com>	<1288524860-538-2-git-send-email-avarab@gmail.com>	<4CCFCCC8.7080603@viscovery.net> <AANLkTimjRwSxkemMffASvHCxK009b1fnvNRs05_T_1DF@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 09 06:38:24 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 09 08:34:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFguV-0008Bn-F0
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 06:38:23 +0100
+	id 1PFiiY-00039N-Vk
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 08:34:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751843Ab0KIFiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Nov 2010 00:38:17 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:36786 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751273Ab0KIFiR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Nov 2010 00:38:17 -0500
-Received: by wyb36 with SMTP id 36so4437590wyb.19
-        for <git@vger.kernel.org>; Mon, 08 Nov 2010 21:38:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:content-type;
-        bh=rvPVH2AVuskw2/0s5rRm/6lblm5vrY38BfqJeZhqJrY=;
-        b=RaSbnaaM6HF7hFJHqqlcIYLP9UiuRbhjYLJlYqM8YrBRJkegzY10zVr/S0AH17mB9A
-         uJBHNwQnTj/ZrqN+DohaLo4yhhTU3CD60WfmMue/U8PXc8BL9rnWrP80OqlMycx/bEkb
-         flybcCK0mDX2rxPeuua94dseTiPYYZXS8sVXg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        b=uQH4pAfYAL1iujObfobUCB8KB0kqVyht7/qzNAvMETyC2NK0Aw7G+cXw7EIJ42DNJK
-         99tw2xd1RC9qlsr7bKuKaGvieSHCLkmtGm+p/6lxQsH5lNFtfnRN4mDHEToQrgsM4P+P
-         F8HRBD6Iqi08m6rSOrEa4hx2nfN/cZ3cZ97ms=
-Received: by 10.216.178.13 with SMTP id e13mr6333149wem.25.1289281095772; Mon,
- 08 Nov 2010 21:38:15 -0800 (PST)
-Received: by 10.216.230.90 with HTTP; Mon, 8 Nov 2010 21:37:53 -0800 (PST)
-In-Reply-To: <AANLkTim3MacQK6EtTPNJsYbqb=5bOM3W3BXC6p=hT+PU@mail.gmail.com>
+	id S1752796Ab0KIHeG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Nov 2010 02:34:06 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:38540 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752320Ab0KIHeD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Nov 2010 02:34:03 -0500
+Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1PFiiM-0002tj-Ed; Tue, 09 Nov 2010 08:33:58 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 262431660F;
+	Tue,  9 Nov 2010 08:33:58 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <AANLkTimjRwSxkemMffASvHCxK009b1fnvNRs05_T_1DF@mail.gmail.com>
+X-Enigmail-Version: 1.1.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161017>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161018>
 
-Is there any feature in git to perform and auto stash apply/pop when
-trying to do a merge/rebase in a dirty working dir? This would save
-some keystrokes from time-to-time, and make it easier for new users
-unfamiliar with git.
+Am 11/8/2010 23:39, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
+>     eval_gettext () {
+>       gettext "$1" | (export PATH `envsubst --variables "$1"`; envsub=
+st "$1")
+>     }
 
-Regards,
-Casey McGinty
+So, for every message printed, you have at least 3 fork()s (usually eve=
+n
+more)! I'm not happy about that. You *must* avoid this at least for
+NO_GETTEXT builds, but if you can reduce them even for no-NO_GETTEXT
+builds, it would be great.
+
+-- Hannes
