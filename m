@@ -1,78 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC/PATCH 02/10] test-lib: introduce test_line_count to measure
- files
-Date: Tue, 09 Nov 2010 14:56:40 -0800
-Message-ID: <7veiaukswn.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [RFC/PATCH 02/10] test-lib: introduce test_line_count to measure files
+Date: Wed, 10 Nov 2010 00:09:41 +0100
+Message-ID: <AANLkTi=NmzMpaEq+iCHdDQth9WdsweLeEbzJBkuP+hZZ@mail.gmail.com>
 References: <1286136014-7728-1-git-send-email-newren@gmail.com>
- <1286136014-7728-16-git-send-email-newren@gmail.com>
- <20101031014654.GC29456@burratino> <7vr5f73umz.fsf@alter.siamese.dyndns.org>
- <20101031072640.GA11483@burratino> <20101031073350.GC11483@burratino>
+	<1286136014-7728-16-git-send-email-newren@gmail.com>
+	<20101031014654.GC29456@burratino>
+	<7vr5f73umz.fsf@alter.siamese.dyndns.org>
+	<20101031072640.GA11483@burratino>
+	<20101031073350.GC11483@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-	avarab@gmail.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Elijah Newren <newren@gmail.com>, git@vger.kernel.org
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 09 23:57:02 2010
+X-From: git-owner@vger.kernel.org Wed Nov 10 00:10:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFx7d-0008JK-Rv
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 23:57:02 +0100
+	id 1PFxK7-0005SL-Ui
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 00:09:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755510Ab0KIW4y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Nov 2010 17:56:54 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45070 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755250Ab0KIW4x (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Nov 2010 17:56:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2A80B3472;
-	Tue,  9 Nov 2010 17:56:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=odKkjbB3bsf7Bl4BWlXwuMzajHk=; b=PVXA0+g+NwAmuspst8uEeSA
-	UpapM9+kRDeEsTwzJWvz/LeqDifRri/D+qdStf1ueugSyLdRrIyO2i1tnb0rX0R2
-	011AdJAjBwQ9OHdyDvnI8eIh7H5F+pQkxJY8+AaQTkpOB6+dHxMaLYR4ofJ9afYW
-	x6upsT5u13FhMW+wZ0QY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=eaQAfkHJfGDDYM+MPpJp77qylVa3XMyg7ECbDGxvSNTooMi+9
-	RasJU0CHPNNCXnTgCtkIUwA3JzHgfZWHTK/rrC02mxX29U+kHmgFSDUvyBHLamzJ
-	qQERrAT0kH5Yz/1ho5KTVkHuPTFAt/8FvFKY9eFtccD5eUmtLQFOrbeqO8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DF585346F;
-	Tue,  9 Nov 2010 17:56:51 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 85A1D346E; Tue,  9 Nov 2010
- 17:56:46 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A416362E-EC54-11DF-AA76-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+	id S1754949Ab0KIXJo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Nov 2010 18:09:44 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:42277 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752385Ab0KIXJn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Nov 2010 18:09:43 -0500
+Received: by fxm16 with SMTP id 16so7207fxm.19
+        for <git@vger.kernel.org>; Tue, 09 Nov 2010 15:09:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=RTNWAxJf4CYqpc5/slV+BIQ/+UBU6bLIOzvsRK7Hll4=;
+        b=T96kLECuvAeIbt6Jadw2qWuJ9BNDYAelmLXMIfi/XrGRnXBgeqR1AOfhA+mMW1JUNS
+         nWFG6i3IzKHL+ozLeX4OxbFGPjHBJNMFWMoKuTA0MIIh/NAvtrcyACDA9xLON58FF5Yd
+         7NWg9KmP4stQkmp7wD0rzMvY2/59355DST+lw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=qdPO+eWknVXGdUi/XU/pVPn5sFgfGUIwG3PAVQLtn+tEo4LytD0VX3gXRINS/I1FrA
+         jsHLcQHXb4dINfjO073o0CuHNMwMN9qAhIUQOPwRMR4YZ0Ao9QzaFU2W691tOWPiuNa0
+         C8oQNIDoyih4HgRE2tehzbTcYOO8kaFFsJFxg=
+Received: by 10.223.101.131 with SMTP id c3mr5905176fao.95.1289344181674; Tue,
+ 09 Nov 2010 15:09:41 -0800 (PST)
+Received: by 10.223.105.78 with HTTP; Tue, 9 Nov 2010 15:09:41 -0800 (PST)
+In-Reply-To: <20101031073350.GC11483@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161107>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161108>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
+On Sun, Oct 31, 2010 at 08:33, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> Some tests check their output with code like the following:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0test "$(git ls-files -u B | wc -l)" -eq 3 =
+|| {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0echo "BAD: sho=
+uld have left stages for B"
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return 1
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
+>
+> The verbose failure condition is used because test, unlike
+> diff, does not print any useful information about the
+> nature of the failure when it fails.
+>
 > Introduce a test_line_count function to help. If used like
 >
-> 	git ls-files -u B >output &&
-> 	test_line_count -eq 3 output
->
-> it will produce output like
->
-> 	test_line_count: line count for output !-eq 3
-> 	100644 b023018cabc396e7692c70bbf5784a93d3f738ab 2	hi.c
-> 	100644 45b983be36b73c0788dc9cbcb76cbb80fc7bb057 3	hi.c
->
-> on failure.
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git ls-files -u B >output &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_line_count -eq 3 output
 
-Sounds like a sane thing to do.
+In an earlier thread I suggested an interface like:
 
-Especially because you wrote the implementation without surrounding dq
-pair, the callers can say "test_line_count = $N $file" instead of -eq and
-things will not break.  Nice.
+    test_line_count 3 "git ls-files -u B"
+
+But I like yours much better. Ack.
