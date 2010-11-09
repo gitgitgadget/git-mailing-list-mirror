@@ -1,83 +1,62 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Git automatic stashing?
-Date: Tue, 09 Nov 2010 08:49:24 +0100
-Message-ID: <vpqlj53j5rv.fsf@bauges.imag.fr>
-References: <AANLkTim3MacQK6EtTPNJsYbqb=5bOM3W3BXC6p=hT+PU@mail.gmail.com>
-	<AANLkTinwftXiZxbs_=PeM-MxQmMF4VaBCPEufH=OG6iU@mail.gmail.com>
-Mime-Version: 1.0
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: [RFC] Using gitrevisions :/search style with other operators
+Date: Tue, 9 Nov 2010 00:06:47 -0800
+Message-ID: <13A8F1B3-39B0-4D11-8763-9C458F75487D@sb.org>
+References: <20101109083023.783fad9b@chalon.bertin.fr>
+Mime-Version: 1.0 (Apple Message framework v1081)
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Casey McGinty <casey.mcginty@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 09 08:49:37 2010
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Yann Dirson <dirson@bertin.fr>
+X-From: git-owner@vger.kernel.org Tue Nov 09 09:07:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFixU-0000e4-2s
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 08:49:36 +0100
+	id 1PFjEP-0006U4-E6
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 09:07:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752998Ab0KIHtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Nov 2010 02:49:31 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:56027 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752708Ab0KIHta (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Nov 2010 02:49:30 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id oA97gaGl022844
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 9 Nov 2010 08:42:37 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PFixI-0004WO-Qu; Tue, 09 Nov 2010 08:49:24 +0100
-In-Reply-To: <AANLkTinwftXiZxbs_=PeM-MxQmMF4VaBCPEufH=OG6iU@mail.gmail.com> (Casey McGinty's message of "Mon\, 8 Nov 2010 19\:37\:53 -1000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 09 Nov 2010 08:42:37 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: oA97gaGl022844
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1289893360.81061@kRIXYf79nWLxn+8PsTpzXw
+	id S1753440Ab0KIIGv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Nov 2010 03:06:51 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:42913 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753435Ab0KIIGu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Nov 2010 03:06:50 -0500
+Received: by iwn10 with SMTP id 10so922329iwn.19
+        for <git@vger.kernel.org>; Tue, 09 Nov 2010 00:06:49 -0800 (PST)
+Received: by 10.231.34.6 with SMTP id j6mr4902587ibd.93.1289290009813;
+        Tue, 09 Nov 2010 00:06:49 -0800 (PST)
+Received: from [10.0.1.14] (c-24-130-32-253.hsd1.ca.comcast.net [24.130.32.253])
+        by mx.google.com with ESMTPS id gy41sm958788ibb.11.2010.11.09.00.06.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 09 Nov 2010 00:06:49 -0800 (PST)
+In-Reply-To: <20101109083023.783fad9b@chalon.bertin.fr>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161022>
 
-Casey McGinty <casey.mcginty@gmail.com> writes:
+On Nov 8, 2010, at 11:30 PM, Yann Dirson wrote:
 
-> Is there any feature in git to perform and auto stash apply/pop when
-> trying to do a merge/rebase in a dirty working dir? This would save
-> some keystrokes from time-to-time, and make it easier for new users
-> unfamiliar with git.
+> Kevin wrote:
+>> Junio wrote:
+>>>   $ git log 'HEAD..:( :/Merge branch 'kb/blame-author-email' )^2'
+> [...]
+>> 
+>> Interesting idea. It certainly solves the problem of being able to
+>> embed it within other operations (though you do then have to worry
+>> about escaping any embedded close-parens in the search), though it
+>> does mean my suggestion for being able to select the 2nd (or nth)
+>> match won't work.
+> 
+> Syntax like origin/pu^{/Merge 'kb/blame-author-email'}2 would be
+> somewhat consistent with the commit^2 case, and would seem unambiguous
+> as well - a bit weird, though.
 
-I agree with the keystrokes part, but not with the fact that it would
-make it easier in general. In the sequence
+This violates the idea that once you reach the end of a ^{} structure,
+it resolves to a commit that can then be modified by subsequent operations.
 
-git stash
-git merge
-git stash pop
-
-conflicts can occur in 2 distinct places. One can easily forsee this
-senario occuring:
-
-git stash
-git merge
-# fix conflicts
-# git commit
-# forget to do the action needed to get the "git stash pop"
-
-and voila, you've just lost data.
-
-Actually, what I'd like to see would be this feature, but limited to
-the case where the merge is a fast-forward, because then, only the
-last action of the sequence could possibly leave conflict, so Git
-could finish with a message like "please fix conflicts and continue
-working". Actually, this is not far from what "git checout -m" is
-doing.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+-Kevin Ballard
