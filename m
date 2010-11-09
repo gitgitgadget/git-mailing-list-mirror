@@ -1,60 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [RFC/PATCH 1/5] gettext: fix bug in git-sh-i18n's eval_gettext()
- by using envsubst(1)
-Date: Tue, 09 Nov 2010 13:53:29 +0100
-Message-ID: <4CD94449.1040201@viscovery.net>
-References: <AANLkTikOgMGqw5fc95c2VGwXxKu9rmsA+=z5_jykD92=@mail.gmail.com>	<1288524860-538-2-git-send-email-avarab@gmail.com>	<4CCFCCC8.7080603@viscovery.net>	<AANLkTimjRwSxkemMffASvHCxK009b1fnvNRs05_T_1DF@mail.gmail.com>	<4CD8F965.6050402@viscovery.net>	<AANLkTinKYJtaDjwEk0OqebBnL6+wvVO4wfWg7G-VYh7d@mail.gmail.com>	<4CD918AB.6060206@viscovery.net>	<AANLkTi=23MXbZeBF=eJLRnQycx4Bdg_an2aa_3oGWR66@mail.gmail.com>	<4CD9241F.6070807@viscovery.net>	<AANLkTins_qq=unv101JuV_CVvkp3KbTq5qycva7bZ7sm@mail.gmail.com>	<4CD933BF.6070105@viscovery.net>	<AANLkTimhbp3AngtJjBYhHpa173=D-XJOg9L2sd6YMCwA@mail.gmail.com>	<4CD93CF2.2060800@viscovery.net> <AANLkTiny+NmXew6UxjNMO+o75=CxxWm9iVRMRxs0LyTJ@mail.gmail.com>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: Git automatic stashing?
+Date: Tue, 9 Nov 2010 07:58:07 -0500
+Message-ID: <AANLkTin-qFrTnu+ZUx45Gbk_3m3843T1+n+aj3agwfzD@mail.gmail.com>
+References: <AANLkTim3MacQK6EtTPNJsYbqb=5bOM3W3BXC6p=hT+PU@mail.gmail.com>
+	<AANLkTinwftXiZxbs_=PeM-MxQmMF4VaBCPEufH=OG6iU@mail.gmail.com>
+	<AANLkTi=G=Xo90QayvuRDp=GTWtkES2fU0kkmn87Q09_2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 09 13:53:58 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Casey McGinty <casey.mcginty@gmail.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 09 13:58:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFni2-0006cz-Jq
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 13:53:58 +0100
+	id 1PFnmB-0008UQ-Bt
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 13:58:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751032Ab0KIMxe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Nov 2010 07:53:34 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:2460 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1749667Ab0KIMxe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Nov 2010 07:53:34 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1PFnhZ-000534-Id; Tue, 09 Nov 2010 13:53:29 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 4FBC81660F;
-	Tue,  9 Nov 2010 13:53:29 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
-In-Reply-To: <AANLkTiny+NmXew6UxjNMO+o75=CxxWm9iVRMRxs0LyTJ@mail.gmail.com>
-X-Enigmail-Version: 1.1.1
-X-Spam-Score: -1.4 (-)
+	id S1751224Ab0KIM6L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Nov 2010 07:58:11 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:55956 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1749667Ab0KIM6J (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Nov 2010 07:58:09 -0500
+Received: by vws13 with SMTP id 13so3171633vws.19
+        for <git@vger.kernel.org>; Tue, 09 Nov 2010 04:58:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=5F19wW8VQh9Zo9MljmJJrVPmHFXqMdTUwstXsroVIas=;
+        b=N0IORIFWoYGAGi48Sn1WAhqTqiDu8AGHBY4JU937txs4CY6Aqp58ABFS174OFXw7wP
+         W5uy/Oj8PifoSk4brkLFmGifzf5Jcg8l7m64uaQ7CJsO9yEJ4Ray14aWYNub17hUKqft
+         sXDDJwGsu6jQ2k3f4CccdrB8JX+wgPBcBeP1U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=IeDWvYy70qrcQrb/AoU65IMXz9yjFcXER3GrjeqQK1QYeh+l10fcl4xYAy3/J5ZL6C
+         DW1gOhXfy+csOG0exnib35HfNXICYjRX5pYdEAIcB+VnYVLFd+fIMEtNDZ4pikWK1/MC
+         HzyJOMtLU/CeZ2EJ3n2FyCo3/PzCzN4SJm2BY=
+Received: by 10.224.203.132 with SMTP id fi4mr5198221qab.240.1289307487932;
+ Tue, 09 Nov 2010 04:58:07 -0800 (PST)
+Received: by 10.224.20.82 with HTTP; Tue, 9 Nov 2010 04:58:07 -0800 (PST)
+In-Reply-To: <AANLkTi=G=Xo90QayvuRDp=GTWtkES2fU0kkmn87Q09_2@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161044>
 
-Am 11/9/2010 13:38, schrieb =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason:
-> I understood your previous comments to mean that the invocation time
-> of git-* on one hand and cat(1) on the other hand had to do with how
-> many DLL's the former needed.
+On Tue, Nov 9, 2010 at 7:36 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> On Tue, Nov 9, 2010 at 12:37 PM, Casey McGinty <casey.mcginty@gmail.com> wrote:
+>> Is there any feature in git to perform and auto stash apply/pop when
+>> trying to do a merge/rebase in a dirty working dir? This would save
+>> some keystrokes from time-to-time, and make it easier for new users
+>> unfamiliar with git.
+>
+> And when switching branches too.
 
-I was only guessing; I can't explain the timing difference.
+When switching branches (or checking out a different commit in general),
+I think git allows you to check out as long as the files that need to be
+replaced have not been updated, much like when merging. As far as I can
+see, that makes the benefit of temporarily stashing changes much smaller
+(but not non-existent) in these two cases (checkout and merge) than it
+is when rebasing.
 
-> Since git-sh-i18n--envsubst needs the same DLL's (i.e. the libc) as
-> cat(1) and *nothing else* it should be as fast as cat(1) and not as
-> slow as git-*(1) once I fix that unfortunate Makefile bug, right?
-
-Wrong. Please accept it as a fact (and I'll forgive your ignorance ;) I
-would like to spend the time explaining the reasons only if you want to
-compile git on Windows yourself.
-
--- Hannes
+Thinking a bit more about it, I think you are right, though, that it
+would still be a nice-to-have, as an option. Currently, 'git rebase' is
+more restrictive than 'git merge', but adding the option to 'git rebase'
+would not just make it on par with 'git merge', but would actually make
+it less restrictive than 'git merge', as even non-conflicting changes
+within files would be automatically handled.
