@@ -1,81 +1,57 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] Using gitrevisions :/search style with other operators
-Date: Tue, 9 Nov 2010 00:16:31 -0500
-Message-ID: <20101109051631.GA19867@sigill.intra.peff.net>
-References: <9D675671-693D-4B59-AF2A-0EFE4C537362@sb.org>
- <7vpqufpr7f.fsf@alter.siamese.dyndns.org>
- <4F75AA0C-B68A-4ABB-B67A-D7F62D989655@sb.org>
+From: Casey McGinty <casey.mcginty@gmail.com>
+Subject: Git automatic stashing?
+Date: Mon, 8 Nov 2010 19:37:53 -1000
+Message-ID: <AANLkTinwftXiZxbs_=PeM-MxQmMF4VaBCPEufH=OG6iU@mail.gmail.com>
+References: <AANLkTim3MacQK6EtTPNJsYbqb=5bOM3W3BXC6p=hT+PU@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git mailing list <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Tue Nov 09 06:19:08 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 09 06:38:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFgbr-0001uH-Lz
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 06:19:08 +0100
+	id 1PFguV-0008Bn-F0
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 06:38:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751120Ab0KIFPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Nov 2010 00:15:37 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:50186 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750857Ab0KIFPh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Nov 2010 00:15:37 -0500
-Received: (qmail 4579 invoked by uid 111); 9 Nov 2010 05:15:35 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 09 Nov 2010 05:15:35 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Nov 2010 00:16:31 -0500
-Content-Disposition: inline
-In-Reply-To: <4F75AA0C-B68A-4ABB-B67A-D7F62D989655@sb.org>
+	id S1751843Ab0KIFiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Nov 2010 00:38:17 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:36786 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751273Ab0KIFiR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Nov 2010 00:38:17 -0500
+Received: by wyb36 with SMTP id 36so4437590wyb.19
+        for <git@vger.kernel.org>; Mon, 08 Nov 2010 21:38:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:content-type;
+        bh=rvPVH2AVuskw2/0s5rRm/6lblm5vrY38BfqJeZhqJrY=;
+        b=RaSbnaaM6HF7hFJHqqlcIYLP9UiuRbhjYLJlYqM8YrBRJkegzY10zVr/S0AH17mB9A
+         uJBHNwQnTj/ZrqN+DohaLo4yhhTU3CD60WfmMue/U8PXc8BL9rnWrP80OqlMycx/bEkb
+         flybcCK0mDX2rxPeuua94dseTiPYYZXS8sVXg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        b=uQH4pAfYAL1iujObfobUCB8KB0kqVyht7/qzNAvMETyC2NK0Aw7G+cXw7EIJ42DNJK
+         99tw2xd1RC9qlsr7bKuKaGvieSHCLkmtGm+p/6lxQsH5lNFtfnRN4mDHEToQrgsM4P+P
+         F8HRBD6Iqi08m6rSOrEa4hx2nfN/cZ3cZ97ms=
+Received: by 10.216.178.13 with SMTP id e13mr6333149wem.25.1289281095772; Mon,
+ 08 Nov 2010 21:38:15 -0800 (PST)
+Received: by 10.216.230.90 with HTTP; Mon, 8 Nov 2010 21:37:53 -0800 (PST)
+In-Reply-To: <AANLkTim3MacQK6EtTPNJsYbqb=5bOM3W3BXC6p=hT+PU@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161016>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161017>
 
-On Mon, Nov 08, 2010 at 02:11:54PM -0800, Kevin Ballard wrote:
+Is there any feature in git to perform and auto stash apply/pop when
+trying to do a merge/rebase in a dirty working dir? This would save
+some keystrokes from time-to-time, and make it easier for new users
+unfamiliar with git.
 
-> >    $ git log 'HEAD..:( :/Merge branch 'kb/blame-author-email' )^2'
-> > 
-> > I haven't visited the particular codepath for some time, so I don't know
-> > offhand how involved the change would be, though.
-> 
-> Interesting idea. It certainly solves the problem of being able to embed it
-> within other operations (though you do then have to worry about escaping any
-> embedded close-parens in the search), though it does mean my suggestion for
-> being able to select the 2nd (or nth) match won't work. When I have the time
-> I'll start taking a look at the code.
-> 
-> Any comments on my suggestion to specify the ref to search from, e.g.
-> origin/pu:/"Merge 'kb/blame-author-email'"? As I stated before, I believe
-
-It seems to me the natural way to do that would be to use our existing
-generic "start at this ref and follow some chain" syntax, which is
-ref^{foo}. For example: origin/pu^{:Merge 'kb/blame-author-email'}.
-
-We already use it for "follow tree link" and "peel tag objects", and it
-is syntactically similar to the usual "follow the ancestry chain" syntax
-("ref^"). And I believe it should be unambiguous, as nothing that could
-go in ^{} could start with ":". And presumably one would have to
-backslash-escape embedded closing curly braces.
-
-We also have ref@{upstream}. The analogue here would be
-origin/pu@{:Merge 'kb/blame-author-email'}.
-
-I don't recall whether we put any conscious thought into ref@{upstream}
-versus ref^{upstream}. Certainly the former implies to me finding a
-particular starting point (as we do for reflogs), and the latter implies
-walking object graph (either by parent ancestry links, or through
-dereferencing tag and commit pointers). But I may just be rationalizing
-after the fact. :)
-
-Certainly this particular case seems to me to be more like "^" or "~";
-you are walking the ancestry tree not a specific number of steps, but
-until you see a particular subject.
-
--Peff
+Regards,
+Casey McGinty
