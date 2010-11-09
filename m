@@ -1,128 +1,96 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] dir.c: fix EXC_FLAG_MUSTBEDIR match in sparse checkout
-Date: Tue, 9 Nov 2010 09:47:01 +0700
-Message-ID: <AANLkTin7Rg19=vxO3PtcxEEXH2XeB92_VHxXPKgMbEqK@mail.gmail.com>
-References: <loom.20101107T172926-284@post.gmane.org> <1289153098-15684-1-git-send-email-pclouds@gmail.com>
- <7vfwvbpo9c.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] docs: give more hints about how "add -e" works
+Date: Mon, 8 Nov 2010 22:03:58 -0500
+Message-ID: <20101109030358.GA17747@sigill.intra.peff.net>
+References: <20101021143034.GA16083@sigill.intra.peff.net>
+ <7v4ocftbww.fsf@alter.siamese.dyndns.org>
+ <20101022192529.GA13059@sigill.intra.peff.net>
+ <7v8w1plwq0.fsf@alter.siamese.dyndns.org>
+ <20101108223322.GA12258@sigill.intra.peff.net>
+ <7vlj53nwjl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, thomasr@sailguy.org,
-	Jens Lehmann <Jens.Lehmann@web.de>
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 09 03:47:29 2010
+X-From: git-owner@vger.kernel.org Tue Nov 09 04:03:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFeF6-0004ih-JZ
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 03:47:28 +0100
+	id 1PFeUL-0000rT-0w
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 04:03:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754923Ab0KICrX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Nov 2010 21:47:23 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:33157 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754722Ab0KICrW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 8 Nov 2010 21:47:22 -0500
-Received: by wyb36 with SMTP id 36so4337199wyb.19
-        for <git@vger.kernel.org>; Mon, 08 Nov 2010 18:47:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Cu8PyhInnBjUzsM9eHdGpN5i76e8vmLJA0K5GNCp9Dk=;
-        b=LZeiVBHGHwT1ayE63os+yA6KfK+SRbz8M2OCyLew1jGFqRbW54xPkshjgyRnUwTuP5
-         3nWkOtBCldRpY3NyTOuGJSNUXKplBeIf7aIvF/vhpq5XQpp3pdRpCUxpCJR5f/BM0lhH
-         wmoWU13PkdY8MJTuJBlcMB10zd29pqT6FatEM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=FlHErj49QBoO5k8KkzcSKOLyNyzslvdPAnd+gvu2dLWe2GclpMzXF5EHTA1Yes46qu
-         LznmclKtzuihekUh5yIMFcFo0akC7MD89aIVhCXijSJu/eCaNnp3kMTsoOWsELeJSvE8
-         BbIRyjY7qspjyR6Av0Yil9mIphTipMLlDNIdc=
-Received: by 10.216.35.74 with SMTP id t52mr6264370wea.41.1289270841201; Mon,
- 08 Nov 2010 18:47:21 -0800 (PST)
-Received: by 10.216.172.199 with HTTP; Mon, 8 Nov 2010 18:47:01 -0800 (PST)
-In-Reply-To: <7vfwvbpo9c.fsf@alter.siamese.dyndns.org>
+	id S1754544Ab0KIDDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 8 Nov 2010 22:03:07 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:60429 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753843Ab0KIDDG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 8 Nov 2010 22:03:06 -0500
+Received: (qmail 3865 invoked by uid 111); 9 Nov 2010 03:03:02 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 09 Nov 2010 03:03:02 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Nov 2010 22:03:58 -0500
+Content-Disposition: inline
+In-Reply-To: <7vlj53nwjl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161012>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161013>
 
-2010/11/9 Junio C Hamano <gitster@pobox.com>:
->> diff --git a/dir.c b/dir.c
->> index d1e5e5e..b2dfb69 100644
->> --- a/dir.c
->> +++ b/dir.c
->> @@ -360,7 +360,8 @@ int excluded_from_list(const char *pathname,
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 if (x->flags & EXC_FLAG_MUSTBEDIR) {
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!dtype) {
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!prefix=
-cmp(pathname, exclude))
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!prefix=
-cmp(pathname, exclude) &&
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- pathname[x->patternlen] =3D=3D '/')
->
-> - Can pathname be much shorter than x->patternlen (it doesn't matter =
-as
-> =C2=A0prefixcmp will return false in that case)?
+On Mon, Nov 08, 2010 at 04:57:34PM -0800, Junio C Hamano wrote:
 
-prefixcmp will return non-zero in that case.
+> The new text indeed looks much clearer, except for one part I am not
+> absolutely sure...
+> 
+> > +new content::
+> > +
+> > +You may also add new content that does not exist in the patch. Simply
+> > +add new lines, each starting with "{plus}".
+> > +
+> > +You can also perform more complex operations, such as modifying the
+> > +content to be staged by a "{plus}" line. However, note that this impacts
+> > +_only_ the index; the working tree file will remain unchanged, and will
+> > +appear to "undo" the content you have staged. Such operations should be
+> > +performed only if you know what you are doing.
+> 
+> This "However, note that" part should apply not only to newly introduced
+> {plus} lines but also to {plus} lines whose change were edited (lines from
+> "added content" and from post-image half of "modified content"), no?
 
-> - Can pathname be equal to exclude (yes it can but in that case pathn=
-ame
-> =C2=A0is not a directory but is a regular file, symlink or a submodul=
-e)?
+Right. The final paragraph you quoted is not part of the list, and it
+looks better when rendered by asciidoc, as it's indented differently. So
+I think some of the confusion is from the source formatting. But...
 
-In index context, regular files, symlinks and submodules are the same
-and should not match here even if they're equal to exclude (the
-original exclude is "foo/". The trailing slash was converted to
-EXC_FLAG_MUSTBEDIR).
+> I tried to be careless when reading the two paragraphs above, and managed
+> to get an incorrect impression that the caveat applies only to "more
+> complex operations", even though it actually applies not just the previous
+> "new content" but also "added/modified" content.
+> 
+> Thinking about it a bit more, it is worse than that.  Turning " " into "-"
+> has the same "getting reverted" issue, no?
 
-> So it may be a tricky code, but I do not think it is a "workaround" i=
-n any
-> way. =C2=A0Isn't it just a "correct solution"?
+Yeah, some of the operations described in the upper list are actually
+"more complex" in the sense of looking like reverts. Basically any time
+you are _introducing_ a change during the diff edit rather than simply
+selecting or not-selecting changes that exist in the working tree, you
+are going to get confusing results. So let me take one more stab at it,
+and I think the correct breakdown is:
 
-Hmm.. when I added it, unpack-trees.c was the only callsite and it was
-a workaround (i.e. foo/ match foo directory, but foo alone does not).
+  1. stuff you might want to do: staging or not staging added, removed,
+     and modified lines
 
-> By the way, builtin/add.c calls excluded() with DT_UNKNOWN and relies=
- on
-> the fact that the macro is accidentally defined as 0. =C2=A0108da0d (=
-git add:
-> Add the "--ignore-missing" option for the dry run, 2010-07-10). =C2=A0=
-If it
-> means NULL, it should spell it out as such.
+  2. stuff you might want to do if you're insane: marking context lines
+     for removal, adding new content, changing content on existing add
+     lines
 
-It does mean NULL. Should builtin/add.c pass a proper pointer that
-contains DT_UNKNOWN instead? DT_UNKNOWN has special treatment (right
-after that "if").
+  3. stuff that you never want to do, because it makes the patch
+     impossible to apply: deleting, adding, or changing context or
+     removal lines
 
-diff --git a/builtin/add.c b/builtin/add.c
-index eed37bf..b104851 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -446,7 +446,8 @@ int cmd_add(int argc, const char **argv, const char=
- *prefix)
- 			if (!seen[i] && pathspec[i][0]
- 			    && !file_exists(pathspec[i])) {
- 				if (ignore_missing) {
--					if (excluded(&dir, pathspec[i], DT_UNKNOWN))
-+					int dtype =3D DT_UNKNOWN;
-+					if (excluded(&dir, pathspec[i], &dtype))
- 						dir_add_ignored(&dir, pathspec[i], strlen(pathspec[i]));
- 				} else
- 					die(_("pathspec '%s' did not match any files"),
---=20
-Duy
+I'll try to do a patch later tonight.
+
+-Peff
