@@ -1,101 +1,82 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] checkout: do not switch branch during a rebase unless -f
- is given
-Date: Tue, 9 Nov 2010 20:40:06 +0700
-Message-ID: <AANLkTinKNF6OEX=k1aepD-Zrm2_4GzHaB+SVHdfTMG-j@mail.gmail.com>
-References: <1285649564-24737-1-git-send-email-pclouds@gmail.com>
- <1285649702-24773-1-git-send-email-pclouds@gmail.com> <AANLkTinUudOXmhKW-+rkcpzb-VNnSBLZwGZcjrS6UdMu@mail.gmail.com>
- <AANLkTin19PREB3B68s+ejsgtXwe3CBxZF-caCvRp4UXv@mail.gmail.com>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: import determinism
+Date: Tue, 9 Nov 2010 14:43:37 +0100
+Message-ID: <20101109134337.GA19430@nibiru.local>
+References: <20101107202535.GA18766@nibiru.local> <AANLkTi=mx0AAKo2Asn5XJVcs30-PLuwhTbM=o0y36Wa_@mail.gmail.com> <m2lj54u9uj.fsf@igel.home> <AANLkTikXxM=CfU2dKAY9khi1_tAsGDdUEc8S5AxooGH9@mail.gmail.com> <m2d3qgu50c.fsf@igel.home>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?RnLDqWTDqXJpYyBCcmnDqHJl?= <fbriere@fbriere.net>,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 09 14:40:36 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 09 14:57:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFoR9-0005Qn-N2
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 14:40:36 +0100
+	id 1PFohE-00063p-5F
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 14:57:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752866Ab0KINka convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Nov 2010 08:40:30 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:63015 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751954Ab0KINk3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Nov 2010 08:40:29 -0500
-Received: by wwb34 with SMTP id 34so10124wwb.1
-        for <git@vger.kernel.org>; Tue, 09 Nov 2010 05:40:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=dWZ/32vdJXnVdhVM5U2Qsd/RajA4OOeUNmwomPm5vvw=;
-        b=ghG1NIjGLridL5GPn2xwHvkGalYrX9Ix6NZfvZBS6V7ZA2TUuLkQBSY/P0JPYD+95e
-         oZUnmM51pPHopPWHymEiNnro8mCCT3Os74DXMvYH1t5Zrv4wpYNJE/nLxR5wZBFYqZkY
-         o/GkpyKpRYaXmM0SeYis2qzo7FhZzQS3OLwa0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=RWwPex6vYgaaCPv9+qsuiE6Xha+hD56FgZVlUF4RQLT6eLSn3uWRC+qVDQLcWY5r50
-         wcY0f/Q1nwrudBLgBpO44919E/9ME/ROVxGgASi+7re8wRp3kXZQ6bGmgUdoMOclZfg/
-         Xpd96qI7HfQfHGBUfqk4lK878WKaC5XA0fLoo=
-Received: by 10.216.47.19 with SMTP id s19mr809675web.56.1289310027131; Tue,
- 09 Nov 2010 05:40:27 -0800 (PST)
-Received: by 10.216.172.199 with HTTP; Tue, 9 Nov 2010 05:40:06 -0800 (PST)
-In-Reply-To: <AANLkTin19PREB3B68s+ejsgtXwe3CBxZF-caCvRp4UXv@mail.gmail.com>
+	id S1752027Ab0KIN5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Nov 2010 08:57:07 -0500
+Received: from caprica.metux.de ([82.165.128.25]:40390 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751265Ab0KIN5E (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Nov 2010 08:57:04 -0500
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id oA9Dx1UT015963
+	for <git@vger.kernel.org>; Tue, 9 Nov 2010 14:59:02 +0100
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id oA9DwWvj015691
+	for git@vger.kernel.org; Tue, 9 Nov 2010 14:58:32 +0100
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id oA9DhbnV024694
+	for git@vger.kernel.org; Tue, 9 Nov 2010 14:43:37 +0100
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <m2d3qgu50c.fsf@igel.home>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161046>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161047>
 
-2010/9/28 Nguyen Thai Ngoc Duy <pclouds@gmail.com>:
->> Even rebase --interactive uses checkout from time to time:
->>
->> =C2=A0- for preserving merges
->> =C2=A0- to move to the correct branch in response to "git rebase -i
->> <upstream> <branch>"
->> =C2=A0- to move to the target in "git rebase -i --onto <new base> <u=
-pstream>"
->>
->> Unfortunately I do not have any good advice. Would it make sense to
->>
->> =C2=A0- first, change these call sites in git to use checkout -f
->> =C2=A0- teach checkout to warn (without erroring out) to give people=
- time
->> to change their scripts
->> =C2=A0- warn loudly about the upcoming change in the release notes
->> =C2=A0- later, change checkout to error out when -f is not supplied
->>
->> or am I being too paranoid?
->
-> No. But I don't like the idea of making scripts use "checkout -f". My
-> intention was to stop users from doing that, not scripts. Putting "-f=
-"
-> everywhere might have more negative side effects.
->
-> Maybe adding "--porcelain" to checkout first, updating scripts to use
-> it, then only check for rebase/bisect/am when --porcelain is missing.
+* Andreas Schwab <schwab@linux-m68k.org> wrote:
 
-Another approach is to let checkout work as usual, but refuse update re=
-fs:
+> > For cvsimport, it is not deterministic. Given cvs'
+> > ambiguous/buggy/inconsistent internal semantics around some
+> > operations, cvsps makes educated guesses about what happened.
+> >
+> > Later commits can affect those educated guesses.
+> 
+> The OP was assuming an unchanging repository.
 
- - after rebase starts, HEAD can only be updated either by rebase, or
-any commands that keep HEAD a headless ref.
- - the branch being rebased is locked. No commands but rebase can updat=
-e it.
+My assumption is:
 
-I think the second point is good for all interactive commands like
-rebase. Create a .lock file with a signature inside (e.g. command
-name). If update_ref() callers do not give correct signature, refuse
-to update.
---=20
-Duy
+* the original cvs repo will have later additions
+  (so I'm incrementally importing)
+* no commints (besides cvsimport) in the git mirror, but others
+  for off from there
+* the mirror could get lost in an desaster (no separate backup)
+  and should be recreated afresh in that case.
+
+
+The point behind this is: I'm running a growing number of cvs2git
+mirrors and dont want to do full backups of them.
+
+
+cu
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
