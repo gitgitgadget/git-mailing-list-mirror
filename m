@@ -1,78 +1,121 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] git-send-email.perl: make initial In-Reply-To apply
- only to first email
-Date: Tue, 09 Nov 2010 13:23:07 -0800
-Message-ID: <7vy692kx8k.fsf@alter.siamese.dyndns.org>
-References: <20101020004533.b64d446c.ospite@studenti.unina.it>
- <1288990769-13307-1-git-send-email-ospite@studenti.unina.it>
- <vpqtyjvo0tp.fsf@bauges.imag.fr>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2010, #01; Tue, 9)
+Date: Tue, 09 Nov 2010 13:38:49 -0800 (PST)
+Message-ID: <m3iq06fa9i.fsf@localhost.localdomain>
+References: <7vbp5ymfyo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Antonio Ospite <ospite@studenti.unina.it>, git@vger.kernel.org,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Stephen Boyd <bebarino@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Tue Nov 09 22:23:44 2010
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 09 22:39:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFvfL-00035k-EW
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 22:23:43 +0100
+	id 1PFvu6-0002lR-Nq
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 22:38:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752908Ab0KIVXc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Nov 2010 16:23:32 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39003 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755150Ab0KIVXb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Nov 2010 16:23:31 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7D268284D;
-	Tue,  9 Nov 2010 16:23:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=HTkvM5Ta+1pdOl8VArJVTj9TnfI=; b=l6WJg2DtucKdotOCj6XE20y
-	B7JMQqI0RxSr5cgSE58YyZdfDHEi3lP8DTZcRrVRIdEDQNogxgnkdSwjPVF0RXjF
-	LpQp7yLxUFPHyXM3RHa+vh3C/aIm8ypmqOeHmPzRPiCUm8KR1/waWXoL6yggMUJV
-	49UwVKlvCWiItDqeOHlE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=Sa8kG+z+RJCIZX06o2H4y0OqQ+mNs6VdLxcGEnhy/WuHHGi9d
-	R7x9GIKETvVyvv/RUKSQXaDQWsmOvjaY2bbcE7NfI/cH9anYKl6VwfUPWMux1AZD
-	ecn/ajQQX6fvEMiL46kv+x0ZW5ptzJgHLxW0O1zVRI1zRC9gkYYnNQZBVo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DA85D2843;
-	Tue,  9 Nov 2010 16:23:25 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A8B83283C; Tue,  9 Nov 2010
- 16:23:13 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 96A3B53C-EC47-11DF-9A20-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+	id S1754634Ab0KIVix (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Nov 2010 16:38:53 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:54031 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753483Ab0KIViw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Nov 2010 16:38:52 -0500
+Received: by ywc21 with SMTP id 21so4726947ywc.19
+        for <git@vger.kernel.org>; Tue, 09 Nov 2010 13:38:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=9FrjF2Fl59fEjL1Wqzq/3B0I/m4z5N517JvYMPvDl1M=;
+        b=SxnqX3CtQ0J9BSVvQNF5U9VmqXxo2lc13Y9/q40vcP1G1Q60sT+GGRhOtQZcYoHsly
+         pkKXrZaVNSXjby270Lb4TDNfzQTIdIMVbMaweI6n8FoKj9I0OCKbJ5Q++Sj/85sVQG+x
+         Pxssxp/l1RPXdLCu8co0X6yUxvrkeIwZyJNq8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=ce7v29WCNThP72rpmUN8tsRXiIu4k+X/zt5+tc/2pf30mimlWWHmvaobH4xZF8tXcT
+         rWq0BUl9M+f1mXbkLl9gcWlHKNY6wdvgKFFJWzQq0qigPRHHj4tttweZSgVplae7V9+v
+         p+fvwJ5HVDrROEvS4hDGWBoJO1d7JFZXiYeyA=
+Received: by 10.216.171.75 with SMTP id q53mr7407918wel.74.1289338731173;
+        Tue, 09 Nov 2010 13:38:51 -0800 (PST)
+Received: from localhost.localdomain (abwj130.neoplus.adsl.tpnet.pl [83.8.233.130])
+        by mx.google.com with ESMTPS id x15sm1222328weq.31.2010.11.09.13.38.48
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 09 Nov 2010 13:38:49 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oA9LcUGV017457;
+	Tue, 9 Nov 2010 22:38:33 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id oA9LcJPd017453;
+	Tue, 9 Nov 2010 22:38:19 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vbp5ymfyo.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161074>
 
-Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> I've been biten by this behavior sending the v2 of
-> a patch serie --in-reply-to the cover letter for the v1. The two
-> versions of each patch appear as reply to the original cover letter,
-> it's kind of a mess. I was really expecting the patch serie to appear
-> as a separate subtree in the discussion.
+> Here are the topics that have been cooking.  Commits prefixed with '-' are
+> only in 'pu' while commits prefixed with '+' are in 'next'.  The ones
+> marked with '.' do not appear in any of the integration branches, but I am
+> still holding onto them.
 
-The above is much better description of what issue the patch is trying to
-address; something like that should go to the description.
+> * tr/config-doc (2010-10-24) 2 commits
+>  . Documentation: complete config list from other manpages
+>  . Documentation: Move variables from config.txt to separate file
+> 
+> This unfortunately heavily conflicts with patches in flight...
 
-Antonio, I've already queued a few tests that document the established
-behaviour on ao/send-email-irt branch (54aae5e1), so could you rebase your
-patch on it, perhaps with an updated explanation in the log (and in the
-documentation)?
+The first patch in series is trivial to re-create: just put
+description of variables into separate file, and replace it with
+include.  Probably could even be scripted.
 
-Thanks, both.
+Which version of "complete config list" script did you pick?  There
+was some unresolved discussion about how best to proceed (following
+versus not-following includes, limiting to "Config.*" sections, etc.)
+
+BTW., IMHO not following includes would be better solution.
+
+> * jh/gitweb-caching (2010-11-01) 4 commits
+>  - gitweb: Minimal testing of gitweb caching
+>  - gitweb: File based caching layer (from git.kernel.org)
+>  - gitweb: add output buffering and associated functions
+>  - gitweb: Prepare for splitting gitweb
+>  (this branch uses jn/gitweb-test.)
+
+> * jn/gitweb-test (2010-09-26) 4 commits
+>   (merged to 'next' on 2010-11-05 at 90b3adf)
+>  + gitweb/Makefile: Include gitweb/config.mak
+>  + gitweb/Makefile: Add 'test' and 'test-installed' targets
+>  + t/gitweb-lib.sh: Add support for GITWEB_TEST_INSTALLED
+>  + gitweb: Move call to evaluate_git_version after evaluate_gitweb_config
+>  (this branch is used by jh/gitweb-caching.)
+
+These two branches have simple to resolve but non-trivial conflict.
+Should I rebase 'jh/gitweb-caching' on top of 'jn/gitweb-test' then,
+resolving this conflict?
+
+BTW. this would allow me to improve 'gitweb: Minimal testing of gitweb
+caching'.
+
+> * yd/dir-rename (2010-10-29) 5 commits
+>  - Allow hiding renames of individual files involved in a directory rename.
+>  - Unified diff output format for bulk moves.
+>  - Add testcases for the --detect-bulk-moves diffcore flag.
+>  - Raw diff output format for bulk moves.
+>  - Introduce bulk-move detection in diffcore.
+
+Very interesting!
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
