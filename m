@@ -1,290 +1,82 @@
-From: Mike Miller <mtmiller@ieee.org>
-Subject: Re: [PATCH] imap-send: Support SSL using GnuTLS
-Date: Tue, 09 Nov 2010 21:16:56 -0500
-Message-ID: <1289355416.3762.67.camel@tesla>
-References: <AANLkTim=hL6ONwu1i+xN=N0vJaF21g5PSj5wdjqoEm5c@mail.gmail.com>
-	 <20101109150941.GD18960@burratino>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 10 03:17:10 2010
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: [PATCH] Documentation/git-pull: clarify configuration
+Date: Tue,  9 Nov 2010 21:56:47 +0100
+Message-ID: <1289336209-28222-1-git-send-email-martin.von.zweigbergk@gmail.com>
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Nov 10 03:57:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PG0FJ-00082f-O3
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 03:17:10 +0100
+	id 1PG0sm-0004Md-Ez
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 03:57:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754159Ab0KJCRE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Nov 2010 21:17:04 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:49517 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752032Ab0KJCRB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Nov 2010 21:17:01 -0500
-Received: by gxk23 with SMTP id 23so72670gxk.19
-        for <git@vger.kernel.org>; Tue, 09 Nov 2010 18:17:00 -0800 (PST)
+	id S1753227Ab0KJC5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Nov 2010 21:57:39 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:49053 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753087Ab0KJC5i (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Nov 2010 21:57:38 -0500
+Received: by qyk5 with SMTP id 5so30778qyk.19
+        for <git@vger.kernel.org>; Tue, 09 Nov 2010 18:57:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:subject:from:to:cc
-         :in-reply-to:references:content-type:date:message-id:mime-version
-         :x-mailer:content-transfer-encoding;
-        bh=n5hDUWMY9xT/Ro161KfWH4B9cCnrGdjnNYXf4t7rIVs=;
-        b=RSKLhpRbyTwLwo1Cntexd2uO6p1nZZdVG6RJScQDFemRBFtkbAoIppwaTWvvkdAzw9
-         Un66kH8rOPr8q1svPhscgfjO49PeF/jPIXRhktJO1YsjjlU2i333hrn/HZFcWC2IcSe4
-         zshjtkhUl5KJBLsULHlrfH7lqvGx7LXx6qdQA=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=EWFGVEjB9B+eqUWrEGFZgQcqumRkXQHI+5HnB0eim4o=;
+        b=QBifdD6EzdOnxGmUPEgxSIAnX1pxeAxKN4ZU6AitgMbRUXzvEWhBtfOVFDImQqCaA4
+         xnpAdPp71YixIa0GWYgXFnhXwPvyHjDPSbP8NqU+jffMtBgHW6m/pSL6eACa2UFwawB7
+         oFF7HmVBljkB2T1F7R82Aqhep/qg3QPqC1nCg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:subject:from:to:cc:in-reply-to:references:content-type:date
-         :message-id:mime-version:x-mailer:content-transfer-encoding;
-        b=Dz8WJGhj0iOrx6eCfyP96hwWmDowxWyc1K7FHXE+S1dIIOv9usyuZCSVrRjs9Zs/wm
-         b/OY3pJhJDV2L9Qfepw3/luKqBKCSOHYONl9kHYXV8WgTNokwvMe/PUma6gaEHmkIY5j
-         rMsb7bnPzG42JljpPmCWFtmV+Gn9cxsI5+2xs=
-Received: by 10.150.189.18 with SMTP id m18mr11963836ybf.171.1289355420338;
-        Tue, 09 Nov 2010 18:17:00 -0800 (PST)
-Received: from [192.168.1.100] (ip70-187-237-171.dc.dc.cox.net [70.187.237.171])
-        by mx.google.com with ESMTPS id q4sm1142487yba.14.2010.11.09.18.16.58
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Z0hhIrVmKjZCHUvNoOJlsiFdhUoYYK7Up7dtACxbw+ZJ3gfEztDsoF8BA4McLt7kqK
+         /gdiDsz/iCr0NvEiXxKPXu6C00H//w51xXhPx3q377ZahddZC3hINT32kQ8Xgy5hW759
+         HULX4iKq/vB/qQ82MudBExCRa37U1Gu6lKzg8=
+Received: by 10.229.185.1 with SMTP id cm1mr7198022qcb.29.1289357855077;
+        Tue, 09 Nov 2010 18:57:35 -0800 (PST)
+Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id s28sm154827qcp.33.2010.11.09.18.57.33
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 09 Nov 2010 18:16:58 -0800 (PST)
-In-Reply-To: <20101109150941.GD18960@burratino>
-X-Mailer: Evolution 2.30.3
+        Tue, 09 Nov 2010 18:57:34 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.167.ga361b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161124>
 
-Hi Jonathan, thanks for the feedback and newb counseling, this is my
-first attempt at a git contribution.
+The sentence about 'branch.<name>.rebase' refers to the first sentence
+in the paragraph. Clarify by moving it right after that sentence.
 
-On Tue, 2010-11-09 at 09:09 -0600, Jonathan Nieder wrote: 
-> 
-> Mike Miller wrote:
-> 
-> > However, GnuTLS does not provide equivalents to the base64 and md5
-> > routines needed for CRAM-MD5 authentication.
-> 
-> Mm, that feels like it should be a separate patch.  It could be useful
-> when not using an SSL lib at all.
-> 
-> Maybe the base64 routine could share some code with base85.c?  (Just
-> a thought.)
+Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+---
+ Documentation/git-pull.txt |   11 +++++------
+ 1 files changed, 5 insertions(+), 6 deletions(-)
 
-Fair enough.  That's a better division grouping functionality with
-library dependencies, as gcrypt is needed for CRAM-MD5 and gnutls for
-SSL socket layer.
-
-> > When compiling, GnuTLS is only used when NO_OPENSSL is defined.
-> > ---
-> 
-> Sign-off?  (See Documentation/SubmittingPatches for what I'm talking
-> about.)
-
-rtfm, got it :)
-
-> 
-> > --- a/Makefile
-> > +++ b/Makefile
-> > @@ -24,6 +24,9 @@ all::
-> >  # Define NO_OPENSSL environment variable if you do not have OpenSSL.
-> >  # This also implies BLK_SHA1.
-> >  #
-> > +# Define NO_GNUTLS if you do not have gnutls installed.  gnutls provides
-> > +# SSL when OpenSSL is not used.
-> > +#
-> 
-> Shouldn't this say "if NO_OPENSSL is defined and you do not have GnuTLS
-> installed"?
-
-Sounds good.
-
-> > @@ -1244,8 +1247,21 @@ ifndef NO_OPENSSL
-> >  else
-> >  	BASIC_CFLAGS += -DNO_OPENSSL
-> >  	BLK_SHA1 = 1
-> > +ifndef NO_GNUTLS
-> > +	OPENSSL_LIBSSL = -lgnutls-openssl -lgnutls -lgcrypt
-> 
-> Probably should be indented another level to convey structure.
-
-Yes.
-
-> > +	ifdef GNUTLSDIR
-> > +		BASIC_CFLAGS += -I$(GNUTLSDIR)/include
-> > +		OPENSSL_LINK = -L$(GNUTLSDIR)/$(lib) $(CC_LD_DYNPATH)$(GNUTLSDIR)/$(lib)
-> > +	else
-> > +		OPENSSL_LINK =
-> > +	endif
-> > +	LIB_OBJS += gnutls-base64.o gcrypt-hmac.o
-> > +	LIB_H += gnutls-base64.h gcrypt-hmac.h
-> 
-> This causes all git commands to link to base64 and hmac routines.
-> Maybe you meant for them to be linked in to imap-send only?  See
-> http.o for an example of this kind of thing.
-
-Right again.
-
-> [...]
-> > --- /dev/null
-> > +++ b/gcrypt-hmac.c
-> > @@ -0,0 +1,41 @@
-> > +/*
-> > + * gcrypt-hmac.c - interface wrapper to provide OpenSSL HMAC API using gcrypt.
-> 
-> Maybe this could be useful for inclusion in gcrypt?
-> 
-> In git, it might make sense to treat these as routines for compat/,
-> kind of like compat/basename.c.
-
-As I was working through this part I was debating whether these should
-be in a separate file, where to put them, etc.  Compat looked like it
-was mostly libc-type functions so I stayed out of there.
-
-Deferring this to gcrypt to handle sounds like a great idea.
-
-> > --- /dev/null
-> > +++ b/gnutls-base64.c
-> > @@ -0,0 +1,197 @@
-> > +/*
-> > + * gnutls-base64.c - base64 encode and decode
-> > + *                   adapted from GnuTLS, original copyright follows
-> 
-> Why is this needed?
-
-gnutls has generic base64 encode/decode routines but they are not
-exported as callable symbols.  The only callable base64 routines in
-gnutls are specific to PEM encoding/decoding.  There are so many base64
-implementations out there but I don't know of any that are in the public
-API of a relatively common library.  Other than openssl.  I'm open to
-suggestions.
-
-Or as you suggested above, merge with base85.c.
-
-Another alternative would be, as with gcrypt, request gnutls to export
-the base64 encode/decode functions, and provide an openssl compatible
-interface while we're at it.
-
-> > --- a/imap-send.c
-> > +++ b/imap-send.c
-> > @@ -26,10 +26,19 @@
-> >  #include "exec_cmd.h"
-> >  #include "run-command.h"
-> >  #ifdef NO_OPENSSL
-> > +#ifdef NO_GNUTLS
-> >  typedef void *SSL;
-> >  #else
-> > +#include <gnutls/openssl.h>
-> > +#include "gnutls-base64.h"
-> > +#include "gcrypt-hmac.h"
-> > +#undef NO_OPENSSL /* gnutls is providing an openssl API */
-> > +#define SSL_VERIFY_PEER 1 /* doesn't matter */
-> 
-> If it doesn't matter, why set it?  (I assume it does matter but that
-> its value is unimportant. ;-))
-
-Something like that.
-
-> > +#endif
-> > +#else
-> >  #include <openssl/evp.h>
-> >  #include <openssl/hmac.h>
-> > +#define USE_OPENSSL_REAL 1
-> >  #endif
-> 
-> Nit: this means something like "SSL_IS_OPENSSL", right?
-> 
-> i.e., it is not actually a request "use such-and-such" but a
-> statement of fact "using such-and-such".
-
-Yeah, I think I changed that one back and forth.  At one point I had
-changed all "NO_OPENSSL"s to "NO_OPENSSL_API" but I switched back to
-minimize the changes and went with this check for the
-SSL_CTX_set_default_verify_paths when that ended up being the only
-difference.
-
-> > @@ -307,9 +316,9 @@ static int ssl_socket_connect(struct imap_socket *sock, int use_tls_only, int ve
-> >  	SSL_load_error_strings();
-> >  
-> >  	if (use_tls_only)
-> > -		meth = TLSv1_method();
-> > +		meth = TLSv1_client_method();
-> >  	else
-> > -		meth = SSLv23_method();
-> > +		meth = SSLv23_client_method();
-> 
-> Is there a semantic difference?  Will old versions of OpenSSL
-> continue to work (I assume so, but...)?
-
-Yeah I honestly don't know enough about it to be boldly making that
-change.  This could be conditional for gnutls, which only provides
-X_client_method and X_server_method but not X_method, which I suppose
-can act as either end of the connection?
-
-> > @@ -321,10 +330,12 @@ static int ssl_socket_connect(struct imap_socket *sock, int use_tls_only, int ve
-> >  	if (verify)
-> >  		SSL_CTX_set_verify(ctx, SSL_VERIFY_PEER, NULL);
-> >  
-> > +#ifdef USE_OPENSSL_REAL
-> >  	if (!SSL_CTX_set_default_verify_paths(ctx)) {
-> >  		ssl_socket_perror("SSL_CTX_set_default_verify_paths");
-> >  		return -1;
-> >  	}
-> > +#endif
-> 
-> Why?  Could this be accomplished with a
-> 
-> #ifndef USE_OPENSSL_REAL
-> 	static inline int SSL_CTX_set_default_verify_paths(...
-> 	{
-> 		/* Not needed by GnuTLS */
-> 		return 0;
-> 	}
-> #endif
-> 
-> wrapper?
-
-Looks good.
-
-> >  	sock->ssl = SSL_new(ctx);
-> >  	if (!sock->ssl) {
-> >  		ssl_socket_perror("SSL_new");
-> > @@ -371,9 +382,19 @@ static int socket_write(struct imap_socket *sock, const char *buf, int len)
-> >  {
-> >  	int n;
-> >  #ifndef NO_OPENSSL
-> > -	if (sock->ssl)
-> > -		n = SSL_write(sock->ssl, buf, len);
-> > -	else
-> > +	if (sock->ssl) {
-> > +		/* loop based on write_in_full, the gnutls implementation of
-> > +		 * SSL_write may write a partial buffer. */
-> > +		int count = len;
-> > +		n = 0;
-> > +		while (count > 0) {
-> > +			int written = SSL_write(sock->ssl, buf, count);
-> > +			if (written <= 0) break;
-> > +			count -= written;
-> > +			buf += written;
-> > +			n += written;
-> > +		}
-> > +	} else
-> 
-> Probably a wrapper function would be nicer.
-
-Amusingly enough, the need for this loop only showed up as the patches I
-was testing with started to get longer...
-
-Looking at it now I think it would be better to fix this in gnutls,
-since the SSL_write manpage does state that the data will always be
-written in full.
-
-Thanks again, I'm looking forward to some more comments on this.  I'll
-refine it some more, but it's starting to look like we may need some
-features added to both gcrypt and gnutls before this can be done
-cleanly.  I'm definitely willing to pull out the relevant parts and
-forward them to the respective projects to keep this moving.
-
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index c50f7dc..e9c0393 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -92,12 +92,11 @@ include::merge-options.txt[]
+ :git-pull: 1
+ 
+ --rebase::
+-	Instead of a merge, perform a rebase after fetching.  If
+-	there is a remote ref for the upstream branch, and this branch
+-	was rebased since last fetched, the rebase uses that information
+-	to avoid rebasing non-local changes. To make this the default
+-	for branch `<name>`, set configuration `branch.<name>.rebase`
+-	to `true`.
++	Instead of a merge, perform a rebase after fetching. To make this
++	the default for branch `<name>`, set configuration
++	`branch.<name>.rebase` to `true`. If there is a remote ref for the
++	upstream branch, and this branch was rebased since last fetched, the
++	rebase uses that information to avoid rebasing non-local changes.
+ +
+ [NOTE]
+ This is a potentially _dangerous_ mode of operation.
 -- 
-mike :: mtmiller at ieee dot org
+1.7.3.2.167.ga361b
