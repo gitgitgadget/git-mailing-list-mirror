@@ -1,73 +1,67 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [PATCH/resend] Doc: git-push: Specify the default mode in the description
-Date: Tue, 9 Nov 2010 13:23:20 +0100
-Message-ID: <AANLkTimYTRvOb1SjjUyANuTX2sCRKj17bLMbkKKG3rFg@mail.gmail.com>
-References: <1289222435-9610-1-git-send-email-santi@agolina.net> <7vy693o833.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Santi=20B=C3=A9jar?= <santi@agolina.net>
+Subject: [PATCHv2] Doc: git-push: Specify the default mode in the description
+Date: Tue,  9 Nov 2010 13:24:57 +0100
+Message-ID: <1289305497-13883-1-git-send-email-santi@agolina.net>
+References: <AANLkTimYTRvOb1SjjUyANuTX2sCRKj17bLMbkKKG3rFg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 09 13:23:49 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 09 13:25:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFnEp-0001vW-VR
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 13:23:48 +0100
+	id 1PFnGB-0002XI-EX
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 13:25:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755370Ab0KIMXn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Nov 2010 07:23:43 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:50875 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754948Ab0KIMXm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Nov 2010 07:23:42 -0500
-Received: by vws13 with SMTP id 13so3137974vws.19
-        for <git@vger.kernel.org>; Tue, 09 Nov 2010 04:23:40 -0800 (PST)
-Received: by 10.229.237.199 with SMTP id kp7mr6045565qcb.152.1289305420701;
- Tue, 09 Nov 2010 04:23:40 -0800 (PST)
-Received: by 10.229.105.76 with HTTP; Tue, 9 Nov 2010 04:23:20 -0800 (PST)
-In-Reply-To: <7vy693o833.fsf@alter.siamese.dyndns.org>
+	id S1755424Ab0KIMZH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Nov 2010 07:25:07 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:64228 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755341Ab0KIMZG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Nov 2010 07:25:06 -0500
+Received: by wyb36 with SMTP id 36so4748313wyb.19
+        for <git@vger.kernel.org>; Tue, 09 Nov 2010 04:25:05 -0800 (PST)
+Received: by 10.216.180.133 with SMTP id j5mr3472062wem.79.1289305504419;
+        Tue, 09 Nov 2010 04:25:04 -0800 (PST)
+Received: from localhost.localdomain (ub222011.pcb.ub.es [161.116.222.11])
+        by mx.google.com with ESMTPS id w8sm810390wei.45.2010.11.09.04.25.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 09 Nov 2010 04:25:03 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.337.gc40334
+In-Reply-To: <AANLkTimYTRvOb1SjjUyANuTX2sCRKj17bLMbkKKG3rFg@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161040>
 
-On Mon, Nov 8, 2010 at 9:48 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Santi B=E9jar <santi@agolina.net> writes:
->
->> Signed-off-by: Santi B=E9jar <santi@agolina.net>
->> ---
->> Hi *,
->>
->> =A0 just resend a patch that maybe was missed inside this thread:
->
-> No, I didn't miss it.
->
-> The new text says 'push "matching" branches' before explaining what i=
-t is,
-> only vaguely refers the reader to the next section by "see below" wit=
-hout
-> telling which part of below the reader should look at. =A0In other wo=
-rds, it
-> wastes two lines without adding two lines worth of additional informa=
-tion.
->
-> Saying "look for string 'default' below" might be an improvement ;-),=
- but
-> then the reader can do that without being told to do so themselves, s=
-o...
+Text extracted from the <refspec> option.
 
-At least with the new text the reader will know what to look for. She
-has to look for "matching" and not the generic "default". BTW, I'll
-send another patch with the explanation of matching, but it just
-repeats what is written in the <refspec> option...
+Signed-off-by: Santi B=C3=A9jar <santi@agolina.net>
+---
+ Documentation/git-push.txt |    5 +++++
+ 1 files changed, 5 insertions(+), 0 deletions(-)
 
-Another option would be to add "see the <refspec> option below",
-although is is already implicit as the paragraph begins with "if no
-explicit refspec".
-
-Santi
+diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
+index e11660a..2c0b311 100644
+--- a/Documentation/git-push.txt
++++ b/Documentation/git-push.txt
+@@ -23,6 +23,11 @@ You can make interesting things happen to a reposito=
+ry
+ every time you push into it, by setting up 'hooks' there.  See
+ documentation for linkgit:git-receive-pack[1].
+=20
++The default operation mode if no explicit refspec is found is
++to push "matching" branches, that is for every branch that exists on
++the local side, the remote side is updated if a branch of the same nam=
+e
++already exists on the remote side. See the <refspec> option below for
++more details.
+=20
+ OPTIONS[[OPTIONS]]
+ ------------------
+--=20
+1.7.3.2.337.gc40334
