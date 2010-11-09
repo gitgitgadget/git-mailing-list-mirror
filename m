@@ -1,82 +1,85 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: import determinism
-Date: Tue, 9 Nov 2010 14:43:37 +0100
-Message-ID: <20101109134337.GA19430@nibiru.local>
-References: <20101107202535.GA18766@nibiru.local> <AANLkTi=mx0AAKo2Asn5XJVcs30-PLuwhTbM=o0y36Wa_@mail.gmail.com> <m2lj54u9uj.fsf@igel.home> <AANLkTikXxM=CfU2dKAY9khi1_tAsGDdUEc8S5AxooGH9@mail.gmail.com> <m2d3qgu50c.fsf@igel.home>
-Reply-To: weigelt@metux.de
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] checkout: do not switch branch during a rebase unless -f
+ is given
+Date: Tue, 9 Nov 2010 08:06:15 -0600
+Message-ID: <20101109140615.GA18960@burratino>
+References: <1285649564-24737-1-git-send-email-pclouds@gmail.com>
+ <1285649702-24773-1-git-send-email-pclouds@gmail.com>
+ <AANLkTinUudOXmhKW-+rkcpzb-VNnSBLZwGZcjrS6UdMu@mail.gmail.com>
+ <AANLkTin19PREB3B68s+ejsgtXwe3CBxZF-caCvRp4UXv@mail.gmail.com>
+ <AANLkTinKNF6OEX=k1aepD-Zrm2_4GzHaB+SVHdfTMG-j@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 09 14:57:12 2010
+Cc: git <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?RnLDqWTDqXJpYyBCcmnDqHJl?= <fbriere@fbriere.net>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 09 15:06:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFohE-00063p-5F
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 14:57:12 +0100
+	id 1PFoqS-0002a2-IN
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 15:06:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752027Ab0KIN5H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Nov 2010 08:57:07 -0500
-Received: from caprica.metux.de ([82.165.128.25]:40390 "EHLO
-	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751265Ab0KIN5E (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Nov 2010 08:57:04 -0500
-Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
-	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id oA9Dx1UT015963
-	for <git@vger.kernel.org>; Tue, 9 Nov 2010 14:59:02 +0100
-Received: (from uucp@localhost)
-	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id oA9DwWvj015691
-	for git@vger.kernel.org; Tue, 9 Nov 2010 14:58:32 +0100
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id oA9DhbnV024694
-	for git@vger.kernel.org; Tue, 9 Nov 2010 14:43:37 +0100
-Mail-Followup-To: git@vger.kernel.org
+	id S1753160Ab0KIOGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Nov 2010 09:06:37 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:47720 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751649Ab0KIOGg (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Nov 2010 09:06:36 -0500
+Received: by ywc21 with SMTP id 21so4259188ywc.19
+        for <git@vger.kernel.org>; Tue, 09 Nov 2010 06:06:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=tfIQhn8zXSIys7q+XKVqKfV7n+8MXnI24s7EaU6k1R4=;
+        b=HPTVorUszy1sxsezwNHVoOGAkh4TK4OApQCIhwSveozFOydmT75vS6PKY3BmBo66Ec
+         uthMiwuUWsRa4/SLNDMvr+f5waUZtz1b51nnsvx2G67IpelO+q75TGZBPAO0zEgYc/Mg
+         lrmbhOcBS/3e6J9jJQ9elnzrJZYjWUxxTjwLs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=JXYiaVDDc8LZZoVTPDwZPIJKNuYUZaMPDfLqb9a4kjb9V02yxtckku6gw85VsL8JS6
+         kvpUC84+iNFinfY2mg0kk4/+i7nnHR3wJah7xH1nxNtxApI+rM0S59BLTPM1U+g6ISC+
+         12Nvubu2OL3JyGWXk5XZumW09dFKfdIQewtc0=
+Received: by 10.42.229.133 with SMTP id ji5mr717099icb.128.1289311594914;
+        Tue, 09 Nov 2010 06:06:34 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id i16sm1397288ibl.0.2010.11.09.06.06.32
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 09 Nov 2010 06:06:33 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <m2d3qgu50c.fsf@igel.home>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
+In-Reply-To: <AANLkTinKNF6OEX=k1aepD-Zrm2_4GzHaB+SVHdfTMG-j@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161047>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161048>
 
-* Andreas Schwab <schwab@linux-m68k.org> wrote:
+Nguyen Thai Ngoc Duy wrote:
 
-> > For cvsimport, it is not deterministic. Given cvs'
-> > ambiguous/buggy/inconsistent internal semantics around some
-> > operations, cvsps makes educated guesses about what happened.
-> >
-> > Later commits can affect those educated guesses.
+> Another approach is to let checkout work as usual, but refuse update refs:
 > 
-> The OP was assuming an unchanging repository.
+>  - after rebase starts, HEAD can only be updated either by rebase, or
+> any commands that keep HEAD a headless ref.
+>  - the branch being rebased is locked. No commands but rebase can update it.
+> 
+> I think the second point is good for all interactive commands like
+> rebase. Create a .lock file with a signature inside (e.g. command
+> name). If update_ref() callers do not give correct signature, refuse
+> to update.
 
-My assumption is:
+I like it.  Would it be possible to make sure the (widespread?) practice
+of using
 
-* the original cvs repo will have later additions
-  (so I'm incrementally importing)
-* no commints (besides cvsimport) in the git mirror, but others
-  for off from there
-* the mirror could get lost in an desaster (no separate backup)
-  and should be recreated afresh in that case.
+	rm -fr .git/rebase-merge
 
-
-The point behind this is: I'm running a growing number of cvs2git
-mirrors and dont want to do full backups of them.
-
-
-cu
--- 
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
-
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+to terminate a rebase without going back to the original branch
+still works?  I think it should be.
