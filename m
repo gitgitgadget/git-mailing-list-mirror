@@ -1,67 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH en/cascade-tests] tests: add missing &&
-Date: Tue, 09 Nov 2010 14:25:34 -0800
-Message-ID: <7vr5eukuch.fsf@alter.siamese.dyndns.org>
-References: <1286136014-7728-1-git-send-email-newren@gmail.com>
- <1286136014-7728-16-git-send-email-newren@gmail.com>
- <20101031014654.GC29456@burratino> <7vr5f73umz.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2010, #01; Tue, 9)
+Date: Tue, 9 Nov 2010 23:27:13 +0100
+Message-ID: <AANLkTimBmRd5jTmjQ5GT3dd25pp3mHes+0Zmitt6DEj=@mail.gmail.com>
+References: <7vbp5ymfyo.fsf@alter.siamese.dyndns.org>
+	<AANLkTi=F6768YZdR4H-vcnHgknV=roHG249dzbNRJVXR@mail.gmail.com>
+	<AANLkTinwdFvR4AV9nR=9sVuMYYZHMn4C7RQ0wneX6Ys+@mail.gmail.com>
+	<AANLkTikbA0qYKZ8BtDgKA8KXKu3d_JtUGVF9d6HFUgJC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-	avarab@gmail.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 09 23:26:09 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Tue Nov 09 23:27:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFwdh-0001Wr-N4
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 23:26:06 +0100
+	id 1PFwev-00027k-EH
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 23:27:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755030Ab0KIWZv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Nov 2010 17:25:51 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43133 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754944Ab0KIWZs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Nov 2010 17:25:48 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2834A30AE;
-	Tue,  9 Nov 2010 17:25:50 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UVECPU/FrHXw4FpNysWzJ9MKqMY=; b=T+pPuS
-	qmDJcOdVPAomaHpVyuCdPo+0bwRcL7m3n0jARwiX2heCbWC+G9rehDZeEQJHqoJI
-	CZzZlEHZZhJhgz51x1pKYOT3MPNiUi1x9hNVzDcN4YPY0N3+Z1SXEt5QLC+C+e0/
-	PjveFE8w7j0xR7Z/XwI4D/h3Naw5Py7QvxIsE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=I0YYO0JZ04lb0r1rpMomUJTie3sVPuYM
-	ylN+0KIda11+/YYBf4W51yvjvB7emDAVCVPXZrOrmbINBuPIkIPVpPc9sgVn3YZA
-	2dzKNyNMl/kc3SdUOtFsO+1y8/8v7inkGKDx2SpMT13ZPx79pF4OhOgAF9jp12Dm
-	/FUC+UUJ1nk=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DF5B030AD;
-	Tue,  9 Nov 2010 17:25:45 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9491830A8; Tue,  9 Nov 2010
- 17:25:40 -0500 (EST)
-In-Reply-To: <7vr5f73umz.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat\, 30 Oct 2010 20\:31\:48 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4BDD815A-EC50-11DF-A6CE-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+	id S1755312Ab0KIW1Q convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Nov 2010 17:27:16 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:52838 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753904Ab0KIW1Q convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 9 Nov 2010 17:27:16 -0500
+Received: by fxm16 with SMTP id 16so5433264fxm.19
+        for <git@vger.kernel.org>; Tue, 09 Nov 2010 14:27:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=FPF9wlg8bOurdySMna09nJSaygU9mSSyqtSgFI3/lxU=;
+        b=xwTBGkNj9/k/rBwzup5q6PEO7E62+whjcve3aqnu9is+E7752fzbabS8Ab5e0B8h4H
+         BjpofNPqjBFN/lgzO24BhQLVEbq0KxCQrHM2+D3s1X8qNOoOnYHhw9NVS4kPh2OWSXqL
+         rUhsWCIkDn7TAfB3hHLkBU/rTXE6R3fvdhdkg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=LkqDb3pHli8U7utsXTzYs/C+pNdV7I0vW6uNnioclW3rlUCw4Xy02vzUQygheTIXX4
+         3yEG2zIuTu9oK9GcpPw4gQxIuPMvK8Nqe+D5J5X1EsxZqFVBpKSJXsHMY2HD3P5YLoCG
+         rF/SAvgd9p05jf9q3wZGJ2pyOmU7V+z1zhnsI=
+Received: by 10.223.83.138 with SMTP id f10mr5806819fal.114.1289341633878;
+ Tue, 09 Nov 2010 14:27:13 -0800 (PST)
+Received: by 10.223.105.78 with HTTP; Tue, 9 Nov 2010 14:27:13 -0800 (PST)
+In-Reply-To: <AANLkTikbA0qYKZ8BtDgKA8KXKu3d_JtUGVF9d6HFUgJC@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161106>
 
-Junio C Hamano <gitster@pobox.com> writes:
+On Tue, Nov 9, 2010 at 23:25, Erik Faye-Lund <kusmabite@gmail.com> wrot=
+e:
+> On Tue, Nov 9, 2010 at 11:21 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
+on
+> <avarab@gmail.com> wrote:
+>> On Tue, Nov 9, 2010 at 23:17, Erik Faye-Lund <kusmabite@gmail.com> w=
+rote:
+>>> Hmmm, this is a bit more annoying IMO - this currently breaks in
+>>> msysgit, due to lack of gettext and NO_GETTEXT not working properly=
+=2E
+>>> =C3=86var is aware of this
+>>> (AANLkTiny+NmXew6UxjNMO+o75=3DCxxWm9iVRMRxs0LyTJ@mail.gmail.com), b=
+ut
+>>> haven't fixed it yet. I do have the patches needed to get a gettext=
+ in
+>>> msysgit, so it's not a very big deal to me. But are you sure that t=
+his
+>>> makes this series ready for 'next'?
+>>
+>> I hear ya. I'm hoping to get around to fixing all this stuff before =
+it
+>> lands in "next".
+>>
+>
+> Good to hear :)
+>
+>> Also going to look at your gettext patches to see if there's anythin=
+g
+>> there that needs
+>> to be made part of the series.
+>>
+>
+> My "gettext-patches" are patches for msysgit (the development
+> environment used to build Git for Windows) to build and install
+> gettext. They're not patches against git.git, so I doubt they are
+> useful to outside of msysgit.git.
 
-> Looked up to but not including t5302 and all looked Ok.
+Right, I hadn't looked at them. Thanks for that clarification.
 
-I looked at the rest and it looked fine.  Queued on top of en/and-cascade-tests
-and seems to merge to 'pu' without much conflicts.
-
-Thanks.
+And thanks for working on building gettext on msysgit. That will be
+very useful later on.
