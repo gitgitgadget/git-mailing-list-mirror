@@ -1,65 +1,83 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH] attr: support quoting pathname patterns in C style
-Date: Tue, 09 Nov 2010 08:48:16 +0100
-Message-ID: <4CD8FCC0.2030500@viscovery.net>
-References: <AANLkTinNctmWpshBeSTzZRm6+EJ=Cjdpoaj4Aon+52_b@mail.gmail.com> <1288878944-14066-1-git-send-email-pclouds@gmail.com> <7vvd4bu2pl.fsf@alter.siamese.dyndns.org> <15C4C111-824D-4657-B034-A1BE1DAD50D4@sb.org> <7v8w13r756.fsf@alter.siamese.dyndns.org> <626BD1B6-4DDF-457F-B430-F15C891710E2@sb.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Git automatic stashing?
+Date: Tue, 09 Nov 2010 08:49:24 +0100
+Message-ID: <vpqlj53j5rv.fsf@bauges.imag.fr>
+References: <AANLkTim3MacQK6EtTPNJsYbqb=5bOM3W3BXC6p=hT+PU@mail.gmail.com>
+	<AANLkTinwftXiZxbs_=PeM-MxQmMF4VaBCPEufH=OG6iU@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu40=?= =?UTF-8?B?YyBEdXk=?= 
-	<pclouds@gmail.com>, git@vger.kernel.org,
-	Marc Strapetz <marc.strapetz@syntevo.com>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Tue Nov 09 08:48:26 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Casey McGinty <casey.mcginty@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 09 08:49:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFiwL-0000EZ-7R
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 08:48:25 +0100
+	id 1PFixU-0000e4-2s
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 08:49:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752934Ab0KIHsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Nov 2010 02:48:20 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:53073 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1752518Ab0KIHsT (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Nov 2010 02:48:19 -0500
-Received: from cpe228-254.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1PFiwD-0007oN-ES; Tue, 09 Nov 2010 08:48:17 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 305AC1660F;
-	Tue,  9 Nov 2010 08:48:17 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
-In-Reply-To: <626BD1B6-4DDF-457F-B430-F15C891710E2@sb.org>
-X-Spam-Score: -1.4 (-)
+	id S1752998Ab0KIHtb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Nov 2010 02:49:31 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:56027 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752708Ab0KIHta (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Nov 2010 02:49:30 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id oA97gaGl022844
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 9 Nov 2010 08:42:37 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PFixI-0004WO-Qu; Tue, 09 Nov 2010 08:49:24 +0100
+In-Reply-To: <AANLkTinwftXiZxbs_=PeM-MxQmMF4VaBCPEufH=OG6iU@mail.gmail.com> (Casey McGinty's message of "Mon\, 8 Nov 2010 19\:37\:53 -1000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 09 Nov 2010 08:42:37 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: oA97gaGl022844
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1289893360.81061@kRIXYf79nWLxn+8PsTpzXw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161020>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161021>
 
-Am 11/8/2010 22:56, schrieb Kevin Ballard:
-> Basically what I'm trying to say is, we already break one particular
-> "rather rare" setup. I would love to come up with a solution that supports
-> both setups, but I don't know if one exists outside of using a config
-> variable to control whether git attribute patterns support quoting (a solution
-> I am not particularly fond of for this case).
+Casey McGinty <casey.mcginty@gmail.com> writes:
 
-Can we perhaps have a pseudo-attribute 'quoted-names' that is to be used
-like this:
+> Is there any feature in git to perform and auto stash apply/pop when
+> trying to do a merge/rebase in a dirty working dir? This would save
+> some keystrokes from time-to-time, and make it easier for new users
+> unfamiliar with git.
 
-* quoted-names
-"file 1" binary
-file.1 -diff
+I agree with the keystrokes part, but not with the fact that it would
+make it easier in general. In the sequence
 
-Its meaning would be that the remainder of the current .gitattributes file
-is to be parsed with C style path quoting enabled. The glob given with
-this attribute is irrelevant and ignored.
+git stash
+git merge
+git stash pop
 
-I didn't check whether old gits would ignore this unknown attribute.
+conflicts can occur in 2 distinct places. One can easily forsee this
+senario occuring:
 
--- Hannes
+git stash
+git merge
+# fix conflicts
+# git commit
+# forget to do the action needed to get the "git stash pop"
+
+and voila, you've just lost data.
+
+Actually, what I'd like to see would be this feature, but limited to
+the case where the merge is a fast-forward, because then, only the
+last action of the sequence could possibly leave conflict, so Git
+could finish with a message like "please fix conflicts and continue
+working". Actually, this is not far from what "git checout -m" is
+doing.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
