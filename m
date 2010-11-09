@@ -1,61 +1,48 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [RFC] Using gitrevisions :/search style with other operators
-Date: Tue, 9 Nov 2010 11:10:18 -0500
-Message-ID: <20101109161015.GB24975@sigill.intra.peff.net>
-References: <20101109083023.783fad9b@chalon.bertin.fr>
+From: Will Hall <will@gnatter.net>
+Subject: What's the -s switch in git show?
+Date: Tue, 09 Nov 2010 16:15:21 +0000
+Message-ID: <4CD97399.4010704@gnatter.net>
+References: <1288711888-21528-1-git-send-email-Matthieu.Moy@imag.fr> <1288711888-21528-8-git-send-email-Matthieu.Moy@imag.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git list <git@vger.kernel.org>, kevin@sb.org
-To: Yann Dirson <dirson@bertin.fr>
-X-From: git-owner@vger.kernel.org Tue Nov 09 17:09:29 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Tue Nov 09 17:50:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFqlD-0003jE-Ra
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 17:09:28 +0100
+	id 1PFrOi-0003qc-3k
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 17:50:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751904Ab0KIQJX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Nov 2010 11:09:23 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:49704 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751223Ab0KIQJW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Nov 2010 11:09:22 -0500
-Received: (qmail 7819 invoked by uid 111); 9 Nov 2010 16:09:21 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 09 Nov 2010 16:09:21 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 09 Nov 2010 11:10:18 -0500
-Content-Disposition: inline
-In-Reply-To: <20101109083023.783fad9b@chalon.bertin.fr>
+	id S1752932Ab0KIQuK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Nov 2010 11:50:10 -0500
+Received: from mail.qualtersystems.com ([74.200.89.103]:56520 "EHLO
+	mail.qualtersystems.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752098Ab0KIQuJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Nov 2010 11:50:09 -0500
+X-Greylist: delayed 2080 seconds by postgrey-1.27 at vger.kernel.org; Tue, 09 Nov 2010 11:50:09 EST
+Received: from localhost (mail [127.0.0.1])
+	by mail.qualtersystems.com (Postfix) with ESMTP id B0C59533830B
+	for <git@vger.kernel.org>; Tue,  9 Nov 2010 16:15:28 +0000 (GMT)
+X-Virus-Scanned: amavisd-new at qualtersystems.com
+Received: from mail.qualtersystems.com ([127.0.0.1])
+	by localhost (mail.qualtersystems.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 38M+FMJUi7cq for <git@vger.kernel.org>;
+	Tue,  9 Nov 2010 16:15:23 +0000 (GMT)
+Received: from merton.mpc.local (mpc-1.sohonet.co.uk [193.203.82.226])
+	(Authenticated sender: will@mail.qualtersystems.com)
+	by mail.qualtersystems.com (Postfix) with ESMTP id 2C3795338349
+	for <git@vger.kernel.org>; Tue,  9 Nov 2010 16:15:23 +0000 (GMT)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-GB; rv:1.9.2.12) Gecko/20101027 Lightning/1.0b2 Thunderbird/3.1.6
+In-Reply-To: <1288711888-21528-8-git-send-email-Matthieu.Moy@imag.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161058>
 
-On Tue, Nov 09, 2010 at 08:30:23AM +0100, Yann Dirson wrote:
-
-> Jeff wrote:
-> > It seems to me the natural way to do that would be to use our existing
-> > generic "start at this ref and follow some chain" syntax, which is
-> > ref^{foo}. For example: origin/pu^{:Merge 'kb/blame-author-email'}.
-> 
-> We may want to keep the "/" mnemonic (which seems no to conflict
-> withcurrent use either), rather than the ":" part, with something like
-> origin/pu^{/Merge 'kb/blame-author-email'}, and keep ":" for future use.
-
-Yeah, sorry, the ':' thing was just a think-o on my part. It should
-definitely be "/".
-
-> > We also have ref@{upstream}. The analogue here would be
-> > origin/pu@{:Merge 'kb/blame-author-email'}.
-> 
-> That's somewhat different, it looks like the foo@{...} only applies to
-> references with name "foo", and not to arbitrary revisions.  Allowing a
-> search to start from any commit seems more useful here.
-
-Yeah, agreed.
-
--Peff
+I know this should be obvious but I can't find *any* reference to this 
+in git show --help
