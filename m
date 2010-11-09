@@ -1,96 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] docs: give more hints about how "add -e" works
-Date: Mon, 8 Nov 2010 22:03:58 -0500
-Message-ID: <20101109030358.GA17747@sigill.intra.peff.net>
-References: <20101021143034.GA16083@sigill.intra.peff.net>
- <7v4ocftbww.fsf@alter.siamese.dyndns.org>
- <20101022192529.GA13059@sigill.intra.peff.net>
- <7v8w1plwq0.fsf@alter.siamese.dyndns.org>
- <20101108223322.GA12258@sigill.intra.peff.net>
- <7vlj53nwjl.fsf@alter.siamese.dyndns.org>
+From: Brian Collins <bricollins@gmail.com>
+Subject: Re: [PATCH v2] Run global hooks from the directory at hooks.dir
+Date: Mon, 8 Nov 2010 19:22:43 -0800
+Message-ID: <AANLkTimx5V7P4yFY0HYP6TNOKa+9fZ1vQUkhoMVL7OeR@mail.gmail.com>
+References: <1289219520-37435-1-git-send-email-bricollins@gmail.com>
+	<7v39rbpn1c.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, s-beyer@gmx.net
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 09 04:03:14 2010
+X-From: git-owner@vger.kernel.org Tue Nov 09 04:22:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFeUL-0000rT-0w
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 04:03:13 +0100
+	id 1PFenK-0006ZY-8b
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 04:22:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754544Ab0KIDDH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 22:03:07 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:60429 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753843Ab0KIDDG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 22:03:06 -0500
-Received: (qmail 3865 invoked by uid 111); 9 Nov 2010 03:03:02 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 09 Nov 2010 03:03:02 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 08 Nov 2010 22:03:58 -0500
-Content-Disposition: inline
-In-Reply-To: <7vlj53nwjl.fsf@alter.siamese.dyndns.org>
+	id S1751324Ab0KIDWp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Nov 2010 22:22:45 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:51612 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751249Ab0KIDWo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Nov 2010 22:22:44 -0500
+Received: by wyb36 with SMTP id 36so4360791wyb.19
+        for <git@vger.kernel.org>; Mon, 08 Nov 2010 19:22:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=T/S4loPCYjQ4H4HGIZDyZzjs/OpGO9JSx2c7NQ7sOg8=;
+        b=rkvBx58nYOxQdCoEjD/QHjJMWpRsNiGnLuYGSG8TtjXkr2hG+dlIC+3t47ScUF2KV8
+         vhlDuJM5ou0WxYYtzL6DjIw9kwVaz+XO9FXLW7a5PkXXS4geJs0+7iYMUJD4wKduHmNw
+         dj9ihzrK1TXEPOH18qltqxAIMqyrNTKtKuiT4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Rt46XkKy8ZPq6HnohcLNgT3Gl7jcS5qvoOpEspxP1oRQVM7vLt1K4vUAH7JTHQGQI7
+         eF+as44PLxUD5w7k4tJQ5p3V8U0+PYgX4IO4KJvWb/7MlohGjEvIx+uc4mt6r2cRyT9A
+         Bl+mHOKG+SnB3DqhxxhKxWNr7HTGnfRwMGeUA=
+Received: by 10.227.133.134 with SMTP id f6mr6004724wbt.202.1289272963077;
+ Mon, 08 Nov 2010 19:22:43 -0800 (PST)
+Received: by 10.216.233.41 with HTTP; Mon, 8 Nov 2010 19:22:43 -0800 (PST)
+In-Reply-To: <7v39rbpn1c.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161013>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161014>
 
-On Mon, Nov 08, 2010 at 04:57:34PM -0800, Junio C Hamano wrote:
+> It is left unspecified what happens when the global hook exists and i=
+t
+> succeeds. =A0Watch out for hooks that read from their standard input.
 
-> The new text indeed looks much clearer, except for one part I am not
-> absolutely sure...
-> 
-> > +new content::
-> > +
-> > +You may also add new content that does not exist in the patch. Simply
-> > +add new lines, each starting with "{plus}".
-> > +
-> > +You can also perform more complex operations, such as modifying the
-> > +content to be staged by a "{plus}" line. However, note that this impacts
-> > +_only_ the index; the working tree file will remain unchanged, and will
-> > +appear to "undo" the content you have staged. Such operations should be
-> > +performed only if you know what you are doing.
-> 
-> This "However, note that" part should apply not only to newly introduced
-> {plus} lines but also to {plus} lines whose change were edited (lines from
-> "added content" and from post-image half of "modified content"), no?
+The local hook will execute. They are chained.
 
-Right. The final paragraph you quoted is not part of the list, and it
-looks better when rendered by asciidoc, as it's indented differently. So
-I think some of the confusion is from the source formatting. But...
+> In any case, the above is totally backwards from the usual practice a=
+nd
+> expectation of local things overriding the global default. =A0If you =
+want a
+> site-wide policy suggestion, default templates would be a more accept=
+able
+> way (and the implementation of hooks you install to developer reposit=
+ories
+> can choose to look at $GIT_DIR/hooks/local-foo-hook).
 
-> I tried to be careless when reading the two paragraphs above, and managed
-> to get an incorrect impression that the caveat applies only to "more
-> complex operations", even though it actually applies not just the previous
-> "new content" but also "added/modified" content.
-> 
-> Thinking about it a bit more, it is worse than that.  Turning " " into "-"
-> has the same "getting reverted" issue, no?
+The global hook doesn't override the local hook, it supplements it. In =
+any
+case, a developer can set hooks.dir to be something else in a specific
+repository, and it will override the global default.
 
-Yeah, some of the operations described in the upper list are actually
-"more complex" in the sense of looking like reverts. Basically any time
-you are _introducing_ a change during the diff edit rather than simply
-selecting or not-selecting changes that exist in the working tree, you
-are going to get confusing results. So let me take one more stab at it,
-and I think the correct breakdown is:
+> By the way, with a distributed scm, anything-wide policy enforcement =
+at
+> the level of developer's individual working repositories is a lost ca=
+use.
+> You are giving freedom to do anything on their own copy of the histor=
+y to
+> the developers; the project-wide policy is to be enforced at the peri=
+meter
+> of your authoritative repository of the project.
 
-  1. stuff you might want to do: staging or not staging added, removed,
-     and modified lines
-
-  2. stuff you might want to do if you're insane: marking context lines
-     for removal, adding new content, changing content on existing add
-     lines
-
-  3. stuff that you never want to do, because it makes the patch
-     impossible to apply: deleting, adding, or changing context or
-     removal lines
-
-I'll try to do a patch later tonight.
-
--Peff
+The developer is in total control, it is a user configuration option.
+It is the same
+as setting colours for diffs. Just a preference that makes the develope=
+r's life
+easier by adding some way of automating certain tasks. Say you want to
+post to IRC every time you commit, this could do that. Or if you want t=
+o set up
+a shell script to jump to your most recently used repository. There are=
+ lots of
+possible applications. I admit "site-wide coding style enforcement" was=
+ a bad
+example, and I certainly don't plan to use it for that.
