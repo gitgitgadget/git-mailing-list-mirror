@@ -1,8 +1,7 @@
 From: Johan Herland <johan@herland.net>
-Subject: [PATCHv6 18/23] git notes merge: --commit should fail if underlying
- notes ref has moved
-Date: Tue, 09 Nov 2010 22:49:54 +0100
-Message-ID: <1289339399-4733-19-git-send-email-johan@herland.net>
+Subject: [PATCHv6 22/23] cmd_merge(): Parse options before checking MERGE_HEAD
+Date: Tue, 09 Nov 2010 22:49:58 +0100
+Message-ID: <1289339399-4733-23-git-send-email-johan@herland.net>
 References: <1289339399-4733-1-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN
@@ -10,192 +9,111 @@ Content-Transfer-Encoding: 7BIT
 Cc: johan@herland.net, jrnieder@gmail.com, bebarino@gmail.com,
 	avarab@gmail.com, gitster@pobox.com, srabbelier@gmail.com
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 09 22:51:30 2010
+X-From: git-owner@vger.kernel.org Tue Nov 09 22:51:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFw6C-0000yR-CE
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 22:51:28 +0100
+	id 1PFw6F-0000yR-LM
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 22:51:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755113Ab0KIVuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Nov 2010 16:50:35 -0500
+	id S1755196Ab0KIVvN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Nov 2010 16:51:13 -0500
 Received: from smtp.getmail.no ([84.208.15.66]:61168 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755466Ab0KIVua (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Nov 2010 16:50:30 -0500
+	id S1755476Ab0KIVuc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Nov 2010 16:50:32 -0500
 Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
  by get-mta-out02.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0LBN005XL0NOCV30@get-mta-out02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 09 Nov 2010 22:50:18 +0100 (MET)
+ git@vger.kernel.org; Tue, 09 Nov 2010 22:50:20 +0100 (MET)
 Received: from get-mta-scan01.get.basefarm.net
  (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 832ED1798FFF_CD9C21AB	for <git@vger.kernel.org>; Tue,
- 09 Nov 2010 21:50:18 +0000 (GMT)
+ with SMTP id 833E11799801_CD9C21CB	for <git@vger.kernel.org>; Tue,
+ 09 Nov 2010 21:50:20 +0000 (GMT)
 Received: from smtp.getmail.no (unknown [10.5.16.4])
 	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 46F151797356_CD9C21AF	for <git@vger.kernel.org>; Tue,
- 09 Nov 2010 21:50:17 +0000 (GMT)
+ with ESMTP id 4B8CB1797775_CD9C21CF	for <git@vger.kernel.org>; Tue,
+ 09 Nov 2010 21:50:19 +0000 (GMT)
 Received: from alpha.herland ([84.215.68.234]) by get-mta-in01.get.basefarm.net
  (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
  with ESMTP id <0LBN00HVN0NLS730@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Tue, 09 Nov 2010 22:50:14 +0100 (MET)
+ git@vger.kernel.org; Tue, 09 Nov 2010 22:50:15 +0100 (MET)
 X-Mailer: git-send-email 1.7.3.2.173.gab1c9.dirty
 In-reply-to: <1289339399-4733-1-git-send-email-johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161085>
 
-When manually resolving a notes merge, if the merging ref has moved since
-the merge started, we should fail to complete the merge, and alert the user
-to what's going on.
+Reorder the initial part of builtin/merge.c:cmd_merge() so that command-line
+options are parsed _before_ we load the index and check for MERGE_HEAD
+(and exits if it exists). This does not change the behaviour of 'git merge',
+but is needed in preparation for the implementation of 'git merge --abort'
+(which requires MERGE_HEAD to be present).
 
-This situation may arise if you start a 'git notes merge' which results in
-conflicts, and you then update the current notes ref (using for example
-'git notes add/copy/amend/edit/remove/prune', 'git update-ref', etc.),
-before you get around to resolving the notes conflicts and calling
-'git notes merge --commit'.
+This patch has been improved by the following contributions:
+- Junio C Hamano: fixup minor style issues
 
-We detect this situation by comparing the first parent of the partial merge
-commit (which was created when the merge started) to the current value of the
-merging notes ref (pointed to by the .git/NOTES_MERGE_REF symref).
-
-If we don't fail in this situation, the notes merge commit would overwrite
-the updated notes ref, thus losing the changes that happened in the meantime.
-
-The patch includes a testcase verifying that we fail correctly in this
-situation.
-
+Thanks-to: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Johan Herland <johan@herland.net>
 ---
- builtin/notes.c                       |   11 ++++-
- t/t3310-notes-merge-manual-resolve.sh |   76 +++++++++++++++++++++++++++++++++
- 2 files changed, 85 insertions(+), 2 deletions(-)
+ builtin/merge.c |   33 +++++++++++++++++----------------
+ 1 files changed, 17 insertions(+), 16 deletions(-)
 
-diff --git a/builtin/notes.c b/builtin/notes.c
-index b440378..ca09d45 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -786,7 +786,7 @@ static int merge_abort(struct notes_merge_options *o)
- static int merge_commit(struct notes_merge_options *o)
- {
- 	struct strbuf msg = STRBUF_INIT;
--	unsigned char sha1[20];
-+	unsigned char sha1[20], parent_sha1[20];
- 	struct notes_tree *t;
- 	struct commit *partial;
- 	struct pretty_print_context pretty_ctx;
-@@ -803,6 +803,11 @@ static int merge_commit(struct notes_merge_options *o)
- 	else if (parse_commit(partial))
- 		die("Could not parse commit from NOTES_MERGE_PARTIAL.");
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 37ce4f5..478a492 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -895,22 +895,6 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	const char *best_strategy = NULL, *wt_strategy = NULL;
+ 	struct commit_list **remotes = &remoteheads;
  
-+	if (partial->parents)
-+		hashcpy(parent_sha1, partial->parents->item->object.sha1);
-+	else
-+		hashclr(parent_sha1);
-+
- 	t = xcalloc(1, sizeof(struct notes_tree));
- 	init_notes(t, "NOTES_MERGE_PARTIAL", combine_notes_overwrite, 0);
+-	if (read_cache_unmerged()) {
+-		die_resolve_conflict("merge");
+-	}
+-	if (file_exists(git_path("MERGE_HEAD"))) {
+-		/*
+-		 * There is no unmerged entry, don't advise 'git
+-		 * add/rm <file>', just 'git commit'.
+-		 */
+-		if (advice_resolve_conflict)
+-			die("You have not concluded your merge (MERGE_HEAD exists).\n"
+-			    "Please, commit your changes before you can merge.");
+-		else
+-			die("You have not concluded your merge (MERGE_HEAD exists).");
+-	}
+-
+-	resolve_undo_clear();
+ 	/*
+ 	 * Check if we are _not_ on a detached HEAD, i.e. if there is a
+ 	 * current branch.
+@@ -929,6 +913,23 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
  
-@@ -818,7 +823,9 @@ static int merge_commit(struct notes_merge_options *o)
- 	format_commit_message(partial, "%s", &msg, &pretty_ctx);
- 	strbuf_trim(&msg);
- 	strbuf_insert(&msg, 0, "notes: ", 7);
--	update_ref(msg.buf, o->local_ref, sha1, NULL, 0, DIE_ON_ERR);
-+	update_ref(msg.buf, o->local_ref, sha1,
-+		   is_null_sha1(parent_sha1) ? NULL : parent_sha1,
-+		   0, DIE_ON_ERR);
+ 	argc = parse_options(argc, argv, prefix, builtin_merge_options,
+ 			builtin_merge_usage, 0);
++
++	if (read_cache_unmerged())
++		die_resolve_conflict("merge");
++
++	if (file_exists(git_path("MERGE_HEAD"))) {
++		/*
++		 * There is no unmerged entry, don't advise 'git
++		 * add/rm <file>', just 'git commit'.
++		 */
++		if (advice_resolve_conflict)
++			die("You have not concluded your merge (MERGE_HEAD exists).\n"
++			    "Please, commit your changes before you can merge.");
++		else
++			die("You have not concluded your merge (MERGE_HEAD exists).");
++	}
++	resolve_undo_clear();
++
+ 	if (verbosity < 0)
+ 		show_diffstat = 0;
  
- 	free_notes(t);
- 	strbuf_release(&msg);
-diff --git a/t/t3310-notes-merge-manual-resolve.sh b/t/t3310-notes-merge-manual-resolve.sh
-index 287fab8..4ec4d11 100755
---- a/t/t3310-notes-merge-manual-resolve.sh
-+++ b/t/t3310-notes-merge-manual-resolve.sh
-@@ -477,4 +477,80 @@ EOF
- 	verify_notes z
- '
- 
-+cp expect_notes_y expect_notes_m
-+cp expect_log_y expect_log_m
-+
-+test_expect_success 'redo merge of z into m (== y) with default ("manual") resolver => Conflicting 3-way merge' '
-+	git update-ref refs/notes/m refs/notes/y &&
-+	test_must_fail git notes merge z >output &&
-+	# Output should point to where to resolve conflicts
-+	grep -q "\\.git/NOTES_MERGE_WORKTREE" output &&
-+	# Inspect merge conflicts
-+	ls .git/NOTES_MERGE_WORKTREE >output_conflicts &&
-+	test_cmp expect_conflicts output_conflicts &&
-+	( for f in $(cat expect_conflicts); do
-+		test_cmp "expect_conflict_$f" ".git/NOTES_MERGE_WORKTREE/$f" ||
-+		exit 1
-+	done ) &&
-+	# Verify that current notes tree (pre-merge) has not changed (m == y)
-+	verify_notes y &&
-+	verify_notes m &&
-+	test "$(git rev-parse refs/notes/m)" = "$(cat pre_merge_y)"
-+'
-+
-+cp expect_notes_w expect_notes_m
-+cp expect_log_w expect_log_m
-+
-+test_expect_success 'reset notes ref m to somewhere else (w)' '
-+	git update-ref refs/notes/m refs/notes/w &&
-+	verify_notes m &&
-+	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)"
-+'
-+
-+test_expect_success 'fail to finalize conflicting merge if underlying ref has moved in the meantime (m != NOTES_MERGE_PARTIAL^1)' '
-+	# Resolve conflicts
-+	cat >.git/NOTES_MERGE_WORKTREE/$commit_sha1 <<EOF &&
-+y and z notes on 1st commit
-+EOF
-+	cat >.git/NOTES_MERGE_WORKTREE/$commit_sha4 <<EOF &&
-+y and z notes on 4th commit
-+EOF
-+	# Fail to finalize merge
-+	test_must_fail git notes merge --commit >output 2>&1 &&
-+	# .git/NOTES_MERGE_* must remain
-+	test -f .git/NOTES_MERGE_PARTIAL &&
-+	test -f .git/NOTES_MERGE_REF &&
-+	test -f .git/NOTES_MERGE_WORKTREE/$commit_sha1 &&
-+	test -f .git/NOTES_MERGE_WORKTREE/$commit_sha2 &&
-+	test -f .git/NOTES_MERGE_WORKTREE/$commit_sha3 &&
-+	test -f .git/NOTES_MERGE_WORKTREE/$commit_sha4 &&
-+	# Refs are unchanged
-+	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)"
-+	test "$(git rev-parse refs/notes/y)" = "$(git rev-parse NOTES_MERGE_PARTIAL^1)"
-+	test "$(git rev-parse refs/notes/m)" != "$(git rev-parse NOTES_MERGE_PARTIAL^1)"
-+	# Mention refs/notes/m, and its current and expected value in output
-+	grep -q "refs/notes/m" output &&
-+	grep -q "$(git rev-parse refs/notes/m)" output &&
-+	grep -q "$(git rev-parse NOTES_MERGE_PARTIAL^1)" output &&
-+	# Verify that other notes refs has not changed (w, x, y and z)
-+	verify_notes w &&
-+	verify_notes x &&
-+	verify_notes y &&
-+	verify_notes z
-+'
-+
-+test_expect_success 'resolve situation by aborting the notes merge' '
-+	git notes merge --abort &&
-+	# No .git/NOTES_MERGE_* files left
-+	test_must_fail ls .git/NOTES_MERGE_* >output 2>/dev/null &&
-+	test_cmp /dev/null output &&
-+	# m has not moved (still == w)
-+	test "$(git rev-parse refs/notes/m)" = "$(git rev-parse refs/notes/w)"
-+	# Verify that other notes refs has not changed (w, x, y and z)
-+	verify_notes w &&
-+	verify_notes x &&
-+	verify_notes y &&
-+	verify_notes z
-+'
-+
- test_done
 -- 
 1.7.3.2.173.gab1c9.dirty
