@@ -1,95 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] docs: give more hints about how "add -e" works
-Date: Mon, 08 Nov 2010 16:57:34 -0800
-Message-ID: <7vlj53nwjl.fsf@alter.siamese.dyndns.org>
-References: <20101021143034.GA16083@sigill.intra.peff.net>
- <7v4ocftbww.fsf@alter.siamese.dyndns.org>
- <20101022192529.GA13059@sigill.intra.peff.net>
- <7v8w1plwq0.fsf@alter.siamese.dyndns.org>
- <20101108223322.GA12258@sigill.intra.peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] t1020-subdirectory: test alias expansion in a subdirectory
+Date: Tue, 9 Nov 2010 08:29:07 +0700
+Message-ID: <AANLkTikwTwNDLhQU7mtKxTYHBUVQzw9tuVzSZy3utSLM@mail.gmail.com>
+References: <627dc7921dc64a16063e77d542cf9edb22631ddd.1289205059.git.git@drmicha.warpmail.net>
+ <20101108102056.GA12366@do> <7v7hgnpnp8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Miklos Vajna <vmiklos@frugalware.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Nov 09 01:57:56 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 09 02:29:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFcX3-0005VD-W3
-	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 01:57:54 +0100
+	id 1PFd1l-0006xH-2D
+	for gcvg-git-2@lo.gmane.org; Tue, 09 Nov 2010 02:29:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752915Ab0KIA5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 8 Nov 2010 19:57:48 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:65083 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752453Ab0KIA5r (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 8 Nov 2010 19:57:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0EDA42074;
-	Mon,  8 Nov 2010 19:57:49 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=slqtoVNOcQ7INa69rGxsIH5ytyY=; b=F3Yt5t
-	yb5Qu+oXiBNkmWR6ctR0pbTNyLHZcP0v2jKu2d1yHdTjkzMsQnu+NAhu/MWLCgvn
-	lmI7XlC25Q428Xu+5DN/mIQIKEu4bjt4tP8LkmT3jx4P2e/CM+Wqikmy23LGVxOo
-	uNFEw+ZrsRbO7zXX9HiY0fbJ/kFBAc/fCPdcQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=n7mTUrK3P0/nrMI/WaUQNJ4iqoDKH2M2
-	BqJoe2S+zCYrJDjabPTmv+yzcGY3qTXiZgIIr4lG2C8/9RcEuR9RV/63YMyz8LMP
-	gMOhU7SJYj8KVkedt2HGSX8qaBIT/oAUYVjsSA7I+d8zjKF12cdXA0KAu2mbOW/Q
-	af45FHyy7Qg=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BE6182073;
-	Mon,  8 Nov 2010 19:57:44 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 272172071; Mon,  8 Nov 2010
- 19:57:38 -0500 (EST)
-In-Reply-To: <20101108223322.GA12258@sigill.intra.peff.net> (Jeff King's
- message of "Mon\, 8 Nov 2010 17\:33\:23 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5CB745A6-EB9C-11DF-9B7A-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+	id S1755104Ab0KIB3b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 8 Nov 2010 20:29:31 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:62276 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754556Ab0KIB3a convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 8 Nov 2010 20:29:30 -0500
+Received: by wwi18 with SMTP id 18so203826wwi.1
+        for <git@vger.kernel.org>; Mon, 08 Nov 2010 17:29:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=OetfZ/WA4z7niO8+UEGYERnU4C4wBDjCTe7IWHMeNFs=;
+        b=jgjMzEN6mWsgkFk4iRobI3Ryp01sm6+CIGHkL3a+/f7f8NOVizVPBGRtGVDTQmj7l7
+         imG1rf+XiPfM2IvW/niyF6+w4ZY6Q2ChptbYpU6Tg8r0O1BK+9Q4H3Su5m/QeHxyL9lh
+         YC1dTmRxyKQY0J/ah+TseuJo/l2Sb3INN8vio=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=RNUcmAXAlhxqWGG63AlxIyNvHjnpdLtwt0ZEU/ltJMvNbRRyGuxOvVGM+oMvhIFCVS
+         3J8ayHNopaicbdcD5iDEqJrhGFkgwKwR/E1tcy2o8Yegjgkq9gILKeBZLmyGZPZAf0Jx
+         ZKO55gIAuerb1FobDUgnEFJwsqpECZXsBE33g=
+Received: by 10.216.58.209 with SMTP id q59mr134193wec.41.1289266169045; Mon,
+ 08 Nov 2010 17:29:29 -0800 (PST)
+Received: by 10.216.172.199 with HTTP; Mon, 8 Nov 2010 17:29:07 -0800 (PST)
+In-Reply-To: <7v7hgnpnp8.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161007>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161008>
 
-Jeff King <peff@peff.net> writes:
+On Tue, Nov 9, 2010 at 3:25 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+>
+>> On Mon, Nov 08, 2010 at 09:32:03AM +0100, Michael J Gruber wrote:
+>>> Add a test for alias expansion in a subdirectory of the worktree.
+>>>
+>>> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+>>>
+>>> ---
+>>> =C2=A0 =C2=A0 65f3a9e (Remove all logic from get_git_work_tree(), 2=
+010-11-01) breaks this test,
+>>> =C2=A0 =C2=A0 which is why I am adding it.
+>>
+>> How about squashing this in?
+>>
+>> --8<--
+>> Subject: Allow set_git_work_tree() to be called more than once
+>>
+>> Usually one of the setup functions is called once. However alias
+>> handling code needs to look ahead in $GIT_DIR/config for aliases. So
+>> set_git_work_tree() may be called twice: once when alias is searched=
+,
+>> once when the actual command is run.
+>>
+>> Loosen the condition and let it through. We can stricten it back whe=
+n
+>> alias handling is fixed.
+>
+> Sounds like sweeping something under rug.
+>
+> Without this hack, alias does not work, but if your plan is to rework=
+ this
+> part right when alias is fixed, then what's the point of loosening it=
+?
+> Either way your alias is broken, no?
+>
+> Shouldn't it at least make sure that the function is giving a consist=
+ent
+> picture to the outside world between the time it was called for the f=
+irst
+> time and the second time? =C2=A0E.g. =C2=A0the second time around new=
+-work-tree must
+> be the same as whatever was given the first time, or something.
 
-> It should replace what's in next. You can either start a new branch and
-> revert what's in next, or I can prepare it on top of what's in next if
-> you prefer.
-
-I can just apply an interdiff if I wanted to, so that is no reason for
-asking a resend.
-
-The new text indeed looks much clearer, except for one part I am not
-absolutely sure...
-
-> +new content::
-> +
-> +You may also add new content that does not exist in the patch. Simply
-> +add new lines, each starting with "{plus}".
-> +
-> +You can also perform more complex operations, such as modifying the
-> +content to be staged by a "{plus}" line. However, note that this impacts
-> +_only_ the index; the working tree file will remain unchanged, and will
-> +appear to "undo" the content you have staged. Such operations should be
-> +performed only if you know what you are doing.
-
-This "However, note that" part should apply not only to newly introduced
-{plus} lines but also to {plus} lines whose change were edited (lines from
-"added content" and from post-image half of "modified content"), no?
-
-I tried to be careless when reading the two paragraphs above, and managed
-to get an incorrect impression that the caveat applies only to "more
-complex operations", even though it actually applies not just the previous
-"new content" but also "added/modified" content.
-
-Thinking about it a bit more, it is worse than that.  Turning " " into "-"
-has the same "getting reverted" issue, no?
+Right. Will do that.
+--=20
+Duy
