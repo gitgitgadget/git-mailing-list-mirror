@@ -1,115 +1,83 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: import determinism
-Date: Tue, 9 Nov 2010 23:40:52 -0500
-Message-ID: <AANLkTi=y_DKRRU43ro3WDz2rSDGL9xASfsinoj8Ya9PT@mail.gmail.com>
-References: <20101107202535.GA18766@nibiru.local>
-	<AANLkTi=mx0AAKo2Asn5XJVcs30-PLuwhTbM=o0y36Wa_@mail.gmail.com>
-	<m2lj54u9uj.fsf@igel.home>
-	<AANLkTikXxM=CfU2dKAY9khi1_tAsGDdUEc8S5AxooGH9@mail.gmail.com>
-	<m2d3qgu50c.fsf@igel.home>
-	<20101109134337.GA19430@nibiru.local>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: "weigelt@metux.de" <weigelt@metux.de>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Nov 10 05:43:06 2010
+From: lists@haller-berlin.de (Stefan Haller)
+Subject: Re: [PATCH] gitk: Add "First parent" checkbox
+Date: Wed, 10 Nov 2010 08:17:19 +0100
+Message-ID: <1jrqe9r.1i2zca71746ggiM%lists@haller-berlin.de>
+References: <20101108211101.GA13114@burratino>
+Cc: paulus@samba.org (Paul Mackerras), git@vger.kernel.org,
+	patthoyts@users.sourceforge.net (Pat Thoyts),
+	trast@student.ethz.ch (Thomas Rast)
+To: jrnieder@gmail.com (Jonathan Nieder)
+X-From: git-owner@vger.kernel.org Wed Nov 10 08:18:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PG2WW-0008Ss-QO
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 05:43:05 +0100
+	id 1PG4x0-0000H2-Ps
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 08:18:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752529Ab0KJEky convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 9 Nov 2010 23:40:54 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:62137 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751089Ab0KJEky convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 9 Nov 2010 23:40:54 -0500
-Received: by iwn10 with SMTP id 10so289404iwn.19
-        for <git@vger.kernel.org>; Tue, 09 Nov 2010 20:40:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=lt5zsKYbS+5RF0fnpA1k+byBfW5E25AaRPG1IFKpsoE=;
-        b=qa+VyzKw4+I6PwC5neGDcLQ8+k0c4QnSzqgjm0ipRK7spsWuZdpvUeU/Eqgnp9OgED
-         zhtABeDhtLJuz53/3UcOpXZoHbAwP6Bx01V9QVQkmsM48u7NQRBoYdvTMLXr2+m27u/2
-         046PWsJR/dnGQEGP+HWgZgzhZ61rQrdT1zkfA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type:content-transfer-encoding;
-        b=C56mIyzpzIRcT6PphtjduFRHGdItir5v+/BW6e/04WLm96jz3Og6gNF6moz+nJyFXd
-         X3d3bgMgHH/24KMBRepYOGNn3eqPIJlk/gW39q1i4/y8ifWOtQS5RoM+WJBbHkVxMBQN
-         c3Gtv4er27oaGO7SJJhxU8xcDuBOIrYt9ZwGI=
-Received: by 10.231.59.77 with SMTP id k13mr6087292ibh.41.1289364052455; Tue,
- 09 Nov 2010 20:40:52 -0800 (PST)
-Received: by 10.231.16.65 with HTTP; Tue, 9 Nov 2010 20:40:52 -0800 (PST)
-In-Reply-To: <20101109134337.GA19430@nibiru.local>
+	id S1753406Ab0KJHR0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Nov 2010 02:17:26 -0500
+Received: from mail.ableton.net ([62.96.12.115]:34403 "EHLO mail.ableton.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752823Ab0KJHRZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Nov 2010 02:17:25 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
+	h=Message-ID:Date:From:Subject:In-Reply-To:Cc:To; bh=tdRwSj1qHAoooMvWGD33JfOCPtTycSW1PkUpszqJP00=;
+	b=t65aHbNWV8mqaYqtf8sQ39E82HmyctgjUUkmtx2VfNu4BObyMQvA5ghMnHf6bKGJieYOxdDlZo2RLYFcYY7+daH3Qhs1E4jW7vqLh6/q3ayfMdhZx+dwuNXzW9Nxav08NbCCtvNiU0yEWTW6pH9gBKiyXA3bzywSqIXYr2Kcekc=;
+Received: from [10.1.15.237]
+	by mail.ableton.net with esmtpsa (SSLv3:AES128-SHA:128)
+	(Exim 4.72)
+	(envelope-from <lists@haller-berlin.de>)
+	id 1PG4vo-0002T3-59; Wed, 10 Nov 2010 08:17:20 +0100
+In-Reply-To: <20101108211101.GA13114@burratino>
+User-Agent: MacSOUP/2.8.3 (Mac OS X version 10.6.4 (x86))
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161131>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161132>
 
-Every full clone is a good backup. If nobody is doing a full clone...
-the do back them up. That's my recommendation.
+Jonathan Nieder <jrnieder@gmail.com> wrote:
+
+> Stefan Haller wrote:
+> 
+> >                                   Most of the diff related options are
+> > ones that I want to toggle with one click.  That's certainly true for
+> > "Ignore space change", "First parent", and the "Diff/Old Version/New
+> > Version" radio buttons.  I would hate to see any of them be removed from
+> > the diff pane.
+> 
+> Thanks, that's useful information.  Could you give example workflows
+> to illustrate this?
+
+When browsing history, I usually have "First parent" off, so that I see
+empty diffs for most merges, except the ones that had conflicts.
+Occasionally though, when looking at a merge of a larger branch, I want
+to see what changes were introduced by the merge; turning on "First
+parent" allows me to quickly see that, or in general gives me an idea of
+just how "big" the merge was.  I usually turn it back off right
+afterwards.
+
+Similar for "Ignore space change": I usually have it off most of the
+time, so that I see faithful diffs.  Occasionally, when just the
+indentation of a block of C code has changed, I turn it on just for that
+one diff to make it easier to read; then I turn it back off right
+afterwards.
+
+Also similar for "Lines of context": this is usually set to a medium
+value, like 3 or 4; sometimes I'll increase it to 12 or more for a
+single diff to see more of the surrounding code, and sometimes I'll set
+it to 1 for a merge diff with hunks so close to each other that they
+otherwise show as conflicts.
+
+Your proposal of having presets for diff options has the drawback that I
+would need a preset for each combination of these options.
+
+-Stefan
 
 
-M
-
-On Tuesday, November 9, 2010, Enrico Weigelt <weigelt@metux.de> wrote:
-> * Andreas Schwab <schwab@linux-m68k.org> wrote:
->
->> > For cvsimport, it is not deterministic. Given cvs'
->> > ambiguous/buggy/inconsistent internal semantics around some
->> > operations, cvsps makes educated guesses about what happened.
->> >
->> > Later commits can affect those educated guesses.
->>
->> The OP was assuming an unchanging repository.
->
-> My assumption is:
->
-> * the original cvs repo will have later additions
->  =A0(so I'm incrementally importing)
-> * no commints (besides cvsimport) in the git mirror, but others
->  =A0for off from there
-> * the mirror could get lost in an desaster (no separate backup)
->  =A0and should be recreated afresh in that case.
->
->
-> The point behind this is: I'm running a growing number of cvs2git
-> mirrors and dont want to do full backups of them.
->
->
-> cu
-> --
-> ---------------------------------------------------------------------=
--
-> =A0Enrico Weigelt, metux IT service -- http://www.metux.de/
->
-> =A0phone: =A0+49 36207 519931 =A0email: weigelt@metux.de
-> =A0mobile: +49 151 27565287 =A0icq: =A0 210169427 =A0 =A0 =A0 =A0 sky=
-pe: nekrad666
-> ---------------------------------------------------------------------=
--
-> =A0Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-> ---------------------------------------------------------------------=
--
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
-
---=20
- martin.langhoff@gmail.com
- martin@laptop.org -- School Server Architect
- - ask interesting questions
- - don't get distracted with shiny stuff  - working code first
- - http://wiki.laptop.org/go/User:Martinlanghoff
+-- 
+Stefan Haller
+Berlin, Germany
+http://www.haller-berlin.de/
