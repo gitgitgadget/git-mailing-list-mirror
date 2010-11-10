@@ -1,77 +1,73 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: is it kosher for pre-commit to change what's staged?
-Date: Wed, 10 Nov 2010 13:08:19 -0400
-Message-ID: <20101110170819.GA3031@gnu.kitenet.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [RFC] Using gitrevisions :/search style with other operators
+Date: Wed, 10 Nov 2010 09:23:58 -0800
+Message-ID: <7vsjz9hz2p.fsf@alter.siamese.dyndns.org>
+References: <20101109083023.783fad9b@chalon.bertin.fr>
+ <13A8F1B3-39B0-4D11-8763-9C458F75487D@sb.org>
+ <20101109102428.5ba8dc13@chalon.bertin.fr>
+ <7vlj52jakh.fsf@alter.siamese.dyndns.org>
+ <050F42EE-34FE-499F-B632-471597EB4881@sb.org>
+ <20101110083209.6a1252ef@chalon.bertin.fr>
+ <23523534-F7A7-4D61-A899-8B3B28566EA7@sb.org>
+ <20101110084609.78f532a5@chalon.bertin.fr>
+ <m3eiatfbg2.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="3V7upXqbjpZ4EhLz"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 10 18:08:46 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Yann Dirson <dirson@bertin.fr>, Kevin Ballard <kevin@sb.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	git list <git@vger.kernel.org>, Jeff King <peff@peff.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 10 18:24:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGE9w-00044Q-5n
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 18:08:32 +0100
+	id 1PGEPD-0006Nz-V5
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 18:24:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757163Ab0KJRI0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Nov 2010 12:08:26 -0500
-Received: from wren.kitenet.net ([80.68.85.49]:56158 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757148Ab0KJRI0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Nov 2010 12:08:26 -0500
-Received: from gnu.kitenet.net (dialup-4.153.253.136.Dial1.Atlanta1.Level3.net [4.153.253.136])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id 7A37F118071
-	for <git@vger.kernel.org>; Wed, 10 Nov 2010 12:08:24 -0500 (EST)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id D074C466CD; Wed, 10 Nov 2010 12:08:19 -0500 (EST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757146Ab0KJRYP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Nov 2010 12:24:15 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43379 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757117Ab0KJRYO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Nov 2010 12:24:14 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2AAE6220B;
+	Wed, 10 Nov 2010 12:24:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Fpnvnyb/qSbqvBNGb2NrtvhS5W8=; b=Z15Bol
+	tNIuTBosb0XH6JdEF/6XusOlhEUlWfWp/QMGCZjsMXyiA6b5UFIB6wWUtmqv1oyI
+	g+IVbxqo93RVdj3Eiwkj1e3y3ureCWKLAAFtEjvbJAvFjsF8xwUEM7Nv6soOmnpp
+	8or98p65W6dNsL8I7OCXeuMrUk/KvcG+JXQpg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=t7rE3x0q+G+WLwJ8q4F6jneYZpjUqDRU
+	tHC3c8G4WYv5eOHbA3XpbhgCDkzycrHbI4VQPEOGAICbcIZmxkWvg+zJe1nEz9z+
+	1IvDJH1TpZ7rTd2Y0VpG0eN32DRyKbrcU/uBUCmCrjm35DBmli9k9DLA18ni5yF/
+	/gNIcowuHYk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D074C2204;
+	Wed, 10 Nov 2010 12:24:11 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 283272200; Wed, 10 Nov 2010
+ 12:24:03 -0500 (EST)
+In-Reply-To: <m3eiatfbg2.fsf@localhost.localdomain> (Jakub Narebski's message
+ of "Wed\, 10 Nov 2010 07\:26\:20 -0800 \(PST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 5560E4E8-ECEF-11DF-9ED6-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161160>
 
+Jakub Narebski <jnareb@gmail.com> writes:
 
---3V7upXqbjpZ4EhLz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> The <ref>@<sth> is about reflogs
 
-I've noticed that if I make a pre-commit hook change the files that are
-staged, those changes are not reflected in the commit message. For
-example, if a pre-commit hook git add's somefile, the commit message
-won't reflect that. I guess prepare-commit-msg is being run before
-pre-commit for some reason?
-
---=20
-see shy jo
-
---3V7upXqbjpZ4EhLz
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQIVAwUBTNrRgMkQ2SIlEuPHAQi0Kw/+Njdo57mw/iecEBT5RzkRHnNhwiaQNmy5
-IxYSSzEBxxnQExtG3D5VJxlAlAQBgDIQF+W6l4yeZ0O/pmQQ3j7xIj9GuWEsdcwN
-3vmlxzAm9ypUfQc6P0TGdHE6/1sTNidkG8k1MAscTKAnJi/+7fjK5iCFyHRCNYZJ
-RK+AXNTm5862mQCK4a7X4IC0ywswqU32YSUp0KNGLNBJdQdJ6Hg0qN289vUEkwrz
-BhJPysRKUMYYQn5AADB7ns5aIcobXxn7ST3JLtgpv/J6nV/XitRRQrhuXfa9cju8
-mgL0m8/edR+p+8kAnWTyfFgXMrQiCMcxBXcnaU+lM9t/2RR9k70ERIuIcMPIBwWd
-+FyVB1SxIlGUoMYz8l9CMbHotwVO9iz2QUXTLqZBzh73KVdJh+1jSgBPW6Z4MyU7
-5Yvo982Am5/SgeFFxDrRCgbG88FsudP3B7GIXJVSRX9bdMKxj95ksyXM7xrhP0FS
-vUoQ9EUhqXs1ceZ9UH7/vtzmHWMIX9aJaPeL+9Z+pUViKno0vH8mc4xmGV30xs8P
-DY+pp7ByyMoRAmQ2NDTUDHIJxxoyX4jhBYHRWRwoIX+WJjrIMbE28YaDlIbP18PF
-vjtkf+ZPDBNBM25vP/g9ZHGbwY5cXnIn7/id/Mppgz7CvEyguRlBrhyKHJbEY0tc
-3rQD3okJ3l4=
-=bMmb
------END PGP SIGNATURE-----
-
---3V7upXqbjpZ4EhLz--
+Wrong.  "@" in the olden days were limited about reflogs but not these
+days.  <ref>@<something> is about refs; <objectname>^<operation> is about
+objects (most often commits).
