@@ -1,69 +1,85 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: Understanding git cherry-pick
-Date: Wed, 10 Nov 2010 15:01:32 -0500 (EST)
-Message-ID: <14344677.655207.1289419292378.JavaMail.root@mail.hq.genarts.com>
-References: <20101110204323.0b675331@cortex>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: is it kosher for pre-commit to change what's staged?
+Date: Wed, 10 Nov 2010 14:06:50 -0600
+Message-ID: <20101110200650.GA13439@burratino>
+References: <20101110170819.GA3031@gnu.kitenet.net>
+ <7v1v6thrzc.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Camille Moncelier <moncelier@devlife.org>
-X-From: git-owner@vger.kernel.org Wed Nov 10 21:01:46 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Joey Hess <joey@kitenet.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 10 21:07:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGGrZ-00055b-7Z
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 21:01:45 +0100
+	id 1PGGx0-0008GD-GT
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 21:07:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755393Ab0KJUBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Nov 2010 15:01:40 -0500
-Received: from hq.genarts.com ([173.9.65.1]:32862 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1754676Ab0KJUBj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Nov 2010 15:01:39 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id CEDA21E26961;
-	Wed, 10 Nov 2010 15:01:38 -0500 (EST)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 5hDzFJwFtZR3; Wed, 10 Nov 2010 15:01:32 -0500 (EST)
-Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
-	by mail.hq.genarts.com (Postfix) with ESMTP id 75E261E26960;
-	Wed, 10 Nov 2010 15:01:32 -0500 (EST)
-In-Reply-To: <20101110204323.0b675331@cortex>
-X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
+	id S1755951Ab0KJUHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Nov 2010 15:07:15 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:63146 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755668Ab0KJUHN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Nov 2010 15:07:13 -0500
+Received: by bwz15 with SMTP id 15so1127696bwz.19
+        for <git@vger.kernel.org>; Wed, 10 Nov 2010 12:07:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=MTVQozFW+R8pPuuU3FU4vLrE5S6G9JP3qnfYIqAdV5E=;
+        b=pIuvfW8/sdE0bP3UozEJp1kvw7vZcnGkBCiFmlrBGAD16JJEt+4WSCv3Ysps6q3O4N
+         kHDBREGUyzK1Qmq13UBqAc/F/fc6s6FALNAr8vzyh7Oq3Q7LG7t5o0/PEq5O1cF02v8Y
+         wvShHz6hQ8M/+q5wty0pa+iv1QlIJdt7y6vF8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=da0jfhDE2x+cDUNYY0CIAMqBbi5/4pkrrk24JpTjQkznZg7TfzQ2lPYHzoppH62p0s
+         sSDUqFvhB7n+RcSEtITUaQRszniVDg/Bm/lU+dXkss0hwlR2qMAOKVCyQPBmSuEz4m81
+         5hyHR9pHBbRjIhWQ7l18RTrH0q3LH1qSa0mvc=
+Received: by 10.204.115.73 with SMTP id h9mr39792bkq.52.1289419632708;
+        Wed, 10 Nov 2010 12:07:12 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id y19sm535882fau.41.2010.11.10.12.07.11
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 10 Nov 2010 12:07:12 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7v1v6thrzc.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161178>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161179>
 
------ Original Message -----
-> From: "Camille Moncelier" <moncelier@devlife.org>
-> To: "Stephen Bash" <bash@genarts.com>
-> Sent: Wednesday, November 10, 2010 2:43:23 PM
-> Subject: Re: Understanding git cherry-pick
->
-> On Wed, 10 Nov 2010 09:04:29 -0500 (EST)
-> Stephen Bash <bash@genarts.com> wrote:
+Junio C Hamano wrote:
+> Joey Hess <joey@kitenet.net> writes:
+
+>> I've noticed that if I make a pre-commit hook change the files that are
+>> staged, those changes are not reflected in the commit message. For
+>> example, if a pre-commit hook git add's somefile, the commit message
+>> won't reflect that. I guess prepare-commit-msg is being run before
+>> pre-commit for some reason?
+
+I'm guessing it is to allow cancelling a commit before a costly
+pre-commit hook runs.
+
+> My intention was that Documentation/githooks.txt would document things
+> that are allowed (e.g. "applypatch-msg" explicitly says "The hook is
+> allowed to edit the message"), and anything that is not specifically
+> allowed is not.
 > 
-> > git status reported the actual change we wanted from the commit
-> > applied cleanly; the conflicts were all added/deleted files between
-> > the two branches. The commit only modifies a single file, and the
-> > file exists with the same name on both branches.
-> >
-> > So what's actually going on here? If the one changed file in the
-> > commit merged cleanly, why did the automatic cherry-pick fail? Why
-> > does cherry-pick even care about file differences between the two
-> > branches that aren't modified by the commit in question? Or is it
-> > user error?
-> 
-> Which version are you using ?
+> "Is it kosher" is a difficult question to answer, as something may not be
+> allowed but there may not be an enforcement mechanism to deny it, iow, it
+> may happen to work by accident.
 
-1.7.3 on the machine I reproduced the issue on...  My coworker has something post-1.7.2 but I'm not exactly sure.
+In this case, isn't it only a half accident?  For example, I think
+v1.5.4-rc0~78^2~12 (builtin-commit: fix partial-commit support,
+2007-11-18) taught git to support this a little better.
 
-Thanks,
-Stephen
+That said, I would be interested to hear the use case, since modifying
+staged content on the fly for a commit sounds a little crazy. :)
