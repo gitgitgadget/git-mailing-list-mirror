@@ -1,35 +1,35 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2 2/5] verify-tag: factor out signature detection
-Date: Wed, 10 Nov 2010 12:17:27 +0100
-Message-ID: <9dd97bd6e2b0443bff1083192b579320931432a7.1289387142.git.git@drmicha.warpmail.net>
+Subject: [PATCHv2 3/5] tag: factor out sig detection for body edits
+Date: Wed, 10 Nov 2010 12:17:28 +0100
+Message-ID: <a463b5b983213c630b800b961fc7bc10c3b4bc5e.1289387142.git.git@drmicha.warpmail.net>
 References: <cover.1289041051.git.git@drmicha.warpmail.net>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Thiago Farina <tfransosi@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 10 12:19:54 2010
+X-From: git-owner@vger.kernel.org Wed Nov 10 12:19:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PG8iV-00055t-AU
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 12:19:51 +0100
+	id 1PG8iV-00055t-R6
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 12:19:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755555Ab0KJLT1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Nov 2010 06:19:27 -0500
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:39180 "EHLO
+	id S1755562Ab0KJLTa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Nov 2010 06:19:30 -0500
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:59396 "EHLO
 	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754088Ab0KJLT0 (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Nov 2010 06:19:26 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 85A9F76F;
-	Wed, 10 Nov 2010 06:19:25 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Wed, 10 Nov 2010 06:19:25 -0500
-X-Sasl-enc: roHI17pMs/80FM6QsCImk0Q39cpWTsJEmWsoLqVFZWrp 1289387964
+	by vger.kernel.org with ESMTP id S1755410Ab0KJLT1 (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Nov 2010 06:19:27 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 5D86F964;
+	Wed, 10 Nov 2010 06:19:27 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Wed, 10 Nov 2010 06:19:27 -0500
+X-Sasl-enc: pzx5ZjVH81LpFz8wieyBnHQHA6mwx4NtQw2JC/9PaXac 1289387966
 Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id F09C7402929;
-	Wed, 10 Nov 2010 06:19:24 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id D61335E4F42;
+	Wed, 10 Nov 2010 06:19:26 -0500 (EST)
 X-Mailer: git-send-email 1.7.3.2.193.g78bbb
 In-Reply-To: <cover.1289041051.git.git@drmicha.warpmail.net>
 In-Reply-To: <cover.1289387142.git.git@drmicha.warpmail.net>
@@ -38,87 +38,52 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161145>
 
-into tag.h/c for later reuse and modification.
+Use the factored out code for sig detection when editing existing
+tag bodies (tag -a -f without -m).
 
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- builtin/verify-tag.c |   10 ++--------
- tag.c                |   13 +++++++++++++
- tag.h                |    1 +
- 3 files changed, 16 insertions(+), 8 deletions(-)
+ builtin/tag.c |   12 ++----------
+ 1 files changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/builtin/verify-tag.c b/builtin/verify-tag.c
-index 9f482c2..86cac6d 100644
---- a/builtin/verify-tag.c
-+++ b/builtin/verify-tag.c
-@@ -17,13 +17,11 @@ static const char * const verify_tag_usage[] = {
- 		NULL
+diff --git a/builtin/tag.c b/builtin/tag.c
+index d311491..66feeb0 100644
+--- a/builtin/tag.c
++++ b/builtin/tag.c
+@@ -29,8 +29,6 @@ struct tag_filter {
+ 	struct commit_list *with_commit;
  };
  
 -#define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
 -
- static int run_gpg_verify(const char *buf, unsigned long size, int verbose)
+ static int show_reference(const char *refname, const unsigned char *sha1,
+ 			  int flag, void *cb_data)
  {
- 	struct child_process gpg;
- 	const char *args_gpg[] = {"gpg", "--verify", "FILE", "-", NULL};
--	char path[PATH_MAX], *eol;
-+	char path[PATH_MAX];
- 	size_t len;
- 	int fd, ret;
+@@ -242,8 +240,7 @@ static void write_tag_body(int fd, const unsigned char *sha1)
+ {
+ 	unsigned long size;
+ 	enum object_type type;
+-	char *buf, *sp, *eob;
+-	size_t len;
++	char *buf, *sp;
  
-@@ -37,11 +35,7 @@ static int run_gpg_verify(const char *buf, unsigned long size, int verbose)
- 	close(fd);
+ 	buf = read_sha1_file(sha1, &type, &size);
+ 	if (!buf)
+@@ -256,12 +253,7 @@ static void write_tag_body(int fd, const unsigned char *sha1)
+ 		return;
+ 	}
+ 	sp += 2; /* skip the 2 LFs */
+-	eob = strstr(sp, "\n" PGP_SIGNATURE "\n");
+-	if (eob)
+-		len = eob - sp;
+-	else
+-		len = buf + size - sp;
+-	write_or_die(fd, sp, len);
++	write_or_die(fd, sp, parse_signature(sp, buf + size - sp));
  
- 	/* find the length without signature */
--	len = 0;
--	while (len < size && prefixcmp(buf + len, PGP_SIGNATURE)) {
--		eol = memchr(buf + len, '\n', size - len);
--		len += eol ? eol - (buf + len) + 1 : size - len;
--	}
-+	len = parse_signature(buf, size);
- 	if (verbose)
- 		write_in_full(1, buf, len);
- 
-diff --git a/tag.c b/tag.c
-index 28641cf..d4f3080 100644
---- a/tag.c
-+++ b/tag.c
-@@ -4,6 +4,8 @@
- #include "tree.h"
- #include "blob.h"
- 
-+#define PGP_SIGNATURE "-----BEGIN PGP SIGNATURE-----"
-+
- const char *tag_type = "tag";
- 
- struct object *deref_tag(struct object *o, const char *warn, int warnlen)
-@@ -133,3 +135,14 @@ int parse_tag(struct tag *item)
- 	free(data);
- 	return ret;
+ 	free(buf);
  }
-+
-+size_t parse_signature(const char *buf, unsigned long size)
-+{
-+	char *eol;
-+	size_t len = 0;
-+	while (len < size && prefixcmp(buf + len, PGP_SIGNATURE)) {
-+		eol = memchr(buf + len, '\n', size - len);
-+		len += eol ? eol - (buf + len) + 1 : size - len;
-+	}
-+	return len;
-+}
-diff --git a/tag.h b/tag.h
-index 4766272..8522370 100644
---- a/tag.h
-+++ b/tag.h
-@@ -16,5 +16,6 @@ extern struct tag *lookup_tag(const unsigned char *sha1);
- extern int parse_tag_buffer(struct tag *item, void *data, unsigned long size);
- extern int parse_tag(struct tag *item);
- extern struct object *deref_tag(struct object *, const char *, int);
-+extern size_t parse_signature(const char *buf, unsigned long size);
- 
- #endif /* TAG_H */
 -- 
 1.7.3.2.193.g78bbb
