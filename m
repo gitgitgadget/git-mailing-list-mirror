@@ -1,68 +1,67 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] rebase: allow -X for non-recursive strategy
-Date: Wed, 10 Nov 2010 02:55:54 -0600
-Message-ID: <20101110085554.GA10282@burratino>
-References: <1289336299-28282-1-git-send-email-martin.von.zweigbergk@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 10 09:56:24 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv2 0/5] Handling of rfc1991 signatures
+Date: Wed, 10 Nov 2010 12:17:25 +0100
+Message-ID: <cover.1289387142.git.git@drmicha.warpmail.net>
+References: <cover.1289041051.git.git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Thiago Farina <tfransosi@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 10 12:19:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PG6Tf-0001p2-Ux
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 09:56:24 +0100
+	id 1PG8i8-0004yp-Oo
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 12:19:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754842Ab0KJI4T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Nov 2010 03:56:19 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:46345 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753439Ab0KJI4S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Nov 2010 03:56:18 -0500
-Received: by gwj21 with SMTP id 21so181836gwj.19
-        for <git@vger.kernel.org>; Wed, 10 Nov 2010 00:56:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=qMtGQs2KT14gxUNamOShw2OrmZqMgevNf5QEIzt0zkk=;
-        b=GX+SS/t5IDu0AJtS+oOSaT4tTEmo2LEsMF4NP5U4cjlgCxWivhELzKY7ql11N9H6Fe
-         AmMQHPsVeoQECTF4x80vxEBCTZz5+G5Iuv4x0v6OQNv1rwyi2WSgc03StZiBE8SA4CKO
-         AomhF/228TGRaNRBR5mEEGz0wNmUIIArnnQWg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=r8s9TS7InXVrosfLU+9Xo6vVFdgGrEccF/ow2+35RlOZhqfXj6n3qhdGlJZ6Ptn7cp
-         a115cKTfn+NUtle7e6yGOJ3jRQMkRPKfNfmRaiSDBQlr1lXkCX4I5bqXuV5u309uErb4
-         SqaBPIxVdgOEvMNTm8K0QceSxrTqV3JgS7UsQ=
-Received: by 10.151.100.16 with SMTP id c16mr12265925ybm.52.1289379378163;
-        Wed, 10 Nov 2010 00:56:18 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id v8sm398737yba.2.2010.11.10.00.56.15
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 10 Nov 2010 00:56:17 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1289336299-28282-1-git-send-email-martin.von.zweigbergk@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755397Ab0KJLTW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Nov 2010 06:19:22 -0500
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:40869 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754088Ab0KJLTW (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Nov 2010 06:19:22 -0500
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 80D82963;
+	Wed, 10 Nov 2010 06:19:21 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Wed, 10 Nov 2010 06:19:21 -0500
+X-Sasl-enc: pY7xPXs/6gS2laJuO6NOWb63ov2AisfSC8V1O7LHs6lm 1289387961
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 02F35404155;
+	Wed, 10 Nov 2010 06:19:20 -0500 (EST)
+X-Mailer: git-send-email 1.7.3.2.193.g78bbb
+In-Reply-To: <cover.1289041051.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161142>
 
-Martin von Zweigbergk wrote:
+This mini-series fixes the handling of signed tags for users
+with "rfc1991" in their gpg config. In fact, the refactoring
+done in the middle three patches would be worthwhile even
+without the side effect of having to fix the handling in
+one place only rather than three...
 
-> Subject: [PATCH] rebase: allow -X for non-recursive strategy
+v2 has these changes:
+* additional tests for dealing with rfc1991 sigs without the rfc1991 option set (1/5)
+* macros in tag.c rather than tag.h since they are used only in tag.c (2/5)
+* logical && at eol for continued logical expression in C (5/5)
 
-I first read this as "allow -X option, which can be used to set a
-non-recursive strategy".  Of course that was nonsense, but maybe
-it can be made clearer?  e.g.
+Michael J Gruber (5):
+  t/t7004-tag: test handling of rfc1991 signatures
+  verify-tag: factor out signature detection
+  tag: factor out sig detection for body edits
+  tag: factor out sig detection for tag display
+  tag: recognize rfc1991 signatures
 
-	rebase -X: do not clobber strategy
+ builtin/tag.c        |   16 +++---------
+ builtin/verify-tag.c |   10 +------
+ t/t7004-tag.sh       |   66 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ tag.c                |   15 +++++++++++
+ tag.h                |    1 +
+ 5 files changed, 88 insertions(+), 20 deletions(-)
 
-This fixes a regression introduced in v1.7.3-rc0~67^2 (2010-07-29).
+-- 
+1.7.3.2.193.g78bbb
