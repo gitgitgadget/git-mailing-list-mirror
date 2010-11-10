@@ -1,67 +1,72 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: is it kosher for pre-commit to change what's staged?
-Date: Thu, 11 Nov 2010 01:17:04 +0300
-Message-ID: <AANLkTi=W_hwU=3PTTqE4R8Cg5T=GMdMfBsKQ1YE0HWRe@mail.gmail.com>
-References: <20101110170819.GA3031@gnu.kitenet.net>
-	<7v1v6thrzc.fsf@alter.siamese.dyndns.org>
-	<20101110200650.GA13439@burratino>
-	<20101110204542.GA11201@gnu.kitenet.net>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: import determinism
+Date: Wed, 10 Nov 2010 23:04:16 +0100
+Message-ID: <20101110220416.GA26994@nibiru.local>
+References: <20101107202535.GA18766@nibiru.local> <AANLkTi=mx0AAKo2Asn5XJVcs30-PLuwhTbM=o0y36Wa_@mail.gmail.com> <m2lj54u9uj.fsf@igel.home> <AANLkTikXxM=CfU2dKAY9khi1_tAsGDdUEc8S5AxooGH9@mail.gmail.com> <m2d3qgu50c.fsf@igel.home> <20101109134337.GA19430@nibiru.local> <AANLkTi=y_DKRRU43ro3WDz2rSDGL9xASfsinoj8Ya9PT@mail.gmail.com> <20101110161804.GA29619@nibiru.local> <AANLkTin-SxiTMZOeucS5_KKpaCz=PJ3yWjPFxB0bhCQ2@mail.gmail.com>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Wed Nov 10 23:17:22 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 10 23:18:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGIyh-0001SU-2y
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 23:17:15 +0100
+	id 1PGIzb-0001wp-Gh
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 23:18:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757241Ab0KJWRH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Nov 2010 17:17:07 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:49831 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757229Ab0KJWRF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Nov 2010 17:17:05 -0500
-Received: by qyk1 with SMTP id 1so67372qyk.19
-        for <git@vger.kernel.org>; Wed, 10 Nov 2010 14:17:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=rjkgT6euducxTS0FkzI6Wn4DcXJ/pCPhOvdLhihGQKQ=;
-        b=EhuynFZBFQzjrcsPmtu0OZQac6mIFAj16RQ4ln4hggJNEEQtKHmMQcntgC8d+WWzWe
-         /lmU/pr+TImL+nAiOfLbHdkMw6GiuMR7cF/a/5l3iWBzcMC974ssirN58biQIWeMh8Zx
-         9Ina4luJeggK0K+S6eIOrTLZib14JPHPL3jQ4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=X1cut43z7aus8v6i7s+nWV1TTepz7FVuQUXfmcTjsk11mxRX/ASJpDAxlyU2yJw3xG
-         rRJDdPj4PKfi9RVypzZgi//eZjAHfk8/+zXa6qqLrwt6DS4PR1BEP8HOpz4GkL5ONjCO
-         XxVFL/uFlMVrVltslhW05mcmZuQxRr2o23eio=
-Received: by 10.224.2.73 with SMTP id 9mr103381qai.260.1289427424103; Wed, 10
- Nov 2010 14:17:04 -0800 (PST)
-Received: by 10.229.230.202 with HTTP; Wed, 10 Nov 2010 14:17:04 -0800 (PST)
-In-Reply-To: <20101110204542.GA11201@gnu.kitenet.net>
+	id S1757012Ab0KJWSF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Nov 2010 17:18:05 -0500
+Received: from caprica.metux.de ([82.165.128.25]:48373 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756882Ab0KJWSE (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Nov 2010 17:18:04 -0500
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id oAAMK1d3010883
+	for <git@vger.kernel.org>; Wed, 10 Nov 2010 23:20:04 +0100
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id oAAMJUjZ010799
+	for git@vger.kernel.org; Wed, 10 Nov 2010 23:19:30 +0100
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id oAAM4HJK027328
+	for git@vger.kernel.org; Wed, 10 Nov 2010 23:04:17 +0100
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <AANLkTin-SxiTMZOeucS5_KKpaCz=PJ3yWjPFxB0bhCQ2@mail.gmail.com>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161190>
 
-On Wed, Nov 10, 2010 at 11:45 PM, Joey Hess <joey@kitenet.net> wrote:
->
-> That said, since git commit stages the whole large file into the index,
-> which is the kind of expensive operation git-annex exists to avoid,
-> it's still not very practical to intercept the commit like that. What
-> I ideally need is a hook that is run before git commit stages anything.
+* Martin Langhoff <martin.langhoff@gmail.com> wrote:
 
-Then maybe you should look at git smudge&clean filters. They perform
-conversation between the working tree and the index.  Though I am not
-sure how well they work with big files.
+> > Does the clone have all information necessary for the incremental
+> > cvsimport runs ?
+> 
+> Yes -- all cvsimport tracks is the branches. No extra import-tracking
+> data is maintained. (Other importers may or may not keep additional
+> data, YMMV, etc)
+
+That's good news. Now I'll have to sit down and code some little
+cluster management tool (mirrors are getting more and more), or
+does anyone already did that ? ...
 
 
-Dmitry
+cu
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
