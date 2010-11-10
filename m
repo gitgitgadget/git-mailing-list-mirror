@@ -1,102 +1,82 @@
-From: Gabriel Corona <gabriel.corona@enst-bretagne.fr>
-Subject: URL-escape the '@' sign in username/password
-Date: Wed, 10 Nov 2010 02:33:09 +0100
-Message-ID: <4CD9F655.8030908@enst-bretagne.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: [PATCH] git-rebase--interactive.sh: Add new command "shell"
+Date: Tue, 9 Nov 2010 17:46:44 -0800
+Message-ID: <833D47AD-041C-47BF-9AF3-69FD97F42712@sb.org>
+References: <9C0BAFB4-299E-459B-A64A-54D480C5445D@sb.org> <20101104112530.5c0e444a@chalon.bertin.fr> <4CD2E7B4.3000908@nextest.com> <vpq62wddmc0.fsf@bauges.imag.fr> <20101104181020.GB16431@burratino> <20101104205307.GA8911@home.lan> <7vd3qfr7ki.fsf@alter.siamese.dyndns.org> <663A3F43-5F64-41F0-B272-64EEE9775250@sb.org> <20101108222937.GH3167@home.lan> <20101110014215.GA1503@burratino>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 10 02:44:15 2010
+Cc: Yann Dirson <ydirson@free.fr>, Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Eric Raible <raible@nextest.com>,
+	Yann Dirson <dirson@bertin.fr>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 10 02:46:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFzjS-0005NH-3g
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 02:44:14 +0100
+	id 1PFzm0-00067v-Fg
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 02:46:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752163Ab0KJBoJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Nov 2010 20:44:09 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:56217 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751406Ab0KJBoH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Nov 2010 20:44:07 -0500
-Received: from [192.168.0.60] (unknown [88.180.106.44])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 381CAA61E3
-	for <git@vger.kernel.org>; Wed, 10 Nov 2010 02:44:00 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.9) Gecko/20100918 Icedove/3.1.4
+	id S1752370Ab0KJBqr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Nov 2010 20:46:47 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:48815 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751406Ab0KJBqr (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Nov 2010 20:46:47 -0500
+Received: by pwj1 with SMTP id 1so23334pwj.19
+        for <git@vger.kernel.org>; Tue, 09 Nov 2010 17:46:46 -0800 (PST)
+Received: by 10.142.139.17 with SMTP id m17mr6964948wfd.41.1289353606825;
+        Tue, 09 Nov 2010 17:46:46 -0800 (PST)
+Received: from [10.8.0.89] ([69.170.160.74])
+        by mx.google.com with ESMTPS id w3sm102900wfd.2.2010.11.09.17.46.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 09 Nov 2010 17:46:45 -0800 (PST)
+In-Reply-To: <20101110014215.GA1503@burratino>
+X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161119>
 
-Hello,
+On Nov 9, 2010, at 5:42 PM, Jonathan Nieder wrote:
 
-I've been trying to use git with a http/webdav repository with an 
-username containing a '@' character (foobar@host). The git FAQ [1] 
-suggests escaping the '@' character with percent encoding. However, the 
-username and password of the URI are not unescaped and the username 
-foobar%400host is sent to the web server.
+> Yann Dirson wrote:
+> 
+>> |Keep in mind that any commit in the original todo list, that would
+>> |not be there after your edits, would not be included in the resulting
+>> |rebased branch.  In case you realize afterwards that you need such a
+>> |commit, you can still access it as an ancestor of @{1}, see
+>> |git-reflog(1) for details.
+> 
+> Do you mean @{-1}?
 
-$ #Launch a dummy web server
-$ webfsd -4 -r ~/bidouilles/temp/empty/ -L- -F -bfoobar@host:secret 
--p8000 -i 127.0.0.1 &
+@{-1} is the previously-checked-out branch. @{1} is the previous commit
+that the current branch was pointing to. I believe @{1} is correct here.
 
-$ git clone http://foobar%40host:secret@127.0.0.1:8000/
-Cloning into 8000...
-fatal: Authentication failed
+>> Maybe we could list a copy of the todo list in the comments, as a
+>> reference for double-checking.  Such a list could even be used for a
+>> final check before applying, that would ask confirmation if the set of
+>> patches has changed, and offer to edit again.  The same config item
+>> (eg. advice.interactiveRebase ?) could be used to hide the note and
+>> the check.
+> 
+> Mm, but intentionally dropping commits is common, no?
+> 
+> What would be nice is to be able to do
+> 
+> 	git rebase --change-of-plans
+> 
+> and somehow get my editor of choice to open with the original todo
+> list (read-only) and the current todo list (read/write).
+> 
+> Well, a person can dream. :)
 
-Compare with:
+Not a bad idea. It would be especially nice if you could then selectively
+roll back to the state after previous entries in your todo list so you
+could change something you've done without having to start all over again.
 
-$ git clone http://127.0.0.1:8000/
-Cloning into 8000...
-Username: foobar@host
-Password: secret
-fatal: http://127.0.0.1:8000/info/refs not found: did you run git 
-update-server-info on the server?
-
-[1] 
-https://git.wiki.kernel.org/index.php/GitFaq#My_username_contains_a_.27.40.27.2C_I_can.27t_clone_through_HTTP.2FHTTPS
-
-diff --git a/http.c b/http.c
-index 0a5011f..c4d18a9 100644
---- a/http.c
-+++ b/http.c
-@@ -297,7 +297,7 @@ static CURL *get_curl_handle(void)
-
-  static void http_auth_init(const char *url)
-  {
--       char *at, *colon, *cp, *slash;
-+       char *at, *colon, *cp, *slash, *temp;
-         int len;
-
-         cp = strstr(url, "://");
-@@ -322,16 +322,25 @@ static void http_auth_init(const char *url)
-                 user_name = xmalloc(len + 1);
-                 memcpy(user_name, cp, len);
-                 user_name[len] = '\0';
-+               temp = url_decode(user_name);
-+               free(user_name);
-+               user_name = temp;
-                 user_pass = NULL;
-         } else {
-                 len = colon - cp;
-                 user_name = xmalloc(len + 1);
-                 memcpy(user_name, cp, len);
-                 user_name[len] = '\0';
-+               temp = url_decode(user_name);
-+               free(user_name);
-+               user_name = temp;
-                 len = at - (colon + 1);
-                 user_pass = xmalloc(len + 1);
-                 memcpy(user_pass, colon + 1, len);
-                 user_pass[len] = '\0';
-+               temp = url_decode(user_pass);
-+               free(user_pass);
-+               user_pass = temp;
-         }
-  }
-
--- 
-Gabriel
+-Kevin Ballard
