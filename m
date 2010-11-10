@@ -1,85 +1,107 @@
-From: Dun Peal <dunpealer@gmail.com>
-Subject: Scripted clone generating an incomplete, unusable .git/config
-Date: Wed, 10 Nov 2010 17:21:37 -0600
-Message-ID: <AANLkTik7-QzrMKDpV=W4dqpuguZsAr5yrMELmHu5NZMd@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH v3 0/3] Teach fetch and pull to recursively fetch submodules
+Date: Thu, 11 Nov 2010 00:53:07 +0100
+Message-ID: <4CDB3063.5010801@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 11 00:21:45 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, Kevin Ballard <kevin@sb.org>,
+	Jon Seymour <jon.seymour@gmail.com>,
+	Chris Packham <judge.packham@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Nov 11 00:53:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGJz6-0003Ct-SN
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 00:21:45 +0100
+	id 1PGKTj-0001Es-8Z
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 00:53:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757324Ab0KJXVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Nov 2010 18:21:39 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:48399 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757279Ab0KJXVi (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Nov 2010 18:21:38 -0500
-Received: by qwi4 with SMTP id 4so1011368qwi.19
-        for <git@vger.kernel.org>; Wed, 10 Nov 2010 15:21:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=wYuuz8Jk2lXsfkdlEhM819FG0kLdshIi306VPlEdvgo=;
-        b=NHKOAKRD1tLyp+VqAtvAyub674CvcKz7m3kdLyr389BSTAwzdea+7/P1s+ZUfpxR19
-         wPXRzL0HQNN0ihYpNYGXZQ27ln1ntQ40ksIl6ZbnfdJa9KLZUhEKMnBy584wFzWo+Cph
-         7OJOb/hn2P+Vriyso9saJmGeO3YID5jyWos/Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=Up8W4jOSAHsPXYWymjjdI2BIDtkGtp1MwP6kNH4BORWevpoduGagfDCKmIElFA8GOq
-         hBt9Gc/mlzAk9kmk0VoBednn5N7C5UzvM15Z3fbEHn8uJr0GebCfuadiaZAITXG8IabZ
-         jwy4osteUGZz2uhHgbwMMr+OcISuasaZbb52U=
-Received: by 10.224.214.70 with SMTP id gz6mr187325qab.104.1289431298003; Wed,
- 10 Nov 2010 15:21:38 -0800 (PST)
-Received: by 10.220.186.198 with HTTP; Wed, 10 Nov 2010 15:21:37 -0800 (PST)
+	id S1757411Ab0KJXxS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Nov 2010 18:53:18 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:34845 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757116Ab0KJXxR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Nov 2010 18:53:17 -0500
+Received: from smtp02.web.de  ( [172.20.0.184])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 0EFAA17757FC3;
+	Thu, 11 Nov 2010 00:53:16 +0100 (CET)
+Received: from [93.246.41.165] (helo=[192.168.178.29])
+	by smtp02.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1PGKTb-00062C-00; Thu, 11 Nov 2010 00:53:16 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19+5HSAyHmb3vS+BGOucy3I0YHDtk0yRnnEvuA2
+	gSu00ERAkp8VwhfU1Sa+WbqQbtKl9AUjn5tZl6ByJRkwulqtiB
+	RZbZ3js1nqldtvKaIr4g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161191>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161193>
 
-This is a weird issue I ran into while scripting some Git operations
-with git 1.7.2 on a Linux server.
+So here is the third iteration of the recursive fetch/pull series.
 
-When running the git-clone command manually from the command line, the
-resulting repo/.git/config had all three required sections: core,
-remote (origin), branch (master).
+Changes since v2:
 
-When running the exact same git-clone command manually from the Python
-scripted, the resulting repo/.git/config was missing the `core` and
-`remote` sections.
+* The default now is to not recurse into submodules (also see "Still
+  to do")
 
-Here's a bash log fully demonstrating the issue:
+* The command line option has been renamed to "--recurse-submodules" as
+  proposed at the GitTogether
 
-  $ python -c "import os; os.popen('git clone
-git@git.domain.com:repos/repo.git')"
-  [...]
-  $ cat repo/.git/config
-  [branch "master"]
-          remote = origin
-          merge = refs/heads/master
-  $ rm -Rf repo
-  $ git clone git@git.domain.com:repos/repo.git
-  $ cat repo/.git/config
-  [core]
-          repositoryformatversion = 0
-          filemode = true
-          bare = false
-          logallrefupdates = true
-  [remote "origin"]
-          fetch = +refs/heads/*:refs/remotes/origin/*
-          url = git@git.domain.com:repo/repo.git
-  [branch "master"]
-          remote = origin
-          merge = refs/heads/master
+* The config options are named "submodule.<name>.fetchRecurseSubmodules"
+  and "fetch.recurseSubmodules" now
 
-What's causing this?  Is it a bug?
+* Switched the order of the two patches adding the config options
 
-Thanks, D
+
+Question:
+
+* Should the "--submodule-prefix" option - which is only used internally
+  now - be a hidden option to "git fetch"?
+
+
+Still to do:
+
+* Add a mode to only fetch those submodules where new recorded commits
+  are fetched in the superproject (and maybe later even fetch only those
+  commits in the submodule which are referenced in the superprojects
+  fetch). This could be a sane default - especially for projects having
+  lots of submodules - and could be enabled by using then to be added
+  "--recurse-submodules=changed" and "fetch[.]recurseSubmodules=changed"
+  options where the configuration uses other defaults (I'm not really
+  convinced yet 'changed' is a very good name but couldn't come up with
+  a better one yet. So suggestions for alternatives are very welcome :-)
+
+* Boost performance by concurrently fetching submodules (after my first
+  experiments this must be configurable, e.g. how many fetch commands
+  to run at the same time, as some git servers barf on too many fetches
+  run at the same time)
+
+
+But nonetheless I think this patch series is ok for inclusion as it does
+not change default behavior and gives people the opportunity to play with
+recursive fetch/pull by enabling one of the introduced config options.
+
+
+Jens Lehmann (3):
+  fetch/pull: Add the --recurse-submodules option
+  Add the 'fetch.recurseSubmodules' config setting
+  Submodules: Add the "fetchRecurseSubmodules" config option
+
+ Documentation/config.txt        |   12 +++
+ Documentation/fetch-options.txt |   13 +++
+ Documentation/gitmodules.txt    |    8 ++
+ builtin/fetch.c                 |   64 ++++++++++---
+ git-pull.sh                     |   10 ++-
+ submodule.c                     |   98 +++++++++++++++++++-
+ submodule.h                     |    5 +
+ t/t5526-fetch-submodules.sh     |  195 +++++++++++++++++++++++++++++++++++++++
+ 8 files changed, 388 insertions(+), 17 deletions(-)
+ create mode 100755 t/t5526-fetch-submodules.sh
+
+-- 
+1.7.3.2.337.g9376c
