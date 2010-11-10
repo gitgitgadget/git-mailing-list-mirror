@@ -1,76 +1,78 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: Re: [RFC] Using gitrevisions :/search style with other operators
-Date: Wed, 10 Nov 2010 08:46:09 +0100
-Organization: Bertin Technologies
-Message-ID: <20101110084609.78f532a5@chalon.bertin.fr>
-References: <20101109083023.783fad9b@chalon.bertin.fr>
- <13A8F1B3-39B0-4D11-8763-9C458F75487D@sb.org>
- <20101109102428.5ba8dc13@chalon.bertin.fr>
- <7vlj52jakh.fsf@alter.siamese.dyndns.org>
- <050F42EE-34FE-499F-B632-471597EB4881@sb.org>
- <20101110083209.6a1252ef@chalon.bertin.fr>
- <23523534-F7A7-4D61-A899-8B3B28566EA7@sb.org>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH 1/5] t/t7004-tag: test handling of rfc1991 signatures
+Date: Wed, 10 Nov 2010 09:23:59 +0100
+Message-ID: <4CDA569F.5090901@drmicha.warpmail.net>
+References: <4CAB90EC.1080302@drmicha.warpmail.net> <cover.1289041051.git.git@drmicha.warpmail.net> <c20fb62cefcd42533e47f6f1bf5817712e5ebf9a.1289041051.git.git@drmicha.warpmail.net> <7vwrommn6j.fsf@alter.siamese.dyndns.org> <4CD9839B.6060406@drmicha.warpmail.net> <7vhbfqjaho.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Junio C Hamano <gitster@pobox.com>, git list <git@vger.kernel.org>,
-	Jeff King <peff@peff.net>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Wed Nov 10 08:56:54 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Stephan Hugel <urschrei@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 10 09:26:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PG5Y5-0004GT-8E
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 08:56:53 +0100
+	id 1PG60H-0006sd-BJ
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 09:26:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753074Ab0KJH4s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Nov 2010 02:56:48 -0500
-Received: from blois.bertin.fr ([195.68.26.9]:36519 "EHLO blois.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752572Ab0KJH4s (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Nov 2010 02:56:48 -0500
-Received: from blois.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id D82B954316
-	for <git@vger.kernel.org>; Wed, 10 Nov 2010 08:56:46 +0100 (CET)
-Received: from YPORT1 (yport1.bertin.fr [192.168.1.13])
-	by blois.bertin.fr (Postfix) with ESMTP id B499454310
-	for <git@vger.kernel.org>; Wed, 10 Nov 2010 08:56:46 +0100 (CET)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0LBN003PCSQMZM70@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Wed, 10 Nov 2010 08:56:46 +0100 (CET)
-In-reply-to: <23523534-F7A7-4D61-A899-8B3B28566EA7@sb.org>
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8200-6.0.0.1038-17756.005
+	id S1753510Ab0KJIZy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Nov 2010 03:25:54 -0500
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:51866 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753226Ab0KJIZx (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Nov 2010 03:25:53 -0500
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 99BD8665;
+	Wed, 10 Nov 2010 03:25:50 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Wed, 10 Nov 2010 03:25:50 -0500
+X-Sasl-enc: rxIwnpn456ASc5HkA7i5vmnkhQJP91wQ17eOPKCggHJC 1289377550
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 05F655E9A92;
+	Wed, 10 Nov 2010 03:25:49 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
+In-Reply-To: <7vhbfqjaho.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161137>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161138>
 
-On Tue, 09 Nov 2010 23:46:59 -0800
-Kevin Ballard <kevin@sb.org> wrote:
-
-> On Nov 9, 2010, at 11:32 PM, Yann Dirson wrote:
+Junio C Hamano venit, vidit, dixit 10.11.2010 01:19:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
 > 
-> >> Another thing to consider - the current :/foo syntax searches for
-> >> the newest commit reachable from any ref. Using the ^{} syntax will
-> >> require specifying a ref first. I'm not sure this is a problem
-> >> though, as I'm not really sure why :/foo searches from all refs to
-> >> begin with.
-> > 
-> > The syntax could be extended so that ^{whatever} starts looking at
-> > current commit (ie. HEAD), somewhat like @{whatever} looks at
-> > reflog for current branch.
+>> The --rfc1991 option matters for the creation of signatures only, not
+>> for the verification (and neither for display/listing with git, of course).
 > 
-> :/foo doesn't start from the current commit - it searches all refs.
-> However, making ^{} search all refs if not given one doesn't make
-> sense for any operator except :/foo, so I don't think it's worth doing
+> Doesn't the above statement assume a bit too much about how the current
+> version of gpg behaves, I have to wonder?
 
-Yes, that's why I suggested to make it search from HEAD, not from all
-refs.
+[Note: I'm sick and may sound even more grumpy than usual...]
 
--- 
-Yann Dirson - Bertin Technologies
+* This test (and the patches) is about making signed tags work for
+people with rfc1991 in their options. This is why I put rfc1991 in gpg's
+option file.
+
+Note that git always produced rfc1991 sigs for those users, and always
+failed to verify/list them properly, no matter what gpg option is active
+during the verify/list phase.
+
+* If you /also/ want to test that users without --rfc1991 can very those
+rfc1991 sigs one would need an additional test after the "rm...". I'm
+telling you that --rfc1991 is completely irrelevant for what gpg
+accepts, and thus the additional test is completely superfluous. gpg is
+lenient about what it accepts (within existing rfc's) and strict about
+what it produces (according to what you tell it to do), just like it
+should. This is by design and intentional, not version dependent or by
+chance. (Even requesting strict openpgp mode does not change this.)
+
+So, the rm needs to stay where it is.
+
+I could repeat the three tests again after the rm, albeit in different
+order so that the first one has no chance of rewriting the rfc1991 sig
+into an openpgp sig. I have no objection against that, it does no good
+and no harm.
+
+Michael
