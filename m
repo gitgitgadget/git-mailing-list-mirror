@@ -1,95 +1,102 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] git-rebase--interactive.sh: Add new command "shell"
-Date: Tue, 9 Nov 2010 19:42:15 -0600
-Message-ID: <20101110014215.GA1503@burratino>
-References: <9C0BAFB4-299E-459B-A64A-54D480C5445D@sb.org>
- <20101104112530.5c0e444a@chalon.bertin.fr>
- <4CD2E7B4.3000908@nextest.com>
- <vpq62wddmc0.fsf@bauges.imag.fr>
- <20101104181020.GB16431@burratino>
- <20101104205307.GA8911@home.lan>
- <7vd3qfr7ki.fsf@alter.siamese.dyndns.org>
- <663A3F43-5F64-41F0-B272-64EEE9775250@sb.org>
- <20101108222937.GH3167@home.lan>
+From: Gabriel Corona <gabriel.corona@enst-bretagne.fr>
+Subject: URL-escape the '@' sign in username/password
+Date: Wed, 10 Nov 2010 02:33:09 +0100
+Message-ID: <4CD9F655.8030908@enst-bretagne.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Kevin Ballard <kevin@sb.org>, Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Eric Raible <raible@nextest.com>,
-	Yann Dirson <dirson@bertin.fr>, git@vger.kernel.org
-To: Yann Dirson <ydirson@free.fr>
-X-From: git-owner@vger.kernel.org Wed Nov 10 02:42:57 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 10 02:44:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PFziB-0004y0-UT
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 02:42:56 +0100
+	id 1PFzjS-0005NH-3g
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 02:44:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753425Ab0KJBmk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 9 Nov 2010 20:42:40 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:34122 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751743Ab0KJBmj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 9 Nov 2010 20:42:39 -0500
-Received: by qyk31 with SMTP id 31so126076qyk.19
-        for <git@vger.kernel.org>; Tue, 09 Nov 2010 17:42:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=Drzq87DyYFnij8gJNAZaiPtqGmyODmh6KQVSmuFQwsY=;
-        b=jPM1zBHD775jwbhxU7mM3PQBIIZ7OsvBx22UA/KsB++IxqTstP8I7BEv3jy0BkFXdc
-         +iFOW3atRCBlcSY9RUsWVNVIEjTHfsFqm119MFwMoUNWfgNvKrv7N1XD9SkGfxgaDXmy
-         /ZmNK+bEHP19UleIUQzpajLeb3kBtZRhqLpxA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=IyTQweyOPF4dw4IV5aFOtyqg5uLobZlTgIFOi6dglVmrkyXJH6wS0UwTs9BE5jACyK
-         xR8LaG/SA5nQXptoUTLYaaj/rCyTggswWp38QtFqaahLFbMcLQIWTpi1FnOhFnZY8yRV
-         qkakXiQG6Vuwmguby0cFFi1tfk6otHnpEI2cQ=
-Received: by 10.229.95.11 with SMTP id b11mr6985935qcn.174.1289353358911;
-        Tue, 09 Nov 2010 17:42:38 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id m7sm86541qck.37.2010.11.09.17.42.34
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 09 Nov 2010 17:42:36 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20101108222937.GH3167@home.lan>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752163Ab0KJBoJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 9 Nov 2010 20:44:09 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:56217 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751406Ab0KJBoH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 9 Nov 2010 20:44:07 -0500
+Received: from [192.168.0.60] (unknown [88.180.106.44])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 381CAA61E3
+	for <git@vger.kernel.org>; Wed, 10 Nov 2010 02:44:00 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.9) Gecko/20100918 Icedove/3.1.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161118>
 
-Yann Dirson wrote:
+Hello,
 
-> |Keep in mind that any commit in the original todo list, that would
-> |not be there after your edits, would not be included in the resulting
-> |rebased branch.  In case you realize afterwards that you need such a
-> |commit, you can still access it as an ancestor of @{1}, see
-> |git-reflog(1) for details.
+I've been trying to use git with a http/webdav repository with an 
+username containing a '@' character (foobar@host). The git FAQ [1] 
+suggests escaping the '@' character with percent encoding. However, the 
+username and password of the URI are not unescaped and the username 
+foobar%400host is sent to the web server.
 
-Do you mean @{-1}?
+$ #Launch a dummy web server
+$ webfsd -4 -r ~/bidouilles/temp/empty/ -L- -F -bfoobar@host:secret 
+-p8000 -i 127.0.0.1 &
 
-> Maybe we could list a copy of the todo list in the comments, as a
-> reference for double-checking.  Such a list could even be used for a
-> final check before applying, that would ask confirmation if the set of
-> patches has changed, and offer to edit again.  The same config item
-> (eg. advice.interactiveRebase ?) could be used to hide the note and
-> the check.
+$ git clone http://foobar%40host:secret@127.0.0.1:8000/
+Cloning into 8000...
+fatal: Authentication failed
 
-Mm, but intentionally dropping commits is common, no?
+Compare with:
 
-What would be nice is to be able to do
+$ git clone http://127.0.0.1:8000/
+Cloning into 8000...
+Username: foobar@host
+Password: secret
+fatal: http://127.0.0.1:8000/info/refs not found: did you run git 
+update-server-info on the server?
 
-	git rebase --change-of-plans
+[1] 
+https://git.wiki.kernel.org/index.php/GitFaq#My_username_contains_a_.27.40.27.2C_I_can.27t_clone_through_HTTP.2FHTTPS
 
-and somehow get my editor of choice to open with the original todo
-list (read-only) and the current todo list (read/write).
+diff --git a/http.c b/http.c
+index 0a5011f..c4d18a9 100644
+--- a/http.c
++++ b/http.c
+@@ -297,7 +297,7 @@ static CURL *get_curl_handle(void)
 
-Well, a person can dream. :)
+  static void http_auth_init(const char *url)
+  {
+-       char *at, *colon, *cp, *slash;
++       char *at, *colon, *cp, *slash, *temp;
+         int len;
+
+         cp = strstr(url, "://");
+@@ -322,16 +322,25 @@ static void http_auth_init(const char *url)
+                 user_name = xmalloc(len + 1);
+                 memcpy(user_name, cp, len);
+                 user_name[len] = '\0';
++               temp = url_decode(user_name);
++               free(user_name);
++               user_name = temp;
+                 user_pass = NULL;
+         } else {
+                 len = colon - cp;
+                 user_name = xmalloc(len + 1);
+                 memcpy(user_name, cp, len);
+                 user_name[len] = '\0';
++               temp = url_decode(user_name);
++               free(user_name);
++               user_name = temp;
+                 len = at - (colon + 1);
+                 user_pass = xmalloc(len + 1);
+                 memcpy(user_pass, colon + 1, len);
+                 user_pass[len] = '\0';
++               temp = url_decode(user_pass);
++               free(user_pass);
++               user_pass = temp;
+         }
+  }
+
+-- 
+Gabriel
