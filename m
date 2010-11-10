@@ -1,77 +1,84 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: import determinism
-Date: Wed, 10 Nov 2010 16:25:40 -0500
-Message-ID: <AANLkTin-SxiTMZOeucS5_KKpaCz=PJ3yWjPFxB0bhCQ2@mail.gmail.com>
-References: <20101107202535.GA18766@nibiru.local> <AANLkTi=mx0AAKo2Asn5XJVcs30-PLuwhTbM=o0y36Wa_@mail.gmail.com>
- <m2lj54u9uj.fsf@igel.home> <AANLkTikXxM=CfU2dKAY9khi1_tAsGDdUEc8S5AxooGH9@mail.gmail.com>
- <m2d3qgu50c.fsf@igel.home> <20101109134337.GA19430@nibiru.local>
- <AANLkTi=y_DKRRU43ro3WDz2rSDGL9xASfsinoj8Ya9PT@mail.gmail.com> <20101110161804.GA29619@nibiru.local>
+From: Miklos Vajna <vmiklos@frugalware.org>
+Subject: Re: git describe weird behaviour
+Date: Wed, 10 Nov 2010 23:07:30 +0100
+Message-ID: <20101110220730.GR22105@genesis.frugalware.org>
+References: <20101110010016.GC22105@genesis.frugalware.org>
+ <7vaalhhstp.fsf@alter.siamese.dyndns.org>
+ <20101110204034.GO22105@genesis.frugalware.org>
+ <20101110212410.GA13782@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: weigelt@metux.de, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 10 22:26:11 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="B1ozxjQqW1UYvlaJ"
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 10 23:07:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGIBG-00071F-KE
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 22:26:10 +0100
+	id 1PGIpS-0003PE-7k
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 23:07:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756889Ab0KJV0E convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Nov 2010 16:26:04 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:33909 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756859Ab0KJV0C convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Nov 2010 16:26:02 -0500
-Received: by yxt33 with SMTP id 33so223727yxt.19
-        for <git@vger.kernel.org>; Wed, 10 Nov 2010 13:26:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=dMbxZzhRjKX5uMXKqiX8FJbG/Ic72yZgR7PtROrhAX0=;
-        b=P1Np/S5WeSpOXHMEvc/xUp86AOx6qYizGvHqH+4XpEl8GOGYa6aBAD+JBpYxCZs5NZ
-         10xhiX+GpTaDW8UYNAj70wgKgfa7tS67ccyxg/fiMHjt1WEgqe+z3XTj3hEyt+2PcqeL
-         6iuTznkQbZWKM0qahWMGEbusQvSAx5N6w12kQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        b=FC/EY+J9j7BsKU/SUGhEqfrACMDYjnOlAlEYJA5f45vFkDWVvpvIrJDLXK7GWFHc9t
-         +e40KThviW1CnU4pYHPxMDNHZcIvoB8qMkkxacJJXnU6UptC2voFlPcMcKguAi8W86l+
-         n4H47yJotf0LWUEhQKKlVsrOcZjX1Zygl+WU8=
-Received: by 10.42.220.69 with SMTP id hx5mr17389icb.519.1289424360806; Wed,
- 10 Nov 2010 13:26:00 -0800 (PST)
-Received: by 10.231.16.65 with HTTP; Wed, 10 Nov 2010 13:25:40 -0800 (PST)
-In-Reply-To: <20101110161804.GA29619@nibiru.local>
+	id S1756886Ab0KJWHc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Nov 2010 17:07:32 -0500
+Received: from virgo.iok.hu ([212.40.97.103]:54395 "EHLO virgo.iok.hu"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756610Ab0KJWHc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Nov 2010 17:07:32 -0500
+Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
+	by virgo.iok.hu (Postfix) with ESMTP id C0C9E580A0;
+	Wed, 10 Nov 2010 23:07:30 +0100 (CET)
+Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
+	by kag.elte.hu (Postfix) with ESMTP id 7EAC744659;
+	Wed, 10 Nov 2010 23:07:30 +0100 (CET)
+Received: by genesis.frugalware.org (Postfix, from userid 1000)
+	id 57013132C041; Wed, 10 Nov 2010 23:07:30 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20101110212410.GA13782@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161187>
-
-On Wed, Nov 10, 2010 at 11:18 AM, Enrico Weigelt <weigelt@metux.de> wro=
-te:
-> * Martin Langhoff <martin.langhoff@gmail.com> wrote:
->> Every full clone is a good backup. If nobody is doing a full clone..=
-=2E
->> the do back them up. That's my recommendation.
->
-> Does the clone have all information necessary for the incremental
-> cvsimport runs ?
-
-Yes -- all cvsimport tracks is the branches. No extra import-tracking
-data is maintained. (Other importers may or may not keep additional
-data, YMMV, etc)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161188>
 
 
-m
---=20
-=A0martin.langhoff@gmail.com
-=A0martin@laptop.org -- School Server Architect
-=A0- ask interesting questions
-=A0- don't get distracted with shiny stuff=A0 - working code first
-=A0- http://wiki.laptop.org/go/User:Martinlanghoff
+--B1ozxjQqW1UYvlaJ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Wed, Nov 10, 2010 at 03:24:10PM -0600, Jonathan Nieder <jrnieder@gmail.c=
+om> wrote:
+> Miklos Vajna wrote:
+>=20
+> > But I think the approach to follow the first parent only would solve the
+> > problem outlined in the commit message of 80dbae0 as well: I think it's
+> > pretty rare to tag a commit in a feature branch, then merge it.
+>=20
+> Doesn't that happen in linux-2.6 history fairly often (subsystem trees
+> syncing with upstream)?
+
+Hm, makes sense - I don't think it ever happened in
+torvalds/linux-2.6.git, but probably it happens in subsystem trees where
+a given maintainer never tags anything, but regularly merges from
+torvalds/linux-2.6.git. So my proposal would break git describe output
+when it's invoked in a subsystem tree, you are right.
+
+(Note that Peff's patch at least fixes the tag part of the issue for me,
+and that should not really break the above situation.)
+
+--B1ozxjQqW1UYvlaJ
+Content-Type: application/pgp-signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iEYEARECAAYFAkzbF6IACgkQe81tAgORUJY5kwCeIf76hAtNPmQ1JgWvSfZqZC2Z
+9B8An3glgU3QhL0PFp7doRm+vO9bt4fU
+=HFCH
+-----END PGP SIGNATURE-----
+
+--B1ozxjQqW1UYvlaJ--
