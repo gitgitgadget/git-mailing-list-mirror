@@ -1,73 +1,66 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: URL-escape the '@' sign in username/password
-Date: Wed, 10 Nov 2010 17:07:57 +0100
-Message-ID: <vpqpqudw49u.fsf@bauges.imag.fr>
-References: <4CD9F655.8030908@enst-bretagne.fr>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: import determinism
+Date: Wed, 10 Nov 2010 17:18:31 +0100
+Message-ID: <20101110161804.GA29619@nibiru.local>
+References: <20101107202535.GA18766@nibiru.local> <AANLkTi=mx0AAKo2Asn5XJVcs30-PLuwhTbM=o0y36Wa_@mail.gmail.com> <m2lj54u9uj.fsf@igel.home> <AANLkTikXxM=CfU2dKAY9khi1_tAsGDdUEc8S5AxooGH9@mail.gmail.com> <m2d3qgu50c.fsf@igel.home> <20101109134337.GA19430@nibiru.local> <AANLkTi=y_DKRRU43ro3WDz2rSDGL9xASfsinoj8Ya9PT@mail.gmail.com>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Gabriel Corona <gabriel.corona@enst-bretagne.fr>
-X-From: git-owner@vger.kernel.org Wed Nov 10 17:08:13 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 10 17:36:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGDDY-0006Gk-SY
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 17:08:13 +0100
+	id 1PGDee-00084s-8Z
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 17:36:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756488Ab0KJQIG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Nov 2010 11:08:06 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:54377 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752753Ab0KJQIF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Nov 2010 11:08:05 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id oAAFqZp1006614
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Wed, 10 Nov 2010 16:52:35 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PGDDK-00027n-2G; Wed, 10 Nov 2010 17:07:58 +0100
-In-Reply-To: <4CD9F655.8030908@enst-bretagne.fr> (Gabriel Corona's message of "Wed\, 10 Nov 2010 02\:33\:09 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 10 Nov 2010 16:52:35 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: oAAFqZp1006614
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1290009156.08789@USEPQekaZ5XMid3f3nxDBg
+	id S1756906Ab0KJQgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Nov 2010 11:36:06 -0500
+Received: from caprica.metux.de ([82.165.128.25]:42293 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756405Ab0KJQgF (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Nov 2010 11:36:05 -0500
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id oAAGc1gP014878
+	for <git@vger.kernel.org>; Wed, 10 Nov 2010 17:38:04 +0100
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id oAAGbs46014814
+	for git@vger.kernel.org; Wed, 10 Nov 2010 17:37:54 +0100
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id oAAGIsRU014596
+	for git@vger.kernel.org; Wed, 10 Nov 2010 17:18:54 +0100
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=y_DKRRU43ro3WDz2rSDGL9xASfsinoj8Ya9PT@mail.gmail.com>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161157>
 
-Gabriel Corona <gabriel.corona@enst-bretagne.fr> writes:
+* Martin Langhoff <martin.langhoff@gmail.com> wrote:
+> Every full clone is a good backup. If nobody is doing a full clone...
+> the do back them up. That's my recommendation.
 
-> Hello,
->
-> I've been trying to use git with a http/webdav repository with an
-> username containing a '@' character (foobar@host). The git FAQ [1]
-> suggests escaping the '@' character with percent encoding.
+Does the clone have all information necessary for the incremental
+cvsimport runs ?
 
-Yes, I'm the one to blame for this: I wrote the FAQ entry trying to
-help someone on the list, but I didn't have a webserver to actually do
-the test.
 
-> diff --git a/http.c b/http.c
-> index 0a5011f..c4d18a9 100644
-> --- a/http.c
-> +++ b/http.c
-
-The patch sounds good. Can you resend it properly (i.e. use git
-format-patch and/or git send-email, read about signed-off-by in
-Documentation/SubmittingPatches, ...) ?
-
-Thanks in advance,
-
+cu
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
