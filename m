@@ -1,78 +1,73 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH 1/5] t/t7004-tag: test handling of rfc1991 signatures
-Date: Wed, 10 Nov 2010 09:23:59 +0100
-Message-ID: <4CDA569F.5090901@drmicha.warpmail.net>
-References: <4CAB90EC.1080302@drmicha.warpmail.net> <cover.1289041051.git.git@drmicha.warpmail.net> <c20fb62cefcd42533e47f6f1bf5817712e5ebf9a.1289041051.git.git@drmicha.warpmail.net> <7vwrommn6j.fsf@alter.siamese.dyndns.org> <4CD9839B.6060406@drmicha.warpmail.net> <7vhbfqjaho.fsf@alter.siamese.dyndns.org>
+From: Maaartin <grajcar1@seznam.cz>
+Subject: Re: git describe weird behaviour
+Date: Wed, 10 Nov 2010 08:47:55 +0000 (UTC)
+Message-ID: <loom.20101110T092918-964@post.gmane.org>
+References: <20101110010016.GC22105@genesis.frugalware.org> <20101110041428.GA8955@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Stephan Hugel <urschrei@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 10 09:26:03 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 10 09:48:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PG60H-0006sd-BJ
-	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 09:26:01 +0100
+	id 1PG6M0-00074Z-Vj
+	for gcvg-git-2@lo.gmane.org; Wed, 10 Nov 2010 09:48:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753510Ab0KJIZy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Nov 2010 03:25:54 -0500
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:51866 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753226Ab0KJIZx (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 10 Nov 2010 03:25:53 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 99BD8665;
-	Wed, 10 Nov 2010 03:25:50 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Wed, 10 Nov 2010 03:25:50 -0500
-X-Sasl-enc: rxIwnpn456ASc5HkA7i5vmnkhQJP91wQ17eOPKCggHJC 1289377550
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 05F655E9A92;
-	Wed, 10 Nov 2010 03:25:49 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
-In-Reply-To: <7vhbfqjaho.fsf@alter.siamese.dyndns.org>
+	id S1755007Ab0KJIsL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Nov 2010 03:48:11 -0500
+Received: from lo.gmane.org ([80.91.229.12]:44312 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754948Ab0KJIsJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Nov 2010 03:48:09 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PG6Lg-0006wE-40
+	for git@vger.kernel.org; Wed, 10 Nov 2010 09:48:08 +0100
+Received: from 188-120-198-113.luckynet.cz ([188-120-198-113.luckynet.cz])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 10 Nov 2010 09:48:08 +0100
+Received: from grajcar1 by 188-120-198-113.luckynet.cz with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 10 Nov 2010 09:48:08 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 188.120.198.113 (Opera/9.80 (Windows NT 5.2; U; en) Presto/2.6.30 Version/10.63)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161138>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161139>
 
-Junio C Hamano venit, vidit, dixit 10.11.2010 01:19:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> The --rfc1991 option matters for the creation of signatures only, not
->> for the verification (and neither for display/listing with git, of course).
-> 
-> Doesn't the above statement assume a bit too much about how the current
-> version of gpg behaves, I have to wonder?
+Jeff King <peff <at> peff.net> writes:
+> PS This would be a much simpler algorithm to write in a depth-first way.
+>    But that would also involve traversing the entire graph down to the
+>    roots, which we try to avoid.  Which reminds me of my "tag
+>    --contains" depth first algorithm, and gives me some ideas on how to
+>    make it work in a breadth-first way. So even if my idea here is
+>    flawed, this thinking hasn't been completely fruitless. :)
 
-[Note: I'm sick and may sound even more grumpy than usual...]
+IMHO, using BFS and counting commits is flawed, since the output is hard to 
+understand and quite meaningless for humans. Imagine a merge of two long 
+branches, one with a tag 10 commits deep and the other with a tag 11 commits 
+deep. Do you see any reason for a human to prefer the first one? I do not.
 
-* This test (and the patches) is about making signed tags work for
-people with rfc1991 in their options. This is why I put rfc1991 in gpg's
-option file.
+I could imagine to always prefer the first branch, which leads to DFS. What is 
+your reason for avoiding traversing to the roots?
 
-Note that git always produced rfc1991 sigs for those users, and always
-failed to verify/list them properly, no matter what gpg option is active
-during the verify/list phase.
+It could be better to traverse the first branch only to the point where the 
+other started, then traverse the other one, and then continue down the common 
+trunk. This sounds a bit complicated to implement and may be hard to specify in 
+more complicated cases. A rule like "tag T1 can be returned only if there's no 
+tag T2 higher (i.e. newer) in the tree", could possibly solve it.
 
-* If you /also/ want to test that users without --rfc1991 can very those
-rfc1991 sigs one would need an additional test after the "rm...". I'm
-telling you that --rfc1991 is completely irrelevant for what gpg
-accepts, and thus the additional test is completely superfluous. gpg is
-lenient about what it accepts (within existing rfc's) and strict about
-what it produces (according to what you tell it to do), just like it
-should. This is by design and intentional, not version dependent or by
-chance. (Even requesting strict openpgp mode does not change this.)
-
-So, the rm needs to stay where it is.
-
-I could repeat the three tests again after the rm, albeit in different
-order so that the first one has no chance of rewriting the rfc1991 sig
-into an openpgp sig. I have no objection against that, it does no good
-and no harm.
-
-Michael
+Finally, using a chronological ordering instead of counting commits seems to be 
+the most straightforward to me. An implementation using a priority queue is no 
+less and no more complicated then BFS or DFS. I think, it could be an 
+interesting and easy to comprehend option. In case I'm talking non-sense, pls 
+bare with me, since I'm still a beginner.
