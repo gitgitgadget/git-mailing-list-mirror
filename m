@@ -1,79 +1,57 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Scripted clone generating an incomplete, unusable .git/config
-Date: Thu, 11 Nov 2010 04:37:42 -0600
-Message-ID: <20101111103742.GA16422@burratino>
-References: <AANLkTik7-QzrMKDpV=W4dqpuguZsAr5yrMELmHu5NZMd@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v2] rebase -X: do not clobber strategy
+Date: Thu, 11 Nov 2010 11:41:33 +0100
+Message-ID: <201011111141.33623.trast@student.ethz.ch>
+References: <1289373266-32593-1-git-send-email-martin.von.zweigbergk@gmail.com> <AANLkTimEvp2mQu1QWhx-FDEx37NLi8jose_p+A1y1iHK@mail.gmail.com> <AANLkTiks87caBYo78Xh1hwnEfDF9yKwBn5q3wa87hBo3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git ML <git@vger.kernel.org>,
-	Stefan Naewe <stefan.naewe@atlas-elektronik.com>
-To: Dun Peal <dunpealer@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 11 11:38:16 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, <git@vger.kernel.org>,
+	<gitster@pobox.com>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 11 11:41:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGUXn-0000Sj-8A
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 11:38:15 +0100
+	id 1PGUbA-00029P-1W
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 11:41:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753529Ab0KKKiJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Nov 2010 05:38:09 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:48440 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753242Ab0KKKiI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Nov 2010 05:38:08 -0500
-Received: by gxk23 with SMTP id 23so1050949gxk.19
-        for <git@vger.kernel.org>; Thu, 11 Nov 2010 02:38:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=mbTK+BC0p+04Azlphv4Yu9/cI9E9hq/clKUHsQkNYJU=;
-        b=eQhLBpWTyUJc1o0wTqyNS952X/xDSFQkZBIi/4lURmCT+EpYAXDCZnRgT+lGuJ4nuN
-         u+3eGuoDB7pga19bjW1EN1s295cCVJ3QmVv76/hyZiZCsYNTDScdQlvBeR9KnmRVgwm6
-         i1EaEB2awVUuIeLTXrb3FpxZNI7FfOZAAFzHc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=LmbFY6wDVDu+jbqDuBO/dFTOcUPQrNpiLF4mIWnfViorWTp418PkjobfvLvW4LxfCj
-         nGbs2ZsW0/irrlXEhvK6R/LKfo8EPzPabzcydQNPAuF2q8U7RRsjT7+2rf+8vtLCF7ah
-         J0lAC1IuieUKlMaXuP7SddfDsSp04UwNwY804=
-Received: by 10.150.144.19 with SMTP id r19mr1520809ybd.141.1289471887741;
-        Thu, 11 Nov 2010 02:38:07 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id q4sm2423427yba.2.2010.11.11.02.38.04
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 11 Nov 2010 02:38:05 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTik7-QzrMKDpV=W4dqpuguZsAr5yrMELmHu5NZMd@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754424Ab0KKKlj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Nov 2010 05:41:39 -0500
+Received: from gwse.ethz.ch ([129.132.178.238]:45916 "EHLO gwse.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753964Ab0KKKli (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Nov 2010 05:41:38 -0500
+Received: from CAS11.d.ethz.ch (172.31.38.211) by gws01.d.ethz.ch
+ (129.132.178.238) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 11 Nov
+ 2010 11:41:36 +0100
+Received: from pctrast.inf.ethz.ch (129.132.208.172) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.218.12; Thu, 11 Nov
+ 2010 11:41:37 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.36-90-desktop; KDE/4.5.3; x86_64; ; )
+In-Reply-To: <AANLkTiks87caBYo78Xh1hwnEfDF9yKwBn5q3wa87hBo3@mail.gmail.com>
+X-Originating-IP: [129.132.208.172]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161221>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161222>
 
-Hi,
+Martin von Zweigbergk wrote:
+> Btw, why is the default (if no strategy is specifed) for 'git rebase' to
+> use 'recursive', while for 'git merge' "a built-in list of strategies is
+> used instead (git merge-recursive when merging a single head, git
+> merge-octopus otherwise)"?
 
-Dun Peal wrote:
+Because rebase does a tree-level merge, so it never attempts to merge
+than one branch, so octopus never enters the picture.
 
->   $ python -c "import os; os.popen('git clone git@git.domain.com:repos/repo.git')"
->   [...]
->   $ cat repo/.git/config
->   [branch "master"]
->           remote = origin
->           merge = refs/heads/master
+Sorry for the original breakage; while it has Mike Lundy assigned as
+author, I resurrected and resubmitted his patch and should have
+noticed.
 
-It looks like you've probably figured it out already, but for
-completeness:
-
-Most likely the clone is terminating when Python exits, perhaps due to
-SIGPIPE.  It doesn't look like a bug to me; I suspect you meant to use
-os.system(), which is synchronous, instead.  You might be able to get
-a better sense of what happened with GIT_TRACE=1 or strace.
-
-Hope that helps,
-Jonathan
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
