@@ -1,72 +1,104 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v2] Documentation/git-pull: clarify configuration
-Date: Thu, 11 Nov 2010 02:31:25 -0600
-Message-ID: <20101111083124.GB15525@burratino>
-References: <1289373188-32543-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <7voc9xhyfx.fsf@alter.siamese.dyndns.org>
- <AANLkTikT4N5JAxRxPCbx=xAokRKOvvxDQ4pAC9CcpObB@mail.gmail.com>
+From: Jan Hudec <bulb@ucw.cz>
+Subject: Re: which git commands is  correponding to "svnlook diff -t" and
+ "svnlook log -t"?
+Date: Thu, 11 Nov 2010 09:47:23 +0100
+Message-ID: <20101111084723.GD30870@efreet.light.src>
+References: <30111518.post@talk.nabble.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 11 09:31:54 2010
+Cc: git@vger.kernel.org
+To: samilkarahan <samilkarahan@yahoo.com>
+X-From: git-owner@vger.kernel.org Thu Nov 11 09:47:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGSZV-0001uC-JC
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 09:31:53 +0100
+	id 1PGSod-0000pO-Sx
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 09:47:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932082Ab0KKIbs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Nov 2010 03:31:48 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:52772 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757824Ab0KKIbr (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Nov 2010 03:31:47 -0500
-Received: by yxk30 with SMTP id 30so228983yxk.19
-        for <git@vger.kernel.org>; Thu, 11 Nov 2010 00:31:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=c+33xLCRGuUY7YWZhwKXPxSen1huIG3NKho2NPcR50g=;
-        b=EdkSXZ2PlwsyQVQPok4cb/8MY8DDOQtccS2CWicDiKPX+FeOLBivBfV8Jw7oNLPB3d
-         rBirJoji8F51xfHzO3VCLXMrS1tDtZJG7VpMUBVJ/CW5GaPg/j0CHNtxMVlXJHB1T4pf
-         1zn/4PbkF8llDxLdvSUqJJi5W+lzHcia6qXP0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=pGiChlt05PQMN/shmiZmTXRISXbx6KTDLe7UInVIPqyGYxVEQEYjOpTMrAUizWEZj7
-         wJqggqx5U+kzKCw4yiNkqiOqZ50jiKR+sMJYpyVNbm+fu3D/bturlPE6oUfQAZ19SzPQ
-         ffnwuOa9O5GvJ1kUzIAt2B185XquTdTioWAwo=
-Received: by 10.91.45.39 with SMTP id x39mr1057781agj.79.1289464306985;
-        Thu, 11 Nov 2010 00:31:46 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id 68sm1322914yhl.3.2010.11.11.00.31.45
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 11 Nov 2010 00:31:46 -0800 (PST)
+	id S1757863Ab0KKIr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Nov 2010 03:47:26 -0500
+Received: from cuda1.bluetone.cz ([212.158.128.5]:48057 "EHLO
+	cuda1.bluetone.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757834Ab0KKIr0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Nov 2010 03:47:26 -0500
+X-ASG-Debug-ID: 1289465242-0702472d0001-QuoKaX
+Received: from efreet.light.src (152-31-80-78.praha.adsl.tmcz.cz [78.80.31.152]) by cuda1.bluetone.cz with ESMTP id D7xwGR57wFZUe7mN; Thu, 11 Nov 2010 09:47:22 +0100 (CET)
+X-Barracuda-Envelope-From: bulb@ucw.cz
+X-Barracuda-Apparent-Source-IP: 78.80.31.152
+Received: from bulb by efreet.light.src with local (Exim 4.72)
+	(envelope-from <bulb@ucw.cz>)
+	id 1PGSoV-0006Od-Jb; Thu, 11 Nov 2010 09:47:23 +0100
+X-ASG-Orig-Subj: Re: which git commands is  correponding to "svnlook diff -t" and
+ "svnlook log -t"?
 Content-Disposition: inline
-In-Reply-To: <AANLkTikT4N5JAxRxPCbx=xAokRKOvvxDQ4pAC9CcpObB@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <30111518.post@talk.nabble.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Barracuda-Connect: 152-31-80-78.praha.adsl.tmcz.cz[78.80.31.152]
+X-Barracuda-Start-Time: 1289465242
+X-Barracuda-URL: http://212.158.128.5:8000/cgi-mod/mark.cgi
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.5010 1.0000 0.7500
+X-Barracuda-Spam-Score: 0.75
+X-Barracuda-Spam-Status: No, SCORE=0.75 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=4.5 KILL_LEVEL=4.8 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.2.46307
+	Rule breakdown below
+	 pts rule name              description
+	---- ---------------------- --------------------------------------------------
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161219>
 
-Martin von Zweigbergk wrote:
+On Tue, Nov 02, 2010 at 00:03:31 -0700, samilkarahan wrote:
+> I have developed pre-commit hook, but it only run for svn hook. 
+> 
+> I want to run it for git hook,But I don't know git well like svn ,so 
 
->                                           I happened to spot a similar
-> problem in the documentation for 'git rebase -s'. It currently says "Use
-> the given merge strategy. If there is no -s option git merge-recursive
-> is used instead. This implies --merge." and I assume the last sentence
-> refers to the first one in this case too. Same question here: Should I
-> send a patch?
+Git works fundamentally differently from subversion. It's not possible to
+give you good advice unless you explain what you want to do in the hook.
 
-Yes, please!
+Where subversion has one commit operation to create the changeset and publish
+it, git has two operations. Commit to create it and push to publish it. Each
+comes with it's own set of hooks. Moreover the operations are done on
+different repositories, so they run hooks from different places!
 
-In general, carefully written patches that improve the documentation
-are always welcome.  (And sloppy patches are not so bad, either.)
+Commit has 'pre-commit', 'prepare-commit-msg', 'commit-msg' and 'post-commit'
+run on the developers local repositories, where they must be manually
+installed and can be easily disabled (with --no-verify option to commit).
+The prepare-commit-msg gives you some extra flexibility in that you can
+prepare template of the commit message here.
+
+Push has 'pre-receive', 'update', 'post-receive' and 'post-update' run on the
+central repository and there is no way around them. It is, however, kind of
+late. The commits are already done, perhaps even for quite a long time, so if
+they are rejected, developers will have to go back and amend them.
+
+Remember, that multiple commits will be pushed at once, so you have to
+inspect all of them (git log $oldsha..$newsha), not just the latest.
+
+> I haven't found corresponding git command to svn commands which are "svnlook
+> diff -t"
+
+Depends on which git hook you want that in. And that depends on what you want
+to do. For pre-commit hook, it's 'git diff --cached', for pre-receive or
+update hook you get the commit ID and inspect it with 'git log' and 'git
+show'.
+
+> and "svnlook log -t".
+
+Again, depends on which git hook you want that in. And that depends on what
+you want to do. For pre-commit hook there is none, since it's called
+*before* the message is created. For commit-msg hook you get name of file
+with the message as argument (and you can edit it from there). For
+pre-receive hook or update hook you use 'git log' and 'git show' again.
+
+> is there anybody know these git commands??
+
+Everybody knows them plus they are quite obvious from the documentation (man
+git-hooks) and the samples (installed by 'git init' in every repository). But
+nobody knows the subversion commands and there is no simple mapping anyway.
+
+-- 
+						 Jan 'Bulb' Hudec <bulb@ucw.cz>
