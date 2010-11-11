@@ -1,121 +1,104 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 1/3] setup: save prefix (original cwd relative to toplevel) in startup_info
-Date: Thu, 11 Nov 2010 21:08:02 +0700
-Message-ID: <1289484484-8632-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 2/3] Make prefix_path() return char* without const
+Date: Thu, 11 Nov 2010 21:08:03 +0700
+Message-ID: <1289484484-8632-3-git-send-email-pclouds@gmail.com>
 References: <1289484484-8632-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
+	<pclouds@gmail.com>
 To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Jonathan Niedier <jrnieder@gmail.com>,
 	Matthieu.Moy@grenoble-inp.fr
-X-From: git-owner@vger.kernel.org Thu Nov 11 15:09:56 2010
+X-From: git-owner@vger.kernel.org Thu Nov 11 15:10:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGXqc-0001Uv-Bg
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 15:09:54 +0100
+	id 1PGXqu-0001fC-SG
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 15:10:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755087Ab0KKOJq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Nov 2010 09:09:46 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:56007 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754351Ab0KKOJp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Nov 2010 09:09:45 -0500
-Received: by pzk28 with SMTP id 28so395513pzk.19
-        for <git@vger.kernel.org>; Thu, 11 Nov 2010 06:09:44 -0800 (PST)
+	id S1755146Ab0KKOKF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Nov 2010 09:10:05 -0500
+Received: from mail-px0-f174.google.com ([209.85.212.174]:35076 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754014Ab0KKOKE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Nov 2010 09:10:04 -0500
+Received: by pxi15 with SMTP id 15so397998pxi.19
+        for <git@vger.kernel.org>; Thu, 11 Nov 2010 06:10:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=1ImAGphvfAouhiN25tLfUfxRlt/263wHFnYVSQvyjio=;
-        b=uj1ncTa4/f5MTIkhsoX9niUtMBm+F60yo76b+y7SJjEEpuBgLK+OAQjvz8emy9YHKL
-         e3Pv+ialegbfmAa02JXtdS3fMwM4w7jDD/vctOclqu1PAOjuz/Z0Okrek5gAFo4ttkLz
-         CQ/Gvp9ze+Q1USPFuhk7YNLHCNnimHOnDnCXY=
+        bh=ysIB6DCvvbWQ7Z54pudFUsLxgoj3tlgGNtWlmSd8gok=;
+        b=eXrvgB7/7DsgO/p6D/V3MF4Syz3iNrfC19i/yDLPm8UqPQPxjJZmh76iHR8Kd9qXcI
+         ysARuz0VFG5hkFRbcr8aMnyrQghfcYV4AGP22MPfk2xeV6EBsZCnz92hxiljhAcVMZfx
+         9ADhT8Gzq2RVTpwYoYoTNV9GymeiY4SbnJg84=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=hSbU5nCvRv2RmmZ+LEQRvrjxbqauXBQpdg+kiQrrpqqE0fWKj/Pqi+0Uwu+C7wnDy6
-         iWLUVhsgzhbD0kAYoF8eSgBRSXIpG+fTyBKkCZDGLuJxiqnzF0s65pLK80Xk9mio16Av
-         /2vujMe7fP/K/v0fLr47PfFLvGkNgbNSUy4OA=
-Received: by 10.142.223.7 with SMTP id v7mr529724wfg.358.1289484584796;
-        Thu, 11 Nov 2010 06:09:44 -0800 (PST)
+        b=UDBVChtNnC7FjPy5ns05FUHIGEvIBcuiYgwtJawoWPlVopAMndD3yYp1gyD2bHpXsa
+         fPF3Aunj3L9Z7vkxXzoXUsKO6VGjfrYTxb1osDWMKkiuUUiFfdICoCT2ReRrSKMss6oH
+         zicKgGaOYc336vln+iSRIBq51sWZOv3JEMKM4=
+Received: by 10.142.50.15 with SMTP id x15mr456319wfx.426.1289484603869;
+        Thu, 11 Nov 2010 06:10:03 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.247.75])
-        by mx.google.com with ESMTPS id q13sm2400211wfc.17.2010.11.11.06.09.36
+        by mx.google.com with ESMTPS id w27sm56138wfd.21.2010.11.11.06.09.55
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Nov 2010 06:09:43 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 11 Nov 2010 21:08:23 +0700
+        Thu, 11 Nov 2010 06:10:01 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 11 Nov 2010 21:08:40 +0700
 X-Mailer: git-send-email 1.7.3.2.210.g045198
 In-Reply-To: <1289484484-8632-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161251>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161252>
 
-Save the path from the original cwd to the cwd at the end of the
-setup procedure in the startup_info struct introduced in e37c1329
-(2010-08-05).  The value cannot vary from thread to thread anyway,
-since the cwd is global.
-
-So now in your builtin command, instead of passing prefix around,
-when you want to convert a user-supplied path to a cwd-relative
-path, you can use startup_info->prefix directly.
-
-Caveat: As with the return value from setup_git_directory_gently(),
-startup_info->prefix would be NULL when the original cwd is not a
-subdir of the toplevel.
-
-Longer term, this woiuld allow the prefix to be reused when several
-noncooperating functions require access to the same repository (for
-example, when accessing configuration before running a builtin).
+prefix_path() allocates new buffer. There's no reason for it to keep
+the buffer for itself and waste memory.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- cache.h |    1 +
- setup.c |    4 +++-
- 2 files changed, 4 insertions(+), 1 deletions(-)
+ cache.h |    2 +-
+ setup.c |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/cache.h b/cache.h
-index 33decd9..222d9cf 100644
+index 222d9cf..bd181c6 100644
 --- a/cache.h
 +++ b/cache.h
-@@ -1117,6 +1117,7 @@ const char *split_cmdline_strerror(int cmdline_er=
-rno);
- /* git.c */
- struct startup_info {
- 	int have_repository;
-+	const char *prefix;
- };
- extern struct startup_info *startup_info;
-=20
+@@ -428,7 +428,7 @@ extern const char **get_pathspec(const char *prefix=
+, const char **pathspec);
+ extern void setup_work_tree(void);
+ extern const char *setup_git_directory_gently(int *);
+ extern const char *setup_git_directory(void);
+-extern const char *prefix_path(const char *prefix, int len, const char=
+ *path);
++extern char *prefix_path(const char *prefix, int len, const char *path=
+);
+ extern const char *prefix_filename(const char *prefix, int len, const =
+char *path);
+ extern int check_filename(const char *prefix, const char *name);
+ extern void verify_filename(const char *prefix, const char *name);
 diff --git a/setup.c b/setup.c
-index a3b76de..833db12 100644
+index 833db12..f930dc0 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -512,8 +512,10 @@ const char *setup_git_directory_gently(int *nongit=
-_ok)
- 	const char *prefix;
+@@ -4,7 +4,7 @@
+ static int inside_git_dir =3D -1;
+ static int inside_work_tree =3D -1;
 =20
- 	prefix =3D setup_git_directory_gently_1(nongit_ok);
--	if (startup_info)
-+	if (startup_info) {
- 		startup_info->have_repository =3D !nongit_ok || !*nongit_ok;
-+		startup_info->prefix =3D prefix;
-+	}
- 	return prefix;
- }
-=20
+-const char *prefix_path(const char *prefix, int len, const char *path)
++char *prefix_path(const char *prefix, int len, const char *path)
+ {
+ 	const char *orig =3D path;
+ 	char *sanitized =3D xmalloc(len + strlen(path) + 1);
 --=20
 1.7.3.2.210.g045198
