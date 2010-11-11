@@ -1,104 +1,129 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: which git commands is  correponding to "svnlook diff -t" and
- "svnlook log -t"?
-Date: Thu, 11 Nov 2010 09:47:23 +0100
-Message-ID: <20101111084723.GD30870@efreet.light.src>
-References: <30111518.post@talk.nabble.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: Looking for a way to set up Git correctly
+Date: Thu, 11 Nov 2010 10:38:47 +0100
+Message-ID: <AANLkTi=CTR-i2v-hi6dp_OAOf6Y7UO2giQq_Uq-tDs=M@mail.gmail.com>
+References: <BD94CB4FDD0C4462804E316F814A3CCA@denny>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: samilkarahan <samilkarahan@yahoo.com>
-X-From: git-owner@vger.kernel.org Thu Nov 11 09:47:34 2010
+To: Dennis <denny@dennymagicsite.com>
+X-From: git-owner@vger.kernel.org Thu Nov 11 10:38:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGSod-0000pO-Sx
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 09:47:32 +0100
+	id 1PGTcM-0006SX-PN
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 10:38:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757863Ab0KKIr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Nov 2010 03:47:26 -0500
-Received: from cuda1.bluetone.cz ([212.158.128.5]:48057 "EHLO
-	cuda1.bluetone.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757834Ab0KKIr0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Nov 2010 03:47:26 -0500
-X-ASG-Debug-ID: 1289465242-0702472d0001-QuoKaX
-Received: from efreet.light.src (152-31-80-78.praha.adsl.tmcz.cz [78.80.31.152]) by cuda1.bluetone.cz with ESMTP id D7xwGR57wFZUe7mN; Thu, 11 Nov 2010 09:47:22 +0100 (CET)
-X-Barracuda-Envelope-From: bulb@ucw.cz
-X-Barracuda-Apparent-Source-IP: 78.80.31.152
-Received: from bulb by efreet.light.src with local (Exim 4.72)
-	(envelope-from <bulb@ucw.cz>)
-	id 1PGSoV-0006Od-Jb; Thu, 11 Nov 2010 09:47:23 +0100
-X-ASG-Orig-Subj: Re: which git commands is  correponding to "svnlook diff -t" and
- "svnlook log -t"?
-Content-Disposition: inline
-In-Reply-To: <30111518.post@talk.nabble.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Barracuda-Connect: 152-31-80-78.praha.adsl.tmcz.cz[78.80.31.152]
-X-Barracuda-Start-Time: 1289465242
-X-Barracuda-URL: http://212.158.128.5:8000/cgi-mod/mark.cgi
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.5010 1.0000 0.7500
-X-Barracuda-Spam-Score: 0.75
-X-Barracuda-Spam-Status: No, SCORE=0.75 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=4.5 KILL_LEVEL=4.8 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.2.46307
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
+	id S1752996Ab0KKJit convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Nov 2010 04:38:49 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:64479 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751139Ab0KKJis convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Nov 2010 04:38:48 -0500
+Received: by gxk23 with SMTP id 23so1028320gxk.19
+        for <git@vger.kernel.org>; Thu, 11 Nov 2010 01:38:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=axStmWDRazIr3Phcqd0lZKiqF6i9lyzl0SbRtyJAeCc=;
+        b=Aa0b0p4GEeDMI9Nzh2GDrsC1Vv5ztOhohptJHvwIzGSHEJ+eJpRlWchMj7ESL78alm
+         30U3yhKOylv+OKLaZzGun/NO/IYKjj1ja+z1LwE9tDhrpWrn7Ig779ERuY7HmFUHU6z8
+         eFG9+lbPjPkTqCV6lTSSlJpfKgC6gAl6ManKU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=RnB0rasNZQP+X+tMp0VD2ir9mtkKmnlQ5jFG5qLWq62pIs26OWA4dJ3FQGpm1EFpTv
+         GucxlqtQQVSZfhFuqOGC5QhI6ziRqRWsPCInBY+qXYuL+WAGLfPQHzUoKZfffq3dLy27
+         KmZCz3A9xaggfHxcZE6HebAMSunMttqxYQ+2A=
+Received: by 10.90.185.14 with SMTP id i14mr1104432agf.178.1289468327299; Thu,
+ 11 Nov 2010 01:38:47 -0800 (PST)
+Received: by 10.90.6.32 with HTTP; Thu, 11 Nov 2010 01:38:47 -0800 (PST)
+In-Reply-To: <BD94CB4FDD0C4462804E316F814A3CCA@denny>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161219>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161220>
 
-On Tue, Nov 02, 2010 at 00:03:31 -0700, samilkarahan wrote:
-> I have developed pre-commit hook, but it only run for svn hook. 
-> 
-> I want to run it for git hook,But I don't know git well like svn ,so 
+On Thu, Nov 11, 2010 at 04:25, Dennis <denny@dennymagicsite.com> wrote:
+> I have started a web project (call it branch1), and have maintained i=
+t
+> without a version control system for quite some time.
+> Then, I copied it to another folder (branch2) and while the project r=
+emained
+> essentially the same, I have changed a few of internal paths and some
+> variable names inside the files.
+> Then, a few months later on, I copied branch2 to a folder called bran=
+ch3 and
+> also modified some of the variable names and some of the internal str=
+ucture
+> of the files.
+>
+> Thus I ended up with 3 folders on my local HDD with pretty much the s=
+ame
+> file names and folder structure and everything, and most of the file
+> content, except those small deltas that made those files different fo=
+r each
+> branch.
+>
+> I guess it's never too late, and now I want to put these 3 projects i=
+nto a
+> version control system, and I chose git.
+>
+> Now, this can be either really simple or really complicated. =C2=A0My=
+ first
+> question is: =C2=A0how do I set the repository up in the proper way w=
+here I could
+> work on all 3 projects separately, with additional possibility of wor=
+king on
+> branch1 only and later committing my changes to branch2 and branch3. =
+=C2=A0(Since
+> projects are virtually identical, a fix in one branch usually needs t=
+o be
+> propagated to other branches)
+> First, I assume I will use a single repository for this. =C2=A0Then, =
+do I simply
+> set up 3 branches and start using them, or is there a way to set git =
+up to
+> capitalize on the projects being nearly identical?
 
-Git works fundamentally differently from subversion. It's not possible to
-give you good advice unless you explain what you want to do in the hook.
+Assuming I've got the relationships of your "branches" right:
 
-Where subversion has one commit operation to create the changeset and publish
-it, git has two operations. Commit to create it and push to publish it. Each
-comes with it's own set of hooks. Moreover the operations are done on
-different repositories, so they run hooks from different places!
+$ cp -a branch1 branch && cd branch
+$ git init
+$ echo /huge-images/ >.gitignore
+$ git add .gitignore; git add .; git commit; git branch branch1
+$ git checkout -b branch2
+$ cp -a ../branch2 .
+$ git add .; git commit
+$ git checkout -b branch3
+$ cp -a ../branch3 .
+$ git add .; git commit
 
-Commit has 'pre-commit', 'prepare-commit-msg', 'commit-msg' and 'post-commit'
-run on the developers local repositories, where they must be manually
-installed and can be easily disabled (with --no-verify option to commit).
-The prepare-commit-msg gives you some extra flexibility in that you can
-prepare template of the commit message here.
+> My second question is that each branch has a huge folder with image d=
+ata. By
+> huge I mean 1 to 4Gb, depending on the branch. =C2=A0Since images are=
+ not
+> directly relevant to the development work, is there a way to not incl=
+ude
+> those folders in git? =C2=A0To be honest though, I probably should in=
+clude them,
+> but I wanted to ask about this separately as git repository may be ge=
+t
+> large, since all 3 branches may grow to 9Gb or so.
+>
+> Thus I am looking for a git way to handle my situation. =C2=A0Is this=
+ simple or
+> is is hard?
 
-Push has 'pre-receive', 'update', 'post-receive' and 'post-update' run on the
-central repository and there is no way around them. It is, however, kind of
-late. The commits are already done, perhaps even for quite a long time, so if
-they are rejected, developers will have to go back and amend them.
-
-Remember, that multiple commits will be pushed at once, so you have to
-inspect all of them (git log $oldsha..$newsha), not just the latest.
-
-> I haven't found corresponding git command to svn commands which are "svnlook
-> diff -t"
-
-Depends on which git hook you want that in. And that depends on what you want
-to do. For pre-commit hook, it's 'git diff --cached', for pre-receive or
-update hook you get the commit ID and inspect it with 'git log' and 'git
-show'.
-
-> and "svnlook log -t".
-
-Again, depends on which git hook you want that in. And that depends on what
-you want to do. For pre-commit hook there is none, since it's called
-*before* the message is created. For commit-msg hook you get name of file
-with the message as argument (and you can edit it from there). For
-pre-receive hook or update hook you use 'git log' and 'git show' again.
-
-> is there anybody know these git commands??
-
-Everybody knows them plus they are quite obvious from the documentation (man
-git-hooks) and the samples (installed by 'git init' in every repository). But
-nobody knows the subversion commands and there is no simple mapping anyway.
-
--- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+If you add the images you will eventually run into problems (heavy
+swapping, for one).
+Git is not really setup to work with big binary files (a file must fit =
+into
+memory completely).
