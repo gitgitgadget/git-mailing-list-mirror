@@ -1,76 +1,120 @@
-From: Patrick Doyle <wpdster@gmail.com>
-Subject: Re: How to recover a lost commit...
-Date: Thu, 11 Nov 2010 12:39:20 -0500
-Message-ID: <AANLkTi=9bu1nwjFgxbXGN+4scMAgrCgmb95H8E3Nfj1x@mail.gmail.com>
-References: <AANLkTinfYTMKicr3V=T=scVpOte_XrmaDgVA_oMj2fYU@mail.gmail.com> <20101111165023.GB16972@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add: do not rely on dtype being NULL behavior
+Date: Thu, 11 Nov 2010 09:47:36 -0800
+Message-ID: <7voc9vhhvr.fsf@alter.siamese.dyndns.org>
+References: <1289480602-10545-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 11 18:39:48 2010
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jens.Lehmann@web.de
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 11 18:47:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGb7j-0003Jh-6U
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 18:39:47 +0100
+	id 1PGbFY-0008FH-4T
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 18:47:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755164Ab0KKRjm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Nov 2010 12:39:42 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:52366 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755117Ab0KKRjm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Nov 2010 12:39:42 -0500
-Received: by gwb20 with SMTP id 20so12069gwb.19
-        for <git@vger.kernel.org>; Thu, 11 Nov 2010 09:39:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=NU/NXK38LsHE1LCHWPrEKw2XcViQpVVZAwGwM4cq4l8=;
-        b=BuqsULEY7AlpNM0psOkY6nCRM7fRjYOjF4sQGXBweji85qbJta051izp+WY3qYMyJG
-         AxaHcqaZ6LEWH383ajcJWpr+6z47a7XzsWXKbLe2ZUJQAHTUTLAnsXYTGsSuqXps0VMp
-         KDBSmn1hhsxuGefkom84USp3yK1FgXPp82CnM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Dy67KyiFslYv7uT5FYJ1F19iPCFE6LVqAlCAVA0tZoxXIZScHo3tWhndatjJMyyWV2
-         UiGFwJMBwfUW4abGSni9La1GcDE7x4DP483NT46siwgbSCinBoeO4fhZnpv4DD0tiLka
-         4kU/gjwKDFtDSX3TI7cXa2lVDxg7eyvbDx3ns=
-Received: by 10.223.118.132 with SMTP id v4mr429764faq.87.1289497180661; Thu,
- 11 Nov 2010 09:39:40 -0800 (PST)
-Received: by 10.223.115.17 with HTTP; Thu, 11 Nov 2010 09:39:20 -0800 (PST)
-In-Reply-To: <20101111165023.GB16972@burratino>
+	id S1755188Ab0KKRrs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Nov 2010 12:47:48 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51775 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755124Ab0KKRrs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Nov 2010 12:47:48 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 742663676;
+	Thu, 11 Nov 2010 12:47:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=9R3HFqAwNiUX
+	JvKHrRtiVmcxUOY=; b=NhH9lpQB9qXj5rpK5Q0XEwC1GwN9fKFjXzm3vYTXgHEk
+	S8TmFw/SuU34UkDJqeiRwBRqoryEe/0Con5IxMJMtIHrWoZkTzW4RIpWtaB8kg83
+	CJiShmPMxPm1q9n4ii8/8iTIydos+Ab9sgJACuhM3PlZ5Mb6HlJ6HmMcIHt8GxE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=uK37Br
+	zMcF6nitsUCPOXb2eyM4DtjkLYqP3Oqj0LJOmurJBlL8GXC4PDeG7cloz+TqBQMe
+	CmjDs3WwEp4GsPeKnXK1V2YFXoc7Sks1eLUMUHSwjKKVRxVd94SGfmvDLao5+j1f
+	nfMLYREcpGXYWEAoa8AOwHN2H00MgJYWcug5o=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 41C393672;
+	Thu, 11 Nov 2010 12:47:49 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B53883671; Thu, 11 Nov 2010
+ 12:47:43 -0500 (EST)
+In-Reply-To: <1289480602-10545-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Thu\, 11 Nov
+ 2010 20\:03\:22 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CCA2E23C-EDBB-11DF-B524-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161277>
 
-On Thu, Nov 11, 2010 at 11:50 AM, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
-> Couldn't
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+
+> Commit c84de70 (excluded_1(): support exclude files in index -
+> 2009-08-20) added support for excluded() where dtype can be NULL. It
+> was designed specifically for index matching because there was no
+> other way to extract dtype information from index. It did not support
+> wildcard matching (for example, "a*/" pattern would fail to match).
 >
-> =A0 =A0 =A0 =A0$ git merge --no-commit svn_to_git_wip
-> =A0 =A0 =A0 =A0$ git reset
+> The code was probably misread when commit 108da0d (git add: Add the
+> "--ignore-missing" option for the dry run - 2010-07-10) was made
+> because DT_UNKNOWN happens to be zero (NULL) too.
 >
-> have worked?
+> Do not pass DT_UNKNOWN/NULL to excluded(), instead pass a pointer to =
+a
+> variable that contains DT_UNKNOWN. The real dtype will be extracted
+> from worktree by excluded(), as expected.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+>  I do not add tests for the "a*/" failure above because I plan
+>  to fix it. Expect c84de70 will be reverted "soon" (in my timescale)
+>  when sparse checkout can pass real dtype.
+>
+>  builtin/add.c |    3 ++-
+>  dir.c         |    2 +-
+>  2 files changed, 3 insertions(+), 2 deletions(-)
+>
+> diff --git a/builtin/add.c b/builtin/add.c
+> index 56a4e0a..1a4672d 100644
+> --- a/builtin/add.c
+> +++ b/builtin/add.c
+> @@ -446,7 +446,8 @@ int cmd_add(int argc, const char **argv, const ch=
+ar *prefix)
+>  			if (!seen[i] && pathspec[i][0]
+>  			    && !file_exists(pathspec[i])) {
+>  				if (ignore_missing) {
+> -					if (excluded(&dir, pathspec[i], DT_UNKNOWN))
+> +					int dtype =3D DT_UNKNOWN;
+> +					if (excluded(&dir, pathspec[i], &dtype))
+>  						dir_add_ignored(&dir, pathspec[i], strlen(pathspec[i]));
+>  				} else
+>  					die("pathspec '%s' did not match any files",
+> diff --git a/dir.c b/dir.c
+> index b2dfb69..c4bed66 100644
+> --- a/dir.c
+> +++ b/dir.c
+> @@ -359,7 +359,7 @@ int excluded_from_list(const char *pathname,
+>  			int to_exclude =3D x->to_exclude;
+> =20
+>  			if (x->flags & EXC_FLAG_MUSTBEDIR) {
+> -				if (!dtype) {
+> +				if (dtype !=3D NULL) {
 
-Hi Jonathan,
-Thanks.  That's where I started (although I also added the --no-ff
-flag to the git-merge command) , but then I decided to get fancy and
-switched to the svn_to_git_wip branch and rebase it on master first.
-In hindsight, I was trying to be to clever for my own good.  But I
-figured I could always undo any mistakes.  I was just surprised to
-find that my work-in-progress had disappeared despite the fact that I
-hadn't done a commit.  (It's possible/likely that I did an implicit
-commit when I was playing with rebase.)
+Hmm, are you sure about this part?
 
-Anyway, next time I'll use git-stash, and in the future, I'll be much
-more paranoid about using git-reset.
-
---wpd
+>  					if (!prefixcmp(pathname, exclude) &&
+>  					    pathname[x->patternlen] =3D=3D '/')
+>  						return to_exclude;
+> --=20
+> 1.7.3.2.210.g045198
