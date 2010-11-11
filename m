@@ -1,106 +1,98 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: git-fast-export issue?
-Date: Thu, 11 Nov 2010 10:55:34 -0800
-Message-ID: <AANLkTinpLGsRXdPwO4E7AB4yyt-G5eWBtCcWKrJy2A6n@mail.gmail.com>
-References: <AANLkTikVVH6SP+bQhU9e2B0h4k0t9ma+2cNkzuNvCDgo@mail.gmail.com> <20101111080930.66e2fb21@atmarama.noip.me>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3 2/3] Add the 'fetch.recurseSubmodules' config setting
+Date: Thu, 11 Nov 2010 13:00:53 -0600
+Message-ID: <20101111190053.GH16972@burratino>
+References: <4CDB3063.5010801@web.de>
+ <4CDB30D6.5040302@web.de>
+ <20101111000216.GA14189@burratino>
+ <4CDBA5FD.20802@web.de>
+ <20101111082748.GA15525@burratino>
+ <7v1v6rhfut.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Richard Hipp <drh@sqlite.org>, git <git@vger.kernel.org>
-To: Gour <gour@atmarama.net>
-X-From: git-owner@vger.kernel.org Thu Nov 11 19:56:10 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Git Mailing List <git@vger.kernel.org>,
+	Kevin Ballard <kevin@sb.org>,
+	Jon Seymour <jon.seymour@gmail.com>,
+	Chris Packham <judge.packham@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 11 20:01:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGcJa-0005z4-K7
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 19:56:06 +0100
+	id 1PGcOl-0000Qm-Vj
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 20:01:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755586Ab0KKS4A convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Nov 2010 13:56:00 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:45041 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753741Ab0KKSz7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Nov 2010 13:55:59 -0500
-Received: by iwn10 with SMTP id 10so2487702iwn.19
-        for <git@vger.kernel.org>; Thu, 11 Nov 2010 10:55:58 -0800 (PST)
-Received: by 10.231.10.132 with SMTP id p4mr1140840ibp.40.1289501756330; Thu,
- 11 Nov 2010 10:55:56 -0800 (PST)
-Received: by 10.231.162.65 with HTTP; Thu, 11 Nov 2010 10:55:34 -0800 (PST)
-In-Reply-To: <20101111080930.66e2fb21@atmarama.noip.me>
+	id S1756035Ab0KKTBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Nov 2010 14:01:19 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:40731 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755877Ab0KKTBR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Nov 2010 14:01:17 -0500
+Received: by vws13 with SMTP id 13so527219vws.19
+        for <git@vger.kernel.org>; Thu, 11 Nov 2010 11:01:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=2vnKbX4dVJbW+H+cK2TKZzzb3LBeFfOCMh4KpVuE5X8=;
+        b=Hb2pzZQvrkl33A0o8yUZKpdx9j4dttV/+8ybuK9Br+EYZ1/1VmYrGp9zgiNhufeEAO
+         9kIviXAo/shnynYjOJvwLrGKGyu9AT39CyahC15u6bj0NQri7IK0QHJrmOHfip0h4z0p
+         IwxpPtIb0pnzZ0/O96d8+EVT6FeY/4kmWkCKs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=n+oMknzgJRMWkgwylxv4wiZkRQZ8U7AFbTdDWikhsehp00qVq9726oPU8spT8Hq1Kc
+         ichG+1dB70JYTnuvNJRU8iQRvA+VJA/6iMyQiOv0dXBMKPRR/WAcUsOvHnBelpTR7SmT
+         +HLeHM8YAkrJ7Y6GLdSHHpsfwbv8jvxJlD+Oo=
+Received: by 10.220.180.66 with SMTP id bt2mr267060vcb.134.1289502076855;
+        Thu, 11 Nov 2010 11:01:16 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id j21sm672052vcr.10.2010.11.11.11.01.14
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 11 Nov 2010 11:01:15 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7v1v6rhfut.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161291>
 
-+git mailing list
+Junio C Hamano wrote:
 
-On Wed, Nov 10, 2010 at 11:09 PM, Gour <gour@atmarama.net> wrote:
-> On Wed, 10 Nov 2010 20:53:31 -0500
->>>>>>> "Richard" =3D=3D Richard Hipp wrote:
->
-> Richard> Gour: =A0The git fast-export manpage says that Shawn O. Pear=
-ce,
-> Richard> CCed on this email, is the author and maintainer of
-> Richard> git-fast-export. =A0I'm including him in the conversation in=
- the
-> Richard> hopes that he can shed some light on this issue.
+> I think the motivation behind having a way to read it from .gitmodules is
+> so that project can suggest the default for convenience (e.g. "almost
+> everybody who interacts with this project wants these submodules checked
+> out and kept updated").
 
-I'm not actually the maintainer of git fast-export.  I don't know
-where that came from.  Maybe its because I wrote and maintained git
-fast-import for a few years?
+Yes, that makes some sense to me.  Except wouldn't it be a single
+configuration item?  "These submodules should be checked out in all
+but unusual situations, so check them out automatically and keep them
+updated."
 
-> Richard> M 100644 :938 emacs/emacs-custom.el
-=2E..
-> Richard> M 100644 :1075 emacs/emacs.rc
-> Richard> D emacs
+Maybe a person setting this to false actually means "This submodule
+has its url set to a repository that is updated very frequently, and
+most updates are not relevant to the superproject."  Unfortunately, I
+think the result would be a poor user experience: when an update comes
+that _is_ important to the superproject, what happens?
 
-This looks like a mistake by `git fast-export --all`.  The D emacs
-needed to come *before* the M commands that put files into the
-directory.  But it was emit afterwards.  I'm not sure why.
+ $ git fetch
+ ... go on plane ...
+ $ git merge @{u} && git submodule update --no-fetch --recursive
+ [...]
+ fatal: reference is not a tree: f1c596a3895643d0969a15b8e945bf0c0072e470
 
-> Richard> According to my reading of the manpage at
-> Richard> http://www.kernel.org/pub/software/scm/git/docs/git-fast-exp=
-ort.html
-> Richard> the "D emacs" line above should delete the "emacs" folder an=
-d
-> Richard> all of its contents. Clearly my understanding is wrong,
-> Richard> though, since Git doesn't actually do that, and why would it
-> Richard> change files in that directory prior to deleting them? =A0Bu=
-t
-> Richard> the "fossil import" command is currently coded to do what I
-> Richard> understand the documentation says it should do - which is to
-> Richard> delete the content of the "emacs" folder. =A0A subsequent co=
-mmit
-> Richard> adds the file emacs/emacs.rc which is why the folder still
-> Richard> exists in the tip.
-> Richard>
-> Richard> I'm really perplexed about that D line.
->
-> The above D line says, according to my understanding based on the
-> actions I did on the repo, to remove emacs *file*.
->
-> it was caused by one of the darcs features called 'rename' which darc=
-s
-> does quite good.
->
-> Here is what I did.
->
-> I've created emacs *folder* and put emacs-* files into it, renamed
-> emacs into emacs.rc and moved into into emacs/emacs.rc.
+Hmm.  I think in that scenario a better solution would be to point the
+submodule url point to a project-specific clone that is updated less
+frequently.
 
-OK.  In this case "D emacs, M emacs/emacs.rc" makes sense if you
-renamed "emacs" to "emacs/emacs.rc".  Unfortunately git fast-export
-wrote the commands in the wrong order.  The fast-import stream
-language executes the file commands in the order they appear on the
-stream, as though it was updating a real filesystem.  This can be
-awkward to use sometimes when changing a file to become a directory.
+What am I missing?
 
-Based on what you said above, the stream is broken, and you can't fix
-it in the importer that is trying to read it.  git fast-export should
-have put "D emacs" first in the stream, not last.
-
---=20
-Shawn.
+Jonathan
