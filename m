@@ -1,102 +1,91 @@
-From: Seth Robertson <in-gitvger@baka.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: How to recover a lost commit...
-Date: Thu, 11 Nov 2010 11:49:45 -0500
-Message-ID: <201011111649.oABGnjca019731@no.baka.org>
+Date: Thu, 11 Nov 2010 10:50:23 -0600
+Message-ID: <20101111165023.GB16972@burratino>
 References: <AANLkTinfYTMKicr3V=T=scVpOte_XrmaDgVA_oMj2fYU@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
 Cc: git <git@vger.kernel.org>
 To: Patrick Doyle <wpdster@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 11 17:49:55 2010
+X-From: git-owner@vger.kernel.org Thu Nov 11 17:50:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGaLS-0000gP-0x
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 17:49:54 +0100
+	id 1PGaMQ-0001Bk-L1
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 17:50:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754337Ab0KKQtt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Nov 2010 11:49:49 -0500
-Received: from tsutomu.baka.org ([66.114.72.182]:32921 "EHLO tsutomu.baka.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753886Ab0KKQtt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Nov 2010 11:49:49 -0500
-Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
-	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id oABGnknD025860
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 11 Nov 2010 11:49:46 -0500
-Received: from no.baka.org (localhost [127.0.0.1])
-	by no.baka.org (8.14.4/8.14.0) with ESMTP id oABGnjca019731;
-	Thu, 11 Nov 2010 11:49:45 -0500
-In-reply-to: <AANLkTinfYTMKicr3V=T=scVpOte_XrmaDgVA_oMj2fYU@mail.gmail.com>
-Comments: In reply to a message from "Patrick Doyle <wpdster@gmail.com>" dated "Thu, 11 Nov 2010 11:29:10 -0500."
+	id S1754617Ab0KKQur (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Nov 2010 11:50:47 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:49453 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754569Ab0KKQuq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Nov 2010 11:50:46 -0500
+Received: by qyk30 with SMTP id 30so902299qyk.19
+        for <git@vger.kernel.org>; Thu, 11 Nov 2010 08:50:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=SFQie6aJMLCzbNAWHmixbx6s1YVdPCBio8ykXPWLT7M=;
+        b=hnm5MW5a+0LTqJt9ry/k5pFWrpKPaaL8i+6+5urRl5pzrPnTGudr9zkViKQwooox1W
+         6HrKYKRzAtqXO1f5/bZ+dB3dzUVvHHV7nyjU649wy9VvkKUlVj55yxEho2czji0a7EoT
+         vBp0oOlKOnbmuExuSgOiM+hnctC0oAxTEcihE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=sWhqqeExeJip+w/6p4KO7Pn738r+jCKjib8d3lQu0Ed7IEdZ+IbfNdl0naDZQxVeTq
+         8UvoRSF2LHhP3y4fTH8JpB1dZvrKyxyZK6bNfmr+xoKKS4jcQAFGBf01pZTOu1Ss8dAh
+         0RwEiif6nSdoHHscCRFztsp2E3n0NUbWvRxGY=
+Received: by 10.229.214.73 with SMTP id gz9mr931116qcb.226.1289494245986;
+        Thu, 11 Nov 2010 08:50:45 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id l14sm2064418qck.17.2010.11.11.08.50.44
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 11 Nov 2010 08:50:45 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTinfYTMKicr3V=T=scVpOte_XrmaDgVA_oMj2fYU@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161269>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161270>
 
+Patrick Doyle wrote:
 
-In message <AANLkTinfYTMKicr3V=T=scVpOte_XrmaDgVA_oMj2fYU@mail.gmail.com>, Patr
-ick Doyle writes:
+> But I'm curious... given the reflog show below... can any of you tell
+> what I did to myself to shoot myself in the foot?  Aside from "use git
+> stash next time dummy", is there any way I could have avoided this?
 
-    I've just noticed however, that my work in progress, no longer seems
-    to be there, and I'm at a loss to understand why it disappeared.  I've
-    tried various checkouts to get it back (the commit containing it was
-    286f167).
+I don't know. :)  But if you still have the svn_to_git_wip branch,
+you might want to try
 
-    But I'm curious... given the reflog show below... can any of you tell
-    what I did to myself to shoot myself in the foot?  Aside from "use git
-    stash next time dummy", is there any way I could have avoided this?
+	$ git log -g svn_to_git_wip
 
-No problem.  We deal with stuff like this on #git in IRC all of the time.
+which just shows the history of that branch.
 
-    $ git reflog
-    ce11719... HEAD@{0}: checkout: moving from master to svn_to_git_wip
-    40070a1... HEAD@{1}: checkout: moving from svn_to_git_wip to master
-    ce11719... HEAD@{2}: ce11719: updating HEAD
-    286f167... HEAD@{3}: 286f167: updating HEAD
-    d8c9d02... HEAD@{4}: checkout: moving from master to svn_to_git_wip
+> Today I want to pick up where I left off with the work-in-progress (on
+> the "svn_to_git_wip" branch).  What I _really_ wanted to do was to
+> grab the contents of that branch, dump them into my working directory
+> for the master branch, and continue as if nothing had happened.  (This
+> is exactly the use case for which git-stash was created, and I
+> probably should have used that to begin with.)
 
-HEAD@{3} shows that your commit of interest was the head of
-svn_to_git_wip.  HEAD@{2} shows that this was changed to whatever
-ce11719 points to (apparently the commit before the commit of interest).
+Couldn't
 
-"Updating HEAD" is often a sign of running `git reset`
+	$ git cherry-pick --no-commit svn_to_git_wip
+	$ git reset
 
-What you probably want to do is:
+or something like
 
-git checkout svn_to_git_wip
-git reset --hard 2867167 (or HEAD@{3} <- caution, number may have changed)
-git checkout master
-git merge svn_to_git_wip
+	$ git merge --no-commit svn_to_git_wip
+	$ git reset
 
-You could do a three-argument rebase instead of a merge, but merge is
-much simpler.
+have worked?
 
-					-Seth Robertson
-
-
-----------------------------------------------------------------------
-286f167... HEAD@{6}: checkout: moving from master to 286f167
-
-Checking out the SHA directly--disconnected head.  Nothing wrong with
-that per-se, but probably not where you want to go.
-
-ce11719... HEAD@{14}: rebase: updating HEAD
-3638aa3... HEAD@{15}: checkout: moving from svn_to_git_wip to
-3638aa3f6e8496b5415ab59bec2a7af07b8ed169
-
-rebasing a disconnected head is definitely not where you want to go.
-You should not in general make modifications if you are not on a branch
-
-cb98d3f... HEAD@{26}: checkout: moving from svn_to_git_wip to master
-ce11719... HEAD@{27}: HEAD^: updating HEAD
-286f167... HEAD@{31}: commit: Saving WIP at the time I switched from SVN to GIT
-ce11719... HEAD@{32}: checkout: moving from master to svn_to_git_wip
-
-HEAD@{27} was your original problem.  You made the commit on @{32}
-then for some reason did (probably) a `git reset HEAD^` That was the
-source of all of your problems.  You should only use `git reset` if
-you have not pushed and if you are very sure you want to get rid of a
-commit or changes.  It is a powerful command and with great power
-comes great responsibility.
+Hope that helps,
+Jonathan
