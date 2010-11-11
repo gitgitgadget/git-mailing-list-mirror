@@ -1,69 +1,73 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 1/2] [RFC] Use --find- instead of --detect- as prefix for long forms of -M and -C.
-Date: Thu, 11 Nov 2010 23:24:57 +0100
-Message-ID: <201011112324.57572.trast@student.ethz.ch>
-References: <1289420833-20602-1-git-send-email-ydirson@altern.org> <201011111147.04365.trast@student.ethz.ch> <20101111114404.GF8911@home.lan>
+From: =?UTF-8?B?TWljaGHFgg==?= Kiedrowicz <mkiedrowicz@ivo.pl>
+Subject: 'gettext -- "--cached cannot be used with --files"' does not work
+Date: Fri, 12 Nov 2010 00:10:37 +0100
+Message-ID: <20101112001037.6e0fef15@ivo.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Yann Dirson <ydirson@free.fr>
-X-From: git-owner@vger.kernel.org Thu Nov 11 23:25:05 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 12 00:36:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGfZo-0006Wg-PR
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 23:25:05 +0100
+	id 1PGghK-0004My-9A
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 00:36:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757029Ab0KKWY7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Nov 2010 17:24:59 -0500
-Received: from gwse.ethz.ch ([129.132.178.237]:39607 "EHLO gwse.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754706Ab0KKWY7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Nov 2010 17:24:59 -0500
-Received: from CAS22.d.ethz.ch (172.31.51.112) by gws00.d.ethz.ch
- (129.132.178.237) with Microsoft SMTP Server (TLS) id 8.2.254.0; Thu, 11 Nov
- 2010 23:24:57 +0100
-Received: from pctrast.inf.ethz.ch (217.162.250.31) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.218.12; Thu, 11 Nov
- 2010 23:24:58 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.36-90-desktop; KDE/4.5.3; x86_64; ; )
-In-Reply-To: <20101111114404.GF8911@home.lan>
-X-Originating-IP: [217.162.250.31]
+	id S1754182Ab0KKXgr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Nov 2010 18:36:47 -0500
+Received: from pc20.ivo.park.gdynia.pl ([153.19.128.20]:40686 "EHLO
+	mail.ivo.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753338Ab0KKXgp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Nov 2010 18:36:45 -0500
+X-Greylist: delayed 1564 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Nov 2010 18:36:45 EST
+Received: from localhost (localhost [127.0.0.1])
+	by mail.ivo.pl (Postfix) with ESMTP id B408550546CC;
+	Fri, 12 Nov 2010 00:10:39 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mail.ivo.pl
+Received: from mail.ivo.pl ([127.0.0.1])
+	by localhost (mail.ivo.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id YmR+IJl-+e63; Fri, 12 Nov 2010 00:10:38 +0100 (CET)
+Received: from localhost (184-183-78-94.net.stream.pl [94.78.183.184])
+	by mail.ivo.pl (Postfix) with ESMTP id 25FD45074500;
+	Fri, 12 Nov 2010 00:10:38 +0100 (CET)
+X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161308>
 
-Yann Dirson wrote:
-> On Thu, Nov 11, 2010 at 11:47:04AM +0100, Thomas Rast wrote:
-> > Yann Dirson wrote:
-> > > Rationale: this is both shorter to spell and consistent with
-> > > --find-copies-harder.
-> > [...]
-> > >  -M[<n>]::
-> > > ---detect-renames[=<n>]::
-> > > +--find-renames[=<n>]::
-> > 
-> > Umm.  The reasoning seems ok for me, but the farthest you can go is
-> > deprecating the options.  Removing them as in
-> > 
-> > > -	else if (!prefixcmp(arg, "-M") || !prefixcmp(arg, "--detect-renames=") ||
-> > > -		 !strcmp(arg, "--detect-renames")) {
-> > > +	else if (!prefixcmp(arg, "-M") || !prefixcmp(arg, "--find-renames=") ||
-> > > +		 !strcmp(arg, "--find-renames")) {
-> > 
-> > would break backwards compatibility.
-> 
-> I don't think we care with compatibility here, since those are not
-> part of any release.
+Hi,
 
-Ah well.  You're right of course, but you could have mentioned that
-somewhere :-)
+I just noticed that
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+	'gettext -- "--cached cannot be used with --files"'=20
+
+in git-submodule.sh generates
+
+	#: git-submodule.sh:588
+	msgid "--"
+	msgstr ""
+
+in *.po files. You can this e.g. in po/de.po.
+
+This is not what commit message says :)
+
+    gettextize: git-submodule "cached cannot be used" message
+   =20
+    Gettextize the "--cached cannot be used with --files" message. Sinc=
+e
+    this message starts with "--" we have to pass "--" as the first
+    argument. This works with both GNU gettext 0.18.1 (as expected), an=
+d
+    the gettext(1) on Solaris 10.
+
+$ gettext --version
+gettext (GNU gettext-runtime) 0.18.1
+
+--=20
+regards,
+Micha=C5=82 Kiedrowicz
