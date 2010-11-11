@@ -1,95 +1,95 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: import determinism
-Date: Thu, 11 Nov 2010 05:28:00 +0100
-Message-ID: <4CDB70D0.6000405@alum.mit.edu>
-References: <20101107202535.GA18766@nibiru.local> <AANLkTi=mx0AAKo2Asn5XJVcs30-PLuwhTbM=o0y36Wa_@mail.gmail.com> <m2lj54u9uj.fsf@igel.home> <AANLkTikXxM=CfU2dKAY9khi1_tAsGDdUEc8S5AxooGH9@mail.gmail.com> <m2d3qgu50c.fsf@igel.home> <20101109134337.GA19430@nibiru.local>
+From: David Fries <david@fries.net>
+Subject: Re: [PATCH] gitk: improve dark background support
+Date: Wed, 10 Nov 2010 22:59:18 -0600
+Message-ID: <20101111045918.GA7572@spacedout.fries.net>
+References: <20101104003524.GI7835@spacedout.fries.net>
+ <20101108131412.GE22067@login.drsnuggles.stderr.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthijs Kooijman <matthijs@stdin.nl>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 11 05:28:17 2010
+X-From: git-owner@vger.kernel.org Thu Nov 11 05:59:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGOlj-0001fp-UC
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 05:28:16 +0100
+	id 1PGPG2-0001r3-Fi
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 05:59:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932464Ab0KKE2E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Nov 2010 23:28:04 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:49290 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932340Ab0KKE2D (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Nov 2010 23:28:03 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.69.133] (p54BECA85.dip.t-dialin.net [84.190.202.133])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id oAB4S0q0022910
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Thu, 11 Nov 2010 05:28:01 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.15) Gecko/20101027 Lightning/1.0b1 Thunderbird/3.0.10
-In-Reply-To: <20101109134337.GA19430@nibiru.local>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S932406Ab0KKE72 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 10 Nov 2010 23:59:28 -0500
+Received: from SpacedOut.fries.net ([67.64.210.234]:34466 "EHLO
+	SpacedOut.fries.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932346Ab0KKE72 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 10 Nov 2010 23:59:28 -0500
+Received: from SpacedOut.fries.net (david@localhost [127.0.0.1])
+	by SpacedOut.fries.net (8.14.3/8.14.3/Debian-9.4) with ESMTP id oAB4xJCt006924
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 10 Nov 2010 22:59:19 -0600
+Received: (from david@localhost)
+	by SpacedOut.fries.net (8.14.3/8.14.3/Submit) id oAB4xIED006923;
+	Wed, 10 Nov 2010 22:59:18 -0600
+Content-Disposition: inline
+In-Reply-To: <20101108131412.GE22067@login.drsnuggles.stderr.nl>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Greylist: Sender passed SPF test, not delayed by milter-greylist-4.3.7 (SpacedOut.fries.net [127.0.0.1]); Wed, 10 Nov 2010 22:59:19 -0600 (CST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161207>
 
-On 11/07/2010 09:25 PM, Enrico Weigelt wrote:
-> I'm curious on how deterministic the imports (git-cvsimport and
-> git-svn) are. Suppose I close the same cvs repo twice (assuming
-> no write access in between), are the resulting object SHA-1's
-> the same ?
+On Mon, Nov 08, 2010 at 02:14:12PM +0100, Matthijs Kooijman wrote:
+> Hi David,
+> 
+> I've been using gitk with a gray-on-black color-scheme for a while now,
+> so I've given your patch a test drive. It seems to work as expected and
+> indeed makes gitk a bit more pleasant to use with a dark color scheme.
+> 
+> I've reviewed the code a bit and it looks ok as well (though I'm hardly
+> familiar with git internals, and not at all in this area).
+> 
+> I did encounter one minor issue, though: If you change the foreground
+> color, the current view is not updated until you restart or switch views
+> (or otherwise trigger a redraw, I guess). A quick look at the code shows
+> that the "setfg" function contains some code that updates all canvases
+> and all contexts in $fglist with the new fg color. I guess that
+> something similar should be done for these tag colors to get them
+> updated right away (though perhaps that should be a second patch)?
 
-On 11/09/2010 02:43 PM, Enrico Weigelt wrote:
-> The point behind this is: I'm running a growing number of cvs2git
-> mirrors and dont want to do full backups of them.
+After much work and document searching I now know more about tk/tcl
+than ever before and have figured out how to make the colors
+dynamically update when the preferences change.  Have a look if you
+will, and if it looks good I'll post it to the maintainer for
+inclusion.  I'm also posting a new patch series to the list.
 
-If you are using cvs2git, why are you asking about git-cvsimport and
-git-svn?
+branch gitk_colors
+git://gitorious.org/~dfries/git/dfriess-git-mainline.git
 
-No tool that imports from CVS or Subversion can make a blanket guarantee
-about consistency across conversions because both CVS and SVN allow
-retroactive changes to the project history.  For example:
+and the more disorganized work in progress branch is gitk_colors_PreSquash
 
-* Both CVS and SVN allow commit messages and other metadata of old
-commits to be changed
 
-* CVS allows files to be added retroactively to tags and branches with
-no timestamp indicating that the file was not part of the original tag.
 
-* CVS allows old revisions to be "obsoleted" (i.e., expunged from history).
+> A final note: There are still some other problems with working with
+> grey-on-black color scheme. In case your interested in working on those,
+> I've listed them at http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=568470
 
-* In CVS it is common practice for people to muck about directly in the
-repository, for example renaming *,v files.
+Anything left in that list worth going over?  In terms of the .gitk
+config colors what are you using and what isn't working?
 
-So (in the general case) there is no way to guarantee that two
-independent conversions will have consistent results for the overlapping
-parts of their history.  And even incremental conversions will
-necessarily have to decide between converting the current state of the
-repository accurately and converting in a way that is consistent with
-earlier conversions.
-
-In practice, especially if you are willing to constrain what the CVS
-users are allowed to do, the overlapping parts of two conversions should
-usually be identical or at least very similar (with older history more
-likely to be identical).  Perhaps an rsync-style backup would be smart
-enough to copy only the changed part of the history without excluding
-the possibility that there are retroactive changes between subsequent
-conversions.
-
-If you run two cvs2git conversions on *exactly* the same CVS repository,
-then the results *should* be identical.  I have tried always to process
-data in a defined order rather than, say, in filesystem or
-hashmap-determined order.  But AFAIK this property has not been tested
-and could easily be buggy if I overlooked some source of indeterminism
-somewhere in the cvs2git code.
-
-Michael
+my relevant .gitk config file settings,
+set mainfont {Helvetica 8}
+set textfont {Courier 8}
+set uifont {Helvetica 9 bold}
+set uicolor grey85
+set bgcolor black
+set fgcolor white
+set colors {green red blue magenta darkgrey brown orange}
+set diffcolors {red green cyan}
+set markbgcolor #404060
+set selectbgcolor gray50
 
 -- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+David Fries <david@fries.net>
+http://fries.net/~david/ (PGP encryption key available)
