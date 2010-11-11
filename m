@@ -1,96 +1,116 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Nov 2010, #01; Tue, 9)
-Date: Thu, 11 Nov 2010 09:21:11 -0800
-Message-ID: <7vsjz7hj3s.fsf@alter.siamese.dyndns.org>
-References: <7vbp5ymfyo.fsf@alter.siamese.dyndns.org>
- <m3iq06fa9i.fsf@localhost.localdomain>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Scripted clone generating an incomplete, unusable .git/config
+Date: Thu, 11 Nov 2010 11:32:53 -0600
+Message-ID: <20101111173253.GC16972@burratino>
+References: <AANLkTik7-QzrMKDpV=W4dqpuguZsAr5yrMELmHu5NZMd@mail.gmail.com>
+ <20101111103742.GA16422@burratino>
+ <AANLkTinzotA4TSjMjjmW--gw7ST3dXMyHzPveGynaVmZ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 11 18:21:25 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Dun Peal <dunpealer@gmail.com>, Git ML <git@vger.kernel.org>,
+	Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
+	Daniel Barkalow <barkalow@iabervon.org>,
+	Carl Worth <cworth@cworth.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 11 18:33:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGapx-0001h9-7R
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 18:21:25 +0100
+	id 1PGb1Y-0008IP-CU
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 18:33:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754844Ab0KKRVT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Nov 2010 12:21:19 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56368 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754405Ab0KKRVS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Nov 2010 12:21:18 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 49F8F324F;
-	Thu, 11 Nov 2010 12:21:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4ncGG4lazpOlpw9YdS4RV4ptnYc=; b=vfL7/B
-	a3L5kouvby8htEh9HoAb4u9nociFNd3LIgTBf64vHS+bNfRn3o0V41VpHeOpbJXx
-	ruJf9Qiaw/ns57euFuF5jXfGSDt10f5F3sri5UDsk6L6Cyu1QfzIX1pxBurhY5CH
-	cRWNFnz8Md2TAEJ6R3NSrHy9iNk0mbLlCpRgk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aR+BIBz6aVaGrta/VrKdZB5ydpVS480A
-	61TrsjAXKmiU4PnUeQElAWtanl8go+C/MsoiNx4eKBG+9ODs031mGf4B+xtrH5pK
-	wzv9+VtjPG+t8uu+1r8PCXZAtgsGJu/Ms4OuXMSQXd3UDSyx8IcAsYdU++O4F45A
-	ohZ55UZQ44w=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1F203324C;
-	Thu, 11 Nov 2010 12:21:20 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2FB543248; Thu, 11 Nov 2010
- 12:21:16 -0500 (EST)
-In-Reply-To: <m3iq06fa9i.fsf@localhost.localdomain> (Jakub Narebski's message
- of "Tue\, 09 Nov 2010 13\:38\:49 -0800 \(PST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 196EB5D6-EDB8-11DF-B814-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+	id S1754858Ab0KKRdT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Nov 2010 12:33:19 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:62893 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754618Ab0KKRdS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Nov 2010 12:33:18 -0500
+Received: by vws13 with SMTP id 13so433702vws.19
+        for <git@vger.kernel.org>; Thu, 11 Nov 2010 09:33:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=cJayz6aM5/hlAetKDK/CnyeieQhA8jay90qRBxdcwso=;
+        b=oo0GRqexF2pS7z0P9h1a0cT/U84PsEU+dKXG3WSPhbqd8XHRZhdiaDanOdmX+hpeON
+         QaOULYlJDW3vPTCplK6OsRH9JOGHsivpeOOEx3x7E91dFkL5X2n1VEkr1jZP6rgpbFmp
+         V/AG5/E6mMupUO5JS9dkOLa4aRF3QnDAcOdvc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=lE10rxWldM5VojJ8esJFUagwVxKA5gchU7k9vMtcob6umKw6hhTPuqH2lO6osManTp
+         cExIbRJbEvVNYCh0FWY0dzyTiWyTcK4gHTDA4HjIKVgr37P6gcnpI7VXW3tLum0mbfxH
+         izF59fbhzPfXz4dC00GwhVkJR6kC+UoTOxD9g=
+Received: by 10.220.191.13 with SMTP id dk13mr250558vcb.230.1289496797325;
+        Thu, 11 Nov 2010 09:33:17 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id s12sm821944vbp.4.2010.11.11.09.33.14
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 11 Nov 2010 09:33:15 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTinzotA4TSjMjjmW--gw7ST3dXMyHzPveGynaVmZ@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161272>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161273>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Thu, Nov 11, 2010 at 07:16:27PM +0700, Nguyen Thai Ngoc Duy wrote:
+> On Thu, Nov 11, 2010 at 5:37 PM, Jonathan Nieder <jrnieder@gmail.com>=
+ wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
-> ...
->> * jh/gitweb-caching (2010-11-01) 4 commits
->>  - gitweb: Minimal testing of gitweb caching
->>  - gitweb: File based caching layer (from git.kernel.org)
->>  - gitweb: add output buffering and associated functions
->>  - gitweb: Prepare for splitting gitweb
->>  (this branch uses jn/gitweb-test.)
->
->> * jn/gitweb-test (2010-09-26) 4 commits
->>   (merged to 'next' on 2010-11-05 at 90b3adf)
->>  + gitweb/Makefile: Include gitweb/config.mak
->>  + gitweb/Makefile: Add 'test' and 'test-installed' targets
->>  + t/gitweb-lib.sh: Add support for GITWEB_TEST_INSTALLED
->>  + gitweb: Move call to evaluate_git_version after evaluate_gitweb_config
->>  (this branch is used by jh/gitweb-caching.)
->
-> These two branches have simple to resolve but non-trivial conflict.
-> Should I rebase 'jh/gitweb-caching' on top of 'jn/gitweb-test' then,
-> resolving this conflict?
+>> Most likely the clone is terminating when Python exits, perhaps due =
+to
+>> SIGPIPE. =C2=A0It doesn't look like a bug to me; I suspect you meant=
+ to use
+>> os.system(), which is synchronous, instead.
+[...]
+> If "git clone" is terminated before it completes, shouldn't it clean
+> the uncompleted repo?
 
-In general, when a conflict between topic A and B is simple to resolve
-(and I have the correct resolution already in 'pu'), I'd rather prefer to
-keep topic A independent of topic B than rebasing topic A on top of topic
-B, unless topic A is far from ready and topic B is truly ready and about
-to graduate, so that we can leave a door open for A to graduate before B
-does (or vice versa).
+Ah, so it should.
 
-In this case, I think it is overdue (iow, sorry I've been slow) for the
-gitweb-test topic to graduate, so the separation does not really matter.
+ trace: built-in: git clone jrn@localhost:/home/jrn/src/xz
+ trace: run_command: ssh jrn@localhost git-upload-pack '/home/jrn/src/x=
+z'
+ trace: remove junk called
+ jrn@localhosts password:=20
+ trace: run_command: index-pack --stdin -v --fix-thin --keep=3Dfetch-pa=
+ck 19314 on burratino
+ trace: exec: git index-pack --stdin -v --fix-thin --keep=3Dfetch-pack =
+19314 on burratino
+ trace: built-in: git index-pack --stdin -v --fix-thin --keep=3Dfetch-p=
+ack 19314 on burratino
+ remote: Counting objects: 7299, done.
+ remote: Compressing objects: 100% (1826/1826), done.
+ remote: Total 7299 (delta 5421), reused 7274 (delta 5401)
+ Receiving objects: 100% (7299/7299), 2.36 MiB | 4.43 MiB/s, done.
+ Resolving deltas: 100% (5421/5421), done.
+ trace: exited with status 0
+ trace: exited with status 0
+ trace: remove junk called
+ trace: remove_junk: pid !=3D 0
 
-> BTW. this would allow me to improve 'gitweb: Minimal testing of gitweb
-> caching'.
+Are there any downside to the following?
 
-Then I probably should leave gitweb-caching out of 'next' when gitweb-test
-graduates to master so that you can refresh the caching series.  Thanks
-for a heads-up.
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 19ed640..af6b40a 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -667,6 +667,5 @@ int cmd_clone(int argc, const char **argv, const ch=
+ar *prefix)
+ 	strbuf_release(&branch_top);
+ 	strbuf_release(&key);
+ 	strbuf_release(&value);
+-	junk_pid =3D 0;
+ 	return err;
+ }
