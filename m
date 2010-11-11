@@ -1,103 +1,93 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 0/7] nd/setup fixups
-Date: Thu, 11 Nov 2010 21:20:41 +0700
-Message-ID: <1289485248-8966-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 1/7] t1020-subdirectory: test alias expansion in a subdirectory
+Date: Thu, 11 Nov 2010 21:20:42 +0700
+Message-ID: <1289485248-8966-2-git-send-email-pclouds@gmail.com>
+References: <1289485248-8966-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 11 15:22:25 2010
+X-From: git-owner@vger.kernel.org Thu Nov 11 15:22:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGY2i-0008Ud-8M
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 15:22:24 +0100
+	id 1PGY31-0000C2-Ej
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 15:22:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755540Ab0KKOWT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Nov 2010 09:22:19 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:54981 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755332Ab0KKOWS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Nov 2010 09:22:18 -0500
-Received: by pwi9 with SMTP id 9so185637pwi.19
-        for <git@vger.kernel.org>; Thu, 11 Nov 2010 06:22:18 -0800 (PST)
+	id S1755332Ab0KKOWi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Nov 2010 09:22:38 -0500
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:64186 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752243Ab0KKOWh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Nov 2010 09:22:37 -0500
+Received: by pva4 with SMTP id 4so398203pva.19
+        for <git@vger.kernel.org>; Thu, 11 Nov 2010 06:22:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=5xE7rFmImFWfvisX+RgSmMt6UKgeF2VzOJRLYdBlyA0=;
-        b=v/Sn3k6URqQaksFNLOVRhg/mAua9JkBgt4eOvcDQUwBNDhSo19r3Wl/d+BAR957rS+
-         pEoPRR7mhXUyaBS7FbLgYacFFUUl3rtgPnvr2h3cib4hgsdkAT8ujJUgpSze83UvhIO1
-         3BEviTaV4zwLfDsSCDDF3Y4JBLTMtD+RgfPcI=
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=Njad/q84zfobUauaYeQKeUgPbLR3t8t7KBacmLMFkfI=;
+        b=f04t8TWHH8sfqFO+qzwnT3ROhebZ7BALyDrPKW/1FPZsxGYMu9EHxNSSetO/Rzg+a6
+         ShLXxEcjChND4j/1+ry6qYz9TPmpl8XW8xZVLyForuBoVIahzmYD8krhLSwLvqX//+qS
+         rz3oJUVYUtqZ1OU1KbDTPQhNYkHg8xKhUC2so=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=xqMh/3kj345qcFKy0+yIjffDl4M08Y6SVUF1wZhK0HrqSlX3CkvLJzJ1ZEDanDYH3K
-         rzrdl/xEerLLZnIOzIVMnW9UMYHsUc9/Fdqb07FLK+Rg0FZYczFME12Ef9jv92vnfsg1
-         0vWbmr6/JyzxWPquRgMvydSZO8JIjzIwUEm24=
-Received: by 10.142.216.16 with SMTP id o16mr501319wfg.434.1289485338586;
-        Thu, 11 Nov 2010 06:22:18 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=N+5e94tsPGuf6Hz0RDUZmDjovyIAtuJlw59AW546ySBLFklUIL/wLiNZPBoATCArUy
+         MtFAVa405J5NQSeyr9+OBcGyvLOYaS8HvljfUtr7uRWoayKAHTr9hIEMz2tGGcGr9yHp
+         HZUdLWwNBllI9kpQzc07NvY/uWBYkTnOVAVbA=
+Received: by 10.142.57.19 with SMTP id f19mr714978wfa.94.1289485357296;
+        Thu, 11 Nov 2010 06:22:37 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.247.75])
-        by mx.google.com with ESMTPS id v19sm2427212wfh.0.2010.11.11.06.22.12
+        by mx.google.com with ESMTPS id y42sm2420954wfd.22.2010.11.11.06.22.29
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Nov 2010 06:22:17 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 11 Nov 2010 21:20:55 +0700
+        Thu, 11 Nov 2010 06:22:36 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 11 Nov 2010 21:21:14 +0700
 X-Mailer: git-send-email 1.7.3.2.210.g045198
+In-Reply-To: <1289485248-8966-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161254>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161255>
 
-This replaces the last three patches in nd/setup in pu (from clean up
-setup_discovered_git_dir to t1020-subdirectory)
+=46rom: Michael J Gruber <git@drmicha.warpmail.net>
 
-Changes are:
+Add a test for alias expansion in a subdirectory of the worktree.
 
- - Retain old behavior of setup_discovered_git_dir() when .git is not
-   explicitly set by set_git_dir(), but later on by setup_git_env().
-   This helps remove the ugly workaround in set_git_dir() earlier.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ t/t1020-subdirectory.sh |    8 ++++++++
+ 1 files changed, 8 insertions(+), 0 deletions(-)
 
- - Include t0001 tests from Jonathan. You'll see I sneak more patches
-   in from my old nd/setup from time to time, until I push all of them =
-:)
-
- - set_git_work_tree() now allows multiple calls as long as the new
-   worktree and the old one is the same, as Junio suggested.
-
- - Document update. Turns out not much is needed.
-
-Jonathan Nieder (1):
-  t0001: test git init when run via an alias
-
-Michael J Gruber (1):
-  t1020-subdirectory: test alias expansion in a subdirectory
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (5):
-  setup: clean up setup_discovered_git_dir()
-  setup: rework setup_explicit_git_dir()
-  Remove all logic from get_git_work_tree()
-  Revert "Documentation: always respect core.worktree if set"
-  git.txt: correct where --work-tree path is relative to
-
- Documentation/config.txt |   23 ++---
- Documentation/git.txt    |    2 +-
- builtin/init-db.c        |   14 ++-
- cache.h                  |    1 -
- environment.c            |   32 ++----
- setup.c                  |  208 +++++++++++++++++--------------
- t/t0001-init.sh          |   56 +++++++++
- t/t1020-subdirectory.sh  |    8 ++
- t/t1510-repo-setup.sh    |  310 +++++++++++++++++++++++---------------=
---------
- 9 files changed, 360 insertions(+), 294 deletions(-)
-
+diff --git a/t/t1020-subdirectory.sh b/t/t1020-subdirectory.sh
+index a3ac338..1fd187c 100755
+--- a/t/t1020-subdirectory.sh
++++ b/t/t1020-subdirectory.sh
+@@ -110,6 +110,14 @@ test_expect_success 'read-tree' '
+ 	)
+ '
+=20
++test_expect_success 'alias expansion' '
++	(
++		git config alias.ss status &&
++		cd dir &&
++		git status &&
++		git ss
++	)
++'
+ test_expect_success 'no file/rev ambiguity check inside .git' '
+ 	git commit -a -m 1 &&
+ 	(
 --=20
 1.7.3.2.210.g045198
