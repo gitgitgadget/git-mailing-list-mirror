@@ -1,104 +1,106 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Scripted clone generating an incomplete, unusable .git/config
-Date: Thu, 11 Nov 2010 12:48:29 -0600
-Message-ID: <20101111184829.GG16972@burratino>
-References: <AANLkTik7-QzrMKDpV=W4dqpuguZsAr5yrMELmHu5NZMd@mail.gmail.com>
- <20101111103742.GA16422@burratino>
- <AANLkTinzotA4TSjMjjmW--gw7ST3dXMyHzPveGynaVmZ@mail.gmail.com>
- <20101111173253.GC16972@burratino>
- <alpine.LNX.2.00.1011111241360.14365@iabervon.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: git-fast-export issue?
+Date: Thu, 11 Nov 2010 10:55:34 -0800
+Message-ID: <AANLkTinpLGsRXdPwO4E7AB4yyt-G5eWBtCcWKrJy2A6n@mail.gmail.com>
+References: <AANLkTikVVH6SP+bQhU9e2B0h4k0t9ma+2cNkzuNvCDgo@mail.gmail.com> <20101111080930.66e2fb21@atmarama.noip.me>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Dun Peal <dunpealer@gmail.com>, Git ML <git@vger.kernel.org>,
-	Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
-	Carl Worth <cworth@cworth.org>, Jeff King <peff@peff.net>
-To: Daniel Barkalow <barkalow@iabervon.org>
-X-From: git-owner@vger.kernel.org Thu Nov 11 19:49:06 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Richard Hipp <drh@sqlite.org>, git <git@vger.kernel.org>
+To: Gour <gour@atmarama.net>
+X-From: git-owner@vger.kernel.org Thu Nov 11 19:56:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGcCn-0001tG-Oo
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 19:49:06 +0100
+	id 1PGcJa-0005z4-K7
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 19:56:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755934Ab0KKSsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Nov 2010 13:48:55 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:36486 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755925Ab0KKSsy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Nov 2010 13:48:54 -0500
-Received: by ywc21 with SMTP id 21so147875ywc.19
-        for <git@vger.kernel.org>; Thu, 11 Nov 2010 10:48:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=Vs0UrW+zz+RQxe1Pjf6NcRSeBDW/7wE+uixzvp5ivvo=;
-        b=NmxfSK7uzqVW2O4EXHIzdo5/3KD2Dpue88ojHzrvLz/PnBr3YKV2bPO2Ne3Hrb3gxn
-         uJdsIIX/WUiNPoA8SbvbOPekJssgVN7Adb3HCShY1EDO6tPKOZwdeW2TrFNbn7WzdO6u
-         TPU1MlM1y263np1Jdh0j3twkC61IcPyZdffBI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=KHvpvcFQoK4qdGwfsTFjRdijbg6ms7z3/YbA2e42XO9OJRr1cbMq0JicH+FNS+YlJB
-         zfAGynf4JYSAtWp0tqFthR6uuLi9yYQX07KfWSwGgeGpeqqlG1WvEAzdPeap3OW1CSve
-         QTNrdmy2MYIQeBLPc20DTUC3LujhkkAfCP6no=
-Received: by 10.223.101.196 with SMTP id d4mr517436fao.23.1289501333617;
-        Thu, 11 Nov 2010 10:48:53 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id k21sm1084186faa.25.2010.11.11.10.48.51
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 11 Nov 2010 10:48:53 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <alpine.LNX.2.00.1011111241360.14365@iabervon.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755586Ab0KKS4A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Nov 2010 13:56:00 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:45041 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753741Ab0KKSz7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 11 Nov 2010 13:55:59 -0500
+Received: by iwn10 with SMTP id 10so2487702iwn.19
+        for <git@vger.kernel.org>; Thu, 11 Nov 2010 10:55:58 -0800 (PST)
+Received: by 10.231.10.132 with SMTP id p4mr1140840ibp.40.1289501756330; Thu,
+ 11 Nov 2010 10:55:56 -0800 (PST)
+Received: by 10.231.162.65 with HTTP; Thu, 11 Nov 2010 10:55:34 -0800 (PST)
+In-Reply-To: <20101111080930.66e2fb21@atmarama.noip.me>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161289>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161290>
 
-On Thu, Nov 11, 2010 at 12:55:48PM -0500, Daniel Barkalow wrote:
-> On Thu, 11 Nov 2010, Jonathan Nieder wrote:
++git mailing list
 
->> --- a/builtin/clone.c
->> +++ b/builtin/clone.c
->> @@ -667,6 +667,5 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->>  	strbuf_release(&branch_top);
->>  	strbuf_release(&key);
->>  	strbuf_release(&value);
->> -	junk_pid = 0;
->>  	return err;
->>  }
+On Wed, Nov 10, 2010 at 11:09 PM, Gour <gour@atmarama.net> wrote:
+> On Wed, 10 Nov 2010 20:53:31 -0500
+>>>>>>> "Richard" =3D=3D Richard Hipp wrote:
 >
-> I believe that would cause it to remove the repository when it terminates, 
-> regardless of whether it completed or not.
+> Richard> Gour: =A0The git fast-export manpage says that Shawn O. Pear=
+ce,
+> Richard> CCed on this email, is the author and maintainer of
+> Richard> git-fast-export. =A0I'm including him in the conversation in=
+ the
+> Richard> hopes that he can shed some light on this issue.
 
-Ah, right, the second remove_junk() call is because of atexit().
+I'm not actually the maintainer of git fast-export.  I don't know
+where that came from.  Maybe its because I wrote and maintained git
+fast-import for a few years?
 
-So why does git clone keep running after the first remove_junk() call?
-It seems that the signal is initially set up (by Python's popen()?) as
-SIG_IGN.  I guess "git clone" should explicitly override that to be
-SIG_DFL?
+> Richard> M 100644 :938 emacs/emacs-custom.el
+=2E..
+> Richard> M 100644 :1075 emacs/emacs.rc
+> Richard> D emacs
 
-Here's a proof of concept.  It is not very good because it overrides
-any previously set sigchain handlers (in case the "git" wrappers
-start to use one) and because using SIG_DFL as a sigchain_fun feels
-like violating an abstraction.
+This looks like a mistake by `git fast-export --all`.  The D emacs
+needed to come *before* the M commands that put files into the
+directory.  But it was emit afterwards.  I'm not sure why.
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 19ed640..2f21a91 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -458,6 +458,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
- 	}
- 	junk_git_dir = git_dir;
- 	atexit(remove_junk);
-+	sigchain_push_common(SIG_DFL);
- 	sigchain_push_common(remove_junk_on_signal);
- 
- 	setenv(CONFIG_ENVIRONMENT, mkpath("%s/config", git_dir), 1);
+> Richard> According to my reading of the manpage at
+> Richard> http://www.kernel.org/pub/software/scm/git/docs/git-fast-exp=
+ort.html
+> Richard> the "D emacs" line above should delete the "emacs" folder an=
+d
+> Richard> all of its contents. Clearly my understanding is wrong,
+> Richard> though, since Git doesn't actually do that, and why would it
+> Richard> change files in that directory prior to deleting them? =A0Bu=
+t
+> Richard> the "fossil import" command is currently coded to do what I
+> Richard> understand the documentation says it should do - which is to
+> Richard> delete the content of the "emacs" folder. =A0A subsequent co=
+mmit
+> Richard> adds the file emacs/emacs.rc which is why the folder still
+> Richard> exists in the tip.
+> Richard>
+> Richard> I'm really perplexed about that D line.
+>
+> The above D line says, according to my understanding based on the
+> actions I did on the repo, to remove emacs *file*.
+>
+> it was caused by one of the darcs features called 'rename' which darc=
+s
+> does quite good.
+>
+> Here is what I did.
+>
+> I've created emacs *folder* and put emacs-* files into it, renamed
+> emacs into emacs.rc and moved into into emacs/emacs.rc.
+
+OK.  In this case "D emacs, M emacs/emacs.rc" makes sense if you
+renamed "emacs" to "emacs/emacs.rc".  Unfortunately git fast-export
+wrote the commands in the wrong order.  The fast-import stream
+language executes the file commands in the order they appear on the
+stream, as though it was updating a real filesystem.  This can be
+awkward to use sometimes when changing a file to become a directory.
+
+Based on what you said above, the stream is broken, and you can't fix
+it in the importer that is trying to read it.  git fast-export should
+have put "D emacs" first in the stream, not last.
+
+--=20
+Shawn.
