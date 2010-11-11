@@ -1,79 +1,105 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3 0/3] Teach fetch and pull to recursively fetch
- submodules
-Date: Wed, 10 Nov 2010 18:05:38 -0600
-Message-ID: <20101111000538.GB14189@burratino>
-References: <4CDB3063.5010801@web.de>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: [PATCH] gitignore(5): explain how to stop tracking a file
+Date: Thu, 11 Nov 2010 06:40:14 +0530
+Message-ID: <AANLkTikpSoMGKDzUWXK-XGNZ8cp9Ltz+n8hNd9Z6FQ2E@mail.gmail.com>
+References: <1289387440-8509-1-git-send-email-sitaram@atc.tcs.com>
+	<20101110185555.GA12365@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Kevin Ballard <kevin@sb.org>,
-	Jon Seymour <jon.seymour@gmail.com>,
-	Chris Packham <judge.packham@gmail.com>,
-	Marc Branchaud <marcnarc@xiplink.com>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Thu Nov 11 01:06:08 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sitaram Chamarty <sitaram@atc.tcs.com>, gitster@pobox.com,
+	git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 11 02:10:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGKg3-0006cg-SY
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 01:06:08 +0100
+	id 1PGLgG-0007Qk-JP
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 02:10:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932095Ab0KKAGB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 10 Nov 2010 19:06:01 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:38349 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757425Ab0KKAGA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 10 Nov 2010 19:06:00 -0500
-Received: by qwi4 with SMTP id 4so1048671qwi.19
-        for <git@vger.kernel.org>; Wed, 10 Nov 2010 16:06:00 -0800 (PST)
+	id S932076Ab0KKBKR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 10 Nov 2010 20:10:17 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:55342 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756719Ab0KKBKQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 10 Nov 2010 20:10:16 -0500
+Received: by eye27 with SMTP id 27so861927eye.19
+        for <git@vger.kernel.org>; Wed, 10 Nov 2010 17:10:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=8q+uBY6Z5eoPjGkd2/OD6+VjfTOxA5B/xOhKcgETgcU=;
-        b=f0Pxoc24+s2yCFGz2klddpSklj3ExTRYyLe9si5FbuAX1qWgdEsUFKf3Y74HWcgQq4
-         m83lKRiMs0N3JYb4zXjbzzhDZZS+UnFvhXErUrorKE04GHPshkMoe9RmHWasktT/AEvw
-         9XFfE+PQD7Xvvxmr+NXpvsUUUTxGFgJh5enEI=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=FdJLZXYEwG5Sn4Ggc4lI2jKdy4LTzwDkBS05QFPR+N0=;
+        b=OkLxnGooAteAYvnkxu+GvDwoamf2TzXZgRb7By0LB+kVLpIpcOxAXDEMDFGQemBhgm
+         v5GxDjd6goVFtthvt5cJWW1jtZwAkvrh6KxkO/2i/nCkQ7lvMiS6yZDlOoxm9aJgbCIP
+         xVXTPS3lCGlcyXSNuRhl9TAldgvZLBXNo/9BI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=kBcXL5TDrgNc8zFZEYEK8oRAP2JIIJeLzyFA1A0VvVg9AE6bfkLHKuacvEUpU+h0lR
-         FLXjIVNmhwnOSfZxs1n2qUI0x4LoNFfCfC5mYzFksc+rYGOq3ZOGaQWZnMSvH4v/zd0f
-         ecW5xBjbAtVW/fRaliMIPT+59Cl5IL6z3KtoY=
-Received: by 10.229.228.76 with SMTP id jd12mr110494qcb.291.1289433959931;
-        Wed, 10 Nov 2010 16:05:59 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id s28sm1229608qcp.21.2010.11.10.16.05.57
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 10 Nov 2010 16:05:58 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4CDB3063.5010801@web.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=RvNI01KQ1iZJObx7qFK4gWezc/Y1Dpcw/vq4C83PY2Gc1xqW8GCDkMFQdM2dO9/4V/
+         FWisTiC1RtpHPVhiUPq+keBX2WX7Wba5pm74xuxy6RY28rn+mw1WxcPCigVAY+OqQxFO
+         6qQsnv/bqmlu/IneB26RHK8BgUcGTFVsSqUh0=
+Received: by 10.213.30.20 with SMTP id s20mr306399ebc.16.1289437814306; Wed,
+ 10 Nov 2010 17:10:14 -0800 (PST)
+Received: by 10.213.35.68 with HTTP; Wed, 10 Nov 2010 17:10:14 -0800 (PST)
+In-Reply-To: <20101110185555.GA12365@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161199>
 
-Jens Lehmann wrote:
+On Thu, Nov 11, 2010 at 12:25 AM, Jonathan Nieder <jrnieder@gmail.com> =
+wrote:
+> Sitaram Chamarty wrote:
+>
+>> --- a/Documentation/gitignore.txt
+>> +++ b/Documentation/gitignore.txt
+>> @@ -18,7 +18,8 @@ Note that all the `gitignore` files really concern=
+ only files
+>> =C2=A0that are not already tracked by git;
+>> =C2=A0in order to ignore uncommitted changes in already tracked file=
+s,
+>> =C2=A0please refer to the 'git update-index --assume-unchanged'
+>> -documentation.
+>> +documentation. =C2=A0To stop tracking a file that is currently trac=
+ked,
+>> +use 'git rm --cached'.
+>
+> Ack. =C2=A0But I fear this makes the gitignore page feel even more to=
+p-heavy
+> than it already is.
 
-> * Should the "--submodule-prefix" option - which is only used internally
->   now - be a hidden option to "git fetch"?
+Oh... I hadn't thought of that.  I was looking at "what's the minimum
+change needed to at least mention 'git rm --cached' somewhere".
+You're right though, and I think your approach is good.
 
-Yes.  (Any option that is useless outside scripts should be, imho.)
+> The current structure is:
 
-> But nonetheless I think this patch series is ok for inclusion as it does
-> not change default behavior and gives people the opportunity to play with
-> recursive fetch/pull by enabling one of the introduced config options.
+[snip]
 
-Except for the .gitmodules detail I mentioned, it looks good to me.
-Looking forward to trying it out.
+> It's a wonder people can find anything there. :) =C2=A0So how about t=
+his?
+>
+> Patch 1 splits the description into three sections. =C2=A0Yes, having=
+ the
+> PATTERN FORMAT section is not part of the conventional list in
+> man-pages(7), but I think it's easier to find the interesting part
+> this way.
+>
+> Patch 2 puts the comments about related commands in a separate NOTES
+> section.
+>
+> This way, one could expand on the "stop tracking file" procedure
+> without interrupting the flow of the basic description of what
+> excludes files do, by adding to the NOTES or EXAMPLES section.
 
-Thanks,
-Jonathan
+++ from me on this approach.
+
+regards
+
+sitaram
