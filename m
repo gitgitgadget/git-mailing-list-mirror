@@ -1,76 +1,94 @@
-From: Jan Hudec <bulb@ucw.cz>
-Subject: Re: is it kosher for pre-commit to change what's staged?
-Date: Thu, 11 Nov 2010 20:26:49 +0100
-Message-ID: <20101111192648.GE30870@efreet.light.src>
-References: <20101110170819.GA3031@gnu.kitenet.net>
- <7v1v6thrzc.fsf@alter.siamese.dyndns.org>
- <20101110200650.GA13439@burratino>
- <20101110204542.GA11201@gnu.kitenet.net>
- <AANLkTi=W_hwU=3PTTqE4R8Cg5T=GMdMfBsKQ1YE0HWRe@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv7 00/11] gitweb: remote_heads feature
+Date: Thu, 11 Nov 2010 20:29:21 +0100
+Message-ID: <201011112029.22373.jnareb@gmail.com>
+References: <1289478378-15604-1-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Joey Hess <joey@kitenet.net>, git@vger.kernel.org
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 11 20:26:57 2010
+Content-Type: text/plain;
+  charset="iso-8859-2"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 11 20:29:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGcnR-0007ZI-5v
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 20:26:57 +0100
+	id 1PGcq0-0000aW-CH
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 20:29:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756140Ab0KKT0w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Nov 2010 14:26:52 -0500
-Received: from cuda1.bluetone.cz ([212.158.128.5]:35933 "EHLO
-	cuda1.bluetone.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754545Ab0KKT0v (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Nov 2010 14:26:51 -0500
-X-ASG-Debug-ID: 1289503608-07057ba70001-QuoKaX
-Received: from efreet.light.src (152-31-80-78.praha.adsl.tmcz.cz [78.80.31.152]) by cuda1.bluetone.cz with ESMTP id BcPfG0ZbrsgnmUBz; Thu, 11 Nov 2010 20:26:48 +0100 (CET)
-X-Barracuda-Envelope-From: bulb@ucw.cz
-X-Barracuda-Apparent-Source-IP: 78.80.31.152
-Received: from bulb by efreet.light.src with local (Exim 4.72)
-	(envelope-from <bulb@ucw.cz>)
-	id 1PGcnJ-0007fm-1r; Thu, 11 Nov 2010 20:26:49 +0100
-X-ASG-Orig-Subj: Re: is it kosher for pre-commit to change what's staged?
+	id S1754545Ab0KKT3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Nov 2010 14:29:32 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:36210 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753064Ab0KKT3b (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Nov 2010 14:29:31 -0500
+Received: by bwz15 with SMTP id 15so2274272bwz.19
+        for <git@vger.kernel.org>; Thu, 11 Nov 2010 11:29:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=DAMgvQbLRDW2IeRJw3sFsoRg/byiQDQE80E4l5DLF8U=;
+        b=emvz9KfhshgmIp5fho9yIkg1HicoXQaJfrLGbiup6lGIRoLZZBmj1UBWQEgBtBEOQb
+         8UHtKtwC5kIOsCmOhg4xvA5Bhq5bCaYZScfh7VAqk/14aYXaj4ji6GMy89guZ1ObLNr/
+         kJ5HPhwKewPauV5Q5HI+ti2I1dBxwO/D2ZMQ0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=KJltd8dTrmwn88892+vjBAoKTjSaTRq4qBkqB53qXV9TVSNaJvxcYKXFuUuozM/lzw
+         emVQKJ9QBL2g+tAeKStDhkmF+aJBsDmCNlVGt2uVQEjRdNzkdTVtXGRO5+ngo+pxkzW6
+         Kr48hQZIAp/OxLPj7p1OVnwAYxg8p5a1lLyrM=
+Received: by 10.204.122.144 with SMTP id l16mr1790336bkr.173.1289503770110;
+        Thu, 11 Nov 2010 11:29:30 -0800 (PST)
+Received: from [192.168.1.13] (abvw231.neoplus.adsl.tpnet.pl [83.8.220.231])
+        by mx.google.com with ESMTPS id a25sm1136442bks.8.2010.11.11.11.29.27
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 11 Nov 2010 11:29:28 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1289478378-15604-1-git-send-email-giuseppe.bilotta@gmail.com>
 Content-Disposition: inline
-In-Reply-To: <AANLkTi=W_hwU=3PTTqE4R8Cg5T=GMdMfBsKQ1YE0HWRe@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Barracuda-Connect: 152-31-80-78.praha.adsl.tmcz.cz[78.80.31.152]
-X-Barracuda-Start-Time: 1289503608
-X-Barracuda-URL: http://212.158.128.5:8000/cgi-mod/mark.cgi
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.5232 1.0000 0.7500
-X-Barracuda-Spam-Score: 0.75
-X-Barracuda-Spam-Status: No, SCORE=0.75 using global scores of TAG_LEVEL=1000.0 QUARANTINE_LEVEL=4.5 KILL_LEVEL=4.8 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.2.46349
-	Rule breakdown below
-	 pts rule name              description
-	---- ---------------------- --------------------------------------------------
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161296>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161297>
 
-On Thu, Nov 11, 2010 at 01:17:04 +0300, Dmitry Potapov wrote:
-> On Wed, Nov 10, 2010 at 11:45 PM, Joey Hess <joey@kitenet.net> wrote:
-> >
-> > That said, since git commit stages the whole large file into the index,
-> > which is the kind of expensive operation git-annex exists to avoid,
-> > it's still not very practical to intercept the commit like that. What
-> > I ideally need is a hook that is run before git commit stages anything.
-> 
-> Then maybe you should look at git smudge&clean filters. They perform
-> conversation between the working tree and the index.  Though I am not
-> sure how well they work with big files.
+On Thu, 11 Nov 2010, Giuseppe Bilotta wrote:
 
-The problem point is not big files, but whether they can change the file mode
-associated with the entry, since in this case the tree contains a file, but
-index should contain a symlink. Looking at the documentation, there does not
-seem to be a way to do it.
+> This 7th version of the remote heads feature for gitweb differs from the
+> previous mostly my small tune-ups, renames of internal functions, some
+> patch reordering and a final addition.
+[...]
 
-It might be worth adding support for it now we have a use-case.
+I like this version very much.
 
+> Giuseppe Bilotta (11):
+>   gitweb: use fullname as hash_base in heads link
+>   gitweb: introduce remote_heads feature
+>   gitweb: git_get_heads_list accepts an optional list of refs
+>   gitweb: separate heads and remotes lists
+>   gitweb: nagivation menu for tags, heads and remotes
+>   gitweb: allow action specialization in page header
+>   gitweb: remotes view for a single remote
+>   gitweb: refactor repository URL printing
+>   gitweb: provide a routine to display (sub)sections
+>   gitweb: group remote heads by remote
+>   git instaweb: enable remote_heads
+
+With exception of next to last patch, which contains a few of outdated
+comments (see my response for this commit), I don't see any problems.
+
+So, for the whole series:
+
+  Acked-by: Jakub Narebski <jnareb@gmail.com>
+
+
+Thanks for working diligently on this series, Giuseppe!
 -- 
-						 Jan 'Bulb' Hudec <bulb@ucw.cz>
+Jakub Narebski
+Poland
