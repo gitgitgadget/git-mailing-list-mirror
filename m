@@ -1,102 +1,187 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: Re: is it kosher for pre-commit to change what's staged?
-Date: Thu, 11 Nov 2010 16:46:26 -0400
-Message-ID: <20101111204626.GA13937@gnu.kitenet.net>
-References: <20101110170819.GA3031@gnu.kitenet.net>
- <7v1v6thrzc.fsf@alter.siamese.dyndns.org>
- <20101110200650.GA13439@burratino>
- <20101110204542.GA11201@gnu.kitenet.net>
- <AANLkTi=W_hwU=3PTTqE4R8Cg5T=GMdMfBsKQ1YE0HWRe@mail.gmail.com>
- <20101111192648.GE30870@efreet.light.src>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH/RFC] gitweb: selectable configurations that change with each
+	request
+Date: Thu, 11 Nov 2010 22:36:37 +0100
+Message-ID: <20101111213456.21127.36449.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="Nq2Wo0NMKNjxTN9z"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Julio Lajara <julio.lajara@alum.rpi.edu>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 11 21:46:40 2010
+X-From: git-owner@vger.kernel.org Thu Nov 11 22:37:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGe2Z-0002mX-8Z
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 21:46:39 +0100
+	id 1PGepb-0005vD-FQ
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 22:37:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755724Ab0KKUqe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Nov 2010 15:46:34 -0500
-Received: from wren.kitenet.net ([80.68.85.49]:36721 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754642Ab0KKUqe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Nov 2010 15:46:34 -0500
-Received: from gnu.kitenet.net (dialup-4.153.250.253.Dial1.Atlanta1.Level3.net [4.153.250.253])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id 7DF3611917D
-	for <git@vger.kernel.org>; Thu, 11 Nov 2010 15:46:30 -0500 (EST)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id 3AC224984F; Thu, 11 Nov 2010 15:46:26 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <20101111192648.GE30870@efreet.light.src>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755698Ab0KKVhN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Nov 2010 16:37:13 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:33675 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752591Ab0KKVhM (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Nov 2010 16:37:12 -0500
+Received: by wyb28 with SMTP id 28so1164092wyb.19
+        for <git@vger.kernel.org>; Thu, 11 Nov 2010 13:37:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:subject:to:cc
+         :date:message-id:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=hY/OplWLX6XCtIE4gov9m9YsxnDDTUuuA/xoW07+T5o=;
+        b=olPsmQWEUrKpdaLGVSSpCGBKf3cpBQr2XI3HysqiessQrn5ZobtQb4ALElzDWbeP5Z
+         +PhyWX1YHshXkVI1mJGhk6g8u4gDoXFZvo2Tf3xCOXqMfusM4S/PVeYprMuZ2Tefh+fC
+         FGNReFa7+/F2sa929ewGei5142lrcLlvMa00o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:subject:to:cc:date:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        b=l3GRoWx0e1e7in3R0VMsg+M5eCWpPrtmNo9O97pysQn2tb1LDFEp7BV2uUjNgBcc2E
+         HHbTcjNtwe4aQY1O19vxVq+jv1my9ygpR6af3QRtcF3P8UO9iKbRasYHoPk0xkJxFOr/
+         8W/cSUunTSd0iB6watrv0xtkiB8yoJIbwYLZc=
+Received: by 10.216.172.194 with SMTP id t44mr2812376wel.86.1289511429059;
+        Thu, 11 Nov 2010 13:37:09 -0800 (PST)
+Received: from localhost.localdomain (abvw231.neoplus.adsl.tpnet.pl [83.8.220.231])
+        by mx.google.com with ESMTPS id e12sm1628695wer.12.2010.11.11.13.37.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 11 Nov 2010 13:37:07 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oABLacsj021177;
+	Thu, 11 Nov 2010 22:36:49 +0100
+User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161301>
+
+Allow selecting whether configuration file should be (re)parsed on each
+request (the default, for backward compatibility with configurations that
+change per session, see commit 7f425db (gitweb: allow configurations that
+change with each request, 2010-07-30)), or whether should it be parsed only
+once (for performance speedup for persistent environments, though currently
+only FastCGI is able to make use of it, when flexibility is not important).
+You can also have configuration file parsed only once, but have parts of
+configuration (re)evaluated once per each request.
+
+This is done by introducing $per_request_config variable: if set to code
+reference, this code would be run once per request, while config file would
+be parsed only once.  For example gitolite's contrib/gitweb/gitweb.conf
+fragment mentioned in 7f425db could be rewritten as
+
+  our $per_request_config = sub {
+  	$ENV{GL_USER} = ($cgi && $cgi->remote_user) || "gitweb";
+  };
+
+to make use of this feature.
+
+If $per_request_config is not a code reference, it is taken to be boolean
+variable, to choose between running config file for each request
+(flexibility), and running config file only once (performance in
+persistent environments).
+
+The default value for $per_request_config is 1 (true), which means that
+old configuration that require to change per session (like gitolite's)
+will keep working.
 
 
---Nq2Wo0NMKNjxTN9z
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Because there is a call to evaluate_gitweb_config() in the run() subroutine
+(the call in run_config() is not invoked at first request to avoid double
+running it), therefore evaluate_git_version() could be moved back there, and
+is now evaluated only once.
 
-Jan Hudec wrote:
-> The problem point is not big files, but whether they can change the file =
-mode
-> associated with the entry, since in this case the tree contains a file, b=
-ut
-> index should contain a symlink. Looking at the documentation, there does =
-not
-> seem to be a way to do it.
->=20
-> It might be worth adding support for it now we have a use-case.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Commit 7f425db914 says: 
 
-I suppose that if I were using smudge filters, I'd probably not need to
-use symlinks at all. I'll think about it.
+    Probably in the end there should be a way to specify in the
+    configuration whether a particular installation wants the speedup or
+    the flexibility.  But for now it is easier to just undo the relevant
+    change.
 
-It belatedly occured to me that I already had something else modifying
-the index in pre-commit, and smudge filters cannot handle its use case.
+This is the way... well, at least a proposal.
 
-That is, etckeeper (http://kitenet.net/~joey/code/etckeeper). The
-pre-commit script there stores some metadata about files that git
-usually doesn't track, by putting it in a dotfile, and stages that
-dotfile for commit. Which currently works fine, except for the minor
-problem that the user doesn't see the dotfile listed in the commit
-message.
+ gitweb/README      |    7 +++++++
+ gitweb/gitweb.perl |   23 +++++++++++++++++++++--
+ 2 files changed, 28 insertions(+), 2 deletions(-)
 
---=20
-see shy jo
-
---Nq2Wo0NMKNjxTN9z
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQIVAwUBTNxWH8kQ2SIlEuPHAQgTIQ/+L7L/qI5W7OqJ3q2EAl+PRLrT7nMIhy7V
-EiGLdJWHQf36Yv0hymhac4NhiSvry6GgBaGdXdv/F3LolWz5oczVVG6v/xuf0XMH
-4w2iQIaeWfYIxH/5t9kBg+DVGlQe/T8cCQdZFYUW5y8CNyiESt1A0UjQi7W+toDb
-TxLnqx2+VBmOp2vjMJhfQ8XzhasbrxzwOsDkT79uNE8WxBMQcSX6DjSwmkyCOBPG
-GqTL6Im/FozGeIBuTNJJodOEUGpRGt9AwkI7mOCVVVzN1c4zxPrkIkR/A30tprNz
-SniXJlqnBAhe0BzWKav49TveGJfKBd0g6p5K+Z2/2QW3jjqIBh7D4SG3LABcvwlh
-IgtP7t/0nGeccSdoLj6+5bPhDLmEOdQhQUNrTOEjIIYBqjjkjt56kCsRZW1gAr0d
-0g/wTcH0zfujD6dcn4gJG/hC2xZfwATmcLCa0C67/P5jPXHn+WLKaE2M/M0DLC1n
-KImI4v2evFlmvl7eMZZK9oLkDs4/3c4NX/+3l/1lFhWE5yGkuCbTbbgWi/ED4kzn
-ejlk3K2+mXp4qUCtcfnGQQ0k+eQoi54xEx3eOteSkq3hcNBLlLrI1zzK+NNx1gpx
-6uE8g2pX0qbLRiWxEIEiHlFvbtFTCHt1UUdYivdRP5NvnwIG3fWrCDLNrUdL+Ngy
-IIILBaELgHA=
-=dpuM
------END PGP SIGNATURE-----
-
---Nq2Wo0NMKNjxTN9z--
+diff --git a/gitweb/README b/gitweb/README
+index bf3664f..6646fda 100644
+--- a/gitweb/README
++++ b/gitweb/README
+@@ -246,6 +246,13 @@ not include variables usually directly set during build):
+    http://www.andre-simon.de due to assumptions about parameters and output).
+    Useful if highlight is not installed on your webserver's PATH.
+    [Default: highlight]
++ * $per_request_config
++   If set to code reference, it would be run once per each request.  You can
++   set parts of configuration that change per session, e.g. by setting it to
++     sub { $ENV{GL_USER} = $cgi->remote_user || "gitweb"; }
++   Otherwise it is treated as boolean value: if true gitweb would process
++   config file once per request, if false it would process config file only
++   once.  The default is true.
+ 
+ Projects list file format
+ ~~~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 7dbaf0c..c3cfefb 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -599,6 +599,14 @@ sub filter_snapshot_fmts {
+ 		!$known_snapshot_formats{$_}{'disabled'}} @fmts;
+ }
+ 
++# If it is set to code reference, it is code that it is to be run once per
++# request, allowing updating configurations that change with each request,
++# while running other code in config file only once.
++#
++# Otherwise, if it is false then gitweb would process config file only once;
++# if it is true then gitweb config would be run for each request.
++our $per_request_config = 1;
++
+ our ($GITWEB_CONFIG, $GITWEB_CONFIG_SYSTEM);
+ sub evaluate_gitweb_config {
+ 	our $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "++GITWEB_CONFIG++";
+@@ -1068,12 +1076,18 @@ sub reset_timer {
+ 	our $number_of_git_cmds = 0;
+ }
+ 
++our $first_request = 1;
+ sub run_request {
+ 	reset_timer();
+ 
+ 	evaluate_uri();
+-	evaluate_gitweb_config();
+-	evaluate_git_version();
++	if ($per_request_config) {
++		if (ref($per_request_config) eq 'CODE') {
++			$per_request_config->();
++		} elsif (!$first_request) {
++			evaluate_gitweb_config();
++		}
++	}
+ 	check_loadavg();
+ 
+ 	# $projectroot and $projects_list might be set in gitweb config file
+@@ -1126,6 +1140,10 @@ sub evaluate_argv {
+ 
+ sub run {
+ 	evaluate_argv();
++	evaluate_gitweb_config();
++	evaluate_git_version();
++
++	$first_request = 1;
+ 
+ 	$pre_listen_hook->()
+ 		if $pre_listen_hook;
+@@ -1139,6 +1157,7 @@ sub run {
+ 
+ 		$post_dispatch_hook->()
+ 			if $post_dispatch_hook;
++		$first_request = 0;
+ 
+ 		last REQUEST if ($is_last_request->());
+ 	}
