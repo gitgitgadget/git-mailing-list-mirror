@@ -1,94 +1,177 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv7 00/11] gitweb: remote_heads feature
-Date: Thu, 11 Nov 2010 20:29:21 +0100
-Message-ID: <201011112029.22373.jnareb@gmail.com>
-References: <1289478378-15604-1-git-send-email-giuseppe.bilotta@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Looking for a way to set up Git correctly
+Date: Thu, 11 Nov 2010 13:38:59 -0600
+Message-ID: <20101111193859.GI16972@burratino>
+References: <BD94CB4FDD0C4462804E316F814A3CCA@denny>
+ <20101111132502.GB23423@nibiru.local>
+ <20101111164606.GA16972@burratino>
+ <20101111190724.00vcimqm8w0cw8s0@dennymagicsite.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 11 20:29:42 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>,
+	Enrico Weigelt <weigelt@metux.de>
+To: denny@dennymagicsite.com
+X-From: git-owner@vger.kernel.org Thu Nov 11 20:39:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGcq0-0000aW-CH
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 20:29:36 +0100
+	id 1PGczb-0006YY-V5
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 20:39:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754545Ab0KKT3c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Nov 2010 14:29:32 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:36210 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753064Ab0KKT3b (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Nov 2010 14:29:31 -0500
-Received: by bwz15 with SMTP id 15so2274272bwz.19
-        for <git@vger.kernel.org>; Thu, 11 Nov 2010 11:29:30 -0800 (PST)
+	id S1755208Ab0KKTj0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Nov 2010 14:39:26 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:64462 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754330Ab0KKTjZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Nov 2010 14:39:25 -0500
+Received: by ewy7 with SMTP id 7so1407859ewy.19
+        for <git@vger.kernel.org>; Thu, 11 Nov 2010 11:39:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=DAMgvQbLRDW2IeRJw3sFsoRg/byiQDQE80E4l5DLF8U=;
-        b=emvz9KfhshgmIp5fho9yIkg1HicoXQaJfrLGbiup6lGIRoLZZBmj1UBWQEgBtBEOQb
-         8UHtKtwC5kIOsCmOhg4xvA5Bhq5bCaYZScfh7VAqk/14aYXaj4ji6GMy89guZ1ObLNr/
-         kJ5HPhwKewPauV5Q5HI+ti2I1dBxwO/D2ZMQ0=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=rqKDrOw6bujTuo0Fe5DXKg6NFIFvJqg3jTwmtfEXGv8=;
+        b=LFoLlbskmHmGApWndbTMz3KrhZeWlWd7Ue98xrRYSCkpeusCBF5f0K8nMrymnlq8f3
+         JjK1fLm2tnRs0n74PGF+RTZfzuI44tuwFchfAO5lQ7HTRxtZZpjuXTIwgbDU9E9qgkoL
+         4FHEu1iRRF3USWwuuUXwUWq1GlaEcTaaLnhng=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=KJltd8dTrmwn88892+vjBAoKTjSaTRq4qBkqB53qXV9TVSNaJvxcYKXFuUuozM/lzw
-         emVQKJ9QBL2g+tAeKStDhkmF+aJBsDmCNlVGt2uVQEjRdNzkdTVtXGRO5+ngo+pxkzW6
-         Kr48hQZIAp/OxLPj7p1OVnwAYxg8p5a1lLyrM=
-Received: by 10.204.122.144 with SMTP id l16mr1790336bkr.173.1289503770110;
-        Thu, 11 Nov 2010 11:29:30 -0800 (PST)
-Received: from [192.168.1.13] (abvw231.neoplus.adsl.tpnet.pl [83.8.220.231])
-        by mx.google.com with ESMTPS id a25sm1136442bks.8.2010.11.11.11.29.27
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 11 Nov 2010 11:29:28 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1289478378-15604-1-git-send-email-giuseppe.bilotta@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=CLSQqN4BrmRW1WXJCOMLXJDDoaCuMm62FnwOf/iQd3lLvG9m1bY+a5+3kE0bp4Zb0R
+         VoLdcCj8cWIwtJuHMmWFleqhFrS6XI8ikJvLiyAaJ9JTDSoUEah6e5TDqva+VLfsW+p3
+         evIQw6KpBnPO8yPe+PCgdNc5XtdOX8xC9TfDw=
+Received: by 10.216.199.81 with SMTP id w59mr2568460wen.100.1289504363863;
+        Thu, 11 Nov 2010 11:39:23 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id x6sm1549281weq.13.2010.11.11.11.39.21
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 11 Nov 2010 11:39:23 -0800 (PST)
 Content-Disposition: inline
+In-Reply-To: <20101111190724.00vcimqm8w0cw8s0@dennymagicsite.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161298>
 
-On Thu, 11 Nov 2010, Giuseppe Bilotta wrote:
+denny@dennymagicsite.com wrote:
 
-> This 7th version of the remote heads feature for gitweb differs from the
-> previous mostly my small tune-ups, renames of internal functions, some
-> patch reordering and a final addition.
+> I am still looking through your replies and getting familiar with
+> git commands.
+
+By the way, please ignore that GIT_WORK_TREE stuff I did.  It
+probably works, but it's ugly. :)  That example could have been
+written better as
+
+	git init everything
+	GIT_DIR=$(pwd)/everything/.git; export GIT_DIR
+	(
+		cd common-ancestor
+		git add -A
+		git commit
+		git branch -m ancestor
+	)
+	(
+		cd project1
+		git checkout -b project1 ancestor
+		git add -A
+		git commit
+	)
+	... etc ..
+	unset GIT_DIR
+
+	cd everything
+	git checkout project1
+
 [...]
+> From a developer's point of view, working on projectX means making
+> some changes and committing them to the repo for that project.  The
+> developer may not be aware of other pojects existing.
 
-I like this version very much.
+For concreteness, I am imagining these directories represent various
+versions of the Almquist shell.  The common ancestor is the BSD4.3/Net-2
+version and various projects may have built from there in different
+directions: NetBSD sh, FreeBSD sh, dash.  (Yes, I am oversimplifying. :))
 
-> Giuseppe Bilotta (11):
->   gitweb: use fullname as hash_base in heads link
->   gitweb: introduce remote_heads feature
->   gitweb: git_get_heads_list accepts an optional list of refs
->   gitweb: separate heads and remotes lists
->   gitweb: nagivation menu for tags, heads and remotes
->   gitweb: allow action specialization in page header
->   gitweb: remotes view for a single remote
->   gitweb: refactor repository URL printing
->   gitweb: provide a routine to display (sub)sections
->   gitweb: group remote heads by remote
->   git instaweb: enable remote_heads
+Now suppose they have diverged so wildly that it is never possible to
+synchronize code with each other.  Instead, they can copy fixes, and
+this is especially convenient when the fixes are phrased as diffs to
+the common ancestor.
 
-With exception of next to last patch, which contains a few of outdated
-comments (see my response for this commit), I don't see any problems.
+To facilitate this, Alice revives the BSD4.3/Net-2 sh project with a
+"fixes only" policy.  Her daily work might look like this:
 
-So, for the whole series:
+ $ git fetch netbsd
+ $ git log netbsd/for-alice@{1}..netbsd/for-alice; # any good patches today?
+ $ git cherry-pick -s 67fd89980; # a good patch.
+ ... quick test ...
+ $ git cherry-pick -s 897ac8; # another good patch.
+ ... quick test ...
+ ...
+ $ git fetch freebsd
+ ... and similarly for the rest of the patch submitters ...
+ $ git am emailed-patch
 
-  Acked-by: Jakub Narebski <jnareb@gmail.com>
+Then to more thoroughly test the result:
 
+ $ git checkout -b throwaway;	# new throw-away branch.[1]
+ $ git merge netbsd/master;	# will the changes work for netbsd?
+ ... thorough test ...
+ $ git reset --keep master
+ $ git merge freebsd/master;	# how about freebsd?
+ ... etc ...
 
-Thanks for working diligently on this series, Giuseppe!
--- 
-Jakub Narebski
-Poland
+And finally she pushes the changes out.
+
+> Without knowing anything about git for a moment, one ideal workflow
+> is where a developer makes changes to projectX that touch the base
+> and projectX specific features.  Then the developer commits them and
+> pushes them to the main repo.  The main repo contains all projects.
+> During the commit, chages to the base automagically get pushed to
+> all projects that share that base
+
+If it is a matter of what files are touched, then maybe the base is
+actually something like a library, which should be managed as a
+separate project.  See the "git submodule" manual if you would like to
+try something like this but still keep the projects coupled.
+
+On the other hand, remaining in the situation from before:
+
+Suppose Sam is the NetBSD sh maintainer.  The first step in working on
+a new release might be
+
+ $ git fetch ancestor
+ $ git log -p HEAD..FETCH_HEAD;	# fixes look okay?
+ $ git pull ancestor
+
+since Alice tends to include only safe, well tested fixes.
+
+Many changes Sam makes are specific to his project, but today he comes
+up with a fix that might be useful for other ash descendants.
+
+So instead of commiting directly, he can try:
+
+ $ git checkout for-alice;	# carry the fix to the for-alice branch
+ ... test ...
+ $ git commit -a;		# commit it.
+
+If it is not an urgent fix, at this point he might do
+
+ $ git checkout master;		# back to the main NetBSD branch, without the fix
+
+and give the other projects some time to work on the patch and come up
+with a better fix.  Or he might cherry-pick the commit from for-alice,
+and even publish it and encourage others to cherry-pick directly from
+him to get the fix out ASAP.
+
+Notice that not all changes to the base files are necessarily useful
+for other descendants of the ancestral program.  So in this example,
+propagation of changes between projects is fairly explicit.
+
+[1] "git checkout HEAD^0" would be more convenient.
+See DETACHED HEAD in the git checkout manual if interested.
