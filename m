@@ -1,79 +1,118 @@
 From: Patrick Doyle <wpdster@gmail.com>
-Subject: Re: git remote vs. submodules
-Date: Thu, 11 Nov 2010 10:11:39 -0500
-Message-ID: <AANLkTi=wT4aVfaw3ZSyqPgforOc3fBSLCP8CQMboFOva@mail.gmail.com>
-References: <AANLkTinev0W7-mm9wXmnZwY6DxN0Y2X0hJdpBOgM_4q=@mail.gmail.com>
- <4CDBD4D4.1080607@dbservice.com> <AANLkTin=t7RoLTwxc1KOv7_vZi-OgD_Jcu+66-fte6Sq@mail.gmail.com>
- <4CDC04F7.6080801@dbservice.com>
+Subject: How to recover a lost commit...
+Date: Thu, 11 Nov 2010 11:29:10 -0500
+Message-ID: <AANLkTinfYTMKicr3V=T=scVpOte_XrmaDgVA_oMj2fYU@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Tomas Carnecky <tom@dbservice.com>
-X-From: git-owner@vger.kernel.org Thu Nov 11 16:13:20 2010
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Nov 11 17:30:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGYpx-0002op-Sq
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 16:13:18 +0100
+	id 1PGa2D-0005kX-DU
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 17:30:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752768Ab0KKPNI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Nov 2010 10:13:08 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:41617 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752518Ab0KKPNH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Nov 2010 10:13:07 -0500
-Received: by yxk8 with SMTP id 8so70409yxk.19
-        for <git@vger.kernel.org>; Thu, 11 Nov 2010 07:13:06 -0800 (PST)
+	id S1754228Ab0KKQ3l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Nov 2010 11:29:41 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:65208 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754145Ab0KKQ3l (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Nov 2010 11:29:41 -0500
+Received: by fxm16 with SMTP id 16so1469666fxm.19
+        for <git@vger.kernel.org>; Thu, 11 Nov 2010 08:29:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=TY3rnG2rDjMSXkyBK/l2kQvxuuS4xAz8EnSX+18Uhv4=;
-        b=iV6VQ5mFtKEUzpKR0vcv7FFgpOWAO/A7Utge0Ih68vXG06EaWPMv4K3+bZHeIR6yL6
-         3BJq8pjHAD470UilfeBBBsOVQ8FO//iijJVaq2jOgqGvn+N47EPddi2TOXLJguVy39Kn
-         l3mtLW8O9tc+wS5JaVOGWeCB50apGpf0GV/rA=
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type;
+        bh=p94kiamMUMpawkp7SLf0zZAoSOIAiRjmXg1hCoVUaSI=;
+        b=EOsTZ3TgXUEFeSO1w0EGdSZyB+iTsGvUZQRpS2RBnp3jKpEB95fVkkEoO8MEV/px3J
+         ghqLA+XBt4vc9Tx9eBFiOk/lMyX2EUcrxJWSqEt9RaVRkstV63S7HUdWa4UPHpB8VvmN
+         7+VAH4IrRCrFPp42MB5hwWKVNqBB69W9IVf7A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=pt2E+DWDgsr+6zBoPmO3vQk0yqCfSLqeDyAWzxLLELyTZx3Ds7jxGUhdvT6mPjVYd3
-         oySRwEYs6b1+K5zcy7twvcxTfr7rLirn1Zzhn59xu0FtYnhmZUpDA8R6yurajU6veWhS
-         y/N9j2XC425aPreIFr9EO+Jz5N42UI2wy1G5I=
-Received: by 10.223.108.147 with SMTP id f19mr256081fap.68.1289488319235; Thu,
- 11 Nov 2010 07:11:59 -0800 (PST)
-Received: by 10.223.115.17 with HTTP; Thu, 11 Nov 2010 07:11:39 -0800 (PST)
-In-Reply-To: <4CDC04F7.6080801@dbservice.com>
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=On7oovuu1LW7+h8xHaVyDsSlnY+r2siHDrh3GGq57HYGvAf3oh+oS5aPlOGv77CRwr
+         bjTSXV8B2JjmjgQrOtV0lSMZ3erfCuY7VToRtnKrUMgZCErVkypvLAaJiD8uVR2E6UpV
+         Czp1K8Xo8LLPyNcwvMzcy40H38kFWdahr+dVg=
+Received: by 10.223.78.143 with SMTP id l15mr349075fak.30.1289492979328; Thu,
+ 11 Nov 2010 08:29:39 -0800 (PST)
+Received: by 10.223.115.17 with HTTP; Thu, 11 Nov 2010 08:29:10 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161266>
 
-On Thu, Nov 11, 2010 at 10:00 AM, Tomas Carnecky <tom@dbservice.com> wr=
-ote:
-> On 11/11/10 3:44 PM, Patrick Doyle wrote:
->> On Thu, Nov 11, 2010 at 6:34 AM, Tomas Carnecky <tom@dbservice.com> =
-wrote:
->>> Are you maybe looking for a subtree merge?
->>> http://www.kernel.org/pub/software/scm/git/docs/howto/using-merge-s=
-ubtree.html
->>
->> Yeah, that looks like it. =A0I never would have hit upon the read-tr=
-ee
->> step by myself -- I would have just laid things out with the prefix
->> already embedded in the subprojects.
->>
->> Hmmm... it seems to me that feeding changes back to the subprojects
->> might be difficult (and that is born out by a comment at the end of
->> the page you referenced.)
->
-> https://github.com/apenwarr/git-subtree, it makes exactly that easier=
-=2E
+Help, I'm in a maze of twisty passages all alike...
 
-That looks cool too!  Thanks.
+Background: I just switched our project repository from SVN to git.  I
+realized once I completed that that I had some work in progress on my
+local machine that I had not checked in.  So I created a branch off of
+master, copied the modified files into that branch, checked them in,
+and switched back to master, where I did some other work.
+
+Today I want to pick up where I left off with the work-in-progress (on
+the "svn_to_git_wip" branch).  What I _really_ wanted to do was to
+grab the contents of that branch, dump them into my working directory
+for the master branch, and continue as if nothing had happened.  (This
+is exactly the use case for which git-stash was created, and I
+probably should have used that to begin with.)
+
+So today I flailed around trying a couple of different approaches for
+getting the work-in-progress (WIP) branch applied to the master
+branch, without an associated commit, because I'm not ready to commit.
+ As I was flailing, at one point I switched to the WIP branch, and
+tried a rebase, to get it up to date wrt master.
+
+I've just noticed however, that my work in progress, no longer seems
+to be there, and I'm at a loss to understand why it disappeared.  I've
+tried various checkouts to get it back (the commit containing it was
+286f167).  I know I can recover from this by grabbing the original
+commit.  I can also recover from this by grabbing the 1/2 dozen files
+from the old SVN directory (which I've kept around just because I'm
+paranoid like that).
+
+But I'm curious... given the reflog show below... can any of you tell
+what I did to myself to shoot myself in the foot?  Aside from "use git
+stash next time dummy", is there any way I could have avoided this?
 
 --wpd
+
+$ git reflog
+ce11719... HEAD@{0}: checkout: moving from master to svn_to_git_wip
+40070a1... HEAD@{1}: checkout: moving from svn_to_git_wip to master
+ce11719... HEAD@{2}: ce11719: updating HEAD
+286f167... HEAD@{3}: 286f167: updating HEAD
+d8c9d02... HEAD@{4}: checkout: moving from master to svn_to_git_wip
+40070a1... HEAD@{5}: checkout: moving from
+286f167944ee019c07885b3f0fbe46efd2dc68b2 to master
+286f167... HEAD@{6}: checkout: moving from master to 286f167
+40070a1... HEAD@{7}: checkout: moving from svn_to_git_wip to master
+d8c9d02... HEAD@{8}: checkout: moving from master to svn_to_git_wip
+40070a1... HEAD@{9}: checkout: moving from svn_to_git_wip to master
+d8c9d02... HEAD@{10}: HEAD^: updating HEAD
+ce11719... HEAD@{11}: checkout: moving from master to svn_to_git_wip
+40070a1... HEAD@{12}: commit: Rebaselined nccov reports based on errmon changes
+cb98d3f... HEAD@{13}: checkout: moving from svn_to_git_wip to master
+ce11719... HEAD@{14}: rebase: updating HEAD
+3638aa3... HEAD@{15}: checkout: moving from svn_to_git_wip to
+3638aa3f6e8496b5415ab59bec2a7af07b8ed169
+3638aa3... HEAD@{16}: checkout: moving from master to svn_to_git_wip
+cb98d3f... HEAD@{17}: checkout: moving from svn_to_git_wip to master
+3638aa3... HEAD@{18}: checkout: moving from master to svn_to_git_wip
+cb98d3f... HEAD@{19}: checkout: moving from svn_to_git_wip to master
+3638aa3... HEAD@{20}: checkout: moving from svn_to_git_wip to svn_to_git_wip
+3638aa3... HEAD@{21}: checkout: moving from svn_to_git_wip to svn_to_git_wip
+3638aa3... HEAD@{22}: HEAD^: updating HEAD
+d8c9d02... HEAD@{23}: checkout: moving from svn_to_git_wip to svn_to_git_wip
+d8c9d02... HEAD@{24}: HEAD^: updating HEAD
+ce11719... HEAD@{25}: checkout: moving from master to svn_to_git_wip
+cb98d3f... HEAD@{26}: checkout: moving from svn_to_git_wip to master
+ce11719... HEAD@{27}: HEAD^: updating HEAD
+286f167... HEAD@{28}: checkout: moving from master to svn_to_git_wip
+cb98d3f... HEAD@{29}: commit: errmon now manages cmp{low,hgh}fal status bits.
+ce11719... HEAD@{30}: checkout: moving from svn_to_git_wip to master
+286f167... HEAD@{31}: commit: Saving WIP at the time I switched from SVN to GIT
+ce11719... HEAD@{32}: checkout: moving from master to svn_to_git_wip
