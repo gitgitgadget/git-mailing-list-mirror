@@ -1,89 +1,104 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3 2/3] Add the 'fetch.recurseSubmodules' config setting
-Date: Thu, 11 Nov 2010 10:31:22 -0800
-Message-ID: <7v1v6rhfut.fsf@alter.siamese.dyndns.org>
-References: <4CDB3063.5010801@web.de> <4CDB30D6.5040302@web.de>
- <20101111000216.GA14189@burratino> <4CDBA5FD.20802@web.de>
- <20101111082748.GA15525@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Scripted clone generating an incomplete, unusable .git/config
+Date: Thu, 11 Nov 2010 12:48:29 -0600
+Message-ID: <20101111184829.GG16972@burratino>
+References: <AANLkTik7-QzrMKDpV=W4dqpuguZsAr5yrMELmHu5NZMd@mail.gmail.com>
+ <20101111103742.GA16422@burratino>
+ <AANLkTinzotA4TSjMjjmW--gw7ST3dXMyHzPveGynaVmZ@mail.gmail.com>
+ <20101111173253.GC16972@burratino>
+ <alpine.LNX.2.00.1011111241360.14365@iabervon.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <Jens.Lehmann@web.de>,
-	Git Mailing List <git@vger.kernel.org>,
-	Kevin Ballard <kevin@sb.org>,
-	Jon Seymour <jon.seymour@gmail.com>,
-	Chris Packham <judge.packham@gmail.com>,
-	Marc Branchaud <marcnarc@xiplink.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 11 19:31:50 2010
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Dun Peal <dunpealer@gmail.com>, Git ML <git@vger.kernel.org>,
+	Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
+	Carl Worth <cworth@cworth.org>, Jeff King <peff@peff.net>
+To: Daniel Barkalow <barkalow@iabervon.org>
+X-From: git-owner@vger.kernel.org Thu Nov 11 19:49:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGbw6-0008Un-Dy
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 19:31:50 +0100
+	id 1PGcCn-0001tG-Oo
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 19:49:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754747Ab0KKSbn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Nov 2010 13:31:43 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63560 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754014Ab0KKSbm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Nov 2010 13:31:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 38AC03BBB;
-	Thu, 11 Nov 2010 13:31:47 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=bdkXT/wInU0mYFz+aeJQIJlOAgA=; b=k1zmkQ
-	MhxMsyBVSzrsWrTmxTnSUWT0Iaq/6uMGAO21zDeDnu7HGfaUwOON00XKbWup2ObD
-	kzsu66AisW9FNrxwGjl7ZL553mCP/7SHEgzSHIdpdVajrBQot1uWHJSe5OeCtnMi
-	3cy2iTEgHG/KDwm7igvTAgwI16yU/7K2kG+Z0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=BrtUeDE6SkEtEGbq7Z5B5+KD/W5jiEa5
-	TqQE11ut5sUb/2fnU1Zpph/yfQd8Mgj6tOrmQX/RKwZ9p188lJaO0WcvtxSs4pBL
-	TpL8nVh01xb9nk6xE9LAS6AelQwcDlAbFWKTUe8LguYFdwL96GosD1qDiWjv/WlD
-	zNxeuGfcfio=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A675F3BB2;
-	Thu, 11 Nov 2010 13:31:39 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A2D1F3BA9; Thu, 11 Nov 2010
- 13:31:30 -0500 (EST)
-In-Reply-To: <20101111082748.GA15525@burratino> (Jonathan Nieder's message of
- "Thu\, 11 Nov 2010 02\:27\:48 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EC7BF336-EDC1-11DF-80D9-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+	id S1755934Ab0KKSsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Nov 2010 13:48:55 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:36486 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755925Ab0KKSsy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Nov 2010 13:48:54 -0500
+Received: by ywc21 with SMTP id 21so147875ywc.19
+        for <git@vger.kernel.org>; Thu, 11 Nov 2010 10:48:54 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=Vs0UrW+zz+RQxe1Pjf6NcRSeBDW/7wE+uixzvp5ivvo=;
+        b=NmxfSK7uzqVW2O4EXHIzdo5/3KD2Dpue88ojHzrvLz/PnBr3YKV2bPO2Ne3Hrb3gxn
+         uJdsIIX/WUiNPoA8SbvbOPekJssgVN7Adb3HCShY1EDO6tPKOZwdeW2TrFNbn7WzdO6u
+         TPU1MlM1y263np1Jdh0j3twkC61IcPyZdffBI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=KHvpvcFQoK4qdGwfsTFjRdijbg6ms7z3/YbA2e42XO9OJRr1cbMq0JicH+FNS+YlJB
+         zfAGynf4JYSAtWp0tqFthR6uuLi9yYQX07KfWSwGgeGpeqqlG1WvEAzdPeap3OW1CSve
+         QTNrdmy2MYIQeBLPc20DTUC3LujhkkAfCP6no=
+Received: by 10.223.101.196 with SMTP id d4mr517436fao.23.1289501333617;
+        Thu, 11 Nov 2010 10:48:53 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id k21sm1084186faa.25.2010.11.11.10.48.51
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 11 Nov 2010 10:48:53 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <alpine.LNX.2.00.1011111241360.14365@iabervon.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161289>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Thu, Nov 11, 2010 at 12:55:48PM -0500, Daniel Barkalow wrote:
+> On Thu, 11 Nov 2010, Jonathan Nieder wrote:
 
->> "fetch.recurseSubmodules" is only read from .git/config. The one read
->> first from .gitmodules and then from .git/config is the per-submodule
->> setting "submodule.<name>.fetchRecurseSubmodules" added in 3/3.
+>> --- a/builtin/clone.c
+>> +++ b/builtin/clone.c
+>> @@ -667,6 +667,5 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+>>  	strbuf_release(&branch_top);
+>>  	strbuf_release(&key);
+>>  	strbuf_release(&value);
+>> -	junk_pid = 0;
+>>  	return err;
+>>  }
 >
-> Sorry for the nonsense.  Would it be easy (or desirable) to make
-> _that_ one not be read from .gitmodules?
+> I believe that would cause it to remove the repository when it terminates, 
+> regardless of whether it completed or not.
 
-I think the motivation behind having a way to read it from .gitmodules is
-so that project can suggest the default for convenience (e.g. "almost
-everybody who interacts with this project wants these submodules checked
-out and kept updated").
+Ah, right, the second remove_junk() call is because of atexit().
 
-Traditionally the suggestions kept in .gitmodules were propagated to the
-config when the submodule was initialized, and at runtime we read only
-from the config from then on without reading from .gitmodules, so that
-once the user decides to follow what the project suggests (or customize
-that away), the preference would stick to the repository.
+So why does git clone keep running after the first remove_junk() call?
+It seems that the signal is initially set up (by Python's popen()?) as
+SIG_IGN.  I guess "git clone" should explicitly override that to be
+SIG_DFL?
 
-That arrangement does not cater well to people who want to follow along
-whatever the project's suggestion of the day, so we might want to change
-things so that we if we find it in the config, we stop there and use what
-we found, otherwise we use what is in the in-tree gitmodules; I suspect we
-might require some changes to "submodule init" not to copy certain things
-to the config for that to work, though...
+Here's a proof of concept.  It is not very good because it overrides
+any previously set sigchain handlers (in case the "git" wrappers
+start to use one) and because using SIG_DFL as a sigchain_fun feels
+like violating an abstraction.
+
+diff --git a/builtin/clone.c b/builtin/clone.c
+index 19ed640..2f21a91 100644
+--- a/builtin/clone.c
++++ b/builtin/clone.c
+@@ -458,6 +458,7 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
+ 	}
+ 	junk_git_dir = git_dir;
+ 	atexit(remove_junk);
++	sigchain_push_common(SIG_DFL);
+ 	sigchain_push_common(remove_junk_on_signal);
+ 
+ 	setenv(CONFIG_ENVIRONMENT, mkpath("%s/config", git_dir), 1);
