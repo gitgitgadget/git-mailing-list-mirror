@@ -1,103 +1,107 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: Scripted clone generating an incomplete, unusable .git/config
-Date: Thu, 11 Nov 2010 12:55:48 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.1011111241360.14365@iabervon.org>
-References: <AANLkTik7-QzrMKDpV=W4dqpuguZsAr5yrMELmHu5NZMd@mail.gmail.com> <20101111103742.GA16422@burratino> <AANLkTinzotA4TSjMjjmW--gw7ST3dXMyHzPveGynaVmZ@mail.gmail.com> <20101111173253.GC16972@burratino>
+From: Gelonida <gelonida@gmail.com>
+Subject: Re: git clone / git pull to USB memory stick (FAT) and symlinks
+Date: Thu, 11 Nov 2010 19:03:48 +0100
+Message-ID: <ibhb64$51p$1@dough.gmane.org>
+References: <ibh605$adm$1@dough.gmane.org> <7vk4kjhhjh.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="1547844168-1868994266-1289497737=:14365"
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Dun Peal <dunpealer@gmail.com>, Git ML <git@vger.kernel.org>,
-	Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
-	Carl Worth <cworth@cworth.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 11 19:02:38 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 11 19:04:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGbTp-0008Jt-Cv
-	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 19:02:37 +0100
+	id 1PGbVn-00013R-7c
+	for gcvg-git-2@lo.gmane.org; Thu, 11 Nov 2010 19:04:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755351Ab0KKSCb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Nov 2010 13:02:31 -0500
-Received: from iabervon.org ([66.92.72.58]:46768 "EHLO iabervon.org"
+	id S1755716Ab0KKSEH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Nov 2010 13:04:07 -0500
+Received: from lo.gmane.org ([80.91.229.12]:41539 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753298Ab0KKSCa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Nov 2010 13:02:30 -0500
-X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Thu, 11 Nov 2010 13:02:30 EST
-Received: (qmail 8581 invoked by uid 1000); 11 Nov 2010 17:55:48 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 11 Nov 2010 17:55:48 -0000
-In-Reply-To: <20101111173253.GC16972@burratino>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
-Content-ID: <alpine.LNX.2.00.1011111250190.14365@iabervon.org>
+	id S1755520Ab0KKSED (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Nov 2010 13:04:03 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PGbVB-0000hb-Ss
+	for git@vger.kernel.org; Thu, 11 Nov 2010 19:04:01 +0100
+Received: from unicorn.dungeon.de ([81.56.82.123])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 11 Nov 2010 19:04:01 +0100
+Received: from gelonida by unicorn.dungeon.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 11 Nov 2010 19:04:01 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: unicorn.dungeon.de
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 ""
+In-Reply-To: <7vk4kjhhjh.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161282>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---1547844168-1868994266-1289497737=:14365
-Content-Type: TEXT/PLAIN; CHARSET=ISO-8859-15
-Content-Transfer-Encoding: 8BIT
-Content-ID: <alpine.LNX.2.00.1011111250191.14365@iabervon.org>
-
-On Thu, 11 Nov 2010, Jonathan Nieder wrote:
-
-> On Thu, Nov 11, 2010 at 07:16:27PM +0700, Nguyen Thai Ngoc Duy wrote:
-> > On Thu, Nov 11, 2010 at 5:37 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+On 11/11/2010 06:54 PM, Junio C Hamano wrote:
+> Gelonida <gelonida@gmail.com> writes:
 > 
-> >> Most likely the clone is terminating when Python exits, perhaps due to
-> >> SIGPIPE.  It doesn't look like a bug to me; I suspect you meant to use
-> >> os.system(), which is synchronous, instead.
-> [...]
-> > If "git clone" is terminated before it completes, shouldn't it clean
-> > the uncompleted repo?
+>> I thought about cloning a remote git repository onto the stick
+>> and performing
+>> - regular pulls in order to update the USB stick
+>> - occasional pushes in orderto publish changes performed on the stick.
 > 
-> Ah, so it should.
-> 
->  trace: built-in: git clone jrn@localhost:/home/jrn/src/xz
->  trace: run_command: ssh jrn@localhost git-upload-pack '/home/jrn/src/xz'
->  trace: remove junk called
->  jrn@localhosts password: 
->  trace: run_command: index-pack --stdin -v --fix-thin --keep=fetch-pack 19314 on burratino
->  trace: exec: git index-pack --stdin -v --fix-thin --keep=fetch-pack 19314 on burratino
->  trace: built-in: git index-pack --stdin -v --fix-thin --keep=fetch-pack 19314 on burratino
->  remote: Counting objects: 7299, done.
->  remote: Compressing objects: 100% (1826/1826), done.
->  remote: Total 7299 (delta 5421), reused 7274 (delta 5401)
->  Receiving objects: 100% (7299/7299), 2.36 MiB | 4.43 MiB/s, done.
->  Resolving deltas: 100% (5421/5421), done.
->  trace: exited with status 0
->  trace: exited with status 0
->  trace: remove junk called
->  trace: remove_junk: pid != 0
-> 
-> Are there any downside to the following?
-> 
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> diff --git a/builtin/clone.c b/builtin/clone.c
-> index 19ed640..af6b40a 100644
-> --- a/builtin/clone.c
-> +++ b/builtin/clone.c
-> @@ -667,6 +667,5 @@ int cmd_clone(int argc, const char **argv, const char *prefix)
->  	strbuf_release(&branch_top);
->  	strbuf_release(&key);
->  	strbuf_release(&value);
-> -	junk_pid = 0;
->  	return err;
->  }
+> ... missing is the reason why this is done to a USB memory stick.  More
+> specifically,...
 
-I believe that would cause it to remove the repository when it terminates, 
-regardless of whether it completed or not. That line is after all of the 
-clone's code. I'm a bit suspicious that it's not flushing some stdio 
-buffer and relying on the C library doing it on an orderly exit.
+The idea is to have a few administrator keys .
 
-	-Daniel
-*This .sig left intentionally blank*
---1547844168-1868994266-1289497737=:14365--
+
+These administrator keys would be plugged into network less PCs. (no git
+installed)
+
+
+I wanted to use git to use these keys up to date.
+
+As the write speed to USB keys is slow I thought about using git in
+order to avoid copying wrting already up to date config scripts and tools.
+
+Occasionally one might encounter errors in the setup scripts and fix
+them immediatel with word pad on the targe system.
+
+Thus the idea to change files directly on the USB key.
+
+When repluging the key nto a development host one could pull / push in
+order to update the central repositroy and all other users just ahd to
+pull again to their keys.
+
+
+I hope this explains why I thought about having
+- a non bare repository on a USB stick
+- due to historical reasons some sym links might be in the repository.
+  thus my question of how to let git ignore these sym links.
+   If this is not possible, then I would probably create a new
+	symlink-less git repository
+
+
+> 
+>> 1.) Ignore skip / symlinks
+>> 2.) Avoiding file permission issues: Is this sufficient
+> 
+> These become non-issues _if_ the reason you are putting this on an USB
+> stick is to safekeep and sneakernet the project data, and are not
+> interested in having a working tree on the stick, which I often find is
+> the use case after grilling people who ask about placing git repositories
+> on an USB stick.
+> 
+> And the commands to interact with such a repository without a working tree
+> are to "push" (into it), and "fetch" (from it).  IOW, you do not "pull"
+> into USB stick.
+> 
+> If you do need a working tree on the stick, and the stick has a FAT
+> derived filesystem (which would be the most common), then you would need
+> 
+>> git config --add core.fileMode false
+> 
+> and perhaps "core.symlinks false" also would help
