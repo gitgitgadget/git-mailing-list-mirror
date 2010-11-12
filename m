@@ -1,254 +1,160 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] tests: add GETENV_POISON option to simulate unfriendly
- getenv()
-Date: Fri, 12 Nov 2010 12:59:49 -0600
-Message-ID: <20101112185949.GA18064@burratino>
-References: <1289498903-18413-1-git-send-email-kirr@mns.spb.ru>
- <20101111181728.GF16972@burratino>
- <20101112140329.GA29604@tugrik.mns.mnsspb.ru>
- <20101112160332.GB15141@burratino>
- <20101112172028.GA3941@tugrik.mns.mnsspb.ru>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v3 2/3] Add the 'fetch.recurseSubmodules' config setting
+Date: Fri, 12 Nov 2010 20:48:18 +0100
+Message-ID: <4CDD9A02.6000507@web.de>
+References: <4CDB3063.5010801@web.de> <4CDB30D6.5040302@web.de> <20101111000216.GA14189@burratino> <4CDBA5FD.20802@web.de> <20101111082748.GA15525@burratino> <7v1v6rhfut.fsf@alter.siamese.dyndns.org> <20101111190053.GH16972@burratino> <4CDD2AF9.6040403@web.de> <20101112155210.GA15141@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	msysgit@googlegroups.com
-To: Kirill Smelkov <kirr@mns.spb.ru>
-X-From: git-owner@vger.kernel.org Fri Nov 12 20:00:30 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Kevin Ballard <kevin@sb.org>,
+	Jon Seymour <jon.seymour@gmail.com>,
+	Chris Packham <judge.packham@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 12 20:48:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGyrN-0000Og-NT
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 20:00:30 +0100
+	id 1PGzbp-00084s-Be
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 20:48:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932565Ab0KLTAY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Nov 2010 14:00:24 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:61543 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932520Ab0KLTAW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Nov 2010 14:00:22 -0500
-Received: by eye27 with SMTP id 27so2099246eye.19
-        for <git@vger.kernel.org>; Fri, 12 Nov 2010 11:00:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=AlXN/uR1Y8TFYDgil9ozk6vkR7AkY3XzRlFjIQifGXk=;
-        b=vXTlzU0r5hM2gqFHnjODbiIWpLQ/SFF/0F0RaLTHFaWpMX2OEaNVgfoGP0o4QNeU7D
-         qfrjthntfDD/sZDN8L258qP+txt2B3mlUl2lVehJcavL5rW/3dd6nLrGk1Bemzfg/ZKN
-         xdUW7Zb9WDvRr7UTipnCUMg8Q1YGTG7qkw1QI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=UYEcm5P3LXnP1odyLS5+TW87MS5Gi/Csj51YgmUApza/CVKkCh2TDegoO5ZNH54NP9
-         z5bDV56qJaThImqLryTzUXpNY1M/SecMmHEiNZCsYNIoWLtsF3mrbuyleSHfY7s4R+Ti
-         uE3N453148p9qNU8w2hl00gTeysGbwzPxTOhs=
-Received: by 10.216.244.11 with SMTP id l11mr2313813wer.43.1289588420166;
-        Fri, 12 Nov 2010 11:00:20 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id o43sm2342103weq.47.2010.11.12.11.00.18
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 12 Nov 2010 11:00:19 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20101112172028.GA3941@tugrik.mns.mnsspb.ru>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932193Ab0KLTsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Nov 2010 14:48:23 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:45632 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755735Ab0KLTsW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Nov 2010 14:48:22 -0500
+Received: from smtp04.web.de  ( [172.20.0.225])
+	by fmmailgate03.web.de (Postfix) with ESMTP id A312E171E1DF0;
+	Fri, 12 Nov 2010 20:48:21 +0100 (CET)
+Received: from [93.240.101.21] (helo=[192.168.178.29])
+	by smtp04.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1PGzbh-00051B-00; Fri, 12 Nov 2010 20:48:21 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <20101112155210.GA15141@burratino>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19hEoUatuQrQHVgzKmrLLSyCIdJiRPJq5OmGtt3
+	F5gsj3p3VSeWcZ4KKEv8Cc+p12ar1mYOBf9qP4nuC79v517KSy
+	WpVlfTpRm1bc/nM7jXug==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161357>
 
-Kirill Smelkov wrote:
-> On Fri, Nov 12, 2010 at 10:03:32AM -0600, Jonathan Nieder wrote:
+Am 12.11.2010 16:52, schrieb Jonathan Nieder:
+> Jens Lehmann wrote:
+>> Am 11.11.2010 20:00, schrieb Jonathan Nieder:
+> 
+>>> Yes, that makes some sense to me.  Except wouldn't it be a single
+>>> configuration item?  "These submodules should be checked out in all
+>>> but unusual situations, so check them out automatically and keep them
+>>> updated."
+>>
+>> Hmm, but we have at least three modes of how to update them:
+>>
+>> 1) Never fetch the submodule (to get new commits the user has to run
+>>    "git fetch --recurse-submodules" by hand)
+>>
+>> 2) Fetch the submodule each time you fetch the superproject (Which is
+>>    really handy when you do development in the submodule too but can
+>>    be really inconvenient when you don't)
+>>
+>> 3) Update submodules only when new recorded commits are fetched in
+>>    the superproject (This mode is not added with the current patch
+>>    series but will be in one of the next)
+>>
+>> So you would need a config option for that anyway, no? And that is why
+>> I'd rather like to have a separate fetch option to control that behavior
+>> instead of an implicit "if-it's-to-be-checked-out-fetch-it-too" approach.
+> 
+> I still think I am missing something.
 
->> Right, but do we know of any platforms that work that way currently?
->
-> I don't. Actually I was really surprised after reading getenv manual
-> about that.
+Ok, I'll try harder to explain my view ;-)
 
-Here's an artificial one.  If someone shows up interested in cleaning
-the getenv() usage, something like this could make it easier to
-maintain the result.
+> Traditionally, git has been a _content_ tracker.  The configuration that
+> gets transmitted (.gitignore, .gitattributes, .gitmodules) would only
+> represent basic information needed for that content to remain usable and
+> sensible.
 
-Before then, it provides a chance to see how invasive the changes
-would need to be to support such a theoretical unfriendly platform.
-The results don't look so good.
+Ack.
 
-> No, I'm not in a hurry - better to fix this properly. Though personally,
-> I've already scratched my itch here.
+> In the case of .gitmodules, it seems that two concepts are being
+> conflated:
+> 
+>  A. Configuration based on the user's preferences.  Absolutely, a person
+>     deserves to be able to easily choose between (1), (2), and (3) as
+>     described above.
+> 
+>  B. Metadata about the content that should be shared.  For example, "this
+>     submodule would be checked out in all but unusual circumstances" is a
+>     useful thing to be able to declare.
 
-Thanks for reporting.
+No, I think these concepts aren't conflated at all:
 
--- 8< --
-Subject: add GETENV_POISON option to simulate unfriendly getenv()
+- Category A is handled by .git/config
 
-Traditionally, getenv() returns a pointer into the environment structure,
-and on typical platforms the pointed-to value remains valid until that
-environment variable gets a new value.
+- Category B is handled by the .gitmodules file
 
-On some platforms (e.g., wine), unfortunately, it does not remain valid
-even after an unrelated setenv() call.
+Category A should not be handled by a file in the work tree while
+category B stuff belongs there to be able to share it. That is why git
+searches all new options in both files with the values from .git/config
+overriding those from .gitmodules: to provide useful defaults and let
+the user choose otherwise if he wants to.
 
-The standard even allows getenv to return its result in a static buffer
-(meaning it would not remain valid after another getenv() call).  So if
-we want to be maximally portable, we should always copy the return
-value from getenv() before fetching another value from the environment.
+> Probably I am missing something big, but fetchsubmodules as currently
+> defined seem like something in category A and not in category B.
+> Partially because if we ever implement option (3), that is what almost
+> _every_ casual consumer will want.  So why should they be stuck with these
+> configuration files specifying (1) and (2) when they check out old
+> revisions?
 
-This patch adds a GETENV_POISON option to demonstrate how hard that
-would be.  When GETENV_POISON is set, getenv is replaced with a wrapper
-that clobbers its old return value after each call, in the hope that
-broken callers might notice.
+With submodules there never is a one-size-fits-all solution :-)
+(And we are currently working on option (3), so it will exist rather
+sooner than later)
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- Makefile               |    4 ++++
- cache.h                |   20 --------------------
- compat/getenv-poison.c |   44 ++++++++++++++++++++++++++++++++++++++++++++
- git-compat-util.h      |   25 +++++++++++++++++++++++++
- 4 files changed, 73 insertions(+), 20 deletions(-)
- create mode 100644 compat/getenv-poison.c
+There are people putting lots of large files in submodules for better
+performance and they almost always never want to fetch (or even stat)
+them, so (1) is for them and it's cool that their upstream can configure
+that, avoiding to have every developer to repeat their "obvious" choice
+after each clone again (and that might only be needed for some submodules,
+so a repo-wide config doesn't necessarily help them).
 
-diff --git a/Makefile b/Makefile
-index 1f1ce04..e16d10e 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1443,6 +1443,10 @@ ifdef INTERNAL_QSORT
- 	COMPAT_CFLAGS += -DINTERNAL_QSORT
- 	COMPAT_OBJS += compat/qsort.o
- endif
-+ifdef GETENV_POISON
-+	COMPAT_CFLAGS += -DGETENV_POISON
-+	COMPAT_OBJS += compat/getenv-poison.o
-+endif
- ifdef RUNTIME_PREFIX
- 	COMPAT_CFLAGS += -DRUNTIME_PREFIX
- endif
-diff --git a/cache.h b/cache.h
-index 33decd9..574dc8f 100644
---- a/cache.h
-+++ b/cache.h
-@@ -438,26 +438,6 @@ extern void verify_non_filename(const char *prefix, const char *name);
- 
- extern int init_db(const char *template_dir, unsigned int flags);
- 
--#define alloc_nr(x) (((x)+16)*3/2)
--
--/*
-- * Realloc the buffer pointed at by variable 'x' so that it can hold
-- * at least 'nr' entries; the number of entries currently allocated
-- * is 'alloc', using the standard growing factor alloc_nr() macro.
-- *
-- * DO NOT USE any expression with side-effect for 'x', 'nr', or 'alloc'.
-- */
--#define ALLOC_GROW(x, nr, alloc) \
--	do { \
--		if ((nr) > alloc) { \
--			if (alloc_nr(alloc) < (nr)) \
--				alloc = (nr); \
--			else \
--				alloc = alloc_nr(alloc); \
--			x = xrealloc((x), alloc * sizeof(*(x))); \
--		} \
--	} while (0)
--
- /* Initialize and use the cache information */
- extern int read_index(struct index_state *);
- extern int read_index_preload(struct index_state *, const char **pathspec);
-diff --git a/compat/getenv-poison.c b/compat/getenv-poison.c
-new file mode 100644
-index 0000000..a88ec85
---- /dev/null
-+++ b/compat/getenv-poison.c
-@@ -0,0 +1,44 @@
-+/*
-+ * getenv(3) says:
-+ *	The implementation of getenv() is not required to be reentrant.
-+ *	The string pointed to by the return value of getenv() may be
-+ *	statically allocated, and can be modified by a subsequent call
-+ *	to getenv(), putenv(3), setenv(3), or unsetenv(3).
-+ *
-+ * This file provides an unpleasant but conformant getenv()
-+ * implementation, for tests.
-+ */
-+#include "../git-compat-util.h"
-+#undef getenv
-+
-+static void poison_buffer(char *buf, size_t buflen)
-+{
-+	if (!buflen)
-+		return;
-+	memset(buf, '\xa5', buflen - 1);
-+	buf[buflen - 1] = '\0';
-+}
-+
-+static void fill_buffer(char **buf, size_t *alloc, const char *str)
-+{
-+	size_t len = strlen(str) + 1;
-+	ALLOC_GROW(*buf, len, *alloc);
-+	memcpy(*buf, str, len);
-+}
-+
-+char *gitgetenv(const char *name)
-+{
-+	static char *envvar_array[2];
-+	static size_t envvar_len[2];
-+	static unsigned int index;
-+	const char *value;
-+
-+	poison_buffer(envvar_array[index], envvar_len[index]);
-+	index = (index + 1) % 2;
-+
-+	value = getenv(name);
-+	if (!value)
-+		return NULL;
-+	fill_buffer(&envvar_array[index], &envvar_len[index], value);
-+	return envvar_array[index];
-+}
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 2af8d3e..1f6a2ce 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -298,6 +298,11 @@ extern ssize_t read_in_full(int fd, void *buf, size_t count);
- extern int gitsetenv(const char *, const char *, int);
- #endif
- 
-+#ifdef GETENV_POISON
-+#define getenv gitgetenv
-+extern char *gitgetenv(const char *name);
-+#endif
-+
- #ifdef NO_MKDTEMP
- #define mkdtemp gitmkdtemp
- extern char *gitmkdtemp(char *);
-@@ -421,6 +426,26 @@ static inline int has_extension(const char *filename, const char *ext)
- 	return len > extlen && !memcmp(filename + len - extlen, ext, extlen);
- }
- 
-+#define alloc_nr(x) (((x)+16)*3/2)
-+
-+/*
-+ * Realloc the buffer pointed at by variable 'x' so that it can hold
-+ * at least 'nr' entries; the number of entries currently allocated
-+ * is 'alloc', using the standard growing factor alloc_nr() macro.
-+ *
-+ * DO NOT USE any expression with side-effect for 'x', 'nr', or 'alloc'.
-+ */
-+#define ALLOC_GROW(x, nr, alloc) \
-+	do { \
-+		if ((nr) > alloc) { \
-+			if (alloc_nr(alloc) < (nr)) \
-+				alloc = (nr); \
-+			else \
-+				alloc = alloc_nr(alloc); \
-+			x = xrealloc((x), alloc * sizeof(*(x))); \
-+		} \
-+	} while (0)
-+
- /* Sane ctype - no locale, and works with signed chars */
- #undef isascii
- #undef isspace
--- 
-1.7.2.3.557.gab647.dirty
+And when you are on a superproject branch actively developing inside a
+submodule, you may want to increase fetch-activity to fetch all new
+commits in the submodule even if they aren't referenced in the
+superproject (yet), as that might be just what your fellow developers
+are about to do. And the person setting up that branch could do that
+once for all users so they don't have to repeat it in every clone. And
+when switching away from that branch all those developers cannot forget
+to reconfigure to fetch-on-demand, so not having that in .git/config is
+a plus here too.
+
+And right, "almost _every_ casual consumer" should start with (3), and
+that is why it will be the default. So most people will get along
+without having ever to configure fetch behavior in .gitmodules because
+git does The Right Thing for them. But in my opinion we should allow
+that for those other users ...
+
+> All that said, I do not think it is unreasonable in some situations for a
+> project to want to share configuration of type (A) between members of a
+> project; for example, lots of projects share hooks and that's great.  I
+> just don't think git should set it up automatically --- better to require
+> an explicit user action like "sh useprojectconfiguration.sh" (an action
+> more explicit than "please initialize and checkout all relevant
+> submodules") for such cases.
+
+You have no other choice for hooks because of security concerns. But I
+can't see any downsides in leaving upstream *the choice* to configure
+default submodule behavior. Lots of people - including me - want that for
+clone and checkout. And to be consistent the same configuration abilities
+should be available for fetch too, and if only to follow the principle of
+least surprise.
+
+
+Thanks
+Jens
