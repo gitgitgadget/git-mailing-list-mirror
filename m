@@ -1,58 +1,53 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: Newbie: Restore messed up code from local or remote repository
-Date: Fri, 12 Nov 2010 15:02:45 +0100
-Message-ID: <AANLkTinyhGKbLDJSsu19+capPUgCx0m_5feaOoSuXCm8@mail.gmail.com>
-References: <1289550163511-5731540.post@n2.nabble.com> <20101112124621.GF30870@efreet.light.src>
+From: Mike Coleman <tutufan@gmail.com>
+Subject: possible 'git --dirstat=0' buglet in 1.7.0.4?
+Date: Fri, 12 Nov 2010 08:33:56 -0600
+Message-ID: <AANLkTi=wZ8MhU0NUw9as-kw8Lhr=TFBK2BY7MFRQvOct@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: gzoller <gzoller@hotmail.com>, git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Fri Nov 12 15:03:14 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 12 15:34:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGuDh-0001QO-JA
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 15:03:13 +0100
+	id 1PGuhe-0002ws-5o
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 15:34:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932211Ab0KLODI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Nov 2010 09:03:08 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:62079 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932094Ab0KLODH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Nov 2010 09:03:07 -0500
-Received: by qyk12 with SMTP id 12so1127263qyk.19
-        for <git@vger.kernel.org>; Fri, 12 Nov 2010 06:03:05 -0800 (PST)
-Received: by 10.229.182.5 with SMTP id ca5mr2026107qcb.150.1289570585593; Fri,
- 12 Nov 2010 06:03:05 -0800 (PST)
-Received: by 10.229.105.76 with HTTP; Fri, 12 Nov 2010 06:02:45 -0800 (PST)
-In-Reply-To: <20101112124621.GF30870@efreet.light.src>
+	id S1757452Ab0KLOeE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Nov 2010 09:34:04 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:37923 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757359Ab0KLOeD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Nov 2010 09:34:03 -0500
+Received: by gyh4 with SMTP id 4so1872640gyh.19
+        for <git@vger.kernel.org>; Fri, 12 Nov 2010 06:34:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=090eMRikBmuVa4mecGLknzkoCah177vw2s8VVwtnQII=;
+        b=v97OW2BMQPH2UCxhL42+YxviPMIEORfDi5F8w0KiyFfNYzxf9FJy03X+v/+Luap8C7
+         O+iUjOjSH/8hdd3Sqxy5/QLH2nqDhUB/mEdCfdZ2mr0g0LTjgV6e9JVqMaH6sF5oPVHR
+         0Bqgd7shQb5VfNRDZzhFpPbutmnguAUJdhe6I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=bbwog/OrjEQ3di4DDoCzpeSAI7hDMiLPWoL1bx47CejfL3q6tgS6U9P6TidevU1+9K
+         0V/2Bg+OeKPlEmvE3hjxckqfAcx0KqAbaNCrJP8HtGFC2WgWpk1LtIEW2P2XS6Yl+CoB
+         gCTQ5J3yexRIPzmL/qAnMpcSoJwSesIk+1JhA=
+Received: by 10.42.229.200 with SMTP id jj8mr2642494icb.53.1289572436696; Fri,
+ 12 Nov 2010 06:33:56 -0800 (PST)
+Received: by 10.42.172.70 with HTTP; Fri, 12 Nov 2010 06:33:56 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161344>
 
-On Fri, Nov 12, 2010 at 1:46 PM, Jan Hudec <bulb@ucw.cz> wrote:
-> On Fri, Nov 12, 2010 at 00:22:43 -0800, gzoller wrote:
->>
->> Hello -- Extreme Git Newbie
->>
->> I have a project that is checked into a local git repository as well as
->> pushed to a remote repository.
->>
->> Through misadventure I've managed to screw up my working code and want to
->> restore what I had from my last commit on either the local or remote
->> repositories.
->
-> If you screwed up content of the index, you will need the 'reset' command.
->
+I noticed just now that the '--dirstat=0' flag still seems to filter
+out some diffs, even though I would expect the '0' to mean "don't
+filter anything".  If there's another flag that says "don't filter", I
+missed it.  Could this be a rounding or off-by-one error?
 
-If the problem is that you messed with the index (stage) or the
-working directory and you want to discard local changes to them, you
-could also execute "git status" and follow the instruccions there. If
-that is not enough, report it here.
-
-HTH,
-Santi
+Mike
