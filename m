@@ -1,61 +1,57 @@
-From: gzoller <gzoller@hotmail.com>
-Subject: Newbie:  Restore messed up code from local or remote repository
-Date: Fri, 12 Nov 2010 00:22:43 -0800 (PST)
-Message-ID: <1289550163511-5731540.post@n2.nabble.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH] Document that rev-list --graph triggers parent rewriting.
+Date: Fri, 12 Nov 2010 09:48:58 +0100
+Message-ID: <1289551738-5498-1-git-send-email-ydirson@altern.org>
+Cc: Yann Dirson <ydirson@altern.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 12 09:22:53 2010
+X-From: git-owner@vger.kernel.org Fri Nov 12 09:49:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGouL-0002kd-Cf
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 09:22:53 +0100
+	id 1PGpJq-0006nB-KO
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 09:49:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755589Ab0KLIWo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Nov 2010 03:22:44 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:33870 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755070Ab0KLIWo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Nov 2010 03:22:44 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <gzoller@hotmail.com>)
-	id 1PGouB-0007xy-Gh
-	for git@vger.kernel.org; Fri, 12 Nov 2010 00:22:43 -0800
+	id S1755865Ab0KLItI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Nov 2010 03:49:08 -0500
+Received: from smtp5-g21.free.fr ([212.27.42.5]:48626 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755705Ab0KLItH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Nov 2010 03:49:07 -0500
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 2C679D48196;
+	Fri, 12 Nov 2010 09:49:00 +0100 (CET)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1PGpJb-0001RG-Vo; Fri, 12 Nov 2010 09:48:59 +0100
+X-Mailer: git-send-email 1.7.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161331>
 
+This may help to understand why --graph causes more comments to
+be selected.
 
-Hello -- Extreme Git Newbie
+Signed-off-by: Yann Dirson <ydirson@altern.org>
+---
+ Documentation/rev-list-options.txt |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
 
-I have a project that is checked into a local git repository as well as
-pushed to a remote repository.
-
-Through misadventure I've managed to screw up my working code and want to
-restore what I had from my last commit on either the local or remote
-repositories.
-
-So I blew away my messed up working files and tried:
-
-git checkout
-git pull -f /path/to/remote/repos
-git fetch -f /path/to/remote/repos
-
-None of the above did the trick.  The two remote commands reported that
-everything was Already up-to-date! (even though I'd deleted a lot of local
-working files)
-
-What am I missing?  How can I restore my previous state from last commit?
-
-Thanks!
-Greg
+diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
+index 7a42567..f4f105f 100644
+--- a/Documentation/rev-list-options.txt
++++ b/Documentation/rev-list-options.txt
+@@ -95,6 +95,8 @@ you would get an output like this:
+ 	to be printed in between commits, in order for the graph history
+ 	to be drawn properly.
+ +
++This enables parent rewriting, see 'History Simplification' below.
+++
+ This implies the '--topo-order' option by default, but the
+ '--date-order' option may also be specified.
+ 
 -- 
-View this message in context: http://git.661346.n2.nabble.com/Newbie-Restore-messed-up-code-from-local-or-remote-repository-tp5731540p5731540.html
-Sent from the git mailing list archive at Nabble.com.
+1.7.2.3
