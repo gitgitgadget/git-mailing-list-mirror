@@ -1,105 +1,148 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHi v4] git-send-email.perl: make initial In-Reply-To apply
- only to first email
-Date: Fri, 12 Nov 2010 13:44:13 -0800
-Message-ID: <7v1v6qfc9e.fsf@alter.siamese.dyndns.org>
-References: <7v62w5hsd4.fsf@alter.siamese.dyndns.org>
- <1289573708-18573-1-git-send-email-ospite@studenti.unina.it>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH v3 2/3] Add the 'fetch.recurseSubmodules' config setting
+Date: Fri, 12 Nov 2010 22:58:20 +0100
+Message-ID: <4CDDB87C.2030803@web.de>
+References: <4CDB3063.5010801@web.de> <4CDB30D6.5040302@web.de> <20101111000216.GA14189@burratino> <4CDBA5FD.20802@web.de> <20101111082748.GA15525@burratino> <7v1v6rhfut.fsf@alter.siamese.dyndns.org> <20101111190053.GH16972@burratino> <4CDD2AF9.6040403@web.de> <20101112155210.GA15141@burratino> <4CDD9A02.6000507@web.de> <20101112201640.GB25248@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Brandon Casey <drafnel@gmail.com>,
-	Stephen Boyd <bebarino@gmail.com>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Antonio Ospite <ospite@studenti.unina.it>
-X-From: git-owner@vger.kernel.org Fri Nov 12 22:44:57 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Kevin Ballard <kevin@sb.org>,
+	Jon Seymour <jon.seymour@gmail.com>,
+	Chris Packham <judge.packham@gmail.com>,
+	Marc Branchaud <marcnarc@xiplink.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 12 22:58:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PH1QW-0005uu-Jp
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 22:44:56 +0100
+	id 1PH1dc-00053R-6t
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 22:58:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932960Ab0KLVoi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Nov 2010 16:44:38 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44132 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932945Ab0KLVof (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Nov 2010 16:44:35 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E4E883C25;
-	Fri, 12 Nov 2010 16:44:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=KI1tdwNTM/+PrOsxPNQwojeq5jQ=; b=Z8IyNd
-	mk6AjHoDDZCOfKk2sDnDnA5YZv5v+3K9NoRZhqx+BaWBRBpo0jEmaY2K9MbVHAvP
-	Du5mC3Ji3iuMeW60IW5jNpP44LktfVig5dyF5udVNUfnkGuBLNyADe43CnedyloP
-	ZqM0AY5Jtw2j+7hUt+sSqTvY9K5R5v/D944Ms=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=l93S4sVdpMMZs7Ds5hTqO2EG0ejDuysA
-	fwJb7PaoGddSViQTJHG2bRsc5dEhpeAxrIWJKGYljKsmPVVV8wjKI4YY1JNTVRfT
-	fEwAAhB1hk6nQr9baNtnEzSE58wxLROaj+1nCbo4FqBH8lKAzwN0aIPjpDdYnL8f
-	Jd+8Cppwgj4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6C5B43C1E;
-	Fri, 12 Nov 2010 16:44:30 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 31E343C1D; Fri, 12 Nov 2010
- 16:44:19 -0500 (EST)
-In-Reply-To: <1289573708-18573-1-git-send-email-ospite@studenti.unina.it>
- (Antonio Ospite's message of "Fri\, 12 Nov 2010 15\:55\:08 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 079C1364-EEA6-11DF-AB75-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+	id S932607Ab0KLV6X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Nov 2010 16:58:23 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:36726 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753527Ab0KLV6W (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Nov 2010 16:58:22 -0500
+Received: from smtp08.web.de  ( [172.20.5.216])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 6DD5C16FF1FF4;
+	Fri, 12 Nov 2010 22:58:21 +0100 (CET)
+Received: from [93.240.101.21] (helo=[192.168.178.29])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1PH1dV-0002yg-00; Fri, 12 Nov 2010 22:58:21 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <20101112201640.GB25248@burratino>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/4v9+ImwQz6Gg3/ujOq5yac4to/9ESPh17ro3j
+	Lgrz7TLnWqguofFS9ZbeAlEnffiEs+4p/FCXYwEw4CbKdlMW+c
+	Qqs+Cseihuo1qudXnU1w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161364>
 
-Antonio Ospite <ospite@studenti.unina.it> writes:
+Am 12.11.2010 21:16, schrieb Jonathan Nieder:
+> Jens Lehmann wrote:
+>> There are people putting lots of large files in submodules for better
+>> performance and they almost always never want to fetch (or even stat)
+>> them, so (1) is for them and it's cool that their upstream can configure
+>> that, avoiding to have every developer to repeat their "obvious" choice
+>> after each clone again (and that might only be needed for some submodules,
+>> so a repo-wide config doesn't necessarily help them).
+> 
+> Wouldn't (3) work for these people, too?
 
-> diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-> index 26c2e93..5e48318 100755
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -324,9 +324,11 @@ test_expect_success $PREREQ 'In-Reply-To without --chain-reply-to' '
->  		--smtp-server="$(pwd)/fake.sendmail" \
->  		$patches $patches $patches \
->  		2>errors &&
-> -	# All the messages are replies to --in-reply-to
-> +	# The first message is a reply to --in-reply-to
->  	sed -n -e "s/^In-Reply-To: *\(.*\)/\1/p" msgtxt1 >actual &&
->  	test_cmp expect actual &&
-> +	# Second and subsequent messages are replies to the first one
-> +	sed -n -e "s/^Message-Id: *\(.*\)/\1/p" msgtxt1 >expect &&
->  	sed -n -e "s/^In-Reply-To: *\(.*\)/\1/p" msgtxt2 >actual &&
->  	test_cmp expect actual &&
->  	sed -n -e "s/^In-Reply-To: *\(.*\)/\1/p" msgtxt3 >actual &&
+As I understand there are people who use submodules as something rather
+unrelated to the superproject line of development and thus recursive on
+demand fetch (and recursive checkout) would not be what they want (and
+could take considerable time they don't want to spend).
 
-Looks good ;-)
+> I think we are getting closer to an explanation.  I can look into
+> adding documentation for this on top when finished.
 
-I'll do the obvious fix-up (below) at my end, so if there is nothing else
-there is no need to resend.
+That would be great! I had the same thing in mind so I would be happy
+to help you with that if you want.
 
-    Look at the v2 series in the illustration to see what the new behavior
-    ensures:
+>> And when you are on a superproject branch actively developing inside a
+>> submodule, you may want to increase fetch-activity to fetch all new
+>> commits in the submodule even if they aren't referenced in the
+>> superproject (yet), as that might be just what your fellow developers
+>> are about to do. And the person setting up that branch could do that
+>> once for all users so they don't have to repeat it in every clone.
+> 
+> This one seems less reasonable to me.  It seems like a way to
+> remotely help developers get a nice setup, rather than a declaration
+> about the content.
 
-           (before the patch)          |      (after the patch)
-     [PATCH 0/2] Here is what I did... | [PATCH 0/2] Here is what I did...
-       [PATCH 1/2] Clean up and tests  |   [PATCH 1/2] Clean up and tests
-       [PATCH 2/2] Implementation      |   [PATCH 2/2] Implementation
-       [PATCH v2 0/3] Here is a reroll |   [PATCH v2 0/3] Here is a reroll
-       [PATCH v2 1/3] Clean up         |     [PATCH v2 1/3] Clean up
-       [PATCH v2 2/3] New tests        |     [PATCH v2 2/3] New tests
-       [PATCH v2 3/3] Implementation   |     [PATCH v2 3/3] Implementation
+Yeah, I know this example is not as convincing as (1). But it was the
+best I could come up with trying to illustrate the "treat-submodules-
+as-if-everything-were-in-one-tree" model which some people use.
+(And we use this model at my dayjob, but we would be fine setting the
+global config option once on every developers computer. But hey, adding
+that to the .gitmodules file would get rid of that too ;-)
 
-    This is the typical behaviour we want when we send a series with cover
-    letter in reply to some discussion, the new patch series should appear
-    as a separate subtree in the discussion.
+> Let me take an unrelated example to illustrate what I mean.  Some
+> projects might want all their developers to use branch.autosetuprebase,
+> to avoid confusion since the update hook is going to reject mergy
+> history anyway.  That seems like a perfectly reasonable desire to me,
+> and I'd encourage them to add a script that sets everything up
+> following the policies of their project.
+> 
+> Now git could even learn to read a .gitconfig file including settings
+> like that one that do not have a security impact.  It would make lots
+> of people happy, and individuals could override settings they really
+> dislike in ~/.gitconfig.  Should we do it?
 
-Thanks.
+Hmm, I never thought of that. But you are right, this is the same
+principle I'm using for .gitmodules.
+
+> I think no, for reasons of intuitiveness and predictability.
+> 
+> On the other hand, scenarios like (1) might mean we have to support
+> such things despite that downside.
+
+Yup.
+
+>> And
+>> when switching away from that branch all those developers cannot forget
+>> to reconfigure to fetch-on-demand, so not having that in .git/config is
+>> a plus here too.
+> 
+> Yes, the "read .gitmodules first and then .git/config" is a very nice
+> enhancement --- thanks!
+
+You are welcome!
+
+>> You have no other choice for hooks because of security concerns. But I
+>> can't see any downsides in leaving upstream *the choice* to configure
+>> default submodule behavior. Lots of people - including me - want that for
+>> clone and checkout.
+> 
+> There is one setting that it is obvious to me for upstream should be
+> able to set:
+> 
+> 	"these submodules are a necessary part of the project;
+> 	 always (at clone time, fetch time, checkout, etc) make
+> 	 sure they are available"
+> 
+> I could easily be convinced about others, but there ought to be a use
+> case to outweigh the "subtle behavior changing behind my back" syndrome.
+
+I don't have a problem with dropping 3/3 from this series if use case (1)
+doesn't convince people. I added it to be consistent with the behavior of
+the 'ignore' flag I added earlier and because I it is needed to support
+more than one use case for submodules in the same superproject. But we
+could wait if someone complains and add it if that happens ... I dunno.
+
+> And again: thanks for doing all this work.  It's inspiring.  (Next step
+> recursive push?)
+
+Thanks a lot! (And nope, it's recursive checkout - thats why I started
+recursive fetch, so that I do have something to check out ;-).
+
+Jens
