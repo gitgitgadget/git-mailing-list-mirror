@@ -1,132 +1,135 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [BUG] git show <remote>: bad information: Local branch|ref
- configured
-Date: Fri, 12 Nov 2010 19:09:34 -0600
-Message-ID: <20101113010934.GA4017@burratino>
-References: <201011130041.oAD0fdmM017083@no.baka.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Seth Robertson <in-gitvger@baka.org>
-X-From: git-owner@vger.kernel.org Sat Nov 13 02:10:14 2010
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: [PATCH] Use reflog in 'pull --rebase . foo'
+Date: Fri, 12 Nov 2010 20:38:28 +0100
+Message-ID: <1289590708-11064-1-git-send-email-martin.von.zweigbergk@gmail.com>
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com, santi@agolina.net
+X-From: git-owner@vger.kernel.org Sat Nov 13 02:39:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PH4dB-0006Jg-TL
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Nov 2010 02:10:14 +0100
+	id 1PH555-0008PZ-KC
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Nov 2010 02:39:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753644Ab0KMBKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Nov 2010 20:10:06 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:45534 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752474Ab0KMBKE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Nov 2010 20:10:04 -0500
-Received: by yxn35 with SMTP id 35so363045yxn.19
-        for <git@vger.kernel.org>; Fri, 12 Nov 2010 17:10:03 -0800 (PST)
+	id S1751476Ab0KMBio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Nov 2010 20:38:44 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:41271 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751008Ab0KMBin (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Nov 2010 20:38:43 -0500
+Received: by vws13 with SMTP id 13so1205694vws.19
+        for <git@vger.kernel.org>; Fri, 12 Nov 2010 17:38:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=0sqGpucXMo/hfRJ9UWZ5CxqCI7EU1g6LzJW3O1kcJhs=;
-        b=uDsNh5y6WkBEuW38W1XBB7xPIzFkQmZpgKhC3xKL+6TRPKt41J8hST50HsJUP4/9JP
-         3BP9yjDN5dWWMxH26m4oHNj7JbNpRLjgik+a4oqNvJWRLWOElIbou6qCU/+OOo+oxbws
-         /XVTo0YnJd+kmyXjNtKNpi2FLuaI1PfXtoBJ8=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=vNwt3WYii/x/SmgBbv+RLyFk8F6hbKuDVQks4yyQlu8=;
+        b=jkeYm2KWNsQ5uUy/FrVitphVkDvIQ/jQ02uA6C2Vroydc4DN1Sk8xT1GEStkvNIfhk
+         YfD0vRkqrbjjW3oTf8ZH22vrQCTDSaqivxDSzqxxEwVwTvXkDg7C/mc9DlwTLhozPtmo
+         broBkQO/njXkkxE4EJOsx0A9FYNdaB7kYQECI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=GorZphi61KJKM/GYQwoZ37mTwlA14Mzc15AlPiyiBDqbMsQhQ6ouWL5DBG73vDHt9w
-         m3K4ojsZikXBh1zRV8zzfXHzhoN2qqDuRzhk8eSMwkPpGdw73hZJJcLRgMYv3rAYCPdm
-         VqZJT9QpBajfDrs/JxlPKEdaqq66LSiIbQYuc=
-Received: by 10.150.203.19 with SMTP id a19mr5102634ybg.220.1289610603895;
-        Fri, 12 Nov 2010 17:10:03 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id w5sm1293663ybe.10.2010.11.12.17.10.02
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 12 Nov 2010 17:10:03 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <201011130041.oAD0fdmM017083@no.baka.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=PRR5SstkdtSwuj0cMt2rRM40dEeU5XlHO08AV/SQ9SMKkvuWsK99e6obsSbbKqnpvs
+         4g8M/n2BahKz2UI2CzzehFrYT94hxdbTIpVsdz5qiC4ZSouD3q9xRfAnWojs5Uy5DYB9
+         Jjm1njE9JFoxzFugyasZLu+WAYXH4UN/FN95o=
+Received: by 10.220.200.6 with SMTP id eu6mr644627vcb.133.1289612322575;
+        Fri, 12 Nov 2010 17:38:42 -0800 (PST)
+Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id q3sm1108506vcr.27.2010.11.12.17.38.41
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 12 Nov 2010 17:38:42 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.167.ga361b
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161378>
 
-On Fri, Nov 12, 2010 at 07:41:39PM -0500, Seth Robertson wrote:
+Since c85c792 (pull --rebase: be cleverer with rebased upstream
+branches, 2008-01-26), "git pull --rebase" has used the reflog to try to
+rebase from the old upstream onto the new upstream.
 
-> Not having inspected the code, it certainly appears as if the "Local
-> branch configured" and "Local ref configured" information is only
-> accidentally correct, but since the normal configuration is the case
-> in which it is accurate, no-one noticed the problem.
+Make this work if the local repository is explicitly passed on the
+command line as in 'git pull --rebase . foo'.
+---
+I removed some seemingly unnecessary variables. I couldn't find any uses
+of them in the callers' code either, so it should be safe...
 
-Funny. :)  But no, lots of people set up local branches as downstream
-to no branch or to some distinct remote branch.  So first I guess it
-might be useful to explain the "push matching" behavior.
+I apparently introduced a call to sed as well. I think I remember seeing
+some guideslines about the use of sed in Git, but I can't remember what.
+I couldn't find anything in the CodingGuidelines either. Is the code
+below ok?
 
-Background: suppose the upstream repository has three branches:
+ git-parse-remote.sh |   24 ++++++++++--------------
+ t/t5520-pull.sh     |    7 +++++++
+ 2 files changed, 17 insertions(+), 14 deletions(-)
 
-	master
-	next
-	topic/better-frotz
-
-Now I have an idea for a new feature, so I do
-
-	git checkout -b topic/xyzzy origin/master
-
-which forks a new branch set up to pull from master.
-
-Now I go about usual work, making changes to master, next,
-topic/better-frotz, and so on, and at the end I am on my private
-topic/xyzzy branch.  Everything looks good, so it is time to push:
-
-	git push origin
-
-This is a shortcut for
-
-	git push origin :
-
-which pushes all local branches for which an upstream branch with the
-same name exists.
-
-"Wait!" you might ask.  "Why push all branches?"
-
-It is partly historical.  A lot of people have public repositories
-with multiple branches, and this is a behavior that has been found to
-be very convenient for that.
-
-"Why only branches for which an upstream branch exists?"
-
-Some work might be private.  If you actually want to push everything,
-use "git push --mirror".
-
-"Why branches with the same name?  Why not to the branch each branch
-pulls from?"
-
-Each branch forked from master does not necessarily contain changes
-that are suitable for inclusion in master immediately.  In general,
-the upstream for each branch is often more stable rather than
-equally stable to it, so automatic pushing upstream does not always
-make sense.
-
-However, if you want the push-to-where-you-pull-from behavior,
-just add
-
-	[push]
-		default = tracking
-
-to your ~/.gitconfig.
-
-See the documentation for branch.<name>.merge in git-config(1) for
-details on that.
-
-For your test example: rather than sample output, could you describe
-next to each command what you expect to happen and how that differs
-from what happens instead?  This would make it easier to find the
-lurking bugs.
-
-Hope that helps,
-Jonathan
+diff --git a/git-parse-remote.sh b/git-parse-remote.sh
+index 5f47b18..0565edd 100644
+--- a/git-parse-remote.sh
++++ b/git-parse-remote.sh
+@@ -63,33 +63,29 @@ get_default_remote () {
+ get_remote_merge_branch () {
+ 	case "$#" in
+ 	0|1)
+-	    origin="$1"
+-	    default=$(get_default_remote)
+-	    test -z "$origin" && origin=$default
+ 	    curr_branch=$(git symbolic-ref -q HEAD)
+-	    [ "$origin" = "$default" ] &&
++	    test -z "$1" || test "$1" = $(get_default_remote) &&
+ 	    echo $(git for-each-ref --format='%(upstream)' $curr_branch)
+ 	    ;;
+ 	*)
+ 	    repo=$1
+ 	    shift
+-	    ref=$1
+ 	    # FIXME: It should return the tracking branch
+ 	    #        Currently only works with the default mapping
+-	    case "$ref" in
+-	    +*)
+-		ref=$(expr "z$ref" : 'z+\(.*\)')
+-		;;
+-	    esac
+-	    expr "z$ref" : 'z.*:' >/dev/null || ref="${ref}:"
+-	    remote=$(expr "z$ref" : 'z\([^:]*\):')
++	    remote=$(echo "$1" | sed -e 's|+\?\([^:]*\):\?|\1|g')
+ 	    case "$remote" in
+ 	    '' | HEAD ) remote=HEAD ;;
+ 	    heads/*) remote=${remote#heads/} ;;
+ 	    refs/heads/*) remote=${remote#refs/heads/} ;;
+ 	    refs/* | tags/* | remotes/* ) remote=
+ 	    esac
+-
+-	    [ -n "$remote" ] && echo "refs/remotes/$repo/$remote"
++	    [ -n "$remote" ] && case "$repo" in
++		.)
++		    echo "refs/heads/$remote"
++		    ;;
++		*)
++		    echo "refs/remotes/$repo/$remote"
++		    ;;
++	    esac
+ 	esac
+ }
+diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
+index 0b489f5..0470a81 100755
+--- a/t/t5520-pull.sh
++++ b/t/t5520-pull.sh
+@@ -222,4 +222,11 @@ test_expect_success 'git pull --rebase does not reapply old patches' '
+ 	)
+ '
+ 
++test_expect_success 'git pull --rebase against local branch' '
++	git checkout -b copy2 to-rebase-orig &&
++	git pull --rebase . to-rebase &&
++	test "conflicting modification" = "$(cat file)" &&
++	test file = "$(cat file2)"
++'
++
+ test_done
+-- 
+1.7.3.2.167.ga361b
