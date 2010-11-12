@@ -1,135 +1,138 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] add: do not rely on dtype being NULL behavior
-Date: Fri, 12 Nov 2010 08:55:43 +0700
-Message-ID: <AANLkTi=Hv_dpP3=2hyXeLZ0KRV-zdunPvCD4whgyYHM_@mail.gmail.com>
-References: <1289480602-10545-1-git-send-email-pclouds@gmail.com> <7voc9vhhvr.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Scripted clone generating an incomplete, unusable .git/config
+Date: Thu, 11 Nov 2010 20:16:02 -0600
+Message-ID: <20101112021602.GA10765@burratino>
+References: <AANLkTik7-QzrMKDpV=W4dqpuguZsAr5yrMELmHu5NZMd@mail.gmail.com>
+ <20101111103742.GA16422@burratino>
+ <AANLkTinzotA4TSjMjjmW--gw7ST3dXMyHzPveGynaVmZ@mail.gmail.com>
+ <20101111173253.GC16972@burratino>
+ <alpine.LNX.2.00.1011111241360.14365@iabervon.org>
+ <20101111184829.GG16972@burratino>
+ <20101111190508.GA3038@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jens.Lehmann@web.de
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 12 02:56:15 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Barkalow <barkalow@iabervon.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Dun Peal <dunpealer@gmail.com>, Git ML <git@vger.kernel.org>,
+	Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
+	Carl Worth <cworth@cworth.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 12 03:17:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGis9-0000qC-0p
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 02:56:13 +0100
+	id 1PGjCX-0000lv-OE
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 03:17:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757392Ab0KLB4G convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Nov 2010 20:56:06 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:40894 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755987Ab0KLB4F convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Nov 2010 20:56:05 -0500
-Received: by wyb28 with SMTP id 28so1396183wyb.19
-        for <git@vger.kernel.org>; Thu, 11 Nov 2010 17:56:04 -0800 (PST)
+	id S1753063Ab0KLCQd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Nov 2010 21:16:33 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:37181 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752465Ab0KLCQd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Nov 2010 21:16:33 -0500
+Received: by qwi4 with SMTP id 4so544146qwi.19
+        for <git@vger.kernel.org>; Thu, 11 Nov 2010 18:16:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=U0I40nl54yxs1pwnIhOOYRZbR6AxquIp7iLSNAQMeUo=;
-        b=NnJEz0n7e2FVd0a/tCP8CLoRsssta+HdrYHIbNEki4N3R9xaP6fU7djPXfe5WFsj3B
-         4m4SdtlefbMRGpTTibi/xGENjB0ABeR2xWc6+igGacA2+m4hDozzm9tG6XeyfHUeLNaE
-         QABkgxCs3mfCRS/n/CKwY6PzkpjkYYtCaN1A8=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=8J6/80M6YE4ikhyiprPk59Y5y2s1u8n/u7CQP4hcbrY=;
+        b=Y0u2SKD91qrQQwg3lyzN0Yyy6zkANKQP/bCTtqFOsI5jKcPjb2kWV8rDsSDRxRKWN+
+         Grd65k1ruD9moPSk5NynYIT86x1t4/hHPWJBfUa+uTqm5gDUqdH1r48Rj5dRNWC124LK
+         vKjEdGBxG6gf9Y4t6Yu62BstWYK+Wgnk7+uJA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=D3+Me3ZpnCJGAPIbzVbz62Agz+MOZoQEEA4B3Uh4WxXQmvL3bguSegU2FABCDsMrfL
-         E3uF+bZ3m8x6fE9MQcVOZpFU7BKzjGSlYt9lyv2bq0nInsA/IU3OCygxh970RW2zbKgy
-         XVare6m8fSyi3Iat98DQlL9IZrnkl+1LWppos=
-Received: by 10.216.255.148 with SMTP id j20mr1460749wes.11.1289526963785;
- Thu, 11 Nov 2010 17:56:03 -0800 (PST)
-Received: by 10.216.172.199 with HTTP; Thu, 11 Nov 2010 17:55:43 -0800 (PST)
-In-Reply-To: <7voc9vhhvr.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=tSuTEPLV9347pYPgrnsX+o8btcLLwS0buddoafWUHcuRonS/eS77XEVwAOOijZskE4
+         qzu6PiNtZd7gosa8iZMwGYWj5XGHhLWuhhD4arWDEqaRypsV6VlVsk3dUWOBzFzKdFjP
+         G30eqWEzGbaxRbe5Q276oEODVsMJHHjXwJ2cA=
+Received: by 10.229.246.73 with SMTP id lx9mr1376128qcb.231.1289528192258;
+        Thu, 11 Nov 2010 18:16:32 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id mz11sm2553196qcb.39.2010.11.11.18.16.30
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 11 Nov 2010 18:16:31 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20101111190508.GA3038@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161316>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161317>
 
-2010/11/12 Junio C Hamano <gitster@pobox.com>:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
-rites:
->
->> Commit c84de70 (excluded_1(): support exclude files in index -
->> 2009-08-20) added support for excluded() where dtype can be NULL. It
->> was designed specifically for index matching because there was no
->> other way to extract dtype information from index. It did not suppor=
-t
->> wildcard matching (for example, "a*/" pattern would fail to match).
->>
->> The code was probably misread when commit 108da0d (git add: Add the
->> "--ignore-missing" option for the dry run - 2010-07-10) was made
->> because DT_UNKNOWN happens to be zero (NULL) too.
->>
->> Do not pass DT_UNKNOWN/NULL to excluded(), instead pass a pointer to=
- a
->> variable that contains DT_UNKNOWN. The real dtype will be extracted
->> from worktree by excluded(), as expected.
->>
->> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
-ail.com>
->> ---
->> =C2=A0I do not add tests for the "a*/" failure above because I plan
->> =C2=A0to fix it. Expect c84de70 will be reverted "soon" (in my times=
-cale)
->> =C2=A0when sparse checkout can pass real dtype.
->>
->> =C2=A0builtin/add.c | =C2=A0 =C2=A03 ++-
->> =C2=A0dir.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 | =C2=A0 =C2=A02 +-
->> =C2=A02 files changed, 3 insertions(+), 2 deletions(-)
->>
->> diff --git a/builtin/add.c b/builtin/add.c
->> index 56a4e0a..1a4672d 100644
->> --- a/builtin/add.c
->> +++ b/builtin/add.c
->> @@ -446,7 +446,8 @@ int cmd_add(int argc, const char **argv, const c=
-har *prefix)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 if (!seen[i] && pathspec[i][0]
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 && !file_exists(pathspec[i])) {
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (ignore_missing) {
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (exclude=
-d(&dir, pathspec[i], DT_UNKNOWN))
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int dtype =3D=
- DT_UNKNOWN;
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (exclude=
-d(&dir, pathspec[i], &dtype))
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 dir_add_ignored(&dir, pathspec[i], strlen(pathspec=
-[i]));
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 } else
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die("pa=
-thspec '%s' did not match any files",
->> diff --git a/dir.c b/dir.c
->> index b2dfb69..c4bed66 100644
->> --- a/dir.c
->> +++ b/dir.c
->> @@ -359,7 +359,7 @@ int excluded_from_list(const char *pathname,
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 int to_exclude =3D x->to_exclude;
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 if (x->flags & EXC_FLAG_MUSTBEDIR) {
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!dtype) {
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (dtype !=3D NULL) {
->
-> Hmm, are you sure about this part?
+Jeff King wrote:
 
-Don't write code when you feel asleep. No, that was wrong.
---=20
-Duy
+> I don't think your patch is the right solution, but FWIW, sigchain was
+> explicitly intended to be able to take SIG_DFL and SIG_IGN. Probably
+> sigchain_fun should be removed and we should just use sighandler_t
+> explicitly
+
+Sorry, that was lazy of me.  The name sighandler_t is a GNU extension[1].
+
+The following addresses my confusion but I doubt it's worth the
+syntactic ugliness.
+
+-- 8< --
+Subject: sigchain: hide sigchain_fun type
+
+Signal handlers that might be passed to signal() must be pointers to
+function with the prototype
+
+	void handler(int signum);
+
+In glibc this type is called sighandler_t; in the sigchain lib,
+sigchain_fun.
+
+These really represent the same type in all respects: even special
+values like SIG_IGN and SIG_DFL are perfectly reasonable arguments
+for a function accepting values of one of the two types.  Avoid
+confusion by eliminating the sigchain_fun name from sigchain.h.
+
+It would be nice to instead use sighandler_t everywhere, but
+unfortunately that name is a GNU extension.
+
+Suggested-by: Jeff King <peff@peff.net>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ [1] http://www.delorie.com/gnu/docs/glibc/libc_481.html
+
+ sigchain.c |    2 ++
+ sigchain.h |    6 ++----
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/sigchain.h b/sigchain.h
+index 618083b..571d148 100644
+--- a/sigchain.h
++++ b/sigchain.h
+@@ -1,11 +1,9 @@
+ #ifndef SIGCHAIN_H
+ #define SIGCHAIN_H
+ 
+-typedef void (*sigchain_fun)(int);
+-
+-int sigchain_push(int sig, sigchain_fun f);
++int sigchain_push(int sig, void (*f)(int));
+ int sigchain_pop(int sig);
+ 
+-void sigchain_push_common(sigchain_fun f);
++void sigchain_push_common(void (*f)(int));
+ 
+ #endif /* SIGCHAIN_H */
+diff --git a/sigchain.c b/sigchain.c
+index 1118b99..f837f61 100644
+--- a/sigchain.c
++++ b/sigchain.c
+@@ -3,6 +3,8 @@
+ 
+ #define SIGCHAIN_MAX_SIGNALS 32
+ 
++typedef void (*sigchain_fun)(int);
++
+ struct sigchain_signal {
+ 	sigchain_fun *old;
+ 	int n;
