@@ -1,62 +1,60 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Newbie:  Restore messed up code from local or remote repository
-Date: Fri, 12 Nov 2010 17:57:09 +0100
-Message-ID: <vpqzkte1nve.fsf@bauges.imag.fr>
-References: <1289550163511-5731540.post@n2.nabble.com>
-	<20101112124621.GF30870@efreet.light.src>
+From: Bruno De Bondt <bruno@dewereldmorgen.be>
+Subject: git clone / svn checkout
+Date: Fri, 12 Nov 2010 18:01:12 +0100
+Organization: DeWereldMorgen.be
+Message-ID: <4CDD72D8.9010205@dewereldmorgen.be>
+Reply-To: bruno@dewereldmorgen.be
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: gzoller <gzoller@hotmail.com>, git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Fri Nov 12 17:57:33 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 12 18:00:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGwwM-0003Qy-0G
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 17:57:30 +0100
+	id 1PGwz8-0005BQ-Ld
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 18:00:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932739Ab0KLQ5U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Nov 2010 11:57:20 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:57434 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932722Ab0KLQ5T (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Nov 2010 11:57:19 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id oACGoBVD006063
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 12 Nov 2010 17:50:12 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PGww2-0006xQ-BY; Fri, 12 Nov 2010 17:57:10 +0100
-In-Reply-To: <20101112124621.GF30870@efreet.light.src> (Jan Hudec's message of "Fri\, 12 Nov 2010 13\:46\:21 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 12 Nov 2010 17:50:12 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: oACGoBVD006063
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1290185416.6444@Ve0pbwfkQrlbHeYOACLdEw
+	id S1757461Ab0KLRAP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Nov 2010 12:00:15 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:36691 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753396Ab0KLRAO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Nov 2010 12:00:14 -0500
+Received: by wyb28 with SMTP id 28so2115731wyb.19
+        for <git@vger.kernel.org>; Fri, 12 Nov 2010 09:00:12 -0800 (PST)
+Received: by 10.216.143.9 with SMTP id k9mr3821703wej.64.1289581212262;
+        Fri, 12 Nov 2010 09:00:12 -0800 (PST)
+Received: from [10.0.0.140] ([91.183.60.172])
+        by mx.google.com with ESMTPS id w8sm2284538wei.45.2010.11.12.09.00.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 12 Nov 2010 09:00:11 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.12) Gecko/20101027 Lightning/1.0b2 Thunderbird/3.1.6
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161353>
 
-Jan Hudec <bulb@ucw.cz> writes:
+Hello,
 
->> git checkout
->
-> I don't think it does anything without argument. With argument '.' this
-> restores working tree to the state in index (stage). So if you have that
-> screwed up too, it won't be enough.
+Just started using Git, coming from SVN.
 
-Actually, the output of "git status" will give you the right command
-here.
+Something I regularly do in SVN, is checking out part of a repository,
+instead of the complete repository. Consider the following: I have a
+local repository for development. On my testing server, I only (SVN)
+check out part of this repository, eg. the document root of a website
+(and not all the project management documents, which are in the same SVN
+repository, but not needed on the testing server).
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+How would I do this in Git, ie. only get a specific part of a
+repository? I feel that this is very much against the whole idea of Git
+(where, as far as I understand Git now, you work with complete clones of
+repositories), but is there a way to do this? Or should I just clone
+complete repositories on my testing server as well?
+
+Thanks,
+Bruno
