@@ -1,88 +1,69 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: 'gettext -- "--cached cannot be used with --files"' does not work
-Date: Fri, 12 Nov 2010 01:06:08 +0100
-Message-ID: <AANLkTike11Hm2s6un37-jgT8rOyf=7k-Vw7M5vEs+9Vp@mail.gmail.com>
-References: <20101112001037.6e0fef15@ivo.pl>
+From: Maaartin <grajcar1@seznam.cz>
+Subject: Re: Rebase problems
+Date: Fri, 12 Nov 2010 00:07:37 +0000 (UTC)
+Message-ID: <loom.20101112T005610-259@post.gmane.org>
+References: <loom.20101108T190513-206@post.gmane.org> <FA37BC66-64CF-4A62-80E9-EC45EAE392C4@wincent.com> <4CD856B8.7030305@seznam.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Micha=C5=82_Kiedrowicz?= <mkiedrowicz@ivo.pl>
-X-From: git-owner@vger.kernel.org Fri Nov 12 01:06:25 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 12 01:07:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGh9q-0001qw-89
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 01:06:22 +0100
+	id 1PGhBM-0002oA-FS
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 01:07:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757303Ab0KLAGK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 11 Nov 2010 19:06:10 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:33204 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754128Ab0KLAGJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 11 Nov 2010 19:06:09 -0500
-Received: by fxm16 with SMTP id 16so1871675fxm.19
-        for <git@vger.kernel.org>; Thu, 11 Nov 2010 16:06:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=rL3Q166Qny3C0awMjvvCL79qy9MmQOpRXbUaoXFyZ3w=;
-        b=d6F8QES0QGaGYO6QU8gQahQVXBMSZnaJUQzDk/FUS1y4ue9b50yniuBvqQ8StzznDj
-         3cMu/2rWES/84gZuZp11u/EiLqqW1BL+NtTRGGDjs7TPHJRrBamXGHIrge91hEj/RnYD
-         mm9GpRM/+1KF7bHVxHBLWwTl5iYvHOrlkXwlI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=dOBg/SRHYS8xatWS1AAe6XQvgxUwNrU+Kh9oDqOkrH8AAE5B+12yjfAEBU5Ok/YWJe
-         kj7r1gTIbkysa9AiNlWJAn2SK0NynxEQkSAyyWf4Dn6oI2Tot9OWlYyO+qapxTA4pyVh
-         w1PmqZjDKwpT4QIbtffLtI++mMxeZc/5JLClA=
-Received: by 10.223.83.138 with SMTP id f10mr821418fal.114.1289520368054; Thu,
- 11 Nov 2010 16:06:08 -0800 (PST)
-Received: by 10.223.105.78 with HTTP; Thu, 11 Nov 2010 16:06:08 -0800 (PST)
-In-Reply-To: <20101112001037.6e0fef15@ivo.pl>
+	id S1756888Ab0KLAHv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Nov 2010 19:07:51 -0500
+Received: from lo.gmane.org ([80.91.229.12]:33770 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754128Ab0KLAHu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Nov 2010 19:07:50 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PGhBD-0002jh-U9
+	for git@vger.kernel.org; Fri, 12 Nov 2010 01:07:48 +0100
+Received: from 188-120-198-113.luckynet.cz ([188-120-198-113.luckynet.cz])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Nov 2010 01:07:47 +0100
+Received: from grajcar1 by 188-120-198-113.luckynet.cz with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 12 Nov 2010 01:07:47 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 188.120.198.113 (Opera/9.80 (Windows NT 5.2; U; en) Presto/2.6.30 Version/10.63)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161310>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161311>
 
-2010/11/12 Micha=C5=82 Kiedrowicz <mkiedrowicz@ivo.pl>:
+Maaartin-1 <grajcar1 <at> seznam.cz> writes:
 
-> I just noticed that
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0'gettext -- "--cached cannot be used with =
---files"'
->
-> in git-submodule.sh generates
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0#: git-submodule.sh:588
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0msgid "--"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0msgstr ""
->
-> in *.po files. You can this e.g. in po/de.po.
->
-> This is not what commit message says :)
->
-> =C2=A0 =C2=A0gettextize: git-submodule "cached cannot be used" messag=
-e
->
-> =C2=A0 =C2=A0Gettextize the "--cached cannot be used with --files" me=
-ssage. Since
-> =C2=A0 =C2=A0this message starts with "--" we have to pass "--" as th=
-e first
-> =C2=A0 =C2=A0argument. This works with both GNU gettext 0.18.1 (as ex=
-pected), and
-> =C2=A0 =C2=A0the gettext(1) on Solaris 10.
+> On 10-11-08 19:33, Wincent Colaiuta wrote:
+> > - If you are really enamored of timestamps, would extracting the latest 
+commit timestamp out of the repo be enough?
+> 
+> Sure it would, I was mostly ignoring the commit timestamp until now, and
+> didn't notice that I'm using a different timestamp for the executable
+> without any reason. Now I need just trivial changes.
 
-Thanks for the report. I spotted this a while ago, meant to raise it
-and put it on my TODO list.
+Time to comment on myself:
 
-Then I forgot about it :)
+It works nice, but there's a small problem. I can't take the author date since 
+it gets preserved across rebases, so I could get non-unique dates. The committer 
+date corresponds with the time I actually create the executable, and I really 
+not going to produce more than one executable per second, so it works nicely. 
+Except for rebase, which can create a lot of commits with the same committer 
+date quickly.
 
-Anyway, the issue is with xgettext(1), not gettext itself. I.e. the
-shellscript parser is broken.
+Currently I'm using cygwin and rebase is slow like hell, but when I switch to 
+Linux, I'll need something to ensure that there'll be no two commits with the 
+same committer date. I think even a one second sleep could do for me, but can I 
+arrange for it easily?
