@@ -1,57 +1,65 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH] Document that rev-list --graph triggers parent rewriting.
-Date: Fri, 12 Nov 2010 09:48:58 +0100
-Message-ID: <1289551738-5498-1-git-send-email-ydirson@altern.org>
-Cc: Yann Dirson <ydirson@altern.org>
+From: Tasslehoff Kjappfot <tasskjapp@gmail.com>
+Subject: Odd behaviour in msysgit
+Date: Fri, 12 Nov 2010 11:04:36 +0100
+Message-ID: <4CDD1134.7090503@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 12 09:49:15 2010
+X-From: git-owner@vger.kernel.org Fri Nov 12 11:04:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGpJq-0006nB-KO
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 09:49:14 +0100
+	id 1PGqUv-0003Dc-Hf
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 11:04:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755865Ab0KLItI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Nov 2010 03:49:08 -0500
-Received: from smtp5-g21.free.fr ([212.27.42.5]:48626 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755705Ab0KLItH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Nov 2010 03:49:07 -0500
-Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 2C679D48196;
-	Fri, 12 Nov 2010 09:49:00 +0100 (CET)
-Received: from yann by home.lan with local (Exim 4.72)
-	(envelope-from <ydirson@free.fr>)
-	id 1PGpJb-0001RG-Vo; Fri, 12 Nov 2010 09:48:59 +0100
-X-Mailer: git-send-email 1.7.2.3
+	id S1756509Ab0KLKEk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Nov 2010 05:04:40 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:54646 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755954Ab0KLKEj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Nov 2010 05:04:39 -0500
+Received: by eye27 with SMTP id 27so1731433eye.19
+        for <git@vger.kernel.org>; Fri, 12 Nov 2010 02:04:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:content-type
+         :content-transfer-encoding;
+        bh=0MporfelVSVu8FAKRgXJMQz8vZtWNlTRjYxG7HeMBrQ=;
+        b=O8SFTYxo1o10VBuUAbsHrTOh930LuCU76W88SOvWdXF1k5KCUcBgJnquzLSYC498yD
+         6zjfqhc3T/RCQybtt5rwkbQBAewUS7auwdkfw7tGEndJFxfB3hXKZDIekr5kRL1IalJK
+         qsAjvIpUreB0OEkIBTfOcQjjbSCDqF3ozBcLU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=SqPERbN0XPmVLR/T73ny/50M7FD//n9GLCTT+7+HvTEFvf5KHWppvIqzAMqEg2ztc0
+         rgFW0ynO4Lmqf5HWSgSSZXyJwLAHuFXn5wP75KW4+C46OaVwx1A5d49O8k7jM8QRAD2m
+         0K3BUOxbRM5BQvqwXScBcBTY/nX84EmwBkQkY=
+Received: by 10.213.103.74 with SMTP id j10mr1895555ebo.46.1289556278063;
+        Fri, 12 Nov 2010 02:04:38 -0800 (PST)
+Received: from [192.168.0.40] (147.84-49-231.nextgentel.com [84.49.231.147])
+        by mx.google.com with ESMTPS id q58sm2994527eeh.15.2010.11.12.02.04.36
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 12 Nov 2010 02:04:37 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.13pre) Gecko/20101107 Shredder/3.1.7pre
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161331>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161332>
 
-This may help to understand why --graph causes more comments to
-be selected.
+On a windows machine at work we have the same issue mentioned in 
+http://osdir.com/ml/msysgit/2010-10/msg00165.html.
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
- Documentation/rev-list-options.txt |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+Running a command like "git status" repeatedly, it will often produce no 
+output at all, while other times giving the desired status information.
 
-diff --git a/Documentation/rev-list-options.txt b/Documentation/rev-list-options.txt
-index 7a42567..f4f105f 100644
---- a/Documentation/rev-list-options.txt
-+++ b/Documentation/rev-list-options.txt
-@@ -95,6 +95,8 @@ you would get an output like this:
- 	to be printed in between commits, in order for the graph history
- 	to be drawn properly.
- +
-+This enables parent rewriting, see 'History Simplification' below.
-++
- This implies the '--topo-order' option by default, but the
- '--date-order' option may also be specified.
- 
--- 
-1.7.2.3
+On #git I was adviced to do "export GIT_PAGER=cat", but that didn't 
+change the behaviour. Then I was adviced to tell the mailing list, which 
+I now do :-)
+
+- Tasslehoff
