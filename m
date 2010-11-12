@@ -1,100 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Scripted clone generating an incomplete, unusable .git/config
-Date: Thu, 11 Nov 2010 23:18:04 -0600
-Message-ID: <20101112051804.GE10765@burratino>
-References: <AANLkTik7-QzrMKDpV=W4dqpuguZsAr5yrMELmHu5NZMd@mail.gmail.com>
- <20101111103742.GA16422@burratino>
- <AANLkTinzotA4TSjMjjmW--gw7ST3dXMyHzPveGynaVmZ@mail.gmail.com>
- <20101111173253.GC16972@burratino>
- <alpine.LNX.2.00.1011111241360.14365@iabervon.org>
- <20101111184829.GG16972@burratino>
- <20101111190508.GA3038@sigill.intra.peff.net>
- <20101112043229.GB10765@burratino>
- <20101112044137.GA24915@sigill.intra.peff.net>
+From: Yann Dirson <ydirson@free.fr>
+Subject: Re: [PATCH 1/2] [RFC] Use --find- instead of --detect- as prefix
+ for long forms of -M and -C.
+Date: Fri, 12 Nov 2010 08:21:55 +0100
+Message-ID: <20101112072154.GJ3167@home.lan>
+References: <1289420833-20602-1-git-send-email-ydirson@altern.org>
+ <201011111147.04365.trast@student.ethz.ch>
+ <20101111114404.GF8911@home.lan>
+ <201011112324.57572.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Barkalow <barkalow@iabervon.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Dun Peal <dunpealer@gmail.com>, Git ML <git@vger.kernel.org>,
-	Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
-	Carl Worth <cworth@cworth.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 12 06:19:15 2010
+Cc: Yann Dirson <ydirson@free.fr>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Nov 12 08:22:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGm2a-0008Kz-0u
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 06:19:12 +0100
+	id 1PGnxr-000485-0l
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 08:22:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750837Ab0KLFSb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Nov 2010 00:18:31 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:35033 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750696Ab0KLFSa (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Nov 2010 00:18:30 -0500
-Received: by yxt33 with SMTP id 33so185066yxt.19
-        for <git@vger.kernel.org>; Thu, 11 Nov 2010 21:18:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=P2JLmHR7lrve2Xk/tVkM+iuWpvibA16GlDfCUVWpI28=;
-        b=FXxzid5O6UwqoWFtMaUPTMNrYGZ/K7pVTbifR2rfS1AgS5L1GbvfTgm+rUhq4OtK3v
-         X0JgCLhCP7NaLSurdEt2Mv+MmCga8jWzXTwG6u8jsb78YkCVnPZmXd3kMgdGORTdTFL8
-         R7orhjObDaRFQ2E1FyOC7UO4S1lLUDWlYdqMk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=rcNbe1VHzdH/7Onc/6r4+bqyLU8wgLBrSM7m0NZTnWxOmxo/w6FOybgPefhQ6dZ4wj
-         zEHf8MGFVu47Ngq9JQG4+qoE19PJwLvuY6b1un5xOAzAC4276zpVY3O4yAhtOJq7i/z0
-         98xwcKeTRkt0Dl41ySFNLs3L7C68irkRnbv/s=
-Received: by 10.151.26.1 with SMTP id d1mr3233043ybj.267.1289539109399;
-        Thu, 11 Nov 2010 21:18:29 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id l66sm2110501yhd.20.2010.11.11.21.18.27
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 11 Nov 2010 21:18:28 -0800 (PST)
+	id S1752510Ab0KLHWF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Nov 2010 02:22:05 -0500
+Received: from smtp5-g21.free.fr ([212.27.42.5]:44143 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752052Ab0KLHWE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Nov 2010 02:22:04 -0500
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 35FFED48018;
+	Fri, 12 Nov 2010 08:21:56 +0100 (CET)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1PGnxL-00015O-0n; Fri, 12 Nov 2010 08:21:55 +0100
 Content-Disposition: inline
-In-Reply-To: <20101112044137.GA24915@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <201011112324.57572.trast@student.ethz.ch>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161325>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161326>
 
-Jeff King wrote:
-> On Thu, Nov 11, 2010 at 10:32:30PM -0600, Jonathan Nieder wrote:
-
->> Subject: SIGPIPE and other fatal signals should default to SIG_DFL
->> 
->> The intuitive behavior when a git command receives a fatal
->> signal is for it to die.
-[...]
-> Do we need to have it in every command? Is calling git-foo deprecated
-> enough that we can just put it in git.c?
+On Thu, Nov 11, 2010 at 11:24:57PM +0100, Thomas Rast wrote:
+> Yann Dirson wrote:
+> > On Thu, Nov 11, 2010 at 11:47:04AM +0100, Thomas Rast wrote:
+> > > Yann Dirson wrote:
+> > > > Rationale: this is both shorter to spell and consistent with
+> > > > --find-copies-harder.
+> > > [...]
+> > > >  -M[<n>]::
+> > > > ---detect-renames[=<n>]::
+> > > > +--find-renames[=<n>]::
+> > > 
+> > > Umm.  The reasoning seems ok for me, but the farthest you can go is
+> > > deprecating the options.  Removing them as in
+> > > 
+> > > > -	else if (!prefixcmp(arg, "-M") || !prefixcmp(arg, "--detect-renames=") ||
+> > > > -		 !strcmp(arg, "--detect-renames")) {
+> > > > +	else if (!prefixcmp(arg, "-M") || !prefixcmp(arg, "--find-renames=") ||
+> > > > +		 !strcmp(arg, "--find-renames")) {
+> > > 
+> > > would break backwards compatibility.
+> > 
+> > I don't think we care with compatibility here, since those are not
+> > part of any release.
 > 
-> I guess there are still a few commands that get installed explicitly in
-> .../bin (upload-pack, for example). They would need a separate one.
-> Perhaps it doesn't hurt to just put it in all of the non-builtins as you
-> did. It's not that big a maintenance issue.
+> Ah well.  You're right of course, but you could have mentioned that
+> somewhere :-)
 
-Okay.  Here's a hunk I forgot to add.  The next challenge is how to
-test this mess. :)
-
-diff --git a/cache.h b/cache.h
-index d85ce86..8088e26 100644
---- a/cache.h
-+++ b/cache.h
-@@ -5,6 +5,7 @@
- #include "strbuf.h"
- #include "hash.h"
- #include "advice.h"
-+#include "sigchain.h"
- 
- #include SHA1_HEADER
- #ifndef git_SHA_CTX
+Ah, I was sure I did, but apprently not :)
