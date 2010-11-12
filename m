@@ -1,7 +1,7 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: Scripted clone generating an incomplete, unusable .git/config
-Date: Thu, 11 Nov 2010 22:35:00 -0600
-Message-ID: <20101112043500.GC10765@burratino>
+Date: Thu, 11 Nov 2010 23:41:38 -0500
+Message-ID: <20101112044137.GA24915@sigill.intra.peff.net>
 References: <AANLkTik7-QzrMKDpV=W4dqpuguZsAr5yrMELmHu5NZMd@mail.gmail.com>
  <20101111103742.GA16422@burratino>
  <AANLkTinzotA4TSjMjjmW--gw7ST3dXMyHzPveGynaVmZ@mail.gmail.com>
@@ -9,70 +9,78 @@ References: <AANLkTik7-QzrMKDpV=W4dqpuguZsAr5yrMELmHu5NZMd@mail.gmail.com>
  <alpine.LNX.2.00.1011111241360.14365@iabervon.org>
  <20101111184829.GG16972@burratino>
  <20101111190508.GA3038@sigill.intra.peff.net>
- <20101112021602.GA10765@burratino>
- <20101112042455.GA20555@sigill.intra.peff.net>
+ <20101112043229.GB10765@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: Daniel Barkalow <barkalow@iabervon.org>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
 	Dun Peal <dunpealer@gmail.com>, Git ML <git@vger.kernel.org>,
 	Stefan Naewe <stefan.naewe@atlas-elektronik.com>,
 	Carl Worth <cworth@cworth.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 12 05:35:32 2010
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 12 05:41:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGlMJ-0001eD-8T
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 05:35:31 +0100
+	id 1PGlSR-0003Wa-Fh
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 05:41:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754982Ab0KLEf0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 11 Nov 2010 23:35:26 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:50720 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753242Ab0KLEf0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 11 Nov 2010 23:35:26 -0500
-Received: by gyh4 with SMTP id 4so1667955gyh.19
-        for <git@vger.kernel.org>; Thu, 11 Nov 2010 20:35:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=3AzWzqzyKr5iflAtmcT0sXpQvB85NFvMf0SjD1YQAF0=;
-        b=Vya1+s6DvvsRTbylPTnDTPrrnoqRF4kNrIP8vZG3J+fUv0Xrz+wxjKhtXbV1GH9CwT
-         bEstvVRU6NxYMugZ669svDXbIAHRqSD7uMpp3bcaNGTe8b7Bd194p9/AKtFU6cYoRlEZ
-         Vcw1xoncbdzo4SCeIlm5ay4ltX1U15knB2HsE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=dRjIPxj2KSOcX70RbO/4Po96I4cQ03EIYzP10wHKtKxA+6n56R9X7P88ygv+hMCB4Y
-         IyVMKEl4RwH9A+QGg11GBrmYeqLXqkI3vw8+prWOh/BWKqUVPTaFZTEyRV8SO1Kin7ZD
-         mQCbO0hsX2a9nbihj5/3LSojH2Ya4J2dwlOkU=
-Received: by 10.100.143.4 with SMTP id q4mr1203044and.21.1289536525255;
-        Thu, 11 Nov 2010 20:35:25 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id w15sm3174147anw.33.2010.11.11.20.35.23
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 11 Nov 2010 20:35:24 -0800 (PST)
+	id S1755009Ab0KLElq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 11 Nov 2010 23:41:46 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:47584 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754516Ab0KLElq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 11 Nov 2010 23:41:46 -0500
+Received: (qmail 1256 invoked by uid 111); 12 Nov 2010 04:41:43 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 12 Nov 2010 04:41:43 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 11 Nov 2010 23:41:38 -0500
 Content-Disposition: inline
-In-Reply-To: <20101112042455.GA20555@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20101112043229.GB10765@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161322>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161323>
 
-Jeff King wrote:
+On Thu, Nov 11, 2010 at 10:32:30PM -0600, Jonathan Nieder wrote:
 
-> Subject: [PATCH] document sigchain api
+> Subject: SIGPIPE and other fatal signals should default to SIG_DFL
 > 
-> It's pretty straightforward, but a stripped-down example
-> never hurts. And we should make clear that it is explicitly
-> OK to use SIG_DFL and SIG_IGN.
+> The intuitive behavior when a git command receives a fatal
+> signal is for it to die.
+> 
+> Indeed, that is the default handling.  However, POSIX semantics
+> allow the parent of a process to override that default by
+> ignoring a signal, since ignored signals are preserved by fork() and
+> exec().  For example, Python 2.6 and 2.7's os.popen() runs a shell
+> with SIGPIPE ignored (Python issue 1736483).
+>
+> [...]
+>
+>  check-racy.c   |    1 +
+>  daemon.c       |    1 +
+>  fast-import.c  |    1 +
+>  git.c          |    2 ++
+>  http-backend.c |    1 +
+>  http-fetch.c   |    1 +
+>  http-push.c    |    1 +
+>  imap-send.c    |    1 +
+>  remote-curl.c  |    1 +
+>  shell.c        |    2 ++
+>  show-index.c   |    2 ++
+>  upload-pack.c  |    1 +
+>  12 files changed, 15 insertions(+), 0 deletions(-)
 
-Nice, thanks.
+Do we need to have it in every command? Is calling git-foo deprecated
+enough that we can just put it in git.c?
+
+I guess there are still a few commands that get installed explicitly in
+.../bin (upload-pack, for example). They would need a separate one.
+Perhaps it doesn't hurt to just put it in all of the non-builtins as you
+did. It's not that big a maintenance issue.
+
+-Peff
