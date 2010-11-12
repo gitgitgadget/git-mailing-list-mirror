@@ -1,87 +1,74 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: Newbie:  Restore messed up code from local or remote repository
-Date: Fri, 12 Nov 2010 16:08:39 +0530
-Message-ID: <20101112103836.GB20053@kytes>
-References: <1289550163511-5731540.post@n2.nabble.com>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Incremental object transfer
+Date: Fri, 12 Nov 2010 11:34:27 +0100
+Message-ID: <20101112103427.GA29057@nibiru.local>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: gzoller <gzoller@hotmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 12 11:38:52 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 12 11:48:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGr1w-0002yg-9l
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 11:38:52 +0100
+	id 1PGrBg-0008R3-CC
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 11:48:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756623Ab0KLKie (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Nov 2010 05:38:34 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:58827 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756525Ab0KLKid (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Nov 2010 05:38:33 -0500
-Received: by yxt33 with SMTP id 33so276587yxt.19
-        for <git@vger.kernel.org>; Fri, 12 Nov 2010 02:38:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=pXo9X79410t34WwQY9cNE/hy/GLiqgjukMjpTmfVa0k=;
-        b=fZqZ1GoYV2e3T45n9h5/5G0sCX4vCOtvVa+2y7bRDmBYBy1YxYqSMGxqc1Bfwz2cWH
-         2SW6kWnoGG4AF8/QsC1zQNJZOLJ3U2jYuoMghZKY0ERv6X2Tk9N53N2UuP6dj9nwA85V
-         /gkwed1/V50/sIbbH6/5mPFcSyk96sfyz2ilU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=BRfFq1ZQ8WdxInsUoPjCEhP0FDdojv7QREnC9Og90kbfav/vih/ewOZXOq/jDMqbql
-         /+rhmBY0knJmXle0q7kPy5oRyklYH7B9BiUFFtYfc5jw3EKqmbqPp4E9BNOp2wXMxuvJ
-         bLUTqpzSSeRWPs97ApvTObl85dtES5a5C+zkk=
-Received: by 10.91.103.1 with SMTP id f1mr2949609agm.182.1289558312962;
-        Fri, 12 Nov 2010 02:38:32 -0800 (PST)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id c39sm3539415anc.21.2010.11.12.02.38.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 12 Nov 2010 02:38:32 -0800 (PST)
+	id S1756726Ab0KLKsc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Nov 2010 05:48:32 -0500
+Received: from caprica.metux.de ([82.165.128.25]:48993 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1756378Ab0KLKsb (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 12 Nov 2010 05:48:31 -0500
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id oACAoXX0020439
+	for <git@vger.kernel.org>; Fri, 12 Nov 2010 11:50:33 +0100
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id oACAo3V1020343
+	for git@vger.kernel.org; Fri, 12 Nov 2010 11:50:03 +0100
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id oACAYS9w008230
+	for git@vger.kernel.org; Fri, 12 Nov 2010 11:34:28 +0100
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <1289550163511-5731540.post@n2.nabble.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161334>
 
-Hi Greg,
 
-gzoller writes:
-> git checkout
-> git pull -f /path/to/remote/repos
-> git fetch -f /path/to/remote/repos
-> 
-> None of the above did the trick.  The two remote commands reported that
-> everything was Already up-to-date! (even though I'd deleted a lot of local
-> working files)
+Hi folks,
 
-Yes, there's really nothing to download. Everything that needs to be
-fetched has already been fetched :)
 
-> What am I missing?  How can I restore my previous state from last commit?
+as already said some time ago, I'm using git to back up maildirs
+on a machine w/ relatively low ram. The biggest problem for now
+is the initial push (maybe later larger subsequent pushes could
+be also affected too): it takes quite a long time to get everything
+packed, and if the connection breaks (the box is sitting behind
+a dynamic-IP DSL link), everything has to be restarted :(
 
-See `--hard` switch of `git reset`. Use with extreme caution.
+So my idea is to incrementally transfer objects in smaller packs,
+disable gc on remote side and update refs when some commit is
+complete.
 
-To throw *everything* all your local work away and go back to the
-state of the remote repository, switch to `master` branch and do `git
-reset --hard origin/master` where `origin` is the name of your remote
-and `master` is the name of your remote branch.
+Is there any way to do this ?
 
-To reset to the last commit without looking at the remote, run `git
-reset --hard`.
 
-Note: Again, please understand what it's doing first; don't run it
-blindly.
+thx
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
 
--- Ram
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
