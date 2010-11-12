@@ -1,8 +1,8 @@
 From: Jens Lehmann <Jens.Lehmann@web.de>
 Subject: Re: [PATCH v3 2/3] Add the 'fetch.recurseSubmodules' config setting
-Date: Fri, 12 Nov 2010 12:40:38 +0100
-Message-ID: <4CDD27B6.3070907@web.de>
-References: <4CDB3063.5010801@web.de> <4CDB30D6.5040302@web.de> <20101111000216.GA14189@burratino> <4CDBA5FD.20802@web.de> <20101111082748.GA15525@burratino> <7v1v6rhfut.fsf@alter.siamese.dyndns.org>
+Date: Fri, 12 Nov 2010 12:54:33 +0100
+Message-ID: <4CDD2AF9.6040403@web.de>
+References: <4CDB3063.5010801@web.de> <4CDB30D6.5040302@web.de> <20101111000216.GA14189@burratino> <4CDBA5FD.20802@web.de> <20101111082748.GA15525@burratino> <7v1v6rhfut.fsf@alter.siamese.dyndns.org> <20101111190053.GH16972@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
@@ -13,79 +13,87 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Chris Packham <judge.packham@gmail.com>,
 	Marc Branchaud <marcnarc@xiplink.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 12 12:40:54 2010
+X-From: git-owner@vger.kernel.org Fri Nov 12 13:18:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PGrzw-0000RD-IZ
-	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 12:40:52 +0100
+	id 1PGsag-0002R8-9X
+	for gcvg-git-2@lo.gmane.org; Fri, 12 Nov 2010 13:18:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757413Ab0KLLkr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Nov 2010 06:40:47 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:35993 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756934Ab0KLLkq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Nov 2010 06:40:46 -0500
-Received: from smtp06.web.de  ( [172.20.5.172])
-	by fmmailgate01.web.de (Postfix) with ESMTP id A1C80177F4C02;
-	Fri, 12 Nov 2010 12:40:44 +0100 (CET)
+	id S1757147Ab0KLMSp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Nov 2010 07:18:45 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:45949 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752711Ab0KLMSo (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Nov 2010 07:18:44 -0500
+Received: from smtp07.web.de  ( [172.20.5.215])
+	by fmmailgate03.web.de (Postfix) with ESMTP id E6406171A6EA2;
+	Fri, 12 Nov 2010 12:54:33 +0100 (CET)
 Received: from [93.246.52.137] (helo=[192.168.178.29])
-	by smtp06.web.de with asmtp (WEB.DE 4.110 #24)
-	id 1PGrzo-0006hM-00; Fri, 12 Nov 2010 12:40:44 +0100
+	by smtp07.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1PGsDB-00018j-00; Fri, 12 Nov 2010 12:54:33 +0100
 User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
-In-Reply-To: <7v1v6rhfut.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20101111190053.GH16972@burratino>
 X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1+9kBuvx7mc1kF5KkNJ+6y/Bt8TGxSJe1J+2lKC
-	ug2k237Xb49J64LE9lkMt/sR7hUJc/ILOo+J2uI32NPpaobW7r
-	vY49ZnIUj6F2vlK6YthA==
+X-Provags-ID: V01U2FsdGVkX1+RvcUFmpg1j1icRORxEztZwbrmgmrwCZpTUSff
+	QG+t4H5qcI9j7lZ5pzAIyT7aorB7gmPjdjF/jjSL6KwTFHilb7
+	+LutD4PDYcxwPIQVCWmw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161339>
 
-Am 11.11.2010 19:31, schrieb Junio C Hamano:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Am 11.11.2010 20:00, schrieb Jonathan Nieder:
+> Junio C Hamano wrote:
 > 
->>> "fetch.recurseSubmodules" is only read from .git/config. The one read
->>> first from .gitmodules and then from .git/config is the per-submodule
->>> setting "submodule.<name>.fetchRecurseSubmodules" added in 3/3.
->>
->> Sorry for the nonsense.  Would it be easy (or desirable) to make
->> _that_ one not be read from .gitmodules?
+>> I think the motivation behind having a way to read it from .gitmodules is
+>> so that project can suggest the default for convenience (e.g. "almost
+>> everybody who interacts with this project wants these submodules checked
+>> out and kept updated").
 > 
-> I think the motivation behind having a way to read it from .gitmodules is
-> so that project can suggest the default for convenience (e.g. "almost
-> everybody who interacts with this project wants these submodules checked
-> out and kept updated").
+> Yes, that makes some sense to me.  Except wouldn't it be a single
+> configuration item?  "These submodules should be checked out in all
+> but unusual situations, so check them out automatically and keep them
+> updated."
 
-Yes, and to achieve that it should /not/ be necessary to run a "git
-submodule sync" manually afterwards to activate those changes.
+Hmm, but we have at least three modes of how to update them:
 
-Jonathan, I think when we allow upstream to configure which submodules
-are to be cloned and checked out by default (which seems an option almost
-everyone likes to have), doesn't it make sense to let upstream set a
-default which submodules should be fetched too (so that new commits there
-can be checked out recursively later)? I would rather not like to do that
-implicitly just because a submodule is configured for recursive checkout
-...
+1) Never fetch the submodule (to get new commits the user has to run
+   "git fetch --recurse-submodules" by hand)
+
+2) Fetch the submodule each time you fetch the superproject (Which is
+   really handy when you do development in the submodule too but can
+   be really inconvenient when you don't)
+
+3) Update submodules only when new recorded commits are fetched in
+   the superproject (This mode is not added with the current patch
+   series but will be in one of the next)
+
+So you would need a config option for that anyway, no? And that is why
+I'd rather like to have a separate fetch option to control that behavior
+instead of an implicit "if-it's-to-be-checked-out-fetch-it-too" approach.
 
 
-> Traditionally the suggestions kept in .gitmodules were propagated to the
-> config when the submodule was initialized, and at runtime we read only
-> from the config from then on without reading from .gitmodules, so that
-> once the user decides to follow what the project suggests (or customize
-> that away), the preference would stick to the repository.
+> Maybe a person setting this to false actually means "This submodule
+> has its url set to a repository that is updated very frequently, and
+> most updates are not relevant to the superproject."  Unfortunately, I
+> think the result would be a poor user experience: when an update comes
+> that _is_ important to the superproject, what happens?
 > 
-> That arrangement does not cater well to people who want to follow along
-> whatever the project's suggestion of the day, so we might want to change
-> things so that we if we find it in the config, we stop there and use what
-> we found, otherwise we use what is in the in-tree gitmodules; I suspect we
-> might require some changes to "submodule init" not to copy certain things
-> to the config for that to work, though...
+>  $ git fetch
+>  ... go on plane ...
+>  $ git merge @{u} && git submodule update --no-fetch --recursive
+>  [...]
+>  fatal: reference is not a tree: f1c596a3895643d0969a15b8e945bf0c0072e470
+> 
+> Hmm.  I think in that scenario a better solution would be to point the
+> submodule url point to a project-specific clone that is updated less
+> frequently.
+> 
+> What am I missing?
 
-Right. But this would enable you to have branches where different sets
-of submodules are fetched, checked out and/or considered to make the
-superproject dirty depending on the topic the branch is for.
+That situation should be handled by method 3) above which was proposed
+for such a use case.
