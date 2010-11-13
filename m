@@ -1,193 +1,83 @@
-From: Seth Robertson <in-gitvger@baka.org>
-Subject: Re: [BUG] git show <remote>: bad information: Local ref configured if push.default=tracking
-Date: Fri, 12 Nov 2010 20:44:11 -0500
-Message-ID: <201011130144.oAD1iBeK022905@no.baka.org>
-References: <201011130041.oAD0fdmM017083@no.baka.org>
-        <20101113010934.GA4017@burratino>
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 13 02:44:20 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Documentation/git-rebase: clarify -s option
+Date: Fri, 12 Nov 2010 17:59:58 -0800
+Message-ID: <7vtyjmdlup.fsf@alter.siamese.dyndns.org>
+References: <1289588269-6920-1-git-send-email-martin.von.zweigbergk@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, jrnieder@gmail.com
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 13 03:00:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PH5AB-0001yI-UQ
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Nov 2010 02:44:20 +0100
+	id 1PH5Pg-0007c3-Us
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Nov 2010 03:00:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751753Ab0KMBoO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Nov 2010 20:44:14 -0500
-Received: from tsutomu.baka.org ([66.114.72.182]:46078 "EHLO tsutomu.baka.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751289Ab0KMBoO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Nov 2010 20:44:14 -0500
-Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
-	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id oAD1iB6H032762
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 12 Nov 2010 20:44:11 -0500
-Received: from no.baka.org (localhost [127.0.0.1])
-	by no.baka.org (8.14.4/8.14.0) with ESMTP id oAD1iBeK022905;
-	Fri, 12 Nov 2010 20:44:11 -0500
-In-reply-to: <20101113010934.GA4017@burratino>
-Comments: In reply to a message from "Jonathan Nieder <jrnieder@gmail.com>" dated "Fri, 12 Nov 2010 19:09:34 -0600."
+	id S1753290Ab0KMCAM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Nov 2010 21:00:12 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61958 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753665Ab0KMCAL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Nov 2010 21:00:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E57693596;
+	Fri, 12 Nov 2010 21:00:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=KmDIUwgMbhSZW2KT5rJw4Q7CkHU=; b=VRERTA
+	PfToYAGWfTL+ShdAkkYQQo0ngubPXzED8GTs3Rs7WWwQv5byanPjMTi1MU6HWS90
+	Lw8zi5vQlB8Vx0fTs9dtcMfDcfjdKWlyAZ5PAb+vkMvHsI2jVSbfq1hu21TVoGDP
+	ePgH1KI314Vz97PvKHesytURZFpKf6XMksIHU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=x/Ks7mjQNur4XiBTVp5GifIhfCy72ptf
+	NAmU5zOoGXICEXI6Q7GMRIz7PK1yRdVu3qeu3C5todG9VGSZUcRSqQjB2kJTrqIq
+	Y7nKn/NAEe7357g5uGzbTsmxO5oaFBGJwsWV4dmH+QP2FjVbMwPllpNn4HUXCPBA
+	CGcIvlEWwoM=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B7A843591;
+	Fri, 12 Nov 2010 21:00:12 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 15168356E; Fri, 12 Nov 2010
+ 21:00:06 -0500 (EST)
+In-Reply-To: <1289588269-6920-1-git-send-email-martin.von.zweigbergk@gmail.com> (Martin
+ von Zweigbergk's message of "Fri\, 12 Nov 2010 19\:57\:49 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C0569DB6-EEC9-11DF-B560-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161379>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161380>
 
+Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 
-In message <20101113010934.GA4017@burratino>, Jonathan Nieder writes:
+> Clarify that it is '-s' itself that implies '--merge'. Currently it may
+> seem like '--merge' is implied "If there is no `-s` option".
+>
+> Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+> ---
+>  Documentation/git-rebase.txt |    4 ++--
+>  1 files changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+> index 30e5c0e..f3753a8 100644
+> --- a/Documentation/git-rebase.txt
+> +++ b/Documentation/git-rebase.txt
+> @@ -244,9 +244,9 @@ other words, the sides are swapped.
+>  
+>  -s <strategy>::
+>  --strategy=<strategy>::
+> -	Use the given merge strategy.
+> +	Use the given merge strategy.  This implies --merge.
+>  	If there is no `-s` option 'git merge-recursive' is used
+> -	instead.  This implies --merge.
+> +	instead.
 
-    On Fri, Nov 12, 2010 at 07:41:39PM -0500, Seth Robertson wrote:
-
-    > Not having inspected the code, it certainly appears as if the "Local
-    > branch configured" and "Local ref configured" information is only
-    > accidentally correct, but since the normal configuration is the case
-    > in which it is accurate, no-one noticed the problem.
-
-    However, if you want the push-to-where-you-pull-from behavior,
-    just add
-	    [push]
-		    default = tracking
-    to your ~/.gitconfig.
-
-I already had this turned on in my ~/.gitconfig.  However, you bring
-up a good point, the output as shown would be correct if the default
-"matching" value was used.  Thus I guess the bug summary needs to be:
-
-git show <remote> produces inaccurate information about "Local ref
-configured" if git-config's push.default==tracking
-
-    For your test example: rather than sample output, could you describe
-    next to each command what you expect to happen and how that differs
-    from what happens instead?  This would make it easier to find the
-    lurking bugs.
-
-In my example, I set up each remote identically and only varied the
-name of the branch.  In all cases, you could push and pull changes
-using `git pull` and `git push`, meaning that they were properly
-configured tracking branches.  Thus, I argue that they should produce
-information for "Local ref configured" in each case, and furthermore
-that the named refs should be appropriate for the mapping in question.
-
-I'll annotate the output below with my desired behavior.  Search for
-"^**" in the output below.
-
-In other news, the last argument of the last command of the Test case
-prep should have been bar/foo_master instead of bar/master.  This
-affects the "git remote show bar" subcase output, showing that the
-"Local branch configured" information is correct.  The "Local ref
-configured" information remains incorrect/obscure.  I updated the test
-case to include the push.default=tracking configuration.
-
-					-Seth Robertson
-
-
-----------------------------------------------------------------------
-mkdir foo; cd foo; git init; echo A>A; git add A; git commit -m A;
-git checkout -b other; echo B>B; git add B; git commit -m B;
-git checkout master; git config push.default tracking
-
-mkdir ../bar; cd ../bar; git init; git remote add foo ../foo;
-git fetch foo; git checkout --track -b foo_master foo/other
-git config push.default tracking
-
-mkdir ../baz; cd ../baz; git init; git remote add foo ../foo;
-git fetch foo; git checkout --track -b master foo/master
-git config push.default tracking
-
-mkdir ../biff; cd ../biff; git init; git remote add foo ../foo;
-git fetch foo; git checkout --track -b master foo/master;
-git remote add baz ../baz; git fetch baz;
-git checkout --track -b baz_master baz/master
-git remote add bar ../bar; git fetch bar;
-git checkout --track -b bar_master bar/foo_master
-git config push.default tracking
-----------------------------------------------------------------------
-
-cd ../bar; git remote show foo
- --------------------------------------------------
- * remote foo
-   Fetch URL: ../foo
-   Push  URL: ../foo
-   HEAD branch: master
-   Remote branches:
-     master tracked
-     other  tracked
-   Local branch configured for 'git pull':
-     foo_master merges with remote other
- --------------------------------------------------
-** DESIRED ADDITION **
- --------------------------------------------------
-   Local ref configured for 'git push':
-     foo_master pushes to other (up to date)
- --------------------------------------------------
-
-cd ../baz; git remote show foo
- --------------------------------------------------
- * remote foo
-   Fetch URL: ../foo
-   Push  URL: ../foo
-   HEAD branch: master
-   Remote branches:
-     master tracked
-     other  tracked
-   Local branch configured for 'git pull':
-     master merges with remote master
-   Local ref configured for 'git push':
-     master pushes to master (up to date)
- --------------------------------------------------
-** OUTPUT CORRECT **
-
-cd ../biff; git remote show foo
- --------------------------------------------------
- * remote foo
-   Fetch URL: ../foo
-   Push  URL: ../foo
-   HEAD branch: master
-   Remote branches:
-     master tracked
-     other  tracked
-   Local branch configured for 'git pull':
-     master merges with remote master
-   Local ref configured for 'git push':
-     master pushes to master (up to date)
- --------------------------------------------------
-** OUTPUT CORRECT **
-
-cd ../biff; git remote show baz
- --------------------------------------------------
- * remote baz
-   Fetch URL: ../baz
-   Push  URL: ../baz
-   HEAD branch: master
-   Remote branch:
-     master tracked
-   Local branch configured for 'git pull':
-     baz_master merges with remote master
-   Local ref configured for 'git push':
-     master pushes to master (up to date)
- --------------------------------------------------
-** CORRECTED LAST TWO LINES **
- --------------------------------------------------
-   Local ref configured for 'git push':
-     baz_master pushes to master (up to date)
- --------------------------------------------------
-
-cd ../biff; git remote show bar
- --------------------------------------------------
- * remote bar
-   Fetch URL: ../bar
-   Push  URL: ../bar
-   HEAD branch: foo_master
-   Remote branch:
-     foo_master tracked
-   Local branch configured for 'git pull':
-     bar_master merges with remote foo_master
- --------------------------------------------------
-** DESIRED ADDITION **
- --------------------------------------------------
-   Local ref configured for 'git push':
-     bar_master pushes to foo_master (up to date)
- --------------------------------------------------
+The first change is absolutely right---thanks for starting this.  However,
+"if there is no `-s`..." describes the default when `--merge` alone is
+given, so these last two lines may need to move elsewhere, no?
