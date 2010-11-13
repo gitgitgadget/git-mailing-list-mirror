@@ -1,111 +1,132 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH v3] rebase -X: do not clobber strategy
-Date: Fri, 12 Nov 2010 20:00:59 +0100
-Message-ID: <1289588459-7064-1-git-send-email-martin.von.zweigbergk@gmail.com>
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com, jrnieder@gmail.com,
-	srabbelier@gmail.com, trast@student.ethz.ch
-X-From: git-owner@vger.kernel.org Sat Nov 13 02:01:33 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [BUG] git show <remote>: bad information: Local branch|ref
+ configured
+Date: Fri, 12 Nov 2010 19:09:34 -0600
+Message-ID: <20101113010934.GA4017@burratino>
+References: <201011130041.oAD0fdmM017083@no.baka.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Seth Robertson <in-gitvger@baka.org>
+X-From: git-owner@vger.kernel.org Sat Nov 13 02:10:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PH4Un-000344-9Z
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Nov 2010 02:01:33 +0100
+	id 1PH4dB-0006Jg-TL
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Nov 2010 02:10:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757719Ab0KMBB2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Nov 2010 20:01:28 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:62109 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757577Ab0KMBB2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Nov 2010 20:01:28 -0500
-Received: by vws13 with SMTP id 13so1198464vws.19
-        for <git@vger.kernel.org>; Fri, 12 Nov 2010 17:01:27 -0800 (PST)
+	id S1753644Ab0KMBKG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Nov 2010 20:10:06 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:45534 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752474Ab0KMBKE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Nov 2010 20:10:04 -0500
+Received: by yxn35 with SMTP id 35so363045yxn.19
+        for <git@vger.kernel.org>; Fri, 12 Nov 2010 17:10:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=ztPWVl5M8aiXSLo1LcMYbZes2qr5zEu+KfsooD8kszY=;
-        b=Us9tpEzX3sO41GaW3supfEisyBVjTIxivtHEaX513RDA40WytWBvu0xJB7NXTCeLpu
-         wrNU3kG5v0ODeaXdWfpOjuDs7URIoHY3z/LdBpCz/uW8ibLrtL5mpYqmaehWX74YZqIN
-         gM1/b4Gw8vtjK1ANC7BkpTpe3M8lu5+QJHt+c=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=0sqGpucXMo/hfRJ9UWZ5CxqCI7EU1g6LzJW3O1kcJhs=;
+        b=uDsNh5y6WkBEuW38W1XBB7xPIzFkQmZpgKhC3xKL+6TRPKt41J8hST50HsJUP4/9JP
+         3BP9yjDN5dWWMxH26m4oHNj7JbNpRLjgik+a4oqNvJWRLWOElIbou6qCU/+OOo+oxbws
+         /XVTo0YnJd+kmyXjNtKNpi2FLuaI1PfXtoBJ8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=ltHpyP0C9jHlU0n7R33ngFKR4HDEZfiPwkDLQpSDebsdV6+AouoQvy41wMPZbGfnsA
-         oRHsEMrt3U7A9Xrylg/HQsKHHYWxO6y+fr+hUEqXxCeyXaMnhSAMZxkXkexoZS8hiNfO
-         ea0SzmhGdfSKeC8XzJj3yQNpKQlh0A+XHSPvY=
-Received: by 10.220.186.2 with SMTP id cq2mr684821vcb.142.1289610086715;
-        Fri, 12 Nov 2010 17:01:26 -0800 (PST)
-Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id o17sm1471001vbi.2.2010.11.12.17.01.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 12 Nov 2010 17:01:26 -0800 (PST)
-X-Mailer: git-send-email 1.7.3.2.167.ga361b
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=GorZphi61KJKM/GYQwoZ37mTwlA14Mzc15AlPiyiBDqbMsQhQ6ouWL5DBG73vDHt9w
+         m3K4ojsZikXBh1zRV8zzfXHzhoN2qqDuRzhk8eSMwkPpGdw73hZJJcLRgMYv3rAYCPdm
+         VqZJT9QpBajfDrs/JxlPKEdaqq66LSiIbQYuc=
+Received: by 10.150.203.19 with SMTP id a19mr5102634ybg.220.1289610603895;
+        Fri, 12 Nov 2010 17:10:03 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id w5sm1293663ybe.10.2010.11.12.17.10.02
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 12 Nov 2010 17:10:03 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <201011130041.oAD0fdmM017083@no.baka.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161377>
 
-If any strategy options are passed to -X, the strategy will always be
-set to 'recursive'. According to the documentation, it should default to
-'recursive' if it is not set, but it should be possible to set it to
-other values.
+On Fri, Nov 12, 2010 at 07:41:39PM -0500, Seth Robertson wrote:
 
-Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
----
-Changes since v2: Now includes a test case provided by Junio.
+> Not having inspected the code, it certainly appears as if the "Local
+> branch configured" and "Local ref configured" information is only
+> accidentally correct, but since the normal configuration is the case
+> in which it is accurate, no-one noticed the problem.
 
- git-rebase.sh           |    4 ----
- t/t3402-rebase-merge.sh |   21 +++++++++++++++++++++
- 2 files changed, 21 insertions(+), 4 deletions(-)
+Funny. :)  But no, lots of people set up local branches as downstream
+to no branch or to some distinct remote branch.  So first I guess it
+might be useful to explain the "push matching" behavior.
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 42c0628..ec08f9c 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -312,10 +312,6 @@ do
- 		esac
- 		strategy_opts="$strategy_opts $(git rev-parse --sq-quote "--$newopt")"
- 		do_merge=t
--		if test -n "$strategy"
--		then
--			strategy=recursive
--		fi
- 		;;
- 	-s=*|--s=*|--st=*|--str=*|--stra=*|--strat=*|--strate=*|\
- 		--strateg=*|--strategy=*|\
-diff --git a/t/t3402-rebase-merge.sh b/t/t3402-rebase-merge.sh
-index 2bea656..be8c1d5 100755
---- a/t/t3402-rebase-merge.sh
-+++ b/t/t3402-rebase-merge.sh
-@@ -117,4 +117,25 @@ test_expect_success 'picking rebase' '
- 	esac
- '
- 
-+test_expect_success 'rebase -s funny -Xopt' '
-+	test_when_finished "rm -fr test-bin funny.was.run" &&
-+	mkdir test-bin &&
-+	cat >test-bin/git-merge-funny <<-EOF &&
-+	#!$SHELL_PATH
-+	case "\$1" in --opt) ;; *) exit 2 ;; esac
-+	shift &&
-+	>funny.was.run &&
-+	exec git merge-recursive "\$@"
-+	EOF
-+	chmod +x test-bin/git-merge-funny &&
-+	git reset --hard &&
-+	git checkout -b test-funny master^ &&
-+	test_commit funny &&
-+	(
-+		PATH=./test-bin:$PATH
-+		git rebase -s funny -Xopt master
-+	) &&
-+	test -f funny.was.run
-+'
-+
- test_done
--- 
-1.7.3.2.167.ga361b
+Background: suppose the upstream repository has three branches:
+
+	master
+	next
+	topic/better-frotz
+
+Now I have an idea for a new feature, so I do
+
+	git checkout -b topic/xyzzy origin/master
+
+which forks a new branch set up to pull from master.
+
+Now I go about usual work, making changes to master, next,
+topic/better-frotz, and so on, and at the end I am on my private
+topic/xyzzy branch.  Everything looks good, so it is time to push:
+
+	git push origin
+
+This is a shortcut for
+
+	git push origin :
+
+which pushes all local branches for which an upstream branch with the
+same name exists.
+
+"Wait!" you might ask.  "Why push all branches?"
+
+It is partly historical.  A lot of people have public repositories
+with multiple branches, and this is a behavior that has been found to
+be very convenient for that.
+
+"Why only branches for which an upstream branch exists?"
+
+Some work might be private.  If you actually want to push everything,
+use "git push --mirror".
+
+"Why branches with the same name?  Why not to the branch each branch
+pulls from?"
+
+Each branch forked from master does not necessarily contain changes
+that are suitable for inclusion in master immediately.  In general,
+the upstream for each branch is often more stable rather than
+equally stable to it, so automatic pushing upstream does not always
+make sense.
+
+However, if you want the push-to-where-you-pull-from behavior,
+just add
+
+	[push]
+		default = tracking
+
+to your ~/.gitconfig.
+
+See the documentation for branch.<name>.merge in git-config(1) for
+details on that.
+
+For your test example: rather than sample output, could you describe
+next to each command what you expect to happen and how that differs
+from what happens instead?  This would make it easier to find the
+lurking bugs.
+
+Hope that helps,
+Jonathan
