@@ -1,135 +1,193 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH] Use reflog in 'pull --rebase . foo'
-Date: Fri, 12 Nov 2010 20:38:28 +0100
-Message-ID: <1289590708-11064-1-git-send-email-martin.von.zweigbergk@gmail.com>
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com, santi@agolina.net
-X-From: git-owner@vger.kernel.org Sat Nov 13 02:39:04 2010
+From: Seth Robertson <in-gitvger@baka.org>
+Subject: Re: [BUG] git show <remote>: bad information: Local ref configured if push.default=tracking
+Date: Fri, 12 Nov 2010 20:44:11 -0500
+Message-ID: <201011130144.oAD1iBeK022905@no.baka.org>
+References: <201011130041.oAD0fdmM017083@no.baka.org>
+        <20101113010934.GA4017@burratino>
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 13 02:44:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PH555-0008PZ-KC
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Nov 2010 02:39:03 +0100
+	id 1PH5AB-0001yI-UQ
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Nov 2010 02:44:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751476Ab0KMBio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 12 Nov 2010 20:38:44 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:41271 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751008Ab0KMBin (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 12 Nov 2010 20:38:43 -0500
-Received: by vws13 with SMTP id 13so1205694vws.19
-        for <git@vger.kernel.org>; Fri, 12 Nov 2010 17:38:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=vNwt3WYii/x/SmgBbv+RLyFk8F6hbKuDVQks4yyQlu8=;
-        b=jkeYm2KWNsQ5uUy/FrVitphVkDvIQ/jQ02uA6C2Vroydc4DN1Sk8xT1GEStkvNIfhk
-         YfD0vRkqrbjjW3oTf8ZH22vrQCTDSaqivxDSzqxxEwVwTvXkDg7C/mc9DlwTLhozPtmo
-         broBkQO/njXkkxE4EJOsx0A9FYNdaB7kYQECI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=PRR5SstkdtSwuj0cMt2rRM40dEeU5XlHO08AV/SQ9SMKkvuWsK99e6obsSbbKqnpvs
-         4g8M/n2BahKz2UI2CzzehFrYT94hxdbTIpVsdz5qiC4ZSouD3q9xRfAnWojs5Uy5DYB9
-         Jjm1njE9JFoxzFugyasZLu+WAYXH4UN/FN95o=
-Received: by 10.220.200.6 with SMTP id eu6mr644627vcb.133.1289612322575;
-        Fri, 12 Nov 2010 17:38:42 -0800 (PST)
-Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id q3sm1108506vcr.27.2010.11.12.17.38.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 12 Nov 2010 17:38:42 -0800 (PST)
-X-Mailer: git-send-email 1.7.3.2.167.ga361b
+	id S1751753Ab0KMBoO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 12 Nov 2010 20:44:14 -0500
+Received: from tsutomu.baka.org ([66.114.72.182]:46078 "EHLO tsutomu.baka.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751289Ab0KMBoO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 12 Nov 2010 20:44:14 -0500
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id oAD1iB6H032762
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 12 Nov 2010 20:44:11 -0500
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id oAD1iBeK022905;
+	Fri, 12 Nov 2010 20:44:11 -0500
+In-reply-to: <20101113010934.GA4017@burratino>
+Comments: In reply to a message from "Jonathan Nieder <jrnieder@gmail.com>" dated "Fri, 12 Nov 2010 19:09:34 -0600."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161378>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161379>
 
-Since c85c792 (pull --rebase: be cleverer with rebased upstream
-branches, 2008-01-26), "git pull --rebase" has used the reflog to try to
-rebase from the old upstream onto the new upstream.
 
-Make this work if the local repository is explicitly passed on the
-command line as in 'git pull --rebase . foo'.
----
-I removed some seemingly unnecessary variables. I couldn't find any uses
-of them in the callers' code either, so it should be safe...
+In message <20101113010934.GA4017@burratino>, Jonathan Nieder writes:
 
-I apparently introduced a call to sed as well. I think I remember seeing
-some guideslines about the use of sed in Git, but I can't remember what.
-I couldn't find anything in the CodingGuidelines either. Is the code
-below ok?
+    On Fri, Nov 12, 2010 at 07:41:39PM -0500, Seth Robertson wrote:
 
- git-parse-remote.sh |   24 ++++++++++--------------
- t/t5520-pull.sh     |    7 +++++++
- 2 files changed, 17 insertions(+), 14 deletions(-)
+    > Not having inspected the code, it certainly appears as if the "Local
+    > branch configured" and "Local ref configured" information is only
+    > accidentally correct, but since the normal configuration is the case
+    > in which it is accurate, no-one noticed the problem.
 
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index 5f47b18..0565edd 100644
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -63,33 +63,29 @@ get_default_remote () {
- get_remote_merge_branch () {
- 	case "$#" in
- 	0|1)
--	    origin="$1"
--	    default=$(get_default_remote)
--	    test -z "$origin" && origin=$default
- 	    curr_branch=$(git symbolic-ref -q HEAD)
--	    [ "$origin" = "$default" ] &&
-+	    test -z "$1" || test "$1" = $(get_default_remote) &&
- 	    echo $(git for-each-ref --format='%(upstream)' $curr_branch)
- 	    ;;
- 	*)
- 	    repo=$1
- 	    shift
--	    ref=$1
- 	    # FIXME: It should return the tracking branch
- 	    #        Currently only works with the default mapping
--	    case "$ref" in
--	    +*)
--		ref=$(expr "z$ref" : 'z+\(.*\)')
--		;;
--	    esac
--	    expr "z$ref" : 'z.*:' >/dev/null || ref="${ref}:"
--	    remote=$(expr "z$ref" : 'z\([^:]*\):')
-+	    remote=$(echo "$1" | sed -e 's|+\?\([^:]*\):\?|\1|g')
- 	    case "$remote" in
- 	    '' | HEAD ) remote=HEAD ;;
- 	    heads/*) remote=${remote#heads/} ;;
- 	    refs/heads/*) remote=${remote#refs/heads/} ;;
- 	    refs/* | tags/* | remotes/* ) remote=
- 	    esac
--
--	    [ -n "$remote" ] && echo "refs/remotes/$repo/$remote"
-+	    [ -n "$remote" ] && case "$repo" in
-+		.)
-+		    echo "refs/heads/$remote"
-+		    ;;
-+		*)
-+		    echo "refs/remotes/$repo/$remote"
-+		    ;;
-+	    esac
- 	esac
- }
-diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-index 0b489f5..0470a81 100755
---- a/t/t5520-pull.sh
-+++ b/t/t5520-pull.sh
-@@ -222,4 +222,11 @@ test_expect_success 'git pull --rebase does not reapply old patches' '
- 	)
- '
- 
-+test_expect_success 'git pull --rebase against local branch' '
-+	git checkout -b copy2 to-rebase-orig &&
-+	git pull --rebase . to-rebase &&
-+	test "conflicting modification" = "$(cat file)" &&
-+	test file = "$(cat file2)"
-+'
-+
- test_done
--- 
-1.7.3.2.167.ga361b
+    However, if you want the push-to-where-you-pull-from behavior,
+    just add
+	    [push]
+		    default = tracking
+    to your ~/.gitconfig.
+
+I already had this turned on in my ~/.gitconfig.  However, you bring
+up a good point, the output as shown would be correct if the default
+"matching" value was used.  Thus I guess the bug summary needs to be:
+
+git show <remote> produces inaccurate information about "Local ref
+configured" if git-config's push.default==tracking
+
+    For your test example: rather than sample output, could you describe
+    next to each command what you expect to happen and how that differs
+    from what happens instead?  This would make it easier to find the
+    lurking bugs.
+
+In my example, I set up each remote identically and only varied the
+name of the branch.  In all cases, you could push and pull changes
+using `git pull` and `git push`, meaning that they were properly
+configured tracking branches.  Thus, I argue that they should produce
+information for "Local ref configured" in each case, and furthermore
+that the named refs should be appropriate for the mapping in question.
+
+I'll annotate the output below with my desired behavior.  Search for
+"^**" in the output below.
+
+In other news, the last argument of the last command of the Test case
+prep should have been bar/foo_master instead of bar/master.  This
+affects the "git remote show bar" subcase output, showing that the
+"Local branch configured" information is correct.  The "Local ref
+configured" information remains incorrect/obscure.  I updated the test
+case to include the push.default=tracking configuration.
+
+					-Seth Robertson
+
+
+----------------------------------------------------------------------
+mkdir foo; cd foo; git init; echo A>A; git add A; git commit -m A;
+git checkout -b other; echo B>B; git add B; git commit -m B;
+git checkout master; git config push.default tracking
+
+mkdir ../bar; cd ../bar; git init; git remote add foo ../foo;
+git fetch foo; git checkout --track -b foo_master foo/other
+git config push.default tracking
+
+mkdir ../baz; cd ../baz; git init; git remote add foo ../foo;
+git fetch foo; git checkout --track -b master foo/master
+git config push.default tracking
+
+mkdir ../biff; cd ../biff; git init; git remote add foo ../foo;
+git fetch foo; git checkout --track -b master foo/master;
+git remote add baz ../baz; git fetch baz;
+git checkout --track -b baz_master baz/master
+git remote add bar ../bar; git fetch bar;
+git checkout --track -b bar_master bar/foo_master
+git config push.default tracking
+----------------------------------------------------------------------
+
+cd ../bar; git remote show foo
+ --------------------------------------------------
+ * remote foo
+   Fetch URL: ../foo
+   Push  URL: ../foo
+   HEAD branch: master
+   Remote branches:
+     master tracked
+     other  tracked
+   Local branch configured for 'git pull':
+     foo_master merges with remote other
+ --------------------------------------------------
+** DESIRED ADDITION **
+ --------------------------------------------------
+   Local ref configured for 'git push':
+     foo_master pushes to other (up to date)
+ --------------------------------------------------
+
+cd ../baz; git remote show foo
+ --------------------------------------------------
+ * remote foo
+   Fetch URL: ../foo
+   Push  URL: ../foo
+   HEAD branch: master
+   Remote branches:
+     master tracked
+     other  tracked
+   Local branch configured for 'git pull':
+     master merges with remote master
+   Local ref configured for 'git push':
+     master pushes to master (up to date)
+ --------------------------------------------------
+** OUTPUT CORRECT **
+
+cd ../biff; git remote show foo
+ --------------------------------------------------
+ * remote foo
+   Fetch URL: ../foo
+   Push  URL: ../foo
+   HEAD branch: master
+   Remote branches:
+     master tracked
+     other  tracked
+   Local branch configured for 'git pull':
+     master merges with remote master
+   Local ref configured for 'git push':
+     master pushes to master (up to date)
+ --------------------------------------------------
+** OUTPUT CORRECT **
+
+cd ../biff; git remote show baz
+ --------------------------------------------------
+ * remote baz
+   Fetch URL: ../baz
+   Push  URL: ../baz
+   HEAD branch: master
+   Remote branch:
+     master tracked
+   Local branch configured for 'git pull':
+     baz_master merges with remote master
+   Local ref configured for 'git push':
+     master pushes to master (up to date)
+ --------------------------------------------------
+** CORRECTED LAST TWO LINES **
+ --------------------------------------------------
+   Local ref configured for 'git push':
+     baz_master pushes to master (up to date)
+ --------------------------------------------------
+
+cd ../biff; git remote show bar
+ --------------------------------------------------
+ * remote bar
+   Fetch URL: ../bar
+   Push  URL: ../bar
+   HEAD branch: foo_master
+   Remote branch:
+     foo_master tracked
+   Local branch configured for 'git pull':
+     bar_master merges with remote foo_master
+ --------------------------------------------------
+** DESIRED ADDITION **
+ --------------------------------------------------
+   Local ref configured for 'git push':
+     bar_master pushes to foo_master (up to date)
+ --------------------------------------------------
