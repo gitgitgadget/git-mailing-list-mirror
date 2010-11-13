@@ -1,111 +1,89 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [PATCH] Use reflog in 'pull --rebase . foo'
-Date: Sat, 13 Nov 2010 18:20:47 +0100
-Message-ID: <AANLkTikmJVj9BM=K2oSYJvPV27Uzn_9SQhsLc9EQm8zQ@mail.gmail.com>
-References: <1289590708-11064-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <m2pqu98urp.fsf@whitebox.home> <AANLkTiniwpk7ao=M4=5vuahczk6FscQYJE1rZx=wuBk_@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Using a different index and HEAD
+Date: Sat, 13 Nov 2010 09:25:46 -0800 (PST)
+Message-ID: <m3aaldf863.fsf@localhost.localdomain>
+References: <20101113152906.GA24903@nibiru.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org,
-	gitster@pobox.com
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 13 18:21:19 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Enrico Weigelt <weigelt@metux.de>
+X-From: git-owner@vger.kernel.org Sat Nov 13 18:25:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PHJmw-0001N2-Pm
-	for gcvg-git-2@lo.gmane.org; Sat, 13 Nov 2010 18:21:19 +0100
+	id 1PHJrO-0003u0-P5
+	for gcvg-git-2@lo.gmane.org; Sat, 13 Nov 2010 18:25:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755679Ab0KMRVK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Nov 2010 12:21:10 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:44144 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754239Ab0KMRVI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 13 Nov 2010 12:21:08 -0500
-Received: by qyk4 with SMTP id 4so641958qyk.19
-        for <git@vger.kernel.org>; Sat, 13 Nov 2010 09:21:07 -0800 (PST)
-Received: by 10.229.241.78 with SMTP id ld14mr3226803qcb.188.1289668867433;
- Sat, 13 Nov 2010 09:21:07 -0800 (PST)
-Received: by 10.229.105.76 with HTTP; Sat, 13 Nov 2010 09:20:47 -0800 (PST)
-In-Reply-To: <AANLkTiniwpk7ao=M4=5vuahczk6FscQYJE1rZx=wuBk_@mail.gmail.com>
+	id S1755110Ab0KMRZu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Nov 2010 12:25:50 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:53339 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754699Ab0KMRZt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Nov 2010 12:25:49 -0500
+Received: by eye27 with SMTP id 27so2436476eye.19
+        for <git@vger.kernel.org>; Sat, 13 Nov 2010 09:25:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=0WtZuqIsjArpe01gYWDyktc/LtK5fUabij8UHfXJki8=;
+        b=pWd2EUJgXoETE26u8DkC9YJizgQ13ZZ3Fodw5vQPKDX+Q6YWf7rBrG0nvtyEKAQf7K
+         DeXrgkrwumBvvblFvXhgLnPHlyImPcfYv0fTbDc443/hQXxOMQG35aO29E8s4mOLMO5s
+         iXvq+srA7qy/RVHcHKkuyveHpuTmYZdMvFoFg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=VuBY+aQL5J01BUR/bxG/mmz+k8pV1cVYF/D/MOcsb7VCZQaUu1WdaAQnxMzLElscPA
+         XfkaC/lMvs5zZu5+gRiUvfdp+A2ww5mP/lG+vrNVkdQ0Ng1+siHCBKF9mItPvDuUlsMu
+         si+fVyB+I6WB7hWtVNtuD9XhL56QfwddGzi5A=
+Received: by 10.213.19.6 with SMTP id y6mr4180099eba.73.1289669148035;
+        Sat, 13 Nov 2010 09:25:48 -0800 (PST)
+Received: from localhost.localdomain (abwe118.neoplus.adsl.tpnet.pl [83.8.228.118])
+        by mx.google.com with ESMTPS id q58sm4575385eeh.15.2010.11.13.09.25.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 13 Nov 2010 09:25:46 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oADHPCQ0023178;
+	Sat, 13 Nov 2010 18:25:22 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id oADHOrW9023168;
+	Sat, 13 Nov 2010 18:24:53 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20101113152906.GA24903@nibiru.local>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161390>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161391>
 
-On Sat, Nov 13, 2010 at 1:09 PM, Martin von Zweigbergk
-<martin.von.zweigbergk@gmail.com> wrote:
-> diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-> index 5f47b18..2e1661d 100644
-> --- a/git-parse-remote.sh
-> +++ b/git-parse-remote.sh
-> @@ -63,11 +63,8 @@ get_default_remote () {
-> =A0get_remote_merge_branch () {
-> =A0 =A0 =A0 =A0case "$#" in
-> =A0 =A0 =A0 =A00|1)
-> - =A0 =A0 =A0 =A0 =A0 origin=3D"$1"
-> - =A0 =A0 =A0 =A0 =A0 default=3D$(get_default_remote)
-> - =A0 =A0 =A0 =A0 =A0 test -z "$origin" && origin=3D$default
-> =A0 =A0 =A0 =A0 =A0 =A0curr_branch=3D$(git symbolic-ref -q HEAD)
-> - =A0 =A0 =A0 =A0 =A0 [ "$origin" =3D "$default" ] &&
-> + =A0 =A0 =A0 =A0 =A0 test -z "$1" || test "$1" =3D $(get_default_rem=
-ote) &&
-> =A0 =A0 =A0 =A0 =A0 =A0echo $(git for-each-ref --format=3D'%(upstream=
-)' $curr_branch)
-> =A0 =A0 =A0 =A0 =A0 =A0;;
-> =A0 =A0 =A0 =A0*)
+Enrico Weigelt <weigelt@metux.de> writes:
 
-They are not equivalent, the last line (echo $(git for-each-ref...))
-is always executed, not only when ask for the default remote. When
-$origin !=3D $default the last line does not return the correct answer.
-It should return nothing, it is not well defined. Or maybe it should
-return the branch pointed by $origin/HEAD (I cannot test right now
-what 'git pull $remote-not-the-default' merges).
+> I'm currently thinking about an IDE toolkit entirely based on git,
+> which eg. versions every single file save operation (so, IOW: an
+> separately versioned workdir) automatically and later allows to
+> rebase/rework this to tell what really gets committed to the
+> actual working branch. For this multiple indices and refs/HEAD
+> pointers would be very helpful.
 
-And it has nothing to do with letting 'pull --rebase . for" work.
+UGFWIWNI (Using Git For What It Was Not Intended) ;-) ?
 
-> @@ -89,7 +86,13 @@ get_remote_merge_branch () {
-> =A0 =A0 =A0 =A0 =A0 =A0refs/heads/*) remote=3D${remote#refs/heads/} ;=
-;
-> =A0 =A0 =A0 =A0 =A0 =A0refs/* | tags/* | remotes/* ) remote=3D
-> =A0 =A0 =A0 =A0 =A0 =A0esac
-> -
-> - =A0 =A0 =A0 =A0 =A0 [ -n "$remote" ] && echo "refs/remotes/$repo/$r=
-emote"
-> + =A0 =A0 =A0 =A0 =A0 [ -n "$remote" ] && case "$repo" in
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 .)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 echo "refs/heads/$remote"
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 *)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 echo "refs/remotes/$repo/$remot=
-e"
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;;
-> + =A0 =A0 =A0 =A0 =A0 esac
-> =A0 =A0 =A0 =A0esac
-> =A0}
-> diff --git a/t/t5520-pull.sh b/t/t5520-pull.sh
-> index 0b489f5..0470a81 100755
-> --- a/t/t5520-pull.sh
-> +++ b/t/t5520-pull.sh
-> @@ -222,4 +222,11 @@ test_expect_success 'git pull --rebase does not
-> reapply old patches' '
-> =A0 =A0 =A0 =A0)
-> =A0'
->
-> +test_expect_success 'git pull --rebase against local branch' '
-> + =A0 =A0 =A0 git checkout -b copy2 to-rebase-orig &&
-> + =A0 =A0 =A0 git pull --rebase . to-rebase &&
-> + =A0 =A0 =A0 test "conflicting modification" =3D "$(cat file)" &&
-> + =A0 =A0 =A0 test file =3D "$(cat file2)"
-> +'
-> +
-> =A0test_done
+> 
+> Is there already a way to tell other locations for index file
+> and current HEAD symref on command line (just like we have w/
+> --work-dir etc) ?
 
-=46or the rest I think they are OK, and make sense.
+There is GIT_INDEX_FILE environment variable (see git(1) manpage);
+you can maniplate symrefs such as HEAD directly using git-symbolic-ref
+(and git-show-ref, git-rev-parse, etc.).
 
-HTH,
-Santi
+You can also check 'contrib/workdir/git-new-workdir' script.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
