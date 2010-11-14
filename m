@@ -1,71 +1,78 @@
-From: Stefan Haller <lists@haller-berlin.de>
-Subject: [PATCH] gitk: Make text selectable on Mac
-Date: Sun, 14 Nov 2010 13:22:56 +0100
-Message-ID: <1289737376-33373-1-git-send-email-lists@haller-berlin.de>
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sun Nov 14 13:23:13 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCHv2 0/2] Fix username and password extraction from HTTP URLs
+Date: Sun, 14 Nov 2010 20:27:50 +0800
+Message-ID: <AANLkTi=WPyDOtcfNhzgkmekkT6vPwBR3OM5Z83XkSaSq@mail.gmail.com>
+References: <1289699475-11364-1-git-send-email-gabriel.corona@enst-bretagne.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, srabbelier@gmail.com
+To: Gabriel Corona <gabriel.corona@enst-bretagne.fr>
+X-From: git-owner@vger.kernel.org Sun Nov 14 13:27:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PHbc0-0005qt-6r
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 13:23:12 +0100
+	id 1PHbgb-00086x-J4
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 13:27:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755424Ab0KNMXI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Nov 2010 07:23:08 -0500
-Received: from mail.ableton.net ([62.96.12.117]:55792 "EHLO mail.ableton.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755332Ab0KNMXF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Nov 2010 07:23:05 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
-	h=Message-Id:Date:Subject:Cc:To:From; bh=f1sCVr1pEgxohfpOw8SOaGgkP4AWPblTBOBgmu2GzwU=;
-	b=soDa12YCtpKEkJAA4eRzSftrfQTHcLICfeFveMFU78LrbTZ6N1jGg/Kh2eH8bL9F26i7Jpa+oyPLTdoAzU5Iktp0DJq7R7AMMVHc20KJC5op1oXSi3+2Nv0+Dy7Hr/MCDysAqpMPYJwPI3wEQjDoUcj/+nFqN3sihkTCz9yi4SM=;
-Received: from dslb-088-074-017-003.pools.arcor-ip.net ([88.74.17.3] helo=localhost.localdomain)
-	by mail.ableton.net with esmtpa (Exim 4.72)
-	(envelope-from <lists@haller-berlin.de>)
-	id 1PHbRi-0002fU-CR; Sun, 14 Nov 2010 13:12:34 +0100
-X-Mailer: git-send-email 1.7.3.2.154.gcfae0
+	id S1755401Ab0KNM1w convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Nov 2010 07:27:52 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:51805 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755370Ab0KNM1v convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Nov 2010 07:27:51 -0500
+Received: by eye27 with SMTP id 27so2585069eye.19
+        for <git@vger.kernel.org>; Sun, 14 Nov 2010 04:27:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=q8ROlFnWP08qKxF5daFWGsdmKyt4mD8QisdwGJuCvyU=;
+        b=m0ySjJyGRZd/xdGKUJMJj/bt7zqCidpG7RrqDYUwv5PG25QMWEkmiqWBigNxnUBC24
+         SXRu9a9xhzIzYYdwzH4HxG0EfOVemb7iubT0vI0KsENh4ycKR1dlGg48zRKJ0AM+CZrn
+         DAdSGQhh+SsL1JC2qF/uKbPLl52US4f8vlpdY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=jOdR0vCM7lerMLyrBav6uX6/HncqGWwPEZ3Z7DaJ8EdM7JFdOquFmuT2YAJKxktXfF
+         wNjhLxy/MjH49OaH8dHtpH19+Jt6Hbe5x8GyKOWdvkUz6qjOLjkVvtMUrjyWUxfB8/fR
+         SucA3CGKBM3o5TRRtwyKxEmWB7AlRbb3zSHBc=
+Received: by 10.213.26.14 with SMTP id b14mr4829571ebc.15.1289737670551; Sun,
+ 14 Nov 2010 04:27:50 -0800 (PST)
+Received: by 10.213.112.195 with HTTP; Sun, 14 Nov 2010 04:27:50 -0800 (PST)
+In-Reply-To: <1289699475-11364-1-git-send-email-gabriel.corona@enst-bretagne.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161408>
 
-From: Stefan Haller <stefan@haller-berlin.de>
+On Sun, Nov 14, 2010 at 9:51 AM, Gabriel Corona
+<gabriel.corona@enst-bretagne.fr> wrote:
+> Percent-decode username and password in HTTP URLs. This is necessary
+> to specify a username with a '@' character in the URL.
+>
+> Gabriel Corona (2):
+> =A0t5550: test HTTP authentication and userinfo decoding
+> =A0Fix username and password extraction from HTTP URLs
+>
+> =A0http.c =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0| =A0 12 +++++++++++-
+> =A0t/lib-httpd.sh =A0 =A0 =A0 =A0 =A0| =A0 =A03 +++
+> =A0t/lib-httpd/apache.conf | =A0 29 +++++++++++++++++++++++++++++
+> =A0t/lib-httpd/passwd =A0 =A0 =A0| =A0 =A01 +
+> =A0t/t5550-http-fetch.sh =A0 | =A0 =A07 +++++++
+> =A05 files changed, 51 insertions(+), 1 deletions(-)
+> =A0create mode 100644 t/lib-httpd/passwd
 
-Stolen from git-gui, 23effa79f7 (original log message by
-Shawn O. Pearce <spearce@spearce.org> follows):
+Although the esotericity of having non-alphanumeric symbols in user
+names escapes me, both look good.
 
-    git-gui: Force focus to the diff viewer on mouse click.
+  Acked-by: Tay Ray Chuan <rctay89@gmail.com>
 
-    Apparently a "feature" of Tcl/Tk on Mac OS X is that a disabled text
-    widget cannot receive focus or receive a selection within it.  This
-    makes the diff viewer almost useless on that platform as you cannot
-    select individual parts of the buffer.
-
-    Now we force focus into the diff viewer when its clicked on with
-    button 1.  This works around the feature and allows selection to
-    work within the viewer just like it does on other less sane systems,
-    like Microsoft Windows.
-
-Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
----
- gitk |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/gitk b/gitk
-index 45e3380..14ffde2 100755
---- a/gitk
-+++ b/gitk
-@@ -2453,6 +2453,7 @@ proc makewindow {} {
-     global ctxbut
-     bind $cflist $ctxbut {pop_flist_menu %W %X %Y %x %y}
-     bind $ctext $ctxbut {pop_diff_menu %W %X %Y %x %y}
-+    bind $ctext <Button-1> {focus %W}
- 
-     set maincursor [. cget -cursor]
-     set textcursor [$ctext cget -cursor]
--- 
-1.7.3.2.154.gcfae0
+--=20
+Cheers,
+Ray Chuan
