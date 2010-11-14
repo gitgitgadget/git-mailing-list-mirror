@@ -1,91 +1,78 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/4] builtin: use builtin.h for all builtin commands
-Date: Sun, 14 Nov 2010 10:55:37 -0800
-Message-ID: <7v8w0v3fbq.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 1/4] Makefile: move "Platform specific tweaks" above
+ LIB_{H,OBJS}
+Date: Sun, 14 Nov 2010 11:08:35 -0800
+Message-ID: <7vvd3z205o.fsf@alter.siamese.dyndns.org>
 References: <1289745857-16704-1-git-send-email-avarab@gmail.com>
- <1289745857-16704-5-git-send-email-avarab@gmail.com>
- <AANLkTi=SbqD_3yYsRGCsmSxh-B8kpupnjq0XPGjMsxdK@mail.gmail.com>
+ <1289745857-16704-2-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
-	Johannes Sixt <j.sixt@viscovery.net>
+Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
 To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 14 19:55:56 2010
+X-From: git-owner@vger.kernel.org Sun Nov 14 20:11:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PHhk3-0007FN-Ld
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 19:55:56 +0100
+	id 1PHhz2-0007ua-9F
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 20:11:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756827Ab0KNSzv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Nov 2010 13:55:51 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63558 "EHLO
+	id S1756863Ab0KNTIp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Nov 2010 14:08:45 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45259 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756776Ab0KNSzu convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Nov 2010 13:55:50 -0500
+	with ESMTP id S1756829Ab0KNTIo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Nov 2010 14:08:44 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C42E53673;
-	Sun, 14 Nov 2010 13:55:55 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 616B83789;
+	Sun, 14 Nov 2010 14:08:50 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=pB+kYldi/bB/
-	7Wp5cKuw+alU2ng=; b=RXB33X6FcfwIZCpmEcvWwrFNLHx/z5WwmxNWuBO5V+0t
-	vf5iipdgTp8iviuHnNznJIpqN9sd5Z3O6V3rvxpK1BQ+AifejGeapy8zgav+ulTp
-	vSHWIa3SXJacgaNCUARjLZc+Wt7Z4vMmhLncmoKAZrZw1NTSlF1J8px+bzLJpG0=
+	:content-type:content-transfer-encoding; s=sasl; bh=QAPyRcHZHPm1
+	6dLaHM8oZ2AAYck=; b=M7lvVJNAyiu26EKl0z/C+UJb4NRFBHcSfgHyeTnIx0i5
+	vGSCFObfaYKmzIVobgCf3YJml8lBfoWLVOdtaYYM0HppRg4w2/CwWILUvdU28SAM
+	CG6gAa8Udf0/C4P4K1Z7WHdohVY301vUGP21G/bi1lCiofItVzVHVe1pmbVC9DU=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=bSZgAH
-	P+dd5gSwpHl+QDmI9CoqnEZy/dZBaVWa41k/DZUm36siB5KHLibGFRlhGHALdwr0
-	ebDsMvar0HtxzABERcYeh/NPqfZXSIjbUEHqM+dhncLnClzxElI+gVdoLMGHxKdS
-	f4AFXMUbUc1SvCHLdTmM33/3K0g9XDOApatVs=
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=g6lEnr
+	R1EVVZOGjEbCTHXYFin3JdURacr+C+VKmGl/055wMQDW3hi+AcYIFTb9ApgSnIBB
+	wGtglzKuRB5S/FxvIoGtltP1lgprGp3NXNJ7ovE2vDCN7CUy5ooIhEPUtJUh65Br
+	rEzkAMGG42stOw6xzJx7MAht+Kym6rEz00L6w=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 83E2C366D;
-	Sun, 14 Nov 2010 13:55:51 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 312003788;
+	Sun, 14 Nov 2010 14:08:47 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 39DE33664; Sun, 14 Nov 2010
- 13:55:45 -0500 (EST)
-In-Reply-To: <AANLkTi=SbqD_3yYsRGCsmSxh-B8kpupnjq0XPGjMsxdK@mail.gmail.com>
- (Sverre Rabbelier's message of "Sun\, 14 Nov 2010 16\:01\:10 +0100")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2763D3787; Sun, 14 Nov 2010
+ 14:08:42 -0500 (EST)
+In-Reply-To: <1289745857-16704-2-git-send-email-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Sun\, 14 Nov
+ 2010 14\:44\:14 +0000")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CD18FAE6-F020-11DF-8494-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 9B6DE590-F022-11DF-87AC-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161432>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161433>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-> On Sun, Nov 14, 2010 at 15:44, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason=
- <avarab@gmail.com> wrote:
->> diff --git a/wt-status.c b/wt-status.c
->> index fc2438f..bfc97fb 100644
->> --- a/wt-status.c
->> +++ b/wt-status.c
->> @@ -1,4 +1,4 @@
->> -#include "cache.h"
->> +#include "builtin.h"
+> Change the Makefile so that the "Platform specific tweaks" section
+> comes before the assignments to LIB_H and LIB_OBJS.
 >
-> Doesn't this suggest wt-status.c should be moved to builtin? Or
-> something like that.
-
-Why?  builtin.h is to declare cmd_foo() and to be included by files tha=
+> In the ab/i18n series I only want to build gettext.o (by adding it to
+> LIB_OBJS) if NO_GETTEXT is unset. It's not possible to do that withou=
 t
-implement cmd_foo() (i.e. builtin/*.c) and the file that needs to see
-cmd_foo() declarations (i.e. git.c).
+> an ugly hack if we haven't applied our platform specific tweaks befor=
+e
+> LIB_{H,OBJS} gets assigned to.
 
-wt-status.c is about giving common service routines for status related
-commands in builtin/commit.c to implement both commit and status.  Its
-services may have gained callers outside builtin/cocmmit.c, but that is
-not a good reason to export its services via builtin.h nor for it to
-include builtin.h.
-
-This is a tangent but I think for the same reason the types and functio=
-ns
-related to notes-rewrite currently in builtin.h do not belong there; th=
-ey
-should be moved to notes.h or somewhere.
+Isn't this similar to block-sha1, which is controlled by the feature ma=
+cro
+BLK_SHA1 that can be inferred from platform tweak?  The mechanism is no=
+t a
+hack but is a way LIB_H and LIB_OBJS are intended to be used, so there
+must be something missing in your explanation.
