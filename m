@@ -1,70 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 003/160] gettext: fix bug in git-sh-i18n's eval_gettext()
- by using envsubst(1)
-Date: Sun, 14 Nov 2010 11:15:56 -0800
-Message-ID: <7vmxpb1ztf.fsf@alter.siamese.dyndns.org>
-References: <1289747245-23263-1-git-send-email-avarab@gmail.com>
- <1289747245-23263-3-git-send-email-avarab@gmail.com>
- <20101114181605.GI26459@burratino>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH 3/3] get_sha1: support relative path ":path" syntax
+Date: Sun, 14 Nov 2010 18:22:14 -0200
+Message-ID: <AANLkTimJKQ=xc7az+FEM+18aTxQ5zQ24q7pfChnSwt6f@mail.gmail.com>
+References: <1289484484-8632-1-git-send-email-pclouds@gmail.com>
+	<1289484484-8632-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 14 20:16:21 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Niedier <jrnieder@gmail.com>,
+	Matthieu.Moy@grenoble-inp.fr
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 14 21:22:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PHi3i-0002QT-VW
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 20:16:15 +0100
+	id 1PHj5i-0004sY-A3
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 21:22:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756561Ab0KNTQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Nov 2010 14:16:09 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53265 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756515Ab0KNTQI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Nov 2010 14:16:08 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 339993853;
-	Sun, 14 Nov 2010 14:16:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=eYto4ie+MtZ5ubbV9uYOcdSrPbE=; b=t1LXvs
-	IGYIvECAUfsqVgig6sNFrG6m5aTiYFuFWPa+Stna7AuU+i+uRiz3CBmzgCwFY4qm
-	T41NYl/+QjPKkumd6yX3hRxqFqQxGDcO1Oi7UyA3wHNzso5VW91Tmse+Ym99M6QE
-	LlcamlQLGXoPQ81TM5CTe061FBAKu6UehftrA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KxZ9wv6ui5g2jrAtc1usJH98I8ijWzkF
-	2tOxUvz4cSB6UdYpFxyE0AGUGpUCAdrT6dMBvtPH/DyadYZcXwFSGpeYkRdj8pYJ
-	iplNhxQeprpkf6pAjQ2AK5S8FZ+QvzqdXm7pYOQov7PYpclh+8weq4YJGPbivVPn
-	SER+lcNuTzg=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E545E3852;
-	Sun, 14 Nov 2010 14:16:09 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9CF093850; Sun, 14 Nov 2010
- 14:16:04 -0500 (EST)
-In-Reply-To: <20101114181605.GI26459@burratino> (Jonathan Nieder's message of
- "Sun\, 14 Nov 2010 12\:16\:05 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A34ECE86-F023-11DF-9016-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+	id S1756516Ab0KNUWQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Nov 2010 15:22:16 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:65095 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755942Ab0KNUWP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Nov 2010 15:22:15 -0500
+Received: by bwz15 with SMTP id 15so4637772bwz.19
+        for <git@vger.kernel.org>; Sun, 14 Nov 2010 12:22:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=sEAgZhUfy88kIuduhzYvsltGedEWT0E/443cRhFLNXA=;
+        b=v+iES/JgDgnWrYUBvYcOAR9wjOPMRuWWFge83arGsVJb/gmOzuDz6vqRNs1YauquNC
+         9zMjpbjTSQNPa5kmFNIntwUyou9zav9FpcwZ6yEZX6GeZPRNP5nirDRZzeeP2ckHQhhB
+         3mUWyATZ13UO4W73IabW6wvs0uOGWa9hZa21o=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=kDAPzakCpHikz82rvObkeD/BA3kJQGif00cl6owH93YYMTzbZKN/MeVViwl6juX8Vh
+         TbWQnqWy+1k1JJjhykYcR9rDpp32KRhrLpd2TY+D+ZPRMb/kF3LDSJUs4BlaEEPdO6K0
+         jcTPaK0uoKOYTjjAwDfIzuz4C2uumTBjYnPCc=
+Received: by 10.204.61.81 with SMTP id s17mr5257880bkh.121.1289766134348; Sun,
+ 14 Nov 2010 12:22:14 -0800 (PST)
+Received: by 10.204.58.71 with HTTP; Sun, 14 Nov 2010 12:22:14 -0800 (PST)
+In-Reply-To: <1289484484-8632-4-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161435>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161437>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+2010/11/11 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
+>:
+> Currently :path and ref:path can be used to refer to a specific objec=
+t
+> in index or ref respectively. "path" component is absolute path. This
+> patch allows "path" to be written as "./path" or "../path", which is
+> relative to user's original cwd.
+>
+> This does not work in commands for which startup_info is NULL
+> (i.e. non-builtin ones, it seems none of them needs this anyway).
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> ---
+> =C2=A0sha1_name.c =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0| =C2=A0 37 ++++++++++++++++++++++--
+> =C2=A0t/t1506-rev-parse-diagnosis.sh | =C2=A0 62 ++++++++++++++++++++=
+++++++++++++++++++++
+> =C2=A02 files changed, 96 insertions(+), 3 deletions(-)
+>
+> diff --git a/sha1_name.c b/sha1_name.c
+> index 484081d..22c1df9 100644
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -1046,6 +1046,23 @@ int get_sha1_with_mode_1(const char *name, uns=
+igned char *sha1, unsigned *mode,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0return ret;
+> =C2=A0}
+>
+> +static char *resolve_relative_path(const char *rel)
+> +{
+> + =C2=A0 =C2=A0 =C2=A0 if (prefixcmp(rel, "./") && prefixcmp(rel, "..=
+/"))
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;
+> +
+> + =C2=A0 =C2=A0 =C2=A0 if (!startup_info)
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die("Relative path=
+ syntax is not supported in this command. Please report.");
+Is the "Please report." necessary? Report to who? Where? (I know we
+know these answers, but maybe a new user won't know them).
 
-> Nit: can this be moved to a subdir?  Maybe po or i18n, or even
-> envsubst.  This could make it clearer that the code has an upstream
-> and should be updated when upstream is.
-
-IOW, just like "xdiff/" is a separate directory.  I think that is a sane
-thing to do.
-
-Thanks.
+> +
+> + =C2=A0 =C2=A0 =C2=A0 if (!is_inside_work_tree())
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die("relative path=
+ syntax can't be used outside working tree.");
+nit: s/relative/Relative ?
