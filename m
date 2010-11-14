@@ -1,129 +1,93 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 2/4] t7004-tag.sh: re-arrange git tag comment for clarity
-Date: Sun, 14 Nov 2010 18:57:03 +0100
-Message-ID: <AANLkTik7E6B0oLnSjqw05NhhbSrz51k+O272iFjr1swk@mail.gmail.com>
-References: <1289745857-16704-1-git-send-email-avarab@gmail.com>
-	<1289745857-16704-3-git-send-email-avarab@gmail.com>
-	<20101114173241.GB26459@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 003/160] gettext: fix bug in git-sh-i18n's eval_gettext()
+ by using envsubst(1)
+Date: Sun, 14 Nov 2010 12:16:05 -0600
+Message-ID: <20101114181605.GI26459@burratino>
+References: <1289747245-23263-1-git-send-email-avarab@gmail.com>
+ <1289747245-23263-3-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Johannes Sixt <j.sixt@viscovery.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 14 18:57:16 2010
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 14 19:16:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PHgpF-0005Wx-ER
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 18:57:13 +0100
+	id 1PHh88-0008RO-UF
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 19:16:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756655Ab0KNR5I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Nov 2010 12:57:08 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:52461 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756487Ab0KNR5H convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Nov 2010 12:57:07 -0500
-Received: by fxm6 with SMTP id 6so1265554fxm.19
-        for <git@vger.kernel.org>; Sun, 14 Nov 2010 09:57:05 -0800 (PST)
+	id S1756672Ab0KNSQj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Nov 2010 13:16:39 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:39422 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756434Ab0KNSQi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Nov 2010 13:16:38 -0500
+Received: by ywc21 with SMTP id 21so1378946ywc.19
+        for <git@vger.kernel.org>; Sun, 14 Nov 2010 10:16:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=zLhHJTjOvtkmpYbwlbxulSKptwf44ENm2e5q3xghSQA=;
-        b=Z+kURqbVyJ03nfb34LEaQHA6AxjqQXGx8wNJ9Q3IckuAjQnC24Qm75M7oO633OKFzi
-         vzt4+7iJk+pUK7yLNRV6wED4+ZufK825TY3ZGGh9/pKAcVjg5+54fXEB/7QmoHlKmLhO
-         z6j75u9Sfg9LwJHIrYlefPfKCHEFRYgeRYPO4=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=IJEAorgbYt0QzB3SDGJOEWcbWS1NaLj/3aPG3vFS/x8=;
+        b=Vp6Hh+zB9JEXFQcNVloIQeROpnWFPCwSln2Y2sY43vZQxiQ0utNJcAZ7hl8CLZg+gN
+         W1MNeqUNDAQ5sPi1p3OoediDxkVbM0yFJ/dAp3NUnaKIJsbhcn5iu2KG/pCv0mEa3bgU
+         Qh9c64q+tPqU6Rntx2GCkaRJj+gFoJYaptXTg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=HQYcIBauTTbqZc8s39TzuzvL6X0h8LGqpMcuyYEflOAxOySYu+VuHwr0GkH4WArGs7
-         GfBUCct9jNK/+dpQqRls5JCfAhx17IfdF+EtIIW3J/tpAY8IqxHua8/Mnz5jW0B/QPS+
-         8CzOlIftFRlxMNkO9rhgrHMzWyUiqrz9D+xC0=
-Received: by 10.223.101.131 with SMTP id c3mr3887738fao.95.1289757423424; Sun,
- 14 Nov 2010 09:57:03 -0800 (PST)
-Received: by 10.223.105.78 with HTTP; Sun, 14 Nov 2010 09:57:03 -0800 (PST)
-In-Reply-To: <20101114173241.GB26459@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=KK4k7H4VaMsVwgD3o+0t+O9iUXvkQ8oYKRPR0+BI7PlP/yUyzglBkRwN7INp4Y5dwm
+         vJWQvPXqD2h8kyUqD/NN6TR1WlQc4vW5FxuKymrShmpt3yTMXPJ0NrADmpBVXitvmgJ6
+         1MOVUW8Q8rqh4aGnzpHASWO/O+fp7wIAzv5co=
+Received: by 10.150.212.1 with SMTP id k1mr8011906ybg.257.1289758597953;
+        Sun, 14 Nov 2010 10:16:37 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id r6sm2305962yba.11.2010.11.14.10.16.36
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 14 Nov 2010 10:16:37 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1289747245-23263-3-git-send-email-avarab@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161429>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161430>
 
-On Sun, Nov 14, 2010 at 18:32, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 I used ! instead of test_must_fail so that
->> the GIT_EDITOR variable was only used in this command invocation,
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0(
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0GIT_EDITOR=3Dc=
-at &&
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0export GIT_EDI=
-TOR &&
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0test_must_fail=
- ...
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0)
->
-> ?
->
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 and
->> because the surrounding tests use this style.
->
-> Oh, okay. =C2=A0I had the test_must_fail version sitting in my local =
-tree
-> as part of the unsent part of the &&-chaining series
-> http://thread.gmane.org/gmane.comp.version-control.git/157903/focus=3D=
-160419
->
-> I am happy to see this fixed sooner.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-Better to fix it up later IMO in something like your series. One
-surgery at a time.
+> These are the modifications I made to envsubst.c as I turned it into
+> sh-i18n--envsubst.c:
+>=20
+>  * Added our git-compat-util.h header for xrealloc() and friends.
+>=20
+>  * Removed inclusion of gettext-specific headers.
+>=20
+>  * Removed most of main() and replaced it with my own. The modified
+>    version only does option parsing for --variables. That's all it
+>    needs.
+>=20
+>  * Modified error() invocations to use our error() instead of
+>    error(3).
+>=20
+>  * Replaced the gettext XNMALLOC(n, size) macro with just
+>    xmalloc(n). Since XNMALLOC() only allocated char's.
+>=20
+>  * Removed the string_list_destroy function. It's redundant (also in
+>    the upstream code).
+>=20
+>  * Replaced the use of stdbool.h (a C99 header) by doing the followin=
+g
+>    replacements on the code:
 
-> [...]
->> +test_expect_success \
->> + =C2=A0 =C2=A0 'message in editor has initial comment: first line' =
-'
->> =C2=A0 =C2=A0 =C2=A0 # check the first line --- should be empty
->> - =C2=A0 =C2=A0 first=3D$(sed -e 1q <actual) &&
->> - =C2=A0 =C2=A0 test -z "$first" &&
->> + =C2=A0 =C2=A0 echo >first.expect &&
->> + =C2=A0 =C2=A0 sed -e 1q <actual >first.actual &&
->> + =C2=A0 =C2=A0 test_cmp first.expect first.actual
->> +'
->> +
->> +test_expect_success \
->> + =C2=A0 =C2=A0 'message in editor has initial comment: remainder' '
->> =C2=A0 =C2=A0 =C2=A0 # remove commented lines from the remainder -- =
-should be empty
->> - =C2=A0 =C2=A0 rest=3D$(sed -e 1d -e '/^#/d' <actual) &&
->> - =C2=A0 =C2=A0 test -z "$rest"
->> + =C2=A0 =C2=A0 >rest.expect
->> + =C2=A0 =C2=A0 sed -e 1d -e '/^#/d' <actual >rest.actual &&
->> + =C2=A0 =C2=A0 test_cmp rest.expect rest.actual
->> =C2=A0'
->
-> Nice. =C2=A0Note that you've changed the semantics of the test here
-> (probably for the better): the $() backquoting operator strips
-> trailing newlines, while your sed expression does not.
->
-> I assume you've run the tests and made sure they still pass.
+Nit: can this be moved to a subdir?  Maybe po or i18n, or even
+envsubst.  This could make it clearer that the code has an upstream
+and should be updated when upstream is.
 
-Yeah, I've been running all these (also the others in the series) for
-months on several different platforms with different options. They all
-work.
-
-> For what it's worth,
-> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
-
-Thanks.
+Jonathan
