@@ -1,9 +1,8 @@
 From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
-Subject: [PATCH 003/160] gettext: fix bug in git-sh-i18n's eval_gettext() by using envsubst(1)
-Date: Sun, 14 Nov 2010 15:07:25 +0000
-Message-ID: <1289747245-23263-3-git-send-email-avarab@gmail.com>
-References: <1289747245-23263-1-git-send-email-avarab@gmail.com>
+Subject: [PATCH 000/160] [PULL] ab/i18n rebased on ab/i18n-prereqs
+Date: Sun, 14 Nov 2010 15:07:23 +0000
+Message-ID: <1289747245-23263-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -12,712 +11,387 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
 	<avarab@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 14 16:08:26 2010
+X-From: git-owner@vger.kernel.org Sun Nov 14 16:08:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PHeBr-0008Ge-Sd
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 16:08:24 +0100
+	id 1PHeBq-0008Ge-Bh
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 16:08:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755988Ab0KNPIR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Nov 2010 10:08:17 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:40937 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755907Ab0KNPIM (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Nov 2010 10:08:12 -0500
-Received: by mail-ww0-f44.google.com with SMTP id 29so498242wwb.1
-        for <git@vger.kernel.org>; Sun, 14 Nov 2010 07:08:11 -0800 (PST)
+	id S1755891Ab0KNPIJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Nov 2010 10:08:09 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:46264 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755701Ab0KNPIH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Nov 2010 10:08:07 -0500
+Received: by wyb28 with SMTP id 28so3574775wyb.19
+        for <git@vger.kernel.org>; Sun, 14 Nov 2010 07:08:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=LfjjfOKazqMa0nJTmXSkHIYKYDiy4v5z6F74tgd/Axs=;
-        b=DDZqwDosAMOdi34I91jks8xdpfn8nMfoyr5fZVubEYMRqCGyf1bpBorhoX9cvM9tt/
-         VutOafNAvmnkEv+DKa5daqThlNNLfpf+2KHXBS742PLIxSB9a6K40zVZGVxjkIU+AIZn
-         Pv1zS3/hoXAb81uao0IbxDNc/a616jvVfqT+4=
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=pEndHcBRbVO3VBh4bItoe+qLNCSI1dm8GcsETBUfL6E=;
+        b=cu7eHgwE5f37svX7FTedrgApOusx739QfzOw/4jyuT5R3enrt5FLkVrKPGaJ3uJcIW
+         pbWwVKDlNmMykWdJ/iTqetqfviT6HyMpt9yL8MUAu1UxQY33LGisG3FUJYzSwYkBwqA4
+         fTwGH/ZdL8ZKkbevFrFPr1mUmyGJuVE11SUs8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=ph5OgJph/WYjyndJRJCVcaR2KoLLsii065ZGS/D+jnfOXB1pHJK0017uuyjxPKsNGG
-         8M+LW/MT3pg+l6sRC7j8tHLbNAa2n4PtQstg5rxPBjK5sBCMvBmbZn4rwvlhLUDaekiA
-         Ca7BjAwMRP9tElIhPQAr1qC52cUk91PrQ+xUk=
-Received: by 10.216.73.16 with SMTP id u16mr5451215wed.94.1289747290125;
-        Sun, 14 Nov 2010 07:08:10 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=mW4XETRBffNzSRSfT4mqMSYDGoDk9rLOV1hu9n60w5dRZNqW7EO7PHOv+7cXScDQzQ
+         Q6zxx3UXYJCKxH876u3DhP9BN2vNaCb3t/tevV+4mj0gPd6CdrMvL70dygX/cTrCNYUN
+         /U7CBKLNm5xqkjUt6SsvOzK/UGRu0+CcR36YM=
+Received: by 10.227.152.9 with SMTP id e9mr5008965wbw.169.1289747285191;
+        Sun, 14 Nov 2010 07:08:05 -0800 (PST)
 Received: from v.nix.is (v.nix.is [109.74.193.250])
-        by mx.google.com with ESMTPS id e12sm3208820wer.12.2010.11.14.07.08.09
+        by mx.google.com with ESMTPS id e12sm3208820wer.12.2010.11.14.07.08.04
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 14 Nov 2010 07:08:09 -0800 (PST)
+        Sun, 14 Nov 2010 07:08:04 -0800 (PST)
 X-Mailer: git-send-email 1.7.3.2.326.g36065a
-In-Reply-To: <1289747245-23263-1-git-send-email-avarab@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161418>
 
-Change eval_gettext(1) in git-sh-i18n.sh to use a modified version of
-gettext's envsubst(1) program, instead of using a clever (but broken)
-printf + eval + printf trick.
+Here's an updated ab/i18n rebased on the new ab/i18n-prereqs
+series. The major change here is this patch:
 
-Our previous fallback would incorrectly handle cases where the
-variable being interpolated contained spaces. E.g.:
+    gettext: fix bug in git-sh-i18n's eval_gettext() by using envsubst(=
+1)
 
-    cmd=3D"git foo"; eval_gettext "command: \$cmd"
+Which fixes eval_gettext to work using our own copy of envsubst(1). And=
+:
 
-Would emit "command: gitfoo", instead of the correct "command: git
-foo". This happened with a message in git-am.sh that used the $cmdline
-variable.
+    Makefile: Set NO_GETTEXT=3DYesPlease on Windows & MinGW
 
-To work around this, and to improve our variable expansion behavior
-(eval has security issues) I've imported a stripped-down version of
-gettext's envsubst(1) program.
+Which implements Johannes Six's suggestion in "[PATCH] Do not build
+i18n on Windows." to not build with gettext on Windows by default.
 
-Using it we pass the latter of the two tests added along with this
-patch (the first one was just added for completeness).
+This series can be fetched from:
 
-Since we want to test both our fallback eval_gettext() and the one
-we'll end up using (i.e. on Solaris) the new tests are executed in
-both t0200-gettext-basic.sh and t0201-gettext-fallbacks.sh.
+    git://github.com/avar/git.git ab/i18n
 
-These are the modifications I made to envsubst.c as I turned it into
-sh-i18n--envsubst.c:
+Erik Faye-Lund (1):
+  gettext.c: use libcharset.h instead of langinfo.h when available
 
- * Added our git-compat-util.h header for xrealloc() and friends.
+Jan Engelhardt (1):
+  po/de.po: complete German translation
 
- * Removed inclusion of gettext-specific headers.
+Jan Kr=C3=BCger (1):
+  po/de.po: add German translation
 
- * Removed most of main() and replaced it with my own. The modified
-   version only does option parsing for --variables. That's all it
-   needs.
+Marcin Cie=C5=9Blak (1):
+  po/pl.po: add Polish translation
 
- * Modified error() invocations to use our error() instead of
-   error(3).
+Peter Krefting (1):
+  po/sv.po: add Swedish translation
 
- * Replaced the gettext XNMALLOC(n, size) macro with just
-   xmalloc(n). Since XNMALLOC() only allocated char's.
+Ramkumar Ramachandra (1):
+  po/hi.po: add Hindi Translation
 
- * Removed the string_list_destroy function. It's redundant (also in
-   the upstream code).
+Sam Reed (1):
+  po/en_GB.po: add British English translation
 
- * Replaced the use of stdbool.h (a C99 header) by doing the following
-   replacements on the code:
+Thomas Rast (1):
+  gettext tests: locate i18n lib&data correctly under --valgrind
 
-    * s/bool/unsigned short int/g
-    * s/true/1/g
-    * s/false/0/g
-
-Reported-by: Johannes Sixt <j.sixt@viscovery.net>
-Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
->
----
- .gitignore                   |    1 +
- Makefile                     |    1 +
- git-sh-i18n.sh               |   14 +-
- sh-i18n--envsubst.c          |  444 ++++++++++++++++++++++++++++++++++=
-++++++++
- t/lib-gettext.sh             |   24 +++
- t/t0200-gettext.sh           |    3 +
- t/t0201-gettext-fallbacks.sh |    3 +
- 7 files changed, 485 insertions(+), 5 deletions(-)
- create mode 100644 sh-i18n--envsubst.c
-
-diff --git a/.gitignore b/.gitignore
-index 80ca718..d2d9ec2 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -126,6 +126,7 @@
- /git-send-email
- /git-send-pack
- /git-sh-i18n
-+/git-sh-i18n--envsubst
- /git-sh-setup
- /git-shell
- /git-shortlog
-diff --git a/Makefile b/Makefile
-index 67d94d3..1ef4648 100644
---- a/Makefile
-+++ b/Makefile
-@@ -420,6 +420,7 @@ PROGRAM_OBJS +=3D shell.o
- PROGRAM_OBJS +=3D show-index.o
- PROGRAM_OBJS +=3D upload-pack.o
- PROGRAM_OBJS +=3D http-backend.o
-+PROGRAM_OBJS +=3D sh-i18n--envsubst.o
-=20
- PROGRAMS +=3D $(patsubst %.o,git-%$X,$(PROGRAM_OBJS))
-=20
-diff --git a/git-sh-i18n.sh b/git-sh-i18n.sh
-index 698a000..3aac21c 100644
---- a/git-sh-i18n.sh
-+++ b/git-sh-i18n.sh
-@@ -48,10 +48,12 @@ then
-=20
- 	# Solaris has a gettext(1) but no eval_gettext(1)
- 	eval_gettext () {
--		gettext_out=3D$(gettext "$1")
--		gettext_eval=3D"printf '%s' \"$gettext_out\""
--		printf "%s" "`eval \"$gettext_eval\"`"
-+		gettext "$1" | (
-+			export PATH $(git sh-i18n--envsubst --variables "$1");
-+			git sh-i18n--envsubst "$1"
-+		)
- 	}
-+
- else
- 	# Since gettext.sh isn't available we'll have to define our own
- 	# dummy pass-through functions.
-@@ -65,7 +67,9 @@ else
- 	}
-=20
- 	eval_gettext () {
--		gettext_eval=3D"printf '%s' \"$1\""
--		printf "%s" "`eval \"$gettext_eval\"`"
-+		printf "%s" "$1" | (
-+			export PATH $(git sh-i18n--envsubst --variables "$1");
-+			git sh-i18n--envsubst "$1"
-+		)
- 	}
- fi
-diff --git a/sh-i18n--envsubst.c b/sh-i18n--envsubst.c
-new file mode 100644
-index 0000000..8db71b1
---- /dev/null
-+++ b/sh-i18n--envsubst.c
-@@ -0,0 +1,444 @@
-+/*
-+ * sh-i18n--envsubst.c - a stripped-down version of gettext's envsubst=
-(1)
-+ *
-+ * Copyright (C) 2010 =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason
-+ *
-+ * This is a modified version of
-+ * 67d0871a8c:gettext-runtime/src/envsubst.c from the gettext.git
-+ * repository. It has been stripped down to only implement the
-+ * envsubst(1) features that we need in the git-sh-i18n fallbacks.
-+ *
-+ * The "Close standard error" part in main() is from
-+ * 8dac033df0:gnulib-local/lib/closeout.c. The copyright notices for
-+ * both files are reproduced immediately below.
-+ */
-+
-+#include "git-compat-util.h"
-+
-+/* Substitution of environment variables in shell format strings.
-+   Copyright (C) 2003-2007 Free Software Foundation, Inc.
-+   Written by Bruno Haible <bruno@clisp.org>, 2003.
-+
-+   This program is free software; you can redistribute it and/or modif=
-y
-+   it under the terms of the GNU General Public License as published b=
-y
-+   the Free Software Foundation; either version 2, or (at your option)
-+   any later version.
-+
-+   This program is distributed in the hope that it will be useful,
-+   but WITHOUT ANY WARRANTY; without even the implied warranty of
-+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+   GNU General Public License for more details.
-+
-+   You should have received a copy of the GNU General Public License
-+   along with this program; if not, write to the Free Software Foundat=
-ion,
-+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. =
- */
-+
-+/* closeout.c - close standard output and standard error
-+   Copyright (C) 1998-2007 Free Software Foundation, Inc.
-+
-+   This program is free software; you can redistribute it and/or modif=
-y
-+   it under the terms of the GNU General Public License as published b=
-y
-+   the Free Software Foundation; either version 2, or (at your option)
-+   any later version.
-+
-+   This program is distributed in the hope that it will be useful,
-+   but WITHOUT ANY WARRANTY; without even the implied warranty of
-+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-+   GNU General Public License for more details.
-+
-+   You should have received a copy of the GNU General Public License
-+   along with this program; if not, write to the Free Software Foundat=
-ion,
-+   Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. =
- */
-+
-+#include <errno.h>
-+#include <getopt.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+
-+/* If true, substitution shall be performed on all variables.  */
-+static unsigned short int all_variables;
-+
-+/* Forward declaration of local functions.  */
-+static void print_variables (const char *string);
-+static void note_variables (const char *string);
-+static void subst_from_stdin (void);
-+
-+int
-+main (int argc, char *argv[])
-+{
-+  /* Default values for command line options.  */
-+  unsigned short int show_variables =3D 0;
-+
-+  switch (argc)
-+	{
-+	case 1:
-+	  error ("we won't substitute all variables on stdin for you");
-+	  /*
-+	  all_variables =3D 1;
-+      subst_from_stdin ();
-+	  */
-+	case 2:
-+	  /* echo '$foo and $bar' | git sh-i18n--envsubst --variables '$foo a=
-nd $bar' */
-+	  all_variables =3D 0;
-+	  note_variables (argv[1]);
-+      subst_from_stdin ();
-+	  break;
-+	case 3:
-+	  /* git sh-i18n--envsubst --variables '$foo and $bar' */
-+	  if (strcmp(argv[1], "--variables"))
-+		error ("first argument must be --variables when two are given");
-+	  show_variables =3D 1;
-+      print_variables (argv[2]);
-+	  break;
-+	default:
-+	  error ("too many arguments");
-+	  break;
-+	}
-+
-+  /* Close standard error.  This is simpler than fwriteerror_no_ebadf,=
- because
-+     upon failure we don't need an errno - all we can do at this point=
- is to
-+     set an exit status.  */
-+  errno =3D 0;
-+  if (ferror (stderr) || fflush (stderr))
-+    {=20
-+      fclose (stderr);
-+      exit (EXIT_FAILURE);
-+    }
-+  if (fclose (stderr) && errno !=3D EBADF)
-+    exit (EXIT_FAILURE);
-+
-+  exit (EXIT_SUCCESS);
-+}
-+
-+/* Parse the string and invoke the callback each time a $VARIABLE or
-+   ${VARIABLE} construct is seen, where VARIABLE is a nonempty sequenc=
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason (152):
+  gettext: add infrastructure for translating Git with gettext
+  Makefile: Set NO_GETTEXT=3DYesPlease on Windows & MinGW
+  gettext: fix bug in git-sh-i18n's eval_gettext() by using envsubst(1)
+  gettext tests: rename test to work around GNU gettext bug
+  gettext: setlocale(LC_CTYPE, "") breaks Git's C function assumptions
+  Makefile: A variable for options used by xgettext(1) calls
+  Makefile: provide a --msgid-bugs-address to xgettext(1)
+  Makefile: tell xgettext(1) that our source is in UTF-8
+  Makefile: use variables and shorter lines for xgettext
+  builtin.h: Include gettext.h
+  gettext.c: work around us not using setlocale(LC_CTYPE, "")
+  gettext tests: add GETTEXT_POISON=3DYesPlease Makefile parameter
+  gettext tests: skip lib-gettext.sh tests under GETTEXT_POISON
+  gettextize: git-init basic messages
+  gettextize: git-init "Initialized [...] repository" message
+  gettext tests: test if $VERSION exists before using it
+  gettext tests: add detection for is_IS.ISO-8859-1 locale
+  gettext tests: test message re-encoding under Shell
+  gettext tests: test re-encoding with a UTF-8 msgid under Shell
+  gettext tests: mark a test message as not needing translation
+  po/is.po: add Icelandic translation
+  gettext tests: test message re-encoding under C
+  gettextize: git-clone basic messages
+  gettextize: git-clone "Cloning into" message
+  gettextize: git-add basic messages
+  gettextize: git-add "no files added" message
+  gettextize: git-add "Use -f if you really want" message
+  gettextize: git-add "pathspec [...] did not match" message
+  gettextize: git-add "remove '%s'" message
+  gettextize: git-add refresh_index message
+  gettextize: git-branch basic messages
+  gettextize: git-branch "remote branch '%s' not found" message
+  gettextize: git-branch "Deleted branch [...]" message
+  gettextize: git-branch "git branch -v" messages
+  gettextize: git-branch "(no branch)" message
+  gettextize: git-checkout basic messages
+  gettextize: git-checkout: our/their version message
+  gettextize: git-checkout describe_detached_head messages
+  gettextize: git-checkout "HEAD is now at" message
+  gettextize: git-checkout "Switched to a .. branch" message
+  gettextize: git-commit basic messages
+  gettextize: git-commit "middle of a merge" message
+  gettextize: git-commit formatting messages
+  gettextize: git-commit print_summary messages
+  gettextize: git-commit "enter the commit message" message
+  gettextize: git-commit advice messages
+  gettextize: git-diff basic messages
+  gettextize: git-fetch basic messages
+  gettextize: git-fetch formatting messages
+  gettextize: git-fetch update_local_ref messages
+  gettextize: git-fetch split up "(non-fast-forward)" message
+  gettextize: git-grep basic messages
+  gettextize: git-grep "--open-files-in-pager" message
+  gettextize: git-log basic messages
+  gettextize: git-log "--OPT does not make sense" messages
+  gettextize: git-merge basic messages
+  gettextize: git-merge "Updating %s..%s" message
+  gettextize: git-merge "You have not concluded your merge" messages
+  gettextize: git-merge "Wonderful" message
+  gettextize: git-mv basic messages
+  gettextize: git-mv "bad" messages
+  gettextize: git-rm basic messages
+  gettextize: git-reset basic messages
+  gettextize: git-reset reset_type_names messages
+  gettextize: git-reset "Unstaged changes after reset" message
+  gettextize: git-tag basic messages
+  gettextize: git-tag tag_template message
+  gettextize: git-push basic messages
+  gettextize: git-push "prevent you from losing" message
+  gettextize: git-status basic messages
+  gettextize: git-status "nothing to commit" messages
+  gettextize: git-status shortstatus messages
+  gettextize: git-status "Changes to be committed" message
+  gettextize: git-status "Initial commit" message
+  gettextize: git-status "renamed: " message
+  gettextize: git-archive basic messages
+  gettextize: git-bundle basic messages
+  gettextize: git-clean basic messages
+  gettextize: git-clean clean.requireForce messages
+  gettextize: git-describe basic messages
+  gettextize: git-gc basic messages
+  gettextize: git-gc "Auto packing the repository" message
+  gettextize: git-notes basic commands
+  gettextize: git-notes GIT_NOTES_REWRITE_MODE error message
+  gettextize: git-notes "Refusing to %s notes in %s" message
+  gettextize: git-revert basic messages
+  gettextize: git-revert "Your local changes" message
+  gettextize: git-revert literal "me" messages
+  gettextize: git-revert split up "could not revert/apply" message
+  gettextize: git-shortlog basic messages
+  Makefile: add GNU_GETTEXT, set when we expect GNU gettext
+  Makefile: MSGFMT=3D"msgfmt --check" under GNU_GETTEXT
+  gettext tests: add GETTEXT_POISON support for shell scripts
+  gettext tests: add GETTEXT_POISON tests for shell scripts
+  gettextize: git-am add git-sh-i18n
+  gettextize: git-am one-line gettext $msg; echo
+  gettextize: git-am multi-line getttext $msg; echo
+  gettextize: git-am eval_gettext messages
+  gettextize: git-am die messages
+  gettextize: git-am cannot_fallback messages
+  gettextize: git-am clean_abort messages
+  gettextize: git-am "Apply?" message
+  gettextize: git-am core say messages
+  gettextize: git-am printf(1) message to eval_gettext
+  gettext docs: add po/README file documenting Git's gettext
+  Makefile: only add gettext tests on XGETTEXT_INCLUDE_TESTS=3DYesPleas=
 e
-+   of ASCII alphanumeric/underscore characters, starting with an ASCII
-+   alphabetic/underscore character.
-+   We allow only ASCII characters, to avoid dependencies w.r.t. the cu=
-rrent
-+   encoding: While "${\xe0}" looks like a variable access in ISO-8859-=
-1
-+   encoding, it doesn't look like one in the BIG5, BIG5-HKSCS, GBK, GB=
-18030,
-+   SHIFT_JIS, JOHAB encodings, because \xe0\x7d is a single character =
-in these
-+   encodings.  */
-+static void
-+find_variables (const char *string,
-+		void (*callback) (const char *var_ptr, size_t var_len))
-+{
-+  for (; *string !=3D '\0';)
-+    if (*string++ =3D=3D '$')
-+      {
-+	const char *variable_start;
-+	const char *variable_end;
-+	unsigned short int valid;
-+	char c;
-+
-+	if (*string =3D=3D '{')
-+	  string++;
-+
-+	variable_start =3D string;
-+	c =3D *string;
-+	if ((c >=3D 'A' && c <=3D 'Z') || (c >=3D 'a' && c <=3D 'z') || c =3D=
-=3D '_')
-+	  {
-+	    do
-+	      c =3D *++string;
-+	    while ((c >=3D 'A' && c <=3D 'Z') || (c >=3D 'a' && c <=3D 'z')
-+		   || (c >=3D '0' && c <=3D '9') || c =3D=3D '_');
-+	    variable_end =3D string;
-+
-+	    if (variable_start[-1] =3D=3D '{')
-+	      {
-+		if (*string =3D=3D '}')
-+		  {
-+		    string++;
-+		    valid =3D 1;
-+		  }
-+		else
-+		  valid =3D 0;
-+	      }
-+	    else
-+	      valid =3D 1;
-+
-+	    if (valid)
-+	      callback (variable_start, variable_end - variable_start);
-+	  }
-+      }
-+}
-+
-+
-+/* Print a variable to stdout, followed by a newline.  */
-+static void
-+print_variable (const char *var_ptr, size_t var_len)
-+{
-+  fwrite (var_ptr, var_len, 1, stdout);
-+  putchar ('\n');
-+}
-+
-+/* Print the variables contained in STRING to stdout, each one followe=
-d by a
-+   newline.  */
-+static void
-+print_variables (const char *string)
-+{
-+  find_variables (string, &print_variable);
-+}
-+
-+
-+/* Type describing list of immutable strings,
-+   implemented using a dynamic array.  */
-+typedef struct string_list_ty string_list_ty;
-+struct string_list_ty
-+{
-+  const char **item;
-+  size_t nitems;
-+  size_t nitems_max;
-+};
-+
-+/* Initialize an empty list of strings.  */
-+static inline void
-+string_list_init (string_list_ty *slp)
-+{
-+  slp->item =3D NULL;
-+  slp->nitems =3D 0;
-+  slp->nitems_max =3D 0;
-+}
-+
-+/* Append a single string to the end of a list of strings.  */
-+static inline void
-+string_list_append (string_list_ty *slp, const char *s)
-+{
-+  /* Grow the list.  */
-+  if (slp->nitems >=3D slp->nitems_max)
-+    {
-+      size_t nbytes;
-+
-+      slp->nitems_max =3D slp->nitems_max * 2 + 4;
-+      nbytes =3D slp->nitems_max * sizeof (slp->item[0]);
-+      slp->item =3D (const char **) xrealloc (slp->item, nbytes);
-+    }
-+
-+  /* Add the string to the end of the list.  */
-+  slp->item[slp->nitems++] =3D s;
-+}
-+
-+/* Compare two strings given by reference.  */
-+static int
-+cmp_string (const void *pstr1, const void *pstr2)
-+{
-+  const char *str1 =3D *(const char **)pstr1;
-+  const char *str2 =3D *(const char **)pstr2;
-+
-+  return strcmp (str1, str2);
-+}
-+
-+/* Sort a list of strings.  */
-+static inline void
-+string_list_sort (string_list_ty *slp)
-+{
-+  if (slp->nitems > 0)
-+    qsort (slp->item, slp->nitems, sizeof (slp->item[0]), cmp_string);
-+}
-+
-+/* Test whether a string list contains a given string.  */
-+static inline int
-+string_list_member (const string_list_ty *slp, const char *s)
-+{
-+  size_t j;
-+
-+  for (j =3D 0; j < slp->nitems; ++j)
-+    if (strcmp (slp->item[j], s) =3D=3D 0)
-+      return 1;
-+  return 0;
-+}
-+
-+/* Test whether a sorted string list contains a given string.  */
-+static int
-+sorted_string_list_member (const string_list_ty *slp, const char *s)
-+{
-+  size_t j1, j2;
-+
-+  j1 =3D 0;
-+  j2 =3D slp->nitems;
-+  if (j2 > 0)
-+    {
-+      /* Binary search.  */
-+      while (j2 - j1 > 1)
-+	{
-+	  /* Here we know that if s is in the list, it is at an index j
-+	     with j1 <=3D j < j2.  */
-+	  size_t j =3D (j1 + j2) >> 1;
-+	  int result =3D strcmp (slp->item[j], s);
-+
-+	  if (result > 0)
-+	    j2 =3D j;
-+	  else if (result =3D=3D 0)
-+	    return 1;
-+	  else
-+	    j1 =3D j + 1;
-+	}
-+      if (j2 > j1)
-+	if (strcmp (slp->item[j1], s) =3D=3D 0)
-+	  return 1;
-+    }
-+  return 0;
-+}
-+
-+
-+/* Set of variables on which to perform substitution.
-+   Used only if !all_variables.  */
-+static string_list_ty variables_set;
-+
-+/* Adds a variable to variables_set.  */
-+static void
-+note_variable (const char *var_ptr, size_t var_len)
-+{
-+  char *string =3D xmalloc (var_len + 1);
-+  memcpy (string, var_ptr, var_len);
-+  string[var_len] =3D '\0';
-+
-+  string_list_append (&variables_set, string);
-+}
-+
-+/* Stores the variables occurring in the string in variables_set.  */
-+static void
-+note_variables (const char *string)
-+{
-+  string_list_init (&variables_set);
-+  find_variables (string, &note_variable);
-+  string_list_sort (&variables_set);
-+}
-+
-+
-+static int
-+do_getc ()
-+{
-+  int c =3D getc (stdin);
-+
-+  if (c =3D=3D EOF)
-+    {
-+      if (ferror (stdin))
-+	error ("error while reading standard input");
-+    }
-+
-+  return c;
-+}
-+
-+static inline void
-+do_ungetc (int c)
-+{
-+  if (c !=3D EOF)
-+    ungetc (c, stdin);
-+}
-+
-+/* Copies stdin to stdout, performing substitutions.  */
-+static void
-+subst_from_stdin ()
-+{
-+  static char *buffer;
-+  static size_t bufmax;
-+  static size_t buflen;
-+  int c;
-+
-+  for (;;)
-+    {
-+      c =3D do_getc ();
-+      if (c =3D=3D EOF)
-+	break;
-+      /* Look for $VARIABLE or ${VARIABLE}.  */
-+      if (c =3D=3D '$')
-+	{
-+	  unsigned short int opening_brace =3D 0;
-+	  unsigned short int closing_brace =3D 0;
-+
-+	  c =3D do_getc ();
-+	  if (c =3D=3D '{')
-+	    {
-+	      opening_brace =3D 1;
-+	      c =3D do_getc ();
-+	    }
-+	  if ((c >=3D 'A' && c <=3D 'Z') || (c >=3D 'a' && c <=3D 'z') || c =3D=
-=3D '_')
-+	    {
-+	      unsigned short int valid;
-+
-+	      /* Accumulate the VARIABLE in buffer.  */
-+	      buflen =3D 0;
-+	      do
-+		{
-+		  if (buflen >=3D bufmax)
-+		    {
-+		      bufmax =3D 2 * bufmax + 10;
-+		      buffer =3D xrealloc (buffer, bufmax);
-+		    }
-+		  buffer[buflen++] =3D c;
-+
-+		  c =3D do_getc ();
-+		}
-+	      while ((c >=3D 'A' && c <=3D 'Z') || (c >=3D 'a' && c <=3D 'z')
-+		     || (c >=3D '0' && c <=3D '9') || c =3D=3D '_');
-+
-+	      if (opening_brace)
-+		{
-+		  if (c =3D=3D '}')
-+		    {
-+		      closing_brace =3D 1;
-+		      valid =3D 1;
-+		    }
-+		  else
-+		    {
-+		      valid =3D 0;
-+		      do_ungetc (c);
-+		    }
-+		}
-+	      else
-+		{
-+		  valid =3D 1;
-+		  do_ungetc (c);
-+		}
-+
-+	      if (valid)
-+		{
-+		  /* Terminate the variable in the buffer.  */
-+		  if (buflen >=3D bufmax)
-+		    {
-+		      bufmax =3D 2 * bufmax + 10;
-+		      buffer =3D xrealloc (buffer, bufmax);
-+		    }
-+		  buffer[buflen] =3D '\0';
-+
-+		  /* Test whether the variable shall be substituted.  */
-+		  if (!all_variables
-+		      && !sorted_string_list_member (&variables_set, buffer))
-+		    valid =3D 0;
-+		}
-+
-+	      if (valid)
-+		{
-+		  /* Substitute the variable's value from the environment.  */
-+		  const char *env_value =3D getenv (buffer);
-+
-+		  if (env_value !=3D NULL)
-+		    fputs (env_value, stdout);
-+		}
-+	      else
-+		{
-+		  /* Perform no substitution at all.  Since the buffered input
-+		     contains no other '$' than at the start, we can just
-+		     output all the buffered contents.  */
-+		  putchar ('$');
-+		  if (opening_brace)
-+		    putchar ('{');
-+		  fwrite (buffer, buflen, 1, stdout);
-+		  if (closing_brace)
-+		    putchar ('}');
-+		}
-+	    }
-+	  else
-+	    {
-+	      do_ungetc (c);
-+	      putchar ('$');
-+	      if (opening_brace)
-+		putchar ('{');
-+	    }
-+	}
-+      else
-+	putchar (c);
-+    }
-+}
-diff --git a/t/lib-gettext.sh b/t/lib-gettext.sh
-index 831ee38..f0101fc 100644
---- a/t/lib-gettext.sh
-+++ b/t/lib-gettext.sh
-@@ -40,3 +40,27 @@ else
- 	test_set_prereq NO_GETTEXT
- 	say "# lib-gettext: No GETTEXT support available"
- fi
-+
-+test_eval_gettext_interpolation() {
-+	test_expect_success NO_GETTEXT_POISON 'eval_gettext: our eval_gettext=
-() fallback can interpolate whitespace variables' '
-+	    git_am_cmdline=3D"git am" &&
-+	    printf "test git am" >expect &&
-+	    eval_gettext "test \$git_am_cmdline" >actual &&
-+	    test_cmp expect actual
-+	'
-+
-+	test_expect_success NO_GETTEXT_POISON 'eval_gettext: git am $cmdline =
-bug' '
-+	    cmdline=3D"git am -3" &&
-+	    export cmdline &&
-+	    cat >expect <<EOF &&
-+When you have resolved this problem run "git am -3 --resolved".
-+If you would prefer to skip this patch, instead run "git am -3 --skip"=
-=2E
-+To restore the original branch and stop patching run "git am -3 --abor=
-t".
-+EOF
-+	    eval_gettext "When you have resolved this problem run \"\$cmdline=
- --resolved\".
-+If you would prefer to skip this patch, instead run \"\$cmdline --skip=
-\".
-+To restore the original branch and stop patching run \"\$cmdline --abo=
-rt\"." >actual &&
-+	    echo >>actual &&
-+	    test_cmp expect actual
-+	'
-+}
-diff --git a/t/t0200-gettext.sh b/t/t0200-gettext.sh
-index 8853d8a..58948fa 100755
---- a/t/t0200-gettext.sh
-+++ b/t/t0200-gettext.sh
-@@ -105,4 +105,7 @@ test_expect_success GETTEXT_LOCALE 'sanity: Some ge=
-ttext("") data for real local
-     test -s real-locale
- '
-=20
-+# Test eval_gettext() interpolation with the actual eval_gettext funct=
-ion
-+test_eval_gettext_interpolation
-+
- test_done
-diff --git a/t/t0201-gettext-fallbacks.sh b/t/t0201-gettext-fallbacks.s=
-h
-index 47ce4f6..d2dc4af 100755
---- a/t/t0201-gettext-fallbacks.sh
-+++ b/t/t0201-gettext-fallbacks.sh
-@@ -46,4 +46,7 @@ test_expect_success 'eval_gettext: our eval_gettext()=
- fallback can interpolate v
-     test_cmp expect actual
- '
-=20
-+# Test eval_gettext() interpolation with the fallback eval_gettext fun=
-ction
-+test_eval_gettext_interpolation
-+
- test_done
+  gettext docs: add a "Testing your changes" section to po/README
+  gettext docs: add "Marking strings for translation" section in
+    po/README
+  gettext docs: the gettext.h C interface
+  gettext docs: the git-sh-i18n.sh Shell interface
+  gettext docs: the Git::I18N Perl interface
+  gettext docs: add "Testing marked strings" section to po/README
+  gettextize: git-pull add git-sh-i18n
+  gettextize: git-pull die messages
+  gettextize: git-pull eval_gettext + die message
+  gettextize: git-pull eval_gettext + warning message
+  gettextize: git-pull split up "no candidate" message
+  gettextize: git-pull "You asked to pull" message
+  gettextize: git-pull "[...] not currently on a branch" message
+  gettextize: git-pull "rebase against" / "merge with" messages
+  gettextize: git-submodule add git-sh-i18n
+  gettextize: git-submodule echo + eval_gettext messages
+  gettextize: git-submodule say + eval_gettext messages
+  gettextize: git-submodule die + eval_gettext messages
+  gettextize: git-submodule $update_module say + die messages
+  gettextize: git-submodule "cached cannot be used" message
+  gettextize: git-submodule "Submodule change[...]" messages
+  gettextize: git-submodule $errmsg messages
+  gettextize: git-submodule "Entering [...]" message
+  gettextize: git-submodule "[...] path is ignored" message
+  gettextize: git-submodule "path not initialized" message
+  gettextize: git-submodule "blob" and "submodule" messages
+  gettextize: git-stash add git-sh-i18n
+  gettextize: git-stash echo + gettext message
+  gettextize: git-stash say + gettext messages
+  gettextize: git-stash die + gettext messages
+  gettextize: git-stash die + eval_gettext messages
+  gettextize: git-stash die + eval_gettext $* messages
+  gettextize: git-stash die + eval_gettext $1 messages
+  gettextize: git-stash "unknown option" message
+  gettextize: git-stash drop_stash say/die messages
+  gettextize: git-bisect add git-sh-i18n
+  gettextize: git-bisect gettext + echo message
+  gettextize: git-bisect echo + gettext messages
+  gettextize: git-bisect echo + eval_gettext message
+  gettextize: git-bisect die + gettext messages
+  gettextize: git-bisect die + eval_gettext messages
+  gettextize: git-bisect bisect_run + $@ messages
+  gettextize: git-bisect bisect_reset + $1 messages
+  gettextize: git-bisect bisect_replay + $1 messages
+  gettextize: git-bisect [Y/n] messages
+  gettextize: git-bisect bisect_next_check "You need to" message
+
+ .gitignore                          |    3 +
+ Documentation/CodingGuidelines      |    7 +
+ INSTALL                             |   12 +
+ Makefile                            |  135 ++-
+ builtin.h                           |    1 +
+ builtin/add.c                       |   46 +-
+ builtin/archive.c                   |   14 +-
+ builtin/branch.c                    |   69 +-
+ builtin/bundle.c                    |    6 +-
+ builtin/checkout.c                  |   93 +-
+ builtin/clean.c                     |   33 +-
+ builtin/clone.c                     |   63 +-
+ builtin/commit.c                    |  156 +-
+ builtin/describe.c                  |   36 +-
+ builtin/diff.c                      |   20 +-
+ builtin/fetch.c                     |   82 +-
+ builtin/gc.c                        |   24 +-
+ builtin/grep.c                      |   34 +-
+ builtin/init-db.c                   |   58 +-
+ builtin/log.c                       |   68 +-
+ builtin/merge.c                     |  124 +-
+ builtin/mv.c                        |   32 +-
+ builtin/notes.c                     |  134 +-
+ builtin/push.c                      |   42 +-
+ builtin/reset.c                     |   42 +-
+ builtin/revert.c                    |   75 +-
+ builtin/rm.c                        |   22 +-
+ builtin/shortlog.c                  |    8 +-
+ builtin/tag.c                       |   66 +-
+ config.mak.in                       |    3 +
+ configure.ac                        |   18 +
+ daemon.c                            |    3 +
+ fast-import.c                       |    3 +
+ gettext.c                           |   35 +
+ gettext.h                           |   22 +
+ git-am.sh                           |   68 +-
+ git-bisect.sh                       |   84 +-
+ git-pull.sh                         |  147 +-
+ git-sh-i18n.sh                      |   80 +
+ git-stash.sh                        |   75 +-
+ git-submodule.sh                    |   94 +-
+ git.c                               |    3 +
+ http-backend.c                      |    3 +
+ http-fetch.c                        |    3 +
+ http-push.c                         |    3 +
+ imap-send.c                         |    3 +
+ perl/Git/I18N.pm                    |   91 +
+ perl/Makefile                       |    3 +-
+ perl/Makefile.PL                    |   14 +-
+ po/.gitignore                       |    1 +
+ po/README                           |  209 ++
+ po/de.po                            | 3609 +++++++++++++++++++++++++++=
+++++++++
+ po/en_GB.po                         | 2784 +++++++++++++++++++++++++++
+ po/hi.po                            | 2787 +++++++++++++++++++++++++++
+ po/is.po                            |  194 ++
+ po/pl.po                            | 2793 +++++++++++++++++++++++++++
+ po/sv.po                            | 3492 +++++++++++++++++++++++++++=
+++++++
+ sh-i18n--envsubst.c                 |  444 +++++
+ shell.c                             |    3 +
+ show-index.c                        |    3 +
+ t/lib-gettext.sh                    |   92 +
+ t/lib-httpd.sh                      |    2 +-
+ t/t0001-init.sh                     |    2 +-
+ t/t0200-gettext-basic.sh            |  111 ++
+ t/t0200/test.c                      |   23 +
+ t/t0200/test.perl                   |   14 +
+ t/t0200/test.sh                     |   14 +
+ t/t0201-gettext-fallbacks.sh        |   52 +
+ t/t0202-gettext-perl.sh             |   27 +
+ t/t0202/test.pl                     |  109 ++
+ t/t0203-gettext-setlocale-sanity.sh |   26 +
+ t/t0204-gettext-reencode-sanity.sh  |   78 +
+ t/t0205-gettext-poison.sh           |   36 +
+ t/t1200-tutorial.sh                 |    5 +-
+ t/t2200-add-update.sh               |    2 +-
+ t/t2204-add-ignored.sh              |   37 +-
+ t/t3030-merge-recursive.sh          |    2 +-
+ t/t3200-branch.sh                   |    2 +-
+ t/t3203-branch-output.sh            |    2 +-
+ t/t3501-revert-cherry-pick.sh       |    2 +-
+ t/t3507-cherry-pick-conflict.sh     |    2 +-
+ t/t3700-add.sh                      |   11 +-
+ t/t4001-diff-rename.sh              |    4 +-
+ t/t4014-format-patch.sh             |    2 +-
+ t/t4150-am.sh                       |    5 +-
+ t/t4151-am-abort.sh                 |    2 +-
+ t/t5541-http-push.sh                |    7 +-
+ t/t5601-clone.sh                    |    2 +-
+ t/t6040-tracking-info.sh            |    2 +-
+ t/t6120-describe.sh                 |    2 +-
+ t/t7004-tag.sh                      |    1 +
+ t/t7012-skip-worktree-writing.sh    |    4 +-
+ t/t7060-wtstatus.sh                 |    2 +-
+ t/t7102-reset.sh                    |    2 +-
+ t/t7110-reset-merge.sh              |    6 +-
+ t/t7201-co.sh                       |   10 +-
+ t/t7300-clean.sh                    |    6 +-
+ t/t7400-submodule-basic.sh          |    4 +-
+ t/t7401-submodule-summary.sh        |   12 +-
+ t/t7407-submodule-foreach.sh        |    4 +-
+ t/t7500-commit.sh                   |    6 +-
+ t/t7501-commit.sh                   |    7 +-
+ t/t7502-commit.sh                   |   60 +-
+ t/t7506-status-submodule.sh         |   28 +-
+ t/t7508-status.sh                   |  115 +-
+ t/t7600-merge.sh                    |    2 +-
+ t/t7811-grep-open.sh                |    2 +-
+ t/test-lib.sh                       |   10 +
+ upload-pack.c                       |    3 +
+ wt-status.c                         |  116 +-
+ 110 files changed, 18581 insertions(+), 1075 deletions(-)
+ create mode 100644 gettext.c
+ create mode 100644 gettext.h
+ create mode 100644 git-sh-i18n.sh
+ create mode 100644 perl/Git/I18N.pm
+ create mode 100644 po/.gitignore
+ create mode 100644 po/README
+ create mode 100644 po/de.po
+ create mode 100644 po/en_GB.po
+ create mode 100644 po/hi.po
+ create mode 100644 po/is.po
+ create mode 100644 po/pl.po
+ create mode 100644 po/sv.po
+ create mode 100644 sh-i18n--envsubst.c
+ create mode 100644 t/lib-gettext.sh
+ create mode 100755 t/t0200-gettext-basic.sh
+ create mode 100644 t/t0200/test.c
+ create mode 100644 t/t0200/test.perl
+ create mode 100644 t/t0200/test.sh
+ create mode 100755 t/t0201-gettext-fallbacks.sh
+ create mode 100755 t/t0202-gettext-perl.sh
+ create mode 100644 t/t0202/test.pl
+ create mode 100755 t/t0203-gettext-setlocale-sanity.sh
+ create mode 100755 t/t0204-gettext-reencode-sanity.sh
+ create mode 100755 t/t0205-gettext-poison.sh
+
 --=20
 1.7.2.3
