@@ -1,99 +1,160 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 003/160] gettext: fix bug in git-sh-i18n's eval_gettext()
- by using envsubst(1)
-Date: Sun, 14 Nov 2010 15:47:32 -0600
-Message-ID: <20101114214731.GA16413@burratino>
-References: <1289747245-23263-1-git-send-email-avarab@gmail.com>
- <1289747245-23263-3-git-send-email-avarab@gmail.com>
- <20101114181605.GI26459@burratino>
- <7vmxpb1ztf.fsf@alter.siamese.dyndns.org>
- <AANLkTinh_Nkxvw7Z5HU=TbJHHFRZeWgr0COJ+N96OeTd@mail.gmail.com>
- <20101114212757.GD10150@burratino>
- <AANLkTim-j6TLwz0PugZvaEf1x3hW=76vT1gALC=w3DOu@mail.gmail.com>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH w/o PGP] do not overwrite untracked during merge from
+ unborn branch
+Date: Sun, 14 Nov 2010 22:49:27 +0100
+Message-ID: <20101114214927.GA29579@localhost>
+References: <AANLkTimDnyzyV1FEEwEuxLfG1nSOcNa7Hzwt7DDssjba@mail.gmail.com>
+ <20101114213453.GA29287@localhost>
+ <20101114214601.GB29287@localhost>
+Reply-To: Clemens Buchacher <drizzd@aon.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 14 22:48:25 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Gert Palok <gert@planc.ee>, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 14 22:49:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PHkQw-0002D8-FB
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 22:48:22 +0100
+	id 1PHkSB-0002vR-DT
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 22:49:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757077Ab0KNVsJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Nov 2010 16:48:09 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:43852 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757019Ab0KNVsI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Nov 2010 16:48:08 -0500
-Received: by yxn35 with SMTP id 35so839133yxn.19
-        for <git@vger.kernel.org>; Sun, 14 Nov 2010 13:48:06 -0800 (PST)
+	id S932376Ab0KNVt2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Nov 2010 16:49:28 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:51486 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932366Ab0KNVt1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Nov 2010 16:49:27 -0500
+Received: by bwz15 with SMTP id 15so4675722bwz.19
+        for <git@vger.kernel.org>; Sun, 14 Nov 2010 13:49:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=1kUxC3C85Z77Skw54pbNBwtlLmq0zXjsO764Jmdna7I=;
-        b=XKyxUxES7sWAh76REHP8zUD64xVqUEeZc7DFG5uDrJKtHzaBkr6WJLkYN0nYuCuB57
-         M+NaXc9imR++B6nyjy1ZDZ28KAjenea8OFUaKszA8WO4IBkJWXEIyerFsmey/rpcmjVf
-         5xhDXOPDcqF6xhqBQF1iGjom8tmO/HuU16a0Q=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:reply-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=ifWxrAB34OvEITJNnJMNR1GWvzuFJHOPMzUKaVGAtp4=;
+        b=ihYW4hf3BWvJXbboTXiuFCVWE51fpZ8pwBLPH697w+IFXog7pWgCQPzkjn0C0snfNk
+         lPseuNDk3njcb8KPt301KAsly674Q2CnnuA2N+WG0LgpHsGdSStQ9cRGPvJm7kajunte
+         q2oz8/Yg0BJ8p0LBfR4DYlaLOzIG3V5C/27Xk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=tr8HjV2RZcFBeUsMqacYWYcObjgdhpF4AikTafAps8wGTKasKQ4W25B62qD8/9tT9b
-         O/ULDOZHmvy0s0gIbkEwowZ4BR8Za16nMUgdlZzTuv3Fs/gNV6nM50aav4/yIU2u6IE7
-         L2d96nKdTRaY169JqObFRGStOpFBFhtM75K08=
-Received: by 10.150.192.2 with SMTP id p2mr4915944ybf.73.1289771286720;
-        Sun, 14 Nov 2010 13:48:06 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id q31sm1821414yba.18.2010.11.14.13.48.05
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 14 Nov 2010 13:48:05 -0800 (PST)
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:reply-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=FaDJncKv8RXawjVvaVlX45Gg06bd3nSV1BWUodD81k2EM8UBtIi2NJYNvbS3tJ7Vo+
+         HDPx2Y7Mt+UTMvt58PjNrDt3akI/H5yA2+BJItOFA7uqQ18wkF67r9lbX+gU6ZMHPB2O
+         mI+aygx16A5//RdlUws8wWirJzPR5KcBqtfWE=
+Received: by 10.204.73.78 with SMTP id p14mr5318185bkj.154.1289771365866;
+        Sun, 14 Nov 2010 13:49:25 -0800 (PST)
+Received: from darc.lan (p549A7640.dip.t-dialin.net [84.154.118.64])
+        by mx.google.com with ESMTPS id r21sm2669481bkj.22.2010.11.14.13.49.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 14 Nov 2010 13:49:24 -0800 (PST)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1PHkRz-0007lI-Rm; Sun, 14 Nov 2010 22:49:27 +0100
 Content-Disposition: inline
-In-Reply-To: <AANLkTim-j6TLwz0PugZvaEf1x3hW=76vT1gALC=w3DOu@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20101114214601.GB29287@localhost>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161451>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+In case HEAD does not point to a valid commit yet, merge is
+implemented as a hard reset. This will cause untracked files to be
+overwritten.
 
-> This is how it currently gets compiled:
->=20
->     $ rm git-sh-i18n--envsubst sh-i18n--envsubst.o; make -j 5 all V=3D=
-1
->     gcc -o sh-i18n--envsubst.o -c   -g -O2 -Wall -I.  -DHAVE_PATHS_H
-> -DSHA1_HEADER=3D'<openssl/sha.h>'  -DNO_STRLCPY -DNO_MKSTEMPS
-> sh-i18n--envsubst.c
->     gcc  -g -O2 -Wall -I.  -DHAVE_PATHS_H
-> -DSHA1_HEADER=3D'<openssl/sha.h>'  -DNO_STRLCPY -DNO_MKSTEMPS -o
-> git-sh-i18n--envsubst   sh-i18n--envsubst.o libgit.a xdiff/lib.a  -lz
-> -lcrypto -lpthread
->=20
-> I tried to remove some of those library includes. But it'll
-> complain. However if I do:
->=20
->     diff --git a/sh-i18n--envsubst.c b/sh-i18n--envsubst.c
->     index 8db71b1..7d4c870 100644
->     --- a/sh-i18n--envsubst.c
->     +++ b/sh-i18n--envsubst.c
->     @@ -215 +215 @@ string_list_append (string_list_ty *slp, const ch=
-ar *s)
->     -      slp->item =3D (const char **) xrealloc (slp->item, nbytes)=
-;
->     +      slp->item =3D (const char **) realloc (slp->item, nbytes);
-[...]
-> It'll compile stand-alone with no library includes at all.
+Instead, assume the empty tree for HEAD and do a regular merge. An
+untracked file will cause the merge to abort and do nothing. If no
+conflicting files are present, the merge will have the same effect
+as a hard reset.
 
-Yes, that is what $gmane/160842 is about (also see $gmane/137738 for
-background).  In this case, a simple local stub xmalloc/xrealloc etc
-to take care of checking for NULL seems fine, indeed.
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
+
+On Sun, Nov 14, 2010 at 10:46:02PM +0100, Clemens Buchacher wrote:
+> --MfFXiAuoTsnnDAfZ
+> Content-Type: text/plain; charset=us-ascii
+> Content-Disposition: inline
+> Content-Transfer-Encoding: quoted-printable
+>
+> This is based on next and does not apply cleanly to master because
+> of t7607. I can rebase it to master, but then it will conflict with
+> next later.
+
+Without signature this time. Oops.
+
+Clemens
+
+ builtin/merge.c            |   20 +++++++++++++++++++-
+ t/t7607-merge-overwrite.sh |   16 ++++++++++++++++
+ 2 files changed, 35 insertions(+), 1 deletions(-)
+
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 10f091b..7571c93 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -234,6 +234,24 @@ static void save_state(void)
+ 		die("not a valid object: %s", buffer.buf);
+ }
+ 
++static void read_empty(unsigned const char *sha1, int verbose)
++{
++	int i = 0;
++	const char *args[6];
++
++	args[i++] = "read-tree";
++	if (verbose)
++		args[i++] = "-v";
++	args[i++] = "-m";
++	args[i++] = "-u";
++	args[i++] = EMPTY_TREE_SHA1_HEX;
++	args[i++] = sha1_to_hex(sha1);
++	args[i] = NULL;
++
++	if (run_command_v_opt(args, RUN_GIT_CMD))
++		die("read-tree failed");
++}
++
+ static void reset_hard(unsigned const char *sha1, int verbose)
+ {
+ 	int i = 0;
+@@ -985,7 +1003,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 			die("%s - not something we can merge", argv[0]);
+ 		update_ref("initial pull", "HEAD", remote_head->sha1, NULL, 0,
+ 				DIE_ON_ERR);
+-		reset_hard(remote_head->sha1, 0);
++		read_empty(remote_head->sha1, 0);
+ 		return 0;
+ 	} else {
+ 		struct strbuf merge_names = STRBUF_INIT;
+diff --git a/t/t7607-merge-overwrite.sh b/t/t7607-merge-overwrite.sh
+index e49dd80..d4a499d 100755
+--- a/t/t7607-merge-overwrite.sh
++++ b/t/t7607-merge-overwrite.sh
+@@ -127,4 +127,20 @@ test_expect_success SYMLINKS 'will not be confused by symlink in leading path' '
+ 	git checkout sub
+ '
+ 
++cat >expect <<\EOF
++error: Untracked working tree file 'c0.c' would be overwritten by merge.
++fatal: read-tree failed
++EOF
++
++test_expect_success 'will not overwrite untracked file on unborn branch' '
++	git reset --hard c0 &&
++	git rm -fr . &&
++	git checkout --orphan new &&
++	cp important c0.c &&
++	test_must_fail git merge c0 2>out &&
++	test_cmp out expect &&
++	test_path_is_missing .git/MERGE_HEAD &&
++	test_cmp important c0.c
++'
++
+ test_done
+-- 
+1.7.3.1.105.g84915
