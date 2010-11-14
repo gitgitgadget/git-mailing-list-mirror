@@ -1,101 +1,61 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv6 06/23] notes.h/c: Propagate combine_notes_fn return
- value to add_note() and beyond
-Date: Sun, 14 Nov 2010 15:22:43 -0600
-Message-ID: <20101114212243.GC10150@burratino>
-References: <1289339399-4733-1-git-send-email-johan@herland.net>
- <1289339399-4733-7-git-send-email-johan@herland.net>
- <AANLkTinQhkXvfa0BS0dFK6-mXFpU+uQ=rKRJ1QaXXA1S@mail.gmail.com>
+From: Khawaja Shams <kshams@usc.edu>
+Subject: Multiple clients accessing git over NFS
+Date: Sun, 14 Nov 2010 13:24:01 -0800
+Message-ID: <AANLkTimyFkVFAw4s2fiWKZFPvnx15K6U6GbxmRgznx7Z@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
-	bebarino@gmail.com, avarab@gmail.com, gitster@pobox.com,
-	srabbelier@gmail.com
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 14 22:23:26 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 14 22:24:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PHk2n-0005VA-IP
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 22:23:25 +0100
+	id 1PHk3V-0005vD-39
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 22:24:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753242Ab0KNVXU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Nov 2010 16:23:20 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:49026 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751912Ab0KNVXT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Nov 2010 16:23:19 -0500
-Received: by gxk23 with SMTP id 23so2654058gxk.19
-        for <git@vger.kernel.org>; Sun, 14 Nov 2010 13:23:18 -0800 (PST)
+	id S1755867Ab0KNVYE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Nov 2010 16:24:04 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:57917 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753583Ab0KNVYC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Nov 2010 16:24:02 -0500
+Received: by fxm6 with SMTP id 6so1326765fxm.19
+        for <git@vger.kernel.org>; Sun, 14 Nov 2010 13:24:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=x1JgqY2374MreTPTji/VXKycmCNiP9YjpCFa4NxKsok=;
-        b=shdxPN6v2uc/s4BxHt3mSd13cPVt/OBT1mZWezaMGsc5DcYTvx4DOvlssnXEc3+4Px
-         gQyMVcihXOB3/DhMrsSeoqhdNBI3LgwG/E4TIBT+mh0mCH8XUa0GH/MZ9dEYn5vADuVJ
-         niNQJEZNCcyCVKI4Wi8I3rI5yUeCtFGfv1O/g=
+        h=domainkey-signature:mime-version:received:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=gGx0JTK7VUTlJa582osT1bEZZZAVV0KFco5bOEsiUvo=;
+        b=bPZ4qb1ruYTdzi8WCqeNpij/i2LQ7GJOgxQYkLJc7XYk8z1hmTnZ6JA9Y6UNPb4wZr
+         mpqkrgiNpCGQ3ZmdsGJ4tkOjDtNKHnYEKhgcgdK4r9Go/8ZBarC1mCRWSFPCW95HbKzw
+         fWguidxjtZ+ONyoRwKAoK/4OuLXC5uRk9RRPs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=ezffVX/sWQYXuwTp0yMPtOnoXfS3lj+nmWABgRgndpkfqQBc7Z3sNG3Qh9pSTAuaq2
-         Pdi1125Ii0jGzyVfrQCGpJVVfVMoAoIEwJxiDmiXEuKgV8g8C5+Bl9Xux7CrEjLIBLgn
-         XLJBbsZZVJ8jYFi4Qt4FgB4JxlhS3FcJeJ9es=
-Received: by 10.151.44.9 with SMTP id w9mr8180253ybj.274.1289769798175;
-        Sun, 14 Nov 2010 13:23:18 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id v39sm2409380yba.19.2010.11.14.13.23.15
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 14 Nov 2010 13:23:17 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTinQhkXvfa0BS0dFK6-mXFpU+uQ=rKRJ1QaXXA1S@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type:content-transfer-encoding;
+        b=LAVJeCdA6cE+7AAa3PRAJFeMjwwwBQ8/1BhAIIjvonZ2JRjlOt9000G4TOzZ8TVLvM
+         zC6ptJ4zD23ILUhf/GykUZ6Ug2v14INfqCNXym3cgXuF7A2UQpmq0jw35jwhofcaihvI
+         K6DE5N1Gxzlgd46l/b8njlEMNg/ERLu9qu6vU=
+Received: by 10.223.78.139 with SMTP id l11mr3855603fak.31.1289769841313; Sun,
+ 14 Nov 2010 13:24:01 -0800 (PST)
+Received: by 10.223.86.205 with HTTP; Sun, 14 Nov 2010 13:24:01 -0800 (PST)
+X-Google-Sender-Auth: 32NS2NEgMmp7IZ6lP7pDHV0m_U8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161442>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161443>
 
-Thiago Farina wrote:
-> On Tue, Nov 9, 2010 at 7:49 PM, Johan Herland <johan@herland.net> wro=
-te:
-
->> --- a/builtin/notes.c
->> +++ b/builtin/notes.c
->> @@ -573,8 +573,8 @@ static int add(int argc, const char **argv, cons=
-t char *prefix)
->>
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (is_null_sha1(new_note))
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0remove_note(t=
-, object);
->> - =C2=A0 =C2=A0 =C2=A0 else
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 add_note(t, objec=
-t, new_note, combine_notes_overwrite);
->> + =C2=A0 =C2=A0 =C2=A0 else if (add_note(t, object, new_note, combin=
-e_notes_overwrite))
->> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die("confused: co=
-mbine_notes_overwrite failed");
->
-> This message looks like more a debug information. Could it be
-> rewritten to be more user friendly / more informative?
-
-Sverre mentioned the same thing.  The intent is the same as the existin=
-g
-
-		die("should not happen, someone must be hit on the forehead");
-
---- i.e., to provoke bug reports if it happens, without the appearance
-of begging. :)
-
-So how about:
-
-		die("BUG: combine_notes_overwrite failed");
-
-Something involving assert() could also work, but that tends to be
-a bit ugly.
+=A0=A0Is it a recommended practice to share a repository over NFS, wher=
+e
+multiple clients can be pushing changes simultaneously?=A0 In our
+production environment, we have a Git repository setup behind
+git-http-backend. We would like to place multiple Apache servers
+behind a load balancer to maximize availability and performance.
+Before we proceed, we wanted to check to see if this practice has a
+potential to cause repository corruption. If there are other ways
+others have solved this problem, we would be very interested in
+learning about those as well. Thank you.
