@@ -1,149 +1,109 @@
-From: Gabriel Corona <gabriel.corona@enst-bretagne.fr>
-Subject: [PATCHv2 1/2] t5550: test HTTP authentication and userinfo decoding
-Date: Sun, 14 Nov 2010 02:51:14 +0100
-Message-ID: <1289699475-11364-2-git-send-email-gabriel.corona@enst-bretagne.fr>
-References: <1289699475-11364-1-git-send-email-gabriel.corona@enst-bretagne.fr>
-Cc: srabbelier@gmail.com,
-	Gabriel Corona <gabriel.corona@enst-bretagne.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 14 03:02:41 2010
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [RFC] rebase: be cleverer with rebased upstream branches
+Date: Sat, 13 Nov 2010 21:46:03 -0500
+Message-ID: <AANLkTikvpXpFH81q6f-xp5zKCNGFpYoVO7D9-Cy2M_J7@mail.gmail.com>
+References: <1289592713-11786-1-git-send-email-martin.von.zweigbergk@gmail.com>
+	<AANLkTincij4wR4=RhbA0oCwe66OhVry0AkS6GCALVWmz@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, trast@student.ethz.ch, newren@gmail.com
+To: =?UTF-8?B?U2FudGkgQsOpamFy?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Sun Nov 14 03:46:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PHRvU-0003Pg-K4
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 03:02:40 +0100
+	id 1PHSbi-0004Zk-2q
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 03:46:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754478Ab0KNCC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Nov 2010 21:02:26 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:50158 "EHLO smtp3-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754395Ab0KNCCZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Nov 2010 21:02:25 -0500
-Received: from localhost.localdomain (unknown [88.180.106.44])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 64317A60E8;
-	Sun, 14 Nov 2010 03:02:19 +0100 (CET)
-X-Mailer: git-send-email 1.7.2.3
-In-Reply-To: <1289699475-11364-1-git-send-email-gabriel.corona@enst-bretagne.fr>
+	id S1751377Ab0KNCqK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 13 Nov 2010 21:46:10 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:46666 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751224Ab0KNCqH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 13 Nov 2010 21:46:07 -0500
+Received: by qwh5 with SMTP id 5so696196qwh.19
+        for <git@vger.kernel.org>; Sat, 13 Nov 2010 18:46:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=f1pMQYyipB2iGZXxy/PmgaShlAHPE/rN2/ZKjr5X6Hs=;
+        b=yIXjiaE2NxHIkmIm+MNYunOYTpkS78Lo4uK4C9riVjOWG/OY42nTSI6lWay+Z9tzdr
+         kRAwjWN6VOrhwoFv+pc9VrwOVD2NBf9k/9zze6F+93M9zKUtU+mGVMW8j4GAEXZ4yyZr
+         wa3E810Bve8crbVBzEXalsv7XZRVXwJNPM/rc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=aRp+NhV3ze0OLigtDHisHpEidHyTP2zO9HCZuktzfMEFhaFiKZWxz+x5gOI5/WTGtB
+         p8GQRucvEPL5OG35GyArqZzI1YviYVoqp97jgV6zvpsg93Jm++ITKE79NCHJCYFAcu3I
+         pwxc8ElH7YkERifDm3Nm3uY8PlpsJ+Ey5U5Mc=
+Received: by 10.224.204.134 with SMTP id fm6mr3950444qab.325.1289702763249;
+ Sat, 13 Nov 2010 18:46:03 -0800 (PST)
+Received: by 10.224.138.5 with HTTP; Sat, 13 Nov 2010 18:46:03 -0800 (PST)
+In-Reply-To: <AANLkTincij4wR4=RhbA0oCwe66OhVry0AkS6GCALVWmz@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161403>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161404>
 
-Add a test for HTTP authentication and proper percent-decoding of the
-userinfo (username and password) part of the URL.
+On Sat, Nov 13, 2010 at 6:30 PM, Santi B=C3=A9jar <santi@agolina.net> w=
+rote:
+> On Fri, Nov 12, 2010 at 9:11 PM, Martin von Zweigbergk
+> <martin.von.zweigbergk@gmail.com> wrote:
+>> Since c85c792 (pull --rebase: be cleverer with rebased upstream
+>> branches, 2008-01-26), 'git pull --rebase' has used the reflog to tr=
+y to
+>> rebase from the old upstream onto the new upstream.
+>>
+>> However, if, instead of 'git pull --rebase', the user were to do 'gi=
+t
+>> fetch' followed by 'git rebase @{upstream}', the reflog would not be
+>> walked. This patch teaches "git rebase" the same reflog-walking tric=
+ks
+>> that 'git pull --rebase' already knows.
+>>
+>> Apart from making 'git rebase' better aligned with 'git pull --rebas=
+e',
+>> this may also be useful on its own for rebasing one branch against
+>> another local branch that has been rebased. Currently, you would hav=
+e to
+>> do that using 'git rebase --onto' or by configuring it on the branch=
+=2E
+>>
+>> It might seem like most of the related code in git-pull.sh can be
+>> removed once git-rebase.sh supports reflog walking. Unfortunately, n=
+ot
+>> much of it can be removed, though. The reason is that git-pull.sh do=
+es
+>> one step of 'reflog' walking even when the reflog is not used. There=
+ are
+>> at least two cases where the reflog is not used: a) when it is disab=
+led,
+>> b) when the remote branch was specified on the command line (let's s=
+ay
+>> 'git pull --rebase origin master'). In both of these cases, git-pull=
+=2Esh
+>> remembers the position of the reference before the fetch and uses th=
+at
+>> in place of '$ref@{1}'.
+>
+> In the code I don't see when b) is different to call it without
+> command line branches. And if it is different I suppose it is a bug.
 
-Signed-off-by: Gabriel Corona <gabriel.corona@enst-bretagne.fr>
----
- t/lib-httpd.sh          |    3 +++
- t/lib-httpd/apache.conf |   29 +++++++++++++++++++++++++++++
- t/lib-httpd/passwd      |    1 +
- t/t5550-http-fetch.sh   |    7 +++++++
- 4 files changed, 40 insertions(+), 0 deletions(-)
- create mode 100644 t/lib-httpd/passwd
+The difference is somewhere in the code for 'git fetch'. I'm trying to
+refer to the same thing as I did in
+http://thread.gmane.org/gmane.comp.version-control.git/160004/focus=3D1=
+60939.
 
-diff --git a/t/lib-httpd.sh b/t/lib-httpd.sh
-index e733f65..3f24384 100644
---- a/t/lib-httpd.sh
-+++ b/t/lib-httpd.sh
-@@ -75,12 +75,14 @@ fi
- 
- prepare_httpd() {
- 	mkdir -p "$HTTPD_DOCUMENT_ROOT_PATH"
-+	cp "$TEST_PATH"/passwd "$HTTPD_ROOT_PATH"
- 
- 	ln -s "$LIB_HTTPD_MODULE_PATH" "$HTTPD_ROOT_PATH/modules"
- 
- 	if test -n "$LIB_HTTPD_SSL"
- 	then
- 		HTTPD_URL=https://127.0.0.1:$LIB_HTTPD_PORT
-+		AUTH_HTTPD_URL=https://user%40host:user%40host@127.0.0.1:$LIB_HTTPD_PORT
- 
- 		RANDFILE_PATH="$HTTPD_ROOT_PATH"/.rnd openssl req \
- 			-config "$TEST_PATH/ssl.cnf" \
-@@ -92,6 +94,7 @@ prepare_httpd() {
- 		HTTPD_PARA="$HTTPD_PARA -DSSL"
- 	else
- 		HTTPD_URL=http://127.0.0.1:$LIB_HTTPD_PORT
-+		AUTH_HTTPD_URL=http://user%40host:user%40host@127.0.0.1:$LIB_HTTPD_PORT
- 	fi
- 
- 	if test -n "$LIB_HTTPD_DAV" -o -n "$LIB_HTTPD_SVN"
-diff --git a/t/lib-httpd/apache.conf b/t/lib-httpd/apache.conf
-index 4961505..b40e43b 100644
---- a/t/lib-httpd/apache.conf
-+++ b/t/lib-httpd/apache.conf
-@@ -17,8 +17,30 @@ ErrorLog error.log
- <IfModule !mod_env.c>
- 	LoadModule env_module modules/mod_env.so
- </IfModule>
-+<IfModule !mod_version.c>
-+	LoadModule version_module modules/mod_version.so
-+</IfModule>
-+
-+<IfVersion < 2.1>
-+<IfModule !mod_auth.c>
-+	LoadModule auth_module modules/mod_auth.so
-+</IfModule>
-+</IfVersion>
-+
-+<IfVersion >= 2.1>
-+<IfModule !mod_auth_basic.c>
-+	LoadModule auth_basic_module modules/mod_auth_basic.so
-+</IfModule>
-+<IfModule !mod_authn_file.c>
-+	LoadModule authn_file_module modules/mod_authn_file.so
-+</IfModule>
-+<IfModule !mod_authz_user.c>
-+	LoadModule authz_user_module modules/mod_authz_user.so
-+</IfModule>
-+</IfVersion>
- 
- Alias /dumb/ www/
-+Alias /auth/ www/auth/
- 
- <Location /smart/>
- 	SetEnv GIT_EXEC_PATH ${GIT_EXEC_PATH}
-@@ -48,6 +70,13 @@ SSLMutex file:ssl_mutex
- SSLEngine On
- </IfDefine>
- 
-+<Location /auth/>
-+	AuthType Basic
-+	AuthName "git-auth"
-+	AuthUserFile passwd
-+	Require valid-user
-+</Location>
-+
- <IfDefine DAV>
- 	LoadModule dav_module modules/mod_dav.so
- 	LoadModule dav_fs_module modules/mod_dav_fs.so
-diff --git a/t/lib-httpd/passwd b/t/lib-httpd/passwd
-new file mode 100644
-index 0000000..f2fbcad
---- /dev/null
-+++ b/t/lib-httpd/passwd
-@@ -0,0 +1 @@
-+user@host:nKpa8pZUHx/ic
-diff --git a/t/t5550-http-fetch.sh b/t/t5550-http-fetch.sh
-index 2fb48d0..a0564de 100755
---- a/t/t5550-http-fetch.sh
-+++ b/t/t5550-http-fetch.sh
-@@ -34,6 +34,13 @@ test_expect_success 'clone http repository' '
- 	test_cmp file clone/file
- '
- 
-+test_expect_failure 'clone http repository with authentication' '
-+	mkdir "$HTTPD_DOCUMENT_ROOT_PATH/auth/" &&
-+	cp -Rf "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" "$HTTPD_DOCUMENT_ROOT_PATH/auth/repo.git" &&
-+	git clone $AUTH_HTTPD_URL/auth/repo.git clone-auth &&
-+	test_cmp file clone-auth/file
-+'
-+
- test_expect_success 'fetch changes via http' '
- 	echo content >>file &&
- 	git commit -a -m two &&
--- 
-1.7.2.3
+> The code must stay in git-pull.sh because there it has more
+> information (commit before and after fetch) than in git-rebase,
+> essentially when reflogs are disabled.
+
+Yes, I think that's what I meant by reason 'a)', but maybe I could have
+explained it in a better way.
