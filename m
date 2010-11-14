@@ -1,77 +1,105 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [RFC] rebase: be cleverer with rebased upstream branches
-Date: Sun, 14 Nov 2010 00:30:47 +0100
-Message-ID: <AANLkTincij4wR4=RhbA0oCwe66OhVry0AkS6GCALVWmz@mail.gmail.com>
-References: <1289592713-11786-1-git-send-email-martin.von.zweigbergk@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org, trast@student.ethz.ch, newren@gmail.com
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 14 00:31:40 2010
+From: Gabriel Corona <gabriel.corona@enst-bretagne.fr>
+Subject: [PATCHv2 2/2] Fix username and password extraction from HTTP URLs
+Date: Sun, 14 Nov 2010 02:51:15 +0100
+Message-ID: <1289699475-11364-3-git-send-email-gabriel.corona@enst-bretagne.fr>
+References: <1289699475-11364-1-git-send-email-gabriel.corona@enst-bretagne.fr>
+Cc: srabbelier@gmail.com,
+	Gabriel Corona <gabriel.corona@enst-bretagne.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 14 03:02:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PHPZM-0000AE-8H
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 00:31:40 +0100
+	id 1PHRvV-0003Pg-4I
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 03:02:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755066Ab0KMXbe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 13 Nov 2010 18:31:34 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:33921 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751115Ab0KMXbe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 13 Nov 2010 18:31:34 -0500
-Received: by qyk12 with SMTP id 12so2424882qyk.19
-        for <git@vger.kernel.org>; Sat, 13 Nov 2010 15:31:33 -0800 (PST)
-Received: by 10.229.182.5 with SMTP id ca5mr3584431qcb.150.1289691067269; Sat,
- 13 Nov 2010 15:31:07 -0800 (PST)
-Received: by 10.229.105.76 with HTTP; Sat, 13 Nov 2010 15:30:47 -0800 (PST)
-In-Reply-To: <1289592713-11786-1-git-send-email-martin.von.zweigbergk@gmail.com>
+	id S1754823Ab0KNCC3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 13 Nov 2010 21:02:29 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:50187 "EHLO smtp3-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754395Ab0KNCC3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 13 Nov 2010 21:02:29 -0500
+Received: from localhost.localdomain (unknown [88.180.106.44])
+	by smtp3-g21.free.fr (Postfix) with ESMTP id EA79DA61DE;
+	Sun, 14 Nov 2010 03:02:22 +0100 (CET)
+X-Mailer: git-send-email 1.7.2.3
+In-Reply-To: <1289699475-11364-1-git-send-email-gabriel.corona@enst-bretagne.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161400>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161401>
 
-On Fri, Nov 12, 2010 at 9:11 PM, Martin von Zweigbergk
-<martin.von.zweigbergk@gmail.com> wrote:
-> Since c85c792 (pull --rebase: be cleverer with rebased upstream
-> branches, 2008-01-26), 'git pull --rebase' has used the reflog to try to
-> rebase from the old upstream onto the new upstream.
->
-> However, if, instead of 'git pull --rebase', the user were to do 'git
-> fetch' followed by 'git rebase @{upstream}', the reflog would not be
-> walked. This patch teaches "git rebase" the same reflog-walking tricks
-> that 'git pull --rebase' already knows.
->
-> Apart from making 'git rebase' better aligned with 'git pull --rebase',
-> this may also be useful on its own for rebasing one branch against
-> another local branch that has been rebased. Currently, you would have to
-> do that using 'git rebase --onto' or by configuring it on the branch.
->
-> It might seem like most of the related code in git-pull.sh can be
-> removed once git-rebase.sh supports reflog walking. Unfortunately, not
-> much of it can be removed, though. The reason is that git-pull.sh does
-> one step of 'reflog' walking even when the reflog is not used. There are
-> at least two cases where the reflog is not used: a) when it is disabled,
-> b) when the remote branch was specified on the command line (let's say
-> 'git pull --rebase origin master'). In both of these cases, git-pull.sh
-> remembers the position of the reference before the fetch and uses that
-> in place of '$ref@{1}'.
+Change the authentification initialisation to percent-decode username
+and password for HTTP URLs.
 
-In the code I don't see when b) is different to call it without
-command line branches. And if it is different I suppose it is a bug.
+Signed-off-by: Gabriel Corona <gabriel.corona@enst-bretagne.fr>
+---
+ http.c                |   12 +++++++++++-
+ t/t5550-http-fetch.sh |    2 +-
+ 2 files changed, 12 insertions(+), 2 deletions(-)
 
-The code must stay in git-pull.sh because there it has more
-information (commit before and after fetch) than in git-rebase,
-essentially when reflogs are disabled.
-
-> ---
-> Junio, don't apply this patch yet, as I will rebase it on top of the
-> refactored rebase code once I'm done with that (to make it work with
-> interactive rebase as well).
-
->From a cursory view it looks ok.
-
-Santi
+diff --git a/http.c b/http.c
+index 0a5011f..c9393a8 100644
+--- a/http.c
++++ b/http.c
+@@ -2,6 +2,7 @@
+ #include "pack.h"
+ #include "sideband.h"
+ #include "run-command.h"
++#include "url.h"
+ 
+ int data_received;
+ int active_requests;
+@@ -297,7 +298,7 @@ static CURL *get_curl_handle(void)
+ 
+ static void http_auth_init(const char *url)
+ {
+-	char *at, *colon, *cp, *slash;
++	char *at, *colon, *cp, *slash, *decoded;
+ 	int len;
+ 
+ 	cp = strstr(url, "://");
+@@ -322,16 +323,25 @@ static void http_auth_init(const char *url)
+ 		user_name = xmalloc(len + 1);
+ 		memcpy(user_name, cp, len);
+ 		user_name[len] = '\0';
++		decoded = url_decode(user_name);
++		free(user_name);
++		user_name = decoded;
+ 		user_pass = NULL;
+ 	} else {
+ 		len = colon - cp;
+ 		user_name = xmalloc(len + 1);
+ 		memcpy(user_name, cp, len);
+ 		user_name[len] = '\0';
++		decoded = url_decode(user_name);
++		free(user_name);
++		user_name = decoded;
+ 		len = at - (colon + 1);
+ 		user_pass = xmalloc(len + 1);
+ 		memcpy(user_pass, colon + 1, len);
+ 		user_pass[len] = '\0';
++		decoded = url_decode(user_pass);
++		free(user_pass);
++		user_pass = decoded;
+ 	}
+ }
+ 
+diff --git a/t/t5550-http-fetch.sh b/t/t5550-http-fetch.sh
+index a0564de..8c2ac35 100755
+--- a/t/t5550-http-fetch.sh
++++ b/t/t5550-http-fetch.sh
+@@ -34,7 +34,7 @@ test_expect_success 'clone http repository' '
+ 	test_cmp file clone/file
+ '
+ 
+-test_expect_failure 'clone http repository with authentication' '
++test_expect_success 'clone http repository with authentication' '
+ 	mkdir "$HTTPD_DOCUMENT_ROOT_PATH/auth/" &&
+ 	cp -Rf "$HTTPD_DOCUMENT_ROOT_PATH/repo.git" "$HTTPD_DOCUMENT_ROOT_PATH/auth/repo.git" &&
+ 	git clone $AUTH_HTTPD_URL/auth/repo.git clone-auth &&
+-- 
+1.7.2.3
