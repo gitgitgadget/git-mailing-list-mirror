@@ -1,125 +1,179 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH 003/160] gettext: fix bug in git-sh-i18n's eval_gettext()
- by using envsubst(1)
-Date: Sun, 14 Nov 2010 22:42:57 +0100
-Message-ID: <AANLkTim-j6TLwz0PugZvaEf1x3hW=76vT1gALC=w3DOu@mail.gmail.com>
-References: <1289747245-23263-1-git-send-email-avarab@gmail.com>
-	<1289747245-23263-3-git-send-email-avarab@gmail.com>
-	<20101114181605.GI26459@burratino>
-	<7vmxpb1ztf.fsf@alter.siamese.dyndns.org>
-	<AANLkTinh_Nkxvw7Z5HU=TbJHHFRZeWgr0COJ+N96OeTd@mail.gmail.com>
-	<20101114212757.GD10150@burratino>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: [PATCH] do not overwrite untracked during merge from unborn branch
+Date: Sun, 14 Nov 2010 22:46:02 +0100
+Message-ID: <20101114214601.GB29287@localhost>
+References: <AANLkTimDnyzyV1FEEwEuxLfG1nSOcNa7Hzwt7DDssjba@mail.gmail.com>
+ <20101114213453.GA29287@localhost>
+Reply-To: Clemens Buchacher <drizzd@aon.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 14 22:43:10 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="MfFXiAuoTsnnDAfZ"
+Cc: Gert Palok <gert@planc.ee>, Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 14 22:46:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PHkLr-0007h4-SD
-	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 22:43:08 +0100
+	id 1PHkOm-0000zC-2o
+	for gcvg-git-2@lo.gmane.org; Sun, 14 Nov 2010 22:46:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932329Ab0KNVnB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Nov 2010 16:43:01 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:34601 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932319Ab0KNVnA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 14 Nov 2010 16:43:00 -0500
-Received: by fxm6 with SMTP id 6so1331867fxm.19
-        for <git@vger.kernel.org>; Sun, 14 Nov 2010 13:42:59 -0800 (PST)
+	id S1757061Ab0KNVqC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Nov 2010 16:46:02 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:56324 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757053Ab0KNVqA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Nov 2010 16:46:00 -0500
+Received: by bwz15 with SMTP id 15so4673818bwz.19
+        for <git@vger.kernel.org>; Sun, 14 Nov 2010 13:45:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=yaMkBKz7RkbQ2BNk/rh0ZJYwrg/bpfTV7vgyK7bNVfc=;
-        b=O679IA/k6ZYxr0h8SOPCXyOcACK5uhuUC3NzsunjUj/OUGjbbZ7WjAopIHBWqsP/ct
-         kh37oW7kGntXYmxOVIi0otCtpWrrFcu9CIaX1aeuvKaufMIInCXbHvbyybLAhwrg0TAF
-         9TxYoWDynXCfFNTsKeEwkXUfQVe99R/RQ96pE=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:reply-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=Z8M99vxrZsE6pyO9GAeDzql3/H/MiCeKehMw+YmdLuw=;
+        b=Fzft2BRVhX9gZnxRR7uwmH4IEO1Di0RfymTh0KMXmfmPsNFZLvfc7fjIxuBbPkA+Aq
+         Q8f4k43YYjjBaZBOmNrB86uP/frndFmKJGjhTmGohQtppHUjvB/oSRe6RQbn0iGH8mHn
+         6+HghttNlVkidYDFiQRJ4+3Sc0jrcnUwBq+wo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=wnxOF36MIoLYBMTSgNE66YuWbjZYGdFcyoUXqH6016+vYNuvrcpftNGOLTV6F62Ar/
-         dEARO3n3BJ0vjUBJqCtSPhOxYJAr8u3tTIY6F2f/HPpzbCkWn06OFo27tXF/9smKVwRw
-         GiPyu+H9nDMpEy6q1FAUqJmRceyzGt1hGuFlI=
-Received: by 10.223.101.131 with SMTP id c3mr4038360fao.95.1289770978018; Sun,
- 14 Nov 2010 13:42:58 -0800 (PST)
-Received: by 10.223.105.78 with HTTP; Sun, 14 Nov 2010 13:42:57 -0800 (PST)
-In-Reply-To: <20101114212757.GD10150@burratino>
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:reply-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=KJYq0+YjZ0Mns4SlWo39XFTC77R3aRok4R8lUNl0/Df+jiPXtLfpHd0pUopVQk4ImO
+         uRQUSyRle5N/cMe72E0i29SlZK7RQgX+kV+MWErdGJwMadLj2If79ZHmZwrKQlFRYgYO
+         HGarNI5jp7s1sSJlaArQ0C8tFPilyucJb0FtI=
+Received: by 10.204.65.198 with SMTP id k6mr5387720bki.18.1289771159160;
+        Sun, 14 Nov 2010 13:45:59 -0800 (PST)
+Received: from darc.lan (p549A7640.dip.t-dialin.net [84.154.118.64])
+        by mx.google.com with ESMTPS id a25sm2667334bks.20.2010.11.14.13.45.57
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 14 Nov 2010 13:45:58 -0800 (PST)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1PHkOg-0007jq-1W; Sun, 14 Nov 2010 22:46:02 +0100
+Content-Disposition: inline
+In-Reply-To: <20101114213453.GA29287@localhost>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161448>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161449>
 
-On Sun, Nov 14, 2010 at 22:27, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->
->> Thanks for the suggestion. I'll put it in envsubst/ then.
->>
->> Any idea about the issue of it being linked to too many things?
->
-> Maybe http://thread.gmane.org/gmane.comp.version-control.git/160842
-> is related?
->
->> tried to add another entry to this section:
->>
->> =C2=A0 =C2=A0 git-%$X: %.o $(GITLIBS)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $=
-(ALL_LDFLAGS) $(filter
->> %.o,$^) $(LIBS)
->>
->> =C2=A0 =C2=A0 git-imap-send$X: imap-send.o $(GITLIBS)
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 $(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $=
-(ALL_LDFLAGS) $(filter %.o,$^) \
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 $(LIBS) $(OPENSSL_LINK) $(=
-OPENSSL_LIBSSL)
->>
->> But it wasn't actually used. But then again I don't know Makefile
->> hacking that much.
->
-> If you send output from "make envsubst" from your attempt with V=3D1,
-> I can try to debug it.
 
-This is how it currently gets compiled:
+--MfFXiAuoTsnnDAfZ
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-    $ rm git-sh-i18n--envsubst sh-i18n--envsubst.o; make -j 5 all V=3D1
-    gcc -o sh-i18n--envsubst.o -c   -g -O2 -Wall -I.  -DHAVE_PATHS_H
--DSHA1_HEADER=3D'<openssl/sha.h>'  -DNO_STRLCPY -DNO_MKSTEMPS
-sh-i18n--envsubst.c
-    gcc  -g -O2 -Wall -I.  -DHAVE_PATHS_H
--DSHA1_HEADER=3D'<openssl/sha.h>'  -DNO_STRLCPY -DNO_MKSTEMPS -o
-git-sh-i18n--envsubst   sh-i18n--envsubst.o libgit.a xdiff/lib.a  -lz
--lcrypto -lpthread
+In case HEAD does not point to a valid commit yet, merge is
+implemented as a hard reset. This will cause untracked files to be
+overwritten.
 
-I tried to remove some of those library includes. But it'll
-complain. However if I do:
+Instead, assume the empty tree for HEAD and do a regular merge. An
+untracked file will cause the merge to abort and do nothing. If no
+conflicting files are present, the merge will have the same effect
+as a hard reset.
 
-    diff --git a/sh-i18n--envsubst.c b/sh-i18n--envsubst.c
-    index 8db71b1..7d4c870 100644
-    --- a/sh-i18n--envsubst.c
-    +++ b/sh-i18n--envsubst.c
-    @@ -215 +215 @@ string_list_append (string_list_ty *slp, const char=
- *s)
-    -      slp->item =3D (const char **) xrealloc (slp->item, nbytes);
-    +      slp->item =3D (const char **) realloc (slp->item, nbytes);
-    @@ -293 +293 @@ note_variable (const char *var_ptr, size_t var_len)
-    -  char *string =3D xmalloc (var_len + 1);
-    +  char *string =3D malloc (var_len + 1);
-    @@ -368 +368 @@ subst_from_stdin ()
-    -                     buffer =3D xrealloc (buffer, bufmax);
-    +                     buffer =3D realloc (buffer, bufmax);
-    @@ -402 +402 @@ subst_from_stdin ()
-    -                     buffer =3D xrealloc (buffer, bufmax);
-    +                     buffer =3D realloc (buffer, bufmax);
+Signed-off-by: Clemens Buchacher <drizzd@aon.at>
+---
 
-It'll compile stand-alone with no library includes at all. Maybe I
-should just modify it to have basic versions of those two x* functions
-so we can compile it completely stand-alone.
+This is based on next and does not apply cleanly to master because
+of t7607. I can rebase it to master, but then it will conflict with
+next later.
+
+Clemens
+
+ builtin/merge.c            |   20 +++++++++++++++++++-
+ t/t7607-merge-overwrite.sh |   16 ++++++++++++++++
+ 2 files changed, 35 insertions(+), 1 deletions(-)
+
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 10f091b..7571c93 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -234,6 +234,24 @@ static void save_state(void)
+ 		die("not a valid object: %s", buffer.buf);
+ }
+=20
++static void read_empty(unsigned const char *sha1, int verbose)
++{
++	int i =3D 0;
++	const char *args[7];
++
++	args[i++] =3D "read-tree";
++	if (verbose)
++		args[i++] =3D "-v";
++	args[i++] =3D "-m";
++	args[i++] =3D "-u";
++	args[i++] =3D EMPTY_TREE_SHA1_HEX;
++	args[i++] =3D sha1_to_hex(sha1);
++	args[i] =3D NULL;
++
++	if (run_command_v_opt(args, RUN_GIT_CMD))
++		die("read-tree failed");
++}
++
+ static void reset_hard(unsigned const char *sha1, int verbose)
+ {
+ 	int i =3D 0;
+@@ -985,7 +1003,7 @@ int cmd_merge(int argc, const char **argv, const char =
+*prefix)
+ 			die("%s - not something we can merge", argv[0]);
+ 		update_ref("initial pull", "HEAD", remote_head->sha1, NULL, 0,
+ 				DIE_ON_ERR);
+-		reset_hard(remote_head->sha1, 0);
++		read_empty(remote_head->sha1, 0);
+ 		return 0;
+ 	} else {
+ 		struct strbuf merge_names =3D STRBUF_INIT;
+diff --git a/t/t7607-merge-overwrite.sh b/t/t7607-merge-overwrite.sh
+index e49dd80..d4a499d 100755
+--- a/t/t7607-merge-overwrite.sh
++++ b/t/t7607-merge-overwrite.sh
+@@ -127,4 +127,20 @@ test_expect_success SYMLINKS 'will not be confused by =
+symlink in leading path' '
+ 	git checkout sub
+ '
+=20
++cat >expect <<\EOF
++error: Untracked working tree file 'c0.c' would be overwritten by merge.
++fatal: read-tree failed
++EOF
++
++test_expect_success 'will not overwrite untracked file on unborn branch' '
++	git reset --hard c0 &&
++	git rm -fr . &&
++	git checkout --orphan new &&
++	cp important c0.c &&
++	test_must_fail git merge c0 2>out &&
++	test_cmp out expect &&
++	test_path_is_missing .git/MERGE_HEAD &&
++	test_cmp important c0.c
++'
++
+ test_done
+--=20
+1.7.3.1.105.g84915
+
+
+--MfFXiAuoTsnnDAfZ
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJM4FiZAAoJELKdZexG8uqM41AIAKZuAawuV2WUCFiWDxxPRyVe
+2/Vlfem7Ej3A70g4+2ca51ENRh2CgVVEtqPQuOhdBJ9aenhL0YsLQsoAefSEuXmZ
+J0yNSUBHVNYWVd9+TiONVDAyn+6ra3V0VdBxz4plRJ+RqrocN3ctmu8FYPyBez3/
+ok3oc09dU9ovqALXPKCXtfu9pcNr2aTPMioqsBPw8W+XrCGwY4+OGqBPKJPzEucd
+dFD7XtCy/W41cdSc7WD0shZjBPXZUWyoMvqWjLq3yJTw03VQyKpW32yU1I9T7R/T
+w7PKKZLK7vnZoiX6A6+7ikFNfFQORjhXPdBhnRQrUmpbskvDxVLsMojSiKgJLMw=
+=YQh3
+-----END PGP SIGNATURE-----
+
+--MfFXiAuoTsnnDAfZ--
