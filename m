@@ -1,62 +1,84 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: Add colors to the prompt for status indicators
-Date: Mon, 15 Nov 2010 14:52:47 -0800
-Message-ID: <19363118-D147-4946-8973-B5DDA4B00985@sb.org>
-References: <AANLkTi=ZdR4_reQgxL+xRaFE=SaqBYAWTrEuGEbLGynt@mail.gmail.com> <4CE04B82.1040804@pileofstuff.org>
-Mime-Version: 1.0 (Apple Message framework v1082)
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] use persistent memory for rejected paths
+Date: Mon, 15 Nov 2010 15:05:07 -0800
+Message-ID: <7v62vyjiho.fsf@alter.siamese.dyndns.org>
+References: <7vbp5ymfyo.fsf@alter.siamese.dyndns.org>
+ <20101114130205.GA27560@localhost> <vpq62vymmsz.fsf@bauges.imag.fr>
+ <20101115194133.GA3297@localhost>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Sebastien Douche <sdouche@gmail.com>, git@vger.kernel.org
-To: Andrew Sayers <andrew-git@pileofstuff.org>
-X-From: git-owner@vger.kernel.org Mon Nov 15 23:52:59 2010
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Tue Nov 16 00:05:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PI7v0-0005em-3e
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 23:52:58 +0100
+	id 1PI873-0003Kt-1D
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 00:05:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758720Ab0KOWwv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Nov 2010 17:52:51 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:45375 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755033Ab0KOWwu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Nov 2010 17:52:50 -0500
-Received: by pzk28 with SMTP id 28so522pzk.19
-        for <git@vger.kernel.org>; Mon, 15 Nov 2010 14:52:50 -0800 (PST)
-Received: by 10.142.170.10 with SMTP id s10mr5402789wfe.340.1289861570615;
-        Mon, 15 Nov 2010 14:52:50 -0800 (PST)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id w22sm531972wfd.19.2010.11.15.14.52.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 15 Nov 2010 14:52:49 -0800 (PST)
-In-Reply-To: <4CE04B82.1040804@pileofstuff.org>
-X-Mailer: Apple Mail (2.1082)
+	id S1756787Ab0KOXFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Nov 2010 18:05:20 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44267 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751556Ab0KOXFT (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Nov 2010 18:05:19 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BB0B12A19;
+	Mon, 15 Nov 2010 18:05:25 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5swRqUf1Yl4oxVFemfbA1EfAk9Y=; b=q50d/9
+	hFTCwBPeL7fk4PQyteWKKFFWInDpY9vGT53P4CG5yqul01dMRq0W0rmK7TlTFqnR
+	0yyPpLSFI4Lh8yaPxPp2KltLnXYlDs2vh2VDrUmhEhDx9N1JBTcRr6q8U2SmR6I3
+	tB73KH4hAKwequ/Hwlp0mBCFeahlvV09HX+8A=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nWwaiUG3SDSxeF5LP6/q4IsKOwctnDlb
+	winm1JznadkYUPAOaFTzHIpO1zc7qBDlbKCGaeJ36QFVz4p1ckRPHmQpVdo9N63S
+	2TZ6AtgodrjkXi958Dv32FW2xLo6EJtilIyeKXhL3NNrzYIU55gkLNBvEHElETXA
+	YNxfrEzZjrI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7A15A2A12;
+	Mon, 15 Nov 2010 18:05:22 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 266C32A0E; Mon, 15 Nov 2010
+ 18:05:16 -0500 (EST)
+In-Reply-To: <20101115194133.GA3297@localhost> (Clemens Buchacher's message
+ of "Mon\, 15 Nov 2010 20\:41\:33 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D2E614E4-F10C-11DF-8802-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161521>
 
-On Nov 14, 2010, at 12:50 PM, Andrew Sayers wrote:
+Clemens Buchacher <drizzd@aon.at> writes:
 
-> It's possible to work around this for a whole script:
-> 
-> foo() {
-> echo -e "\033[;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0;0m"
-> }
-> PS1='\[$(foo)'\]>'
+> On Mon, Nov 15, 2010 at 08:03:40PM +0100, Matthieu Moy wrote:
+>> Clemens Buchacher <drizzd@aon.at> writes:
+>> 
+>> > An aborted merge prints the list of rejected paths as part of the
+>> > error message. Some of those paths do not have static buffers, so
+>> > we have to keep a copy.
+>> 
+>> Like Junio, I'm surprised by this, but I guess you encountered the
+>> problem.
+>
+> You don't have to take my word for it, just try the test. It should
+> be failing nicely.  :-)
 
-If $(foo) were to emit some actual printable characters, won't this make
-bash ignore them when calculating line lengths?
+As far as I remember the tests were about the output order and never about
+"ah we are showing stale contents from stack" (which is rather hard to
+arrange for reliable testing anyway).
 
-> As a fan of colourful prompts, I'd be very happy if you found a way
-> around this for parts of a script.  But as a fan of fast prompts, I'd
-> prefer not to call __git_ps1 more than once :)
+>> Did you remove all uses of "struct rejected_paths_list"? If so, you
+>> can remove its declaration, if not, why?
+>
+> Indeed I can. Thanks.
 
-I don't think there is any way around this, besides patching bash to be
-intelligent and determine which PS1 characters are printable itself without
-relying on \[ and \].
-
--Kevin Ballard
+I see you have v2 now; will replace.  Thanks.
