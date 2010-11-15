@@ -1,89 +1,93 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH] git-gui: support for underline styles
-Date: Mon, 15 Nov 2010 11:04:58 +0100
-Message-ID: <1289815498-12287-1-git-send-email-bert.wesarg@googlemail.com>
-Cc: Bert Wesarg <bert.wesarg@googlemail.com>,
-	"Shawn O . Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Mon Nov 15 11:05:14 2010
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] clean: avoid quoting twice
+Date: Mon, 15 Nov 2010 17:12:44 +0700
+Message-ID: <1289815964-31999-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Nov 15 11:14:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PHvw2-0008Hk-FF
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 11:05:14 +0100
+	id 1PHw4g-0004vw-LQ
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 11:14:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755290Ab0KOKFF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Nov 2010 05:05:05 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:56216 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755052Ab0KOKFD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Nov 2010 05:05:03 -0500
-Received: by bwz15 with SMTP id 15so5019881bwz.19
-        for <git@vger.kernel.org>; Mon, 15 Nov 2010 02:05:02 -0800 (PST)
+	id S1754236Ab0KOKOF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Nov 2010 05:14:05 -0500
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:45498 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753655Ab0KOKOE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Nov 2010 05:14:04 -0500
+Received: by pzk28 with SMTP id 28so919801pzk.19
+        for <git@vger.kernel.org>; Mon, 15 Nov 2010 02:14:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=PchvpvXaRw6Kd0HYW/B7RHhehfFvDX99qq9lx2MNErs=;
-        b=tEZEXs9H+B29fJcbRhR/ru/kIeEErc/z8oxFZeMoMtOOkAMKTVcyczCxW0fuanGoTb
-         6msqXfBT8ptFeEkVzrJqXfx/GbcYQw84QPEVLU+5tO3ysNLJDHiQw1XbvWQL628sHqc1
-         YVceSxoEKB5d03eEfBGSfDHVqYzttEGNDhW1M=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=8GqhRyMx7u7Ws2cEHZ6j4DHbshJqP+mX/a6sgPkdJfU=;
+        b=aZF8q+EmXU+w4UkFWHQS0dlcESfTDhyqIkHyF6SN9htxvD+WA35M5QxhW+FOw0+AXl
+         OsiO+DEgPiesbNGW4JmbFqQpwxZrqzpFWA7sh6i/TdG3EFM6tPDLpXWKVPXQ+tIvDkGI
+         8zEBTbInCTeaOWwPwuqAIZeP8aKBSuZl9Mt4c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=VxJcYrU46P8VsrGVd050B+JcTrphfGy/y6jtizH0kMKLFwHhiTYD6eDoFuYjAEegSU
-         AcBdeXSqpg2XbQCL5UJUxeljDQQMBjHSY4v4xMdfkRWDDBeyCrX9qF3xQLC0SHw2qCXi
-         owT5LNmvqmiTp+xQLbuF/yyPs8vEnowgzrkaw=
-Received: by 10.204.62.203 with SMTP id y11mr5734392bkh.11.1289815501655;
-        Mon, 15 Nov 2010 02:05:01 -0800 (PST)
-Received: from localhost (p3E99037B.dip.t-dialin.net [62.153.3.123])
-        by mx.google.com with ESMTPS id d12sm2928252bkw.7.2010.11.15.02.04.59
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=DeZw4Utmb5ORuePdYybatR/Go4n9k9tnoDQiUpCptUKohentqGUSEXw+aWTaLRzP2u
+         0FEvMrLGhQhKrFxNJUBTCbCzOSxHx2zYf/zLv/8YrQ9yrQ2uYGGFWJesHfBsbQ3ZYhDg
+         IN3Y61xiXyfyTvn3cOmChy6VybmYt5KcfgTu8=
+Received: by 10.142.166.4 with SMTP id o4mr5002411wfe.58.1289816043171;
+        Mon, 15 Nov 2010 02:14:03 -0800 (PST)
+Received: from pclouds@gmail.com ([115.73.247.75])
+        by mx.google.com with ESMTPS id y42sm8548456wfd.10.2010.11.15.02.13.56
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 15 Nov 2010 02:05:00 -0800 (PST)
-X-Mailer: git-send-email 1.7.3.2.1149.g1f51c
+        Mon, 15 Nov 2010 02:14:01 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 15 Nov 2010 17:12:45 +0700
+X-Mailer: git-send-email 1.7.3.2.210.g045198
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161474>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161475>
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+qname is the result of quote_path_relative(), which does
+quote_c_style_counted() internally. Remove the hard-coded quotes.
 
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
 ---
- git-gui/git-gui.sh   |    4 ++++
- git-gui/lib/diff.tcl |    3 ++-
- 2 files changed, 6 insertions(+), 1 deletions(-)
+ builtin/clean.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index d3acf0d..70c0483 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -3328,6 +3328,10 @@ foreach {n c} {0 black 1 red4 2 green4 3 yellow4 4 blue4 5 magenta4 6 cyan4 7 gr
- 	$ui_diff tag configure clri4$n -foreground $c
- 	$ui_diff tag configure clr3$n -foreground $c
- 	$ui_diff tag configure clri3$n -background $c
-+	$ui_diff tag configure clru4$n -underline 1 -background $c
-+	$ui_diff tag configure clrui4$n -underline 1 -foreground $c
-+	$ui_diff tag configure clru3$n -underline 1 -foreground $c
-+	$ui_diff tag configure clrui3$n -underline 1 -background $c
- }
- $ui_diff tag configure clr1 -font font_diffbold
- 
-diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-index dcf0711..f59477f 100644
---- a/git-gui/lib/diff.tcl
-+++ b/git-gui/lib/diff.tcl
-@@ -463,7 +463,8 @@ proc read_diff {fd cont_info} {
- 
- 		foreach {posbegin colbegin posend colend} $markup {
- 			set prefix clr
--			foreach style [split $colbegin ";"] {
-+			foreach style [lsort -integer [split $colbegin ";"]] {
-+				if {$style eq "4"} {append prefix u; continue}
- 				if {$style eq "7"} {append prefix i; continue}
- 				if {$style < 30 || $style > 47} {continue}
- 				set a "$mark linestart + $posbegin chars"
--- 
-tg: (6f10c41..) bw/git-gui/support-underline-ansi-styles (depends on: master)
+diff --git a/builtin/clean.c b/builtin/clean.c
+index c8798f5..8f602c9 100644
+--- a/builtin/clean.c
++++ b/builtin/clean.c
+@@ -153,7 +153,7 @@ int cmd_clean(int argc, const char **argv, const ch=
+ar *prefix)
+ 					printf("Removing %s\n", qname);
+ 				if (remove_dir_recursively(&directory,
+ 							   rm_flags) !=3D 0) {
+-					warning("failed to remove '%s'", qname);
++					warning("failed to remove %s", qname);
+ 					errors++;
+ 				}
+ 			} else if (show_only) {
+@@ -173,7 +173,7 @@ int cmd_clean(int argc, const char **argv, const ch=
+ar *prefix)
+ 				printf("Removing %s\n", qname);
+ 			}
+ 			if (unlink(ent->name) !=3D 0) {
+-				warning("failed to remove '%s'", qname);
++				warning("failed to remove %s", qname);
+ 				errors++;
+ 			}
+ 		}
+--=20
+1.7.3.2.210.g045198
