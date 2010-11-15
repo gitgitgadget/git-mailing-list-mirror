@@ -1,115 +1,107 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 01/10] add: do not rely on dtype being NULL behavior
-Date: Mon, 15 Nov 2010 06:14:15 -0600
-Message-ID: <20101115121415.GB14729@burratino>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH 02/10] unpack-trees: move all skip-worktree check back to unpack_trees()
+Date: Mon, 15 Nov 2010 10:34:31 -0200
+Message-ID: <AANLkTi=cvt2W1Eqj7KmtM+ng-BS7wRTM=+49gq5n+ghs@mail.gmail.com>
 References: <1289817410-32470-1-git-send-email-pclouds@gmail.com>
- <1289817410-32470-2-git-send-email-pclouds@gmail.com>
+	<1289817410-32470-3-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 15 13:14:58 2010
+Cc: git@vger.kernel.org
+To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
+	<pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 15 13:34:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PHxxY-0006UN-8P
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 13:14:56 +0100
+	id 1PHyGa-0005du-Sh
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 13:34:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756156Ab0KOMOv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Nov 2010 07:14:51 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:57221 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751643Ab0KOMOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Nov 2010 07:14:50 -0500
-Received: by gxk23 with SMTP id 23so2864843gxk.19
-        for <git@vger.kernel.org>; Mon, 15 Nov 2010 04:14:50 -0800 (PST)
+	id S1755909Ab0KOMed convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Nov 2010 07:34:33 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:43799 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751958Ab0KOMec convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Nov 2010 07:34:32 -0500
+Received: by bwz15 with SMTP id 15so5121510bwz.19
+        for <git@vger.kernel.org>; Mon, 15 Nov 2010 04:34:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=/IhKM9qtKgkEnNRCwu02EaBbrL2a/D1i/tBTuGQh3CA=;
-        b=c66a7BooZLG0TRZKSgyEF7kxJM0himwPjl2QD67tffWcYEx9hA450rBkcqwyUKf5Yf
-         lYqjEbnjesVQx144hRwxZS5uXSYvhvjK/DDe11YJj+vwlFAkqaLK75QGsOZnWLvhAaUC
-         4+mb09s8sHqFt1EX26nn6AKIaZkcS0wfqxi2Y=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=VsXNAfIpLxOfSN5VZRFKJYke5ViEDj3Vp0hpfufK13Q=;
+        b=X3Yy3sOUYRFsOrKj4A1V/GsOwHvgGWnLGHI9cpkbEtKLJE3jdZwOf4na8WHyYCklz/
+         cYNLhy4WR3WuojIUGmhxIbrq6Bc2r+dz0AYATPtCc8xyf7O5LWmvbNEIjJAqYS7vlZtW
+         7Y6EtkOneLAbJwxxbyCqcFzlgZDQYrBFtSKoU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=M/gm8HKjXVQ8tFknEazLG0B4vwouprx/uUw5fbCe3U0JdVCRV4M7sauMpQ5o68RRd/
-         ri0dRvJG7bZHvbJQ5vqAY7/1NOTWVpo0WQxGIhXNurpuES/E/JL43MMhH525MI4Vcjz7
-         hizo0Y1/htzaSwbqo8DAT1XB9gUb+ZUn3j/1g=
-Received: by 10.100.247.17 with SMTP id u17mr2831364anh.197.1289823290041;
-        Mon, 15 Nov 2010 04:14:50 -0800 (PST)
-Received: from burratino ([68.255.106.176])
-        by mx.google.com with ESMTPS id d20sm3732775and.9.2010.11.15.04.14.47
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 15 Nov 2010 04:14:48 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1289817410-32470-2-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=wG/EinURKavVb5yHSqLwbJR4/IS2wu5huZ/I90v6cTbdkFDrRNiCsbbgzN3CFbGbZf
+         1j1zptqqyo5LYkHcCeeOHs/NnJpjAqLgtD+NmHkQOFYoFc4qSrsmrGgeMMFQDes8qB0U
+         r9yBcO3DhJIODUKi9NX3y7G3HVP7RYqGl8D+c=
+Received: by 10.204.62.17 with SMTP id v17mr6015234bkh.67.1289824471275; Mon,
+ 15 Nov 2010 04:34:31 -0800 (PST)
+Received: by 10.204.58.71 with HTTP; Mon, 15 Nov 2010 04:34:31 -0800 (PST)
+In-Reply-To: <1289817410-32470-3-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161489>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+2010/11/15 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
+>:
+> =C2=A0cache.h =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 =C2=A01 +
+> =C2=A0unpack-trees.c | =C2=A0 69 ++++++++++++++++++++++++++++++++++++=
+++++++++++++++-----
+> =C2=A02 files changed, 63 insertions(+), 7 deletions(-)
+>
+> diff --git a/cache.h b/cache.h
+> index 33decd9..d87708a 100644
+> --- a/cache.h
+> +++ b/cache.h
+> @@ -182,6 +182,7 @@ struct cache_entry {
+> =C2=A0#define CE_WT_REMOVE (0x400000) /* remove in work directory */
+>
+> =C2=A0#define CE_UNPACKED =C2=A0(0x1000000)
+> +#define CE_NEW_SKIP_WORKTREE (0x2000000)
+>
+Would be good to remove the () around the hex here and else in this fil=
+e?
 
-> Commit c84de70 (excluded_1(): support exclude files in index -
-> 2009-08-20) added support for excluded() where dtype can be NULL. It
-> was designed specifically for index matching because there was no
-> other way to extract dtype information from index. It did not support
-> wildcard matching (for example, "a*/" pattern would fail to match).
->=20
-> The code was probably misread when commit 108da0d (git add: Add the
-> "--ignore-missing" option for the dry run - 2010-07-10) was made
-> because DT_UNKNOWN happens to be zero (NULL) too.
->=20
-> Do not pass DT_UNKNOWN/NULL to excluded(), instead pass a pointer to =
-a
-> variable that contains DT_UNKNOWN. The real dtype will be extracted
-> from worktree by excluded(), as expected.
-
-Could you rephrase this in a way that contrasts current and desired
-behavior?  Is it like this?
-
-	The "git add --ignore-missing --dry-run" codepath is
-	interpreting .gitignore incorrectly, unlike "git add".  For
-	example:
-
-		$ test -e foo || echo missing
-		missing
-		$ echo foo/ >>.gitignore
-		$ mkdir bar
-		$ git add --ignore-missing --dry-run foo; echo $?
-		The following paths are ignored by one of your .gitignore files:
-		foo/
-		Use -f if you really want to add them.
-		fatal: no files added
-		128
-		$ git add --ignore-missing --dry-run bar/foo; echo $?
-		0
-
-	In the original use case (preparing to add a submodule) the
-	behavior of the first command is correct, second incorrect.
-	If the entry to be added was a regular file, it would be the
-	other way around.
-
-	The cause: the --ignore-missing code passes DT_UNKNOWN as the
-	dtype_ptr argument to excluded() which happens to equal zero
-	(NULL) and accidentally triggers the "match pathspecs in index
-	only" codepath (see c84de70, excluded_1(): support exclude
-	files in index, 2009-08-20) that is unfortunately a bit
-	primitive.
-
-	Surely what was really wanted is to check paths against the
-	index and work tree, defaulting to "regular file".
-
-Wait --- that's not true.  In the "git submodule add" case, we really
-want to default to (or even better, force) "directory".
+> =C2=A0/*
+> =C2=A0* Extended on-disk flags
+> diff --git a/unpack-trees.c b/unpack-trees.c
+> index 803445a..9acd9be 100644
+> --- a/unpack-trees.c
+> +++ b/unpack-trees.c
+> @@ -258,7 +258,7 @@ static int apply_sparse_checkout(struct cache_ent=
+ry *ce, struct unpack_trees_opt
+> =C2=A0{
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0int was_skip_worktree =3D ce_skip_worktree=
+(ce);
+>
+> - =C2=A0 =C2=A0 =C2=A0 if (!ce_stage(ce) && will_have_skip_worktree(c=
+e, o))
+> + =C2=A0 =C2=A0 =C2=A0 if (ce->ce_flags & CE_NEW_SKIP_WORKTREE)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ce->ce_flags |=
+=3D CE_SKIP_WORKTREE;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0else
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ce->ce_flags &=
+=3D ~CE_SKIP_WORKTREE;
+> @@ -834,6 +834,49 @@ static int unpack_callback(int n, unsigned long =
+mask, unsigned long dirmask, str
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0return mask;
+> =C2=A0}
+>
+> +static void set_new_skip_worktree_1(struct unpack_trees_options *o)
+> +{
+> + =C2=A0 =C2=A0 =C2=A0 int i;
+> +
+> + =C2=A0 =C2=A0 =C2=A0 for (i =3D 0;i < o->src_index->cache_nr;i++) {
+Could you add spaces after ; for readability, please? There is another
+for below that needs this to.
