@@ -1,69 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 03/10] unpack-trees: add function to update ce_flags
- based on sparse patterns
-Date: Mon, 15 Nov 2010 12:30:40 -0600
-Message-ID: <20101115183040.GD16385@burratino>
-References: <1289817410-32470-1-git-send-email-pclouds@gmail.com>
- <1289817410-32470-4-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] use persistent memory for rejected paths
+Date: Mon, 15 Nov 2010 10:31:33 -0800
+Message-ID: <7vvd3yl9q2.fsf@alter.siamese.dyndns.org>
+References: <7vbp5ymfyo.fsf@alter.siamese.dyndns.org>
+ <20101114130205.GA27560@localhost>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 15 19:31:57 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Mon Nov 15 19:32:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PI3qP-0000mO-Dk
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 19:31:57 +0100
+	id 1PI3qQ-0000mO-V7
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 19:31:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758112Ab0KOSbU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Nov 2010 13:31:20 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:42334 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758108Ab0KOSbQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Nov 2010 13:31:16 -0500
-Received: by fxm6 with SMTP id 6so2005171fxm.19
-        for <git@vger.kernel.org>; Mon, 15 Nov 2010 10:31:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=WhbpXvkF758hPqv9p/S+CGQzMnDe0YDhTqYsXv4FuDc=;
-        b=CBsJlsroxwk1ZacEkGOe6/JuVG+crn3lCJX+5XOJ0c8KOliSh1ECDYQa57sleiCcZA
-         NsmYs3/CBMZczm4Z9KxqGdpmIYtFUqbtNj+FCog6aTHSwWHLOw1T1Hd0y8O3rkz2Ho+a
-         8EAe68YDtqrg5Wdi4NkG5QUoIzTUrluhYx/us=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=YxIAfKgXi6jRVSuOaNBOr7Eo9KeJAmp/LAK5zZcoMwDvWrKD1zKVjTbDBo4BKBi0YR
-         2dHIhcyfTMBmU/mgawEgerjAoW61hvXmPHxOuSPR4Xwq6ynO/fKQJr6peeDRxZNWsw87
-         zIO2nQsE/MSxo1+GXxg5ZpO9LMREzZkPbNs3s=
-Received: by 10.223.97.10 with SMTP id j10mr151994fan.112.1289845875517;
-        Mon, 15 Nov 2010 10:31:15 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id j8sm982231fah.6.2010.11.15.10.31.13
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 15 Nov 2010 10:31:14 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1289817410-32470-4-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758113Ab0KOSbo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Nov 2010 13:31:44 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37397 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758097Ab0KOSbn (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Nov 2010 13:31:43 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 504D22142;
+	Mon, 15 Nov 2010 13:31:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=zgJM7L91OR1HNV0EQGEVVayXeBY=; b=QmfhyQ
+	HJZcdSAA4uw2rpl2iTPQXMkhirBdmMd+FKZz7f/x9QZuaq2AcyKUnsgm+u5FnGPe
+	/ocrcfAYHHvbZp+gojEMcCCwABBKWJw4RbTJAuqxclqMtwLmVSdOpOu/E5gw09uq
+	UUB0xYPvYDIGMcxvsqaSWYS5YPzgcM7iOLwQ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uXEVF+IxoZ3fR+K9eE2o4XE87aF9WKaM
+	GEm2oTa72o1FXMPcM3AiGnRyHIsxbTfN+eQMjhSKZ2f0FbqWXp7TR9LZczpWQtTm
+	2bfeVmU2kKFCP30RboFEtzlabVkkBvvwpUhtGAq2Tq4N1gECev8qQwLP1U8V3CSS
+	i+NBFLlrouA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1D97B2141;
+	Mon, 15 Nov 2010 13:31:47 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0DA3C2140; Mon, 15 Nov 2010
+ 13:31:42 -0500 (EST)
+In-Reply-To: <20101114130205.GA27560@localhost> (Clemens Buchacher's message
+ of "Sun\, 14 Nov 2010 14\:02\:05 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 9A920628-F0E6-11DF-A582-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161498>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161499>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Clemens Buchacher <drizzd@aon.at> writes:
 
-> The function will reconstruct directory structure from index and feed
-> excluded_from_list() with proper dtype.
+> An aborted merge prints the list of rejected paths as part of the
+> error message. Some of those paths do not have static buffers, so
+> we have to keep a copy. Use string_list's to accomplish this.
+>
+> Previous to this fix, the error message would print whatever was
+> stored in the stack at that point.
 
-Might be worth squashing with a patch introducing a caller; otherwise i=
-t's
-hard to get a sense of what these functions do.
+Hmmm, all calls to add_rejected_path() seems to be with ce->name as the
+path parameter, and I do not think we ever free cache entries (either
+taken from the index or synthesized during the merge), so I am a bit
+surprised that this is necessary (namely, if some ce->name points into the
+stack, wouldn't that be a more serious bug than misreporting???).
+
+> With this change, the path list is printed in the order of
+> processing.  Previously, the order was reversed.
+
+That is true but I wonder if the order should be "whatever the processing
+order happens to be" in the first place, as this is a report to the end
+user, no?  Perhaps "collect in strlist, sort at the end before showing" is
+a more desirable thing to do?
+
+Still, I am more disturbed by the "some do not have static"...
