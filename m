@@ -1,75 +1,69 @@
-From: "Dennis" <dennisfm@friendlymatch.com>
-Subject: Setting up Git Server over SSH
-Date: Mon, 15 Nov 2010 13:20:15 -0500
-Message-ID: <B99C7057496B47E48E5ABED7DE6BA51A@denny>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 03/10] unpack-trees: add function to update ce_flags
+ based on sparse patterns
+Date: Mon, 15 Nov 2010 12:30:40 -0600
+Message-ID: <20101115183040.GD16385@burratino>
+References: <1289817410-32470-1-git-send-email-pclouds@gmail.com>
+ <1289817410-32470-4-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	format=flowed;
-	charset="iso-8859-1";
-	reply-type=original
-Content-Transfer-Encoding: 7bit
-To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Mon Nov 15 19:30:50 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 15 19:31:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PI3pG-0000Bn-3L
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 19:30:46 +0100
+	id 1PI3qP-0000mO-Dk
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 19:31:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932996Ab0KOSag (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Nov 2010 13:30:36 -0500
-Received: from fmailhost04.isp.att.net ([204.127.217.104]:54267 "EHLO
-	fmailhost04.isp.att.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758117Ab0KOSae (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Nov 2010 13:30:34 -0500
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Nov 2010 13:30:34 EST
-DKIM-Signature: v=1; q=dns/txt; d=ameritech.net; s=dkim01;
-      i=dennismv@ameritech.net; a=rsa-sha256; c=relaxed/relaxed;
-      t=1289845834; h=Content-Transfer-Encoding:Content-Type:
-     MIME-Version:Date:Subject:To:From:Message-ID; bh=mSZG1+F4DhC+uXKtI4
-     xK6gMlynqyreXgTH6U2XyBtdE=; b=o/Yxj8T8OYjrcztseTWHm8CaIWafpsPw/bUnf
-     ttiSiURYFjiRYYRb1xu7VzTE1ZGHArwiqSdd1WuUhRUvIzIGA==
-Received: from denny (d118-75-134-244.clv.wideopenwest.com[75.118.244.134])
-          by isp.att.net (frfwmhc04) with SMTP
-          id <20101115182019H0400o0lqme>; Mon, 15 Nov 2010 18:20:19 +0000
-X-Originating-IP: [75.118.244.134]
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2900.5931
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5994
+	id S1758112Ab0KOSbU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Nov 2010 13:31:20 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:42334 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758108Ab0KOSbQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Nov 2010 13:31:16 -0500
+Received: by fxm6 with SMTP id 6so2005171fxm.19
+        for <git@vger.kernel.org>; Mon, 15 Nov 2010 10:31:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=WhbpXvkF758hPqv9p/S+CGQzMnDe0YDhTqYsXv4FuDc=;
+        b=CBsJlsroxwk1ZacEkGOe6/JuVG+crn3lCJX+5XOJ0c8KOliSh1ECDYQa57sleiCcZA
+         NsmYs3/CBMZczm4Z9KxqGdpmIYtFUqbtNj+FCog6aTHSwWHLOw1T1Hd0y8O3rkz2Ho+a
+         8EAe68YDtqrg5Wdi4NkG5QUoIzTUrluhYx/us=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=YxIAfKgXi6jRVSuOaNBOr7Eo9KeJAmp/LAK5zZcoMwDvWrKD1zKVjTbDBo4BKBi0YR
+         2dHIhcyfTMBmU/mgawEgerjAoW61hvXmPHxOuSPR4Xwq6ynO/fKQJr6peeDRxZNWsw87
+         zIO2nQsE/MSxo1+GXxg5ZpO9LMREzZkPbNs3s=
+Received: by 10.223.97.10 with SMTP id j10mr151994fan.112.1289845875517;
+        Mon, 15 Nov 2010 10:31:15 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id j8sm982231fah.6.2010.11.15.10.31.13
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 15 Nov 2010 10:31:14 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1289817410-32470-4-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161497>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161498>
 
-I have a remote server (hostname.com) that acts as a webserver.
-What I did is I wanted to set up my public_html folder as a public 
-repository.
-After trial and error I am still at stage_0.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-Thus, on that server I have /home/user/.git directory and the repo works 
-fine if I am accessing it from the server.
+> The function will reconstruct directory structure from index and feed
+> excluded_from_list() with proper dtype.
 
-Now, I want to clone that repo onto my local machine.
-I am doing this, but it fails:
-
->git clone ssh://hostname.com:/home/user/.git
-Cloning into user...
-fatal: protocol error: bad line length character: logi
-
->Access denied
-Access denied
-Access denied
-Access denied
-Access denied
-Access denied
-FATAL ERROR: Server sent disconnect message
-type 2 (protocol error):
-"Too many authentication failures for "
---------------------------------
-
-What can I do to make it work?
-Dennis
+Might be worth squashing with a patch introducing a caller; otherwise i=
+t's
+hard to get a sense of what these functions do.
