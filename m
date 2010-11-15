@@ -1,83 +1,283 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: Multiple clients accessing git over NFS
-Date: Mon, 15 Nov 2010 15:44:18 -0500
-Message-ID: <1289853858.9996.14.camel@drew-northup.unet.maine.edu>
-References: <AANLkTimyFkVFAw4s2fiWKZFPvnx15K6U6GbxmRgznx7Z@mail.gmail.com>
-	 <rmi39r3mrf6.fsf@fnord.ir.bbn.com>
-	 <AANLkTim1bUbofDzC5HJnB--0WkT45ewbWCa25RebEgae@mail.gmail.com>
-	 <20101115195641.GG30870@efreet.light.src>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 07/10] checkout: add -S to update sparse checkout
+Date: Mon, 15 Nov 2010 15:16:36 -0600
+Message-ID: <20101115211636.GH16385@burratino>
+References: <1289817410-32470-1-git-send-email-pclouds@gmail.com>
+ <1289817410-32470-8-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jan Hudec <bulb@ucw.cz>
-To: Khawaja Shams <kshams@usc.edu>
-X-From: git-owner@vger.kernel.org Mon Nov 15 21:52:12 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 15 22:17:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PI628-0000mD-6x
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 21:52:12 +0100
+	id 1PI6QX-000617-IX
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 22:17:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758339Ab0KOUwG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Nov 2010 15:52:06 -0500
-Received: from basalt.its.maine.edu ([130.111.32.66]:46312 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758303Ab0KOUwF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Nov 2010 15:52:05 -0500
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id oAFKiOTC013569
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 15 Nov 2010 15:44:29 -0500
-In-Reply-To: <20101115195641.GG30870@efreet.light.src>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=3
-	Fuz1=3 Fuz2=3
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: oAFKiOTC013569
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1290458736.70285@OI6n80Mb/sy3QnpGRl0I2A
+	id S933784Ab0KOVRQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Nov 2010 16:17:16 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:44766 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933054Ab0KOVRO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Nov 2010 16:17:14 -0500
+Received: by fxm6 with SMTP id 6so2154976fxm.19
+        for <git@vger.kernel.org>; Mon, 15 Nov 2010 13:17:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=AMujkb4UqbATTmTWWNf2O3NZl5sRR3nyRrZknsHpEjM=;
+        b=gSC9VPMlJaOMKyaDAMNDWUGZa/6Jx9oVOsOwfVmSgOHNhSFS8BUEEgg6cjNlGaFBgw
+         usDwv9ioXlvb76SMmQZosnn3KZ7GRVBcR/cGs5HelVHrClFQ+yvvxyY+0jRym8RPQkoN
+         TFxD2knDZcV4MgN3+JqVYjl0T4aGecZOsFgZQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Y40dVgpFsgcPCN+h9Hf1XWz0OGbTUGG117IVQc0lVYw7Oj2jh6b2x1FtZY1BY0PeP9
+         LKplW7RxjIQLizvyxF6SkhlidCmJJfvYDhp5VCvNZ0yYgBgxo6LrUQmDIOfjD5Y7Srzv
+         8IxiOWNHyLCrIwPl2j90QtOHHX+K73j1+t/JI=
+Received: by 10.223.122.146 with SMTP id l18mr5147897far.102.1289855833090;
+        Mon, 15 Nov 2010 13:17:13 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id b20sm1054395fab.35.2010.11.15.13.17.09
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 15 Nov 2010 13:17:10 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1289817410-32470-8-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161514>
 
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
 
-On Mon, 2010-11-15 at 20:56 +0100, Jan Hudec wrote:
-> On Sun, Nov 14, 2010 at 15:42:29 -0800, Khawaja Shams wrote:
-> > Hi Greg,
-> >    Thank you for the insightful response. We have multiple automated
-> > clients pushing and pulling changes from git as events occur. We have
-> > not hit any real performance issues just yet. Our main goal is to
-> > improve the availability of the repository in case the box running the
-> > apache server has an outage during a mission critical period.
-> 
-> If you are out for availability, NFS isn't an answer, because the NFS server
-> remains a single point of failure. There are distributed filesystems
-> (Gluster, Lustre etc.) that can provide redundancy of storage nodes too or
-> you could have shared storage array with appropriate filesystem (GlobalFS,
-> OCFS2, etc.), but that requires special hardware. These will probably give
-> you better performance too -- git network protocol is optimized to send
-> minimal data, but that often means a lot more needs to be read from the disk.
-> 
-> I don't have personal experience with them though, so I can't give you more
-> specific recommendation.
+> --- a/Documentation/git-checkout.txt
+> +++ b/Documentation/git-checkout.txt
+> @@ -12,6 +12,7 @@ SYNOPSIS
+>  'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<star=
+t_point>]
+>  'git checkout' [-f|--ours|--theirs|-m|--conflict=3D<style>] [<tree-i=
+sh>] [--] <paths>...
+>  'git checkout' --patch [<tree-ish>] [--] [<paths>...]
+> +'git checkout' -S
+> =20
+>  DESCRIPTION
+>  -----------
+> @@ -176,6 +177,13 @@ the conflicted merge in the specified paths.
+>  This means that you can use `git checkout -p` to selectively discard
+>  edits from your current working tree.
+> =20
+> +-S::
+> +--update-sparse-checkout::
+> +	An editor is invoked to let you update your sparse checkout
+> +	patterns. The updated patterns will be saved in
+> +	$GIT_DIR/info/sparse-checkout. The working directory is also
+> +	updated. An empty file will abort the process.
 
-Khawaja,
-I haven't tried setting a server up with it yet, but perhaps DRDB
-mirrored devices may be of use? At that point then you have a way of
-making all of your HTTPd instances "see" the same filesystem (and will
-have notification options for when they do not). It probably isn't
-perfect, but may be worth looking into if your SAN cannot provide
-downtime-less NFS. As an added benefit, there is no longer a requirement
-that all of your front-ends be co-located (physically or logically).
+Wording nit: this doesn't make the worktree more up-to-date.  How
+about:
 
--- 
--Drew Northup N1XIM
-   AKA RvnPhnx on OPN
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+ --edit-sparse-checkout
+ --define-work-area
+ --narrow-worktree
+
+Hmph.
+
+--edit-sparse-checkout seems best for consistency of the choices I can
+think of.
+
+[...]
+> @@ -316,6 +324,14 @@ $ git add frotz
+>  ------------
+> =20
+> =20
+> +ENVIRONMENT AND CONFIGURATION VARIABLES
+> +---------------------------------------
+> +The editor used to edit the commit log message will be chosen from t=
+he
+                                 ^
+  patterns defining what subset of the tracked tree to work on
+
+> +GIT_EDITOR environment variable, the core.editor configuration varia=
+ble, the
+
+Might be simpler to say:
+
+ CONFIGURATION
+ -------------
+ --edit-sparse-checkout uses the configured editor.  See git-var(1) for
+ details.
+
+[...]
+> --- a/builtin/checkout.c
+> +++ b/builtin/checkout.c
+> @@ -675,6 +675,31 @@ static const char *unique_tracking_name(const ch=
+ar *name)
+>  	return NULL;
+>  }
+> =20
+> +static void edit_info_sparse_checkout()
+> +{
+> +	char *tmpfile =3D xstrdup(git_path("sparse-checkout"));
+
+git_pathdup()?
+
+> +	struct exclude_list el;
+> +	int i;
+> +
+> +	copy_file(tmpfile, git_path("info/sparse-checkout"), 0666);
+> +
+> +	if (launch_editor(tmpfile, NULL, NULL))
+> +		exit(1);
+> +
+> +	memset(&el, 0, sizeof(el));
+> +	if (add_excludes_from_file_to_list(tmpfile, "", 0, NULL, &el, 0) < =
+0 ||
+> +	    el.nr =3D=3D 0)
+> +		die("No valid sparse patterns. Abort.");
+
+Perhaps the error message should mention the temp file.
+
+> +	for (i =3D 0; i < el.nr; i++)
+> +		free(el.excludes[i]);
+> +	free(el.excludes);
+
+Neat.
+
+> +
+> +	if (rename(tmpfile, git_path("info/sparse-checkout")) < 0)
+> +		die_errno("Can't update %s", git_path("info/sparse-checkout"));
+
+Wouldn't git_path() clobber errno?  Probably worth keeping a temporary
+with the result from git_path before the rename.
+
+> +
+> +	free(tmpfile);
+> +}
+> +
+>  int cmd_checkout(int argc, const char **argv, const char *prefix)
+>  {
+>  	struct checkout_opts opts;
+> @@ -685,6 +710,7 @@ int cmd_checkout(int argc, const char **argv, con=
+st char *prefix)
+>  	char *conflict_style =3D NULL;
+>  	int patch_mode =3D 0;
+>  	int dwim_new_local_branch =3D 1;
+> +	int update_sparse_checkout =3D 0;
+>  	struct option options[] =3D {
+>  		OPT__QUIET(&opts.quiet),
+>  		OPT_STRING('b', NULL, &opts.new_branch, "branch",
+> @@ -704,6 +730,8 @@ int cmd_checkout(int argc, const char **argv, con=
+st char *prefix)
+>  		OPT_STRING(0, "conflict", &conflict_style, "style",
+>  			   "conflict style (merge or diff3)"),
+>  		OPT_BOOLEAN('p', "patch", &patch_mode, "select hunks interactively=
+"),
+> +		OPT_BOOLEAN('S', "update-sparse-checkout", &update_sparse_checkout=
+,
+> +			    "open up editor to edit $GIT_DIR/info/sparse-checkout" ),
+>  		{ OPTION_BOOLEAN, 0, "guess", &dwim_new_local_branch, NULL,
+>  		  "second guess 'git checkout no-such-branch'",
+>  		  PARSE_OPT_NOARG | PARSE_OPT_HIDDEN },
+> @@ -722,6 +750,9 @@ int cmd_checkout(int argc, const char **argv, con=
+st char *prefix)
+>  	argc =3D parse_options(argc, argv, prefix, options, checkout_usage,
+>  			     PARSE_OPT_KEEP_DASHDASH);
+> =20
+> +	if (update_sparse_checkout && !core_apply_sparse_checkout)
+> +		die("core.sparseCheckout needs to be turned on");
+
+--%s requires core.sparsecheckout to be turned out
+
+> +
+>  	/* we can assume from now on new_branch =3D !new_branch_force */
+>  	if (opts.new_branch && opts.new_branch_force)
+>  		die("-B cannot be used with -b");
+> @@ -874,6 +905,9 @@ no_reference:
+>  		if (!pathspec)
+>  			die("invalid path specification");
+> =20
+> +		if (update_sparse_checkout)
+> +			die("git checkout: update paths is incompatible with updating spa=
+rse checkout.");
+> +
+
+"updating paths is incompatible", I think.
+
+Maybe an area for future work. :)
+
+> @@ -892,8 +926,11 @@ no_reference:
+>  		return checkout_paths(source_tree, pathspec, &opts);
+>  	}
+> =20
+> -	if (patch_mode)
+> +	if (patch_mode) {
+> +		if (update_sparse_checkout)
+> +			die("git checkout: interactive checkout is incompatible with upda=
+ting sparse checkout.");
+
+Hmm, I'd put
+
+	if (patch_mode && update_sparse_checkout)
+		die(...
+
+earlier as part of option validation.
+
+[...]
+> --- a/t/t1011-read-tree-sparse-checkout.sh
+> +++ b/t/t1011-read-tree-sparse-checkout.sh
+> @@ -184,4 +184,22 @@ test_expect_success 'read-tree --reset removes o=
+utside worktree' '
+>  	test_cmp empty result
+>  '
+> =20
+> +test_expect_success 'git checkout -S fails to launch editor' '
+> +	GIT_EDITOR=3D/non-existent test_must_fail git checkout -S &&
+
+Exporting envvars via a function is non-portable.  The usual workaround=
+:
+
+	(
+		GIT_EDITOR=3D... &&
+		export  GIT_EDITOR &&
+		test_must_fail ...
+	) &&
+
+Maybe it's time to introduce
+
+	eval_must_fail GIT_EDITOR=3D/non-existent git checkout -S
+
+?
+
+[...]
+> +test_expect_success 'git checkout -S' '
+> +	git checkout -f top &&
+> +	cat >editor.sh <<\EOF &&
+> +#!/bin/sh
+> +echo sub > "$1"
+> +EOF
+
+Style: the git test scripts usually omit the space after >.
+
+> --- a/templates/info--sparse-checkout
+> +++ b/templates/info--sparse-checkout
+> @@ -1,3 +1,4 @@
+>  # Specify what files are checked out in working directory
+>  # Run "git checkout" after updating this file to update working dire=
+ctory
+> +# If this is opened by "git checkout -S", empty this file will abort=
+ it.
+>  *
+
+Usage nits: s/if/when/; s/opened/edited/; s/will/to/; s/it//.
+
+ # When editing with "git checkout -S", empty this file to abort.
