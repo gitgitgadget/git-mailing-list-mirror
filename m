@@ -1,78 +1,135 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH 002/160] Makefile: Set NO_GETTEXT=YesPlease on Windows & MinGW
-Date: Mon, 15 Nov 2010 11:35:15 +0100
-Message-ID: <AANLkTin2sMUBtS_WgVX39ngRGrWRLf=Z_+UhGNorP6VH@mail.gmail.com>
-References: <1289747245-23263-1-git-send-email-avarab@gmail.com> <1289747245-23263-2-git-send-email-avarab@gmail.com>
-Reply-To: kusmabite@gmail.com
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 00/10] Sparse checkout fixes and improvements
+Date: Mon, 15 Nov 2010 17:36:40 +0700
+Message-ID: <1289817410-32470-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	msysGit <msysgit@googlegroups.com>
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 15 11:35:56 2010
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 15 11:38:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PHwPj-0008Iw-Oe
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 11:35:56 +0100
+	id 1PHwS1-0001FT-1d
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 11:38:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755045Ab0KOKfj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Nov 2010 05:35:39 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:62423 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755568Ab0KOKfh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Nov 2010 05:35:37 -0500
-Received: by fxm6 with SMTP id 6so1607757fxm.19
-        for <git@vger.kernel.org>; Mon, 15 Nov 2010 02:35:35 -0800 (PST)
+	id S1755444Ab0KOKiL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Nov 2010 05:38:11 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:50556 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755147Ab0KOKiK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Nov 2010 05:38:10 -0500
+Received: by pwi9 with SMTP id 9so709809pwi.19
+        for <git@vger.kernel.org>; Mon, 15 Nov 2010 02:38:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=CCP4bpoEgWPymqYK4R3Ctb+DTUqG2x0C/h0WX/G/Hfo=;
-        b=wRzju80B/lzTR8azHKsv14qDUxwrry9GrVrka/k8EruLtEkyZzXUgjU14rRMVkzlDm
-         VUI7ccXeC1qywODyEEivfmu1dR6WxnxDOZpL2GNRyTtRTzYecBvK1+/8DjFnDe3VcDxq
-         YDkaJxE4FArsre20izCus2qHA4AC/bqlVqE5c=
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=xGMkiJZbG4MirCA1lkVCMQYnHHFxEzuOE2elNrYDKRU=;
+        b=qAv65g8pvUsP2mZHQAHDQC4X21uja8weXobobUlpmIsvpAyri7wJdoabEcIbxoeuGM
+         ejBmID6NW9hbVIA9tNxDr95YWSKX2aqtdZzpbbymd2rikqQAxPkJfChBLU+H30Nh85lR
+         VZF/frjHuz+0BUH8ZeGa0z6OEM1uX7yZEwAfc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=vB+zL9QNht5kjgq++VFpC6r1BdSUluZzEnoHKqrXJl0pn1mwC04lMooE7nJEvzQiBi
-         SrDS35ylE7yzE32NnYG8vZD0AE0Btz31zpYQbeZI49MRxK3JuxFJ630oOdfX++AVO3m1
-         QkoZ/OENHWjMxSkkxLZKJTfgXW7Z6o1fY/i+c=
-Received: by 10.223.100.4 with SMTP id w4mr4520254fan.26.1289817335746; Mon,
- 15 Nov 2010 02:35:35 -0800 (PST)
-Received: by 10.223.72.206 with HTTP; Mon, 15 Nov 2010 02:35:15 -0800 (PST)
-In-Reply-To: <1289747245-23263-2-git-send-email-avarab@gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=m3MKykskfxYdwxC2ZbbRx63CWXp8sERDQunk5P8/WlXcdjiyLriwnXLUUGcFVpoHia
+         qUW15cQqgeE/Jr0WqkoJ4sOT+z7OZCQWQolbSYSOjM/CiEpjUcbJEaZH99cdfYJrWPkr
+         ooDC9wDBjKEtTAj6wRkt263h9DIPqenEOiwEo=
+Received: by 10.142.161.11 with SMTP id j11mr4796575wfe.133.1289817489644;
+        Mon, 15 Nov 2010 02:38:09 -0800 (PST)
+Received: from pclouds@gmail.com ([115.73.247.75])
+        by mx.google.com with ESMTPS id e14sm8574080wfg.20.2010.11.15.02.38.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 15 Nov 2010 02:38:08 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 15 Nov 2010 17:36:51 +0700
+X-Mailer: git-send-email 1.7.3.2.210.g045198
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161477>
 
-(msysgit mailing list CC'ed)
+The first part fixes the long standing t1011.7 and removes the
+work around in excluded_from_list(). As a result, the
+EXC_FLAG_MUSTBEDIR fix for sparse checkout [1] is no longer needed.
 
-On Sun, Nov 14, 2010 at 4:07 PM, =C6var Arnfj=F6r=F0 Bjarmason
-<avarab@gmail.com> wrote:
-> Change the Windows and MinGW build defaults to not build the gettext
-> tools by default. Gettext hasn't yet been ported to the default
-> environments on those systems, although Erik Faye-Lund is working on
-> MinGW support.
->
-> Reported-by: Johannes Sixt <j6t@kdbg.org>
-> Signed-off-by: =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com>
+Another plus is that because the index is now traversed tree-alike,
+when a directory is match, all its children does not need to be checked=
+,
+which could speed things up a bit.
 
-I don't think this is exactly what Hannes reported; IIRC he reported
-that setting NO_GETTEXT wasn't sufficient to get it to build. Just
-unsetting NEEDS_LIBINTL for a platform that doesn't have gettext is
-curing the symptoms rather than the decease, shouldn't the build
-system and/or the code be fixed so setting NO_GETTEXT is sufficient
-instead?
+[1] http://http://article.gmane.org/gmane.comp.version-control.git/1608=
+92
 
-As a side-note, I think it might be time to merge the gettext-branch
-into msysGit soon. If no one complains, I'll get it done one of the
-next days.
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (10):
+  add: do not rely on dtype being NULL behavior
+  unpack-trees: move all skip-worktree check back to unpack_trees()
+  unpack-trees: add function to update ce_flags based on sparse
+    patterns
+  unpack-trees: fix sparse checkout's "unable to match directories"
+    fault
+
+
+The second part is more experimental although I think it's good
+change:
+
+  unpack-trees: optimize full checkout case
+
+The intention is that $GIT_DIR/info/sparse-checkout can be always-on.
+But it should not impact performance when not really used.
+
+
+  templates: add info/sparse-checkout
+
+I should have done this long before. I did not notice it until recently=
+=2E
+
+
+  checkout: add -S to update sparse checkout
+  checkout: add --full to fully populate working directory
+  git-checkout.txt: mention of sparse checkout
+
+These form a friendlier interface to update sparse checkout. Users need
+not to dig deep in git-read-tree.txt just to use sparse checkout.
+"git checkout -S" resembles "cleartool edcs", which makes sense to me.
+Both edit a file (location "unknown" in clearcase case) and update
+worktree after that.
+
+
+  clean: support cleaning sparse checkout with -S
+
+Sparse checkout does not prohibit you from checking out other parts of =
+the
+index. But you are pretty much left alone when doing so. This helps a b=
+it.
+Support "git clean -S -e" is possible with clear_ce_flags() from the fi=
+rst
+part of this series but I need to think a bit more.
+
+
+ Documentation/git-checkout.txt       |   49 +++++++++
+ Documentation/git-clean.txt          |    6 +-
+ Documentation/git-read-tree.txt      |   18 +---
+ builtin/add.c                        |    3 +-
+ builtin/checkout.c                   |   59 +++++++++++-
+ builtin/clean.c                      |   70 +++++++++++++
+ cache.h                              |    1 +
+ dir.c                                |    6 -
+ t/t1011-read-tree-sparse-checkout.sh |   39 +++++++-
+ t/t7301-clean-sparse.sh              |   92 +++++++++++++++++
+ templates/info--sparse-checkout      |    4 +
+ unpack-trees.c                       |  188 ++++++++++++++++++++++++++=
++++++---
+ 12 files changed, 490 insertions(+), 45 deletions(-)
+ create mode 100755 t/t7301-clean-sparse.sh
+ create mode 100644 templates/info--sparse-checkout
+
+--=20
+1.7.3.2.210.g045198
