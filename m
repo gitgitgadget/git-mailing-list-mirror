@@ -1,108 +1,67 @@
-From: Clemens Buchacher <drizzd@aon.at>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH] use persistent memory for rejected paths
-Date: Mon, 15 Nov 2010 20:02:06 +0100
-Message-ID: <20101115190206.GA2992@localhost>
+Date: Mon, 15 Nov 2010 20:03:40 +0100
+Message-ID: <vpq62vymmsz.fsf@bauges.imag.fr>
 References: <7vbp5ymfyo.fsf@alter.siamese.dyndns.org>
- <20101114130205.GA27560@localhost>
- <7vvd3yl9q2.fsf@alter.siamese.dyndns.org>
-Reply-To: Clemens Buchacher <drizzd@aon.at>
+	<20101114130205.GA27560@localhost>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="+QahgC5+KEYLbs62"
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@imag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 15 20:02:13 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Mon Nov 15 20:04:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PI4Jh-0007sL-43
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 20:02:13 +0100
+	id 1PI4Le-0000Us-Dy
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 20:04:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932644Ab0KOTCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Nov 2010 14:02:08 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:58010 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932737Ab0KOTCG (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Nov 2010 14:02:06 -0500
-Received: by gxk23 with SMTP id 23so3136628gxk.19
-        for <git@vger.kernel.org>; Mon, 15 Nov 2010 11:02:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:received:date:from:to
-         :cc:subject:message-id:reply-to:references:mime-version:content-type
-         :content-disposition:in-reply-to:user-agent;
-        bh=agob7UDRZFQv3a6I4iQTn8Sl4x/O4SpsDD3juWOeELU=;
-        b=XxVOVw+QCSwx6bq6EYA539jsrACQZswmrUcsbGI+ubve0fL91EGCkrjkQJlMPax4s3
-         qCN+9TIaOjdGCuOCXD6nej7jtk4QEuiUvpW6al8pTkSqwy7keDsJ/A/AHVkmMw7QnWH2
-         s+OQI7w15doka+WkCcXut6gpu/cnN89/WH7iw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=sender:date:from:to:cc:subject:message-id:reply-to:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        b=YHS00nMG9bHHlvqOMh7VjFbVrotstMNqn1AlJRclHcI3r1wgE/y36kl/Xv04VKod4n
-         1SknOhiy4zojCR/IfQ3QG0vNcd5DJBYhj9UGrGnBv7mcAkDsWhahHi9XpRj9BL5kNfR7
-         ivwRAa6Pf4ME+HQFjLsKpBMWliEdgRiyI3wyI=
-Received: by 10.204.79.9 with SMTP id n9mr6418534bkk.126.1289847724765;
-        Mon, 15 Nov 2010 11:02:04 -0800 (PST)
-Received: from darc.lan (p549A63CB.dip.t-dialin.net [84.154.99.203])
-        by mx.google.com with ESMTPS id p34sm172181bkf.15.2010.11.15.11.02.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 15 Nov 2010 11:02:02 -0800 (PST)
-Received: from drizzd by darc.lan with local (Exim 4.71)
-	(envelope-from <drizzd@localhost>)
-	id 1PI4Ja-0000n9-OJ; Mon, 15 Nov 2010 20:02:06 +0100
-Content-Disposition: inline
-In-Reply-To: <7vvd3yl9q2.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932840Ab0KOTEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Nov 2010 14:04:09 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:55936 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932703Ab0KOTEI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Nov 2010 14:04:08 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id oAFIm2dG030228
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 15 Nov 2010 19:48:02 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PI4L6-0003LJ-Eu; Mon, 15 Nov 2010 20:03:40 +0100
+In-Reply-To: <20101114130205.GA27560@localhost> (Clemens Buchacher's message of "Sun\, 14 Nov 2010 14\:02\:05 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 15 Nov 2010 19:48:02 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: oAFIm2dG030228
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1290451686.35399@t+xTP/4wfj5jvpoHGUuPsQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161502>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161503>
 
+Clemens Buchacher <drizzd@aon.at> writes:
 
---+QahgC5+KEYLbs62
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> An aborted merge prints the list of rejected paths as part of the
+> error message. Some of those paths do not have static buffers, so
+> we have to keep a copy.
 
-On Mon, Nov 15, 2010 at 10:31:33AM -0800, Junio C Hamano wrote:
->=20
-> Hmmm, all calls to add_rejected_path() seems to be with ce->name as the
-> path parameter,
+Like Junio, I'm surprised by this, but I guess you encountered the
+problem.
 
-Yes. All of them except for the leading path checks I introduced
-recently. In that code path we have to report untracked files which
-do not have a corresponding index entry.
+> Use string_list's to accomplish this.
 
-> That is true but I wonder if the order should be "whatever the processing
-> order happens to be" in the first place, as this is a report to the end
-> user, no?  Perhaps "collect in strlist, sort at the end before showing" is
-> a more desirable thing to do?
+That seems to be a good thing anyway.
 
-Is the order of processing not alphabetic? It is at least in the
-tests that I touched.
+Did you remove all uses of "struct rejected_paths_list"? If so, you
+can remove its declaration, if not, why?
 
-Clemens
-
---+QahgC5+KEYLbs62
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAEBAgAGBQJM4YOuAAoJELKdZexG8uqMZWgH/3ZvuFUwET0CLX0oiPlU3Hsq
-idyXHZ4HIR5Nh6S3jBBxGoz5n8O0FbCu91OP35odKSdkflmPfG84VmJhFgdlDgr0
-hEvrZf1i6dhCoqiPIBLeELuTZwgA2eH3gdETtMQmXOtQ2khY9ECciD5IoBvnUt5I
-tGrEoTlXJF/se2tMWY7d5Dpica6cjfPamEBm2wVMaKa0+AJPL6tDQV6SmUGQwuK1
-i/q7oL29fXIIRV2kFEYnxhKTq1DhNlKe1L4g3lcGbDu4hxHpVky7jbgq+wkJkK8O
-pqHOUWjBLdiABp5ybKMked6A0weqeve/tAK6cNf5SuEikynealerPPnolfvKPPc=
-=cfo5
------END PGP SIGNATURE-----
-
---+QahgC5+KEYLbs62--
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
