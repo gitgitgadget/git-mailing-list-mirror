@@ -1,82 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
 Subject: Re: Multiple clients accessing git over NFS
-Date: Sun, 14 Nov 2010 18:32:59 -0600
-Message-ID: <20101115003259.GC26104@burratino>
+Date: Mon, 15 Nov 2010 06:56:32 +0530
+Message-ID: <AANLkTi=4D+yoeN9=aKNw4y_Um_F9WhUCPDaU5FZkY4QF@mail.gmail.com>
 References: <AANLkTimyFkVFAw4s2fiWKZFPvnx15K6U6GbxmRgznx7Z@mail.gmail.com>
- <rmi39r3mrf6.fsf@fnord.ir.bbn.com>
- <AANLkTim1bUbofDzC5HJnB--0WkT45ewbWCa25RebEgae@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Khawaja Shams <kshams@usc.edu>
-X-From: git-owner@vger.kernel.org Mon Nov 15 01:33:41 2010
+X-From: git-owner@vger.kernel.org Mon Nov 15 02:26:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PHn0u-0006om-1t
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 01:33:40 +0100
+	id 1PHnqQ-0006Vk-AI
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 02:26:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757113Ab0KOAdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Nov 2010 19:33:35 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:48766 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755626Ab0KOAde (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Nov 2010 19:33:34 -0500
-Received: by ywc21 with SMTP id 21so1453328ywc.19
-        for <git@vger.kernel.org>; Sun, 14 Nov 2010 16:33:34 -0800 (PST)
+	id S932343Ab0KOB0f convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 14 Nov 2010 20:26:35 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:52040 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757223Ab0KOB0e convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 14 Nov 2010 20:26:34 -0500
+Received: by ewy8 with SMTP id 8so490109ewy.19
+        for <git@vger.kernel.org>; Sun, 14 Nov 2010 17:26:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=tO+F0JM8r6mi/feLxgZw4i73ilQGpteDTQ4HYdoE6kA=;
-        b=oZoe2ncxRQx/LIoYb/J16EO7V/mJ0ft+qSoh0dyhUBkq9h4DFr5btAzIfjTTjqNG8J
-         N5VDcu6cFjajI8Jc2grQXngbPrOQo4yvau92qO3D2EwedsEtRR/YsxKZKE8sMeS9LdEE
-         EMOUoCONZypBWsytXDjl3fQ908phPXQmO6VfQ=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=lZ/LpdwHQ7wq60u2UK0JuYVfYFPYZhXRFsWbwmqGaC4=;
+        b=UMFnG4bo6rSBLycy7zgKfwxVUVHQpFdCsymTGe8oNYIcIs8ttoHIzWVlFyV69lLGes
+         zG8YYHrVBVRoa67yOBjI9RVIb1Hjaryb9XaJnams3m2kti+k6XREksxorzr/8XtNOL5m
+         GRnM9z8RtWZbPfdyUmNKzDsK1fymr1i/wPB0c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=FlPgkG3nbraJNEk2vuyj/Ie3sx+M7O4IsJUePiFSa1AkADUJypY0WenjoGS5ZySSYv
-         Mz9QwHYGoHFvEwcuCRLSBCO9ViWNWGGmCiUuE4/kgajDzgjtCLlrl0Jq7y2ox2lskORg
-         gzHUfotIg8hhf8Gf0L0A2uCe+4G7y0e6LIyQw=
-Received: by 10.150.199.15 with SMTP id w15mr8271481ybf.326.1289781212979;
-        Sun, 14 Nov 2010 16:33:32 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id p1sm2670091ybn.17.2010.11.14.16.33.31
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 14 Nov 2010 16:33:32 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTim1bUbofDzC5HJnB--0WkT45ewbWCa25RebEgae@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=eeFUUE+WO84CG29VpIIq2o6rj8mHSi7krq0fq3TrQqKqbJdipRtv4SYc9iL4PvTaYB
+         8ynniM3+ivxEOF4bZCotU9qnz6e5Yjx8N1rftyY2tHke2VUA46b6tbrBCSBsR4x1wSL9
+         N08u9agWBMbJYCHX5H3/f0WvPJ5OQS+SWPa2g=
+Received: by 10.213.30.20 with SMTP id s20mr4277241ebc.16.1289784392255; Sun,
+ 14 Nov 2010 17:26:32 -0800 (PST)
+Received: by 10.213.35.68 with HTTP; Sun, 14 Nov 2010 17:26:32 -0800 (PST)
+In-Reply-To: <AANLkTimyFkVFAw4s2fiWKZFPvnx15K6U6GbxmRgznx7Z@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161468>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161469>
 
-Khawaja Shams wrote:
+On Mon, Nov 15, 2010 at 2:54 AM, Khawaja Shams <kshams@usc.edu> wrote:
+> =C2=A0=C2=A0Is it a recommended practice to share a repository over N=
+=46S, where
+> multiple clients can be pushing changes simultaneously?=C2=A0 In our
 
->    I am still interested in knowing if git can handle multiple
-> simultaneous pushes on the same repository without encountering
-> corruption issues.
+http://permalink.gmane.org/gmane.comp.version-control.git/122670
 
-Yes, concurrent attempts to update a branch are serialized.  (But
-please don't ask me to answer about NFS semantics.  See
+may be useful...
 
-http://stackoverflow.com/questions/750765/concurrency-in-a-git-repo-on-a-network-shared-folder
+> production environment, we have a Git repository setup behind
+> git-http-backend. We would like to place multiple Apache servers
+> behind a load balancer to maximize availability and performance.
+> Before we proceed, we wanted to check to see if this practice has a
+> potential to cause repository corruption. If there are other ways
+> others have solved this problem, we would be very interested in
+> learning about those as well. Thank you.
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
+>
 
-for some notes.)  See the note about fast-fowards in the git push
-manual for how integrity is preserved.
 
-After reading that, you might wonder: if there are many, many clients
-pushing to the same branch, how is starvation avoided?  Good question!
-It isn't.  If you have so many clients wanting to push to a single
-branch, I would suggest having a single person or a few people
-maintaining it, pulling from others.  Life will be better for many
-reasons, especially quality control.
 
-Hope that helps.
-Jonathan
+--=20
+Sitaram
