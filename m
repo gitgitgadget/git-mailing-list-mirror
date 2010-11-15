@@ -1,429 +1,82 @@
-From: Johan Herland <johan@herland.net>
-Subject: [PATCHv6.1 19/23] git notes merge: Add another auto-resolving
- strategy: "cat_sort_uniq"
-Date: Mon, 15 Nov 2010 00:57:17 +0100
-Message-ID: <201011150057.18187.johan@herland.net>
-References: <1289339399-4733-1-git-send-email-johan@herland.net>
- <20101114212243.GC10150@burratino> <201011150050.27131.johan@herland.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Multiple clients accessing git over NFS
+Date: Sun, 14 Nov 2010 18:32:59 -0600
+Message-ID: <20101115003259.GC26104@burratino>
+References: <AANLkTimyFkVFAw4s2fiWKZFPvnx15K6U6GbxmRgznx7Z@mail.gmail.com>
+ <rmi39r3mrf6.fsf@fnord.ir.bbn.com>
+ <AANLkTim1bUbofDzC5HJnB--0WkT45ewbWCa25RebEgae@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Thiago Farina <tfransosi@gmail.com>, bebarino@gmail.com,
-	avarab@gmail.com, gitster@pobox.com, srabbelier@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 15 00:57:32 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Khawaja Shams <kshams@usc.edu>
+X-From: git-owner@vger.kernel.org Mon Nov 15 01:33:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PHmRv-00065V-GX
-	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 00:57:32 +0100
+	id 1PHn0u-0006om-1t
+	for gcvg-git-2@lo.gmane.org; Mon, 15 Nov 2010 01:33:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755158Ab0KNX50 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 14 Nov 2010 18:57:26 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:62006 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754853Ab0KNX50 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 14 Nov 2010 18:57:26 -0500
-Received: from get-mta-scan01.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LBW00HESFVPL600@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Mon, 15 Nov 2010 00:57:25 +0100 (MET)
-Received: from get-mta-scan01.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 0D8941799CBB_CE07765B	for <git@vger.kernel.org>; Sun,
- 14 Nov 2010 23:57:25 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan01.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id AA8EE17965C7_CE07764F	for <git@vger.kernel.org>; Sun,
- 14 Nov 2010 23:57:24 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LBW0029RFVJXS30@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Mon, 15 Nov 2010 00:57:24 +0100 (MET)
-User-Agent: KMail/1.13.5 (Linux/2.6.35-ARCH; KDE/4.5.3; x86_64; ; )
-In-reply-to: <201011150050.27131.johan@herland.net>
+	id S1757113Ab0KOAdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 14 Nov 2010 19:33:35 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:48766 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755626Ab0KOAde (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 14 Nov 2010 19:33:34 -0500
+Received: by ywc21 with SMTP id 21so1453328ywc.19
+        for <git@vger.kernel.org>; Sun, 14 Nov 2010 16:33:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=tO+F0JM8r6mi/feLxgZw4i73ilQGpteDTQ4HYdoE6kA=;
+        b=oZoe2ncxRQx/LIoYb/J16EO7V/mJ0ft+qSoh0dyhUBkq9h4DFr5btAzIfjTTjqNG8J
+         N5VDcu6cFjajI8Jc2grQXngbPrOQo4yvau92qO3D2EwedsEtRR/YsxKZKE8sMeS9LdEE
+         EMOUoCONZypBWsytXDjl3fQ908phPXQmO6VfQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=FlPgkG3nbraJNEk2vuyj/Ie3sx+M7O4IsJUePiFSa1AkADUJypY0WenjoGS5ZySSYv
+         Mz9QwHYGoHFvEwcuCRLSBCO9ViWNWGGmCiUuE4/kgajDzgjtCLlrl0Jq7y2ox2lskORg
+         gzHUfotIg8hhf8Gf0L0A2uCe+4G7y0e6LIyQw=
+Received: by 10.150.199.15 with SMTP id w15mr8271481ybf.326.1289781212979;
+        Sun, 14 Nov 2010 16:33:32 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id p1sm2670091ybn.17.2010.11.14.16.33.31
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 14 Nov 2010 16:33:32 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTim1bUbofDzC5HJnB--0WkT45ewbWCa25RebEgae@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161467>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161468>
 
-This new strategy is similar to "concatenate", but in addition to
-concatenating the two note candidates, this strategy sorts the resulting
-lines, and removes duplicate lines from the result. This is equivalent to
-applying the "cat | sort | uniq" shell pipeline to the two note candidates.
+Khawaja Shams wrote:
 
-This strategy is useful if the notes follow a line-based format where one
-wants to avoid duplicate lines in the merge result.
+>    I am still interested in knowing if git can handle multiple
+> simultaneous pushes on the same repository without encountering
+> corruption issues.
 
-Note that if either of the note candidates contain duplicate lines _prior_
-to the merge, these will also be removed by this merge strategy.
+Yes, concurrent attempts to update a branch are serialized.  (But
+please don't ask me to answer about NFS semantics.  See
 
-The patch also contains tests and documentation for the new strategy.
+http://stackoverflow.com/questions/750765/concurrency-in-a-git-repo-on-a-network-shared-folder
 
-Signed-off-by: Johan Herland <johan@herland.net>
----
- Documentation/git-notes.txt         |   12 +++-
- builtin/notes.c                     |    8 ++-
- notes-merge.c                       |    7 ++
- notes-merge.h                       |    3 +-
- notes.c                             |   76 ++++++++++++++++++
- notes.h                             |    1 +
- t/t3309-notes-merge-auto-resolve.sh |  145 +++++++++++++++++++++++++++++++++++
- 7 files changed, 248 insertions(+), 4 deletions(-)
+for some notes.)  See the note about fast-fowards in the git push
+manual for how integrity is preserved.
 
-diff --git a/Documentation/git-notes.txt b/Documentation/git-notes.txt
-index a822551..1de1417 100644
---- a/Documentation/git-notes.txt
-+++ b/Documentation/git-notes.txt
-@@ -155,7 +155,7 @@ OPTIONS
- --strategy=<strategy>::
- 	When merging notes, resolve notes conflicts using the given
- 	strategy. The following strategies are recognized: "manual"
--	(default), "ours", "theirs" and "union".
-+	(default), "ours", "theirs", "union" and "cat_sort_uniq".
- 	See the "NOTES MERGE STRATEGIES" section below for more
- 	information on each notes merge strategy.
- 
-@@ -230,6 +230,16 @@ ref).
- "union" automatically resolves notes conflicts by concatenating the
- local and remote versions.
- 
-+"cat_sort_uniq" is similar to "union", but in addition to concatenating
-+the local and remote versions, this strategy also sorts the resulting
-+lines, and removes duplicate lines from the result. This is equivalent
-+to applying the "cat | sort | uniq" shell pipeline to the local and
-+remote versions. This strategy is useful if the notes follow a line-based
-+format where one wants to avoid duplicated lines in the merge result.
-+Note that if either the local or remote version contain duplicate lines
-+prior to the merge, these will also be removed by this notes merge
-+strategy.
-+
- 
- EXAMPLES
- --------
-diff --git a/builtin/notes.c b/builtin/notes.c
-index 710a89d..455046e 100644
---- a/builtin/notes.c
-+++ b/builtin/notes.c
-@@ -324,6 +324,8 @@ combine_notes_fn parse_combine_notes_fn(const char *v)
- 		return combine_notes_ignore;
- 	else if (!strcasecmp(v, "concatenate"))
- 		return combine_notes_concatenate;
-+	else if (!strcasecmp(v, "cat_sort_uniq"))
-+		return combine_notes_cat_sort_uniq;
- 	else
- 		return NULL;
- }
-@@ -846,8 +848,8 @@ static int merge(int argc, const char **argv, const char *prefix)
- 		OPT__VERBOSITY(&verbosity),
- 		OPT_GROUP("Merge options"),
- 		OPT_STRING('s', "strategy", &strategy, "strategy",
--			   "resolve notes conflicts using the given "
--			   "strategy (manual/ours/theirs/union)"),
-+			   "resolve notes conflicts using the given strategy "
-+			   "(manual/ours/theirs/union/cat_sort_uniq)"),
- 		OPT_GROUP("Committing unmerged notes"),
- 		{ OPTION_BOOLEAN, 0, "commit", &do_commit, NULL,
- 			"finalize notes merge by committing unmerged notes",
-@@ -899,6 +901,8 @@ static int merge(int argc, const char **argv, const char *prefix)
- 			o.strategy = NOTES_MERGE_RESOLVE_THEIRS;
- 		else if (!strcmp(strategy, "union"))
- 			o.strategy = NOTES_MERGE_RESOLVE_UNION;
-+		else if (!strcmp(strategy, "cat_sort_uniq"))
-+			o.strategy = NOTES_MERGE_RESOLVE_CAT_SORT_UNIQ;
- 		else {
- 			error("Unknown -s/--strategy: %s", strategy);
- 			usage_with_options(git_notes_merge_usage, options);
-diff --git a/notes-merge.c b/notes-merge.c
-index 459b1c2..71c4d45 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -453,6 +453,13 @@ static int merge_one_change(struct notes_merge_options *o,
- 			die("failed to concatenate notes "
- 			    "(combine_notes_concatenate)");
- 		return 0;
-+	case NOTES_MERGE_RESOLVE_CAT_SORT_UNIQ:
-+		OUTPUT(o, 2, "Concatenating unique lines in local and remote "
-+		       "notes for %s", sha1_to_hex(p->obj));
-+		if (add_note(t, p->obj, p->remote, combine_notes_cat_sort_uniq))
-+			die("failed to concatenate notes "
-+			    "(combine_notes_cat_sort_uniq)");
-+		return 0;
- 	}
- 	die("Unknown strategy (%i).", o->strategy);
- }
-diff --git a/notes-merge.h b/notes-merge.h
-index 195222f..168a672 100644
---- a/notes-merge.h
-+++ b/notes-merge.h
-@@ -17,7 +17,8 @@ struct notes_merge_options {
- 		NOTES_MERGE_RESOLVE_MANUAL = 0,
- 		NOTES_MERGE_RESOLVE_OURS,
- 		NOTES_MERGE_RESOLVE_THEIRS,
--		NOTES_MERGE_RESOLVE_UNION
-+		NOTES_MERGE_RESOLVE_UNION,
-+		NOTES_MERGE_RESOLVE_CAT_SORT_UNIQ
- 	} strategy;
- 	unsigned has_worktree:1;
- };
-diff --git a/notes.c b/notes.c
-index 09a93ab..96cde42 100644
---- a/notes.c
-+++ b/notes.c
-@@ -845,6 +845,82 @@ int combine_notes_ignore(unsigned char *cur_sha1,
- 	return 0;
- }
- 
-+static int string_list_add_note_lines(struct string_list *sort_uniq_list,
-+				      const unsigned char *sha1)
-+{
-+	char *data;
-+	unsigned long len;
-+	enum object_type t;
-+	struct strbuf buf = STRBUF_INIT;
-+	struct strbuf **lines = NULL;
-+	int i, list_index;
-+
-+	if (is_null_sha1(sha1))
-+		return 0;
-+
-+	/* read_sha1_file NUL-terminates */
-+	data = read_sha1_file(sha1, &t, &len);
-+	if (t != OBJ_BLOB || !data || !len) {
-+		free(data);
-+		return t != OBJ_BLOB || !data;
-+	}
-+
-+	strbuf_attach(&buf, data, len, len + 1);
-+	lines = strbuf_split(&buf, '\n');
-+
-+	for (i = 0; lines[i]; i++) {
-+		if (lines[i]->buf[lines[i]->len - 1] == '\n')
-+			strbuf_setlen(lines[i], lines[i]->len - 1);
-+		if (!lines[i]->len)
-+			continue; /* skip empty lines */
-+		list_index = string_list_find_insert_index(sort_uniq_list,
-+							   lines[i]->buf, 0);
-+		if (list_index < 0)
-+			continue; /* skip duplicate lines */
-+		string_list_insert_at_index(sort_uniq_list, list_index,
-+					    lines[i]->buf);
-+	}
-+
-+	strbuf_list_free(lines);
-+	strbuf_release(&buf);
-+	return 0;
-+}
-+
-+static int string_list_join_lines_helper(struct string_list_item *item,
-+					 void *cb_data)
-+{
-+	struct strbuf *buf = cb_data;
-+	strbuf_addstr(buf, item->string);
-+	strbuf_addch(buf, '\n');
-+	return 0;
-+}
-+
-+int combine_notes_cat_sort_uniq(unsigned char *cur_sha1,
-+		const unsigned char *new_sha1)
-+{
-+	struct string_list sort_uniq_list = { NULL, 0, 0, 1 };
-+	struct strbuf buf = STRBUF_INIT;
-+	int ret = 1;
-+
-+	/* read both note blob objects into unique_lines */
-+	if (string_list_add_note_lines(&sort_uniq_list, cur_sha1))
-+		goto out;
-+	if (string_list_add_note_lines(&sort_uniq_list, new_sha1))
-+		goto out;
-+
-+	/* create a new blob object from sort_uniq_list */
-+	if (for_each_string_list(&sort_uniq_list,
-+				 string_list_join_lines_helper, &buf))
-+		goto out;
-+
-+	ret = write_sha1_file(buf.buf, buf.len, blob_type, cur_sha1);
-+
-+out:
-+	strbuf_release(&buf);
-+	string_list_clear(&sort_uniq_list, 0);
-+	return ret;
-+}
-+
- static int string_list_add_one_ref(const char *path, const unsigned char *sha1,
- 				   int flag, void *cb)
- {
-diff --git a/notes.h b/notes.h
-index b372575..93a7365 100644
---- a/notes.h
-+++ b/notes.h
-@@ -27,6 +27,7 @@ typedef int (*combine_notes_fn)(unsigned char *cur_sha1, const unsigned char *ne
- int combine_notes_concatenate(unsigned char *cur_sha1, const unsigned char *new_sha1);
- int combine_notes_overwrite(unsigned char *cur_sha1, const unsigned char *new_sha1);
- int combine_notes_ignore(unsigned char *cur_sha1, const unsigned char *new_sha1);
-+int combine_notes_cat_sort_uniq(unsigned char *cur_sha1, const unsigned char *new_sha1);
- 
- /*
-  * Notes tree object
-diff --git a/t/t3309-notes-merge-auto-resolve.sh b/t/t3309-notes-merge-auto-resolve.sh
-index 1a1fc7e..461fd84 100755
---- a/t/t3309-notes-merge-auto-resolve.sh
-+++ b/t/t3309-notes-merge-auto-resolve.sh
-@@ -499,4 +499,149 @@ test_expect_success 'merge z into y with "union" strategy => Non-conflicting 3-w
- 	verify_notes y union
- '
- 
-+test_expect_success 'reset to pre-merge state (y)' '
-+	git update-ref refs/notes/y refs/notes/y^1 &&
-+	# Verify pre-merge state
-+	verify_notes y y
-+'
-+
-+cat <<EOF | sort >expect_notes_union2
-+d682107b8bf7a7aea1e537a8d5cb6a12b60135f1 $commit_sha15
-+5de7ea7ad4f47e7ff91989fb82234634730f75df $commit_sha14
-+3a631fdb6f41b05b55d8f4baf20728ba8f6fccbc $commit_sha13
-+a66055fa82f7a03fe0c02a6aba3287a85abf7c62 $commit_sha12
-+7e3c53503a3db8dd996cb62e37c66e070b44b54d $commit_sha11
-+b8d03e173f67f6505a76f6e00cf93440200dd9be $commit_sha10
-+851e1638784a884c7dd26c5d41f3340f6387413a $commit_sha8
-+357b6ca14c7afd59b7f8b8aaaa6b8b723771135b $commit_sha5
-+e2bfd06a37dd2031684a59a6e2b033e212239c78 $commit_sha4
-+5772f42408c0dd6f097a7ca2d24de0e78d1c46b1 $commit_sha3
-+283b48219aee9a4105f6cab337e789065c82c2b9 $commit_sha2
-+EOF
-+
-+cat >expect_log_union2 <<EOF
-+$commit_sha15 15th
-+z notes on 15th commit
-+
-+y notes on 15th commit
-+
-+$commit_sha14 14th
-+y notes on 14th commit
-+
-+$commit_sha13 13th
-+y notes on 13th commit
-+
-+$commit_sha12 12th
-+y notes on 12th commit
-+
-+$commit_sha11 11th
-+z notes on 11th commit
-+
-+$commit_sha10 10th
-+x notes on 10th commit
-+
-+$commit_sha9 9th
-+
-+$commit_sha8 8th
-+z notes on 8th commit
-+
-+$commit_sha7 7th
-+
-+$commit_sha6 6th
-+
-+$commit_sha5 5th
-+z notes on 5th commit
-+
-+y notes on 5th commit
-+
-+$commit_sha4 4th
-+y notes on 4th commit
-+
-+$commit_sha3 3rd
-+y notes on 3rd commit
-+
-+$commit_sha2 2nd
-+z notes on 2nd commit
-+
-+$commit_sha1 1st
-+
-+EOF
-+
-+test_expect_success 'merge y into z with "union" strategy => Non-conflicting 3-way merge' '
-+	git config core.notesRef refs/notes/z &&
-+	git notes merge --strategy=union y &&
-+	verify_notes z union2
-+'
-+
-+test_expect_success 'reset to pre-merge state (z)' '
-+	git update-ref refs/notes/z refs/notes/z^1 &&
-+	# Verify pre-merge state
-+	verify_notes z z
-+'
-+
-+cat <<EOF | sort >expect_notes_cat_sort_uniq
-+6be90240b5f54594203e25d9f2f64b7567175aee $commit_sha15
-+5de7ea7ad4f47e7ff91989fb82234634730f75df $commit_sha14
-+3a631fdb6f41b05b55d8f4baf20728ba8f6fccbc $commit_sha13
-+a66055fa82f7a03fe0c02a6aba3287a85abf7c62 $commit_sha12
-+7e3c53503a3db8dd996cb62e37c66e070b44b54d $commit_sha11
-+b8d03e173f67f6505a76f6e00cf93440200dd9be $commit_sha10
-+851e1638784a884c7dd26c5d41f3340f6387413a $commit_sha8
-+660311d7f78dc53db12ac373a43fca7465381a7e $commit_sha5
-+e2bfd06a37dd2031684a59a6e2b033e212239c78 $commit_sha4
-+5772f42408c0dd6f097a7ca2d24de0e78d1c46b1 $commit_sha3
-+283b48219aee9a4105f6cab337e789065c82c2b9 $commit_sha2
-+EOF
-+
-+cat >expect_log_cat_sort_uniq <<EOF
-+$commit_sha15 15th
-+y notes on 15th commit
-+z notes on 15th commit
-+
-+$commit_sha14 14th
-+y notes on 14th commit
-+
-+$commit_sha13 13th
-+y notes on 13th commit
-+
-+$commit_sha12 12th
-+y notes on 12th commit
-+
-+$commit_sha11 11th
-+z notes on 11th commit
-+
-+$commit_sha10 10th
-+x notes on 10th commit
-+
-+$commit_sha9 9th
-+
-+$commit_sha8 8th
-+z notes on 8th commit
-+
-+$commit_sha7 7th
-+
-+$commit_sha6 6th
-+
-+$commit_sha5 5th
-+y notes on 5th commit
-+z notes on 5th commit
-+
-+$commit_sha4 4th
-+y notes on 4th commit
-+
-+$commit_sha3 3rd
-+y notes on 3rd commit
-+
-+$commit_sha2 2nd
-+z notes on 2nd commit
-+
-+$commit_sha1 1st
-+
-+EOF
-+
-+test_expect_success 'merge y into z with "cat_sort_uniq" strategy => Non-conflicting 3-way merge' '
-+	git notes merge --strategy=cat_sort_uniq y &&
-+	verify_notes z cat_sort_uniq
-+'
-+
- test_done
--- 
-1.7.3.2.173.gab1c9.dirty
+After reading that, you might wonder: if there are many, many clients
+pushing to the same branch, how is starvation avoided?  Good question!
+It isn't.  If you have so many clients wanting to push to a single
+branch, I would suggest having a single person or a few people
+maintaining it, pulling from others.  Life will be better for many
+reasons, especially quality control.
+
+Hope that helps.
+Jonathan
