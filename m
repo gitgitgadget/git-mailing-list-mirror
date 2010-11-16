@@ -1,103 +1,119 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git-send-email and "mailhost" misbehavior
-Date: Tue, 16 Nov 2010 11:06:20 -0800
-Message-ID: <7vy68tgkb7.fsf@alter.siamese.dyndns.org>
-References: <AANLkTinAjqb7cuCaiu=UvT9m5R=RM5E0hf4zPuKYVmHn@mail.gmail.com>
+Subject: Re: [PATCH] t6022: Use -eq not = to test output of wc -l
+Date: Tue, 16 Nov 2010 11:10:40 -0800
+Message-ID: <7vtyjhgk3z.fsf@alter.siamese.dyndns.org>
+References: <1289251766-48316-1-git-send-email-brian@gernhardtsoftware.com>
+ <7vaalajkiq.fsf@alter.siamese.dyndns.org> <4CE22EC2.7040603@viscovery.net>
+ <20101116171031.GB13398@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Mike Frysinger <vapier@gentoo.org>
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Tue Nov 16 20:06:48 2010
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Git List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 16 20:11:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIQrf-0001dw-Mi
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 20:06:48 +0100
+	id 1PIQvk-0004T3-CI
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 20:11:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757276Ab0KPTGb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Nov 2010 14:06:31 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58663 "EHLO
+	id S1757172Ab0KPTKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Nov 2010 14:10:54 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63361 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757263Ab0KPTGa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Nov 2010 14:06:30 -0500
+	with ESMTP id S1756706Ab0KPTKx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Nov 2010 14:10:53 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5F94D29E6;
-	Tue, 16 Nov 2010 14:06:39 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8947F2A79;
+	Tue, 16 Nov 2010 14:11:02 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=r6CLc3PbFCBYXsbVdHnD0NEP97k=; b=bwuZtX
-	5J5m8K+XJfndr6yjjtHI9OCebvHF6b8buSjK1PAb8Q+Z5A5tUVDRcO8sVD6h2hxx
-	2jTLgF3nHXzdR8v7IOZmfbjZT5xhpr/Hrop7Bg/JVdTZI+eS1o5CY+QpG/MnNGjP
-	7J3PKng5dsUjF3GrYoq8ivosxGmckso022sqQ=
+	:content-type; s=sasl; bh=75ByY/4go21s9cCAkUqln3HN53g=; b=JZjdQ7
+	G0Ut20Lf3/BsFlntMQgqyiNSPKZGaSBsbwLqb6qtC6R4Oxp64omg/Zu2DCYpYe9d
+	4buxT37W9WSSeGm1qG06GTcwSCc1aV9nJUK5RcdkbWdBVJWOlmvnNLF7gbw+VCng
+	keFfNVBnMtcQ4KOoBw+Lfp/NwNC9apRjcAw5M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=gZVXxBn3nsUuclsLp+peEBfXOmB408Pa
-	xHKTVCg292zjfuFg8eaeiVuqLzKxd3XQ0S9XmVjMerNQvQE0gLgEZsCIBH2K5eiU
-	T9SKaYfsyFjvU5Nr7jzfPVA+Jw8wkU1Az8mo1xhm2KlyHpTim3GSo7sorxG0XJA4
-	CJ7BfGLRtss=
+	:content-type; q=dns; s=sasl; b=nZV61CgoGBw3CsNnmzaWjAi0J7Xvn/Wu
+	kr91mizrY1RroneFdWl5up48HlOtoHHH0zXbvhatpLZKNc79Ou98GpGVBWuHhKbe
+	pZ35cXMONwNp7GvfIkgTlK9h3iwsZ8k01tG1AnWPLNwydA3cZN/jycCMs3qRgn76
+	LXKsb+solYc=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2C57C29E5;
-	Tue, 16 Nov 2010 14:06:36 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4914F2A75;
+	Tue, 16 Nov 2010 14:10:58 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0979729E3; Tue, 16 Nov 2010
- 14:06:31 -0500 (EST)
-In-Reply-To: <AANLkTinAjqb7cuCaiu=UvT9m5R=RM5E0hf4zPuKYVmHn@mail.gmail.com>
- (Mike Frysinger's message of "Mon\, 15 Nov 2010 15\:24\:02 -0500")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BD4FF2A73; Tue, 16 Nov 2010
+ 14:10:52 -0500 (EST)
+In-Reply-To: <20101116171031.GB13398@burratino> (Jonathan Nieder's message of
+ "Tue\, 16 Nov 2010 11\:10\:32 -0600")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A2295FB6-F1B4-11DF-82E6-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 3E574998-F1B5-11DF-BF81-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161576>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161577>
 
-Mike Frysinger <vapier@gentoo.org> writes:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> i have sendemail in my ~/.gitconfig setup like so:
-> [sendemail]
->     smtpserver = localhost:1111
+> Johannes Sixt wrote:
 >
-> and i have a ssh tunnel running there to forward my e-mail to another
-> machine's localhost:25
+>> - It doesn't save any messages or fix-ups during review: instead of "do
+>> not quote!" we have to say "use test_line_count!".
 >
-> however, when i attempt to send e-mail from some systems, the `git
-> send-email` process pauses for like 2 minutes without doing anything.
-> after hassling my e-mail admin about greylisting (which is disabled
-> for localhost), i looked at git-send-email a bit closer.
+> I was nervous about introducing test_line_count for that reason.
 >
-> running it through a heavy strace shows the source of the pause:
-> connect(6, {sa_family=AF_INET, sin_port=htons(25),
-> sin_addr=inet_addr("208.68.139.38")}, 16)
-> then there's a timeout after 120 seconds trying to connect to this guy
+> Another consideration won out: not syntax but output format.  See
+> cae3aa79 (t6022 (renaming merge): chain test commands with &&,
+> 2010-10-31).  Kind of analogous to test_cmp, which is a similar
+> headache to get used over less portable or less pleasant alternatives.
 >
-> so wtf is "208.68.139.38" !?  well, my shitty ISP (comcast) is doing
-> DNS hijacking for unresolved DNS names.  so git-send-email tried to
-> look up some host and it got back "208.68.139.38".  while comcast is
-> wrong here, why is git-send-email looking up anything at all
-> considering my sendemail.smtpserver is configured to localhost ?
+> If a piped variant is needed, I would prefer it to work something
+> like this.  Usage:
 >
-> it seems that buried in the bowels of git-send-email and totally
-> undocumented is this nugget:
-> /usr/libexec/git-core/git-send-email:
-> ...
-> sub maildomain_mta {
->     my $maildomain;
+> 	{
+> 		command_producing_five_lines |
+> 		test_line_count = 5 -
+> 	}
 >
->     if (eval { require Net::SMTP; 1 }) {
->         for my $host (qw(mailhost localhost)) {
->             my $smtp = Net::SMTP->new($host);
-> ...
->
-> so git-send-email is so kind as to attempt port 25 connections to
-> "mailhost:25" and "localhost:25" while attempting to locate its FQDN
-> !?  this doesnt sound right at all.  DNS lookups do not require actual
-> TCP/IP connection attempts.
->
-> stubbing out "mailhost" to 127.0.0.1 in /etc/hosts fixes my troubles.
-> -mike
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+> diff --git a/t/test-lib.sh b/t/test-lib.sh
+> index 1ea0116..35a5634 100644
+> --- a/t/test-lib.sh
+> +++ b/t/test-lib.sh
+> @@ -660,15 +660,24 @@ test_path_is_missing () {
+>  # output through when the number of lines is wrong.
+>  
+>  test_line_count () {
+> +	line_count_tmp=
+>  	if test $# != 3
+>  	then
+>  		error "bug in the test script: not 3 parameters to test_line_count"
+> -	elif ! test $(wc -l <"$3") "$1" "$2"
+> +	fi
+> +	if test "$3" = -
+> +	then
+> +		line_count_tmp=test_line_count.output
+> +		cat >"$line_count_tmp"
+> +		set -- "$1" "$2" "$line_count_tmp"
+> +	fi
+> +	if ! test $(wc -l <"$3") "$1" "$2"
+>  	then
+>  		echo "test_line_count: line count for $3 !$1 $2"
+>  		cat "$3"
+>  		return 1
 
-Redirecting to Jari Aalto for 134550f (git-send-email.perl - try to give
-real name of the calling host to HELO/EHLO, 2010-03-14)
+You forgot to clean the temporary file here.
+
+Also if the file is huge, do we really want to cat the whole thing?
+
+>  	fi
+> +	rm -f "$line_count_tmp"
+>  }
+>  
+>  # This is not among top-level (test_expect_success | test_expect_failure)
