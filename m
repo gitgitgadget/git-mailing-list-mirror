@@ -1,110 +1,87 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH 10/10] clean: support cleaning sparse checkout with -S
-Date: Tue, 16 Nov 2010 09:53:47 +0700
-Message-ID: <AANLkTimrm2ArRn9Ym271iFEv2bstPPD0WPuP0=Majf0K@mail.gmail.com>
+Date: Mon, 15 Nov 2010 21:07:28 -0600
+Message-ID: <20101116030728.GB29358@burratino>
 References: <1289817410-32470-1-git-send-email-pclouds@gmail.com>
- <1289817410-32470-11-git-send-email-pclouds@gmail.com> <20101115213059.GJ16385@burratino>
+ <1289817410-32470-11-git-send-email-pclouds@gmail.com>
+ <20101115213059.GJ16385@burratino>
+ <AANLkTimrm2ArRn9Ym271iFEv2bstPPD0WPuP0=Majf0K@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 16 03:54:15 2010
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 16 04:08:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIBgV-00010e-7W
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 03:54:15 +0100
+	id 1PIBu0-0005eC-IY
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 04:08:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759206Ab0KPCyJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Nov 2010 21:54:09 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:53278 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754636Ab0KPCyI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Nov 2010 21:54:08 -0500
-Received: by wwa36 with SMTP id 36so237924wwa.1
-        for <git@vger.kernel.org>; Mon, 15 Nov 2010 18:54:07 -0800 (PST)
+	id S1759208Ab0KPDIH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Nov 2010 22:08:07 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:42693 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755550Ab0KPDIF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Nov 2010 22:08:05 -0500
+Received: by qwh6 with SMTP id 6so2124qwh.19
+        for <git@vger.kernel.org>; Mon, 15 Nov 2010 19:08:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Iisloic2GuFUmf4Xi9SjNFiSXrVIue4mECu+XVcxfyk=;
-        b=JISgEBAHEBekytkCn+YKhP/zitvNGL+EqAK0oN+hHxrY51K5kB/THjMs+o+r67riWF
-         XXPNeDmznN3pZi1Ou3L70lV7EDI0yb29bp9RN0AAIk6+A+/6IQyTIuMocklREcp3ngo6
-         hpbY0zZ7hwhrChOOPV+yEOKE6GGi8DRSV+wmU=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=ZlTKVTbKxgKBKUYMUZBQK1A6+q93wt+SVk1XUKTYCMA=;
+        b=rZZ/4okiJYe/MJCBcMDeKktaNaefadukJekvnSLZWxeIh02O/kdclVqtyH3zj2LBuy
+         aAR/UIAK6Q/PeQ3TYg/7xwaq0s7FN1RbG+aVK9u36p4F+efAG/I9+uBFTVqwpk3l6Q/o
+         1VvgtmaUUhNBHSPcXBFU3rkXiZnVbiU1e7+8I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=aZEeIr1QgOR4wGfcnjRScZpOv/vyfOwN/IfZ7tLoMePS6M1zzzWTwur8TAVGLdBWaC
-         YDQInU8aAxSGnx7MCscwwbuhsMxQoZqI5H5MWYVS/g2fZ9jaDjqK33BoYyV9dvBhcMvN
-         PoTrERi670sOTGSH2UD9Yq/lvAlGls9VoFX78=
-Received: by 10.216.166.68 with SMTP id f46mr7526057wel.26.1289876047255; Mon,
- 15 Nov 2010 18:54:07 -0800 (PST)
-Received: by 10.216.172.199 with HTTP; Mon, 15 Nov 2010 18:53:47 -0800 (PST)
-In-Reply-To: <20101115213059.GJ16385@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=j1YmvPGh6MZjEAX8MQHAvsIlyBkvLJLclTs0Ixn7T84YVJw3J3h3dUFxE0biUloZZ3
+         BGgI5zdL0HrLrKruKXdkIXJDbhT6Z66TMN57Q16XBIKaVGLqrqH4pR9am/ZmHvXdhcbN
+         dnG9FNrjPnNO7KIgQ4LPdTHWyxCt5t0uq0osQ=
+Received: by 10.229.35.5 with SMTP id n5mr5666657qcd.175.1289876884720;
+        Mon, 15 Nov 2010 19:08:04 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id s34sm450583qcp.44.2010.11.15.19.08.02
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 15 Nov 2010 19:08:03 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTimrm2ArRn9Ym271iFEv2bstPPD0WPuP0=Majf0K@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161536>
 
-2010/11/16 Jonathan Nieder <jrnieder@gmail.com>:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+Nguyen Thai Ngoc Duy wrote:
+> 2010/11/16 Jonathan Nieder <jrnieder@gmail.com>:
+
+>> Hmm, that's new. =C2=A0Seems fine, though; a person using -S would b=
+e
+>> forwarned.
 >
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0Files
->> that match the index exactly will be cleaned without "-f".
+> It's safe, which is why I let it do that without '-f'. One can always
+> checkout those entries again (provided that they know what entries to
+> checkout).
 >
-> Hmm, that's new. =C2=A0Seems fine, though; a person using -S would be
-> forwarned.
+> How do you want them to be warned?
 
-It's safe, which is why I let it do that without '-f'. One can always
-checkout those entries again (provided that they know what entries to
-checkout).
+Manual and -h output, ideally.
 
-How do you want them to be warned?
+>		OPT_BOOLEAN('S', NULL, &sparse, "remove tracked files outside sparse=
+ checkout"),
 
->> --- a/Documentation/git-clean.txt
->> +++ b/Documentation/git-clean.txt
->> @@ -8,7 +8,7 @@ git-clean - Remove untracked files from the working =
-tree
->> =C2=A0SYNOPSIS
->> =C2=A0--------
->> =C2=A0[verse]
->> -'git clean' [-d] [-f] [-n] [-q] [-e <pattern>] [-x | -X] [--] <path=
->...
->> +'git clean' [-d] [-f] [-n] [-q] [-e <pattern>] [-x | -X | -S] [--] =
-<path>...
->
-> So -S and -x don't combine?
+Maybe something to the effect of
 
-No. Technical difficulties. Wait, nothing prevents me from doing that.
-Yes combination is possible.
+		OPT_SET_INT('S', NULL, &sparse,
+			"prune worktree to sparse pattern (even without -f)", 1),
 
->>
->> =C2=A0DESCRIPTION
->> =C2=A0-----------
->> @@ -61,6 +61,10 @@ OPTIONS
->> =C2=A0 =C2=A0 =C2=A0 Remove only files ignored by git. =C2=A0This ma=
-y be useful to rebuild
->> =C2=A0 =C2=A0 =C2=A0 everything from scratch, but keep manually crea=
-ted files.
->>
->> +-S::
->> + =C2=A0 =C2=A0 Remove files tracked by git but are outside of spars=
-e checkout.
->> + =C2=A0 =C2=A0 Files that match the index exactly will be removed e=
-ven when
->> + =C2=A0 =C2=A0 '-f' is not given and clean.requireForce is no.
->
-> Does "no" mean "yes" here?
-
-Probably, need to look at the that config variable again :(
---=20
-Duy
+Probably someone will chime in with the perfect wording that fits
+in the 80-column "git clean -h" output format. :)
