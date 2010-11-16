@@ -1,67 +1,76 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Difference between 'git rebase' and 'git rebase -m'
-Date: Tue, 16 Nov 2010 12:27:49 -0600
-Message-ID: <20101116182749.GC14552@burratino>
-References: <4CE2C0ED.1030309@workspacewhiz.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 01/10] add: do not rely on dtype being NULL behavior
+Date: Tue, 16 Nov 2010 10:58:17 -0800
+Message-ID: <7v39r1hz92.fsf@alter.siamese.dyndns.org>
+References: <1289817410-32470-1-git-send-email-pclouds@gmail.com>
+ <1289817410-32470-2-git-send-email-pclouds@gmail.com>
+ <20101115121415.GB14729@burratino>
+ <AANLkTikkArsu=NLJWQcP61uf3yrQmdxRQtB+3AmC9tHQ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>,
-	Stephen Bash <bash@genarts.com>
-To: Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Tue Nov 16 19:28:42 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Jens Lehmann <Jens.Lehmann@web.de>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 16 19:58:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIQGg-00007h-AK
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 19:28:34 +0100
+	id 1PIQk5-0004rK-6m
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 19:58:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756709Ab0KPS23 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Nov 2010 13:28:29 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:57115 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755869Ab0KPS22 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Nov 2010 13:28:28 -0500
-Received: by pwi2 with SMTP id 2so23893pwi.19
-        for <git@vger.kernel.org>; Tue, 16 Nov 2010 10:28:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=TuR4iN3gPGbsU+3jLfXBAxgoLb0cGq+TDbEPBiE+cFk=;
-        b=ovJMn/dz0JjZu8FGv9Eshw/4m/CmmH03zfMcc04H/tWlLo/F6k8tuXiHTHAkoZp2mN
-         YGXrGAihzOrz4JxMjkff4PH7v3zmztwnNqD6IGwsQ0dETu2lAg0wAJIi5tOgMZ8XdpC3
-         GU4xqshjkhrqZJ3yxFDe4HdgGu31SMGM8HBqo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=OACqLJHZJ4SguLNjrU6AdpeO0nwL40F3639xRm7k6fFp3ddZooQmcP3d+MDqdiRZnU
-         57qf4kXndFu62rKwWLnlYh92qUl2ZZhVHtqYNWTAdCzM6u4aWh7qaZh2rEBNCU5vB6Fv
-         5epMzZ67v4cDUjVoKFGDer8ljMMqJxqzStrcg=
-Received: by 10.223.81.67 with SMTP id w3mr4374534fak.110.1289932107143;
-        Tue, 16 Nov 2010 10:28:27 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id g22sm749852faa.17.2010.11.16.10.28.25
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 16 Nov 2010 10:28:26 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4CE2C0ED.1030309@workspacewhiz.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757099Ab0KPS6d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Nov 2010 13:58:33 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49629 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757041Ab0KPS6c (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Nov 2010 13:58:32 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7A26928AF;
+	Tue, 16 Nov 2010 13:58:40 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=0qILXr4QHjedpLfcKjuobiq4xxg=; b=PU3RhH
+	zLyE+nEf6zMr2IZ96iwdFE9lmNG9cVoDaqTYeNfaYGeX3UN81q2IEO9blW6Ul8SH
+	6bwmyxV9t/c5/UMx88U5l2lZRhchhBSLAOBbRaAetsUNMoPkPFapYQO2cf5mVS+d
+	1i0awZNd8aazf7HcfXUTETWeo0ZcTKVRaMsLc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LcTaALd+Q3PDl3sV7KotcOoCXWklwFf/
+	JMv0Ki/Polnu2znHStFZjc9+9EXWNss8J40/vC5+1eK631Nkh8xaWXeI+O+lretD
+	ZBMapFWBr14HBlNvdUknJJ9gf1BGtan9OIojqWTTg6We3fU6st9S7Vmh1ssn0RSS
+	Lb2je6U2g/I=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2DA8428AD;
+	Tue, 16 Nov 2010 13:58:35 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AD10928AA; Tue, 16 Nov 2010
+ 13:58:28 -0500 (EST)
+In-Reply-To: <AANLkTikkArsu=NLJWQcP61uf3yrQmdxRQtB+3AmC9tHQ@mail.gmail.com>
+ (Nguyen Thai Ngoc Duy's message of "Tue\, 16 Nov 2010 09\:18\:04 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 83778468-F1B3-11DF-A8A2-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161574>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161575>
 
-Joshua Jensen wrote:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-> I'm curious as to why 'git rebase -m' isn't the default and what the
-> real difference is between 'git rebase' and 'git rebase -m'.
+> Hmm.. get_index_dtype() would return DT_DIR if the submodule exists in
+> index. If it does not it must be a directory in worktree, right?
+> Call flow: excluded_from_list() -> get_dtype() -> get_index_dtype()
 
-git rebase is faster. :)
+By the way, your c84de70 (excluded_1(): support exclude files in index,
+2009-08-20) looks broken.  What happens when the exclude pattern wants a
+directory but specifies it with a wildcard?
 
-git rebase works by formatting a patch series and applying it.
-git rebase -m uses repeated 3-way merge and should be more robust.
+The safest and sanest first step is to just change DT_UNKNOWN (which
+clearly is a wrong thing to pass) to NULL to keep the current behaviour,
+but it probably makes more sense to do the second step at the same time to
+pass a pointer to an int that holds DT_UNKNOWN to avoid triggering that
+broken codepath.
