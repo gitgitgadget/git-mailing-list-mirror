@@ -1,68 +1,139 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: possible 'git --dirstat=0' buglet in 1.7.0.4?
-Date: Tue, 16 Nov 2010 10:05:06 -0800
-Message-ID: <7v7hgdi1pp.fsf@alter.siamese.dyndns.org>
-References: <AANLkTi=wZ8MhU0NUw9as-kw8Lhr=TFBK2BY7MFRQvOct@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: scan entire repo for changes to file
+Date: Tue, 16 Nov 2010 12:20:43 -0600
+Message-ID: <20101116182043.GA14552@burratino>
+References: <ibi59v$pjg$1@dough.gmane.org>
+ <AANLkTi=uKhrvAS6ApnmCZnfbFboYU77rNcKDpaSBn1id@mail.gmail.com>
+ <20101112014434.GA10679@burratino>
+ <7vk4kdi2h4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Mike Coleman <tutufan@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 16 19:05:29 2010
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 16 19:21:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIPuG-000180-TC
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 19:05:25 +0100
+	id 1PIQ9w-0003dY-9r
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 19:21:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756218Ab0KPSFR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Nov 2010 13:05:17 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50695 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753696Ab0KPSFQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Nov 2010 13:05:16 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6E50B2070;
-	Tue, 16 Nov 2010 13:05:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=m/9Xs0DAUZHeS7HBf7YBnAlSHpg=; b=Q4cyXd
-	TLwwpWucud/NKMi6hxKkvKnkXI3pMoy1s5ak3a3LjNIohYwffKRCUmeskX2Wxdxn
-	MnVhyKvWOdZ7HmRFyq8elGbpsKUs9T6iO1oDAa/4FgFA9yHUgntkEj0lPXzwov5Y
-	/Un8GQrK4tPpuHZQcl9SoKUWFO8kKuJqCLYMQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=YjEsxygXHjjV6sHF4L8dg/jz7shqMDPl
-	ClfB1VojL1ATPN2OZjZS6dwZ+5hHYfO9mQn1iwK58dQxiKUPdKi20mQG6gZeJP+y
-	3VWrKS4NaL83jWGdGk8i1gdGQh9A1uRLByFGdGet8F/V9gnvyLcyzaoDcwMg/7Y+
-	FA8O3sgXZus=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4B5DE206F;
-	Tue, 16 Nov 2010 13:05:21 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4DAF6206D; Tue, 16 Nov 2010
- 13:05:17 -0500 (EST)
-In-Reply-To: <AANLkTi=wZ8MhU0NUw9as-kw8Lhr=TFBK2BY7MFRQvOct@mail.gmail.com>
- (Mike Coleman's message of "Fri\, 12 Nov 2010 08\:33\:56 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 13C2E98E-F1AC-11DF-A006-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+	id S1756651Ab0KPSV1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Nov 2010 13:21:27 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:65051 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756567Ab0KPSV0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Nov 2010 13:21:26 -0500
+Received: by wwa36 with SMTP id 36so1053429wwa.1
+        for <git@vger.kernel.org>; Tue, 16 Nov 2010 10:21:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=mwifer8cxuOML2HZBrWy0tRU+yi1fP8Jjr4URnMOMzA=;
+        b=eC5vFDeJASl8ZI/CmpHJRnb9YL0zIlliZAjScmZh8VjE15/BN6Z+7XYWpk00WH1XdE
+         xdVEgPg5HEdGLiyt2KHMdywHRWBLbZ8xs2Jk8z4yVcU80ebnKLvJQ9Elv2fiWrCG1L3l
+         qwdHy1i9lGplUT/qqZ9zL9szRzqrCwGbFVxFo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=jTluHvIIcWmQcs+K/fg+CMqdSyC7lnKBqAnNCWmS03JEXexbPTaCGI3Icd8OUpFSVQ
+         P6bejdrjIj194Hp6BXDkpfiT1rHkYSmYdx0wO1L0+vzvaMXLoek1N3krL3b457il/nMP
+         zOJVdKI/bTE4QrG35SH2NIxGyvZ6MQhGn5J7c=
+Received: by 10.216.177.81 with SMTP id c59mr551856wem.81.1289931684144;
+        Tue, 16 Nov 2010 10:21:24 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id l51sm713984wer.26.2010.11.16.10.21.21
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 16 Nov 2010 10:21:22 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vk4kdi2h4.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161572>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161573>
 
-Mike Coleman <tutufan@gmail.com> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
+>> Martin von Zweigbergk wrote:
+>>> On Thu, Nov 11, 2010 at 8:28 PM, Neal Kreitzinger <neal@rsss.com> wrote:
 
-> I noticed just now that the '--dirstat=0' flag still seems to filter
-> out some diffs, even though I would expect the '0' to mean "don't
-> filter anything".  If there's another flag that says "don't filter", I
-> missed it.  Could this be a rounding or off-by-one error?
+>>>> Is there a way to scan my entire repo (many unmerged branches) for any
+>>>> changes to a file?
+>>>> e.g.
+>>>> $ git log * -- somepath/myblob
+>>>> would return all commits in the repo that changed myblob.
+>>>
+>>> Might replacing '*' by '--all' give you what are looking for?
+>>
+>> Probably with --full-history if you want to know what happened on
+>> historic branches, too.
+>
+> You would need to clarify what you mean by "historic branches" here.
 
-We seem to internally compute in per-mille (see gather_dirstat() in diff.c)
-so if your changes are too small to be rounded off to zero there,...
+Yes, quite right.  I meant failed experiments of a certain kind.
 
-I think you can remove the "if (permille)" there to make it not filter at
-all when dir->percent is set to 0, but I didn't look carefully.
+The "git log -- path" facility can be used to learn the nature and
+origin of a collection of files.
+
+	$ git log --graph --oneline -- block-sha1/
+	* 078e9bc msvc: Select the "fast" definition of the {get,put}_be32() macros
+[...]
+	* d7c208a Add new optimized C 'block-sha1' routines
+
+The result is a list of commits that explains the current state of
+that file, without commits irrelevant to that purpose.
+
+What happens to merges?  Consider a history like this (history flowing
+left to right):
+
+ A --- B --- C --- D --- E --- F --- G ---- M --- H
+              \                            /
+               I ...                  ... J
+
+There is a main line and a side branch.  On the mainline, the selected
+files have been getting better and better.  The side branch does not
+touch those files.  Then the side branch would irrelevant to the
+history of those files.
+
+To flesh out this idea, git history simplification.  When walking
+through history, if a merge is encountered (M) and one of the parents
+already matches the resulting state (G), then git will follow that
+parent and ignore the others.  If no parent matches the resulting
+state, git follows all parents.  So we get a simpler history that
+should still adequately explain the result.
+
+Consider another scenario, though:
+
+ A --- B --- C --- D --- E --- F --- G ---- M' --- H'
+              \                            /
+               I' ...                ... J'
+
+There is a mainline and a side branch.  On the mainline, the selected
+files have been getting better and better.  On the side branch, there
+was an abortive experiment; some changes were made to the selected
+files there, but none of these changes survived as far as the merge M'.
+
+The side branch is _still_ irrelevant to the purpose of explaining the
+current state of those files.  Git will notice that (G matches M') and
+ignore the side branch.  But if your goal is not to explain the
+current state but to delve into the history of all thoughts this
+project remembers on a subject, such history simplification would not
+be appropriate and you should be using the --full-history option.
+
+The History Simplification section of git-log(1) has details.
+
+Caveat: the list of commits selected with --full-history --dense do
+not convey a coherent history.  M' is uninteresting but some of the
+commits on the I' ... J' track are; how do we stitch the interesting
+commits together?  So history visualization tools cop out and show
+all merges when --full-history is enabled.  (Put another way,
+--parents --full-history implies --no-dense.)
+
+Hope that helps.
