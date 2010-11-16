@@ -1,102 +1,61 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 01/10] add: do not rely on dtype being NULL behavior
-Date: Mon, 15 Nov 2010 20:42:52 -0600
-Message-ID: <20101116024252.GA29358@burratino>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 04/10] unpack-trees: fix sparse checkout's "unable to
+ match directories" fault
+Date: Tue, 16 Nov 2010 09:43:57 +0700
+Message-ID: <AANLkTimozeFehA2SHcwsPYxs-Q2k_DFa2DE-i_m--Zq8@mail.gmail.com>
 References: <1289817410-32470-1-git-send-email-pclouds@gmail.com>
- <1289817410-32470-2-git-send-email-pclouds@gmail.com>
- <20101115121415.GB14729@burratino>
- <AANLkTikkArsu=NLJWQcP61uf3yrQmdxRQtB+3AmC9tHQ@mail.gmail.com>
+ <1289817410-32470-5-git-send-email-pclouds@gmail.com> <20101115191041.GE16385@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jens Lehmann <Jens.Lehmann@web.de>,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 16 03:43:40 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 16 03:45:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIBWF-0005r5-Rm
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 03:43:40 +0100
+	id 1PIBXf-0006ID-WD
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 03:45:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759190Ab0KPCnf convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 15 Nov 2010 21:43:35 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:53646 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753494Ab0KPCne (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Nov 2010 21:43:34 -0500
-Received: by qwb8 with SMTP id 8so205445qwb.19
-        for <git@vger.kernel.org>; Mon, 15 Nov 2010 18:43:33 -0800 (PST)
+	id S1759200Ab0KPCpB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Nov 2010 21:45:01 -0500
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:56483 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754868Ab0KPCpB (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 15 Nov 2010 21:45:01 -0500
+Received: by wwb13 with SMTP id 13so39249wwb.1
+        for <git@vger.kernel.org>; Mon, 15 Nov 2010 18:45:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=O1psDhPSQoya1NljN9Vbelck80FIHOqIqv0rbTzHtfE=;
-        b=f7k+nR2oSdhN9+wQxdjJuvH1wlbw7jH06MX+vjPE0rCbEVG3KwvL5KHoUFT2sAbxkM
-         1SbQb+pSZKo05HVr817AQHry46M0aZ1SPD/gewKNZjbSn4dLs9J7wkvQMENyC72m4TNh
-         Y6dReoqmqScVE4kXizdWupRZNcjSJyyjya7g4=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=1FOr/VjPuxHObxRbmwYiVfiqQZk8q8NuY2BCEbDmTfw=;
+        b=BUTJak1IbDZ5bt3O/LrX0bh6YeqVD2O2iganjO4QCkwUyb5e5RioEJ54QjqRozvGjF
+         1DuvO3+HEouESGza6gTbwhEkja28mkP6e5NE5XUumvDDwn3h0zkRMjKUktdReHZOLRuR
+         B6UIYghy4EiYSQ3p84RBBOliqpz40jvbG4ETg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=OWJPVvQbJ/shZwC5lyg96TgNkhoNlTmYQLhRU5+TGG5EtgZJzwrcCIRD7eEQWILq4s
-         o7ohbVdeHAXNkK9ksAKWbgpTSV+3ak2pqo+Jho7ZEOuWq42oAy6RUNKrkZy7ixvP41l9
-         ai0t3t9cgg2Cg8N+2mSwguULOXC6CRfyf0Uyw=
-Received: by 10.224.177.6 with SMTP id bg6mr6085157qab.120.1289875413665;
-        Mon, 15 Nov 2010 18:43:33 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id s28sm437129qcp.33.2010.11.15.18.43.29
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 15 Nov 2010 18:43:30 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTikkArsu=NLJWQcP61uf3yrQmdxRQtB+3AmC9tHQ@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=v3kFMENEHiGPlZU/0NPCHhqSvxkKKCa9ZkJUrRZHR9j47ddhKvVPioVS7v5hIEF9Lg
+         W//U+qEBqrG4+PrlUaPfoXIaS/I4stH5rcqODMOowZI2VYQMnrgTqVXZ7oNVVdACvP61
+         K7PKMkc4uhrd8xGvYwvkSODLBxchvNgnP1KQE=
+Received: by 10.216.172.9 with SMTP id s9mr6000575wel.56.1289875457339; Mon,
+ 15 Nov 2010 18:44:17 -0800 (PST)
+Received: by 10.216.172.199 with HTTP; Mon, 15 Nov 2010 18:43:57 -0800 (PST)
+In-Reply-To: <20101115191041.GE16385@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161533>
 
-Nguyen Thai Ngoc Duy wrote:
-> On Mon, Nov 15, 2010 at 7:14 PM, Jonathan Nieder <jrnieder@gmail.com>=
- wrote:
+2010/11/16 Jonathan Nieder <jrnieder@gmail.com>:
+> Is it possible to make the two code paths share code without
+> sacrificing speed?
 
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0Surely what was really wanted is to check=
- paths against the
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0index and work tree, defaulting to "regul=
-ar file".
->>
->> Wait --- that's not true. =C2=A0In the "git submodule add" case, we =
-really
->> want to default to (or even better, force) "directory".
->
-> Hmm.. get_index_dtype() would return DT_DIR if the submodule exists i=
-n
-> index. If it does not it must be a directory in worktree, right?
-> Call flow: excluded_from_list() -> get_dtype() -> get_index_dtype()
-
-based on
-
-	git ls-files --error-unmatch "$path" >/dev/null 2>&1 &&
-	die "'$path' already exists in the index"
-
-	if test -z "$force" && ! git add --dry-run --ignore-missing "$path" > =
-/dev/null 2>&1
-	then
-		echo >&2 "The following path is ignored by one of your .gitignore fil=
-es:" &&
-		echo >&2 $path &&
-		echo >&2 "Use -f if you really want to add it."
-		exit 1
-	fi
-
-	# perhaps the path exists and is already a git repo, else clone it
-	if test -e "$path"
-
-I'd say no, the usual case is that the potential submodule does not
-exist in the index or worktree, which is why that call site uses
---ignore-missing.
+I think so. I'll merge the two functions in set_new_skip_worktree() as
+you suggested in the previous mail.
+-- 
+Duy
