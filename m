@@ -1,161 +1,109 @@
 From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCHv2 1/2] git-gui: respect conflict marker size
-Date: Tue, 16 Nov 2010 10:21:52 +0100
-Message-ID: <1289899312-2732-1-git-send-email-bert.wesarg@googlemail.com>
-References: <1289893762-28567-1-git-send-email-bert.wesarg@googlemail.com>
+Subject: [PATCH 2/2] git-gui: support for diff3 conflict style
+Date: Tue, 16 Nov 2010 10:26:58 +0100
+Message-ID: <1289899618-2845-1-git-send-email-bert.wesarg@googlemail.com>
+References: <1289899312-2732-1-git-send-email-bert.wesarg@googlemail.com>
 Cc: Bert Wesarg <bert.wesarg@googlemail.com>,
-	"Shawn O . Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+	"Shawn O . Pearce" <spearce@spearce.org>, git@vger.kernel.org
 To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Tue Nov 16 10:22:05 2010
+X-From: git-owner@vger.kernel.org Tue Nov 16 10:27:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIHjo-00027n-Uw
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 10:22:05 +0100
+	id 1PIHok-0004P7-8w
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 10:27:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934079Ab0KPJV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Nov 2010 04:21:59 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:60731 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934044Ab0KPJV4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Nov 2010 04:21:56 -0500
-Received: by eye27 with SMTP id 27so143478eye.19
-        for <git@vger.kernel.org>; Tue, 16 Nov 2010 01:21:54 -0800 (PST)
+	id S934080Ab0KPJ1D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Nov 2010 04:27:03 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:39945 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932447Ab0KPJ1B (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Nov 2010 04:27:01 -0500
+Received: by ewy8 with SMTP id 8so147527ewy.19
+        for <git@vger.kernel.org>; Tue, 16 Nov 2010 01:27:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=googlemail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=OnzvkT92064x5nejmWtvKQ77NpTBhwofcdzvYBgwp1M=;
-        b=lpaZ0ntHEYvlxcGjxrSVx/R/4w4biXRlYKP4XSQXZAo0K2L3GGcvuC/go3F/VI5w+7
-         5g5/7ArpOA+P295goBW1NNGAu5PZCgYR3preR43TLEWw30iSrtQJ9QwO8lJDHRqhmTPc
-         L5lzWqduVhQt6NFpCAzPOgTGklU9J8T+3cLCE=
+        bh=Ixx5/eIENGvcnQbj5b8r/waEa8GngvVq6+IMe0HiRBM=;
+        b=LEslZ0fPMEV8os9eq+h27rl6LojmAdfrPi5yWI5s46MQnWSYRPRTESkRpUpNXr4B2q
+         OQOEnxqOi1bfCHxiSqv/PSTutkE89z9Xalqg107n0bw55bIa9DGmYTvm9+7F7GvwkBTw
+         EDVmfz+yazYkyZXUhyBU/QzgREJk+m/rjhV0E=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=googlemail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=dWNxce6umOm86/sYHwiuLDDp+eQFlCLVg+Hl8CeQWa6e0fBqEOrqHTGdQBkbdCgNMQ
-         HAlJ8PlFNA7tEmq3ojuXgr0wJuApIVlA1oj3ksO05vzywCJ6HBJNlXCHlHrDjnwRbHG0
-         wPw9ES/ViGECGm8AmU3+moPh0vUga0fDv337I=
-Received: by 10.213.105.143 with SMTP id t15mr155689ebo.13.1289899314695;
-        Tue, 16 Nov 2010 01:21:54 -0800 (PST)
+        b=E49cDFqQwsX+RCfzqwxm4Lq4ZePTvz4E3aMrxDxHWuTkc6ZEolqK8vy9PlI+WAiyRI
+         qK1OjTtyzVmzgHf/Fn0oIdfGYQZIPS3v4STo1gARxki+2PZWmsJkPocGULOzFxM80PjF
+         tBIIp725+PU5jCp3qQnVvmJ7MgKuv1nVUxahQ=
+Received: by 10.213.14.148 with SMTP id g20mr5542381eba.66.1289899620202;
+        Tue, 16 Nov 2010 01:27:00 -0800 (PST)
 Received: from localhost ([141.76.90.249])
-        by mx.google.com with ESMTPS id w20sm933732eeh.12.2010.11.16.01.21.52
+        by mx.google.com with ESMTPS id v51sm936778eeh.10.2010.11.16.01.26.59
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 16 Nov 2010 01:21:53 -0800 (PST)
+        Tue, 16 Nov 2010 01:26:59 -0800 (PST)
 X-Mailer: git-send-email 1.7.3.2.1157.gd16c3
-In-Reply-To: <1289893762-28567-1-git-send-email-bert.wesarg@googlemail.com>
+In-Reply-To: <1289899312-2732-1-git-send-email-bert.wesarg@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161551>
 
-Respect the conflict-marker-size attribute on paths when detecting merge
-conflicts.
+This adds highlight support for the diff3 conflict style.
+
+The common pre-image will be reversed to --, because it has been removed
+and either replaced with our or their side.
 
 Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 
 ---
-
-v2 fixes the tags selection and also the regexp to match always exactly the
-desired number of markers.
-
-Bert
-
- git-gui/git-gui.sh   |    6 +++---
- git-gui/lib/diff.tcl |   22 ++++++++++++++++++----
- 2 files changed, 21 insertions(+), 7 deletions(-)
+ git-gui/git-gui.sh   |    3 +++
+ git-gui/lib/diff.tcl |   10 ++++++++++
+ 2 files changed, 13 insertions(+), 0 deletions(-)
 
 diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index d3acf0d..38362fa 100755
+index 38362fa..0134438 100755
 --- a/git-gui/git-gui.sh
 +++ b/git-gui/git-gui.sh
-@@ -3351,13 +3351,13 @@ $ui_diff tag conf d_s- \
- 	-foreground red \
- 	-background ivory1
- 
--$ui_diff tag conf d<<<<<<< \
-+$ui_diff tag conf d< \
+@@ -3354,6 +3354,9 @@ $ui_diff tag conf d_s- \
+ $ui_diff tag conf d< \
  	-foreground orange \
  	-font font_diffbold
--$ui_diff tag conf d======= \
-+$ui_diff tag conf d= \
++$ui_diff tag conf d| \
++	-foreground orange \
++	-font font_diffbold
+ $ui_diff tag conf d= \
  	-foreground orange \
  	-font font_diffbold
--$ui_diff tag conf d>>>>>>> \
-+$ui_diff tag conf d> \
- 	-foreground orange \
- 	-font font_diffbold
- 
 diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-index dcf0711..d4e2ce3 100644
+index d4e2ce3..ccd4c70 100644
 --- a/git-gui/lib/diff.tcl
 +++ b/git-gui/lib/diff.tcl
-@@ -253,6 +253,19 @@ proc show_other_diff {path w m cont_info} {
+@@ -339,6 +339,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
  	}
- }
  
-+proc get_conflict_marker_size {path} {
-+	set size 7
-+	catch {
-+		set fd_rc [eval [list git_read check-attr "conflict-marker-size" -- $path]]
-+		set ret [gets $fd_rc line]
-+		close $fd_rc
-+		if {$ret > 0} {
-+			regexp {.*: conflict-marker-size: (\d+)$} $line line size
-+		}
-+	}
-+	return $size
-+}
-+
- proc start_show_diff {cont_info {add_opts {}}} {
- 	global file_states file_lists
- 	global is_3way_diff is_submodule_diff diff_active repo_config
-@@ -268,6 +281,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 	set is_submodule_diff 0
- 	set diff_active 1
- 	set current_diff_header {}
-+	set conflict_size [get_conflict_marker_size $path]
- 
- 	set cmd [list]
- 	if {$w eq $ui_index} {
-@@ -329,7 +343,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
+ 	set ::current_diff_inheader 1
++	set ::in_conflict_pre_image 0
+ 	fconfigure $fd \
  		-blocking 0 \
  		-encoding [get_path_encoding $path] \
- 		-translation lf
--	fileevent $fd readable [list read_diff $fd $cont_info]
-+	fileevent $fd readable [list read_diff $fd $conflict_size $cont_info]
- }
- 
- proc parse_color_line {line} {
-@@ -349,7 +363,7 @@ proc parse_color_line {line} {
- 	return [list $result $markup]
- }
- 
--proc read_diff {fd cont_info} {
-+proc read_diff {fd conflict_size cont_info} {
- 	global ui_diff diff_active is_submodule_diff
- 	global is_3way_diff is_conflict_diff current_diff_header
- 	global current_diff_queue
-@@ -402,7 +416,7 @@ proc read_diff {fd cont_info} {
- 			{- } {set tags d_-s}
- 			{--} {set tags d_--}
- 			{++} {
--				if {[regexp {^\+\+([<>]{7} |={7})} $line _g op]} {
-+				if {[regexp {^\+\+([<>=]){$conflict_size}(?: |$)} $line _g op]} {
+@@ -420,6 +421,15 @@ proc read_diff {fd conflict_size cont_info} {
  					set is_conflict_diff 1
  					set line [string replace $line 0 1 {  }]
  					set tags d$op
-@@ -441,7 +455,7 @@ proc read_diff {fd cont_info} {
- 			{@} {set tags d_@}
- 			{-} {set tags d_-}
- 			{+} {
--				if {[regexp {^\+([<>]{7} |={7})} $line _g op]} {
-+				if {[regexp {^\+([<>=]){$conflict_size}(?: |$)} $line _g op]} {
- 					set is_conflict_diff 1
- 					set tags d$op
++					set ::in_conflict_pre_image 0
++				} elseif {[regexp {^\+\+\|{$conflict_size}(?: |$)} $line]} {
++					set is_conflict_diff 1
++					set line [string replace $line 0 1 {  }]
++					set tags d|
++					set ::in_conflict_pre_image 1
++				} elseif ($::in_conflict_pre_image) {
++					set line [string replace $line 0 1 {--}]
++					set tags d_--
  				} else {
+ 					set tags d_++
+ 				}
 -- 
-tg: (6f10c41..) bw/git-gui/respect-conflict-marker-size (depends on: master)
+tg: (fba7c96..) bw/git-gui/support-diff3 (depends on: master bw/git-gui/respect-conflict-marker-size)
