@@ -1,59 +1,113 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH v2] use persistent memory for rejected paths
-Date: Tue, 16 Nov 2010 17:41:57 +0100
-Message-ID: <vpqvd3xgqzu.fsf@bauges.imag.fr>
-References: <7vbp5ymfyo.fsf@alter.siamese.dyndns.org>
-	<20101114130205.GA27560@localhost> <vpq62vymmsz.fsf@bauges.imag.fr>
-	<20101115194133.GA3297@localhost> <20101115195219.GB3297@localhost>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] t6022: Use -eq not = to test output of wc -l
+Date: Tue, 16 Nov 2010 11:10:32 -0600
+Message-ID: <20101116171031.GB13398@burratino>
+References: <1289251766-48316-1-git-send-email-brian@gernhardtsoftware.com>
+ <7vaalajkiq.fsf@alter.siamese.dyndns.org>
+ <4CE22EC2.7040603@viscovery.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Clemens Buchacher <drizzd@aon.at>
-X-From: git-owner@vger.kernel.org Tue Nov 16 17:42:25 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Git List <git@vger.kernel.org>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Nov 16 18:11:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIObw-0003AT-73
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 17:42:24 +0100
+	id 1PIP49-0006QL-Nj
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 18:11:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754662Ab0KPQmS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Nov 2010 11:42:18 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:52254 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754627Ab0KPQmS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Nov 2010 11:42:18 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id oAGGQGgR000670
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 16 Nov 2010 17:26:16 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PIObV-0006Qp-Im; Tue, 16 Nov 2010 17:41:57 +0100
-In-Reply-To: <20101115195219.GB3297@localhost> (Clemens Buchacher's message of "Mon\, 15 Nov 2010 20\:52\:19 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 16 Nov 2010 17:26:17 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: oAGGQGgR000670
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1290529579.59438@E3/T4EgOfeC1hgRSG8bFsw
+	id S1755377Ab0KPRLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Nov 2010 12:11:12 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:63997 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755274Ab0KPRLL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Nov 2010 12:11:11 -0500
+Received: by gyh4 with SMTP id 4so479826gyh.19
+        for <git@vger.kernel.org>; Tue, 16 Nov 2010 09:11:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=uSq/aw6Sc0sMBWPKxVPJ8bTdYGLmBpccYthIlL4kAGg=;
+        b=lFeiSbGoAKJKwCrQKyulDNdpiY5Le2IMkA+4G5SZmvm6Q4B7BmQseYnLNeU3uwknKb
+         VE7pZJb3AruUlsm3iOF+/BGzl8KdYIsFsBvBrp/aH2dcwyoB4U0NtGfbU0ofG7lDJYWV
+         OnVufSM5Om3GFeCeRgVnL7tt4YOOCK4T0091A=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=rZ6auKwYYaxJ77KC5z3ih7h0Y/dKLrd7sGVf7iwkul7hP/0zf57AsCiNKAWT2sckFe
+         nhuvy9sAlN81En+UIt6RzDlvAU+pqzO1xBTT454sbsmL6LdmsAcNmPOy+mGwo7zV0hq4
+         Jznd72UbMPIAc/hLc5bIeIQZ3N/jNqfx+dTL0=
+Received: by 10.151.110.2 with SMTP id n2mr12051834ybm.164.1289927470640;
+        Tue, 16 Nov 2010 09:11:10 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id 52sm912946yhl.17.2010.11.16.09.11.08
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 16 Nov 2010 09:11:09 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4CE22EC2.7040603@viscovery.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161565>
 
-Clemens Buchacher <drizzd@aon.at> writes:
+Johannes Sixt wrote:
 
-> I clarified above which commit introduces this problem and I
-> removed the now unused struct rejected_paths_list.
+> - It doesn't save any messages or fix-ups during review: instead of "do
+> not quote!" we have to say "use test_line_count!".
 
-Nice! No more remarks on my side.
+I was nervous about introducing test_line_count for that reason.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Another consideration won out: not syntax but output format.  See
+cae3aa79 (t6022 (renaming merge): chain test commands with &&,
+2010-10-31).  Kind of analogous to test_cmp, which is a similar
+headache to get used over less portable or less pleasant alternatives.
+
+If a piped variant is needed, I would prefer it to work something
+like this.  Usage:
+
+	{
+		command_producing_five_lines |
+		test_line_count = 5 -
+	}
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index 1ea0116..35a5634 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -660,15 +660,24 @@ test_path_is_missing () {
+ # output through when the number of lines is wrong.
+ 
+ test_line_count () {
++	line_count_tmp=
+ 	if test $# != 3
+ 	then
+ 		error "bug in the test script: not 3 parameters to test_line_count"
+-	elif ! test $(wc -l <"$3") "$1" "$2"
++	fi
++	if test "$3" = -
++	then
++		line_count_tmp=test_line_count.output
++		cat >"$line_count_tmp"
++		set -- "$1" "$2" "$line_count_tmp"
++	fi
++	if ! test $(wc -l <"$3") "$1" "$2"
+ 	then
+ 		echo "test_line_count: line count for $3 !$1 $2"
+ 		cat "$3"
+ 		return 1
+ 	fi
++	rm -f "$line_count_tmp"
+ }
+ 
+ # This is not among top-level (test_expect_success | test_expect_failure)
