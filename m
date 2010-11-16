@@ -1,66 +1,81 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: How to import bzr repository into git
-Date: Tue, 16 Nov 2010 21:05:12 +0100
-Message-ID: <AANLkTikGs7yWxXZ408_OJfRhJwQp8H4adrWWr1uFiN+M@mail.gmail.com>
-References: <AANLkTinVrwkOvYgGFX3S2530jfWnrAP28gVm4te1B4sC@mail.gmail.com>
-	<AANLkTimPmPOJq64=VePSb2efsx17j8BNxCLt_i=b2ykW@mail.gmail.com>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH 1/2] [RFC] Detect attempts at calling git init specifying a
+ remote repository.
+Date: Tue, 16 Nov 2010 21:10:03 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1011162107580.13543@perkele.intern.softwolves.pp.se>
+References: <cover.1289561504.git.peter@softwolves.pp.se>
+ <3f7d07a2b3a02c1d3f864d2a17f3b8808890a4d1.1289561504.git.peter@softwolves.pp.se>
+ <7vfwv1i22u.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Dmitri Pissarenko <dmitri.pissarenko@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 16 21:05:24 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Transfer-Encoding: 7BIT
+Cc: Git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 16 21:10:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIRmO-0007mH-84
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 21:05:24 +0100
+	id 1PIRrD-0002Ij-If
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 21:10:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758832Ab0KPUFQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Nov 2010 15:05:16 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:50616 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755534Ab0KPUFP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Nov 2010 15:05:15 -0500
-Received: by vws13 with SMTP id 13so566026vws.19
-        for <git@vger.kernel.org>; Tue, 16 Nov 2010 12:05:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=vqiuNeeRlk3DyrgmVTrV7YkS/3SIfhGgT6vtUSVTa2M=;
-        b=pJnrBSwawB0a7ghauyQLkWoYi0OXHvhAgSIZF+8YwwGceZIM/5jRLvISf1sGZJHONc
-         qRRCUJsw+VA3wdkLTuxsQa4UK8VIAlyXhvuaG6JAXFBVqVeDqLu6OIbLmdPgZS0BvPBL
-         2MrUcO4jlrkmjrBLV8kpbd2xnD17p7Rb0BCvc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=J3iPo5MGB9MXME/eQj9r/IZPEKRYRECa5EfDWytz83FQn1SiBhYoxAHnUgy5btM+aT
-         j2cJAP75PezjADxxo5pfwatM9pOzeq++569RID2g34mCRxPIsnkhWq6IL755u9gRztzt
-         DLF3QdJP2EzcLULfY+tahQE7+5dPSehTyPzyA=
-Received: by 10.223.78.199 with SMTP id m7mr6359097fak.11.1289937912857; Tue,
- 16 Nov 2010 12:05:12 -0800 (PST)
-Received: by 10.223.86.134 with HTTP; Tue, 16 Nov 2010 12:05:12 -0800 (PST)
-In-Reply-To: <AANLkTimPmPOJq64=VePSb2efsx17j8BNxCLt_i=b2ykW@mail.gmail.com>
+	id S932169Ab0KPUKP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Nov 2010 15:10:15 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:51956 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755538Ab0KPUKO (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Nov 2010 15:10:14 -0500
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LBZ006DZUP0Z080@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 16 Nov 2010 21:10:12 +0100 (MET)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 94C8C1EA5583_CE2E524B	for <git@vger.kernel.org>; Tue,
+ 16 Nov 2010 20:10:12 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 7F9D51EA2FEA_CE2E524F	for <git@vger.kernel.org>; Tue,
+ 16 Nov 2010 20:10:12 +0000 (GMT)
+Received: from perkele ([84.215.142.63]) by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LBZ00DVHUP0WF00@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Tue, 16 Nov 2010 21:10:12 +0100 (MET)
+Received: by perkele (Postfix, from userid 501)	id 621EC2FC06; Tue,
+ 16 Nov 2010 21:10:03 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
+ with ESMTP id 60A5B2FC04; Tue, 16 Nov 2010 21:10:03 +0100 (CET)
+In-reply-to: <7vfwv1i22u.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161583>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161584>
 
-On Tue, Nov 16, 2010 at 20:57, Dmitri Pissarenko
-<dmitri.pissarenko@gmail.com> wrote:
-> I want to migrate one of my projects from Bazaar to git, preserving the history.
+Junio C Hamano:
 
-Have you looked at some of the migration tools already?
+>> --- a/builtin/init-db.c
+>> +++ b/builtin/init-db.c
+>> @@ -435,7 +435,12 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
+>>  		int mkdir_tried = 0;
+>>  	retry:
+>>  		if (chdir(argv[0]) < 0) {
+>> -			if (!mkdir_tried) {
+>> +			if (is_url(argv[0]) || strchr(argv[0], '@') != NULL || (strchr(argv[0], ':') != NULL && !has_dos_drive_prefix(argv[0]))) {
+>> +				/*
+>> +				 * We were passed a remote repository specification.
+> Or a directory with ':' in its pathname, no?
 
-Which ones? Why do you think they work / don't work for you?
+Indeed. Don't do that, then :-)
 
-> How can I do that in Windows (import an existing Bazaar project into a
-> new/empty git repository) ?
+Seriously, though, I tried finding an API that checked if the pathspec is 
+local or remote, but I was unable to. Is there one I should use instead?
 
-You don't need to do it on Windows. You can install VirtualBox + Linux
-for free and do it there. That's probably easier in some cases than
-porting the relevant software to Windows.
+-- 
+\\// Peter - http://www.softwolves.pp.se/
