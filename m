@@ -1,66 +1,59 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] cherry-pick -x: add newline before pick note
-Date: Tue, 16 Nov 2010 16:11:17 +0100
-Message-ID: <d0318dcd2b52f2e818888003e3dd81c7b713fec6.1289920242.git.git@drmicha.warpmail.net>
-Cc: Martin Svensson <martin.k.svensson@netinsight.se>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 16 16:13:37 2010
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2] use persistent memory for rejected paths
+Date: Tue, 16 Nov 2010 17:41:57 +0100
+Message-ID: <vpqvd3xgqzu.fsf@bauges.imag.fr>
+References: <7vbp5ymfyo.fsf@alter.siamese.dyndns.org>
+	<20101114130205.GA27560@localhost> <vpq62vymmsz.fsf@bauges.imag.fr>
+	<20101115194133.GA3297@localhost> <20101115195219.GB3297@localhost>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Tue Nov 16 17:42:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PINDz-0001SJ-G0
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 16:13:35 +0100
+	id 1PIObw-0003AT-73
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 17:42:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759335Ab0KPPNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Nov 2010 10:13:21 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:34092 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1759279Ab0KPPNU (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Nov 2010 10:13:20 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 9FA8B70E;
-	Tue, 16 Nov 2010 10:13:19 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 16 Nov 2010 10:13:19 -0500
-X-Sasl-enc: FzCriuqSQHQtxVBXf5DM185ds/EytXCmvzvDsi8+K5Yh 1289920399
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 22A1540C2AD;
-	Tue, 16 Nov 2010 10:13:19 -0500 (EST)
-X-Mailer: git-send-email 1.7.3.2.193.g78bbb
+	id S1754662Ab0KPQmS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Nov 2010 11:42:18 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:52254 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754627Ab0KPQmS (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Nov 2010 11:42:18 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id oAGGQGgR000670
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 16 Nov 2010 17:26:16 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PIObV-0006Qp-Im; Tue, 16 Nov 2010 17:41:57 +0100
+In-Reply-To: <20101115195219.GB3297@localhost> (Clemens Buchacher's message of "Mon\, 15 Nov 2010 20\:52\:19 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 16 Nov 2010 17:26:17 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: oAGGQGgR000670
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1290529579.59438@E3/T4EgOfeC1hgRSG8bFsw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161564>
 
-Currently, cherry-pick -x sticks the pick note immediately after the
-existing commit message. This
+Clemens Buchacher <drizzd@aon.at> writes:
 
-* is bad for commits with 1 line subject (it makes a 2 line subject)
-* is different from git-svn, e.g., which leaves an empty line before.
+> I clarified above which commit introduces this problem and I
+> removed the now unused struct rejected_paths_list.
 
-Make cherry-pick always insert an empty line before the pick note.
+Nice! No more remarks on my side.
 
-Reported-by: Martin Svensson <martin.k.svensson@netinsight.se>
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- builtin/revert.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/builtin/revert.c b/builtin/revert.c
-index 57b51e4..9251257 100644
---- a/builtin/revert.c
-+++ b/builtin/revert.c
-@@ -485,7 +485,7 @@ static int do_pick_commit(void)
- 		set_author_ident_env(msg.message);
- 		add_message_to_msg(&msgbuf, msg.message);
- 		if (no_replay) {
--			strbuf_addstr(&msgbuf, "(cherry picked from commit ");
-+			strbuf_addstr(&msgbuf, "\n(cherry picked from commit ");
- 			strbuf_addstr(&msgbuf, sha1_to_hex(commit->object.sha1));
- 			strbuf_addstr(&msgbuf, ")\n");
- 		}
 -- 
-1.7.3.2.193.g78bbb
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
