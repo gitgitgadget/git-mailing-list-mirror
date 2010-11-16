@@ -1,68 +1,64 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Bogus error: Untracked working tree file '....' would be
- overwritten by merge. Aborting
-Date: Tue, 16 Nov 2010 18:34:40 +0700
-Message-ID: <AANLkTikeaj6kfq+pv+F0mOUSC7yJKnwyUgy9k8GPTpxg@mail.gmail.com>
-References: <AANLkTinv7XsXNR2MMbaGAUo2=WgL6SEWkuzwGU_7YVn0@mail.gmail.com> <20101116112406.GA18259@do>
+From: Sebastien Douche <sdouche@gmail.com>
+Subject: Git roadmap (How read What's cooking in git.git)
+Date: Tue, 16 Nov 2010 13:53:01 +0100
+Message-ID: <AANLkTimtUz3L0F_iOpH7YuYpyoutPqtevPj-Tjo6MRcs@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git <git@vger.kernel.org>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= <avarab@gmail.com>
-To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 16 12:35:12 2010
+To: git list <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 16 13:54:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIJod-0002iS-Cd
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 12:35:11 +0100
+	id 1PIL31-0004ii-Ke
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 13:54:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933446Ab0KPLfE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 16 Nov 2010 06:35:04 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:64239 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933106Ab0KPLfC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 16 Nov 2010 06:35:02 -0500
-Received: by wyb28 with SMTP id 28so589640wyb.19
-        for <git@vger.kernel.org>; Tue, 16 Nov 2010 03:35:01 -0800 (PST)
+	id S1758086Ab0KPMxp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Nov 2010 07:53:45 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:33757 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757975Ab0KPMxn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Nov 2010 07:53:43 -0500
+Received: by iwn35 with SMTP id 35so777237iwn.19
+        for <git@vger.kernel.org>; Tue, 16 Nov 2010 04:53:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=aKsyYZYok0WJXOhbOMOv0ixmtvJ8Fq42r/cRuQMiTSc=;
-        b=j7sy7cQxoyVHTMVF/IT25dP36600r8GjPLUlhap+ql2cpiXLafIHmHsKbDZ+0qAC18
-         G8CQzyzI0cTGREYSpKsGPMCt9fA1M7J607BLo2iSCYjn7TNGNGbwipIy3mM8ecR+wGxI
-         wVrMiauLcSLbRSRDfRupAo2qiiuPUlCO+ctnE=
+        h=domainkey-signature:received:mime-version:received:from:date
+         :message-id:subject:to:content-type;
+        bh=Ku9UtHdPZ/2IYSXGuz2HMrk4p+vwn8QBGems8dUAGHg=;
+        b=IhJZBZFRS2FmvheKVG2d/jzyAVyIPuvAk/9of/KS3ukz4XEKLJ7dv7aZUBMWU/kOq6
+         3c2Ng6n7mfrUm4JSNYKQI8M73Nwb7Y87jPkg4Uf50LhHBFGj2USnta7pGOlch2equ8y0
+         mdehDrTQ4WoowqoXN3H4sFJJvfLlk2tZtAdb8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=RccKcImvZT3Pfb6YIdeZkGS3eeUx5xYuvTz6oTROUfg0F9qhiZzXfWfp4VNBO9UE+S
-         SF8hjE1B9gwSPOxg4tCFhjpDsevuzYpOaqpC2gtoscniv0qEEVdJuBPvu3ZYKZaQJs1k
-         99WnVymfIkm9RtPEDCgaIyUl+Xi0FHFRYdgP0=
-Received: by 10.216.172.9 with SMTP id s9mr6450532wel.56.1289907300602; Tue,
- 16 Nov 2010 03:35:00 -0800 (PST)
-Received: by 10.216.172.199 with HTTP; Tue, 16 Nov 2010 03:34:40 -0800 (PST)
-In-Reply-To: <20101116112406.GA18259@do>
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=G7GELHsV9qG39VBZ4v0R14+uTxolHQQv3xnRKJnkPcBAe6aLsyVAmkCy7N0XpqIR9J
+         Q2BrQ98LOfwJOxrI6C9VQ3VpOTxBlZvkXXJbz9+VsTYuEv6AtbjR5/oFLoQIHIZs5XlI
+         ssvMGce31CnnjfAebD0rQ7++qwq9l2c1epcVM=
+Received: by 10.231.14.140 with SMTP id g12mr5542826iba.84.1289912022265; Tue,
+ 16 Nov 2010 04:53:42 -0800 (PST)
+Received: by 10.231.174.20 with HTTP; Tue, 16 Nov 2010 04:53:01 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161559>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161560>
 
-On Tue, Nov 16, 2010 at 6:24 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.co=
-m> wrote:
-> +static int identical_content(struct cache_entry *ce, struct stat *st=
-)
-> +{
-> + =C2=A0 =C2=A0 =C2=A0 unsigned char sha1[20];
-> + =C2=A0 =C2=A0 =C2=A0 return !index_path(sha1, ce->name, st, 0) && !=
-hashcmp(sha1, ce->sha1);
+Hi Junio,
+I'm starting a french blog[1] on git to support workshops[2]. The goal
+is to explain deeply the philosophy, the commands and subcommands,
+workflows, etc. And also to aggregate headlines of the git world,
+follow events and announce git releases. For the latter, it's a bit
+hard (for a non core developer) to follow the development. From your
+point of view, how we could set up a roadmap and a "what's new"?
 
-Even better, do a file size check here. If it's not equal, there's no
-point in calling the expensive index_path().
---=20
-Duy
+
+
+[1] http://blog.gitfr.net
+[2] 100% free, with 50 attendees for the first workshop, 70 for the second!
+
+
+-- 
+Sebastien Douche <sdouche@gmail.com>
+Twitter: @sdouche (agile, lean, python, git, open source)
