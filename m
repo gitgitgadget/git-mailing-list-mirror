@@ -1,417 +1,81 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: [PATCH v8 1/3] Add bidirectional_transfer_loop()
-Date: Tue, 16 Nov 2010 05:34:12 +0200
-Message-ID: <1289878454-17192-2-git-send-email-ilari.liusvaara@elisanet.fi>
-References: <1289878454-17192-1-git-send-email-ilari.liusvaara@elisanet.fi>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 16 04:32:54 2010
+From: Tim Stoakes <git@stoakes.net>
+Subject: Re: Using git-svn with svnsync mirror
+Date: Tue, 16 Nov 2010 14:53:12 +1030
+Message-ID: <20101116042312.GB24344@mail.stoakes.net>
+References: <loom.20101116T030410-656@post.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Phillip Hutchings <sitharus@sitharus.com>
+X-From: git-owner@vger.kernel.org Tue Nov 16 05:33:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PICHs-0005Er-8L
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 04:32:52 +0100
+	id 1PIDE3-0007uu-0t
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 05:32:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759266Ab0KPDcm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Nov 2010 22:32:42 -0500
-Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:34499 "EHLO
-	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759252Ab0KPDcj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 15 Nov 2010 22:32:39 -0500
-Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id 205ED18D1C2
-	for <git@vger.kernel.org>; Tue, 16 Nov 2010 05:32:38 +0200 (EET)
-Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
-	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A048021CC16; Tue, 16 Nov 2010 05:32:38 +0200
-Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
-	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id EA27D1C6382
-	for <git@vger.kernel.org>; Tue, 16 Nov 2010 05:32:36 +0200 (EET)
-X-Mailer: git-send-email 1.7.1.rc2.10.g714149
-In-Reply-To: <1289878454-17192-1-git-send-email-ilari.liusvaara@elisanet.fi>
-X-Antivirus: VAMS
+	id S1756716Ab0KPEcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 15 Nov 2010 23:32:31 -0500
+Received: from outbound-mail03.westnet.com.au ([203.10.1.244]:39942 "EHLO
+	outbound-mail03.westnet.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755256Ab0KPEcb (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 15 Nov 2010 23:32:31 -0500
+X-Greylist: delayed 552 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Nov 2010 23:32:30 EST
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: AvsEAHqV4UzKrYlp/2dsb2JhbACiWnK/PIMECII+BIpXgyY
+X-IronPort-AV: E=Sophos;i="4.59,203,1288540800"; 
+   d="scan'208";a="107462439"
+Received: from dsl-202-173-137-105.sa.westnet.com.au (HELO mail.stoakes.net) ([202.173.137.105])
+  by outbound-mail03.westnet.com.au with ESMTP/TLS/ADH-AES256-SHA; 16 Nov 2010 12:23:15 +0800
+Received: from narco.pvt.stoakes.net (unknown [192.168.20.234])
+	by mail.stoakes.net (Postfix) with ESMTP id 5EFB7EE4CF;
+	Tue, 16 Nov 2010 14:53:31 +1030 (CST)
+Received: by narco.pvt.stoakes.net (Postfix, from userid 1000)
+	id AD26D1024B3; Tue, 16 Nov 2010 14:53:12 +1030 (CST)
+Mail-Followup-To: Phillip Hutchings <sitharus@sitharus.com>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <loom.20101116T030410-656@post.gmane.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161541>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161542>
 
-This helper function copies bidirectional stream of data between
-stdin/stdout and specified file descriptors.
+Phillip Hutchings(sitharus@sitharus.com)@161110-02:08:
+> Hi,
+> 
+> I've got an svnsync mirror of a large repository, and I'm trying to do
+> a git-svn clone from the mirror as the main server is off site. This
+> works well until I try to dcommit or use git svn info.
+> 
+> My investigations show that working_head_info in git-svn doesn't
+> account for using svnsync properties, so it cannot find a log entry
+> that matches a config entry.
+> 
+> My perl isn't good enough to patch this yet, so I was wondering if
+> anyone else had encountered it.
+> 
+> I could change the config URL to match, but I'm worried this will
+> break things.
 
-Signed-off-by: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
----
- compat/mingw.h     |    5 +
- transport-helper.c |  316 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- transport.h        |    1 +
- 3 files changed, 322 insertions(+), 0 deletions(-)
+You want to use rewriteRoot option so that changing the URL does not
+break things (the URL is stored in each git commit's log).
 
-diff --git a/compat/mingw.h b/compat/mingw.h
-index f465566..00ee685 100644
---- a/compat/mingw.h
-+++ b/compat/mingw.h
-@@ -23,6 +23,9 @@ typedef int pid_t;
- #define WEXITSTATUS(x) ((x) & 0xff)
- #define WTERMSIG(x) SIGTERM
- 
-+#define EWOULDBLOCK EAGAIN
-+#define SHUT_WR SD_SEND
-+
- #define SIGHUP 1
- #define SIGQUIT 3
- #define SIGKILL 9
-@@ -50,6 +53,8 @@ struct pollfd {
- };
- #define POLLIN 1
- #define POLLHUP 2
-+#define POLLOUT 4
-+#define POLLNVAL 8
- #endif
- 
- typedef void (__cdecl *sig_handler_t)(int);
-diff --git a/transport-helper.c b/transport-helper.c
-index 0381de5..b52c08e 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -9,6 +9,11 @@
- #include "remote.h"
- #include "string-list.h"
- 
-+#ifndef NO_PTHREADS
-+#include <pthread.h>
-+#include "thread-utils.h"
-+#endif
-+
- static int debug;
- 
- struct helper_data
-@@ -862,3 +867,314 @@ int transport_helper_init(struct transport *transport, const char *name)
- 	transport->smart_options = &(data->transport_options);
- 	return 0;
- }
-+
-+/*
-+ * Linux pipes can buffer 65536 bytes at once (and most platforms can
-+ * buffer less), so attempt reads and writes with up to that size.
-+ */
-+#define BUFFERSIZE 65536
-+/* This should be enough to hold debugging message. */
-+#define PBUFFERSIZE 8192
-+
-+/* Print bidirectional transfer loop debug message. */
-+static void transfer_debug(const char *fmt, ...)
-+{
-+	va_list args;
-+	char msgbuf[PBUFFERSIZE];
-+	static int debug_enabled = -1;
-+
-+	if (debug_enabled < 0)
-+		debug_enabled = getenv("GIT_TRANSLOOP_DEBUG") ? 1 : 0;
-+	if (!debug_enabled)
-+		return;
-+
-+	va_start(args, fmt);
-+	vsnprintf(msgbuf, PBUFFERSIZE, fmt, args);
-+	va_end(args);
-+	fprintf(stderr, "Transfer loop debugging: %s\n", msgbuf);
-+}
-+
-+/* Stream state: More data may be coming in this direction. */
-+#define SSTATE_TRANSFERING 0
-+/*
-+ * Stream state: No more data coming in this direction, flushing rest of
-+ * data.
-+ */
-+#define SSTATE_FLUSHING 1
-+/* Stream state: Transfer in this direction finished. */
-+#define SSTATE_FINISHED 2
-+
-+#define STATE_NEEDS_READING(state) ((state) <= SSTATE_TRANSFERING)
-+#define STATE_NEEDS_WRITING(state) ((state) <= SSTATE_FLUSHING)
-+#define STATE_NEEDS_CLOSING(state) ((state) == SSTATE_FLUSHING)
-+
-+/* Unidirectional transfer. */
-+struct unidirectional_transfer {
-+	/* Source */
-+	int src;
-+	/* Destination */
-+	int dest;
-+	/* Is source socket? */
-+	int src_is_sock;
-+	/* Is destination socket? */
-+	int dest_is_sock;
-+	/* Transfer state (TRANSFERING/FLUSHING/FINISHED) */
-+	int state;
-+	/* Buffer. */
-+	char buf[BUFFERSIZE];
-+	/* Buffer used. */
-+	size_t bufuse;
-+	/* Name of source. */
-+	const char *src_name;
-+	/* Name of destination. */
-+	const char *dest_name;
-+};
-+
-+/* Closes the target (for writing) if transfer has finished. */
-+static void udt_close_if_finished(struct unidirectional_transfer *t)
-+{
-+	if (STATE_NEEDS_CLOSING(t->state) && !t->bufuse) {
-+		t->state = SSTATE_FINISHED;
-+		if (t->dest_is_sock)
-+			shutdown(t->dest, SHUT_WR);
-+		else
-+			close(t->dest);
-+		transfer_debug("Closed %s.", t->dest_name);
-+	}
-+}
-+
-+/*
-+ * Tries to read read data from source into buffer. If buffer is full,
-+ * no data is read. Returns 0 on success, -1 on error.
-+ */
-+static int udt_do_read(struct unidirectional_transfer *t)
-+{
-+	ssize_t bytes;
-+
-+	if (t->bufuse == BUFFERSIZE)
-+		return 0;	/* No space for more. */
-+
-+	transfer_debug("%s is readable", t->src_name);
-+	bytes = read(t->src, t->buf + t->bufuse, BUFFERSIZE - t->bufuse);
-+	if (bytes < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
-+		errno != EINTR) {
-+		error("read(%s) failed: %s", t->src_name, strerror(errno));
-+		return -1;
-+	} else if (bytes == 0) {
-+		transfer_debug("%s EOF (with %i bytes in buffer)",
-+			t->src_name, t->bufuse);
-+		t->state = SSTATE_FLUSHING;
-+	} else if (bytes > 0) {
-+		t->bufuse += bytes;
-+		transfer_debug("Read %i bytes from %s (buffer now at %i)",
-+			(int)bytes, t->src_name, (int)t->bufuse);
-+	}
-+	return 0;
-+}
-+
-+/* Tries to write data from buffer into destination. If buffer is empty,
-+ * no data is written. Returns 0 on success, -1 on error.
-+ */
-+static int udt_do_write(struct unidirectional_transfer *t)
-+{
-+	size_t bytes;
-+
-+	if (t->bufuse == 0)
-+		return 0;	/* Nothing to write. */
-+
-+	transfer_debug("%s is writable", t->dest_name);
-+	bytes = write(t->dest, t->buf, t->bufuse);
-+	if (bytes < 0 && errno != EWOULDBLOCK && errno != EAGAIN &&
-+		errno != EINTR) {
-+		error("write(%s) failed: %s", t->dest_name, strerror(errno));
-+		return -1;
-+	} else if (bytes > 0) {
-+		t->bufuse -= bytes;
-+		if (t->bufuse)
-+			memmove(t->buf, t->buf + bytes, t->bufuse);
-+		transfer_debug("Wrote %i bytes to %s (buffer now at %i)",
-+			(int)bytes, t->dest_name, (int)t->bufuse);
-+	}
-+	return 0;
-+}
-+
-+
-+/* State of bidirectional transfer loop. */
-+struct bidirectional_transfer_state {
-+	/* Direction from program to git. */
-+	struct unidirectional_transfer ptg;
-+	/* Direction from git to program. */
-+	struct unidirectional_transfer gtp;
-+};
-+
-+static void *udt_copy_task_routine(void *udt)
-+{
-+	struct unidirectional_transfer *t = (struct unidirectional_transfer *)udt;
-+	while (t->state != SSTATE_FINISHED) {
-+		if (STATE_NEEDS_READING(t->state))
-+			if (udt_do_read(t))
-+				return NULL;
-+		if (STATE_NEEDS_WRITING(t->state))
-+			if (udt_do_write(t))
-+				return NULL;
-+		if (STATE_NEEDS_CLOSING(t->state))
-+			udt_close_if_finished(t);
-+	}
-+	return udt;	/* Just some non-NULL value. */
-+}
-+
-+#ifndef NO_PTHREADS
-+
-+/*
-+ * Join thread, with apporiate errors on failure. Name is name for the
-+ * thread (for error messages). Returns 0 on success, 1 on failure.
-+ */
-+static int tloop_join(pthread_t thread, const char *name)
-+{
-+	int err;
-+	void *tret;
-+	err = pthread_join(thread, &tret);
-+	if (!tret) {
-+		error("%s thread failed", name);
-+		return 1;
-+	}
-+	if (err) {
-+		error("%s thread failed to join: %s", name, strerror(err));
-+		return 1;
-+	}
-+	return 0;
-+}
-+
-+/*
-+ * Spawn the transfer tasks and then wait for them. Returns 0 on success,
-+ * -1 on failure.
-+ */
-+static int tloop_spawnwait_tasks(struct bidirectional_transfer_state *s)
-+{
-+	pthread_t gtp_thread;
-+	pthread_t ptg_thread;
-+	int err;
-+	int ret = 0;
-+	err = pthread_create(&gtp_thread, NULL, udt_copy_task_routine,
-+		&s->gtp);
-+	if (err)
-+		die("Can't start thread for copying data: %s", strerror(err));
-+	err = pthread_create(&ptg_thread, NULL, udt_copy_task_routine,
-+		&s->ptg);
-+	if (err)
-+		die("Can't start thread for copying data: %s", strerror(err));
-+
-+	ret |= tloop_join(gtp_thread, "Git to program copy");
-+	ret |= tloop_join(ptg_thread, "Program to git copy");
-+	return ret;
-+}
-+#else
-+
-+/* Close the source and target (for writing) for transfer. */
-+static void udt_kill_transfer(struct unidirectional_transfer *t)
-+{
-+	t->state = SSTATE_FINISHED;
-+	/*
-+	 * Socket read end left open isn't a disaster if nobody
-+	 * attempts to read from it (mingw compat headers do not
-+	 * have SHUT_RD)...
-+	 *
-+	 * We can't fully close the socket since otherwise gtp
-+	 * task would first close the socket it sends data to
-+	 * while closing the ptg file descriptors.
-+	 */
-+	if (!t->src_is_sock)
-+		close(t->src);
-+	if (t->dest_is_sock)
-+		shutdown(t->dest, SHUT_WR);
-+	else
-+		close(t->dest);
-+}
-+
-+/*
-+ * Join process, with apporiate errors on failure. Name is name for the
-+ * process (for error messages). Returns 0 on success, 1 on failure.
-+ */
-+static int tloop_join(pid_t pid, const char *name)
-+{
-+	int tret;
-+	if (waitpid(pid, &tret, 0) < 0) {
-+		error("%s process failed to wait: %s", name, strerror(errno));
-+		return 1;
-+	}
-+	if (!WIFEXITED(tret) || WEXITSTATUS(tret)) {
-+		error("%s process failed", name);
-+		return 1;
-+	}
-+	return 0;
-+}
-+
-+/*
-+ * Spawn the transfer tasks and then wait for them. Returns 0 on success,
-+ * -1 on failure.
-+ */
-+static int tloop_spawnwait_tasks(struct bidirectional_transfer_state *s)
-+{
-+	pid_t pid1, pid2;
-+	int ret = 0;
-+
-+	/* Fork thread #1: git to program. */
-+	pid1 = fork();
-+	if (pid1 < 0)
-+		die_errno("Can't start thread for copying data");
-+	else if (pid1 == 0) {
-+		udt_kill_transfer(&s->ptg);
-+		exit(udt_copy_task_routine(&s->gtp) ? 0 : 1);
-+	}
-+
-+	/* Fork thread #2: program to git. */
-+	pid2 = fork();
-+	if (pid2 < 0)
-+		die_errno("Can't start thread for copying data");
-+	else if (pid2 == 0) {
-+		udt_kill_transfer(&s->gtp);
-+		exit(udt_copy_task_routine(&s->ptg) ? 0 : 1);
-+	}
-+
-+	/*
-+	 * Close both streams in parent as to not interfere with
-+	 * end of file detection and wait for both tasks to finish.
-+	 */
-+	udt_kill_transfer(&s->gtp);
-+	udt_kill_transfer(&s->ptg);
-+	ret |= tloop_join(pid1, "Git to program copy");
-+	ret |= tloop_join(pid2, "Program to git copy");
-+	return ret;
-+}
-+#endif
-+
-+/*
-+ * Copies data from stdin to output and from input to stdout simultaneously.
-+ * Additionally filtering through given filter. If filter is NULL, uses
-+ * identity filter.
-+ */
-+int bidirectional_transfer_loop(int input, int output)
-+{
-+	struct bidirectional_transfer_state state;
-+
-+	/* Fill the state fields. */
-+	state.ptg.src = input;
-+	state.ptg.dest = 1;
-+	state.ptg.src_is_sock = (input == output);
-+	state.ptg.dest_is_sock = 0;
-+	state.ptg.state = SSTATE_TRANSFERING;
-+	state.ptg.bufuse = 0;
-+	state.ptg.src_name = "remote input";
-+	state.ptg.dest_name = "stdout";
-+
-+	state.gtp.src = 0;
-+	state.gtp.dest = output;
-+	state.gtp.src_is_sock = 0;
-+	state.gtp.dest_is_sock = (input == output);
-+	state.gtp.state = SSTATE_TRANSFERING;
-+	state.gtp.bufuse = 0;
-+	state.gtp.src_name = "stdin";
-+	state.gtp.dest_name = "remote output";
-+
-+	return tloop_spawnwait_tasks(&state);
-+}
-diff --git a/transport.h b/transport.h
-index c59d973..e803c0e 100644
---- a/transport.h
-+++ b/transport.h
-@@ -154,6 +154,7 @@ int transport_connect(struct transport *transport, const char *name,
- 
- /* Transport methods defined outside transport.c */
- int transport_helper_init(struct transport *transport, const char *name);
-+int bidirectional_transfer_loop(int input, int output);
- 
- /* common methods used by transport.c and builtin-send-pack.c */
- void transport_verify_remote_names(int nr_heads, const char **heads);
+I use something like this all the time:
+[svn-remote "svn"]
+  rewriteRoot = svn://svn.foo.com/repo/blah   <-- the master
+  url = svn://svn-mirror.foo.com/repo/somewhere/else/blah  <-- a slave
+
+If you've imported from the mirror without this option, then you're
+stuck I think. You could work around it by swapping the URLs in the
+rewriteRoot and url fields (essentially rewriting the URLs in the wrong
+order), but this is strictly 'wrong'.
+
+Tim
+
 -- 
-1.7.1.336.ge601a.dirty
+Tim Stoakes
