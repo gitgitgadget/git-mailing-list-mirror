@@ -1,81 +1,65 @@
-From: Tim Stoakes <git@stoakes.net>
-Subject: Re: Using git-svn with svnsync mirror
-Date: Tue, 16 Nov 2010 14:53:12 +1030
-Message-ID: <20101116042312.GB24344@mail.stoakes.net>
-References: <loom.20101116T030410-656@post.gmane.org>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: [PATCH 2/2] [WIP] Allow running git init on a remote repository
+ specification.
+Date: Tue, 16 Nov 2010 06:33:50 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1011160632280.20293@ds9.cixit.se>
+References: <cover.1289561504.git.peter@softwolves.pp.se> <ba28273f7efb0fa3e403a8a9d7b923b61bb62ce3.1289561504.git.peter@softwolves.pp.se> <AANLkTimqLeyDW9sJVR8NPOXQ1Xdz+kRmu9-8fPn1yj_j@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Phillip Hutchings <sitharus@sitharus.com>
-X-From: git-owner@vger.kernel.org Tue Nov 16 05:33:01 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: Scott Chacon <schacon@gmail.com>, Jeff King <peff@peff.net>,
+	Git <git@vger.kernel.org>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 16 06:34:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIDE3-0007uu-0t
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 05:32:59 +0100
+	id 1PIEBO-0001GF-BZ
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 06:34:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756716Ab0KPEcb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 15 Nov 2010 23:32:31 -0500
-Received: from outbound-mail03.westnet.com.au ([203.10.1.244]:39942 "EHLO
-	outbound-mail03.westnet.com.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755256Ab0KPEcb (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 15 Nov 2010 23:32:31 -0500
-X-Greylist: delayed 552 seconds by postgrey-1.27 at vger.kernel.org; Mon, 15 Nov 2010 23:32:30 EST
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: AvsEAHqV4UzKrYlp/2dsb2JhbACiWnK/PIMECII+BIpXgyY
-X-IronPort-AV: E=Sophos;i="4.59,203,1288540800"; 
-   d="scan'208";a="107462439"
-Received: from dsl-202-173-137-105.sa.westnet.com.au (HELO mail.stoakes.net) ([202.173.137.105])
-  by outbound-mail03.westnet.com.au with ESMTP/TLS/ADH-AES256-SHA; 16 Nov 2010 12:23:15 +0800
-Received: from narco.pvt.stoakes.net (unknown [192.168.20.234])
-	by mail.stoakes.net (Postfix) with ESMTP id 5EFB7EE4CF;
-	Tue, 16 Nov 2010 14:53:31 +1030 (CST)
-Received: by narco.pvt.stoakes.net (Postfix, from userid 1000)
-	id AD26D1024B3; Tue, 16 Nov 2010 14:53:12 +1030 (CST)
-Mail-Followup-To: Phillip Hutchings <sitharus@sitharus.com>,
-	git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <loom.20101116T030410-656@post.gmane.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755715Ab0KPFeE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Nov 2010 00:34:04 -0500
+Received: from upper-gw.cixit.se ([92.43.32.133]:59809 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1754882Ab0KPFeA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Nov 2010 00:34:00 -0500
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id oAG5XpDa020791
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 16 Nov 2010 06:33:51 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id oAG5XorU020786;
+	Tue, 16 Nov 2010 06:33:50 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <AANLkTimqLeyDW9sJVR8NPOXQ1Xdz+kRmu9-8fPn1yj_j@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161543>
 
-Phillip Hutchings(sitharus@sitharus.com)@161110-02:08:
-> Hi,
-> 
-> I've got an svnsync mirror of a large repository, and I'm trying to do
-> a git-svn clone from the mirror as the main server is off site. This
-> works well until I try to dcommit or use git svn info.
-> 
-> My investigations show that working_head_info in git-svn doesn't
-> account for using svnsync properties, so it cannot find a log entry
-> that matches a config entry.
-> 
-> My perl isn't good enough to patch this yet, so I was wondering if
-> anyone else had encountered it.
-> 
-> I could change the config URL to match, but I'm worried this will
-> break things.
+Hi!
 
-You want to use rewriteRoot option so that changing the URL does not
-break things (the URL is stored in each git commit's log).
+Sverre Rabbelier:
 
-I use something like this all the time:
-[svn-remote "svn"]
-  rewriteRoot = svn://svn.foo.com/repo/blah   <-- the master
-  url = svn://svn-mirror.foo.com/repo/somewhere/else/blah  <-- a slave
+> I remember the idea of a new remote service (e.g., in addition to 
+> 'git-upload-pack' and 'git-receive-pack') to create a new repository. The 
+> reason for making this a new service was so that (among others) the github 
+> guys could make that do something sensible for their service.
 
-If you've imported from the mirror without this option, then you're
-stuck I think. You could work around it by swapping the URLs in the
-rewriteRoot and url fields (essentially rewriting the URLs in the wrong
-order), but this is strictly 'wrong'.
+Right, that does indeed make sense. I guess that means I need to read up a 
+bit more on how to hook things together. It wasn't quite as obvious on a 
+cursory glance :-)
 
-Tim
+
+Any objections to the first part of the patch (that detects attempts at 
+remote init and rejects them)?
 
 -- 
-Tim Stoakes
+\\// Peter - http://www.softwolves.pp.se/
