@@ -1,79 +1,279 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: [PATCH 2/2] [WIP] Allow running git init on a remote repository
- specification.
-Date: Tue, 16 Nov 2010 21:12:46 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1011162110300.13543@perkele.intern.softwolves.pp.se>
-References: <cover.1289561504.git.peter@softwolves.pp.se>
- <ba28273f7efb0fa3e403a8a9d7b923b61bb62ce3.1289561504.git.peter@softwolves.pp.se>
- <AANLkTimqLeyDW9sJVR8NPOXQ1Xdz+kRmu9-8fPn1yj_j@mail.gmail.com>
- <alpine.DEB.2.00.1011160632280.20293@ds9.cixit.se>
- <7vbp5pi20z.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH] commit -s: allow "(cherry picked " lines in sign-off section
+Date: Tue, 16 Nov 2010 14:25:56 -0600
+Message-ID: <20101116202556.GA27390@burratino>
+References: <d0318dcd2b52f2e818888003e3dd81c7b713fec6.1289920242.git.git@drmicha.warpmail.net>
+ <20101116193018.GA31036@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Content-Transfer-Encoding: 7BIT
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Scott Chacon <schacon@gmail.com>, Jeff King <peff@peff.net>,
-	Git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 16 21:13:09 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	Martin Svensson <martin.k.svensson@netinsight.se>,
+	Junio C Hamano <gitster@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 16 21:27:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIRtq-0004QA-MK
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 21:13:07 +0100
+	id 1PIS7A-0004mH-CL
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 21:26:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759335Ab0KPUM6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Nov 2010 15:12:58 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:52179 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755631Ab0KPUM5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Nov 2010 15:12:57 -0500
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LBZ006LGUTKZ080@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Tue, 16 Nov 2010 21:12:56 +0100 (MET)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 3CCDC1EA55FB_CE2E5C8B	for <git@vger.kernel.org>; Tue,
- 16 Nov 2010 20:12:56 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 0A90D1EA2B2C_CE2E5C8F	for <git@vger.kernel.org>; Tue,
- 16 Nov 2010 20:12:56 +0000 (GMT)
-Received: from perkele ([84.215.142.63]) by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LBZ00D12UTJWF10@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 16 Nov 2010 21:12:56 +0100 (MET)
-Received: by perkele (Postfix, from userid 501)	id D67A42FC06; Tue,
- 16 Nov 2010 21:12:46 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])	by perkele (Postfix)
- with ESMTP id D4EAF2FC04; Tue, 16 Nov 2010 21:12:46 +0100 (CET)
-In-reply-to: <7vbp5pi20z.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
+	id S1754186Ab0KPU0m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Nov 2010 15:26:42 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:56171 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753057Ab0KPU0l (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Nov 2010 15:26:41 -0500
+Received: by gxk23 with SMTP id 23so663514gxk.19
+        for <git@vger.kernel.org>; Tue, 16 Nov 2010 12:26:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=N8d+khhU5QVFXmF4EAVHrLl7pW1FaJvJ34g6cLakOzk=;
+        b=RGUXjnNPCQgKoRqOq1jTXga+Nw2vtTxWxwdYFsiELo7YVYkVH+yNvqit5EEVQXA7W2
+         2yLKmjkKpQ78JwDmjKFIxi/emNixRRADRtI5E2OOT9ILfuRw5g+Bg82MY/+YQFq6U0s2
+         sVe5j0cwlATG8pLHdyvlo+ZnbJuZXUNqt9ezc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=LRSW3L6lVQf2BPFLR8lk1am9PKzGXGb2voHvlW1aDW+14Wo0sRY5D+FxbKSbzmh4tY
+         kx3CxD7eGqMZP0KVtnlnTOfFw0u33mIyurOWRKQok9Sj/dvrdnXZzBF5fsciTArMkxqB
+         YdirDlSE5nm9O9TnkfhEFRQLq7oJdzFZ070ZM=
+Received: by 10.223.70.133 with SMTP id d5mr81306faj.64.1289939199379;
+        Tue, 16 Nov 2010 12:26:39 -0800 (PST)
+Received: from burratino ([68.255.106.176])
+        by mx.google.com with ESMTPS id b20sm1454169fab.11.2010.11.16.12.26.37
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 16 Nov 2010 12:26:38 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20101116193018.GA31036@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161585>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161586>
 
-Junio C Hamano:
+Using cherry-pick -x -s to backport a public commit results in
+an unsightly gap in the sign-off chain:
 
-> Didn't we discuss this long time ago and decided, if anything is to be 
-> done, it would be something like "the first push creates"?
+	Reported-by: Jarek Poplawski <jarkao2@gmail.com>
+	Tested-by: Jarek Poplawski <jarkao2@gmail.com>
+	Signed-off-by: Frederic Weisbecker <fweisbec@gmail.com>
+	Cc: Jeff Mahoney <jeffm@suse.com>
+	Cc: All since 2.6.32 <stable@kernel.org>
+	Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+	Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+	(cherry picked from commit 9d8117e72bf453dd9d85e0cd322ce4a0f8bccbc0)
 
-I have probably missed that reference. But you mean to instead set up an 
-empty repository, with a configured remote? That is an interesting 
-alternative, but would still fail as there still is no way to initialize a 
-new repository on the remote.
+	Signed-off-by: Back Porter <backporter@example.com>
 
-But I am definitely open to fix it properly, I just haven't been able to 
-figure out how to do that yet.
+The cherry-pick is a step in the line of a patch like any other,
+so one might prefer to lose the extra newline.
 
+	...
+	Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+	(cherry picked from commit 9d8117e72bf453dd9d85e0cd322ce4a0f8bccbc0)
+	Signed-off-by: Back Porter <backporter@example.com>
+
+This commit teaches "git commit --signoff", and thus cherry-pick -s,
+to do exactly that.  It works by treating the "(cherry picked" line as
+just another line in the signoff chain, except as the first line (that
+last exception is to avoid false positives).
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Jeff King wrote:
+
+> Even better, I wonder if it should actually be:
+> 
+>   message subject
+> 
+>   Message body.
+> 
+>   Signed-off-by: Jeff King <peff@peff.net>
+>   Cherry-picked-from: ...
+
+Here's something like that.  I use "git cherry-pick -x -s" to
+backport patches from a public upstream.  Now you can, too.
+
+Ideally inline notes like
+
+	 [akpm@linux-foundation.org: coding-style fixes]
+
+also ought to be tolerated.
+
+ builtin/commit.c               |   20 +++++++
+ t/t3510-cherry-pick-message.sh |  112 ++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 132 insertions(+), 0 deletions(-)
+ create mode 100755 t/t3510-cherry-pick-message.sh
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 66fdd22..71dd52b 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -528,6 +528,8 @@ static int ends_rfc2822_footer(struct strbuf *sb)
+ 		i++;
+ 
+ 	for (; i < len; i = k) {
++		static const char cherry_pick[] = "(cherry picked from commit ";
++
+ 		for (k = i; k < len && buf[k] != '\n'; k++)
+ 			; /* do nothing */
+ 		k++;
+@@ -535,6 +537,20 @@ static int ends_rfc2822_footer(struct strbuf *sb)
+ 		if ((buf[k] == ' ' || buf[k] == '\t') && !first)
+ 			continue;
+ 
++		if (!first && buf[k] == '(' && k + strlen(cherry_pick) < len) {
++			/* Might be a cherry-pick notice. */
++			const char *p = buf + k;
++			if (!memcmp(p, cherry_pick, strlen(cherry_pick))) {
++				p = memchr(buf + k, '\n', len - k);
++				if (!p)
++					return 0;
++				if (p + 1 == buf + len)
++					return 1;
++				k = p - buf;
++				continue;
++			}
++		}
++
+ 		first = 0;
+ 
+ 		for (j = 0; i + j < len; j++) {
+@@ -625,6 +641,10 @@ static int prepare_to_commit(const char *index_file, const char *prefix,
+ 		for (i = sb.len - 1; i > 0 && sb.buf[i - 1] != '\n'; i--)
+ 			; /* do nothing */
+ 		if (prefixcmp(sb.buf + i, sob.buf)) {
++			/*
++			 * Only insert an extra newline if the previous line
++			 * is not part of a Signed-off-by:/Acked-by:/etc chain.
++			 */
+ 			if (!i || !ends_rfc2822_footer(&sb))
+ 				strbuf_addch(&sb, '\n');
+ 			strbuf_addbuf(&sb, &sob);
+diff --git a/t/t3510-cherry-pick-message.sh b/t/t3510-cherry-pick-message.sh
+new file mode 100755
+index 0000000..83e50a3
+--- /dev/null
++++ b/t/t3510-cherry-pick-message.sh
+@@ -0,0 +1,112 @@
++#!/bin/sh
++
++test_description='tests for the log messages cherry-pick produces
++
++  ----
++  +      cherry-pick of branch
++     +   signoff
++    +    basic
++  ++     mainline
++  +++    initial
++'
++. ./test-lib.sh
++
++prepare_commit () {
++	git checkout initial &&
++	test_commit "$1" &&
++	test_tick &&
++	git commit --amend --allow-empty-message -F "$1.message" &&
++	git tag -d "$1" &&
++	git tag "$1"
++}
++
++test_cmp_message () {
++	expect=$1 &&
++	shift &&
++	git log -1 --pretty=format:%B "$@" >actual &&
++	test_cmp "$expect" actual
++}
++
++cat >basic.message <<\EOF
++ A branch
++
++Here comes the lovely description of a change to pick up.
++Contributions come from many people:
++EOF
++
++{
++	cat basic.message
++	cat <<-\EOF
++
++	Signed-off-by: Foo <foo@example.com>
++	Signed-off-by: Bar <bar@example.com>
++	Tested-by: Baz <baz@example.com>
++	EOF
++} >signoff.message
++
++test_expect_success 'setup' '
++	test_commit initial &&
++	prepare_commit basic &&
++	prepare_commit signoff
++'
++
++test_expect_success 'cherry-pick preserves message' '
++	cat basic.message >expect &&
++	git checkout initial &&
++	git cherry-pick basic &&
++	test_cmp_message expect
++'
++
++test_expect_success 'cherry-pick -s adds signoff' '
++	{
++		cat basic.message &&
++		echo &&
++		echo "Signed-off-by: C O Mitter <committer@example.com>"
++	} >expect &&
++	git checkout initial &&
++	git cherry-pick -s basic &&
++	test_cmp_message expect HEAD
++'
++
++test_expect_success 'cherry-pick -s integrates into existing signoff chain' '
++	{
++		cat signoff.message &&
++		echo "Signed-off-by: C O Mitter <committer@example.com>"
++	} >expect &&
++	git checkout initial &&
++	git cherry-pick -s signoff &&
++	test_cmp_message expect HEAD
++'
++
++test_expect_success 'cherry-pick -x adds old commit id' '
++	{
++		cat basic.message &&
++		echo "(cherry picked from commit $(git rev-parse basic^0))"
++	} >expect &&
++	git checkout initial &&
++	git cherry-pick -x basic &&
++	test_cmp_message expect HEAD
++'
++
++test_expect_success 'cherry-pick -x integrates into signoff chain' '
++	{
++		cat signoff.message &&
++		echo "(cherry picked from commit $(git rev-parse signoff^0))"
++	} >expect &&
++	git checkout initial &&
++	git cherry-pick -x signoff &&
++	test_cmp_message expect HEAD
++'
++
++test_expect_success 'cherry-pick -x -s' '
++	{
++		cat signoff.message &&
++		echo "(cherry picked from commit $(git rev-parse signoff^0))"
++		echo "Signed-off-by: C O Mitter <committer@example.com>"
++	} >expect &&
++	git checkout initial &&
++	git cherry-pick -x -s signoff &&
++	test_cmp_message expect HEAD
++'
++
++test_done
 -- 
-\\// Peter - http://www.softwolves.pp.se/
+1.7.2.3.551.g13682.dirty
