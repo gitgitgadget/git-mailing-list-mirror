@@ -1,89 +1,85 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] cherry-pick -x: add newline before pick note
-Date: Tue, 16 Nov 2010 14:30:18 -0500
-Message-ID: <20101116193018.GA31036@sigill.intra.peff.net>
-References: <d0318dcd2b52f2e818888003e3dd81c7b713fec6.1289920242.git.git@drmicha.warpmail.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: cherry-pick -x formats the message incorrectly
+Date: Tue, 16 Nov 2010 13:35:04 -0600
+Message-ID: <20101116193504.GB15828@burratino>
+References: <loom.20101116T100730-967@post.gmane.org>
+ <7vpqu5gjmv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org,
-	Martin Svensson <martin.k.svensson@netinsight.se>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Nov 16 20:30:31 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Martin Svensson <martin.k.svensson@netinsight.se>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 16 20:35:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIREd-0000dQ-2l
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 20:30:31 +0100
+	id 1PIRJm-0004Hm-0f
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 20:35:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757313Ab0KPTaV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Nov 2010 14:30:21 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:59859 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756304Ab0KPTaU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Nov 2010 14:30:20 -0500
-Received: (qmail 31324 invoked by uid 111); 16 Nov 2010 19:30:19 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 16 Nov 2010 19:30:19 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 16 Nov 2010 14:30:18 -0500
+	id S1756570Ab0KPTfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Nov 2010 14:35:45 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:44612 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756324Ab0KPTfo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Nov 2010 14:35:44 -0500
+Received: by gwj17 with SMTP id 17so616510gwj.19
+        for <git@vger.kernel.org>; Tue, 16 Nov 2010 11:35:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=XPJ5cd5HhOwMPnSMTt66aV7ma3n4q7JaCHBz4jt6M9o=;
+        b=sRT1cm0jLkep/TIWjgEpe7G3LKN04K+wdhwHY21sYybGKoSR0yUte0nPholB4B89OK
+         t4Icn/Cc3mI/n8sJtpmbz3tB3vZ3RiOFZHtbsa6tHyWoMMsbzX+/AxROx+9pezPS/tPv
+         RzK06oJKTVi+FNJGRibzt9JUFenSdc6skSGeo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=RllDrRzS6Sa1vpB+APmiujIISyX7rkV0lPk2uIVR8yjkJKiFU/PE8d5WwxdPCA2v+w
+         FNhxL2Y1BKGWglyB27bpRoCc1IuCwyyfUiJP/gAcIiK2v7Sv9xdPNm80SirEGff5gpYn
+         qRECH+qS1ugeCmdAcaTmGkVRphFjRHaDRyP1M=
+Received: by 10.223.69.134 with SMTP id z6mr6560242fai.19.1289936142932;
+        Tue, 16 Nov 2010 11:35:42 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id j8sm1431765fah.30.2010.11.16.11.35.41
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 16 Nov 2010 11:35:42 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <d0318dcd2b52f2e818888003e3dd81c7b713fec6.1289920242.git.git@drmicha.warpmail.net>
+In-Reply-To: <7vpqu5gjmv.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161581>
 
-On Tue, Nov 16, 2010 at 04:11:17PM +0100, Michael J Gruber wrote:
+Junio C Hamano wrote:
+> Martin Svensson <martin.k.svensson@netinsight.se> writes:
 
-> Currently, cherry-pick -x sticks the pick note immediately after the
-> existing commit message. This
-> 
-> * is bad for commits with 1 line subject (it makes a 2 line subject)
-> * is different from git-svn, e.g., which leaves an empty line before.
-> 
-> Make cherry-pick always insert an empty line before the pick note.
+>> It should be:
+>>
+>>   foo
+>>   
+>>   (cherry picked from commit eb42a6475d2c2e4fff7a1b626ce6e27eec21e886)
+>>
+>> Am I right?
+>
+> I tend to agree (modulo s/summary/subject/ would be the wording I would
+> have used).
+>
+> This falls into "patches welcome" category, though.  I do not think
+> anybody sane is still using cherry-pick with -x option these days after
+> http://thread.gmane.org/gmane.comp.version-control.git/28378
 
-Hmm. Should this respect pseudo-header blocks at the end? E.g., if I
-have:
+Mm, I use it and do not agree; I think the rule should rather be:
 
-  message subject
+ - if there is a Signed-off chain, quietly integrate into that (no added
+   newline)
 
-  Message body.
+ - if there is not a Signed-off chain, add the extra newline.
 
-  Signed-off-by: Jeff King <peff@peff.net>
-
-shouldn't it result in:
-
-  message subject
-
-  Message body.
-
-  (cherry picked from commit ...)
-
-  Signed-off-by: Jeff King <peff@peff.net>
-
-?
-
-Even better, I wonder if it should actually be:
-
-  message subject
-
-  Message body.
-
-  Signed-off-by: Jeff King <peff@peff.net>
-  Cherry-picked-from: ...
-
-And then you could actually sign off the cherry-pick separately, too, if
-you wanted, by adding a line _below_ the cherry-picked-from. I have no
-idea if people are trying to grep for "cherry picked from commit...",
-which my proposal would break.
-
-Note that none of this is introduced by your patch. The current output
-for this case is terribly ugly. But I thought I would mention it, as my
-third version means we _do_ want the current behavior in some cases
-(i.e., when there is already a pseudo-header block).
-
--Peff
+Patch for a related issue in a few minutes.
