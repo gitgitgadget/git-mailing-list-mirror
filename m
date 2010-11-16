@@ -1,142 +1,131 @@
-From: Phillip Hutchings <sitharus@sitharus.com>
-Subject: Re: Using git-svn with svnsync mirror
-Date: Tue, 16 Nov 2010 20:31:32 +1300
-Message-ID: <AC576A1A-98E4-4710-91B8-7777DBC65B9B@sitharus.com>
-References: <loom.20101116T030410-656@post.gmane.org> <20101116042312.GB24344@mail.stoakes.net>
-Mime-Version: 1.0 (Apple Message framework v1082)
-Content-Type: multipart/signed; boundary=Apple-Mail-1195-200363368; protocol="application/pkcs7-signature"; micalg=sha1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 16 08:32:01 2010
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [PATCH] git-gui: respect conflict marker size
+Date: Tue, 16 Nov 2010 08:49:22 +0100
+Message-ID: <1289893762-28567-1-git-send-email-bert.wesarg@googlemail.com>
+Cc: Bert Wesarg <bert.wesarg@googlemail.com>,
+	"Shawn O . Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Tue Nov 16 08:50:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIG1I-0004Mh-MI
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 08:32:01 +0100
+	id 1PIGIs-0003Xr-DI
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 08:50:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932410Ab0KPHbo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Nov 2010 02:31:44 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:59960 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759426Ab0KPHbm (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Nov 2010 02:31:42 -0500
-Received: by pwi9 with SMTP id 9so55099pwi.19
-        for <git@vger.kernel.org>; Mon, 15 Nov 2010 23:31:41 -0800 (PST)
-Received: by 10.143.34.4 with SMTP id m4mr6051209wfj.18.1289892699815;
-        Mon, 15 Nov 2010 23:31:39 -0800 (PST)
-Received: from [10.0.1.4] (121-98-80-7.bitstream.orcon.net.nz [121.98.80.7])
-        by mx.google.com with ESMTPS id y42sm1012977wfd.22.2010.11.15.23.31.36
+	id S1759457Ab0KPHuC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Nov 2010 02:50:02 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:37388 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759454Ab0KPHuA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Nov 2010 02:50:00 -0500
+Received: by mail-ew0-f46.google.com with SMTP id 8so127460ewy.19
+        for <git@vger.kernel.org>; Mon, 15 Nov 2010 23:50:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=RWtm0+FM4T0L7CotfDGu9Z0tUMsfexpwz7ujbviuNrg=;
+        b=vU1NxDBecfSPL984hnxEXBLDiKUbph9HQEck368CdGQpJ4w4gfL3uXh1aCGY/OGkk+
+         MOs106SwTDtTL6tT7PvKmGPBnxA740NleB42rutCgFs5IacSe6Y0DzeQd1pn9Tja9Iv4
+         gneZCjNZYE2txKeanZG7qfN7+0TPq7vM/+xnw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=NTlvaaRNVAK7IrO4udw9DuoFxhn3hJiaIuqdY+okY8N/g6RmAXwK2GWOjxj1oV+HBV
+         /Sz0r4vL5pSCWrBoXdLT8VNd79U/6/PBpJ6oNq8QjUHtjJFnjwSOxjlgJ0DBTLOS2VWn
+         /mJyDa9uLvxUW3anbfhQozYzJP7epQf4O79kU=
+Received: by 10.213.28.9 with SMTP id k9mr5473565ebc.99.1289893800034;
+        Mon, 15 Nov 2010 23:50:00 -0800 (PST)
+Received: from localhost ([92.116.142.180])
+        by mx.google.com with ESMTPS id b52sm866326eei.1.2010.11.15.23.49.56
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 15 Nov 2010 23:31:38 -0800 (PST)
-In-Reply-To: <20101116042312.GB24344@mail.stoakes.net>
-X-Mailer: Apple Mail (2.1082)
+        Mon, 15 Nov 2010 23:49:59 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.1157.gd16c3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161546>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161547>
 
+Respect the conflict-marker-size attribute on paths when detecting merge
+conflicts.
 
---Apple-Mail-1195-200363368
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain;
-	charset=us-ascii
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 
+---
+ git-gui/lib/diff.tcl |   22 ++++++++++++++++++----
+ 1 files changed, 18 insertions(+), 4 deletions(-)
 
-On 16/11/2010, at 5:23 PM, Tim Stoakes wrote:
-
-> Phillip Hutchings(sitharus@sitharus.com)@161110-02:08:
->> Hi,
->> 
->> I've got an svnsync mirror of a large repository, and I'm trying to do
->> a git-svn clone from the mirror as the main server is off site. This
->> works well until I try to dcommit or use git svn info.
->> 
->> My investigations show that working_head_info in git-svn doesn't
->> account for using svnsync properties, so it cannot find a log entry
->> that matches a config entry.
->> 
->> My perl isn't good enough to patch this yet, so I was wondering if
->> anyone else had encountered it.
->> 
->> I could change the config URL to match, but I'm worried this will
->> break things.
-> 
-> You want to use rewriteRoot option so that changing the URL does not
-> break things (the URL is stored in each git commit's log).
-> 
-> I use something like this all the time:
-> [svn-remote "svn"]
->  rewriteRoot = svn://svn.foo.com/repo/blah   <-- the master
->  url = svn://svn-mirror.foo.com/repo/somewhere/else/blah  <-- a slave
-> 
-> If you've imported from the mirror without this option, then you're
-> stuck I think. You could work around it by swapping the URLs in the
-> rewriteRoot and url fields (essentially rewriting the URLs in the wrong
-> order), but this is strictly 'wrong'.
-
-
-I cloned using --use-svnsync-props, this resulted in the log entries
-having the correct url to the master, but git-svn being unable to
-link that url back to the config entry.
-
-Guess I'm in for a recloning then.
-
---
-Phillip Hutchings
-sitharus@sitharus.com
-
-
-
-
---Apple-Mail-1195-200363368
-Content-Disposition: attachment;
-	filename=smime.p7s
-Content-Type: application/pkcs7-signature;
-	name=smime.p7s
-Content-Transfer-Encoding: base64
-
-MIAGCSqGSIb3DQEHAqCAMIACAQExCzAJBgUrDgMCGgUAMIAGCSqGSIb3DQEHAQAAoIIFjTCCBYkw
-ggNxoAMCAQICAwkrAjANBgkqhkiG9w0BAQUFADB5MRAwDgYDVQQKEwdSb290IENBMR4wHAYDVQQL
-ExVodHRwOi8vd3d3LmNhY2VydC5vcmcxIjAgBgNVBAMTGUNBIENlcnQgU2lnbmluZyBBdXRob3Jp
-dHkxITAfBgkqhkiG9w0BCQEWEnN1cHBvcnRAY2FjZXJ0Lm9yZzAeFw0xMDA5MTEwNjQ1MjVaFw0x
-MTAzMTAwNjQ1MjVaMG8xGDAWBgNVBAMTD0NBY2VydCBXb1QgVXNlcjEkMCIGCSqGSIb3DQEJARYV
-c2l0aGFydXNAc2l0aGFydXMuY29tMS0wKwYJKoZIhvcNAQkBFh5waGlsbGlwLmh1dGNoaW5nc0Bz
-aXRoYXJ1cy5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC9NHv4coeVolY+Cy9u
-LKXBmojUv+cAOw7G1JYuruQJrf1JfRcLKwLq5Nmv1kgEEwgTUCb8j2D4WC6bRqT7erCY2PpGLheO
-b4hLACXJhxjGgBCbFMzJGOrjR1KFNYb2KZ732qY5zngDwYtZlE82Mfuh3nCFMoT5I9+MSqF4YCGZ
-5CxwA+De6XnHFFnL3UipGGgvro+dvw3luf1PgNi9LpEjmzRUO3ylCQs8uFHmGqXe/NG7jtk/oRFc
-tvjebkXb1d2jCeqrZE9FL3J+uT5vzCgo9N5WOvMAUWf+G0F3NH+oKKyQJ0EFweSeFWCLLg31dW+Z
-pUVPjsoFinWdth61B5vxAgMBAAGjggEiMIIBHjAMBgNVHRMBAf8EAjAAMFYGCWCGSAGG+EIBDQRJ
-FkdUbyBnZXQgeW91ciBvd24gY2VydGlmaWNhdGUgZm9yIEZSRUUgaGVhZCBvdmVyIHRvIGh0dHA6
-Ly93d3cuQ0FjZXJ0Lm9yZzBABgNVHSUEOTA3BggrBgEFBQcDBAYIKwYBBQUHAwIGCisGAQQBgjcK
-AwQGCisGAQQBgjcKAwMGCWCGSAGG+EIEATAyBggrBgEFBQcBAQQmMCQwIgYIKwYBBQUHMAGGFmh0
-dHA6Ly9vY3NwLmNhY2VydC5vcmcwQAYDVR0RBDkwN4EVc2l0aGFydXNAc2l0aGFydXMuY29tgR5w
-aGlsbGlwLmh1dGNoaW5nc0BzaXRoYXJ1cy5jb20wDQYJKoZIhvcNAQEFBQADggIBALB2lIbH+UyN
-0X1R3zfx/EvSPO7LabIIGlKhkY2KYBvkeqmRKPBKXP2RajQTo12x5WhCRNCYVitCQjSYT/fjIU1u
-wn1MOwzofojxrDK5AHqsyp0MSRJDOU003CWIe4vBizx7k3K+iD2aXUbzQ2/VQIU8E51nhvaK5d67
-/B2nIOtOEq6tkaE30Np5hfNuoV8zh2ATQJPXJZ8Gvue4drcDu/0yhquFbvf0YVAS/QobgIuUfT2l
-1mAnsIi0qujGjVCwWHmt+RVfYv5gBeCg7tntJenSbEBMhizJpGGS55fJbMwfGJS3C8+ULkb+iM3o
-DbkgxAc/kgtvXzD/071ZTMbwingW6g1QACslZmT1Lr7oZwMFX4Txz+7nBjCgXuF2eZX6Rkc0S6jS
-Ztbg1+qZ5g4hh+GgfP1uf3wqQZaXyRH5tsFJn6qvG2WyVfyMMzXu/LFSl5Bn6q9+jaOKduJpWjOF
-6xCeOKe2Z0SXNxCySwnsztDc6V62YFss361BxAfFO4edlX96SHVfSIUhSkVijHQL6M0H7IjUi7yv
-JGPirxX7pudbSYQlPVPeS66xLYys4j0yw084IjSuZKt+FCh1NM6vQ5ud3+INZLh9oX+MnB+xX/gH
-Wem+B3beLM+gH0IX9jRLEXqGb7WhmP48rFB/4cQgVBuN0J6JM/3Zi5PNjdE6vBT0MYIDMzCCAy8C
-AQEwgYAweTEQMA4GA1UEChMHUm9vdCBDQTEeMBwGA1UECxMVaHR0cDovL3d3dy5jYWNlcnQub3Jn
-MSIwIAYDVQQDExlDQSBDZXJ0IFNpZ25pbmcgQXV0aG9yaXR5MSEwHwYJKoZIhvcNAQkBFhJzdXBw
-b3J0QGNhY2VydC5vcmcCAwkrAjAJBgUrDgMCGgUAoIIBhzAYBgkqhkiG9w0BCQMxCwYJKoZIhvcN
-AQcBMBwGCSqGSIb3DQEJBTEPFw0xMDExMTYwNzMxMzJaMCMGCSqGSIb3DQEJBDEWBBTcCMgNemQO
-NAjGjD884yclXyccNTCBkQYJKwYBBAGCNxAEMYGDMIGAMHkxEDAOBgNVBAoTB1Jvb3QgQ0ExHjAc
-BgNVBAsTFWh0dHA6Ly93d3cuY2FjZXJ0Lm9yZzEiMCAGA1UEAxMZQ0EgQ2VydCBTaWduaW5nIEF1
-dGhvcml0eTEhMB8GCSqGSIb3DQEJARYSc3VwcG9ydEBjYWNlcnQub3JnAgMJKwIwgZMGCyqGSIb3
-DQEJEAILMYGDoIGAMHkxEDAOBgNVBAoTB1Jvb3QgQ0ExHjAcBgNVBAsTFWh0dHA6Ly93d3cuY2Fj
-ZXJ0Lm9yZzEiMCAGA1UEAxMZQ0EgQ2VydCBTaWduaW5nIEF1dGhvcml0eTEhMB8GCSqGSIb3DQEJ
-ARYSc3VwcG9ydEBjYWNlcnQub3JnAgMJKwIwDQYJKoZIhvcNAQEBBQAEggEAjjkPz8ilxbfF0xKG
-UqLaiDqnYZhiNQ2bS/jsNNjnLyAvktoEgFlYseENvqb8cuNr0s1Jdycs7FJUugk8MRDtEk44dapZ
-g6X0JBifvOCNtH5IG8sjKD+BluioH4UuVc8MHisYuGSjEAu9XfSBFiwIohxNYEK9K2q0wsoOVjOy
-qF5A+LiOBUxJJh2GTTBIon2xDi0bbJB9O1CMg0W+vD78GZs9QcCXUqJkRkG1bxq0qBiPtl7mH986
-0tIJ9+KlZN39tR39K4jXoQW8r1v618USrpmm5/OyA+z3Ud/+igNzkSA7/MKZ22XNIklVIUXA1Swq
-r+C5XmhhKL5ZJYQr2OqwoAAAAAAAAA==
-
---Apple-Mail-1195-200363368--
+diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
+index dcf0711..a753737 100644
+--- a/git-gui/lib/diff.tcl
++++ b/git-gui/lib/diff.tcl
+@@ -253,6 +253,19 @@ proc show_other_diff {path w m cont_info} {
+ 	}
+ }
+ 
++proc get_conflict_marker_size {path} {
++	set size 7
++	catch {
++		set fd_rc [eval [list git_read check-attr "conflict-marker-size" -- $path]]
++		set ret [gets $fd_rc line]
++		close $fd_rc
++		if {$ret > 0} {
++			regexp {.*: conflict-marker-size: (\d+)$} $line line size
++		}
++	}
++	return $size
++}
++
+ proc start_show_diff {cont_info {add_opts {}}} {
+ 	global file_states file_lists
+ 	global is_3way_diff is_submodule_diff diff_active repo_config
+@@ -268,6 +281,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
+ 	set is_submodule_diff 0
+ 	set diff_active 1
+ 	set current_diff_header {}
++	set conflict_size [get_conflict_marker_size $path]
+ 
+ 	set cmd [list]
+ 	if {$w eq $ui_index} {
+@@ -329,7 +343,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
+ 		-blocking 0 \
+ 		-encoding [get_path_encoding $path] \
+ 		-translation lf
+-	fileevent $fd readable [list read_diff $fd $cont_info]
++	fileevent $fd readable [list read_diff $fd $conflict_size $cont_info]
+ }
+ 
+ proc parse_color_line {line} {
+@@ -349,7 +363,7 @@ proc parse_color_line {line} {
+ 	return [list $result $markup]
+ }
+ 
+-proc read_diff {fd cont_info} {
++proc read_diff {fd conflict_size cont_info} {
+ 	global ui_diff diff_active is_submodule_diff
+ 	global is_3way_diff is_conflict_diff current_diff_header
+ 	global current_diff_queue
+@@ -402,7 +416,7 @@ proc read_diff {fd cont_info} {
+ 			{- } {set tags d_-s}
+ 			{--} {set tags d_--}
+ 			{++} {
+-				if {[regexp {^\+\+([<>]{7} |={7})} $line _g op]} {
++				if {[regexp {^\+\+([<>]{$conflict_size} |={$conflict_size})} $line _g op]} {
+ 					set is_conflict_diff 1
+ 					set line [string replace $line 0 1 {  }]
+ 					set tags d$op
+@@ -441,7 +455,7 @@ proc read_diff {fd cont_info} {
+ 			{@} {set tags d_@}
+ 			{-} {set tags d_-}
+ 			{+} {
+-				if {[regexp {^\+([<>]{7} |={7})} $line _g op]} {
++				if {[regexp {^\+([<>]{$conflict_size} |={$conflict_size})} $line _g op]} {
+ 					set is_conflict_diff 1
+ 					set tags d$op
+ 				} else {
+-- 
+tg: (6f10c41..) bw/git-gui/respect-conflict-marker-size (depends on: master)
