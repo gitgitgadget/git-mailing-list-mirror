@@ -1,85 +1,60 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: cherry-pick -x formats the message incorrectly
-Date: Tue, 16 Nov 2010 13:35:04 -0600
-Message-ID: <20101116193504.GB15828@burratino>
-References: <loom.20101116T100730-967@post.gmane.org>
- <7vpqu5gjmv.fsf@alter.siamese.dyndns.org>
+From: Dmitri Pissarenko <dmitri.pissarenko@gmail.com>
+Subject: How to import bzr repository into git
+Date: Tue, 16 Nov 2010 20:57:45 +0100
+Message-ID: <AANLkTimPmPOJq64=VePSb2efsx17j8BNxCLt_i=b2ykW@mail.gmail.com>
+References: <AANLkTinVrwkOvYgGFX3S2530jfWnrAP28gVm4te1B4sC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Martin Svensson <martin.k.svensson@netinsight.se>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 16 20:35:52 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 16 20:57:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIRJm-0004Hm-0f
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 20:35:50 +0100
+	id 1PIRf7-0002aW-Gs
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 20:57:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756570Ab0KPTfp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Nov 2010 14:35:45 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:44612 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756324Ab0KPTfo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Nov 2010 14:35:44 -0500
-Received: by gwj17 with SMTP id 17so616510gwj.19
-        for <git@vger.kernel.org>; Tue, 16 Nov 2010 11:35:43 -0800 (PST)
+	id S1756903Ab0KPT5s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Nov 2010 14:57:48 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:55644 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758466Ab0KPT5s (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Nov 2010 14:57:48 -0500
+Received: by wyb28 with SMTP id 28so1097500wyb.19
+        for <git@vger.kernel.org>; Tue, 16 Nov 2010 11:57:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=XPJ5cd5HhOwMPnSMTt66aV7ma3n4q7JaCHBz4jt6M9o=;
-        b=sRT1cm0jLkep/TIWjgEpe7G3LKN04K+wdhwHY21sYybGKoSR0yUte0nPholB4B89OK
-         t4Icn/Cc3mI/n8sJtpmbz3tB3vZ3RiOFZHtbsa6tHyWoMMsbzX+/AxROx+9pezPS/tPv
-         RzK06oJKTVi+FNJGRibzt9JUFenSdc6skSGeo=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:content-type;
+        bh=iiuQPrkvWNClZ2EhIGc6eMkbIZWpMo0Y8YtitK+Iszg=;
+        b=PVACK7BcWWHALwEahD9exiDWXv50hzOujeO/cNOEpUPBY1z9YNGm71BMBWy/1MDZ81
+         TD74NhXFKHB5i6xatlu0lE/v+6XLjDpsiYzSiH4lpHZMrdYI8e7S77piSeWYFKfwXHfK
+         /LOT+nMWyz4p+BFCXTA5DdqzEbvRvtAerlEuo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=RllDrRzS6Sa1vpB+APmiujIISyX7rkV0lPk2uIVR8yjkJKiFU/PE8d5WwxdPCA2v+w
-         FNhxL2Y1BKGWglyB27bpRoCc1IuCwyyfUiJP/gAcIiK2v7Sv9xdPNm80SirEGff5gpYn
-         qRECH+qS1ugeCmdAcaTmGkVRphFjRHaDRyP1M=
-Received: by 10.223.69.134 with SMTP id z6mr6560242fai.19.1289936142932;
-        Tue, 16 Nov 2010 11:35:42 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id j8sm1431765fah.30.2010.11.16.11.35.41
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 16 Nov 2010 11:35:42 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vpqu5gjmv.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        b=bm3uZ/9CEwiUnSi2CGK86RO/PxsbxTkM3yx5MEWIYSXrXgJoT1hDor25BbA5myMUJF
+         g0yB1iF7E7LoDSKuo6p6eh2lv04QU7ucQ6Uvyacj9RgE6cFFgX+dVHfKxWf1kxiOAw9l
+         P/L2mrfHFRoBrXO7fyAsMhqZnzNa28/AJs8SY=
+Received: by 10.227.134.149 with SMTP id j21mr8122328wbt.194.1289937465785;
+ Tue, 16 Nov 2010 11:57:45 -0800 (PST)
+Received: by 10.227.27.131 with HTTP; Tue, 16 Nov 2010 11:57:45 -0800 (PST)
+In-Reply-To: <AANLkTinVrwkOvYgGFX3S2530jfWnrAP28gVm4te1B4sC@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161582>
 
-Junio C Hamano wrote:
-> Martin Svensson <martin.k.svensson@netinsight.se> writes:
+Hello!
 
->> It should be:
->>
->>   foo
->>   
->>   (cherry picked from commit eb42a6475d2c2e4fff7a1b626ce6e27eec21e886)
->>
->> Am I right?
->
-> I tend to agree (modulo s/summary/subject/ would be the wording I would
-> have used).
->
-> This falls into "patches welcome" category, though.  I do not think
-> anybody sane is still using cherry-pick with -x option these days after
-> http://thread.gmane.org/gmane.comp.version-control.git/28378
+I want to migrate one of my projects from Bazaar to git, preserving the history.
 
-Mm, I use it and do not agree; I think the rule should rather be:
+How can I do that in Windows (import an existing Bazaar project into a
+new/empty git repository) ?
 
- - if there is a Signed-off chain, quietly integrate into that (no added
-   newline)
+Thanks in advance
 
- - if there is not a Signed-off chain, add the extra newline.
-
-Patch for a related issue in a few minutes.
+Dmitri
