@@ -1,113 +1,67 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] t6022: Use -eq not = to test output of wc -l
-Date: Tue, 16 Nov 2010 11:10:32 -0600
-Message-ID: <20101116171031.GB13398@burratino>
-References: <1289251766-48316-1-git-send-email-brian@gernhardtsoftware.com>
- <7vaalajkiq.fsf@alter.siamese.dyndns.org>
- <4CE22EC2.7040603@viscovery.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/3] Introduce sorted-array binary-search function.
+Date: Tue, 16 Nov 2010 09:27:16 -0800
+Message-ID: <7vy68ti3gr.fsf@alter.siamese.dyndns.org>
+References: <1289255942-19705-1-git-send-email-ydirson@altern.org>
+ <1289255942-19705-2-git-send-email-ydirson@altern.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Brian Gernhardt <brian@gernhardtsoftware.com>,
-	Git List <git@vger.kernel.org>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Nov 16 18:11:34 2010
+Cc: git@vger.kernel.org
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Tue Nov 16 18:27:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIP49-0006QL-Nj
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 18:11:34 +0100
+	id 1PIPJe-0000Ji-9i
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 18:27:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755377Ab0KPRLM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Nov 2010 12:11:12 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:63997 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755274Ab0KPRLL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Nov 2010 12:11:11 -0500
-Received: by gyh4 with SMTP id 4so479826gyh.19
-        for <git@vger.kernel.org>; Tue, 16 Nov 2010 09:11:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=uSq/aw6Sc0sMBWPKxVPJ8bTdYGLmBpccYthIlL4kAGg=;
-        b=lFeiSbGoAKJKwCrQKyulDNdpiY5Le2IMkA+4G5SZmvm6Q4B7BmQseYnLNeU3uwknKb
-         VE7pZJb3AruUlsm3iOF+/BGzl8KdYIsFsBvBrp/aH2dcwyoB4U0NtGfbU0ofG7lDJYWV
-         OnVufSM5Om3GFeCeRgVnL7tt4YOOCK4T0091A=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=rZ6auKwYYaxJ77KC5z3ih7h0Y/dKLrd7sGVf7iwkul7hP/0zf57AsCiNKAWT2sckFe
-         nhuvy9sAlN81En+UIt6RzDlvAU+pqzO1xBTT454sbsmL6LdmsAcNmPOy+mGwo7zV0hq4
-         Jznd72UbMPIAc/hLc5bIeIQZ3N/jNqfx+dTL0=
-Received: by 10.151.110.2 with SMTP id n2mr12051834ybm.164.1289927470640;
-        Tue, 16 Nov 2010 09:11:10 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id 52sm912946yhl.17.2010.11.16.09.11.08
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 16 Nov 2010 09:11:09 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4CE22EC2.7040603@viscovery.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755789Ab0KPR12 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Nov 2010 12:27:28 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35769 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755679Ab0KPR11 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Nov 2010 12:27:27 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D3BBB3B2E;
+	Tue, 16 Nov 2010 12:27:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=h2fhs8zMTK09Gp9i+MPyZEOUodQ=; b=hy6xzc
+	Eh8+5g+bEcO6k4A6106vAr/bUcWAR/q8JJ1nSrh6S6x+nfOU+WEGk4N5Gfn6U0FU
+	XI2iHwt6xLO/5nM5UjEMNToRTF8353DQKGkSqVzZZT9OQ7znOHjnUnyf1E4dA0j2
+	48VzBpuTyPqzGiSc6Zn4IGwi261+mdRmOpyLw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=xbmz31sAbptkP8bd36EAX8JRZyvgxvgn
+	rkv7t9NFA7nfx0adfyR1cPHmvP/euM2h1X99BTQG51CsKACcksbtyV21DXKhcaDw
+	zdj4OlzFnxAN/0LEICxBwCf+zjiO4ZLh9SZo5xis5zSe1XC8q91HdU29c29hwMBK
+	nta++AOAPsU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B295D3B2D;
+	Tue, 16 Nov 2010 12:27:31 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9C0DE3B29; Tue, 16 Nov 2010
+ 12:27:28 -0500 (EST)
+In-Reply-To: <1289255942-19705-2-git-send-email-ydirson@altern.org> (Yann
+ Dirson's message of "Mon\,  8 Nov 2010 23\:39\:00 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CAFCF168-F1A6-11DF-BEED-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161566>
 
-Johannes Sixt wrote:
+Yann Dirson <ydirson@altern.org> writes:
 
-> - It doesn't save any messages or fix-ups during review: instead of "do
-> not quote!" we have to say "use test_line_count!".
+> We use a cpp-based template mechanism to declare the array and its
+> management data, as well as a search function, derived from locate_rename_dst()
+> from diffcore-rename.c.  Thanks to Jonathan Nieder for this design idea.
 
-I was nervous about introducing test_line_count for that reason.
+Hmmm.... Yet another binary search...
 
-Another consideration won out: not syntax but output format.  See
-cae3aa79 (t6022 (renaming merge): chain test commands with &&,
-2010-10-31).  Kind of analogous to test_cmp, which is a similar
-headache to get used over less portable or less pleasant alternatives.
-
-If a piped variant is needed, I would prefer it to work something
-like this.  Usage:
-
-	{
-		command_producing_five_lines |
-		test_line_count = 5 -
-	}
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-diff --git a/t/test-lib.sh b/t/test-lib.sh
-index 1ea0116..35a5634 100644
---- a/t/test-lib.sh
-+++ b/t/test-lib.sh
-@@ -660,15 +660,24 @@ test_path_is_missing () {
- # output through when the number of lines is wrong.
- 
- test_line_count () {
-+	line_count_tmp=
- 	if test $# != 3
- 	then
- 		error "bug in the test script: not 3 parameters to test_line_count"
--	elif ! test $(wc -l <"$3") "$1" "$2"
-+	fi
-+	if test "$3" = -
-+	then
-+		line_count_tmp=test_line_count.output
-+		cat >"$line_count_tmp"
-+		set -- "$1" "$2" "$line_count_tmp"
-+	fi
-+	if ! test $(wc -l <"$3") "$1" "$2"
- 	then
- 		echo "test_line_count: line count for $3 !$1 $2"
- 		cat "$3"
- 		return 1
- 	fi
-+	rm -f "$line_count_tmp"
- }
- 
- # This is not among top-level (test_expect_success | test_expect_failure)
+Can we generalize the existing ones first before adding any of this in
+(hint: look for "git grep -w -e hi --and -e lo")?
