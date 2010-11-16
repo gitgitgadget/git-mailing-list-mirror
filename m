@@ -1,74 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: cherry-pick -x formats the message incorrectly
-Date: Tue, 16 Nov 2010 11:20:56 -0800
-Message-ID: <7vpqu5gjmv.fsf@alter.siamese.dyndns.org>
-References: <loom.20101116T100730-967@post.gmane.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] t6022: Use -eq not = to test output of wc -l
+Date: Tue, 16 Nov 2010 13:23:18 -0600
+Message-ID: <20101116192318.GA15828@burratino>
+References: <1289251766-48316-1-git-send-email-brian@gernhardtsoftware.com>
+ <7vaalajkiq.fsf@alter.siamese.dyndns.org>
+ <4CE22EC2.7040603@viscovery.net>
+ <20101116171031.GB13398@burratino>
+ <7vtyjhgk3z.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Martin Svensson <martin.k.svensson@netinsight.se>
-X-From: git-owner@vger.kernel.org Tue Nov 16 20:21:15 2010
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Git List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Nov 16 20:24:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIR5e-0002lY-1T
-	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 20:21:14 +0100
+	id 1PIR8a-0004oU-9t
+	for gcvg-git-2@lo.gmane.org; Tue, 16 Nov 2010 20:24:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755865Ab0KPTVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Nov 2010 14:21:07 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42713 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754640Ab0KPTVG (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Nov 2010 14:21:06 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0A3F62BE6;
-	Tue, 16 Nov 2010 14:21:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4TohILlWb6HEcGnLrjSyCEIj3/Y=; b=ukPNhE
-	ooPksQhYc3NZBvjjA/u2NPBW13w4KssiWcHW0S+7P+hJEi6oMCxBUStERV3lkwNJ
-	27C1mVpbB9Ea/tSgN16NVm0DYxWevbGhnng+tNXgXQ5XbxUk1SjVIjXXT3tSZNKG
-	2pdReydf777edkXjqUqSbIukwRht4sO7LejC0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=SjXbW5aNIjKTqtA9TQrtdV1llaYZZsBQ
-	Mjldyw5GZfRv4R8lWmKx69auDBBofsFxLA/1yMpo7jOSTSYmAe4/gPICQjfxdv4B
-	BXLR+tkuIW2JviMu8hyz5BED+2xY/TT9jCnbWmsskAwWFaMc5KcJxUPuw+oN3Yar
-	8SqJ+iREobo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DC8972BE5;
-	Tue, 16 Nov 2010 14:21:10 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1069A2BE4; Tue, 16 Nov 2010
- 14:21:07 -0500 (EST)
-In-Reply-To: <loom.20101116T100730-967@post.gmane.org> (Martin Svensson's
- message of "Tue\, 16 Nov 2010 09\:14\:15 +0000 \(UTC\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AB892A30-F1B6-11DF-937F-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+	id S1757418Ab0KPTYF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Nov 2010 14:24:05 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:39838 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753636Ab0KPTYD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Nov 2010 14:24:03 -0500
+Received: by vws13 with SMTP id 13so523627vws.19
+        for <git@vger.kernel.org>; Tue, 16 Nov 2010 11:24:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=/k0VXmDhcfZgDPlUzCNWKLpTQJcoVMNeuAHc0fWmqv4=;
+        b=rxz+p7PPhQNAo3lpx69G352D/VKL/jv0pNCxK3lhs8r5gduPZXupv1VLpV7Kb3w+l4
+         YuFtu3+TVLDps66u3RZ+7pmCu/ZGXukdALC3FE54gWNTeVUAWAKIQTynukPNtCPB8maj
+         O2liT2LLBhwLpuGA4v3WShGL9Y1j5/nIyeFp8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=jRMNEpk/STMz7BvgIW6tGFmc6QysX4Anm0QNAMYJUyxuxA72P15N2USdw/SFQYC4Xr
+         QqO7iFPKwmeEqqMDbG1kH+CfpxyO1n5mIQmVW/rMdJ9MF63gGSKO0R0MfcWZFhm/SVtK
+         0JPw4LveTuT9RkYCOfBMVxukWDMeWzV1AOQgA=
+Received: by 10.229.82.10 with SMTP id z10mr6692706qck.98.1289935442781;
+        Tue, 16 Nov 2010 11:24:02 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id m7sm962891qck.25.2010.11.16.11.23.56
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 16 Nov 2010 11:23:57 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vtyjhgk3z.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161579>
 
-Martin Svensson <martin.k.svensson@netinsight.se> writes:
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Now that's not good, because it is a two-line summary. In my opinion, the
-> parentheses should _always_ end up in the detailed part.
-> It should be:
+>> +	if test "$3" = -
+>> +	then
+>> +		line_count_tmp=test_line_count.output
+>> +		cat >"$line_count_tmp"
+>> +		set -- "$1" "$2" "$line_count_tmp"
+>> +	fi
+>> +	if ! test $(wc -l <"$3") "$1" "$2"
+>>  	then
+>>  		echo "test_line_count: line count for $3 !$1 $2"
+>>  		cat "$3"
+>>  		return 1
 >
->   foo
->   
->   (cherry picked from commit eb42a6475d2c2e4fff7a1b626ce6e27eec21e886)
->
-> Am I right?
+> You forgot to clean the temporary file here.
 
-I tend to agree (modulo s/summary/subject/ would be the wording I would
-have used).
+The idea was to leave it around to help in diagnosis.  But you are
+right, it is more useful to not break later tests:
 
-This falls into "patches welcome" category, though.  I do not think
-anybody sane is still using cherry-pick with -x option these days after
-http://thread.gmane.org/gmane.comp.version-control.git/28378
+		rm -f "$line_count_tmp"
+		return 1
+
+> Also if the file is huge, do we really want to cat the whole thing?
+
+I think so.  (Maybe not if it is binary, though.)
