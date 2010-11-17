@@ -1,93 +1,89 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] commit -s: allow "(cherry picked " lines in sign-off
- section
-Date: Tue, 16 Nov 2010 17:36:49 -0600
-Message-ID: <20101116233649.GA30700@burratino>
-References: <d0318dcd2b52f2e818888003e3dd81c7b713fec6.1289920242.git.git@drmicha.warpmail.net>
- <20101116193018.GA31036@sigill.intra.peff.net>
- <20101116202556.GA27390@burratino>
- <20101116204027.GB27390@burratino>
- <7vlj4shoej.fsf@alter.siamese.dyndns.org>
+From: Gabriel Filion <lelutin@gmail.com>
+Subject: Re: How to import bzr repository into git
+Date: Tue, 16 Nov 2010 19:22:58 -0500
+Message-ID: <4CE32062.6010308@gmail.com>
+References: <AANLkTinVrwkOvYgGFX3S2530jfWnrAP28gVm4te1B4sC@mail.gmail.com> <AANLkTimPmPOJq64=VePSb2efsx17j8BNxCLt_i=b2ykW@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org,
-	Martin Svensson <martin.k.svensson@netinsight.se>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 17 00:37:38 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Dmitri Pissarenko <dmitri.pissarenko@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 17 01:23:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIV5m-0001Uh-AP
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 00:37:38 +0100
+	id 1PIVnt-00029i-74
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 01:23:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933140Ab0KPXhd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 16 Nov 2010 18:37:33 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:54832 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932745Ab0KPXhc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 16 Nov 2010 18:37:32 -0500
-Received: by gyh4 with SMTP id 4so807955gyh.19
-        for <git@vger.kernel.org>; Tue, 16 Nov 2010 15:37:31 -0800 (PST)
+	id S1759535Ab0KQAXF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 16 Nov 2010 19:23:05 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:49534 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759534Ab0KQAXD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 16 Nov 2010 19:23:03 -0500
+Received: by qyk4 with SMTP id 4so1423765qyk.19
+        for <git@vger.kernel.org>; Tue, 16 Nov 2010 16:23:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=QNJY2tz57WP5/NXeGXyRma/e/1EQDPuJaiU4mhGuL8o=;
-        b=cBdnPL+wTyh0/FVunyEHJmCikAEBdMB5AjwL5vqQodXYcudo2P2pNL+9oRSbphSmzk
-         SFROgtJhiNe1OrqCSraPtS9mM1msXHgdIT+rxXdFTuvFogC9JOAVJ4eOVrCCyOvJ5YLu
-         +pk9bcRQCCA9mRAihgOWIv8etqk7s8juLPKAo=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=51sUDdibUy5R54RjjMz9shgUIMIucOrIAF46W4x9hRU=;
+        b=Gv4X2usBkw66SH7Q1K1KEqMsrWPRaDuniIZtT6sgkWkpEBL9EbcuWUIJ3t8yzKCb5k
+         artYrbXXaMdA9n8sNtlD0K2WSjqk4U50DtQuaLTTiD5HuR2XY+++YKjQ0U+eUtgIwDym
+         FIeKTC+ad5dncly3BZPlQSI3rXczj5Lu4stkY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=uWwSCNaeiypqnkvQeH3TxEg9vR5mhTvwCbY26wDRx+ZP5eQIMvV9+hOMQj5XwpZwHL
-         s1f07qVu8Bz2i+YLY3K41OBvkNXFedW+xNcRmLRN+p7gK76gPWU3PkHKFq14XCgG+mKB
-         HJN13hD/QDkRrp425z98yB0ZS6zhSob3lHJCE=
-Received: by 10.100.191.7 with SMTP id o7mr5868203anf.198.1289950651468;
-        Tue, 16 Nov 2010 15:37:31 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id d10sm5621315and.39.2010.11.16.15.37.29
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 16 Nov 2010 15:37:30 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vlj4shoej.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=EgOvx0JzGEcGXmkcM3nQ+/aSG7lMfY6+uJRISSaerfvlzXToi7Poqj/a6LRTF1+Niq
+         tft5tknR9B9NJFDEUFk6GsHPLo3OYPgPi3aFzjLgdi339FY7TCAraOhPOg+T/wuyABia
+         WO5ML6kshfkbhskBwbhK4BghxxjFg/dikqXZA=
+Received: by 10.224.11.147 with SMTP id t19mr5593450qat.166.1289953381536;
+        Tue, 16 Nov 2010 16:23:01 -0800 (PST)
+Received: from [192.168.2.207] (dsl-147-180.aei.ca [66.36.147.180])
+        by mx.google.com with ESMTPS id m7sm1149231qck.37.2010.11.16.16.22.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 16 Nov 2010 16:23:00 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.15) Gecko/20101030 Iceowl/1.0b1 Icedove/3.0.10
+In-Reply-To: <AANLkTimPmPOJq64=VePSb2efsx17j8BNxCLt_i=b2ykW@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161591>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161593>
 
-Junio C Hamano wrote:
+On 11/16/2010 02:57 PM, Dmitri Pissarenko wrote:
+> Hello!
+> 
+> I want to migrate one of my projects from Bazaar to git, preserving the history.
+> 
+> How can I do that in Windows (import an existing Bazaar project into a
+> new/empty git repository) ?
+> 
 
-> I am not sure I agree with the reasoning of this patch, by the way.  A
-> cherry-pick is an event that breaks the life of the patch, so it may even
-> be a sensible thing to do to express "the above sign-off chain shows who
-> were involved in the original commit; I am cherry-picking it out of
-> context, and these people do not have much to do with the result" with a
-> blank line on both sides of the "cherry picked" line, like this:
-> 
->	A concise summary of the change
-> 
-> 	A detailed description of the change, why it is needed, what
->	was broken and why applying this is the best course of action.
-> 
-> 	Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-> 	Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-> 
-> 	(cherry picked from commit 9d8117e72bf453dd9d85e0cd322ce4a0f8bccbc0)
-> 
-> 	Signed-off-by: Back Porter <backporter@example.com>
+Have a look at "bzr-fastimport" [1]. it's a Bazaar plugin that can help
+you to transform the bzr history into a git one.
 
-How is the cherry-pick event different from the send-by-mail-and-apply
-event?
+[1]: https://launchpad.net/bzr-fastimport
 
-In both cases, the result has a distinct commit id and distinct
-signoff and it is unlikely that the previous patch handler was testing
-with the same tree as the next one.  (And each patch handler should add
-relevant comments if the new situation warrants that.)
+I haven't done a lot of testing with shared-tree Bazaar repositories (a
+repository with multiple branches in it) but I suspect it would not work
+very well with such a layout.. If you're doing a one-time conversion of
+a one-branch repository, it works pretty well.
+
+Once Bazaar and the bzr-fastimport plugin are installed, you mostly need
+to run those commands :
+
+    git init project
+    cd project
+    bzr fast-export --export-marks=../bzr.mark /path/to/old/bzr/project
+| git-fast-import --export-marks=../git.mark
+
+you now have, in the new git project, a "master" branch with all the
+history from the bzr repository and all tags.
+
+-- 
+Gabriel Filion
