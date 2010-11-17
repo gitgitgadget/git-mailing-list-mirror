@@ -1,63 +1,63 @@
-From: Andi Kleen <andi@firstfloor.org>
-Subject: Re: groff .ft command use in asciidoc
-Date: Wed, 17 Nov 2010 12:52:46 +0100
-Message-ID: <20101117115245.GB23656@basil.fritz.box>
-References: <20101117095233.GA23817@basil.fritz.box>
- <20101117101516.GA12416@burratino>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Difference between 'git rebase' and 'git rebase -m'
+Date: Wed, 17 Nov 2010 14:36:38 +0100
+Message-ID: <4CE3DA66.80808@drmicha.warpmail.net>
+References: <4CE2C0ED.1030309@workspacewhiz.com> <20101116182749.GC14552@burratino> <AANLkTik7RML10gyQ19OV0KAH8Mn3=VZe92kU1qxER7wO@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andi Kleen <andi@firstfloor.org>, git@vger.kernel.org,
-	Chris Johnsen <chris_johnsen@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 17 12:53:05 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>,
+	Stephen Bash <bash@genarts.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 17 14:38:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIgZU-0000CR-Rl
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 12:53:05 +0100
+	id 1PIiDp-0003RW-RP
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 14:38:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934574Ab0KQLws (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Nov 2010 06:52:48 -0500
-Received: from one.firstfloor.org ([213.235.205.2]:53426 "EHLO
-	one.firstfloor.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932962Ab0KQLwr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Nov 2010 06:52:47 -0500
-Received: from basil.firstfloor.org (p5B3C9449.dip0.t-ipconnect.de [91.60.148.73])
-	by one.firstfloor.org (Postfix) with ESMTP id AB3361A9805F;
-	Wed, 17 Nov 2010 12:52:46 +0100 (CET)
-Received: by basil.firstfloor.org (Postfix, from userid 1000)
-	id 2A343B16AA; Wed, 17 Nov 2010 12:52:46 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20101117101516.GA12416@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S933390Ab0KQNin (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Nov 2010 08:38:43 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:35858 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932433Ab0KQNin (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Nov 2010 08:38:43 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 5638D940;
+	Wed, 17 Nov 2010 08:38:42 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Wed, 17 Nov 2010 08:38:42 -0500
+X-Sasl-enc: 3O/jALbY4Vj6U8eau9S1UpTST3Cq9o6E+a/saIPIoC1q 1290001122
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 0EC105EBF28;
+	Wed, 17 Nov 2010 08:38:40 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
+In-Reply-To: <AANLkTik7RML10gyQ19OV0KAH8Mn3=VZe92kU1qxER7wO@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161613>
 
-> This is in my opinion a bug: unless you use ASCIIDOC_NO_ROFF, git's
-> asciidoc.conf will include raw roff directives in the docbook markup
-> it generates.  And then docbook will escape the periods, producing
-> the output you see.
-
-I see. Thanks for the explanation.
-
+Nguyen Thai Ngoc Duy venit, vidit, dixit 17.11.2010 12:43:
+> On Wed, Nov 17, 2010 at 1:27 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> Joshua Jensen wrote:
+>>
+>>> I'm curious as to why 'git rebase -m' isn't the default and what the
+>>> real difference is between 'git rebase' and 'git rebase -m'.
+>>
+>> git rebase is faster. :)
 > 
-> The workaround is very simple: set ASCIIDOC_NO_ROFF to nonempty
-> when you build documentation.
+> Perhaps a config option to let people to default to -m. Or perhaps
+> they can just make an alias.
+> 
+> By the way, can we make rebase even faster? Rebasing ~20 patches or
+> more seems slow to me. I don't know much how patching works though.
 
-I will suggest to the opensuse git maintainers to set that variable.
- 
-> I think the only reason this is not the default is that no one has
-> tested it with old DocBook XSL versions, but I'm not sure.
-> Documentation/Makefile has some notes about this.
+git sequencer...
 
-It would be nice if that worked out of the box.
-
--Andi
-
--- 
-ak@linux.intel.com -- Speaking for myself only.
+Michael
