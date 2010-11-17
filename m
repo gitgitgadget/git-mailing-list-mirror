@@ -1,66 +1,91 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 08/10] t3404 (rebase -i): move comment to description
-Date: Wed, 17 Nov 2010 15:12:20 -0800
-Message-ID: <7v62vvee97.fsf@alter.siamese.dyndns.org>
-References: <1286136014-7728-1-git-send-email-newren@gmail.com>
- <1286136014-7728-16-git-send-email-newren@gmail.com>
- <20101031014654.GC29456@burratino> <7vr5f73umz.fsf@alter.siamese.dyndns.org>
- <20101031072640.GA11483@burratino> <20101031073951.GI11483@burratino>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv7.2 4/4] gitweb: Minimal testing of gitweb caching
+Date: Thu, 18 Nov 2010 00:12:22 +0100
+Message-ID: <201011180012.23294.jnareb@gmail.com>
+References: <201010311021.55917.jnareb@gmail.com> <201011130101.51116.jnareb@gmail.com> <7vk4kbefv8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-	avarab@gmail.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 18 00:12:40 2010
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, John 'Warthog9' Hawley <warthog9@kernel.org>,
+	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
+	Petr Baudis <pasky@ucw.cz>, admin@repo.or.cz
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 18 00:12:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIrBA-0001Km-8E
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 00:12:40 +0100
+	id 1PIrBA-0001Km-Po
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 00:12:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964805Ab0KQXMd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Nov 2010 18:12:33 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63103 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935679Ab0KQXMc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Nov 2010 18:12:32 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1650C298C;
-	Wed, 17 Nov 2010 18:12:40 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=mkfSFiiMp8IVHBextqAjJq1JQKo=; b=gqQ5ehLZTksDJisAiimZNBT
-	GrfHeaprvV5isnUY+jO3/hBXnnuRYRrYQMQ/b8+sWiM4sX8crHx5C6fTnyZ5s0uW
-	74FqD/JhLm5t35oPhkoEbmUQ7cd8FsbqvaqEr+an/XO6EDE7F3qhKaIdhmdK+4B0
-	eV5ZU7gJG+PAo7ttREnw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=Yk8iHJFUDchpryIXJMXw8A77jahuzaKqJT0Degv5MkljpWXEU
-	7kTzH/I3+U7TJwuKpIgwxUspbpWJOHi5CEL+i8EktAC1dXIAotKYxdIYdmLhTnBE
-	An33Rx0WvnWsIvUh3UEyFLkG4ZB5M7iBvmjOl2HBQys5QEZZszz6WE2L3A=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CB5A32983;
-	Wed, 17 Nov 2010 18:12:35 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7E98B2980; Wed, 17 Nov 2010
- 18:12:30 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2A0349D8-F2A0-11DF-9753-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+	id S964806Ab0KQXMh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Nov 2010 18:12:37 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:36809 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S935679Ab0KQXMe (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Nov 2010 18:12:34 -0500
+Received: by bwz15 with SMTP id 15so2145209bwz.19
+        for <git@vger.kernel.org>; Wed, 17 Nov 2010 15:12:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=35E9UEkFU85a9+wUUaYq2cVj+YiEnN42pWyFSyXIU24=;
+        b=nKf01qUVqM6V1qHbsjgLAHRkvxMlIbJcbLnBNIziWSd+LMAbM6EFEHcDzZ3ov7kB14
+         RHQ7xg9QsUjX/uRIKcm1PwOayyImjpAMrY2gzJMtZxUl3w/snOEtNL+lKIfaCo/PtA7r
+         13BCeJ6ToM4nL+XdLcwJYfbbjP8EPwRZm6mtg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=IoJ+5xYv2YOtPwy+/XWSW63kw72GCao8ftWbyfPJzqrTm/7bydiiXC4LwEAcfhxQ90
+         izIVkHwZPe0nz8LXcnZiaWLNfy9kwpFJiVWhcd6nknoTwfjE0WvrMDYTfx/hEJgOCJ6M
+         R+ErNhVYvaPr44F6Jhl74EntI+fOv3tEQ4xZM=
+Received: by 10.204.27.20 with SMTP id g20mr9996906bkc.114.1290035553372;
+        Wed, 17 Nov 2010 15:12:33 -0800 (PST)
+Received: from [192.168.1.13] (abva140.neoplus.adsl.tpnet.pl [83.8.198.140])
+        by mx.google.com with ESMTPS id a25sm1653715bks.20.2010.11.17.15.12.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 17 Nov 2010 15:12:31 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vk4kbefv8.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161638>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Dnia =B6roda 17. listopada 2010 23:37, Junio C Hamano napisa=B3:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>=20
+> > +gitweb_enable_caching () {
+> > +	test_expect_success 'enable caching' '
+> > +		cat >>gitweb_config.perl <<-\EOF &&
+> > +		our $caching_enabled =3D 1;
+> > +		our $minCacheTime =3D 60*60*24*7*30;     # very long expiration =
+time for tests (a month)
+>=20
+> Does your month have 210 days in it?
+>=20
+> > +		our $maxCacheTime =3D 60*60*24*7*30*365; # upper bound for dynam=
+ic (adaptive) caching
+>=20
+> Likewise, is this 210 years?  Does this bust 32-bit time_t somewhere?
 
-> Add a comment describing the setup in t3404 to its --help output.
+Ooops.
 
-You learn new things every day---I didn't know our tests supported the -h
-option ;-)
+Still, fixing this doesn't fix tests.  I think I'd have to make another
+extra commit, adding configure knob to turn off cacheWaitForUpdate()...
 
-Yeah, yeah, e1970ce ([PATCH 1/2] Test framework take two., 2005-05-13) was
-mine, but I forgot all about it.
+
+Or perhaps I did something wrong when simplifying, but I have checked
+diff between full and simplified version (in comments in v7.1 series),
+and it doesn't look like it...
+
+--=20
+Jakub Narebski
+Poland
