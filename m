@@ -1,101 +1,80 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 07/10] checkout: add -S to update sparse checkout
-Date: Wed, 17 Nov 2010 22:02:50 +0700
-Message-ID: <AANLkTim=beQhCvXmV6NvDiNHAYC+SBgvw36FzSthXHN2@mail.gmail.com>
-References: <1289817410-32470-1-git-send-email-pclouds@gmail.com>
- <1289817410-32470-8-git-send-email-pclouds@gmail.com> <20101115211636.GH16385@burratino>
- <87bp5qmez1.fsf@catnip.gol.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Nov 17 16:03:22 2010
+From: Stefan Naewe <stefan.naewe@googlemail.com>
+Subject: [PATCH] git-gui: use --exclude-standard to check for untracked files
+Date: Wed, 17 Nov 2010 16:13:24 +0100
+Message-ID: <1290006804-9142-1-git-send-email-stefan.naewe@googlemail.com>
+Cc: Stefan Naewe <stefan.naewe@googlemail.com>
+To: gitster@pobox.com, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 17 16:13:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIjXd-0005cM-Ib
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 16:03:21 +0100
+	id 1PIjhl-0005G0-KF
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 16:13:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932881Ab0KQPDP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Nov 2010 10:03:15 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:45697 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932419Ab0KQPDO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Nov 2010 10:03:14 -0500
-Received: by eye27 with SMTP id 27so1208078eye.19
-        for <git@vger.kernel.org>; Wed, 17 Nov 2010 07:03:12 -0800 (PST)
+	id S934591Ab0KQPNn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Nov 2010 10:13:43 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:61884 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933120Ab0KQPNm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Nov 2010 10:13:42 -0500
+Received: by yxf34 with SMTP id 34so1116778yxf.19
+        for <git@vger.kernel.org>; Wed, 17 Nov 2010 07:13:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=GxDdS9ue1UEpK4sf1twGOR6Ha/Ykl01HyJONv7H/+sQ=;
-        b=d+lywSzxbwf4vFlJ4KIYppkcVyj+RSCUVfM4n7o2QAJtB81pnanZ4YJM2xVVsUYTEv
-         OM+QNTY9l21ZnWow33Qj57cRJJBOCz1IgIDIt+dJzhyN3YbOEj8NCG2tRq138krKyGMQ
-         S3yCQWjV0/B+0lXYvm4PO5mTgEVu4d0HCJabw=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=DFtuVJkpijF+NqBzvyfuoBm4BwVawZt/gGdcJJPhBmQ=;
+        b=R8M6tRbDwGc4EHJDKVa8QvnthroQKB8ESUbLti6WqUdtAirONGNn1lohWQJzyv63aU
+         eWbuaSxFN5d/us87LOrQRy44E3CXThiIFDugdQP5JFx8dOOcJgHEn+1L8ME90RLQw3tP
+         BI+exrHN8OmbKTaNsRngsu2SQx02m80/b77Vs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=XYDyTDZO1b8d4H1nn06Xjs/leNfrnm1A4ElorbkD1nPqiNMaC8jKuGSPAMlTKVpVlX
-         sVIwW0ihb6bydOxYNRoaIxG/FuhZh0RzkcySM42XN27THRbbwqm6GnGzgZK4rbp3njuJ
-         tHn6aogBItwClVWGRQMi5OfpVdHObaT8cCGg4=
-Received: by 10.216.255.148 with SMTP id j20mr8197865wes.11.1290006191715;
- Wed, 17 Nov 2010 07:03:11 -0800 (PST)
-Received: by 10.216.172.199 with HTTP; Wed, 17 Nov 2010 07:02:50 -0800 (PST)
-In-Reply-To: <87bp5qmez1.fsf@catnip.gol.com>
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=sGrZ2J5+VS4GG1lFZ7oxX9FU4k+ziULpeB+QChH31Qpy3xncEDp8uvZxln9X6jRZj6
+         MRBe51vKWhOtZg9rp/7ZWN9UpnQl7g7N77VA/8zNLYlRV3vJ63DQvQgjswxbwEBUJErl
+         BYNfj7s4+kUgDu0WoUgtQBXH9qJbWEIIwJ7kw=
+Received: by 10.204.62.136 with SMTP id x8mr9319220bkh.192.1290006821610;
+        Wed, 17 Nov 2010 07:13:41 -0800 (PST)
+Received: from darkstar.home (dslc-082-083-230-174.pools.arcor-ip.net [82.83.230.174])
+        by mx.google.com with ESMTPS id p34sm1384974bkf.3.2010.11.17.07.13.40
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 17 Nov 2010 07:13:40 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161620>
 
-2010/11/16 Miles Bader <miles@gnu.org>:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
->>> +-S::
->>> +--update-sparse-checkout::
->>> + =C2=A0 =C2=A0An editor is invoked to let you update your sparse c=
-heckout
->>> + =C2=A0 =C2=A0patterns. The updated patterns will be saved in
->>> + =C2=A0 =C2=A0$GIT_DIR/info/sparse-checkout. The working directory=
- is also
->>> + =C2=A0 =C2=A0updated. An empty file will abort the process.
->>
->> Wording nit: this doesn't make the worktree more up-to-date. =C2=A0H=
-ow
->> about:
->>
->> =C2=A0--edit-sparse-checkout
->> =C2=A0--define-work-area
->> =C2=A0--narrow-worktree
->>
->> Hmph.
->>
->> --edit-sparse-checkout seems best for consistency of the choices I c=
-an
->> think of.
->
-> "--change-sparse-checkout"?
->
-> Onna-account of "edit" sounding like you're actually somehow editting
-> the checkout itself... =C2=A0OTOH, since it invokes the editor... hmm=
-m
->
-> BTW, wouldn't it be more convenient to allow specifying patterns
-> directly via the command line? =C2=A0I'd think in many (maybe the maj=
-ority
-> of) cases people will really only want one entry, and having to edit =
-a
-> file to specify it seems vaguely annoying...
+This fixes git gui failing to display untracked files if
+core.excludesfile is set to '~/.gitexcludes'.
 
-A command line option to append patterns only sounds good to me. But
-it would clutter up sparse-checkout file over time and may decrease
-performance. The same option can also be reused for git-clone. Do you
-suggest any name? I'm bad at naming.
+Signed-off-by: Stefan Naewe <stefan.naewe@googlemail.com>
+---
+ git-gui/git-gui.sh |    9 +--------
+ 1 files changed, 1 insertions(+), 8 deletions(-)
 
-I don't think I can make an option to remove patterns though.
---=20
-Duy
+diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
+index 4617f29..7121526 100755
+--- a/git-gui/git-gui.sh
++++ b/git-gui/git-gui.sh
+@@ -1428,14 +1428,7 @@ proc rescan_stage2 {fd after} {
+ 		close $fd
+ 	}
+ 
+-	set ls_others [list --exclude-per-directory=.gitignore]
+-	if {[have_info_exclude]} {
+-		lappend ls_others "--exclude-from=[gitdir info exclude]"
+-	}
+-	set user_exclude [get_config core.excludesfile]
+-	if {$user_exclude ne {} && [file readable $user_exclude]} {
+-		lappend ls_others "--exclude-from=$user_exclude"
+-	}
++	set ls_others [list --exclude-standard]
+ 
+ 	set buf_rdi {}
+ 	set buf_rdf {}
+-- 
+1.7.3.2
