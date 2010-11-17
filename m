@@ -1,171 +1,61 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH 2/2] allow command-specific pagers in pager.<cmd>
-Date: Wed, 17 Nov 2010 12:04:12 -0500
-Message-ID: <20101117170411.GA4163@sigill.intra.peff.net>
-References: <20101117170045.GA4108@sigill.intra.peff.net>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Runaway "git remote" if group definition contains a remote by the
+ same name
+Date: Wed, 17 Nov 2010 18:10:00 +0100
+Message-ID: <AANLkTinni=VJLoZp1Hjm4dfW8faChytDObJbXsFF5iXv@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	suvayu ali <fatkasuvayu+linux@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 17 18:04:33 2010
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Nov 17 18:10:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIlQu-0001ay-AV
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 18:04:32 +0100
+	id 1PIlWM-0005f3-0s
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 18:10:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935020Ab0KQREQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Nov 2010 12:04:16 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:40622 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S935014Ab0KQREN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Nov 2010 12:04:13 -0500
-Received: (qmail 7003 invoked by uid 111); 17 Nov 2010 17:04:13 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 17 Nov 2010 17:04:13 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Nov 2010 12:04:12 -0500
-Content-Disposition: inline
-In-Reply-To: <20101117170045.GA4108@sigill.intra.peff.net>
+	id S934988Ab0KQRKD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Nov 2010 12:10:03 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:62234 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S934967Ab0KQRKB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Nov 2010 12:10:01 -0500
+Received: by gyh4 with SMTP id 4so1228681gyh.19
+        for <git@vger.kernel.org>; Wed, 17 Nov 2010 09:10:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=4VvQ4KGYaZ89AKfZfEPGpbw9BMhLuMrdqSs8NbYC/Jc=;
+        b=nXCCHZGo/TDdJqHpM8OM4LwsIll+DsCfzWsgrHKbZBnSJxbT8rFXK7wXU+DcuoATYC
+         jXvXaMxNoPzFY0COtIg5DvnVVIfX+Ohxd/dR2e3xxH66DcXmWOBNeitQLFUFOz6QOtIv
+         aGwaHuJ89Ps/U+4GHKV93/wF05mWagIKkviMY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=kZY5fewRcGe7mQYqTIT1FI4WZDSojmqJzYxJ7rB3TtXIK8Ys0+8mTt66cnJ86Luc3x
+         l6AR9xSAU1HjEKVrsS6BrzKCEpw8Rmt3Zxg0C/LbCWOOnSj44vRBv5y1c+f5hvcxxv0e
+         TcH/SFuv7YAdg3KLg8YN7362eB0mnKqswLvH0=
+Received: by 10.90.2.23 with SMTP id 23mr11816083agb.97.1290013800604; Wed, 17
+ Nov 2010 09:10:00 -0800 (PST)
+Received: by 10.90.6.32 with HTTP; Wed, 17 Nov 2010 09:10:00 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161625>
 
-A user may want different pager settings or even a
-different pager for various subcommands (e.g., because they
-use different less settings for "log" vs "diff", or because
-they have a pager that interprets only log output but not
-other commands).
+Hi,
 
-This patch extends the pager.<cmd> syntax to support not
-only boolean to-page-or-not-to-page, but also to specify a
-pager just for a specific command.
+it is also a way to create a fork bomb out of the innocent tool on platforms
+where pressing Ctrl-C does not terminate subprocesses of the foreground
+process (like, of course, Windows).
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-This is a repost of
+To reproduce, run
 
-  http://article.gmane.org/gmane.comp.version-control.git/158051
+   git -c remotes.origin='origin other' remote update origin
 
-The patch text is the same, but without patch 1 in this series, there is
-a regression (anyone with "pager.foo = 0" would stop interpreting "0" as
-a bool, and start interpreting it as the command "0").
-
- Documentation/config.txt |   12 +++++++-----
- git.c                    |   21 ++++++++++++++++-----
- t/t7006-pager.sh         |   29 +++++++++++++++++++++++++++++
- 3 files changed, 52 insertions(+), 10 deletions(-)
-
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index 538ebb5..b834c4e 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1531,11 +1531,13 @@ pack.packSizeLimit::
- 	supported.
- 
- pager.<cmd>::
--	Allows turning on or off pagination of the output of a
--	particular git subcommand when writing to a tty.  If
--	`\--paginate` or `\--no-pager` is specified on the command line,
--	it takes precedence over this option.  To disable pagination for
--	all commands, set `core.pager` or `GIT_PAGER` to `cat`.
-+	If the value is boolean, turns on or off pagination of the
-+	output of a particular git subcommand when writing to a tty.
-+	Otherwise, turns on pagination for the subcommand using the
-+	pager specified by the value of `pager.<cmd>`.  If `\--paginate`
-+	or `\--no-pager` is specified on the command line, it takes
-+	precedence over this option.  To disable pagination for all
-+	commands, set `core.pager` or `GIT_PAGER` to `cat`.
- 
- pretty.<name>::
- 	Alias for a --pretty= format string, as specified in
-diff --git a/git.c b/git.c
-index 0409ac9..81221cf 100644
---- a/git.c
-+++ b/git.c
-@@ -19,14 +19,22 @@ static struct startup_info git_startup_info;
- static int use_pager = -1;
- struct pager_config {
- 	const char *cmd;
--	int val;
-+	int want;
-+	char *value;
- };
- 
- static int pager_command_config(const char *var, const char *value, void *data)
- {
- 	struct pager_config *c = data;
--	if (!prefixcmp(var, "pager.") && !strcmp(var + 6, c->cmd))
--		c->val = git_config_bool(var, value);
-+	if (!prefixcmp(var, "pager.") && !strcmp(var + 6, c->cmd)) {
-+		int b = git_config_maybe_bool(var, value);
-+		if (b >= 0)
-+			c->want = b;
-+		else {
-+			c->want = 1;
-+			c->value = xstrdup(value);
-+		}
-+	}
- 	return 0;
- }
- 
-@@ -35,9 +43,12 @@ int check_pager_config(const char *cmd)
- {
- 	struct pager_config c;
- 	c.cmd = cmd;
--	c.val = -1;
-+	c.want = -1;
-+	c.value = NULL;
- 	git_config(pager_command_config, &c);
--	return c.val;
-+	if (c.value)
-+		pager_program = c.value;
-+	return c.want;
- }
- 
- static void commit_pager_choice(void) {
-diff --git a/t/t7006-pager.sh b/t/t7006-pager.sh
-index fb744e3..49a6261 100755
---- a/t/t7006-pager.sh
-+++ b/t/t7006-pager.sh
-@@ -435,4 +435,33 @@ test_core_pager_subdir    expect_success 'git -p shortlog'
- test_core_pager_subdir    expect_success test_must_fail \
- 					 'git -p apply </dev/null'
- 
-+test_expect_success TTY 'command-specific pager' '
-+	unset PAGER GIT_PAGER;
-+	echo "foo:initial" >expect &&
-+	>actual &&
-+	git config --unset core.pager &&
-+	git config pager.log "sed s/^/foo:/ >actual" &&
-+	test_terminal git log --format=%s -1 &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success TTY 'command-specific pager overrides core.pager' '
-+	unset PAGER GIT_PAGER;
-+	echo "foo:initial" >expect &&
-+	>actual &&
-+	git config core.pager "exit 1"
-+	git config pager.log "sed s/^/foo:/ >actual" &&
-+	test_terminal git log --format=%s -1 &&
-+	test_cmp expect actual
-+'
-+
-+test_expect_success TTY 'command-specific pager overridden by environment' '
-+	GIT_PAGER="sed s/^/foo:/ >actual" && export GIT_PAGER &&
-+	>actual &&
-+	echo "foo:initial" >expect &&
-+	git config pager.log "exit 1" &&
-+	test_terminal git log --format=%s -1 &&
-+	test_cmp expect actual
-+'
-+
- test_done
--- 
-1.7.3.2.362.g308e9
+I just cannot look at it right now, and have to resolve to only reporting
+the problem to warn people. Something seems to resolve the remotes group
+definition over and over again.
