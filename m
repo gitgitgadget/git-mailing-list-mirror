@@ -1,62 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: groff .ft command use in asciidoc
-Date: Wed, 17 Nov 2010 09:38:55 -0500
-Message-ID: <20101117143855.GA1987@sigill.intra.peff.net>
-References: <20101117095233.GA23817@basil.fritz.box>
- <20101117101516.GA12416@burratino>
+From: Christoph Bartoschek <bartoschek@gmx.de>
+Subject: Git-Svn-Bridge
+Date: Wed, 17 Nov 2010 15:56:34 +0100
+Organization: =?UTF-8?B?VW5pdmVyc2l0w6R0?= Bonn
+Message-ID: <227dr7-3nl.ln1@burns.bruehl.pontohonk.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Andi Kleen <andi@firstfloor.org>, git@vger.kernel.org,
-	Chris Johnsen <chris_johnsen@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 17 15:39:09 2010
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 17 15:57:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIjAB-0004wJ-Lu
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 15:39:08 +0100
+	id 1PIjRb-0001Be-CC
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 15:57:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934357Ab0KQOjA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Nov 2010 09:39:00 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:44665 "EHLO peff.net"
+	id S932419Ab0KQO5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Nov 2010 09:57:01 -0500
+Received: from lo.gmane.org ([80.91.229.12]:52054 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756884Ab0KQOjA (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Nov 2010 09:39:00 -0500
-Received: (qmail 5368 invoked by uid 111); 17 Nov 2010 14:38:57 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 17 Nov 2010 14:38:57 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Nov 2010 09:38:55 -0500
-Content-Disposition: inline
-In-Reply-To: <20101117101516.GA12416@burratino>
+	id S932295Ab0KQO5A (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Nov 2010 09:57:00 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PIjRT-000164-M3
+	for git@vger.kernel.org; Wed, 17 Nov 2010 15:56:59 +0100
+Received: from bg-1.or.uni-bonn.de ([131.220.141.100])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 Nov 2010 15:56:59 +0100
+Received: from bartoschek by bg-1.or.uni-bonn.de with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 17 Nov 2010 15:56:59 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: bg-1.or.uni-bonn.de
+User-Agent: KNode/4.4.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161617>
 
-On Wed, Nov 17, 2010 at 04:15:16AM -0600, Jonathan Nieder wrote:
+Hi,
 
-> This is in my opinion a bug: unless you use ASCIIDOC_NO_ROFF, git's
-> asciidoc.conf will include raw roff directives in the docbook markup
-> it generates.  And then docbook will escape the periods, producing
-> the output you see.
+we would like to use a Git-Svn-Bridge as it is described in Jon Loeliger's 
+book. However there are some open questions:
 
-IIRC, that depends very much on the versions of asciidoc and docbook you
-have. Once upon a time, not setting ASCIIDOC_NO_ROFF was required for
-sane output.
+We have the bridge repository and the bare repository created. 
 
-Andi, I would be curious to hear which asciidoc and docbook-xsl versions
-you are using.
+a) Are the developers supposed to work on a branch that follows  master from 
+the bare repository or on a branch that follows svn/trunk on the master? I 
+assume they follow the master.
 
-> I think the only reason this is not the default is that no one has
-> tested it with old DocBook XSL versions, but I'm not sure.
-> Documentation/Makefile has some notes about this.
+b) How do we get changes from the bare repository to the bridge repository? 
+Should there be a new branch for the changes or should one use master from 
+the bridge?
 
-At the time those knobs came into being, the defaults were set for
-then-current versions of the software. I suspect ASCIIDOC8 and
-ASCIIDOC_NO_ROFF should be the default these days.
+c) How do we get changes from subversion to the bare repository?
 
--Peff
+d) Are the changes from subversion applied to the bare repository master or 
+only to the svn/* branches?
+
+
+Thanks
+Christoph
