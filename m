@@ -1,81 +1,129 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] commit -s: allow "(cherry picked " lines in sign-off
- section
-Date: Wed, 17 Nov 2010 08:46:57 -0800
-Message-ID: <7vd3q3hp8e.fsf@alter.siamese.dyndns.org>
-References: <d0318dcd2b52f2e818888003e3dd81c7b713fec6.1289920242.git.git@drmicha.warpmail.net> <20101116193018.GA31036@sigill.intra.peff.net> <20101116202556.GA27390@burratino> <20101116204027.GB27390@burratino> <7vlj4shoej.fsf@alter.siamese.dyndns.org> <20101116233649.GA30700@burratino>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 1/2] log.decorate: accept 0/1 bool values
+Date: Wed, 17 Nov 2010 12:00:45 -0500
+Message-ID: <20101117170045.GA4108@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org,
-	Martin Svensson <martin.k.svensson@netinsight.se>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 17 17:47:24 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 17 18:01:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIlAE-0004gm-Tc
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 17:47:19 +0100
+	id 1PIlNP-0007Jk-Hk
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 18:00:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935048Ab0KQQrN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Nov 2010 11:47:13 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37361 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934973Ab0KQQrM (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Nov 2010 11:47:12 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 000823400;
-	Wed, 17 Nov 2010 11:47:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=UlYqy3e1ek1NdUBlBcaPe0UuWrQ=; b=TZpPTD
-	5R0aXSjuzgM9D8dyXXTT2AtFY0es+yIjuNohZmnMNov0E+7RDfFdWvu04UQ0iVS9
-	KV8i/HkGu9WHY4VTLOg67V9mlsfC70wasU+ZDWieuw5CiZ4Bwh9bbOsixfIqJAy5
-	owejnSqwTM+A77XnsTVOztINg4CGnqL/my+d8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HDg+EDc7u7E7Km5U86PooW5OozqzsLjz
-	0+idi836VT79x7jsXBWj5rjXD6Wlg0H3X9wRy/Gt9N+178p5d4sdWfHCZKlwf9HV
-	g9hnk0A7H/5Y1GeIDcy5CMdMo53BwTzVGlsQOU0TCRvH5rjr+nWK/KgHEPAeKWmr
-	XMk/nkOYTqw=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 971C033FF;
-	Wed, 17 Nov 2010 11:47:15 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0F14B33FD; Wed, 17 Nov 2010
- 11:47:08 -0500 (EST)
-In-Reply-To: <20101116233649.GA30700@burratino> (Jonathan Nieder's message of
- "Tue\, 16 Nov 2010 17\:36\:49 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 554AA5AE-F26A-11DF-8C3A-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+	id S934924Ab0KQRAu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Nov 2010 12:00:50 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:55772 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932743Ab0KQRAu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Nov 2010 12:00:50 -0500
+Received: (qmail 6885 invoked by uid 111); 17 Nov 2010 17:00:46 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 17 Nov 2010 17:00:46 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 17 Nov 2010 12:00:45 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161623>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+We explicitly document "0" and "1" as synonyms for "false"
+and "true" in boolean config options. However, we don't
+actually handle those values in git_config_maybe_bool.
 
-> How is the cherry-pick event different from the send-by-mail-and-apply
-> event?
->
-> In both cases, the result has a distinct commit id and distinct
-> signoff and it is unlikely that the previous patch handler was testing
-> with the same tree as the next one.  (And each patch handler should add
-> relevant comments if the new situation warrants that.)
+In most cases this works fine, as we call git_config_bool,
+which in turn calls git_config_bool_or_int, which in turn
+calls git_config_maybe_bool. Values of 0/1 are considered
+"not bool", but their integer values end up being converted
+to the corresponding boolean values.
 
-Fair enough.  If that is the direction we would want to go, perhaps it
-suggests that we might eventually want to use "Cherry-picked-from: " as
-the marker for this information?
+However, the log.decorate code looks for maybe_bool
+explicitly, so that it can fall back to the "short" and
+"full" strings. It does not handle 0/1 at all, and considers
+them invalid values.
 
-And if we go that route, and if this information is being used, we have a
-rather serious backward compatibility problem.  Older scripts will break,
-and this cannot be handwaved away with a configuration option or a command
-line switch (even if you personally choose to keep using the old format,
-you may get a commit with the new style trailer from elsewhere).
+We cannot simply add 0/1 support to git_config_maybe_bool.
+That would confuse git_config_bool_or_int, which may want to
+distinguish the integer values "0" and "1" from bools.
 
-Hmm.
+Signed-off-by: Jeff King <peff@peff.net>
+---
+I don't know that anyone explicitly cares about distinguishing "0" from
+"false", but we do expose this interface via "git config --bool-or-int",
+and we test for it explicitly in t1300. So I kept the existing behavior
+intact in that instance.
+
+Note that another way to solve this would be to check explicitly for
+"short" or "full" and then just call git_config_bool itself. That works
+in this case, but not for an open-ended case (i.e., where you can take
+either a bool, or any arbitrary string). And I needed that case for my
+patch 2/2. :)
+
+ config.c       |   16 ++++++++++++++--
+ t/t4202-log.sh |    9 +++++++++
+ 2 files changed, 23 insertions(+), 2 deletions(-)
+
+diff --git a/config.c b/config.c
+index 4b0a820..9918b93 100644
+--- a/config.c
++++ b/config.c
+@@ -410,7 +410,7 @@ unsigned long git_config_ulong(const char *name, const char *value)
+ 	return ret;
+ }
+ 
+-int git_config_maybe_bool(const char *name, const char *value)
++static int git_config_maybe_bool_text(const char *name, const char *value)
+ {
+ 	if (!value)
+ 		return 1;
+@@ -427,9 +427,21 @@ int git_config_maybe_bool(const char *name, const char *value)
+ 	return -1;
+ }
+ 
++int git_config_maybe_bool(const char *name, const char *value)
++{
++	int v = git_config_maybe_bool_text(name, value);
++	if (0 <= v)
++		return v;
++	if (!strcmp(value, "0"))
++		return 0;
++	if (!strcmp(value, "1"))
++		return 1;
++	return -1;
++}
++
+ int git_config_bool_or_int(const char *name, const char *value, int *is_bool)
+ {
+-	int v = git_config_maybe_bool(name, value);
++	int v = git_config_maybe_bool_text(name, value);
+ 	if (0 <= v) {
+ 		*is_bool = 1;
+ 		return v;
+diff --git a/t/t4202-log.sh b/t/t4202-log.sh
+index 2e51356..2043bb8 100755
+--- a/t/t4202-log.sh
++++ b/t/t4202-log.sh
+@@ -422,6 +422,15 @@ test_expect_success 'log.decorate configuration' '
+ 	test_cmp expect.full actual &&
+ 
+ 	git config --unset-all log.decorate &&
++	git config log.decorate 1 &&
++	git log --oneline >actual &&
++	test_cmp expect.short actual &&
++	git log --oneline --decorate=full >actual &&
++	test_cmp expect.full actual &&
++	git log --oneline --decorate=no >actual &&
++	test_cmp expect.none actual &&
++
++	git config --unset-all log.decorate &&
+ 	git config log.decorate short &&
+ 	git log --oneline >actual &&
+ 	test_cmp expect.short actual &&
+-- 
+1.7.3.2.362.g308e9
