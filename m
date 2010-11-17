@@ -1,69 +1,46 @@
-From: Christoph Bartoschek <bartoschek@gmx.de>
-Subject: Git-Svn-Bridge
-Date: Wed, 17 Nov 2010 15:56:34 +0100
-Organization: =?UTF-8?B?VW5pdmVyc2l0w6R0?= Bonn
-Message-ID: <227dr7-3nl.ln1@burns.bruehl.pontohonk.de>
+From: Ananth <smilewithani@gmail.com>
+Subject: Re: How to apply patches
+Date: Wed, 17 Nov 2010 07:01:16 -0800 (PST)
+Message-ID: <1290006076573-5748001.post@n2.nabble.com>
+References: <1289988042359-5747036.post@n2.nabble.com> <AANLkTinR5Z60u5DYzgzuB0x7CmA8kVR04nLDJ4csDZJK@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 17 15:57:10 2010
+X-From: git-owner@vger.kernel.org Wed Nov 17 16:01:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIjRb-0001Be-CC
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 15:57:07 +0100
+	id 1PIjVj-000487-8I
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 16:01:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932419Ab0KQO5B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Nov 2010 09:57:01 -0500
-Received: from lo.gmane.org ([80.91.229.12]:52054 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932295Ab0KQO5A (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Nov 2010 09:57:00 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PIjRT-000164-M3
-	for git@vger.kernel.org; Wed, 17 Nov 2010 15:56:59 +0100
-Received: from bg-1.or.uni-bonn.de ([131.220.141.100])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 17 Nov 2010 15:56:59 +0100
-Received: from bartoschek by bg-1.or.uni-bonn.de with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 17 Nov 2010 15:56:59 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: bg-1.or.uni-bonn.de
-User-Agent: KNode/4.4.5
+	id S1757996Ab0KQPBR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Nov 2010 10:01:17 -0500
+Received: from kuber.nabble.com ([216.139.236.158]:44439 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757739Ab0KQPBR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Nov 2010 10:01:17 -0500
+Received: from jim.nabble.com ([192.168.236.80])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <smilewithani@gmail.com>)
+	id 1PIjVc-0005CQ-If
+	for git@vger.kernel.org; Wed, 17 Nov 2010 07:01:16 -0800
+In-Reply-To: <AANLkTinR5Z60u5DYzgzuB0x7CmA8kVR04nLDJ4csDZJK@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161617>
-
-Hi,
-
-we would like to use a Git-Svn-Bridge as it is described in Jon Loeliger's 
-book. However there are some open questions:
-
-We have the bridge repository and the bare repository created. 
-
-a) Are the developers supposed to work on a branch that follows  master from 
-the bare repository or on a branch that follows svn/trunk on the master? I 
-assume they follow the master.
-
-b) How do we get changes from the bare repository to the bridge repository? 
-Should there be a new branch for the changes or should one use master from 
-the bridge?
-
-c) How do we get changes from subversion to the bare repository?
-
-d) Are the changes from subversion applied to the bare repository master or 
-only to the svn/* branches?
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161618>
 
 
-Thanks
-Christoph
+Hi Tay Ray,
+Thanks for the reply. the problem is now resolved. The problem was that the
+patches created were in Unix format (only CR) while when I uploaded the
+patches through FTP site, they were converted to Windows format (CRLF) which
+was preventing from the patches from getting applied. I changed the files to
+unix format again and the problem got resolved.
+-- 
+View this message in context: http://git.661346.n2.nabble.com/How-to-apply-patches-tp5747036p5748001.html
+Sent from the git mailing list archive at Nabble.com.
