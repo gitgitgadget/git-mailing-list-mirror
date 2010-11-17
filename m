@@ -1,202 +1,176 @@
-From: Anders Kaseorg <andersk@ksplice.com>
-Subject: =?UTF-8?Q?=5BPATCH=5D_describe=3A_Don=E2=80=99t_look_up_commits_with_--exact-match?=
-Date: Wed, 17 Nov 2010 18:33:06 -0500 (EST)
-Message-ID: <alpine.DEB.2.02.1011171830050.14285@dr-wily.mit.edu>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 18 00:33:31 2010
+From: aga@iki.fi
+Subject: [PATCH] status: show branchname with a configurable color
+Date: Thu, 18 Nov 2010 01:40:05 +0200
+Message-ID: <1290037205-19470-1-git-send-email-aga@iki.fi>
+Cc: gitster@pobox.com, Aleksi Aalto <aga@iki.fi>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 18 00:48:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIrVK-00077h-5J
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 00:33:30 +0100
+	id 1PIrjW-0007ug-Kt
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 00:48:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751963Ab0KQXdK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Nov 2010 18:33:10 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:43374 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751023Ab0KQXdJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Nov 2010 18:33:09 -0500
-Received: by qwi2 with SMTP id 2so192493qwi.19
-        for <git@vger.kernel.org>; Wed, 17 Nov 2010 15:33:08 -0800 (PST)
-Received: by 10.229.89.202 with SMTP id f10mr8072665qcm.212.1290036788316;
-        Wed, 17 Nov 2010 15:33:08 -0800 (PST)
-Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
-        by mx.google.com with ESMTPS id t17sm1903501qcp.38.2010.11.17.15.33.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 17 Nov 2010 15:33:07 -0800 (PST)
-X-X-Sender: andersk@dr-wily.mit.edu
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+	id S1750859Ab0KQXsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Nov 2010 18:48:05 -0500
+Received: from dusk.niksula.hut.fi ([130.233.40.6]:54154 "EHLO
+	mail.niksula.hut.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750722Ab0KQXsE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Nov 2010 18:48:04 -0500
+X-Greylist: delayed 413 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Nov 2010 18:48:03 EST
+Received: by mail.niksula.hut.fi (Postfix, from userid 60001)
+	id 6107E74184; Thu, 18 Nov 2010 01:41:09 +0200 (EET)
+X-Spam-Checker-Version: SpamAssassin 3.3.1-niksula20080612 (2010-03-16) on dusk
+X-Spam-Level: 
+X-Spam-Status: No, score=0.0 required=5.0 tests=none autolearn=disabled
+	version=3.3.1-niksula20080612
+X-Spam-Niksula: No
+Received: from kekkonen.cs.hut.fi (kekkonen.cs.hut.fi [130.233.41.50])
+	by mail.niksula.hut.fi (Postfix) with ESMTP id 074AE74181;
+	Thu, 18 Nov 2010 01:41:06 +0200 (EET)
+Received: (from ajaalto@localhost)
+	by kekkonen.cs.hut.fi (8.14.3+Sun/8.14.3/Submit) id oAHNf5ra019567;
+	Thu, 18 Nov 2010 01:41:05 +0200 (EET)
+X-Mailer: git-send-email 1.7.3.GIT
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161639>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161640>
 
-This makes =E2=80=98git describe --exact-match HEAD=E2=80=99 about 15 t=
-imes faster on
-a cold cache (2.3s instead of 35s) in a linux-2.6 repository with many
-packed tags.  That=E2=80=99s a huge win for the interactivity of the __=
-git_ps1
-shell prompt helper.
+From: Aleksi Aalto <aga@iki.fi>
 
-Signed-off-by: Anders Kaseorg <andersk@ksplice.com>
+The configuration variable is color.status.branch.
+
+The default color is magenta.
+
+Signed-off-by: Aleksi Aalto <aga@iki.fi>
 ---
- builtin/describe.c |   64 ++++++++++++++++++++++++++------------------=
--------
- 1 files changed, 33 insertions(+), 31 deletions(-)
+ Documentation/config.txt |   15 +++++++--------
+ builtin/commit.c         |    2 ++
+ t/t7508-status.sh        |    2 +-
+ wt-status.c              |   25 ++++++++++++++-----------
+ wt-status.h              |    1 +
+ 5 files changed, 25 insertions(+), 20 deletions(-)
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 43caff2..1cdb831 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -22,7 +22,7 @@ static int tags;	/* Allow lightweight tags */
- static int longformat;
- static int abbrev =3D DEFAULT_ABBREV;
- static int max_candidates =3D 10;
--static int found_names;
-+struct commit_name *names =3D NULL;
- static const char *pattern;
- static int always;
- static const char *dirty;
-@@ -34,6 +34,8 @@ static const char *diff_index_args[] =3D {
-=20
-=20
- struct commit_name {
-+	struct commit_name *next;
-+	unsigned char peeled[20];
- 	struct tag *tag;
- 	unsigned prio:2; /* annotated tag =3D 2, tag =3D 1, head =3D 0 */
- 	unsigned name_checked:1;
-@@ -78,31 +80,26 @@ static int replace_name(struct commit_name *e,
- }
-=20
- static void add_to_known_names(const char *path,
--			       struct commit *commit,
-+			       const unsigned char *peeled,
- 			       int prio,
- 			       const unsigned char *sha1)
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index ba9639c..1dd3669 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -769,14 +769,13 @@ color.status::
+ 	only when the output is to a terminal. Defaults to false.
+ 
+ color.status.<slot>::
+-	Use customized color for status colorization. `<slot>` is
+-	one of `header` (the header text of the status message),
+-	`added` or `updated` (files which are added but not committed),
+-	`changed` (files which are changed but not added in the index),
+-	`untracked` (files which are not tracked by git), or
+-	`nobranch` (the color the 'no branch' warning is shown in, defaulting
+-	to red). The values of these variables may be specified as in
+-	color.branch.<slot>.
++	Use customized color for status colorization. `<slot>` is one of
++	`header` (the header text of the status message), `added` or `updated`
++	(files which are added but not committed), `changed` (files which
++	are changed but not added in the index), `untracked` (files which
++	are not tracked by git), `branch` (the current branch) or `nobranch`
++	(the color the 'no branch' warning is shown in, defaulting to red). The
++	values of these variables may be specified as in color.branch.<slot>.
+ 
+ color.ui::
+ 	When set to `always`, always use colors in all git commands which
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 66fdd22..df4d189 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -984,6 +984,8 @@ static int parse_status_slot(const char *var, int offset)
  {
--	struct commit_name *e =3D commit->util;
- 	struct tag *tag =3D NULL;
--	if (replace_name(e, prio, sha1, &tag)) {
--		size_t len =3D strlen(path)+1;
--		free(e);
--		e =3D xmalloc(sizeof(struct commit_name) + len);
--		e->tag =3D tag;
--		e->prio =3D prio;
--		e->name_checked =3D 0;
--		hashcpy(e->sha1, sha1);
--		memcpy(e->path, path, len);
--		commit->util =3D e;
--	}
--	found_names =3D 1;
-+	size_t len =3D strlen(path)+1;
-+	struct commit_name *e =3D xmalloc(sizeof(struct commit_name) + len);
-+	hashcpy(e->peeled, peeled);
-+	e->tag =3D tag;
-+	e->prio =3D prio;
-+	e->name_checked =3D 0;
-+	hashcpy(e->sha1, sha1);
-+	memcpy(e->path, path, len);
-+	e->next =3D names;
-+	names =3D e;
- }
-=20
- static int get_name(const char *path, const unsigned char *sha1, int f=
-lag, void *cb_data)
+ 	if (!strcasecmp(var+offset, "header"))
+ 		return WT_STATUS_HEADER;
++	if (!strcasecmp(var+offset, "branch"))
++		return WT_STATUS_ONBRANCH;
+ 	if (!strcasecmp(var+offset, "updated")
+ 		|| !strcasecmp(var+offset, "added"))
+ 		return WT_STATUS_UPDATED;
+diff --git a/t/t7508-status.sh b/t/t7508-status.sh
+index c9300f3..d755e2a 100755
+--- a/t/t7508-status.sh
++++ b/t/t7508-status.sh
+@@ -386,7 +386,7 @@ test_expect_success 'setup unique colors' '
+ '
+ 
+ cat >expect <<\EOF
+-# On branch master
++# On branch <MAGENTA>master<RESET>
+ # Changes to be committed:
+ #   (use "git reset HEAD <file>..." to unstage)
+ #
+diff --git a/wt-status.c b/wt-status.c
+index fc2438f..ffbbb8f 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -13,14 +13,15 @@
+ #include "submodule.h"
+ 
+ static char default_wt_status_colors[][COLOR_MAXLEN] = {
+-	GIT_COLOR_NORMAL, /* WT_STATUS_HEADER */
+-	GIT_COLOR_GREEN,  /* WT_STATUS_UPDATED */
+-	GIT_COLOR_RED,    /* WT_STATUS_CHANGED */
+-	GIT_COLOR_RED,    /* WT_STATUS_UNTRACKED */
+-	GIT_COLOR_RED,    /* WT_STATUS_NOBRANCH */
+-	GIT_COLOR_RED,    /* WT_STATUS_UNMERGED */
+-	GIT_COLOR_GREEN,  /* WT_STATUS_LOCAL_BRANCH */
+-	GIT_COLOR_RED,    /* WT_STATUS_REMOTE_BRANCH */
++	GIT_COLOR_NORMAL,  /* WT_STATUS_HEADER */
++	GIT_COLOR_MAGENTA, /* WT_STATUS_ONBRANCH */
++	GIT_COLOR_GREEN,   /* WT_STATUS_UPDATED */
++	GIT_COLOR_RED,     /* WT_STATUS_CHANGED */
++	GIT_COLOR_RED,     /* WT_STATUS_UNTRACKED */
++	GIT_COLOR_RED,     /* WT_STATUS_NOBRANCH */
++	GIT_COLOR_RED,     /* WT_STATUS_UNMERGED */
++	GIT_COLOR_GREEN,   /* WT_STATUS_LOCAL_BRANCH */
++	GIT_COLOR_RED,     /* WT_STATUS_REMOTE_BRANCH */
+ };
+ 
+ static const char *color(int slot, struct wt_status *s)
+@@ -625,7 +626,8 @@ static void wt_status_print_tracking(struct wt_status *s)
+ 
+ void wt_status_print(struct wt_status *s)
  {
- 	int might_be_tag =3D !prefixcmp(path, "refs/tags/");
--	struct commit *commit;
--	struct object *object;
- 	unsigned char peeled[20];
- 	int is_tag, prio;
-=20
-@@ -110,16 +107,10 @@ static int get_name(const char *path, const unsig=
-ned char *sha1, int flag, void
- 		return 0;
-=20
- 	if (!peel_ref(path, peeled) && !is_null_sha1(peeled)) {
--		commit =3D lookup_commit_reference_gently(peeled, 1);
--		if (!commit)
--			return 0;
--		is_tag =3D !!hashcmp(sha1, commit->object.sha1);
-+		is_tag =3D !!hashcmp(sha1, peeled);
- 	} else {
--		commit =3D lookup_commit_reference_gently(sha1, 1);
--		object =3D parse_object(sha1);
--		if (!commit || !object)
--			return 0;
--		is_tag =3D object->type =3D=3D OBJ_TAG;
-+		hashcpy(peeled, sha1);
-+		is_tag =3D 0;
+-	const char *branch_color = color(WT_STATUS_HEADER, s);
++	const char *branch_color = color(WT_STATUS_ONBRANCH, s);
++	const char *branch_status_color = color(WT_STATUS_HEADER, s);
+ 
+ 	if (s->branch) {
+ 		const char *on_what = "On branch ";
+@@ -634,11 +636,12 @@ void wt_status_print(struct wt_status *s)
+ 			branch_name += 11;
+ 		else if (!strcmp(branch_name, "HEAD")) {
+ 			branch_name = "";
+-			branch_color = color(WT_STATUS_NOBRANCH, s);
++			branch_status_color = color(WT_STATUS_NOBRANCH, s);
+ 			on_what = "Not currently on any branch.";
+ 		}
+ 		color_fprintf(s->fp, color(WT_STATUS_HEADER, s), "# ");
+-		color_fprintf_ln(s->fp, branch_color, "%s%s", on_what, branch_name);
++		color_fprintf(s->fp, branch_status_color, "%s", on_what);
++		color_fprintf_ln(s->fp, branch_color, "%s", branch_name);
+ 		if (!s->is_initial)
+ 			wt_status_print_tracking(s);
  	}
-=20
- 	/* If --all, then any refs are used.
-@@ -142,7 +133,7 @@ static int get_name(const char *path, const unsigne=
-d char *sha1, int flag, void
- 		if (!prio)
- 			return 0;
- 	}
--	add_to_known_names(all ? path + 5 : path + 10, commit, prio, sha1);
-+	add_to_known_names(all ? path + 5 : path + 10, peeled, prio, sha1);
- 	return 0;
- }
-=20
-@@ -228,7 +219,7 @@ static void describe(const char *arg, int last_one)
- 	unsigned char sha1[20];
- 	struct commit *cmit, *gave_up_on =3D NULL;
- 	struct commit_list *list;
--	struct commit_name *n;
-+	struct commit_name *n, *e;
- 	struct possible_tag all_matches[MAX_TAGS];
- 	unsigned int match_cnt =3D 0, annotated_cnt =3D 0, cur_match;
- 	unsigned long seen_commits =3D 0;
-@@ -240,7 +231,12 @@ static void describe(const char *arg, int last_one=
-)
- 	if (!cmit)
- 		die("%s is not a valid '%s' object", arg, commit_type);
-=20
--	n =3D cmit->util;
-+	n =3D NULL;
-+	for (e =3D names; e; e =3D e->next) {
-+		if (hashcmp(e->peeled, cmit->object.sha1) =3D=3D 0 &&
-+		    replace_name(n, e->prio, e->sha1, &e->tag))
-+			n =3D e;
-+	}
- 	if (n && (tags || all || n->prio =3D=3D 2)) {
- 		/*
- 		 * Exact match to an existing ref.
-@@ -259,6 +255,12 @@ static void describe(const char *arg, int last_one=
-)
- 	if (debug)
- 		fprintf(stderr, "searching to describe %s\n", arg);
-=20
-+	for (e =3D names; e; e =3D e->next) {
-+		struct commit *c =3D lookup_commit_reference_gently(e->peeled, 1);
-+		if (c && replace_name(c->util, e->prio, e->sha1, &e->tag))
-+			c->util =3D e;
-+	}
-+
- 	list =3D NULL;
- 	cmit->object.flags =3D SEEN;
- 	commit_list_insert(cmit, &list);
-@@ -418,8 +420,8 @@ int cmd_describe(int argc, const char **argv, const=
- char *prefix)
- 		return cmd_name_rev(i + argc, args, prefix);
- 	}
-=20
--	for_each_ref(get_name, NULL);
--	if (!found_names && !always)
-+	for_each_rawref(get_name, NULL);
-+	if (!names && !always)
- 		die("No names found, cannot describe anything.");
-=20
- 	if (argc =3D=3D 0) {
---=20
-1.7.3.2
+diff --git a/wt-status.h b/wt-status.h
+index 9df9c9f..2457f20 100644
+--- a/wt-status.h
++++ b/wt-status.h
+@@ -7,6 +7,7 @@
+ 
+ enum color_wt_status {
+ 	WT_STATUS_HEADER = 0,
++	WT_STATUS_ONBRANCH,
+ 	WT_STATUS_UPDATED,
+ 	WT_STATUS_CHANGED,
+ 	WT_STATUS_UNTRACKED,
+-- 
+1.7.3.3.gc2223.dirty
