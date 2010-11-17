@@ -1,76 +1,100 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 09/10] t3404 (rebase -i): introduce helper to check
- position of HEAD
-Date: Wed, 17 Nov 2010 09:55:46 -0800
-Message-ID: <7vd3q3g7h9.fsf@alter.siamese.dyndns.org>
-References: <1286136014-7728-1-git-send-email-newren@gmail.com>
- <1286136014-7728-16-git-send-email-newren@gmail.com>
- <20101031014654.GC29456@burratino> <7vr5f73umz.fsf@alter.siamese.dyndns.org>
- <20101031072640.GA11483@burratino> <20101031074030.GJ11483@burratino>
+Subject: Re: [PATCH 1/2] log.decorate: accept 0/1 bool values
+Date: Wed, 17 Nov 2010 11:36:30 -0800
+Message-ID: <7v4obfg2td.fsf@alter.siamese.dyndns.org>
+References: <20101117170045.GA4108@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Elijah Newren <newren@gmail.com>, git@vger.kernel.org,
-	avarab@gmail.com
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 17 18:56:12 2010
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Nov 17 20:36:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PImEl-0008Pc-13
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 18:56:03 +0100
+	id 1PInoD-0008PT-Jp
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 20:36:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S934983Ab0KQRz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Nov 2010 12:55:58 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56438 "EHLO
+	id S935246Ab0KQTgj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Nov 2010 14:36:39 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55893 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S934788Ab0KQRz6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Nov 2010 12:55:58 -0500
+	with ESMTP id S932364Ab0KQTgj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Nov 2010 14:36:39 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F0B583D47;
-	Wed, 17 Nov 2010 12:56:06 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4E5292D82;
+	Wed, 17 Nov 2010 14:36:46 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=8oJPZzE5r5oNQX5naNRUA8p6oGs=; b=YpT/HnUPi9H6uCzr6yXqd0m
-	7QtTp7rgotCvynhTTbVlfcEodBQforlUYa5MTCTsBGywwELATzYBzloFJ7Imj5y6
-	TdUXdhXI3kY33DUW7AqSHv8qYVISsnBoGuSdmSc9x52PsSs9nMhdipBraUftu9pL
-	U5UMGXfloUfSYhwGZK5U=
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=O6VrPGDsqp8oC/YHl5dvNDov++s=; b=oRPrXa
+	0UhYRzl4YAeADA5jA9YTUHIbWAHk8MemdqKWFKr4qbbBI9PB1ScgIfdYqscGR33H
+	Kyd6T37UBD9bKOvnVPqlot8iw6i8Wkq2Y8MhTALjrWSFm87YGG7Bmr65Desfnf2e
+	3wZYlDpELOHf3hf/ZOTPCMnLWQcPBV84yYRnM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=RJJ7GaDVAoSDkjhusv3f+shYJ3Y0sBspwiDd4Uj8EUFLWWif1
-	Ji9D5IkD7ZxAdFKEOTG27/MBXgHa92zCGflOWE/f2DGU+BjQ/qcxtQIAxhpDN0XC
-	BSoc+VG0VbYrwMKEv1G6il+An9l9/heBvO0Ec+pYEEygws/SQkZmEFH1cU=
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=r1mP1qtMJXOC5A2FLGBXnGghCsEqZLZ4
+	Q5Y7Ssypdk8X/0vdw0tu+njYoTX/4fq6ix+poX0a58X3M9/lieya0ryvGL75TrgR
+	JbVccPWzlpwaYvvNuTGXPyxrwFB1aFg2ahSVtYDwe2304Esw/IX/ZmWL8T4QaSm3
+	fYmll4ID3iI=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A3DC13D46;
-	Wed, 17 Nov 2010 12:56:02 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2DEA02D81;
+	Wed, 17 Nov 2010 14:36:44 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5AB073D3F; Wed, 17 Nov 2010
- 12:55:57 -0500 (EST)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 382BE2D7B; Wed, 17 Nov 2010
+ 14:36:40 -0500 (EST)
+In-Reply-To: <20101117170045.GA4108@sigill.intra.peff.net> (Jeff King's
+ message of "Wed\, 17 Nov 2010 12\:00\:45 -0500")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F134B5DC-F273-11DF-96F7-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 02391C48-F282-11DF-B67F-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161630>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> The same code to check the position of HEAD is used by several
-> tests in this script.  Factor it out as a function and simplify it.
+> We cannot simply add 0/1 support to git_config_maybe_bool.
+> That would confuse git_config_bool_or_int, which may want to
+> distinguish the integer values "0" and "1" from bools.
 
-That rationale makes sense, but why use describe for it, especially if the
-helper is called "cmp-rev"?  The tests here are not about catching
-breakages in describe.
+... e.g. number one spelled as "1" do mean one not true in contexts like
+status.submodulesummary, where "true" means "unlimited" and "1" means
+"limit to one".  It surely is necessary to avoid breakage there.
 
-When we later want to move this helper to test-lib.sh, some potential
-callers may find it inconvenient that use of describe robs the ability to
-tell annotated tags from bare commits.
+A caller that uses git_config_maybe_bool() expects to see 0/1 when the
+input looks like a boolean, and your patch looks like the right thing to
+do.
 
-> +test_cmp_rev () {
-> +	git describe --always --tags "$1" >expect.rev &&
-> +	git describe --always --tags "$2" >actual.rev &&
-> +	test_cmp expect.rev actual.rev
-> +}
+The repertoire of parsers that involve elements that are possibly boolean
+are now:
+
+ - git_config_bool(): takes "0/false/no/..." or "$n/true/yes/..." (where
+   any non-zero number $n is taken as true [*1*]), or more traditional
+
+   [section]
+       var
+
+   without any equal sign, which means true.  Errors out if the input is
+   not a boolean.
+
+ - git_config_maybe_bool(): similar, and returns -1 (not a bool), 0
+   (false) and 1 (true).  "0" is false, "1" is true.  But all other
+   numbers are not boolean;
+
+ - git_config_bool_or_int(): the caller can tell if the value was boolean.
+   "0" and "1" are integers, and not boolean.  Errors out if the input is
+   not bool nor int.
+
+Perhaps we would want to add Documentation/technical/api-config.txt
+someday?   Hint, hint....
+
+
+[Footnote]
+
+*1* I doubt anybody is insane enough to have an existing configuration
+file that spells "true" with "2" (or "100"), so it might be ok to tighten
+the rule after the fact a bit here to take only "1" as true from purist's
+point of view, but I do not think the upside outweighs possible breakage.
