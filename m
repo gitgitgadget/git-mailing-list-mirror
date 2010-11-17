@@ -1,88 +1,91 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: groff .ft command use in asciidoc
-Date: Wed, 17 Nov 2010 04:15:16 -0600
-Message-ID: <20101117101516.GA12416@burratino>
-References: <20101117095233.GA23817@basil.fritz.box>
+From: Matthijs Kooijman <matthijs@stdin.nl>
+Subject: Re: Versioning configuration files on a server: fatal: Unable to
+	create '//etc/.git/index.lock': No such file or directory
+Date: Wed, 17 Nov 2010 12:20:42 +0100
+Message-ID: <20101117112042.GX22067@login.drsnuggles.stderr.nl>
+References: <AANLkTi=UPWTeZP9uF+FGtsSs7wH3AmwdeLtsPJQnKvez@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Chris Johnsen <chris_johnsen@pobox.com>
-To: Andi Kleen <andi@firstfloor.org>
-X-From: git-owner@vger.kernel.org Wed Nov 17 11:16:11 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="cQhetzcoY2fnMuoN"
+Cc: git@vger.kernel.org
+To: Albert Strasheim <fullung@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 17 12:20:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIf3j-0005v3-93
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 11:16:11 +0100
+	id 1PIg4J-0005VT-Qn
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 12:20:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932541Ab0KQKQF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Nov 2010 05:16:05 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:60651 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750736Ab0KQKQD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Nov 2010 05:16:03 -0500
-Received: by gwj17 with SMTP id 17so975441gwj.19
-        for <git@vger.kernel.org>; Wed, 17 Nov 2010 02:16:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=wP65rAn44UWANsT6rcW8zzfFB+j8Klaoe+2ElcaWkO8=;
-        b=HiZ2YQN8gSSd3MyBnPYLo6rfkrVJe0erg+c1Kc0G/toucVF2+m0S9CTLOCOVX5GZvA
-         iPLiTErnR1aDihwcS6emZxvFdHLPqd8BYAwN+rVs9prr9e36AzLMiFdT1DlpMs76Lfpl
-         5cuQ9JjQkKKGliLzkezQd0H2E/OqLdpntpckM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=gqrDkPXFSQBZfuQSsjpUf2FMXPlLBkwXOo0qPMcMoF9i3avnb2oGl8XXb7LFpIhCwB
-         YbbNmJ+NYD5mwgAnVOtWH4FTSf+z6oebOAGWKfagPYCOZ8gF4BqK7W7PeTs5/zcCeqgT
-         vd51GOOzMy8wCFOxgZVes4N7ZhfcJ/oECNWls=
-Received: by 10.151.43.10 with SMTP id v10mr13746564ybj.421.1289988960039;
-        Wed, 17 Nov 2010 02:16:00 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id 43sm1487046yhl.37.2010.11.17.02.15.57
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 17 Nov 2010 02:15:58 -0800 (PST)
+	id S934050Ab0KQLUq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Nov 2010 06:20:46 -0500
+Received: from drsnuggles.stderr.nl ([94.142.244.14]:51137 "EHLO
+	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932962Ab0KQLUp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Nov 2010 06:20:45 -0500
+Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
+	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
+	(envelope-from <matthijs@stdin.nl>)
+	id 1PIg4A-0006fW-Pg; Wed, 17 Nov 2010 12:20:43 +0100
+Received: (nullmailer pid 25634 invoked by uid 1000);
+	Wed, 17 Nov 2010 11:20:42 -0000
+Mail-Followup-To: Albert Strasheim <fullung@gmail.com>, git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20101117095233.GA23817@basil.fritz.box>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <AANLkTi=UPWTeZP9uF+FGtsSs7wH3AmwdeLtsPJQnKvez@mail.gmail.com>
+X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
+X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Score: -2.6 (--)
+X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
+	pts  rule name              description
+	---- ---------------------- -------------------------------------------
+	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161609>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161610>
 
-Hi,
 
-Andi Kleen wrote:
+--cQhetzcoY2fnMuoN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-> The git manpages on my opensuse 11.3 (git 1.7.1-1.14)
-> frequently use the .ft command the opensuse groff does not 
-> render.
-> 
-> For example from the final output of "man git-commit":
-> 
->            .ft C
->            $ edit hello.c
->            $ git rm goodbye.c
->            $ git add hello.c
->            $ git commit
->            .ft
+Hey,
 
-This is in my opinion a bug: unless you use ASCIIDOC_NO_ROFF, git's
-asciidoc.conf will include raw roff directives in the docbook markup
-it generates.  And then docbook will escape the periods, producing
-the output you see.
+> su
+> cd /
+> git init
 
-The workaround is very simple: set ASCIIDOC_NO_ROFF to nonempty
-when you build documentation.
+I've been using git for exactly this purpose succesfully for a while now
+(git 1.5.6.5 from Debian stable and I think also 1.7.2.3 from Debian
+testing). The only problem I've found was that, with the former version,
+a lot of operations need to happen while the current dir is /, otherwise
+it wouldn't find the git repository properly (or do other weird stuff).
+This problem was gone in the latter version.
 
-I think the only reason this is not the default is that no one has
-tested it with old DocBook XSL versions, but I'm not sure.
-Documentation/Makefile has some notes about this.
+> fatal: Unable to create '//etc/.git/index.lock': No such file or directory
 
-Hope that helps,
-Jonathan
+This sounds like git assumes /etc/.git exists, but it really doesn't.
+Not sure why that happens.
+
+Gr.
+
+Matthijs
+
+--cQhetzcoY2fnMuoN
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkzjuooACgkQz0nQ5oovr7y32QCfb4JYlNMFqgsLJ52fvMZYjpi6
+dK8AniJ/H2dx38v2LfqsEXGIs7hlz72x
+=ZO/X
+-----END PGP SIGNATURE-----
+
+--cQhetzcoY2fnMuoN--
