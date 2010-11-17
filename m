@@ -1,91 +1,202 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv7.2 4/4] gitweb: Minimal testing of gitweb caching
-Date: Thu, 18 Nov 2010 00:12:22 +0100
-Message-ID: <201011180012.23294.jnareb@gmail.com>
-References: <201010311021.55917.jnareb@gmail.com> <201011130101.51116.jnareb@gmail.com> <7vk4kbefv8.fsf@alter.siamese.dyndns.org>
+From: Anders Kaseorg <andersk@ksplice.com>
+Subject: =?UTF-8?Q?=5BPATCH=5D_describe=3A_Don=E2=80=99t_look_up_commits_with_--exact-match?=
+Date: Wed, 17 Nov 2010 18:33:06 -0500 (EST)
+Message-ID: <alpine.DEB.2.02.1011171830050.14285@dr-wily.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
+Content-Type: TEXT/PLAIN; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, John 'Warthog9' Hawley <warthog9@kernel.org>,
-	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
-	Petr Baudis <pasky@ucw.cz>, admin@repo.or.cz
+Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 18 00:12:41 2010
+X-From: git-owner@vger.kernel.org Thu Nov 18 00:33:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIrBA-0001Km-Po
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 00:12:41 +0100
+	id 1PIrVK-00077h-5J
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 00:33:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S964806Ab0KQXMh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Nov 2010 18:12:37 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:36809 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S935679Ab0KQXMe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Nov 2010 18:12:34 -0500
-Received: by bwz15 with SMTP id 15so2145209bwz.19
-        for <git@vger.kernel.org>; Wed, 17 Nov 2010 15:12:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=35E9UEkFU85a9+wUUaYq2cVj+YiEnN42pWyFSyXIU24=;
-        b=nKf01qUVqM6V1qHbsjgLAHRkvxMlIbJcbLnBNIziWSd+LMAbM6EFEHcDzZ3ov7kB14
-         RHQ7xg9QsUjX/uRIKcm1PwOayyImjpAMrY2gzJMtZxUl3w/snOEtNL+lKIfaCo/PtA7r
-         13BCeJ6ToM4nL+XdLcwJYfbbjP8EPwRZm6mtg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=IoJ+5xYv2YOtPwy+/XWSW63kw72GCao8ftWbyfPJzqrTm/7bydiiXC4LwEAcfhxQ90
-         izIVkHwZPe0nz8LXcnZiaWLNfy9kwpFJiVWhcd6nknoTwfjE0WvrMDYTfx/hEJgOCJ6M
-         R+ErNhVYvaPr44F6Jhl74EntI+fOv3tEQ4xZM=
-Received: by 10.204.27.20 with SMTP id g20mr9996906bkc.114.1290035553372;
-        Wed, 17 Nov 2010 15:12:33 -0800 (PST)
-Received: from [192.168.1.13] (abva140.neoplus.adsl.tpnet.pl [83.8.198.140])
-        by mx.google.com with ESMTPS id a25sm1653715bks.20.2010.11.17.15.12.30
+	id S1751963Ab0KQXdK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Nov 2010 18:33:10 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:43374 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751023Ab0KQXdJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 17 Nov 2010 18:33:09 -0500
+Received: by qwi2 with SMTP id 2so192493qwi.19
+        for <git@vger.kernel.org>; Wed, 17 Nov 2010 15:33:08 -0800 (PST)
+Received: by 10.229.89.202 with SMTP id f10mr8072665qcm.212.1290036788316;
+        Wed, 17 Nov 2010 15:33:08 -0800 (PST)
+Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
+        by mx.google.com with ESMTPS id t17sm1903501qcp.38.2010.11.17.15.33.07
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 17 Nov 2010 15:12:31 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vk4kbefv8.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+        Wed, 17 Nov 2010 15:33:07 -0800 (PST)
+X-X-Sender: andersk@dr-wily.mit.edu
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161639>
 
-Dnia =B6roda 17. listopada 2010 23:37, Junio C Hamano napisa=B3:
-> Jakub Narebski <jnareb@gmail.com> writes:
->=20
-> > +gitweb_enable_caching () {
-> > +	test_expect_success 'enable caching' '
-> > +		cat >>gitweb_config.perl <<-\EOF &&
-> > +		our $caching_enabled =3D 1;
-> > +		our $minCacheTime =3D 60*60*24*7*30;     # very long expiration =
-time for tests (a month)
->=20
-> Does your month have 210 days in it?
->=20
-> > +		our $maxCacheTime =3D 60*60*24*7*30*365; # upper bound for dynam=
-ic (adaptive) caching
->=20
-> Likewise, is this 210 years?  Does this bust 32-bit time_t somewhere?
+This makes =E2=80=98git describe --exact-match HEAD=E2=80=99 about 15 t=
+imes faster on
+a cold cache (2.3s instead of 35s) in a linux-2.6 repository with many
+packed tags.  That=E2=80=99s a huge win for the interactivity of the __=
+git_ps1
+shell prompt helper.
 
-Ooops.
+Signed-off-by: Anders Kaseorg <andersk@ksplice.com>
+---
+ builtin/describe.c |   64 ++++++++++++++++++++++++++------------------=
+-------
+ 1 files changed, 33 insertions(+), 31 deletions(-)
 
-Still, fixing this doesn't fix tests.  I think I'd have to make another
-extra commit, adding configure knob to turn off cacheWaitForUpdate()...
-
-
-Or perhaps I did something wrong when simplifying, but I have checked
-diff between full and simplified version (in comments in v7.1 series),
-and it doesn't look like it...
-
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 43caff2..1cdb831 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -22,7 +22,7 @@ static int tags;	/* Allow lightweight tags */
+ static int longformat;
+ static int abbrev =3D DEFAULT_ABBREV;
+ static int max_candidates =3D 10;
+-static int found_names;
++struct commit_name *names =3D NULL;
+ static const char *pattern;
+ static int always;
+ static const char *dirty;
+@@ -34,6 +34,8 @@ static const char *diff_index_args[] =3D {
+=20
+=20
+ struct commit_name {
++	struct commit_name *next;
++	unsigned char peeled[20];
+ 	struct tag *tag;
+ 	unsigned prio:2; /* annotated tag =3D 2, tag =3D 1, head =3D 0 */
+ 	unsigned name_checked:1;
+@@ -78,31 +80,26 @@ static int replace_name(struct commit_name *e,
+ }
+=20
+ static void add_to_known_names(const char *path,
+-			       struct commit *commit,
++			       const unsigned char *peeled,
+ 			       int prio,
+ 			       const unsigned char *sha1)
+ {
+-	struct commit_name *e =3D commit->util;
+ 	struct tag *tag =3D NULL;
+-	if (replace_name(e, prio, sha1, &tag)) {
+-		size_t len =3D strlen(path)+1;
+-		free(e);
+-		e =3D xmalloc(sizeof(struct commit_name) + len);
+-		e->tag =3D tag;
+-		e->prio =3D prio;
+-		e->name_checked =3D 0;
+-		hashcpy(e->sha1, sha1);
+-		memcpy(e->path, path, len);
+-		commit->util =3D e;
+-	}
+-	found_names =3D 1;
++	size_t len =3D strlen(path)+1;
++	struct commit_name *e =3D xmalloc(sizeof(struct commit_name) + len);
++	hashcpy(e->peeled, peeled);
++	e->tag =3D tag;
++	e->prio =3D prio;
++	e->name_checked =3D 0;
++	hashcpy(e->sha1, sha1);
++	memcpy(e->path, path, len);
++	e->next =3D names;
++	names =3D e;
+ }
+=20
+ static int get_name(const char *path, const unsigned char *sha1, int f=
+lag, void *cb_data)
+ {
+ 	int might_be_tag =3D !prefixcmp(path, "refs/tags/");
+-	struct commit *commit;
+-	struct object *object;
+ 	unsigned char peeled[20];
+ 	int is_tag, prio;
+=20
+@@ -110,16 +107,10 @@ static int get_name(const char *path, const unsig=
+ned char *sha1, int flag, void
+ 		return 0;
+=20
+ 	if (!peel_ref(path, peeled) && !is_null_sha1(peeled)) {
+-		commit =3D lookup_commit_reference_gently(peeled, 1);
+-		if (!commit)
+-			return 0;
+-		is_tag =3D !!hashcmp(sha1, commit->object.sha1);
++		is_tag =3D !!hashcmp(sha1, peeled);
+ 	} else {
+-		commit =3D lookup_commit_reference_gently(sha1, 1);
+-		object =3D parse_object(sha1);
+-		if (!commit || !object)
+-			return 0;
+-		is_tag =3D object->type =3D=3D OBJ_TAG;
++		hashcpy(peeled, sha1);
++		is_tag =3D 0;
+ 	}
+=20
+ 	/* If --all, then any refs are used.
+@@ -142,7 +133,7 @@ static int get_name(const char *path, const unsigne=
+d char *sha1, int flag, void
+ 		if (!prio)
+ 			return 0;
+ 	}
+-	add_to_known_names(all ? path + 5 : path + 10, commit, prio, sha1);
++	add_to_known_names(all ? path + 5 : path + 10, peeled, prio, sha1);
+ 	return 0;
+ }
+=20
+@@ -228,7 +219,7 @@ static void describe(const char *arg, int last_one)
+ 	unsigned char sha1[20];
+ 	struct commit *cmit, *gave_up_on =3D NULL;
+ 	struct commit_list *list;
+-	struct commit_name *n;
++	struct commit_name *n, *e;
+ 	struct possible_tag all_matches[MAX_TAGS];
+ 	unsigned int match_cnt =3D 0, annotated_cnt =3D 0, cur_match;
+ 	unsigned long seen_commits =3D 0;
+@@ -240,7 +231,12 @@ static void describe(const char *arg, int last_one=
+)
+ 	if (!cmit)
+ 		die("%s is not a valid '%s' object", arg, commit_type);
+=20
+-	n =3D cmit->util;
++	n =3D NULL;
++	for (e =3D names; e; e =3D e->next) {
++		if (hashcmp(e->peeled, cmit->object.sha1) =3D=3D 0 &&
++		    replace_name(n, e->prio, e->sha1, &e->tag))
++			n =3D e;
++	}
+ 	if (n && (tags || all || n->prio =3D=3D 2)) {
+ 		/*
+ 		 * Exact match to an existing ref.
+@@ -259,6 +255,12 @@ static void describe(const char *arg, int last_one=
+)
+ 	if (debug)
+ 		fprintf(stderr, "searching to describe %s\n", arg);
+=20
++	for (e =3D names; e; e =3D e->next) {
++		struct commit *c =3D lookup_commit_reference_gently(e->peeled, 1);
++		if (c && replace_name(c->util, e->prio, e->sha1, &e->tag))
++			c->util =3D e;
++	}
++
+ 	list =3D NULL;
+ 	cmit->object.flags =3D SEEN;
+ 	commit_list_insert(cmit, &list);
+@@ -418,8 +420,8 @@ int cmd_describe(int argc, const char **argv, const=
+ char *prefix)
+ 		return cmd_name_rev(i + argc, args, prefix);
+ 	}
+=20
+-	for_each_ref(get_name, NULL);
+-	if (!found_names && !always)
++	for_each_rawref(get_name, NULL);
++	if (!names && !always)
+ 		die("No names found, cannot describe anything.");
+=20
+ 	if (argc =3D=3D 0) {
 --=20
-Jakub Narebski
-Poland
+1.7.3.2
