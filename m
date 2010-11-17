@@ -1,98 +1,92 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH 4/4] builtin: use builtin.h for all builtin commands
-Date: Wed, 17 Nov 2010 21:08:29 +0100
-Message-ID: <AANLkTikw0+FGJmj7C0B9J_3ZVXrbqCw+UzyP3sqfyVdm@mail.gmail.com>
+Date: Wed, 17 Nov 2010 14:15:09 -0600
+Message-ID: <20101117201509.GA27452@burratino>
 References: <1289745857-16704-1-git-send-email-avarab@gmail.com>
-	<1289745857-16704-5-git-send-email-avarab@gmail.com>
-	<7vzkt7enfn.fsf@alter.siamese.dyndns.org>
+ <1289745857-16704-5-git-send-email-avarab@gmail.com>
+ <7vzkt7enfn.fsf@alter.siamese.dyndns.org>
+ <AANLkTikw0+FGJmj7C0B9J_3ZVXrbqCw+UzyP3sqfyVdm@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Johannes Sixt <j.sixt@viscovery.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 17 21:08:37 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 17 21:15:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIoJ2-0005wk-7N
-	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 21:08:36 +0100
+	id 1PIoQB-00036v-AX
+	for gcvg-git-2@lo.gmane.org; Wed, 17 Nov 2010 21:15:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S935435Ab0KQUIb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Nov 2010 15:08:31 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:48988 "EHLO
+	id S933874Ab0KQUPy convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 17 Nov 2010 15:15:54 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:53783 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933888Ab0KQUIa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 17 Nov 2010 15:08:30 -0500
-Received: by fxm6 with SMTP id 6so918536fxm.19
-        for <git@vger.kernel.org>; Wed, 17 Nov 2010 12:08:29 -0800 (PST)
+	with ESMTP id S1754601Ab0KQUPy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Nov 2010 15:15:54 -0500
+Received: by fxm6 with SMTP id 6so925517fxm.19
+        for <git@vger.kernel.org>; Wed, 17 Nov 2010 12:15:52 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=WkPQw5gkFQJ+8EX/RVq3f2Kw7TWZF57lggn/Igm55qs=;
-        b=XgLB5WSjpcbhlTLpAgdjqyisbpi6s5SeWb78tOKhxugi7zorksjQlMBVpigCmgpF2b
-         YigPRdgjBZkFkxvM84kcACuv5Le5MqocWfbIBgjivNV80aARL3SwBIav6t3UUdi/K9/N
-         lGwIHt9r/hDSiqJNDRYf/mo2qiVso3XEiJZ6A=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=v36ygh0kn5gGo7o3QKE8YKTisPgjlzj3OCbjJAj+eA4=;
+        b=omgkw4a7cPQ19Cn3TFrhoQ/d6/ppe3Re7PC0DHFo7z8OJbU7ZSdive/x3X3eWbDvXm
+         6Ioe128XnQDhAeHELMHfhv67XKNB7eg67hi7c4Z6JXBX/Fw6pGrd6DnlkaOtPj9tlX83
+         gS5NlTfMp6Z3pyTGrS39XtfPMGgy/HlrO4e28=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=GWdgBED9qdH/CQOUQUUyPDUyotWeMS5LSzS3+LtBEV1DmJ1d9BR1qkXsvExyTjqcmH
-         RF3E7GlYmlwzMWhFUhr1djqT8l13ZtjcCBx+qpL6KLmPKCfXWt2JXu8N6z85zBa1C4Yn
-         kmGrUkOgth6WXF83CeFFSWqSt+r4ZAEn5Jun4=
-Received: by 10.223.108.147 with SMTP id f19mr7373490fap.68.1290024509181;
- Wed, 17 Nov 2010 12:08:29 -0800 (PST)
-Received: by 10.223.86.134 with HTTP; Wed, 17 Nov 2010 12:08:29 -0800 (PST)
-In-Reply-To: <7vzkt7enfn.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Jss9hA1DfO7u2ZOODuGaMQ0wwyfKfi+RcbLDFEAC8UHq9hycrvYvrZqaEWEo479qYK
+         U2TeWSdcqkMmwzuTaJoQV1gINKHvi8dpEIVJE2nP841RuCV/339zLRLDTterdqD1gVEk
+         qMIHvE+1+LVjcsGMu3jv1SQoT27D2hf8lf/Lc=
+Received: by 10.223.78.199 with SMTP id m7mr7402925fak.11.1290024952709;
+        Wed, 17 Nov 2010 12:15:52 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id y1sm1304222fak.39.2010.11.17.12.15.50
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 17 Nov 2010 12:15:51 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikw0+FGJmj7C0B9J_3ZVXrbqCw+UzyP3sqfyVdm@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161633>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161634>
 
-On Wed, Nov 17, 2010 at 20:54, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason =C2=A0<avarab@gmail.com> write=
-s:
->
->> Change the builtin/*.c files and wt-status.c files which weren't usi=
-ng
->> builtin.h to use it, also remove any git-compat-util.h, strbuf.h and
->> cache.h from those files. We can trust on builtin.h including them.
->
-> As I already said, buitlin/*.c is fine, but wt-status.c is very dubio=
-us.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
 
-So I should resend this patch with `#include "gettext.h"` in
-wt-status.c and the rest unchanged, along with a new commit message?
+> I can do that too. I just got the impression previously that we wante=
+d
+> to only include things in headers that made sense according to their
+> name. Gettext has nothing to do with the cache, and cache.h itself
+> doesn't need it.
 
->> This impeded my efforts to gettextize git, since I'd otherwise have =
-to
->> add gettext.h to all of these. Using builtin.h is a good idea in any
->> case, since it's defining the prototypes for the cmd_* functions tha=
-t
->> these files define.
->
-> What about non-builtin commands? =C2=A0Don't they need to include get=
-text.h
-> anyway?
+A little bit of history: git was once called dircache.  cache.h is
+practically speaking git.h, which is why it declares:
 
-In my patch to add gettext infrastructure I add gettext.h to
-imap-send.c and friends which have their own main.
+ - get_git_dir
+ - ALLOC_GROW
+ - zlib_compression_level
+ - safe_crlf
+ - mksnpath
+ - git_pathdup
+ - hashclr
+ - validate_headref
+ - peel_to_type
+ - approxidate_careful
+ - packed_git
+ - path_match
+ - fsync_or_die
+ - setup_pager
+ - checkout_fast_forward
 
-> I would have expected that gettext.h would be included from cache.h, =
-so
-> that all gitty commands, whether they are builtin or standalone, have
-> access to the symbols defined in it.
-
-I can do that too. I just got the impression previously that we wanted
-to only include things in headers that made sense according to their
-name. Gettext has nothing to do with the cache, and cache.h itself
-doesn't need it.
-
-But if we want to stick it in there that's fine by me, I just care
-about the ends, not the means. So just say which way you want it and I
-can cook up a patch.
+to list a random assortment.  See "A birds-eye view of Git's source
+code" in the user manual for more on this.
