@@ -1,71 +1,68 @@
-From: "Jan Hudec" <bulb@ucw.cz>
-Subject: [BUG?] git checkout -b removes MERGE_HEAD
-Date: Thu, 18 Nov 2010 08:15:23 +0100 (CET)
-Message-ID: <456aec650e66bba518b8a5ec88c88a6b.squirrel@artax.karlin.mff.cuni.cz>
+From: Tor Arntsen <tor@spacetec.no>
+Subject: Re: patch for AIX system
+Date: Thu, 18 Nov 2010 10:13:17 +0100
+Message-ID: <AANLkTi=94zL-nuBeGcrAdWVBu6VTuqX3xcM9oGNNUwvQ@mail.gmail.com>
+References: <4CE38472.8070206@Nemec-online.de>
+	<7vr5ejg7oi.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 18 08:40:55 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Norbert Nemec <Norbert@nemec-online.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 18 10:13:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIz6z-0005gJ-ER
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 08:40:53 +0100
+	id 1PJ0YZ-0007DR-Hw
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 10:13:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755220Ab0KRHks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Nov 2010 02:40:48 -0500
-Received: from artax.karlin.mff.cuni.cz ([195.113.26.195]:40976 "EHLO
-	artax.karlin.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755023Ab0KRHks (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Nov 2010 02:40:48 -0500
-Received: from artax.karlin.mff.cuni.cz (localhost [127.0.0.1])
-	by artax.karlin.mff.cuni.cz (Postfix) with ESMTP id DEFB89809B
-	for <git@vger.kernel.org>; Thu, 18 Nov 2010 08:15:23 +0100 (CET)
-Received: from 62.24.65.159
-        (SquirrelMail authenticated user jhud7196)
-        by artax.karlin.mff.cuni.cz with HTTP;
-        Thu, 18 Nov 2010 08:15:23 +0100 (CET)
-User-Agent: SquirrelMail/1.4.15
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1754681Ab0KRJNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Nov 2010 04:13:21 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:49484 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751145Ab0KRJNS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Nov 2010 04:13:18 -0500
+Received: by qwf7 with SMTP id 7so18154qwf.19
+        for <git@vger.kernel.org>; Thu, 18 Nov 2010 01:13:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:sender:received
+         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
+         :from:to:cc:content-type;
+        bh=okf/lVIm+zUuxU8E+gFRLGJ8Ex43Cbuwaz092uwupj8=;
+        b=dSa/LcmlJw2WrWH/qT9D6Ip5sBsUr0C+8LEDdb6QSd1yOIKWRSWorc8Y04eOwnJvzC
+         IML48o6DKducNHVzgH165UnkktE5H3eoblOUtWfYAUed91o9O8qkefaZ7795Kc4QOqlf
+         gkEntV+ccW7PPBsJiTZWak1zXNPTp1qp0ukcU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        b=QATLlESbd6/h9Zb20UbWokqs3zMpgBetWipjVv6grAqkqOiZbKfd2ztQfHjuF1fBvZ
+         fXrFWM+NB+tHWMe5jUo0t0bwrnXfZTpzFDmGx729AytMZUrHGYx0rzLmjMkiLEZJFxmv
+         GCFACAVrG79w6R6/zEEc+K5MJSKvDr+/44cMg=
+Received: by 10.229.81.148 with SMTP id x20mr370051qck.18.1290071597603; Thu,
+ 18 Nov 2010 01:13:17 -0800 (PST)
+Received: by 10.229.80.6 with HTTP; Thu, 18 Nov 2010 01:13:17 -0800 (PST)
+In-Reply-To: <7vr5ejg7oi.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: PTkRKXG6aPa3miHzWyyMJVfXLEQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161654>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161655>
 
-Hello all,
+On Wed, Nov 17, 2010 at 18:51, Junio C Hamano <gitster@pobox.com> wrote:
 
-I am not sure whether it is a bug or not, but it definitely did
-surprise me a lot. The use-case was as follows:
+> I'd defer this section to AIX experts; I've always assumed that people
+> on non-gnu platforms used ginstall, but perhaps AIX doesn't have one?
 
- - I checked out master and ran a merge from branch (let's call
-   it "branch"). It had a lot of conflicts, so I needed to test
-   the result well.
- - During the testing I found a problem, but it may have already
-   existed on master before the merge.
- - Therefore I needed to return to clean master, test it and return
-   to the merge. So I thought I'd commit the merge to a temporary
-   branch, test master again and merge the temporary to master if
-   the problem is not from the merge. So I did:
+All my AIX systems have the coreutils RPM from the IBM Toolbox
+installed (extra CD, or, these days, from ftp.software.ibm.com), so I
+never ran into the incompatible install issue.
+However, for those without coreutils a patch to make installbsd work
+(with comments from Junio taken into account) would be reasonable I
+guess. Particularly if the patch could be made so that it's easy
+enough to switch to coreutils install if you wish to.
 
-   $ git checkout -b temp
-   $ git commit
-
-   OOPS! It forgot it was a merge.
-
-Yes, I could have simply commited to master and reset --hard it
-back. But I didn't expect it to forget it was a merge in the first
-place. After all, it does NOT touch the index nor the working tree,
-so why should it clear the MERGE_HEAD and MERGE_MSG?
-
-So should this behaviour be changed?
-
-Thanks,
-Jan
-
--- 
-                                        - Jan Hudec <bulb@ucw.cz>
+-Tor
