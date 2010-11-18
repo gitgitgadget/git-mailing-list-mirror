@@ -1,94 +1,137 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: groff .ft command use in asciidoc
-Date: Thu, 18 Nov 2010 16:11:11 -0500
-Message-ID: <1290114671.2316.12.camel@drew-northup.unet.maine.edu>
-References: <20101117095233.GA23817@basil.fritz.box>
-	 <20101117101516.GA12416@burratino>  <ic3or7$dfi$1@dough.gmane.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Submodules or similar for exercise/exam management
+Date: Thu, 18 Nov 2010 22:20:15 +0100
+Message-ID: <4CE5988F.7050309@web.de>
+References: <201011181109.08345.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Alejandro Riveira =?ISO-8859-1?Q?Fern=E1ndez?= 
-	<ariveira@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 18 22:11:27 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>, in-gitvger@baka.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Nov 18 22:21:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJBlO-0008GR-8e
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 22:11:26 +0100
+	id 1PJBuh-0000nY-7d
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 22:21:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760475Ab0KRVLU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Nov 2010 16:11:20 -0500
-Received: from beryl.its.maine.edu ([130.111.32.94]:60985 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757054Ab0KRVLT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Nov 2010 16:11:19 -0500
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id oAILBHJs001132
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 18 Nov 2010 16:11:17 -0500
-In-Reply-To: <ic3or7$dfi$1@dough.gmane.org>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=2 Fuz1=2
-	Fuz2=2
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: oAILBHJs001132
-X-MailScanner: Found to be clean
-X-MailScanner-SpamScore: s
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1290719477.85165@KDLSayXyeJ5SnY0ogihocA
+	id S1760508Ab0KRVU6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Nov 2010 16:20:58 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:33793 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757271Ab0KRVU5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Nov 2010 16:20:57 -0500
+Received: from smtp08.web.de  ( [172.20.5.216])
+	by fmmailgate01.web.de (Postfix) with ESMTP id D189017A55A31;
+	Thu, 18 Nov 2010 22:20:19 +0100 (CET)
+Received: from [93.240.120.178] (helo=[192.168.178.29])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1PJBtz-0008SP-00; Thu, 18 Nov 2010 22:20:19 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <201011181109.08345.trast@student.ethz.ch>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+pJnDS/ilQoHoC73l9EfkpQfK+66x0R24lfJoC
+	J95mlqj7m6xvUgq9WMWXXji3FS+9oODK3GtIOt7D8sH7+CAB32
+	bb9h+u7YmkcJZrwY0emQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161712>
+
+Hi Thomas
+
+Am 18.11.2010 11:09, schrieb Thomas Rast:
+> The scenario is that we have a bunch of exercise questions stored in
+> one or several files, each living in a directory.  Then, we assemble1
+> those into exercise sheets (super-repos) spanning a group of questions
+> (submodules).
+
+That sounds like each directory is maintained by a different group of
+people and then there is another bunch of people choosing the content
+of the next exercise sheets, right?
+
+> We would like to track this in such a way that changes
+> to the questions propagate to other sheets (possibly in other
+> lectures) that use them.
+
+This could mean you would want an 'always-tip' mode for the
+submodules, or am I misunderstanding you here?
+
+> Training everyone in full git usage is probably not an option, so any
+> solution would have to have some frontend that can be explained
+> easily.
+
+Yup, makes sense (at least until something goes wrong, see 3). ;-)
+
+> The requirements we came up with are roughly:
+> 
+> 1) commit across all sub-repos at the same time (atomicity nice but
+>    optional)
+> 
+>   1b) tag across all sub-repos
+
+"git commit" and "git tag" could be taught the "--recurse-submodule"
+option (but the commit part only makes sense when "git branch" can
+do that too, so you have something to commit on. And I think you
+want to enable a - yet to be implemented - file-based recursive diff
+and status too, to see what changes your next commit will include).
+And until all that materializes for submodules, a script would have
+to do that.
+
+> 2) do recursive clone/update of one super-repo easily
+
+That will be handled by recursive checkout and is already achieved
+by "git clone --recursive" (but at least in the first version both
+don't support an "always-tip" mode).
+
+> 3) never need to be aware of repo boundaries or manipulate sub-repo
+
+I think that this requirement is the hardest for any solution I know
+of or can imagine, as you hit these boundaries sooner or later either
+when you want to commit, push and/or when you have to resolve merge
+conflicts.
+
+> 4) sanely cope with branches etc. in case the user wants them
+
+A "--recurse-submodules" option to "git-branch" might be what you
+want here, but as this isn't there yet a script will have to do that
+for now.
+
+> A sample workflow might be:
+> 
+>   foo clone git@example.com/some/super/repo
+>   # time passes
+>   cd repo
+>   foo update
+>   # work
+>   foo status
+>   foo diff
+>   foo commit -m 'one message fits all'
+>   # possibly, but this could also be commit --no-push instead
+>   foo push
+> 
+> Merges are expected to be rare but would happen every so often.
+> 
+> It seems repo can do (2) and (4) but violates (3) [requires use of
+> git-commit and others in the sub-repo].  git-subtree can do (1) and
+> (2) but probably violates (3) [need to rebase changes to sub-repo
+> branch] and (4).  Submodules can do (2) and (4) but violate (3) and
+> currently have no support for (1).  I think svn externals could do
+> (1)-(3) but violate (4) and probably (1b).
+> 
+> Has this been done before?  Or do we need to hack up a new wrapper
+> around submodules?
+
+If you would base that on submodule functionality, you would have
+to hack up a wrapper script for the foreseeable future because the
+"fully integrated" world view you seem to need is not worked on yet
+(and I didn't see anyone coming forward to do that).
+
+I took a cursory glance at "gitslave" Seth mentioned, it might do
+what you want, but I can't tell for sure as I never used it myself.
 
 
-On Thu, 2010-11-18 at 17:47 +0000, Alejandro Riveira Fern=C3=A1ndez wro=
-te:
-> On Wed, 17 Nov 2010 04:15:16 -0600, Jonathan Nieder wrote:
-=20
-> > This is in my opinion a bug: unless you use ASCIIDOC_NO_ROFF, git's
-> > asciidoc.conf will include raw roff directives in the docbook marku=
-p it
-> > generates.  And then docbook will escape the periods, producing the
-> > output you see.
-> >=20
-> > The workaround is very simple: set ASCIIDOC_NO_ROFF to nonempty whe=
-n you
-> > build documentation.
->=20
->  I use make quick-install-man which, afaik, installs man pages=20
-> "prerendered" from the man branch and i see the same artifact.
-> =20
->  So can those man pages be rendered with this workaraound?
-> =20
->  Thanks
-
-Out of curiosity I went ahead and ran that make script. I then ran the
-following in the directory that the manpage directories were written ou=
-t
-to (an alternate DESTDIR):
-
-[dnorthup@drew-northup man]$ grep -R "\.ft" *
-[dnorthup@drew-northup man]$=20
-
-Note that it returned nothing. This is based on the current git.git. (I
-just pulled to be sure of that...)
-
-As noted, all that make script essentially does is write out the
-manpages found in origin/man--so it matters not what my current platfor=
-m
-is.
-
-Run "man git-commit" in one terminal open up a second and run "ps ax |
-grep man" and report on the results.=20
-
---=20
--Drew Northup N1XIM
-   AKA RvnPhnx on OPN
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Jens
