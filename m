@@ -1,76 +1,80 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Versioning configuration files on a server: fatal: Unable to
- create '//etc/.git/index.lock': No such file or directory
-Date: Thu, 18 Nov 2010 23:07:39 +0700
-Message-ID: <AANLkTi=mf_1HaJ0qZJ4nG1=zti9CJdTZHAfhLayR4FRS@mail.gmail.com>
-References: <AANLkTi=UPWTeZP9uF+FGtsSs7wH3AmwdeLtsPJQnKvez@mail.gmail.com>
- <20101117112042.GX22067@login.drsnuggles.stderr.nl> <20101118155211.GE22067@login.drsnuggles.stderr.nl>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] branch: support sorting branches by mtime
+Date: Thu, 18 Nov 2010 11:13:51 -0500
+Message-ID: <20101118161351.GA19011@sigill.intra.peff.net>
+References: <1290090126-14471-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Albert Strasheim <fullung@gmail.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 18 17:08:15 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 18 17:14:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJ71z-0004XJ-2S
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 17:08:15 +0100
+	id 1PJ77c-0000N4-An
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 17:14:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759477Ab0KRQIH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Nov 2010 11:08:07 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:40201 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759451Ab0KRQIE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Nov 2010 11:08:04 -0500
-Received: by wyb28 with SMTP id 28so3392833wyb.19
-        for <git@vger.kernel.org>; Thu, 18 Nov 2010 08:08:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:content-type;
-        bh=T39dLLQRrC2Rblyw8F9wP0r9kmvIFiUc3slY5brXotg=;
-        b=WYASvdjKxYcK5SCyaLdoJAtGDX3fCgRHvuJMdHgahwQiQXQzy/dQEOROSyGEFwyVas
-         fRYxuF9a+yaAA/SUoeuNinSRWzdsLFeaTcKQ/UlWHQZqMM2jaMAQIsbCmF1PA06GhnMQ
-         V8xqraOCWsZ41i5K5/L+SnqTstCq2orjYUk34=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        b=N9KAy/N9fDm17xHNJTiSx83LSMa7oxEozM+8F3aFovjjjNpRFIQHgPwo0Ov81kfEbP
-         S+elCqzPx2NzKCf7Jj/k72vP0hofJ9PwwIOWhpkzq812JXoLBgO2VChF/DPHjpCHaW6z
-         39eJ1H5OwQVYU4GCetqxtP8v9jGNTPzKCHKD4=
-Received: by 10.216.166.68 with SMTP id f46mr3252328wel.26.1290096481173; Thu,
- 18 Nov 2010 08:08:01 -0800 (PST)
-Received: by 10.216.172.199 with HTTP; Thu, 18 Nov 2010 08:07:39 -0800 (PST)
-In-Reply-To: <20101118155211.GE22067@login.drsnuggles.stderr.nl>
+	id S932200Ab0KRQN6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Nov 2010 11:13:58 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:36904 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932185Ab0KRQN4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Nov 2010 11:13:56 -0500
+Received: (qmail 16308 invoked by uid 111); 18 Nov 2010 16:13:55 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 18 Nov 2010 16:13:55 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Nov 2010 11:13:51 -0500
+Content-Disposition: inline
+In-Reply-To: <1290090126-14471-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161680>
 
-On Thu, Nov 18, 2010 at 10:52 PM, Matthijs Kooijman <matthijs@stdin.nl> wrote:
-> Hi all,
->
->> I've been using git for exactly this purpose succesfully for a while now
->> (git 1.5.6.5 from Debian stable and I think also 1.7.2.3 from Debian
->> testing).
-> Coming back to the testing machine I was using this on, I see this
-> problem as well now. I'm pretty sure it wasn't there before, which would
-> mean it was introduced by a recent upgrade.
->
-> Checking the logs shows that I was running 1.7.1 before, and now 1.7.2.3
-> is broken. Downgrading to 1.7.1 indeed removes the problem.
->
-> I've rummaged around in the source a bit, haven't found the cause yet
-> (and I'm out of time now).
->
-> The issue also still occurs with a fairly recent git master (ca209065f:
-> completion: fix zsh check under bash with 'set -u').
+On Thu, Nov 18, 2010 at 09:22:06PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=
+=BB=8Dc Duy wrote:
 
-You may be interested in 72ec8ba (Support working directory located at
-root - 2010-02-14). t1509 reports the breakages. Unfortunately this
-kind of tests can't be run automatically
--- 
-Duy
+> I lost in my branches again while looking for a topic that I feel lik=
+e
+> working on tonight. Too old branches are out of question.
+>=20
+> This throwaway patch demonstrates the idea. I should have looked into
+> reflog for this kind of information, but my laziness won over me.
+
+I do something similar, but rather than using mtime, I sort by
+authordate, which for-each-ref supports already. In fact, the script I
+use is:
+
+-- >8 --
+#!/bin/sh
+
+format=3D'%(refname:short)'
+sortby=3Drefname
+set -- $(getopt vt "$@")
+while test $# -gt 0; do
+	case "$1" in
+	-v) format=3D'%(refname:short) %(subject)' ;;
+	-t) sortby=3D-authordate ;;
+	--) break ;;
+	 *) echo >&2 "unknown option: $1"; exit 100 ;;
+	esac
+	shift
+done
+
+git for-each-ref --sort=3D$sortby --format=3D"$format" refs/heads |
+egrep '^[a-z]{2,3}/' |
+perl -pe '
+  s/(\S+) /$1 . " " x (22 - length($1))/e; # line up subjects
+  s/^(.{79}).*/$1/; # truncate long lines
+'
+-- 8< --
+
+It might be nice if git-branch supported the same sortby that
+for-each-ref does.
+
+-Peff
