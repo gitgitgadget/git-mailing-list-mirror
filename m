@@ -1,63 +1,105 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: Re: [PATCH v8 0/3] git-remote-fd & git-remote-ext
-Date: Thu, 18 Nov 2010 04:31:04 +0200
-Message-ID: <20101118023104.GA28255@LK-Perkele-V2.elisa-laajakaista.fi>
-References: <1289878454-17192-1-git-send-email-ilari.liusvaara@elisanet.fi>
- <7vy68rg9c9.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 0/2] svn-fe: recognize v3 dumps
+Date: Wed, 17 Nov 2010 23:00:23 -0600
+Message-ID: <20101118050023.GA14861@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 18 03:31:05 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	David Barr <david.barr@cordelta.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 18 06:01:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIuH8-00064R-Gh
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 03:31:02 +0100
+	id 1PIwcb-0002Ju-DM
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 06:01:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754799Ab0KRCa5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Nov 2010 21:30:57 -0500
-Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:44719 "EHLO
-	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754775Ab0KRCa5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Nov 2010 21:30:57 -0500
-Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id 8FB4E8C6EE;
-	Thu, 18 Nov 2010 04:30:54 +0200 (EET)
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
-	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A02E468BDF7; Thu, 18 Nov 2010 04:30:54 +0200
-Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
-	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id 69C9B27D85;
-	Thu, 18 Nov 2010 04:30:51 +0200 (EET)
+	id S1750867Ab0KRFBK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Nov 2010 00:01:10 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:56397 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750732Ab0KRFBJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Nov 2010 00:01:09 -0500
+Received: by yxf34 with SMTP id 34so1630143yxf.19
+        for <git@vger.kernel.org>; Wed, 17 Nov 2010 21:01:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=bOnLshKCqaCyxXYV13IVYM5VPfonNQB6oIfenJuyAHs=;
+        b=OMfhNuBKpdPtUAhbVMAUUuQ2r1FV9mr8CrOcMFst1Xq/2aR+UtD+GdCKW39LntMswx
+         hTJjkhwiXp4IZzD8VKMZLN6LVIVcmFIfcOd8HuieC57oyyS3GylJVuV8dBI3FQLh1WbO
+         QT1wjx6TDYvAzUrLuBzPnRK8bEBQ9mUiE1Qog=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=td0aLrexhGPIhdmzJ4loLWZDSHJDo2I40G0ojZOO9UtdK/VZQprWkJ4i9mhn8NMu9e
+         3tbUOrXlvqY49AcMwgBPBHJ595RdIJZUVFqsmTEdIpfK5ekUnNg+0QT1g1AtFJPHMwuE
+         ZEScyfnGlx5CLFhuiS0mgpCI81i5qhT4c2i0Y=
+Received: by 10.151.10.12 with SMTP id n12mr345946ybi.367.1290056468452;
+        Wed, 17 Nov 2010 21:01:08 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id v9sm1289638ybe.9.2010.11.17.21.01.06
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 17 Nov 2010 21:01:07 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <7vy68rg9c9.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Antivirus: VAMS
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161647>
 
-On Wed, Nov 17, 2010 at 09:15:34AM -0800, Junio C Hamano wrote:
-> Thanks; the changes from the last round all look sensible to me, but did
-> you know that the last round has already been in 'next' for a few weeks by
-> now already?
+This mini-series is part of an effort to get David and Ram's svn
+import work integrated into mainline git[1].  It fixes a longstanding
+svn-fe bug that bit me a few times: when fed v3 (= --deltas) dumps,
+current svn-fe produces nonsense --- a directory full of svn-format
+deltas --- rather than erroring out.  For example:
 
-Oops... Sorry. :-/
- 
-> If you don't mind I'll turn these three into the following and queue as
-> 4/3 on top of what is already merged, as reverting the merge with the old
-> series and merging the new round to 'next' makes it messier than it
-> already is.
+	; git init
+	; svnrdump dump -r1:10 http://cvs2svn.tigris.org/svn/cvs2svn |
+		svn-fe |
+		git fast-import
+	; git show HEAD:trunk/README
+	SVN^@^@^@M-^N^D^CM-^N^DM-^@M-^N^DThis is a program to convert a CVS repository to Subversion.
 
-I tested applying that patch. Doesn't seem to break things at least code-
-wise (no surprise, it only adds headers and adds one conditional that only
-evaluates to false on invalid input).
+After this series, svn-fe would instead die with the message "fatal:
+text and property deltas not supported".
 
-So I don't mind applying that patch. Acking the patch.
+Ram and David: this code will probably look familiar.  It is roughly
+based on David's "vcs-svn: Extend svndump to parse version 3 format"
+from about a month ago[2].  I would be particularly interested in
+hearing whether this still seems sensible in design and execution,
+so it can be deployed to a wider audience with your blessing if
+appropriate.
 
--Ilari
+Thoughts?  Improvements?
+
+David Barr (1):
+  vcs-svn: Allow simple v3 dumps (no deltas yet)
+
+Jonathan Nieder (1):
+  vcs-svn: Error out for v3 dumps
+
+ t/t9010-svn-fe.sh |  403 ++++++++++++++++++++++++++++++++++++++++++++++++++---
+ vcs-svn/svndump.c |   28 ++++-
+ 2 files changed, 406 insertions(+), 25 deletions(-)
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/160875
+
+The dumpfile v3 code proper has been proving more trouble to review
+than anticipated.  Mostly because it involves tracking down details of
+the svn repository model that aren't clearly documented in any obvious
+place:
+
+ * What do the five node actions (replace, delete, add, modify,
+   unknown) represent?  How can we deal with them without repeating
+   the same code four times?
+
+ * Which actions preserve properties?  Which preserve text?
+
+[2] http://thread.gmane.org/gmane.comp.version-control.git/159117/focus=159114
