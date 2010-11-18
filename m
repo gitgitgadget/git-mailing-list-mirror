@@ -1,75 +1,87 @@
-From: Lars Buitinck <larsmans@gmail.com>
-Subject: Re: git build failure with libssl (OpenSSL) in custom directory
-Date: Thu, 18 Nov 2010 19:04:00 +0100
-Message-ID: <AANLkTikZBcmbFoCmqT-eorGm3R0YYjkzotc414w_PHyd@mail.gmail.com>
-References: <AANLkTikQC9hncPZkeScWi7OsWw+Optbvxaygyn1p7_sN@mail.gmail.com>
-	<20101118174921.GD16610@burratino>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 2/2] A loose object is not corrupt if it cannot be read
+ due to EMFILE
+Date: Thu, 18 Nov 2010 19:18:37 +0100
+Message-ID: <AANLkTi=rrcc5tia03K-Rtqs3vyjOv9P1NArnmbYhCQ27@mail.gmail.com>
+References: <1288299210-27092-1-git-send-email-gitster@pobox.com>
+ <1288299210-27092-2-git-send-email-gitster@pobox.com> <AANLkTi=L1Z6kxubMf3yPUfpY9ugd+Qan+yCxi3dp4oR4@mail.gmail.com>
+ <4CE55794.7050201@viscovery.net> <AANLkTikns0Rm5znC7FOa72qZXKpQzazKiYsPe-oDNMAk@mail.gmail.com>
+ <20101118172920.GC16610@burratino>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	msysGit <msysgit@googlegroups.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 18 19:04:10 2010
+X-From: git-owner@vger.kernel.org Thu Nov 18 19:19:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJ8q9-0000FZ-CM
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 19:04:09 +0100
+	id 1PJ94b-0003KQ-Jd
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 19:19:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760029Ab0KRSED convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Nov 2010 13:04:03 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:52282 "EHLO
+	id S1758685Ab0KRSS7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Nov 2010 13:18:59 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:54173 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755220Ab0KRSEC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Nov 2010 13:04:02 -0500
-Received: by fxm10 with SMTP id 10so173855fxm.19
-        for <git@vger.kernel.org>; Thu, 18 Nov 2010 10:04:01 -0800 (PST)
+	with ESMTP id S1755645Ab0KRSS6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Nov 2010 13:18:58 -0500
+Received: by fxm10 with SMTP id 10so188312fxm.19
+        for <git@vger.kernel.org>; Thu, 18 Nov 2010 10:18:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=VuXI+w0GzruZjoh6oz/zUPIZtH5jkfQGSexjH2cRAog=;
-        b=mvX4LYQmBWHXGh13N4aVYWEJ9K5ORkE1PwkVZcnrllsN2gr4JYsC0g+YH8lzZ1TCLq
-         Q4lW1F6rZYrH73RWIsiVCDm+JmxEEFxlWhfpNg/4MHNzqETn/XrKhaN1Ksa91kBdb80Y
-         KVBeNG7YMz1XLYBgB4EqvJa8k2HzVWk/EQ5Bc=
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type;
+        bh=0QxKN0baQgB5hew3HWQL/VELIQ0gDEJfSYOThhQlhmg=;
+        b=mQL49dFS5tdvrgOSUbxe2a2tAkPxlC20cRXw2uEWKLgmoW7toX4UfL/oNsmZ0HoPRN
+         lxmu+Nwza8n6a2c7dIu5Ij4hqU8Ea+7V5Cb//s1GNsrSn/r76/Rd8/PUe5kdeZ1PEy7B
+         eCAqvJzmlQG/6KWd1OzkjebbtnYZKLXt+vK0Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=rtVba4uK6aZaoH5k+iixEtGu5qpH9iLph7V2s+JBF0+TTqpf6M4HVKxsc6EWjXnMSn
-         d5p62YIfFASuiD1HFVBZRiE9p/WhTT3KgsmUrbmEoEblBDNEh/cWl17KO5mfr8y9tuyK
-         Hdapq+Hf/TDOoo9sjt/9HVGNJK5DjRP/tayaw=
-Received: by 10.223.73.207 with SMTP id r15mr851128faj.141.1290103440518; Thu,
- 18 Nov 2010 10:04:00 -0800 (PST)
-Received: by 10.223.101.132 with HTTP; Thu, 18 Nov 2010 10:04:00 -0800 (PST)
-In-Reply-To: <20101118174921.GD16610@burratino>
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        b=gi6C8Tr7oYJIC5kp9e/cdt7l5lEpeACFgVfsXfnG+CuvtI/DcqvssFPFmztPUGlyGI
+         N0ZKNnnitznSu8PNnvZ5qXkELlIIkRsV0/5qgD/x+8JGDSqqUoGPCphgv3iBckto172U
+         sOHZhn+D0hoJw3z+epbrU/7/Uho9E+smtZB74=
+Received: by 10.223.100.4 with SMTP id w4mr931677fan.26.1290104337137; Thu, 18
+ Nov 2010 10:18:57 -0800 (PST)
+Received: by 10.223.72.206 with HTTP; Thu, 18 Nov 2010 10:18:37 -0800 (PST)
+In-Reply-To: <20101118172920.GC16610@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161699>
 
-Yes, that works fine with LDFLAGS=3D in the Makefile. Is this just a
-lack of Makefile-fu on my part?
+On Thu, Nov 18, 2010 at 6:29 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> Erik Faye-Lund wrote:
+>
+>> I was wondering about the same thing, I don't think this approach is
+>> very easy to follow. But either way I think we should make sure
+>> opendir/closedir/readdir doesn't mess with errno.
+>
+> Other platforms and are allowed to (and do) clobber errno in many
+> non-error situations, so the main effect would be to work around/hide
+> some git bugs.
 
-2010/11/18 Jonathan Nieder <jrnieder@gmail.com>:
-> Hi Lars,
->
-> Lars Buitinck wrote:
->
->> =C2=A0 CPPFLAGS=3D-I$HOME/apps/include LDFLAGS=3D-L$HOME/apps/lib ma=
-ke
->> prefix=3D$HOME/apps all doc info
->
-> How about
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0prefix=3D$HOME/apps
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0make CPPFLAGS=3D-I$prefix/include LDFLAGS=3D=
--L$prefix/lib prefix=3D$prefix \
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0all doc info
->
-> ?
->
+I don't think that's the case; K&R (section B1.7) says "In addition,
+the integer expression errno (declared in <errno.h>) may contain an
+error number that contains information about the most recent error.".
+A non-error condition would not be information about the most recent
+error. I interpret the use of the word "may" to mean "some functions
+does not update errno, so errno could also have information about
+older errors" not as "some functions can clear errno", but other might
+disagree with me.
+
+POSIX (which defines opendir) says "No function in this volume of IEEE
+Std 1003.1-2001 shall set errno to 0", so I think it's clear cut in
+this case. (see
+http://www.opengroup.org/onlinepubs/009695399/functions/errno.html for
+the full text)
+
+We also seem to depend quite heavily on errno being preserved on
+non-errors some places around in the code.
