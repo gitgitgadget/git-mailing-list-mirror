@@ -1,70 +1,75 @@
-From: Alejandro Riveira =?iso-8859-1?q?Fern=E1ndez?= 
-	<ariveira@gmail.com>
-Subject: Re: groff .ft command use in asciidoc
-Date: Thu, 18 Nov 2010 17:47:19 +0000 (UTC)
-Message-ID: <ic3or7$dfi$1@dough.gmane.org>
-References: <20101117095233.GA23817@basil.fritz.box>
-	<20101117101516.GA12416@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git build failure with libssl (OpenSSL) in custom directory
+Date: Thu, 18 Nov 2010 11:49:21 -0600
+Message-ID: <20101118174921.GD16610@burratino>
+References: <AANLkTikQC9hncPZkeScWi7OsWw+Optbvxaygyn1p7_sN@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 18 18:47:45 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Lars Buitinck <larsmans@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 18 18:50:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJ8aE-000500-ET
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 18:47:42 +0100
+	id 1PJ8ci-0006tA-1w
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 18:50:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758134Ab0KRRri (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Nov 2010 12:47:38 -0500
-Received: from lo.gmane.org ([80.91.229.12]:52290 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755048Ab0KRRrh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Nov 2010 12:47:37 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PJ8a7-0004t2-1S
-	for git@vger.kernel.org; Thu, 18 Nov 2010 18:47:35 +0100
-Received: from 81.38.65.156 ([81.38.65.156])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 18 Nov 2010 18:47:35 +0100
-Received: from ariveira by 81.38.65.156 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 18 Nov 2010 18:47:35 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 81.38.65.156
-User-Agent: Pan/0.133 (House of Butterflies)
+	id S1759993Ab0KRRuI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Nov 2010 12:50:08 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:44964 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755363Ab0KRRuG (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Nov 2010 12:50:06 -0500
+Received: by bwz15 with SMTP id 15so3012917bwz.19
+        for <git@vger.kernel.org>; Thu, 18 Nov 2010 09:50:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=la555VRXXndxwvy0uGV+y6bwX3zpr609tE+SGwuWEXU=;
+        b=YJyN36dsdsKHY/9yDLdmzrfIgZo2X4nOAMqHbtTMY5CHtQO9Cj7A/27sjZVnfCTfr/
+         BGrBnsxQ4XHelb9wf1vtAZUtfdh7D+VOnTJz+wjZfJ0vyKrmP3pYxSkYP4cRZ+vTB3GT
+         9c1cZkUmY7n3PMrDY5ceyqc1VkqaizcYELPRY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=kq8PhURyl2/8H4/bZI/cb7ZqwmcPgP3dVL3hdTd/2aldnQ1J3QGm5bePcgCYwaZFAd
+         O0dZoVBJAkiFwNl0fm0JW/Lz/aNZgdj5bEyHRQ9rJ6GyQxnEwf6r2NLSCe0FThFm21Lz
+         AImsSKleC9KzwMo6MLe96AWiptL9TdXTyTx0Y=
+Received: by 10.204.79.9 with SMTP id n9mr895208bkk.126.1290102604739;
+        Thu, 18 Nov 2010 09:50:04 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id a24sm719175fak.3.2010.11.18.09.50.03
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 18 Nov 2010 09:50:04 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikQC9hncPZkeScWi7OsWw+Optbvxaygyn1p7_sN@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161693>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161694>
 
-On Wed, 17 Nov 2010 04:15:16 -0600, Jonathan Nieder wrote:
+Hi Lars,
 
+Lars Buitinck wrote:
 
-> 
-> This is in my opinion a bug: unless you use ASCIIDOC_NO_ROFF, git's
-> asciidoc.conf will include raw roff directives in the docbook markup it
-> generates.  And then docbook will escape the periods, producing the
-> output you see.
-> 
-> The workaround is very simple: set ASCIIDOC_NO_ROFF to nonempty when you
-> build documentation.
+> =C2=A0 CPPFLAGS=3D-I$HOME/apps/include LDFLAGS=3D-L$HOME/apps/lib mak=
+e
+> prefix=3D$HOME/apps all doc info
 
- I use make quick-install-man which, afaik, installs man pages 
-"prerendered" from the man branch and i see the same artifact.
- 
- So can those man pages be rendered with this workaraound?
- 
- Thanks
+How about
 
+	prefix=3D$HOME/apps
+	make CPPFLAGS=3D-I$prefix/include LDFLAGS=3D-L$prefix/lib prefix=3D$pr=
+efix \
+		all doc info
 
-
-> Hope that helps,
-> Jonathan
+?
