@@ -1,87 +1,81 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Versioning configuration files on a server: fatal: Unable to
- create '//etc/.git/index.lock': No such file or directory
-Date: Thu, 18 Nov 2010 23:26:38 +0700
-Message-ID: <AANLkTin6vir9UT9c4-9ArNvFHNdHiDiXMtXKRUMoExho@mail.gmail.com>
-References: <AANLkTi=UPWTeZP9uF+FGtsSs7wH3AmwdeLtsPJQnKvez@mail.gmail.com>
- <20101117112042.GX22067@login.drsnuggles.stderr.nl> <20101118155211.GE22067@login.drsnuggles.stderr.nl>
- <AANLkTi=mf_1HaJ0qZJ4nG1=zti9CJdTZHAfhLayR4FRS@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: How to import bzr repository into git
+Date: Thu, 18 Nov 2010 10:37:03 -0600
+Message-ID: <20101118163702.GA16610@burratino>
+References: <AANLkTinVrwkOvYgGFX3S2530jfWnrAP28gVm4te1B4sC@mail.gmail.com>
+ <AANLkTimPmPOJq64=VePSb2efsx17j8BNxCLt_i=b2ykW@mail.gmail.com>
+ <4CE32062.6010308@gmail.com>
+ <AANLkTimm2unZoUNH=wgnAFjPpeF_C=tJAZ0DkNK4mMv_@mail.gmail.com>
+ <AANLkTikLt+=ffsqY1=-fN49fVZ_Q4HVWnzn5qSftg=T3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Albert Strasheim <fullung@gmail.com>, git@vger.kernel.org,
-	Clemens Buchacher <drizzd@aon.at>,
-	Matthijs Kooijman <matthijs@stdin.nl>
-X-From: git-owner@vger.kernel.org Thu Nov 18 17:27:12 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Dmitri Pissarenko <dmitri.pissarenko@gmail.com>,
+	Gabriel Filion <lelutin@gmail.com>, git@vger.kernel.org,
+	bzr-fastimport@packages.debian.com
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 18 17:38:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJ7KJ-00024u-Bh
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 17:27:11 +0100
+	id 1PJ7Un-0001u5-KE
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 17:38:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932123Ab0KRQ1D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Nov 2010 11:27:03 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:64595 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932083Ab0KRQ1B (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Nov 2010 11:27:01 -0500
-Received: by yxf34 with SMTP id 34so1936972yxf.19
-        for <git@vger.kernel.org>; Thu, 18 Nov 2010 08:27:01 -0800 (PST)
+	id S1759866Ab0KRQhv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Nov 2010 11:37:51 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:47566 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759674Ab0KRQhu (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Nov 2010 11:37:50 -0500
+Received: by fxm10 with SMTP id 10so90937fxm.19
+        for <git@vger.kernel.org>; Thu, 18 Nov 2010 08:37:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:content-type;
-        bh=d5P52rp8J9H6NGf2NwuCf52PKqi7FeSP15R9hoXcJnI=;
-        b=Jiko/rQkieEUjGcVgR/YPg+ZalkTcTFY3BgcpzqtkscoLgGuMMGaKQARdIx0tH5TBx
-         xr0mmwhTn2I4XkJG7TRdbQqnF2mccygoyoQ+Iwi4kc+CpXS6LFyy3+U/mhpMUIP5wZ1/
-         487zKxANctoNTDkZvq2sWfd5+mktSUzhsiPAA=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=TKgDeWeLzGANFc0TweXKGhSql1RiLMsBUJFwVzpweVQ=;
+        b=n/QyySr9Io+zNhrGzaJqrnrOa5Vudemkko49B7OyuwcHOUb/cwuAiTRRbQ1Qj0wSCF
+         VQYVDDB61y3w2KXvwwQvaMaaqRAe1g+1wpGSzs/nfHpnFOzYP+JsOPjbBbNUHrT+2VIp
+         5DPzL5l7xD7WxRunjQl/Wlm4HeAiq+zQsBaCU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        b=aEKEiY1xFYGlvg9jHV7eKOs1WFALQFSbcHzajP9d6N6zhE609wrQdj6x1kTHv9Ojm+
-         /i0qNKVLDgEV3AHsKzFB5M+KaJ7Wezj6m2XdNfHEeDGIYeBJgx4MemGJSDB4sS/bA0IW
-         3qKph1wKexD8R30NbnF6g41WhnvI7edvfU1dI=
-Received: by 10.216.172.9 with SMTP id s9mr819986wel.56.1290097619068; Thu, 18
- Nov 2010 08:26:59 -0800 (PST)
-Received: by 10.216.172.199 with HTTP; Thu, 18 Nov 2010 08:26:38 -0800 (PST)
-In-Reply-To: <AANLkTi=mf_1HaJ0qZJ4nG1=zti9CJdTZHAfhLayR4FRS@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=Y3YCZJBXgP3bo0fK89H5ERHxlXip9RtBRmJxYWH6qzUFy3gBoMt+r+BQ0dl19thPTz
+         J6AQD/YfOuIN0hmet/zJt1hLLIiG4zsjjXc1EGCpqFjUMF4amzIFaF+B3V8kD0iAbHW5
+         8sNZkTiqlZC6sfAOB/3kUgvPdAeu/N+Okv9nY=
+Received: by 10.223.86.203 with SMTP id t11mr778775fal.97.1290098269054;
+        Thu, 18 Nov 2010 08:37:49 -0800 (PST)
+Received: from burratino ([68.255.106.176])
+        by mx.google.com with ESMTPS id j14sm198352faa.47.2010.11.18.08.37.46
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 18 Nov 2010 08:37:48 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikLt+=ffsqY1=-fN49fVZ_Q4HVWnzn5qSftg=T3@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161681>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161682>
 
-On Thu, Nov 18, 2010 at 11:07 PM, Nguyen Thai Ngoc Duy
-<pclouds@gmail.com> wrote:
-> On Thu, Nov 18, 2010 at 10:52 PM, Matthijs Kooijman <matthijs@stdin.nl> wrote:
->> Hi all,
->>
->>> I've been using git for exactly this purpose succesfully for a while now
->>> (git 1.5.6.5 from Debian stable and I think also 1.7.2.3 from Debian
->>> testing).
->> Coming back to the testing machine I was using this on, I see this
->> problem as well now. I'm pretty sure it wasn't there before, which would
->> mean it was introduced by a recent upgrade.
->>
->> Checking the logs shows that I was running 1.7.1 before, and now 1.7.2.3
->> is broken. Downgrading to 1.7.1 indeed removes the problem.
->>
->> I've rummaged around in the source a bit, haven't found the cause yet
->> (and I'm out of time now).
->>
->> The issue also still occurs with a fairly recent git master (ca209065f:
->> completion: fix zsh check under bash with 'set -u').
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
+> On Thu, Nov 18, 2010 at 15:34, Dmitri Pissarenko
+> <dmitri.pissarenko@gmail.com> wrote:
+
+>> However, I had to give up this idea due to an "out of memory" error
+>> during bzr-export.
 >
-> You may be interested in 72ec8ba (Support working directory located at
-> root - 2010-02-14). t1509 reports the breakages. Unfortunately this
-> kind of tests can't be run automatically
+> Buy more memory or use more swap?
 
-I think 490544b (get_cwd_relative(): do not misinterpret suffix as
-subdirectory - 2010-05-22) causes it. Haven't fully understood what's
-going on in that function though :P
+Or report it as a bug/wanted feature?
 
-Will look again tomorrow, if nobody beats me to it.
--- 
-Duy
+Cc-ing Jelmer Vernooij in the hope that he might be able to point you
+to the right person for that.
+
+Thanks,
+Jonathan
