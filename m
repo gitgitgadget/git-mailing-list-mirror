@@ -1,140 +1,67 @@
-From: Alejandro Riveira =?UTF-8?B?RmVybsOhbmRleg==?= 
-	<ariveira@gmail.com>
-Subject: Re: groff .ft command use in asciidoc
-Date: Fri, 19 Nov 2010 00:15:14 +0100
-Message-ID: <20101119001514.4cd0c4d9@varda>
-References: <20101117095233.GA23817@basil.fritz.box>
-	<20101117101516.GA12416@burratino>
-	<ic3or7$dfi$1@dough.gmane.org>
-	<1290114671.2316.12.camel@drew-northup.unet.maine.edu>
+From: Anders Kaseorg <andersk@MIT.EDU>
+Subject: Re: [PATCH] t9157-git-svn-fetch-merge.sh: remove dependency on
+ subversion 1.5
+Date: Thu, 18 Nov 2010 18:35:11 -0500 (EST)
+Message-ID: <alpine.DEB.2.02.1011181826560.14285@dr-wily.mit.edu>
+References: <1287737937.3785.15.camel@balanced-tree> <1287798958-22549-1-git-send-email-stevenrwalter@gmail.com> <alpine.DEB.2.02.1011181606340.14285@dr-wily.mit.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Fri Nov 19 00:15:38 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, normalperson@yhbt.net,
+	git@vger.kernel.org
+To: Steven Walter <stevenrwalter@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 19 00:35:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJDhV-0004QN-Bd
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 00:15:33 +0100
+	id 1PJE0i-00086M-1G
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 00:35:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760374Ab0KRXP1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Nov 2010 18:15:27 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:48027 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759975Ab0KRXP0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Nov 2010 18:15:26 -0500
-Received: by wyb28 with SMTP id 28so3803703wyb.19
-        for <git@vger.kernel.org>; Thu, 18 Nov 2010 15:15:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:in-reply-to:references:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        bh=sS1aIn1t2H78xh+KEpiSur0nldshcPhoZBAZOSkWPQk=;
-        b=EPcmHL48W1oR+YNGmHMuoIkf46WrBmBABN04fSxiZnvE6X4ZIaoR6bTlyi3DnTXLyk
-         wYlupdP/PFDfIhFQi3MBJof8Z+leFf5AbIryaL+KgkgcMbwgXozWJ4ZmxPASPyQuFCsg
-         CVqcRsU7io9syc/2mWUZYMRCdFqBfdyLui7m8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        b=CHwBbcyTBZ+o7gJOS3Jrl82BSS7mY2wwRYTZLkToebp4I0B67tnBudUHK0DMKkXLZH
-         WONaedeb01wXUXcHAFd9Filz6Fdh+1Er+vdQBHTEgS4x0VQbu+JNd223Hf94hNmOOxgs
-         wCR5wComaS0ytTDaySvuwqaScL/J7vtC/dIqQ=
-Received: by 10.216.46.65 with SMTP id q43mr1028072web.114.1290122124811;
-        Thu, 18 Nov 2010 15:15:24 -0800 (PST)
-Received: from varda (156.Red-81-38-65.dynamicIP.rima-tde.net [81.38.65.156])
-        by mx.google.com with ESMTPS id e12sm503101wer.36.2010.11.18.15.15.22
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 18 Nov 2010 15:15:23 -0800 (PST)
-In-Reply-To: <1290114671.2316.12.camel@drew-northup.unet.maine.edu>
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
+	id S1759997Ab0KRXfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Nov 2010 18:35:16 -0500
+Received: from DMZ-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.34]:55849 "EHLO
+	dmz-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754729Ab0KRXfP (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Nov 2010 18:35:15 -0500
+X-AuditID: 12074422-b7c3eae000000a70-a6-4ce5b832fbce
+Received: from mailhub-auth-3.mit.edu ( [18.9.21.43])
+	by dmz-mailsec-scanner-5.mit.edu (Symantec Brightmail Gateway) with SMTP id 8A.A3.02672.238B5EC4; Thu, 18 Nov 2010 18:35:14 -0500 (EST)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id oAINZDJ3018865;
+	Thu, 18 Nov 2010 18:35:14 -0500
+Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
+	(authenticated bits=0)
+        (User authenticated as andersk@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id oAINZBPJ025468
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
+	Thu, 18 Nov 2010 18:35:12 -0500 (EST)
+In-Reply-To: <alpine.DEB.2.02.1011181606340.14285@dr-wily.mit.edu>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161716>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161717>
 
-El Thu, 18 Nov 2010 16:11:11 -0500
-Drew Northup <drew.northup@maine.edu> escribi=C3=B3:
+On Thu, 18 Nov 2010, Anders Kaseorg wrote:
+> Junio: Did this get lost?  It fixes a test suite regression between 
+> v1.7.3.1 and v1.7.3.2 on systems with Subversion 1.4.
 
->=20
-> On Thu, 2010-11-18 at 17:47 +0000, Alejandro Riveira Fern=C3=A1ndez w=
-rote:
-> > On Wed, 17 Nov 2010 04:15:16 -0600, Jonathan Nieder wrote:
-> =20
-> > > This is in my opinion a bug: unless you use ASCIIDOC_NO_ROFF, git=
-'s
-> > > asciidoc.conf will include raw roff directives in the docbook mar=
-kup it
-> > > generates.  And then docbook will escape the periods, producing t=
-he
-> > > output you see.
-> > >=20
-> > > The workaround is very simple: set ASCIIDOC_NO_ROFF to nonempty w=
-hen you
-> > > build documentation.
-> >=20
-> >  I use make quick-install-man which, afaik, installs man pages=20
-> > "prerendered" from the man branch and i see the same artifact.
-> > =20
-> >  So can those man pages be rendered with this workaraound?
-> > =20
-> >  Thanks
->=20
-> Out of curiosity I went ahead and ran that make script. I then ran th=
-e
-> following in the directory that the manpage directories were written =
-out
-> to (an alternate DESTDIR):
+Hmm, perhaps I spoke too soon; when I actually run the patched test on an 
+Ubuntu 8.04 system, I still get a failure.  Apparently Subversion 1.4 
+thinks the manually set svn:mergeinfo properties cause conflicts:
 
- Doh! ... the problem was between chair and keyboard. i used alternate =
-DESTDIR
- with the make all and make install but with quick.-install-man i forgo=
-t to set=20
- it; so the man pages were old versions from when i actually builded th=
-e man
- pages myself
- Sorry for the wasted time ...
++ svn merge -r5:9 file:///tmp/andersk/git/t/trash directory.t9157-git-svn-fetch-merge/svnrepo/branches/branch2
+A    baz
+ C   .
++ svn propset svn:mergeinfo /branches/branch1:4-8
+/branches/branch2:6-9 .
+property 'svn:mergeinfo' set on '.'
++ svn resolved baz
++ svn commit -m merge branch2
+svn: Commit failed (details follow):
+svn: Aborting commit: '/tmp/andersk/git/t/trash directory.t9157-git-svn-fetch-merge/.git/svn/refs/remotes/git-svn/svn-tree' remains in conflict
 
->=20
-> [dnorthup@drew-northup man]$ grep -R "\.ft" *
-> [dnorthup@drew-northup man]$=20
->=20
- After correcting the above
- $ grep -R "\.ft" *
- man3/private-Error.3pm:.ft CW
- man3/private-Error.3pm:.ft R
- man3/Git.3pm:.ft CW
- man3/Git.3pm:.ft R
-=20
- Which are probably letfovers from previous builds ...
-  =20
-> Note that it returned nothing. This is based on the current git.git. =
-(I
-> just pulled to be sure of that...)
-
- Thanks for checking and again. Sorry
-
->=20
-> As noted, all that make script essentially does is write out the
-> manpages found in origin/man--so it matters not what my current platf=
-orm
-> is.
->=20
-> Run "man git-commit" in one terminal open up a second and run "ps ax =
-|
-> grep man" and report on the results.=20
-
- For the sake of completeness
-  $ ps ax | grep man
-    585 ?        S<     0:00 [kondemand]
-   4994 ?        S      0:00 gnome-power-manager
-  32649 pts/2    S+     0:00 man git-commit
-  32690 pts/4    S+     0:00 grep man
-
- Bye.
+Anders
