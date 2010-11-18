@@ -1,82 +1,80 @@
-From: Sebastian Schuberth <sschuberth@gmail.com>
-Subject: [PATCH 3/3] mergetool--lib: Add the proper executable name for ECMerge
-Date: Thu, 18 Nov 2010 11:44:31 +0100
-Message-ID: <4CE5038F.2040400@gmail.com>
-References: <4CE50290.90600@gmail.com>
+From: Norbert Nemec <Norbert@Nemec-online.de>
+Subject: Re: patch for AIX system
+Date: Thu, 18 Nov 2010 11:44:54 +0100
+Message-ID: <4CE503A6.6060208@Nemec-online.de>
+References: <4CE38472.8070206@Nemec-online.de>	<7vr5ejg7oi.fsf@alter.siamese.dyndns.org> <AANLkTi=94zL-nuBeGcrAdWVBu6VTuqX3xcM9oGNNUwvQ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, David Aguilar <davvid@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Thu Nov 18 11:44:41 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 18 11:45:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJ1yq-0006LL-TG
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 11:44:41 +0100
+	id 1PJ1zJ-0006au-8u
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 11:45:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756451Ab0KRKog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Nov 2010 05:44:36 -0500
+	id S1756555Ab0KRKpD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Nov 2010 05:45:03 -0500
 Received: from mail-ey0-f174.google.com ([209.85.215.174]:33362 "EHLO
 	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756293Ab0KRKof (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Nov 2010 05:44:35 -0500
-Received: by eye27 with SMTP id 27so1823744eye.19
-        for <git@vger.kernel.org>; Thu, 18 Nov 2010 02:44:34 -0800 (PST)
+	with ESMTP id S1756551Ab0KRKpB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Nov 2010 05:45:01 -0500
+Received: by mail-ey0-f174.google.com with SMTP id 27so1823744eye.19
+        for <git@vger.kernel.org>; Thu, 18 Nov 2010 02:45:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:newsgroups:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=YpCHOerEXfE1zvuKOv1NJOBk+GRt3plxL+8zeS3KliI=;
-        b=u14TSygVl1D5/k9HzpXQSXz9Auxylx7rEfMIxErIN8XrUsx5kFtsINBdyb5gOiramJ
-         3edLU3DXLtXKfDIUu8Uxnl0nF+prTzxJ6wIQ0vMHscDfHN8KXUiR4zazy1BAyZ4amGkT
-         Bb4uHNzY5xXsvu9YZFHsW8MsRICs1JIAK5HNY=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=gRDiSSv6Vs+L9lGx75kMt7S/J9uMvF+Mnu0Z5lRbATU=;
+        b=ouqd7tY0BSkO7s+U+Mh6yEhmwgNEMOGfHRicS07UuSfsq29QD0IP6Mzvsgko1LErxu
+         /kRNaTKsFoH9lQvBWlVarLgL6GIsFcBwRLUSJJmvc7ViRoHnrJ3nhUs4IRoEJjqJdlhS
+         FT84inrwzGx4lbtD5IMYUX2Zlw+vh07QUND7s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:cc:subject
+        d=googlemail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:subject
          :references:in-reply-to:content-type:content-transfer-encoding;
-        b=sLX7/gK54WMlu5Z1ustG7xBEQd04JHuHqHaIhid3zboLknpZKgxKC7tltQgiS4mUh3
-         FDcQKipxm019ydOwZyF1u6PD/x0EryV33DmdS/3aEeAJqlbBPxGgcSDSstcGHeOssdAk
-         YQ7XqFu+2wYd+HXZu+qn2ngYlpuqU30KR36/E=
-Received: by 10.213.28.205 with SMTP id n13mr3530099ebc.5.1290077073522;
-        Thu, 18 Nov 2010 02:44:33 -0800 (PST)
-Received: from [130.73.68.143] (berry.zib.de [130.73.68.143])
-        by mx.google.com with ESMTPS id q58sm274038eeh.9.2010.11.18.02.44.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 18 Nov 2010 02:44:32 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.12) Gecko/20080213 Thunderbird/2.0.0.12 Mnenhy/0.7.5.0
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <4CE50290.90600@gmail.com>
+        b=KolHMx0BvN9XsblwJ+Cj+clxIAOpa56Ydgh1lfSlx9gh1vzk45/7VgUKoEpnDEPDga
+         ONY+Sy2T0Vnn98ZczAsd1t651fY/456EPgJByzjHH8VYXAedodp7d8k8HmGV3577+mpQ
+         sK2NAi1lHObLgXmjAiHEH6SwIhImkQsrmxAaU=
+Received: by 10.213.27.68 with SMTP id h4mr363448ebc.34.1290077099124;
+        Thu, 18 Nov 2010 02:44:59 -0800 (PST)
+Received: from [141.14.151.101] (marble.rz-berlin.mpg.de [141.14.151.101])
+        by mx.google.com with ESMTPS id q58sm271346eeh.21.2010.11.18.02.44.57
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 18 Nov 2010 02:44:58 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <AANLkTi=94zL-nuBeGcrAdWVBu6VTuqX3xcM9oGNNUwvQ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161663>
 
+On 11/18/2010 10:13 AM, Tor Arntsen wrote:
+> On Wed, Nov 17, 2010 at 18:51, Junio C Hamano<gitster@pobox.com>  wrote:
+>> I'd defer this section to AIX experts; I've always assumed that people
+>> on non-gnu platforms used ginstall, but perhaps AIX doesn't have one?
+> All my AIX systems have the coreutils RPM from the IBM Toolbox
+> installed (extra CD, or, these days, from ftp.software.ibm.com), so I
+> never ran into the incompatible install issue.
+> However, for those without coreutils a patch to make installbsd work
+> (with comments from Junio taken into account) would be reasonable I
+> guess. Particularly if the patch could be made so that it's easy
+> enough to switch to coreutils install if you wish to.
+A new version of the patch is in preparation.
 
+Indeed - I don't have root access on the machine in question, so 
+installing a RPM is not an option. Apart from that - keeping a 
+dependency on coreutils just to have ginstall available does not seem 
+such a good idea. Anyway - the patch allows changing to ginstall simply 
+by changing the INSTALLDIR variable.
 
-Signed-off-by: Sebastian Schuberth <sschuberth@gmail.com>
----
- git-mergetool--lib.sh |    3 +++
- 1 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
-index 47049a6..58398bd 100644
---- a/git-mergetool--lib.sh
-+++ b/git-mergetool--lib.sh
-@@ -16,6 +16,9 @@ translate_merge_tool_path () {
- 	bc3)
- 		echo BCompare
- 		;;
-+	ecmerge)
-+		echo guimerge
-+		;;
- 	emerge)
- 		echo emacs
- 		;;
 -- 
-1.7.3.2.msysgit.11
+_______________________________________________Norbert Nemec
+   Lilienstr. 5a ... 12203 Berlin-Lichterfelde ... Germany
+       Tel: +49-30-5483 3143 Mobile: +49-176-5502 5643
+           eMail:<Norbert@Nemec-online.de>
