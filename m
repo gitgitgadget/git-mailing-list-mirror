@@ -1,34 +1,33 @@
 From: "Jan Hudec" <bulb@ucw.cz>
-Subject: [BUG?] push to mirrior interferes with parallel operations
-Date: Thu, 18 Nov 2010 08:39:17 +0100 (CET)
-Message-ID: <e355bb33c6192a6a29de56c7be93278e.squirrel@artax.karlin.mff.cuni.cz>
+Subject: [BUG?] git checkout -b removes MERGE_HEAD
+Date: Thu, 18 Nov 2010 08:15:23 +0100 (CET)
+Message-ID: <456aec650e66bba518b8a5ec88c88a6b.squirrel@artax.karlin.mff.cuni.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7BIT
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 18 08:39:37 2010
+X-From: git-owner@vger.kernel.org Thu Nov 18 08:40:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIz5h-0004rN-49
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 08:39:33 +0100
+	id 1PIz6z-0005gJ-ER
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 08:40:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755330Ab0KRHjT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Nov 2010 02:39:19 -0500
-Received: from artax.karlin.mff.cuni.cz ([195.113.26.195]:41438 "EHLO
+	id S1755220Ab0KRHks (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Nov 2010 02:40:48 -0500
+Received: from artax.karlin.mff.cuni.cz ([195.113.26.195]:40976 "EHLO
 	artax.karlin.mff.cuni.cz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755319Ab0KRHjS (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Nov 2010 02:39:18 -0500
-X-Greylist: delayed 1433 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Nov 2010 02:39:18 EST
+	with ESMTP id S1755023Ab0KRHks (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Nov 2010 02:40:48 -0500
 Received: from artax.karlin.mff.cuni.cz (localhost [127.0.0.1])
-	by artax.karlin.mff.cuni.cz (Postfix) with ESMTP id 59F6C12801D
-	for <git@vger.kernel.org>; Thu, 18 Nov 2010 08:39:17 +0100 (CET)
+	by artax.karlin.mff.cuni.cz (Postfix) with ESMTP id DEFB89809B
+	for <git@vger.kernel.org>; Thu, 18 Nov 2010 08:15:23 +0100 (CET)
 Received: from 62.24.65.159
         (SquirrelMail authenticated user jhud7196)
         by artax.karlin.mff.cuni.cz with HTTP;
-        Thu, 18 Nov 2010 08:39:17 +0100 (CET)
+        Thu, 18 Nov 2010 08:15:23 +0100 (CET)
 User-Agent: SquirrelMail/1.4.15
 X-Priority: 3 (Normal)
 Importance: Normal
@@ -36,37 +35,34 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161654>
 
 Hello all,
 
-I have a repository populated with git-svn. For backup I have
-a mirror remote set up. Today I ran 'git push backup' on one
-terminal and before it finished (it's just on a network
-filesystem, so it's kind of slow), I ran 'git svn fetch' on
-another. And than I didn't see any results of that fetch.
+I am not sure whether it is a bug or not, but it definitely did
+surprise me a lot. The use-case was as follows:
 
-What happened is that the push took the values of all the
-refs -- including those in refs/remotes/svn as it's a mirror
-for pushing them to the backup. Meanwhile the fetch udpated
-them. But when the push finished with the remote repo, it
-updated the local refs back to the values it pushed, undoing
-the effects of that fetch.
+ - I checked out master and ran a merge from branch (let's call
+   it "branch"). It had a lot of conflicts, so I needed to test
+   the result well.
+ - During the testing I found a problem, but it may have already
+   existed on master before the merge.
+ - Therefore I needed to return to clean master, test it and return
+   to the merge. So I thought I'd commit the merge to a temporary
+   branch, test master again and merge the temporary to master if
+   the problem is not from the merge. So I did:
 
-The repository was created with simple:
+   $ git checkout -b temp
+   $ git commit
 
-    git remote add --mirror backup /mnt/server/path/to/repo.git
+   OOPS! It forgot it was a merge.
 
-which created configuration:
+Yes, I could have simply commited to master and reset --hard it
+back. But I didn't expect it to forget it was a merge in the first
+place. After all, it does NOT touch the index nor the working tree,
+so why should it clear the MERGE_HEAD and MERGE_MSG?
 
-    [remote "backup"]
-	url = /mnt/server/path/to/repo.git
-	fetch = +refs/*:refs/*
-	mirror = true
-
-So, should the push be more careful when updating the refs,
-not simulate the pull back when doing a --mirror, or the
-git remote add not add the 'fetch = +refs/*:refs/*' line?
+So should this behaviour be changed?
 
 Thanks,
 Jan
