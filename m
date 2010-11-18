@@ -1,174 +1,169 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/2] A loose object is not corrupt if it cannot be read
- due to EMFILE
-Date: Thu, 18 Nov 2010 14:27:46 -0600
-Message-ID: <20101118202746.GG16610@burratino>
-References: <1288299210-27092-1-git-send-email-gitster@pobox.com>
- <1288299210-27092-2-git-send-email-gitster@pobox.com>
- <AANLkTi=L1Z6kxubMf3yPUfpY9ugd+Qan+yCxi3dp4oR4@mail.gmail.com>
- <4CE55794.7050201@viscovery.net>
- <AANLkTikns0Rm5znC7FOa72qZXKpQzazKiYsPe-oDNMAk@mail.gmail.com>
- <20101118172920.GC16610@burratino>
- <AANLkTi=rrcc5tia03K-Rtqs3vyjOv9P1NArnmbYhCQ27@mail.gmail.com>
+From: Matthijs Kooijman <matthijs@stdin.nl>
+Subject: Re: Versioning configuration files on a server: fatal: Unable to
+	create '//etc/.git/index.lock': No such file or directory
+Date: Thu, 18 Nov 2010 21:36:17 +0100
+Message-ID: <20101118203617.GH22067@login.drsnuggles.stderr.nl>
+References: <AANLkTi=UPWTeZP9uF+FGtsSs7wH3AmwdeLtsPJQnKvez@mail.gmail.com> <20101117112042.GX22067@login.drsnuggles.stderr.nl> <20101118155211.GE22067@login.drsnuggles.stderr.nl> <AANLkTi=mf_1HaJ0qZJ4nG1=zti9CJdTZHAfhLayR4FRS@mail.gmail.com> <AANLkTin6vir9UT9c4-9ArNvFHNdHiDiXMtXKRUMoExho@mail.gmail.com> <20101118171751.GG22067@login.drsnuggles.stderr.nl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	msysGit <msysgit@googlegroups.com>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 18 21:28:39 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="rZmXUR44+r3t6Ir8"
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Albert Strasheim <fullung@gmail.com>, git@vger.kernel.org,
+	Clemens Buchacher <drizzd@aon.at>
+X-From: git-owner@vger.kernel.org Thu Nov 18 21:36:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJB5z-0004BV-6a
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 21:28:39 +0100
+	id 1PJBDW-00013r-8b
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 21:36:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756813Ab0KRU2d (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Nov 2010 15:28:33 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:58671 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755912Ab0KRU2c (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Nov 2010 15:28:32 -0500
-Received: by vws13 with SMTP id 13so2013084vws.19
-        for <git@vger.kernel.org>; Thu, 18 Nov 2010 12:28:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=PG1LEbXzujeiB+KWpP35mR/kcQRVmbtFPshQ/Q6bjy4=;
-        b=dAMvtv5tsYUxGPr9y7S3vZ7w78+ZMdj6zoDaRz3K3RQnkLGoKKmmKvbif7/jAgDD1j
-         fMjOXGdgDIdQfH5Dt1vYuv0r9SIQ8BxtexMgWcb+JYcwT30ZGUU6moAO9fWLwakjo1F1
-         r5+iA1b4Y+N5+QOWtHSCq/jV0JywMfF5gS1+4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=kqPToJ6V7E7w4kQO/tePK/n/UdAIDv4Xdz4Lij0Auz9HJi+FLYNxi6YE9IVOvRZ7mk
-         lSoOjMjFVA+YJ/BQkOMGY0OCNLs/hQnOJA4Fdkwj5Q+0Jtmiv8CZvddCYaEs6CsuXp5r
-         LaXMmVHYl/BQ6Y9Dwknd0UNEbVy3aGx/Z+03s=
-Received: by 10.220.166.4 with SMTP id k4mr252954vcy.177.1290112111426;
-        Thu, 18 Nov 2010 12:28:31 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id n38sm276724vba.15.2010.11.18.12.28.28
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 18 Nov 2010 12:28:29 -0800 (PST)
+	id S1760238Ab0KRUgV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Nov 2010 15:36:21 -0500
+Received: from drsnuggles.stderr.nl ([94.142.244.14]:33879 "EHLO
+	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760237Ab0KRUgU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Nov 2010 15:36:20 -0500
+Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
+	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
+	(envelope-from <matthijs@stdin.nl>)
+	id 1PJBDN-0006pi-AK; Thu, 18 Nov 2010 21:36:18 +0100
+Received: (nullmailer pid 26265 invoked by uid 1000);
+	Thu, 18 Nov 2010 20:36:17 -0000
+Mail-Followup-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Albert Strasheim <fullung@gmail.com>, git@vger.kernel.org,
+	Clemens Buchacher <drizzd@aon.at>
 Content-Disposition: inline
-In-Reply-To: <AANLkTi=rrcc5tia03K-Rtqs3vyjOv9P1NArnmbYhCQ27@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20101118171751.GG22067@login.drsnuggles.stderr.nl>
+X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
+X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Score: -2.6 (--)
+X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
+	pts  rule name              description
+	---- ---------------------- -------------------------------------------
+	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161709>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161710>
 
-Erik Faye-Lund wrote:
 
-> We also seem to depend quite heavily on errno being preserved on
-> non-errors some places around in the code.
+--rZmXUR44+r3t6Ir8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Hmm, sounds worrying.
+Hi folks,
 
-- builtin/fetch.c::s_update_ref appears to have some of this kind of
-  bogosity.
-- safe_create_leading_directories_const and git_config_set_multivar let
-  free() touch errno.  Probably not a problem.
-- lock_file ought to preserve or set errno on failure.
-- daemon::run_service sometimes sets errno on failure and sometimes not.
-  This is confusing even if callers don't seem to care.
-- fast-import::dump_marks_helper ought to do its own error reporting.
-- resolve_ref seems to rely on get_packed_refs not to clobber errno.
-- sha1_file::open_packed_git_1 seems to rely on unuse_one_window not to
-  clobber errno.
+> > I think 490544b (get_cwd_relative(): do not misinterpret suffix as
+> > subdirectory - 2010-05-22) causes it. Haven't fully understood what's
+> > going on in that function though :P
+> Seems you're right. I just reverted this commit and the problem seems to
+> go away.
+A bit more gdb'ing with -O0, I found the following. get_cwd_relative is
+called with dir=3D"/". The cwd is "/etc". The stack looks like:
 
-Aside from that:
+#0  get_relative_cwd (buffer=3D0x7a44c0 "/etc", size=3D4096, dir=3D0x7b1041=
+ "") at dir.c:961
+#1  0x00000000004dfdf1 in setup_git_directory () at setup.c:612
+#2  0x0000000000404f69 in run_builtin (p=3D0x75ea10, argc=3D2, argv=3D0x7ff=
+fffffc918) at git.c:257
+#3  0x00000000004051e3 in handle_internal_command (argc=3D2, argv=3D0x7ffff=
+fffc918) at git.c:431
+#4  0x000000000040538a in main (argc=3D2, argv=3D0x7fffffffc918) at git.c:5=
+16
 
-The following does not take into account correctness of error
-messages.  (That is probably a good reason to fix compat/mingw's
-opendir.  Sorry, I forgot to take that into account before.)
+After the following code runs:
 
-Builtins
---------
-apply.c:
-	checks errno following lstat() failure.
-	checks errno following try_create_file() return from
-	 mkdir(), symlink(), or open() failure.
-clone.c:	checks errno following mkdir() and unlink() failure.
-commit.c:	saves errno following strbuf_read_file() failure.
-fetch.c:
-	checks errno following write_in_full(), close(), fopen() failure.
-	see above for the s_update_ref() checks.
-for-each-ref.c:	checks errno following strtol() failure.
-grep.c:	checks errno following open() and lstat() failure.
-index-pack.c:
-	checks errno following open() failure.
-	checks errno following odb_pack_keep() [= open()] failure.
-init-db.c:	checks errno following mkdir(), lstat() failure.
-log.c:	checks errno following mkdir() failure.
-mailsplit.c:	checks errno following opendir() failure.
-pack-objects.c:	checks errno following fgets() failure.
-rm.c:	checks errno following lstat() failure.
-update-index.c:
-	checks errno following lstat() failure.
-	relies on strtoul() not to clobber errno on success.
-	checks errno following hold_locked_index() return from
-	 lock_file() failure (see above).
-upload-archive.c:
-	checks errno following read(), pipe(), fork(), and poll() failure.
+    while (*dir && *dir =3D=3D *cwd) {
+	    dir++;=20
+	    cwd++;
+    }
 
-Compatibility routines
-----------------------
-cygwin.c, inet_ntop.c, mingw.c, and mmap.c use errno in
-noncosmetic ways.  I haven't checked them.
+I have dir=3D"" and cwd=3D"etc". Then the following code runs:
 
-git wrapper
------------
-git.c:	checks errno following run_command_v_opt() failure.
+    switch (*cwd) {
+    case '\0':
+	    return cwd;
+    case '/':
+	    return cwd + 1;
+    default:
+	    return NULL;
+    }
 
-libgit
-------
-config.c:	checks errno following open() failure, with intervening free().
-connect.c:	checks errno following connect(), socket() failure.
-copy.c:	saves errno following xread(), xwrite() failure.
-daemon.c:	checks errno following poll(), accept() failure.
-diff-lib.c:	checks errno following lstat() failure.
-diff.c:	checks errno following lstat() failure.
-dir.c:	checks errno following unlink() failure.
-entry.c:	checks errno following mkdir() failure.
-fast-import.c:
-	saves errno following fdopen(), fprintf(), fclose() failure.
-	saves errno following commit_lock_file [=close() or rename()] failure.
-	relies on strtoul() not to clobber errno on success.
-git-compat-util.h:
-	relies on strtoul(), strtol() not to clobber errno on success.
-http.c:	checks errno following open() failure.
-lockfile.c:	checks errno following open() failure.
-merge-recursive.c:
-	checks errno following write_in_full(), unlink() failure.
-path.c:	checks errno following snprintf() failure.
-read-cache.c:	checks errno following lstat(), open() failure.
-refs.c:	see above for resolve_ref() worries.
-rerere.c:	checks errno following fwrite(), unlink() failure.
-run-command.c:
-	checks errno following waitpid, pipe, fork, execv, failure.
-	wait_or_whine() does not set errno when child died by signal.
-setup.c:	checks errno following lstat() failure.
-sha1_file.c:
-	checks errno following open(), opendir() failure.
-	see above re unuse_one_window() failure.
-sha1_name.c:	checks errno following lstat() failure.
-strbuf.c:	checks errno following readlink() failure.
-symlinks.c:	checks errno following stat(), lstat() failure.
-transport-helper.c:	checks errno following start_command() failure.
-unpack-trees.c:	checks errno following lstat() failure.
-upload-pack.c:	checks errno following poll() failure.
-utf8.c:	checks errno following iconv() failure.
-wrapper.c:
-	checks errno following read(), write(), unlink(), rmdir() failure.
-write_or_die.c:	checks errno following fflush(), write() failures.
+Since *cwd=3D'e', it returns NULL.
 
-Test helpers
-------------
-test-run-command.c:	checks errno following start_command() failure.
+The old code (before 490544b) was:
+
+   if (*cwd =3D=3D '/')
+	   return cwd + 1;
+   return cwd;
+
+So this would return "etc".
+
+
+So, that's what is happens. I think this happens because
+get_relative_cwd expects dir to not contain a trailing slash. Normally,
+there is no trailing slash, but in the special case of dir=3D"/" there is
+(sort of) a trailing slash.
+
+I'm not completely sure how to fix this. Looking at 72ec8ba (Support
+working directory located at root - 2010-02-14), perhaps something like
+this?
+
+diff --git a/dir.c b/dir.c
+index d1e5e5e..5408db9 100644
+--- a/dir.c
++++ b/dir.c
+@@ -943,6 +943,7 @@ int file_exists(const char *f)
+ char *get_relative_cwd(char *buffer, int size, const char *dir)
+ {
+        char *cwd =3D buffer;
++       size_t len, root_len;
+=20
+        if (!dir)
+                return NULL;
+@@ -952,6 +953,15 @@ char *get_relative_cwd(char *buffer, int size, const c=
+har *dir)
+        if (!is_absolute_path(dir))
+                dir =3D make_absolute_path(dir);
+=20
++       len =3D strlen(dir);
++       root_len =3D offset_1st_component(dir);
++
++       if (root_len >=3D len) {
++           /* dir is the filesystem root, so the cwd is always inside */
++           root_len =3D offset_1st_component(cwd);
++           return cwd + root_len;
++       }
++
+        while (*dir && *dir =3D=3D *cwd) {
+                dir++;
+                cwd++;
+
+I'm not sure how this stuff really works, though. I think this works for *n=
+ix,
+but I'm unsure about Windows.
+
+Gr.
+
+Matthijs
+
+--rZmXUR44+r3t6Ir8
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkzljkEACgkQz0nQ5oovr7xipgCgwx7NqOCaPo6vyptoPSRATinv
+L+gAn35BNvjlMY3QMLzCV4z5d1OUP0FN
+=t/Ax
+-----END PGP SIGNATURE-----
+
+--rZmXUR44+r3t6Ir8--
