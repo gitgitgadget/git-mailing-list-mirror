@@ -1,89 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git build failure with libssl (OpenSSL) in custom directory
-Date: Thu, 18 Nov 2010 12:24:47 -0600
-Message-ID: <20101118182447.GF16610@burratino>
-References: <AANLkTikQC9hncPZkeScWi7OsWw+Optbvxaygyn1p7_sN@mail.gmail.com>
- <20101118174921.GD16610@burratino>
- <AANLkTikZBcmbFoCmqT-eorGm3R0YYjkzotc414w_PHyd@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUG?] git checkout -b removes MERGE_HEAD
+Date: Thu, 18 Nov 2010 10:39:31 -0800
+Message-ID: <7vwroabhng.fsf@alter.siamese.dyndns.org>
+References: <456aec650e66bba518b8a5ec88c88a6b.squirrel@artax.karlin.mff.cuni.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Lars Buitinck <larsmans@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 18 19:25:39 2010
+To: "Jan Hudec" <bulb@ucw.cz>
+X-From: git-owner@vger.kernel.org Thu Nov 18 19:39:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJ9Aw-000835-6T
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 19:25:38 +0100
+	id 1PJ9Oe-0001SZ-Nc
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 19:39:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758408Ab0KRSZd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Nov 2010 13:25:33 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:55422 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757963Ab0KRSZd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Nov 2010 13:25:33 -0500
-Received: by fxm10 with SMTP id 10so193899fxm.19
-        for <git@vger.kernel.org>; Thu, 18 Nov 2010 10:25:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=ToUvTr3lWOYUlLgqa/jbx5uV7I+ehukgIG36lovu0mo=;
-        b=K1GBUkuDCAGpKUP0B98CQ9g4ZusOH3u9pVRL0EF+fygzg/bn1SrbvO3WSoLwmVIi65
-         ojjpyUySKN+D6mGBb+DLoGWJTHgVPX62R99xlOf/xdLogcULBD1UbcMu5ayqaIeC4G8r
-         riMNekPOlVUHz+iYPAs5FbUYevXi3RCsCFcpY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=TXAFIzYhlslEmxvWU2l546Z7RXf+QH/NDE9RoHNdO4licT2xRBKPp07KmYprAY3bsn
-         6q7Wu+NR44JiClPiVcu7DqFIV/NLm6qCAKgJCgjdgR7f/VKdzkxN+Ba/MdWRuQnUadTZ
-         mmBN/TnMD/g4sug8jbj+mFzBjE/OPc8PCkAQ4=
-Received: by 10.223.74.11 with SMTP id s11mr458549faj.11.1290104731709;
-        Thu, 18 Nov 2010 10:25:31 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id y13sm246287fah.26.2010.11.18.10.25.30
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 18 Nov 2010 10:25:30 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTikZBcmbFoCmqT-eorGm3R0YYjkzotc414w_PHyd@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1760120Ab0KRSjk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Nov 2010 13:39:40 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41213 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760103Ab0KRSjk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Nov 2010 13:39:40 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8468022B8;
+	Thu, 18 Nov 2010 13:39:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=3cc9O9Ixpm1241DFTVRhObe/vTo=; b=qSTpgL
+	jluVCwWNX+lmGqTHGUwnbDC0nOjo3GVZm6KkKpTZOBGQBHapIpb+Cg0V5SXWyfCS
+	VopuInftURxadZmWGNmPiL8pAcBxMWBYC6aViYrOCUguMCcuTlKj5T37dF3o0nAR
+	y2j92n6GIRW/CU+9yIv0rLBNRApRejb/AHzt0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=e9ESKfso+3gBXDT0nbhQMhmQlWOXjD8A
+	1bQHJVbLnwS7ooEtmvb1m3H8PaDx2BF5wDFhKlJm1/aEmHf6qUEE61hruJtnWqHu
+	IAXb66bl17rMtxKKEke1V66WCxLX4OJgeJhYRrCl+D2Tv2VriIBfYaIcYkh08JBp
+	8Feg1iYcfrU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5F52022B7;
+	Thu, 18 Nov 2010 13:39:47 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5AF0A22A7; Thu, 18 Nov 2010
+ 13:39:44 -0500 (EST)
+In-Reply-To: <456aec650e66bba518b8a5ec88c88a6b.squirrel@artax.karlin.mff.cuni.cz> (Jan
+ Hudec's message of "Thu\, 18 Nov 2010 08\:15\:23 +0100 \(CET\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 381176F0-F343-11DF-AE2E-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161702>
 
-Lars Buitinck wrote:
+"Jan Hudec" <bulb@ucw.cz> writes:
 
-> Yes, that works fine with LDFLAGS= in the Makefile. Is this just a
-> lack of Makefile-fu on my part?
+>  - During the testing I found a problem, but it may have already
+>    existed on master before the merge.
+>  - Therefore I needed to return to clean master, test it and return
+>    to the merge. So I thought I'd commit the merge to a temporary
+>    branch, test master again and merge the temporary to master if
+>    the problem is not from the merge. So I did:
+>
+>    $ git checkout -b temp
+>    $ git commit
+>
+>    OOPS! It forgot it was a merge.
 
-In general, "make" likes to get its variable assignments on the
-command line rather than from the environment.  This way, Makefile
-authors do not have to worry about keeping variable names in a
-tightly reined namespace.
+I think it was an oversight by the author of 91dcdfd (Make "git checkout"
+create new branches on demand, 2005-07-11) who forgot that he also did
+ef0bfa2 (Remove MERGE_HEAD in "git checkout/reset", 2005-06-21).  The
+rationale for the removal of MERGE_HEAD from the earlier commit is:
 
-On the other hand, it can be convenient to set up the environment
-with flags that would be used for multiple builds.  Different
-projects deal with that differently:
+    [this command] will end up resetting the index to some specific
+    head, and any unresolved merge will be forgotten [hence there is no
+    point recording the result as a merge].
 
-./configure takes certain values (including LDFLAGS) from the
-environment in autotools-using projects.  ./configure --help=short
-lists them.
+but when used with -b no such "resetting of the index" happens.
 
-The Linux kernel build system has a separate (namespaced) set of
-variables it reads from the environment.  Example: exporting
-KBUILD_OUTPUT=$HOME/.cache/linux-2.6 in .profile would save me from
-typing "make O=$HOME/.cache/linux-2.6" every time I build the kernel.
-They are documented in Documentation/kbuild/kbuild.txt.
-
-Git reads settings from a config.mak file in the toplevel of the
-git source tree.  So one can set
-
-	LDFLAGS = -L$(HOME)/opt/git/lib
-
-there and it will be used for all builds.
+Having said that, changing it not to remove MERGE_HEAD and MERGE_MSG is
+probably not sufficient, as MERGE_MSG would likely to already record to
+which branch you are recording the merge (I didn't check, though).
