@@ -1,67 +1,98 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: Re: [PATCH] t9157-git-svn-fetch-merge.sh: remove dependency on
- subversion 1.5
-Date: Thu, 18 Nov 2010 18:35:11 -0500 (EST)
-Message-ID: <alpine.DEB.2.02.1011181826560.14285@dr-wily.mit.edu>
-References: <1287737937.3785.15.camel@balanced-tree> <1287798958-22549-1-git-send-email-stevenrwalter@gmail.com> <alpine.DEB.2.02.1011181606340.14285@dr-wily.mit.edu>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Submodules or similar for exercise/exam management
+Date: Thu, 18 Nov 2010 17:49:16 -0600
+Message-ID: <20101118234916.GB21621@burratino>
+References: <201011181109.08345.trast@student.ethz.ch>
+ <4CE5988F.7050309@web.de>
+ <7vsjyyb6ui.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>, normalperson@yhbt.net,
-	git@vger.kernel.org
-To: Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 19 00:35:24 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Git Mailing List <git@vger.kernel.org>, in-gitvger@baka.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Nov 19 00:50:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJE0i-00086M-1G
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 00:35:24 +0100
+	id 1PJEF0-0000GC-G1
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 00:50:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759997Ab0KRXfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Nov 2010 18:35:16 -0500
-Received: from DMZ-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.34]:55849 "EHLO
-	dmz-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754729Ab0KRXfP (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Nov 2010 18:35:15 -0500
-X-AuditID: 12074422-b7c3eae000000a70-a6-4ce5b832fbce
-Received: from mailhub-auth-3.mit.edu ( [18.9.21.43])
-	by dmz-mailsec-scanner-5.mit.edu (Symantec Brightmail Gateway) with SMTP id 8A.A3.02672.238B5EC4; Thu, 18 Nov 2010 18:35:14 -0500 (EST)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id oAINZDJ3018865;
-	Thu, 18 Nov 2010 18:35:14 -0500
-Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id oAINZBPJ025468
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 18 Nov 2010 18:35:12 -0500 (EST)
-In-Reply-To: <alpine.DEB.2.02.1011181606340.14285@dr-wily.mit.edu>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
-X-Brightmail-Tracker: AAAAAA==
+	id S1759484Ab0KRXuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Nov 2010 18:50:04 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:40414 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756649Ab0KRXuD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Nov 2010 18:50:03 -0500
+Received: by vws13 with SMTP id 13so2175880vws.19
+        for <git@vger.kernel.org>; Thu, 18 Nov 2010 15:50:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=kShKBJ+DnBmrzcbtObVTeHGRNIpa5O/TTvqep2r2BvU=;
+        b=lJVBT9RTV47Ha67goyE0u2ZTK+TS1GIQRCw2s4xp2SrMhpROn1jahto7cU0urlV6IK
+         OYJ9fEKeF8qHeVYbO8wkTqvwBxsnVzL0kO22N+Dx44DK4xvY8Dp0BzmM3Mibo+PgZ5TV
+         cxB0q2ihz+YbKgaiwWvrlFrrNbpRxyuNZIS4Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=k150PFT7ghQLJOWwHmFvjVJKFvletkOOxJPkHPHO7rIrs0MfjWHpU27BYqZjHn4cZY
+         cQ597HCWD2TVsthCQ3QHYmmF7r7WWnKaPoLXVWmHLXnHJw63qY+6eq4U4FeHNJ4XlHt4
+         NhWeguvC4MtwRSpPDlTTFKLNeeczFEzdl6s74=
+Received: by 10.220.182.10 with SMTP id ca10mr276509vcb.125.1290124202042;
+        Thu, 18 Nov 2010 15:50:02 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id j22sm248381vcr.31.2010.11.18.15.49.59
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 18 Nov 2010 15:50:00 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vsjyyb6ui.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161718>
 
-On Thu, 18 Nov 2010, Anders Kaseorg wrote:
-> Junio: Did this get lost?  It fixes a test suite regression between 
-> v1.7.3.1 and v1.7.3.2 on systems with Subversion 1.4.
+Junio C Hamano wrote:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-Hmm, perhaps I spoke too soon; when I actually run the patched test on an 
-Ubuntu 8.04 system, I still get a failure.  Apparently Subversion 1.4 
-thinks the manually set svn:mergeinfo properties cause conflicts:
+>>> 3) never need to be aware of repo boundaries or manipulate sub-repo
+>>
+>> I think that this requirement is the hardest for any solution I know
+>> of or can imagine, as you hit these boundaries sooner or later either
+>> when you want to commit, push and/or when you have to resolve merge
+>> conflicts.
+>
+> Just a quick sanity check.  When this "requirement" makes sense, does the
+> whole thing need to be a superproject with bunch of submodules, and why?
 
-+ svn merge -r5:9 file:///tmp/andersk/git/t/trash directory.t9157-git-svn-fetch-merge/svnrepo/branches/branch2
-A    baz
- C   .
-+ svn propset svn:mergeinfo /branches/branch1:4-8
-/branches/branch2:6-9 .
-property 'svn:mergeinfo' set on '.'
-+ svn resolved baz
-+ svn commit -m merge branch2
-svn: Commit failed (details follow):
-svn: Aborting commit: '/tmp/andersk/git/t/trash directory.t9157-git-svn-fetch-merge/.git/svn/refs/remotes/git-svn/svn-tree' remains in conflict
+In this example: because the submodule represents individual
+questions that are used by multiple exams.
 
-Anders
+Another instance of the same (slightly uncomfortable :)) practice:
+suppose a certain chapter is part of multiple works I have
+published --- maybe in an article and a larger book.  When working on
+the book:
+
+ - I do not want to make changes to that chapter and forget to commit
+   them.
+
+ - After making changes to many chapters, I do not want the fuss of
+   going from chapter to chapter and commiting them one by one.
+
+ - I certainly do not want to publish a version of the book that
+   "includes" versions of the chapters as dead links, so to speak.
+   That is, when I publish the current version of the book, I want
+   to publish the current version of all chapters, too.
+
+ - When starting work on the book again after long absence, I would
+   like to be able to see and have the chance to adopt changes to
+   chapters made as part of this book and as part of others.
+
+If I understand correctly.
