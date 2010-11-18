@@ -1,176 +1,155 @@
-From: aga@iki.fi
-Subject: [PATCH] status: show branchname with a configurable color
-Date: Thu, 18 Nov 2010 01:40:05 +0200
-Message-ID: <1290037205-19470-1-git-send-email-aga@iki.fi>
-Cc: gitster@pobox.com, Aleksi Aalto <aga@iki.fi>
+From: "Neal Kreitzinger" <neal@rsss.com>
+Subject: Re: scan entire repo for changes to file
+Date: Wed, 17 Nov 2010 18:47:10 -0600
+Message-ID: <ic1t5i$9hs$1@dough.gmane.org>
+References: <ibi59v$pjg$1@dough.gmane.org> <AANLkTi=uKhrvAS6ApnmCZnfbFboYU77rNcKDpaSBn1id@mail.gmail.com> <20101112014434.GA10679@burratino> <7vk4kdi2h4.fsf@alter.siamese.dyndns.org> <20101116182043.GA14552@burratino>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 18 00:48:16 2010
+X-From: git-owner@vger.kernel.org Thu Nov 18 01:49:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PIrjW-0007ug-Kt
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 00:48:11 +0100
+	id 1PIsgd-00013O-SS
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 01:49:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750859Ab0KQXsF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 17 Nov 2010 18:48:05 -0500
-Received: from dusk.niksula.hut.fi ([130.233.40.6]:54154 "EHLO
-	mail.niksula.hut.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750722Ab0KQXsE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 17 Nov 2010 18:48:04 -0500
-X-Greylist: delayed 413 seconds by postgrey-1.27 at vger.kernel.org; Wed, 17 Nov 2010 18:48:03 EST
-Received: by mail.niksula.hut.fi (Postfix, from userid 60001)
-	id 6107E74184; Thu, 18 Nov 2010 01:41:09 +0200 (EET)
-X-Spam-Checker-Version: SpamAssassin 3.3.1-niksula20080612 (2010-03-16) on dusk
-X-Spam-Level: 
-X-Spam-Status: No, score=0.0 required=5.0 tests=none autolearn=disabled
-	version=3.3.1-niksula20080612
-X-Spam-Niksula: No
-Received: from kekkonen.cs.hut.fi (kekkonen.cs.hut.fi [130.233.41.50])
-	by mail.niksula.hut.fi (Postfix) with ESMTP id 074AE74181;
-	Thu, 18 Nov 2010 01:41:06 +0200 (EET)
-Received: (from ajaalto@localhost)
-	by kekkonen.cs.hut.fi (8.14.3+Sun/8.14.3/Submit) id oAHNf5ra019567;
-	Thu, 18 Nov 2010 01:41:05 +0200 (EET)
-X-Mailer: git-send-email 1.7.3.GIT
+	id S1753301Ab0KRAtG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 17 Nov 2010 19:49:06 -0500
+Received: from lo.gmane.org ([80.91.229.12]:47310 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752114Ab0KRAtF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 17 Nov 2010 19:49:05 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PIsgQ-0000ze-7E
+	for git@vger.kernel.org; Thu, 18 Nov 2010 01:49:02 +0100
+Received: from 67.63.162.200 ([67.63.162.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 18 Nov 2010 01:49:02 +0100
+Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 18 Nov 2010 01:49:02 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 67.63.162.200
+X-MSMail-Priority: Normal
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-RFC2646: Format=Flowed; Original
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161641>
 
-From: Aleksi Aalto <aga@iki.fi>
 
-The configuration variable is color.status.branch.
+"Jonathan Nieder" <jrnieder@gmail.com> wrote in message 
+news:20101116182043.GA14552@burratino...
+> Junio C Hamano wrote:
+>> Jonathan Nieder <jrnieder@gmail.com> writes:
+>>> Martin von Zweigbergk wrote:
+>>>> On Thu, Nov 11, 2010 at 8:28 PM, Neal Kreitzinger <neal@rsss.com> 
+>>>> wrote:
+>
+>>>>> Is there a way to scan my entire repo (many unmerged branches) for any
+>>>>> changes to a file?
+>>>>> e.g.
+>>>>> $ git log * -- somepath/myblob
+>>>>> would return all commits in the repo that changed myblob.
+>>>>
+>>>> Might replacing '*' by '--all' give you what are looking for?
+>>>
+>>> Probably with --full-history if you want to know what happened on
+>>> historic branches, too.
+>>
+>> You would need to clarify what you mean by "historic branches" here.
+>
+> Yes, quite right.  I meant failed experiments of a certain kind.
+>
+> The "git log -- path" facility can be used to learn the nature and
+> origin of a collection of files.
+>
+> $ git log --graph --oneline -- block-sha1/
+> * 078e9bc msvc: Select the "fast" definition of the {get,put}_be32() 
+> macros
+> [...]
+> * d7c208a Add new optimized C 'block-sha1' routines
+>
+> The result is a list of commits that explains the current state of
+> that file, without commits irrelevant to that purpose.
+>
+> What happens to merges?  Consider a history like this (history flowing
+> left to right):
+>
+> A --- B --- C --- D --- E --- F --- G ---- M --- H
+>              \                            /
+>               I ...                  ... J
+>
+> There is a main line and a side branch.  On the mainline, the selected
+> files have been getting better and better.  The side branch does not
+> touch those files.  Then the side branch would irrelevant to the
+> history of those files.
+>
+> To flesh out this idea, git history simplification.  When walking
+> through history, if a merge is encountered (M) and one of the parents
+> already matches the resulting state (G), then git will follow that
+> parent and ignore the others.  If no parent matches the resulting
+> state, git follows all parents.  So we get a simpler history that
+> should still adequately explain the result.
+>
+> Consider another scenario, though:
+>
+> A --- B --- C --- D --- E --- F --- G ---- M' --- H'
+>              \                            /
+>               I' ...                ... J'
+>
+> There is a mainline and a side branch.  On the mainline, the selected
+> files have been getting better and better.  On the side branch, there
+> was an abortive experiment; some changes were made to the selected
+> files there, but none of these changes survived as far as the merge M'.
+>
+> The side branch is _still_ irrelevant to the purpose of explaining the
+> current state of those files.  Git will notice that (G matches M') and
+> ignore the side branch.  But if your goal is not to explain the
+> current state but to delve into the history of all thoughts this
+> project remembers on a subject, such history simplification would not
+> be appropriate and you should be using the --full-history option.
+>
+> The History Simplification section of git-log(1) has details.
+>
+> Caveat: the list of commits selected with --full-history --dense do
+> not convey a coherent history.  M' is uninteresting but some of the
+> commits on the I' ... J' track are; how do we stitch the interesting
+> commits together?  So history visualization tools cop out and show
+> all merges when --full-history is enabled.  (Put another way,
+> --parents --full-history implies --no-dense.)
+>
+> Hope that helps.
 
-The default color is magenta.
+Thank you for the explanations.  I needed to use --full-history in addition 
+to --all this time because I was querying our 'QA' repo.  Our projects push 
+their commits up to the QA repo and then the testers pull down from the QA 
+repo a commit they want to test into a test repo that points to its own set 
+of data/DB files.  Our commits contain the binaries along with the source. 
+The test repos are sparse checkouts of binaries only.  As projects do 
+various interactive rebases and deliver to QA without necessarily rebasing 
+on master branch's HEAD and while master branch is also advancing and being 
+tested, the QA repo acquires many lines of development.  These repos in 
+question are for a new system so we don't have anything in true production 
+yet and therefore our master branch is tested in-house rather than by 
+end-users at this point.  (For our productional system the master branch is 
+stable, but not for the new system I'm talking about in this context.) 
+Using --all --full-history, I can interrogate everything being tested by 
+querying the QA repo.  In this case, I checked to see what the impact of a 
+newfound bug was on current testing by checking if any projects' QA 
+deliveries had the buggy modules in any of their changesets.  Of course, I 
+found that some projects had modified these modules so I was then able to 
+assess the impact and devise the proper remediation.
 
-Signed-off-by: Aleksi Aalto <aga@iki.fi>
----
- Documentation/config.txt |   15 +++++++--------
- builtin/commit.c         |    2 ++
- t/t7508-status.sh        |    2 +-
- wt-status.c              |   25 ++++++++++++++-----------
- wt-status.h              |    1 +
- 5 files changed, 25 insertions(+), 20 deletions(-)
+This is my first newsgroup and I'm learning as I go so I'm not sure if I'm 
+doing it right.  Jonathan, did this reply automatically show up in your 
+email in addition to showing up on the newsgroup?
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ba9639c..1dd3669 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -769,14 +769,13 @@ color.status::
- 	only when the output is to a terminal. Defaults to false.
- 
- color.status.<slot>::
--	Use customized color for status colorization. `<slot>` is
--	one of `header` (the header text of the status message),
--	`added` or `updated` (files which are added but not committed),
--	`changed` (files which are changed but not added in the index),
--	`untracked` (files which are not tracked by git), or
--	`nobranch` (the color the 'no branch' warning is shown in, defaulting
--	to red). The values of these variables may be specified as in
--	color.branch.<slot>.
-+	Use customized color for status colorization. `<slot>` is one of
-+	`header` (the header text of the status message), `added` or `updated`
-+	(files which are added but not committed), `changed` (files which
-+	are changed but not added in the index), `untracked` (files which
-+	are not tracked by git), `branch` (the current branch) or `nobranch`
-+	(the color the 'no branch' warning is shown in, defaulting to red). The
-+	values of these variables may be specified as in color.branch.<slot>.
- 
- color.ui::
- 	When set to `always`, always use colors in all git commands which
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 66fdd22..df4d189 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -984,6 +984,8 @@ static int parse_status_slot(const char *var, int offset)
- {
- 	if (!strcasecmp(var+offset, "header"))
- 		return WT_STATUS_HEADER;
-+	if (!strcasecmp(var+offset, "branch"))
-+		return WT_STATUS_ONBRANCH;
- 	if (!strcasecmp(var+offset, "updated")
- 		|| !strcasecmp(var+offset, "added"))
- 		return WT_STATUS_UPDATED;
-diff --git a/t/t7508-status.sh b/t/t7508-status.sh
-index c9300f3..d755e2a 100755
---- a/t/t7508-status.sh
-+++ b/t/t7508-status.sh
-@@ -386,7 +386,7 @@ test_expect_success 'setup unique colors' '
- '
- 
- cat >expect <<\EOF
--# On branch master
-+# On branch <MAGENTA>master<RESET>
- # Changes to be committed:
- #   (use "git reset HEAD <file>..." to unstage)
- #
-diff --git a/wt-status.c b/wt-status.c
-index fc2438f..ffbbb8f 100644
---- a/wt-status.c
-+++ b/wt-status.c
-@@ -13,14 +13,15 @@
- #include "submodule.h"
- 
- static char default_wt_status_colors[][COLOR_MAXLEN] = {
--	GIT_COLOR_NORMAL, /* WT_STATUS_HEADER */
--	GIT_COLOR_GREEN,  /* WT_STATUS_UPDATED */
--	GIT_COLOR_RED,    /* WT_STATUS_CHANGED */
--	GIT_COLOR_RED,    /* WT_STATUS_UNTRACKED */
--	GIT_COLOR_RED,    /* WT_STATUS_NOBRANCH */
--	GIT_COLOR_RED,    /* WT_STATUS_UNMERGED */
--	GIT_COLOR_GREEN,  /* WT_STATUS_LOCAL_BRANCH */
--	GIT_COLOR_RED,    /* WT_STATUS_REMOTE_BRANCH */
-+	GIT_COLOR_NORMAL,  /* WT_STATUS_HEADER */
-+	GIT_COLOR_MAGENTA, /* WT_STATUS_ONBRANCH */
-+	GIT_COLOR_GREEN,   /* WT_STATUS_UPDATED */
-+	GIT_COLOR_RED,     /* WT_STATUS_CHANGED */
-+	GIT_COLOR_RED,     /* WT_STATUS_UNTRACKED */
-+	GIT_COLOR_RED,     /* WT_STATUS_NOBRANCH */
-+	GIT_COLOR_RED,     /* WT_STATUS_UNMERGED */
-+	GIT_COLOR_GREEN,   /* WT_STATUS_LOCAL_BRANCH */
-+	GIT_COLOR_RED,     /* WT_STATUS_REMOTE_BRANCH */
- };
- 
- static const char *color(int slot, struct wt_status *s)
-@@ -625,7 +626,8 @@ static void wt_status_print_tracking(struct wt_status *s)
- 
- void wt_status_print(struct wt_status *s)
- {
--	const char *branch_color = color(WT_STATUS_HEADER, s);
-+	const char *branch_color = color(WT_STATUS_ONBRANCH, s);
-+	const char *branch_status_color = color(WT_STATUS_HEADER, s);
- 
- 	if (s->branch) {
- 		const char *on_what = "On branch ";
-@@ -634,11 +636,12 @@ void wt_status_print(struct wt_status *s)
- 			branch_name += 11;
- 		else if (!strcmp(branch_name, "HEAD")) {
- 			branch_name = "";
--			branch_color = color(WT_STATUS_NOBRANCH, s);
-+			branch_status_color = color(WT_STATUS_NOBRANCH, s);
- 			on_what = "Not currently on any branch.";
- 		}
- 		color_fprintf(s->fp, color(WT_STATUS_HEADER, s), "# ");
--		color_fprintf_ln(s->fp, branch_color, "%s%s", on_what, branch_name);
-+		color_fprintf(s->fp, branch_status_color, "%s", on_what);
-+		color_fprintf_ln(s->fp, branch_color, "%s", branch_name);
- 		if (!s->is_initial)
- 			wt_status_print_tracking(s);
- 	}
-diff --git a/wt-status.h b/wt-status.h
-index 9df9c9f..2457f20 100644
---- a/wt-status.h
-+++ b/wt-status.h
-@@ -7,6 +7,7 @@
- 
- enum color_wt_status {
- 	WT_STATUS_HEADER = 0,
-+	WT_STATUS_ONBRANCH,
- 	WT_STATUS_UPDATED,
- 	WT_STATUS_CHANGED,
- 	WT_STATUS_UNTRACKED,
--- 
-1.7.3.3.gc2223.dirty
+v/r,
+Neal 
