@@ -1,94 +1,66 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: Re: [PATCH] t9157-git-svn-fetch-merge.sh: remove dependency on
- subversion 1.5
-Date: Thu, 18 Nov 2010 16:15:59 -0500 (EST)
-Message-ID: <alpine.DEB.2.02.1011181606340.14285@dr-wily.mit.edu>
-References: <1287737937.3785.15.camel@balanced-tree> <1287798958-22549-1-git-send-email-stevenrwalter@gmail.com>
+From: "J.H." <warthog9@kernel.org>
+Subject: Re: What's cooking in git.git (Nov 2010, #02; Wed, 17)
+Date: Thu, 18 Nov 2010 13:33:49 -0800
+Message-ID: <4CE59BBD.9060105@kernel.org>
+References: <7v1v6je9g8.fsf@alter.siamese.dyndns.org> <m3mxp668cy.fsf@localhost.localdomain> <7v1v6icyb0.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: normalperson@yhbt.net, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Steven Walter <stevenrwalter@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 18 22:21:32 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 18 22:33:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJBuw-00015H-Ig
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 22:21:18 +0100
+	id 1PJC6r-0002DS-M0
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 22:33:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760515Ab0KRVVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Nov 2010 16:21:05 -0500
-Received: from DMZ-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.37]:54890 "EHLO
-	dmz-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1760529Ab0KRVVE (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 18 Nov 2010 16:21:04 -0500
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Thu, 18 Nov 2010 16:21:04 EST
-X-AuditID: 12074425-b7c98ae000000a04-16-4ce597924714
-Received: from mailhub-auth-1.mit.edu ( [18.9.21.35])
-	by dmz-mailsec-scanner-8.mit.edu (Symantec Brightmail Gateway) with SMTP id A5.3D.02564.29795EC4; Thu, 18 Nov 2010 16:16:02 -0500 (EST)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-1.mit.edu (8.13.8/8.9.2) with ESMTP id oAILG1fN017480;
-	Thu, 18 Nov 2010 16:16:01 -0500
-Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
+	id S1759801Ab0KRVdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Nov 2010 16:33:33 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:58125 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757156Ab0KRVdc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Nov 2010 16:33:32 -0500
+Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
 	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id oAILG061027706
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 18 Nov 2010 16:16:00 -0500 (EST)
-In-Reply-To: <1287798958-22549-1-git-send-email-stevenrwalter@gmail.com>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
-X-Brightmail-Tracker: AAAAAA==
+	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id oAILXDjd019388
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Thu, 18 Nov 2010 13:33:14 -0800
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.12) Gecko/20100907 Fedora/3.0.7-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.7
+In-Reply-To: <7v1v6icyb0.fsf@alter.siamese.dyndns.org>
+X-Enigmail-Version: 1.0.1
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Thu, 18 Nov 2010 13:33:14 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161713>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161714>
 
-Junio: Did this get lost?  It fixes a test suite regression between 
-v1.7.3.1 and v1.7.3.2 on systems with Subversion 1.4.
-
-Steven: Can you sign off on your commit?
-
-Anders
-
-On Fri, 22 Oct 2010, Steven Walter wrote:
-
-> Specify a revision range to "merge" and manually set the svn:mergeinfo
-> property.
-> ---
->  t/t9157-git-svn-fetch-merge.sh |   10 +++++++---
->  1 files changed, 7 insertions(+), 3 deletions(-)
+>> I am thinking about splitting main 'gitweb: File based caching layer
+>> (from git.kernel.org)' patch in two, separating moving test for
+>> $caching_enabled out of cache_fetch to separate commit (largest change
+>> to original J.H. submission), but leaving hardening "do 'cache.pl';"
+>> and replacing 0/1 valued $cache_enable with boolean valued 
+>> $caching_enabled.
+>>
+>> Because currently new tests in t9501 and t9502 (examining status and
+>> output of gitweb with caching enabled) do not pass, I am thinking
+>> about adding new configuration know turning off "Generating..." page.
+>>
+>> BTW. should I forge J.H. signoffs, and add mine?
 > 
-> diff --git a/t/t9157-git-svn-fetch-merge.sh b/t/t9157-git-svn-fetch-merge.sh
-> index da582c5..424e1fa 100755
-> --- a/t/t9157-git-svn-fetch-merge.sh
-> +++ b/t/t9157-git-svn-fetch-merge.sh
-> @@ -25,15 +25,19 @@ test_expect_success 'initialize source svn repo' '
->  		svn add baz &&
->  		svn commit -m x &&
->  		svn switch "$svnrepo"/trunk &&
-> -		svn merge "$svnrepo"/branches/branch1 &&
-> +		svn merge -r3:7 "$svnrepo"/branches/branch1 &&
-> +		svn propset svn:mergeinfo "/branches/branch1:4-7" . &&
->  		svn commit -m "merge" &&
->  		svn switch "$svnrepo"/branches/branch1 &&
->  		svn commit -m x &&
->  		svn switch "$svnrepo"/branches/branch2 &&
-> -		svn merge "$svnrepo"/branches/branch1 &&
-> +		svn merge -r3:8 "$svnrepo"/branches/branch1 &&
-> +		svn propset svn:mergeinfo "/branches/branch1:4-8" . &&
->  		svn commit -m "merge branch1" &&
->  		svn switch "$svnrepo"/trunk &&
-> -		svn merge "$svnrepo"/branches/branch2 &&
-> +		svn merge -r5:9 "$svnrepo"/branches/branch2 &&
-> +		svn propset svn:mergeinfo "/branches/branch1:4-8
-> +/branches/branch2:6-9" . &&
->  		svn resolved baz &&
->  		svn commit -m "merge branch2"
->  	) &&
-> -- 
-> 1.6.3.3
-> 
-> 
+> Just ping him beforehand ;-)
+
+I hadn't done a signoff as Jakub asked me to investigate some breakage
+in the testing infrastructure he had put together.  Sadly I haven't been
+able to duplicate it, and I haven't been able to catch him online to try
+and figure out what the problem was exactly.
+
+That said there's already a way to disable the Generating... page so I'm
+not sure why an extra, and different, mechanism to disable it is needed...
+
+- John 'Warthog9' Hawley
