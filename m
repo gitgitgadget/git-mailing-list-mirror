@@ -1,124 +1,115 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [BUG?] push to mirrior interferes with parallel operations
-Date: Thu, 18 Nov 2010 12:50:08 -0500
-Message-ID: <20101118175007.GA26505@sigill.intra.peff.net>
-References: <e355bb33c6192a6a29de56c7be93278e.squirrel@artax.karlin.mff.cuni.cz>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Nov 2010, #02; Wed, 17)
+Date: Thu, 18 Nov 2010 09:54:27 -0800
+Message-ID: <7v1v6icyb0.fsf@alter.siamese.dyndns.org>
+References: <7v1v6je9g8.fsf@alter.siamese.dyndns.org>
+ <m3mxp668cy.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jan Hudec <bulb@ucw.cz>
-X-From: git-owner@vger.kernel.org Thu Nov 18 18:50:33 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "John 'Warthog9' Hawley" <warthog9@kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 18 18:54:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJ8cy-00073f-Km
-	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 18:50:32 +0100
+	id 1PJ8h2-0001lA-6p
+	for gcvg-git-2@lo.gmane.org; Thu, 18 Nov 2010 18:54:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759996Ab0KRRuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Nov 2010 12:50:13 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:43075 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755363Ab0KRRuM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Nov 2010 12:50:12 -0500
-Received: (qmail 17361 invoked by uid 111); 18 Nov 2010 17:50:11 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 18 Nov 2010 17:50:11 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 18 Nov 2010 12:50:08 -0500
-Content-Disposition: inline
-In-Reply-To: <e355bb33c6192a6a29de56c7be93278e.squirrel@artax.karlin.mff.cuni.cz>
+	id S1760005Ab0KRRyi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 18 Nov 2010 12:54:38 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50691 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755203Ab0KRRyh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 18 Nov 2010 12:54:37 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A45DA3C40;
+	Thu, 18 Nov 2010 12:54:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=P3EnnbgVq9O3MzDYrjeQ34TyODw=; b=lpoQMs
+	CSg+OvLHx17L0WGnZ5CPRf3TH1r/6CnKv1EZwfJsXXjXXWmF5Od5eWliw/1YdgKQ
+	BlfbyPSkYFrvjNuZg7mQhmQ3wr9uL/KkHCB9CZ55j2ahq075eB1Nj84Tdj+bqHLk
+	a9eL57r6O0vydRvzP936s80J8oXp2joXXTU80=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=IIHH6ROB8PbmIZ5ettjnrOM37P77R6ln
+	mlGyMwfZM43swdGfBotabVOSSvWs8++xkzdPk7x4gP3oIS2JI6I+NzyGkIGaWDV1
+	YsY6d5/zeE0IBsGD2r5d6F+oPXEwYqpcusWiRKBsdnJBuFuBsddUT1Kdcj+H8LMs
+	N6M/R/iD1fc=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 75C393C3D;
+	Thu, 18 Nov 2010 12:54:44 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BA7713C3A; Thu, 18 Nov 2010
+ 12:54:39 -0500 (EST)
+In-Reply-To: <m3mxp668cy.fsf@localhost.localdomain> (Jakub Narebski's message
+ of "Thu\, 18 Nov 2010 06\:00\:23 -0800 \(PST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: ED03C15A-F33C-11DF-9EAB-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161695>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161696>
 
-On Thu, Nov 18, 2010 at 08:39:17AM +0100, Jan Hudec wrote:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> What happened is that the push took the values of all the
-> refs -- including those in refs/remotes/svn as it's a mirror
-> for pushing them to the backup. Meanwhile the fetch udpated
-> them. But when the push finished with the remote repo, it
-> updated the local refs back to the values it pushed, undoing
-> the effects of that fetch.
+> Sidenote: recently sent
+>
+>   gitweb: selectable configurations that change with each request
+>
+> practically reverts
+>
+>   gitweb: Move call to evaluate_git_version after evaluate_gitweb_config
+>
+> Just FYI.
 
-Hrm. There are actually two issues here, I think.
+Hmph, will have to look at it again.
 
-What is happening, I believe, is that push is trying to
-opportunistically update your local tracking branches.
+>> * jn/gitweb-time-hires-comes-with-5.8 (2010-11-09) 1 commit
+>>  - gitweb: Time::HiRes is in core for Perl 5.8
+>> 
+>> Looked reasonable.  Will merge to next.
+>
+> Thanks. With or without improvement to commit message?
 
-So the first issue is that you do not have the usual branches-in-heads,
-tracking-branches-in-remotes setup. Instead it is looking at your fetch
-refspec:
+I think what I pushed out has already been reworded.  Please check.
 
->     [remote "backup"]
-> 	url = /mnt/server/path/to/repo.git
-> 	fetch = +refs/*:refs/*
-> 	mirror = true
+>> * jh/gitweb-caching (2010-11-01) 4 commits
+>>  . gitweb: Minimal testing of gitweb caching
+>>  . gitweb: File based caching layer (from git.kernel.org)
+>>  . gitweb: add output buffering and associated functions
+>>  . gitweb: Prepare for splitting gitweb
+>> 
+>> Temporarily ejected while I shuffled jn/gitweb-testing; will queue the
+>> latest back in pu or perhaps in next.
+>
+> The advantage of 'gitweb: File based caching layer (from git.kernel.org)'
+> is that it is tested in real-life on heavy load (assuming that 
+> git.kernel.org uses the same version as is/would be in pu/next).
+>
+> The disadvantage is that it is seriously messy code.  Something that I
+> wanted to improve in my rewrite.  This is only minimal fixup.
 
-and trying to update everything in refs/* with what it just pushed.
-Usually this is a no-op, since it is the same as the value we just
-pushed, but as you found out, it is in a race with concurrent commands.
+Which is exactly what we want at this point (I want to release 1.7.4 by
+the end-of-year holidays, which means a feature-freeze will have to start
+soon).  My understanding is that the serious messiness does not come from
+the caching layer.
 
-I think we don't want to be doing the opportunistic update in this case.
-But what is the correct rule for deciding not to do it? I can think of a
-few possibilities:
+> I am thinking about splitting main 'gitweb: File based caching layer
+> (from git.kernel.org)' patch in two, separating moving test for
+> $caching_enabled out of cache_fetch to separate commit (largest change
+> to original J.H. submission), but leaving hardening "do 'cache.pl';"
+> and replacing 0/1 valued $cache_enable with boolean valued 
+> $caching_enabled.
+>
+> Because currently new tests in t9501 and t9502 (examining status and
+> output of gitweb with caching enabled) do not pass, I am thinking
+> about adding new configuration know turning off "Generating..." page.
+>
+> BTW. should I forge J.H. signoffs, and add mine?
 
- 1. When the mirror option is used. But this doesn't help people who
-    have a broad fetch refspec they have configured without mirror.
-
- 2. When the RHS of a fetch refspec is something that is being pushed.
-    But this doesn't cover the case of pushing local "refs/heads/foo" to
-    remote "refs/heads/bar", and then having it update "refs/heads/bar"
-    locally.
-
- 3. When the ref to be updated is not in refs/remotes. This feels a
-    little hack-ish, but I think would work the best in practice. The
-    refs/remotes hierarchy is supposed to just be a cache of remote
-    state, so really it is the only place such an opportunistic update
-    should be safe. People who are doing exotic things like fetching
-    directly into refs/heads will have to live without the opportunistic
-    update.
-
-The second issue I mentioned is that transport_update_tracking_ref does
-not actually check the old sha1 of the ref it is updating. The usual
-practice in git to avoid holding long locks is:
-
-  1. lock ref, read sha1, unlock ref
-  2. do stuff to make a new sha1, remembering old sha1
-  3. lock ref, read sha1, check that it equals old sha1, write new sha1,
-     unlock
-
-We don't do that here. It is tempting to do something like:
-
-diff --git a/transport.c b/transport.c
-index 0078660..02212fb 100644
---- a/transport.c
-+++ b/transport.c
-@@ -605,7 +605,7 @@ void transport_update_tracking_ref(struct remote *remote, struct ref *ref, int v
- 			delete_ref(rs.dst, NULL, 0);
- 		} else
- 			update_ref("update by push", rs.dst,
--					ref->new_sha1, NULL, 0, 0);
-+					ref->new_sha1, ref->old_sha1, 0, 0);
- 		free(rs.dst);
- 	}
- }
-
-but that is not right. That is saying "if we updated the remote ref R
-from A to B, update the tracking ref of R to B only if it is at A".
-However, our tracking ref of R is not necessarily at A; it might be
-stale with respect to upstream.
-
-So really we would need to read the current value of the tracking ref at
-the beginning of the push. But that is inefficient, and it is not
-actually atomic with the push we are doing.
-
-So I think it is OK to keep this the way it is, and assume that
-update_tracking_ref is about overwriting whatever is there. The real
-problem in your case is that the things it is overwriting are actually
-precious heads, not just a remote cache.
-
--Peff
+Just ping him beforehand ;-)
