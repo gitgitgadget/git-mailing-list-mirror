@@ -1,82 +1,118 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: groff .ft command use in asciidoc
-Date: Fri, 19 Nov 2010 15:40:10 -0500
-Message-ID: <20101119204010.GA18342@sigill.intra.peff.net>
-References: <20101117095233.GA23817@basil.fritz.box>
- <20101117101516.GA12416@burratino>
- <20101117143855.GA1987@sigill.intra.peff.net>
- <20101117154829.GE23656@basil.fritz.box>
- <20101119175424.GA13276@sigill.intra.peff.net>
- <1290198893.13785.68.camel@drew-northup.unet.maine.edu>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] get_cwd_relative(): do not misinterpret root path
+Date: Fri, 19 Nov 2010 21:41:59 +0100
+Message-ID: <20101119204159.GA28622@localhost>
+References: <1290158239-12138-1-git-send-email-pclouds@gmail.com>
+Reply-To: Clemens Buchacher <drizzd@aon.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Andi Kleen <andi@firstfloor.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Chris Johnsen <chris_johnsen@pobox.com>
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Fri Nov 19 21:40:21 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="5mCyUwZo2JvN/JJP"
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	fullung@gmail.com, matthijs@stdin.nl
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 19 21:41:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJXkq-0000ci-Bx
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 21:40:20 +0100
+	id 1PJXmK-0001pI-8b
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 21:41:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754764Ab0KSUkO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Nov 2010 15:40:14 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:33473 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754438Ab0KSUkN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Nov 2010 15:40:13 -0500
-Received: (qmail 28324 invoked by uid 111); 19 Nov 2010 20:40:13 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 19 Nov 2010 20:40:12 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Nov 2010 15:40:10 -0500
+	id S1755444Ab0KSUlr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Nov 2010 15:41:47 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:60979 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755315Ab0KSUlq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Nov 2010 15:41:46 -0500
+Received: by bwz15 with SMTP id 15so4288568bwz.19
+        for <git@vger.kernel.org>; Fri, 19 Nov 2010 12:41:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:reply-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=B1HD/mQrlJFCs3DmdeWoO1IWKCdnh3J60+jnBKqTnqI=;
+        b=k+nXIUyihlppeCWjsPb2klJgVw3TTAnC4HqX6b9meIYexTms3lrtQHV5UI2Ly7w0oz
+         x3g4oBKbVwz0D7xB/jZYSE6F+5r6nf2ok+zV73Ced4K6WTXoQpbz3sZlF0X6P7tgE+Wf
+         rQlpp8TgZClMxnnYvs3D5pX0e3PueHKcQmqA4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:reply-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=FuKsxnYsON3NltycOAkedwEGrs2xkgPvkmOWJ+COJZx2w87G/oH1tT6ApFiFSHLJzX
+         xgj2kX5rwtSU7sTFkS3fOwHT0RMnSQtAPVnMO+EIgNhmuKOQMnYMcJpcmbh6XcF5B2l9
+         tUJeJhIxc2jI0I654AcAg/XP2x0NpAflTHDV0=
+Received: by 10.204.61.20 with SMTP id r20mr2684578bkh.57.1290199305241;
+        Fri, 19 Nov 2010 12:41:45 -0800 (PST)
+Received: from darc.lan (p549A340F.dip.t-dialin.net [84.154.52.15])
+        by mx.google.com with ESMTPS id p22sm1069668bkp.9.2010.11.19.12.41.42
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 19 Nov 2010 12:41:43 -0800 (PST)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1PJXmR-0007Uu-5T; Fri, 19 Nov 2010 21:41:59 +0100
 Content-Disposition: inline
-In-Reply-To: <1290198893.13785.68.camel@drew-northup.unet.maine.edu>
+In-Reply-To: <1290158239-12138-1-git-send-email-pclouds@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161783>
 
-On Fri, Nov 19, 2010 at 03:34:53PM -0500, Drew Northup wrote:
 
-> > RHEL5 has asciidoc8, but docbook-xsl 1.69, which means it still needs
-> > ASCIIDOC_ROFF enabled. RHEL6 is just out last week. So we are
-> > technically breaking at least RHEL5 people (along with anybody with
-> > ancient systems) until they tweak their knobs.
-> 
-> Once I imported the DocBook XML XSL 4.5 files into my local cache it
-> seemed to make the man pages just fine on my RHEL5 machine even with the
-> posted patch applied.
-> 
-> [root@host ~]# rpm -qi asciidoc
-> Name        : asciidoc                     Relocations: (not relocatable)
-> Version     : 8.6.3                             Vendor: Dag Apt Repository, http://dag.wieers.com/apt/
-> Release     : 1.el5.rf                      Build Date: Thu 18 Nov 2010 08:35:22 AM EST
-> ...
-> [root@host ~]# rpm -qi docbook-utils
-> Name        : docbook-utils                Relocations: (not relocatable)
-> Version     : 0.6.14                            Vendor: Red Hat, Inc.
-> Release     : 5.1                           Build Date: Wed 12 Jul 2006 03:55:00 AM EDT
-> 
-> I didn't inspect each and every one for errors, but I didn't see any
-> problems in the ones I did look at.
+--5mCyUwZo2JvN/JJP
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I think the updated XSL files are what's making it work. The stock
-docbook xsl files are:
+Hi Duy,
 
-  $ yum list | grep docbook-style-xsl
-  docbook-style-xsl.noarch   1.69.1-5.1 rhel-x86_64-server-5
+Thanks for looking into this.
 
-and I don't know that we can assume anyone has updated them. However, I
-don't actually build git on my RHEL machines, so I could might be wrong.
+On Fri, Nov 19, 2010 at 04:17:19PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=
+=8Dc Duy wrote:
+>=20
+> @@ -965,6 +965,12 @@ char *get_relative_cwd(char *buffer, int size, const=
+ char *dir)
+>  	case '/':
+>  		return cwd + 1;
+>  	default:
+> +		/*
+> +		 * dir can end with a path separator when it's root
+> +		 * directory. Return proper prefix in that case.
+> +		 */
+> +		if (is_dir_sep(dir[-1]))
+> +			return cwd;
+>  		return NULL;
+>  	}
+>  }
 
-All that being said, I am willing to accept RHEL5 as collateral damage
-if the new defaults Just Work for the majority of other platforms.
+make_absolute_path() already rewrites dir to contain slashes only.
+I think it is confusing to use is_dir_sep() here, when we only
+check for / above.
 
--Peff
+Otherwise, the patch looks good to me.
+
+Clemens
+
+--5mCyUwZo2JvN/JJP
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAEBAgAGBQJM5uEXAAoJELKdZexG8uqMgLsH/RIoYzuJ+oIMhT4piioJ3vaI
+SpuFEwMltSsH8CBfG42IH43BtugH6JQq6oPOoL7RKmirng0kypp3Kpyrd7uSwMxG
+TQKAhdQNdZdr1mNkvvFaiRlNsAVRPjVeG6HTQ7Kc0HP1FB2xAhpQUw9RsM0pmhLf
+4IJg6fBIYHBnlfiwrBHWLEF9GvTE4dXNYHr4CJ7QBJT+geqbLpMtHSH6WjSAGHEM
+OeVuzd+uk0r0lDXd0TGTsBINi9T4ERzh7fi86pKuO1n84/4MGA0ItUSwzIFQuPH9
+3XSJlmDYT7u0Evl/a+vx8e2kx6lWCTkiN5mMX81CaKP7nzvXt8xg40mGQLuOofY=
+=nalh
+-----END PGP SIGNATURE-----
+
+--5mCyUwZo2JvN/JJP--
