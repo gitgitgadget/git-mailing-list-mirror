@@ -1,77 +1,108 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH] git-gui: fix browsers [Up To Parent] in sub-sub-directories.
-Date: Fri, 19 Nov 2010 21:43:48 +0100
-Message-ID: <1290199429-30421-1-git-send-email-bert.wesarg@googlemail.com>
-Cc: Bert Wesarg <bert.wesarg@googlemail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Fri Nov 19 21:44:00 2010
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: groff .ft command use in asciidoc
+Date: Fri, 19 Nov 2010 15:53:29 -0500
+Message-ID: <1290200009.13785.80.camel@drew-northup.unet.maine.edu>
+References: <20101117095233.GA23817@basil.fritz.box>
+	 <20101117101516.GA12416@burratino>
+	 <20101117143855.GA1987@sigill.intra.peff.net>
+	 <20101117154829.GE23656@basil.fritz.box>
+	 <20101119175424.GA13276@sigill.intra.peff.net>
+	 <1290198893.13785.68.camel@drew-northup.unet.maine.edu>
+	 <20101119204010.GA18342@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Andi Kleen <andi@firstfloor.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Chris Johnsen <chris_johnsen@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 19 21:54:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJXoN-000394-55
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 21:43:59 +0100
+	id 1PJXyf-00024o-Ci
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 21:54:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755511Ab0KSUny (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Nov 2010 15:43:54 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:38347 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755452Ab0KSUny (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Nov 2010 15:43:54 -0500
-Received: by fxm13 with SMTP id 13so1055554fxm.19
-        for <git@vger.kernel.org>; Fri, 19 Nov 2010 12:43:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=fe/sUXHDU1Fm6SgOlSX4ji1iWdXywyonfOAT2/Eaz6c=;
-        b=jUOFO2Fdlv/qKL6TsS9GRpBlXumNBNq32Ryzfz+3XUwitGlBs7FgY9J5xXe+yZY6QV
-         7x9zxBFkgo/E2Fy1R9dXs50zsw5gvCElhY3THBCStRfPdlE296HzGBre+8YdAyUApMLf
-         vi4NuCf4gy1sNrdi/Wpt7/UDGG+llP9lKwDKw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=qR1NuAPvkmfP39ZLUuZ5V1d/dlJ2QNAhRzETAQFMx7CdTX9nvBulk2jZ77/d+w6WRX
-         zo9vXP3PjRc+RC80AwoVoDmzV4zKpoH/nYt1q9A/n3GXOJbFUloEV7rvq6YAMgWiTD9/
-         cePznSn0x8AnVfHeATy70W/BWbNnNBWfwODbQ=
-Received: by 10.223.114.135 with SMTP id e7mr1350745faq.78.1290199432686;
-        Fri, 19 Nov 2010 12:43:52 -0800 (PST)
-Received: from localhost (p3E9905AB.dip.t-dialin.net [62.153.5.171])
-        by mx.google.com with ESMTPS id p18sm667949faa.40.2010.11.19.12.43.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 19 Nov 2010 12:43:51 -0800 (PST)
-X-Mailer: git-send-email 1.7.3.2.1200.ge4bf6
+	id S1755597Ab0KSUyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Nov 2010 15:54:31 -0500
+Received: from beryl.its.maine.edu ([130.111.32.94]:55724 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754064Ab0KSUyb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Nov 2010 15:54:31 -0500
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id oAJKrZft018052
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 19 Nov 2010 15:53:35 -0500
+In-Reply-To: <20101119204010.GA18342@sigill.intra.peff.net>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=6 Fuz1=6
+	Fuz2=6
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: oAJKrZft018052
+X-MailScanner: Found to be clean
+X-MailScanner-SpamScore: s
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1290804820.15175@1xmXlCA/vYGrMjwv3rOzdA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161785>
 
-browser_path used to end with a slash, so the regexp matches the empty string
-and therefore removes nothing.
 
-Fix this.
+On Fri, 2010-11-19 at 15:40 -0500, Jeff King wrote:
+> On Fri, Nov 19, 2010 at 03:34:53PM -0500, Drew Northup wrote:
+> 
+> > > RHEL5 has asciidoc8, but docbook-xsl 1.69, which means it still needs
+> > > ASCIIDOC_ROFF enabled. RHEL6 is just out last week. So we are
+> > > technically breaking at least RHEL5 people (along with anybody with
+> > > ancient systems) until they tweak their knobs.
+> > 
+> > Once I imported the DocBook XML XSL 4.5 files into my local cache it
+> > seemed to make the man pages just fine on my RHEL5 machine even with the
+> > posted patch applied.
+> > 
+> > [root@host ~]# rpm -qi asciidoc
+> > Name        : asciidoc                     Relocations: (not relocatable)
+> > Version     : 8.6.3                             Vendor: Dag Apt Repository, http://dag.wieers.com/apt/
+> > Release     : 1.el5.rf                      Build Date: Thu 18 Nov 2010 08:35:22 AM EST
+> > ...
+> > [root@host ~]# rpm -qi docbook-utils
+> > Name        : docbook-utils                Relocations: (not relocatable)
+> > Version     : 0.6.14                            Vendor: Red Hat, Inc.
+> > Release     : 5.1                           Build Date: Wed 12 Jul 2006 03:55:00 AM EDT
+> > 
+> > I didn't inspect each and every one for errors, but I didn't see any
+> > problems in the ones I did look at.
+> 
+> I think the updated XSL files are what's making it work. The stock
+> docbook xsl files are:
+> 
+>   $ yum list | grep docbook-style-xsl
+>   docbook-style-xsl.noarch   1.69.1-5.1 rhel-x86_64-server-5
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+Interestingly enough, without the updated XSL files it seemed to be
+working ok, it was just ungodly slow and kicking up a ton of warnings
+(it was trying to fetch them off of the hosting web server at such a
+high rate it was being limited out).
 
----
- git-gui/lib/browser.tcl |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+> and I don't know that we can assume anyone has updated them. However, I
+> don't actually build git on my RHEL machines, so I could might be wrong.
+> 
+> All that being said, I am willing to accept RHEL5 as collateral damage
+> if the new defaults Just Work for the majority of other platforms.
+> 
+> -Peff
 
-diff --git a/git-gui/lib/browser.tcl b/git-gui/lib/browser.tcl
-index c241572..a8c6223 100644
---- a/git-gui/lib/browser.tcl
-+++ b/git-gui/lib/browser.tcl
-@@ -121,7 +121,7 @@ method _parent {} {
- 		if {$browser_stack eq {}} {
- 			regsub {:.*$} $browser_path {:} browser_path
- 		} else {
--			regsub {/[^/]+$} $browser_path {} browser_path
-+			regsub {/[^/]+/$} $browser_path {/} browser_path
- 		}
- 		set browser_status [mc "Loading %s..." $browser_path]
- 		_ls $this [lindex $parent 0] [lindex $parent 1]
+I don't personally see this as a stopper. After all, asciidoc wasn't a
+default install either.
+
 -- 
-tg: (6f10c41..) bw/git-gui/fix-browser-up (depends on: master)
+-Drew Northup N1XIM
+   AKA RvnPhnx on OPN
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
