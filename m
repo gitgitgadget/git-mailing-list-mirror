@@ -1,113 +1,98 @@
-From: Gabriel Filion <lelutin@gmail.com>
-Subject: Re: How to import bzr repository into git
-Date: Fri, 19 Nov 2010 16:34:11 -0500
-Message-ID: <4CE6ED53.7060900@gmail.com>
-References: <AANLkTinVrwkOvYgGFX3S2530jfWnrAP28gVm4te1B4sC@mail.gmail.com> <AANLkTimPmPOJq64=VePSb2efsx17j8BNxCLt_i=b2ykW@mail.gmail.com> <4CE32062.6010308@gmail.com> <AANLkTimm2unZoUNH=wgnAFjPpeF_C=tJAZ0DkNK4mMv_@mail.gmail.com> <AANLkTikLt+=ffsqY1=-fN49fVZ_Q4HVWnzn5qSftg=T3@mail.gmail.com> <20101118163702.GA16610@burratino> <20101118163851.GB16610@burratino>
+From: Jeff King <peff@peff.net>
+Subject: Re: [BUG?] push to mirrior interferes with parallel operations
+Date: Fri, 19 Nov 2010 16:51:43 -0500
+Message-ID: <20101119215143.GA19644@sigill.intra.peff.net>
+References: <e355bb33c6192a6a29de56c7be93278e.squirrel@artax.karlin.mff.cuni.cz>
+ <20101118175007.GA26505@sigill.intra.peff.net>
+ <20101118184241.GN3693@efreet.light.src>
+ <20101118190414.GA30438@sigill.intra.peff.net>
+ <m2ipzt14rh.fsf@igel.home>
+ <20101119194628.GA15466@sigill.intra.peff.net>
+ <m28w0p1071.fsf@igel.home>
+ <20101119212118.GA19425@sigill.intra.peff.net>
+ <m24obd0zpp.fsf@igel.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Dmitri Pissarenko <dmitri.pissarenko@gmail.com>,
-	git@vger.kernel.org, bzr-fastimport@packages.debian.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 19 22:34:56 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Fri Nov 19 22:52:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJYbY-0002AT-Tx
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 22:34:49 +0100
+	id 1PJYsq-00069J-0a
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 22:52:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757009Ab0KSVeS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Nov 2010 16:34:18 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:38546 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756681Ab0KSVeP (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Nov 2010 16:34:15 -0500
-Received: by qyk32 with SMTP id 32so137565qyk.19
-        for <git@vger.kernel.org>; Fri, 19 Nov 2010 13:34:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=f3JoOrYmfYxb9IbxZzAaLRD7r8n+ZpP6/zzGn8ymqY4=;
-        b=O/CNsDJnbwEkQaeVvT08M/1TjtwHYUfAEP4+kBBNtNzWnyS0hmEv5V+JLGnujThAuE
-         DlremF80F1rzspqYB+PLCm/If+nngAQm/FGDM1EnLKgxQD5Dibj/tRfTVRGiW7Q9NcBh
-         39m4dIyMhXzPGf1uH6hMfedxctLHn3gz7UL2g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=dLWlilVQXuBiVC55r/4HtkmOm4HBB6W8jZXC6CGh+WqaBcVoN0ohu+UpkD/QzaHJ96
-         McHToKcbG8cRJ0352MHTlfHTcyg1d57B4oixmL1bRMmcmzKct1NLL0X2JEFRQdbiTql6
-         QPYD8TPR6JSqiFiaYRyJlhqiq9iBLshM8WfC4=
-Received: by 10.224.10.202 with SMTP id q10mr1304324qaq.373.1290202454809;
-        Fri, 19 Nov 2010 13:34:14 -0800 (PST)
-Received: from [192.168.2.207] (dsl-147-180.aei.ca [66.36.147.180])
-        by mx.google.com with ESMTPS id nb14sm1245451qcb.0.2010.11.19.13.34.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 19 Nov 2010 13:34:13 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.1.15) Gecko/20101030 Iceowl/1.0b1 Icedove/3.0.10
-In-Reply-To: <20101118163851.GB16610@burratino>
+	id S1757339Ab0KSVvu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Nov 2010 16:51:50 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:34948 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757248Ab0KSVvt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Nov 2010 16:51:49 -0500
+Received: (qmail 29105 invoked by uid 111); 19 Nov 2010 21:51:46 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 19 Nov 2010 21:51:46 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Nov 2010 16:51:43 -0500
+Content-Disposition: inline
+In-Reply-To: <m24obd0zpp.fsf@igel.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161792>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161793>
 
-On 11/18/2010 11:38 AM, Jonathan Nieder wrote:
-> Jonathan Nieder wrote:
->> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason wrote:
->>> On Thu, Nov 18, 2010 at 15:34, Dmitri Pissarenko
->>> <dmitri.pissarenko@gmail.com> wrote:
->=20
->>>> However, I had to give up this idea due to an "out of memory" erro=
-r
->>>> during bzr-export.
->>>
->>> Buy more memory or use more swap?
->>
->> Or report it as a bug/wanted feature?
->>
->> Cc-ing Jelmer Vernooij in the hope that he might be able to point
->> to the right person for that.
->=20
-> This time with a valid email address (sorry for the noise).
+On Fri, Nov 19, 2010 at 10:29:22PM +0100, Andreas Schwab wrote:
 
-right! I did see this with this particular workflow:
+> Jeff King <peff@peff.net> writes:
+> 
+> > On Fri, Nov 19, 2010 at 10:18:58PM +0100, Andreas Schwab wrote:
+> >
+> >> Jeff King <peff@peff.net> writes:
+> >> 
+> >> > On Fri, Nov 19, 2010 at 08:40:18PM +0100, Andreas Schwab wrote:
+> >> >
+> >> >> Jeff King <peff@peff.net> writes:
+> >> >> 
+> >> >> > it really only makes sense to push from a non-bare repo,
+> >> >> 
+> >> >> Why?  The repo could itself be a mirror.
+> >> >
+> >> > Why do you have a working directory if you are going to have a refspec
+> >> > that overwrites HEAD behind your back (which, IIRC, git will simply barf
+> >> > on, so all of your fetches will fail)?
+> >> 
+> >> I don't understand that question.  There is no working directory in a
+> >> bare repo.
+> >
+> > Now I'm confused. I thought we were talking about non-bare repos. Can
+> > you clarify your question?
+> 
+> You claim that pushing from a bare repo does not make sense, and I
+> question that (I do that all the time).
 
-bzr branch lp:bzr
-git init bzr.git
-cd bzr.git
-bzr fast-export ../bzr | git fast-import
+It's hard to tell because you trimmed all of the context from my
+statement, but:
 
+  1. We are talking specifically about pushing to remotes configured
+     using remote.*.mirror, and created via "git remote add --mirror".
 
-the weird thing is that using fastimport directly with the lp:bzr
-address (not "logged in" to launchpad, so in practice via HTTP) instead
-of a local copy of the directory took a very long time but worked.
+  2. I think you are reading what I quoted as the converse of what I
+     meant. You are saying "if bare, pushing does not make sense". But
+     what I meant there was "if non-bare, only pushing makes sense".
+     Which is why my initial response to you was so confused.
 
-So I guess there's probably a memory leak when using local files.
+     That being said, the immediately following statement you didn't
+     quote was "[only makes sense...] to fetch into a bare repo". Which
+     is what you are saying, and I do think is oversimplistic. But...
 
+  3. Much of the rest of my email goes on to explain a case where that
+     simple rule is not true, and discusses the implications.
 
-other than bzr-fastimport, there is also bzr-git, which seems to suppor=
-t
-some form of pushing (bzr dpush).
+So yes. You can push from a bare repo, I agree. I think we need "git
+remote add --mirror={fetch,push}" in order to handle all cases. But what
+should "git remote --mirror" do? Be disallowed? Be a synonym for
+--mirror=fetch (as it is now)? Guess based on bare/non-bare status?
 
-There are also mentions, in different discussions, of tailor:
-
-http://wiki.darcs.net/RelatedSoftware/Tailor
-
-And finally, the git wiki mentions BzrToGit
-
-https://git.wiki.kernel.org/index.php/Interfaces,_frontends,_and_tools#=
-BzrToGit
-
-However, I have not thoroughly tested these tools and I have yet to fin=
-d
-something that works right in all cases. If you give these tools a try,
-I'd be glad to hear about your experience with them.
-
---=20
-Gabriel Filion
+-Peff
