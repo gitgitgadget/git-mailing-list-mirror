@@ -1,78 +1,71 @@
-From: Dun Peal <dunpealer@gmail.com>
-Subject: Re: Best newbie / advanced / expert reference texts for Git?
-Date: Fri, 19 Nov 2010 17:08:23 +0000
-Message-ID: <AANLkTinuuU+PqYQs=4XywUsrSyd3evFbRK+2_WxEAoZo@mail.gmail.com>
-References: <AANLkTikctrASqX0FLCOapyJCt1VqG6_cxs_oXJ6fExZC@mail.gmail.com>
-	<AANLkTik5ZYC66NicUvbDxJMiR_0iK3vPRAf9dGAQu+qW@mail.gmail.com>
-	<AANLkTin_kS_2d=ajuGo-V_OWsF91xSb=SeKmrX9Aghe8@mail.gmail.com>
-	<AANLkTimckSDtkfoVqvEACNUhMHAKVvTKcCCmm=VdavJL@mail.gmail.com>
+From: Jeffrey Middleton <jefromi@gmail.com>
+Subject: Re: pager config for external commands
+Date: Fri, 19 Nov 2010 11:16:53 -0600
+Message-ID: <AANLkTikE6=At-BV22myZtM4nuNL6z4hoJ-kS=O1LkBXo@mail.gmail.com>
+References: <AANLkTimtjR0O3K8iGOVVVaFJS2+2wHcHhWf45tFYXjRQ@mail.gmail.com>
+ <AANLkTimMSp8XVzoaax2mW-jYP26B+zF2QSJFcy4TUi60@mail.gmail.com> <20101119160058.GA7967@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Patrick Doyle <wpdster@gmail.com>, Git ML <git@vger.kernel.org>
-To: Scott Chacon <schacon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 19 18:08:30 2010
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 19 18:17:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJURp-0000Vy-IV
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 18:08:29 +0100
+	id 1PJUaP-0007HP-Qo
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 18:17:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755167Ab0KSRIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Nov 2010 12:08:25 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:52018 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754127Ab0KSRIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Nov 2010 12:08:24 -0500
-Received: by qyk32 with SMTP id 32so239980qyk.19
-        for <git@vger.kernel.org>; Fri, 19 Nov 2010 09:08:23 -0800 (PST)
+	id S1755039Ab0KSRRQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Nov 2010 12:17:16 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:34701 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754622Ab0KSRRP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Nov 2010 12:17:15 -0500
+Received: by eye27 with SMTP id 27so2840763eye.19
+        for <git@vger.kernel.org>; Fri, 19 Nov 2010 09:17:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=mx7SEfg9H4/KJ/sO1os6Q0KxSWG/oIDGbe9XWz/dJEw=;
-        b=Y6NPwGS9uVHNOGGUPosAUm7otZUyt79N8m0SkNyPVG5XsJaEUgoeKTf9D9rreuBRPi
-         1ByExg/K9RAn60DHEl9fTgij2Gn08DbiV9pV8cik789ClA+VxgPq5nSL+f8eN9yjG0O8
-         mtV3H4hSn7jZ+PnwURWMdHg/6MWBk1LbC/gIw=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=fGY+1kNPukXNH3R5CfOHiox1r2RAN0FwgPhP7udinYo=;
+        b=g2QFVUQ52Pb6n4sXYeIlj1VfPFIwfcq+5Q4Zd3qGrg/te32C+G+y1u+2t0o2UVfo6T
+         MWo5alq6K9VifeefLD3l1gd51hsegBaAYtLA5jr7sI8+BqHoMt9Z8EiZeoMDWyDJIOeL
+         6vUxXw1+cE9cfzY2NvApVKPNa79hkqYDjwe6A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        b=KmBSTAx8LBY3oj9E7URNGsdx/LAUh6JbJYIw6ogMa6ZWN41Rsg87npE0QkxdwGYx2V
-         9A+a3tAnzYRZjGowsDOi2Xzd6AZtE2aVc1wg3TW20VMzFANPsHbEZ25ud3wILwGT/Wka
-         387ufC8vntcZxc86pULgBOiqrGEsE4O8IOrYE=
-Received: by 10.224.19.129 with SMTP id a1mr1110725qab.154.1290186503325; Fri,
- 19 Nov 2010 09:08:23 -0800 (PST)
-Received: by 10.220.186.198 with HTTP; Fri, 19 Nov 2010 09:08:23 -0800 (PST)
-In-Reply-To: <AANLkTimckSDtkfoVqvEACNUhMHAKVvTKcCCmm=VdavJL@mail.gmail.com>
+        b=AP4CbQWMgluf5MGS9zK0TRGSfiXp95VjVEtL17EE9E1owJI7PQ4C0ej/uex9bR+HVw
+         UdrnM4Ybar2oeOmnC4el/Xv3s7kQY8fx3GC/ibDMZDTH5DxqEjnv2j5eCuxiQvzmHlKq
+         N8Ohz/8LGgShG/2+z7GaaJ+qamV3ILgXojRrA=
+Received: by 10.216.242.12 with SMTP id h12mr2159283wer.26.1290187033681; Fri,
+ 19 Nov 2010 09:17:13 -0800 (PST)
+Received: by 10.216.206.30 with HTTP; Fri, 19 Nov 2010 09:16:53 -0800 (PST)
+In-Reply-To: <20101119160058.GA7967@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161769>
 
-On Fri, Nov 19, 2010 at 3:54 PM, Scott Chacon <schacon@gmail.com> wrote:
-> For newbies as a sort of shorter tutorial/reference I also have
-> http://gitref.org
+On Fri, Nov 19, 2010 at 10:00 AM, Jeff King <peff@peff.net> wrote:
+> Basically the problem is that we just call execv("git-<cmd>"). If it
+> works, then we are running an external, but we no longer have an
+> opportunity to start the pager. If it doesn't, then we don't necessarily
+> want to commit our pager choice. We may be running an alias, or we may
+> simply barf with "no such command".
 
-Cool, looks like what I need for the Newbie class.
-> These and other resources are listed out in http://git-scm.com/documentation
+Okay, that makes sense, I think. But execv_dashed_external does
+currently commit the pager choice, just without looking it up from the
+config. This means that, for example, git --paginate
+<nonexistent-command> does invoke the pager. Is that intended? I don't
+think I see any tests covering the combination of pager.<cmd> for
+anything but builtins.
 
-Yeah there are definitely a lot of resources listed there; so many,
-that one can't readily decide which to use and for what purpose ;-)
+Also, instead of having git implement "look up in PATH" internally,
+would it make sense to simply commit the pager choice, try the execv,
+then uncommit the pager choice if the command was not found?
 
->> P.S. I glanced at it briefly and it seemed a bit out of date, but
->> perhaps my inspection was too cursory.
->
-> Do you have any examples?
-
-I just glanced through a description of checking out branches and
-didn't see the feature that creates a remote-tracking branch foo when
-you `git checkout foo`, and foo isn't a local branch but does exist on
-the remote.
-
-Very cool of you to open your text up like that. I'll get a bunch of
-copies of ProGit ordered as soon as I can.
-
-D
+Jeffrey
