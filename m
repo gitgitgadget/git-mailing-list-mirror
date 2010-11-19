@@ -1,9 +1,11 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH 2/6] url: add str wrapper for end_url_with_slash()
-Date: Fri, 19 Nov 2010 20:46:26 +0800
-Message-ID: <1290170790-2200-3-git-send-email-rctay89@gmail.com>
+Subject: [PATCH 4/6] http-backend: use end_url_with_slash()
+Date: Fri, 19 Nov 2010 20:46:28 +0800
+Message-ID: <1290170790-2200-5-git-send-email-rctay89@gmail.com>
 References: <1290170790-2200-1-git-send-email-rctay89@gmail.com>
  <1290170790-2200-2-git-send-email-rctay89@gmail.com>
+ <1290170790-2200-3-git-send-email-rctay89@gmail.com>
+ <1290170790-2200-4-git-send-email-rctay89@gmail.com>
 Cc: "Junio C Hamano" <gitster@pobox.com>,
 	"Jonathan Nieder" <jrnieder@gmail.com>,
 	Gabriel Corona <gabriel.corona@enst-bretagne.fr>
@@ -14,77 +16,64 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJQN3-0001C8-Pp
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 13:47:18 +0100
+	id 1PJQN4-0001C8-Sv
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 13:47:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753144Ab0KSMq6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Nov 2010 07:46:58 -0500
-Received: from mail-px0-f174.google.com ([209.85.212.174]:54600 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753012Ab0KSMq5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Nov 2010 07:46:57 -0500
-Received: by pxi15 with SMTP id 15so1003656pxi.19
-        for <git@vger.kernel.org>; Fri, 19 Nov 2010 04:46:57 -0800 (PST)
+	id S1753273Ab0KSMrG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Nov 2010 07:47:06 -0500
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:47695 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753148Ab0KSMrD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Nov 2010 07:47:03 -0500
+Received: by mail-pv0-f174.google.com with SMTP id 1so687011pvh.19
+        for <git@vger.kernel.org>; Fri, 19 Nov 2010 04:47:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=+aMe3xA5qoAmvXkUeklba7gdzRt+UHdZo3QTg5J0H9Q=;
-        b=Zmfe7HB4RV099PWr0AqBKRPiAs986R4NcmfjADaYb/BjI+WFfE/g8jpn950ejJRgXA
-         QAWbEgwUa7UMXAFi2ZDbbp+vbgpyJzwEfPSXRQZRxwDASt1m6yzTACAVshfVJR/sdOZg
-         SbLjsVPnUiuzZq8OGPqDJD6H16f91EG+T84tA=
+        bh=gf89cPdK2+uiJGx4K7kwVWUZacrDw1y8DbedscN/Qf4=;
+        b=QGXmrprUX16pQMJU1syRUoNa+I5fg9sz9ZO+1jqNklD9tpRObtXHEOzHSIuTO9FZ2i
+         7FOg+efc8iMg3VDdW8/BYHNu/uxsqH7niaY+9C0+GIwXYigslOdUiq4YWpF6QT6nvf0c
+         ZaT5GJIyeiG9HFybslWDrDF9wD/1mXLQg6uYM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=YuqEYaaCvQh8Z+PIotsDwWEEu2wA/bmr/KcwUFi679+ODOFGToOmnh1zKdLzFxAkoK
-         8PhDX94MGhxXn51vxiKWfQaskdOEgv7E7t8Kh9n6z5bsFYQ4GpPSV5Q6/ts3KtZ5hJI3
-         ORKt37JlYgh48uerkNgN5dJxkLOPx0cyMxrJk=
-Received: by 10.142.11.18 with SMTP id 18mr1661141wfk.262.1290170817272;
-        Fri, 19 Nov 2010 04:46:57 -0800 (PST)
+        b=h/FT2AnB+rXZGG4AjeO65quQonLedRkIogdHGX4wd6r2X3wnBpyL8rnHQX7I9+SXtA
+         StpXTjjBxqkU61PFdW9C7Mb2+LJPaVkbPqty6cYqORod2tE+gXaC8oDK1KHHZfqURAzP
+         DozUe47Xt91YabcC3hZi2+CoECFeINIaZZW3Y=
+Received: by 10.142.172.13 with SMTP id u13mr1642323wfe.403.1290170823519;
+        Fri, 19 Nov 2010 04:47:03 -0800 (PST)
 Received: from localhost.localdomain (cm69.zeta153.maxonline.com.sg [116.87.153.69])
-        by mx.google.com with ESMTPS id q13sm1852420wfc.5.2010.11.19.04.46.54
+        by mx.google.com with ESMTPS id q13sm1852420wfc.5.2010.11.19.04.47.00
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 19 Nov 2010 04:46:56 -0800 (PST)
+        Fri, 19 Nov 2010 04:47:02 -0800 (PST)
 X-Mailer: git-send-email 1.7.2.2.513.ge1ef3
-In-Reply-To: <1290170790-2200-2-git-send-email-rctay89@gmail.com>
+In-Reply-To: <1290170790-2200-4-git-send-email-rctay89@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161748>
 
 Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
- url.c |    8 ++++++++
- url.h |    1 +
- 2 files changed, 9 insertions(+), 0 deletions(-)
+ http-backend.c |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
 
-diff --git a/url.c b/url.c
-index 7cebc64..138396c 100644
---- a/url.c
-+++ b/url.c
-@@ -132,3 +132,11 @@ void end_url_with_slash(struct strbuf *buf, const char *url)
- 	if (buf->len && buf->buf[buf->len - 1] != '/')
- 		strbuf_addstr(buf, "/");
- }
-+
-+void str_end_url_with_slash(const char *url, char **dest) {
-+	struct strbuf buf = STRBUF_INIT;
-+	end_url_with_slash(&buf, url);
-+	if (dest)
-+		free(*dest);
-+	*dest = strbuf_detach(&buf, NULL);
-+}
-diff --git a/url.h b/url.h
-index 8cb74d4..7100e32 100644
---- a/url.h
-+++ b/url.h
-@@ -8,5 +8,6 @@ extern char *url_decode_parameter_name(const char **query);
- extern char *url_decode_parameter_value(const char **query);
- 
- extern void end_url_with_slash(struct strbuf *buf, const char *url);
-+extern void str_end_url_with_slash(const char *url, char **dest);
- 
- #endif /* URL_H */
+diff --git a/http-backend.c b/http-backend.c
+index 14c90c2..8501504 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -510,9 +510,7 @@ static char* getdir(void)
+ 			die("GIT_PROJECT_ROOT is set but PATH_INFO is not");
+ 		if (daemon_avoid_alias(pathinfo))
+ 			die("'%s': aliased", pathinfo);
+-		strbuf_addstr(&buf, root);
+-		if (buf.buf[buf.len - 1] != '/')
+-			strbuf_addch(&buf, '/');
++		end_url_with_slash(&buf, root);
+ 		if (pathinfo[0] == '/')
+ 			pathinfo++;
+ 		strbuf_addstr(&buf, pathinfo);
 -- 
 1.7.3.67.g2a10b
