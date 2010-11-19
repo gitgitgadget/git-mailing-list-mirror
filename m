@@ -1,72 +1,57 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 0/6] http (dumb): end urls with slash
-Date: Fri, 19 Nov 2010 13:18:10 -0600
-Message-ID: <20101119191810.GD26187@burratino>
-References: <1290125163-31065-1-git-send-email-gabriel.corona@enst-bretagne.fr>
- <AANLkTikM8mNv+GiVyDWEJxsf0o3FYaaJj+jdYyiuXnov@mail.gmail.com>
- <20101119051047.GA4201@burratino>
- <1290170790-2200-1-git-send-email-rctay89@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [BUG?] push to mirrior interferes with parallel operations
+Date: Fri, 19 Nov 2010 20:40:18 +0100
+Message-ID: <m2ipzt14rh.fsf@igel.home>
+References: <e355bb33c6192a6a29de56c7be93278e.squirrel@artax.karlin.mff.cuni.cz>
+	<20101118175007.GA26505@sigill.intra.peff.net>
+	<20101118184241.GN3693@efreet.light.src>
+	<20101118190414.GA30438@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Gabriel Corona <gabriel.corona@enst-bretagne.fr>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 19 20:19:08 2010
+Cc: Jan Hudec <bulb@ucw.cz>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 19 20:40:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJWUF-0001BI-Ex
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 20:19:07 +0100
+	id 1PJWoz-0005sj-Qq
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 20:40:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756171Ab0KSTTB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Nov 2010 14:19:01 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:40090 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756003Ab0KSTTA (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Nov 2010 14:19:00 -0500
-Received: by eye27 with SMTP id 27so2958168eye.19
-        for <git@vger.kernel.org>; Fri, 19 Nov 2010 11:18:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=gkjLN8ocZu857lXkmETztSmX1xSAc3XFU7LYooOMPVE=;
-        b=SuieEmOhnLNo4vIiuYzYDbycQ0sPX24wqKnuJHVNDQnr8D4CMiObtbxgM/s5V2letz
-         kU9FidnWvSMPoQSi/xpVtNwN+/IfaxBBXAhKtpYojQCinACyXYfuNV14rS6LL9IdG9+9
-         x+TqCJ2O6HYyniz4wKE1ZMAA3w4S6VIYTCebk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=R/jWSP5LlqfwfyoP/74qgfXQzPmFFb056BhUkT1NFSxdb6E3ZX3wjjlWn2cVNJY0G6
-         zoKiDT564Np6R6SwALK6HjYRaLdDKlTANcarOMm5ZNByGLLSRzDo/ExV+6p+bXoFPHPp
-         HJM3PN5sE27EDsxc9B0wUGFyN6G3BFg1Wm2N0=
-Received: by 10.216.142.199 with SMTP id i49mr2113259wej.96.1290194338912;
-        Fri, 19 Nov 2010 11:18:58 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id x28sm966886weq.16.2010.11.19.11.18.56
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 19 Nov 2010 11:18:57 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1290170790-2200-1-git-send-email-rctay89@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756099Ab0KSTkV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Nov 2010 14:40:21 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:43234 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751197Ab0KSTkU (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Nov 2010 14:40:20 -0500
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id B6F74188A184;
+	Fri, 19 Nov 2010 20:40:18 +0100 (CET)
+Received: from igel.home (ppp-88-217-122-42.dynamic.mnet-online.de [88.217.122.42])
+	by mail.mnet-online.de (Postfix) with ESMTP id 6A34C1C018E0;
+	Fri, 19 Nov 2010 20:40:18 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 33314CA2A0; Fri, 19 Nov 2010 20:40:18 +0100 (CET)
+X-Yow: There's a lot of BIG MONEY in MISERY if you have an AGENT!!
+In-Reply-To: <20101118190414.GA30438@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 18 Nov 2010 14:04:15 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.90 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161777>
 
-Hi Ray Chuan,
+Jeff King <peff@peff.net> writes:
 
-Tay Ray Chuan wrote:
+> it really only makes sense to push from a non-bare repo,
 
-> This patch series contains Gabriel's fix, as well as some related work I did in
-> the area while looking through the code paths.
+Why?  The repo could itself be a mirror.
 
-Thanks!  The code is quite readable.  I don't know enough to say
-anything about the functional changes, but I assume you have that
-covered.
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
