@@ -1,95 +1,116 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH/RFC/WIP/POC] git-gui: grep prototype
-Date: Fri, 19 Nov 2010 21:16:21 +0100
-Message-ID: <AANLkTi=-OGvTT+yVqQWUyGn0PmODr=dv1DE9fZkaEDBB@mail.gmail.com>
-References: <1289770869-11665-1-git-send-email-bert.wesarg@googlemail.com>
-	<20101114215442.GC16413@burratino>
-	<AANLkTiktg4aZ7VfdXUT9XF4RK7MuCvzevB5jSRaNiE1L@mail.gmail.com>
-	<20101114220932.GE16413@burratino>
-	<AANLkTi=JR3vVnZ4Yz8o9MpZKiQ2_ASYxahbPNv8QACir@mail.gmail.com>
-	<20101114234848.GB26104@burratino>
-	<AANLkTimWyjrRD951AGeEayMoTNd-N2OXRd_wQ0RBFegN@mail.gmail.com>
-	<20101119194907.GG26187@burratino>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: groff .ft command use in asciidoc
+Date: Fri, 19 Nov 2010 15:34:53 -0500
+Message-ID: <1290198893.13785.68.camel@drew-northup.unet.maine.edu>
+References: <20101117095233.GA23817@basil.fritz.box>
+	 <20101117101516.GA12416@burratino>
+	 <20101117143855.GA1987@sigill.intra.peff.net>
+	 <20101117154829.GE23656@basil.fritz.box>
+	 <20101119175424.GA13276@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
-	"Shawn O . Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 19 21:16:29 2010
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Andi Kleen <andi@firstfloor.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Chris Johnsen <chris_johnsen@pobox.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Nov 19 21:36:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJXNk-0002vm-U6
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 21:16:29 +0100
+	id 1PJXhR-0007Bs-4R
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 21:36:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932088Ab0KSUQX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Nov 2010 15:16:23 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:48930 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756633Ab0KSUQX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Nov 2010 15:16:23 -0500
-Received: by iwn7 with SMTP id 7so184354iwn.19
-        for <git@vger.kernel.org>; Fri, 19 Nov 2010 12:16:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=ObCEpmOsTdyzU4rEsOmAKo9F34vv6fIPS3CEZj/Wx8w=;
-        b=uB7u/sHjUiM2nmKM/7RwUyDbTEH1gjpEEB882salQbV4WlgEfyrCUz+u4NOu7wTl5o
-         4R9Y24JCf5AXA3rbFug65YE4cNrwDqJ0btS2smIcrl1zicOF9nErF5zS6EcYGGUmfiLk
-         KGt+s38YbJQAaOHnLCLmZXPfOOxQzplyXJ2Uk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=nShVch1hP6PxKME6S9W8Rm1sJyMl9ZRcU+vJf+CpbGvkbOyzPthPcmm8MOAclzIHO5
-         OLbdMBfD6nA1xJg7dS03Y3k6d0v+4nUtBaxBTlYNn4WFf6dVHHwTUV4B2OZZTkHzTALQ
-         jN01QNAIwDuSZebaDJEB0zCxxOge8SqoTsgHQ=
-Received: by 10.231.15.137 with SMTP id k9mr2619830iba.58.1290197781847; Fri,
- 19 Nov 2010 12:16:21 -0800 (PST)
-Received: by 10.42.14.70 with HTTP; Fri, 19 Nov 2010 12:16:21 -0800 (PST)
-In-Reply-To: <20101119194907.GG26187@burratino>
+	id S1755836Ab0KSUgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Nov 2010 15:36:43 -0500
+Received: from basalt.its.maine.edu ([130.111.32.66]:36589 "EHLO
+	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754622Ab0KSUgn (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Nov 2010 15:36:43 -0500
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id oAJKYxVC018106
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 19 Nov 2010 15:35:04 -0500
+In-Reply-To: <20101119175424.GA13276@sigill.intra.peff.net>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=6
+	Fuz1=6 Fuz2=6
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: oAJKYxVC018106
+X-MailScanner: Found to be clean
+X-MailScanner-SpamScore: s
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1290803709.55748@18fWB36omZgRLQPNLoqAhw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161781>
 
-On Fri, Nov 19, 2010 at 20:49, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> [resending to list; sorry for the noise]
 
-No problem.
+On Fri, 2010-11-19 at 12:54 -0500, Jeff King wrote:
+> On Wed, Nov 17, 2010 at 04:48:29PM +0100, Andi Kleen wrote:
+> 
+> > On Wed, Nov 17, 2010 at 09:38:55AM -0500, Jeff King wrote:
+> > > On Wed, Nov 17, 2010 at 04:15:16AM -0600, Jonathan Nieder wrote:
+> > > Andi, I would be curious to hear which asciidoc and docbook-xsl versions
+> > > you are using.
+> > 
+> > I see this with the git rpms in opensuse 11.3 which I didn't build.
+> > But presumably it's built with asciidoc 8.4.5-5.1 and 1.75.2-7.1
+> 
+> Thanks. I think technically that is a bug in opensuse's packaging, as
+> they are not setting the right knobs for their version. However, I think
+> these days we can make it easier for them. Perhaps it is time to apply
+> this:
+> 
+> -- >8 --
+> Subject: [PATCH] docs: default to more modern toolset
+> 
+> When the ASCIIDOC8 and ASCIIDOC_NO_ROFF knobs were built,
+> many people were still on asciidoc 7 and using older
+> versions of docbook-xsl. These days, even the almost
+> 2-year-old Debian stable needs these knobs turned.
+> 
+> So let's turn them by default. The new knobs ASCIIDOC7 and
+> ASCIIDOC_ROFF can be used to get the old behavior if people
+> are on older systems.
+> 
+> Signed-off-by: Jeff King <peff@peff.net>
+> ---
+> These defaults work on Debian stable and further. It sounds like
+> opensuse 11.3, too. I don't know about Fedora, but I suspect they are at
+> least as far along as Debian stable.
+> 
+> RHEL5 has asciidoc8, but docbook-xsl 1.69, which means it still needs
+> ASCIIDOC_ROFF enabled. RHEL6 is just out last week. So we are
+> technically breaking at least RHEL5 people (along with anybody with
+> ancient systems) until they tweak their knobs.
 
->
-> Bert Wesarg wrote:
->
->> Could we settle on a name space for such variables? GIT_EDITOR_* makes
->> it obvious that it is for the editor started from git.
->
-> Sounds good to me.
->
-> If the choice of variables ends up looking especially good, maybe
-> we can pass it along to the Portland group and call it xdg-editor for
-> use by other apps, too. :)
->
+Once I imported the DocBook XML XSL 4.5 files into my local cache it
+seemed to make the man pages just fine on my RHEL5 machine even with the
+posted patch applied.
 
-Interesting idea.
+[root@host ~]# rpm -qi asciidoc
+Name        : asciidoc                     Relocations: (not relocatable)
+Version     : 8.6.3                             Vendor: Dag Apt Repository, http://dag.wieers.com/apt/
+Release     : 1.el5.rf                      Build Date: Thu 18 Nov 2010 08:35:22 AM EST
+...
+[root@host ~]# rpm -qi docbook-utils
+Name        : docbook-utils                Relocations: (not relocatable)
+Version     : 0.6.14                            Vendor: Red Hat, Inc.
+Release     : 5.1                           Build Date: Wed 12 Jul 2006 03:55:00 AM EDT
 
-There is one more thing to discuss before starting collecting the
-variables. Has each flag its own env-variable, or do we put flags into
-one variable named GIT_EDITOR_FLAGS? They could be space or comma
-separated.
+I didn't inspect each and every one for errors, but I didn't see any
+problems in the ones I did look at.
 
-The second option sounds a little bit more future prove to me.
 
-For non-flag arguments, there is the obvious LINENUMBER. But how do we
-pass columns or even a character range to the editor. They would be
-good for compiler output. Sure its out of score for git, but a little
-future-thinking will not hurt. We could add it to the LINENUMBER with
-a syntax like:
-
-    <line>[:<column-start[-<column-end>]]
-
-Bert
+-- 
+-Drew Northup N1XIM
+   AKA RvnPhnx on OPN
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
