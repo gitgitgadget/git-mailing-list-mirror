@@ -1,99 +1,134 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: [PATCH 2/2] git-p4: Added copy detection support
-Date: Fri, 19 Nov 2010 01:38:13 +0000
-Message-ID: <1290130693-30855-3-git-send-email-vitor.hda@gmail.com>
-References: <1290130693-30855-1-git-send-email-vitor.hda@gmail.com>
-Cc: Vitor Antunes <vitor.hda@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 19 02:38:38 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH] Normalise directory names when pushing to some WebDAV servers
+Date: Fri, 19 Nov 2010 12:02:38 +0800
+Message-ID: <AANLkTikM8mNv+GiVyDWEJxsf0o3FYaaJj+jdYyiuXnov@mail.gmail.com>
+References: <1290125163-31065-1-git-send-email-gabriel.corona@enst-bretagne.fr>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Gabriel Corona <gabriel.corona@enst-bretagne.fr>
+X-From: git-owner@vger.kernel.org Fri Nov 19 05:07:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJFvx-0005yJ-GC
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 02:38:37 +0100
+	id 1PJIFx-0008Hg-Ke
+	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 05:07:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756480Ab0KSBiX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 18 Nov 2010 20:38:23 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:34306 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755160Ab0KSBiV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 18 Nov 2010 20:38:21 -0500
-Received: by mail-wy0-f174.google.com with SMTP id 28so3920772wyb.19
-        for <git@vger.kernel.org>; Thu, 18 Nov 2010 17:38:21 -0800 (PST)
+	id S1751324Ab0KSECk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 18 Nov 2010 23:02:40 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:45448 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751035Ab0KSECj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 18 Nov 2010 23:02:39 -0500
+Received: by ewy5 with SMTP id 5so262236ewy.19
+        for <git@vger.kernel.org>; Thu, 18 Nov 2010 20:02:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=+si0DDycrIdhsmVC5L86aos5UOxPprXX0jTGTwjK2j8=;
-        b=LiLkTUyCZD68AbQH6IIJ6QyzLtgILuMhJYc4Ch1nNuvVT7TR3pnlR3p5x3xHbc7RA+
-         DUKXaw24zyslNDtruSwqK6bkMGngLpbFTYkXUQ/wiEX8td0OqjfDnkEHKBFytyjOixPY
-         SZlsD8g9lhcSNWrn/pLnWzKSxW+EBzubPgxt0=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=EbOcyS3L0J8O531hYOjSlXxlNnTBzNAzGFPif1Y5WJ8=;
+        b=B+asChsZsaSXx8uyP4HsvFsAfkvBg4Rtb76EVCo75a5yMtRY5Sl8WwerDDoyaMJbr1
+         ALN3NzxfhAK/QnAIGA9oWbOruHyih6d0rXo3YV/3kAkH/Wh/0wl0tu5vMVhGfm/qrJAY
+         IwGlvYKNdQG1e5UGLqpxMB+Xs9LyCJuI8bEKo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=OwNAzQhMonSxHAeD7dJX+WG/yQFLLiedukWLLjzQNtWLP+X7/ut9xSM3XRa4VE78kk
-         VJjdPIskguygDDa9Pr9Ukgy3gXaxqkAS+0mT0PCYav1lY1LYSzWPf7BxQ/oEaDV12eDa
-         0A26Pbdo70ZA75mcCpqXAmI9rfbaaBB2Wne9Q=
-Received: by 10.216.161.147 with SMTP id w19mr1175276wek.88.1290130700766;
-        Thu, 18 Nov 2010 17:38:20 -0800 (PST)
-Received: from localhost.localdomain (111.216.54.77.rev.vodafone.pt [77.54.216.111])
-        by mx.google.com with ESMTPS id a2sm540988wer.17.2010.11.18.17.38.19
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 18 Nov 2010 17:38:20 -0800 (PST)
-X-Mailer: git-send-email 1.7.2.3
-In-Reply-To: <1290130693-30855-1-git-send-email-vitor.hda@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=lpdPGDzj1R//AHJnm7Yj429iWHt3Dl63nRov0vRsaFtkEb/MB/Ox9r5r9C/h/7B4hs
+         URTbDTi4ziGXqp4tXXtGop4YbjpJfVzBgMUXOWLujKNT84XkAH2nIYg1pnF6CnXFUgqE
+         NklLGwUb1PQxfhwUQlxgcYwyI3BySBKtBb7iw=
+Received: by 10.213.13.3 with SMTP id z3mr1226183ebz.28.1290139358140; Thu, 18
+ Nov 2010 20:02:38 -0800 (PST)
+Received: by 10.213.112.195 with HTTP; Thu, 18 Nov 2010 20:02:38 -0800 (PST)
+In-Reply-To: <1290125163-31065-1-git-send-email-gabriel.corona@enst-bretagne.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161722>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161723>
 
-Added new config options:
-    git-p4.detectCopies         - Enable copy detection.
-    git-p4.detectCopiesHarder   - Find copies harder.
-The detectCopies option should be set to the desired threshold value.
-The detectCopiesHarder option receives a simple true/false value.
-P4Submit is now able to process diff-tree C status.
----
- contrib/fast-import/git-p4 |   17 +++++++++++++++++
- 1 files changed, 17 insertions(+), 0 deletions(-)
+On Fri, Nov 19, 2010 at 8:06 AM, Gabriel Corona
+<gabriel.corona@enst-bretagne.fr> wrote:
+> =A0http-push.c | =A0 13 +++++++++++++
+> =A01 files changed, 13 insertions(+), 0 deletions(-)
+>
+> diff --git a/http-push.c b/http-push.c
+> index c9bcd11..aeb37ab 100644
+> --- a/http-push.c
+> +++ b/http-push.c
+> @@ -1083,6 +1083,18 @@ static void process_ls_ref(struct remote_ls_ct=
+x *ls)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0one_remote_ref(ls->dentry_name);
+> =A0}
+>
+> +static void normalize_dirname(char** name) {
+> + =A0 =A0 =A0 char* res;
+> + =A0 =A0 =A0 int len =3D strlen(*name);
+> + =A0 =A0 =A0 if((*name)[len-1]=3D=3D'/') return;
+> + =A0 =A0 =A0 res =3D malloc(len+2);
+> + =A0 =A0 =A0 strcpy(res, *name);
+> + =A0 =A0 =A0 res[len]=3D'/';
+> + =A0 =A0 =A0 res[len+1]=3D'\0';
+> + =A0 =A0 =A0 free(*name);
+> + =A0 =A0 =A0 *name =3D res;
+> +}
+> +
+> =A0static void handle_remote_ls_ctx(struct xml_ctx *ctx, int tag_clos=
+ed)
+> =A0{
+> =A0 =A0 =A0 =A0struct remote_ls_ctx *ls =3D (struct remote_ls_ctx *)c=
+tx->userData;
+> @@ -1090,6 +1102,7 @@ static void handle_remote_ls_ctx(struct xml_ctx=
+ *ctx, int tag_closed)
+> =A0 =A0 =A0 =A0if (tag_closed) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (!strcmp(ctx->name, DAV_PROPFIND_RE=
+SP) && ls->dentry_name) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (ls->dentry_flags &=
+ IS_DIR) {
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 normali=
+ze_dirname(&ls->dentry_name);
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (ls=
+->flags & PROCESS_DIRS) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0ls->userFunc(ls);
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0}
+> --
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index ba18512..0ea3a44 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -620,6 +620,14 @@ class P4Submit(Command):
-         else:
-             diffOpts = ("", "-M")[self.detectRenames]
- 
-+        detectCopies = gitConfig("git-p4.detectCopies")
-+        if len(detectCopies) > 0:
-+            diffOpts += " -C%s" % detectCopies
+Hmm, we already have the logic to do this in end_url_with_slash(). It
+works on strbufs though. How about this?
+
+-->8--
+
+diff --git a/http-push.c b/http-push.c
+index c9bcd11..645c2b5 100644
+--- a/http-push.c
++++ b/http-push.c
+@@ -1086,10 +1086,15 @@ static void process_ls_ref(struct remote_ls_ctx=
+ *ls)
+ static void handle_remote_ls_ctx(struct xml_ctx *ctx, int tag_closed)
+ {
+        struct remote_ls_ctx *ls =3D (struct remote_ls_ctx *)ctx->userD=
+ata;
++       struct strbuf buf =3D STRBUF_INIT;
+
+        if (tag_closed) {
+                if (!strcmp(ctx->name, DAV_PROPFIND_RESP) && ls->dentry=
+_name) {
+                        if (ls->dentry_flags & IS_DIR) {
++                               end_url_with_slash(&buf, ls->dentry_nam=
+e);
++                               free(ls->dentry_name);
++                               ls->dentry_name =3D strbuf_detach(&buf,=
+ NULL);
 +
-+        detectCopiesHarder = gitConfig("git-p4.detectCopiesHarder")
-+        if len(detectCopiesHarder) > 0 and detectCopiesHarder.lower() != "false":
-+            diffOpts += " --find-copies-harder"
-+
-         diff = read_pipe_lines("git diff-tree -r %s \"%s^\" \"%s\"" % (diffOpts, id, id))
-         filesToAdd = set()
-         filesToDelete = set()
-@@ -643,6 +651,15 @@ class P4Submit(Command):
-                 filesToDelete.add(path)
-                 if path in filesToAdd:
-                     filesToAdd.remove(path)
-+            elif modifier == "C":
-+                src, dest = diff['src'], diff['dst']
-+                p4_system("integrate -Dt \"%s\" \"%s\"" % (src, dest))
-+                if diff['src_sha1'] != diff['dst_sha1']:
-+                    p4_system("edit \"%s\"" % (dest))
-+                if isModeExecChanged(diff['src_mode'], diff['dst_mode']):
-+                    filesToChangeExecBit[dest] = diff['dst_mode']
-+                os.unlink(dest)
-+                editedFiles.add(dest)
-             elif modifier == "R":
-                 src, dest = diff['src'], diff['dst']
-                 p4_system("integrate -Dt \"%s\" \"%s\"" % (src, dest))
--- 
-1.7.2.3
+                                if (ls->flags & PROCESS_DIRS) {
+                                        ls->userFunc(ls);
+                                }
+
+--=20
+Cheers,
+Ray Chuan
