@@ -1,10 +1,9 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 1/8] svn-fe: Prepare for strbuf use
-Date: Sat, 20 Nov 2010 13:22:47 -0600
-Message-ID: <20101120192247.GB17823@burratino>
+Subject: [WIP/PATCH 0/8] svn-fe: support for text deltas
+Date: Sat, 20 Nov 2010 13:21:53 -0600
+Message-ID: <20101120192153.GA17823@burratino>
 References: <20101118050023.GA14861@burratino>
  <20101120004525.GA17445@burratino>
- <20101120192153.GA17823@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
@@ -17,100 +16,88 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJt1m-0000Sp-9t
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Nov 2010 20:23:14 +0100
+	id 1PJt1l-0000Sp-73
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Nov 2010 20:23:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754786Ab0KTTW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Nov 2010 14:22:57 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:35567 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754753Ab0KTTWz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Nov 2010 14:22:55 -0500
-Received: by gxk23 with SMTP id 23so3369563gxk.19
-        for <git@vger.kernel.org>; Sat, 20 Nov 2010 11:22:54 -0800 (PST)
+	id S1754776Ab0KTTWI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Nov 2010 14:22:08 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:40558 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754753Ab0KTTWG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Nov 2010 14:22:06 -0500
+Received: by yxf34 with SMTP id 34so3367838yxf.19
+        for <git@vger.kernel.org>; Sat, 20 Nov 2010 11:22:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=xxFIrZpglxxQFv3ha84epqYSdIdDywUmPA0x96ysRzU=;
-        b=VaaGzuJcodLmpe390L4pKtdZXQggDWR3rlUmlyt7M4n8Fq1dvVODEqulEpmHGd4Nzt
-         jbpd80ILfSk9YABJGXnPDyc0daFrWUVyf2I9iK9AjEbQ/bv0tEQ12YRdA5pKIrgrHscq
-         NnCvV2QaCNElHPIK6zyUCGPCR+BJKuaX6ITN8=
+        bh=Y1aeCoZ1wYyAMFo23Eh03dURmVWMXC88eRpL85N+AMo=;
+        b=SBZz5nWGgxnw1EjxqSCsdpClC59Bel6KEdpdaDNZMEdhwFF+/aSjtT7nByH59SejzU
+         atCoBtOHIZZH9bJgi63BkCfqX2Gdzq/sBrbapL8n/eDpaEhYf++pH/h/Cv/YZWZEhFbl
+         coXnxmkgtDMA3XlboJ70IyOn0NNVNs5MMimWc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=pG/4/yTFgjWrTGNvr2xxtJgdPh2P2N/WfgMHPAAiDkhpm3xpaP86zlvKhywrmZhejf
-         wMrTW7zj1AaH8Cebks1NjkmKsUiYEN1Rtw65yu8IgTCIlMrHro9qiZ3XAW98HWTuxX7F
-         /5UXke+6WKpWVxtVq/efdWJpn1bDI4E7bsJLY=
-Received: by 10.150.205.11 with SMTP id c11mr6022037ybg.304.1290280974656;
-        Sat, 20 Nov 2010 11:22:54 -0800 (PST)
+        b=YkuBP1Ok9Shy8wloXklQhldO9oEkArnqMjj0VzU2bnXBwNW0t2p5FBdT//LZzHYXD+
+         fzsBNxy2clemiNqP1U4b6KH1DeiZPgRedbvSB4jn/ehmIdb16NUX/soF1+wiNTs/AvpS
+         ToruV9XrZ6NglwW6MtvkbLnx9pyNSPqP1k9I8=
+Received: by 10.150.91.18 with SMTP id o18mr6237725ybb.92.1290280924137;
+        Sat, 20 Nov 2010 11:22:04 -0800 (PST)
 Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id r18sm2001639yba.15.2010.11.20.11.22.53
+        by mx.google.com with ESMTPS id 50sm1982307yhl.41.2010.11.20.11.22.01
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 20 Nov 2010 11:22:54 -0800 (PST)
+        Sat, 20 Nov 2010 11:22:02 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20101120192153.GA17823@burratino>
+In-Reply-To: <20101120004525.GA17445@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161831>
 
-Linking svn-fe strbuf.o will require sha1_name.o and wrapper.o, hence
-sha1_file.o, hence libz, pthreads, and most of libgit.  Luckily there
-is a separate patch series in flight that would trim down those
-dependencies again.
+Jonathan Nieder wrote:
+> Jonathan Nieder wrote:
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- contrib/svn-fe/Makefile |   15 +++++++--------
- 1 files changed, 7 insertions(+), 8 deletions(-)
+>> This mini-series is part of an effort to get David and Ram's svn
+>> import work integrated into mainline git[1].
 
-diff --git a/contrib/svn-fe/Makefile b/contrib/svn-fe/Makefile
-index 360d8da..9732b03 100644
---- a/contrib/svn-fe/Makefile
-+++ b/contrib/svn-fe/Makefile
-@@ -8,11 +8,13 @@ CFLAGS = -g -O2 -Wall
- LDFLAGS =
- ALL_CFLAGS = $(CFLAGS)
- ALL_LDFLAGS = $(LDFLAGS)
--EXTLIBS =
-+PTHREAD_LIBS = -lpthread
-+EXTLIBS = -lz $(PTHREAD_LIBS)
- 
- GIT_LIB = ../../libgit.a
- VCSSVN_LIB = ../../vcs-svn/lib.a
--LIBS = $(VCSSVN_LIB) $(GIT_LIB) $(EXTLIBS)
-+XDIFF_LIB = ../../xdiff/lib.a
-+LIBS = $(VCSSVN_LIB) $(GIT_LIB) $(XDIFF_LIB) $(EXTLIBS)
- 
- QUIET_SUBDIR0 = +$(MAKE) -C # space to separate -C and subdir
- QUIET_SUBDIR1 =
-@@ -33,7 +35,7 @@ ifndef V
- endif
- endif
- 
--svn-fe$X: svn-fe.o $(VCSSVN_LIB) $(GIT_LIB)
-+svn-fe$X: svn-fe.o $(VCSSVN_LIB) $(GIT_LIB) $(XDIFF_LIB)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ svn-fe.o \
- 		$(ALL_LDFLAGS) $(LIBS)
- 
-@@ -51,11 +53,8 @@ svn-fe.1: svn-fe.txt
- 		../contrib/svn-fe/$@
- 	$(MV) ../../Documentation/svn-fe.1 .
- 
--../../vcs-svn/lib.a: FORCE
--	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) vcs-svn/lib.a
--
--../../libgit.a: FORCE
--	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) libgit.a
-+../../%.a: FORCE
-+	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) $*.a
- 
- clean:
- 	$(RM) svn-fe$X svn-fe.o svn-fe.html svn-fe.xml svn-fe.1
--- 
-1.7.2.3
+The next chapter.  This adds handling of text deltas.  I broke it
+in the process, though, as you can see with the attached test script:
+
+	$ testme.sh http://svn.apache.org/repos/asf 100 asf.git
+	[...]
+	* Dumped revision 35.
+	error: Preimage ends early
+	fatal: cannot apply delta
+
+Perhaps you can take this as a puzzle.  Where does the patch series
+go wrong?
+
+I like to think some of the cleanup will make this more maintainable
+in the future, even if it is broken now.
+
+Builds on the db/fast-import-cat-blob[1] and jn/svndiff0[2] topics.
+
+Thoughts, improvements, complaints welcome.
+
+David Barr (2):
+  vcs-svn: Let caller set up sliding window for delta preimage
+  vcs-svn: Implement text-delta handling
+
+Jonathan Nieder (6):
+  svn-fe: Prepare for strbuf use
+  vcs-svn: Internal fast_export_save_blob helper
+  vcs-svn: Introduce repo_read_path to check the content at a path
+  vcs-svn: Introduce fd_buffer library
+  vcs-svn: Read delta preimage from file descriptor
+  vcs-svn: Teach line_buffer about temporary files
+
+[1] Doesn't seem to be available on gmane.
+The important part (patch 3) is, though:
+http://thread.gmane.org/gmane.comp.version-control.git/161730
+Should I re-send?
+
+[2] http://thread.gmane.org/gmane.comp.version-control.git/151086/focus=158913
