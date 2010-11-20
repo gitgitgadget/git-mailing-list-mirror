@@ -1,83 +1,60 @@
-From: Yang Zhang <yanghatespam@gmail.com>
-Subject: =?windows-1252?Q?Re=3A_How_to_fix_=93Your_branch_and_=27origin=2Fmaster=27_ha?=
-	=?windows-1252?Q?ve_diverged=94_after_editing_a_commit_that_came_before_a_pul?=
-	=?windows-1252?Q?l=3F?=
-Date: Fri, 19 Nov 2010 17:59:55 -0800
-Message-ID: <AANLkTinRfzzG-Dc9Ervc-h0_4cwx9KBO1aTkhwBGpHHs@mail.gmail.com>
-References: <AANLkTikr+uGrO2EB9WQk+CXeOm7jiYxdbhGzRRvgc9B9@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [RFC] rebase: use @{upstream} if no upstream specified
+Date: Fri, 19 Nov 2010 23:10:12 -0500
+Message-ID: <20101120041011.GA20725@sigill.intra.peff.net>
+References: <1289595349-12589-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <20101113095140.GH8911@home.lan>
+ <AANLkTin+3FuuX_pavZQMrbi4qxjTRvM7nHk1PXcFbeiZ@mail.gmail.com>
+ <20101119211533.GA18942@sigill.intra.peff.net>
+ <AANLkTikWYVyCf9mueoAHjGcQuNOdPFyQrmtW79As4RG-@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 20 03:00:25 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Yann Dirson <ydirson@free.fr>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Santi =?utf-8?B?QsOpamFy?= <santi@agolina.net>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 20 05:10:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJcka-0007Kb-Hw
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Nov 2010 03:00:24 +0100
+	id 1PJemY-0007zg-5A
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Nov 2010 05:10:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756424Ab0KTCAS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Nov 2010 21:00:18 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:51549 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756314Ab0KTCAR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Nov 2010 21:00:17 -0500
-Received: by yxf34 with SMTP id 34so3119745yxf.19
-        for <git@vger.kernel.org>; Fri, 19 Nov 2010 18:00:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=D4DXQdxMduUQWDeDPDTgWNht4oMp0Gsxidedk3aVtlA=;
-        b=YUdE4hLpgEBY0cKy9Yw4lsJNJawfCGxgHmasnMatPkOmANLklyRff28KFsGO8EY6ao
-         MXylJMGTKQYGCQDYfNeEUJmO89s4a8B+ammAYAhYce6CmY3dM0MeoMMVOSl53KgYy3qs
-         ls9cbNezSXJpduNGkl2Wvl0taAQ1Y8INqPwfQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        b=yDUzJCMLkJEUnukYreXOTyAiOI4K40SMeNEzIabjEmUWPgwXHqc7q/RtiJxQSGYS0E
-         Jov8L5dTQZkAwZzk597IZwCktq8SwtJ9B1b+WPbEIyyaak0MHX1UgCBaU5y4GntBWT26
-         AeAGFFmrndc4lcmg1SnrvmxfyOyBL9kEqH85I=
-Received: by 10.90.2.23 with SMTP id 23mr3581544agb.97.1290218416590; Fri, 19
- Nov 2010 18:00:16 -0800 (PST)
-Received: by 10.90.222.2 with HTTP; Fri, 19 Nov 2010 17:59:55 -0800 (PST)
-In-Reply-To: <AANLkTikr+uGrO2EB9WQk+CXeOm7jiYxdbhGzRRvgc9B9@mail.gmail.com>
+	id S1757764Ab0KTEKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Nov 2010 23:10:19 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:46996 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757568Ab0KTEKS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Nov 2010 23:10:18 -0500
+Received: (qmail 31080 invoked by uid 111); 20 Nov 2010 04:10:16 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sat, 20 Nov 2010 04:10:16 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Nov 2010 23:10:12 -0500
+Content-Disposition: inline
+In-Reply-To: <AANLkTikWYVyCf9mueoAHjGcQuNOdPFyQrmtW79As4RG-@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161818>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161819>
 
-Clarification:
+On Fri, Nov 19, 2010 at 07:26:57PM -0500, Martin von Zweigbergk wrote:
 
-Simply pulling again does not fix the problem; it just reapplies the
-commits D, E on top of what I already have (despite the D, E already
-being there in the history), which also has the side-effect of
-producing superfluous conflicts.
+> Yes, I did try that and I noticed that it worked, but it helps to know
+> that it is not just by accident. I realize I was not very clear, but
+> what I really was wondering if there is any advantage to using
+> "git for-each-ref --format='%(upstream)' ${branch_name}" (as used by
+> git pull) as compared to "git rev-parse @{upstream}" as suggested by
+> Yann. ($branch_name in this case would be the current branch.)
 
-On Fri, Nov 19, 2010 at 4:36 PM, Yang Zhang <yanghatespam@gmail.com> wr=
-ote:
-> In the following scenario:
->
-> 1. Make commits A, B, C
-> 2. Pull, getting commits D, E
-> 3. Make more commits F, G, H, ...
-> 4. Realize that you need to tweak B
-> 5. Tweak B using git rebase -i and git commit --amend
->
-> Now git status says:
->
-> =A0Your branch and 'origin/master' have diverged.
->
-> How should I fix this? Thanks.
->
+No, I don't think there is a reason to prefer one over the other these
+days. When the instance in git-parse-remote was written (e9460a6,
+2009-06-12) @{upstream} did not yet exist (it came in 28fb843,
+2009-09-10). So for-each-ref was the only way to get the informationa
 
+I would use whichever one seems clearer in your context.
 
-
---=20
-Yang Zhang
-http://yz.mit.edu/
+-Peff
