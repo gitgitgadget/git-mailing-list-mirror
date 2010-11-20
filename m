@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 08/15] vcs-svn: Combine repo_replace and repo_modify functions
-Date: Fri, 19 Nov 2010 18:51:50 -0600
-Message-ID: <20101120005150.GI17445@burratino>
+Subject: [PATCH 09/15] vcs-svn: Delay read of per-path properties
+Date: Fri, 19 Nov 2010 18:52:28 -0600
+Message-ID: <20101120005228.GJ17445@burratino>
 References: <20101118050023.GA14861@burratino>
  <20101120004525.GA17445@burratino>
 Mime-Version: 1.0
@@ -10,45 +10,45 @@ Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	David Barr <david.barr@cordelta.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 20 01:52:45 2010
+X-From: git-owner@vger.kernel.org Sat Nov 20 01:53:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJbh5-0002Pd-Oi
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Nov 2010 01:52:44 +0100
+	id 1PJbhh-0002gi-KM
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Nov 2010 01:53:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755880Ab0KTAwj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Nov 2010 19:52:39 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:55441 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753694Ab0KTAwi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Nov 2010 19:52:38 -0500
-Received: by yxf34 with SMTP id 34so3101257yxf.19
-        for <git@vger.kernel.org>; Fri, 19 Nov 2010 16:52:38 -0800 (PST)
+	id S1755793Ab0KTAxR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Nov 2010 19:53:17 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:64956 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753694Ab0KTAxQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Nov 2010 19:53:16 -0500
+Received: by gwb20 with SMTP id 20so367971gwb.19
+        for <git@vger.kernel.org>; Fri, 19 Nov 2010 16:53:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=DNlA9UbiSvEcEY9xx2ffVQQZCv4VUlHEEkMtQeT49HY=;
-        b=r/ktVCiJgR4Sxq6YFVYLsbKGBVGdK4m7TL388VhtuHXZP3AuzTGQZB5CENdOyHm74H
-         YyNPllw7WwHwH+YV8mNGPylUr62hbakF8hIgQ0QSGeK14sPXIDZUWstxNChDc/gA0PME
-         cRqZBIThDDjDIGTgR6j3GMrCVIryIQtBdkrSo=
+        bh=JNvcUfEzGgRlU2FmdHwf4mHFHjuUlulw8/sGpF0Eu4Q=;
+        b=UtryoseVJRilzn/E4nl5Fjgx/gCmKr6+qm0pU1lbSsyqWnpwqe+ufHYVQdn1P8a2r7
+         gd6heaouSQ9yNIk8UJX+w6tu6xe8hCj3lapuswWKshrV2XyuhI1iHZzJUmuwPF4ooNYb
+         TvoD8l408kJxtbje9M/cT4FlaIOOq3l68XNVo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=bYbsX7Y6QtT1w5LwUiiXm3AJYU3OPioRvdxh1VR7wyLTXBSgHk6Wp4UceXgg95TGuG
-         EomAUW7vYZPxyRzFkz4ShiqjM49WdoBdKSv2wk3eHHWY35+bePvOCH+8rKhmjGUWGGDf
-         Q/zTz2p04aIeoLKN6yOhVrPBbnzH2cuRLhHt4=
-Received: by 10.100.168.5 with SMTP id q5mr1946998ane.223.1290214357916;
-        Fri, 19 Nov 2010 16:52:37 -0800 (PST)
+        b=cnIFmnUQ9kzj9PZLSe4Di+/ZV+VKuqZE/C61yCUR/Ji+fECnRJVJ4y3S9Jp3DtNpIs
+         jFdpxfGxTjPDx6JrFhXYRLJnKL+FOcYnN5eOeJyLomhx2DX0gtFR2rHrN4Axmw+IREeh
+         ePwcpgR69VVEOKphRgGoc4DfVJeHljtAdxByQ=
+Received: by 10.151.10.7 with SMTP id n7mr4624657ybi.228.1290214395634;
+        Fri, 19 Nov 2010 16:53:15 -0800 (PST)
 Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id w15sm2443159anw.33.2010.11.19.16.52.36
+        by mx.google.com with ESMTPS id k2sm191933ybj.20.2010.11.19.16.53.14
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 19 Nov 2010 16:52:37 -0800 (PST)
+        Fri, 19 Nov 2010 16:53:15 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20101120004525.GA17445@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -56,112 +56,99 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161808>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161809>
 
-There are two functions to change the staged content for a path in the
-svn importer's active commit: repo_replace, which changes the text and
-returns the mode, and repo_modify, which changes the text and mode and
-returns nothing.
+The mode for each file in an svn-format dump is kept in the properties
+section.  The properties section is read as soon as possible to allow
+the correct mode to be filled in when registering the file with the
+repo_tree lib.
 
-Worse, there are more subtle differences:
+To support nodes with a missing properties section, svn-fe determines
+the mode in three stages:
 
- - A mark of 0 passed to repo_modify means "use the existing content".
-   repo_replace uses it as mark :0 and produces a corrupt stream.
+ - The kind (directory or file) of the node is read from the dump and
+   used to make an initial estimate (040000 or 100644).
+ - Properties are read in and allowed to override this for symlinks
+   and executables.
+ - If there is no properties section, the mode from the previous
+   content of the path is left alone, overriding the above
+   considerations.
 
- - When passed a path that is not part of the active commit,
-   repo_replace returns without doing anything.  repo_modify
-   transparently adds a new directory entry.
+This is a bit of a mess, and worse, it would get even more complicated
+once we start to support property deltas.  If we could only register
+the file with a provisional value for mode and then change it later
+when properties say so, the procedure would be much simpler.
 
-Get rid of both and introduce a new function with the best features of
-both: repo_modify_path modifies the mode, content, or both for a path,
-depending on which arguments are zero.  If no such dirent already
-exists, it does nothing and reports the error by returning 0.
-Otherwise, the return value is the resulting mode.
+... oh, right, we can.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-David, I think we discussed doing something like this a few months
-ago.  It seems appropriate because Subversion's Replace FS operation
-is not similar to repo_replace after all.
+ vcs-svn/svndump.c |   42 +++++++++++++++++++-----------------------
+ 1 files changed, 19 insertions(+), 23 deletions(-)
 
- vcs-svn/repo_tree.c |   21 +++++++--------------
- vcs-svn/repo_tree.h |    3 +--
- vcs-svn/svndump.c   |    8 ++++----
- 3 files changed, 12 insertions(+), 20 deletions(-)
-
-diff --git a/vcs-svn/repo_tree.c b/vcs-svn/repo_tree.c
-index e94d91d..7214ac8 100644
---- a/vcs-svn/repo_tree.c
-+++ b/vcs-svn/repo_tree.c
-@@ -175,25 +175,18 @@ void repo_add(uint32_t *path, uint32_t mode, uint32_t blob_mark)
- 	repo_write_dirent(path, mode, blob_mark, 0);
- }
- 
--uint32_t repo_replace(uint32_t *path, uint32_t blob_mark)
-+uint32_t repo_modify_path(uint32_t *path, uint32_t mode, uint32_t blob_mark)
- {
--	uint32_t mode = 0;
- 	struct repo_dirent *src_dent;
- 	src_dent = repo_read_dirent(active_commit, path);
--	if (src_dent != NULL) {
--		mode = src_dent->mode;
--		repo_write_dirent(path, mode, blob_mark, 0);
--	}
--	return mode;
--}
--
--void repo_modify(uint32_t *path, uint32_t mode, uint32_t blob_mark)
--{
--	struct repo_dirent *src_dent;
--	src_dent = repo_read_dirent(active_commit, path);
--	if (src_dent != NULL && blob_mark == 0)
-+	if (!src_dent)
-+		return 0;
-+	if (!blob_mark)
- 		blob_mark = src_dent->content_offset;
-+	if (!mode)
-+		mode = src_dent->mode;
- 	repo_write_dirent(path, mode, blob_mark, 0);
-+	return mode;
- }
- 
- void repo_delete(uint32_t *path)
-diff --git a/vcs-svn/repo_tree.h b/vcs-svn/repo_tree.h
-index 5476175..68baeb5 100644
---- a/vcs-svn/repo_tree.h
-+++ b/vcs-svn/repo_tree.h
-@@ -14,8 +14,7 @@
- uint32_t next_blob_mark(void);
- uint32_t repo_copy(uint32_t revision, uint32_t *src, uint32_t *dst);
- void repo_add(uint32_t *path, uint32_t mode, uint32_t blob_mark);
--uint32_t repo_replace(uint32_t *path, uint32_t blob_mark);
--void repo_modify(uint32_t *path, uint32_t mode, uint32_t blob_mark);
-+uint32_t repo_modify_path(uint32_t *path, uint32_t mode, uint32_t blob_mark);
- void repo_delete(uint32_t *path);
- void repo_commit(uint32_t revision, uint32_t author, char *log, uint32_t uuid,
- 		 uint32_t url, long unsigned timestamp);
 diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index 6a6aaf9..e40be58 100644
+index e40be58..4fdfcbb 100644
 --- a/vcs-svn/svndump.c
 +++ b/vcs-svn/svndump.c
-@@ -182,14 +182,14 @@ static void handle_node(void)
+@@ -150,7 +150,8 @@ static void read_props(void)
  
- 	if (node_ctx.action == NODEACT_CHANGE) {
- 		if (have_props)
--			repo_modify(node_ctx.dst, node_ctx.type, mark);
+ static void handle_node(void)
+ {
+-	uint32_t old_mode = 0, mark = 0;
++	uint32_t mark = 0;
++	const uint32_t type = node_ctx.type;
+ 	const int have_props = node_ctx.propLength != LENGTH_UNKNOWN;
+ 
+ 	if (node_ctx.text_delta || node_ctx.prop_delta)
+@@ -171,32 +172,27 @@ static void handle_node(void)
+ 		node_ctx.action = NODEACT_ADD;
+ 	}
+ 
+-	if (have_props && node_ctx.propLength)
+-		read_props();
++	if (node_ctx.srcRev) {
++		repo_copy(node_ctx.srcRev, node_ctx.src, node_ctx.dst);
++		node_ctx.action = NODEACT_CHANGE;
++	}
+ 
+-	if (node_ctx.srcRev)
+-		old_mode = repo_copy(node_ctx.srcRev, node_ctx.src, node_ctx.dst);
+-
+-	if (mark && node_ctx.type == REPO_MODE_DIR)
++	if (mark && type == REPO_MODE_DIR)
+ 		die("invalid dump: directories cannot have text attached");
+ 
+-	if (node_ctx.action == NODEACT_CHANGE) {
+-		if (have_props)
+-			repo_modify_path(node_ctx.dst, node_ctx.type, mark);
+-		else if (mark)
+-			old_mode = repo_modify_path(node_ctx.dst, 0, mark);
+-	} else if (node_ctx.action == NODEACT_ADD) {
+-		if (node_ctx.srcRev && have_props)
+-			repo_modify_path(node_ctx.dst, node_ctx.type, mark);
+-		else if (node_ctx.srcRev && mark)
+-			old_mode = repo_modify_path(node_ctx.dst, 0, mark);
+-		else if ((node_ctx.type == REPO_MODE_DIR && !node_ctx.srcRev) ||
+-			 mark)
+-			repo_add(node_ctx.dst, node_ctx.type, mark);
+-	}
++	if (node_ctx.action == NODEACT_CHANGE)
++		node_ctx.type = repo_modify_path(node_ctx.dst, 0, mark);
++	else	/* Node-action: add */
++		repo_add(node_ctx.dst, type, mark);
+ 
+-	if (!have_props && old_mode)
+-		node_ctx.type = old_mode;
++	if (have_props) {
++		const uint32_t old_mode = node_ctx.type;
++		node_ctx.type = type;
++		if (node_ctx.propLength)
++			read_props();
++		if (node_ctx.type != old_mode)
 +			repo_modify_path(node_ctx.dst, node_ctx.type, mark);
- 		else if (mark)
--			old_mode = repo_replace(node_ctx.dst, mark);
-+			old_mode = repo_modify_path(node_ctx.dst, 0, mark);
- 	} else if (node_ctx.action == NODEACT_ADD) {
- 		if (node_ctx.srcRev && have_props)
--			repo_modify(node_ctx.dst, node_ctx.type, mark);
-+			repo_modify_path(node_ctx.dst, node_ctx.type, mark);
- 		else if (node_ctx.srcRev && mark)
--			old_mode = repo_replace(node_ctx.dst, mark);
-+			old_mode = repo_modify_path(node_ctx.dst, 0, mark);
- 		else if ((node_ctx.type == REPO_MODE_DIR && !node_ctx.srcRev) ||
- 			 mark)
- 			repo_add(node_ctx.dst, node_ctx.type, mark);
++	}
+ 
+ 	if (mark)
+ 		fast_export_blob(node_ctx.type, mark, node_ctx.textLength);
 -- 
 1.7.2.3
