@@ -1,90 +1,98 @@
-From: Joshua Juran <jjuran@gmail.com>
-Subject: Re: [PATCH] branch: support sorting branches by mtime
-Date: Fri, 19 Nov 2010 20:22:19 -0800
-Message-ID: <21836339-5F7E-4485-97CB-FC609CE4E364@gmail.com>
-References: <1290090126-14471-1-git-send-email-pclouds@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: [PATCH 5/6] http-push: check path length before using it
+Date: Sat, 20 Nov 2010 12:28:51 +0800
+Message-ID: <AANLkTikJz+SigzqFdeP+rZR3FS06U1exDb59AsRFTQAj@mail.gmail.com>
+References: <1290170790-2200-1-git-send-email-rctay89@gmail.com>
+	<1290170790-2200-2-git-send-email-rctay89@gmail.com>
+	<1290170790-2200-3-git-send-email-rctay89@gmail.com>
+	<1290170790-2200-4-git-send-email-rctay89@gmail.com>
+	<1290170790-2200-5-git-send-email-rctay89@gmail.com>
+	<1290170790-2200-6-git-send-email-rctay89@gmail.com>
+	<20101119183339.GB26187@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?UTF-8?Q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 20 05:22:32 2010
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Gabriel Corona <gabriel.corona@enst-bretagne.fr>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 20 05:29:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJey7-0004Gr-I9
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Nov 2010 05:22:31 +0100
+	id 1PJf4N-0007Cc-Ib
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Nov 2010 05:28:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757568Ab0KTEWZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Nov 2010 23:22:25 -0500
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:64388 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755152Ab0KTEWY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Nov 2010 23:22:24 -0500
-Received: by pvh1 with SMTP id 1so830263pvh.19
-        for <git@vger.kernel.org>; Fri, 19 Nov 2010 20:22:24 -0800 (PST)
+	id S1757766Ab0KTE2y convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Nov 2010 23:28:54 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:61299 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757684Ab0KTE2x convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Nov 2010 23:28:53 -0500
+Received: by eye27 with SMTP id 27so3165704eye.19
+        for <git@vger.kernel.org>; Fri, 19 Nov 2010 20:28:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:cc:message-id:from:to
-         :in-reply-to:content-type:content-transfer-encoding:mime-version
-         :subject:date:references:x-mailer;
-        bh=5NwTrxh5IN5ruAOJvm/e5vkjRSPBArU8neGPeAJqRIQ=;
-        b=B4a6LPyiQ5sB+n+HbAAYJkkIgKjh0gBitp1jqhZLxhN8ig4H/1tXxx7th3Y/K4sc7K
-         RcIcn8mHjiykHJUfdu2kDbcAN8BE6KVXQ1GSso/KTLAvXdg9o9MXop7ze2LnmN7pyl+p
-         +HU//G4wj5yR2TzEMaDb4FLjQuuDjlcOix9a0=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=jzKdHZ/0oR3PsxOKaINXDZgs/q8v602dyhwS8mPSoVk=;
+        b=aJbljrJOWegn/vUC0R2I3WpEBt94c/mO5PaFpJ/SFbAC4umuRgdWwRUgKPqVPmDAXU
+         xrgC9o7gkL/W+EPAE8bZNFEOZ3jMYTB+Pumr3GmU8NXktSyc9r81vu5vHgcoYGdOi69v
+         SWQqWeNSB5PDbceRuXQOPVhV8awKwWZ1hvnic=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=hVOgKl0ZiGavcMeorWmhllqT9IC9F+BCcBoJYFsVIsDAS8hFrHvBe3ed1NRisbQbMO
-         ZVvLDUjD2D6+1T9D+jqAn1JeRFo3NVVbEel7YAI5GwvpesV69H6fQND+CcN/0RRQ6vOD
-         OX/s7541orT2CrllRMM6LnzmOXz3RyRqxRLIo=
-Received: by 10.142.172.9 with SMTP id u9mr2498277wfe.197.1290226943960;
-        Fri, 19 Nov 2010 20:22:23 -0800 (PST)
-Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
-        by mx.google.com with ESMTPS id w27sm2746741wfd.9.2010.11.19.20.22.21
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 19 Nov 2010 20:22:21 -0800 (PST)
-In-Reply-To: <1290090126-14471-1-git-send-email-pclouds@gmail.com>
-X-Mailer: Apple Mail (2.936)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=MOj52BQwP9FAYz6q5N3turGYV+GqqYZQjjVR4vehVrzLsXfhn5QkTjAP2IHAaqIpRS
+         GpF8Ba46CfA82f7hc7moMH3nqzIDEwehiaZJKLcQiZeGEdEvLnbeRbq7StE7ZoWjLo40
+         RKkjuxPyvWuwTpXRmWylVCXypbDiw1fRJrLCI=
+Received: by 10.213.35.73 with SMTP id o9mr20434ebd.2.1290227331674; Fri, 19
+ Nov 2010 20:28:51 -0800 (PST)
+Received: by 10.213.112.195 with HTTP; Fri, 19 Nov 2010 20:28:51 -0800 (PST)
+In-Reply-To: <20101119183339.GB26187@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161821>
 
-On Nov 18, 2010, at 6:22 AM, Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =
-wrote:
+Hi,
 
-> I lost in my branches again while looking for a topic that I feel lik=
-e
-> working on tonight. Too old branches are out of question.
+On Sat, Nov 20, 2010 at 2:33 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> [snip]
+> ... or here. =A0So perhaps:
 >
-> This throwaway patch demonstrates the idea. I should have looked into
-> reflog for this kind of information, but my laziness won over me.
->
-> OK Git's fun time is over..
-> ---
-> builtin/branch.c |   32 ++++++++++++++++++++++++++++----
-> 1 files changed, 28 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/branch.c b/builtin/branch.c
-> index 87976f0..fdc2714 100644
-> --- a/builtin/branch.c
-> +++ b/builtin/branch.c
-> @@ -232,6 +232,7 @@ struct ref_item {
-> 	char *name;
-> 	char *dest;
-> 	unsigned int kind, len;
-> +	unsigned long mtime;
-> 	struct commit *commit;
-> };
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (path) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0const =
+char *url =3D repo->path;
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (!u=
+rl)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0url =3D repo->url;
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if (st=
+rncmp(path, url, repo->path_len)) {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0error("Parsed path '%s' does not match url: '%s'\n",
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0 =A0 =A0 =A0 =A0path, url);
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0} else=
+ {
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0path +=3D ...
 
-It's possible to have 32-bit long and 64-bit time_t.
+Looks much cleaner, thanks.
 
-Josh
+> By the way, is the error behavior correct? =A0This prints a message w=
+ith
+> "error: " and then continues anyway.
+
+Yeah, this fits in with the exiting xml code paths - they just
+indicate errors and continue.
+
+--=20
+Cheers,
+Ray Chuan
