@@ -1,85 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: groff .ft command use in asciidoc
-Date: Fri, 19 Nov 2010 14:58:06 -0800
-Message-ID: <7v62vsc45d.fsf@alter.siamese.dyndns.org>
-References: <20101117095233.GA23817@basil.fritz.box>
- <20101117101516.GA12416@burratino>
- <20101117143855.GA1987@sigill.intra.peff.net>
- <20101117154829.GE23656@basil.fritz.box>
- <20101119175424.GA13276@sigill.intra.peff.net>
- <1290198893.13785.68.camel@drew-northup.unet.maine.edu>
- <20101119204010.GA18342@sigill.intra.peff.net>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [RFC] rebase: use @{upstream} if no upstream specified
+Date: Fri, 19 Nov 2010 19:26:57 -0500
+Message-ID: <AANLkTikWYVyCf9mueoAHjGcQuNOdPFyQrmtW79As4RG-@mail.gmail.com>
+References: <1289595349-12589-1-git-send-email-martin.von.zweigbergk@gmail.com>
+	<20101113095140.GH8911@home.lan>
+	<AANLkTin+3FuuX_pavZQMrbi4qxjTRvM7nHk1PXcFbeiZ@mail.gmail.com>
+	<20101119211533.GA18942@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Drew Northup <drew.northup@maine.edu>,
-	Andi Kleen <andi@firstfloor.org>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Chris Johnsen <chris_johnsen@pobox.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Yann Dirson <ydirson@free.fr>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	=?UTF-8?B?U2FudGkgQsOpamFy?= <santi@agolina.net>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Nov 19 23:58:30 2010
+X-From: git-owner@vger.kernel.org Sat Nov 20 01:27:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJZuW-0002VJ-D1
-	for gcvg-git-2@lo.gmane.org; Fri, 19 Nov 2010 23:58:28 +0100
+	id 1PJbIK-00078q-Uk
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Nov 2010 01:27:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757369Ab0KSW6X (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 19 Nov 2010 17:58:23 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44974 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755518Ab0KSW6W (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 19 Nov 2010 17:58:22 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A959B2BB4;
-	Fri, 19 Nov 2010 17:58:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=58kVzPWvTUpoeQESvZ4KOOssgbo=; b=iEueka
-	yvTuf1DOLZv30mboAxtXeMwL/0e/cllYlNCUeB6zjzxO38neFz+cjkq7jUzi7I72
-	Yk8P6N5Iao6DLZnlkaBOqEf2odmhgfoUmfwAt/PGwYfZ6Xs62HeDIz4Km0hdIT3D
-	6pRenfTAz5GHWKOzpe996aNnc/+sMCoLxF+ow=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nzpoN4qpkQF/o7zV7UifHPu3jHp69Tiw
-	JKHoE4amgErsgEdEgXu60x9UN7nXgMjM7kwZfcX3Lz0MvbKQO4MJBYNBSMs+I3Km
-	dPY7V4Lfw3mz3kvFxD8InyacFWEf9GvBQ/Tm6ojHSWpO4201+fhatJ067+cbGfrb
-	bVGLWuS5obk=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4ABE22BB3;
-	Fri, 19 Nov 2010 17:58:27 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8439E2BB1; Fri, 19 Nov 2010
- 17:58:19 -0500 (EST)
-In-Reply-To: <20101119204010.GA18342@sigill.intra.peff.net> (Jeff King's
- message of "Fri\, 19 Nov 2010 15\:40\:10 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8513AF66-F430-11DF-ACC1-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
+	id S1751515Ab0KTA1A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Nov 2010 19:27:00 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:41363 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751248Ab0KTA1A convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 19 Nov 2010 19:27:00 -0500
+Received: by qyk32 with SMTP id 32so287542qyk.19
+        for <git@vger.kernel.org>; Fri, 19 Nov 2010 16:26:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Vgy+WmyJy7fnRy79OLSjLK2kaBwgvnYz1Q6CaLn5fpo=;
+        b=Wd/njenDWvCjJT+W/bgMsZDtxB0FieMtPEJYZdYNq87aMWpiujSUavKOI1PZsso+ZP
+         AnqhbAiMpPHWX5omhlApqw+NwypJiMZiTLB9+42+TBphLWsUnppCsPEF9bjO83sovENQ
+         cCJzpfZCwTzMIr9ned4ib/1cUk70xvJVyzDBs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=QJAji6eB00TeGOwZDLLRdXxz1E8CiHOjD0kZyZrkzwPQrPn+KRPAMx0Riykp04OtYp
+         YWoKmzuM3wHNmHIouwMiUQaz9h58engop0EYDqrlS4tY8Er/231tJRcPrmKyKuHDGRYc
+         jLyabEMstcD8LlAiC7XXmfh715wQWaMS7Ydgg=
+Received: by 10.224.191.196 with SMTP id dn4mr130751qab.225.1290212817505;
+ Fri, 19 Nov 2010 16:26:57 -0800 (PST)
+Received: by 10.224.80.202 with HTTP; Fri, 19 Nov 2010 16:26:57 -0800 (PST)
+In-Reply-To: <20101119211533.GA18942@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161797>
 
-Jeff King <peff@peff.net> writes:
-
-> I think the updated XSL files are what's making it work. The stock
-> docbook xsl files are:
+On Fri, Nov 19, 2010 at 4:15 PM, Jeff King <peff@peff.net> wrote:
+> On Tue, Nov 16, 2010 at 09:29:46PM -0500, Martin von Zweigbergk wrote=
+:
 >
->   $ yum list | grep docbook-style-xsl
->   docbook-style-xsl.noarch   1.69.1-5.1 rhel-x86_64-server-5
+>> > What about simply checking if "rev-parse @{u}" succeeds, in which =
+case
+>> > we can use upstream_name=3D@{u} ? =C2=A0If it fails, then we can d=
+o the work
+>> > of finding where the config flaw is (and delegate this to a func).
+>> > That would help keep the nominal code path short.
+>>
+>> Will make sure to find out the error only when needed as you suggest=
+=2E
+>>
+>> I thought I would need the ref name to be able to walk the reflog if=
+ my
+>> other propasal would be accepted (see
+>> http://thread.gmane.org/gmane.comp.version-control.git/161381), but =
+it
+>> seems to work with @{u} as well. I just adapted the call from 'git p=
+ull'
+>> (git-parse-remote.sh), but I guess I could use 'git rev-parse @{upst=
+ream}'
+>> instead. It does seem more natural to me.
+>>
+>> Maybe one of the guys on the CC list can advise?
 >
-> and I don't know that we can assume anyone has updated them. However, I
-> don't actually build git on my RHEL machines, so I could might be wrong.
+> I'm not quite sure I understand the question, coming into the middle =
+of
+> the conversation. If you want to know "can I traverse the reflog of t=
+he
+> upstream with @{u}", the answer is yes. We dereference the ref first
+> (similarly, foo@{u}@{3.days.ago} looks at the upstream branch's reflo=
+g).
+> If you want the refname, you can also use "git rev-parse
+> --symbolic-full-name @{u}".
 >
-> All that being said, I am willing to accept RHEL5 as collateral damage
-> if the new defaults Just Work for the majority of other platforms.
+> Does that help?
 
-Thanks.  I usually am fairly cautious when changing the default, but I
-think this particular one is not such a big deal.  I agree that the end of
-the year release would probably be a good time to switch.
-
-I think people on RHEL5 would also be ok; they have paid support for this
-kind of thing, no ;-)?
+Yes, I did try that and I noticed that it worked, but it helps to know
+that it is not just by accident. I realize I was not very clear, but
+what I really was wondering if there is any advantage to using
+"git for-each-ref --format=3D'%(upstream)' ${branch_name}" (as used by
+git pull) as compared to "git rev-parse @{upstream}" as suggested by
+Yann. ($branch_name in this case would be the current branch.)
