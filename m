@@ -1,88 +1,116 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH] bash completion: add basic support for git-reflog
-Date: Sun, 21 Nov 2010 01:32:48 +0800
-Message-ID: <1290274368-3212-1-git-send-email-rctay89@gmail.com>
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Nov 20 18:33:10 2010
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 1/8] svn-fe: Prepare for strbuf use
+Date: Sat, 20 Nov 2010 13:22:47 -0600
+Message-ID: <20101120192247.GB17823@burratino>
+References: <20101118050023.GA14861@burratino>
+ <20101120004525.GA17445@burratino>
+ <20101120192153.GA17823@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	David Barr <david.barr@cordelta.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 20 20:23:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJrJF-0005f5-LF
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Nov 2010 18:33:09 +0100
+	id 1PJt1m-0000Sp-9t
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Nov 2010 20:23:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754569Ab0KTRdD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Nov 2010 12:33:03 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:53690 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754549Ab0KTRdC (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Nov 2010 12:33:02 -0500
-Received: by pzk28 with SMTP id 28so1201426pzk.19
-        for <git@vger.kernel.org>; Sat, 20 Nov 2010 09:33:01 -0800 (PST)
+	id S1754786Ab0KTTW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Nov 2010 14:22:57 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:35567 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754753Ab0KTTWz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Nov 2010 14:22:55 -0500
+Received: by gxk23 with SMTP id 23so3369563gxk.19
+        for <git@vger.kernel.org>; Sat, 20 Nov 2010 11:22:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=z78RkqM1NJojkp+PfYrOha/tfDC/rgBpsNMZQb/eaIc=;
-        b=sNfIwRnAffLmi7+vE1EzS5Fh/4kowMhVrQ49FdSbJ7/EDb4EinWzTU42Ebxmp4wADI
-         EivAFFL6eM/p9iwTw1qI4dwGrP9krUVjsVmIiu4YWyWrncomxIa/OzNl6kq2etZx2WxA
-         wH9zYQB8r4bLz6YIpxW1+49rNVGEJFGsjheKQ=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=xxFIrZpglxxQFv3ha84epqYSdIdDywUmPA0x96ysRzU=;
+        b=VaaGzuJcodLmpe390L4pKtdZXQggDWR3rlUmlyt7M4n8Fq1dvVODEqulEpmHGd4Nzt
+         jbpd80ILfSk9YABJGXnPDyc0daFrWUVyf2I9iK9AjEbQ/bv0tEQ12YRdA5pKIrgrHscq
+         NnCvV2QaCNElHPIK6zyUCGPCR+BJKuaX6ITN8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=LAYJVQUyXtUUSjz9hHNfWKO2l8sY5wTF65udDf8GXXJy9k1zDfRs2LNq7lA1aWuLgE
-         FcG1oUy9aPIZka96MHkU2r9+Nx2Fqcr6DL3562iaquF6FKjhUU6wwgODR2++rVksmS6u
-         8f/PUyHKCa0CcDYCsm6Ak1g/8AUFXnQEzXfwI=
-Received: by 10.143.43.11 with SMTP id v11mr2969412wfj.388.1290274381339;
-        Sat, 20 Nov 2010 09:33:01 -0800 (PST)
-Received: from localhost.localdomain (cm69.zeta153.maxonline.com.sg [116.87.153.69])
-        by mx.google.com with ESMTPS id y42sm3624773wfd.22.2010.11.20.09.32.58
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 20 Nov 2010 09:33:00 -0800 (PST)
-X-Mailer: git-send-email 1.7.2.2.513.ge1ef3
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=pG/4/yTFgjWrTGNvr2xxtJgdPh2P2N/WfgMHPAAiDkhpm3xpaP86zlvKhywrmZhejf
+         wMrTW7zj1AaH8Cebks1NjkmKsUiYEN1Rtw65yu8IgTCIlMrHro9qiZ3XAW98HWTuxX7F
+         /5UXke+6WKpWVxtVq/efdWJpn1bDI4E7bsJLY=
+Received: by 10.150.205.11 with SMTP id c11mr6022037ybg.304.1290280974656;
+        Sat, 20 Nov 2010 11:22:54 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id r18sm2001639yba.15.2010.11.20.11.22.53
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 20 Nov 2010 11:22:54 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20101120192153.GA17823@burratino>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161830>
 
-Add basic completion for the three subcommands - show, expire, delete.
-Try completing refs for these too.
+Linking svn-fe strbuf.o will require sha1_name.o and wrapper.o, hence
+sha1_file.o, hence libz, pthreads, and most of libgit.  Luckily there
+is a separate patch series in flight that would trim down those
+dependencies again.
 
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- contrib/completion/git-completion.bash |   16 ++++++++++++++++
- 1 files changed, 16 insertions(+), 0 deletions(-)
+ contrib/svn-fe/Makefile |   15 +++++++--------
+ 1 files changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
-index f710469..4007ca1 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1632,6 +1632,22 @@ _git_rebase ()
- 	__gitcomp "$(__git_refs)"
- }
+diff --git a/contrib/svn-fe/Makefile b/contrib/svn-fe/Makefile
+index 360d8da..9732b03 100644
+--- a/contrib/svn-fe/Makefile
++++ b/contrib/svn-fe/Makefile
+@@ -8,11 +8,13 @@ CFLAGS = -g -O2 -Wall
+ LDFLAGS =
+ ALL_CFLAGS = $(CFLAGS)
+ ALL_LDFLAGS = $(LDFLAGS)
+-EXTLIBS =
++PTHREAD_LIBS = -lpthread
++EXTLIBS = -lz $(PTHREAD_LIBS)
  
-+_git_reflog ()
-+{
-+	local SUB_CMDS=(show delete expire)
-+	local cur="${COMP_WORDS[COMP_CWORD-1]}"
-+
-+	for val in ${SUB_CMDS[*]}; do
-+		if [[ "$val" == "$cur" ]]; then
-+			# this is a subcommand
-+			__gitcomp "$(__git_refs)"
-+			return
-+		fi
-+	done
-+
-+	__gitcomp "${SUB_CMDS[*]}"
-+}
-+
- __git_send_email_confirm_options="always never auto cc compose"
- __git_send_email_suppresscc_options="author self cc bodycc sob cccmd body all"
+ GIT_LIB = ../../libgit.a
+ VCSSVN_LIB = ../../vcs-svn/lib.a
+-LIBS = $(VCSSVN_LIB) $(GIT_LIB) $(EXTLIBS)
++XDIFF_LIB = ../../xdiff/lib.a
++LIBS = $(VCSSVN_LIB) $(GIT_LIB) $(XDIFF_LIB) $(EXTLIBS)
  
+ QUIET_SUBDIR0 = +$(MAKE) -C # space to separate -C and subdir
+ QUIET_SUBDIR1 =
+@@ -33,7 +35,7 @@ ifndef V
+ endif
+ endif
+ 
+-svn-fe$X: svn-fe.o $(VCSSVN_LIB) $(GIT_LIB)
++svn-fe$X: svn-fe.o $(VCSSVN_LIB) $(GIT_LIB) $(XDIFF_LIB)
+ 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ svn-fe.o \
+ 		$(ALL_LDFLAGS) $(LIBS)
+ 
+@@ -51,11 +53,8 @@ svn-fe.1: svn-fe.txt
+ 		../contrib/svn-fe/$@
+ 	$(MV) ../../Documentation/svn-fe.1 .
+ 
+-../../vcs-svn/lib.a: FORCE
+-	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) vcs-svn/lib.a
+-
+-../../libgit.a: FORCE
+-	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) libgit.a
++../../%.a: FORCE
++	$(QUIET_SUBDIR0)../.. $(QUIET_SUBDIR1) $*.a
+ 
+ clean:
+ 	$(RM) svn-fe$X svn-fe.o svn-fe.html svn-fe.xml svn-fe.1
 -- 
-1.7.3.2.496.g9c54
+1.7.2.3
