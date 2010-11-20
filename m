@@ -1,83 +1,166 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH 0/6] http (dumb): end urls with slash
-Date: Sat, 20 Nov 2010 12:32:28 +0800
-Message-ID: <AANLkTimWz4meHUb6o0K8yNMmqyqpWbKrq0OmnzWAS300@mail.gmail.com>
-References: <1290125163-31065-1-git-send-email-gabriel.corona@enst-bretagne.fr>
-	<AANLkTikM8mNv+GiVyDWEJxsf0o3FYaaJj+jdYyiuXnov@mail.gmail.com>
-	<20101119051047.GA4201@burratino>
-	<1290170790-2200-1-git-send-email-rctay89@gmail.com>
-	<7vd3q0c4b3.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: How to fix =?utf-8?B?4oCcWW91ciBicmFu?=
+ =?utf-8?Q?ch_and_'origin=2Fmaster'_have_diverged?= =?utf-8?B?4oCd?= after
+ editing a commit that came before a pull?
+Date: Fri, 19 Nov 2010 23:36:28 -0500
+Message-ID: <20101120043628.GB20725@sigill.intra.peff.net>
+References: <AANLkTikr+uGrO2EB9WQk+CXeOm7jiYxdbhGzRRvgc9B9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Gabriel Corona <gabriel.corona@enst-bretagne.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 20 05:32:36 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Yang Zhang <yanghatespam@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 20 05:36:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJf7r-0000KK-V6
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Nov 2010 05:32:36 +0100
+	id 1PJfBo-0001rH-1e
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Nov 2010 05:36:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758007Ab0KTEca convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 19 Nov 2010 23:32:30 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:48163 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757916Ab0KTEc3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 19 Nov 2010 23:32:29 -0500
-Received: by eye27 with SMTP id 27so3166288eye.19
-        for <git@vger.kernel.org>; Fri, 19 Nov 2010 20:32:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=roPfq+zpFrm2J71Wk9423X6ycnWingwE8s4WORjwAdA=;
-        b=faUGqe/ptvU1KTNBS1DIcieiqGoVMoo2G0HF2zXXuVELts8P2fLgTuneGeVCuVyV/S
-         s0FdE2kX1MnQV1mKo5dXfHoEoxDVsmDCGHuZFAnkYECbBT/aw6uW86ULa8KEfEkFwp2E
-         k1oFVCw6IU+OTUtEuevp4hVZhgarAwBbLp0oA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=BJwBovTSAn23PL0IGeHYrfZKpxtFy/BMdaCdzm9X3C4G9RAHToHI0BJIv1Afg6Ea99
-         CGyYrdQbLUrXcC/DLVJiqs6IGqoLpK1cMSGd3ftZXt9QIdxgOwcd2SWeSYq7zSyR2o8Z
-         2x5sLD1nJS9cselD6JcDU6vGmrp3hqVoGI24I=
-Received: by 10.213.14.146 with SMTP id g18mr5677166eba.2.1290227548661; Fri,
- 19 Nov 2010 20:32:28 -0800 (PST)
-Received: by 10.213.112.195 with HTTP; Fri, 19 Nov 2010 20:32:28 -0800 (PST)
-In-Reply-To: <7vd3q0c4b3.fsf@alter.siamese.dyndns.org>
+	id S932660Ab0KTEge (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 19 Nov 2010 23:36:34 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:54580 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932257Ab0KTEgd (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 19 Nov 2010 23:36:33 -0500
+Received: (qmail 31243 invoked by uid 111); 20 Nov 2010 04:36:33 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sat, 20 Nov 2010 04:36:33 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 19 Nov 2010 23:36:28 -0500
+Content-Disposition: inline
+In-Reply-To: <AANLkTikr+uGrO2EB9WQk+CXeOm7jiYxdbhGzRRvgc9B9@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161822>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161823>
 
-Hi,
+On Fri, Nov 19, 2010 at 04:36:46PM -0800, Yang Zhang wrote:
 
-On Sat, Nov 20, 2010 at 6:54 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Didn't find anything suspicious during my cursory read (except for th=
-e
-> ones Jonathan pointed out, which I missed), but how does this series
-> relate to your earlier commits around d8fab07 (remote-curl: ensure th=
-at
-> URLs have a trailing slash, 2010-04-08)? =A0Same topic, tying loose e=
-nds?
-> Same topic, different approach? =A0Unrelated changes with similar-sou=
-nding
-> names?
+> In the following scenario:
+> 
+> 1. Make commits A, B, C
+> 2. Pull, getting commits D, E
+> 3. Make more commits F, G, H, ...
+> 4. Realize that you need to tweak B
+> 5. Tweak B using git rebase -i and git commit --amend
+> 
+> Now git status says:
+> 
+>   Your branch and 'origin/master' have diverged.
+> 
+> How should I fix this? Thanks.
 
-Johnathan and Junio, thanks for taking the time.
+When you change a commit, you also change every commit after it (since
+each points to its predecessor by a parent pointer). So you create an
+alternate history. IOW, you had this:
 
-Sorry for the confusion. Well, it's all about slashes, hence the
-title, but there are some refactors and related work in the http area
-in this series.
+  A--B--C
 
---=20
-Cheers,
-Ray Chuan
+and pulled to get this:
+
+  A--B--C--D--E
+
+or maybe this:
+
+  A--B--C--Merge
+          /
+      D--E
+
+depending on how those other commits relate to what you have. Then you
+made more commits, like (let's look at the non-merge case):
+
+  A--B--C--D--E--F--G--H
+
+Then you tweaked B. The rebase replayed every commit after that, but
+each one is not exactly the same as the other. So now you have:
+
+    B--C--D--E--F--G--H
+   /
+  A--B'--C'--D'--E'--F'--G'--H'
+
+where the top branch of history is what you used to have (and is
+accessible via the reflog as branch@{1}). But your actual branch is at
+H'. So if you "git pull" again, as you tried, it will try to merge D and
+E from upstream. So:
+
+                            D--E
+                                \
+  A--B'--C'--D'--E'--F'--G'--H'--Merge
+
+which is definitely not what you want. The problem is that you have
+rewritten upstream's commits, because you rebased across a set of
+commits that contained things you had pulled.
+
+To fix it, what you want to do is recreate the history on top of B' as
+it happened on top of B. So first you go back to C', the last commit
+just before the commits from upstream that were rewritten. (you will
+have pick its sha1 out of the log):
+
+  git checkout -b temp B'
+
+You should then have:
+
+  A--B'--C'
+
+on a temporary branch. Now re-pull from upstream (you could also
+manually rebase those commits, but this is probably simpler, especially
+if there actually was a merge):
+
+  git pull remote_name branch_name
+
+Note that you need to explicitly mention where you pulled from, since
+the temp branch will not be configured to pull in the same way (if you
+don't have any special config set up, it should be "git pull origin
+master").
+
+And now you have:
+
+  A--B'--C'--D--E
+
+at which point we can rebase the last bit of your branch on top:
+
+  git rebase --onto temp F'^ branch_name
+
+where "branch_name" is the name of the branch where this mess happened
+(presumably "master"), and F' is the first commit that is worth saving
+after you pulled from upstream. And that gives you:
+
+  A--B'--C'--D--E--F''--G''--H''
+
+where F'' corresponds to the original F, but actually has a different
+commit id (because of different parentage) than F or F'.
+
+At that point your original branch should be in the state you want. You
+can delete the temp branch with "git branch -D temp".
+
+So that's the most general way to do it. It's a little convoluted
+because of the way rebase works (you can't say "rebase those commits on
+top of me", but rather have to say "rebase me on top of these commits",
+which leads us to use the temporary branch).
+
+Depending on the relationship of F, G, and H to D and E, it could be
+much simpler to just re-order history. So from your your broken state,
+which remember is:
+
+  A--B'--C'--D'--E'--F'--G'--H'
+
+do a "git rebase -i", and just _delete_ all of the commits you pulled
+from upstream (D and E in this case). Now you have:
+
+  A--B'--C'--F''--G''--H''
+
+and now repeat your pull to get:
+
+  A--B'--C'--F''--G''--H''--D--E
+
+Which is very simple and straightforward. But it relies on it being
+acceptable for F, G, and H to come before D and E in the history.
+
+
+Whew, that turned out long. Hopefully it helps, and did not just confuse
+you more. :)
+
+-Peff
