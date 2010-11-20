@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 4/8] vcs-svn: Introduce fd_buffer routines
-Date: Sat, 20 Nov 2010 13:26:48 -0600
-Message-ID: <20101120192648.GE17823@burratino>
+Subject: [PATCH 5/8] vcs-svn: Read delta preimage from file descriptor
+Date: Sat, 20 Nov 2010 13:27:13 -0600
+Message-ID: <20101120192713.GF17823@burratino>
 References: <20101118050023.GA14861@burratino>
  <20101120004525.GA17445@burratino>
  <20101120192153.GA17823@burratino>
@@ -11,45 +11,45 @@ Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	David Barr <david.barr@cordelta.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Nov 20 20:27:02 2010
+X-From: git-owner@vger.kernel.org Sat Nov 20 20:27:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PJt5S-00027U-4B
-	for gcvg-git-2@lo.gmane.org; Sat, 20 Nov 2010 20:27:02 +0100
+	id 1PJt5r-0002Je-7A
+	for gcvg-git-2@lo.gmane.org; Sat, 20 Nov 2010 20:27:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754802Ab0KTT05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Nov 2010 14:26:57 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:60216 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754764Ab0KTT05 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Nov 2010 14:26:57 -0500
-Received: by gxk23 with SMTP id 23so3370562gxk.19
-        for <git@vger.kernel.org>; Sat, 20 Nov 2010 11:26:56 -0800 (PST)
+	id S1754808Ab0KTT1W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Nov 2010 14:27:22 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:53165 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754764Ab0KTT1V (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Nov 2010 14:27:21 -0500
+Received: by gyb11 with SMTP id 11so599011gyb.19
+        for <git@vger.kernel.org>; Sat, 20 Nov 2010 11:27:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=9q2W9TB2t1PrRcZEdqvMPvdT3HkBHXdt2o4x75G6VdM=;
-        b=gexYYibd5cTcIpxdGmYfb6EO9PbQ9x/lfqxsVjNK4ah+BkR5vJcxBPXo6LmJQaUZRz
-         N8zrE5uxz1LS6Bp9SDjnFa/SmOBBbdetkIrfEQC5P0sGU2Rz+4r9NXAAxFPw/qhhmCSL
-         HMyyLzHC34n0wEa3sLik1xOGM3EaSn2xIk4uU=
+        bh=xBvo899egW8hD3xKsY6wiFU9xZD1byZDPswVxNzi7k0=;
+        b=Cjfth1E2mJ9fyDdxh9QLV28l+SFGv6ChYkGHxwBIpvWBdm6Zcs0ZfbfWqLfz99HeC0
+         fouko2VRxZXa6rbWePgCEx3DPOXsMR++YwZ7t+ZrpbdPjRSGiQIxwSztm/QOoPjIwtsg
+         geawZDsqY7NlUU7mvhUrkC20vvxAe0w+9W5Po=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=hL8bc+7eFnH1ln3tgm4Ynkgz2ir6eK1wXI0xP7WqODWVZo0btYehWuVQ0+cahr+uO6
-         /2qFVysezDwVkXMe2+/Z6XqTAJ4wwSOBKPifxrHvruZw8LxoESz1XfkBUR/Nfs/Opt2g
-         YKM3ExjEv/pRY9UGUPavdBjYYzhOp9vlgtI4A=
-Received: by 10.151.111.19 with SMTP id o19mr6036347ybm.277.1290281216356;
-        Sat, 20 Nov 2010 11:26:56 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id v9sm727541ybe.21.2010.11.20.11.26.54
+        b=Imo5i9MrysQmzjTs6PMZtbt80vApDmQGT6xldRMLWtwXbN17Tahk0KWZyDzOWZPiBX
+         dkdq9Km9CAV8opGGPiaizAHPMKoQ9ppnlL7Zrj6cdTaVQ5/G4z2BAwUlVOzY1rlvrCcJ
+         sTCe6r2aPRsdWcMDORWDBAHoC7RVf2CrxbHs0=
+Received: by 10.90.3.15 with SMTP id 15mr4724700agc.101.1290281240729;
+        Sat, 20 Nov 2010 11:27:20 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id n28sm1986869yha.16.2010.11.20.11.27.19
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 20 Nov 2010 11:26:55 -0800 (PST)
+        Sat, 20 Nov 2010 11:27:19 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20101120192153.GA17823@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -57,224 +57,144 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161834>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161835>
 
-The fd_buffer library is perhaps poorly named, because it does not
-manage its own buffer.  These functions provide the relevant
-functionality from line_buffer for low-level, unbuffered (file
-descriptor) I/O.
-
-The purpose is to preserve convenience while avoiding deadlock that
-could occur from too greedily reading ahead in the cat-blob-fd pipe.
-(An alternative approach to achieve the same effect would be to
-set the O_NONBLOCK flag on the pipe fd.)
+Teach the svndiff routines to read the preimage for a delta from a
+file descriptor without reading ahead.  This way, the delta applier
+can stream its input directly from fast-import's cat-blob-fd pipe.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- Makefile              |    5 ++-
- vcs-svn/fast_export.c |   45 ++++++++++------------------------
- vcs-svn/fd_buffer.c   |   65 +++++++++++++++++++++++++++++++++++++++++++++++++
- vcs-svn/fd_buffer.h   |   19 ++++++++++++++
- 4 files changed, 100 insertions(+), 34 deletions(-)
- create mode 100644 vcs-svn/fd_buffer.c
- create mode 100644 vcs-svn/fd_buffer.h
+ test-svn-fe.c            |   10 +++++-----
+ vcs-svn/sliding_window.c |   21 +++++++++------------
+ vcs-svn/sliding_window.h |    2 +-
+ vcs-svn/svndiff.c        |    6 +++---
+ vcs-svn/svndiff.h        |    2 +-
+ 5 files changed, 19 insertions(+), 22 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index aa10288..844e3b4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1760,7 +1760,7 @@ ifndef NO_CURL
- endif
- XDIFF_OBJS = xdiff/xdiffi.o xdiff/xprepare.o xdiff/xutils.o xdiff/xemit.o \
- 	xdiff/xmerge.o xdiff/xpatience.o
--VCSSVN_OBJS = vcs-svn/string_pool.o vcs-svn/line_buffer.o \
-+VCSSVN_OBJS = vcs-svn/string_pool.o vcs-svn/line_buffer.o vcs-svn/fd_buffer.o \
- 	vcs-svn/repo_tree.o vcs-svn/fast_export.o vcs-svn/svndump.o \
- 	vcs-svn/sliding_window.o vcs-svn/svndiff.o
- OBJECTS := $(GIT_OBJS) $(XDIFF_OBJS) $(VCSSVN_OBJS)
-@@ -1889,7 +1889,8 @@ xdiff-interface.o $(XDIFF_OBJS): \
- $(VCSSVN_OBJS): \
- 	vcs-svn/obj_pool.h vcs-svn/trp.h vcs-svn/string_pool.h \
- 	vcs-svn/line_buffer.h vcs-svn/repo_tree.h vcs-svn/fast_export.h \
--	vcs-svn/sliding_window.h vcs-svn/svndump.h vcs-svn/svndiff.h
-+	vcs-svn/sliding_window.h vcs-svn/svndump.h vcs-svn/svndiff.h \
-+	vcs-svn/fd_buffer.h
- endif
+diff --git a/test-svn-fe.c b/test-svn-fe.c
+index 4799e4c..4ea0cd6 100644
+--- a/test-svn-fe.c
++++ b/test-svn-fe.c
+@@ -22,20 +22,20 @@ int main(int argc, char *argv[])
+ 		return 0;
+ 	}
+ 	if (argc == 5 && !strcmp(argv[1], "-d")) {
+-		struct line_buffer preimage = LINE_BUFFER_INIT;
++		int preimage_fd = -1;
+ 		struct line_buffer delta = LINE_BUFFER_INIT;
+-		if (buffer_init(&preimage, argv[2]))
++		preimage_fd = open(argv[2], O_RDONLY);
++		if (preimage_fd < 0)
+ 			die_errno("cannot open preimage");
+ 		if (buffer_init(&delta, argv[3]))
+ 			die_errno("cannot open delta");
+ 		if (svndiff0_apply(&delta, (off_t) strtoull(argv[4], NULL, 0),
+-				   &preimage, stdout))
++				   preimage_fd, stdout))
+ 			return 1;
+-		if (buffer_deinit(&preimage))
++		if (close(preimage_fd))
+ 			die_errno("cannot close preimage");
+ 		if (buffer_deinit(&delta))
+ 			die_errno("cannot close delta");
+-		buffer_reset(&preimage);
+ 		buffer_reset(&delta);
+ 		return 0;
+ 	}
+diff --git a/vcs-svn/sliding_window.c b/vcs-svn/sliding_window.c
+index 5c08828..6d4261a 100644
+--- a/vcs-svn/sliding_window.c
++++ b/vcs-svn/sliding_window.c
+@@ -5,7 +5,7 @@
  
- exec_cmd.s exec_cmd.o: EXTRA_CPPFLAGS = \
-diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
-index 0de498b..ebaab72 100644
---- a/vcs-svn/fast_export.c
-+++ b/vcs-svn/fast_export.c
-@@ -6,6 +6,7 @@
  #include "git-compat-util.h"
- #include "fast_export.h"
- #include "line_buffer.h"
+ #include "sliding_window.h"
+-#include "line_buffer.h"
 +#include "fd_buffer.h"
- #include "repo_tree.h"
- #include "string_pool.h"
  #include "strbuf.h"
-@@ -73,7 +74,7 @@ static int ends_with(const char *s, size_t len, const char *suffix)
- 	return !memcmp(s + len - suffixlen, suffix, suffixlen);
- }
  
--static int parse_cat_response_line(const char *header, size_t *len)
-+static int parse_cat_response_line(const char *header, off_t *len)
+ static void strbuf_remove_from_left(struct strbuf *sb, size_t nbytes)
+@@ -30,7 +30,7 @@ static int check_overflow(off_t a, size_t b)
+ int move_window(struct view *view, off_t off, size_t len)
  {
- 	size_t headerlen = strlen(header);
- 	const char *type;
-@@ -95,45 +96,25 @@ static int parse_cat_response_line(const char *header, size_t *len)
- static struct strbuf response_line = STRBUF_INIT;
- static const char *get_response_line(void)
- {
--	/*
--	 * NEEDSWORK: Does not actually need to read one byte at a time.
--	 * Some platforms have O_NONBLOCK.  On others we could read 8 chars
--	 * at a time until a potential appearance of " blob ".
--	 */
- 	strbuf_reset(&response_line);
--	for (;;) {
--		char buf[1];
--		if (xread(REPORT_FILENO, buf, 1) < 0) {
--			error("cannot read cat-blob result: %s", strerror(errno));
--			return NULL;
--		}
--		if (*buf == '\n')
--			return response_line.buf;
--		strbuf_addch(&response_line, *buf);
+ 	off_t file_offset;
+-	assert(view && view->file);
++	assert(view && view->fd >= 0);
+ 	assert(!check_overflow(view->off, view->buf.len));
+ 
+ 	if (check_overflow(off, len))
+@@ -47,21 +47,18 @@ int move_window(struct view *view, off_t off, size_t len)
+ 	if (off > file_offset) {
+ 		/* Seek ahead to skip the gap. */
+ 		const off_t gap = off - file_offset;
+-		const off_t nread = buffer_skip_bytes(view->file, gap);
++		const off_t nread = fd_skip_bytes(view->fd, gap);
+ 		if (nread != gap) {
+-			if (!buffer_ferror(view->file))
++			if (!nread)
+ 				return error("Preimage ends early");
+-			return error("Cannot seek forward in input: %s",
+-				     strerror(errno));
++			return error("Cannot seek forward in input");
+ 		}
+ 		file_offset += gap;
+ 	}
+-	buffer_read_binary(&view->buf, len - view->buf.len, view->file);
+-	if (view->buf.len != len) {
+-		if (!buffer_ferror(view->file))
+-			return error("Preimage ends early");
+-		return error("Cannot read preimage: %s", strerror(errno));
 -	}
-+	if (fd_read_line(&response_line, REPORT_FILENO))
-+		return NULL;
-+	return response_line.buf;
++	if (fd_read_binary(&view->buf, len - view->buf.len, view->fd))
++		return error("Cannot read preimage");
++	if (view->buf.len != len)
++		return error("Preimage ends early");
+ 	view->off = off;
+ 	return 0;
+ }
+diff --git a/vcs-svn/sliding_window.h b/vcs-svn/sliding_window.h
+index b9f0552..532dc93 100644
+--- a/vcs-svn/sliding_window.h
++++ b/vcs-svn/sliding_window.h
+@@ -4,7 +4,7 @@
+ #include "strbuf.h"
+ 
+ struct view {
+-	struct line_buffer *file;
++	int fd;
+ 	off_t off;
+ 	struct strbuf buf;
+ };
+diff --git a/vcs-svn/svndiff.c b/vcs-svn/svndiff.c
+index 9ee7411..ef3a921 100644
+--- a/vcs-svn/svndiff.c
++++ b/vcs-svn/svndiff.c
+@@ -283,10 +283,10 @@ static int apply_one_window(struct line_buffer *delta, off_t *delta_len,
  }
  
--static int copy_bytes(FILE *out, size_t len)
-+static int copy_bytes(FILE *out, off_t len)
+ int svndiff0_apply(struct line_buffer *delta, off_t delta_len,
+-		   struct line_buffer *preimage, FILE *postimage)
++		   int preimage_fd, FILE *postimage)
  {
--	char buf[4096];
--	ssize_t nread;
--	for (; len; len -= nread) {
--		nread = xread(REPORT_FILENO, buf,
--					len < sizeof(buf) ? len : sizeof(buf));
--		if (nread < 0)
--			return error("cannot copy cat-blob result: %s",
--					strerror(errno));
--		if (!nread)
--			return error("0-length read...");
--		if (fwrite(buf, 1, nread, out) != nread)
--			return error("cannot write cat-blob results: %s",
--					strerror(errno));
--	}
-+	off_t ret = fd_copy_bytes(out, REPORT_FILENO, len);
-+	if (!ret)
-+		return error("read error: file ends early");
-+	if (ret <= 0)
-+		return error("cannot copy cat-blob result");
-+	return 0;
- }
+-	struct view preimage_view = {preimage, 0, STRBUF_INIT};
+-	assert(delta && preimage && postimage);
++	struct view preimage_view = {preimage_fd, 0, STRBUF_INIT};
++	assert(delta && preimage_fd >= 0 && postimage);
  
- static int fast_export_save_blob(FILE *out)
- {
--	size_t len = len;
-+	off_t len = len;
- 	const char *header, *tail;
+ 	if (read_magic(delta, &delta_len))
+ 		goto fail;
+diff --git a/vcs-svn/svndiff.h b/vcs-svn/svndiff.h
+index a986099..9003d6e 100644
+--- a/vcs-svn/svndiff.h
++++ b/vcs-svn/svndiff.h
+@@ -4,6 +4,6 @@
+ #include "line_buffer.h"
  
- 	header = get_response_line();
-diff --git a/vcs-svn/fd_buffer.c b/vcs-svn/fd_buffer.c
-new file mode 100644
-index 0000000..3d2c1a1
---- /dev/null
-+++ b/vcs-svn/fd_buffer.c
-@@ -0,0 +1,65 @@
-+/*
-+ * Licensed under a two-clause BSD-style license.
-+ * See LICENSE for details.
-+ */
-+
-+#include "git-compat-util.h"
-+#include "fd_buffer.h"
-+#include "strbuf.h"
-+
-+/* Read a line without trailing newline. */
-+int fd_read_line(struct strbuf *line, int fd)
-+{
-+	/*
-+	 * NEEDSWORK: Does not actually need to read one byte at a time.
-+	 * Some platforms have O_NONBLOCK.  On others we could read
-+	 * several chars at a time until an appearance of a string known
-+	 * to belong in the line (e.g., " blob ").
-+	 */
-+	for (;;) {
-+		char buf[1];
-+		if (xread(fd, buf, 1) < 0)
-+			return error("cannot read line: %s", strerror(errno));
-+		if (*buf == '\n')
-+			return 0;
-+		strbuf_addch(line, *buf);
-+	}
-+}
-+
-+int fd_read_binary(struct strbuf *buf, size_t len, int fd)
-+{
-+	char *p, *end;
-+	strbuf_grow(buf, len);
-+	p = buf->buf + buf->len;
-+	end = p + len;
-+
-+	while (p != end) {
-+		ssize_t nread = xread(fd, p, end - p);
-+		if (nread < 0)
-+			return error("read error: %s", strerror(errno));
-+		if (!nread)	/* end of file */
-+			break;
-+		p += nread;
-+	}
-+	strbuf_setlen(buf, p - buf->buf);
-+	return 0;
-+}
-+
-+off_t fd_copy_bytes(FILE *out, int fd, off_t len)
-+{
-+	off_t total = 0;
-+	while (len) {
-+		char buf[4096];
-+		ssize_t nread = xread(fd, buf,
-+					len < sizeof(buf) ? len : sizeof(buf));
-+		if (nread < 0)
-+			return error("read error: %s", strerror(errno));
-+		if (!nread)
-+			return 0;
-+		if (out && fwrite(buf, 1, nread, out) != nread)
-+			return error("write error: %s", strerror(errno));
-+		total += nread;
-+		len -= nread;
-+	}
-+	return total;
-+}
-diff --git a/vcs-svn/fd_buffer.h b/vcs-svn/fd_buffer.h
-new file mode 100644
-index 0000000..9434ac3
---- /dev/null
-+++ b/vcs-svn/fd_buffer.h
-@@ -0,0 +1,19 @@
-+#ifndef FD_BUFFER_H
-+#define FD_BUFFER_H
-+
-+#include "strbuf.h"
-+
-+/* Low-level input helpers.  Usually line_buffer is a better choice. */
-+
-+extern int fd_read_line(struct strbuf *line, int fd);
-+extern int fd_read_binary(struct strbuf *buf, size_t len, int fd);
-+
-+/* returns 0 for end of file */
-+extern off_t fd_copy_bytes(FILE *out, int fd, off_t len);
-+
-+static inline off_t fd_skip_bytes(int fd, off_t len)
-+{
-+	return fd_copy_bytes(NULL, fd, len);
-+}
-+
-+#endif
+ extern int svndiff0_apply(struct line_buffer *delta, off_t delta_len,
+-			  struct line_buffer *preimage, FILE *postimage);
++				int preimage_fd, FILE *postimage);
+ 
+ #endif
 -- 
 1.7.2.3
