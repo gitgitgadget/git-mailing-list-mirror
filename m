@@ -1,215 +1,186 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: First/oldest entry in reflog dropped
-Date: Sun, 21 Nov 2010 17:57:46 -0500
-Message-ID: <AANLkTikS00FN9-_MoSGvBMxdUefzk5K_8Zz2V14KCDLJ@mail.gmail.com>
-References: <AANLkTiktGbeSmUB75kn3q=swnw=cHvivX21OkR3sJJDC@mail.gmail.com>
-	<20101121053545.GA10520@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Status of the svn remote helper project (Nov 2010, #2)
+Date: Sun, 21 Nov 2010 17:06:13 -0600
+Message-ID: <20101121230613.GA24397@burratino>
+References: <20101107112129.GA30042@burratino>
+ <20101121063149.GA15449@burratino>
+ <BB713021-7826-4E9E-8576-7D1704BF517C@cordelta.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Nov 21 23:58:14 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: David Michael Barr <david.barr@cordelta.com>
+X-From: git-owner@vger.kernel.org Mon Nov 22 00:06:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKIrM-0007kD-Sy
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Nov 2010 23:58:13 +0100
+	id 1PKIzX-0002rq-Lm
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 00:06:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754596Ab0KUW5s convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 21 Nov 2010 17:57:48 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:62889 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754463Ab0KUW5r convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 21 Nov 2010 17:57:47 -0500
-Received: by qwc9 with SMTP id 9so153116qwc.19
-        for <git@vger.kernel.org>; Sun, 21 Nov 2010 14:57:46 -0800 (PST)
+	id S1754852Ab0KUXGd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Nov 2010 18:06:33 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:44040 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754561Ab0KUXGd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Nov 2010 18:06:33 -0500
+Received: by gxk23 with SMTP id 23so3725729gxk.19
+        for <git@vger.kernel.org>; Sun, 21 Nov 2010 15:06:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=BPnge47D6v2Aj+zAlqZdLq0ff3vyP7cmjynY3gbf5P4=;
-        b=fPCydhak0nKehyYfJ+4/BCPA72fh5cVECSqxBhPUKk8faxHuk+yu5Zppm4diPnTcba
-         aafnfjBayrluUx/l42NmDBCUAdQSZTBtHPipnwu8oijtoB2wHlWV/TcHllb1HBhOek04
-         Z6+AKeUIukjwnns132DnjNtyFXRWnD98jLT58=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=rmtHxq72tNx/GPILou4wpu+5JK9cCf7HMpeAPgvOL5I=;
+        b=jP/SE/s7Zt9kQkmQ4x3cyFOl+xRnHCp05J+zy3NpyxNK4KdYbzqVGmu2yfQMheBRD6
+         /qmvtiD0ZLazfdiq7NLBRNc7cclh1j8eu81pVilueTXbUtlGZ3I7qvfrOPZetFVfSKfp
+         YziwlLkuw54nGvIiP2WCe8vyyWZx1BHkxgn7w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=KRHFE3iL2EiAR3NpxA/ai+eDRR7X5BHIxKZaT1sPp1g06J1ATn3/usQAOUZGpA7XDd
-         JtyCJumtJMuMyonVlTML5eQdWVlZPB6bRfThtoeKwxamh9qfDqyWcGJ8yrSh03wA4TCt
-         pc0VOTtCDiVCKUCO5JvC+mACk4seH6aafKPbA=
-Received: by 10.224.135.227 with SMTP id o35mr4573708qat.75.1290380266400;
- Sun, 21 Nov 2010 14:57:46 -0800 (PST)
-Received: by 10.224.80.202 with HTTP; Sun, 21 Nov 2010 14:57:46 -0800 (PST)
-In-Reply-To: <20101121053545.GA10520@sigill.intra.peff.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ArjnuWuANO1HX/3bsHcQPyL0/RfAnBmz8GfkEe3JUkN7T6Re8Hp+2aYbTFl+JS0zjo
+         jkr3NxGrkJXa0wh8gsJHnlARG6ArSTO/CpIlEI09e7SJKv+0PRkIW8FUdvjYBG/XzEim
+         fa/a6k6n/qlZ7z0AXw8grtoj9PhxB1NAt5e/I=
+Received: by 10.100.205.10 with SMTP id c10mr2839227ang.172.1290380791850;
+        Sun, 21 Nov 2010 15:06:31 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id d10sm4964438and.39.2010.11.21.15.06.27
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 21 Nov 2010 15:06:30 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <BB713021-7826-4E9E-8576-7D1704BF517C@cordelta.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161873>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161874>
 
-On Sun, Nov 21, 2010 at 12:35 AM, Jeff King <peff@peff.net> wrote:
-> On Sat, Nov 20, 2010 at 10:11:34PM -0500, Martin von Zweigbergk wrote=
-:
->
->> Can someone explain the behavior in the execution below?
->>
->> # I expected this reflog...
->> $ git branch tmp
->> $ git reflog show refs/heads/tmp
->> b60a214 refs/heads/tmp@{0}: branch: Created from master
->>
->> # ... and this one as well...
->> $ git update-ref refs/heads/tmp HEAD^
->> $ git reflog show refs/heads/tmp
->> 7d1a0b8 refs/heads/tmp@{0}:
->> b60a214 refs/heads/tmp@{1}: branch: Created from master
->>
->> # ... but why is the first entry (i.e. "branch: Created from master"=
-)
->> # dropped here?
->> $ git update-ref refs/heads/tmp HEAD
->> $ git reflog show refs/heads/tmp
->> b60a214 refs/heads/tmp@{0}:
->> 7d1a0b8 refs/heads/tmp@{1}:
->>
->> If the ref is updated once more (to e.g. HEAD^^) before being moved =
-back
->> to HEAD, the first entry will be shown in the output.
->>
->> If this is a bug, it seems to be in reflog, rather than in update-re=
-f,
->> because the first entry does exist in .git/logs/refs/heads/tmp.
->
-> I think it's a bug in the reflog-walking machinery, which is sort of
-> bolted onto the regular revision traversal machinery. When we hit
-> b60a214 the first time, we show it and set the SHOWN flag (since the
-> normal traversal machinery would not want to show a commit twice). Wh=
-en
-> we hit it again, simplify_commit() sees that it is SHOWN and tells us=
- to
-> skip it.
->
-> However, the bolted-on reflog-walking machinery does have a way of
-> handling this. While we are traversing via get_revision(), we notice
-> that we are doing a reflog walk and call fake_reflog_parent. This
-> function is responsible for replacing the actual parents of the commi=
-t
-> with a fake list consisting of the previous reflog entry (so we
-> basically pretend that the history consists of a string of commits, e=
-ach
-> one pointing to the previous reflog entry, not the actual parent).
->
-> This function _also_ clears some flags, including the SHOWN flag, in
-> what almost seems like a tacked-on side effect. So if we hit the same
-> commit twice, we will actually show it again. Which is what makes
-> reflogs with repeated commits work at all.
->
-> However, there is a subtle bug: it clears the flags at the very end o=
-f
-> the function. But through the function, if we see that there are no f=
-ake
-> parents (because we are on the very first reflog entry), we do an ear=
-ly
-> return. But we not only skip the later "set up parents" code, we also
-> accidentally skip the "clear SHOWN flag" side-effect code.
->
-> So I believe we will always fail to show the very first reflog if it =
-is
-> a repeated commit.
->
-> The fix, AFAICT, is to just move the flag clearing above the early
-> returns (patch below). But I have to admit I do not quite understand
-> what the ADDED and SEEN flags are doing here, as this is the first ti=
-me
-> I have ever looked at the reflog-walk code. So possibly just the SHOW=
-N
-> flag should be unconditionally cleared.
->
-> This patch clears up your bug, and doesn't break any tests. But I'd
-> really like to get a second opinion on the significance of those othe=
-r
-> flags, or why the flag clearing was at the bottom of the function in =
-the
-> first place.
->
-> -Peff
->
-> ---
-> diff --git a/reflog-walk.c b/reflog-walk.c
-> index 4879615..d5d055b 100644
-> --- a/reflog-walk.c
-> +++ b/reflog-walk.c
-> @@ -210,44 +210,45 @@ int add_reflog_for_walk(struct reflog_walk_info=
- *info,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0add_commit_info(commit, commit_reflog, &in=
-fo->reflogs);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0return 0;
-> =C2=A0}
->
-> =C2=A0void fake_reflog_parent(struct reflog_walk_info *info, struct c=
-ommit *commit)
-> =C2=A0{
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct commit_info *commit_info =3D
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0get_commit_inf=
-o(commit, &info->reflogs, 0);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct commit_reflog *commit_reflog;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct reflog_info *reflog;
->
-> + =C2=A0 =C2=A0 =C2=A0 commit->object.flags &=3D ~(ADDED | SEEN | SHO=
-WN);
-> +
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0info->last_commit_reflog =3D NULL;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!commit_info)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit_reflog =3D commit_info->util;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (commit_reflog->recno < 0) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0commit->parent=
-s =3D NULL;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0reflog =3D &commit_reflog->reflogs->items[=
-commit_reflog->recno];
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0info->last_commit_reflog =3D commit_reflog=
-;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit_reflog->recno--;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit_info->commit =3D (struct commit *)p=
-arse_object(reflog->osha1);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (!commit_info->commit) {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0commit->parent=
-s =3D NULL;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0}
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit->parents =3D xcalloc(sizeof(struct =
-commit_list), 1);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit->parents->item =3D commit_info->com=
-mit;
-> - =C2=A0 =C2=A0 =C2=A0 commit->object.flags &=3D ~(ADDED | SEEN | SHO=
-WN);
-> =C2=A0}
->
-> =C2=A0void get_reflog_selector(struct strbuf *sb,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 struct reflog_walk_info *reflog_info,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 enum date_mode dmode,
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 int shorten)
-> =C2=A0{
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct commit_reflog *commit_reflog =3D re=
-flog_info->last_commit_reflog;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct reflog_info *info;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0const char *printed_ref;
->
->
+David Michael Barr wrote:
+> Jonathan Nieder wrote:
 
-Good job! And yes, if the first commit is included in any cycles, it
-seems to be dropped. I must have been blind yesterday...
+>> A delta in r36 of <http://svn.apache.org/repos/asf> does not apply
+>> with this brand of svn-fe.
+>
+> That's odd, I was able to import up to r354 before receiving:
+> fatal: missing newline after cat-blob response
+
+Apparently sometimes deltas use the whole preimage and sometimes they
+don't.
+
+Here's a fix (still needs a simple reproduction script).
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+diff --git a/test-svn-fe.c b/test-svn-fe.c
+index 64f63cf..71de02b 100644
+--- a/test-svn-fe.c
++++ b/test-svn-fe.c
+@@ -11,7 +11,7 @@
+ int main(int argc, char *argv[])
+ {
+ 	static const char test_svnfe_usage[] =
+-		"test-svn-fe (<dumpfile> | [-d] <preimage> <delta> <len>)";
++		"test-svn-fe (<dumpfile> | [-d] <preimage> [<preimage len>] <delta> <len>)";
+ 	if (argc < 2)
+ 		usage(test_svnfe_usage);
+ 	if (argc == 2) {
+@@ -22,16 +22,26 @@ int main(int argc, char *argv[])
+ 		svndump_reset();
+ 		return 0;
+ 	}
+-	if (argc == 5 && !strcmp(argv[1], "-d")) {
++	if ((argc == 5 || argc == 6) && !strcmp(argv[1], "-d")) {
++		char **arg = argv + 2;
+ 		struct line_buffer delta = LINE_BUFFER_INIT;
+-		int preimage_fd = open(argv[2], O_RDONLY);
++		int preimage_fd = open(*arg++, O_RDONLY);
+ 		struct view preimage_view = {preimage_fd, 0, STRBUF_INIT};
++		off_t preimage_len;
+ 		if (preimage_fd < 0)
+ 			die_errno("cannot open preimage");
+-		if (buffer_init(&delta, argv[3]))
++		if (argc == 6) {
++			preimage_len = (off_t) strtoull(*arg++, NULL, 0);
++		} else {
++			struct stat st;
++			if (fstat(preimage_fd, &st))
++				die_errno("cannot stat preimage");
++			preimage_len = st.st_size;
++		}
++		if (buffer_init(&delta, *arg++))
+ 			die_errno("cannot open delta");
+-		if (svndiff0_apply(&delta, (off_t) strtoull(argv[4], NULL, 0),
+-				   &preimage_view, stdout))
++		if (svndiff0_apply(&delta, (off_t) strtoull(*arg++, NULL, 0),
++				   &preimage_view, preimage_len, stdout))
+ 			return 1;
+ 		if (close(preimage_fd))
+ 			die_errno("cannot close preimage");
+diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
+index ceb1fc5..02456cf 100644
+--- a/vcs-svn/fast_export.c
++++ b/vcs-svn/fast_export.c
+@@ -119,6 +119,7 @@ static long apply_delta(uint32_t mark, off_t len, struct line_buffer *input,
+ 			uint32_t old_mark, uint32_t old_mode)
+ {
+ 	long ret;
++	off_t preimage_len = 0;
+ 	struct view preimage = {REPORT_FILENO, 0, STRBUF_INIT};
+ 	FILE *out;
+ 
+@@ -130,13 +131,12 @@ static long apply_delta(uint32_t mark, off_t len, struct line_buffer *input,
+ 		printf("cat-blob :%"PRIu32"\n", old_mark);
+ 		fflush(stdout);
+ 		response = get_response_line();
+-		/* Not necessary, just for robustness */
+-		if (parse_cat_response_line(response, &dummy))
++		if (parse_cat_response_line(response, &preimage_len))
+ 			die("invalid cat-blob response: %s", response);
+ 	}
+ 	if (old_mode == REPO_MODE_LNK)
+ 		strbuf_addstr(&preimage.buf, "link ");
+-	if (svndiff0_apply(input, len, &preimage, out))
++	if (svndiff0_apply(input, len, &preimage, preimage_len, out))
+ 		die("cannot apply delta");
+ 	if (old_mark) {
+ 		/* Discard trailing newline from cat-blob-fd. */
+diff --git a/vcs-svn/svndiff.c b/vcs-svn/svndiff.c
+index 308c734..8210561 100644
+--- a/vcs-svn/svndiff.c
++++ b/vcs-svn/svndiff.c
+@@ -283,7 +283,8 @@ static int apply_one_window(struct line_buffer *delta, off_t *delta_len,
+ }
+ 
+ int svndiff0_apply(struct line_buffer *delta, off_t delta_len,
+-			struct view *preimage_view, FILE *postimage)
++			struct view *preimage_view, off_t preimage_len,
++			FILE *postimage)
+ {
+ 	assert(delta && preimage_view && postimage);
+ 
+@@ -302,5 +303,7 @@ int svndiff0_apply(struct line_buffer *delta, off_t delta_len,
+ 			return error("Delta ends early! (%"PRIu64" bytes remaining)",
+ 			      (uint64_t) delta_len);
+ 	}
++	if (move_window(preimage_view, preimage_len, 0))
++		return -1;
+ 	return 0;
+ }
+diff --git a/vcs-svn/svndiff.h b/vcs-svn/svndiff.h
+index bb5afd0..640e04f 100644
+--- a/vcs-svn/svndiff.h
++++ b/vcs-svn/svndiff.h
+@@ -5,6 +5,7 @@
+ #include "sliding_window.h"
+ 
+ extern int svndiff0_apply(struct line_buffer *delta, off_t delta_len,
+-				struct view *preimage_view, FILE *postimage);
++				struct view *preimage_view, off_t preimage_len,
++				FILE *postimage);
+ 
+ #endif
