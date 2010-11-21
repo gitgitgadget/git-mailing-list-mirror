@@ -1,96 +1,167 @@
-From: tom fogal <tfogal@sci.utah.edu>
-Subject: Re: rebuild repo from data, packfiles?
-Date: Sun, 21 Nov 2010 12:51:40 -0700
-Message-ID: <auto-000024046785@sci.utah.edu>
-References: <auto-000024044659@sci.utah.edu> <20101121001643.GB27666@burratino> <auto-000024045093@sci.utah.edu>  <20101121032707.GA11571@burratino>
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 21 20:53:17 2010
+From: Christoph Bartoschek <bartoschek@gmx.de>
+Subject: Re: Git-Svn-Bridge
+Date: Sun, 21 Nov 2010 21:24:44 +0100
+Organization: =?UTF-8?B?VW5pdmVyc2l0w6R0?= Bonn
+Message-ID: <dpbor7-rtk.ln1@homer.bruehl.pontohonk.de>
+References: <227dr7-3nl.ln1@burns.bruehl.pontohonk.de> <AANLkTimH=iv5y5OdBXnVM=EVY2+FvY7dTgnLc4pZSkWP@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 21 21:25:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKFxk-0002ri-9s
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Nov 2010 20:52:36 +0100
+	id 1PKGTc-0001G5-AK
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Nov 2010 21:25:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755490Ab0KUTw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Nov 2010 14:52:27 -0500
-Received: from mail.sci.utah.edu ([155.98.58.80]:29878 "EHLO sci.utah.edu"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752433Ab0KUTw1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Nov 2010 14:52:27 -0500
-Received: from dummy.name; Sun, 21 Nov 2010 12:52:26 -0700
-In-Reply-To: Your message of "Sat, 20 Nov 2010 21:27:07 CST."
-             <20101121032707.GA11571@burratino> 
+	id S1755509Ab0KUUZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Nov 2010 15:25:27 -0500
+Received: from lo.gmane.org ([80.91.229.12]:49713 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754993Ab0KUUZ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Nov 2010 15:25:26 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PKGTU-0001Ek-Sk
+	for git@vger.kernel.org; Sun, 21 Nov 2010 21:25:24 +0100
+Received: from p4ff4b952.dip.t-dialin.net ([79.244.185.82])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 21 Nov 2010 21:25:24 +0100
+Received: from bartoschek by p4ff4b952.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sun, 21 Nov 2010 21:25:24 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: p4ff4b952.dip.t-dialin.net
+User-Agent: KNode/4.4.5
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161870>
 
-Hi Jonathan,
+Thomas Ferris Nicolaisen wrote:
 
-thanks for all your help thus far.  I saw your other message as well,
-which was helpful, but I've nothing to contribute to the group other
-than "yeah, that helped!", so I'm not going to reply separately.
+...
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-> Sometimes it is possible to recover some specific object with
-> detective work; see howto/recover-corrupted-blob-object.txt in the
-> Documentation directory for an example of that.
+> I've experimented with my own "hybrid bridge" setup [2], but I've yet
+> to hear whether it's wrong or can be done better. Someone on #git
+> claimed it was more complicated that it had to be, but as far as I've
+> heard, the setup in Loeliger's book is even worse [3] (no offense to
+> his book though, I haven't read it but heard it's great).
 
-I've been pouring over this and think I understand my issues now.
-Following Linus' log --raw ... pattern, I get [1].  If I were to
-represent my commits as a list, they'd be:
+...
 
-  936e5e1 ---- 23ffd9c ---- 48fa24c
+> So, to shape it in form of a question: What is the optimal git-svn bridge
+> setup?
 
-My problem is that 23ffd9c is now missing due to my stupidity.
+I see the following advantages of the Loeliger setup:
 
-Is there any way I could rewrite my history to be:
+- The master branch on the bare repository reflects the whole history. The 
+branches and merges the git users perform are visible in this branch.
 
-  936e5e1 ---- 48fa24c
+- The git users do not need to know about subversion.
 
-? I imagine that the sha1's would change and the like; I don't care
-much about that.  I'm thinking I could do a rebase -i and squash
-23ffd9c into 48fa24c... but I can't rebase -i because my history is
-broken.  So I'd like to "virtually" rebase -i -- connect 48fa24c to
-936e5e1 and vice versa -- but I don't see any commands to do this.
 
-The reasoning is I've got something like 15 "broken link from tree ...
-to blob ..." errors in my fsck.  I attempted to correct these Linus'
-way, by looking at the diff between, say 936e5 .. 48fa2 and trying to
-guess the intermediate diff... this is going to be doable but *very*
-hard, and my full history just isn't worth that kind of time ;)
+This is how I currently understand the setup:
 
-Apologies for abusing your time with this, but thanks much for the
-ideas!
+A.1. Clone the subversion repository to a fetching git repository:
 
--tom
+git svn clone -s --prefix=svn/ <SVN-URL> fetch.git
 
-[1]
-commit d5210216537e5a37955d5605a2a688edfa28e5b5
-Author: Tom Fogal <tfogal@alumni.unh.edu>
-Date:   Thu Oct 28 13:05:31 2010 -0600
+A.2. Fix master to check to the correct commit:
 
-    Remove controller dependence from VariantArray.
+git reset --hard svn/trunk
 
-    Only needed it for a few debug messages, and those weren't
-    terribly useful anyway.
+A.3. Create a local branch for each subversion branch to follow:
 
-:100644 100644 23ffd9c... 48fa24c... M  VariantArray.cpp
+git branch branch_A svn/branch_A
 
-commit dfa3d3b53a1f21e056a75e23446ef36f377e55bc
-Author: Tom Fogal <tfogal@alumni.unh.edu>
-Date:   Fri Oct 8 11:31:11 2010 -0600
+A.4. Create a bare repository that is used as depot for git:
 
-    VariantArray: support more data types.
+git init --bare bare.git
 
-    Also reorganize a bit.  Use the boost, aka std types, and use a
-    consistent order of widening bit widths for similar methods.
+A.5. Push the branches to the depot:
 
-:100644 100644 936e5e1... 23ffd9c... M  VariantArray.cpp
-error: Could not read 21ab2742822b0afc8c6a582cab0ba9da5c32e1d3
-fatal: cannot simplify commit 096fd9f8ae47a8d3b3fb09e0ce89c924d72cea40 (because
-of 21ab2742822b0afc8c6a582cab0ba9da5c32e1d3)
+git push --all ../bare.git
+git push ../bare.git 'refs/remotes/svn/*:refs/heads/svn/*
+
+Now the setup is done and the git users can start to clone the depot and 
+continue to work. The convention is that the svn/* branches always only 
+reflect the subversion history. One does not directly work on them. Work is 
+done on master and the branches that have been created locally.
+
+
+If there are no updates to the bare repository but changes to subversion 
+then one can update the bare repository with:
+
+B.1. Go to the fetch repository and get the newest svn data:
+
+git svn fetch
+
+B.2. Merge the new data to each branch that tracks a svn branch:
+
+git checkout master
+git merge svn/trunk
+git checkout branch_A
+git merge svn/branch_A
+
+B.3. Push the new data to the bare repository:
+
+git push -all ../bare.git
+git push ../bare.git 'refs/remotes/svn/*:refs/heads/svn/*'
+
+
+Are there shortcuts to get the commands in B.2 and B.3 in a single one?
+
+
+Now changes are commited to master on the bare repository and one wants to 
+push them to the subversion server. If there are changes on the subversion 
+side also fetch them:
+
+C.1: Go to the fetch repository and pull the changes from the bare 
+repository:
+
+git checkout master
+git pull ../bare.git master
+git checkout branch_A
+git pull ../bare.git branch_A
+
+Is there a shortcut?
+
+C.2: Fetch changes from svn:
+
+git svn fetch
+
+C.3: Create detached heads from the svn branches one follows, merge the 
+changes from the git branches and dcommit them:
+
+git checkout svn/trunk
+git merge --no-ff --log master
+git svn dcommit
+
+Same for branch_A.
+
+C.4: Merge the newly created subversion commit to the git branches:
+
+git checkout master
+git merge svn/trunk
+git checkout branch_A
+git merge svn/branch_A
+
+C.5: Push the new commits to the bare repository:
+
+git push --all ../bare.git
+git push  ../bare.git 'refs/remotes/svn/*:refs/heads/svn/*'
+
+
+This is how I understand the setup. Do you see any mistakes or ways to 
+improve it?
+
+Thanks
+Christoph
