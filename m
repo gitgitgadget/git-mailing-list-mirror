@@ -1,167 +1,66 @@
-From: Christoph Bartoschek <bartoschek@gmx.de>
-Subject: Re: Git-Svn-Bridge
-Date: Sun, 21 Nov 2010 21:24:44 +0100
-Organization: =?UTF-8?B?VW5pdmVyc2l0w6R0?= Bonn
-Message-ID: <dpbor7-rtk.ln1@homer.bruehl.pontohonk.de>
-References: <227dr7-3nl.ln1@burns.bruehl.pontohonk.de> <AANLkTimH=iv5y5OdBXnVM=EVY2+FvY7dTgnLc4pZSkWP@mail.gmail.com>
+From: Muhammad Kazim <kazimalik@gmail.com>
+Subject: Error "Unable to look up android.git.kernel.org (port 9418) (Name or
+ service not known)"
+Date: Mon, 22 Nov 2010 02:46:08 +0500
+Message-ID: <AANLkTik-Fr=0PL+T3geL58qZOX8nt53PLfgVphj4GaYT@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 21 21:25:34 2010
+X-From: git-owner@vger.kernel.org Sun Nov 21 22:46:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKGTc-0001G5-AK
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Nov 2010 21:25:32 +0100
+	id 1PKHjk-0005Th-CE
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Nov 2010 22:46:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755509Ab0KUUZ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Nov 2010 15:25:27 -0500
-Received: from lo.gmane.org ([80.91.229.12]:49713 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754993Ab0KUUZ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Nov 2010 15:25:26 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PKGTU-0001Ek-Sk
-	for git@vger.kernel.org; Sun, 21 Nov 2010 21:25:24 +0100
-Received: from p4ff4b952.dip.t-dialin.net ([79.244.185.82])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 21 Nov 2010 21:25:24 +0100
-Received: from bartoschek by p4ff4b952.dip.t-dialin.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 21 Nov 2010 21:25:24 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: p4ff4b952.dip.t-dialin.net
-User-Agent: KNode/4.4.5
+	id S1755971Ab0KUVqK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Nov 2010 16:46:10 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:60177 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755838Ab0KUVqJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Nov 2010 16:46:09 -0500
+Received: by qwc9 with SMTP id 9so115635qwc.19
+        for <git@vger.kernel.org>; Sun, 21 Nov 2010 13:46:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=be9udyUfwjQ/rzcg01ttgIOYGUXCXTP0BDGAXcZAjII=;
+        b=WMhn2ddtM6vQXhOnV4zGcF6CLfou4Kh1vWvcbBHZ0+aIEnqZTJ8ZxjKdLsZGRNwMop
+         2dtFlqub2GEokBxNkc6FScFJhmt753b9eam0V0ofS1H7ELqzW27Jycp2IPWWCzRR8+mF
+         8A4ByOhMjOinMdO5rFgiu2/OvPmJ9acNumhD4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=JMkqz/UyBOKqgvprM5CgYro1PAeTH2zBNOGGtePne56mjv3XMGBrVs+sARpAOe2146
+         0ZSOaJHkZ6b2LCi69N6qMugTRuLZxFWMgmFeFyjx2nvht0X3OcaXuWT3JoJH8jbwVRTP
+         7Rw4Izkh+Ur5Lrf01oXl13gbL2rJjRJd79d6s=
+Received: by 10.229.181.74 with SMTP id bx10mr4395755qcb.163.1290375968375;
+ Sun, 21 Nov 2010 13:46:08 -0800 (PST)
+Received: by 10.220.169.209 with HTTP; Sun, 21 Nov 2010 13:46:08 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161871>
 
-Thomas Ferris Nicolaisen wrote:
+Dear All,
+I was looking to get the Android source code in ubuntu 9.04. I entered
+the following commands
 
-...
+-repo init -u git://android.git.kernel.org/platform/manifest.git
+-repo sync
 
-> I've experimented with my own "hybrid bridge" setup [2], but I've yet
-> to hear whether it's wrong or can be done better. Someone on #git
-> claimed it was more complicated that it had to be, but as far as I've
-> heard, the setup in Loeliger's book is even worse [3] (no offense to
-> his book though, I haven't read it but heard it's great).
+After 9% downloading was done an error came which was
 
-...
+"Unable to look up android.git.kernel.org	(port 9418) (Name or service
+not known)"
 
-> So, to shape it in form of a question: What is the optimal git-svn bridge
-> setup?
-
-I see the following advantages of the Loeliger setup:
-
-- The master branch on the bare repository reflects the whole history. The 
-branches and merges the git users perform are visible in this branch.
-
-- The git users do not need to know about subversion.
+I am using DSL connection and i am not behind any proxy server.
+Kindly help me to solve this problem. I will really appreciate any of your help.
 
 
-This is how I currently understand the setup:
-
-A.1. Clone the subversion repository to a fetching git repository:
-
-git svn clone -s --prefix=svn/ <SVN-URL> fetch.git
-
-A.2. Fix master to check to the correct commit:
-
-git reset --hard svn/trunk
-
-A.3. Create a local branch for each subversion branch to follow:
-
-git branch branch_A svn/branch_A
-
-A.4. Create a bare repository that is used as depot for git:
-
-git init --bare bare.git
-
-A.5. Push the branches to the depot:
-
-git push --all ../bare.git
-git push ../bare.git 'refs/remotes/svn/*:refs/heads/svn/*
-
-Now the setup is done and the git users can start to clone the depot and 
-continue to work. The convention is that the svn/* branches always only 
-reflect the subversion history. One does not directly work on them. Work is 
-done on master and the branches that have been created locally.
-
-
-If there are no updates to the bare repository but changes to subversion 
-then one can update the bare repository with:
-
-B.1. Go to the fetch repository and get the newest svn data:
-
-git svn fetch
-
-B.2. Merge the new data to each branch that tracks a svn branch:
-
-git checkout master
-git merge svn/trunk
-git checkout branch_A
-git merge svn/branch_A
-
-B.3. Push the new data to the bare repository:
-
-git push -all ../bare.git
-git push ../bare.git 'refs/remotes/svn/*:refs/heads/svn/*'
-
-
-Are there shortcuts to get the commands in B.2 and B.3 in a single one?
-
-
-Now changes are commited to master on the bare repository and one wants to 
-push them to the subversion server. If there are changes on the subversion 
-side also fetch them:
-
-C.1: Go to the fetch repository and pull the changes from the bare 
-repository:
-
-git checkout master
-git pull ../bare.git master
-git checkout branch_A
-git pull ../bare.git branch_A
-
-Is there a shortcut?
-
-C.2: Fetch changes from svn:
-
-git svn fetch
-
-C.3: Create detached heads from the svn branches one follows, merge the 
-changes from the git branches and dcommit them:
-
-git checkout svn/trunk
-git merge --no-ff --log master
-git svn dcommit
-
-Same for branch_A.
-
-C.4: Merge the newly created subversion commit to the git branches:
-
-git checkout master
-git merge svn/trunk
-git checkout branch_A
-git merge svn/branch_A
-
-C.5: Push the new commits to the bare repository:
-
-git push --all ../bare.git
-git push  ../bare.git 'refs/remotes/svn/*:refs/heads/svn/*'
-
-
-This is how I understand the setup. Do you see any mistakes or ways to 
-improve it?
-
-Thanks
-Christoph
+Regards
+M.Kazim
