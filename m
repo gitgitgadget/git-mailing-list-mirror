@@ -1,160 +1,240 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: First/oldest entry in reflog dropped
-Date: Sun, 21 Nov 2010 00:35:46 -0500
-Message-ID: <20101121053545.GA10520@sigill.intra.peff.net>
-References: <AANLkTiktGbeSmUB75kn3q=swnw=cHvivX21OkR3sJJDC@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Status of the svn remote helper project (Nov 2010, #2)
+Date: Sun, 21 Nov 2010 00:31:49 -0600
+Message-ID: <20101121063149.GA15449@burratino>
+References: <20101107112129.GA30042@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
-	git@vger.kernel.org
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 21 06:37:27 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	David Barr <david.barr@cordelta.com>,
+	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 21 07:37:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PK2cA-0007so-T1
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Nov 2010 06:37:27 +0100
+	id 1PK3YV-000420-Op
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Nov 2010 07:37:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750880Ab0KUFfx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Nov 2010 00:35:53 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:55045 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750769Ab0KUFfx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Nov 2010 00:35:53 -0500
-Received: (qmail 7123 invoked by uid 111); 21 Nov 2010 05:35:51 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 21 Nov 2010 05:35:51 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 21 Nov 2010 00:35:46 -0500
+	id S1751840Ab0KUGcE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Nov 2010 01:32:04 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:47200 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751300Ab0KUGcD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Nov 2010 01:32:03 -0500
+Received: by yxf34 with SMTP id 34so3503256yxf.19
+        for <git@vger.kernel.org>; Sat, 20 Nov 2010 22:32:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=k+2LvxMM27zztcqcdQzRrlfClxfESQEPmP3B+3tQzD4=;
+        b=ByYtcFUfgS8v9KVNDm3GC2ABnOhvU6Dg/b2L/yW7Qj9pYYwh+ARYiXurx6skIyDB3W
+         d+nGWqC/YdXvh3spg4gA+IVk8V0z/WcbabTSQnaMd/NAYGzu2tllSc+MRNQBtZBaJUnZ
+         Z0KHeohTmjwk3sQlhhdT3Pm5VjNwGLB5kMh8Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=TdNrprlKRlrZLwGg5vfIWb4pYiLCRRw8epZhFbln4V6EcnD7wTM9JhvqnLDGoeSGJP
+         ToUrwaBuLp9d3+G65ck8TSt6QSUOEEF/ioPN59eiSE1Wsi3crIG6pBezX9w8bpRYwNv6
+         mwQAfShpsiHhi1/zsd7mXeyb6dTUqCJgRo9oQ=
+Received: by 10.151.111.12 with SMTP id o12mr3576002ybm.82.1290321120826;
+        Sat, 20 Nov 2010 22:32:00 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id w5sm2366989ybe.22.2010.11.20.22.31.57
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 20 Nov 2010 22:31:59 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <AANLkTiktGbeSmUB75kn3q=swnw=cHvivX21OkR3sJJDC@mail.gmail.com>
+In-Reply-To: <20101107112129.GA30042@burratino>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161859>
 
-On Sat, Nov 20, 2010 at 10:11:34PM -0500, Martin von Zweigbergk wrote:
+Not much to see here.  There are lots of patches waiting for review;
+still especially noteworthy are Tomas's fast-import changes.
 
-> Can someone explain the behavior in the execution below?
-> 
-> # I expected this reflog...
-> $ git branch tmp
-> $ git reflog show refs/heads/tmp
-> b60a214 refs/heads/tmp@{0}: branch: Created from master
-> 
-> # ... and this one as well...
-> $ git update-ref refs/heads/tmp HEAD^
-> $ git reflog show refs/heads/tmp
-> 7d1a0b8 refs/heads/tmp@{0}:
-> b60a214 refs/heads/tmp@{1}: branch: Created from master
-> 
-> # ... but why is the first entry (i.e. "branch: Created from master")
-> # dropped here?
-> $ git update-ref refs/heads/tmp HEAD
-> $ git reflog show refs/heads/tmp
-> b60a214 refs/heads/tmp@{0}:
-> 7d1a0b8 refs/heads/tmp@{1}:
-> 
-> If the ref is updated once more (to e.g. HEAD^^) before being moved back
-> to HEAD, the first entry will be shown in the output.
-> 
-> If this is a bug, it seems to be in reflog, rather than in update-ref,
-> because the first entry does exist in .git/logs/refs/heads/tmp.
+Incremental updates after a one-shot conversion by svn-fe are not
+supported yet.  A map from git revisions to svn revision numbers would
+be needed for that, preferrably such that the time to look up the HEAD
+commit does not scale with the number of revisions.
 
-I think it's a bug in the reflog-walking machinery, which is sort of
-bolted onto the regular revision traversal machinery. When we hit
-b60a214 the first time, we show it and set the SHOWN flag (since the
-normal traversal machinery would not want to show a commit twice). When
-we hit it again, simplify_commit() sees that it is SHOWN and tells us to
-skip it.
+A merge of the branches listed below is available as
 
-However, the bolted-on reflog-walking machinery does have a way of
-handling this. While we are traversing via get_revision(), we notice
-that we are doing a reflog walk and call fake_reflog_parent. This
-function is responsible for replacing the actual parents of the commit
-with a fake list consisting of the previous reflog entry (so we
-basically pretend that the history consists of a string of commits, each
-one pointing to the previous reflog entry, not the actual parent).
+	git://repo.or.cz/git/jrn.git vcs-svn-pu
 
-This function _also_ clears some flags, including the SHOWN flag, in
-what almost seems like a tacked-on side effect. So if we hit the same
-commit twice, we will actually show it again. Which is what makes
-reflogs with repeated commits work at all.
+and individual topic branches are also available in that repository
+in the refs/topics namespace.  Please try to base your work on just
+the topic branches you use; vcs-svn-pu itself is rebuilt each time it
+is updated.
 
-However, there is a subtle bug: it clears the flags at the very end of
-the function. But through the function, if we see that there are no fake
-parents (because we are on the very first reflog entry), we do an early
-return. But we not only skip the later "set up parents" code, we also
-accidentally skip the "clear SHOWN flag" side-effect code.
+Complaints of all kinds welcome.
 
-So I believe we will always fail to show the very first reflog if it is
-a repeated commit.
+--------------------------------------------------
+[Cooking]
+* jn/svndiff0 (2010-11-06) 24 commits
+ - vcs-svn: Allow deltas to copy from preimage
+ - vcs-svn: Reject deltas that read past end of preimage
+ - vcs-svn: Let deltas use data from postimage
+ - vcs-svn: Reject deltas that do not consume all inline data
+ - vcs-svn: Check declared number of output bytes
+ - vcs-svn: Implement copyfrom_data delta instruction
+ - vcs-svn: Read instructions from deltas
+ - vcs-svn: Read inline data from deltas
+ - vcs-svn: Read the preimage while applying deltas
+ - vcs-svn: Skeleton of an svn delta parser
+ - compat: helper for detecting unsigned overflow
+ - vcs-svn: Learn to check for SVN\0 magic
+ - vcs-svn: Learn to parse variable-length integers
+ - vcs-svn: Add code to maintain a sliding view of a file
+ - vcs-svn: Allow character-oriented input
+ - vcs-svn: Allow input errors to be detected early
+ - vcs-svn: Let callers peek ahead to find stream end
+ - vcs-svn: Add binary-safe read() function
+ - vcs-svn: Improve support for reading large files
+ - vcs-svn: Make buffer_skip_bytes() report partial reads
+ - vcs-svn: Teach line_buffer to handle multiple input files
+ - vcs-svn: Collect line_buffer data in a struct
+ - vcs-svn: Replace buffer_read_string() memory pool with a strbuf
+ - vcs-svn: Eliminate global byte_buffer[] array
 
-The fix, AFAICT, is to just move the flag clearing above the early
-returns (patch below). But I have to admit I do not quite understand
-what the ADDED and SEEN flags are doing here, as this is the first time
-I have ever looked at the reflog-walk code. So possibly just the SHOWN
-flag should be unconditionally cleared.
+Well tested.  It's a library without a user except test-svn-fe -d, but
+aside from that detail, this series should be ready for wide use.
 
-This patch clears up your bug, and doesn't break any tests. But I'd
-really like to get a second opinion on the significance of those other
-flags, or why the flag clearing was at the bottom of the function in the
-first place.
+* db/fast-import-cat-blob (2010-11-07) 3 commits
+ - fast-import: Allow cat-blob requests at arbitrary points in stream
+ - fast-import: let importers retrieve blobs
+ - fast-import: clarify documentation of "feature" command
+ - fast-import: stricter parsing of integer options
 
--Peff
+There are plans for an additional command to print information in
+ls-tree format about a path.
 
----
-diff --git a/reflog-walk.c b/reflog-walk.c
-index 4879615..d5d055b 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -210,44 +210,45 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
- 	add_commit_info(commit, commit_reflog, &info->reflogs);
- 	return 0;
- }
- 
- void fake_reflog_parent(struct reflog_walk_info *info, struct commit *commit)
- {
- 	struct commit_info *commit_info =
- 		get_commit_info(commit, &info->reflogs, 0);
- 	struct commit_reflog *commit_reflog;
- 	struct reflog_info *reflog;
- 
-+	commit->object.flags &= ~(ADDED | SEEN | SHOWN);
-+
- 	info->last_commit_reflog = NULL;
- 	if (!commit_info)
- 		return;
- 
- 	commit_reflog = commit_info->util;
- 	if (commit_reflog->recno < 0) {
- 		commit->parents = NULL;
- 		return;
- 	}
- 
- 	reflog = &commit_reflog->reflogs->items[commit_reflog->recno];
- 	info->last_commit_reflog = commit_reflog;
- 	commit_reflog->recno--;
- 	commit_info->commit = (struct commit *)parse_object(reflog->osha1);
- 	if (!commit_info->commit) {
- 		commit->parents = NULL;
- 		return;
- 	}
- 
- 	commit->parents = xcalloc(sizeof(struct commit_list), 1);
- 	commit->parents->item = commit_info->commit;
--	commit->object.flags &= ~(ADDED | SEEN | SHOWN);
- }
- 
- void get_reflog_selector(struct strbuf *sb,
- 			 struct reflog_walk_info *reflog_info,
- 			 enum date_mode dmode,
- 			 int shorten)
- {
- 	struct commit_reflog *commit_reflog = reflog_info->last_commit_reflog;
- 	struct reflog_info *info;
- 	const char *printed_ref;
- 
+* db/recognize-v3 (2010-11-20) 2 commits
+ - vcs-svn: Allow simple v3 dumps (no deltas yet)
+ - vcs-svn: Error out for v3 dumps
+
+A bugfix and the framework for a feature.
+
+* db/prop-delta (2010-11-20) 16 commits
+ - vcs-svn: Simplify handling of deleted properties
+ - vcs-svn: Implement Prop-delta handling
+ - vcs-svn: Sharpen parsing of property lines
+ - vcs-svn: Split off function for handling of individual properties
+ - vcs-svn: Make source easier to read on small screens
+ - vcs-svn: More dump format sanity checks
+ - vcs-svn: Reject path nodes without Node-action
+ - vcs-svn: Delay read of per-path properties
+ - vcs-svn: Combine repo_replace and repo_modify functions
+ - vcs-svn: Replace = Delete + Add
+ - vcs-svn: handle_node: Handle deletion case early
+ - vcs-svn: Use mark to indicate nodes with included text
+ - vcs-svn: Unclutter handle_node by introducing have_props var
+ - vcs-svn: Eliminate node_ctx.mark global
+ - vcs-svn: Eliminate node_ctx.srcRev global
+ - vcs-svn: Check for errors from open()
+ (this branch uses db/recognize-v3.)
+
+Needs review and testing.
+
+* db/text-delta (2010-11-20) 10 commits
+ - svn-fe: Test script for handling of dumps with --deltas
+ - vcs-svn: Implement text-delta handling
+ - Merge branch 'db/fast-import-cat-blob' into db/text-delta
+ - vcs-svn: Teach line_buffer about temporary files
+ - vcs-svn: Let caller set up sliding window for delta preimage
+ - vcs-svn: Read delta preimage from file descriptor
+ - vcs-svn: Introduce fd_buffer routines
+ - vcs-svn: Introduce repo_read_path to check the content at a path
+ - vcs-svn: Internal fast_export_save_blob helper
+ - Merge branch 'jn/svndiff0' into db/text-delta
+ (this branch uses db/recognize-v3, db/prop-delta, db/fast-import-cat-blob,
+  and jn/svndiff0.)
+
+A delta in r36 of <http://svn.apache.org/repos/asf> does not apply
+with this brand of svn-fe.
+
+* rr/svnfe-tests-no-perl (2010-11-07) 1 commit
+ - t9010 (svn-fe): Eliminate dependency on svn perl bindings
+
+Sent to list; hopefully will be in jch and we can stop tracking it
+soon.
+
+* jn/thinner-wrapper (2010-11-06) 7 commits
+ - Remove pack file handling dependency from wrapper.o
+ - pack-objects: mark file-local variable static
+ - wrapper: give zlib wrappers their own translation unit
+ - strbuf: move strbuf_branchname to sha1_name.c
+ - path helpers: move git_mkstemp* to wrapper.c
+ - wrapper: move odb_* to environment.c
+ - wrapper: move xmmap() to sha1_file.c
+
+>From pu.
+
+* xx/thinner-wrapper-svndiff0 (2010-11-07) 2 commits
+ - svn-fe: stop linking to libz and libxdiff
+ - Merge branch 'jn/svndiff0' into xx/thinner-wrapper-svndiff0
+ (this branch uses jn/thinner-wrapper and jn/svndiff0.)
+
+---------------------------------------------------
+[Dropped]
+* db/svn-fe-dumpfile3 (2010-11-07) 6 commits
+ - vcs-svn: apply node text deltas
+ - Merge branch 'jn/svndiff0' into db/svn-fe-dumpfile3
+ - Merge branch 'db/fast-import-cat-blob' into db/svn-fe-dumpfile3
+ - vcs-svn: Add output file param to buffer_copy_bytes()
+ - vcs-svn: Find basis for deltified nodes; apply node prop deltas
+ - vcs-svn: Teach dump parser about new header types
+ (this branch uses jn/svndiff0 and db/fast-import-cat-blob.)
+
+Ejected in favor of db/recognize-v3, db/prop-delta, and db/text-delta.
+
+--------------------------------------------------
+[Not picked up yet]
+
+* db/branch-mapper: $gmane/158375
+ . contrib/svn-fe: Fast script to remap svn history
+
+Sent comments.  The choices this script makes can be arbitrary at
+times.
+
+* tc/remote-helper-usability: $gmane/157860
+ . Register new packs after the remote helper is done fetching
+ . Properly record history of the notes ref
+ . Fix ls-remote output when displaying impure refs
+ . Add git-remote-svn
+ . Introduce the git fast-import-helper
+ . Rename get_mode() to decode_tree_mode() and export it
+ . Allow the transport fetch command to add additional refs
+ . Allow more than one keepfile in the transport
+ . Remote helper: accept ':<value> <name>' as a response to 'list'
+
+The fourth-from-top seems a bit hard to review.  If it really is
+necessary to introduce a separate program with a separate interface,
+maybe a compile-time flag to choose between them would help?
+
+* rr/remote-helper: http://github.com/artagnon/git
+ . remote-svn: Write in fetch functionality
+ . run-command: Protect the FD 3 from being grabbed
+ . remote-svn: Build a pipeline for the import using svnrdump
+ . run-command: Extend child_process to include a backchannel FD
+ . Allow the transport fetch command to add additional refs
+ . Remote helper: accept ':<value> <name>' as a response to 'list'
+ . test-svn-fe: Allow for a dumpfile on stdin
+ . contrib/svn-fe: Fast script to remap svn history
+ . Add Tom's remote helper for reference
+ . Add a stubby remote-svn remote helper
+ . Add a correct svndiff applier
+
+Work in progress, waiting on lower levels to be more functional
+(in particular, svn-fe does not support incremental imports yet).
+
+* sb/svn-fe-example: $gmane/159054
