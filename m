@@ -1,142 +1,166 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: rebuild repo from data, packfiles?
-Date: Sat, 20 Nov 2010 22:19:15 -0600
-Message-ID: <20101121041915.GA11884@burratino>
-References: <auto-000024044659@sci.utah.edu>
- <20101121001643.GB27666@burratino>
- <auto-000024045093@sci.utah.edu>
- <20101121032707.GA11571@burratino>
- <auto-000024045181@sci.utah.edu>
+Subject: Re: [PATCH] contrib/svn-fe: Fast script to remap svn history
+Date: Sat, 20 Nov 2010 23:17:34 -0600
+Message-ID: <20101121051734.GA11856@burratino>
+References: <1286431561-24126-1-git-send-email-david.barr@cordelta.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: tom fogal <tfogal@sci.utah.edu>
-X-From: git-owner@vger.kernel.org Sun Nov 21 05:19:35 2010
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>
+To: David Barr <david.barr@cordelta.com>
+X-From: git-owner@vger.kernel.org Sun Nov 21 06:18:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PK1Oo-00068F-CT
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Nov 2010 05:19:34 +0100
+	id 1PK2JX-0002fP-3I
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Nov 2010 06:18:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752501Ab0KUET2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Nov 2010 23:19:28 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:52205 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751028Ab0KUET1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Nov 2010 23:19:27 -0500
-Received: by gxk23 with SMTP id 23so3483235gxk.19
-        for <git@vger.kernel.org>; Sat, 20 Nov 2010 20:19:27 -0800 (PST)
+	id S1750835Ab0KUFRs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Nov 2010 00:17:48 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:36005 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750769Ab0KUFRr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Nov 2010 00:17:47 -0500
+Received: by gyb11 with SMTP id 11so721354gyb.19
+        for <git@vger.kernel.org>; Sat, 20 Nov 2010 21:17:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=ruF4kxYhnElbb+svcFPrCbl1tww8o692bjA827WYHpU=;
-        b=ujvcDWzXcGSsU92z3r1XRSJQ8AUQrHAEb6EXiaghW8eOrbDvG9Fq+Ad26y2zRi1Osm
-         sw71fFpOQqyKFbROnDtEKtoEWWjtvYeT3fU+JRM/CVGtBHybpiAU4LkrE96HXLksCgbe
-         68y6Rh5r9P0ZtSkD1Rj1t9CYLFA5/VOpCBPvg=
+        bh=eJELs6q/XqDz+FK+/3sY950S3Z5c0VSOrzsDkjjI90g=;
+        b=kOeW7oaOkfP7QY0ZGz5f6My2c7ZGFJ/WS+MpcURmwE5aZPxonpRsGxQYfZLeIx2puo
+         IJ323rxwDCO+2Wk7S6sdKps17+vFSngjpLCXm2pGCuSAPUO4sZ7xXidiDHzFqWkP5t0I
+         1Xuo1qAy49F0JdLAy0y63SEX748t5a1gSsz8g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=cDToxM8zQwIcP4d3rmbuyXdgce+pVDmZS32+rUSAeHuK33DB4XH4zIaOVg7OYhruii
-         XNLJnCIA4xmR9rzOnt/J/v79dbl6Sg/2RsY5CO+JuqXbmb3i+Mod6NftfKcHcxktvFsf
-         ccByyp+sXVmhfCXt0aM0GMNwzRT+LiPZbbaYs=
-Received: by 10.100.210.17 with SMTP id i17mr2875019ang.116.1290313167144;
-        Sat, 20 Nov 2010 20:19:27 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id d8sm3972223ana.2.2010.11.20.20.19.25
+        b=AC01ZVSuzN8kM/tPETKMrkD7QO6DTFm7ZRsKj6ZiBuoKEyrQFCjcTzc+CidlIdzbdQ
+         0Jf/1+8hocc6k+aHUqNMtYsdh8s4J5/FVYYeOMg6YXcnZfJQG1wqDtnpqaQ4TH6LoGDE
+         kviyraZ1btoU4NvAR1KmOE2rxa5AL3MRUsaBI=
+Received: by 10.150.182.1 with SMTP id e1mr6807546ybf.59.1290316666871;
+        Sat, 20 Nov 2010 21:17:46 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
+        by mx.google.com with ESMTPS id p1sm2334604ybn.17.2010.11.20.21.17.43
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 20 Nov 2010 20:19:25 -0800 (PST)
+        Sat, 20 Nov 2010 21:17:44 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <auto-000024045181@sci.utah.edu>
+In-Reply-To: <1286431561-24126-1-git-send-email-david.barr@cordelta.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161857>
 
-Hi again,
+Hi David,
 
-Just a few more quick hints.
+David Barr wrote:
 
-tom fogal wrote:
+> This python script walks the commit sequence imported by svn-fe.
+> For each commit, it tries to identify the branch that was changed.
+> Commits are rewritten to be rooted according to the standard layout.
 
-> I can't run it on the repository as-is.  After adding some metadata in
-> .git (i.e. refs, config, HEAD), I get a lot of:
-> 
->   broken link from    tree a22ef5ea2d15b29ccff0bd64aa2fa2c3259ea201
->                 to    blob 23ffd9cc867a2db93d0eb991383e29243dc4db51
-> 
-> and then many "dangling commit"s + "missing blob"s.
+I like the idea and especially that the heuristics are simple.
 
-Nice.  If you're only missing blobs, that's much better than missing
-trees or commits.  You might be able to use
+Maybe this could be made git-agnostic using the new ls-tree command
+you are introducing in fast-import?  Though it would need to get a
+revision list from somewhere.  Alternatively, do you think it would
+make sense for something like this to be implemented as a filter or
+observer of the fast-import stream as it is generated during an
+import?
 
- git rev-list --objects --all
+> A basic heuristic of matching trees is used to find parents for the
+> first commit in a branch and for tags.
 
-to get some sense of paths for the blobs (and trees, if any) that are
-missing.
+More precisely, the rule used is:
 
-> Sorry, yes, this is what I meant.  I'm hoping I can introduce a couple
-> "oops, mucked up the history" gigantic commits into the middle of the
-> history, created by saying "i know that I'm missing commits between
-> these two; give me the tree diff here"
+> +    # Find a common path prefix in the changes for the revision
+> +    subroot = ""
+> +    changes = Popen(["git","diff","--name-only",parent,git_commit], stdout=PIPE)
+> +    for path in changes.stdout:
+> +        match = subroot_re.match(path)
+> +        if match:
+> +            subroot = match.group()
+> +            changes.terminate()
+> +            break
 
-Thanks, I missed that before.
+The first change lying in one of
 
-(In such a case I would use "git archive" to pull out the trees since
-the result is closer to the actual data that is available, but your
-approach is equally sane.)
+	trunk
+	branch/*
+	tags/*
 
-> It probably helps that the server is svn; my history is completely
-> linear (OTOH, if we were using git, I'm sure I would have cloned this
-> at home instead of ssh'ing to work on it at various points...).
+determines the branch.  When a branch is renamed, this has a 50/50
+chance of choosing the right branch.
 
-Ah!  You can also try using "git svn clone" to re-fetch the remote repo
-and then include those objects in the .git/objects directory.  If
-you're lucky, some of the missing blobs (or even trees or commits)
-will be there. :)
+> +        # Choose a parent for the rewritten commit
+> +        if ref in ref_commit:
+> +            parent = ref_commit[ref]
+> +        elif subtree in tree_commit:
+> +            parent = tree_commit[subtree]
+> +        else:
+> +            parent = ""
 
-> Don't I wish... this was just my workstation's copy.  There is of
-> course the subversion repo && other clones of those revisions.
+If this is a live branch, the parent is the last commit from that
+branch.  Otherwise, we take the last commit whose resulting tree
+looked like this one.  Or...
 
-(or grab the pack and .idx from another clone)
+> +            # Default to trunk if the branch is new
+> +            if parent == "" and "refs/heads/trunk" in ref_commit:
+> +                parent = ref_commit["refs/heads/trunk"]
 
-> I had simply waited too long to push, and now I'm paying the price...
+... if all else fails, we take the tip commit on the trunk.
 
-Yes, I made the same kind of mistake yesterday (wiped out the .git
-dir completely) and ended up re-creating patches from the worktree.
+For comparison, here's the git-svn rule:
 
-> ./logs:
-> total 96
-> -rw-r--r-- 1 tf tf 95572 2010-11-04 16:01 HEAD
-> drwxr-xr-x 4 tf tf    44 2010-10-26 17:13 refs
-[etc]
+> 	# look for a parent from another branch:
+> 	my @b_path_components = split m#/#, $self->{path};
 
-These can be used to recover the refs in .git/refs, if any of the
-branches is particularly important.  Once you've found the right
-log entry,
+Among the paths above this commit's base directory [if this is
+branches/foo, examine first branches/foo, then branches, then /]:
 
-	git update-ref <full ref name> <commit id> ""
+> 	while (@b_path_components) {
+> 		$i = $paths->{'/'.join('/', @b_path_components)};
+> 		last if $i && defined $i->{copyfrom_path};
+> 		unshift(@a_path_components, pop(@b_path_components));
+> 	}
+> 	return undef unless defined $i && defined $i->{copyfrom_path};
 
-will do it.  For example, something like this would print commands
-to revive all branches:
+Find the first one with copyfrom information (i.e., that was
+renamed or copied from another rev in this revision).
 
-	find .git/logs -type f -exec sh -c '
-		refname=${1#.git/logs/} &&
-		if test "$refname" = HEAD
-		then
-			exit 0
-		fi &&
-		printf "$refname " &&
-		head -1 "$1"
-	' - {} ';' |
-	cut -d' ' -f1,3 |
-	while read refname value
-	do
-		echo git update-ref "$refname" "$value" \"\"
-	done
+> 	my $branch_from = $i->{copyfrom_path};
+> 	if (@a_path_components) {
+> 		print STDERR "branch_from: $branch_from => ";
+> 		$branch_from .= '/'.join('/', @a_path_components);
+> 		print STDERR $branch_from, "\n";
+> 	}
+
+Build back up the URL (so if branches was renamed to Branches but
+branches/foo had no copyfrom information, we look for Branches/foo).
+
+[...]
+> 	my $gs = $self->other_gs($new_url, $url,
+> 		                 $branch_from, $r, $self->{ref_id});
+> 	my ($r0, $parent) = $gs->find_rev_before($r, 1);
+
+Find the last revision that changed that path and record it.
+
+Maybe we could benefit from including the copyfrom information in the
+fast-import stream output by svn-fe somehow?  The simplest way to do
+this would be some specially formatted comments.  An alternative (in
+the spirit of Sam's earlier suggestions) might be to represent it in
+the tree svn-fe creates, for example by introducing dummy
+
+	foo.copiedfrom
+
+symlinks.
+
+Thanks, that was interesting.
+Jonathan
