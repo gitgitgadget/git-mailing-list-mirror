@@ -1,75 +1,98 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: First/oldest entry in reflog dropped
-Date: Sat, 20 Nov 2010 22:11:34 -0500
-Message-ID: <AANLkTiktGbeSmUB75kn3q=swnw=cHvivX21OkR3sJJDC@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: rebuild repo from data, packfiles?
+Date: Sat, 20 Nov 2010 21:27:07 -0600
+Message-ID: <20101121032707.GA11571@burratino>
+References: <auto-000024044659@sci.utah.edu>
+ <20101121001643.GB27666@burratino>
+ <auto-000024045093@sci.utah.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 21 04:22:01 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: tom fogal <tfogal@sci.utah.edu>
+X-From: git-owner@vger.kernel.org Sun Nov 21 04:28:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PK0V5-00013j-Ht
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Nov 2010 04:22:00 +0100
+	id 1PK0bZ-0002bX-OR
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Nov 2010 04:28:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752059Ab0KUDLg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 20 Nov 2010 22:11:36 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:58366 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751687Ab0KUDLf (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 20 Nov 2010 22:11:35 -0500
-Received: by qyk5 with SMTP id 5so245501qyk.19
-        for <git@vger.kernel.org>; Sat, 20 Nov 2010 19:11:34 -0800 (PST)
+	id S1751553Ab0KUD1V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 20 Nov 2010 22:27:21 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:32916 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751329Ab0KUD1U (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 20 Nov 2010 22:27:20 -0500
+Received: by gxk23 with SMTP id 23so3474140gxk.19
+        for <git@vger.kernel.org>; Sat, 20 Nov 2010 19:27:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=kgx0+Ux3GIAFiA2K5TYL5vMsCdPXKjYzLcxoFPJjikA=;
-        b=JHwDGYcZsQFvqWFu9YzFvEq0RBN6aNLYO70h+2lLbNMPmLh6pxGQIKq7ths2Isu5K7
-         0QwoQqDi9BKU3wGU7zYdHxw/iOdRyHwdOE1ErLlAeiw96RVxbwR1M7EqRWby6A3dU1uO
-         htuZAHtQbTaDn+YtcamIJAdJB4E9BVUWIxxGU=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=037LZW0ZqrJnb8xuQ7zJ0s43jcnYFL9jJsivshMp2LE=;
+        b=eiusb7c+mqmNyHcXjK5t89t1wphcRqQgZPD0TAqElNZjbE3qcXlj80fCw0AIWIRJpX
+         SYNUN8iO4nH1mbnoWqyNeUNWsqEFrwALzawJ2ZMGl7ZGu26CNc0ZvuCrwE5G93y+Vwf9
+         T8c58XRu0sE7b1UVt68T0cm5EmZjaeERCXXxY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=Dv2kLiBci6+HecnCA6aJPL6A5jOq3JsWwVPlAy83Vq8hailEDrqIIERISOgIuM8+dp
-         P/ZuVKzytnd8WNXZ3rtCHaGQxScxCywPi2iI1Cqam+dupGaqhuqbt5MujI/uP4px6Ri9
-         753YNpT2SYTKeGS602OAKKM1qAkWZo1mtPq2I=
-Received: by 10.224.215.193 with SMTP id hf1mr3595777qab.275.1290309094477;
- Sat, 20 Nov 2010 19:11:34 -0800 (PST)
-Received: by 10.224.80.202 with HTTP; Sat, 20 Nov 2010 19:11:34 -0800 (PST)
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=WeuDeT1VDNBIWdzxsU5rigdFxRZoPn6+Yq74cAaWb+NeZd08dP5Dx2zG8n6CJD6wAV
+         zg+uLAoXx2W9dqVdmOLxrA0Y4AvIZ3HwAAR5wU9uyG+NzBVMud3z3ksI4fZXgRylDdsv
+         s/oMaU3sGAp9zGzgg2/IhcSPDUHd/2RKsVlq0=
+Received: by 10.90.10.34 with SMTP id 34mr5065947agj.157.1290310039666;
+        Sat, 20 Nov 2010 19:27:19 -0800 (PST)
+Received: from burratino ([68.255.106.176])
+        by mx.google.com with ESMTPS id 28sm3916032anv.26.2010.11.20.19.27.17
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 20 Nov 2010 19:27:18 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <auto-000024045093@sci.utah.edu>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161853>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161854>
 
-Can someone explain the behavior in the execution below?
+tom fogal wrote:
 
-# I expected this reflog...
-$ git branch tmp
-$ git reflog show refs/heads/tmp
-b60a214 refs/heads/tmp@{0}: branch: Created from master
+> My thought is to cat-file all my commits, filter out the ones which are
+> upstream, order them by date, and git-am them back into a repo.
+> 
+> Some of my data only exist in blobs, though... maybe git-diff-tree
+> can get me the patch I need?  Not quite sure what to diff it with,
+> though... maybe the most-recent sha1 I have, based on date?
+> 
+> Other ideas would certainly be welcome!
 
-# ... and this one as well...
-$ git update-ref refs/heads/tmp HEAD^
-$ git reflog show refs/heads/tmp
-7d1a0b8 refs/heads/tmp@{0}:
-b60a214 refs/heads/tmp@{1}: branch: Created from master
+What did "git fsck" say?
 
-# ... but why is the first entry (i.e. "branch: Created from master")
-# dropped here?
-$ git update-ref refs/heads/tmp HEAD
-$ git reflog show refs/heads/tmp
-b60a214 refs/heads/tmp@{0}:
-7d1a0b8 refs/heads/tmp@{1}:
+If it is possible to unambiguously recover your data without using any
+external knowledge, then that would imply a bug imho --- why doesn't
+git do it automatically?  Chances are some objects are missing ---
+blobs, trees, commits, or tags --- and you will have to fill in some
+information for a full recovery.
 
-If the ref is updated once more (to e.g. HEAD^^) before being moved back
-to HEAD, the first entry will be shown in the output.
+Perhaps you have another copy of those objects somewhere.  Have you
+ever cloned this repo or pushed to another machine?
 
-If this is a bug, it seems to be in reflog, rather than in update-ref,
-because the first entry does exist in .git/logs/refs/heads/tmp.
+Sometimes it is possible to recover some specific object with
+detective work; see howto/recover-corrupted-blob-object.txt in the
+Documentation directory for an example of that.
 
-Thanks,
-Martin
+git does not use text diffs for its object storage.  The information
+the repository can give you directly consists of binary deltas and
+full objects.
+
+Are the old refs (branches and tags) intact?  More generally, what
+files does
+
+ ls -lR .git
+
+list in the old repository?
+
+Regards,
+Jonathan
