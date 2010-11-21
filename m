@@ -1,166 +1,160 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] contrib/svn-fe: Fast script to remap svn history
-Date: Sat, 20 Nov 2010 23:17:34 -0600
-Message-ID: <20101121051734.GA11856@burratino>
-References: <1286431561-24126-1-git-send-email-david.barr@cordelta.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: First/oldest entry in reflog dropped
+Date: Sun, 21 Nov 2010 00:35:46 -0500
+Message-ID: <20101121053545.GA10520@sigill.intra.peff.net>
+References: <AANLkTiktGbeSmUB75kn3q=swnw=cHvivX21OkR3sJJDC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Eric Wong <normalperson@yhbt.net>
-To: David Barr <david.barr@cordelta.com>
-X-From: git-owner@vger.kernel.org Sun Nov 21 06:18:13 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Johannes Schindelin <johannes.schindelin@gmx.de>,
+	git@vger.kernel.org
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 21 06:37:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PK2JX-0002fP-3I
-	for gcvg-git-2@lo.gmane.org; Sun, 21 Nov 2010 06:18:11 +0100
+	id 1PK2cA-0007so-T1
+	for gcvg-git-2@lo.gmane.org; Sun, 21 Nov 2010 06:37:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750835Ab0KUFRs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Nov 2010 00:17:48 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:36005 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750769Ab0KUFRr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Nov 2010 00:17:47 -0500
-Received: by gyb11 with SMTP id 11so721354gyb.19
-        for <git@vger.kernel.org>; Sat, 20 Nov 2010 21:17:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=eJELs6q/XqDz+FK+/3sY950S3Z5c0VSOrzsDkjjI90g=;
-        b=kOeW7oaOkfP7QY0ZGz5f6My2c7ZGFJ/WS+MpcURmwE5aZPxonpRsGxQYfZLeIx2puo
-         IJ323rxwDCO+2Wk7S6sdKps17+vFSngjpLCXm2pGCuSAPUO4sZ7xXidiDHzFqWkP5t0I
-         1Xuo1qAy49F0JdLAy0y63SEX748t5a1gSsz8g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=AC01ZVSuzN8kM/tPETKMrkD7QO6DTFm7ZRsKj6ZiBuoKEyrQFCjcTzc+CidlIdzbdQ
-         0Jf/1+8hocc6k+aHUqNMtYsdh8s4J5/FVYYeOMg6YXcnZfJQG1wqDtnpqaQ4TH6LoGDE
-         kviyraZ1btoU4NvAR1KmOE2rxa5AL3MRUsaBI=
-Received: by 10.150.182.1 with SMTP id e1mr6807546ybf.59.1290316666871;
-        Sat, 20 Nov 2010 21:17:46 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id p1sm2334604ybn.17.2010.11.20.21.17.43
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 20 Nov 2010 21:17:44 -0800 (PST)
+	id S1750880Ab0KUFfx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Nov 2010 00:35:53 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:55045 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750769Ab0KUFfx (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Nov 2010 00:35:53 -0500
+Received: (qmail 7123 invoked by uid 111); 21 Nov 2010 05:35:51 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 21 Nov 2010 05:35:51 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 21 Nov 2010 00:35:46 -0500
 Content-Disposition: inline
-In-Reply-To: <1286431561-24126-1-git-send-email-david.barr@cordelta.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <AANLkTiktGbeSmUB75kn3q=swnw=cHvivX21OkR3sJJDC@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161857>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161858>
 
-Hi David,
+On Sat, Nov 20, 2010 at 10:11:34PM -0500, Martin von Zweigbergk wrote:
 
-David Barr wrote:
+> Can someone explain the behavior in the execution below?
+> 
+> # I expected this reflog...
+> $ git branch tmp
+> $ git reflog show refs/heads/tmp
+> b60a214 refs/heads/tmp@{0}: branch: Created from master
+> 
+> # ... and this one as well...
+> $ git update-ref refs/heads/tmp HEAD^
+> $ git reflog show refs/heads/tmp
+> 7d1a0b8 refs/heads/tmp@{0}:
+> b60a214 refs/heads/tmp@{1}: branch: Created from master
+> 
+> # ... but why is the first entry (i.e. "branch: Created from master")
+> # dropped here?
+> $ git update-ref refs/heads/tmp HEAD
+> $ git reflog show refs/heads/tmp
+> b60a214 refs/heads/tmp@{0}:
+> 7d1a0b8 refs/heads/tmp@{1}:
+> 
+> If the ref is updated once more (to e.g. HEAD^^) before being moved back
+> to HEAD, the first entry will be shown in the output.
+> 
+> If this is a bug, it seems to be in reflog, rather than in update-ref,
+> because the first entry does exist in .git/logs/refs/heads/tmp.
 
-> This python script walks the commit sequence imported by svn-fe.
-> For each commit, it tries to identify the branch that was changed.
-> Commits are rewritten to be rooted according to the standard layout.
+I think it's a bug in the reflog-walking machinery, which is sort of
+bolted onto the regular revision traversal machinery. When we hit
+b60a214 the first time, we show it and set the SHOWN flag (since the
+normal traversal machinery would not want to show a commit twice). When
+we hit it again, simplify_commit() sees that it is SHOWN and tells us to
+skip it.
 
-I like the idea and especially that the heuristics are simple.
+However, the bolted-on reflog-walking machinery does have a way of
+handling this. While we are traversing via get_revision(), we notice
+that we are doing a reflog walk and call fake_reflog_parent. This
+function is responsible for replacing the actual parents of the commit
+with a fake list consisting of the previous reflog entry (so we
+basically pretend that the history consists of a string of commits, each
+one pointing to the previous reflog entry, not the actual parent).
 
-Maybe this could be made git-agnostic using the new ls-tree command
-you are introducing in fast-import?  Though it would need to get a
-revision list from somewhere.  Alternatively, do you think it would
-make sense for something like this to be implemented as a filter or
-observer of the fast-import stream as it is generated during an
-import?
+This function _also_ clears some flags, including the SHOWN flag, in
+what almost seems like a tacked-on side effect. So if we hit the same
+commit twice, we will actually show it again. Which is what makes
+reflogs with repeated commits work at all.
 
-> A basic heuristic of matching trees is used to find parents for the
-> first commit in a branch and for tags.
+However, there is a subtle bug: it clears the flags at the very end of
+the function. But through the function, if we see that there are no fake
+parents (because we are on the very first reflog entry), we do an early
+return. But we not only skip the later "set up parents" code, we also
+accidentally skip the "clear SHOWN flag" side-effect code.
 
-More precisely, the rule used is:
+So I believe we will always fail to show the very first reflog if it is
+a repeated commit.
 
-> +    # Find a common path prefix in the changes for the revision
-> +    subroot = ""
-> +    changes = Popen(["git","diff","--name-only",parent,git_commit], stdout=PIPE)
-> +    for path in changes.stdout:
-> +        match = subroot_re.match(path)
-> +        if match:
-> +            subroot = match.group()
-> +            changes.terminate()
-> +            break
+The fix, AFAICT, is to just move the flag clearing above the early
+returns (patch below). But I have to admit I do not quite understand
+what the ADDED and SEEN flags are doing here, as this is the first time
+I have ever looked at the reflog-walk code. So possibly just the SHOWN
+flag should be unconditionally cleared.
 
-The first change lying in one of
+This patch clears up your bug, and doesn't break any tests. But I'd
+really like to get a second opinion on the significance of those other
+flags, or why the flag clearing was at the bottom of the function in the
+first place.
 
-	trunk
-	branch/*
-	tags/*
+-Peff
 
-determines the branch.  When a branch is renamed, this has a 50/50
-chance of choosing the right branch.
-
-> +        # Choose a parent for the rewritten commit
-> +        if ref in ref_commit:
-> +            parent = ref_commit[ref]
-> +        elif subtree in tree_commit:
-> +            parent = tree_commit[subtree]
-> +        else:
-> +            parent = ""
-
-If this is a live branch, the parent is the last commit from that
-branch.  Otherwise, we take the last commit whose resulting tree
-looked like this one.  Or...
-
-> +            # Default to trunk if the branch is new
-> +            if parent == "" and "refs/heads/trunk" in ref_commit:
-> +                parent = ref_commit["refs/heads/trunk"]
-
-... if all else fails, we take the tip commit on the trunk.
-
-For comparison, here's the git-svn rule:
-
-> 	# look for a parent from another branch:
-> 	my @b_path_components = split m#/#, $self->{path};
-
-Among the paths above this commit's base directory [if this is
-branches/foo, examine first branches/foo, then branches, then /]:
-
-> 	while (@b_path_components) {
-> 		$i = $paths->{'/'.join('/', @b_path_components)};
-> 		last if $i && defined $i->{copyfrom_path};
-> 		unshift(@a_path_components, pop(@b_path_components));
-> 	}
-> 	return undef unless defined $i && defined $i->{copyfrom_path};
-
-Find the first one with copyfrom information (i.e., that was
-renamed or copied from another rev in this revision).
-
-> 	my $branch_from = $i->{copyfrom_path};
-> 	if (@a_path_components) {
-> 		print STDERR "branch_from: $branch_from => ";
-> 		$branch_from .= '/'.join('/', @a_path_components);
-> 		print STDERR $branch_from, "\n";
-> 	}
-
-Build back up the URL (so if branches was renamed to Branches but
-branches/foo had no copyfrom information, we look for Branches/foo).
-
-[...]
-> 	my $gs = $self->other_gs($new_url, $url,
-> 		                 $branch_from, $r, $self->{ref_id});
-> 	my ($r0, $parent) = $gs->find_rev_before($r, 1);
-
-Find the last revision that changed that path and record it.
-
-Maybe we could benefit from including the copyfrom information in the
-fast-import stream output by svn-fe somehow?  The simplest way to do
-this would be some specially formatted comments.  An alternative (in
-the spirit of Sam's earlier suggestions) might be to represent it in
-the tree svn-fe creates, for example by introducing dummy
-
-	foo.copiedfrom
-
-symlinks.
-
-Thanks, that was interesting.
-Jonathan
+---
+diff --git a/reflog-walk.c b/reflog-walk.c
+index 4879615..d5d055b 100644
+--- a/reflog-walk.c
++++ b/reflog-walk.c
+@@ -210,44 +210,45 @@ int add_reflog_for_walk(struct reflog_walk_info *info,
+ 	add_commit_info(commit, commit_reflog, &info->reflogs);
+ 	return 0;
+ }
+ 
+ void fake_reflog_parent(struct reflog_walk_info *info, struct commit *commit)
+ {
+ 	struct commit_info *commit_info =
+ 		get_commit_info(commit, &info->reflogs, 0);
+ 	struct commit_reflog *commit_reflog;
+ 	struct reflog_info *reflog;
+ 
++	commit->object.flags &= ~(ADDED | SEEN | SHOWN);
++
+ 	info->last_commit_reflog = NULL;
+ 	if (!commit_info)
+ 		return;
+ 
+ 	commit_reflog = commit_info->util;
+ 	if (commit_reflog->recno < 0) {
+ 		commit->parents = NULL;
+ 		return;
+ 	}
+ 
+ 	reflog = &commit_reflog->reflogs->items[commit_reflog->recno];
+ 	info->last_commit_reflog = commit_reflog;
+ 	commit_reflog->recno--;
+ 	commit_info->commit = (struct commit *)parse_object(reflog->osha1);
+ 	if (!commit_info->commit) {
+ 		commit->parents = NULL;
+ 		return;
+ 	}
+ 
+ 	commit->parents = xcalloc(sizeof(struct commit_list), 1);
+ 	commit->parents->item = commit_info->commit;
+-	commit->object.flags &= ~(ADDED | SEEN | SHOWN);
+ }
+ 
+ void get_reflog_selector(struct strbuf *sb,
+ 			 struct reflog_walk_info *reflog_info,
+ 			 enum date_mode dmode,
+ 			 int shorten)
+ {
+ 	struct commit_reflog *commit_reflog = reflog_info->last_commit_reflog;
+ 	struct reflog_info *info;
+ 	const char *printed_ref;
+ 
