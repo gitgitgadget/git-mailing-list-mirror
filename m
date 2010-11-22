@@ -1,98 +1,118 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] format-patch: page output with --stdout
-Date: Mon, 22 Nov 2010 12:15:01 -0600
-Message-ID: <20101122181501.GF2084@burratino>
-References: <1290229542-3116-1-git-send-email-rctay89@gmail.com>
+From: Harry Putnam <reader@newsguy.com>
+Subject: vcs for hefty video and graphics files
+Date: Mon, 22 Nov 2010 12:09:14 -0600
+Organization: Still searching...
+Message-ID: <877hg55iyd.fsf@newsguy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Tay Ray Chuan <rctay89@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 22 19:15:26 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: bazaar@lists.canonical.com, users@subversion.apache.org,
+	git@vger.kernel.org, info-cvs@gnu.org
+To: mercurial@selenic.com
+X-From: mercurial-bounces@selenic.com Mon Nov 22 19:46:08 2010
+Return-path: <mercurial-bounces@selenic.com>
+Envelope-to: gcvmd-mercurial@gmane.org
+Received: from waste.org ([173.11.57.241])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKavF-0003ee-Le
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 19:15:26 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757037Ab0KVSPI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Nov 2010 13:15:08 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:46682 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757025Ab0KVSPH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Nov 2010 13:15:07 -0500
-Received: by mail-vw0-f46.google.com with SMTP id 13so3580654vws.19
-        for <git@vger.kernel.org>; Mon, 22 Nov 2010 10:15:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=pQmOAuIXbbKXjUqH/2/G42FCP2WB2EqFYY8XIBfSM/M=;
-        b=jT8XxICn3iyRreNjiQ06lnZt3as0g+YKQcQ9zgy1kuO0rV3cGI40aPOWz1IdJSBvi4
-         aLkrrC+ekO0a+xGlKU2XNN5ig8wqGXVNoOLKUg99dlX8BVrD+o+PSbd5y+ucDtJ3IXob
-         PF0fSg6O6AMBoatkc70ZtXJOqc0RMb4HlRItk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=PSDFqSMFsIZvLeuymlivheSuv08jakhqavN1ZP/Uy0+Kp8Qh9NbEVfFcliLvUvrkvr
-         Znv7J0qOHjLSrWhxdkPsfOyqYjYjWFSEJohDkk+z1LaBQgfuSpZVYCxL05ODKFOnb4kB
-         FYwHhVQlGFRTcVQU9h9MXR61nvcXjoJGkC/60=
-Received: by 10.220.188.193 with SMTP id db1mr482806vcb.246.1290449706413;
-        Mon, 22 Nov 2010 10:15:06 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id j21sm1060444vcr.10.2010.11.22.10.15.03
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 22 Nov 2010 10:15:04 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1290229542-3116-1-git-send-email-rctay89@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161907>
+	(envelope-from <mercurial-bounces@selenic.com>)
+	id 1PKbOw-0002eH-FK
+	for gcvmd-mercurial@gmane.org; Mon, 22 Nov 2010 19:46:06 +0100
+Received: from localhost (localhost [127.0.0.1])
+	by waste.org (Postfix) with ESMTP id D28247436F;
+	Mon, 22 Nov 2010 12:46:05 -0600 (CST)
+X-Virus-Scanned: Debian amavisd-new at waste.org
+Received: from waste.org ([127.0.0.1])
+	by localhost (waste.org [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id 6p+-Y4d0hmXh; Mon, 22 Nov 2010 12:46:00 -0600 (CST)
+Received: from waste.org (localhost [127.0.0.1])
+	by waste.org (Postfix) with ESMTP id 880C774217;
+	Mon, 22 Nov 2010 12:45:40 -0600 (CST)
+X-Original-To: mercurial@waste.org
+Delivered-To: mercurial@waste.org
+Received: from localhost (localhost [127.0.0.1])
+	by waste.org (Postfix) with ESMTP id 6A94C7416F
+	for <mercurial@waste.org>; Mon, 22 Nov 2010 12:09:37 -0600 (CST)
+X-Virus-Scanned: Debian amavisd-new at waste.org
+Received: from waste.org ([127.0.0.1])
+	by localhost (waste.org [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id Y+RnNSV-HZ7X for <mercurial@waste.org>;
+	Mon, 22 Nov 2010 12:09:35 -0600 (CST)
+Received: from lo.gmane.org (lo.gmane.org [80.91.229.12])
+	by waste.org (Postfix) with ESMTP id 4B00F74155
+	for <mercurial@selenic.com>; Mon, 22 Nov 2010 12:09:35 -0600 (CST)
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvmd-mercurial@m.gmane.org>) id 1PKapZ-0000dS-J9
+	for mercurial@selenic.com; Mon, 22 Nov 2010 19:09:33 +0100
+Received: from c-98-215-178-110.hsd1.in.comcast.net ([98.215.178.110])
+	by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+	id 1AlnuQ-0007hv-00
+	for <mercurial@selenic.com>; Mon, 22 Nov 2010 19:09:33 +0100
+Received: from reader by c-98-215-178-110.hsd1.in.comcast.net with local
+	(Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00
+	for <mercurial@selenic.com>; Mon, 22 Nov 2010 19:09:33 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: c-98-215-178-110.hsd1.in.comcast.net
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/24.0.50 (gnu/linux)
+Cancel-Lock: sha1:s9FCSJODTDZxwnaeu3+u8XEXzAs=
+X-Mailman-Approved-At: Mon, 22 Nov 2010 12:45:38 -0600
+X-BeenThere: mercurial@selenic.com
+X-Mailman-Version: 2.1.11
+Precedence: list
+List-Id: <mercurial.selenic.com>
+List-Unsubscribe: <http://selenic.com/mailman/options/mercurial>,
+	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
+List-Archive: <http://selenic.com/pipermail/mercurial>
+List-Post: <mailto:mercurial@selenic.com>
+List-Help: <mailto:mercurial-request@selenic.com?subject=help>
+List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
+	<mailto:mercurial-request@selenic.com?subject=subscribe>
+Sender: mercurial-bounces@selenic.com
+Errors-To: mercurial-bounces@selenic.com
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161908>
 
-Tay Ray Chuan wrote:
+I hope not to appear to be sneaking in a war of systems, and may rate
+a bit a high in windbag factor since I've asked a very similar
+question here but quite a while ago
 
-> --- a/builtin/log.c
-> +++ b/builtin/log.c
-> @@ -1159,6 +1159,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
->  
->  	if (!use_stdout)
->  		output_directory = set_outdir(prefix, output_directory);
-> +	else
-> +		setup_pager();
+I'd like to briefly describe my projected usage of a versioning system
+and see what people here think in terms what system best suits to that
+usage.
 
-Since it can be disabled with
+I'm a light weight semi-professional videographer but I have enough
+going on to feel a need to keep track of and be able to rollback
+versions of a project as it is being worked on
 
-	[pager]
-		format-patch = false
+It would involve on any one projects something like 15 to 60 GB of
+stuff to keep up with.  Large numbers of images and a dozen or 2 dozen
+video files.  All in some stake of compression depending on the codex.
 
-this looks reasonable to me.  Maybe a test to that effect would
-help, something like this?
+I'd like to keep a few version of say an Adobe Premier project with
+all the attendant files that play a role in it.
 
- test_expect_success TTY 'format-patch --stdout paginates' '
-	rm -f pager_used &&
-	(
-		GIT_PAGER="wc >pager_used" &&
-		export GIT_PAGER &&
-		test_terminal git format-patch --stdout --all
-	) &&
-	test_path_is_file pager_used
- '
+Ditto for sets of Adobe After effects and attendant files.  And many
+many images and compilation in various states of cutting or whatever
+editing.
 
- test_expect_success TTY 'format-patch --stdout pagination can be disabled' '
-	rm -f pager_used &&
-	(
-		GIT_PAGER="wc >pager_used" &&
-		export GIT_PAGER &&
-		test_terminal git --no-pager format-patch --stdout --all &&
-		test_terminal git -c "pager.format-patch=false" format-patch --stdout --all
-	) &&
-	test_path_is_missing pager_used &&
-	test_path_is_missing .git/pager_used
- '
+And then the whole project including the various Premier and After
+effects sets and piles of captured video tape.  All in DV-avi format.
+
+So versions inside versions and then repeated for different projects.
+
+Each of which may have more than 1 version.
+
+But cutting to the chase... assorted video and graphics files
+amounting to between 15 - 60 GB in any one project
+
+Each project would only run a month or 2 months at the most and then
+all but the final delivered version would be deleted.  That version
+might be keep for a yr or so.
+
+I have some experience with cvs over quite a few yrs but still only a
+homeboy user and not very skilled or knowledgeable about cvs and even
+less with mercurial or git, where I do have some tiny bit of
+experience too.
+
+Which of the main contenders:  cvs subversion mercurial git bizarre 
+Maybe  a few more I don't know about, would be the best candidate for
+the usage and user described
