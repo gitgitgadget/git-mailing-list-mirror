@@ -1,178 +1,197 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: First/oldest entry in reflog dropped
-Date: Sun, 21 Nov 2010 23:42:53 -0500
-Message-ID: <20101122044252.GA7362@sigill.intra.peff.net>
-References: <AANLkTiktGbeSmUB75kn3q=swnw=cHvivX21OkR3sJJDC@mail.gmail.com>
- <20101121053545.GA10520@sigill.intra.peff.net>
- <alpine.DEB.1.00.1011211233570.2948@bonsai2>
+Subject: Re: How to fix =?utf-8?B?4oCcWW91ciBicmFu?=
+ =?utf-8?Q?ch_and_'origin=2Fmaster'_have_diverged?= =?utf-8?B?4oCd?= after
+ editing a commit that came before a pull?
+Date: Mon, 22 Nov 2010 00:38:14 -0500
+Message-ID: <20101122053814.GA7568@sigill.intra.peff.net>
+References: <AANLkTikr+uGrO2EB9WQk+CXeOm7jiYxdbhGzRRvgc9B9@mail.gmail.com>
+ <20101120043628.GB20725@sigill.intra.peff.net>
+ <AANLkTikCnX5aBrmh9+wnb9JyOiynv0zhrpdMJwbhL2ji@mail.gmail.com>
+ <20101121163001.GA29216@sigill.intra.peff.net>
+ <AANLkTim6h17cd6LjCt8e8HBHGCdyCjw1yx7PVUsD7piJ@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org
-To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Nov 22 05:46:12 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Gavin Guo <tuffkidtt@gmail.com>, git@vger.kernel.org
+To: Yang Zhang <yanghatespam@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 22 06:38:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKOI6-00022k-Q5
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 05:46:11 +0100
+	id 1PKP6i-0007Ww-AY
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 06:38:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756591Ab0KVEnI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Nov 2010 23:43:08 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:54036 "EHLO peff.net"
+	id S1750877Ab0KVFiX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Nov 2010 00:38:23 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:59345 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756545Ab0KVEnH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Nov 2010 23:43:07 -0500
-Received: (qmail 14004 invoked by uid 111); 22 Nov 2010 04:43:02 -0000
+	id S1750797Ab0KVFiW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Nov 2010 00:38:22 -0500
+Received: (qmail 14339 invoked by uid 111); 22 Nov 2010 05:38:21 -0000
 Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 22 Nov 2010 04:43:01 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 21 Nov 2010 23:42:53 -0500
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 22 Nov 2010 05:38:21 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 22 Nov 2010 00:38:14 -0500
 Content-Disposition: inline
-In-Reply-To: <alpine.DEB.1.00.1011211233570.2948@bonsai2>
+In-Reply-To: <AANLkTim6h17cd6LjCt8e8HBHGCdyCjw1yx7PVUsD7piJ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161881>
 
-On Sun, Nov 21, 2010 at 12:36:21PM +0100, Johannes Schindelin wrote:
+On Sun, Nov 21, 2010 at 10:51:51AM -0800, Yang Zhang wrote:
 
-> On Sun, 21 Nov 2010, Jeff King wrote:
-> 
-> > This patch clears up your bug, and doesn't break any tests. But I'd 
-> > really like to get a second opinion on the significance of those other 
-> > flags, or why the flag clearing was at the bottom of the function in the 
-> > first place.
-> 
-> The flag clearing was at the bottom because I had the impression that 
-> something function one might want to call in that function in the future 
-> could set the flags again. Maybe a goto would be appropriate here instead 
-> of the early returns?
+> >> > =C2=A0git rebase --onto temp F'^ branch_name
+> >> [...]
+> >> > At that point your original branch should be in the state you wa=
+nt. You
+> >> > can delete the temp branch with "git branch -D temp".
+> >>
+> >> I'm sorry that I can't understand "your original branch should be =
+in
+> >> the state you want" ?
+> >> You only create a temp branch, and rebase some commits on it, righ=
+t ??
+> >> What does that related to original branch ??
+> >
+> > The three-argument form of rebase above will switch to branch_name =
+(your
+> > original branch), consider F'^ as the upstream, and rebase
+> > F'^..branch_name on top of the commits in "temp".
+> >
+> > -Peff
+> >
+>=20
+> Actually, I missed this detail earlier, and now like Gavin I'm
+> confused. *temp* is "in the state that you want," not original_branch=
+,
+> right? temp shouldn't be deleted just yet; master should be updated t=
+o
+> point to this....
 
-That makes sense. I did a quick skim of the called code and I'm not sure
-any flags could be set, but even if I am right, I think it is better to
-be defensive.
+No, the first thing rebase will do is switch back to your
+original_branch, and then it will rebase the extra commits (the
+rebased versions of things that happened after your initial pull), on
+top of the new partial history in temp.
 
-So let's do this, which is the equivalent behavior to your gotos, but
-this structure makes more sense to me as a reader (and it doesn't
-involve goto :) ).
+Yeah, the arguments to rebase are weird. In a simpler world you would
+do:
+
+  # assume we're on master, the broken branch; mark the point with a ta=
+g
+  git tag broken
+
+  # go back to just before the broken rewritten commits
+  git reset --hard C'
+
+  # now re-do the merge
+  git pull origin master
+
+  # and now grab the other commits from our broken state
+  git cherry-pick F'^..broken
+
+except that cherry-pick doesn't actually walk the commit range as you
+want it to. I think you can do:
+
+  git cherry-pick F' G' H'
+
+these days, so that is another option.
+
+Anyway, just for fun I put together a script which graphically shows
+your situation at each step. You can run it all at once, but it is
+probably more instructive to cut and paste into a terminal, reading all
+of the comments.
+
+-Peff
 
 -- >8 --
-Subject: [PATCH] reflogs: clear flags properly in corner case
+#!/bin/sh
 
-The reflog-walking mechanism is based on the regular
-revision traversal. We just rewrite the parents of each
-commit in fake_reflog_parent to point to the commit in the
-next reflog entry instead of the real parents.
+# clean up any previous invocations
+rm -rf parent child
 
-However, the regular revision traversal tries not to show
-the same commit twice, and so sets the SHOWN flag on each
-commit it shows. In a reflog, however, we may want to see
-the same commit more than once if it appears in the reflog
-multiple times (which easily happens, for example, if you do
-a reset to a prior state).
+# short helper function for making our commits
+commit() {
+  echo $1 >$1 && git add $1 && git commit -m $1 && git tag $1
+}
 
-The fake_reflog_parent function takes care of this by
-clearing flags, including SHOWN. Unfortunately, it does so
-at the very end of the function, and it is possible to
-return early from the function if there is no fake parent to
-set up (e.g., because we are at the very first reflog entry
-on the branch). In such a case the flag is not cleared, and
-the entry is skipped by the revision traversal machinery as
-already shown.
+# short helper to show state
+show() {
+  # or gitk "$@" if you prefer
+  git log --oneline --graph --decorate "$@"
+}
 
-You can see this by walking the log of a ref which is set to
-its very first commit more than once (the test below shows
-such a situation). In this case the reflog walk will fail to
-show the entry for the initial creation of the ref.
+# make a parent and child with some shared base
+mkdir parent && (cd parent && git init && commit base)
+git clone parent child
 
-We don't want to simply move the flag-clearing to the top of
-the function; we want to make sure flags set during the
-fake-parent installation are also cleared. Instead, let's
-hoist the flag-clearing out of the fake_reflog_parent
-function entirely. It's not really about fake parents
-anyway, and the only caller is the get_revision machinery.
+# now child and parent diverge. child has a-b-c,
+# parent has d-e
+(cd child && commit A && commit B && commit C) &&
+(cd parent && commit D && commit E) &&
 
-Reported-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Signed-off-by: Jeff King <peff@peff.net>
----
- reflog-walk.c          |    1 -
- revision.c             |    4 +++-
- t/t1412-reflog-loop.sh |   34 ++++++++++++++++++++++++++++++++++
- 3 files changed, 37 insertions(+), 2 deletions(-)
- create mode 100755 t/t1412-reflog-loop.sh
+# now let's recreate the problem situation. Everything
+# now happens in the child.
+cd child
 
-diff --git a/reflog-walk.c b/reflog-walk.c
-index 4879615..5d81d39 100644
---- a/reflog-walk.c
-+++ b/reflog-walk.c
-@@ -239,7 +239,6 @@ void fake_reflog_parent(struct reflog_walk_info *info, struct commit *commit)
- 
- 	commit->parents = xcalloc(sizeof(struct commit_list), 1);
- 	commit->parents->item = commit_info->commit;
--	commit->object.flags &= ~(ADDED | SEEN | SHOWN);
- }
- 
- void get_reflog_selector(struct strbuf *sb,
-diff --git a/revision.c b/revision.c
-index b1c1890..ded8812 100644
---- a/revision.c
-+++ b/revision.c
-@@ -2030,8 +2030,10 @@ static struct commit *get_revision_1(struct rev_info *revs)
- 		revs->commits = entry->next;
- 		free(entry);
- 
--		if (revs->reflog_info)
-+		if (revs->reflog_info) {
- 			fake_reflog_parent(revs->reflog_info, commit);
-+			commit->object.flags &= ~(ADDED | SEEN | SHOWN);
-+		}
- 
- 		/*
- 		 * If we haven't done the list limiting, we need to look at
-diff --git a/t/t1412-reflog-loop.sh b/t/t1412-reflog-loop.sh
-new file mode 100755
-index 0000000..7f519e5
---- /dev/null
-+++ b/t/t1412-reflog-loop.sh
-@@ -0,0 +1,34 @@
-+#!/bin/sh
-+
-+test_description='reflog walk shows repeated commits again'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup commits' '
-+	test_tick &&
-+	echo content >file && git add file && git commit -m one &&
-+	git tag one &&
-+	echo content >>file && git add file && git commit -m two &&
-+	git tag two
-+'
-+
-+test_expect_success 'setup reflog with alternating commits' '
-+	git checkout -b topic &&
-+	git reset one &&
-+	git reset two &&
-+	git reset one &&
-+	git reset two
-+'
-+
-+test_expect_success 'reflog shows all entries' '
-+	cat >expect <<-\EOF
-+		topic@{0} two: updating HEAD
-+		topic@{1} one: updating HEAD
-+		topic@{2} two: updating HEAD
-+		topic@{3} one: updating HEAD
-+		topic@{4} branch: Created from HEAD
-+	EOF
-+	git log -g --format="%gd %gs" topic >actual &&
-+	test_cmp expect actual
-+'
-+
-+test_done
--- 
-1.7.3.2.509.g15259
+# First we pull the parent's commits into the child
+git pull origin master
+
+# And build on top of it
+commit F && commit G && commit H
+
+# And then we "rebase -i", rewriting B
+GIT_EDITOR=3D'perl -pi -e "s/pick (.* B)/edit \$1/"' git rebase -i base
+echo changes >>B && git commit --amend -a -m B
+git rebase --continue
+
+# Now we have the broken state, because we rewrote parent's commits dur=
+ing our
+# rebase. We also failed to preserve merges, so the new history appears=
+ linear.
+# You can see the repeated commits easily by looking at the history gra=
+ph of
+# our new state versus our old.
+#
+# Let's also go ahead and tag the original history and each of the new =
+commits
+# so we can recognize and refer to them. Here H-new corresponds to H' i=
+n my
+# other explanation, and so on.
+git branch original-history master@{1}
+git tag H-new HEAD
+git tag G-new HEAD~1
+git tag F-new HEAD~2
+git tag E-new HEAD~3
+git tag D-new HEAD~4
+git tag C-new HEAD~5
+git tag B-new HEAD~6
+show --all
+
+# So now let's look at the solution. First we make a temporary branch f=
+rom the
+# rewritten commit just prior to the ones from upstream (in this case, =
+C').
+git checkout -b temp C-new
+show temp
+
+# Now re-pull from upstream, recreating the merge on top of your rewrit=
+ten
+# commits.
+git pull origin master
+show temp
+
+# And now rebase the rewritten versions of all of the commits that came=
+ after
+# the merge. We know F-new is the first such rewritten commit, so its p=
+arent
+# (F-new^) becomes the upstream. We are rebasing onto the state we have=
+ in
+# temp, and we are rebasing the branch master (and the end result will =
+go on
+# master).
+git rebase --onto temp F-new^ master
+show master
