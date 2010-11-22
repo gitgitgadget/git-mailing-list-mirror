@@ -1,118 +1,82 @@
-From: Harry Putnam <reader@newsguy.com>
-Subject: vcs for hefty video and graphics files
-Date: Mon, 22 Nov 2010 12:09:14 -0600
-Organization: Still searching...
-Message-ID: <877hg55iyd.fsf@newsguy.com>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Can't build doc anymore (v1.7.3.2)
+Date: Mon, 22 Nov 2010 20:45:02 +0100
+Message-ID: <m2oc9hkurl.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: bazaar@lists.canonical.com, users@subversion.apache.org,
-	git@vger.kernel.org, info-cvs@gnu.org
-To: mercurial@selenic.com
-X-From: mercurial-bounces@selenic.com Mon Nov 22 19:46:08 2010
-Return-path: <mercurial-bounces@selenic.com>
-Envelope-to: gcvmd-mercurial@gmane.org
-Received: from waste.org ([173.11.57.241])
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 22 20:45:20 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <mercurial-bounces@selenic.com>)
-	id 1PKbOw-0002eH-FK
-	for gcvmd-mercurial@gmane.org; Mon, 22 Nov 2010 19:46:06 +0100
-Received: from localhost (localhost [127.0.0.1])
-	by waste.org (Postfix) with ESMTP id D28247436F;
-	Mon, 22 Nov 2010 12:46:05 -0600 (CST)
-X-Virus-Scanned: Debian amavisd-new at waste.org
-Received: from waste.org ([127.0.0.1])
-	by localhost (waste.org [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 6p+-Y4d0hmXh; Mon, 22 Nov 2010 12:46:00 -0600 (CST)
-Received: from waste.org (localhost [127.0.0.1])
-	by waste.org (Postfix) with ESMTP id 880C774217;
-	Mon, 22 Nov 2010 12:45:40 -0600 (CST)
-X-Original-To: mercurial@waste.org
-Delivered-To: mercurial@waste.org
-Received: from localhost (localhost [127.0.0.1])
-	by waste.org (Postfix) with ESMTP id 6A94C7416F
-	for <mercurial@waste.org>; Mon, 22 Nov 2010 12:09:37 -0600 (CST)
-X-Virus-Scanned: Debian amavisd-new at waste.org
-Received: from waste.org ([127.0.0.1])
-	by localhost (waste.org [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id Y+RnNSV-HZ7X for <mercurial@waste.org>;
-	Mon, 22 Nov 2010 12:09:35 -0600 (CST)
-Received: from lo.gmane.org (lo.gmane.org [80.91.229.12])
-	by waste.org (Postfix) with ESMTP id 4B00F74155
-	for <mercurial@selenic.com>; Mon, 22 Nov 2010 12:09:35 -0600 (CST)
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvmd-mercurial@m.gmane.org>) id 1PKapZ-0000dS-J9
-	for mercurial@selenic.com; Mon, 22 Nov 2010 19:09:33 +0100
-Received: from c-98-215-178-110.hsd1.in.comcast.net ([98.215.178.110])
-	by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-	id 1AlnuQ-0007hv-00
-	for <mercurial@selenic.com>; Mon, 22 Nov 2010 19:09:33 +0100
-Received: from reader by c-98-215-178-110.hsd1.in.comcast.net with local
-	(Gmexim 0.1 (Debian)) id 1AlnuQ-0007hv-00
-	for <mercurial@selenic.com>; Mon, 22 Nov 2010 19:09:33 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: c-98-215-178-110.hsd1.in.comcast.net
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/24.0.50 (gnu/linux)
-Cancel-Lock: sha1:s9FCSJODTDZxwnaeu3+u8XEXzAs=
-X-Mailman-Approved-At: Mon, 22 Nov 2010 12:45:38 -0600
-X-BeenThere: mercurial@selenic.com
-X-Mailman-Version: 2.1.11
-Precedence: list
-List-Id: <mercurial.selenic.com>
-List-Unsubscribe: <http://selenic.com/mailman/options/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=unsubscribe>
-List-Archive: <http://selenic.com/pipermail/mercurial>
-List-Post: <mailto:mercurial@selenic.com>
-List-Help: <mailto:mercurial-request@selenic.com?subject=help>
-List-Subscribe: <http://selenic.com/mailman/listinfo/mercurial>,
-	<mailto:mercurial-request@selenic.com?subject=subscribe>
-Sender: mercurial-bounces@selenic.com
-Errors-To: mercurial-bounces@selenic.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161908>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1PKcKF-0000yI-Ju
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 20:45:19 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1755590Ab0KVTpJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Nov 2010 14:45:09 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:37897 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755181Ab0KVTpI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Nov 2010 14:45:08 -0500
+Received: by wwa36 with SMTP id 36so7736689wwa.1
+        for <git@vger.kernel.org>; Mon, 22 Nov 2010 11:45:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:user-agent
+         :date:message-id:mime-version:content-type;
+        bh=ZwFhml3+GBgQCWUlpDNW9PNiOakgtW3qwnuk+IKdku8=;
+        b=iuksA3ZmCcQ0YjJKgYrvs27O1sCG6o5CrWnDlgFbOvNMYFEm/IOOHSb9sHvKOpzy/c
+         cQofQ+9fLvUBAN8f/rfaZ5pbfGH/TcUECctluXC8L4srSXXXkS42obWyLm1SY1if7lNn
+         NZtwR/Z7rX+Uxa/BXuyYxbfYwUr+g8Sb9GF24=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:user-agent:date:message-id:mime-version
+         :content-type;
+        b=CnA3MPWk7I9G6A339zmsWaN899sbiXnc84d4B4kSETWKeEH/flLBe0XSRRVMYEPybH
+         gDXii5t25iKDZ0rUatoeFo7ONAoHprVkM762TeCAZ2cH/HnuOADT8iW8YC7jeiSVXCGs
+         jyA0O+g7u6LKN6i9IS5vCkJ9ZIM/QAHWfshk0=
+Received: by 10.227.156.68 with SMTP id v4mr6424782wbw.224.1290455107101;
+        Mon, 22 Nov 2010 11:45:07 -0800 (PST)
+Received: from localhost (au213-1-82-235-205-153.fbx.proxad.net [82.235.205.153])
+        by mx.google.com with ESMTPS id f14sm3547416wbe.20.2010.11.22.11.45.04
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 22 Nov 2010 11:45:05 -0800 (PST)
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161909>
 
-I hope not to appear to be sneaking in a war of systems, and may rate
-a bit a high in windbag factor since I've asked a very similar
-question here but quite a while ago
+Hello,
 
-I'd like to briefly describe my projected usage of a versioning system
-and see what people here think in terms what system best suits to that
-usage.
+I'm trying to build the git's documentation, but after pulling v1.7.3.2,
+it fails:
 
-I'm a light weight semi-professional videographer but I have enough
-going on to feel a need to keep track of and be able to rollback
-versions of a project as it is being worked on
+  $ make prefix=/usr/local doc
+  make -C Documentation all
+  make[1]: Entering directory `/home/fmoreau/git/Documentation'
+  make[2]: Entering directory `/home/fmoreau/git'
+  make[2]: `GIT-VERSION-FILE' is up to date.
+  make[2]: Leaving directory `/home/fmoreau/git'
+      XMLTO git-fetch.1
+  xmlto: /home/fmoreau/git/Documentation/git-fetch.xml does not validate (status 3)
+  xmlto: Fix document syntax or use --skip-validation option
+  I/O error : Attempt to load network entity http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd
+  /home/fmoreau/git/Documentation/git-fetch.xml:2: warning: failed to load external entity "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
+  D DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
+                                                                                 ^
+  I/O error : Attempt to load network entity http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd
+  warning: failed to load external entity "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
+  validity error : Could not load the external subset "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
+  Document /home/fmoreau/git/Documentation/git-fetch.xml does not validate
+  make[1]: *** [git-fetch.1] Error 13
+  make[1]: Leaving directory `/home/fmoreau/git/Documentation'
 
-It would involve on any one projects something like 15 to 60 GB of
-stuff to keep up with.  Large numbers of images and a dozen or 2 dozen
-video files.  All in some stake of compression depending on the codex.
+Could anybody tell me what's now wrong ?
 
-I'd like to keep a few version of say an Adobe Premier project with
-all the attendant files that play a role in it.
-
-Ditto for sets of Adobe After effects and attendant files.  And many
-many images and compilation in various states of cutting or whatever
-editing.
-
-And then the whole project including the various Premier and After
-effects sets and piles of captured video tape.  All in DV-avi format.
-
-So versions inside versions and then repeated for different projects.
-
-Each of which may have more than 1 version.
-
-But cutting to the chase... assorted video and graphics files
-amounting to between 15 - 60 GB in any one project
-
-Each project would only run a month or 2 months at the most and then
-all but the final delivered version would be deleted.  That version
-might be keep for a yr or so.
-
-I have some experience with cvs over quite a few yrs but still only a
-homeboy user and not very skilled or knowledgeable about cvs and even
-less with mercurial or git, where I do have some tiny bit of
-experience too.
-
-Which of the main contenders:  cvs subversion mercurial git bizarre 
-Maybe  a few more I don't know about, would be the best candidate for
-the usage and user described
+Thanks
+-- 
+Francis
