@@ -1,88 +1,108 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: [PATCH] bash completion: add basic support for git-reflog
-Date: Mon, 22 Nov 2010 23:50:44 +0800
-Message-ID: <AANLkTinJPQF-khzViED+ROyojEr9nHrcgwKQWsDugD7Y@mail.gmail.com>
-References: <1290274368-3212-1-git-send-email-rctay89@gmail.com>
-	<20101122152409.GA7010@neumann>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: OK, how should I have done this...
+Date: Mon, 22 Nov 2010 17:14:25 +0100
+Message-ID: <vpqtyj9xrmm.fsf@bauges.imag.fr>
+References: <AANLkTim0_J0i_a0o+z1oCC4mramfUxCGtCg_Y+ab+h+-@mail.gmail.com>
+	<vpq4ob9qy6f.fsf@bauges.imag.fr>
+	<AANLkTi=uxRfsy2vG+4CBJv8Vhjrr2roVOXeNLvPA+6U+@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Nov 22 16:51:11 2010
+Cc: git <git@vger.kernel.org>
+To: Patrick Doyle <wpdster@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 22 17:18:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKYfa-0007Sg-DB
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 16:51:06 +0100
+	id 1PKZ5z-0000ao-0m
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 17:18:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753532Ab0KVPuq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Nov 2010 10:50:46 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:43543 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751393Ab0KVPup convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Nov 2010 10:50:45 -0500
-Received: by eye27 with SMTP id 27so3928770eye.19
-        for <git@vger.kernel.org>; Mon, 22 Nov 2010 07:50:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=JzmEQ+gl57l0YI7VJ6XmYGg0kpOLcR3VKnquueqGWkQ=;
-        b=CirtIlUfjrUdV7GNbfN8KDwQzZOGikCvte0O2hdC+dLCJlk+ygxLBY7XZCFRx4pBSv
-         s6UEZ3KFX8KyMj+Eu9P5iEnKPT6BsT5sr4LT9480dEgRljLDA7RDpi+btTN5JQkKd0YP
-         hg7mLTsa3V0V3e15AScCA6Qo1oheZtc/YP1KM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=eJjF0l6gKyGuKQGRvre46oh3N/+waqB+9FB9VKdbqUbTpUxn/VLJLCrWrbHq7UQJ0g
-         g5eOJ64CB4513N2zlFp2hxvkJNLSIOcCoxsR7kvDslYqCFP+N7ysA3/t6m+q2ZVnqp4i
-         uPlzvfxon4Xy9N+PlIkjj/nGmgtVzMucK6pBU=
-Received: by 10.213.33.14 with SMTP id f14mr7952070ebd.15.1290441044222; Mon,
- 22 Nov 2010 07:50:44 -0800 (PST)
-Received: by 10.213.112.195 with HTTP; Mon, 22 Nov 2010 07:50:44 -0800 (PST)
-In-Reply-To: <20101122152409.GA7010@neumann>
+	id S1751465Ab0KVQSH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Nov 2010 11:18:07 -0500
+Received: from imag.imag.fr ([129.88.30.1]:37071 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751001Ab0KVQSG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Nov 2010 11:18:06 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id oAMGEX5R005936
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 22 Nov 2010 17:14:33 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PKZ2A-0007CV-5k; Mon, 22 Nov 2010 17:14:26 +0100
+In-Reply-To: <AANLkTi=uxRfsy2vG+4CBJv8Vhjrr2roVOXeNLvPA+6U+@mail.gmail.com> (Patrick Doyle's message of "Mon\, 22 Nov 2010 09\:22\:21 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 22 Nov 2010 17:14:34 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161899>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161900>
 
-Hi,
+Patrick Doyle <wpdster@gmail.com> writes:
 
-2010/11/22 SZEDER G=E1bor <szeder@ira.uka.de>:
-> On Sun, Nov 21, 2010 at 01:32:48AM +0800, Tay Ray Chuan wrote:
->> Add basic completion for the three subcommands - show, expire, delet=
-e.
->> Try completing refs for these too.
+> On Mon, Nov 22, 2010 at 8:34 AM, Matthieu Moy
+> <Matthieu.Moy@grenoble-inp.fr> wrote:
+>> Patrick Doyle <wpdster@gmail.com> writes:
+>>
+>>> I just checked in modifications to 1/2 dozen or so files in a singl=
+e
+>>> commit and pushed them to my server.
+>>
+>>> So now I want to figure out which modification(s) in which file(s)
+>>> introduced the problem.
+>>
+>> 'didn't read all the details of your message, but the way I'd have
+>> done this would be with stash --keep-index:
+>>
+>> (untested)
+>>
+>> git checkout the-one-that-works # staging area and tree checked out.
+>> git reset the-one-that-doesnt =A0 # just change the staging area
+>> git add -p
+>> # pick some commits
+>> git stash --keep-index
+>> # run some tests
+>> # if test fail then
+>> =A0 # happy, "git diff --staged" tells you what.
+>> # else
+>> =A0 git commit -m "first modification"
+>> =A0 git stash pop
+>> =A0 # goto the git add -p step.
+>> # fi
 >
-> Heh, I've always thought reflog is plumbing, and that's why the
-> completion script doesn't support it.
+> That looks kinda scary to me.  The last time I played with git-reset,
+> I ended up losing(*) the commit at the head of my branch.
 
-That didn't really cross my mind, I just did this out of my irritation
-with its absence.
+In general, you should think twice before doing this kind of surgery.
+But :
 
-(After some checking, it's actually part of git-log, so I don't think
-it counts as plumbing.)
+* The git checkout at the beginning brings you in detached HEAD state,
+  so you're not going to damage the branches themselves. The
+  intermediate commits you'll do will be unreachable unless you create
+  a ref explicitely. So, "git checkout branch-name" will bring you
+  back to your branch when you're done.
 
-> This only looks at the previous word on the command line, and leads t=
-o
-> wrong behavior when an option is used:
->
-> =A0$ git reflog expire --verbose <TAB><TAB>
-> =A0delete =A0 expire =A0 show
->
-> To prevent this you could use the __git_find_on_cmdline() helper
-> function and follow how other completion functions use it.
+* Git has this great "reflog" thing, so even if you mess up your
+  branch, it's still in the reflog.
 
-Yep I'll look into it.
+* Hopefully, you're working on a local clone, and really important
+  stuff have already been pushed to a safer place, so the very worst
+  thing that can happen is to start over with a fresh clone.
+
+In my proposal, *if* you end up with a set of small commit that you
+prefer over your initial big commit, you can chose to record it in
+history (either git update-ref, dangerous if you've already pushed
+anything, or git merge, to keep both the big commit and the small ones
+in the history).
 
 --=20
-Cheers,
-Ray Chuan
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
