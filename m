@@ -1,83 +1,105 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH] t3407: make reflog check stricter
-Date: Sun, 21 Nov 2010 20:20:34 +0100
-Message-ID: <1290367234-8206-1-git-send-email-martin.von.zweigbergk@gmail.com>
-References: <1290337881-26449-1-git-send-email-martin.von.zweigbergk@gmail.com>
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-To: git@vger.kernel.org,
-	Johannes Schindelin <johannes.schindelin@gmx.de>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 22 02:21:17 2010
+From: David Barr <david.barr@cordelta.com>
+Subject: Re: Status of the svn remote helper project (Nov 2010, #2)
+Date: Mon, 22 Nov 2010 13:06:44 +1100
+Organization: Cordelta Pty Ltd
+Message-ID: <201011221306.45096.david.barr@cordelta.com>
+References: <20101107112129.GA30042@burratino> <BB713021-7826-4E9E-8576-7D1704BF517C@cordelta.com> <20101121230613.GA24397@burratino>
+Mime-Version: 1.0
+Content-Type: Text/Plain;
+  charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
+	Tomas Carnecky <tom@dbservice.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 22 03:07:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKL5o-0005MY-Lq
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 02:21:17 +0100
+	id 1PKLoQ-0002Jf-MU
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 03:07:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755995Ab0KVBVJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Nov 2010 20:21:09 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:39241 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755726Ab0KVBVI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Nov 2010 20:21:08 -0500
-Received: by vws13 with SMTP id 13so3214487vws.19
-        for <git@vger.kernel.org>; Sun, 21 Nov 2010 17:21:06 -0800 (PST)
+	id S1756143Ab0KVCHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Nov 2010 21:07:15 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:36545 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755371Ab0KVCHO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Nov 2010 21:07:14 -0500
+Received: by gwb20 with SMTP id 20so1040141gwb.19
+        for <git@vger.kernel.org>; Sun, 21 Nov 2010 18:07:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=oRnIT1c9ISnP7EMV6CYbD7TW4AaeujAM4Yq0QGNr/DA=;
-        b=XIuhvk3SyGWvzmpSt6PlfIU8pLvpzq7+Lq03qFE7i1V5+AwpZ++kqD0aS/4iLn5HgK
-         GpoHJCYf1ERTIk7St/N6WQ/ZkjJXAymA5eSHZ5bwH2f6pNhH+S+5/RxVOe37ceLBXajN
-         8vRd+N0BZ+0UGG6N+phqBqlHp9DZyluzQ+NX4=
+        h=domainkey-signature:received:received:sender:from:organization:to
+         :subject:date:user-agent:cc:references:in-reply-to:mime-version
+         :content-type:content-transfer-encoding:message-id;
+        bh=9CfIbslTTywmQlkjxBV4HYnZ0DOUXekO5IADsYxe5TA=;
+        b=TTAZXhbsZgrniqx27NqI5Pi1re+kfjgDkPHcrBUx99gMFt3u0QQPHhrvIrb1pllNEN
+         N0Fwwg01FatJteM68+HczFAt0JcvSXk+opUaaAH1wksad4RyAJ6kld1uHbFAjiwL2fEU
+         6tn8dwoTnuIfVdv9VxPBHk9pCmzGrjxnG6v7w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=CO6zOVDqBKYsMUFRkvbWCbWSfcDTxMaS0yZdWd9J2m7S3PfUtQd8xjApmlqHuSAz37
-         ayUNKAckb1kEWd8hm22FUhrMHX7CmUKLDjiaW2pviUOV/YDY7Uq0szMXMCQwPaRUXm/U
-         uBVotMh2CFm/SRFVw8e9JAJqeXVYjZGJ/WIY0=
-Received: by 10.220.159.196 with SMTP id k4mr1291404vcx.196.1290388866696;
-        Sun, 21 Nov 2010 17:21:06 -0800 (PST)
-Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id c40sm872039vcs.25.2010.11.21.17.21.05
+        h=sender:from:organization:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :message-id;
+        b=Kg0G9e7p3XdSKfbtLW4S4BXkayZKHYyMG6YRkuh4c1QIELtIPzIW8nrulTsXZMLqjP
+         Ebdssq62o+wsg+cx+xyIq8k/azhoZZneOyhRdRHnjwMOHU3jGDDeFd46qzBTEboaFJ+V
+         Eb4OL8ghRgUcDQUeX1x76MKHB57zU7XkT+kxs=
+Received: by 10.150.206.6 with SMTP id d6mr3348652ybg.242.1290391633608;
+        Sun, 21 Nov 2010 18:07:13 -0800 (PST)
+Received: from dba.localnet ([119.15.97.146])
+        by mx.google.com with ESMTPS id p20sm1631713ybe.5.2010.11.21.18.07.11
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 21 Nov 2010 17:21:06 -0800 (PST)
-X-Mailer: git-send-email 1.7.3.2.190.gfb4ae
-In-Reply-To: <1290337881-26449-1-git-send-email-martin.von.zweigbergk@gmail.com>
+        Sun, 21 Nov 2010 18:07:12 -0800 (PST)
+User-Agent: KMail/1.13.5 (Linux/2.6.35-22-generic; KDE/4.5.1; x86_64; ; )
+In-Reply-To: <20101121230613.GA24397@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161877>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161878>
 
+Hi,
+
+> >> A delta in r36 of <http://svn.apache.org/repos/asf> does not apply
+> >> with this brand of svn-fe.
+> >
+> > That's odd, I was able to import up to r354 before receiving:
+> > fatal: missing newline after cat-blob response
+> 
+> Apparently sometimes deltas use the whole preimage and sometimes they
+> don't.
+> 
+> Here's a fix (still needs a simple reproduction script).
+
+I'm testing this path along with the following changes.
+The first just removes a compile-time warning.
+The second fixes a memory leak.
+Sorry, my send-email-fu is not up to scratch.
+
+Signed-off-by: David Barr <david.barr@cordelta.com>
 ---
-This is hopefully an improvement to the test case. Please squash with
-previous patch if you agree.
-
- t/t3407-rebase-abort.sh |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
-
-diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
-index f3250c3..e573dc8 100755
---- a/t/t3407-rebase-abort.sh
-+++ b/t/t3407-rebase-abort.sh
-@@ -77,11 +77,12 @@ testrebase() {
- 		cd "$work_dir" &&
- 		# Clean up the state from the previous one
- 		git reset --hard pre-rebase &&
--		reflog_entries_before=$(git reflog show to-rebase | wc -l) &&
-+		git reflog show to-rebase > reflog_before &&
- 		test_must_fail git rebase$type master &&
- 		git rebase --abort &&
--		reflog_entries_after=$(git reflog show to-rebase | wc -l) &&
--		test $reflog_entries_before -eq $reflog_entries_after
-+		git reflog show to-rebase > reflog_after &&
-+		test_cmp reflog_before reflog_after &&
-+		rm reflog_before reflog_after
- 	'
+diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
+index 02456cf..a95a5c9 100644
+--- a/vcs-svn/fast_export.c
++++ b/vcs-svn/fast_export.c
+@@ -127,7 +127,6 @@ static long apply_delta(uint32_t mark, off_t len, struct 
+line_buffer *input,
+                die("cannot open temporary file for blob retrieval");
+        if (old_mark) {
+                const char *response;
+-               off_t dummy;
+                printf("cat-blob :%"PRIu32"\n", old_mark);
+                fflush(stdout);
+                response = get_response_line();
+@@ -147,6 +146,7 @@ static long apply_delta(uint32_t mark, off_t len, struct 
+line_buffer *input,
+        ret = buffer_tmpfile_prepare_to_read(&postimage);
+        if (ret < 0)
+                die("cannot read temporary file for blob retrieval");
++       strbuf_release(&preimage.buf);
+        return ret;
  }
  
--- 
-1.7.3.2.190.gfb4ae
