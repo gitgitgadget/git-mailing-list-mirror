@@ -1,105 +1,99 @@
-From: Patrick Doyle <wpdster@gmail.com>
-Subject: Re: OK, how should I have done this...
-Date: Mon, 22 Nov 2010 19:17:55 -0500
-Message-ID: <AANLkTimek=PAMGz-aKrb=7QJGJYEjZ29Z8izrD1BCKDN@mail.gmail.com>
-References: <AANLkTim0_J0i_a0o+z1oCC4mramfUxCGtCg_Y+ab+h+-@mail.gmail.com> <7vr5ecvr9p.fsf@alter.siamese.dyndns.org>
+From: denny@dennymagicsite.com
+Subject: Git branch workflow
+Date: Mon, 22 Nov 2010 17:08:05 +0000
+Message-ID: <20101122170805.8jtzkqwxpcog0kgk@dennymagicsite.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 23 01:18:24 2010
+Content-Type: text/plain; charset=US-ASCII;
+	DelSp=Yes	format=flowed
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 23 01:28:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKgaU-0003Z3-9u
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 01:18:22 +0100
+	id 1PKgkI-0007QT-Gz
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 01:28:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932480Ab0KWASR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Nov 2010 19:18:17 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:52465 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932177Ab0KWASQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Nov 2010 19:18:16 -0500
-Received: by fxm13 with SMTP id 13so3240403fxm.19
-        for <git@vger.kernel.org>; Mon, 22 Nov 2010 16:18:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=AUGi4aBknY5Sj0e61qhmQfyAP8GWaFi+tKWALlY0X6c=;
-        b=sRENrvOPnBBA0yUCIaMXek0VsS+hhlW4XMFekEaTap6GR/tGQBoa++lP2RUlLm0FLC
-         zTSCU/gzi95onB3CUZf/sJYnO9IUoAcQJMGFyy2yz6yTkR6WkeFgQkBRMR9aLleuYP11
-         FgkbVLrlDYKHPVP8eobze5nV+nRluzf/EBumc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Icxsqi2KMk712nHtw9mbAbzGXzDml3wVzDbz831YaPeLcH/YrI5NaHepYTu3FSvREQ
-         ilFOT3MDArRHFzTJ6i6Riq4hp2UFmFC9zc9SdEmDOw6i6t2sreCR8QMTQpQ41XGGX992
-         ouZNe7tnl0DfCOUlNWiKrV+2ZaxptnGAeRzXU=
-Received: by 10.223.87.2 with SMTP id u2mr407374fal.106.1290471495412; Mon, 22
- Nov 2010 16:18:15 -0800 (PST)
-Received: by 10.223.115.17 with HTTP; Mon, 22 Nov 2010 16:17:55 -0800 (PST)
-In-Reply-To: <7vr5ecvr9p.fsf@alter.siamese.dyndns.org>
+	id S932583Ab0KWA2O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Nov 2010 19:28:14 -0500
+Received: from server02.webhostingbuzz.com ([74.81.65.178]:43157 "EHLO
+	server02.webhostingbuzz.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932574Ab0KWA2L convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Nov 2010 19:28:11 -0500
+X-Greylist: delayed 26434 seconds by postgrey-1.27 at vger.kernel.org; Mon, 22 Nov 2010 19:28:11 EST
+Received: from localhost ([127.0.0.1])
+	by server02.webhostingbuzz.com with esmtpa (Exim 4.69)
+	(envelope-from <denny@dennymagicsite.com>)
+	id 1PKZs5-0005hj-St
+	for git@vger.kernel.org; Mon, 22 Nov 2010 17:08:06 +0000
+Received: from 65.203.93.8 ([65.203.93.8]) by dennymagicsite.com (Horde
+	MIME library) with HTTP; Mon, 22 Nov 2010 17:08:05 +0000
+Content-Disposition: inline
+User-Agent: Internet Messaging Program (IMP) H3 (4.1.6)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - server02.webhostingbuzz.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - dennymagicsite.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161920>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161921>
 
-On Mon, Nov 22, 2010 at 7:05 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Patrick Doyle <wpdster@gmail.com> writes:
->
->> But I _know_ that there must be a better way to do this. =A0What sho=
-uld
->> I have done?
->
-> Depends on how you wanted to fix your history (we already know from y=
-our
-> description what shape of tree you want to end up in).
->
-> If you want to pretend that you were perfect and never made mistakes =
-in
-> these three files you had to fix later, then history surgery like wha=
-t
-> Matthieu suggested would be necessary (I won't repeat how).
->
-> On the other hand, if you want to record what you did in the time ord=
-er,
-> then I would probably do this:
->
-> =A0$ git checkout master ; test ;# broken
-> =A0$ git checkout 5ccce3 ; test ;# ok
-> =A0$ git checkout master -- file1 ; test ;# ok
-> =A0$ git checkout master -- file2 ; test ;# ok
-> =A0$ git checkout master -- blah/file7 ; test ;# broken
-> =A0$ edit blah/file7 ; test ;# ok
-> =A0$ git reset --soft master
-> =A0$ git commit -a -m 'The change to file3 was borked on the other en=
-v' -e
->
-> and in this particular case, this would be what I would have done, as=
- a
-> separate "fix-up" commit will give me a place to describe why a solut=
-ion
-> different from the initial attempt, which was Ok on the original mach=
-ine,
-> was necessary.
+my website was small enough where I usually fixed everything live on  
+production server, including adding new features, doing bug fixes and  
+so on.
 
-Thanks Junio, that's exactly what I was trying to do.  I keep getting
-confused about checkout vs. reset.  Both affect the index and the
-working copy.  Both manipulate the ref pointer.  I just can't keep
-straight when I should use reset.  I understand using checkout to grab
-a particular version of the repository.
+Now, with git I can create branches in whatever order I want, and then  
+merge them whenever I want and push things to production whenever I  
+want.
+With this, comes confusion of what a good branch workflow is.  And  
+this will be my question -- in what order and from which branches to I  
+create new branches and how do I merge them back.
 
-But your recipe is what I wanted to do.  I just used "checkout"
-instead of "reset --soft".
+Consider a specific scenario:
+I am on dev server on master branch and I want to develop a specific  
+feature F.
+I cut a Feature branch F from master and start working on the feature.  
+  Once I am done with most of the work on F and it works reasonably  
+well, I want to push it to production, but .. before I do I realize  
+that I want to make some CSS fixes to the site, unrelated to other  
+branches, and I can wait with pushing Feature branch to Production  
+until I fix up CSS reasonably well.
+Here is the question:  do I cut the CSS branch from Master or do I cut  
+it from the Feature branch?
 
-Thanks again.
+If I want to keep close to my original before-git workflow, I say, either
+*  merge Feature with Master
+*  cut CSS branch from Master
+*  do CSS fixes
+*  merge CSS with Master
+*  push Dev Master to Prod Master
 
---wpd
+or
+*  cut CSS branch from Feature, as Feature already has latest code
+*  when I am done with CSS, merge CSS into Feature
+*  merge Feature into Master (and remove Feature)
+*  push Dev Master to Prod Master
+
+There are tons of other variations that are possible.  Which workflow  
+is preferred for this scenario?
+
+Supplementary questions that may help define a good workflow for my case:
+*  What if later a bug is discovered in the Feature.  If I already  
+merged Feature branch into Master and deleted Feature branch, do I  
+create a FeatureBugFix branch?  Or do I keep the original Feature  
+branch without removing it for a while?  If so, for how long do I keep  
+it?  Do I perhaps keep a general BugFix branch instead that I don't  
+remove?
+*  currently I am the only developer working on the code.  This will  
+not change in the forseeable future.
+
+Dennis
