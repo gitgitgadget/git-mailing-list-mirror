@@ -1,73 +1,95 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: OK, how should I have done this...
-Date: Mon, 22 Nov 2010 22:29:55 +0800
-Message-ID: <AANLkTim19WCCz6_iMrRj9cLU1-Q=MGAWnvYOc8=NBC_F@mail.gmail.com>
-References: <AANLkTim0_J0i_a0o+z1oCC4mramfUxCGtCg_Y+ab+h+-@mail.gmail.com>
-	<vpq4ob9qy6f.fsf@bauges.imag.fr>
-	<AANLkTi=uxRfsy2vG+4CBJv8Vhjrr2roVOXeNLvPA+6U+@mail.gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] bash completion: add basic support for git-reflog
+Date: Mon, 22 Nov 2010 16:24:09 +0100
+Message-ID: <20101122152409.GA7010@neumann>
+References: <1290274368-3212-1-git-send-email-rctay89@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>
-To: Patrick Doyle <wpdster@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 22 15:30:05 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Tay Ray Chuan <rctay89@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 22 16:24:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKXPA-00046w-IN
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 15:30:04 +0100
+	id 1PKYFf-00061O-JW
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 16:24:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756220Ab0KVO36 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Nov 2010 09:29:58 -0500
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:54018 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753587Ab0KVO35 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Nov 2010 09:29:57 -0500
-Received: by ewy5 with SMTP id 5so1623358ewy.19
-        for <git@vger.kernel.org>; Mon, 22 Nov 2010 06:29:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=k73HV1jmxNbYWpYGEKGVr+A4JF7GlQn3vxdGVGqCB1Y=;
-        b=EuwzFvTcZwDa7YRzM1TFeh7at08izzpobFYseWlJabtyYdopK0gCnA0Fmk7gUapyE0
-         bckQVfTAQdcjsXDsAd9iULX9AlDBc+tyE1d0kKFKI10KvKPo2qpchQcHS/DVagB2T9NI
-         BSNYsS6iPFIChMZ4cBfv9xct0iantAQ9gwv9o=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=If6AOFyt5K5+iwqxUoUtVzUgOEbR/cjKYihdp4+NA0SdFA78C4jBu2y4c0gOA5M7yE
-         ZJNs3cJ7oeAKV98eWBLjtXJUGGT3A327G08dv8gvTBALy1zC/gHF9fSrOuECZzN6J0cs
-         am11HNOFtTRDNX4QYXSUtoa31I+X3n1++gJnI=
-Received: by 10.213.28.133 with SMTP id m5mr7703565ebc.28.1290436195766; Mon,
- 22 Nov 2010 06:29:55 -0800 (PST)
-Received: by 10.213.112.195 with HTTP; Mon, 22 Nov 2010 06:29:55 -0800 (PST)
-In-Reply-To: <AANLkTi=uxRfsy2vG+4CBJv8Vhjrr2roVOXeNLvPA+6U+@mail.gmail.com>
+	id S1755964Ab0KVPYO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Nov 2010 10:24:14 -0500
+Received: from francis.fzi.de ([141.21.7.5]:46842 "EHLO exchange.fzi.de"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755737Ab0KVPYN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Nov 2010 10:24:13 -0500
+Received: from localhost6.localdomain6 ([141.21.4.196]) by exchange.fzi.de over TLS secured channel with Microsoft SMTPSVC(6.0.3790.4675);
+	 Mon, 22 Nov 2010 16:24:09 +0100
+Content-Disposition: inline
+In-Reply-To: <1290274368-3212-1-git-send-email-rctay89@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-OriginalArrivalTime: 22 Nov 2010 15:24:09.0987 (UTC) FILETIME=[4F734D30:01CB8A59]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161898>
 
 Hi,
 
-On Mon, Nov 22, 2010 at 10:22 PM, Patrick Doyle <wpdster@gmail.com> wro=
-te:
-> That looks kinda scary to me. =A0The last time I played with git-rese=
-t,
-> I ended up losing(*) the commit at the head of my branch. =A0((*) Wel=
-l,
-> I didn't "lose" it in the sense of "it's gone forever", but I lost it
-> in the sense of "it doesn't show up in git log anymore".)
 
-That's the whole idea of git reset. If you want to see what the "lost"
-commit was, try git reflog; it's very likely at HEAD@{1}.
+On Sun, Nov 21, 2010 at 01:32:48AM +0800, Tay Ray Chuan wrote:
+> Add basic completion for the three subcommands - show, expire, delete.
+> Try completing refs for these too.
 
---=20
-Cheers,
-Ray Chuan
+Heh, I've always thought reflog is plumbing, and that's why the
+completion script doesn't support it.
+
+> Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+> ---
+>  contrib/completion/git-completion.bash |   16 ++++++++++++++++
+>  1 files changed, 16 insertions(+), 0 deletions(-)
+> 
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index f710469..4007ca1 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -1632,6 +1632,22 @@ _git_rebase ()
+>  	__gitcomp "$(__git_refs)"
+>  }
+>  
+> +_git_reflog ()
+> +{
+> +	local SUB_CMDS=(show delete expire)
+> +	local cur="${COMP_WORDS[COMP_CWORD-1]}"
+> +
+> +	for val in ${SUB_CMDS[*]}; do
+> +		if [[ "$val" == "$cur" ]]; then
+> +			# this is a subcommand
+> +			__gitcomp "$(__git_refs)"
+> +			return
+
+This only looks at the previous word on the command line, and leads to
+wrong behavior when an option is used:
+
+  $ git reflog expire --verbose <TAB><TAB>
+  delete   expire   show     
+
+To prevent this you could use the __git_find_on_cmdline() helper
+function and follow how other completion functions use it.
+
+
+> +		fi
+> +	done
+> +
+> +	__gitcomp "${SUB_CMDS[*]}"
+> +}
+> +
+>  __git_send_email_confirm_options="always never auto cc compose"
+>  __git_send_email_suppresscc_options="author self cc bodycc sob cccmd body all"
+>  
+> -- 
+> 1.7.3.2.496.g9c54
+> 
+> 
