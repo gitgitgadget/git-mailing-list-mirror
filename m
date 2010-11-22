@@ -1,110 +1,96 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH] rebase --abort: do not update branch ref
-Date: Mon, 22 Nov 2010 07:23:27 -0500
-Message-ID: <AANLkTikwZTZhP5biBEsf62g+GTkZN7NwX=zeF2PKhmwO@mail.gmail.com>
-References: <1290337881-26449-1-git-send-email-martin.von.zweigbergk@gmail.com>
-	<7v1v6evyq5.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 22 13:23:41 2010
+From: Antonio Ospite <ospite@studenti.unina.it>
+Subject: [PATCH] t/t9001-send-email.sh: fix '&&' chain in some tests
+Date: Mon, 22 Nov 2010 13:31:49 +0100
+Message-ID: <1290429109-2318-1-git-send-email-ospite@studenti.unina.it>
+Cc: Antonio Ospite <ospite@studenti.unina.it>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 22 13:34:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKVQq-0007sQ-OM
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 13:23:41 +0100
+	id 1PKVbh-0005Oq-67
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 13:34:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755282Ab0KVMX3 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Nov 2010 07:23:29 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:51090 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754525Ab0KVMX2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 22 Nov 2010 07:23:28 -0500
-Received: by qwc9 with SMTP id 9so743847qwc.19
-        for <git@vger.kernel.org>; Mon, 22 Nov 2010 04:23:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=9vCjCDRgxLXIVa9LSRZ7voR9u8IC4PYlb4kSpXWtgMI=;
-        b=iNuZVHQ3RaRGGTMQ6fkHSfDJtTD+cIK/7a/DuxKdjTVr9iYPdz1oDIiZC4oekFZhSw
-         eHq5QynxEw/H1UT/Bk8DsrrWjxUQqAu43xhJgMvWkezYQP3BK5uf0yVUbAJFC9807eVP
-         dxU9EhvctWxOsWdbrK3JlbAXBzCdu5nV4aTOA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=yGSqVfLCCsxgizWkLIBbxi1A7mT6OIprX3WbydiNXa1EXlBxionR3+bX4QmTyabGMF
-         DkUr720LNA4iuLZg/RiTW2J4gcoRu91amiUkNJWMc8rXqDDzfwvGq6sQZ3X9X6okYjkW
-         c1CeaXRGnyFlymGiuOIhsoZIAV5Sfh1W9i4J4=
-Received: by 10.224.19.145 with SMTP id a17mr259091qab.194.1290428607690; Mon,
- 22 Nov 2010 04:23:27 -0800 (PST)
-Received: by 10.224.200.138 with HTTP; Mon, 22 Nov 2010 04:23:27 -0800 (PST)
-In-Reply-To: <7v1v6evyq5.fsf@alter.siamese.dyndns.org>
+	id S1754972Ab0KVMer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Nov 2010 07:34:47 -0500
+Received: from smtp209.alice.it ([82.57.200.105]:41985 "EHLO smtp209.alice.it"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754244Ab0KVMer (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Nov 2010 07:34:47 -0500
+Received: from jcn (82.60.124.113) by smtp209.alice.it (8.5.124.08)
+        id 4C1A27590ABC8205; Mon, 22 Nov 2010 13:34:43 +0100
+Received: from ao2 by jcn with local (Exim 4.72)
+	(envelope-from <ospite@studenti.unina.it>)
+	id 1PKVbW-0001Tw-3h; Mon, 22 Nov 2010 13:34:42 +0100
+X-Mailer: git-send-email 1.7.2.3
+X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161884>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161885>
 
-On Sun, Nov 21, 2010 at 10:11 PM, Junio C Hamano <gitster@pobox.com> wr=
-ote:
-> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
->
->> diff --git a/git-rebase.sh b/git-rebase.sh
->> index ec08f9c..3d194b1 100755
->> --- a/git-rebase.sh
->> +++ b/git-rebase.sh
->> @@ -278,12 +278,17 @@ do
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if test -d "$dotest=
-"
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 then
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 GIT_QUIET=3D$(cat "$dotest/quiet")
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 move_to_original_branch
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 dotest=3D"$GIT_DIR"/rebase-apply
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 GIT_QUIET=3D$(cat "$dotest/quiet")
->> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 move_to_original_branch
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fi
->
-> Micronit. =C2=A0It appears that GIT_QUIET is set to the same value in=
- either
-> case, so perhaps you would also want to move it outside of the if blo=
-ck,
-> i.e.
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0test -d "$dotest" || dotest=3D"$GIT_DIR/re=
-base-apply"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0GIT_QUIET=3D$(cat "$dotest/quiet)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0... your rewrite to move_to_original_branc=
-h here ...
->
-> no? =C2=A0Staring at it further, I wonder who pays attention to GIT_Q=
-UIET in
-> this codepath that will soon exit, though.
+t/README recommends chaining test assertions.
 
-Yes, I just didn't care to change it in this patch, because I'm changin=
-g
-this code in the refactor I'm currently working on. OTOH, I don't mind
-if you do squash that in either. It might make sense since we don't yet
-know if my refactoring series will accepted.
+Signed-off-by: Antonio Ospite <ospite@studenti.unina.it>
+---
 
-Btw, I'm sure you noticed it, but also I sent a little fix for the test
-included in this patch. I have never used the In-Reply-To header, so I'=
-m
-not sure I used it right (judging by how the threaded Gmane view
-presents it, I did not).
+Hi,
 
-Regards,
-Martin
+there are a couple of tests I didn't fix here, they are storing intermediate
+return values, see "confirm by default (due to cc)" and following in
+t/t9001-send-email.sh
+
+I don't know if chaining is correct already there.
+
+Thanks,
+   Antonio
+
+ t/t9001-send-email.sh |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
+index d1ba252..ac1af86 100755
+--- a/t/t9001-send-email.sh
++++ b/t/t9001-send-email.sh
+@@ -265,7 +265,7 @@ test_expect_success $PREREQ 'Author From: in message body' '
+ 		--to=nobody@example.com \
+ 		--smtp-server="$(pwd)/fake.sendmail" \
+ 		$patches &&
+-	sed "1,/^\$/d" < msgtxt1 > msgbody1
++	sed "1,/^\$/d" < msgtxt1 > msgbody1 &&
+ 	grep "From: A <author@example.com>" msgbody1
+ '
+ 
+@@ -276,7 +276,7 @@ test_expect_success $PREREQ 'Author From: not in message body' '
+ 		--to=nobody@example.com \
+ 		--smtp-server="$(pwd)/fake.sendmail" \
+ 		$patches &&
+-	sed "1,/^\$/d" < msgtxt1 > msgbody1
++	sed "1,/^\$/d" < msgtxt1 > msgbody1 &&
+ 	! grep "From: A <author@example.com>" msgbody1
+ '
+ 
+@@ -298,7 +298,7 @@ test_expect_success $PREREQ 'Invalid In-Reply-To' '
+ 		--in-reply-to=" " \
+ 		--smtp-server="$(pwd)/fake.sendmail" \
+ 		$patches \
+-		2>errors
++		2>errors &&
+ 	! grep "^In-Reply-To: < *>" msgtxt1
+ '
+ 
+@@ -574,7 +574,7 @@ EOF
+ "
+ 
+ test_expect_success $PREREQ '--suppress-cc=sob' '
+-	git config --unset sendemail.cccmd
++	git config --unset sendemail.cccmd &&
+ 	test_suppression sob
+ '
+ 
+-- 
+1.7.2.3
