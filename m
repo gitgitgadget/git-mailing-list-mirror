@@ -1,96 +1,78 @@
-From: Antonio Ospite <ospite@studenti.unina.it>
-Subject: [PATCH] t/t9001-send-email.sh: fix '&&' chain in some tests
-Date: Mon, 22 Nov 2010 13:31:49 +0100
-Message-ID: <1290429109-2318-1-git-send-email-ospite@studenti.unina.it>
-Cc: Antonio Ospite <ospite@studenti.unina.it>,
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: [PATCH] rebase -i: remove undocumented '--verify' flag
+Date: Mon, 22 Nov 2010 07:48:24 +0100
+Message-ID: <1290408504-14639-1-git-send-email-martin.von.zweigbergk@gmail.com>
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: git@vger.kernel.org, Nanako Shiraishi <nanako3@lavabit.com>,
 	Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 22 13:34:55 2010
+X-From: git-owner@vger.kernel.org Mon Nov 22 13:48:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKVbh-0005Oq-67
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 13:34:53 +0100
+	id 1PKVov-0004Tu-MG
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 13:48:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754972Ab0KVMer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Nov 2010 07:34:47 -0500
-Received: from smtp209.alice.it ([82.57.200.105]:41985 "EHLO smtp209.alice.it"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754244Ab0KVMer (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Nov 2010 07:34:47 -0500
-Received: from jcn (82.60.124.113) by smtp209.alice.it (8.5.124.08)
-        id 4C1A27590ABC8205; Mon, 22 Nov 2010 13:34:43 +0100
-Received: from ao2 by jcn with local (Exim 4.72)
-	(envelope-from <ospite@studenti.unina.it>)
-	id 1PKVbW-0001Tw-3h; Mon, 22 Nov 2010 13:34:42 +0100
-X-Mailer: git-send-email 1.7.2.3
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+	id S1756099Ab0KVMsa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Nov 2010 07:48:30 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:35670 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755471Ab0KVMs2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Nov 2010 07:48:28 -0500
+Received: by vws13 with SMTP id 13so3265777vws.19
+        for <git@vger.kernel.org>; Mon, 22 Nov 2010 04:48:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=SXvgbrAsg2iAUeR9IbxTN+Wrh0wriSWN7xPAasTffsU=;
+        b=oJ+OBuj0HWrtFh27g8714gkgmpZkUvm+ZwmhIKYAILGLPUerpHewrppX2FInaKpgJM
+         F5A+qvhaerCmDJUOyGmrIMlYUztSap17fSD81SAsBFM3qpTHnf/0XwqCiQ1h8Vztsxst
+         FquO2OAs/4xgQ2i8d4uaYPKs7a/lAQF9gHt+w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=EcwO9q5nMeJdo7tyJx4jWlZg0ExL7VNd3FiZ03pF3wIjkPQXHovU/7TH3XVQ0ZzhtA
+         92bXwbaGU8qu+kXil81iciZbE8Dxt+5biKKy7okWbwyjWH8F1Ov4zNRK+5jQGCuw0DC7
+         OD/pgb4KpB28/7ly6BopmIhV6ko7Kh2URxCNk=
+Received: by 10.220.188.68 with SMTP id cz4mr1453734vcb.74.1290430104638;
+        Mon, 22 Nov 2010 04:48:24 -0800 (PST)
+Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id q3sm948731vcr.27.2010.11.22.04.48.23
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 22 Nov 2010 04:48:23 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.190.gfb4ae
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161886>
 
-t/README recommends chaining test assertions.
+Remove the undocumented and unused '--verify' flag from interactive
+rebase.
 
-Signed-off-by: Antonio Ospite <ospite@studenti.unina.it>
+Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 ---
+This tiny and almost pointless patch has been in my refactor-rebase
+branch for quite some time. As it's not really related to the
+refactoring, I'm sending it off separately instead.
 
-Hi,
+ git-rebase--interactive.sh |    2 --
+ 1 files changed, 0 insertions(+), 2 deletions(-)
 
-there are a couple of tests I didn't fix here, they are storing intermediate
-return values, see "confirm by default (due to cc)" and following in
-t/t9001-send-email.sh
-
-I don't know if chaining is correct already there.
-
-Thanks,
-   Antonio
-
- t/t9001-send-email.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index d1ba252..ac1af86 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -265,7 +265,7 @@ test_expect_success $PREREQ 'Author From: in message body' '
- 		--to=nobody@example.com \
- 		--smtp-server="$(pwd)/fake.sendmail" \
- 		$patches &&
--	sed "1,/^\$/d" < msgtxt1 > msgbody1
-+	sed "1,/^\$/d" < msgtxt1 > msgbody1 &&
- 	grep "From: A <author@example.com>" msgbody1
- '
- 
-@@ -276,7 +276,7 @@ test_expect_success $PREREQ 'Author From: not in message body' '
- 		--to=nobody@example.com \
- 		--smtp-server="$(pwd)/fake.sendmail" \
- 		$patches &&
--	sed "1,/^\$/d" < msgtxt1 > msgbody1
-+	sed "1,/^\$/d" < msgtxt1 > msgbody1 &&
- 	! grep "From: A <author@example.com>" msgbody1
- '
- 
-@@ -298,7 +298,7 @@ test_expect_success $PREREQ 'Invalid In-Reply-To' '
- 		--in-reply-to=" " \
- 		--smtp-server="$(pwd)/fake.sendmail" \
- 		$patches \
--		2>errors
-+		2>errors &&
- 	! grep "^In-Reply-To: < *>" msgtxt1
- '
- 
-@@ -574,7 +574,7 @@ EOF
- "
- 
- test_expect_success $PREREQ '--suppress-cc=sob' '
--	git config --unset sendemail.cccmd
-+	git config --unset sendemail.cccmd &&
- 	test_suppression sob
- '
- 
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index a27952d..f7171e8 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -726,8 +726,6 @@ do
+ 	--no-verify)
+ 		OK_TO_SKIP_PRE_REBASE=yes
+ 		;;
+-	--verify)
+-		;;
+ 	--continue)
+ 		is_standalone "$@" || usage
+ 		get_saved_options
 -- 
-1.7.2.3
+1.7.3.2.190.gfb4ae
