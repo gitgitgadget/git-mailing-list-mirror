@@ -1,101 +1,78 @@
-From: tom fogal <tfogal@sci.utah.edu>
-Subject: Re: Git branch workflow
-Date: Mon, 22 Nov 2010 17:43:22 -0700
-Message-ID: <4CEB0E2A.5080304@sci.utah.edu>
-References: <20101122170805.8jtzkqwxpcog0kgk@dennymagicsite.com>
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH] git-gui: fix browsers [Up To Parent] in sub-sub-directories.
+Date: Mon, 22 Nov 2010 21:58:06 +0000
+Message-ID: <87vd3pf2c1.fsf@fox.patthoyts.tk>
+References: <1290199429-30421-1-git-send-email-bert.wesarg@googlemail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: denny@dennymagicsite.com
-X-From: git-owner@vger.kernel.org Tue Nov 23 01:44:22 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 23 03:17:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKgzd-0004Pt-BO
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 01:44:21 +0100
+	id 1PKiRn-0001FH-K9
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 03:17:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932617Ab0KWAoK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Nov 2010 19:44:10 -0500
-Received: from mail.sci.utah.edu ([155.98.58.80]:4405 "EHLO sci.utah.edu"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S932612Ab0KWAoJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Nov 2010 19:44:09 -0500
-Received: from dummy.name; Mon, 22 Nov 2010 17:44:09 -0700
-User-Agent: Mozilla-Thunderbird 2.0.0.24 (X11/20100329)
-In-Reply-To: <20101122170805.8jtzkqwxpcog0kgk@dennymagicsite.com>
+	id S1751100Ab0KWCRX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 22 Nov 2010 21:17:23 -0500
+Received: from smtp-out5.blueyonder.co.uk ([195.188.213.8]:58037 "EHLO
+	smtp-out5.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750863Ab0KWCRW (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 22 Nov 2010 21:17:22 -0500
+Received: from [172.23.144.245] (helo=asmtp-out1.blueyonder.co.uk)
+	by smtp-out5.blueyonder.co.uk with esmtp (Exim 4.52)
+	id 1PKiRS-0005js-QF; Tue, 23 Nov 2010 02:17:11 +0000
+Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
+	by asmtp-out1.blueyonder.co.uk with esmtpa (Exim 4.52)
+	id 1PKeOl-00034F-79; Mon, 22 Nov 2010 21:58:07 +0000
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id 8FFAD20880; Mon, 22 Nov 2010 21:58:06 +0000 (GMT)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+In-Reply-To: <1290199429-30421-1-git-send-email-bert.wesarg@googlemail.com>
+	(Bert Wesarg's message of "Fri, 19 Nov 2010 21:43:48 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161923>
 
-Hi Dennis,
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
 
-denny@dennymagicsite.com wrote:
-> my website was small enough where I usually fixed everything live on 
-> production server, including adding new features, doing bug fixes and so 
-> on.
-> 
-> Now, with git I can create branches in whatever order I want, and then 
-> merge them whenever I want and push things to production whenever I want.
-> With this, comes confusion of what a good branch workflow is.  And this 
-> will be my question -- in what order and from which branches to I create 
-> new branches and how do I merge them back.
+>browser_path used to end with a slash, so the regexp matches the empty string
+>and therefore removes nothing.
+>
+>Fix this.
+>
+>Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+>
+>---
+> git-gui/lib/browser.tcl |    2 +-
+> 1 files changed, 1 insertions(+), 1 deletions(-)
+>
+>diff --git a/git-gui/lib/browser.tcl b/git-gui/lib/browser.tcl
+>index c241572..a8c6223 100644
+>--- a/git-gui/lib/browser.tcl
+>+++ b/git-gui/lib/browser.tcl
+>@@ -121,7 +121,7 @@ method _parent {} {
+> 		if {$browser_stack eq {}} {
+> 			regsub {:.*$} $browser_path {:} browser_path
+> 		} else {
+>-			regsub {/[^/]+$} $browser_path {} browser_path
+>+			regsub {/[^/]+/$} $browser_path {/} browser_path
+> 		}
+> 		set browser_status [mc "Loading %s..." $browser_path]
+> 		_ls $this [lindex $parent 0] [lindex $parent 1]
 
-This is, of course, a matter of opinion.  Despite what I say below, I
-would say the best advice with git is: try it!  Experiment with a few
-different workflows.  Give each a week or two.  I think you'll find
-there are advantages to any approach, but there's one that works best
-for *you*.
-
-The nice thing about git is that you don't have to use the workflow that
-works for "me" (for generic "me") -- you get to adapt git to fit the
-workflow you have, instead of adapting your workflow to fit the git
-you've got.
-
-> Consider a specific scenario:
-> I am on dev server on master branch and I want to develop a specific 
-> feature F.
-> I cut a Feature branch F from master and start working on the feature. 
->  Once I am done with most of the work on F and it works reasonably well, 
-> I want to push it to production, but .. before I do I realize that I 
-> want to make some CSS fixes to the site, unrelated to other branches, 
-> and I can wait with pushing Feature branch to Production until I fix up 
-> CSS reasonably well.
-> Here is the question:  do I cut the CSS branch from Master or do I cut 
-> it from the Feature branch?
-
-I would personally base 'css' off of master.  Although with the caveat,
-since I just recently did something dumb and lost data <g>, that I would
-(now) push 'feature' to some backup repo first.  Not make it live, just
-push it somewhere so it's backed up.
-
-My logic is: a) the two things are logically disjoint.  I can always 
-decide later that I want to bring them together.  It's much harder to
-decide later that I want to pull them apart (though, admittedly, still 
-possible); b) pushing to production involves certain risks.  Maybe you 
-had a silly PEBKAC and broke some shell script, and now your entire site 
-gives 401 errors.  By keeping them separate you can push to production + 
-verify each branch separately, which hopefully makes the problem easier 
-to figure out should you have a hand-to-forehead moment.
-
-[snip]
-> Supplementary questions that may help define a good workflow for my case:
-> *  What if later a bug is discovered in the Feature.  If I already 
-> merged Feature branch into Master and deleted Feature branch, do I 
-> create a FeatureBugFix branch?  Or do I keep the original Feature branch 
-> without removing it for a while?  If so, for how long do I keep it?  Do 
-> I perhaps keep a general BugFix branch instead that I don't remove?
-
-I don't have a set guide for doing this myself.  I go through and delete 
-old branches whenever "git branch" grows so many lines of output that it 
-annoys me.  That said, it's extremely rare that I use a branch which has
-been merged back to master: instead I make a new bugfix-branch which is 
-based off of master (or, more commonly: the release branch).
-
-Cheers && HTH,
-
--tom
+Thanks - applied to git-gui master.
+-- 
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
