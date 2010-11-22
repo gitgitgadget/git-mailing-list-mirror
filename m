@@ -1,99 +1,120 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] t/t9001-send-email.sh: fix '&&' chain in some tests
-Date: Mon, 22 Nov 2010 11:00:40 -0600
-Message-ID: <20101122170040.GA2084@burratino>
-References: <1290429109-2318-1-git-send-email-ospite@studenti.unina.it>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: =?UTF-8?q?=5BPATCH=5D=20bash=20completion=3A=20add=20basic=20support=20for=20git-reflog?=
+Date: Tue, 23 Nov 2010 01:09:09 +0800
+Message-ID: <1290445749-4884-1-git-send-email-rctay89@gmail.com>
+References: <1290274368-3212-1-git-send-email-rctay89@gmail.com> <20101122152409.GA7010@neumann> <AANLkTinJPQF-khzViED+ROyojEr9nHrcgwKQWsDugD7Y@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Antonio Ospite <ospite@studenti.unina.it>
-X-From: git-owner@vger.kernel.org Mon Nov 22 18:00:56 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	SZEDER Gabor <szeder@ira.uka.de>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Nov 22 18:09:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKZl9-0006Hl-Um
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 18:00:56 +0100
+	id 1PKZth-0003ra-Cl
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 18:09:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752523Ab0KVRAs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Nov 2010 12:00:48 -0500
-Received: from mail-px0-f174.google.com ([209.85.212.174]:36606 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750830Ab0KVRAr (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Nov 2010 12:00:47 -0500
-Received: by pxi15 with SMTP id 15so1518370pxi.19
-        for <git@vger.kernel.org>; Mon, 22 Nov 2010 09:00:46 -0800 (PST)
+	id S1754646Ab0KVRJh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 22 Nov 2010 12:09:37 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:56698 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751810Ab0KVRJg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 22 Nov 2010 12:09:36 -0500
+Received: by wwa36 with SMTP id 36so7577409wwa.1
+        for <git@vger.kernel.org>; Mon, 22 Nov 2010 09:09:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=flTECGg08COO1BxfKAa1L4/8gJMeKj6Vo3165R+4nmA=;
-        b=pkmd9KPDXmlNrKWgZC92BrHiDDW80YCXuGTol3PIgKxjQxwsHB7PipWqDLly19UH6x
-         xNO+yY3xlWQKZOty7NTxweXXcq4vJC6TEJfqAThIkjCnI+7lCkwQyj6Z40qSEJ5Y74Di
-         Gi3xowdt/iMUxJY4wp/o6w8xgbYKap8QPWC1M=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=FZv1hf1BKkR5pRG6euqx5ql577ZIV5lYlzepwqx2hRc=;
+        b=V1bmT9AYPQ4L4sDAuOV6Fno7/JihVFXhKiNjMS5XsCfFr6BXms5uYvg7/Qci3hSnTR
+         9BIQJYh5Rla/ADSXyUKZr86EYJcPvhv9jYP22wAr4JOK16+ZLiva28ysY0pwHEjtaTdW
+         yxK//9Ef6ZKSFxHBm/iUEREt/whoDKVKLB9eM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=a/R9V1e87c1I6H3U/+UlmL7NSzVLDEUwGodEMbdN75QXCDJdWDDiHW6Ng7FRoCRSEc
-         M4fGVj8VfiYBPwD9G26aW9cnn7viaYeEsZvjshCvH6VD4ZZ9lv5gWHN+rS/oiTPIylaZ
-         pEuoeaR7XtKA4MICEGXPdiceMA17zt/xNqTyI=
-Received: by 10.229.99.84 with SMTP id t20mr5213839qcn.120.1290445246307;
-        Mon, 22 Nov 2010 09:00:46 -0800 (PST)
-Received: from burratino ([68.255.106.176])
-        by mx.google.com with ESMTPS id l14sm2976905qck.29.2010.11.22.09.00.43
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 22 Nov 2010 09:00:44 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1290429109-2318-1-git-send-email-ospite@studenti.unina.it>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=RUfGGOadZB+j4221QOfWvBRP0cHnUjqiipQ9E+yfN5gRW+2+mQE9YFeXZsg4KVoxlj
+         sZvjId0Mt/1SrGftfezhiIjIJwa0x7qnZUqUuOpoS61D0ul2kFS4bBpPwHDwh8NqFfft
+         QE2CWmQrTnW1UlHgI94qYKnJ21Capsx5P7YBM=
+Received: by 10.227.138.82 with SMTP id z18mr6249173wbt.56.1290445774578;
+        Mon, 22 Nov 2010 09:09:34 -0800 (PST)
+Received: from localhost.localdomain (cm69.zeta153.maxonline.com.sg [116.87.153.69])
+        by mx.google.com with ESMTPS id f14sm3443225wbe.20.2010.11.22.09.09.28
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 22 Nov 2010 09:09:33 -0800 (PST)
+X-Mailer: git-send-email 1.7.2.2.513.ge1ef3
+In-Reply-To: <AANLkTinJPQF-khzViED+ROyojEr9nHrcgwKQWsDugD7Y@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161901>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161902>
 
-Hi,
+"Promote" the reflog command out of plumbing, so that we now run
+completion for it. After all, it's listed under porcelain (ancillary),
+and we do run completion for those commands.
 
-Antonio Ospite wrote:
+Add basic completion for the three subcommands - show, expire, delete.
+Try completing refs for these too.
 
-> --- a/t/t9001-send-email.sh
-> +++ b/t/t9001-send-email.sh
-> @@ -261,10 +262,10 @@ test_expect_success $PREREQ 'Author From: in message body' '
-> test_expect_success $PREREQ 'Author From: in message body' '
-> 	clean_fake_sendmail &&
-> 	git send-email \
-> 		--from="Example <nobody@example.com>" \
->  		--to=nobody@example.com \
->  		--smtp-server="$(pwd)/fake.sendmail" \
->  		$patches &&
-> -	sed "1,/^\$/d" < msgtxt1 > msgbody1
-> +	sed "1,/^\$/d" < msgtxt1 > msgbody1 &&
->  	grep "From: A <author@example.com>" msgbody1
->  '
-[...]
->  		$patches &&
-> -	sed "1,/^\$/d" < msgtxt1 > msgbody1
-> +	sed "1,/^\$/d" < msgtxt1 > msgbody1 &&
-[...]
-> @@ -300,5 +300,5 @@ test_expect_success $PREREQ 'Invalid In-Reply-To' '
->  		$patches \
-> -		2>errors
-> +		2>errors &&
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
 
-Good.
+Changed from v1:=20
+ - picked up G=C3=A1bor's suggestion on using __git_find_on_cmdline()
+   to correctly handle situations where subcommands are used with dashe=
+d
+   options.
+ - don't "hide" reflog anymore - run completion for it too.
 
-> @@ -574,7 +574,7 @@ EOF
->  "
->  
->  test_expect_success $PREREQ '--suppress-cc=sob' '
-> -	git config --unset sendemail.cccmd
-> +	git config --unset sendemail.cccmd &&
+G=C3=A1bor: hmm, it really seems that reflog is treated as plumbing - n=
+o completion
+is done for it. Even get-tar-commit-id (I've never used this before) is=
+ treated
+better than reflog. Shall do something about it!
 
-This one needs a test_might_fail in front, since "git config --unset"
-would fail if some future change causes the configuration item not to
-be set in the first place.
+ contrib/completion/git-completion.bash |   13 ++++++++++++-
+ 1 files changed, 12 insertions(+), 1 deletions(-)
 
-Thanks.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index f710469..6732b1d 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -735,7 +735,6 @@ __git_list_porcelain_commands ()
+ 		quiltimport)      : import;;
+ 		read-tree)        : plumbing;;
+ 		receive-pack)     : plumbing;;
+-		reflog)           : plumbing;;
+ 		remote-*)         : transport;;
+ 		repo-config)      : deprecated;;
+ 		rerere)           : plumbing;;
+@@ -1632,6 +1631,18 @@ _git_rebase ()
+ 	__gitcomp "$(__git_refs)"
+ }
+=20
++_git_reflog ()
++{
++	local subcommands=3D"show delete expire"
++	local subcommand=3D"$(__git_find_on_cmdline "$subcommands")"
++
++	if [ -z "$subcommand" ]; then
++		__gitcomp "$subcommands"
++	else
++		__gitcomp "$(__git_refs)"
++	fi
++}
++
+ __git_send_email_confirm_options=3D"always never auto cc compose"
+ __git_send_email_suppresscc_options=3D"author self cc bodycc sob cccmd=
+ body all"
+=20
+--=20
+1.7.3.2.493.g2b058
