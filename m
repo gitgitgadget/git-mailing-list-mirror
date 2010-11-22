@@ -1,105 +1,92 @@
-From: David Barr <david.barr@cordelta.com>
-Subject: Re: Status of the svn remote helper project (Nov 2010, #2)
-Date: Mon, 22 Nov 2010 13:06:44 +1100
-Organization: Cordelta Pty Ltd
-Message-ID: <201011221306.45096.david.barr@cordelta.com>
-References: <20101107112129.GA30042@burratino> <BB713021-7826-4E9E-8576-7D1704BF517C@cordelta.com> <20101121230613.GA24397@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rebase --abort: do not update branch ref
+Date: Sun, 21 Nov 2010 19:11:46 -0800
+Message-ID: <7v1v6evyq5.fsf@alter.siamese.dyndns.org>
+References: <1290337881-26449-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
-	Tomas Carnecky <tom@dbservice.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 22 03:07:23 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 22 04:12:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKLoQ-0002Jf-MU
-	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 03:07:23 +0100
+	id 1PKMp9-0002i8-SD
+	for gcvg-git-2@lo.gmane.org; Mon, 22 Nov 2010 04:12:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756143Ab0KVCHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 21 Nov 2010 21:07:15 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:36545 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755371Ab0KVCHO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 21 Nov 2010 21:07:14 -0500
-Received: by gwb20 with SMTP id 20so1040141gwb.19
-        for <git@vger.kernel.org>; Sun, 21 Nov 2010 18:07:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:sender:from:organization:to
-         :subject:date:user-agent:cc:references:in-reply-to:mime-version
-         :content-type:content-transfer-encoding:message-id;
-        bh=9CfIbslTTywmQlkjxBV4HYnZ0DOUXekO5IADsYxe5TA=;
-        b=TTAZXhbsZgrniqx27NqI5Pi1re+kfjgDkPHcrBUx99gMFt3u0QQPHhrvIrb1pllNEN
-         N0Fwwg01FatJteM68+HczFAt0JcvSXk+opUaaAH1wksad4RyAJ6kld1uHbFAjiwL2fEU
-         6tn8dwoTnuIfVdv9VxPBHk9pCmzGrjxnG6v7w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=sender:from:organization:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :message-id;
-        b=Kg0G9e7p3XdSKfbtLW4S4BXkayZKHYyMG6YRkuh4c1QIELtIPzIW8nrulTsXZMLqjP
-         Ebdssq62o+wsg+cx+xyIq8k/azhoZZneOyhRdRHnjwMOHU3jGDDeFd46qzBTEboaFJ+V
-         Eb4OL8ghRgUcDQUeX1x76MKHB57zU7XkT+kxs=
-Received: by 10.150.206.6 with SMTP id d6mr3348652ybg.242.1290391633608;
-        Sun, 21 Nov 2010 18:07:13 -0800 (PST)
-Received: from dba.localnet ([119.15.97.146])
-        by mx.google.com with ESMTPS id p20sm1631713ybe.5.2010.11.21.18.07.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 21 Nov 2010 18:07:12 -0800 (PST)
-User-Agent: KMail/1.13.5 (Linux/2.6.35-22-generic; KDE/4.5.1; x86_64; ; )
-In-Reply-To: <20101121230613.GA24397@burratino>
+	id S1756289Ab0KVDMG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 21 Nov 2010 22:12:06 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44210 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756220Ab0KVDMF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 21 Nov 2010 22:12:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3EBBA2221;
+	Sun, 21 Nov 2010 22:12:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=8yrU+OFzjxnp8YDRnxNWktw+kKk=; b=tIMlxgpfRS3VUylC7gjbAC7
+	drVv2t4FMfE6q2iWz0BQRKlfE0VVXpvNxvXESEYoMTtCsCudMp1ftpO4RPtj0JOB
+	1bMCL8DvCr12guUSAN+22bhwVHrStEhNIWxokUVDNwTpyqaJYi3GyiG/7eZKPENx
+	+pH8YMO9ETl4lgl/ulZc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=lM4CqK9xtQ7cC1QCvHDyKfOaxWoQfpGyD1rM961n+nzMqLmga
+	xZTb9gL51ENZRUrUfGVYz+hE/a28nLez6t3Pho17oSM+XwJXXN2S4Q3kdZUwpbsh
+	xwIJ7mglTc8O1t6XCmqahx5ZPTXFsql9z6D00QGQ3Xge3N3Ue50d4aWV4E=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0F3BD221F;
+	Sun, 21 Nov 2010 22:12:11 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9F724221E; Sun, 21 Nov 2010
+ 22:12:06 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4BF83EEC-F5E6-11DF-BF4E-B53272ABC92C-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161879>
 
-Hi,
+Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 
-> >> A delta in r36 of <http://svn.apache.org/repos/asf> does not apply
-> >> with this brand of svn-fe.
-> >
-> > That's odd, I was able to import up to r354 before receiving:
-> > fatal: missing newline after cat-blob response
-> 
-> Apparently sometimes deltas use the whole preimage and sometimes they
-> don't.
-> 
-> Here's a fix (still needs a simple reproduction script).
+> diff --git a/git-rebase.sh b/git-rebase.sh
+> index ec08f9c..3d194b1 100755
+> --- a/git-rebase.sh
+> +++ b/git-rebase.sh
+> @@ -278,12 +278,17 @@ do
+>  		if test -d "$dotest"
+>  		then
+>  			GIT_QUIET=$(cat "$dotest/quiet")
+> -			move_to_original_branch
+>  		else
+>  			dotest="$GIT_DIR"/rebase-apply
+>  			GIT_QUIET=$(cat "$dotest/quiet")
+> -			move_to_original_branch
+>  		fi
 
-I'm testing this path along with the following changes.
-The first just removes a compile-time warning.
-The second fixes a memory leak.
-Sorry, my send-email-fu is not up to scratch.
+Micronit.  It appears that GIT_QUIET is set to the same value in either
+case, so perhaps you would also want to move it outside of the if block,
+i.e.
 
-Signed-off-by: David Barr <david.barr@cordelta.com>
----
-diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
-index 02456cf..a95a5c9 100644
---- a/vcs-svn/fast_export.c
-+++ b/vcs-svn/fast_export.c
-@@ -127,7 +127,6 @@ static long apply_delta(uint32_t mark, off_t len, struct 
-line_buffer *input,
-                die("cannot open temporary file for blob retrieval");
-        if (old_mark) {
-                const char *response;
--               off_t dummy;
-                printf("cat-blob :%"PRIu32"\n", old_mark);
-                fflush(stdout);
-                response = get_response_line();
-@@ -147,6 +146,7 @@ static long apply_delta(uint32_t mark, off_t len, struct 
-line_buffer *input,
-        ret = buffer_tmpfile_prepare_to_read(&postimage);
-        if (ret < 0)
-                die("cannot read temporary file for blob retrieval");
-+       strbuf_release(&preimage.buf);
-        return ret;
- }
- 
+	test -d "$dotest" || dotest="$GIT_DIR/rebase-apply"
+        GIT_QUIET=$(cat "$dotest/quiet)
+        ... your rewrite to move_to_original_branch here ...
+
+no?  Staring at it further, I wonder who pays attention to GIT_QUIET in
+this codepath that will soon exit, though.
+
+> +		head_name="$(cat "$dotest"/head-name)" &&
+> +		case "$head_name" in
+> +		refs/*)
+> +			git symbolic-ref HEAD $head_name ||
+> +			die "Could not move back to $head_name"
+> +			;;
+> +		esac
+>  		git reset --hard $(cat "$dotest/orig-head")
+>  		rm -r "$dotest"
+>  		exit
