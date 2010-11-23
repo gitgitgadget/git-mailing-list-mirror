@@ -1,124 +1,86 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [RFC PATCH 4/6] win32: dirent: handle errors
-Date: Tue, 23 Nov 2010 18:30:42 +0100
-Message-ID: <1290533444-3404-5-git-send-email-kusmabite@gmail.com>
-References: <1290533444-3404-1-git-send-email-kusmabite@gmail.com>
-Cc: msysgit@googlegroups.com, j6t@kdbg.org, gitster@pobox.com,
-	jrnieder@gmail.com
-To: git@vger.kernel.org
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: disabling PROPFIND when using smart http
+Date: Tue, 23 Nov 2010 09:31:24 -0800
+Message-ID: <AANLkTikoGS4X8YbNgLT=Akx5RBj2d4Uybdx5QnJ+CWNo@mail.gmail.com>
+References: <AANLkTikwqtPDDk6i0nMKJiXn5cc3DmTGYp0==daX96yd@mail.gmail.com>
+	<20101123161018.GB10420@LK-Perkele-V2.elisa-laajakaista.fi>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Sitaram Chamarty <sitaramc@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
 X-From: git-owner@vger.kernel.org Tue Nov 23 18:31:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKwiO-0003bQ-7b
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 18:31:36 +0100
+	id 1PKwiN-0003bQ-3Y
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 18:31:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755898Ab0KWRbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Nov 2010 12:31:33 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:38329 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755827Ab0KWRb1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Nov 2010 12:31:27 -0500
-Received: by mail-ey0-f174.google.com with SMTP id 27so4809402eye.19
-        for <git@vger.kernel.org>; Tue, 23 Nov 2010 09:31:26 -0800 (PST)
+	id S1755890Ab0KWRb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Nov 2010 12:31:29 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:43105 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755780Ab0KWRb0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Nov 2010 12:31:26 -0500
+Received: by ewy5 with SMTP id 5so2584583ewy.19
+        for <git@vger.kernel.org>; Tue, 23 Nov 2010 09:31:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=lf5rUeeFd1E/4mUQBdhyJC44D90e1+d3TsT708f7qvg=;
-        b=eKCUWpAY59ETLyzpWBoQ7BuWnouaC24mgPliVmtalCGiEvp+sjt32FK+4S6uIfPVcE
-         owPThfGQCx9XjtFUVZ3vfvsLIQ9mRwi+XF6UPLwvOjW2SPmiXKUO1EEKEG3oIVqEtT2W
-         ALa1RAdRkdF4aZrWoD0XK/wgmO3FLNUqLB1LY=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=xd87S4zxw6X0SwBMZq1YA2X+tIm+hkx7ucQm1rK9UA0=;
+        b=r8p4uiH9f08Al/dNFf9k/CxYG+KfttkjSWPqEuyuGYGIZsFZkZvybkEQejTXItEqNr
+         yZQLLO2Kz+9L0JAwHfNwjdl95wq0iscOiEgQzVHp3USO9F2Sjy6dqz0h9ZXJD+TCCCBt
+         FNfB9fwdcD/iy9/68xuJYmc1+M4SNTl4sdX70=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=JkA6CupdYxGaZK1I+mMZWmgGW5E5GfwABukOnJa54ti8P5H8fuKT5KSBP2RMfHchcw
-         THt4NnDkWouThcWwX6HgkC9djKzNwk3mKHxq3inlN4LAJXFG+l1vfppIgflw+sZgKu88
-         yDR++vSaChgWNBF0hCC7NBDRmHI0l3eFxZUvY=
-Received: by 10.14.126.69 with SMTP id a45mr1734499eei.15.1290533486637;
-        Tue, 23 Nov 2010 09:31:26 -0800 (PST)
-Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
-        by mx.google.com with ESMTPS id v51sm6012931eeh.22.2010.11.23.09.31.25
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 23 Nov 2010 09:31:26 -0800 (PST)
-X-Mailer: git-send-email 1.7.3.2.493.ge4bf7
-In-Reply-To: <1290533444-3404-1-git-send-email-kusmabite@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=TBiSRYMqPMyWQ5tkuip4IweE+hDTiBw6yr9bmEa1hF8pXq3F4n1laaLQRSmbg5tQb0
+         VLozXn3QHhUU5009TIsVAu5sLtJjjDv4IY4EhBdBEjR0hypr8yn8zW+QE1zaH4qXfPl6
+         WE93biTw4LV77GBedFVPvutoXEnPUY6JidEXU=
+Received: by 10.14.37.10 with SMTP id x10mr5929241eea.6.1290533485007; Tue, 23
+ Nov 2010 09:31:25 -0800 (PST)
+Received: by 10.14.119.197 with HTTP; Tue, 23 Nov 2010 09:31:24 -0800 (PST)
+In-Reply-To: <20101123161018.GB10420@LK-Perkele-V2.elisa-laajakaista.fi>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161987>
 
-Previously all error conditions were ignored. Be nice, and set errno
-when we should.
+Hey,
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
----
- compat/mingw.c |    2 +-
- compat/msvc.c  |   28 +++++++++++++++++++++++++++-
- 2 files changed, 28 insertions(+), 2 deletions(-)
+On Tue, Nov 23, 2010 at 8:10 AM, Ilari Liusvaara
+<ilari.liusvaara@elisanet.fi> wrote:
+> Apparently pusher is falling back to dumb WebDAV push for some
+> reason. And then failing because server does not support it
+> or isn't configured apporiately for it.
 
-diff --git a/compat/mingw.c b/compat/mingw.c
-index fdbf093..d8fd5d8 100644
---- a/compat/mingw.c
-+++ b/compat/mingw.c
-@@ -1584,7 +1584,7 @@ struct dirent *mingw_readdir(DIR *dir)
- 	HANDLE handle;
- 	struct mingw_DIR *mdir = (struct mingw_DIR*)dir;
- 
--	if (!dir->dd_handle) {
-+	if (!dir || !dir->dd_handle) {
- 		errno = EBADF; /* No set_errno for mingw */
- 		return NULL;
- 	}
-diff --git a/compat/msvc.c b/compat/msvc.c
-index 38f2d92..8417fd3 100644
---- a/compat/msvc.c
-+++ b/compat/msvc.c
-@@ -5,8 +5,29 @@
- 
- DIR *opendir(const char *name)
- {
--	int len = strlen(p->dd_name);
-+	DWORD attrs = GetFileAttributes(name);
-+	int len;
- 	DIR *p;
-+
-+	/* check for valid path */
-+	if (attrs == INVALID_FILE_ATTRIBUTES) {
-+		errno = ENOENT;
-+		return NULL;
-+	}
-+
-+	/* check if it's a directory */
-+	if (!(attrs & FILE_ATTRIBUTE_DIRECTORY)) {
-+		errno = ENOTDIR;
-+		return NULL;
-+	}
-+
-+	/* check that the pattern won't be too long for FindFirstFileA */
-+	len = strlen(name);
-+	if (len + 2 >= MAX_PATH) {
-+		errno = ENAMETOOLONG;
-+		return NULL;
-+	}
-+
- 	p = xmalloc(sizeof(DIR) + len + 2);
- 	memset(p, 0, sizeof(DIR) + len + 2);
- 	strcpy(p->dd_name, name);
-@@ -18,6 +39,11 @@ DIR *opendir(const char *name)
- }
- int closedir(DIR *dir)
- {
-+	if (!dir) {
-+		errno = EBADF;
-+		return -1;
-+	}
-+
- 	if (dir->dd_handle != (long)INVALID_HANDLE_VALUE)
- 		FindClose((HANDLE)dir->dd_handle);
- 	free(dir);
--- 
-1.7.3.2.493.ge4bf7
+Yes, the client will fall back to 'dumb' HTTP stuff if the server does
+not respond properly to the initial /info/refs GET call.  I believe
+it's something like if the client asks for
+
+/info/refs?service=git-upload-pack
+
+and the server does not respond with the first line being:
+
+# service=git-upload-pack
+
+or the Content-Type header being:
+
+application/x-git-upload-pack-advertisement
+
+I believe either of those being absent will cause the client to think
+that it's not a smart server, so it falls back to the DAV based push.
+If you let us know what the curl output before that point was, or what
+your apache config looks like, we might be able to help figure out
+what's wrong with the server.
+
+I got these DAV fallbacks all the time when my proxy wasn't letting
+the /info/refs calls through to Apache properly.
+
+Scott
