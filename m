@@ -1,75 +1,120 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: vcs for hefty video and graphics files
-Date: Tue, 23 Nov 2010 14:41:50 -0600
-Message-ID: <20101123204149.GA2373@burratino>
-References: <877hg55iyd.fsf@newsguy.com>
- <icg5ia$5an$1@dough.gmane.org>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: Can't build doc anymore (v1.7.3.2)
+Date: Tue, 23 Nov 2010 21:48:46 +0100
+Message-ID: <m2fwur7olt.fsf@gmail.com>
+References: <m2oc9hkurl.fsf@gmail.com>
+	<1290458128.29678.23.camel@drew-northup.unet.maine.edu>
+	<m2k4k5ks0b.fsf@gmail.com>
+	<1290461070.5468.5.camel@drew-northup.unet.maine.edu>
+	<m2bp5glbrp.fsf@gmail.com> <4CEB7F1F.809@drmicha.warpmail.net>
+	<1290517990.10366.17.camel@drew-northup.unet.maine.edu>
+	<4CEBC8C9.4010905@drmicha.warpmail.net> <m2d3pwj8th.fsf@gmail.com>
+	<1290532016.10892.40.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Philippe Lhoste <PhiLho@GMX.net>
-X-From: git-owner@vger.kernel.org Tue Nov 23 21:42:23 2010
+Cc: git@vger.kernel.org, git@drmicha.warpmail.net
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Tue Nov 23 21:49:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKzgw-0001jm-Ih
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 21:42:18 +0100
+	id 1PKznQ-00053t-4U
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 21:49:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752544Ab0KWUl7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Nov 2010 15:41:59 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:57856 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752514Ab0KWUl6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Nov 2010 15:41:58 -0500
-Received: by vws13 with SMTP id 13so4571881vws.19
-        for <git@vger.kernel.org>; Tue, 23 Nov 2010 12:41:58 -0800 (PST)
+	id S1752212Ab0KWUsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Nov 2010 15:48:55 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:43653 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752179Ab0KWUsy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Nov 2010 15:48:54 -0500
+Received: by wwa36 with SMTP id 36so9113521wwa.1
+        for <git@vger.kernel.org>; Tue, 23 Nov 2010 12:48:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=ysIr8tx824yLAIuZCAWKnKXArDflq8rIlA03PJn6JSk=;
-        b=G0OfXI0Sl6ssQ75Mv1HKr9godDNtz2P7wdXVHc4fFog4UZzT2otObC6VfNH+O28VUO
-         E7YTXRgasprEKu+pIN17OWgH4NQLAF/azwpVboPej+VUTf91XkPwc2gvTAE+zQRlQ+pN
-         dCgJnCbXb8LUZ4SkOAIt7A2gA0f1t0tzif6XU=
+        h=domainkey-signature:received:received:from:to:cc:subject:references
+         :date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        bh=OZRLq/gU/4+Uko5VzwxtCGPV38KgxMsNJVb1i8rKYtI=;
+        b=HnzIaHGkmCVphXkHq9szXyOb5VgBSu1ULEnQsaEpiB+kbjh+tAQKV43IDYvurFTPBh
+         8Zo404FnIOv6Upe93r3ABaIz1Bh3zzBFcDZEv0hT7z5//rhtywfZcA3rEF9Ft2oCTERz
+         gXeuCye5PPQisVIbxJ/e9Uk2YuRrAMMZpL+MA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=omrBUEKHmu2r+4N5YSu43s/ZzkcGSp73tfg+HYGxOmA2Xsv+YWgyBCSIAsTHJ7/ZoN
-         ttqczIZlkh36Idkr5Mfl9pep1VSidR99q5tq3p2QIb2oOx/219DctFP/i6PpEcbq4JLi
-         S0F9hm+aziJE7AcbS5gtJHlV2ULlsO66nTnEc=
-Received: by 10.220.94.207 with SMTP id a15mr1687102vcn.202.1290544916566;
-        Tue, 23 Nov 2010 12:41:56 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
-        by mx.google.com with ESMTPS id j21sm1457834vcr.10.2010.11.23.12.41.54
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 23 Nov 2010 12:41:55 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <icg5ia$5an$1@dough.gmane.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        b=tXOaRqMBC7yBzKvzHQCBT/C9dLNdUA3XQpJiiB/ExOIFzYlR5o/nU2GYvENoMI/u/g
+         JhZSEg/CUGNc2Mc3lxHv3kBO73/zsjCBdQTfn4goJJP/WR8ZE1zwi1bDxSJ8nBc77gIm
+         lxiHE57M82bJ5rIULsA2m9VQE3nPoTkiR7E4M=
+Received: by 10.227.68.206 with SMTP id w14mr8228633wbi.144.1290545332482;
+        Tue, 23 Nov 2010 12:48:52 -0800 (PST)
+Received: from localhost (au213-1-82-235-205-153.fbx.proxad.net [82.235.205.153])
+        by mx.google.com with ESMTPS id h29sm4401960wbc.3.2010.11.23.12.48.49
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 23 Nov 2010 12:48:50 -0800 (PST)
+In-Reply-To: <1290532016.10892.40.camel@drew-northup.unet.maine.edu> (Drew
+	Northup's message of "Tue, 23 Nov 2010 12:06:56 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162026>
 
-Philippe Lhoste wrote:
+Drew Northup <drew.northup@maine.edu> writes:
 
-> Some game makers keep track of their (large) binary files, along
-> with the rest of the project (source code). Rarely in isolation.
-> Perforce and PlasticSCM both boast superior support of these files,
-> I won't comment on these allegations (over other VCS), just having
-> no experience here.
+> On Tue, 2010-11-23 at 17:36 +0100, Francis Moreau wrote:
+>> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>> 
+>> [...]
+>
+>> 
+>> >> I recommend re-installing the docbook-dtds package alone and in
+>> >> isolation from other Yum/RPM transactions. If the xmlcatalog file is
+>> >> correctly regenerated AND the docbook files are there AND you have
+>> >> (re)run ./configure prior to running make AND you don't have filesystem
+>> >
+>> > Don't do that unless you're using configure for git usually. I don't
+>> > think Francis is, he's setting make variables.
+>> >
+>> 
+>> I won't, I just call make with some variables set.
+>> 
+>> >> errors THEN you should have a successful build. (Barring something that
+>> >> crawls up out of the rabbit hole--other than a rabbit.)
+>> >> 
+>> >> Fix the most obvious possible problems first before seeking
+>> >> off-the-beaten-path solutions or worse blaming somebody.
+>> >> 
+>> >
+>> > ???
+>> >
+>> > catalog sent to Francis off-list, which closes this topic for me.
+>> 
+>> Not really I'm afraid...
+>> 
+>>   xmlto -m manpage-normal.xsl --skip-validation man git-diff-index.xml
+>>   I/O error : Attempt to load network entity http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd
+>>   /home/fmoreau/git/Documentation/git-diff-index.xml:2: warning: failed to load external entity "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
+>>   D DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
+>> 
+>> This is with your catalog.
+>
+> I really hope you don't have any filesystem errors. May be worth
+> checking before attempting to reinstall the docbook-dtds package.
+>
+> In any case, you are apparently missing the docbook XML 4.5 DTD/XSL
+> files (from your local cache). It automagically fails over to trying to
+> fetch them over the internet (which I've noted doesn't work very well).
 
-One small thing to add: for this use case, you might like git-annex[1].
+Ok, I fixed the problem by reinstalling the following packages:
 
-It is a shame no single mailing list to follow up to was mentioned.
-Hopefully the reply will get to Harry, anyway.
+    - docbook-style-xsl
+    - docbook-dtds
 
-Regards,
-Jonathan
+I suspect something went wrong during Fedora major updates, at least
+that's the one I'm going to blame for now ;)
 
-[1] http://git-annex.branchable.com/
+Thanks both of you for your help.
+-- 
+Francis
