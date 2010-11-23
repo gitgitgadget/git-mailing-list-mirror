@@ -1,80 +1,110 @@
-From: Jeenu V <jeenuv@gmail.com>
-Subject: Re: Git reset -p on working tree
-Date: Tue, 23 Nov 2010 18:30:39 +0530
-Message-ID: <AANLkTimEOULR8_PAs5iPu7z+n4DQPSyDKYg8RghZxosz@mail.gmail.com>
-References: <AANLkTimc=Dt9YSu=J=7C-f1hZ9UODU7VHu6oD8dmFX3N@mail.gmail.com>
- <AANLkTimP9zr=wQDYeBxtvYCE1mZ1aHXQ_nLOxGFfR9YD@mail.gmail.com>
- <AANLkTimQ644C-dEoJTj8bNd9y+YzpMez7D1KLZFNEe7c@mail.gmail.com>
- <AANLkTindHnjeXEGbKWiQkWgoUBwqZbdx71sQwNr_gFp0@mail.gmail.com> <AANLkTi=5w3YpYu0_WbmHud0BUkO2BqYNVezWDMkCaSj2@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: bug: unexpected output for "git st" + suggestion
+Date: Tue, 23 Nov 2010 20:08:07 +0700
+Message-ID: <AANLkTikxMXRiCYE=ny1tfrS64P0ywAHP_9eLJJzNUG3Q@mail.gmail.com>
+References: <AANLkTimdKoGHapMTrA-bf_mEyMAEiiM0ALvLbZX8QJpv@mail.gmail.com>
+ <AANLkTinFMn4V3c3yV6j72eqj5=v4jW7Uh3fmNDOyYjnT@mail.gmail.com> <AANLkTinj3ryChGKV8c6fHSD=aickmz0TMos4k0RYGKvo@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: knittl <knittl89@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 23 14:04:57 2010
+To: =?UTF-8?B?VGFyZWsgWmlhZMOp?= <ziade.tarek@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 23 14:08:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKsYK-0004rw-JB
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 14:04:56 +0100
+	id 1PKsc0-0006mx-Ns
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 14:08:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752154Ab0KWNEv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Nov 2010 08:04:51 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:63205 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751584Ab0KWNEu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Nov 2010 08:04:50 -0500
-Received: by yxn35 with SMTP id 35so66744yxn.19
-        for <git@vger.kernel.org>; Tue, 23 Nov 2010 05:04:50 -0800 (PST)
+	id S1753730Ab0KWNIk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Nov 2010 08:08:40 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:46455 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753568Ab0KWNIj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Nov 2010 08:08:39 -0500
+Received: by wyb28 with SMTP id 28so8259104wyb.19
+        for <git@vger.kernel.org>; Tue, 23 Nov 2010 05:08:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=eoDYusIIGoYdsS/FojJ5Oc6P0WUQDZqRFewTptq1SN4=;
-        b=bPJGmJ6tD+qCa2MViQfM0Q7CRHwCa0CGmIMlg0nesznkb50kI9GlKIudETH7/GZ7sV
-         IP0qoz+UeyqEwER3ZZbHCQsPSr3r67OyN7vgKu0DW3NZXXaNeTrRK35pG27MomgW/XwM
-         A3hVEjOy5LnWINSrrmUbmFzGSvAnv0ASJ+NEU=
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=PKcIC0OFBI6oUIJYA74u2TQ1cSt4r0VUkO93xv/RuoY=;
+        b=ZEvfd09wgJpZEq7Jci7YCoWgdd8aaNcT7wsY3W0DwkUKCFU00HgjM9vYTRNZrLaied
+         wX4JF8aAxtCf6yJ8SdSDJ31Hzanelre9lnLhdtP/hPg3TlC24y+AypNb050IH9M2NLqz
+         bD6qf167S2daYLVMhqtSwm5x3ojD4Nf6zmJ8g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=NwCEv4NAM75sfbdc9uqJrLOrIWZbnZm3QVlT/V8pvWc8qb7xVNPjPgMb0mtI8KMmjS
-         hXL610EJIZLg4+gW35w8E6u4VLbi6NgWREkrkAm+oDK7gCC8zXICagJkBic0viplMxXi
-         9SS6SisTe+4aAO/L4fOX9Lbi8Ep0FuHz4gx/o=
-Received: by 10.216.20.201 with SMTP id p51mr6545883wep.33.1290517387775; Tue,
- 23 Nov 2010 05:03:07 -0800 (PST)
-Received: by 10.216.10.209 with HTTP; Tue, 23 Nov 2010 05:00:39 -0800 (PST)
-In-Reply-To: <AANLkTi=5w3YpYu0_WbmHud0BUkO2BqYNVezWDMkCaSj2@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        b=d1z/5PMflju36wcM27JI8RXMVu8e0fP/QOvR8/mTjIWj5BwJrIvUBpqTQPKuZaIjMl
+         KkvaPR4U6Q5NJzMkoSnOeuu6Ty4Xe8+MixVFohpqY1GALgOPRB8Nt8o7j99bLoXC8NUf
+         biHVoIh0zVGyyceV84agDAtrw2LbNU3xy+p6E=
+Received: by 10.216.175.73 with SMTP id y51mr6598360wel.41.1290517717631; Tue,
+ 23 Nov 2010 05:08:37 -0800 (PST)
+Received: by 10.216.172.199 with HTTP; Tue, 23 Nov 2010 05:08:07 -0800 (PST)
+In-Reply-To: <AANLkTinj3ryChGKV8c6fHSD=aickmz0TMos4k0RYGKvo@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161955>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161956>
 
-On Tue, Nov 23, 2010 at 4:28 PM, knittl <knittl89@googlemail.com> wrote:
-> `git reset` seldomly affects the working tree, unless using `--hard`,
-> `--merge` or `--keep`, and those switches are potentially dangerous if
-> you are not aware of the implications to your worktree and index.
+On Tue, Nov 23, 2010 at 7:49 PM, Tarek Ziad=C3=A9 <ziade.tarek@gmail.co=
+m> wrote:
+> On Tue, Nov 23, 2010 at 1:40 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.=
+com> wrote:
+>> On Tue, Nov 23, 2010 at 7:23 PM, Tarek Ziad=C3=A9 <ziade.tarek@gmail=
+=2Ecom> wrote:
+>>> Hello,
+>>>
+>>> I am new to Git and I tried to run "git st"
+>>>
+>>> I have found one small bug: "status" is not listed in the help scre=
+en
+>>> Git displays in that case.
+>>>
+>>> $ git st
+>>> git: 'st' is not a git command. See 'git --help'.
+>>>
+>>> Did you mean one of these?
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0reset
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0stage
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0stash
+>>
+>> It's heuristics, based on the assumption that you mistype a command =
+by
+>> a letter or two.
+>> It gives helpful suggestions most of the time, but
+>> you can't expect it to be always right, especially when "st" is not =
+a
+>> mistyping. "git --help" does show "status" though so I guess it's ok=
+=2E
 >
-> without options reset undoes a previous add, i.e. remove changes from
-> the index, but not the working tree.
+> Yes, I understood this, but given the list of base commands git comes
+> with, if "st" gives "stage" and "stash", it would find it logical to
+> give also "status", by listing commands that starts with 'st'
 >
-> git reset manpage mentions git-checkout:
+> st
+> stage
+> stash
+> status
 
-Agreed. What I'm saying is most manuals/guides out there tips user to
-use 'git reset --hard' to discard changes in the working directory and
-restore the pristine copy of files. 'reset' then becomes synonymous to
-discard, and it kind of is but for a different reason. Because other
-commands offer -p for selective operations, one might try to discard
-selectively, and end up using 'git reset -p --hard', which obviously
-isn't going to work.
+There's another command that starts with "st": stripspace (it's a
+lowlevel command by the way). It's going to be a lot more if you type
+"git m" and expect all commands starting with 'm'. Personally I would
+do "git help -a|grep st" in that case. Hmm.. "git apropos" could be a
+good idea.
 
-Knowing the users intention in such cases, I was suggesting the error
-message could hint the right command (just like git commit hints user
-to use git-add when one does 'git commit' with a dirty working tree).
+> That's what the tab completion does:
+>
+> $ git st<tab>
+> stage =C2=A0 =C2=A0stash =C2=A0 =C2=A0status
 
-But that's just me.
-
--- 
-Jeenu
+And it does for tab _completion_ (notice stripspace is missing,
+git-completion.sh only lists high level commands). The above case is
+to help mistyping.
+--=20
+Duy
