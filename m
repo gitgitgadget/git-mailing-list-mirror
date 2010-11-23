@@ -1,96 +1,92 @@
-From: Philippe Lhoste <PhiLho@GMX.net>
-Subject: Re: vcs for hefty video and graphics files
-Date: Tue, 23 Nov 2010 11:37:46 +0100
-Message-ID: <icg5ia$5an$1@dough.gmane.org>
-References: <877hg55iyd.fsf@newsguy.com>
+From: knittl <knittl89@googlemail.com>
+Subject: Re: Git reset -p on working tree
+Date: Tue, 23 Nov 2010 11:58:46 +0100
+Message-ID: <AANLkTi=5w3YpYu0_WbmHud0BUkO2BqYNVezWDMkCaSj2@mail.gmail.com>
+References: <AANLkTimc=Dt9YSu=J=7C-f1hZ9UODU7VHu6oD8dmFX3N@mail.gmail.com>
+ <AANLkTimP9zr=wQDYeBxtvYCE1mZ1aHXQ_nLOxGFfR9YD@mail.gmail.com>
+ <AANLkTimQ644C-dEoJTj8bNd9y+YzpMez7D1KLZFNEe7c@mail.gmail.com> <AANLkTindHnjeXEGbKWiQkWgoUBwqZbdx71sQwNr_gFp0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: info-cvs@gnu.org, mercurial@selenic.com, git@vger.kernel.org,
-	users@tomcat.apache.org
-To: bazaar@lists.canonical.com
-X-From: bazaar-bounces@lists.canonical.com Tue Nov 23 11:38:30 2010
-Return-path: <bazaar-bounces@lists.canonical.com>
-Envelope-to: gcvbg-bazaar-ng@m.gmane.org
-Received: from chlorine.canonical.com ([91.189.94.204])
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Jeenu V <jeenuv@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 23 11:59:23 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <bazaar-bounces@lists.canonical.com>)
-	id 1PKqGc-0004gq-7A
-	for gcvbg-bazaar-ng@m.gmane.org; Tue, 23 Nov 2010 11:38:30 +0100
-Received: from localhost ([127.0.0.1] helo=chlorine.canonical.com)
-	by chlorine.canonical.com with esmtp (Exim 4.69)
-	(envelope-from <bazaar-bounces@lists.canonical.com>)
-	id 1PKqGQ-0003N3-Hh; Tue, 23 Nov 2010 10:38:18 +0000
-Received: from lo.gmane.org ([80.91.229.12])
-	by chlorine.canonical.com with esmtp (Exim 4.69)
-	(envelope-from <gcvbg-bazaar-ng@m.gmane.org>) id 1PKqGO-0003Mx-UD
-	for bazaar@lists.canonical.com; Tue, 23 Nov 2010 10:38:17 +0000
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvbg-bazaar-ng@m.gmane.org>) id 1PKqGN-0004cm-L2
-	for bazaar@lists.canonical.com; Tue, 23 Nov 2010 11:38:15 +0100
-Received: from mycomadmin-6-206.cnt.nerim.net ([213.215.6.206])
-	by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-	id 1AlnuQ-0007hv-00
-	for <bazaar@lists.canonical.com>; Tue, 23 Nov 2010 11:38:15 +0100
-Received: from PhiLho by mycomadmin-6-206.cnt.nerim.net with local (Gmexim 0.1
-	(Debian)) id 1AlnuQ-0007hv-00
-	for <bazaar@lists.canonical.com>; Tue, 23 Nov 2010 11:38:15 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: mycomadmin-6-206.cnt.nerim.net
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; fr;
-	rv:1.8.1.9) Gecko/20071031 Thunderbird/2.0.0.9 Mnenhy/0.7.5.666
-In-Reply-To: <877hg55iyd.fsf@newsguy.com>
-X-Topics: everythingelse
-X-BeenThere: bazaar@lists.canonical.com
-X-Mailman-Version: 2.1.9
-Precedence: list
-List-Id: bazaar discussion <bazaar.lists.canonical.com>
-List-Unsubscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar>,
-	<mailto:bazaar-request@lists.canonical.com?subject=unsubscribe>
-List-Archive: <https://lists.ubuntu.com/archives/bazaar>
-List-Post: <mailto:bazaar@lists.canonical.com>
-List-Help: <mailto:bazaar-request@lists.canonical.com?subject=help>
-List-Subscribe: <https://lists.ubuntu.com/mailman/listinfo/bazaar>,
-	<mailto:bazaar-request@lists.canonical.com?subject=subscribe>
-Sender: bazaar-bounces@lists.canonical.com
-Errors-To: bazaar-bounces@lists.canonical.com
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161941>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1PKqan-0006VP-8A
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 11:59:21 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752932Ab0KWK7J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Nov 2010 05:59:09 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:46394 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751914Ab0KWK7I (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Nov 2010 05:59:08 -0500
+Received: by qyk11 with SMTP id 11so1889692qyk.19
+        for <git@vger.kernel.org>; Tue, 23 Nov 2010 02:59:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=fJ0CQebtPhk7dSQ4nw40YYUeVQPw2iSe8tJi6uxoPcc=;
+        b=l3227x9jYOj6C8NCD4oTi0O35sD0i9i7jhThbVC2g810ouJ0LYjxO7tJKPBMQWo60y
+         zps4AoaDVysBEiUUhH4oKI9RVVq0z6P1dXKy8VVaoVWWbM/RTvpSTJ44fANnCR4G8fEO
+         wtsoiwFC8SGAtbHc8dJ6kPRiHpq8etHyCyNLo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=q9iyM4ymZlga+i74m6AtDtv714LsWxaxXLVytk7x33bU1twoFuaSyana9MPZ4yAdX+
+         Z80qlZRiofa2l5B+cRNruNUY+MMxci70jKrHW86WZ88Ly/Y5EQ1pvLLNFoFGDAHHmJ26
+         66E7+PthacqaYN6QxUGR8jutF6ZKJLF9KIZ0o=
+Received: by 10.229.86.13 with SMTP id q13mr5937594qcl.175.1290509946666; Tue,
+ 23 Nov 2010 02:59:06 -0800 (PST)
+Received: by 10.229.36.135 with HTTP; Tue, 23 Nov 2010 02:58:46 -0800 (PST)
+In-Reply-To: <AANLkTindHnjeXEGbKWiQkWgoUBwqZbdx71sQwNr_gFp0@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161942>
 
-On 22/11/2010 19:09, Harry Putnam wrote:
-> Which of the main contenders:  cvs subversion mercurial git bizarre
-> Maybe  a few more I don't know about, would be the best candidate for
-> the usage and user described
+On Tue, Nov 23, 2010 at 11:32 AM, Jeenu V <jeenuv@gmail.com> wrote:
+> On Tue, Nov 23, 2010 at 3:56 PM, Jeenu V <jeenuv@gmail.com> wrote:
+>> On Tue, Nov 23, 2010 at 2:50 PM, knittl <knittl89@googlemail.com> wrote:
+>>>> Right now I do this with vimdiff, by applying 'git diff' in reverse.
+>>>> Wish reset supports -p on working tree operations as well because the
+>>>> -p framework (of add, and reset) feels good to use.
+>>>
+>>>
+>>> there's `git checkout -p` to selectively remove changes from your working tree.
+>>> (also `git stash -p` to selectively stash changes temporarily)
+>>
+>> Surprised to know that checkout and stash supports it! Thanks a lot
+>> for pointing out.
+>
+> I think Git could suggest 'checkout -p' and/or 'stash -p' when user
+> tries to use -p with --{hard,soft,mixed} with reset command (in
+> addition to mentioning that they're incompatible), since relatively
+> new users are used to 'reset' than other commands to reset their
+> working trees.
 
-bizarre? Never heard of this VCS before...
+`git reset` seldomly affects the working tree, unless using `--hard`,
+`--merge` or `--keep`, and those switches are potentially dangerous if
+you are not aware of the implications to your worktree and index.
 
- > Each project would only run a month or 2 months at the most and then
- > all but the final delivered version would be deleted.  That version
- > might be keep for a yr or so.
+without options reset undoes a previous add, i.e. remove changes from
+the index, but not the working tree.
 
-Maybe it is pure heresy, but since all you want is to keep temporarily several very big 
-and nearly incompressible files where diffs (or deltas?) are probably not significant, I 
-would advance that a VCS won't be very useful here.
-Advantages of VCS are (among others):
-- make delta of changes to keep as little data as possible
-- compress this data (?)
-- keep changes indefinitely to be sure to have them when we need them
-- share and merge (changes from somebody else, or you elsewhere)
-Unless I missed something, these advantages doesn't seem to apply there.
+git reset manpage mentions git-checkout:
 
-Some game makers keep track of their (large) binary files, along with the rest of the 
-project (source code). Rarely in isolation.
-Perforce and PlasticSCM both boast superior support of these files, I won't comment on 
-these allegations (over other VCS), just having no experience here.
+> After running git reset <paths> to update the index entry, you can
+> use git-checkout(1) to check the contents out of the index to the
+> working tree. Alternatively, using git-checkout(1) and specifying a
+> commit, you can copy the contents of a path out of a commit to the
+> index and to the working tree in one go.
 
-Somehow, in your case, the good old way of keeping copies renamed to keep the version (or 
-kept in specific directories) might work for you... Perhaps along with a small text file 
-with comments on content of each file.
 
-PS.: I don't see why you included Tomcat list...
-
--- 
-Philippe Lhoste
---  (near) Paris -- France
---  http://Phi.Lho.free.fr
---  --  --  --  --  --  --  --  --  --  --  --  --  --
+--
+typed with http://neo-layout.org
+myFtPhp -- visit http://myftphp.sf.net -- v. 0.4.7 released!
