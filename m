@@ -1,75 +1,77 @@
-From: Howard Miller <howard@e-learndesign.co.uk>
-Subject: Re: Absolute Beginner
-Date: Tue, 23 Nov 2010 16:03:07 +0000
-Message-ID: <AANLkTim8G+Gi5ibhLnpE0XjgsNJPP_+eR0awrOpwF2D4@mail.gmail.com>
-References: <1290516065002-5766449.post@n2.nabble.com>
-	<AANLkTindQRaUMXiQ_2Fa-guKtZz5oV89Gw7W0dapO9MT@mail.gmail.com>
-	<1290525868767-5766781.post@n2.nabble.com>
-	<20101123155436.GA10420@LK-Perkele-V2.elisa-laajakaista.fi>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: disabling PROPFIND when using smart http
+Date: Tue, 23 Nov 2010 18:10:18 +0200
+Message-ID: <20101123161018.GB10420@LK-Perkele-V2.elisa-laajakaista.fi>
+References: <AANLkTikwqtPDDk6i0nMKJiXn5cc3DmTGYp0==daX96yd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: marcos <marcos@arena.com.br>, git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Tue Nov 23 17:03:18 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Sitaram Chamarty <sitaramc@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 23 17:10:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKvKu-0006bi-OS
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 17:03:17 +0100
+	id 1PKvRh-000215-UJ
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 17:10:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754700Ab0KWQDJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Nov 2010 11:03:09 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:51177 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753565Ab0KWQDI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Nov 2010 11:03:08 -0500
-Received: by yxs7 with SMTP id 7so1802yxs.19
-        for <git@vger.kernel.org>; Tue, 23 Nov 2010 08:03:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:sender:received
-         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type;
-        bh=IY68eVm61K0iw3PSSjk/zU9vrOS3KKGMa1shKhVqLVQ=;
-        b=bE+BGp7SysrTtqMVnIkzozvps5D6bWRjk6hlKbzQ245SvKUVr32gFUoqxuE+pR61ih
-         oqyNO811h5Qmc2Yyal5Yph5WPSCo8cI222ZT8DXxZ8u8gpMLVRPwgCB6XPofiXNLSppK
-         VK7V8iv56hBZuGv4s4nut7WM4+r3N6uAZGK00=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        b=xbrlT2iwHxIlLsx+xRhAw4IZkhMDMtKvQd3oZWcNoRwVo87HGZlqAeSZTA+qr1iOY2
-         7S7tUsXoCPGj9WOGoyW0j9NW68oFJjyd9Pap3Cpi51zKwPHNnnHJ/L6yIgUGfXVYnySx
-         OeMBiUMJR+ElaUYUgpCSj9NYT1iTTrdsAUUKw=
-Received: by 10.151.49.1 with SMTP id b1mr11756729ybk.418.1290528187142; Tue,
- 23 Nov 2010 08:03:07 -0800 (PST)
-Received: by 10.150.202.3 with HTTP; Tue, 23 Nov 2010 08:03:07 -0800 (PST)
-In-Reply-To: <20101123155436.GA10420@LK-Perkele-V2.elisa-laajakaista.fi>
-X-Google-Sender-Auth: l8OsGMmbotcjqsE3ZUuTmH59KHI
+	id S1754895Ab0KWQKJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Nov 2010 11:10:09 -0500
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:44282 "EHLO
+	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753777Ab0KWQKJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Nov 2010 11:10:09 -0500
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh02-2.mail.saunalahti.fi (Postfix) with SMTP id 89B32EF61B;
+	Tue, 23 Nov 2010 18:10:07 +0200 (EET)
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A0685D633D8; Tue, 23 Nov 2010 18:10:07 +0200
+Received: from LK-Perkele-V2 (a88-112-50-174.elisa-laajakaista.fi [88.112.50.174])
+	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id 6C396E51A2;
+	Tue, 23 Nov 2010 18:10:04 +0200 (EET)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikwqtPDDk6i0nMKJiXn5cc3DmTGYp0==daX96yd@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161977>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161978>
 
-On 23 November 2010 15:54, Ilari Liusvaara <ilari.liusvaara@elisanet.fi> wrote:
-> On Tue, Nov 23, 2010 at 07:24:28AM -0800, marcos wrote:
->>
->> Then I received a reply from Howard Miller:
->>
->> (...)
->> You are trying to push to a repo that isn't bare. Not impossible but
->> problematic and you can't do it at all by default (as you have found).
->>
->> Personally I would look at a central shared repo. You could just get an
->> account on (something like) GitHub or setup your own (something like
->> Gitosis).
->> (...)
->
-> Don't use Gitosis, it is obsolete. Use Gitolite instead.
->
-> -Ilari
+On Tue, Nov 23, 2010 at 09:10:43PM +0530, Sitaram Chamarty wrote:
+> Hello,
+>=20
+> Although smart http worked fine for me out of the box, following "man
+> git-http-backend", I've found folks on #git for whom it seems to fail
+> on doing a PROPFIND (found by setting GIT_CURL_VERBOSE=3D1).  Enablin=
+g
+> WebDAV also doesn't seem to help, although that is quite likely to be
+> some nuance in the Apache config I suppose.
+>=20
+> The thing is, I *think* that PROPFIND is not, strictly speaking,
+> needed when you use the smart HTTP mode.=C2=A0 If that is indeed true=
+, can
+> we stop git from even attempting it, and so avoid the need to setup
+> WebDAV on Apache?
 
-Another job on the TODO list: "migrate Gitosis to Gitolite". Sigh!! :)
+I thought that this is quite strange, and as consequence, decided to
+dig a bit.=20
+
+This is pretty telling:
+
+$ git grep -i --files-with-matches "propfind"
+http-push.c
+
+http-push.c is AFAIK not used by smart HTTP, only by dumb HTTP
+push.
+
+Apparently pusher is falling back to dumb WebDAV push for some
+reason. And then failing because server does not support it
+or isn't configured apporiately for it.
+
+-Ilari
