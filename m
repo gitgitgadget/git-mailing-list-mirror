@@ -1,63 +1,72 @@
-From: Dun Peal <dunpealer@gmail.com>
-Subject: Re: Inexplicably deteriorating performance of Git repositories on Windows
-Date: Tue, 23 Nov 2010 21:17:59 +0000
-Message-ID: <AANLkTin2W4TG9BX41fkGCMTkrDdFeqpotyFFYXqNOSv-@mail.gmail.com>
+From: Ferry Huberts <mailings@hupie.com>
+Subject: Re: Inexplicably deteriorating performance of Git repositories on
+ Windows
+Date: Tue, 23 Nov 2010 22:49:39 +0100
+Message-ID: <4CEC36F3.5020908@hupie.com>
 References: <AANLkTimTh7ka21inpovM=qqdWs6j2OcPXVsFh_CMiZ7N@mail.gmail.com>
-	<AANLkTik2+e+9M73RdPT5xha0=QGxD1cVfmLih=bDtCTU@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: Git ML <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 23 22:25:19 2010
+To: Dun Peal <dunpealer@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 23 22:49:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PL0MY-0007Zh-4c
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 22:25:18 +0100
+	id 1PL0kH-0003nI-SI
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 22:49:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751403Ab0KWVZL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Nov 2010 16:25:11 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:63167 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750894Ab0KWVZF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Nov 2010 16:25:05 -0500
-Received: by qwb7 with SMTP id 7so25178qwb.19
-        for <git@vger.kernel.org>; Tue, 23 Nov 2010 13:25:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=iGJvbtCYiCDwsaOUgpbkSh0pelk+AztkkpUONh6RjMc=;
-        b=K5CSElPI/ybUkZT+r8ssNsifviHpxu06U68T/CCQFZ9aJJ0MuP6L2uQLguN4463Owv
-         2ajfkrTdtuvNvT4BWVHIhsbAHh6O0B97qvRJhpcw6mHa2TvYAYo5Tn1d6GXxC8ip4PAD
-         xrA2x7mGrI/IcvLI9E9JlQyYRXBFHdgK3hEnY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=dyaqMnC6jp8aBKUbn3Wg60goX4osbeZC/0tmiBU71wfN7Kba5kchenlDZwduEsPnWP
-         JMfZk1b2SoePa5hkAesFUrybrNR2GvZoJWMJIO7sQrcy3b8L+h6GNtayC2kNQvg//KjA
-         c/8gf0CZg98nlPk4rAWD1Z4rm89MZjKZl1Ey4=
-Received: by 10.224.19.129 with SMTP id a1mr5991748qab.154.1290547080019; Tue,
- 23 Nov 2010 13:18:00 -0800 (PST)
-Received: by 10.220.186.198 with HTTP; Tue, 23 Nov 2010 13:17:59 -0800 (PST)
-In-Reply-To: <AANLkTik2+e+9M73RdPT5xha0=QGxD1cVfmLih=bDtCTU@mail.gmail.com>
+	id S1751540Ab0KWVto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Nov 2010 16:49:44 -0500
+Received: from hupie.xs4all.nl ([82.95.241.251]:47817 "EHLO
+	mail.internal.Hupie.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1750798Ab0KWVtn (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Nov 2010 16:49:43 -0500
+Received: from paul.internal.hupie.com (paul.internal.Hupie.com [192.168.40.1])
+	by mail.internal.Hupie.com (Postfix) with ESMTP id CF05658C993;
+	Tue, 23 Nov 2010 22:49:39 +0100 (CET)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Thunderbird/3.1.6
+In-Reply-To: <AANLkTimTh7ka21inpovM=qqdWs6j2OcPXVsFh_CMiZ7N@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162030>
 
-On Tue, Nov 23, 2010 at 9:13 PM, Martin Langhoff
-<martin.langhoff@gmail.com> wrote:
-> A reboot clears your cache. Reboot and time the first and second run
-> of git status.
+Are your users using the 'show my status in the prompt' feature?
+If so, then disable all but showing the current branch, it makes a whole
+lot of difference :-)
 
-Thanks, after all this benchmarking I'm well aware of cold and warm
-caches. The 14-15s timing is unfortunately stable across multiple
-runs, after the cache was warm (without it, we got times much longer
-than that).
+On 11/23/2010 08:08 PM, Dun Peal wrote:
+> Hey,
+> 
+> We have a bunch of Windows users, unfortunately, and they're using the
+> latest msysGit release (Git-1.7.3.1-preview20101002).
+> 
+> An interesting issue we've noticed is that the Time To Complete of
+> their common operations start deteriorating inexplicably, and
+> severely, some time after the clone.
+> 
+> For instance, immediately after a clone, `git status` takes about
+> 5-6s. Which is slow compared to Linux (consistent 1-2s), but still
+> usable (it's a BIG repo).
+> 
+> However, after a reboot (of all things), `git status` latency
+> skyrockets to 14-15s, making the repo unusable.
+> 
+> Any idea what's going on?  We just recently switched from SVN, and
+> those users are getting really frustrated. BTW, the only real
+> alternative I'm aware of, Cygwin's git, is even slower.
+> 
+> Thanks, D
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
 
-.D
+grtz
+
+-- 
+Ferry Huberts
