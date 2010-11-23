@@ -1,130 +1,71 @@
-From: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
-Subject: [PATCH] Hint at "checkout -p" in the "reset --patch <type>" error message
-Date: Tue, 23 Nov 2010 15:20:58 +0100
-Message-ID: <87mxp086k5.fsf_-_@gmail.com>
-References: <AANLkTimc=Dt9YSu=J=7C-f1hZ9UODU7VHu6oD8dmFX3N@mail.gmail.com>
-	<AANLkTimP9zr=wQDYeBxtvYCE1mZ1aHXQ_nLOxGFfR9YD@mail.gmail.com>
-	<AANLkTimQ644C-dEoJTj8bNd9y+YzpMez7D1KLZFNEe7c@mail.gmail.com>
-	<AANLkTindHnjeXEGbKWiQkWgoUBwqZbdx71sQwNr_gFp0@mail.gmail.com>
-	<AANLkTi=5w3YpYu0_WbmHud0BUkO2BqYNVezWDMkCaSj2@mail.gmail.com>
-	<AANLkTimEOULR8_PAs5iPu7z+n4DQPSyDKYg8RghZxosz@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] rebase -i: remove undocumented '--verify' flag
+Date: Tue, 23 Nov 2010 09:41:33 -0500
+Message-ID: <20101123144133.GA3145@sigill.intra.peff.net>
+References: <1290408504-14639-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <vpqoc9hsemy.fsf@bauges.imag.fr>
+ <201011221414.15982.trast@student.ethz.ch>
+ <vpq8w0lqyf7.fsf@bauges.imag.fr>
+ <alpine.DEB.1.10.1011222103290.17721@debian>
+ <CA8E4FB8-70F7-415C-85DE-746B1113AE4C@sb.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: knittl <knittl89@googlemail.com>, git@vger.kernel.org
-To: Jeenu V <jeenuv@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 23 15:22:58 2010
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Tue Nov 23 15:41:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKtlm-0001z6-IZ
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 15:22:54 +0100
+	id 1PKu42-0004U7-6w
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 15:41:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752920Ab0KWOWs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Nov 2010 09:22:48 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:44023 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752627Ab0KWOWs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Nov 2010 09:22:48 -0500
-Received: by bwz15 with SMTP id 15so7137478bwz.19
-        for <git@vger.kernel.org>; Tue, 23 Nov 2010 06:22:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject
-         :in-reply-to:references:user-agent:date:message-id:mime-version
-         :content-type:content-transfer-encoding;
-        bh=bYKxpXJW877zm8GL379HHfkPMI7oaNkm0SLM1gYIGe0=;
-        b=UtMjCzWWVRw0TeVsyCalsXL+4xeRxI4ZVQ5TBhm3keSFG9rqKrHqVS//GDdzictak3
-         iEcSYJFZkkAAyAfxVWkP1uOj8NnI0ZJwGy97emMJF26ZvXybD/CzK3xrsU+dYcx+7zdN
-         LUMRr2ilfmFsWJNu8dOFi5BWOJ+L/Ryzi2z8s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:in-reply-to:references:user-agent:date
-         :message-id:mime-version:content-type:content-transfer-encoding;
-        b=jbKpyPENh/JVBZ+BiTeM1T5fknddNaZLiJJp4hNo40r0W9b9EKtdGe2nCxdE9BtctU
-         ZF5q7lNk0dXWbU/4V9z3EBmsLp4NEOtBX/dPbw6haqQzgtdgGHn/0BHkqmUJdIthnnKr
-         8kCAup1WweyUpkGl6bC5j3UWALnwdGvoypwlk=
-Received: by 10.204.46.226 with SMTP id k34mr6656618bkf.38.1290522164966;
-        Tue, 23 Nov 2010 06:22:44 -0800 (PST)
-Received: from localhost (176.119.broadband10.iol.cz [90.177.119.176])
-        by mx.google.com with ESMTPS id d27sm3121048bkw.2.2010.11.23.06.22.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 23 Nov 2010 06:22:41 -0800 (PST)
-In-Reply-To: <AANLkTimEOULR8_PAs5iPu7z+n4DQPSyDKYg8RghZxosz@mail.gmail.com>
-	(Jeenu V.'s message of "Tue, 23 Nov 2010 18:30:39 +0530")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+	id S1753019Ab0KWOll (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Nov 2010 09:41:41 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:33198 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752318Ab0KWOlk (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Nov 2010 09:41:40 -0500
+Received: (qmail 28220 invoked by uid 111); 23 Nov 2010 14:41:35 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 23 Nov 2010 14:41:35 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 23 Nov 2010 09:41:33 -0500
+Content-Disposition: inline
+In-Reply-To: <CA8E4FB8-70F7-415C-85DE-746B1113AE4C@sb.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161966>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161967>
 
-The --patch option to git-reset is not compatible with the type
-specifiers (--hard et al.), but some users try that first when what the=
-y
-really want is "checkout -p" (cf.
-<http://permalink.gmane.org/gmane.comp.version-control.git/161955>).
+On Mon, Nov 22, 2010 at 06:24:10PM -0800, Kevin Ballard wrote:
 
-Mention "git checkout -p" in the error message to point users in the
-right direction.
+> On Nov 22, 2010, at 12:21 PM, Martin von Zweigbergk wrote:
+> 
+> > (I hope this is the correct way of including a patch. I have only used
+> > 'git send-email before'. I noticed that Jeff seems to remove the first
+> > three lines and put a '-- 8> --' before, but others do not. What does
+> > the mysterious header mean?)
+> 
+> It's actually 8< or >8, and it's a little ASCII icon of a pair of scissors.
+> If a line consists mainly of dashes and scissors then `git am --scissors`
+> can split the mail on that line and treat the rest of the body after that
+> line as a patch.
 
-Signed-off-by: =C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec <stepnem@gmail.com>
----
+Yep. I don't know if Junio actually uses --scissors these days. Before
+it existed, he would just snip the parts above the marker manually,
+which was not a big deal because he reads his mail in emacs. If that is
+still the case, then it doesn't really matter what the marker is, as
+long as he recognizes it, and it is not "---", which is the special
+marker for splitting commit message from cover letter.
 
-Jeenu V <jeenuv@gmail.com> writes:
+That being said, people other than Junio may apply your patch, so if you
+are going to use such a marker, making it look scissor-like is probably
+the best thing to do.
 
-> On Tue, Nov 23, 2010 at 4:28 PM, knittl <knittl89@googlemail.com> wro=
-te:
->> `git reset` seldomly affects the working tree, unless using `--hard`=
-,
->> `--merge` or `--keep`, and those switches are potentially dangerous =
-if
->> you are not aware of the implications to your worktree and index.
->>
->> without options reset undoes a previous add, i.e. remove changes fro=
-m
->> the index, but not the working tree.
->>
->> git reset manpage mentions git-checkout:
->
-> Agreed. What I'm saying is most manuals/guides out there tips user to
-> use 'git reset --hard' to discard changes in the working directory an=
-d
-> restore the pristine copy of files. 'reset' then becomes synonymous t=
-o
-> discard, and it kind of is but for a different reason. Because other
-> commands offer -p for selective operations, one might try to discard
-> selectively, and end up using 'git reset -p --hard', which obviously
-> isn't going to work.
->
-> Knowing the users intention in such cases, I was suggesting the error
-> message could hint the right command (just like git commit hints user
-> to use git-add when one does 'git commit' with a dirty working tree).
->
-> But that's just me.
-
-Well, maybe something like the patch below wouldn't hurt?
-
- builtin/reset.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/builtin/reset.c b/builtin/reset.c
-index 0037be4..fc530d2 100644
---- a/builtin/reset.c
-+++ b/builtin/reset.c
-@@ -309,7 +309,8 @@ int cmd_reset(int argc, const char **argv, const ch=
-ar *prefix)
-=20
- 	if (patch_mode) {
- 		if (reset_type !=3D NONE)
--			die("--patch is incompatible with --{hard,mixed,soft}");
-+			die("--patch is incompatible with --{hard,mixed,soft}\n"
-+			    "(use \"git checkout -p\" to selectively discard changes in wor=
-king directory)");
- 		return interactive_reset(rev, argv + i, prefix);
- 	}
-=20
---=20
-1.7.3.rc2.221.gbf93f.dirty
+-Peff
