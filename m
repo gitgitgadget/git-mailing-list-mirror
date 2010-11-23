@@ -1,120 +1,76 @@
-From: Francis Moreau <francis.moro@gmail.com>
-Subject: Re: Can't build doc anymore (v1.7.3.2)
-Date: Tue, 23 Nov 2010 21:48:46 +0100
-Message-ID: <m2fwur7olt.fsf@gmail.com>
-References: <m2oc9hkurl.fsf@gmail.com>
-	<1290458128.29678.23.camel@drew-northup.unet.maine.edu>
-	<m2k4k5ks0b.fsf@gmail.com>
-	<1290461070.5468.5.camel@drew-northup.unet.maine.edu>
-	<m2bp5glbrp.fsf@gmail.com> <4CEB7F1F.809@drmicha.warpmail.net>
-	<1290517990.10366.17.camel@drew-northup.unet.maine.edu>
-	<4CEBC8C9.4010905@drmicha.warpmail.net> <m2d3pwj8th.fsf@gmail.com>
-	<1290532016.10892.40.camel@drew-northup.unet.maine.edu>
+From: Dun Peal <dunpealer@gmail.com>
+Subject: Re: Inexplicably deteriorating performance of Git repositories on Windows
+Date: Tue, 23 Nov 2010 21:07:24 +0000
+Message-ID: <AANLkTimAxK66U1NRO7=R9Qb4r_rspNHWkkyq1L-z5--A@mail.gmail.com>
+References: <AANLkTimky3Ojc5w3PcCoJOs=NMfMpgUWUDcx+ry6h1dF@mail.gmail.com>
+	<32148197.47150.1290543936407.JavaMail.root@mail.hq.genarts.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, git@drmicha.warpmail.net
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Tue Nov 23 21:49:00 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git ML <git@vger.kernel.org>,
+	Wilbert van Dolleweerd <wilbert@arentheym.com>
+To: Stephen Bash <bash@genarts.com>
+X-From: git-owner@vger.kernel.org Tue Nov 23 22:07:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKznQ-00053t-4U
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 21:49:00 +0100
+	id 1PL05L-0006Wr-JQ
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 22:07:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752212Ab0KWUsz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Nov 2010 15:48:55 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:43653 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752179Ab0KWUsy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Nov 2010 15:48:54 -0500
-Received: by wwa36 with SMTP id 36so9113521wwa.1
-        for <git@vger.kernel.org>; Tue, 23 Nov 2010 12:48:53 -0800 (PST)
+	id S1752062Ab0KWVH0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Nov 2010 16:07:26 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:41013 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752312Ab0KWVHZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Nov 2010 16:07:25 -0500
+Received: by qyk12 with SMTP id 12so2831104qyk.19
+        for <git@vger.kernel.org>; Tue, 23 Nov 2010 13:07:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:references
-         :date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        bh=OZRLq/gU/4+Uko5VzwxtCGPV38KgxMsNJVb1i8rKYtI=;
-        b=HnzIaHGkmCVphXkHq9szXyOb5VgBSu1ULEnQsaEpiB+kbjh+tAQKV43IDYvurFTPBh
-         8Zo404FnIOv6Upe93r3ABaIz1Bh3zzBFcDZEv0hT7z5//rhtywfZcA3rEF9Ft2oCTERz
-         gXeuCye5PPQisVIbxJ/e9Uk2YuRrAMMZpL+MA=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5aErucUIYKeekQqcFJy98OUx2L4njCo2NpddRNiClM4=;
+        b=XE1PUBX+CmSSjpBeX27TyDu6YaFNOzz4jCXq3RggIl2zN6Dy+3Jeanz+5xgkxSl8sL
+         +cOVHimjxLsRQ/gNwE8+XJynXqHAlckicODwNa8+ZsTMbEYpZkLStuV1be21BXbh5mAB
+         +NeZDw9CyfUqbsqhS7iFsILA4FPgO3DGCByNQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        b=tXOaRqMBC7yBzKvzHQCBT/C9dLNdUA3XQpJiiB/ExOIFzYlR5o/nU2GYvENoMI/u/g
-         JhZSEg/CUGNc2Mc3lxHv3kBO73/zsjCBdQTfn4goJJP/WR8ZE1zwi1bDxSJ8nBc77gIm
-         lxiHE57M82bJ5rIULsA2m9VQE3nPoTkiR7E4M=
-Received: by 10.227.68.206 with SMTP id w14mr8228633wbi.144.1290545332482;
-        Tue, 23 Nov 2010 12:48:52 -0800 (PST)
-Received: from localhost (au213-1-82-235-205-153.fbx.proxad.net [82.235.205.153])
-        by mx.google.com with ESMTPS id h29sm4401960wbc.3.2010.11.23.12.48.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 23 Nov 2010 12:48:50 -0800 (PST)
-In-Reply-To: <1290532016.10892.40.camel@drew-northup.unet.maine.edu> (Drew
-	Northup's message of "Tue, 23 Nov 2010 12:06:56 -0500")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=f6IjOngDLMTNxfuGqbO8RTMDY5ZaJUaDx6lUckkfUodMlIy4rrrrk7mr6i6DwDC77S
+         b0O/ZFwzfFYjVLP9og9Bv6M+sPl/RAS6c+AOW13F0KgyHjaTHEosOqhrzyxmrUHCRUjZ
+         ytaU0Q/O8lY/iTMXdHUSM5M98Oie2bLUT2Z+I=
+Received: by 10.229.215.213 with SMTP id hf21mr6718638qcb.189.1290546444608;
+ Tue, 23 Nov 2010 13:07:24 -0800 (PST)
+Received: by 10.220.186.198 with HTTP; Tue, 23 Nov 2010 13:07:24 -0800 (PST)
+In-Reply-To: <32148197.47150.1290543936407.JavaMail.root@mail.hq.genarts.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162027>
 
-Drew Northup <drew.northup@maine.edu> writes:
+On Tue, Nov 23, 2010 at 8:25 PM, Stephen Bash <bash@genarts.com> wrote:
+> ----- Original Message -----
+> We're working with about a 1.5GB repository, and while I haven't seen an specific msysgit slow downs, I did run into build issues due to Windows anti-virus programs (on-access scans, new files scans, etc). I had to add my development directory to the anti-virus exception list to speed things back up.
 
-> On Tue, 2010-11-23 at 17:36 +0100, Francis Moreau wrote:
->> Michael J Gruber <git@drmicha.warpmail.net> writes:
->> 
->> [...]
->
->> 
->> >> I recommend re-installing the docbook-dtds package alone and in
->> >> isolation from other Yum/RPM transactions. If the xmlcatalog file is
->> >> correctly regenerated AND the docbook files are there AND you have
->> >> (re)run ./configure prior to running make AND you don't have filesystem
->> >
->> > Don't do that unless you're using configure for git usually. I don't
->> > think Francis is, he's setting make variables.
->> >
->> 
->> I won't, I just call make with some variables set.
->> 
->> >> errors THEN you should have a successful build. (Barring something that
->> >> crawls up out of the rabbit hole--other than a rabbit.)
->> >> 
->> >> Fix the most obvious possible problems first before seeking
->> >> off-the-beaten-path solutions or worse blaming somebody.
->> >> 
->> >
->> > ???
->> >
->> > catalog sent to Francis off-list, which closes this topic for me.
->> 
->> Not really I'm afraid...
->> 
->>   xmlto -m manpage-normal.xsl --skip-validation man git-diff-index.xml
->>   I/O error : Attempt to load network entity http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd
->>   /home/fmoreau/git/Documentation/git-diff-index.xml:2: warning: failed to load external entity "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
->>   D DocBook XML V4.5//EN" "http://www.oasis-open.org/docbook/xml/4.5/docbookx.dtd"
->> 
->> This is with your catalog.
->
-> I really hope you don't have any filesystem errors. May be worth
-> checking before attempting to reinstall the docbook-dtds package.
->
-> In any case, you are apparently missing the docbook XML 4.5 DTD/XSL
-> files (from your local cache). It automagically fails over to trying to
-> fetch them over the internet (which I've noted doesn't work very well).
+Yeah, the performance numbers I mentioned are *after* excluding our AV
+software from that directory.
 
-Ok, I fixed the problem by reinstalling the following packages:
+> That being said, I do most of my development on Mac and Linux, and msysgit is noticeably slower across the board for me...
 
-    - docbook-style-xsl
-    - docbook-dtds
+Yup, as mentioned, even under the best case Windows scenario (freshly
+cloned repo) I'm still seeing `git status` latencies that are x2-3
+times those of Linux machines.
 
-I suspect something went wrong during Fedora major updates, at least
-that's the one I'm going to blame for now ;)
+I don't hope to get Windows' git to be as fast as on Linux; at this
+point, just making it fast enough to be usable would be an
+achievement: I can't tell developers who just switched from a fast SVN
+setup to wait for 15s for `git status`, an operation they perform
+dozens of times per day (other operations, like stash, also take
+involve long, unworkable waits).
 
-Thanks both of you for your help.
--- 
-Francis
+.D
