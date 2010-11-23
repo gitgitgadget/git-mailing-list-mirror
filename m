@@ -1,72 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH/RFC] fast-import: insert new object entries at start of
- hash bucket
-Date: Tue, 23 Nov 2010 12:19:56 -0600
-Message-ID: <20101123181956.GG12113@burratino>
-References: <20101123075348.GA10367@burratino>
- <AANLkTikK+vO2fLseChD8iccA0=M0FXp6TmWAPeaK9v+R@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <david.barr@cordelta.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Raja R Harinath <harinath@hurrynot.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 23 19:20:15 2010
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH v2 0/6] win32-dirent
+Date: Tue, 23 Nov 2010 19:38:23 +0100
+Message-ID: <1290537509-360-1-git-send-email-kusmabite@gmail.com>
+Cc: msysgit@googlegroups.com, j6t@kdbg.org, gitster@pobox.com,
+	jrnieder@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Nov 23 19:39:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKxTT-0005OZ-J4
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 19:20:15 +0100
+	id 1PKxln-0007PH-S7
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 19:39:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755337Ab0KWSUJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Nov 2010 13:20:09 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:63359 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754198Ab0KWSUH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Nov 2010 13:20:07 -0500
-Received: by vws13 with SMTP id 13so4424539vws.19
-        for <git@vger.kernel.org>; Tue, 23 Nov 2010 10:20:07 -0800 (PST)
+	id S1756297Ab0KWSjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Nov 2010 13:39:06 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:51282 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756266Ab0KWSjE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Nov 2010 13:39:04 -0500
+Received: by mail-ey0-f174.google.com with SMTP id 27so4858031eye.19
+        for <git@vger.kernel.org>; Tue, 23 Nov 2010 10:39:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=IhcHX4nIRitSWUC3riryiu/UCfsVpJGGe/IhoIITwws=;
-        b=PYm9x9XlBcf48dUae2YsDaP9MT8ONp80RrMB45obMm+Rhw0vU/cyzCySDR+Yp/+fia
-         KtNRX+LOxAmmYGZgxM1A4z7axBqsIQnnDcpXzBFh+WiRxtJVGPt6ZMfef221lew/QVAX
-         +pZztY1pwbZsaJggAM4aLONmoZ4nq1UFi/6NU=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=6fxdXvcYjKnURb/G5u3mhe/XCVsZg4EZNM07AAnfkUY=;
+        b=cQcNwOamN4LPSdh6HcNWoEtHlLb/wczDwDxSARfweg8UDhKbVG/ty2dtgnk9PXgCBs
+         NUpFxFDioc/sVCDh0NLLqHF4RI8jQw8zKNKUWQUJkY1xe73+pmjwLGrOnxu1bFdnZHny
+         G0iKg4bRd2e0QVEJeb9RVlhhHC0IWFdnm5Naw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=PeUX2f2BjWDTC+lN4tzzaoTk5PUnCkEyZQUmHz2Ivw2fsjYO9SJ791P89ruPAJGmH+
-         jrbFoCXjHh03/AQr6SkOCV6aCIif4WGetoypNNLXyArS04DGPvyUmzozWJDR5J7D97DA
-         SCk8KibCKrehkIFcEYjpFdj2lvLr53fzZLnUQ=
-Received: by 10.220.181.72 with SMTP id bx8mr2036004vcb.158.1290536406913;
-        Tue, 23 Nov 2010 10:20:06 -0800 (PST)
-Received: from burratino (adsl-68-255-106-176.dsl.chcgil.sbcglobal.net [68.255.106.176])
-        by mx.google.com with ESMTPS id h28sm1414857vcr.19.2010.11.23.10.20.01
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 23 Nov 2010 10:20:05 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTikK+vO2fLseChD8iccA0=M0FXp6TmWAPeaK9v+R@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Z3Nh6BbSi5tH2HoglYWYqQhlFHU3INPGhbKjOmyFms746aI9oAMdjNaiHwhOeuFwOL
+         0w6SQ5gPM9H3EGiAuy22N5d3isouPgSp/p1AIMIsBYYiMPDyFAgJ1Bi9VVqB1NibRMJ6
+         lpuUJLd7lx6kVNoIiybguGOJYpO9S5UGNY990=
+Received: by 10.14.45.78 with SMTP id o54mr5365824eeb.41.1290537544050;
+        Tue, 23 Nov 2010 10:39:04 -0800 (PST)
+Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
+        by mx.google.com with ESMTPS id v51sm6075473eeh.10.2010.11.23.10.39.02
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 23 Nov 2010 10:39:03 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.493.ge4bf7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162003>
 
-Sverre Rabbelier wrote:
-> On Tue, Nov 23, 2010 at 08:53, Jonathan Nieder <jrnieder@gmail.com> wrote:
+Here's a re-roll of my win32-dirent branch, this time with some comments
+by Jonathan Nieder taken into account.
 
->> Thoughts?
->
-> Are there (m)any non-artificial cases for which this slows things down (a lot)?
+* 1/6 is back to using malloc (as opposed to xmalloc),
+* 2/6 corrected the strlen, and now does strlen of the input-string. It
+  seems I messed up when splitting some patches.
 
-If a very common blob (e.g., the empty blob) is in the same bucket as
-a few uncommon ones, it is likely to be inserted first and this would
-slow down access to it.
+The other patches are adjusted accordingly.
+
+Erik Faye-Lund (6):
+  msvc: opendir: fix malloc-failure
+  msvc: opendir: allocate enough memory
+  msvc: opendir: do not start the search
+  win32: dirent: handle errors
+  msvc: opendir: handle paths ending with a slash
+  win32: use our own dirent.h
+
+ Makefile                        |    7 ++-
+ compat/mingw.c                  |   60 ------------------
+ compat/mingw.h                  |   29 ---------
+ compat/msvc.c                   |   29 ---------
+ compat/vcbuild/include/dirent.h |  128 ---------------------------------------
+ compat/win32/dirent.c           |  108 +++++++++++++++++++++++++++++++++
+ compat/win32/dirent.h           |   24 +++++++
+ 7 files changed, 137 insertions(+), 248 deletions(-)
+ delete mode 100644 compat/vcbuild/include/dirent.h
+ create mode 100644 compat/win32/dirent.c
+ create mode 100644 compat/win32/dirent.h
+
+-- 
+1.7.3.2.493.gc8738
