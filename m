@@ -1,61 +1,71 @@
-From: Howard Miller <howard@e-learndesign.co.uk>
-Subject: Re: Absolute Beginner
-Date: Tue, 23 Nov 2010 15:28:54 +0000
-Message-ID: <AANLkTi=k1LhUS1Af0kGkjh_FyuAY_T1YRj4x2wpdM3NZ@mail.gmail.com>
-References: <1290516065002-5766449.post@n2.nabble.com>
-	<AANLkTindQRaUMXiQ_2Fa-guKtZz5oV89Gw7W0dapO9MT@mail.gmail.com>
-	<1290525868767-5766781.post@n2.nabble.com>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: disabling PROPFIND when using smart http
+Date: Tue, 23 Nov 2010 21:10:43 +0530
+Message-ID: <AANLkTikwqtPDDk6i0nMKJiXn5cc3DmTGYp0==daX96yd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: marcos <marcos@arena.com.br>
-X-From: git-owner@vger.kernel.org Tue Nov 23 16:34:47 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 23 16:40:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKutI-0007ju-SB
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 16:34:45 +0100
+	id 1PKuzE-0002dz-E7
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 16:40:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754602Ab0KWPeg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Nov 2010 10:34:36 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:54832 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753581Ab0KWPeg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Nov 2010 10:34:36 -0500
-Received: by ywl5 with SMTP id 5so428600ywl.19
-        for <git@vger.kernel.org>; Tue, 23 Nov 2010 07:34:35 -0800 (PST)
+	id S1755390Ab0KWPkq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Nov 2010 10:40:46 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:46224 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755220Ab0KWPkp convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Nov 2010 10:40:45 -0500
+Received: by eye27 with SMTP id 27so4724763eye.19
+        for <git@vger.kernel.org>; Tue, 23 Nov 2010 07:40:44 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:sender:received
-         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type;
-        bh=ou4RhW4qKRgBrPCsSJ3jttBYQ4QvxW2hmB3iqqJEIFw=;
-        b=hqBZtEzYoInLNMXgTOZWNvI55nP/gUn15dPvwtVLQDvLqyeJTcmxHnToDoHuJ6SDzo
-         KtxY1M+icTbv8VPqTI25zWzEYW/5GFRpUoyrMYd+fhF4NRV/QBzHpsWm6ljFuzuSSKOY
-         er9aXPbO4pniMjErDQuUzY2hzxi2fXaOwlaTA=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:cc:content-type:content-transfer-encoding;
+        bh=GnOXNBwx4ge20jXcuaLwSxHz63gcIM/dcONs8b+nuuU=;
+        b=MF36+iDjPNq63i2iSvYJJGdYK5X9AQlDxJKyCCH/uAQurWU2/Pvx1Nr3D1aMrNjIiP
+         XSDyTNKCMp0B9KXphGhqmsKFdgRS5lY96JPKS5KzIY7gjHq4/6SWoi5cH8xGJUUY6F1a
+         A+AfXcPTtjWOXfZKA2ehkHu8m6MlsDBAQzgvs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        b=f1yrFaJ9oanLM5VXkozNT3OTSsQOiqwT+O2iR2pp1Vn85DiVN4fZ8vI6aL4frpGxph
-         91NdBMZnILKN1RGjitCiKJkTBSCKjBR/9j2XLdyHQCyV44klQ4G8J5XFDybyLHPjvpFm
-         GlOMvvPWsZWN5bFMEgzZe6BxfigsGHw+QGZBc=
-Received: by 10.150.50.18 with SMTP id x18mr11653652ybx.361.1290526134871;
- Tue, 23 Nov 2010 07:28:54 -0800 (PST)
-Received: by 10.150.202.3 with HTTP; Tue, 23 Nov 2010 07:28:54 -0800 (PST)
-In-Reply-To: <1290525868767-5766781.post@n2.nabble.com>
-X-Google-Sender-Auth: SV3F32GGtcxvo9sGQjeSg2H_eS8
+        h=mime-version:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=oNfeMwYGas6PCXhlbOTlf+4dglaHRDpno4+26UHJiWd0zEO/5IE4aTx1z89uEHvJIe
+         xQpdcTDSC/j98As01XTzPOin4vTN6erTc8QdoQJ0rOSoAvYmk3odnNJG45KNKJFyf1t7
+         Ghe8kBVbeD3SVbj1Gs9vp/MHMGszAHLKezA5E=
+Received: by 10.213.16.131 with SMTP id o3mr4127219eba.29.1290526843900; Tue,
+ 23 Nov 2010 07:40:43 -0800 (PST)
+Received: by 10.213.108.81 with HTTP; Tue, 23 Nov 2010 07:40:43 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161973>
 
-> Then I received a reply from Howard Miller:
->
-> (...)
+Hello,
+
+Although smart http worked fine for me out of the box, following "man
+git-http-backend", I've found folks on #git for whom it seems to fail
+on doing a PROPFIND (found by setting GIT_CURL_VERBOSE=3D1).  Enabling
+WebDAV also doesn't seem to help, although that is quite likely to be
+some nuance in the Apache config I suppose.
+
+The thing is, I *think* that PROPFIND is not, strictly speaking,
+needed when you use the smart HTTP mode.=C2=A0 If that is indeed true, =
+can
+we stop git from even attempting it, and so avoid the need to setup
+WebDAV on Apache?
+
+Would be a great help for many installations.
+
+Thanks,
 
 
-Sorry, I forgot to 'plain text' my reply. The list doesn't like that.
+--
+Sitaram
