@@ -1,125 +1,137 @@
-From: marcos <marcos@arena.com.br>
-Subject: Re: Absolute Beginner
-Date: Tue, 23 Nov 2010 07:24:28 -0800 (PST)
-Message-ID: <1290525868767-5766781.post@n2.nabble.com>
-References: <1290516065002-5766449.post@n2.nabble.com> <AANLkTindQRaUMXiQ_2Fa-guKtZz5oV89Gw7W0dapO9MT@mail.gmail.com>
+From: =?utf-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
+Subject: Re: [PATCH] Hint at "checkout -p" in the "reset --patch <type>" error message
+Date: Tue, 23 Nov 2010 16:23:18 +0100
+Message-ID: <87ipzo83o9.fsf@gmail.com>
+References: <AANLkTimc=Dt9YSu=J=7C-f1hZ9UODU7VHu6oD8dmFX3N@mail.gmail.com>
+	<AANLkTimP9zr=wQDYeBxtvYCE1mZ1aHXQ_nLOxGFfR9YD@mail.gmail.com>
+	<AANLkTimQ644C-dEoJTj8bNd9y+YzpMez7D1KLZFNEe7c@mail.gmail.com>
+	<AANLkTindHnjeXEGbKWiQkWgoUBwqZbdx71sQwNr_gFp0@mail.gmail.com>
+	<AANLkTi=5w3YpYu0_WbmHud0BUkO2BqYNVezWDMkCaSj2@mail.gmail.com>
+	<AANLkTimEOULR8_PAs5iPu7z+n4DQPSyDKYg8RghZxosz@mail.gmail.com>
+	<87mxp086k5.fsf_-_@gmail.com>
+	<20101123145921.GB3145@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 23 16:24:36 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeenu V <jeenuv@gmail.com>, knittl <knittl89@googlemail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Nov 23 16:25:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKujT-0002CK-Rc
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 16:24:36 +0100
+	id 1PKuk8-0002VY-Ok
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 16:25:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753526Ab0KWPYa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Nov 2010 10:24:30 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:49574 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752109Ab0KWPY3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Nov 2010 10:24:29 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <marcos@arena.com.br>)
-	id 1PKujM-0005Ks-Ox
-	for git@vger.kernel.org; Tue, 23 Nov 2010 07:24:28 -0800
-In-Reply-To: <AANLkTindQRaUMXiQ_2Fa-guKtZz5oV89Gw7W0dapO9MT@mail.gmail.com>
+	id S1755339Ab0KWPZF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Nov 2010 10:25:05 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:49952 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755328Ab0KWPZE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Nov 2010 10:25:04 -0500
+Received: by fxm13 with SMTP id 13so3965577fxm.19
+        for <git@vger.kernel.org>; Tue, 23 Nov 2010 07:25:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject
+         :in-reply-to:references:user-agent:date:message-id:mime-version
+         :content-type:content-transfer-encoding;
+        bh=o6ICyAPA9DqQ7Jzto7MShM55hjk3wtnAHrr+F/QXV4I=;
+        b=sM9FLAd3gCD5dwBUIuAGM8ikjvEU9lNvqfSm1ZQwoTIW856a39MLav3TsNpsGeh1nf
+         acFiqwyLa+ufpwkQ2dr/EhwDkM5KcDiPBrWBkRsA2HtX8sb2A1d6pUzeaHzYq5pOOtfU
+         yWPsfElOZ5iMSRAvsyP3BWiQDpuSG5cP/q5RM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:in-reply-to:references:user-agent:date
+         :message-id:mime-version:content-type:content-transfer-encoding;
+        b=NBPYz+SVz7G4LVJ8hGuPgMV/g7AKN6vrGEr2zYuMHWmdeLV5u1PWEdukmHBNmJT8OI
+         dvpiEVbQ9kY1YXOwaem/1tra/ouGiBYid73v9RFhA7E5xTVJQOz9wC2pB3G437pMaQUv
+         O+QBF989TCYv/BKrJHeQU4D9JBb+u6KoZi15w=
+Received: by 10.223.85.197 with SMTP id p5mr5655371fal.65.1290525902559;
+        Tue, 23 Nov 2010 07:25:02 -0800 (PST)
+Received: from localhost (176.119.broadband10.iol.cz [90.177.119.176])
+        by mx.google.com with ESMTPS id n6sm1455366faa.28.2010.11.23.07.25.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 23 Nov 2010 07:25:01 -0800 (PST)
+In-Reply-To: <20101123145921.GB3145@sigill.intra.peff.net> (Jeff King's
+	message of "Tue, 23 Nov 2010 09:59:21 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161971>
 
+Jeff King <peff@peff.net> writes:
 
-Hello Duy,
+> On Tue, Nov 23, 2010 at 03:20:58PM +0100, =C5=A0t=C4=9Bp=C3=A1n N=C4=9B=
+mec wrote:
+>
+>> diff --git a/builtin/reset.c b/builtin/reset.c
+>> index 0037be4..fc530d2 100644
+>> --- a/builtin/reset.c
+>> +++ b/builtin/reset.c
+>> @@ -309,7 +309,8 @@ int cmd_reset(int argc, const char **argv, const=
+ char *prefix)
+>> =20
+>>  	if (patch_mode) {
+>>  		if (reset_type !=3D NONE)
+>> -			die("--patch is incompatible with --{hard,mixed,soft}");
+>> +			die("--patch is incompatible with --{hard,mixed,soft}\n"
+>> +			    "(use \"git checkout -p\" to selectively discard changes in =
+working directory)");
+>>  		return interactive_reset(rev, argv + i, prefix);
+>>  	}
+>
+> Should this actually print something different for --hard versus --mi=
+xed
+> versus --soft?
+>
+> For --soft, "-p" simply makes no sense as you are not changing the in=
+dex
+> or the working directory.
+>
+> For --mixed, shouldn't we support "-p" already, as that is the defaul=
+t
+> mode?
+>
+> For --hard, suggesting "checkout -p" does make sense.
+>
+> Also, what about "--merge" and "--keep" modes?
 
-I've just replied by email. See below the message sent:
+All good questions, most of which occured to me, too. What I was going
+to do based on the outcome of (the discussion of) this patch was at
+least fix the currently out-of-date "--{hard,mixed,soft}", as the
+error is signalled with the newer options (--keep and --merge) as well.
+I'm not sure I could cope with anything much more complicated than that=
+,
+esp. if it involved adding some new reset functionality. :-)
 
-(...)
-Thanks for your reply. Since this is my first visit to this mailing-list, I
-don't know its etiquette rules yet. Is this the place to get help? Can I
-post long messages? The whole story of setting up our Git server is quite
-big... :-)
+What about this instead:
 
-Anyway, follows below a list of some of the places where I've found the
-instructions I've mentioned:
+diff --git a/builtin/reset.c b/builtin/reset.c
+index 0037be4..7779302 100644
+--- a/builtin/reset.c
++++ b/builtin/reset.c
+@@ -308,8 +308,11 @@ int cmd_reset(int argc, const char **argv, const c=
+har *prefix)
+ 	hashcpy(sha1, commit->object.sha1);
+=20
+ 	if (patch_mode) {
+-		if (reset_type !=3D NONE)
+-			die("--patch is incompatible with --{hard,mixed,soft}");
++		if (reset_type =3D=3D HARD)
++			die("--patch is incompatible with --hard\n"
++			    "(use \"git checkout -p\" to selectively discard changes in wor=
+king directory)");
++		if (reset_type !=3D MIXED)
++			die("--patch is incompatible with --{hard,soft,keep,merge}");
+ 		return interactive_reset(rev, argv + i, prefix);
+ 	}
+=20
 
-http://progit.org/book/ch4-0.html
-http://www.kernel.org/pub/software/scm/git/docs/howto/setup-git-server-over-http.txt
-http://www.howtoforge.com/how-to-install-a-public-git-repository-on-a-debian-server
-http://batterypowered.wordpress.com/2008/07/04/deploying-a-git-repository-server-in-ubuntu/
-http://mattrude.com/2009/07/creating-a-secure-git-repository-server/
-http://scie.nti.st/2007/11/14/hosting-git-repositories-the-easy-and-secure-way
-http://www.kernel.org/pub/software/scm/git/docs/git-daemon.html
-http://gofedora.com/how-to-install-configure-gitweb/
+Thanks,
 
-Trying to make it short, the last attempt to push a local project to the
-server produced the following results:
-
-marcos@hp-laptop:~/teste_sem_bare$ git status
-# On branch master
-# Your branch is ahead of 'origin/master' by 1 commit.
-#
-nothing to commit (working directory clean)
-
-marcos@hp-laptop:~/teste_sem_bare$ ls
-teste.txt
-
-marcos@hp-laptop:~/teste_sem_bare$ git push origin master
-Counting objects: 5, done.
-Writing objects: 100% (3/3), 293 bytes, done.
-Total 3 (delta 0), reused 0 (delta 0)
-remote: error: refusing to update checked out branch: refs/heads/master
-remote: error: By default, updating the current branch in a non-bare
-repository
-remote: error: is denied, because it will make the index and work tree
-inconsistent
-remote: error: with what you pushed, and will require 'git reset --hard' to
-match
-remote: error: the work tree to HEAD.
-remote: error: 
-remote: error: You can set 'receive.denyCurrentBranch' configuration
-variable to
-remote: error: 'ignore' or 'warn' in the remote repository to allow pushing
-into
-remote: error: its current branch; however, this is not recommended unless
-you
-remote: error: arranged to update its work tree to match what you pushed in
-some
-remote: error: other way.
-remote: error: 
-remote: error: To squelch this message and still keep the default behaviour,
-set
-remote: error: 'receive.denyCurrentBranch' configuration variable to
-'refuse'.
-To git@srvpkt:/home/public/teste_sem_bare
- ! [remote rejected] master -> master (branch is currently checked out)
-error: failed to push some refs to 'git@srvpkt:/home/public/teste_sem_bare'
-
-marcos@hp-laptop:~/teste_sem_bare$ 
-(...)
-
-Then I received a reply from Howard Miller:
-
-(...)
-You are trying to push to a repo that isn't bare. Not impossible but
-problematic and you can't do it at all by default (as you have found).
-
-Personally I would look at a central shared repo. You could just get an
-account on (something like) GitHub or setup your own (something like
-Gitosis).
-(...)
-
->From now on I'll remain here at Nabble regarding this subject.
-
-Thanks again,
-
-Marcos
-
--- 
-View this message in context: http://git.661346.n2.nabble.com/Absolute-Beginner-tp5766449p5766781.html
-Sent from the git mailing list archive at Nabble.com.
+  =C5=A0t=C4=9Bp=C3=A1n
