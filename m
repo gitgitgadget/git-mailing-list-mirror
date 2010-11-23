@@ -1,63 +1,153 @@
-From: =?ISO-8859-1?Q?Tarek_Ziad=E9?= <ziade.tarek@gmail.com>
-Subject: Re: bug: unexpected output for "git st" + suggestion
-Date: Tue, 23 Nov 2010 14:58:51 +0100
-Message-ID: <AANLkTina0tnOEE2+17W03pFPqg37Btss0HYBeW+pOEgn@mail.gmail.com>
-References: <AANLkTimdKoGHapMTrA-bf_mEyMAEiiM0ALvLbZX8QJpv@mail.gmail.com>
-	<AANLkTinvM6OhLdeKt5MqEeNhZJx63X+KzOy_ngEsy0A2@mail.gmail.com>
-	<AANLkTi=G1ZpiaRN8vWYBJ33_ZOXo1t616X5gQU+jNda_@mail.gmail.com>
-	<AANLkTinu+Wq84x2H0vB3rUSXbwreumrDC7k2dr5nOfjC@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Can't build doc anymore (v1.7.3.2)
+Date: Tue, 23 Nov 2010 14:59:37 +0100
+Message-ID: <4CEBC8C9.4010905@drmicha.warpmail.net>
+References: <m2oc9hkurl.fsf@gmail.com>	 <1290458128.29678.23.camel@drew-northup.unet.maine.edu>	 <m2k4k5ks0b.fsf@gmail.com>	 <1290461070.5468.5.camel@drew-northup.unet.maine.edu>	 <m2bp5glbrp.fsf@gmail.com>  <4CEB7F1F.809@drmicha.warpmail.net> <1290517990.10366.17.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Tue Nov 23 14:59:09 2010
+Content-Transfer-Encoding: 7bit
+Cc: Francis Moreau <francis.moro@gmail.com>, git@vger.kernel.org
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Tue Nov 23 15:01:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKtOi-00065U-VH
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 14:59:05 +0100
+	id 1PKtRP-0007QC-VO
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 15:01:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754111Ab0KWN66 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Nov 2010 08:58:58 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:41798 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752668Ab0KWN65 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Nov 2010 08:58:57 -0500
-Received: by bwz15 with SMTP id 15so7116216bwz.19
-        for <git@vger.kernel.org>; Tue, 23 Nov 2010 05:58:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=8LM3Jk93Rt3vhsG8a5YxWisOrBrTjjPiRlM0iWPQUig=;
-        b=m1/u/CaUK5Kjid6zDpMQ5Deihme+lWrE6IBxVaPz0v1D6j7llIFuYCgOpudp/t1blS
-         +dHTvNmZxyD+q9HToSHILBA1a53H4NOFB9lg7NbQjSZzdhRK4ZSxewanc2r+cUwlnbnE
-         ndVBSRo73F4YXnwslHtpUTToTaR5Bg6McUjFU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=wGqSnZJUQP+GVGNZnWGT5+bYl9jqkvB1nr8btIp6wWsMuJJEaXOY9ZPoNi0fF5i6PI
-         ihEYHzRwab79e51HmGsPdzruKKr5kTa11I2erNHC8pk4yJT5DAp5lLst9MxoEpaNBIOz
-         IC5R8ujvuRZYvjMH6rpEP7lF5KCYdPsgTd7rA=
-Received: by 10.204.54.147 with SMTP id q19mr3469374bkg.69.1290520732275; Tue,
- 23 Nov 2010 05:58:52 -0800 (PST)
-Received: by 10.204.54.207 with HTTP; Tue, 23 Nov 2010 05:58:51 -0800 (PST)
-In-Reply-To: <AANLkTinu+Wq84x2H0vB3rUSXbwreumrDC7k2dr5nOfjC@mail.gmail.com>
+	id S1754334Ab0KWOBp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Nov 2010 09:01:45 -0500
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:38097 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752046Ab0KWOBo (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Nov 2010 09:01:44 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id E26B81A38;
+	Tue, 23 Nov 2010 09:01:43 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Tue, 23 Nov 2010 09:01:43 -0500
+X-Sasl-enc: XI61/5nYvbswSBOPqLtr+nC4PcuOSN4d+BfW63JvOWqz 1290520903
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 11C195E8E18;
+	Tue, 23 Nov 2010 09:01:42 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
+In-Reply-To: <1290517990.10366.17.camel@drew-northup.unet.maine.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161965>
 
-On Tue, Nov 23, 2010 at 2:56 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
-..
-> I experimented a bit around, and the last idea I played around with
-> was to keep the Levenshtein-suggestions as-is, but to add all common
-> commands that had the entered command as a prefix. That's a bit more
-> generic than what you suggested, but also not as flexible as it would
-> have to be a strict prefix.
+Drew Northup venit, vidit, dixit 23.11.2010 14:13:
+> 
+> On Tue, 2010-11-23 at 09:45 +0100, Michael J Gruber wrote:
+>> Francis Moreau venit, vidit, dixit 23.11.2010 08:50:
+>>> Drew Northup <drew.northup@maine.edu> writes:
+>>>
+>>> [...]
+>>>
+>>>> Supposedly docbook-dtds-1.0-53.fc14 contains the files needed. I would
+>>>> check to make sure that your /usr/share/sgml/docbook/xmlcatalog file is
+>>>> correct. If it is it will contain a line an awful lot like the
+>>>> following:
+>>>> <public publicId="-//OASIS//DTD DocBook XML V4.5//EN" uri="xml-dtd-4.5/docbookx.dtd"/>
+>>>
+>>> It doesn't seem so:
+>>>
+>>>   $ cat /usr/share/sgml/docbook/xmlcatalog
+>>>   <?xml version="1.0"?>
+>>>   <!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN" "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+>>>   <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"/>
+> 
+> Ok, before we get too far down the rabbit hole, is that EVERYTHING in
+> your xmlcatalog? If it is then you have an install error (I downloaded
+> the spec file and read it extra closely just to be sure). In FC14 the
+> xmlcatalog file is not provided as whole cloth but it is built by the
+> post-install script. If that script failed to run to completion you will
+> have missing parts to your docbook-dtds package installation.
+> 
+> 
+>>> This file belongs to xml-common-0.6.3-33.fc14.noarch which sounds pretty
+>>> uptodate for a Fedora distribution.
+> 
+> Yes, it is the latest in the FC git repo collection for that package as
+> well.
+> 
+>>>
+>>> Here's a list of some packages installed on my system that might be
+>>> relevant:
+>>>
+>>>   asciidoc-8.4.5-5.fc14.noarch
+>>>   docbook-utils-0.6.14-26.fc14.noarch
+>>>   docbook-style-xsl-1.75.2-6.fc14.noarch
+>>>   docbook-style-dsssl-1.79-11.fc14.noarch
+>>>   docbook-dtds-1.0-53.fc14.noarch
+>>>   xml-commons-resolver-1.2-4.fc14.noarch
+>>>   xmlto-0.0.23-3.fc13.x86_64
+>>>   xmltex-20020625-16.fc13.noarch
+>>>   libxml2-devel-2.7.7-2.fc14.x86_64
+>>>   libxml2-python-2.7.7-2.fc14.x86_64
+>>>   libxml++-2.30.1-1.fc14.x86_64
+>>>   libxml2-2.7.7-2.fc14.i686
+>>>   libxml++-2.30.1-1.fc14.i686
+>>>   xml-common-0.6.3-33.fc14.noarch
+>>>   xml-commons-apis-1.4.01-1.fc13.noarch
+>>>
+>>
+>> I have no problems building the doc on F14 with
+>>
+>> ASCIIDOC8=y
+>> ASCIIDOC_NO_ROFF=y
+>> DOCBOOK2X_TEXI=db2x_docbook2texi
+>>
+>> in my config.mak (besides other stuff), with these versions:
+>>
+>> asciidoc-8.4.5-5.fc14.noarch
+>> docbook2X-0.8.8-7.fc14.x86_64
+>> docbook-dtds-1.0-53.fc14.noarch
+>> docbook-style-dsssl-1.79-11.fc14.noarch
+>> docbook-style-xsl-1.75.2-6.fc14.noarch
+>> docbook-utils-0.6.14-26.fc14.noarch
+>> libxml2-2.7.7-2.fc14.x86_64
+>> libxml++-2.32.0-1.fc14.x86_64
+>> libxml2-python-2.7.7-2.fc14.x86_64
+>> python-lxml-2.2.8-1.fc14.x86_64
+>> xml-common-0.6.3-33.fc14.noarch
+>> xmlto-0.0.23-3.fc13.x86_64
+>>
+>> (libxml is irrelevant)
+>>
+>> Are you sure you have no other xmlto (type -a xmlto) and no tinkering
+>> with the default style sheet config?
+>>
+>> Michael
+> 
+> Before you get too much further along chasing phantoms, please have a
+> look back into the mailing list at the problems I had just enumerated
+> with respect to building the man pages when missing the docbook 4.5
+> declarations and files in my local xmlcatalog. I got EXACTLY THE SAME
+> ERRORS ORIGINALLY NOTED. That's why I answered the original query to the
+> list.
+> 
+> I recommend re-installing the docbook-dtds package alone and in
+> isolation from other Yum/RPM transactions. If the xmlcatalog file is
+> correctly regenerated AND the docbook files are there AND you have
+> (re)run ./configure prior to running make AND you don't have filesystem
 
-+1. That would improve it a lot
+Don't do that unless you're using configure for git usually. I don't
+think Francis is, he's setting make variables.
+
+> errors THEN you should have a successful build. (Barring something that
+> crawls up out of the rabbit hole--other than a rabbit.)
+> 
+> Fix the most obvious possible problems first before seeking
+> off-the-beaten-path solutions or worse blaming somebody.
+> 
+
+???
+
+catalog sent to Francis off-list, which closes this topic for me.
+
+Michael
