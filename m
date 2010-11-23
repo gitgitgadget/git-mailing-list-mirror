@@ -1,71 +1,146 @@
-From: knittl <knittl89@googlemail.com>
-Subject: Re: Git reset -p on working tree
-Date: Tue, 23 Nov 2010 10:20:31 +0100
-Message-ID: <AANLkTimP9zr=wQDYeBxtvYCE1mZ1aHXQ_nLOxGFfR9YD@mail.gmail.com>
-References: <AANLkTimc=Dt9YSu=J=7C-f1hZ9UODU7VHu6oD8dmFX3N@mail.gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Can't build doc anymore (v1.7.3.2)
+Date: Tue, 23 Nov 2010 10:20:52 +0100
+Message-ID: <4CEB8774.7050504@drmicha.warpmail.net>
+References: <m2oc9hkurl.fsf@gmail.com>	<1290458128.29678.23.camel@drew-northup.unet.maine.edu>	<m2k4k5ks0b.fsf@gmail.com>	<1290461070.5468.5.camel@drew-northup.unet.maine.edu>	<m2bp5glbrp.fsf@gmail.com> <4CEB7F1F.809@drmicha.warpmail.net> <m27hg4l8a3.fsf@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Jeenu V <jeenuv@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 23 10:21:00 2010
+Content-Transfer-Encoding: 7bit
+Cc: Drew Northup <drew.northup@maine.edu>, git@vger.kernel.org
+To: Francis Moreau <francis.moro@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 23 10:23:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKp3c-0002jI-2W
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 10:21:00 +0100
+	id 1PKp5e-0003ku-Cw
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 10:23:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555Ab0KWJUx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 23 Nov 2010 04:20:53 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:38400 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751282Ab0KWJUw (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 23 Nov 2010 04:20:52 -0500
-Received: by qyk12 with SMTP id 12so1809898qyk.19
-        for <git@vger.kernel.org>; Tue, 23 Nov 2010 01:20:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=3mFnrc4H6hB6GeZR7VWI3WyLHn2VPRtOWQ+/IZvq58E=;
-        b=qL7QswgUKmApskxg7Gcq8U7pmkrBQfSs7RxBYPljGLRlyxsCUCcPAhweeIrCynA8Iq
-         shKOfeMfiSP4C3bjoTutaxbl01rFZUYFPIly2LC6BKYiiRcHjJYQd0hWRzsX7RUEnaCB
-         i0GlEBYjwrPxslzRA0qAyClyfReGyZF8UmBnQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=XTN5N7JyFhvPctbDw6sqA8CyQiiKi7OdQYNyr12jvNBCKYBNdY3iMO7Rvz75usMpxq
-         YMJIAaQeeAogWyM2HnSfz097IjQ0KlVeqYWqPYTEuwNGP9ysoaDUeznsFq/WeB+luL7X
-         bqGy1QINwkcya3B9YnSUnqQE6fvA2ulRYebO0=
-Received: by 10.229.215.8 with SMTP id hc8mr6063590qcb.23.1290504051362; Tue,
- 23 Nov 2010 01:20:51 -0800 (PST)
-Received: by 10.229.36.135 with HTTP; Tue, 23 Nov 2010 01:20:31 -0800 (PST)
-In-Reply-To: <AANLkTimc=Dt9YSu=J=7C-f1hZ9UODU7VHu6oD8dmFX3N@mail.gmail.com>
+	id S1752528Ab0KWJXA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Nov 2010 04:23:00 -0500
+Received: from out2.smtp.messagingengine.com ([66.111.4.26]:34406 "EHLO
+	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752314Ab0KWJW6 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 23 Nov 2010 04:22:58 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 45E7718B0;
+	Tue, 23 Nov 2010 04:22:58 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Tue, 23 Nov 2010 04:22:58 -0500
+X-Sasl-enc: iktwIbYlduBltu5k18FcjDvc1yT2X1H0cI/lstDnA4cn 1290504177
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 788125E2F51;
+	Tue, 23 Nov 2010 04:22:57 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
+In-Reply-To: <m27hg4l8a3.fsf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161936>
 
-On Tue, Nov 23, 2010 at 10:11 AM, Jeenu V <jeenuv@gmail.com> wrote:
-> Often I find it useful to selectively undo the modifications that I
-> did to my working tree. The -p option to 'reset' that selectively
-> resets changes back to a given commit. Unfortunately the option
-> reports itself to be incompatible with --{hard,soft,mixed} and thus
-> can't be applied to working tree.
->
-> Right now I do this with vimdiff, by applying 'git diff' in reverse.
-> Wish reset supports -p on working tree operations as well because the
-> -p framework (of add, and reset) feels good to use.
+Francis Moreau venit, vidit, dixit 23.11.2010 10:05:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> Francis Moreau venit, vidit, dixit 23.11.2010 08:50:
+>>> Drew Northup <drew.northup@maine.edu> writes:
+>>>
+>>> [...]
+>>
+>>>
+>>>> Supposedly docbook-dtds-1.0-53.fc14 contains the files needed. I would
+>>>> check to make sure that your /usr/share/sgml/docbook/xmlcatalog file is
+>>>> correct. If it is it will contain a line an awful lot like the
+>>>> following:
+>>>> <public publicId="-//OASIS//DTD DocBook XML V4.5//EN" uri="xml-dtd-4.5/docbookx.dtd"/>
+>>>
+>>> It doesn't seem so:
+>>>
+>>>   $ cat /usr/share/sgml/docbook/xmlcatalog
+>>>   <?xml version="1.0"?>
+>>>   <!DOCTYPE catalog PUBLIC "-//OASIS//DTD Entity Resolution XML Catalog V1.0//EN" "http://www.oasis-open.org/committees/entity/release/1.0/catalog.dtd">
+>>>   <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"/>
+>>>
+>>> This file belongs to xml-common-0.6.3-33.fc14.noarch which sounds pretty
+>>> uptodate for a Fedora distribution.
+>>>
+>>> Here's a list of some packages installed on my system that might be
+>>> relevant:
+>>>
+>>>   asciidoc-8.4.5-5.fc14.noarch
+>>>   docbook-utils-0.6.14-26.fc14.noarch
+>>>   docbook-style-xsl-1.75.2-6.fc14.noarch
+>>>   docbook-style-dsssl-1.79-11.fc14.noarch
+>>>   docbook-dtds-1.0-53.fc14.noarch
+>>>   xml-commons-resolver-1.2-4.fc14.noarch
+>>>   xmlto-0.0.23-3.fc13.x86_64
+>>>   xmltex-20020625-16.fc13.noarch
+>>>   libxml2-devel-2.7.7-2.fc14.x86_64
+>>>   libxml2-python-2.7.7-2.fc14.x86_64
+>>>   libxml++-2.30.1-1.fc14.x86_64
+>>>   libxml2-2.7.7-2.fc14.i686
+>>>   libxml++-2.30.1-1.fc14.i686
+>>>   xml-common-0.6.3-33.fc14.noarch
+>>>   xml-commons-apis-1.4.01-1.fc13.noarch
+>>>
+>>
+>> I have no problems building the doc on F14 with
+>>
+> 
+> Yes I think it's related to my config otherwise a lot of users would
+> have already complained.
+> 
+>>
+>> ASCIIDOC8=y
+>> ASCIIDOC_NO_ROFF=y
+>> DOCBOOK2X_TEXI=db2x_docbook2texi
+> 
+> I tried with these options but still fails
+> 
+>>
+>> in my config.mak (besides other stuff), with these versions:
+>>
+>> asciidoc-8.4.5-5.fc14.noarch
+>> docbook2X-0.8.8-7.fc14.x86_64
+>> docbook-dtds-1.0-53.fc14.noarch
+>> docbook-style-dsssl-1.79-11.fc14.noarch
+>> docbook-style-xsl-1.75.2-6.fc14.noarch
+>> docbook-utils-0.6.14-26.fc14.noarch
+>> libxml2-2.7.7-2.fc14.x86_64
+>> libxml++-2.32.0-1.fc14.x86_64
+>> libxml2-python-2.7.7-2.fc14.x86_64
+>> python-lxml-2.2.8-1.fc14.x86_64
+>> xml-common-0.6.3-33.fc14.noarch
+>> xmlto-0.0.23-3.fc13.x86_64
+>>
+>> (libxml is irrelevant)
+>>
+>> Are you sure you have no other xmlto (type -a xmlto)
+> 
+>   $ type -a xmlto
+>   xmlto is /usr/bin/xmlto
+> 
+>   $ rpm -qf /usr/bin/xmlto
+>   xmlto-0.0.23-3.fc13.x86_64
+> 
+>> and no tinkering with the default style sheet config?
+> 
+> Well I've never played with that since I've no idea of what it's.
 
+That's what they all say ;)
 
-there's `git checkout -p` to selectively remove changes from your working tree.
-(also `git stash -p` to selectively stash changes temporarily)
+How successful is:
 
-`git reset -p` will only undo staged changes from your index
+make XMLTO_EXTRA="--skip-validation" doc
 
--- 
-typed with http://neo-layout.org
-myFtPhp -- visit http://myftphp.sf.net -- v. 0.4.7 released!
+This should avoid hitting the network for the dtd under all
+circumstances. (Are you online when make'ing?) Normally, the catalogue
+should take care of that but this seems to be failing for you.
+
+Just to make sure: You're not building as root, are you?
+
+You can also use the quick-install-doc target, of course, but we want
+install-doc to work as well on a mainstream distro.
+
+Michael
