@@ -1,134 +1,103 @@
-From: Shawn Pearce <spearce@spearce.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH/RFC] fast-import: insert new object entries at start of
  hash bucket
-Date: Tue, 23 Nov 2010 14:33:52 -0800
-Message-ID: <AANLkTikqUjjjMRzWTcEOs+2PGu=-9VVbdn0YgpabFaDu@mail.gmail.com>
+Date: Tue, 23 Nov 2010 17:17:18 -0600
+Message-ID: <20101123231718.GA4317@burratino>
 References: <20101123075348.GA10367@burratino>
+ <AANLkTikqUjjjMRzWTcEOs+2PGu=-9VVbdn0YgpabFaDu@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, David Barr <david.barr@cordelta.com>,
 	Nicolas Pitre <nico@fluxnic.net>,
 	Raja R Harinath <harinath@hurrynot.org>,
 	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 23 23:34:25 2010
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Nov 24 00:17:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PL1RL-0001E0-Vn
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 23:34:20 +0100
+	id 1PL27C-0003sO-It
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 00:17:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753359Ab0KWWeN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Nov 2010 17:34:13 -0500
-Received: from mail-px0-f174.google.com ([209.85.212.174]:54012 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752627Ab0KWWeN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Nov 2010 17:34:13 -0500
-Received: by pxi15 with SMTP id 15so2230867pxi.19
-        for <git@vger.kernel.org>; Tue, 23 Nov 2010 14:34:12 -0800 (PST)
-Received: by 10.142.126.16 with SMTP id y16mr7497201wfc.345.1290551652617;
- Tue, 23 Nov 2010 14:34:12 -0800 (PST)
-Received: by 10.143.165.15 with HTTP; Tue, 23 Nov 2010 14:33:52 -0800 (PST)
-In-Reply-To: <20101123075348.GA10367@burratino>
+	id S1753237Ab0KWXR3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Nov 2010 18:17:29 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:33115 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752575Ab0KWXR2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Nov 2010 18:17:28 -0500
+Received: by qyk11 with SMTP id 11so2911310qyk.19
+        for <git@vger.kernel.org>; Tue, 23 Nov 2010 15:17:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=mdUyh0vbe6u7AFqcB+nIehciQZoscqOgsO1/MRUttCs=;
+        b=bHeACBJ/Qrln1LRB1+Y21Dz/7YWCdBSfr4OBSnA8RctwryZrjUPM3kKIQxBJUwEXQt
+         YSQO7A/Ia26F7JgnJFoPsb6ZN+nJcMI2aY2BTvqTQCfGIpDqkGQO6yxnRiHAPfeoDlRQ
+         QW4fw26OpcNm6kStekZB6wFsAsjISvxJ3Sy6w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=hm61eLW5I9EpCuDu4IN9L7LDUfPbrCROncXAMSK4dB3RwyM3EvhFlVzI06HkXKYq0b
+         aHJ6xAwZNRODYH0KrXs9uLGe+f5UfEo/8LAYv4WrUEuH4ZD9Ys7QTyhdwTlK/Urs15zS
+         InzzGI+bshKe4J1at0x1tsmjQ5l35s3QdQsHI=
+Received: by 10.224.2.141 with SMTP id 13mr5985934qaj.282.1290554248117;
+        Tue, 23 Nov 2010 15:17:28 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id s34sm3970589qcp.32.2010.11.23.15.17.25
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 23 Nov 2010 15:17:26 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTikqUjjjMRzWTcEOs+2PGu=-9VVbdn0YgpabFaDu@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162031>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162032>
 
-On Mon, Nov 22, 2010 at 11:53 PM, Jonathan Nieder <jrnieder@gmail.com> =
-wrote:
-> More often than not, find_object is called for recently inserted obje=
-cts.
-> Optimise for this case by inserting new entries at the start of the c=
-hain.
-> This doesn't affect the cost of new inserts but reduces the cost of f=
-ind
-> and insert for existing object entries.
+Shawn Pearce wrote:
+> On Mon, Nov 22, 2010 at 11:53 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-This is a good change.  I totally agree with it.
+>> Other aspects to investigate: choice of hash function;
+>
+> Why?  SHA-1 is pretty uniform in its distribution.
 
-> I would guess other workflows would display the same tendency if any;
-> at least, the same blob is likely to come up repeatedly in a few revs
-> and then not be mentioned for a while. =A0Though maybe there is some
-> reason to make the opposite assumption that I have not thought of.
-> Shawn?
+I got distracted for a moment by the atom table, but since that does
+not have a big effect on performance it's probably not worth spending
+time on.  Sorry about that; please ignore.
 
-The new entry was put onto the end of the hash chain because I wasn't
-thinking when I wrote that code.  For some reason I assumed it made
-sense to put it onto the end of the chain, because I had already
-walked the chain to see if it already exists... and by the time I
-reached the end, I had the tail, so I might as well put the new item
-on to the tail.
+[...]
+>                                                           The way I
+> read this store_tree() code, every subdirectory is recursed into even
+> if no modifications were made inside of that subdirectory during the
+> current commit.
 
-Moving the new item to the head works because it is somewhat likely
-that the new item will be asked for in the near future, and older
-items are less likely to be asked for.  So I can see how this can
-offer a small CPU time improvement for a very big import.
+Doesn't the is_null_sha1 check avoid that?
 
-> A more dramatic improvement comes from increasing the size of the has=
-h
-> table; in particular, David noticed it allows the CPU usage to
-> increase from ~60% to 100% of one core. =A0So presumably we should ma=
-ke
-> the size of the hash table dynamic.
+To further explain the workload: svn-fe receives its blobs from svn
+in the form of deltas.  So the conversation might go like this:
 
-Uhm.  Wait, the table isn't already dynamic?  I cheated that badly and
-made the table fixed size?
+	S	commit refs/heads/master
+	S	mark :10000
+	S	committer felicity <felicity@local>
+	S	data 74
+	S	bug 3097: switch spamd from doing 'fork per message' to a 'prefork' model
+	S	cat incubator/spamassassin/trunk/spamd/spamd.raw
+	F	89d56462577b8b7b4f4115f2a47f0b3da22b791a blob 63633
+	F	#!/usr/bin/perl -w -T
+	...
+	S	M 100644 inline incubator/spamassassin/trunk/spamd/spamd.raw
+	S	data 62114
+	...
 
-I can tell you why its fixed size... when I wrote fast-import to
-support the Mozilla repository import, we had an estimate on the
-number of objects that we needed fast-import to handle in a given run.
- From that estimate we concluded that a table of 2^16 was sufficiently
-large enough, as the hash chains would only be some small N long given
-the total number of objects we needed to handle for Mozilla.  Doubling
-that into 2^17 or larger wasn't useful, and using a smaller table like
-2^14 produced too long of a chain.
+Current svn-fe in vcs-svn-pu requests the preimage blobs using marks,
+but the idea is the same.
 
-Once this code was working, we moved on to other features, and never
-reconsidered the table size.  This table should be growing if the
-initial 2^16 isn't big enough.  Its just that nobody has ever noticed
-that I hardcoded the size.  :-)
-
-> Other aspects to investigate: choice of hash function;
-
-Why?  SHA-1 is pretty uniform in its distribution.  The object_table
-is taking the first 16 bits and using that to index the object, that's
-the first 4 hex digits.  The Linux kernel uniquely identifies an
-object with under 10 hex digits, or 40 leading bits.  The table just
-needs to double or quadruple its size (and have the hash function
-include that many more bits) when an arbitrary bucket's chain length
-gets over some reasonable constant number (e.g. 16).  We probably do
-need to cap the table size though, especially on 32 bit builds of Git.
-
-> is it worth
-> moving accessed entries to the front of hash chains when they already
-> exist?
-
-Maybe, maybe not?  It depends on what the front end is doing.
-
-If the front end is feeding hex SHA-1s, and will frequently reuse the
-same blobs, yes.  Otherwise, maybe not.  The only time we are looking
-for an object in the object_table is when we are about to insert an
-object and need to avoid a duplicate (that's the insert_object code
-path), or when we have to page in a tree into the branch cache.
-
-If the branch cache is spilling, you probably should be increasing its
-size so that it doesn't spill as often.
-
-The code within store_tree() is really inefficient.  It looks up the
-old tree to find out how its stored... we could store that struct
-object_entry* inside of the struct tree_content.  We also could avoid
-calling store_object() if the tree hasn't been modified.  The way I
-read this store_tree() code, every subdirectory is recursed into even
-if no modifications were made inside of that subdirectory during the
-current commit.  We just need to format the tree, and if the SHA-1 is
-the same as the old SHA-1, skip back out without calling
-store_object().  That should give you a pretty dramatic reduction on
-the number of times the object_table is accessed during an import.
-
---=20
-Shawn.
+If this proves a bottleneck I suppose we could cache the content of
+frequently-requested old blobs and keep pointers to that in the
+in-core tree.
