@@ -1,130 +1,83 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH v2] format-patch: page output with --stdout
-Date: Tue, 23 Nov 2010 11:16:30 +0800
-Message-ID: <1290482190-5932-1-git-send-email-rctay89@gmail.com>
-References: <1290229542-3116-1-git-send-email-rctay89@gmail.com> <20101122181501.GF2084@burratino>
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Jonathan Nieder" <jrnieder@gmail.com>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Nov 23 04:17:08 2010
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [PATCH] git-gui: fix browser with initial path
+Date: Tue, 23 Nov 2010 08:37:50 +0100
+Message-ID: <1290497870-28673-1-git-send-email-bert.wesarg@googlemail.com>
+Cc: Bert Wesarg <bert.wesarg@googlemail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Tue Nov 23 08:38:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PKjNS-0001gT-T5
-	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 04:17:07 +0100
+	id 1PKnSH-0001VV-66
+	for gcvg-git-2@lo.gmane.org; Tue, 23 Nov 2010 08:38:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751733Ab0KWDRA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 22 Nov 2010 22:17:00 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:43501 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751712Ab0KWDQ7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 22 Nov 2010 22:16:59 -0500
-Received: by gyb11 with SMTP id 11so1808486gyb.19
-        for <git@vger.kernel.org>; Mon, 22 Nov 2010 19:16:59 -0800 (PST)
+	id S1752477Ab0KWHiO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Nov 2010 02:38:14 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:59612 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752323Ab0KWHiN (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Nov 2010 02:38:13 -0500
+Received: by eye27 with SMTP id 27so4486667eye.19
+        for <git@vger.kernel.org>; Mon, 22 Nov 2010 23:38:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
+        d=googlemail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=xhAGWT98kBKfbRmwnHTA9WcmPksoR2zpcacm5VN/gFA=;
-        b=q0/gC/6mgNuIWEUQW8+eHcMHVV7yRVsv8nBqDMQi27lslpcbiZs13iPnQSXTCNvZR/
-         Ph1z3/on89pKpcXgiR9fLIGcgUPsETnNBEbYWqSsWPWY4Ie/3AjHMiwzXjfUF0cdlbeL
-         UYo0IDGzIJqmcJJvpGC4YiWN1GTfp2sSRzHuE=
+         :message-id:x-mailer;
+        bh=ToRT7aGy4ozXrS2sVYdZBN69n+BW6sP0i1fZegwsTls=;
+        b=izxrbwq7klftYWEr7pGE0+bsavDnYDYtC4uMhz1fhbZXdjrFwpqx8g4Tx0ra0C0Ooj
+         RieoEf0GztBkFBc77bWIQPbYZ0DR1k2z7FU2fSOEq9yDwV88vo1mAFMvOZN9cKDRoOwI
+         ysDGE9/eoQDfLveadZWz+LNnwnhHIBa2aOAQQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=iDIwMJqItn9RR5owdhFa1A8lqvKHZKjqsTn4FWlNd9m0AAnhoYMwagwUu0Sntxgs1S
-         Fq7QQ5dRPPJ2sqSsOs4YMyl/EJzo/A+iFbveiYy6Q3zueg3ipj9/usAD4L4oNPkVVVk1
-         qAJqEm8hC4VvRMa1CwGwK/smWxCmOy2wnCDUs=
-Received: by 10.150.143.2 with SMTP id q2mr10862882ybd.46.1290482218589;
-        Mon, 22 Nov 2010 19:16:58 -0800 (PST)
-Received: from localhost.localdomain (cm69.zeta153.maxonline.com.sg [116.87.153.69])
-        by mx.google.com with ESMTPS id r6sm17087yba.23.2010.11.22.19.16.55
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=HN8zhC+KbzjPwqfoRmZvlKGlxg5A9jlgzyb7vHThPY33Fv3FEjNh3kv/9C3OdcT3j8
+         JMP/Ow+MggRerJwA7KtmMBt+nPHZW6k7fd7jy6+S5jw2sgJSxRRRpHwowg2o+Fy1fnD0
+         UfNDLBf0sQHve2USODr9uieITC4ph0t8CfXfA=
+Received: by 10.213.26.13 with SMTP id b13mr2411083ebc.90.1290497891885;
+        Mon, 22 Nov 2010 23:38:11 -0800 (PST)
+Received: from localhost ([188.46.72.74])
+        by mx.google.com with ESMTPS id v51sm5514830eeh.22.2010.11.22.23.37.59
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 22 Nov 2010 19:16:57 -0800 (PST)
-X-Mailer: git-send-email 1.7.2.2.513.ge1ef3
-In-Reply-To: <20101122181501.GF2084@burratino>
+        Mon, 22 Nov 2010 23:38:11 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.1200.ge4bf6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/161928>
 
-Pass output through the pager if format-patch is run with --stdout. This
-saves the user the trouble of running git with '-p' or piping through a
-pager.
+The path given to the browser does not end in a slash, which results in bad
+path given to blame and broke [Up To Parent]. Also the path was not
+escaped before displaying.
 
-setup_pager() already checks if stdout is a tty, so we don't have to
-worry about behaviour if the user redirects/pipes stdout. Paging can
-also be disabled with the config
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
 
-  [pager]
-      format-patch = false
-
-Add tests to check for these behaviour.
-
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
+ git-gui/lib/browser.tcl |    8 +++++++-
+ 1 files changed, 7 insertions(+), 1 deletions(-)
 
-Thanks for the tests, Johnathan.
-
- builtin/log.c           |    2 ++
- t/t4014-format-patch.sh |   23 +++++++++++++++++++++++
- 2 files changed, 25 insertions(+), 0 deletions(-)
-
-diff --git a/builtin/log.c b/builtin/log.c
-index d0297a1..c631950 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -1159,6 +1159,8 @@ int cmd_format_patch(int argc, const char **argv, const char *prefix)
+diff --git a/git-gui/lib/browser.tcl b/git-gui/lib/browser.tcl
+index c241572..a88a68b 100644
+--- a/git-gui/lib/browser.tcl
++++ b/git-gui/lib/browser.tcl
+@@ -26,8 +26,14 @@ constructor new {commit {path {}}} {
+ 	wm withdraw $top
+ 	wm title $top [append "[appname] ([reponame]): " [mc "File Browser"]]
  
- 	if (!use_stdout)
- 		output_directory = set_outdir(prefix, output_directory);
-+	else
-+		setup_pager();
- 
- 	if (output_directory) {
- 		if (use_stdout)
-diff --git a/t/t4014-format-patch.sh b/t/t4014-format-patch.sh
-index 07bf6eb..027c13d 100755
---- a/t/t4014-format-patch.sh
-+++ b/t/t4014-format-patch.sh
-@@ -6,6 +6,7 @@
- test_description='various format-patch tests'
- 
- . ./test-lib.sh
-+. "$TEST_DIRECTORY"/lib-terminal.sh
- 
- test_expect_success setup '
- 
-@@ -686,4 +687,26 @@ test_expect_success 'format-patch --signature="" supresses signatures' '
- 	! grep "^-- \$" output
- '
- 
-+test_expect_success TTY 'format-patch --stdout paginates' '
-+	rm -f pager_used &&
-+	(
-+		GIT_PAGER="wc >pager_used" &&
-+		export GIT_PAGER &&
-+		test_terminal git format-patch --stdout --all
-+	) &&
-+	test_path_is_file pager_used
-+'
++	if {$path ne {}} {
++		if {[string index $path end] ne {/}} {
++			append path /
++		}
++	}
 +
-+ test_expect_success TTY 'format-patch --stdout pagination can be disabled' '
-+	rm -f pager_used &&
-+	(
-+		GIT_PAGER="wc >pager_used" &&
-+		export GIT_PAGER &&
-+		test_terminal git --no-pager format-patch --stdout --all &&
-+		test_terminal git -c "pager.format-patch=false" format-patch --stdout --all
-+	) &&
-+	test_path_is_missing pager_used &&
-+	test_path_is_missing .git/pager_used
-+'
-+
- test_done
+ 	set browser_commit $commit
+-	set browser_path $browser_commit:$path
++	set browser_path "$browser_commit:[escape_path $path]"
+ 
+ 	${NS}::label $w.path \
+ 		-textvariable @browser_path \
 -- 
-1.7.3.2.487.gd5344.dirty
+tg: (6f10c41..) bw/git-gui/fix-browser-up (depends on: master)
