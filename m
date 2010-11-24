@@ -1,86 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Can't build doc anymore (v1.7.3.2)
-Date: Wed, 24 Nov 2010 11:17:13 -0800
-Message-ID: <7v7hg2ttty.fsf@alter.siamese.dyndns.org>
-References: <m2oc9hkurl.fsf@gmail.com>
- <1290458128.29678.23.camel@drew-northup.unet.maine.edu>
- <m2k4k5ks0b.fsf@gmail.com>
- <1290461070.5468.5.camel@drew-northup.unet.maine.edu>
- <m2bp5glbrp.fsf@gmail.com> <4CEB7F1F.809@drmicha.warpmail.net>
- <1290517990.10366.17.camel@drew-northup.unet.maine.edu>
- <4CEBC8C9.4010905@drmicha.warpmail.net> <m2d3pwj8th.fsf@gmail.com>
- <1290532016.10892.40.camel@drew-northup.unet.maine.edu>
- <m2fwur7olt.fsf@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Drew Northup <drew.northup@maine.edu>, git@vger.kernel.org,
-	git@drmicha.warpmail.net
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 24 20:17:47 2010
+From: "Neal Kreitzinger" <neal@rsss.com>
+Subject: Re: when does git start caring about symlinks?
+Date: Wed, 24 Nov 2010 13:48:13 -0600
+Message-ID: <icjq8q$519$1@dough.gmane.org>
+References: <ichk2q$bbu$1@dough.gmane.org> <AANLkTi=O0pZ97kRt0jGfy20znfvfp3UTydTBn_aMBxE+@mail.gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 24 20:50:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLKqg-0002ij-Ip
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 20:17:46 +0100
+	id 1PLLLz-0005El-3c
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 20:50:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756231Ab0KXTR1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Nov 2010 14:17:27 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37953 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756167Ab0KXTR0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Nov 2010 14:17:26 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1E2553FB5;
-	Wed, 24 Nov 2010 14:17:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=WnirWmlFcZ6BN6sOky8YIYxhBjs=; b=AMq4WJ
-	LPMZkcvQENFQ7lk/iTDxIdhdV1DlAJMGA8iGXxAaEXO55IhVs1JK7YNfJ1uo3pBK
-	rcLUVC+3BQjEw/RQZTKhGf2hk6cKOMYaXWMHEMeEyNWpsD8w/JWTHI+HcSgMhnCa
-	pe6vXxLl8Xowm1MCckz2xXzpT6W9VdTcLrEM0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=enoU/FIHX7ZAOKojIFyj2Qm3t0uxADpz
-	yJYvZYT40nJCRaZ6sWwzyUg9zzhwlaX0ejAcNmAFaeIqY7TLcc3HYjmCMzCVLYpf
-	NV+A0MfaRXGxlq6xiVtk+qZLFfO4HHhvstdft0CETNxwFRIrRnGLq8CeoUWE4IUs
-	E13MpQqUkLY=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B78663FB4;
-	Wed, 24 Nov 2010 14:17:34 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 348243FB3; Wed, 24 Nov 2010
- 14:17:28 -0500 (EST)
-In-Reply-To: <m2fwur7olt.fsf@gmail.com> (Francis Moreau's message of "Tue\,
- 23 Nov 2010 21\:48\:46 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 7E009356-F7FF-11DF-ADB5-DF8536391E49-77302942!a-pb-sasl-sd.pobox.com
+	id S1756276Ab0KXTuA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Nov 2010 14:50:00 -0500
+Received: from lo.gmane.org ([80.91.229.12]:40095 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755877Ab0KXTt7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Nov 2010 14:49:59 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PLLLp-0005Ax-Pd
+	for git@vger.kernel.org; Wed, 24 Nov 2010 20:49:57 +0100
+Received: from 67.63.162.200 ([67.63.162.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 24 Nov 2010 20:49:57 +0100
+Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 24 Nov 2010 20:49:57 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 67.63.162.200
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-RFC2646: Format=Flowed; Original
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162073>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162074>
 
-Francis Moreau <francis.moro@gmail.com> writes:
 
-> Ok, I fixed the problem by reinstalling the following packages:
+>"Nguyen Thai Ngoc Duy" <pclouds@gmail.com> wrote in message 
+> >news:AANLkTi=O0pZ97kRt0jGfy20znfvfp3UTydTBn_aMBxE+@mail.gmail.com...
+>On Wed, Nov 24, 2010 at 6:50 AM, Neal Kreitzinger <neal@rsss.com> wrote:
+>> I have a question on how symlinks work and at what point git starts 
+>> caring
+>> about them. If dirA/repoA/.git has no symlinks and I copy it to
+>> dirB/repoB/.git (ie. cp -rp /dirA/repoA/.git /dirB/repoB/.git), but /dirB 
+>> is
+>> a symlink to /x/dirB does that mean that repoB contains symlinks (I 
+>> suspect
+>> that repoB may be made up of all symlinks at this point)? In other words,
+>> if I parallel test repoA and repoB am I running a true parallel test or 
+>> are
+>> the repos different because repoA has no symlinks and repoB has symlinks?
 >
->     - docbook-style-xsl
->     - docbook-dtds
->
-> I suspect something went wrong during Fedora major updates, at least
-> that's the one I'm going to blame for now ;)
+>There should be no difference between repoA and repoB until you make
+>changes. Symlinks outside worktree do not matter. Symlinks inside .git
+>dir may cause problems when you start updating repos. But I don't
+>think recent git creates symlinks. There are other forms of symlinks
+>in .git dir though: .git as a file that points to real .git dir, or
+>.git/info/alternates comes to mind.
+>-- 
+>Duy
 
-I vaguely recall that I saw a similar breakage due to broken xml catalog
-on the system when k.org updated a few years ago (not the recent move to
-FC13 but two updates before that one to FC9) and asked the sysadmin to
-reinstall docbook-dtds.
+Thank you for clarifying this for me.  I see that I mistyped my copy 
+command.  It's actually "cp -rp /dirA/repoA /dirB/repoB", but you understood 
+what I meant anyway when you stated "Symlinks outside worktree do not 
+matter".  :)
 
-Is it still CANTFIX [*1*], I wonder?
-
-[Reference]
-
-*1* https://bugzilla.redhat.com/show_bug.cgi?id=454097
-1
+v/r,
+Neal 
