@@ -1,65 +1,88 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+From: Matthijs Kooijman <matthijs@stdin.nl>
 Subject: Re: Versioning configuration files on a server: fatal: Unable to
- create '//etc/.git/index.lock': No such file or directory
-Date: Wed, 24 Nov 2010 15:45:43 +0700
-Message-ID: <AANLkTim_sPyVGK3XWEVseseRzcmNM-YS=aFSWZeBiB7n@mail.gmail.com>
-References: <AANLkTikfg9fLtqC6V3hQkiSZ+RfWqViJsHPxrt6ycoRR@mail.gmail.com>
+	create '//etc/.git/index.lock': No such file or directory
+Date: Wed, 24 Nov 2010 09:50:30 +0100
+Message-ID: <20101124085030.GB22067@login.drsnuggles.stderr.nl>
+References: <AANLkTikfg9fLtqC6V3hQkiSZ+RfWqViJsHPxrt6ycoRR@mail.gmail.com> <AANLkTim_sPyVGK3XWEVseseRzcmNM-YS=aFSWZeBiB7n@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Ilyas -- <umask00@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 24 09:46:36 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="7hb49YTkEhc+rP/V"
+Cc: Ilyas -- <umask00@gmail.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 24 09:50:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLAzq-0006vc-28
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 09:46:35 +0100
+	id 1PLB3m-0000DY-Iq
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 09:50:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752744Ab0KXIqR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Nov 2010 03:46:17 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:39373 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751601Ab0KXIqP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Nov 2010 03:46:15 -0500
-Received: by eye27 with SMTP id 27so5190357eye.19
-        for <git@vger.kernel.org>; Wed, 24 Nov 2010 00:46:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=wJvW/VTzxb/NrrGJs+tnT2Uu3slvR2tkKtd6d8SucMk=;
-        b=MJX46OkuE93O3/6DLvj41qAU5/vzLEiZmzVXaQk5/D8rx39NmhOtlT3Yz9KIdIOYPH
-         o6jsG+SP0bXHf93Qj8tOtd18+z7Iyjfed7Ft3XzqW3Gu+r5M1mSvALpho6ibianDvkoZ
-         LLVLuQNB6LV1/tIP0TjWK8vnDUY+2H/8bX940=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=fS3L7o+Fh9q4lY+GlxiH6oVgBx/JIefW7xzExZiNzTLLoMEGyh7OTpzqrD7rDSUXq/
-         b1rZfChNzWZryTNaCJPWsa05XYWmNe0EPZTbh864qAsthy2yVjpMLm/J0lBIM/wOYFII
-         hB42ph4r6xq/9Imb97rTj9hiRbpbuN5nZh1uQ=
-Received: by 10.216.255.148 with SMTP id j20mr7860886wes.11.1290588373934;
- Wed, 24 Nov 2010 00:46:13 -0800 (PST)
-Received: by 10.216.172.199 with HTTP; Wed, 24 Nov 2010 00:45:43 -0800 (PST)
-In-Reply-To: <AANLkTikfg9fLtqC6V3hQkiSZ+RfWqViJsHPxrt6ycoRR@mail.gmail.com>
+	id S1752314Ab0KXIud (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Nov 2010 03:50:33 -0500
+Received: from drsnuggles.stderr.nl ([94.142.244.14]:47345 "EHLO
+	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751601Ab0KXIuc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Nov 2010 03:50:32 -0500
+Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
+	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
+	(envelope-from <matthijs@stdin.nl>)
+	id 1PLB3e-0006MD-9J; Wed, 24 Nov 2010 09:50:31 +0100
+Received: (nullmailer pid 24438 invoked by uid 1000);
+	Wed, 24 Nov 2010 08:50:30 -0000
+Mail-Followup-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Ilyas -- <umask00@gmail.com>, git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <AANLkTim_sPyVGK3XWEVseseRzcmNM-YS=aFSWZeBiB7n@mail.gmail.com>
+X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
+X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Score: -2.5 (--)
+X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
+	pts  rule name              description
+	---- ---------------------- -------------------------------------------
+	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
+	0.1 AWL                    AWL: From: address is in the auto white-list
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162054>
 
-On Wed, Nov 24, 2010 at 3:01 PM, Ilyas -- <umask00@gmail.com> wrote:
-> Hi!
->
-> The patch bellow for problem 'Versioning configuration files on a
-> server: fatal: Unable to create '//etc/.git/index.lock': No such file
-> or directory' works fine on FreeBSD/Linux.
-> Please fix this problem in upstream.
 
-I also have another patch to fix this [1]. Hopefully Junio will pick it up soon.
+--7hb49YTkEhc+rP/V
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-[1] http://article.gmane.org/gmane.comp.version-control.git/161825
--- 
-Duy
+Hi folks,
+
+On Wed, Nov 24, 2010 at 03:45:43PM +0700, Nguyen Thai Ngoc Duy wrote:
+> On Wed, Nov 24, 2010 at 3:01 PM, Ilyas -- <umask00@gmail.com> wrote:
+> > The patch bellow for problem 'Versioning configuration files on a
+> > server: fatal: Unable to create '//etc/.git/index.lock': No such file
+> > or directory' works fine on FreeBSD/Linux.
+> > Please fix this problem in upstream.
+>=20
+> I also have another patch to fix this [1]. Hopefully Junio will pick it u=
+p soon.
+The patch sent by Ilyas is mine and it was just a quick hack. Please use
+the patch sent later by Nguyen instead, it solves the problem properly:
+
+> [1] http://article.gmane.org/gmane.comp.version-control.git/161825
+
+--7hb49YTkEhc+rP/V
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAkzs0dYACgkQz0nQ5oovr7xKwQCgqd/l6cuub7zXlnbepYCDRwEW
+i88AniNyZFrWeYS5gNlKJfEnENo6ml2p
+=uRWs
+-----END PGP SIGNATURE-----
+
+--7hb49YTkEhc+rP/V--
