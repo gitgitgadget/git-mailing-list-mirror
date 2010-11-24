@@ -1,77 +1,62 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: when does git start caring about symlinks?
-Date: Wed, 24 Nov 2010 21:55:49 +0700
-Message-ID: <AANLkTi=O0pZ97kRt0jGfy20znfvfp3UTydTBn_aMBxE+@mail.gmail.com>
-References: <ichk2q$bbu$1@dough.gmane.org>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [PATCH] StGit: export: fix base commit reporting in series file
+Date: Wed, 24 Nov 2010 16:57:48 +0000
+Message-ID: <AANLkTi=8-Y80CrrTYr0i1gcPP_SPxbwHiqB7LhgZF9GA@mail.gmail.com>
+References: <20101121155706.16544.20984.stgit@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Neal Kreitzinger <neal@rsss.com>
-X-From: git-owner@vger.kernel.org Wed Nov 24 15:56:29 2010
+To: Paulius Zaleckas <paulius.zaleckas@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 24 17:58:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLGlo-00050x-68
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 15:56:28 +0100
+	id 1PLIfV-0006l0-94
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 17:58:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752970Ab0KXO4W convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Nov 2010 09:56:22 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:37419 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751488Ab0KXO4V convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 24 Nov 2010 09:56:21 -0500
-Received: by wyb28 with SMTP id 28so9545680wyb.19
-        for <git@vger.kernel.org>; Wed, 24 Nov 2010 06:56:20 -0800 (PST)
+	id S1755776Ab0KXQ5v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Nov 2010 11:57:51 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:64840 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755718Ab0KXQ5u (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Nov 2010 11:57:50 -0500
+Received: by gwj20 with SMTP id 20so910394gwj.19
+        for <git@vger.kernel.org>; Wed, 24 Nov 2010 08:57:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Gx35sgDg7XLnsiHlC2we4rsalrQZ/NaTx9nsYDbW8Kk=;
-        b=ERjm70sNcRTZKAdwNzrnJdwqeTHUdMItxEzXxQdOXMBvn1QO/3GNDM90EnJjkrkyW3
-         mSOIkm9AQMEiB2ZYzK2rXMZNL4N1txcFNi9Cld3KjFPHxm1M44xWgnJZoGdTLwilXiHP
-         4RP+ctX309gAJ8pTJGrp2UTOVu7PalokSIXCo=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=GWVXyLSV2t1n7MdGlqfy5tNEMBnyh4VBKpq7rQSa8HE=;
+        b=ojff2B11EPPUxLNKDz3a3PyoSgCoo6+i0Uw6h4FL3XzkcxpjwQ/SQVwjSiuphz55Sk
+         LWtom2fiarHfcaJnOoW6PsZqSIh3J32DoG9ueod2RlnF4MvTt6vZwYCtPxppuZ+DFGQ2
+         VqvqocMrmlja5a+oU7XuvF3Pf2/i+0i5kKiDA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=nUZVoEzTUemAi5EBbrwgh0miHdfMhuH/Dg/vG8K0qroFZ3cK+u3L6Ky4p0EQXGo7iG
-         BErTloh77mhxmYQf82wwQC4Lgiy/wNoM//TflcxIQtnyUhzFzxSnFBJOna1pUoIlv5K7
-         zuYByJedYRbuxebK+GAxqzbKUIdtkcWPAmiPY=
-Received: by 10.216.47.19 with SMTP id s19mr2602355web.56.1290610579254; Wed,
- 24 Nov 2010 06:56:19 -0800 (PST)
-Received: by 10.216.172.199 with HTTP; Wed, 24 Nov 2010 06:55:49 -0800 (PST)
-In-Reply-To: <ichk2q$bbu$1@dough.gmane.org>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=uurxm6iLyG7dsnAHS3LMNvwSo8ICIpPH2wi3YE5APDFfCHzcXQYtZc2d5DnLq1msx4
+         Srwyz5aFF+vBxr7SE8Qw+K2W4wodkThg3/4I6I7qJbno4Kyj8nCKSJ2rICSotAVrNFyD
+         armMcREVu1YzyvAxRl/dqAN5JJiE/hZCu9AH0=
+Received: by 10.150.138.18 with SMTP id l18mr1360199ybd.106.1290617868530;
+ Wed, 24 Nov 2010 08:57:48 -0800 (PST)
+Received: by 10.231.148.72 with HTTP; Wed, 24 Nov 2010 08:57:48 -0800 (PST)
+In-Reply-To: <20101121155706.16544.20984.stgit@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162067>
 
-On Wed, Nov 24, 2010 at 6:50 AM, Neal Kreitzinger <neal@rsss.com> wrote=
-:
-> I have a question on how symlinks work and at what point git starts c=
-aring
-> about them. =C2=A0If dirA/repoA/.git has no symlinks and I copy it to
-> dirB/repoB/.git (ie. cp -rp /dirA/repoA/.git /dirB/repoB/.git), but /=
-dirB is
-> a symlink to /x/dirB does that mean that repoB contains symlinks (I s=
-uspect
-> that repoB may be made up of all symlinks at this point)? =C2=A0In ot=
-her words,
-> if I parallel test repoA and repoB am I running a true parallel test =
-or are
-> the repos different because repoA has no symlinks and repoB has symli=
-nks?
+On 21 November 2010 15:57, Paulius Zaleckas <paulius.zaleckas@gmail.com> wrote:
+> This bug was introduced in 3f19450c426970b78b19c522a82df1a962da5761
+> It should report the commit stg stack is based on, but not the
+> last patch in stack.
+>
+> Signed-off-by: Paulius Zaleckas <paulius.zaleckas@gmail.com>
 
-There should be no difference between repoA and repoB until you make
-changes. Symlinks outside worktree do not matter. Symlinks inside .git
-dir may cause problems when you start updating repos. But I don't
-think recent git creates symlinks. There are other forms of symlinks
-in .git dir though: .git as a file that points to real .git dir, or
-=2Egit/info/alternates comes to mind.
---=20
-Duy
+Thanks, applied.
+
+-- 
+Catalin
