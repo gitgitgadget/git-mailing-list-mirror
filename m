@@ -1,70 +1,73 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: Inexplicably deteriorating performance of Git repositories on Windows
-Date: Wed, 24 Nov 2010 23:06:17 +0100
-Message-ID: <201011242306.17834.j6t@kdbg.org>
-References: <AANLkTimTh7ka21inpovM=qqdWs6j2OcPXVsFh_CMiZ7N@mail.gmail.com> <4CED488A.2070507@workspacewhiz.com> <AANLkTi=X724OJgUvG0Ggu3OwxyaJprr9CLL+t+x=MbTO@mail.gmail.com>
+From: Levente Kovacs <leventelist@gmail.com>
+Subject: gitolite description
+Date: Wed, 24 Nov 2010 23:23:59 +0100
+Organization: logonex.eu
+Message-ID: <20101124232359.38034ff1@jive.levalinux.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Cc: Joshua Jensen <jjensen@workspacewhiz.com>,
-	Tay Ray Chuan <rctay89@gmail.com>,
-	Wilbert van Dolleweerd <wilbert@arentheym.com>,
-	Git ML <git@vger.kernel.org>
-To: Dun Peal <dunpealer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 24 23:06:28 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 24 23:24:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLNTv-0003Gt-Am
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 23:06:27 +0100
+	id 1PLNlD-0004Ph-KC
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 23:24:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754909Ab0KXWGW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Nov 2010 17:06:22 -0500
-Received: from bsmtp2.bon.at ([213.33.87.16]:63409 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1752375Ab0KXWGV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Nov 2010 17:06:21 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 3E45E130049;
-	Wed, 24 Nov 2010 23:06:18 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id 1F01019F5FD;
-	Wed, 24 Nov 2010 23:06:18 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <AANLkTi=X724OJgUvG0Ggu3OwxyaJprr9CLL+t+x=MbTO@mail.gmail.com>
-Content-Disposition: inline
+	id S1754828Ab0KXWYN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Nov 2010 17:24:13 -0500
+Received: from lo.gmane.org ([80.91.229.12]:59515 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752791Ab0KXWYM (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Nov 2010 17:24:12 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PLNl4-0004LJ-Rc
+	for git@vger.kernel.org; Wed, 24 Nov 2010 23:24:10 +0100
+Received: from fxip-006cc.externet.hu ([92.52.216.204])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 24 Nov 2010 23:24:10 +0100
+Received: from leventelist by fxip-006cc.externet.hu with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 24 Nov 2010 23:24:10 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: fxip-006cc.externet.hu
+X-Newsreader: Claws Mail 3.7.6 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162090>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162091>
 
-On Mittwoch, 24. November 2010, Dun Peal wrote:
-> So my theory is that there's a cache that on the "fast" machines
-> aggressively caches the entire tree on a regular `git status` run. On
-> such a machine, it's enough to run `git status` once, and after that
-> initial cold run, the rest will be warm... until you reboot the
-> machine, rinse, repeat.
->
-> On a slow machine, however, cache isn't so aggressive. It might be
-> write-oriented. So when you write out a whole new working tree, that
-> tree gets cached as it is written. And for the remainder of the
-> lifetime of that cache, you get the fully-cached performance you see
-> on the "fast" machines. But then you reboot the machine, and lose the
-> cache. And since the caching process isn't aggressive, any number of
-> `git status` runs won't get you back to the fully cached state. You
-> will only get that on a newly written working copy.
+Hi list,
 
-You can test this theory on a slow machine: You have cloned a repository, 
-rebooted, and you are now at 14s per 'git status'. Now:
 
- $ git rm -r .
- $ git reset --hard
+I have a gitolite and gitweb environment. Each time I set up a repository, I
+have to ssh to my server and edit the description of the newly created
+repository.
 
-erases the worktree and writes it out again (do this only on a clean 
-checkout!). Are you now at 5s per 'git status'?
+Is there any way to remotely edit the description?
 
--- Hannes
+I tried to edit it locally, and then push it, but it didn't help.
+
+I add my repository like this:
+
+git remote add origin gitolite:new_repo.git
+git push origin master:master
+
+my gitweb interface is available here:
+
+http://git.logonex.eu/
+
+Note the "Unnamed repository; edit this..." strings.
+
+Thanks,
+Levente
+
+-- 
+Levente Kovacs
+http://levente.logonex.eu
