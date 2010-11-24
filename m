@@ -1,58 +1,69 @@
-From: =?UTF-8?q?Diego=20Elio=20Petten=C3=B2?= <flameeyes@gmail.com>
-Subject: [PATCH] imap-send: link against libcrypto for HMAC and others
-Date: Wed, 24 Nov 2010 14:55:16 +0100
-Message-ID: <1290606916-14550-1-git-send-email-flameeyes@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 24 14:56:03 2010
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: Inexplicably deteriorating performance of Git repositories on Windows
+Date: Wed, 24 Nov 2010 22:16:29 +0800
+Message-ID: <AANLkTim-1uKTVacr1N=9bhZ+=ngggrJS=GD-YNjkSuBR@mail.gmail.com>
+References: <AANLkTimTh7ka21inpovM=qqdWs6j2OcPXVsFh_CMiZ7N@mail.gmail.com>
+	<AANLkTikXkWvHrc7=FjePfX5WyyNF1U=KH2DBCU+CcVu6@mail.gmail.com>
+	<AANLkTimky3Ojc5w3PcCoJOs=NMfMpgUWUDcx+ry6h1dF@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Wilbert van Dolleweerd <wilbert@arentheym.com>,
+	Git ML <git@vger.kernel.org>
+To: Dun Peal <dunpealer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 24 15:16:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLFpB-0004Sx-CC
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 14:55:53 +0100
+	id 1PLG9E-0007Bx-Mh
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 15:16:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755163Ab0KXNze (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Nov 2010 08:55:34 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:54453 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754923Ab0KXNzd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Nov 2010 08:55:33 -0500
-Received: by wyb28 with SMTP id 28so9493944wyb.19
-        for <git@vger.kernel.org>; Wed, 24 Nov 2010 05:55:32 -0800 (PST)
-Received: by 10.227.135.85 with SMTP id m21mr9482045wbt.227.1290606930836;
-        Wed, 24 Nov 2010 05:55:30 -0800 (PST)
-Received: from localhost (host249-252-static.95-94-b.business.telecomitalia.it [94.95.252.249])
-        by mx.google.com with ESMTPS id x15sm3462514weq.31.2010.11.24.05.55.28
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 24 Nov 2010 05:55:29 -0800 (PST)
-X-Mailer: git-send-email 1.7.3.2
+	id S1751493Ab0KXOQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Nov 2010 09:16:31 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:47520 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751376Ab0KXOQa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Nov 2010 09:16:30 -0500
+Received: by ewy5 with SMTP id 5so3149805ewy.19
+        for <git@vger.kernel.org>; Wed, 24 Nov 2010 06:16:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=oqDLWEEudjbgDzbqf/o59ggWywc/UfJy4FA7j+B2R94=;
+        b=UZ4A2wzRiNu5m4LevTPDBlYAoQ2iY7nwsiT5pqkxkhwQU0v7KYSiLGYUaw/nATU3xK
+         X3XwXLbfrJ5f1TDVnLX+TWfc2YKQr7xGtsU/qN+DAYOwPaXcwsHf3PHVe+NwMvIauWmI
+         FeoVWz6FFxtO5Oa+0kNrhaoxwCxAx4mOR5K5w=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=Pf5GJGbLcfdlov7CztMhss/tubbD/PwXFfh2u8C8iuUdlJLvbyFxLgAtfxHLER5lCq
+         C0MrCNP91NABUoEjjJG8WLntt6Mj3iWYVW9xNCnQTq8zIKJKWR/pvD37C3tXQaXtafd9
+         Sd7e9xjx69jfgcK1MusB0Qx3Ki27Qv2tXeni4=
+Received: by 10.213.28.133 with SMTP id m5mr3517115ebc.28.1290608189093; Wed,
+ 24 Nov 2010 06:16:29 -0800 (PST)
+Received: by 10.213.112.195 with HTTP; Wed, 24 Nov 2010 06:16:29 -0800 (PST)
+In-Reply-To: <AANLkTimky3Ojc5w3PcCoJOs=NMfMpgUWUDcx+ry6h1dF@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162063>
 
-When using stricter linkers, such as GNU gold or Darwin ld, transitive
-dependencies are not counted towards symbol resolution. If we don't link
-imap-send to libcrypto, we'll have undefined references to the HMAC_*,
-EVP_* and ERR_* functions families.
----
- Makefile |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+On Wed, Nov 24, 2010 at 3:59 AM, Dun Peal <dunpealer@gmail.com> wrote:
+> On Tue, Nov 23, 2010 at 7:12 PM, Wilbert van Dolleweerd
+> <wilbert@arentheym.com> wrote:
+>> How big is your repository? We're using some fairly big repositories
+>> over here but I haven't seen this behavior with the latest version of
+>> msysgit.
+>
+> The working copy totals about 4GB. The .git directory, tightly packed, is 1GB.
 
-diff --git a/Makefile b/Makefile
-index 1f1ce04..c8377d4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1927,7 +1927,7 @@ git-%$X: %.o $(GITLIBS)
- 
- git-imap-send$X: imap-send.o $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
--		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL)
-+		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
- 
- git-http-fetch$X: revision.o http.o http-walker.o http-fetch.o $(GITLIBS)
- 	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,$^) \
+What does the structure of your working tree look like? I think the
+depth might be affecting performance.
+
 -- 
-1.7.3.2
+Cheers,
+Ray Chuan
