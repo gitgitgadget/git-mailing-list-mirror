@@ -1,80 +1,130 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH] rebase -i: remove undocumented '--verify' flag
-Date: Tue, 23 Nov 2010 20:09:06 -0500
-Message-ID: <AANLkTinF8kTRS+MoxLhnVNNN2+jdev5N9cRM-TwHv9np@mail.gmail.com>
-References: <1290408504-14639-1-git-send-email-martin.von.zweigbergk@gmail.com>
-	<vpqoc9hsemy.fsf@bauges.imag.fr>
-	<201011221414.15982.trast@student.ethz.ch>
-	<vpq8w0lqyf7.fsf@bauges.imag.fr>
-	<alpine.DEB.1.10.1011222103290.17721@debian>
-	<7vfwurvluh.fsf@alter.siamese.dyndns.org>
+From: "J.H." <warthog9@kernel.org>
+Subject: Re: What's cooking in git.git (Nov 2010, #02; Wed, 17)
+Date: Tue, 23 Nov 2010 17:45:14 -0800
+Message-ID: <4CEC6E2A.9080605@kernel.org>
+References: <7v1v6je9g8.fsf@alter.siamese.dyndns.org> <m3mxp668cy.fsf@localhost.localdomain> <7v1v6icyb0.fsf@alter.siamese.dyndns.org> <201011200142.26522.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 24 02:09:19 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 24 02:44:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PL3rH-0007EB-9a
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 02:09:15 +0100
+	id 1PL4Pa-0003d6-6n
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 02:44:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755857Ab0KXBJJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 23 Nov 2010 20:09:09 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:47951 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755504Ab0KXBJH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 23 Nov 2010 20:09:07 -0500
-Received: by qyk12 with SMTP id 12so3153831qyk.19
-        for <git@vger.kernel.org>; Tue, 23 Nov 2010 17:09:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=e2BJwJ+qOMfLJ3HQUs0U3JdZt5BpEd5jrsjFBsnSgQM=;
-        b=LTF6y/Q6ggnk9L6JPJH6GgfOiTCDI6aLs83HX9RI+OYnWwlGIN1C2YYd7DNfVJPT2N
-         9ohtGdyRzryLwTs0KeoceZHyuXAUIbZUfGEcNzCs4bRq5vavRfFZ4sdokbWqfE7MhsFy
-         yZJ5wOkZkmDL157XCOc/xRLWuQ7oxnKk0ip28=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=RDNjqDB8p9lZtvGPp+VLHonzlkHMvqHb5Le5OsbeevXVX9SHifW4ddd/6maEN3hHDs
-         g+lnqDTjoeKBzNXBvaT6iWoVL/3f8mr3YVySXmy9gxzsyPJLzlauyrY5G1xwMghZO6B1
-         noezNjYWW/b9juUm4pumJ/0CG9i3cbBLPIHVI=
-Received: by 10.224.11.67 with SMTP id s3mr5782899qas.144.1290560946038; Tue,
- 23 Nov 2010 17:09:06 -0800 (PST)
-Received: by 10.224.200.138 with HTTP; Tue, 23 Nov 2010 17:09:06 -0800 (PST)
-In-Reply-To: <7vfwurvluh.fsf@alter.siamese.dyndns.org>
+	id S932068Ab0KXBog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 23 Nov 2010 20:44:36 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:43987 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755667Ab0KXBof (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 23 Nov 2010 20:44:35 -0500
+Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id oAO1iLOI027240
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Tue, 23 Nov 2010 17:44:21 -0800
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.12) Gecko/20100907 Fedora/3.0.7-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.7
+In-Reply-To: <201011200142.26522.jnareb@gmail.com>
+X-Enigmail-Version: 1.0.1
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Tue, 23 Nov 2010 17:44:22 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162039>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162040>
 
-On Tue, Nov 23, 2010 at 3:14 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Somehow this patch seems severely whitespace mangled---please check y=
-our
-> MUA. =C2=A0I think I've seen Alpine send patches sanely; there should=
- be a way
-> to tell it to behave.
+>>>> * jh/gitweb-caching (2010-11-01) 4 commits
+>>>>  . gitweb: Minimal testing of gitweb caching
+>>>>  . gitweb: File based caching layer (from git.kernel.org)
+>>>>  . gitweb: add output buffering and associated functions
+>>>>  . gitweb: Prepare for splitting gitweb
+>>>>
+>>>> Temporarily ejected while I shuffled jn/gitweb-testing; will queue the
+>>>> latest back in pu or perhaps in next.
+>>>
+>>> The advantage of 'gitweb: File based caching layer (from git.kernel.org)'
+>>> is that it is tested in real-life on heavy load (assuming that 
+>>> git.kernel.org uses the same version as is/would be in pu/next).
+>>>
+>>> The disadvantage is that it is seriously messy code.  Something that I
+>>> wanted to improve in my rewrite.  This is only minimal fixup.
+>>
+>> Which is exactly what we want at this point (I want to release 1.7.4 by
+>> the end-of-year holidays, which means a feature-freeze will have to start
+>> soon).  My understanding is that the serious messiness does not come from
+>> the caching layer.
+> 
+> Well... the capturing, caching and actual gitweb operations are quite
+> intermixed in J.H. patch.
 
-Hmm... It must be the format=3Dflowed stuff, which should be turned off
-according to SubmittingPatches. It is apparently on by default in
-Alpine. I have now turned it off, so it will hopefully look
-better next time. I tried sending the patch to myself, but I couldn't
-see any difference either in Gmail or in Alpine. As far as I can
-understand, this option only affects the presentation. I didn't see
-anything wrong with the raw message.
+I'm not sure how they can be any less intermixed.  The biggest problem
+is getting the code launched into the caching engine, which gitweb in
+general has no good means of dealing with.  Now that said, since I
+switched how I'm capturing the output the diff into the main gitweb code
+is quite small, and easily bypassed.
 
-Sorry about the inconvenience :-(.
+The only place there the code gets really intermixed at all is in the
+special case of binary files, and that's just because the entirety of
+that code in gitweb.perl assumes it can dump the data straight to the
+client, which I point out has a whole slew of disadvantages, not the
+least of which is the client has no idea how big the file should be and
+is accepting bits blindly until the stream closes.
 
-> No need to resend; I can unmunge this patch by hand.
+> I wanted to separate those issues, and have
+> them modularized in my rewrite[1], making it easy to use other caching engine
+> (tested with Cache::FileCache from Cache::Cache).  On the other hand 
+> intermixing allows capturing directly to cache file (although it is only
+> since v7), something that would be more difficult in my rewrite.
 
-Thanks.
+While I don't disagree, being able to support other caching systems
+would be nice, we have this now, it's tested and it works.  I'd argue
+this is a step 1, step 2 case at this point.
+
+I'd also point out that while caching the output has been exceedingly
+useful, and has proven to be fast, I can definitely see benefits to
+caching individual data pieces, however to do that the output and data
+accessing bits in gitweb really need to be re-written, and we should
+honestly move to some sort of templating engine.  That said, that's not
+part of this patch series anyway.
+
+> The Perl code of J.H. patch does not follow style of other parts of gitweb,
+> doesn't follow best practices (like e.g. using lexical filehandles instead
+> of globs), does include some code repetitions... all of which made me
+> attempt rewrite rather than fix it.
+
+Concerning the lexical filehandles vs. globs, I can not find any
+documentation anywhere as to why you would prefer one over the other.
+Considering that the handles were being use globally the lexical way
+made sense (and was the way I wrote it 4 years ago).  I've already done
+the quick search and replace to move them over to globs.
+
+Speaking to code repetitions the only thing that I really had repeated
+was the check for if the action involved a binary file, I've added a
+function that checks for that now.  Beyond that, I'm not really seeing
+anything.
+
+> BTW. I didn't get any responses to "[RFC] Implementing gitweb output caching
+> - issues to solve".
+
+Because you sent that while I was in Boston at Kernel Summit and LPC.
+It got lost in my inbox, and I've only gotten far enough in the last day
+or so to start digging back into the gitweb stuff.  I'm not sure how,
+but you have perfect timing in every time you send out stuff I'm in the
+middle of a big messy trip.  Clearly I should just travel less ;-)
+
+I should have fixes / cleanups and further commentary soon.  I've also
+got some changes that are a combination of requests from the gittogether
+and from irc that I'll be adding in.
+
+I'm currently working from on top of Jakub's last tree, though I've got
+some questions about his reasoning on a few things now that I've been
+digging into it.
+
+- John 'Warthog9' Hawley
