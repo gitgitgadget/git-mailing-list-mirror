@@ -1,69 +1,69 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: Inexplicably deteriorating performance of Git repositories on Windows
-Date: Wed, 24 Nov 2010 22:16:29 +0800
-Message-ID: <AANLkTim-1uKTVacr1N=9bhZ+=ngggrJS=GD-YNjkSuBR@mail.gmail.com>
-References: <AANLkTimTh7ka21inpovM=qqdWs6j2OcPXVsFh_CMiZ7N@mail.gmail.com>
-	<AANLkTikXkWvHrc7=FjePfX5WyyNF1U=KH2DBCU+CcVu6@mail.gmail.com>
-	<AANLkTimky3Ojc5w3PcCoJOs=NMfMpgUWUDcx+ry6h1dF@mail.gmail.com>
+From: Torgny Nyblom <kde@nyblom.org>
+Subject: [PATCH] Allow tuning of the threshold for detecting renames/copies.
+Date: Wed, 24 Nov 2010 15:31:04 +0100
+Message-ID: <20101124153104.3cc1135e@explosive.nyblom.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Wilbert van Dolleweerd <wilbert@arentheym.com>,
-	Git ML <git@vger.kernel.org>
-To: Dun Peal <dunpealer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 24 15:16:40 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Nov 24 15:41:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLG9E-0007Bx-Mh
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 15:16:37 +0100
+	id 1PLGXh-00050O-2Y
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 15:41:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751493Ab0KXOQb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Nov 2010 09:16:31 -0500
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:47520 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751376Ab0KXOQa (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Nov 2010 09:16:30 -0500
-Received: by ewy5 with SMTP id 5so3149805ewy.19
-        for <git@vger.kernel.org>; Wed, 24 Nov 2010 06:16:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=oqDLWEEudjbgDzbqf/o59ggWywc/UfJy4FA7j+B2R94=;
-        b=UZ4A2wzRiNu5m4LevTPDBlYAoQ2iY7nwsiT5pqkxkhwQU0v7KYSiLGYUaw/nATU3xK
-         X3XwXLbfrJ5f1TDVnLX+TWfc2YKQr7xGtsU/qN+DAYOwPaXcwsHf3PHVe+NwMvIauWmI
-         FeoVWz6FFxtO5Oa+0kNrhaoxwCxAx4mOR5K5w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=Pf5GJGbLcfdlov7CztMhss/tubbD/PwXFfh2u8C8iuUdlJLvbyFxLgAtfxHLER5lCq
-         C0MrCNP91NABUoEjjJG8WLntt6Mj3iWYVW9xNCnQTq8zIKJKWR/pvD37C3tXQaXtafd9
-         Sd7e9xjx69jfgcK1MusB0Qx3Ki27Qv2tXeni4=
-Received: by 10.213.28.133 with SMTP id m5mr3517115ebc.28.1290608189093; Wed,
- 24 Nov 2010 06:16:29 -0800 (PST)
-Received: by 10.213.112.195 with HTTP; Wed, 24 Nov 2010 06:16:29 -0800 (PST)
-In-Reply-To: <AANLkTimky3Ojc5w3PcCoJOs=NMfMpgUWUDcx+ry6h1dF@mail.gmail.com>
+	id S1751991Ab0KXOlo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Nov 2010 09:41:44 -0500
+Received: from mailrelay.veberod.com ([193.12.238.77]:37612 "EHLO
+	mailrelay.veberod.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750894Ab0KXOlo (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Nov 2010 09:41:44 -0500
+X-Greylist: delayed 635 seconds by postgrey-1.27 at vger.kernel.org; Wed, 24 Nov 2010 09:41:43 EST
+Received: from dx.nyblom.org ([212.247.117.70])
+	by mailrelay.veberod.com (8.13.8/8.13.8) with ESMTP id oAOBdnZ2001194
+	for <git@vger.kernel.org>; Wed, 24 Nov 2010 12:39:50 +0100
+Received: from localhost (localhost [127.0.0.1])
+	by dx.nyblom.org (Postfix) with ESMTP id 8227C30500
+	for <git@vger.kernel.org>; Wed, 24 Nov 2010 15:31:05 +0100 (CET)
+X-Virus-Scanned: amavisd-new at dx.nyblom.org
+Received: from dx.nyblom.org ([127.0.0.1])
+	by localhost (dx.nyblom.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id o4hhZI0D+Utl for <git@vger.kernel.org>;
+	Wed, 24 Nov 2010 15:31:04 +0100 (CET)
+Received: from explosive.nyblom.org (explosive.nyblom.org [192.168.0.201])
+	by dx.nyblom.org (Postfix) with ESMTP id 913BBE40B7
+	for <git@vger.kernel.org>; Wed, 24 Nov 2010 15:31:04 +0100 (CET)
+X-Mailer: Claws Mail 3.7.7 (GTK+ 2.20.1; x86_64-unknown-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162064>
 
-On Wed, Nov 24, 2010 at 3:59 AM, Dun Peal <dunpealer@gmail.com> wrote:
-> On Tue, Nov 23, 2010 at 7:12 PM, Wilbert van Dolleweerd
-> <wilbert@arentheym.com> wrote:
->> How big is your repository? We're using some fairly big repositories
->> over here but I haven't seen this behavior with the latest version of
->> msysgit.
->
-> The working copy totals about 4GB. The .git directory, tightly packed, is 1GB.
+A patch originally from Jeff King, it allows tuning of the threshold for detecting renames/copies when using git log.
 
-What does the structure of your working tree look like? I think the
-depth might be affecting performance.
 
+From: Jeff King <peff@peff.net>
+
+Signed-off-by: Torgny Nyblom <kde@nyblom.org>
+---
+ tree-diff.c |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/tree-diff.c b/tree-diff.c
+index 12c9a88..378f049 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -351,6 +351,7 @@ static void try_to_follow_renames(struct tree_desc *t1, struct tree_desc *t2, co
+ 	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
+ 	diff_opts.single_follow = opt->paths[0];
+ 	diff_opts.break_opt = opt->break_opt;
++	diff_opts.rename_score = opt->rename_score;
+ 	paths[0] = NULL;
+ 	diff_tree_setup_paths(paths, &diff_opts);
+ 	if (diff_setup_done(&diff_opts) < 0)
 -- 
-Cheers,
-Ray Chuan
+1.7.1
