@@ -1,88 +1,182 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2010, #02; Wed, 17)
-Date: Wed, 24 Nov 2010 22:30:44 +0100
-Message-ID: <201011242230.44920.jnareb@gmail.com>
-References: <7v1v6je9g8.fsf@alter.siamese.dyndns.org> <4CEC6E2A.9080605@kernel.org> <7vpqtutzkp.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH/RFC] gitweb: selectable configurations that change with each request
+Date: Wed, 24 Nov 2010 22:43:20 +0100
+Message-ID: <201011242243.20545.jnareb@gmail.com>
+References: <20101111213456.21127.36449.stgit@localhost.localdomain> <7vhbf6txi9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: "J.H." <warthog9@kernel.org>, git@vger.kernel.org
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Julio Lajara <julio.lajara@alum.rpi.edu>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Nov 24 22:31:05 2010
+X-From: git-owner@vger.kernel.org Wed Nov 24 22:43:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLMve-0007Hd-3l
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 22:31:02 +0100
+	id 1PLN7l-00077C-5J
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 22:43:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753051Ab0KXVa5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Nov 2010 16:30:57 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:59465 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751353Ab0KXVa4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Nov 2010 16:30:56 -0500
-Received: by fxm13 with SMTP id 13so183244fxm.19
-        for <git@vger.kernel.org>; Wed, 24 Nov 2010 13:30:55 -0800 (PST)
+	id S1754040Ab0KXVn1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Nov 2010 16:43:27 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:51563 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751757Ab0KXVn0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Nov 2010 16:43:26 -0500
+Received: by bwz15 with SMTP id 15so246374bwz.19
+        for <git@vger.kernel.org>; Wed, 24 Nov 2010 13:43:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=hz1IRnZtdTZuv8udnWDE/zyWvCM57gS5o5xrbPTZFRk=;
-        b=TzmZh64ambUk5WzIKko/bmYbj/H9yO0syEJCMGhy2EvpvIheMEPdE2f6Szy+2IBMeK
-         M9R19g2v2slN8WopB9YADEzRj0z/wXWoCngt+3CWsB6tPDLUKos2tQ4QF2509jInC0x7
-         HTKv/3sLIWd8dCWB1KXWrM96Ql9gKUAfbQhD8=
+        bh=N73trSUGOOPUdcpNLb2JMpIEu0FzQotaKr/NDtYfQL0=;
+        b=r2fSdOzju1P4Ue3iopUVgxf8fQlfJ/kbTeU9xSx/ZRLAPVZ0A9BSioP37YDw2876OL
+         6H5eoLx7+L6e04HerOWnfEjFmcLnsm2ugONrBq54YfGeVC4DiXuFVPJZQPwtSKTs/UFR
+         oM8rroNncWbi27s32HwNnEsBdnU6ZMix9mXds=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=r4sVvGCJieDolduTVgeS8ZLenVQum3OQ3sNvOrqf+OwJ5c2sK8oKfrNbvyUiZz/SLf
-         PbRADlwuWSe/mMkpEPtEsL1rh9aGj1tKwkdQBsP2HXJcrcLHJmTBDlCrh7ZZeYcvR+On
-         OLJ1zpziI85ICDme6slCNOfh5npMHRchBvAfA=
-Received: by 10.223.122.146 with SMTP id l18mr640817far.67.1290634255386;
-        Wed, 24 Nov 2010 13:30:55 -0800 (PST)
+        b=dAyzbe+JEgI5KQZF7kx6bMVFtJar+2IQYZINcH6OgpLUP5aCNOwTFZb4zUkjrxH084
+         9QE/R2BDXyuaWzKU1os6RV8+tjLG2Gb1S0G6hxP5bm+TtpalV3HhUiR/qLKMQ2VvCU/+
+         0rO8SlPeIb89668gQhRnz7q23MXwTReoKWG+M=
+Received: by 10.204.79.144 with SMTP id p16mr2982918bkk.161.1290635005330;
+        Wed, 24 Nov 2010 13:43:25 -0800 (PST)
 Received: from [192.168.1.13] (abwq109.neoplus.adsl.tpnet.pl [83.8.240.109])
-        by mx.google.com with ESMTPS id e17sm2377838fak.34.2010.11.24.13.30.50
+        by mx.google.com with ESMTPS id d27sm3981887bkw.14.2010.11.24.13.43.22
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 24 Nov 2010 13:30:53 -0800 (PST)
+        Wed, 24 Nov 2010 13:43:23 -0800 (PST)
 User-Agent: KMail/1.9.3
-In-Reply-To: <7vpqtutzkp.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vhbf6txi9.fsf@alter.siamese.dyndns.org>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162089>
 
 On Wed, 24 Nov 2010, Junio C Hamano wrote:
-> "J.H." <warthog9@kernel.org> writes:
+> Jakub Narebski <jnareb@gmail.com> writes:
 > 
-> > While I don't disagree, being able to support other caching systems
-> > would be nice, we have this now, it's tested and it works.  I'd argue
-> > this is a step 1, step 2 case at this point.
+> > The default value for $per_request_config is 1 (true), which means that
+> > old configuration that require to change per session (like gitolite's)
+> > will keep working.
+> >
+> > Because there is a call to evaluate_gitweb_config() in the run() subroutine
+> > (the call in run_config() is not invoked at first request to avoid double
+> > running it), therefore evaluate_git_version() could be moved back there, and
+> > is now evaluated only once.
+> >
+> > Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 > 
-> I would have to agree; getting some cache layer that is known to work (you
-> are battle testing your updates on a busy site of yours as you develop,
-> right?) early, quick and dirty with minimum changes, is more beneficial
-> than waiting for a large rewrite thats "gets it perfect this time".
+> I like the "we can keep the old behaviour by default, but you can go
+> fancier if you wanted to" attitude of this patch.
 
-I also agree, that's why I'd like to go the "minimal fixups" route, where
-those minimal fixups are about caching being robust (loading cache.pl,
-passing minimal tests), not penalizing non-cached case (moving check for
-$caching_enabled out of cache_fetch), and make it possible to move to
-better solution / other caching engines in the future while maintaining
-backward copmatibility (configuration is API; $caching_enabled, perhaps
-also $cache (is 'cache.pl') and %cache_options).
+Thanks.
 
-> > I'm currently working from on top of Jakub's last tree, though I've got
-> > some questions about his reasoning on a few things now that I've been
-> > digging into it.
-> 
-> Thanks both for keeping the ball rolling.
+> I however am not sure if this particular implementation is regression
+> free.  People who wanted the per-request configuration used to be able to
+> access what evaluate_uri() did while running evaluate_gitweb_config(),
+> which in turn means that their custom configuration could take things like
+> my-url and path-info into account, but now for the first invocation they
+> cannot.  It probably is just the matter of moving some code around from
+> their old custom gitweb-config to a per_request_config sub they need to
+> write and point $per_request_config variable at, but that makes "setting 1
+> will keep the old behaviour" a false promise, no?
+
+Thanks for catching this; I forgot to take into account the fact that
+gitweb config changing with request would need request-related variables.
+
+So instead of code flow looking like this
+
+  evaluate_gitweb_config();
+  $first_request = 1;
+
+  while (...) {
+
+  	if ($per_request_config) {
+		if (ref($per_request_config) eq 'CODE') {
+			$per_request_config->();
+		} elsif (!$first_request) {
+			evaluate_gitweb_config();
+		}
+	}
+
+	$first_request = 0;
+
+  }
+
+
+we would move to
+
+  $first_request = 1;
+  while (...) {
+
+  	if ($first_request) {
+		evaluate_gitweb_config();
+	} elsif ($per_request_config) {
+		if (ref($per_request_config) eq 'CODE') {
+			$per_request_config->();
+		} else {
+  			evaluate_gitweb_config();
+  		}
+	}
+	$first_request = 0;
+
+  }
+
+
+I'll send new version soon.
+
+
+P.S. if we could assume that nobody ever edits gitweb.cgi directly
+to set $per_request_config to non-default value, we could probably
+get rid of $first_request variable...
+ 
+> > @@ -1068,12 +1076,18 @@ sub reset_timer {
+> >  	our $number_of_git_cmds = 0;
+> >  }
+> >  
+> > +our $first_request = 1;
+> >  sub run_request {
+> >  	reset_timer();
+> >  
+> >  	evaluate_uri();
+> > -	evaluate_gitweb_config();
+> > -	evaluate_git_version();
+> > +	if ($per_request_config) {
+> > +		if (ref($per_request_config) eq 'CODE') {
+> > +			$per_request_config->();
+> > +		} elsif (!$first_request) {
+> > +			evaluate_gitweb_config();
+> > +		}
+> > +	}
+> >  	check_loadavg();
+> >  
+> >  	# $projectroot and $projects_list might be set in gitweb config file
+> > @@ -1126,6 +1140,10 @@ sub evaluate_argv {
+> >  
+> >  sub run {
+> >  	evaluate_argv();
+> > +	evaluate_gitweb_config();
+> > +	evaluate_git_version();
+> > +
+> > +	$first_request = 1;
+> >  
+> >  	$pre_listen_hook->()
+> >  		if $pre_listen_hook;
+> > @@ -1139,6 +1157,7 @@ sub run {
+> >  
+> >  		$post_dispatch_hook->()
+> >  			if $post_dispatch_hook;
+> > +		$first_request = 0;
+> >  
+> >  		last REQUEST if ($is_last_request->());
+> >  	}
 > 
 
 -- 
