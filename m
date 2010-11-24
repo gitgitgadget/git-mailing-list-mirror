@@ -1,117 +1,178 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: [PATCHv3] git-rebase--interactive.sh: extend "edit" command to be more useful
-Date: Wed, 24 Nov 2010 12:19:20 -0800
-Message-ID: <1290629960-60917-1-git-send-email-kevin@sb.org>
-References: <20101110015327.GB1503@burratino>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Yann Dirson <dirson@bertin.fr>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Eric Raible <raible@nextest.com>, Kevin Ballard <kevin@sb.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 24 21:19:41 2010
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH] help: always suggest common-cmds if prefix of cmd
+Date: Wed, 24 Nov 2010 21:20:45 +0100
+Message-ID: <AANLkTi=nxcODCvQ6hmaQe=q38e=bF7cRHWrRaFr+zen6@mail.gmail.com>
+References: <AANLkTina0tnOEE2+17W03pFPqg37Btss0HYBeW+pOEgn@mail.gmail.com>
+ <1290539473-2420-1-git-send-email-kusmabite@gmail.com> <7v1v6atsbd.fsf@alter.siamese.dyndns.org>
+Reply-To: kusmabite@gmail.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, ziade.tarek@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Nov 24 21:21:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLLoa-0005Tz-U8
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 21:19:41 +0100
+	id 1PLLq6-0006PN-GV
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 21:21:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755489Ab0KXUTg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Nov 2010 15:19:36 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:49582 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754227Ab0KXUTf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Nov 2010 15:19:35 -0500
-Received: by pzk6 with SMTP id 6so49471pzk.19
-        for <git@vger.kernel.org>; Wed, 24 Nov 2010 12:19:34 -0800 (PST)
-Received: by 10.142.147.21 with SMTP id u21mr9037643wfd.257.1290629974738;
-        Wed, 24 Nov 2010 12:19:34 -0800 (PST)
-Received: from localhost.localdomain ([69.170.160.74])
-        by mx.google.com with ESMTPS id e14sm9861769wfg.8.2010.11.24.12.19.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 24 Nov 2010 12:19:33 -0800 (PST)
-X-Mailer: git-send-email 1.7.3.2.488.gc5e8
-In-Reply-To: <20101110015327.GB1503@burratino>
+	id S1755600Ab0KXUVI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Nov 2010 15:21:08 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:46292 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753278Ab0KXUVH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 24 Nov 2010 15:21:07 -0500
+Received: by fxm13 with SMTP id 13so127728fxm.19
+        for <git@vger.kernel.org>; Wed, 24 Nov 2010 12:21:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=bAT4g8iHqOUw9J3LglfVU2qJdqSu62Q4ybER5n0Jvz0=;
+        b=rJbE9//FqZfEo/Zsl7EGu/Bzri+hSd4qAraVU2Ivfp/2YY22DWkUHOfVEZ+M4UU+ac
+         kQPveyYvt8BjPIMfCjz1emT76Ll9Z39YIAr4DqeRAbK8vwJjTMsMb/NPZTIOaJWSwDTB
+         5NB2gUwMwMn27TQweqECTyxeau0K+d2FRXMVQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=tKzpKsRW1DpGTJlVOr2uQH7L5xkXd6utqpIAlj72lElZW15dXUpnPJ79qS044P24RO
+         wx0/NRpyB7ypox1Z1Fxo84pxRlmc1Z5D0B//nlE1+L7Dwv6e18XNp8Mi7O2rscH1rqcw
+         sbFDqZ19uJiE0RaQOW5I/iMvMnIbkAPa98Ed0=
+Received: by 10.223.100.15 with SMTP id w15mr6482142fan.121.1290630065193;
+ Wed, 24 Nov 2010 12:21:05 -0800 (PST)
+Received: by 10.223.72.206 with HTTP; Wed, 24 Nov 2010 12:20:45 -0800 (PST)
+In-Reply-To: <7v1v6atsbd.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162080>
 
-Extend the "edit" command to simply stop for editing if no sha1 is
-given or if the sha1 is equal to "-". This behaves the same as "x false"
-but is a bit friendlier for the user.
+On Wed, Nov 24, 2010 at 8:49 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Erik Faye-Lund <kusmabite@gmail.com> writes:
+>
+>> @@ -320,9 +321,16 @@ const char *help_unknown_cmd(const char *cmd)
+>> =A0 =A0 =A0 uniq(&main_cmds);
+>>
+>> =A0 =A0 =A0 /* This reuses cmdname->len for similarity index */
+>> + =A0 =A0 for (i =3D 0; i < main_cmds.cnt; ++i) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 main_cmds.names[i]->len =3D 1 +
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 levenshtein(cmd, main_cm=
+ds.names[i]->name, 0, 2, 1, 4);
+>> + =A0 =A0 =A0 =A0 =A0 =A0 for (n =3D 0; n < ARRAY_SIZE(common_cmds);=
+ ++n) {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (!strcmp(main_cmds.name=
+s[i]->name,
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 common_cmds[n].nam=
+e) &&
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 !prefixcmp(main_cm=
+ds.names[i]->name, cmd))
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 main_cmds.=
+names[i]->len =3D 0;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 }
+>> + =A0 =A0 }
+>
+> So main_cmds.names[]->len (which is not "len" anymore at this point b=
+ut is
+> just a "score") gets levenshtein distance (i.e. a smaller number indi=
+cates
+> cmd is more likely to be a typo of it), and in addition ->len =3D=3D =
+0 is "it
+> is prefix". =A0Overall, the smaller the score, the likelier the match=
+=2E
+>
 
-Signed-off-by: Kevin Ballard <kevin@sb.org>
----
+Correct. This was already the case, though. I just reserved len =3D 0 a=
+s
+"this is a prefix of the entered command".
 
-Two changes since the last patch:
-* Picked up the extended explanation suggested by Jonathan Nieder.
-  I left off the last line about "noop" as that doesn't seem related.
-* If the line given is "edit - some comments", emit "some comments" when
-  stopped. This is undocumented, so if anyone has any suggestions for how
-  it should be documented I'm all ears. I'm also not sure if it should use
-  the output format I selected now, or if it should just emit the comment
-  in place of the commit summary (e.g. Stopped at $sha1... $comment).
+>> @@ -330,9 +338,12 @@ const char *help_unknown_cmd(const char *cmd)
+>> =A0 =A0 =A0 if (!main_cmds.cnt)
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 die ("Uh oh. Your system reports no Git =
+commands at all.");
+>>
+>> - =A0 =A0 best_similarity =3D main_cmds.names[0]->len;
+>> - =A0 =A0 n =3D 1;
+>> - =A0 =A0 while (n < main_cmds.cnt && best_similarity =3D=3D main_cm=
+ds.names[n]->len)
+>> + =A0 =A0 n =3D 0;
+>> + =A0 =A0 do {
+>> + =A0 =A0 =A0 =A0 =A0 =A0 best_similarity =3D main_cmds.names[n++]->=
+len;
+>> + =A0 =A0 } while (!best_similarity);
+>
+> At this point, main_cmds.names[] is sorted by the above score (smalle=
+r to
+> larger), and first you skip all the "prefix" ones that score 0.
+>
+> This relies on the fact that there is at least one entry with non-zer=
+o
+> score, which in practice is true, but without even a comment? =A0I fe=
+el
+> dirty.
+>
 
- git-rebase--interactive.sh |   30 +++++++++++++++++++++++++-----
- 1 files changed, 25 insertions(+), 5 deletions(-)
+Ah, yes. This needs clearer code badly. I'll see what I can cook up.
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 5934b97..176f735 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -469,12 +469,29 @@ do_next () {
- 		comment_for_reflog edit
- 
- 		mark_action_done
--		pick_one $sha1 ||
--			die_with_patch $sha1 "Could not apply $sha1... $rest"
--		echo "$sha1" > "$DOTEST"/stopped-sha
--		make_patch $sha1
-+		comment=''
-+		if test -n "$sha1" -a "$sha1" != "-"; then
-+			pick_one $sha1 ||
-+				die_with_patch $sha1 "Could not apply $sha1... $rest"
-+			echo "$sha1" > "$DOTEST"/stopped-sha
-+			make_patch $sha1
-+		else
-+			# we just want to exit to the shell
-+			# we don't have a valid $sha1 or $rest, so recreate that
-+			# save the original $rest to a comment for later
-+			comment="$rest"
-+			line=$(git rev-list --pretty=oneline -1 --abbrev-commit --abbrev=7 HEAD)
-+			sha1="${line%% *}"
-+			rest="${line#* }"
-+			echo "$sha1" > "$DOTEST"/stopped-sha
-+		fi
- 		git rev-parse --verify HEAD > "$AMEND"
- 		warn "Stopped at $sha1... $rest"
-+		if test -n "$comment"; then
-+			warn
-+			warn "	$comment"
-+			warn
-+		fi
- 		warn "You can amend the commit now, with"
- 		warn
- 		warn "	git commit --amend"
-@@ -1016,11 +1033,14 @@ first and then run 'git rebase --continue' again."
- # Commands:
- #  p, pick = use commit
- #  r, reword = use commit, but edit the commit message
--#  e, edit = use commit, but stop for amending
-+#  e, edit = use commit (if specified), but stop to amend/examine/test
- #  s, squash = use commit, but meld into previous commit
- #  f, fixup = like "squash", but discard this commit's log message
- #  x <cmd>, exec <cmd> = Run a shell command <cmd>, and stop if it fails
- #
-+# The argument to edit is optional; if left out or equal to "-",
-+# it means to stop to examine or amend the previous commit.
-+#
- # If you remove a line here THAT COMMIT WILL BE LOST.
- # However, if you remove everything, the rebase will be aborted.
- #
--- 
-1.7.3.2.488.gc5e8
+> The score of the first non-prefix entry is in best_similarity and tha=
+t
+> entry is at main_cmds.names[n-1] at this point. =A0You haven't checke=
+d
+> main_cmds.names[n] yet...
+>
+>> + =A0 =A0 n++;
+>
+> ... but you increment n to skip that entry without even looking, and =
+then
+> go on to ...
+>
+
+This is a bug, thanks for spotting it. It was intended to be the same
+as "i =3D 1" in the old version, but I didn't think about it being
+increased in the previous loop as well, silly me.
+
+>> + =A0 =A0 while (n < main_cmds.cnt && best_similarity >=3D main_cmds=
+=2Enames[n]->len)
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 ++n;
+>
+> You skip the entries with the same similarity as the closest typo,
+> presumably to point n to the first entry that is irrelevant (i.e. 0 t=
+hru n
+> but not including n are candidates).
+>
+> Your rewrite of the loop makes it very hard to read and spot bugs, I
+> think.
+>
+
+Indeed. What about this intra-diff? Hopefully it's a bit clearer, as
+it's closer to the original, just reusing the same logic for the new
+similar loop... Also makes the final diff smaller, which is nice.
+
+diff --git a/help.c b/help.c
+index dc76a62..d02a019 100644
+--- a/help.c
++++ b/help.c
+@@ -339,11 +339,10 @@ const char *help_unknown_cmd(const char *cmd)
+ 		die ("Uh oh. Your system reports no Git commands at all.");
+
+ 	n =3D 0;
+-	do {
+-		best_similarity =3D main_cmds.names[n++]->len;
+-	} while (!best_similarity);
+-	n++;
+-	while (n < main_cmds.cnt && best_similarity >=3D main_cmds.names[n]->=
+len)
++	while (n < main_cmds.cnt && !main_cmds.names[n]->len)
++		++n;
++	best_similarity =3D main_cmds.names[n++]->len;
++	while (n < main_cmds.cnt && best_similarity =3D=3D main_cmds.names[n]=
+->len)
+ 		++n;
+ 	if (autocorrect && n =3D=3D 1 && SIMILAR_ENOUGH(best_similarity)) {
+ 		const char *assumed =3D main_cmds.names[0]->name;
