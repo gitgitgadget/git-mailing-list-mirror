@@ -1,84 +1,71 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: Inexplicably deteriorating performance of Git repositories on
- Windows
-Date: Wed, 24 Nov 2010 12:34:15 +0100
-Message-ID: <4CECF837.1080404@op5.se>
-References: <AANLkTimTh7ka21inpovM=qqdWs6j2OcPXVsFh_CMiZ7N@mail.gmail.com>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH] rebase -m: skip cherry-picked commits more reliably
+Date: Wed, 24 Nov 2010 07:53:49 +0100 (CET)
+Message-ID: <alpine.DEB.1.10.1011240746030.17721@debian>
+References: <1290467372-6487-1-git-send-email-Knut.Franke@gmx.de> <alpine.DEB.1.10.1011232156510.17721@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git ML <git@vger.kernel.org>
-To: Dun Peal <dunpealer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Nov 24 12:34:35 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Eric Wong <normalperson@yhbt.net>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: Knut Franke <Knut.Franke@gmx.de>
+X-From: git-owner@vger.kernel.org Wed Nov 24 13:53:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLDcR-0007kq-Du
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 12:34:35 +0100
+	id 1PLEr4-00025S-Ip
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 13:53:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753947Ab0KXLeU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Nov 2010 06:34:20 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:41678 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753938Ab0KXLeT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Nov 2010 06:34:19 -0500
-Received: by eye27 with SMTP id 27so5268839eye.19
-        for <git@vger.kernel.org>; Wed, 24 Nov 2010 03:34:18 -0800 (PST)
-Received: by 10.213.14.148 with SMTP id g20mr488537eba.66.1290598458051;
-        Wed, 24 Nov 2010 03:34:18 -0800 (PST)
-Received: from clix.int.op5.se (sth-vpn1.op5.com [193.201.96.49])
-        by mx.google.com with ESMTPS id b52sm6847895eei.7.2010.11.24.03.34.16
+	id S1754223Ab0KXMxl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Nov 2010 07:53:41 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:52376 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753985Ab0KXMxk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Nov 2010 07:53:40 -0500
+Received: by qyk11 with SMTP id 11so4115055qyk.19
+        for <git@vger.kernel.org>; Wed, 24 Nov 2010 04:53:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:x-x-sender:to:cc
+         :subject:in-reply-to:message-id:references:user-agent:mime-version
+         :content-type;
+        bh=F2s9itXZMkZQ4jdjyBqQmfs2VzFHxeXTldFUw+gaF+A=;
+        b=f97uMWuOy3NF1YWBRDUA3Yqie1PuNd9yj2hCw6WpcaCLBuA367MeIATdYUbX/gn+Eg
+         vHZw6iS26qOLCbNAj99MNH33RM91ZpciPyVWuGu1h3R59VJw9CZUn41jBIoKSWcAnuPZ
+         pOqnLV2n8bP2b3J9TeDsEyzx//3boqKc0dzFY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        b=TRAWb9MdBf8l+11IDVp/AjZUv2UGKTFCm9yYIR+CaalkqamNrI907Z8YZ0Ks79SktP
+         jlEt2ziGvfQjilPVpOReJc2U7Syn9qir1g+fg1kfcmkQouEQXlqy/E/BCBPUUhT4MvzM
+         jTsfddJnRywJ9C9HcUiZk8Xp/eJz4gnvx3X4E=
+Received: by 10.224.10.198 with SMTP id q6mr7560338qaq.284.1290603217214;
+        Wed, 24 Nov 2010 04:53:37 -0800 (PST)
+Received: from [192.168.1.103] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id t35sm4378997qco.6.2010.11.24.04.53.35
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 24 Nov 2010 03:34:16 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Thunderbird/3.0.10 ThunderGit/0.1a
-In-Reply-To: <AANLkTimTh7ka21inpovM=qqdWs6j2OcPXVsFh_CMiZ7N@mail.gmail.com>
+        Wed, 24 Nov 2010 04:53:36 -0800 (PST)
+X-X-Sender: martin@debian
+In-Reply-To: <alpine.DEB.1.10.1011232156510.17721@debian>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162059>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162060>
 
-On 11/23/2010 08:08 PM, Dun Peal wrote:
-> Hey,
-> 
-> We have a bunch of Windows users, unfortunately, and they're using the
-> latest msysGit release (Git-1.7.3.1-preview20101002).
-> 
-> An interesting issue we've noticed is that the Time To Complete of
-> their common operations start deteriorating inexplicably, and
-> severely, some time after the clone.
-> 
-> For instance, immediately after a clone, `git status` takes about
-> 5-6s. Which is slow compared to Linux (consistent 1-2s), but still
-> usable (it's a BIG repo).
-> 
 
-How many refs (tags and branches) do you have?
-Are the refs packed or loose?
-If they are loose, does packing them resolve the issue?
-Are you using network-mounted or local storage?
-What does the .git/config file look like for a user where git status
-is excruciatingly slow?
-Does copying the config file from a windows user to a linux user make
-timings somewhat consistent between various systems?
-Do older version of git perform as poorly?
-How is the repository laid out (ie, are there any directories with
-a ton of files in, or are they spread across multiple directories)?
-How many .gitignore files are you using, and what do they look like?
 
-> However, after a reboot (of all things), `git status` latency
-> skyrockets to 14-15s, making the repo unusable.
-> 
+On Tue, 23 Nov 2010, Martin von Zweigbergk wrote:
 
-That's just plain weird, and is almost certainly a system issue.
+> What I think we really want to do is to remove any patches in
+> upstream..branch that also exist in branch..onto. I don't know how to
+> do that efficiently, though. (And am I even right about it?)
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+To try to answer my own question, would the lines prefixed with a plus
+in the output of 'git cherry $onto $branch $(git merge-base $upstream
+$branch)' work?
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+/Martin
