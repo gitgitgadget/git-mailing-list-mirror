@@ -1,129 +1,94 @@
-From: "Neal Kreitzinger" <neal@rsss.com>
-Subject: Re: Problems switching branches
-Date: Wed, 24 Nov 2010 16:33:04 -0600
-Message-ID: <ick3tr$j5l$1@dough.gmane.org>
-References: <loom.20101103T032930-451@post.gmane.org> <loom.20101104T012032-963@post.gmane.org> <AANLkTikK93Jt+dAkpp6K-hQEo6D67q5OKJSLs+g0YL4y@mail.gmail.com> <4CD3A5D9.6070802@seznam.cz>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Nov 24 23:34:55 2010
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: vcs for hefty video and graphics files
+Date: Wed, 24 Nov 2010 14:42:11 -0800 (PST)
+Message-ID: <m3r5ea4a5y.fsf@localhost.localdomain>
+References: <877hg55iyd.fsf@newsguy.com> <icg5ia$5an$1@dough.gmane.org>
+	<20101123204149.GA2373@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Philippe Lhoste <PhiLho@GMX.net>, git@vger.kernel.org,
+	Harry Putnam <reader@newsguy.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Nov 24 23:42:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLNvT-00020b-7E
-	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 23:34:55 +0100
+	id 1PLO2f-00063f-Ia
+	for gcvg-git-2@lo.gmane.org; Wed, 24 Nov 2010 23:42:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755216Ab0KXWet (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Nov 2010 17:34:49 -0500
-Received: from lo.gmane.org ([80.91.229.12]:56329 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751691Ab0KXWes (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Nov 2010 17:34:48 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PLNvL-0001wf-9j
-	for git@vger.kernel.org; Wed, 24 Nov 2010 23:34:47 +0100
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 24 Nov 2010 23:34:47 +0100
-Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 24 Nov 2010 23:34:47 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-RFC2646: Format=Flowed; Original
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
+	id S1755485Ab0KXWmQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Nov 2010 17:42:16 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:48312 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754541Ab0KXWmP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Nov 2010 17:42:15 -0500
+Received: by fxm13 with SMTP id 13so236968fxm.19
+        for <git@vger.kernel.org>; Wed, 24 Nov 2010 14:42:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=vOUE9CR/TAVrmpM6Xtz5b5K5+GU/Bqkz4cK7Xr+CAYQ=;
+        b=LKjv7qat0eI0xLAvyp6jhEqk76i1iSci0g7s6wHeqNEicOYvjKtORVT0P7UxXc/Han
+         WTZXgkWDeLzFhZSxAkOtQBW6rhw1AorWBOhyGe4YTSTOxSZhVrzBw/r+21qrcwcsdt/8
+         Bz69b/mVU2J9G694tS10fxS5ZEi+lSq5JQpBI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=Vwh4VVzBtSnKd59Kk1ZOsAtHP8BDQMjKn8/uT+5vc8occy+wk/JWEGYzx+Fa59HUpY
+         rVGdUvMOBnNv3M5jq+15XbPzO0YU2ijtIljjRvf7MQfARRJcS022yuiQhy6NmnMVM7yN
+         MNTAFtYMXvQAOsJqJrjmBjJamIjVgUq/zu+a0=
+Received: by 10.223.83.4 with SMTP id d4mr4301681fal.59.1290638532824;
+        Wed, 24 Nov 2010 14:42:12 -0800 (PST)
+Received: from localhost.localdomain (abwq109.neoplus.adsl.tpnet.pl [83.8.240.109])
+        by mx.google.com with ESMTPS id n15sm3722fam.12.2010.11.24.14.42.10
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 24 Nov 2010 14:42:11 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oAOMfY9g002765;
+	Wed, 24 Nov 2010 23:41:44 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id oAOMfDWi002760;
+	Wed, 24 Nov 2010 23:41:13 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20101123204149.GA2373@burratino>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162093>
 
+Jonathan Nieder <jrnieder@gmail.com> writes:
+> Philippe Lhoste wrote:
+> 
+> > Some game makers keep track of their (large) binary files, along
+> > with the rest of the project (source code). Rarely in isolation.
+> > Perforce and PlasticSCM both boast superior support of these files,
+> > I won't comment on these allegations (over other VCS), just having
+> > no experience here.
+> 
+> One small thing to add: for this use case, you might like git-annex[1].
+> 
+> It is a shame no single mailing list to follow up to was mentioned.
+> Hopefully the reply will get to Harry, anyway.
+> 
+> Regards,
+> Jonathan
+> 
+> [1] http://git-annex.branchable.com/
 
-"Maaartin-1" <grajcar1@seznam.cz> wrote in message 
-news:4CD3A5D9.6070802@seznam.cz...
-> On 10-11-04 15:39, Nguyen Thai Ngoc Duy wrote:
->> On Thu, Nov 4, 2010 at 7:23 AM, Maaartin <grajcar1@seznam.cz> wrote:
->>> Maaartin <grajcar1 <at> seznam.cz> writes:
->>>
->>>>
->>>> I sometimes run in a problem similar to
->>>> http://kerneltrap.org/mailarchive/git/2008/10/15/3667644/thread
->>>> There are some ignored files which I want neither track nor throw away; 
->>>> I'm
->>> just
->>>> happy to have them and keep them out of version control.
->>>>
->>>> Unfortunately, there weren't ignored in the old branch. I'd be quite 
->>>> happy
->>> with
->>>> non-destructive switching like "checkout everything what doesn't 
->>>> overwrite an
->>>> untracked file", so I would end in the old branch with a dirty working 
->>>> tree.
->>> Is
->>>> it possible?
->>>
->>> No answer?
->>
->> Which means nobody is interested in. Well, not really.
->>
->> I also get irritated by a similar situation, where the untracked files
->> have the same content as the to-be-checked-out files. I have been
->> tempted (but never got around) to make git compare the in-index
->> content and the untracked file, if it's the same, no need to abort the
->> checkout process.
->
-> I was asked to provide a working example of the happening, but I haven't
-> managed to reproduce it yet. However, it's not very rare (it just never
-> happen when I need it).
->
->> But your approach may be better. Yes, I think it's possible. Any
->> suggestion for checkout's new argument? --no-overwrite-untracked seems
->> too long.
->
-> I would go even further: a switch called "ignorant" or "lenient"
-> allowing to always switch branches in a non-destructible way. All files
-> normally causing abort would be left unmodified, so you could do
-> git checkout --ignorant forth; git checkout back
-> and would (assuming you started in branch "back") land in the original
-> state without loosing anything. Of course, this means, that the ignorant
-> checkout doesn't lead you into a clean state, but that's why I'd like to
-> use a switch instead of making it the default. :)
->
-> I may be talking non-sense as I'm quite inexperienced user, however I'd
-> love an easier way for switching branches. Quite often, I'd like to put
-> a modified file onto a different branch. This sounds probably strange,
-> but my work is really quite chaotic in this respect at the moment and
-> I'd like to organize it better by using a couple of (quite similar)
-> branches (with a lifespan of a few days at most).
->
+Jonathan, could you add git-annex to "Interfaces, frontends, and tools"
+page on git wiki:
+  https://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools
 
-You could use git-stash in combination with git-clean.  Let's say BranchA 
-has FileA (untracked), and BranchB has FileA (tracked):
-git branch = BranchA
-git stash = this will store your dirty working tree in a commit 
-behind-the-scenes, and store your index in a commit behind-the-scenes, and 
-then run a git-reset --hard behind the scenes.
-git status = is FileA still 'untracked'?
-    if so, git clean -f to remove it.  don't worry, its in your stash you 
-just made.
-git clean -f
-git checkout BranchB
-now you have FileA from BranchB
-git checkout BranchA
-git stash apply, (use git stash apply --index if you want the index back 
-also)
-now you have BranchA and its untracked FileA
+Does git-annex use git-replace?
 
-Using the stash and clean will also keep various untracked files from 
-different lines-of-development from accumulating in your worktree.  "Keep 
-track" of your untracked files by stashing them away and cleaning them up, 
-so to speak.  This is actually pretty straightforwarad and easy once you get 
-used to it, IMHO.
-
-v/r,
-Neal 
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
