@@ -1,87 +1,86 @@
-From: Stefan Monnier <monnier@iro.umontreal.ca>
-Subject: Re: vcs for hefty video and graphics files
-Date: Thu, 25 Nov 2010 12:34:41 -0500
-Message-ID: <jwvr5e91fj2.fsf-monnier+gmane.comp.version-control.bazaar-ng.general@gnu.org>
-References: <877hg55iyd.fsf@newsguy.com>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: bazaar@lists.canonical.com, mercurial@selenic.com, git@vger.kernel.org,
-	info-cvs@gnu.org
-To: info-cvs@gnu.org
-X-From: info-cvs-bounces+gnu-info-cvs=m.gmane.org@nongnu.org Thu Nov 25 21:40:38 2010
-Return-path: <info-cvs-bounces+gnu-info-cvs=m.gmane.org@nongnu.org>
-Envelope-to: gnu-info-cvs@m.gmane.org
-Received: from lists.gnu.org ([199.232.76.165])
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH/RFC] gitweb: Go to DONE_REQUEST rather than DONE_GITWEB in die_error
+Date: Thu, 25 Nov 2010 23:15:08 +0100
+Message-ID: <1290723308-21685-1-git-send-email-jnareb@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 25 23:17:41 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <info-cvs-bounces+gnu-info-cvs=m.gmane.org@nongnu.org>)
-	id 1PLicM-0004lc-6y
-	for gnu-info-cvs@m.gmane.org; Thu, 25 Nov 2010 21:40:34 +0100
-Received: from localhost ([127.0.0.1]:51722 helo=lists.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43)
-	id 1PLicL-0000Iy-QE
-	for gnu-info-cvs@m.gmane.org; Thu, 25 Nov 2010 15:40:33 -0500
-Received: from [140.186.70.92] (port=40871 helo=eggs.gnu.org)
-	by lists.gnu.org with esmtp (Exim 4.43) id 1PLibz-0000Ir-Lv
-	for info-cvs@gnu.org; Thu, 25 Nov 2010 15:40:12 -0500
-Received: from Debian-exim by eggs.gnu.org with spam-scanned (Exim 4.71)
-	(envelope-from <gnu-info-cvs@m.gmane.org>) id 1PLiby-0000ZR-SX
-	for info-cvs@gnu.org; Thu, 25 Nov 2010 15:40:11 -0500
-Received: from lo.gmane.org ([80.91.229.12]:44989)
-	by eggs.gnu.org with esmtp (Exim 4.71)
-	(envelope-from <gnu-info-cvs@m.gmane.org>) id 1PLiby-0000Yg-Kw
-	for info-cvs@gnu.org; Thu, 25 Nov 2010 15:40:10 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gnu-info-cvs@m.gmane.org>) id 1PLibr-0004OS-Sh
-	for info-cvs@gnu.org; Thu, 25 Nov 2010 21:40:03 +0100
-Received: from 69-196-160-116.dsl.teksavvy.com ([69.196.160.116])
-	by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-	id 1AlnuQ-0007hv-00
-	for <info-cvs@gnu.org>; Thu, 25 Nov 2010 21:40:03 +0100
-Received: from monnier by 69-196-160-116.dsl.teksavvy.com with local (Gmexim
-	0.1 (Debian)) id 1AlnuQ-0007hv-00
-	for <info-cvs@gnu.org>; Thu, 25 Nov 2010 21:40:03 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 69-196-160-116.dsl.teksavvy.com
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
-Cancel-Lock: sha1:6/RbMlwWFrZHJivQ2YBcQjonKNI=
-X-detected-operating-system: by eggs.gnu.org: GNU/Linux 2.6 (newer, 3)
-X-BeenThere: info-cvs@nongnu.org
-X-Mailman-Version: 2.1.5
-Precedence: list
-List-Id: Announcements and discussions for the CVS version control system
-	<info-cvs.nongnu.org>
-List-Unsubscribe: <http://lists.nongnu.org/mailman/listinfo/info-cvs>,
-	<mailto:info-cvs-request@nongnu.org?subject=unsubscribe>
-List-Archive: <http://lists.nongnu.org/archive/html/info-cvs>
-List-Post: <mailto:info-cvs@nongnu.org>
-List-Help: <mailto:info-cvs-request@nongnu.org?subject=help>
-List-Subscribe: <http://lists.nongnu.org/mailman/listinfo/info-cvs>,
-	<mailto:info-cvs-request@nongnu.org?subject=subscribe>
-Sender: info-cvs-bounces+gnu-info-cvs=m.gmane.org@nongnu.org
-Errors-To: info-cvs-bounces+gnu-info-cvs=m.gmane.org@nongnu.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162155>
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1PLk8J-0004cl-TD
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 23:17:40 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1752315Ab0KYWPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Nov 2010 17:15:34 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:37006 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752237Ab0KYWPe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Nov 2010 17:15:34 -0500
+Received: by fxm15 with SMTP id 15so241921fxm.19
+        for <git@vger.kernel.org>; Thu, 25 Nov 2010 14:15:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=lAIDhIbfWREESJF4tMFvmpOjhzDC877SRhA4nAfRL10=;
+        b=edJtsr6P0QtHZrn7GX9ysMSnqCN5ZJFyZpGY+ldmwdJCfhz0Xmg8j0aeBLcYdkfP8d
+         ADq+0e/7DoHlXzqDROyG6laoyQhtr7hqIXrxmWjinHI/0t7Ij/MvI4WWbRNCvQt2n8Ua
+         1H0tcQ3kuKgKpYOMLBytYW0wRc7FRCvOjK4DQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=k4k1fCmELl3ITYKn9f3W6S//6PHyE2bOYLuHRK+xNq/5xUnHM7W1LvjQMQN/h5s5l8
+         YUMIRVlB2Vsx+mZ+c6oSaVcQuKxeeM7QR3K3dLkNb5qCFrOF6ivBb4suvlLY5IMSlivl
+         9tErJRQ+M6gbQqeWrMSD+XNU4jjLKT7WyD+Qs=
+Received: by 10.223.72.202 with SMTP id n10mr1323727faj.74.1290723332874;
+        Thu, 25 Nov 2010 14:15:32 -0800 (PST)
+Received: from localhost.localdomain (abvd11.neoplus.adsl.tpnet.pl [83.8.201.11])
+        by mx.google.com with ESMTPS id e17sm308973fak.10.2010.11.25.14.15.30
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 25 Nov 2010 14:15:31 -0800 (PST)
+X-Mailer: git-send-email 1.7.3
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162156>
 
-> It would involve on any one projects something like 15 to 60 GB of
-> stuff to keep up with.  Large numbers of images and a dozen or 2 dozen
-> video files.  All in some stake of compression depending on the codex.
+End the request after die_error finishes, rather than exiting gitweb
+instance (perhaps wrapped like in ModPerl::Registry or gitweb.psgi
+case).
 
-FWIW, for a VCS to do a good job on this kind of problem, you'd need
-to use a representation that lends itself to it.
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Should bring no differences except for running gitweb in persistent
+environments natively, without wrapping; currently only FastCGI is
+supported.
 
-I.e. regardless of what you end up doing, I would recommend you contact
-the mailing-list of Free Software that can do the kind of video
-manipulation you want to do, and tell them that you'd need their tool to
-represent a project in such a way that it has a bunch of big-files that
-are almost never modified (containing "binary data" such as the source
-images and audio recordings, say) along with a few other smaller files
-that mostly contain instructions about how to use the big-files to
-generate the desired output.
+ gitweb/gitweb.perl |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
-Such a representation should lead to very good support from most VCSs.
-E.g. If these small files use a clean text representation, then a VCS
-might even be able to do useful merges between different branches of
-a project (as long as the branches share the same big-files).
-
-
-        Stefan
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 1d94718..bcd7c8a 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1156,6 +1156,7 @@ sub run {
+ 
+ 		run_request();
+ 
++	DONE_REQUEST:
+ 		$post_dispatch_hook->()
+ 			if $post_dispatch_hook;
+ 		$first_request = 0;
+@@ -3679,7 +3680,7 @@ EOF
+ 	print "</div>\n";
+ 
+ 	git_footer_html();
+-	goto DONE_GITWEB
++	goto DONE_REQUEST
+ 		unless ($opts{'-error_handler'});
+ }
+ 
+-- 
+1.7.3
