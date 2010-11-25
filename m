@@ -1,62 +1,71 @@
-From: Sitaram Chamarty <sitaramc@gmail.com>
-Subject: Re: gitolite description
-Date: Thu, 25 Nov 2010 06:17:27 +0530
-Message-ID: <AANLkTi=Rb3UJrdimxsMic82XBzkuXoX_FVr69G026mWs@mail.gmail.com>
-References: <20101124232359.38034ff1@jive.levalinux.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Levente Kovacs <leventelist@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 25 01:47:36 2010
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: [PATCH] git-p4: Corrected typo.
+Date: Thu, 25 Nov 2010 01:26:59 +0000
+Message-ID: <1290648419-6107-1-git-send-email-vitor.hda@gmail.com>
+References: <1290130693-30855-2-git-send-email-vitor.hda@gmail.com>
+Cc: Vitor Antunes <vitor.hda@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 25 02:28:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLPzr-0005jM-AJ
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 01:47:35 +0100
+	id 1PLQdd-0006E1-2b
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 02:28:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753574Ab0KYAr3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Nov 2010 19:47:29 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:65451 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751367Ab0KYAr3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Nov 2010 19:47:29 -0500
-Received: by eye27 with SMTP id 27so190116eye.19
-        for <git@vger.kernel.org>; Wed, 24 Nov 2010 16:47:27 -0800 (PST)
+	id S1753293Ab0KYB1W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 24 Nov 2010 20:27:22 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:44369 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751367Ab0KYB1V (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Nov 2010 20:27:21 -0500
+Received: by wyb28 with SMTP id 28so346909wyb.19
+        for <git@vger.kernel.org>; Wed, 24 Nov 2010 17:27:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=7XphhmvTd0s3C+PIV45jVNPykDF3x4EgbsFqB5Pr1jQ=;
-        b=KMaeTXjuP8o06VWSBRHFrKHHZniVUa4tRY3aT7xwpUA/3o0S462f6zZyZ/yKZkkFOw
-         +GoI07j7Bc8avCpUhIjB8LRdRWYl35d/cUV9s+voI4+7f2EoBrtK5H27vTGRCAAoJMWQ
-         vd7DcDrI9pO0j1Sfv9nxhNSJ1FV3GtIqnmSr0=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=2GCn1iJc6SA8RMZik/7aRDG/bkbmsjqiijKk/im3KJs=;
+        b=tnNNh7FvqPA/txyY3RaaWl1x7ffRrGBtZufgW7xIHYnyM1LNCwC4StywgGq5dp03M4
+         miiWtp79PqDHzsdgXeE4xgs5zPstMEwtoyBIiItRrgUYktiCj7queJiEF7ca4mcf/m+x
+         bLu8qA2zg8i6SL5XSghWTPIsNs7nu5eMrBuaY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=EZ85IRNmpa38mRXoVnz86bazu++0TrtKqHeTc0CGx9TH65F/bAWcRKk8zpuORJIfMi
-         /GLvHIrKqHFzx/G9x31imLc1EO8bvWuPDkF8G7pBRPU06FbaabgpJsxBlKcjoDwV2pgO
-         Gy+ZfgkD+NmmOzyqCqylm7QLwNiVoNJRDeYO0=
-Received: by 10.213.16.83 with SMTP id n19mr3592716eba.16.1290646047738; Wed,
- 24 Nov 2010 16:47:27 -0800 (PST)
-Received: by 10.213.108.81 with HTTP; Wed, 24 Nov 2010 16:47:27 -0800 (PST)
-In-Reply-To: <20101124232359.38034ff1@jive.levalinux.org>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=iLN7eNa/C/XhJIXYyBpKdZyb4IVMSD4mspQRId2J4G7FmG330FkOLKOKhN2LHKbTWW
+         kXLP0J7ZaM+6q8dWee0X/A/CTxhwxRbJTaEo1ZE2JOm1hcTrwSQ9QRSkpvLApZp3YPcM
+         IqFRo8aEjvpsxJtonS4NVtec5DmQIHkgr5n+g=
+Received: by 10.227.128.7 with SMTP id i7mr94868wbs.165.1290648440117;
+        Wed, 24 Nov 2010 17:27:20 -0800 (PST)
+Received: from localhost.localdomain (111.216.54.77.rev.vodafone.pt [77.54.216.111])
+        by mx.google.com with ESMTPS id i19sm90758wbe.17.2010.11.24.17.27.17
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 24 Nov 2010 17:27:18 -0800 (PST)
+X-Mailer: git-send-email 1.7.2.3
+In-Reply-To: <1290130693-30855-2-git-send-email-vitor.hda@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162096>
 
-On Thu, Nov 25, 2010 at 3:53 AM, Levente Kovacs <leventelist@gmail.com> wrote:
-> Hi list,
->
->
-> I have a gitolite and gitweb environment. Each time I set up a repository, I
-> have to ssh to my server and edit the description of the newly created
-> repository.
->
-> Is there any way to remotely edit the description?
+---
+ contrib/fast-import/git-p4 |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-https://github.com/sitaramc/gitolite/blob/pu/doc/2-admin.mkd#_specifying_gitweb_and_daemon_access
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 0ea3a44..a466847 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -618,7 +618,7 @@ class P4Submit(Command):
+         if len(detectRenames) > 0:
+             diffOpts = "-M%s" % detectRenames
+         else:
+-            diffOpts = ("", "-M")[self.detectRenames]
++            diffOpts = ("", "-M")[self.detectRename]
+ 
+         detectCopies = gitConfig("git-p4.detectCopies")
+         if len(detectCopies) > 0:
+-- 
+1.7.2.3
