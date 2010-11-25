@@ -1,88 +1,85 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH v3 0/9] http: end urls with slash
-Date: Thu, 25 Nov 2010 16:21:01 +0800
-Message-ID: <1290673270-4284-1-git-send-email-rctay89@gmail.com>
-References: <1290433298-6000-1-git-send-email-rctay89@gmail.com>
-Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Jonathan Nieder" <jrnieder@gmail.com>
-To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 25 09:28:53 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: 'git replace' and pushing
+Date: Thu, 25 Nov 2010 09:37:52 +0100
+Message-ID: <4CEE2060.4020507@drmicha.warpmail.net>
+References: <AANLkTinzPCeCJ486cysmk981HE61=dv9MS7E8Ap4rQ5r@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Cory Fields <FOSS@AtlasTechnologiesInc.com>
+X-From: git-owner@vger.kernel.org Thu Nov 25 09:40:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLXCH-0002gK-4f
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 09:28:53 +0100
+	id 1PLXNA-0007aT-J7
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 09:40:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751702Ab0KYI2t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Nov 2010 03:28:49 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:56120 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751534Ab0KYI2s (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Nov 2010 03:28:48 -0500
-Received: by yxp4 with SMTP id 4so337813yxp.19
-        for <git@vger.kernel.org>; Thu, 25 Nov 2010 00:28:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=UMydg4oC/xuTzwDpuj9cU9/ciUxHR6y9Bn5XD2s5lFI=;
-        b=t5qJNv7geq3qbbmYB5jUnQFCJ5XclCrMKo4991KnhYwJBoRj3j8rG+AnC2alSbSkbI
-         Jy9yc1X5B2+4LfDc3gy2cNCxqPDLOSxmxy3vtnY9F9sVon6UISYUWamFQ1doimc59LPE
-         fWhHmXe+S2ZItVOUN7NXXXe72TQg1SV+fQobY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=S5pFoAa9+6yU9ArXPLMU95l5g9Sa5LcnMzdAarN3E/qb2jO4zcs30IMw5LgxrZPAP7
-         mPNBlnWY0533vNBC/8uDuHPlGeEDCjjzmfeK4zbfMgUBvd+x/b4wKKTWu1ZQ0QiZlVV/
-         P5H3Nfa4Dl1B0O+3vD5gbOT1ews4AAscZncCo=
-Received: by 10.42.173.72 with SMTP id q8mr160899icz.350.1290673318982;
-        Thu, 25 Nov 2010 00:21:58 -0800 (PST)
-Received: from localhost.localdomain (cm60.zeta152.maxonline.com.sg [116.87.152.60])
-        by mx.google.com with ESMTPS id i16sm513271ibl.12.2010.11.25.00.21.45
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 25 Nov 2010 00:21:57 -0800 (PST)
-X-Mailer: git-send-email 1.7.2.2.513.ge1ef3
-In-Reply-To: <1290433298-6000-1-git-send-email-rctay89@gmail.com>
+	id S1751784Ab0KYIkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Nov 2010 03:40:00 -0500
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:58842 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751681Ab0KYIkA (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Nov 2010 03:40:00 -0500
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id D486839C;
+	Thu, 25 Nov 2010 03:39:59 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Thu, 25 Nov 2010 03:39:59 -0500
+X-Sasl-enc: WBJA9I+lS8cmRenKhVaUlub3SvmYwgo07IDAoh25hAmK 1290674399
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 4B21B5E753C;
+	Thu, 25 Nov 2010 03:39:59 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
+In-Reply-To: <AANLkTinzPCeCJ486cysmk981HE61=dv9MS7E8Ap4rQ5r@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162116>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162117>
 
-This patch series contains Gabriel's fix, as well as some related work I did in
-the area while looking through the code paths.
+Cory Fields venit, vidit, dixit 24.11.2010 05:33:
+> I am having some trouble understanding how a replaced object (commit)
+> should behave when pushed to a remote repo. Here's my scenario:
+> 
+> We are moving from svn to git. Our svn repo is huge, and most of the
+> history is useless. To save space, I would like to do a 50/50 split so
+> that when the repo is cloned, 50% is seen by default, and the
+> historical 50% can be seen by fetching the replacement history. I've
+> done this by creating a phony snapshot at 3 then using a 'replace' to
+> put the others on top. The history is purely linear.
+> 
+> 1---2---3---4---5
+>                  \---4---5
 
-Changed from v2:
- - new patches (#2 and #9) that reworks http-fetch url slashing code, and test
-   that this doesn't break anything.
- - patch #4: remove pointer check before running free(), as pointed out by
-   Johnathan.
+I assume the "other" 4 goes off 3 (you're not using a monospaced font,
+are you?).
 
-All other patches remain unchanged.
+Also, the other 4 should have no parent, otherwise you've not cut-off
+any history.
 
-Contents:
-[1/9] t5550-http-fetch: add missing '&&'
-[2/9] t5550-http-fetch: add test for http-fetch
-[3/9] shift end_url_with_slash() from http.[ch] to url.[ch]
-[4/9] url: add str wrapper for end_url_with_slash()
-[5/9] http-backend: use end_url_with_slash()
-[6/9] http-push: Normalise directory names when pushing to some WebDAV servers
-[7/9] http-push: check path length before using it
-[8/9] http-push: add trailing slash at arg-parse time, instead of later on
-[9/9] http-fetch: rework url handling
+> 
+> When the replacement is in place, the repo is half size (commit-wise)
+> as expected. The problem is that 'git push' does not honor the
+> replace. So when I push, all objects go with it, which defeats the
+> purpose. The only way that seams to work is doing a filter-branch and
+> replacing the other way.
+> 
+> Is this by design? I would really like a way to split the repo without
+> breaking hashes for the developers that have already begun using git
+> svn.
 
- Makefile              |    2 +-
- http-backend.c        |    4 +---
- http-fetch.c          |   16 +++++-----------
- http-push.c           |   31 ++++++++++++++++---------------
- http.c                |    8 +-------
- http.h                |    2 +-
- t/t5550-http-fetch.sh |   16 ++++++++++++++--
- url.c                 |   14 ++++++++++++++
- url.h                 |    3 +++
- 9 files changed, 56 insertions(+), 40 deletions(-)
+It is by design since a replace creates a "fake history", and this
+should not be created behind a users back.
 
--- 
-1.7.3.2.495.gc7b3f
+The 5 is not rewritten, and it's ancestry contains the whole history. If
+that is the commit your developers have already and that you want to
+preserve then there's not much you can do.
+
+You could try to push or pull your replacement refs first (refs/replace)
+but I don't think this will change what objects the push of 5 will
+transfer. Just have a try.
+
+Michael
