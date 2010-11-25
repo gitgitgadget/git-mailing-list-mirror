@@ -1,48 +1,67 @@
-From: Ilyas -- <umask00@gmail.com>
-Subject: aa
-Date: Thu, 25 Nov 2010 07:50:27 +0300
-Message-ID: <AANLkTimAfkAgPcctV9SLU0n96apGns_J_RMHwsER3mz+@mail.gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH] t7300: add a missing SYMLINKS prerequisite
+Date: Thu, 25 Nov 2010 09:03:39 +0100
+Message-ID: <4CEE185B.9020603@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 25 05:51:10 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Nov 25 09:03:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLTnY-0006FW-AD
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 05:51:08 +0100
+	id 1PLWo2-00009F-Nz
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 09:03:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751975Ab0KYEu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Nov 2010 23:50:29 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:45902 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751854Ab0KYEu2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Nov 2010 23:50:28 -0500
-Received: by wwa36 with SMTP id 36so512177wwa.1
-        for <git@vger.kernel.org>; Wed, 24 Nov 2010 20:50:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=7mbM0yKjbyDpTVlY3SygizTLc7hBBQl5UD9g+obTCb0=;
-        b=gRTNAKK2BnE9B7CGlD74dqFv/ZchGGGCPYcVcNyWa8tFaGvNPbvvaq+DBSL81cSEI2
-         wtKYBpKeTN6Zx0xAeSsJHuVtTw5aCazPJ/cgm598VUNOJomUMzc5PAv0/2YsUDiJLuxm
-         Mkc8Hr1eBqqr4faepOvUlEC430TEyRu/0zHbQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=vRBdAZVYqOZT0aoZO9OmixlTfcxhIVC4BIs+CXSbi/hHwcXI/Upd/7yzQc2mbwvlgt
-         UN9v8HM7nZK9Vd/znLgehxru/j8nbqZw43Cp/vkgK+LHw5aihbpAiGaqUzQBf09Yqw5w
-         KlncnNFHwiCQW9Qh2n6WEGXd7Xsy5jcx44S5s=
-Received: by 10.216.161.147 with SMTP id w19mr199870wek.88.1290660627284; Wed,
- 24 Nov 2010 20:50:27 -0800 (PST)
-Received: by 10.216.234.216 with HTTP; Wed, 24 Nov 2010 20:50:27 -0800 (PST)
+	id S1751308Ab0KYIDp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Nov 2010 03:03:45 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:31084 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751153Ab0KYIDo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Nov 2010 03:03:44 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1PLWnr-0006s4-Td; Thu, 25 Nov 2010 09:03:40 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id A17891660F;
+	Thu, 25 Nov 2010 09:03:39 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+X-Enigmail-Version: 1.1.1
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162104>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162105>
 
-unsubscribe git
+From: Johannes Sixt <j6t@kdbg.org>
+
+The test fails on Windows since 2dec68c (tests: add missing &&, batch 2).
+
+Even though this test allocates and leaves behind files, subsequent tests
+do not depend on this, so it is safe to just skip it.
+
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+ t/t7300-clean.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
+index b6bef7a..70d8168 100755
+--- a/t/t7300-clean.sh
++++ b/t/t7300-clean.sh
+@@ -179,7 +179,7 @@ test_expect_success 'git clean -d with prefix and path' '
+ 
+ '
+ 
+-test_expect_success 'git clean symbolic link' '
++test_expect_success SYMLINKS 'git clean symbolic link' '
+ 
+ 	mkdir -p build docs &&
+ 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
+-- 
+1.7.3.2.1593.g40fa0
