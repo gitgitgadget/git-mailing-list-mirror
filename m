@@ -1,67 +1,79 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH] t7300: add a missing SYMLINKS prerequisite
-Date: Thu, 25 Nov 2010 09:03:39 +0100
-Message-ID: <4CEE185B.9020603@viscovery.net>
+From: git@drmicha.warpmail.net
+Subject: Re: Can't build doc anymore (v1.7.3.2)
+Date: Thu, 25 Nov 2010 09:13:13 +0100
+Message-ID: <4CEE1A99.8020001@drmicha.warpmail.net>
+References: <m2oc9hkurl.fsf@gmail.com> <1290458128.29678.23.camel@drew-northup.unet.maine.edu> <m2k4k5ks0b.fsf@gmail.com> <1290461070.5468.5.camel@drew-northup.unet.maine.edu> <m2bp5glbrp.fsf@gmail.com> <4CEB7F1F.809@drmicha.warpmail.net> <1290517990.10366.17.camel@drew-northup.unet.maine.edu> <4CEBC8C9.4010905@drmicha.warpmail.net> <m2d3pwj8th.fsf@gmail.com> <1290532016.10892.40.camel@drew-northup.unet.maine.edu> <m2fwur7olt.fsf@gmail.com> <7v7hg2ttty.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
+Cc: Francis Moreau <francis.moro@gmail.com>,
+	Drew Northup <drew.northup@maine.edu>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Nov 25 09:03:51 2010
+X-From: git-owner@vger.kernel.org Thu Nov 25 09:15:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLWo2-00009F-Nz
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 09:03:51 +0100
+	id 1PLWzG-0005G1-87
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 09:15:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751308Ab0KYIDp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Nov 2010 03:03:45 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:31084 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751153Ab0KYIDo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Nov 2010 03:03:44 -0500
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1PLWnr-0006s4-Td; Thu, 25 Nov 2010 09:03:40 +0100
-Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id A17891660F;
-	Thu, 25 Nov 2010 09:03:39 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
-X-Enigmail-Version: 1.1.1
-X-Spam-Score: -1.4 (-)
+	id S1751331Ab0KYIPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Nov 2010 03:15:20 -0500
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:56244 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751241Ab0KYIPT (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Nov 2010 03:15:19 -0500
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 23251693;
+	Thu, 25 Nov 2010 03:15:18 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Thu, 25 Nov 2010 03:15:18 -0500
+X-Sasl-enc: eiPi4zIXtxe2SRNtaC0MHFHFsq/myttt2FPxL/YOqvB5 1290672917
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 65FAD404CC2;
+	Thu, 25 Nov 2010 03:15:17 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
+In-Reply-To: <7v7hg2ttty.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162105>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162106>
 
-From: Johannes Sixt <j6t@kdbg.org>
+Junio C Hamano venit, vidit, dixit 24.11.2010 20:17:
+> Francis Moreau <francis.moro@gmail.com> writes:
+> 
+>> Ok, I fixed the problem by reinstalling the following packages:
+>>
+>>     - docbook-style-xsl
+>>     - docbook-dtds
+>>
+>> I suspect something went wrong during Fedora major updates, at least
+>> that's the one I'm going to blame for now ;)
+> 
+> I vaguely recall that I saw a similar breakage due to broken xml catalog
+> on the system when k.org updated a few years ago (not the recent move to
+> FC13 but two updates before that one to FC9) and asked the sysadmin to
+> reinstall docbook-dtds.
+> 
+> Is it still CANTFIX [*1*], I wonder?
+> 
+> [Reference]
+> 
+> *1* https://bugzilla.redhat.com/show_bug.cgi?id=454097
+> 1
 
-The test fails on Windows since 2dec68c (tests: add missing &&, batch 2).
+I've marked it NEXTRELEASE now since the fix is in the F10 package (the
+report was against rawhide leading up to F10).
 
-Even though this test allocates and leaves behind files, subsequent tests
-do not depend on this, so it is safe to just skip it.
+In that bug, the catalog ended up being empty for certain reasons, and
+that effect has been fixed.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- t/t7300-clean.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Here, it ended up being broken (half-written it seems), so it's similar
+but different.
 
-diff --git a/t/t7300-clean.sh b/t/t7300-clean.sh
-index b6bef7a..70d8168 100755
---- a/t/t7300-clean.sh
-+++ b/t/t7300-clean.sh
-@@ -179,7 +179,7 @@ test_expect_success 'git clean -d with prefix and path' '
- 
- '
- 
--test_expect_success 'git clean symbolic link' '
-+test_expect_success SYMLINKS 'git clean symbolic link' '
- 
- 	mkdir -p build docs &&
- 	touch a.out src/part3.c docs/manual.txt obj.o build/lib.so &&
--- 
-1.7.3.2.1593.g40fa0
+Francis: If you can reproduce this in any way then please file a Fedora
+bug, or describe the procedure and I'll file a bug on your behalf.
+
+Michael
