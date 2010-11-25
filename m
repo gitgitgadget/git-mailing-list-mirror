@@ -1,77 +1,126 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2010, #03; Wed, 24)
-Date: Fri, 26 Nov 2010 01:40:39 +0100
-Message-ID: <AANLkTimbGZYBwG83KxJV8thHqmnFGO__3SQGoqx6u+Uv@mail.gmail.com>
-References: <7vk4k2rt2m.fsf@alter.siamese.dyndns.org>
-	<AANLkTi=U=Km28W-xUM0vmRhhYCuhjSxxk5Fk_yhvjz8K@mail.gmail.com>
-	<AANLkTinWtG8dp_CvoH+EWYz4d=D-N0QUiBSrCNwamROo@mail.gmail.com>
-	<AANLkTim0hYKcPPaZjxjbpekhR4Ho_cOVaE=41HyJOrMZ@mail.gmail.com>
-	<AANLkTi=N=-e+BYM+Bjp665pN=GxK5fWSKbJ34T8Qfh77@mail.gmail.com>
-	<AANLkTind1tQ2bE3O-_dz+LOa4gW1X3J28uvRg1mP7aU=@mail.gmail.com>
-	<AANLkTi=gg=cqTewgUfqctbd=MdYNcL=jECyCXJycwx_k@mail.gmail.com>
-	<AANLkTikcZ1-7+ATH1mB+ycQiL7-WRtjwBZ8rkue_-Vom@mail.gmail.com>
-	<AANLkTin-kF_+DKDAu=gt12WfOcEVJaED-Qny8sFQ=oKP@mail.gmail.com>
-	<AANLkTi=hRk-bqNvvMRCmbSu8Mc4uux5aowgLGnPLnD4A@mail.gmail.com>
-	<AANLkTi=G0m_AY3PMVs93=u=cKtVrAjFD56KPURYAyhyh@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Fri Nov 26 01:50:15 2010
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: [PATCH/RFC 00/20] Refactor rebase
+Date: Thu, 25 Nov 2010 20:57:43 +0100
+Message-ID: <1290715083-16919-1-git-send-email-martin.von.zweigbergk@gmail.com>
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 26 02:58:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLmVy-0002GG-Sc
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 01:50:15 +0100
+	id 1PLna3-0001kp-Vn
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 02:58:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752892Ab0KZAuG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Nov 2010 19:50:06 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:35608 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752849Ab0KZAuF (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Nov 2010 19:50:05 -0500
-Received: by fxm15 with SMTP id 15so306667fxm.19
-        for <git@vger.kernel.org>; Thu, 25 Nov 2010 16:50:04 -0800 (PST)
+	id S1753000Ab0KZB6H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Nov 2010 20:58:07 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:63197 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752941Ab0KZB6G (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Nov 2010 20:58:06 -0500
+Received: by vws3 with SMTP id 3so347966vws.19
+        for <git@vger.kernel.org>; Thu, 25 Nov 2010 17:58:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=+Gks4HadH4C1/PuuxWgiLsl4DGO5xRejzdTC4FZ9T/E=;
-        b=ZpYsoNoFmjb0wGyVcVQLKOYDLQkG0sm9OTCpuzFuK+pUyD7Vx4WIeM17sagseVWf3E
-         8EsM1XSTB3ms9moeGRtmY/PfKYUg9ZqcQG4SHFPQLXDXywXt12ou8Qxas6GB7UBHYoMD
-         tYtV/I9/kdjUAygA+3W7oW5DuMIc9l2yZa43U=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=E0PMC7LiFaCDmZKl4JtfCzXpao5NNSi1L7BLS5rz3Qo=;
+        b=hOmF0ISHfz4Frbt93Yrr4Rrs26kA3iDEnoB2wop9ZCoTlqIq6FkSQVqly8KMxWh52+
+         PPoDTqlFWN6Bb3RMHx/CI0iPafN0y/hDu+eTtY1DUCwxjw+Fl9/UGFWq+NquSBVCqXgg
+         44/ruErjX5TWtKg96Hvb8Z/ZgOU43RuyKmIy4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=SVuJKJ4ruM08LhRzZ2nFGdfek6VMKCOLCCc4FaqWZMOTVpbQnMR3WEBrqJvuYlQ9Bo
-         PZxbx6HPruCI77H5SAWdNRAb6rk7UVMDr0DZUCUFhmbCk8KB6KW/OK12b0koyE9wtNdJ
-         i1y2G/TIzF5HdcffqugGMt8g+MmXFe8lCI3ls=
-Received: by 10.223.108.147 with SMTP id f19mr1437790fap.68.1290732039191;
- Thu, 25 Nov 2010 16:40:39 -0800 (PST)
-Received: by 10.223.86.134 with HTTP; Thu, 25 Nov 2010 16:40:39 -0800 (PST)
-In-Reply-To: <AANLkTi=G0m_AY3PMVs93=u=cKtVrAjFD56KPURYAyhyh@mail.gmail.com>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Rk7NClt0lcmjQRMctsM6ofqZ/XV9SR4/8eChGii2n7RJIeTKAystC672umFXT/5R7l
+         P0ZYT9x6D5UUuVIkXeWPlD7QRchJ9CQkQAvcDWTogn/sJoBIS+UfprzRTDMuUK6JJ3rx
+         L4Kke+LW2ZPxCrtFklp5BzsBde6aa4u8cGpMw=
+Received: by 10.220.159.196 with SMTP id k4mr353010vcx.196.1290736685086;
+        Thu, 25 Nov 2010 17:58:05 -0800 (PST)
+Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id y14sm193301vch.28.2010.11.25.17.58.03
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 25 Nov 2010 17:58:04 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.864.gbbb96
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162160>
 
-On Thu, Nov 25, 2010 at 21:02, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+This is a first draft of my attempt to refactor the rebase code. I
+have tried to refactor it as Hannes suggested, namely "to write a
+command line processor, git-rebase.sh, that sets shell variables from
+options that it collects from various sources, then dispatches to one
+of git-rebase--interactive.sh, git-rebase--merge.sh, or
+git-rebase--am.sh (the latter two would be stripped-down copies of the
+current git-rebase.sh)."
 
-> Well, there you go. That's one of the things that needs to get fixed ;)
->
-> I don't quite understand why you won't do it the way I just proposed
-> (and IIRC a while ago by Hannes), though.
 
-Does it help if I don't understand it either ? :)
+Patches 01-04 try to make git-rebase.sh more readable and extensible.
 
-Anyway, there's obviously a bug that needs to be fixed. I'm just going
-to have to poke the Makefile to see how to fix it. When I do I'll make
-sure to try both ways and see which one makes sense, then document
-that in the commit message.
+Patches 05-16 factor out common code between git-rebase.sh and
+git-rebase--interactive.sh.
 
-Hopefully you or some other win32 dev can help test whatever I come up
-with, thanks for all your help so far on that front.
+Patches 17-20 finally achieve, I hope, what Hannes suggested.
+
+
+I have aligned a lot of the error checking and error messages, but I
+still have barely gotten to align any of the command line options
+supported by 'git rebase' and 'git rebase -i'. How do you think I
+should continue? Some specific questions:
+
+1. What should -v do? Interactive rebase currently prints most
+commands it is about to execute, while non-interactive rebase only
+prints a header to the diffstat. Is there any reason they should be
+different? If not, what should they print?
+
+2. Interactive rebase currently saves most command line options when
+the rebase is initiated and then reads then back on '--continue'
+etc. Non-interactive rebase does not store any options and allows them
+to be passed on the command line when the rebase is continued
+instead. Any reason for the difference? What do we want?
+
+
+All feedback would be greatly appreciated! I'm new to the Git code,
+new to development on Linux and even quite new to bash, so please
+review very carefully. Thanks!
+
+
+Martin von Zweigbergk (20):
+  rebase: clearer names for directory variables
+  rebase: refactor reading of state
+  rebase: read state outside loop
+  rebase: remove unused rebase state 'prev_head'
+  rebase: act on command line outside parsing loop
+  rebase: collect check for existing rebase
+  rebase: stricter check on arguments
+  rebase: align variable names
+  rebase: align variable content
+  rebase: factor out command line option processing
+  rebase -i: remove now unnecessary directory checks
+  rebase: reorder validation steps
+  rebase: factor out reference parsing
+  rebase: factor out clean work tree check
+  rebase: factor out call to pre-rebase hook
+  rebase -i: support --stat
+  rebase: improve detection of rebase in progress
+  rebase -m: extract code to new source file
+  rebase: extract am code to new source file
+  rebase: show consistent conflict resolution hint
+
+ .gitignore                 |    2 +
+ Makefile                   |    2 +
+ git-rebase--am.sh          |   34 +++
+ git-rebase--interactive.sh |  554 ++++++++++++++++----------------------------
+ git-rebase--merge.sh       |  154 ++++++++++++
+ git-rebase.sh              |  434 ++++++++++++-----------------------
+ 6 files changed, 538 insertions(+), 642 deletions(-)
+ create mode 100644 git-rebase--am.sh
+ create mode 100644 git-rebase--merge.sh
+
+-- 
+1.7.3.2.864.gbbb96
