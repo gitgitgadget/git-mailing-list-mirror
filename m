@@ -1,92 +1,87 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2010, #03; Wed, 24)
-Date: Thu, 25 Nov 2010 21:02:10 +0100
-Message-ID: <AANLkTi=G0m_AY3PMVs93=u=cKtVrAjFD56KPURYAyhyh@mail.gmail.com>
-References: <7vk4k2rt2m.fsf@alter.siamese.dyndns.org> <AANLkTi=U=Km28W-xUM0vmRhhYCuhjSxxk5Fk_yhvjz8K@mail.gmail.com>
- <AANLkTinWtG8dp_CvoH+EWYz4d=D-N0QUiBSrCNwamROo@mail.gmail.com>
- <AANLkTim0hYKcPPaZjxjbpekhR4Ho_cOVaE=41HyJOrMZ@mail.gmail.com>
- <AANLkTi=N=-e+BYM+Bjp665pN=GxK5fWSKbJ34T8Qfh77@mail.gmail.com>
- <AANLkTind1tQ2bE3O-_dz+LOa4gW1X3J28uvRg1mP7aU=@mail.gmail.com>
- <AANLkTi=gg=cqTewgUfqctbd=MdYNcL=jECyCXJycwx_k@mail.gmail.com>
- <AANLkTikcZ1-7+ATH1mB+ycQiL7-WRtjwBZ8rkue_-Vom@mail.gmail.com>
- <AANLkTin-kF_+DKDAu=gt12WfOcEVJaED-Qny8sFQ=oKP@mail.gmail.com> <AANLkTi=hRk-bqNvvMRCmbSu8Mc4uux5aowgLGnPLnD4A@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Stefan Monnier <monnier@iro.umontreal.ca>
+Subject: Re: vcs for hefty video and graphics files
+Date: Thu, 25 Nov 2010 12:34:41 -0500
+Message-ID: <jwvr5e91fj2.fsf-monnier+gmane.comp.version-control.bazaar-ng.general@gnu.org>
+References: <877hg55iyd.fsf@newsguy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 25 21:02:40 2010
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
+Content-Type: text/plain
+Cc: bazaar@lists.canonical.com, mercurial@selenic.com, git@vger.kernel.org,
+	info-cvs@gnu.org
+To: info-cvs@gnu.org
+X-From: info-cvs-bounces+gnu-info-cvs=m.gmane.org@nongnu.org Thu Nov 25 21:40:38 2010
+Return-path: <info-cvs-bounces+gnu-info-cvs=m.gmane.org@nongnu.org>
+Envelope-to: gnu-info-cvs@m.gmane.org
+Received: from lists.gnu.org ([199.232.76.165])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLi1e-0006EK-3v
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 21:02:38 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752220Ab0KYUCd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Nov 2010 15:02:33 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:47779 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752106Ab0KYUCc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Nov 2010 15:02:32 -0500
-Received: by fxm15 with SMTP id 15so173169fxm.19
-        for <git@vger.kernel.org>; Thu, 25 Nov 2010 12:02:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=CsPWZimMXmNsWNoYc4I9m9gvCFa1yI3aqy+oKDAaXaI=;
-        b=CXYLcEOS1NtZy9VjJnbAb95adgyown8BBV2sGvyigTIJr1gXQ/WeLRK5K8gpXPk5TF
-         wmHi7pMwy4fqQ3Ycy+nBZuWUc+6lmWq5gRYV83Gdp2KofFXCCM7+DM+IDwQhIJH3vrrV
-         X4DmQzaR4r7GsQIulwCTi3pzCEkLSxuUxu+ic=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=XzloQYSOajUhJWK+eNc5ft8HFS5DszIGMZl0YJXNBrhCoJYmgfv+NfXU+oVdI4F3ky
-         XuVOw8O+HnnlfHttYETX71niXrDYUuWXwe4HdASAmUbvKW0Cb7A3L/+sKSXb1480U1k/
-         z6o0zBpc8vWCcymCfS/BywIidy8S+vOQ0GaLs=
-Received: by 10.223.79.72 with SMTP id o8mr1205512fak.83.1290715350859; Thu,
- 25 Nov 2010 12:02:30 -0800 (PST)
-Received: by 10.223.72.206 with HTTP; Thu, 25 Nov 2010 12:02:10 -0800 (PST)
-In-Reply-To: <AANLkTi=hRk-bqNvvMRCmbSu8Mc4uux5aowgLGnPLnD4A@mail.gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162154>
+	(envelope-from <info-cvs-bounces+gnu-info-cvs=m.gmane.org@nongnu.org>)
+	id 1PLicM-0004lc-6y
+	for gnu-info-cvs@m.gmane.org; Thu, 25 Nov 2010 21:40:34 +0100
+Received: from localhost ([127.0.0.1]:51722 helo=lists.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43)
+	id 1PLicL-0000Iy-QE
+	for gnu-info-cvs@m.gmane.org; Thu, 25 Nov 2010 15:40:33 -0500
+Received: from [140.186.70.92] (port=40871 helo=eggs.gnu.org)
+	by lists.gnu.org with esmtp (Exim 4.43) id 1PLibz-0000Ir-Lv
+	for info-cvs@gnu.org; Thu, 25 Nov 2010 15:40:12 -0500
+Received: from Debian-exim by eggs.gnu.org with spam-scanned (Exim 4.71)
+	(envelope-from <gnu-info-cvs@m.gmane.org>) id 1PLiby-0000ZR-SX
+	for info-cvs@gnu.org; Thu, 25 Nov 2010 15:40:11 -0500
+Received: from lo.gmane.org ([80.91.229.12]:44989)
+	by eggs.gnu.org with esmtp (Exim 4.71)
+	(envelope-from <gnu-info-cvs@m.gmane.org>) id 1PLiby-0000Yg-Kw
+	for info-cvs@gnu.org; Thu, 25 Nov 2010 15:40:10 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gnu-info-cvs@m.gmane.org>) id 1PLibr-0004OS-Sh
+	for info-cvs@gnu.org; Thu, 25 Nov 2010 21:40:03 +0100
+Received: from 69-196-160-116.dsl.teksavvy.com ([69.196.160.116])
+	by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+	id 1AlnuQ-0007hv-00
+	for <info-cvs@gnu.org>; Thu, 25 Nov 2010 21:40:03 +0100
+Received: from monnier by 69-196-160-116.dsl.teksavvy.com with local (Gmexim
+	0.1 (Debian)) id 1AlnuQ-0007hv-00
+	for <info-cvs@gnu.org>; Thu, 25 Nov 2010 21:40:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 69-196-160-116.dsl.teksavvy.com
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/24.0.50 (gnu/linux)
+Cancel-Lock: sha1:6/RbMlwWFrZHJivQ2YBcQjonKNI=
+X-detected-operating-system: by eggs.gnu.org: GNU/Linux 2.6 (newer, 3)
+X-BeenThere: info-cvs@nongnu.org
+X-Mailman-Version: 2.1.5
+Precedence: list
+List-Id: Announcements and discussions for the CVS version control system
+	<info-cvs.nongnu.org>
+List-Unsubscribe: <http://lists.nongnu.org/mailman/listinfo/info-cvs>,
+	<mailto:info-cvs-request@nongnu.org?subject=unsubscribe>
+List-Archive: <http://lists.nongnu.org/archive/html/info-cvs>
+List-Post: <mailto:info-cvs@nongnu.org>
+List-Help: <mailto:info-cvs-request@nongnu.org?subject=help>
+List-Subscribe: <http://lists.nongnu.org/mailman/listinfo/info-cvs>,
+	<mailto:info-cvs-request@nongnu.org?subject=subscribe>
+Sender: info-cvs-bounces+gnu-info-cvs=m.gmane.org@nongnu.org
+Errors-To: info-cvs-bounces+gnu-info-cvs=m.gmane.org@nongnu.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162155>
 
-On Thu, Nov 25, 2010 at 7:06 PM, =C6var Arnfj=F6r=F0 Bjarmason
-<avarab@gmail.com> wrote:
-> On Thu, Nov 25, 2010 at 18:55, Erik Faye-Lund <kusmabite@gmail.com> w=
-rote:
->> On Thu, Nov 25, 2010 at 5:33 PM, =C6var Arnfj=F6r=F0 Bjarmason
->> <avarab@gmail.com> wrote:
->>> Anyway, if that works it's a cleaner way to disable it.
->>>
->>
->> Yes, that works. But that is a work-around, not a solution. I alread=
-y
->> told the make system not to translate git, why should I have to
->> anything else? In fact, I did exactly what the documentation at the
->> top of the makefile told me to do. It says to set NO_GETTEXT, nothin=
-g
->> about clearing NEEDS_LIBINTL.
->
-> Oh yeah that's definitely a bug that I need to solve. But that should
-> just be something like:
->
-> ifdef NO_GETTEXT
-> =A0 =A0NEEDS_LIBINTL =3D
-> endif
->
-> Stuck in some strategic location. Then it all should just work.
->
+> It would involve on any one projects something like 15 to 60 GB of
+> stuff to keep up with.  Large numbers of images and a dozen or 2 dozen
+> video files.  All in some stake of compression depending on the codex.
 
-Well, there you go. That's one of the things that needs to get fixed ;)
+FWIW, for a VCS to do a good job on this kind of problem, you'd need
+to use a representation that lends itself to it.
 
-I don't quite understand why you won't do it the way I just proposed
-(and IIRC a while ago by Hannes), though.
+I.e. regardless of what you end up doing, I would recommend you contact
+the mailing-list of Free Software that can do the kind of video
+manipulation you want to do, and tell them that you'd need their tool to
+represent a project in such a way that it has a bunch of big-files that
+are almost never modified (containing "binary data" such as the source
+images and audio recordings, say) along with a few other smaller files
+that mostly contain instructions about how to use the big-files to
+generate the desired output.
+
+Such a representation should lead to very good support from most VCSs.
+E.g. If these small files use a clean text representation, then a VCS
+might even be able to do useful merges between different branches of
+a project (as long as the branches share the same big-files).
+
+
+        Stefan
