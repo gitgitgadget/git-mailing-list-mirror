@@ -1,7 +1,7 @@
 From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH/RFC 20/20] rebase: show consistent conflict resolution hint
-Date: Thu, 25 Nov 2010 20:58:03 +0100
-Message-ID: <1290715083-16919-21-git-send-email-martin.von.zweigbergk@gmail.com>
+Subject: [PATCH/RFC 19/20] rebase: extract am code to new source file
+Date: Thu, 25 Nov 2010 20:58:02 +0100
+Message-ID: <1290715083-16919-20-git-send-email-martin.von.zweigbergk@gmail.com>
 References: <1290715083-16919-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
 	Johannes Sixt <j.sixt@viscovery.net>,
@@ -14,68 +14,194 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLnaz-00026e-CB
+	id 1PLnay-00026e-SB
 	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 02:59:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753261Ab0KZB6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Nov 2010 20:58:42 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:63197 "EHLO
+	id S1753354Ab0KZB6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Nov 2010 20:58:32 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:62199 "EHLO
 	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753306Ab0KZB63 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Nov 2010 20:58:29 -0500
-Received: by mail-vw0-f46.google.com with SMTP id 3so347966vws.19
-        for <git@vger.kernel.org>; Thu, 25 Nov 2010 17:58:29 -0800 (PST)
+	with ESMTP id S1753300Ab0KZB62 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Nov 2010 20:58:28 -0500
+Received: by mail-vw0-f46.google.com with SMTP id 3so347969vws.19
+        for <git@vger.kernel.org>; Thu, 25 Nov 2010 17:58:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=3zbr1vDuTegx3bhxD9oIuqa+fX7mO5PaNhgDthaOT7E=;
-        b=VBI9wob3OwUttiJuzMvJjpqVDbUUzP9PspHCnHPQQ/gTiWp6YRedrJMxcQHzONu/YO
-         RDu1tphxavDavK+kY2c1p+L2GdNmsT+dsHjOjTTsLB4hTtEbp3ZdaVxSQrHaHHD0W2OI
-         T3hwg3gCqmX8pB03M0729uCc4NL8i6+HrZ62Q=
+        bh=S53ZQiqbkjvTJmOmGxtcKc37nIIXMtyuF7QOFniKVhU=;
+        b=RF4wD9mg/IkRUlAJbiEHFF9Q9oFAjwMrQd1W8dwCS0BMrvVyvKKPhkbh2/Ao/opJT4
+         /khE4aU2Scg8Pdft+ze1/n1UWwc8ySro/uyRPPKk+kxqp7WD+TVkACQJmPMuKqTJRi43
+         Wgluml/WiViwlJsgd1Z05qq8WpSH9yYyrvIbw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=m2sfyMrVQSWAqIOTtas384+kjmzObALobg5pBXHry5mkw2lLLCACVd9PjISrDT+9gl
-         k+MdUwssU8hzsXBb0hKQxU8axayenMn0Yiys4E4gNf8NCNjFZW65xW3RIi7S8kRX+Bkx
-         Fic5VxxtrhSp5zY9myK8PXRk/42Tysk/2kSAU=
-Received: by 10.220.76.196 with SMTP id d4mr387769vck.37.1290736709424;
-        Thu, 25 Nov 2010 17:58:29 -0800 (PST)
+        b=lppDe3iqG6vVTTvI0YPNNB1YNGL5wjmecS61zeNEOEGAEHPfQbD8Ry2St7lNLthqLm
+         FRcDd3NHfBYZR68YQ4USvgAcuxMKsRK0CIGVJpCTndxSNNBI+6YKVfujwiVc9RXtOUUU
+         +qSe2iltCyL4vKre0DpyYud6gUgI6tpwCl/o8=
+Received: by 10.220.182.203 with SMTP id cd11mr417566vcb.36.1290736708424;
+        Thu, 25 Nov 2010 17:58:28 -0800 (PST)
 Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id y14sm193301vch.28.2010.11.25.17.58.28
+        by mx.google.com with ESMTPS id y14sm193301vch.28.2010.11.25.17.58.27
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 25 Nov 2010 17:58:29 -0800 (PST)
+        Thu, 25 Nov 2010 17:58:28 -0800 (PST)
 X-Mailer: git-send-email 1.7.3.2.864.gbbb96
 In-Reply-To: <1290715083-16919-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162172>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162173>
 
-When rebase stops due to conflict, interactive rebase currently
-displays a different hint to the user than non-interactive rebase
-does. Use the same message latter message for both types of rebase.
+Extract the code for am-based rebase to git-rebase--am.sh.
 
 Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 ---
- git-rebase--interactive.sh |    4 +---
- 1 files changed, 1 insertions(+), 3 deletions(-)
+ .gitignore        |    1 +
+ Makefile          |    1 +
+ git-rebase--am.sh |   34 ++++++++++++++++++++++++++++++++++
+ git-rebase.sh     |   34 +++-------------------------------
+ 4 files changed, 39 insertions(+), 31 deletions(-)
+ create mode 100644 git-rebase--am.sh
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index d60977d..b810197 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -82,9 +82,7 @@ AMEND="$DOTEST"/amend
- REWRITTEN_LIST="$DOTEST"/rewritten-list
- REWRITTEN_PENDING="$DOTEST"/rewritten-pending
+diff --git a/.gitignore b/.gitignore
+index 8f68f8a..22b7907 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -102,6 +102,7 @@
+ /git-quiltimport
+ /git-read-tree
+ /git-rebase
++/git-rebase--am
+ /git-rebase--interactive
+ /git-rebase--merge
+ /git-receive-pack
+diff --git a/Makefile b/Makefile
+index 213ceaf..62e9e1e 100644
+--- a/Makefile
++++ b/Makefile
+@@ -396,6 +396,7 @@ SCRIPT_SH += git-merge-resolve.sh
+ SCRIPT_SH += git-mergetool.sh
+ SCRIPT_SH += git-pull.sh
+ SCRIPT_SH += git-quiltimport.sh
++SCRIPT_SH += git-rebase--am.sh
+ SCRIPT_SH += git-rebase--interactive.sh
+ SCRIPT_SH += git-rebase--merge.sh
+ SCRIPT_SH += git-rebase.sh
+diff --git a/git-rebase--am.sh b/git-rebase--am.sh
+new file mode 100644
+index 0000000..162dd6c
+--- /dev/null
++++ b/git-rebase--am.sh
+@@ -0,0 +1,34 @@
++#!/bin/sh
++#
++# Copyright (c) 2010 Junio C Hamano.
++#
++
++. git-sh-setup
++
++case "$action" in
++continue)
++	git am --resolved --3way --resolvemsg="$RESOLVEMSG" &&
++	move_to_original_branch
++	exit
++	;;
++skip)
++	git am --skip --3way --resolvemsg="$RESOLVEMSG" &&
++	move_to_original_branch
++	exit
++	;;
++esac
++
++test -n "$rebase_root" && root_flag=--root
++
++git format-patch -k --stdout --full-index --ignore-if-in-upstream \
++	--src-prefix=a/ --dst-prefix=b/ \
++	--no-renames $root_flag "$revisions" |
++git am $git_am_opt --rebasing --resolvemsg="$RESOLVEMSG" &&
++move_to_original_branch
++ret=$?
++test 0 != $ret -a -d "$state_dir" &&
++	echo $head_name > "$state_dir/head-name" &&
++	echo $onto > "$state_dir/onto" &&
++	echo $orig_head > "$state_dir/orig-head" &&
++	echo "$GIT_QUIET" > "$state_dir/quiet"
++exit $ret
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 0773968..e2e97af 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -92,9 +92,9 @@ run_specific_rebase () {
+ 	export onto autosquash strategy strategy_opts verbose rebase_root \
+ 	force_rebase action preserve_merges upstream switch_to head_name \
+ 	in_progress state_dir head_name orig_head GIT_QUIET revisions \
+-	RESOLVEMSG
++	RESOLVEMSG git_am_opt
+ 	export -f move_to_original_branch
+-	test "$type" != am && exec git-rebase--$type
++	exec git-rebase--$type
+ }
  
--GIT_CHERRY_PICK_HELP="\
--hint: after resolving the conflicts, mark the corrected paths
--hint: with 'git add <paths>' and run 'git rebase --continue'"
-+GIT_CHERRY_PICK_HELP="$RESOLVEMSG"
- export GIT_CHERRY_PICK_HELP
+ run_pre_rebase_hook () {
+@@ -284,17 +284,11 @@ continue)
+ 	}
+ 	read_basic_state
+ 	run_specific_rebase
+-	git am --resolved --3way --resolvemsg="$RESOLVEMSG" &&
+-	move_to_original_branch
+-	exit
+ 	;;
+ skip)
+ 	git reset --hard HEAD || exit $?
+ 	read_basic_state
+ 	run_specific_rebase
+-	git am -3 --skip --resolvemsg="$RESOLVEMSG" &&
+-	move_to_original_branch
+-	exit
+ 	;;
+ abort)
+ 	git rerere clear
+@@ -331,14 +325,12 @@ then
+ 	shift
+ 	upstream=`git rev-parse --verify "${upstream_name}^0"` ||
+ 	die "invalid upstream $upstream_name"
+-	unset root_flag
+ 	upstream_arg="$upstream_name"
+ else
+ 	test -z "$onto" && die "You must specify --onto when using --root"
+ 	unset upstream_name
+ 	unset upstream
+-	root_flag="--root"
+-	upstream_arg="$root_flag"
++	upstream_arg=--root
+ fi
  
- warn () {
+ # Make sure the branch to rebase onto is valid.
+@@ -464,24 +456,4 @@ else
+ 	revisions="$upstream..$orig_head"
+ fi
+ 
+-if test -z "$do_merge"
+-then
+-	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
+-		--src-prefix=a/ --dst-prefix=b/ \
+-		--no-renames $root_flag "$revisions" |
+-	git am $git_am_opt --rebasing --resolvemsg="$RESOLVEMSG" &&
+-	move_to_original_branch
+-	ret=$?
+-	test 0 != $ret -a -d "$apply_dir" &&
+-		echo $head_name > "$apply_dir/head-name" &&
+-		echo $onto > "$apply_dir/onto" &&
+-		echo $orig_head > "$apply_dir/orig-head" &&
+-		echo "$GIT_QUIET" > "$apply_dir/quiet"
+-	exit $ret
+-fi
+-
+-
+-# start doing a rebase with git-merge
+-# this is rename-aware if the recursive (default) strategy is used
+-
+ run_specific_rebase
 -- 
 1.7.3.2.864.gbbb96
