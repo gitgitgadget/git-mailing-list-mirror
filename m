@@ -1,86 +1,67 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH/RFC] gitweb: Go to DONE_REQUEST rather than DONE_GITWEB in die_error
-Date: Thu, 25 Nov 2010 23:15:08 +0100
-Message-ID: <1290723308-21685-1-git-send-email-jnareb@gmail.com>
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 25 23:17:41 2010
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: How to do with access control per repo with a smart http git server?
+Date: Thu, 25 Nov 2010 23:35:11 +0100
+Message-ID: <AANLkTi=1borEXoxZHKRQfPVhuLenp1mOQ7dezFCyKXQi@mail.gmail.com>
+References: <loom.20101124T035911-773@post.gmane.org> <20101124045025.GA12399@LK-Perkele-V2.elisa-laajakaista.fi>
+ <loom.20101124T060650-817@post.gmane.org> <20101124060813.GA12949@LK-Perkele-V2.elisa-laajakaista.fi>
+ <loom.20101124T082340-444@post.gmane.org> <loom.20101124T110708-253@post.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Chunlin Zhang <zhangchunlin@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 25 23:35:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLk8J-0004cl-TD
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 23:17:40 +0100
+	id 1PLkPj-0004V5-4a
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 23:35:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752315Ab0KYWPe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Nov 2010 17:15:34 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37006 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752237Ab0KYWPe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Nov 2010 17:15:34 -0500
-Received: by fxm15 with SMTP id 15so241921fxm.19
-        for <git@vger.kernel.org>; Thu, 25 Nov 2010 14:15:32 -0800 (PST)
+	id S1752412Ab0KYWfd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Nov 2010 17:35:33 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:60983 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752237Ab0KYWfd (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Nov 2010 17:35:33 -0500
+Received: by yxt3 with SMTP id 3so161097yxt.19
+        for <git@vger.kernel.org>; Thu, 25 Nov 2010 14:35:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=lAIDhIbfWREESJF4tMFvmpOjhzDC877SRhA4nAfRL10=;
-        b=edJtsr6P0QtHZrn7GX9ysMSnqCN5ZJFyZpGY+ldmwdJCfhz0Xmg8j0aeBLcYdkfP8d
-         ADq+0e/7DoHlXzqDROyG6laoyQhtr7hqIXrxmWjinHI/0t7Ij/MvI4WWbRNCvQt2n8Ua
-         1H0tcQ3kuKgKpYOMLBytYW0wRc7FRCvOjK4DQ=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=CmeTqTGSA6qJQhlj0Z864J/r5R6L0fvhGvK5riS8Ptw=;
+        b=FBsvwjsJZseM8fj7QuVO91BJY3S18/Fo+vaeGrvb4PSX8EVxzxIw5A167N9YIIeHHn
+         BM6pSWKSrLJT88t7AT1WGj2FpOu1bCht3IWff1OOcTbRUd7tu2ClNVzL3Qe3sPIPRDlJ
+         7i6/3Rp6ISpOPcHIe4L2kKeemf2AaLKmwt4hc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=k4k1fCmELl3ITYKn9f3W6S//6PHyE2bOYLuHRK+xNq/5xUnHM7W1LvjQMQN/h5s5l8
-         YUMIRVlB2Vsx+mZ+c6oSaVcQuKxeeM7QR3K3dLkNb5qCFrOF6ivBb4suvlLY5IMSlivl
-         9tErJRQ+M6gbQqeWrMSD+XNU4jjLKT7WyD+Qs=
-Received: by 10.223.72.202 with SMTP id n10mr1323727faj.74.1290723332874;
-        Thu, 25 Nov 2010 14:15:32 -0800 (PST)
-Received: from localhost.localdomain (abvd11.neoplus.adsl.tpnet.pl [83.8.201.11])
-        by mx.google.com with ESMTPS id e17sm308973fak.10.2010.11.25.14.15.30
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 25 Nov 2010 14:15:31 -0800 (PST)
-X-Mailer: git-send-email 1.7.3
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=GqDWTmoRDi0hhL4/TFKgT/025J9Ltfut1h4tjH9+RDQwk+HJbJybQ+7WsmhubVgJuM
+         jP5guZKgDAMSzjGBqDUBNEHHg5ZciZpJdQC8Ir8oBbHMKoHd6jsDBegf3GRVY+XWBt/u
+         v3M95BakXzIYSBTVBNuLD00sfbyrcaGfIpK7U=
+Received: by 10.151.84.7 with SMTP id m7mr3783342ybl.359.1290724531593; Thu,
+ 25 Nov 2010 14:35:31 -0800 (PST)
+Received: by 10.151.100.19 with HTTP; Thu, 25 Nov 2010 14:35:11 -0800 (PST)
+In-Reply-To: <loom.20101124T110708-253@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162156>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162157>
 
-End the request after die_error finishes, rather than exiting gitweb
-instance (perhaps wrapped like in ModPerl::Registry or gitweb.psgi
-case).
+Heya,
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-Should bring no differences except for running gitweb in persistent
-environments natively, without wrapping; currently only FastCGI is
-supported.
+On Wed, Nov 24, 2010 at 11:13, Chunlin Zhang <zhangchunlin@gmail.com> wrote:
+> If it is useful to someone else,can email me and I will share it.
 
- gitweb/gitweb.perl |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+Three years down the road someone will read this message on vger, have
+their mail to you bounce, and curse their luck. Why not just put it up
+on github or so, link to it here, and if someone finds a use to it at
+some point, all the merrier?
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 1d94718..bcd7c8a 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -1156,6 +1156,7 @@ sub run {
- 
- 		run_request();
- 
-+	DONE_REQUEST:
- 		$post_dispatch_hook->()
- 			if $post_dispatch_hook;
- 		$first_request = 0;
-@@ -3679,7 +3680,7 @@ EOF
- 	print "</div>\n";
- 
- 	git_footer_html();
--	goto DONE_GITWEB
-+	goto DONE_REQUEST
- 		unless ($opts{'-error_handler'});
- }
- 
 -- 
-1.7.3
+Cheers,
+
+Sverre Rabbelier
