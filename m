@@ -1,8 +1,7 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH 03/18] usage: implement error_errno() the same way as
-	die_errno()
-Date: Thu, 25 Nov 2010 22:20:34 +0100
-Message-ID: <20101125212050.5188.56613.chriscool@tuxfamily.org>
+Subject: [RFC/PATCH 04/18] revert: don't die when write_message() fails
+Date: Thu, 25 Nov 2010 22:20:35 +0100
+Message-ID: <20101125212050.5188.41232.chriscool@tuxfamily.org>
 References: <20101125210138.5188.13115.chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -12,109 +11,94 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>,
 	Linus Torvalds <torvalds@linux-foundation.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 26 06:54:40 2010
+X-From: git-owner@vger.kernel.org Fri Nov 26 06:54:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLrGa-0006bE-H6
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 06:54:40 +0100
+	id 1PLrGb-0006bE-17
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 06:54:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751715Ab0KZFy3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Nov 2010 00:54:29 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:47285 "EHLO smtp3-g21.free.fr"
+	id S1751798Ab0KZFye (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Nov 2010 00:54:34 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:47326 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751627Ab0KZFy2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Nov 2010 00:54:28 -0500
+	id S1751724Ab0KZFye (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Nov 2010 00:54:34 -0500
 Received: from localhost6.localdomain6 (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 61B3EA6101;
-	Fri, 26 Nov 2010 06:54:21 +0100 (CET)
-X-git-sha1: 613822cf4304cbfc56fdee10b3459e0ea956cce2 
+	by smtp3-g21.free.fr (Postfix) with ESMTP id D8591A61DE;
+	Fri, 26 Nov 2010 06:54:26 +0100 (CET)
+X-git-sha1: 6558e7c1bbf4bd7f683dd1aaa5f9ea3260ec973e 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20101125210138.5188.13115.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162187>
 
-die_errno() is very useful, but sometimes we don't want to
-die after printing an error message and the error message
-from errno. So let's implement error_errno() that does the
-same thing as die_errno() except that it calls
-error_routine() instead of die_routine().
+Instead we will just return an error code.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- git-compat-util.h |    1 +
- usage.c           |   28 ++++++++++++++++++++++++----
- 2 files changed, 25 insertions(+), 4 deletions(-)
+ builtin/revert.c |   18 ++++++++++++------
+ 1 files changed, 12 insertions(+), 6 deletions(-)
 
-diff --git a/git-compat-util.h b/git-compat-util.h
-index 490f969..32294cc 100644
---- a/git-compat-util.h
-+++ b/git-compat-util.h
-@@ -230,6 +230,7 @@ extern NORETURN void usage(const char *err);
- extern NORETURN void usagef(const char *err, ...) __attribute__((format (printf, 1, 2)));
- extern NORETURN void die(const char *err, ...) __attribute__((format (printf, 1, 2)));
- extern NORETURN void die_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
-+extern int error_errno(const char *err, ...) __attribute__((format (printf, 1, 2)));
- extern int error(const char *err, ...) __attribute__((format (printf, 1, 2)));
- extern void warning(const char *err, ...) __attribute__((format (printf, 1, 2)));
- 
-diff --git a/usage.c b/usage.c
-index ec4cf53..f3ac869 100644
---- a/usage.c
-+++ b/usage.c
-@@ -69,10 +69,9 @@ void die(const char *err, ...)
- 	va_end(params);
+diff --git a/builtin/revert.c b/builtin/revert.c
+index 9649d37..947e666 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -257,17 +257,19 @@ static void print_advice(void)
+ 		       find_unique_abbrev(commit->object.sha1, DEFAULT_ABBREV));
  }
  
--void die_errno(const char *fmt, ...)
-+static void format_errno(char *fmt_with_err, size_t fmt_with_err_size,
-+			 const char *fmt)
+-static void write_message(struct strbuf *msgbuf, const char *filename)
++static int write_message(struct strbuf *msgbuf, const char *filename)
  {
--	va_list params;
--	char fmt_with_err[1024];
- 	char str_error[256], *err;
- 	int i, j;
+ 	static struct lock_file msg_file;
  
-@@ -90,13 +89,34 @@ void die_errno(const char *fmt, ...)
- 		}
- 	}
- 	str_error[j] = 0;
--	snprintf(fmt_with_err, sizeof(fmt_with_err), "%s: %s", fmt, str_error);
-+	snprintf(fmt_with_err, fmt_with_err_size, "%s: %s", fmt, str_error);
-+}
+ 	int msg_fd = hold_lock_file_for_update(&msg_file, filename,
+ 					       LOCK_DIE_ON_ERROR);
+ 	if (write_in_full(msg_fd, msgbuf->buf, msgbuf->len) < 0)
+-		die_errno("Could not write to %s.", filename);
++		return error_errno("Could not write to %s.", filename);
+ 	strbuf_release(msgbuf);
+ 	if (commit_lock_file(&msg_file) < 0)
+-		die("Error wrapping up %s", filename);
++		return error("Error wrapping up %s", filename);
 +
-+void die_errno(const char *fmt, ...)
-+{
-+	va_list params;
-+	char fmt_with_err[1024];
-+
-+	format_errno(fmt_with_err, sizeof(fmt_with_err), fmt);
- 
- 	va_start(params, fmt);
- 	die_routine(fmt_with_err, params);
- 	va_end(params);
++	return 0;
  }
  
-+int error_errno(const char *fmt, ...)
-+{
-+	va_list params;
-+	char fmt_with_err[1024];
-+
-+	format_errno(fmt_with_err, sizeof(fmt_with_err), fmt);
-+
-+	va_start(params, fmt);
-+	error_routine(fmt_with_err, params);
-+	va_end(params);
-+	return -1;
-+}
-+
- int error(const char *err, ...)
- {
- 	va_list params;
+ static struct tree *empty_tree(void)
+@@ -397,7 +399,7 @@ static int do_pick_commit(void)
+ 	struct commit_message msg = { NULL, NULL, NULL, NULL, NULL };
+ 	char *defmsg = NULL;
+ 	struct strbuf msgbuf = STRBUF_INIT;
+-	int res;
++	int res, write_res;
+ 
+ 	if (no_commit) {
+ 		/*
+@@ -495,12 +497,16 @@ static int do_pick_commit(void)
+ 	if (!strategy || !strcmp(strategy, "recursive") || action == REVERT) {
+ 		res = do_recursive_merge(base, next, base_label, next_label,
+ 					 head, &msgbuf);
+-		write_message(&msgbuf, defmsg);
++		write_res = write_message(&msgbuf, defmsg);
++		if (write_res)
++			return write_res;
+ 	} else {
+ 		struct commit_list *common = NULL;
+ 		struct commit_list *remotes = NULL;
+ 
+-		write_message(&msgbuf, defmsg);
++		write_res = write_message(&msgbuf, defmsg);
++		if (write_res)
++			return write_res;
+ 
+ 		commit_list_insert(base, &common);
+ 		commit_list_insert(next, &remotes);
 -- 
 1.7.3.2.504.g59d466
