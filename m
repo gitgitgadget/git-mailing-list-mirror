@@ -1,85 +1,98 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: 'git replace' and pushing
-Date: Thu, 25 Nov 2010 09:37:52 +0100
-Message-ID: <4CEE2060.4020507@drmicha.warpmail.net>
-References: <AANLkTinzPCeCJ486cysmk981HE61=dv9MS7E8Ap4rQ5r@mail.gmail.com>
+Subject: Re: [PATCH] Hint at "checkout -p" in the "reset --patch <type>" error
+ message
+Date: Thu, 25 Nov 2010 09:55:14 +0100
+Message-ID: <4CEE2472.5020901@drmicha.warpmail.net>
+References: <AANLkTimc=Dt9YSu=J=7C-f1hZ9UODU7VHu6oD8dmFX3N@mail.gmail.com>	<AANLkTimP9zr=wQDYeBxtvYCE1mZ1aHXQ_nLOxGFfR9YD@mail.gmail.com>	<AANLkTimQ644C-dEoJTj8bNd9y+YzpMez7D1KLZFNEe7c@mail.gmail.com>	<AANLkTindHnjeXEGbKWiQkWgoUBwqZbdx71sQwNr_gFp0@mail.gmail.com>	<AANLkTi=5w3YpYu0_WbmHud0BUkO2BqYNVezWDMkCaSj2@mail.gmail.com>	<AANLkTimEOULR8_PAs5iPu7z+n4DQPSyDKYg8RghZxosz@mail.gmail.com>	<87mxp086k5.fsf_-_@gmail.com>	<20101123145921.GB3145@sigill.intra.peff.net> <87ipzo83o9.fsf@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Cory Fields <FOSS@AtlasTechnologiesInc.com>
-X-From: git-owner@vger.kernel.org Thu Nov 25 09:40:09 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, Jeenu V <jeenuv@gmail.com>,
+	knittl <knittl89@googlemail.com>, git@vger.kernel.org
+To: =?UTF-8?B?xaB0xJtww6FuIE7Em21lYw==?= <stepnem@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 25 09:57:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLXNA-0007aT-J7
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 09:40:08 +0100
+	id 1PLXdt-0000pT-GJ
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 09:57:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751784Ab0KYIkA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Nov 2010 03:40:00 -0500
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:58842 "EHLO
+	id S1751842Ab0KYI5U convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Nov 2010 03:57:20 -0500
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:43466 "EHLO
 	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751681Ab0KYIkA (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Nov 2010 03:40:00 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id D486839C;
-	Thu, 25 Nov 2010 03:39:59 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 25 Nov 2010 03:39:59 -0500
-X-Sasl-enc: WBJA9I+lS8cmRenKhVaUlub3SvmYwgo07IDAoh25hAmK 1290674399
+	by vger.kernel.org with ESMTP id S1751799Ab0KYI5T (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Nov 2010 03:57:19 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 6CEF2479;
+	Thu, 25 Nov 2010 03:57:19 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 25 Nov 2010 03:57:19 -0500
+X-Sasl-enc: XrIqmfxcC6GX2Wh7JXR1EiMr2PCw51kxIElkCg/xqAWo 1290675439
 Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 4B21B5E753C;
-	Thu, 25 Nov 2010 03:39:59 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 95D04403FF7;
+	Thu, 25 Nov 2010 03:57:18 -0500 (EST)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
-In-Reply-To: <AANLkTinzPCeCJ486cysmk981HE61=dv9MS7E8Ap4rQ5r@mail.gmail.com>
+In-Reply-To: <87ipzo83o9.fsf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162118>
 
-Cory Fields venit, vidit, dixit 24.11.2010 05:33:
-> I am having some trouble understanding how a replaced object (commit)
-> should behave when pushed to a remote repo. Here's my scenario:
-> 
-> We are moving from svn to git. Our svn repo is huge, and most of the
-> history is useless. To save space, I would like to do a 50/50 split so
-> that when the repo is cloned, 50% is seen by default, and the
-> historical 50% can be seen by fetching the replacement history. I've
-> done this by creating a phony snapshot at 3 then using a 'replace' to
-> put the others on top. The history is purely linear.
-> 
-> 1---2---3---4---5
->                  \---4---5
+=C5=A0t=C4=9Bp=C3=A1n N=C4=9Bmec venit, vidit, dixit 23.11.2010 16:23:
+> Jeff King <peff@peff.net> writes:
+>=20
+>> On Tue, Nov 23, 2010 at 03:20:58PM +0100, =C5=A0t=C4=9Bp=C3=A1n N=C4=
+=9Bmec wrote:
+>>
+>>> diff --git a/builtin/reset.c b/builtin/reset.c
+>>> index 0037be4..fc530d2 100644
+>>> --- a/builtin/reset.c
+>>> +++ b/builtin/reset.c
+>>> @@ -309,7 +309,8 @@ int cmd_reset(int argc, const char **argv, cons=
+t char *prefix)
+>>> =20
+>>>  	if (patch_mode) {
+>>>  		if (reset_type !=3D NONE)
+>>> -			die("--patch is incompatible with --{hard,mixed,soft}");
+>>> +			die("--patch is incompatible with --{hard,mixed,soft}\n"
+>>> +			    "(use \"git checkout -p\" to selectively discard changes in=
+ working directory)");
+>>>  		return interactive_reset(rev, argv + i, prefix);
+>>>  	}
+>>
+>> Should this actually print something different for --hard versus --m=
+ixed
+>> versus --soft?
+>>
+>> For --soft, "-p" simply makes no sense as you are not changing the i=
+ndex
+>> or the working directory.
+>>
+>> For --mixed, shouldn't we support "-p" already, as that is the defau=
+lt
+>> mode?
+>>
+>> For --hard, suggesting "checkout -p" does make sense.
+>>
+>> Also, what about "--merge" and "--keep" modes?
+>=20
+> All good questions, most of which occured to me, too. What I was goin=
+g
+> to do based on the outcome of (the discussion of) this patch was at
+> least fix the currently out-of-date "--{hard,mixed,soft}", as the
+> error is signalled with the newer options (--keep and --merge) as wel=
+l.
+> I'm not sure I could cope with anything much more complicated than th=
+at,
+> esp. if it involved adding some new reset functionality. :-)
 
-I assume the "other" 4 goes off 3 (you're not using a monospaced font,
-are you?).
+The man page for git-reset points at git-checkout already.
 
-Also, the other 4 should have no parent, otherwise you've not cut-off
-any history.
-
-> 
-> When the replacement is in place, the repo is half size (commit-wise)
-> as expected. The problem is that 'git push' does not honor the
-> replace. So when I push, all objects go with it, which defeats the
-> purpose. The only way that seams to work is doing a filter-branch and
-> replacing the other way.
-> 
-> Is this by design? I would really like a way to split the repo without
-> breaking hashes for the developers that have already begun using git
-> svn.
-
-It is by design since a replace creates a "fake history", and this
-should not be created behind a users back.
-
-The 5 is not rewritten, and it's ancestry contains the whole history. If
-that is the commit your developers have already and that you want to
-preserve then there's not much you can do.
-
-You could try to push or pull your replacement refs first (refs/replace)
-but I don't think this will change what objects the push of 5 will
-transfer. Just have a try.
+Until we have a "verbosity level" config across all commands, I don't
+favor adding a lot of hints to command error messages.
 
 Michael
