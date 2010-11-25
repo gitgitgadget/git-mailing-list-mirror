@@ -1,8 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH 09/18] revert: make pick_commits() return an error on --ff
-	incompatible option
-Date: Thu, 25 Nov 2010 22:20:40 +0100
-Message-ID: <20101125212050.5188.43278.chriscool@tuxfamily.org>
+Subject: [RFC/PATCH 11/18] revert: add get_todo_content() and
+	create_todo_file()
+Date: Thu, 25 Nov 2010 22:20:42 +0100
+Message-ID: <20101125212050.5188.30170.chriscool@tuxfamily.org>
 References: <20101125210138.5188.13115.chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -12,95 +12,116 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Jeff King <peff@peff.net>,
 	Linus Torvalds <torvalds@linux-foundation.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Nov 26 06:56:48 2010
+X-From: git-owner@vger.kernel.org Fri Nov 26 06:56:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLrIe-0007NM-3G
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 06:56:48 +0100
+	id 1PLrIf-0007NM-47
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 06:56:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752030Ab0KZFzD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Nov 2010 00:55:03 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:47647 "EHLO smtp3-g21.free.fr"
+	id S1752240Ab0KZFzN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Nov 2010 00:55:13 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:47755 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751335Ab0KZFzB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Nov 2010 00:55:01 -0500
+	id S1752126Ab0KZFzM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Nov 2010 00:55:12 -0500
 Received: from localhost6.localdomain6 (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id 80509A61E3;
-	Fri, 26 Nov 2010 06:54:54 +0100 (CET)
-X-git-sha1: 01d59d9c2f4f67d3ccbbc3a7b2f4252f4cb8605a 
+	by smtp3-g21.free.fr (Postfix) with ESMTP id 71622A6209;
+	Fri, 26 Nov 2010 06:55:05 +0100 (CET)
+X-git-sha1: 1225f09e208544ceae2321ebf6f8c4b1fe0e3cfb 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20101125210138.5188.13115.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162193>
 
-As we want to use pick_commits() many times and write TODO and DONE
-file in case of errors, we must not die in case of error inside
-pick_commits() but return an error.
+These static functions will make it possible to write "todo"
+and "done" files. These files will list the actions (cherry
+picks or reverts) that are still to be completed and that
+have already been done respectively.
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/revert.c |   32 ++++++++++++++++----------------
- 1 files changed, 16 insertions(+), 16 deletions(-)
+ builtin/revert.c |   63 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 63 insertions(+), 0 deletions(-)
 
 diff --git a/builtin/revert.c b/builtin/revert.c
-index 1f20251..57d4300 100644
+index 8b50e0c..7429be2 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -578,33 +578,33 @@ static void read_and_refresh_cache(const char *me)
- 	rollback_lock_file(&index_lock);
+@@ -177,6 +177,69 @@ static char *get_encoding(const char *message, const unsigned char *sha1)
+ 	return NULL;
  }
  
-+static int ff_incompatible(int val, const char *opt)
++static void get_todo_content(struct strbuf *buf, struct commit_list *list,
++			     const char *line_prefix, struct args_info *info)
 +{
-+	return val ? error("cherry-pick --ff cannot be used with %s", opt) : 0;
++	struct commit_list *cur = list;
++	struct strbuf cmd = STRBUF_INIT;
++
++	if (line_prefix)
++		strbuf_addstr(&cmd, line_prefix);
++	strbuf_addstr(&cmd, info->action == REVERT ? "revert " : "pick ");
++	if (info->no_commit)
++		strbuf_addstr(&cmd, "-n ");
++	if (info->edit)
++		strbuf_addstr(&cmd, "-e ");
++	if (info->signoff)
++		strbuf_addstr(&cmd, "-s ");
++	if (info->mainline)
++		strbuf_addf(&cmd, "-m %d ", info->mainline);
++	if (info->allow_rerere_auto)
++		strbuf_addstr(&cmd, "--rerere-autoupdate ");
++	if (info->strategy)
++		strbuf_addf(&cmd, "--strategy %s ", info->strategy);
++	if (info->no_replay)
++		strbuf_addstr(&cmd, "-x ");
++	if (info->allow_ff)
++		strbuf_addstr(&cmd, "--ff ");
++
++	for (; cur; cur = cur->next) {
++		struct commit_message msg = { NULL, NULL, NULL, NULL, NULL };
++		const unsigned char *sha1 = cur->item->object.sha1;
++		if (get_message(cur->item->buffer, sha1, &msg) != 0)
++			die("Cannot get commit message for %s",
++			    sha1_to_hex(sha1));
++		strbuf_addbuf(buf, &cmd);
++		strbuf_addf(buf, " %s # %s\n",
++			    find_unique_abbrev(sha1, DEFAULT_ABBREV),
++			    msg.subject);
++		free_message(&msg);
++	}
++
++	strbuf_release(&cmd);
 +}
 +
- static int pick_commits(struct args_info *infos)
++static void create_todo_file(const char *filepath, int append,
++			     struct commit_list *list, const char *line_prefix,
++			     struct args_info *info)
++{
++	int fd, flags;
++	struct strbuf buf = STRBUF_INIT;
++
++	get_todo_content(&buf, list, line_prefix, info);
++
++	flags = O_WRONLY | O_CREAT | (append ? O_APPEND : O_TRUNC);
++	fd = open(filepath, flags, 0666);
++	if (fd < 0)
++		die_errno("Could not open file '%s' for writing", filepath);
++
++	write_or_whine(fd, buf.buf, buf.len, filepath);
++
++	close(fd);
++
++	strbuf_release(&buf);
++}
++
+ static void add_message_to_msg(struct strbuf *msgbuf, const char *message,
+ 			       const unsigned char *sha1)
  {
- 	struct rev_info revs;
- 	struct commit *commit;
-+	int res = 0;
- 
--	if (infos->allow_ff) {
--		if (infos->signoff)
--			die("cherry-pick --ff cannot be used with --signoff");
--		if (infos->no_commit)
--			die("cherry-pick --ff cannot be used with --no-commit");
--		if (infos->no_replay)
--			die("cherry-pick --ff cannot be used with -x");
--		if (infos->edit)
--			die("cherry-pick --ff cannot be used with --edit");
--	}
-+	if (infos->allow_ff &&
-+	    ((res = ff_incompatible(infos->signoff, "--signoff")) ||
-+	     (res = ff_incompatible(infos->no_commit, "--no_commit")) ||
-+	     (res = ff_incompatible(infos->no_replay, "-x")) ||
-+	     (res = ff_incompatible(infos->edit, "--edit"))))
-+			return res;
- 
- 	read_and_refresh_cache(me);
- 
- 	prepare_revs(&revs, infos);
- 
--	while ((commit = get_revision(&revs))) {
--		int res = do_pick_commit(infos, commit);
--		if (res)
--			return res;
--	}
-+	while ((commit = get_revision(&revs)) &&
-+	       !(res = do_pick_commit(infos, commit)))
-+		; /* do nothing */
- 
--	return 0;
-+	return res;
- }
- 
- static int revert_or_cherry_pick(int argc, const char **argv, int revert, int edit)
 -- 
 1.7.3.2.504.g59d466
