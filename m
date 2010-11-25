@@ -1,88 +1,65 @@
 From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Breaking t1510-repo-setup.sh tests in pu
-Date: Thu, 25 Nov 2010 10:56:42 +0100
-Message-ID: <AANLkTim=_0WiphBv-RBhJ2i9rGzXvz8yKcZcm_7pYXFc@mail.gmail.com>
+Subject: Re: [PATCH v8 1/5] Introduce bulk-move detection in diffcore.
+Date: Thu, 25 Nov 2010 11:08:07 +0100
+Message-ID: <AANLkTi=Ekoe+RSrRFj63S___Vsa5kTsDKJVPamFsz0c2@mail.gmail.com>
+References: <1288303712-14662-1-git-send-email-ydirson@altern.org>
+	<1288303712-14662-2-git-send-email-ydirson@altern.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 25 10:56:51 2010
+Cc: git@vger.kernel.org, Yann Dirson <ydirson@free.fr>,
+	Junio C Hamano <gitster@pobox.com>
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Thu Nov 25 11:08:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLYZO-0006Vf-Ez
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 10:56:50 +0100
+	id 1PLYki-00043A-G9
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 11:08:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751611Ab0KYJ4p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Nov 2010 04:56:45 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:36339 "EHLO
+	id S1751755Ab0KYKIK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Nov 2010 05:08:10 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:47502 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751372Ab0KYJ4o convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Nov 2010 04:56:44 -0500
-Received: by fxm13 with SMTP id 13so599869fxm.19
-        for <git@vger.kernel.org>; Thu, 25 Nov 2010 01:56:42 -0800 (PST)
+	with ESMTP id S1751398Ab0KYKII convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Nov 2010 05:08:08 -0500
+Received: by fxm13 with SMTP id 13so609318fxm.19
+        for <git@vger.kernel.org>; Thu, 25 Nov 2010 02:08:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:cc:content-type:content-transfer-encoding;
-        bh=SWugL1p07Ah4ONeUC2kLuIYvI2DTmfg+rTehr7VQEjM=;
-        b=nqvOHTy6JCjqyhzSV8q8Tug2+LAcirsRLy3Jvn4+aTXhthRKI4oZggZ8W5SlndRYFk
-         bOEjIitt5zVTJLXDku97EHpQF5wqZ+ZZY8T2h/AitLcgHOE3HiismNAXYxO80RPzer1n
-         5fRTsCsf/AT9ZUYv72vnlsCXxbljl17R6h+l8=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GEuW/DrEjDr+ynzjCcZzIVve0GHUBKzfvROoqwTWIrw=;
+        b=bNzYP9LOlg674rzSg2Y4/qn2/cUoM0X8WlyJwo/8FdzBX3ljQhts29BuO4jtUYwCjM
+         NnKryUCP8oMD8oWEqpyz29cilzQQ3Zyksk204KYHw6M5vrbpHWfl7D8+xg21emAewoOE
+         PgRbXmam7eh+MlI1WwTAVI061O187d6B1LzuU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=xmkrzfUKxUuChAUyKp7m+Yn+A8msin0C1BkbX/jSF1SGb3H+4ikkHSWrVm2k2zeygT
-         YmLIF9ooZ/t1T9iiB7Oj33lghiPpGOmT/KjiLLPi8exVIVniXjRwox4esiZHdMyzNLhr
-         +TdQt17sMcRmkp9Vkq3j975AFs2B4PhtFZhKM=
-Received: by 10.223.108.147 with SMTP id f19mr486825fap.68.1290679002793; Thu,
- 25 Nov 2010 01:56:42 -0800 (PST)
-Received: by 10.223.86.134 with HTTP; Thu, 25 Nov 2010 01:56:42 -0800 (PST)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=lXC7fVpzS9xdkjB7W5TIlYzzDIbmP3gJN+4JY4ASpLIpUsPgmP9k6FheJfmXLoDJez
+         L2BXFwDi92VLwo0EQQzdjGCMz/YE5uZBdEpA1HM3m0KrhnDEZSI0eQeMN5qZncmDNw5s
+         QU2JP9iDWm2JhgSbDI2jgwV1Re8dhahbszXVs=
+Received: by 10.223.74.11 with SMTP id s11mr513058faj.11.1290679687541; Thu,
+ 25 Nov 2010 02:08:07 -0800 (PST)
+Received: by 10.223.86.134 with HTTP; Thu, 25 Nov 2010 02:08:07 -0800 (PST)
+In-Reply-To: <1288303712-14662-2-git-send-email-ydirson@altern.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162120>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162121>
 
-I haven't investigated these. But that test is breaking in pu now:
+On Fri, Oct 29, 2010 at 00:08, Yann Dirson <ydirson@altern.org> wrote:
 
-    $ prove ./t1510-repo-setup.sh
-    ./t1510-repo-setup.sh .. Dubious, test returned 1 (wstat 256, 0x100=
-)
-    Failed 244/376 subtests
+> + =C2=A0 =C2=A0 =C2=A0 slash =3D memrchr(src, '/', len);
 
-    Test Summary Report
-    -------------------
-    ./t1510-repo-setup.sh (Wstat: 256 Tests: 376 Failed: 244)
-      Failed tests:  8-9, 11, 15-36, 46-67, 71-92, 101, 103
-                    113-128, 144-159, 169-184, 207-208, 211-234
-                    256-279, 281-282, 284-307, 320-343, 351
-                    353-376
-      Non-zero exit status: 1
-    Files=3D1, Tests=3D376,  8 wallclock secs ( 0.23 usr  0.02 sys +  0=
-=2E85
-cusr  5.26 csys =3D  6.36 CPU)
-    Result: FAIL
+I can't compile pu now on Solaris due to this bit. Are you planning on
+picking up the patch / configure / Makefile detection discussed in the
+"[PATCH] compat: add memrchr()" thread? Just wondering what the
+progress was on that.
 
-All the breakages seem to be due to path differences:
-
-    --- expected    2010-11-25 09:53:46.000000000 +0000
-    +++ result      2010-11-25 09:53:46.000000000 +0000
-    @@ -1,4 +1,4 @@
-    -setup: git_dir: /home/avar/g/git/t/trash directory.t1510-repo-setu=
-p/3/.git
-    -setup: worktree: /home/avar/g/git/t/trash directory.t1510-repo-set=
-up/3/wt
-    +setup: git_dir: .git
-    +setup: worktree: /home/avar/g/git/t/trash directory.t1510-repo-set=
-up/3
-     setup: cwd: /home/avar/g/git/t/trash directory.t1510-repo-setup/3
-     setup: prefix: (null)
-    not ok - 24 #3: GIT_DIR, GIT_WORK_TREE=3Dwt at root
-
-This is probably due to Nguy=E1=BB=85n's recent work. But I'm not sure.
+Thanks.
