@@ -1,7 +1,8 @@
 From: Christian Couder <chriscool@tuxfamily.org>
-Subject: [RFC/PATCH 16/18] revert: implement parsing TODO and DONE files
-Date: Thu, 25 Nov 2010 22:20:47 +0100
-Message-ID: <20101125212050.5188.64875.chriscool@tuxfamily.org>
+Subject: [RFC/PATCH 14/18] revert: move global variable "me" into "struct
+	args_info"
+Date: Thu, 25 Nov 2010 22:20:45 +0100
+Message-ID: <20101125212050.5188.49554.chriscool@tuxfamily.org>
 References: <20101125210138.5188.13115.chriscool@tuxfamily.org>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -17,277 +18,118 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLrIh-0007NM-MS
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 06:56:52 +0100
+	id 1PLrIg-0007NM-Kq
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 06:56:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752778Ab0KZFzl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Nov 2010 00:55:41 -0500
-Received: from smtp3-g21.free.fr ([212.27.42.3]:48042 "EHLO smtp3-g21.free.fr"
+	id S1752686Ab0KZFzc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Nov 2010 00:55:32 -0500
+Received: from smtp3-g21.free.fr ([212.27.42.3]:47907 "EHLO smtp3-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752509Ab0KZFzk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Nov 2010 00:55:40 -0500
+	id S1752509Ab0KZFz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Nov 2010 00:55:29 -0500
 Received: from localhost6.localdomain6 (unknown [82.243.130.161])
-	by smtp3-g21.free.fr (Postfix) with ESMTP id DD2C3A61B0;
-	Fri, 26 Nov 2010 06:55:32 +0100 (CET)
-X-git-sha1: 5db28724d964ba7a60ee929ed7f754c023c48dd3 
+	by smtp3-g21.free.fr (Postfix) with ESMTP id E77B1A61F3;
+	Fri, 26 Nov 2010 06:55:21 +0100 (CET)
+X-git-sha1: 267ad8202fbcd63dbdb69f7b9d32b666962b4056 
 X-Mailer: git-mail-commits v0.5.2
 In-Reply-To: <20101125210138.5188.13115.chriscool@tuxfamily.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162198>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162199>
 
-From: Stephan Beyer <s-beyer@gmx.net>
-
-The code from this patch comes from the git sequencer Google
-Summer of Code 2008 project available here:
-
-http://repo.or.cz/w/git/sbeyer.git
 
 Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
 ---
- builtin/revert.c |  228 ++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 1 files changed, 228 insertions(+), 0 deletions(-)
+ builtin/revert.c |   19 ++++++++++---------
+ 1 files changed, 10 insertions(+), 9 deletions(-)
 
 diff --git a/builtin/revert.c b/builtin/revert.c
-index fee2e38..ca65b92 100644
+index 12a2409..7513a00 100644
 --- a/builtin/revert.c
 +++ b/builtin/revert.c
-@@ -70,6 +70,234 @@ static const char * const *revert_or_cherry_pick_usage(struct args_info *info)
- 	return info->action == REVERT ? revert_usage : cherry_pick_usage;
- }
+@@ -39,8 +39,6 @@ static const char * const cherry_pick_usage[] = {
+ 	NULL
+ };
  
-+/*
-+ * A structure for a parsed instruction line plus a next pointer
-+ * to allow linked list behavior
-+ */
-+struct parsed_insn {
-+	int argc;
-+	const char **argv;
-+	int line;
-+	struct strbuf orig;
-+	struct parsed_insn *next;
-+};
+-static const char *me;
+-
+ struct args_info {
+ 	enum { REVERT, CHERRY_PICK } action;
+ 	int edit;
+@@ -51,6 +49,7 @@ struct args_info {
+ 	int allow_ff;
+ 	int allow_rerere_auto;
+ 	int continuing;
++	const char *me;
+ 	const char *strategy;
+ 	const char **commit_argv;
+ 	int commit_argc;
+@@ -91,6 +90,9 @@ static void parse_args(int argc, const char **argv, struct args_info *info)
+ 		OPT_END(),
+ 	};
+ 
++	info->me = info->action == REVERT ? "revert" : "cherry-pick";
++	setenv(GIT_REFLOG_ACTION, info->me, 0);
 +
-+struct parsed_file {
-+	size_t count;
-+	size_t total;
-+	struct parsed_insn *first;
-+	struct parsed_insn *last;
-+	struct parsed_insn *cur; /* a versatile helper */
-+};
-+
-+static int parse_line(char *buf, size_t len, int lineno,
-+		      struct parsed_insn **line)
-+{
-+	static int alloc = 0;
-+	static struct strbuf arg_sb = STRBUF_INIT;
-+	static enum {
-+		ST_START,
-+		ST_DELIMITER,
-+		ST_ARGUMENT,
-+		ST_ESCAPE,
-+		ST_DOUBLE_QUOTES,
-+		ST_DOUBLE_QUOTES_ESCAPE,
-+		ST_SINGLE_QUOTES,
-+	} state = ST_START;
-+	/* The current rules are as follows:
-+	 *  1. whitespace at the beginning is ignored
-+	 *  2. insn is everything up to next whitespace or EOL
-+	 *  3. now whitespace acts as delimiter for arguments,
-+	 *     except if written in single or double quotes
-+	 *  4. \ acts as escape inside and outside double quotes.
-+	 *     Inside double quotes, this is only useful for \".
-+	 *     Outside, it is useful for \', \", \\ and \ .
-+	 *  5. single quotes do not have an escape character
-+	 *  6. abort on "#" (comments)
-+	 */
-+
-+	size_t i, j = 0;
-+	struct parsed_insn *ret = *line;
-+
-+	for (i = 0; i <= len; ++i) {
-+		switch (state) {
-+		case ST_START:
-+			switch (buf[i]) {
-+			case ' ':
-+			case '\t':
-+				continue;
-+			case 0:
-+			case '#':
-+				break;
-+			case '\'':
-+				j = i+1;
-+				state = ST_SINGLE_QUOTES;
-+				break;
-+			case '"':
-+				j = i+1;
-+				state = ST_DOUBLE_QUOTES;
-+				break;
-+			default:
-+				j = i;
-+				state = ST_ARGUMENT;
-+				break;
-+			}
-+			/* prepare everything */
-+			ret = xcalloc(1, sizeof(*ret));
-+			ret->line = lineno;
-+			strbuf_init(&ret->orig, len+2);
-+			if (!buf[i] || buf[i] == '#') /* empty/comment */
-+				goto finish;
-+			break;
-+		case ST_DELIMITER:
-+			switch (buf[i]) {
-+			case ' ':
-+			case '\t':
-+				continue;
-+			case 0:
-+				break;
-+			case '\'':
-+				j = i+1;
-+				state = ST_SINGLE_QUOTES;
-+				break;
-+			case '"':
-+				j = i+1;
-+				state = ST_DOUBLE_QUOTES;
-+				break;
-+			default:
-+				j = i;
-+				state = ST_ARGUMENT;
-+				if (buf[i] == '#') /* a comment */
-+					goto finish;
-+				break;
-+			}
-+			/* prepare next argument */
-+			ALLOC_GROW(ret->argv, ret->argc + 1, alloc);
-+			ret->argv[ret->argc++] = strbuf_detach(&arg_sb, NULL);
-+			break;
-+		case ST_ARGUMENT:
-+			switch (buf[i]) {
-+			case ' ':
-+			case '\t':
-+				strbuf_add(&arg_sb, buf+j, i-j);
-+				state = ST_DELIMITER;
-+				break;
-+			case '"':
-+				strbuf_add(&arg_sb, buf+j, i-j);
-+				j = i + 1;
-+				state = ST_DOUBLE_QUOTES;
-+				break;
-+			case '\'':
-+				strbuf_add(&arg_sb, buf+j, i-j);
-+				j = i + 1;
-+				state = ST_SINGLE_QUOTES;
-+				break;
-+			case '\\':
-+				strbuf_add(&arg_sb, buf+j, i-j);
-+				j = i + 1;
-+				state = ST_ESCAPE;
-+			default:
-+				break;
-+			}
-+			break;
-+		case ST_ESCAPE:
-+				state = ST_ARGUMENT;
-+			break;
-+		case ST_DOUBLE_QUOTES:
-+			switch (buf[i]) {
-+			case '"':
-+				strbuf_add(&arg_sb, buf+j, i-j);
-+				j = i + 1;
-+				state = ST_ARGUMENT;
-+				break;
-+			case '\\':
-+				strbuf_add(&arg_sb, buf+j, i-j);
-+				j = i + 1;
-+				state = ST_DOUBLE_QUOTES_ESCAPE;
-+				break;
-+			default:
-+				break;
-+			}
-+			break;
-+		case ST_DOUBLE_QUOTES_ESCAPE:
-+			state = ST_DOUBLE_QUOTES;
-+			break;
-+		case ST_SINGLE_QUOTES:
-+			switch (buf[i]) {
-+			case '\'':
-+				strbuf_add(&arg_sb, buf+j, i-j);
-+				j = i + 1;
-+				state = ST_ARGUMENT;
-+				break;
-+			default:
-+				break;
-+			}
-+			break;
-+		}
-+	}
-+finish:
-+	*line = ret;
-+	switch(state) {
-+	case ST_DOUBLE_QUOTES:
-+	case ST_DOUBLE_QUOTES_ESCAPE:
-+	case ST_SINGLE_QUOTES:
-+		strbuf_add(&arg_sb, buf+j, i-j-1);
-+		strbuf_add(&arg_sb, "\n", 1);
-+		return 1;
-+	case ST_ARGUMENT:
-+		if (i-j > 1)
-+			strbuf_add(&arg_sb, buf+j, i-j-1);
-+		ALLOC_GROW(ret->argv, ret->argc + 1, alloc);
-+		ret->argv[ret->argc++] = strbuf_detach(&arg_sb, NULL);
-+	case ST_DELIMITER:
-+		state = ST_START;
-+		alloc = 0;
-+	default:
-+		strbuf_addstr(&ret->orig, buf);
-+		strbuf_addch(&ret->orig, '\n');
-+		return 0;
-+	}
-+}
-+
-+static void add_parsed_line_to_parsed_file(struct parsed_insn *parsed_line,
-+					   struct parsed_file *contents)
-+{
-+	if (!contents->first) {
-+		contents->first = parsed_line;
-+		contents->last = parsed_line;
-+	} else {
-+		contents->last->next = parsed_line;
-+		contents->last = parsed_line;
-+	}
-+	if (parsed_line->argv)
-+		contents->total++;
-+}
-+
-+/* Parse a file fp; write result into contents */
-+static void parse_file(const char *filename, struct parsed_file *contents)
-+{
-+	struct strbuf str = STRBUF_INIT;
-+	struct parsed_insn *parsed_line = NULL;
-+	int r = 0;
-+	int lineno = 0;
-+	FILE *fp = fp = fopen(filename, "r");
-+	if (!fp)
-+		die_errno("Could not open file '%s'", filename);
-+
-+	memset(contents, 0, sizeof(*contents));
-+
-+	while (strbuf_getline(&str, fp, '\n') != EOF) {
-+		lineno++;
-+		r = parse_line(str.buf, str.len, lineno, &parsed_line);
-+		if (!r)
-+			add_parsed_line_to_parsed_file(parsed_line, contents);
-+	}
-+	strbuf_release(&str);
-+	fclose(fp);
-+	if (r)
-+		die("Unexpected end of file.");
-+}
-+
- static void parse_args(int argc, const char **argv, struct args_info *info)
+ 	if (info->action == CHERRY_PICK) {
+ 		struct option cp_extra[] = {
+ 			OPT_BOOLEAN('x', NULL, &info->no_replay, "append commit name"),
+@@ -403,7 +405,8 @@ static int fast_forward_to(const unsigned char *to, const unsigned char *from)
+ 
+ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 			      const char *base_label, const char *next_label,
+-			      unsigned char *head, struct strbuf *msgbuf)
++			      unsigned char *head, const char *me,
++			      struct strbuf *msgbuf)
  {
- 	int noop;
+ 	struct merge_options o;
+ 	struct tree *result, *next_tree, *base_tree, *head_tree;
+@@ -507,7 +510,7 @@ static int do_pick_commit(struct args_info *info, struct commit *commit)
+ 		if (get_sha1("HEAD", head))
+ 			return error("You do not have a valid HEAD");
+ 		if (index_differs_from("HEAD", 0))
+-			return error_dirty_index(me);
++			return error_dirty_index(info->me);
+ 	}
+ 	discard_cache();
+ 
+@@ -543,7 +546,7 @@ static int do_pick_commit(struct args_info *info, struct commit *commit)
+ 
+ 	if (parent && parse_commit(parent) < 0)
+ 		return error("%s: cannot parse parent commit %s",
+-			     me, sha1_to_hex(parent->object.sha1));
++			     info->me, sha1_to_hex(parent->object.sha1));
+ 
+ 	if (get_message(commit->buffer, commit->object.sha1, &msg) != 0)
+ 		return error("Cannot get commit message for %s",
+@@ -590,7 +593,7 @@ static int do_pick_commit(struct args_info *info, struct commit *commit)
+ 	if (!info->strategy || !strcmp(info->strategy, "recursive") ||
+ 	    info->action == REVERT) {
+ 		res = do_recursive_merge(base, next, base_label, next_label,
+-					 head, &msgbuf);
++					 head, info->me, &msgbuf);
+ 		write_res = write_message(&msgbuf, defmsg);
+ 		if (write_res)
+ 			return write_res;
+@@ -704,7 +707,7 @@ static int pick_commits(struct args_info *infos, struct commit_list **done_list)
+ 	     (res = ff_incompatible(infos->edit, "--edit"))))
+ 		return save_todo_and_done(res, infos, NULL, NULL, done_list);
+ 
+-	if ((res = read_and_refresh_cache(me)) ||
++	if ((res = read_and_refresh_cache(infos->me)) ||
+ 	    (res = prepare_revs(&revs, infos)))
+ 		return save_todo_and_done(res, infos, NULL, NULL, done_list);
+ 
+@@ -722,8 +725,6 @@ static int revert_or_cherry_pick(int argc, const char **argv, int revert, int ed
+ 	int res;
+ 
+ 	git_config(git_default_config, NULL);
+-	me = revert ? "revert" : "cherry-pick";
+-	setenv(GIT_REFLOG_ACTION, me, 0);
+ 	memset(&infos, 0, sizeof(infos));
+ 	infos.action = revert ? REVERT : CHERRY_PICK;
+ 	parse_args(argc, argv, &infos);
 -- 
 1.7.3.2.504.g59d466
