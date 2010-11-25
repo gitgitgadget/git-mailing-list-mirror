@@ -1,71 +1,138 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: [PATCH] git-p4: Corrected typo.
-Date: Thu, 25 Nov 2010 01:26:59 +0000
-Message-ID: <1290648419-6107-1-git-send-email-vitor.hda@gmail.com>
-References: <1290130693-30855-2-git-send-email-vitor.hda@gmail.com>
-Cc: Vitor Antunes <vitor.hda@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Nov 25 02:28:42 2010
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: Re: [PATCH] git apply: binary files differ can be applied with -pN
+ (N>1).
+Date: Thu, 25 Nov 2010 09:46:57 +0800
+Message-ID: <4CEDC011.1050503@gmail.com>
+References: <4CECA0AE.90505@gmail.com> <7vlj4itz8j.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Nov 25 02:48:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLQdd-0006E1-2b
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 02:28:41 +0100
+	id 1PLQwI-0006H5-D5
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 02:47:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753293Ab0KYB1W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 24 Nov 2010 20:27:22 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:44369 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751367Ab0KYB1V (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 24 Nov 2010 20:27:21 -0500
-Received: by wyb28 with SMTP id 28so346909wyb.19
-        for <git@vger.kernel.org>; Wed, 24 Nov 2010 17:27:20 -0800 (PST)
+	id S1754718Ab0KYBrG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 24 Nov 2010 20:47:06 -0500
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:41691 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751621Ab0KYBrF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 24 Nov 2010 20:47:05 -0500
+Received: by pva4 with SMTP id 4so92444pva.19
+        for <git@vger.kernel.org>; Wed, 24 Nov 2010 17:47:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=2GCn1iJc6SA8RMZik/7aRDG/bkbmsjqiijKk/im3KJs=;
-        b=tnNNh7FvqPA/txyY3RaaWl1x7ffRrGBtZufgW7xIHYnyM1LNCwC4StywgGq5dp03M4
-         miiWtp79PqDHzsdgXeE4xgs5zPstMEwtoyBIiItRrgUYktiCj7queJiEF7ca4mcf/m+x
-         bLu8qA2zg8i6SL5XSghWTPIsNs7nu5eMrBuaY=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=B8ygz4KfmoDHGb0vnb/ILL2XSD+KoXa4JBypN+2zQQg=;
+        b=wkaWt6gYTkEfj9IxkN71RtH5aXGaU0g7y5Tq7ci1NJcdFykk1QOv9piuRpxUZT4pth
+         3505jPwzqib0PdjubzYfdFq912dVs7ltQgQqHQzQidXIIwLkSTLX5BfEIYOHfosBlJsO
+         jI7kZYzG2+ly8l+EIp4+ROxoXJwSB10f/YIEo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=iLN7eNa/C/XhJIXYyBpKdZyb4IVMSD4mspQRId2J4G7FmG330FkOLKOKhN2LHKbTWW
-         kXLP0J7ZaM+6q8dWee0X/A/CTxhwxRbJTaEo1ZE2JOm1hcTrwSQ9QRSkpvLApZp3YPcM
-         IqFRo8aEjvpsxJtonS4NVtec5DmQIHkgr5n+g=
-Received: by 10.227.128.7 with SMTP id i7mr94868wbs.165.1290648440117;
-        Wed, 24 Nov 2010 17:27:20 -0800 (PST)
-Received: from localhost.localdomain (111.216.54.77.rev.vodafone.pt [77.54.216.111])
-        by mx.google.com with ESMTPS id i19sm90758wbe.17.2010.11.24.17.27.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 24 Nov 2010 17:27:18 -0800 (PST)
-X-Mailer: git-send-email 1.7.2.3
-In-Reply-To: <1290130693-30855-2-git-send-email-vitor.hda@gmail.com>
+        h=message-id:date:from:user-agent:mime-version:to:subject:references
+         :in-reply-to:content-type:content-transfer-encoding;
+        b=WfgRFoh/GSzsrs8vsnJboKVgdmeMIIiQyh4E+5NT5Ui921Lj1bgf07PAU0/5tj/IDF
+         F5xYsPvEUYl/mu9jBON5LrEvA5tNIezawOBpDFfCRWp3pOX2faP2r5lfo5IjLpYzrDN5
+         EzRrgQ061D/3LD6P9lfmNVUCU9bZMe4slrXiw=
+Received: by 10.142.223.15 with SMTP id v15mr78795wfg.330.1290649623645;
+        Wed, 24 Nov 2010 17:47:03 -0800 (PST)
+Received: from [192.168.0.50] ([123.115.150.125])
+        by mx.google.com with ESMTPS id v19sm213764wfh.0.2010.11.24.17.47.00
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 24 Nov 2010 17:47:02 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); zh-CN; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <7vlj4itz8j.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162096>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162097>
 
----
- contrib/fast-import/git-p4 |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-index 0ea3a44..a466847 100755
---- a/contrib/fast-import/git-p4
-+++ b/contrib/fast-import/git-p4
-@@ -618,7 +618,7 @@ class P4Submit(Command):
-         if len(detectRenames) > 0:
-             diffOpts = "-M%s" % detectRenames
-         else:
--            diffOpts = ("", "-M")[self.detectRenames]
-+            diffOpts = ("", "-M")[self.detectRename]
- 
-         detectCopies = gitConfig("git-p4.detectCopies")
-         if len(detectCopies) > 0:
--- 
-1.7.2.3
+=E4=BA=8E 2010=E5=B9=B411=E6=9C=8825=E6=97=A5 01:20, Junio C Hamano =E5=
+=86=99=E9=81=93:
+> Jiang Xin <worldhello.net@gmail.com> writes:
+>=20
+>> When patch file generated against two non-git directories using
+>> 'git diff --binary --no-index' without '--no-prefix', the patch
+>> file has patch level greater then 1, and should be applied with
+>> '-p2' option. But it does not work if there are binary differ
+>> in the patch file, it is because in one case the patch level is
+>> not properly handled.
+>>
+>> Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
+>=20
+> Can you please add a testcase to protect your fix from getting broken=
+ by
+> later changes by other people, perhaps to t/t4120?
+>=20
+
+Yes, I add a testcase in t/t4120, and I will send it as a new PATCH.
+The new testcase is like following:
+
++test_expect_success 'apply git diff with -p2 and use default name from=
+ header' '
++       sed -e "/^\(---\|+++\) / d" patch.file > patch.newheader &&
++       cp file1.saved file1 &&
++       git apply -p2 patch.newheader
++'
++
+
+> By the way, this codepath is shared by all forms of patches "diff --g=
+it"
+> header, not just binary.  Do you see a similar breakage with --no-pre=
+fix
+> patches that are not binary, and if not why?
+>=20
+
+The breakage will appear under these circumstances:
+* the patch is in git style: header with "diff --git".
+* the header does not contain '--- path/to/old' and '+++ path/to/new'.
+* has a patch level greater than 1.
+
+When I do `git diff` against binary files, I find the patch header does=
+ not has
+'--- path/to/old' and '+++ path/to/new'. May be there exist other cases=
+, but
+I'm not sure.
+
+>> ---
+>>  builtin/apply.c |    3 ++-
+>>  1 files changed, 2 insertions(+), 1 deletions(-)
+>>
+>> diff --git a/builtin/apply.c b/builtin/apply.c
+>> index 23c18c5..d603e37 100644
+>> --- a/builtin/apply.c
+>> +++ b/builtin/apply.c
+>> @@ -1126,6 +1126,7 @@ static char *git_header_name(char *line, int l=
+len)
+>>  	 * form.
+>>  	 */
+>>  	for (len =3D 0 ; ; len++) {
+>> +		int nslash =3D p_value;
+>>  		switch (name[len]) {
+>>  		default:
+>>  			continue;
+>> @@ -1137,7 +1138,7 @@ static char *git_header_name(char *line, int l=
+len)
+>>  				char c =3D *second++;
+>>  				if (c =3D=3D '\n')
+>>  					return NULL;
+>> -				if (c =3D=3D '/')
+>> +				if (c =3D=3D '/' && --nslash <=3D 0)
+>>  					break;
+>>  			}
+>>  			if (second[len] =3D=3D '\n' && !memcmp(name, second, len)) {
+>> --=20
+>> 1.7.3.2.245.g03276.dirty
+
+
+--=20
+Jiang Xin
