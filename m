@@ -1,197 +1,78 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCHv3] gitweb: selectable configurations that change with each request
-Date: Thu, 25 Nov 2010 19:43:59 +0100
-Message-ID: <201011251944.01423.jnareb@gmail.com>
-References: <20101111213456.21127.36449.stgit@localhost.localdomain> <201011251318.31235.jnareb@gmail.com> <20101125182314.GA17261@burratino>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: Can't build doc anymore (v1.7.3.2)
+Date: Thu, 25 Nov 2010 20:54:18 +0100
+Message-ID: <m2zksxch79.fsf@gmail.com>
+References: <m2oc9hkurl.fsf@gmail.com>
+	<1290458128.29678.23.camel@drew-northup.unet.maine.edu>
+	<m2k4k5ks0b.fsf@gmail.com>
+	<1290461070.5468.5.camel@drew-northup.unet.maine.edu>
+	<m2bp5glbrp.fsf@gmail.com> <4CEB7F1F.809@drmicha.warpmail.net>
+	<1290517990.10366.17.camel@drew-northup.unet.maine.edu>
+	<4CEBC8C9.4010905@drmicha.warpmail.net> <m2d3pwj8th.fsf@gmail.com>
+	<1290532016.10892.40.camel@drew-northup.unet.maine.edu>
+	<m2fwur7olt.fsf@gmail.com> <7v7hg2ttty.fsf@alter.siamese.dyndns.org>
+	<4CEE1A99.8020001@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Julio Lajara <julio.lajara@alum.rpi.edu>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Nov 25 19:44:19 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Drew Northup <drew.northup@maine.edu>, git@vger.kernel.org
+To: git@drmicha.warpmail.net
+X-From: git-owner@vger.kernel.org Thu Nov 25 20:55:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLgnr-0007dB-6R
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 19:44:19 +0100
+	id 1PLhug-0002V6-Ky
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 20:55:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752072Ab0KYSoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Nov 2010 13:44:13 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:54041 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751685Ab0KYSoN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Nov 2010 13:44:13 -0500
-Received: by bwz15 with SMTP id 15so1124642bwz.19
-        for <git@vger.kernel.org>; Thu, 25 Nov 2010 10:44:11 -0800 (PST)
+	id S1752105Ab0KYTy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Nov 2010 14:54:26 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:42534 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751894Ab0KYTyZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Nov 2010 14:54:25 -0500
+Received: by wyb28 with SMTP id 28so1207157wyb.19
+        for <git@vger.kernel.org>; Thu, 25 Nov 2010 11:54:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=0WjC/ks/wG/aUpDmJlxxxQqk5hOMTeekNACSJkGV/aA=;
-        b=QbOA/p8qXUyYik+vSBuazP/okH/mNqIzCHSpe4yONWapPU4bRdnoSSOMCbeLwoKacs
-         kzOnlV/tvKuOyoQLgfeomp+ctVD/+Zk3RdRNw6+7aku/vs8h1P8Qe/BTddKBr3EdFT/Z
-         sWEEwuJXlLodk7k0cR5rjBzvPDrtfbWsSG61Q=
+        h=domainkey-signature:received:received:from:to:cc:subject:references
+         :date:in-reply-to:message-id:user-agent:mime-version:content-type;
+        bh=wWTRAm9R8qEOccAQGeQHBkHFS0SzVr1nfvLqTJ7o2Vw=;
+        b=h+Lc1MxRxpETxpqIqXXzGs2kxaeiXJLUNTqYzOE102silNdvoLxBJZAv8QNqFBopI3
+         1n7pdpwXBLax4pFdnEkuE4kX1vWv4DRc0SQ6/Q/LzY4Vgop+oA2I3qcxM0xaXZ23Ewhx
+         c/ERDjH8B/zJT1dkdgLlb2zvlB/Rpm6DXxAxA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=W+f5Et0D6PlJSbOx7dSBzT1DxLrz9IiCbumeYmddYWyZMFkFwfc0SuCNlCBl6SVxoi
-         q2DuG8KwGitPip/EloAFlsVyCCjSOYjEmfVdguqpnSCHiMoplTb2nvqH4MBVBmyUUjKD
-         fqdiiYqra6hIgxW8PvSJnX1r1zW5+oG2fV9KE=
-Received: by 10.204.100.79 with SMTP id x15mr1088040bkn.10.1290710650690;
-        Thu, 25 Nov 2010 10:44:10 -0800 (PST)
-Received: from [192.168.1.13] (abwg199.neoplus.adsl.tpnet.pl [83.8.230.199])
-        by mx.google.com with ESMTPS id b17sm44057bku.20.2010.11.25.10.44.08
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        b=vun0GRZCuvLegMc8ikveyll4+h5ZB2gTe409D9X0gy+ttTbIjMFKC5CTGKFxhDxTJt
+         1nu/atz75LKCxtUYx6xUpFnPOde61ZZaXWSt70OmezozE2Tpg0l8wLW4XxH+vWbtrlIU
+         Vv7BtsvjKknGsoyHa1EhfTh1BDkXVCXu726yY=
+Received: by 10.227.63.7 with SMTP id z7mr1410948wbh.21.1290714864195;
+        Thu, 25 Nov 2010 11:54:24 -0800 (PST)
+Received: from localhost (au213-1-82-235-205-153.fbx.proxad.net [82.235.205.153])
+        by mx.google.com with ESMTPS id q18sm598226wbe.23.2010.11.25.11.54.20
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 25 Nov 2010 10:44:09 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20101125182314.GA17261@burratino>
-Content-Disposition: inline
+        Thu, 25 Nov 2010 11:54:21 -0800 (PST)
+In-Reply-To: <4CEE1A99.8020001@drmicha.warpmail.net>
+	(git@drmicha.warpmail.net's message of "Thu, 25 Nov 2010 09:13:13
+	+0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162151>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162153>
 
-Allow selecting whether configuration file should be (re)parsed on each
-request (the default, for backward compatibility with configurations that
-change per session, see commit 7f425db (gitweb: allow configurations that
-change with each request, 2010-07-30)), or whether should it be parsed only
-once (for performance speedup for persistent environments, though currently
-only FastCGI is able to make use of it, when flexibility is not important).
+git@drmicha.warpmail.net writes:
 
-You can also have configuration file parsed only once, but have parts of
-configuration (re)evaluated once per each request.
+[...]
 
-This is done by introducing $per_request_config variable: if set to code
-reference, this code would be run once per request, while config file would
-be parsed only once.  For example gitolite's contrib/gitweb/gitweb.conf
-fragment mentioned in 7f425db could be rewritten as
+> Francis: If you can reproduce this in any way then please file a Fedora
+> bug, or describe the procedure and I'll file a bug on your behalf.
 
-  our $per_request_config = sub {
-  	$ENV{GL_USER} = ($cgi && $cgi->remote_user) || "gitweb";
-  };
+Yes, I'll do.
 
-to make use of this feature.
-
-If $per_request_config is not a code reference, it is taken to be boolean
-variable, to choose between running config file for each request
-(flexibility), and running config file only once (performance in
-persistent environments).
-
-The default value for $per_request_config is 1 (true), which means that
-old configuration that require to change per session (like gitolite's)
-will keep working.
-
-
-While at it, make it so evaluate_git_version() is run only once.
-
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-On Thu, 25 Nov 2010, Jonathan Nieder wrote:
-> Should per_request_config() be run for the first request, too?  Maybe:
-> 
->         if ($first_request) {
->                 evaluate_gitweb_config();
->                 evaluate_git_version();
->         }
->         if ($per_request_config) {
->                 if (ref($per_request_config) eq 'CODE') {
->                         $per_request_config->();
->                 } elsif (!$first_request) {
->                         evaluate_gitweb_config();
->                 }
->         }
-
-You are right, thanks for pointing that out.  I'm sorry for my mistake.
-
- gitweb/README      |    7 +++++++
- gitweb/gitweb.perl |   24 ++++++++++++++++++++++--
- 2 files changed, 29 insertions(+), 2 deletions(-)
-
-diff --git a/gitweb/README b/gitweb/README
-index bf3664f..6646fda 100644
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -246,6 +246,13 @@ not include variables usually directly set during build):
-    http://www.andre-simon.de due to assumptions about parameters and output).
-    Useful if highlight is not installed on your webserver's PATH.
-    [Default: highlight]
-+ * $per_request_config
-+   If set to code reference, it would be run once per each request.  You can
-+   set parts of configuration that change per session, e.g. by setting it to
-+     sub { $ENV{GL_USER} = $cgi->remote_user || "gitweb"; }
-+   Otherwise it is treated as boolean value: if true gitweb would process
-+   config file once per request, if false it would process config file only
-+   once.  The default is true.
- 
- Projects list file format
- ~~~~~~~~~~~~~~~~~~~~~~~~~
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 7dbaf0c..1d94718 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -599,6 +599,14 @@ sub filter_snapshot_fmts {
- 		!$known_snapshot_formats{$_}{'disabled'}} @fmts;
- }
- 
-+# If it is set to code reference, it is code that it is to be run once per
-+# request, allowing updating configurations that change with each request,
-+# while running other code in config file only once.
-+#
-+# Otherwise, if it is false then gitweb would process config file only once;
-+# if it is true then gitweb config would be run for each request.
-+our $per_request_config = 1;
-+
- our ($GITWEB_CONFIG, $GITWEB_CONFIG_SYSTEM);
- sub evaluate_gitweb_config {
- 	our $GITWEB_CONFIG = $ENV{'GITWEB_CONFIG'} || "++GITWEB_CONFIG++";
-@@ -1068,12 +1076,22 @@ sub reset_timer {
- 	our $number_of_git_cmds = 0;
- }
- 
-+our $first_request = 1;
- sub run_request {
- 	reset_timer();
- 
- 	evaluate_uri();
--	evaluate_gitweb_config();
--	evaluate_git_version();
-+	if ($first_request) {
-+		evaluate_gitweb_config();
-+		evaluate_git_version();
-+	}
-+	if ($per_request_config) {
-+		if (ref($per_request_config) eq 'CODE') {
-+			$per_request_config->();
-+		} elsif (!$first_request) {
-+			evaluate_gitweb_config();
-+		}
-+	}
- 	check_loadavg();
- 
- 	# $projectroot and $projects_list might be set in gitweb config file
-@@ -1127,6 +1145,7 @@ sub evaluate_argv {
- sub run {
- 	evaluate_argv();
- 
-+	$first_request = 1;
- 	$pre_listen_hook->()
- 		if $pre_listen_hook;
- 
-@@ -1139,6 +1158,7 @@ sub run {
- 
- 		$post_dispatch_hook->()
- 			if $post_dispatch_hook;
-+		$first_request = 0;
- 
- 		last REQUEST if ($is_last_request->());
- 	}
 -- 
-1.7.3
+Francis
