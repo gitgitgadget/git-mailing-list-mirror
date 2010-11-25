@@ -1,95 +1,80 @@
 From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: [PATCH v3 4/9] url: add str wrapper for end_url_with_slash()
-Date: Thu, 25 Nov 2010 16:21:05 +0800
-Message-ID: <1290673270-4284-5-git-send-email-rctay89@gmail.com>
+Subject: [PATCH v3 5/9] http-backend: use end_url_with_slash()
+Date: Thu, 25 Nov 2010 16:21:06 +0800
+Message-ID: <1290673270-4284-6-git-send-email-rctay89@gmail.com>
 References: <1290433298-6000-1-git-send-email-rctay89@gmail.com>
  <1290673270-4284-1-git-send-email-rctay89@gmail.com>
  <1290673270-4284-2-git-send-email-rctay89@gmail.com>
  <1290673270-4284-3-git-send-email-rctay89@gmail.com>
  <1290673270-4284-4-git-send-email-rctay89@gmail.com>
+ <1290673270-4284-5-git-send-email-rctay89@gmail.com>
 Cc: "Junio C Hamano" <gitster@pobox.com>,
-	"Jonathan Nieder" <jrnieder@gmail.com>, rctay@nus.edu.sg
+	"Jonathan Nieder" <jrnieder@gmail.com>
 To: "Git Mailing List" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Nov 25 09:23:02 2010
+X-From: git-owner@vger.kernel.org Thu Nov 25 09:23:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLX6b-0008Tt-PI
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 09:23:02 +0100
+	id 1PLX6n-00009U-Uv
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 09:23:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751697Ab0KYIW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Nov 2010 03:22:56 -0500
+	id S1751723Ab0KYIXI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Nov 2010 03:23:08 -0500
 Received: from mail-iw0-f174.google.com ([209.85.214.174]:34173 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751679Ab0KYIWz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Nov 2010 03:22:55 -0500
+	with ESMTP id S1751710Ab0KYIXH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Nov 2010 03:23:07 -0500
 Received: by mail-iw0-f174.google.com with SMTP id 5so389iwn.19
-        for <git@vger.kernel.org>; Thu, 25 Nov 2010 00:22:55 -0800 (PST)
+        for <git@vger.kernel.org>; Thu, 25 Nov 2010 00:23:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=SOcZ856J/EiEyyN1jL+66imh9EKgw0nmDfxG1ZxMLbc=;
-        b=m172wrUlpMeOaJiBZNpQNF6xPhZr1iS+tdj4j1BCadXQuig4TSP5y5BLMtXWt8uE5W
-         t6nN3GIFxjoxMSnR8vVXB9czZuar5ov7QPqVt0I5BUm3LH3jRNcqyNULtA6S76AvKGKG
-         Mu5cWketqurcBL0jHELE7K+KVpeCWV7N2M5mo=
+        bh=M2Zwk6dY/jukge8xuRV/Uh4Rn+BU/CNKv8a7f3LWQFk=;
+        b=cmz1lDA0hRXorr9GfUUtP9gQpPkSNoJGCWhLvFirAeV4RT0xVrAES9YAeynDgF1Qg3
+         zr3Ut/QOgfCZEKplfIsDx8Pr3zOSrbOFO5rz7K7ivKz7o9bSSM5vNy6ViaGZtNDvhbH0
+         D4G7FtGV805zb9vhJn7KN6cQM5W2bEbZhXtP8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=WidVTSDUFDINyYgUnE17WoqnRwVWe7IF6xvR+Z4vlfmL9g/oPGMNGnI4tuoM9jUfQX
-         cejrgP5jUIzwcOTszgUa+FubCZfgNbIVQ/6fWUBhvM0g94gWjI9K8Ydi+msSgh8zw+09
-         FBlHyOjq9pV2eCxyuG7H0BKGP2LKBlIFTtPBY=
-Received: by 10.231.39.198 with SMTP id h6mr367049ibe.21.1290673375164;
-        Thu, 25 Nov 2010 00:22:55 -0800 (PST)
+        b=uhvsx7c/u61ZXI7GrqS/JmAyAZRPMK/oL2UyNTeeaX+81E945g4nUvxDAqNPCa6sBa
+         DZ/GG1WUJthpgGfkMg6O9dobCcsw+LIVqL2NKRLX3Bv1EIkxDB9e6uraTrOaD3TD++vi
+         agmpr69WGEIhzu/er83kc3OC8bxNJlooWvnFY=
+Received: by 10.231.32.66 with SMTP id b2mr348606ibd.27.1290673386864;
+        Thu, 25 Nov 2010 00:23:06 -0800 (PST)
 Received: from localhost.localdomain (cm60.zeta152.maxonline.com.sg [116.87.152.60])
-        by mx.google.com with ESMTPS id i16sm513271ibl.12.2010.11.25.00.22.44
+        by mx.google.com with ESMTPS id i16sm513271ibl.12.2010.11.25.00.22.56
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 25 Nov 2010 00:22:54 -0800 (PST)
+        Thu, 25 Nov 2010 00:23:05 -0800 (PST)
 X-Mailer: git-send-email 1.7.2.2.513.ge1ef3
-In-Reply-To: <1290673270-4284-4-git-send-email-rctay89@gmail.com>
+In-Reply-To: <1290673270-4284-5-git-send-email-rctay89@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162109>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162110>
 
-Helped-by: Johnathan Nieder <jrnieder@gmail.com>
 Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
 ---
+ http-backend.c |    4 +---
+ 1 files changed, 1 insertions(+), 3 deletions(-)
 
-Changed from v2: removed pointer check before free(), as suggested by Johnathan.
-
- url.c |    7 +++++++
- url.h |    1 +
- 2 files changed, 8 insertions(+), 0 deletions(-)
-
-diff --git a/url.c b/url.c
-index 7cebc64..6a54959 100644
---- a/url.c
-+++ b/url.c
-@@ -132,3 +132,10 @@ void end_url_with_slash(struct strbuf *buf, const char *url)
- 	if (buf->len && buf->buf[buf->len - 1] != '/')
- 		strbuf_addstr(buf, "/");
- }
-+
-+void str_end_url_with_slash(const char *url, char **dest) {
-+	struct strbuf buf = STRBUF_INIT;
-+	end_url_with_slash(&buf, url);
-+	free(*dest);
-+	*dest = strbuf_detach(&buf, NULL);
-+}
-diff --git a/url.h b/url.h
-index 8cb74d4..7100e32 100644
---- a/url.h
-+++ b/url.h
-@@ -8,5 +8,6 @@ extern char *url_decode_parameter_name(const char **query);
- extern char *url_decode_parameter_value(const char **query);
- 
- extern void end_url_with_slash(struct strbuf *buf, const char *url);
-+extern void str_end_url_with_slash(const char *url, char **dest);
- 
- #endif /* URL_H */
+diff --git a/http-backend.c b/http-backend.c
+index 14c90c2..8501504 100644
+--- a/http-backend.c
++++ b/http-backend.c
+@@ -510,9 +510,7 @@ static char* getdir(void)
+ 			die("GIT_PROJECT_ROOT is set but PATH_INFO is not");
+ 		if (daemon_avoid_alias(pathinfo))
+ 			die("'%s': aliased", pathinfo);
+-		strbuf_addstr(&buf, root);
+-		if (buf.buf[buf.len - 1] != '/')
+-			strbuf_addch(&buf, '/');
++		end_url_with_slash(&buf, root);
+ 		if (pathinfo[0] == '/')
+ 			pathinfo++;
+ 		strbuf_addstr(&buf, pathinfo);
 -- 
 1.7.3.2.495.gc7b3f
