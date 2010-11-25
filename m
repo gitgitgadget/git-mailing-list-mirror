@@ -1,83 +1,102 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2010, #03; Wed, 24)
-Date: Thu, 25 Nov 2010 19:06:19 +0100
-Message-ID: <AANLkTi=hRk-bqNvvMRCmbSu8Mc4uux5aowgLGnPLnD4A@mail.gmail.com>
-References: <7vk4k2rt2m.fsf@alter.siamese.dyndns.org>
-	<AANLkTi=U=Km28W-xUM0vmRhhYCuhjSxxk5Fk_yhvjz8K@mail.gmail.com>
-	<AANLkTinWtG8dp_CvoH+EWYz4d=D-N0QUiBSrCNwamROo@mail.gmail.com>
-	<AANLkTim0hYKcPPaZjxjbpekhR4Ho_cOVaE=41HyJOrMZ@mail.gmail.com>
-	<AANLkTi=N=-e+BYM+Bjp665pN=GxK5fWSKbJ34T8Qfh77@mail.gmail.com>
-	<AANLkTind1tQ2bE3O-_dz+LOa4gW1X3J28uvRg1mP7aU=@mail.gmail.com>
-	<AANLkTi=gg=cqTewgUfqctbd=MdYNcL=jECyCXJycwx_k@mail.gmail.com>
-	<AANLkTikcZ1-7+ATH1mB+ycQiL7-WRtjwBZ8rkue_-Vom@mail.gmail.com>
-	<AANLkTin-kF_+DKDAu=gt12WfOcEVJaED-Qny8sFQ=oKP@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv2] gitweb: selectable configurations that change with
+ each request
+Date: Thu, 25 Nov 2010 12:23:14 -0600
+Message-ID: <20101125182314.GA17261@burratino>
+References: <20101111213456.21127.36449.stgit@localhost.localdomain>
+ <7vhbf6txi9.fsf@alter.siamese.dyndns.org>
+ <201011242243.20545.jnareb@gmail.com>
+ <201011251318.31235.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Thu Nov 25 19:06:27 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Julio Lajara <julio.lajara@alum.rpi.edu>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 25 19:23:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLgDC-0003hy-Sw
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 19:06:27 +0100
+	id 1PLgTn-0005DL-7z
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 19:23:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751992Ab0KYSGW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Nov 2010 13:06:22 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:50109 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751554Ab0KYSGV convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 25 Nov 2010 13:06:21 -0500
-Received: by fxm15 with SMTP id 15so101156fxm.19
-        for <git@vger.kernel.org>; Thu, 25 Nov 2010 10:06:20 -0800 (PST)
+	id S1751799Ab0KYSXa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 25 Nov 2010 13:23:30 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:41050 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751565Ab0KYSX3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 25 Nov 2010 13:23:29 -0500
+Received: by qwb7 with SMTP id 7so1233597qwb.19
+        for <git@vger.kernel.org>; Thu, 25 Nov 2010 10:23:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=rJomF4zACZjdY7iXHnIoIqPgyu0L+TW0CwKJfIOLG6k=;
-        b=YdYZCubnVYuI8c/WRYcjo3eOgCsnj3Ti6KC7IhQzfKLJ5ulNDs8nYQ8kTKE15yxVuf
-         R2hgiMJxDRSw/MqO/zJiG0Ou2ZGTenv71ytpiWZrEyJ7KTyfWuxC65JwPIpbarExy/8t
-         kenY70+Xb5F4CQZ0jsZoVsiOxmJnMu3vUnR24=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=b/Sk1HU8DpautXXjC1MP4DJA5YozfJnYhD2pGTXc4ck=;
+        b=cM56FgDSW8ebwZDwhQNY6fX39Knn6XP6Nx6z3Q5lMnydTI58my+rCJFNzz3pw1t0Qk
+         Vzg1nboXAQYgC3GCKlVL45h8M4PGVI4K3HrS45L1bNNtnYWqPJXpCy4/G1vo5QxcmU7V
+         PCUFymVcthGTslidmh/AZMX4qyhwaKaeUO1Bc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=F+6/ZYQOhQqgwqBI5u4addgzp6fkO73OQwvg30HMK+cDqYk5cv9Mjp1qlPIypakiZv
-         ffuOw1nW1RfrbuuPj6z7482QlBXFrjIk4+jQN+7OA5aSr6OVV3iVIWrz9emLHnAQElm1
-         t10t3PYkv86mHqkHQrg9g9J5GIM6IEXeLNuTQ=
-Received: by 10.223.93.142 with SMTP id v14mr1085741fam.49.1290708380067; Thu,
- 25 Nov 2010 10:06:20 -0800 (PST)
-Received: by 10.223.86.134 with HTTP; Thu, 25 Nov 2010 10:06:19 -0800 (PST)
-In-Reply-To: <AANLkTin-kF_+DKDAu=gt12WfOcEVJaED-Qny8sFQ=oKP@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=JWzoiMxwRI0Z2Cllkf4EOLx1F/ATOyXcBEVIKMOr+UGkkRBehGCc/HVPuaO7uOAd1v
+         hBniWekzHDP3FyygfBlriHQNpTcA38DvPp78Zgh/9QpuGJQ01rsw73BaEFTMAhwVya7S
+         CdxlwjkUyLcJ80zz7S4bQC8rb7vElo7hNO7y8=
+Received: by 10.229.236.203 with SMTP id kl11mr930459qcb.204.1290709408807;
+        Thu, 25 Nov 2010 10:23:28 -0800 (PST)
+Received: from burratino (adsl-68-255-106-176.dsl.chcgil.ameritech.net [68.255.106.176])
+        by mx.google.com with ESMTPS id mz11sm621332qcb.15.2010.11.25.10.23.25
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 25 Nov 2010 10:23:27 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <201011251318.31235.jnareb@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162149>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162150>
 
-On Thu, Nov 25, 2010 at 18:55, Erik Faye-Lund <kusmabite@gmail.com> wro=
-te:
-> On Thu, Nov 25, 2010 at 5:33 PM, =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmas=
-on
-> <avarab@gmail.com> wrote:
->> Anyway, if that works it's a cleaner way to disable it.
->>
->
-> Yes, that works. But that is a work-around, not a solution. I already
-> told the make system not to translate git, why should I have to
-> anything else? In fact, I did exactly what the documentation at the
-> top of the makefile told me to do. It says to set NO_GETTEXT, nothing
-> about clearing NEEDS_LIBINTL.
+Jakub Narebski wrote:
 
-Oh yeah that's definitely a bug that I need to solve. But that should
-just be something like:
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+[...]
+> @@ -1068,12 +1076,21 @@ sub reset_timer {
+>  	our $number_of_git_cmds = 0;
+>  }
+>  
+> +our $first_request = 1;
+>  sub run_request {
+>  	reset_timer();
+>  
+>  	evaluate_uri();
+> -	evaluate_gitweb_config();
+> -	evaluate_git_version();
+> +	if ($first_request) {
+> +		evaluate_gitweb_config();
+> +		evaluate_git_version();
+> +	} elsif ($per_request_config) {
+> +		if (ref($per_request_config) eq 'CODE') {
+> +			$per_request_config->();
+> +		} else {
+> +			evaluate_gitweb_config();
+> +		}
+> +	}
 
-ifdef NO_GETTEXT
-    NEEDS_LIBINTL =3D
-endif
+Should per_request_config() be run for the first request, too?  Maybe:
 
-Stuck in some strategic location. Then it all should just work.
+	if ($first_request) {
+		evaluate_gitweb_config();
+		evaluate_git_version();
+	}
+	if ($per_request_config) {
+		if (ref($per_request_config) eq 'CODE') {
+			$per_request_config->();
+		} elsif (!$first_request) {
+			evaluate_gitweb_config();
+		}
+	}
