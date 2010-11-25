@@ -1,78 +1,92 @@
-From: Francis Moreau <francis.moro@gmail.com>
-Subject: Re: Can't build doc anymore (v1.7.3.2)
-Date: Thu, 25 Nov 2010 20:54:18 +0100
-Message-ID: <m2zksxch79.fsf@gmail.com>
-References: <m2oc9hkurl.fsf@gmail.com>
-	<1290458128.29678.23.camel@drew-northup.unet.maine.edu>
-	<m2k4k5ks0b.fsf@gmail.com>
-	<1290461070.5468.5.camel@drew-northup.unet.maine.edu>
-	<m2bp5glbrp.fsf@gmail.com> <4CEB7F1F.809@drmicha.warpmail.net>
-	<1290517990.10366.17.camel@drew-northup.unet.maine.edu>
-	<4CEBC8C9.4010905@drmicha.warpmail.net> <m2d3pwj8th.fsf@gmail.com>
-	<1290532016.10892.40.camel@drew-northup.unet.maine.edu>
-	<m2fwur7olt.fsf@gmail.com> <7v7hg2ttty.fsf@alter.siamese.dyndns.org>
-	<4CEE1A99.8020001@drmicha.warpmail.net>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2010, #03; Wed, 24)
+Date: Thu, 25 Nov 2010 21:02:10 +0100
+Message-ID: <AANLkTi=G0m_AY3PMVs93=u=cKtVrAjFD56KPURYAyhyh@mail.gmail.com>
+References: <7vk4k2rt2m.fsf@alter.siamese.dyndns.org> <AANLkTi=U=Km28W-xUM0vmRhhYCuhjSxxk5Fk_yhvjz8K@mail.gmail.com>
+ <AANLkTinWtG8dp_CvoH+EWYz4d=D-N0QUiBSrCNwamROo@mail.gmail.com>
+ <AANLkTim0hYKcPPaZjxjbpekhR4Ho_cOVaE=41HyJOrMZ@mail.gmail.com>
+ <AANLkTi=N=-e+BYM+Bjp665pN=GxK5fWSKbJ34T8Qfh77@mail.gmail.com>
+ <AANLkTind1tQ2bE3O-_dz+LOa4gW1X3J28uvRg1mP7aU=@mail.gmail.com>
+ <AANLkTi=gg=cqTewgUfqctbd=MdYNcL=jECyCXJycwx_k@mail.gmail.com>
+ <AANLkTikcZ1-7+ATH1mB+ycQiL7-WRtjwBZ8rkue_-Vom@mail.gmail.com>
+ <AANLkTin-kF_+DKDAu=gt12WfOcEVJaED-Qny8sFQ=oKP@mail.gmail.com> <AANLkTi=hRk-bqNvvMRCmbSu8Mc4uux5aowgLGnPLnD4A@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Drew Northup <drew.northup@maine.edu>, git@vger.kernel.org
-To: git@drmicha.warpmail.net
-X-From: git-owner@vger.kernel.org Thu Nov 25 20:55:30 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Nov 25 21:02:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLhug-0002V6-Ky
-	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 20:55:26 +0100
+	id 1PLi1e-0006EK-3v
+	for gcvg-git-2@lo.gmane.org; Thu, 25 Nov 2010 21:02:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752105Ab0KYTy0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 25 Nov 2010 14:54:26 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:42534 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751894Ab0KYTyZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 25 Nov 2010 14:54:25 -0500
-Received: by wyb28 with SMTP id 28so1207157wyb.19
-        for <git@vger.kernel.org>; Thu, 25 Nov 2010 11:54:24 -0800 (PST)
+	id S1752220Ab0KYUCd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 25 Nov 2010 15:02:33 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:47779 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752106Ab0KYUCc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 25 Nov 2010 15:02:32 -0500
+Received: by fxm15 with SMTP id 15so173169fxm.19
+        for <git@vger.kernel.org>; Thu, 25 Nov 2010 12:02:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:references
-         :date:in-reply-to:message-id:user-agent:mime-version:content-type;
-        bh=wWTRAm9R8qEOccAQGeQHBkHFS0SzVr1nfvLqTJ7o2Vw=;
-        b=h+Lc1MxRxpETxpqIqXXzGs2kxaeiXJLUNTqYzOE102silNdvoLxBJZAv8QNqFBopI3
-         1n7pdpwXBLax4pFdnEkuE4kX1vWv4DRc0SQ6/Q/LzY4Vgop+oA2I3qcxM0xaXZ23Ewhx
-         c/ERDjH8B/zJT1dkdgLlb2zvlB/Rpm6DXxAxA=
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=CsPWZimMXmNsWNoYc4I9m9gvCFa1yI3aqy+oKDAaXaI=;
+        b=CXYLcEOS1NtZy9VjJnbAb95adgyown8BBV2sGvyigTIJr1gXQ/WeLRK5K8gpXPk5TF
+         wmHi7pMwy4fqQ3Ycy+nBZuWUc+6lmWq5gRYV83Gdp2KofFXCCM7+DM+IDwQhIJH3vrrV
+         X4DmQzaR4r7GsQIulwCTi3pzCEkLSxuUxu+ic=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:references:date:in-reply-to:message-id
-         :user-agent:mime-version:content-type;
-        b=vun0GRZCuvLegMc8ikveyll4+h5ZB2gTe409D9X0gy+ttTbIjMFKC5CTGKFxhDxTJt
-         1nu/atz75LKCxtUYx6xUpFnPOde61ZZaXWSt70OmezozE2Tpg0l8wLW4XxH+vWbtrlIU
-         Vv7BtsvjKknGsoyHa1EhfTh1BDkXVCXu726yY=
-Received: by 10.227.63.7 with SMTP id z7mr1410948wbh.21.1290714864195;
-        Thu, 25 Nov 2010 11:54:24 -0800 (PST)
-Received: from localhost (au213-1-82-235-205-153.fbx.proxad.net [82.235.205.153])
-        by mx.google.com with ESMTPS id q18sm598226wbe.23.2010.11.25.11.54.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 25 Nov 2010 11:54:21 -0800 (PST)
-In-Reply-To: <4CEE1A99.8020001@drmicha.warpmail.net>
-	(git@drmicha.warpmail.net's message of "Thu, 25 Nov 2010 09:13:13
-	+0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=XzloQYSOajUhJWK+eNc5ft8HFS5DszIGMZl0YJXNBrhCoJYmgfv+NfXU+oVdI4F3ky
+         XuVOw8O+HnnlfHttYETX71niXrDYUuWXwe4HdASAmUbvKW0Cb7A3L/+sKSXb1480U1k/
+         z6o0zBpc8vWCcymCfS/BywIidy8S+vOQ0GaLs=
+Received: by 10.223.79.72 with SMTP id o8mr1205512fak.83.1290715350859; Thu,
+ 25 Nov 2010 12:02:30 -0800 (PST)
+Received: by 10.223.72.206 with HTTP; Thu, 25 Nov 2010 12:02:10 -0800 (PST)
+In-Reply-To: <AANLkTi=hRk-bqNvvMRCmbSu8Mc4uux5aowgLGnPLnD4A@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162154>
 
-git@drmicha.warpmail.net writes:
+On Thu, Nov 25, 2010 at 7:06 PM, =C6var Arnfj=F6r=F0 Bjarmason
+<avarab@gmail.com> wrote:
+> On Thu, Nov 25, 2010 at 18:55, Erik Faye-Lund <kusmabite@gmail.com> w=
+rote:
+>> On Thu, Nov 25, 2010 at 5:33 PM, =C6var Arnfj=F6r=F0 Bjarmason
+>> <avarab@gmail.com> wrote:
+>>> Anyway, if that works it's a cleaner way to disable it.
+>>>
+>>
+>> Yes, that works. But that is a work-around, not a solution. I alread=
+y
+>> told the make system not to translate git, why should I have to
+>> anything else? In fact, I did exactly what the documentation at the
+>> top of the makefile told me to do. It says to set NO_GETTEXT, nothin=
+g
+>> about clearing NEEDS_LIBINTL.
+>
+> Oh yeah that's definitely a bug that I need to solve. But that should
+> just be something like:
+>
+> ifdef NO_GETTEXT
+> =A0 =A0NEEDS_LIBINTL =3D
+> endif
+>
+> Stuck in some strategic location. Then it all should just work.
+>
 
-[...]
+Well, there you go. That's one of the things that needs to get fixed ;)
 
-> Francis: If you can reproduce this in any way then please file a Fedora
-> bug, or describe the procedure and I'll file a bug on your behalf.
-
-Yes, I'll do.
-
--- 
-Francis
+I don't quite understand why you won't do it the way I just proposed
+(and IIRC a while ago by Hannes), though.
