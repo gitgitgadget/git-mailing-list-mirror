@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 24/47] t1510: setup case #21
-Date: Fri, 26 Nov 2010 22:32:20 +0700
-Message-ID: <1290785563-15339-25-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 25/47] t1510: setup case #22
+Date: Fri, 26 Nov 2010 22:32:21 +0700
+Message-ID: <1290785563-15339-26-git-send-email-pclouds@gmail.com>
 References: <1290785563-15339-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,197 +10,444 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 26 16:43:36 2010
+X-From: git-owner@vger.kernel.org Fri Nov 26 16:43:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PM0SV-0005sJ-W7
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 16:43:36 +0100
+	id 1PM0Sp-00064s-Hn
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 16:43:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755194Ab0KZPnW convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Nov 2010 10:43:22 -0500
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:52690 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755184Ab0KZPnU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Nov 2010 10:43:20 -0500
-Received: by pva4 with SMTP id 4so351834pva.19
-        for <git@vger.kernel.org>; Fri, 26 Nov 2010 07:43:20 -0800 (PST)
+	id S1755235Ab0KZPns convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Nov 2010 10:43:48 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:35877 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751335Ab0KZPnr (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Nov 2010 10:43:47 -0500
+Received: by pwj3 with SMTP id 3so401671pwj.19
+        for <git@vger.kernel.org>; Fri, 26 Nov 2010 07:43:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=BI7rYIbhu8VFDpeUhn3NiaW3wWBET8w8MHXnryGn9cI=;
-        b=T3FKS941R8fPnP8HLM7yOBQdY7DYhf8onI75sAmnks2C8WVzg6KkmIYsYCYJ1Xmxcr
-         WX0Sxn6nvtjKxtdwGzt6ylRxgXmukCD4Jcdb1HGApommHT+hRSasQ82x422tUEQKrTD/
-         q2tRy/NJz7pmVjrwu2xJ0cvE6Oblk+Yj8fox8=
+        bh=ByUTXZZ44zGi6CP3qT34/mGaEvg3s6PhbrHKx78GLbM=;
+        b=u0MOr5vxJKIWKrDAG50BZjtdIwMM0bfqSHL7s+exqosMqfeTvwDjC/oqxj0lutodhc
+         KMTAWVYddch0uINuVio/oN7ReI6DcfPcBP93H5Nds+yZvYkiM+hhArFd/4AcvYmprRwm
+         gz/sFsza/itxyndLoMgKM9kJkmbhLy/7jzWGs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=moq+/CyGNWXMwQBeYze/dlNH6ILvjkAwGF33ekm+bH4PF0YNSIwU4MPY280QRJvwpG
-         xcidGUAf3Typ1tiW+fHnPKBE68PflUhEoux3SBf633AvRwQO1A8gJjLn6zSg2x8SKg/A
-         wqXN3fXAfw7ZZavtAPkgRdFOv8JrtXieUhp78=
-Received: by 10.142.211.20 with SMTP id j20mr2493645wfg.408.1290786200219;
-        Fri, 26 Nov 2010 07:43:20 -0800 (PST)
+        b=jHb+FvaS5wqhGQEujPkmAQ2XVfW5L97AgvdM1kJsmRwfKrwWlRGoPl3om5oLSKOvfV
+         WpXtQ1pDU8eBBqZY/99KXRcYcYmZ6Tp5FQs0M3kdoxA53ZKtQlMVf+9tZHsqASVZ8xGz
+         VPiTj6oXbKnMA5YK7fE+wjQK8ctfC9Y3eovqk=
+Received: by 10.142.157.8 with SMTP id f8mr2535316wfe.1.1290786227251;
+        Fri, 26 Nov 2010 07:43:47 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.252.168])
-        by mx.google.com with ESMTPS id y42sm2684598wfd.10.2010.11.26.07.43.11
+        by mx.google.com with ESMTPS id q13sm2685629wfc.5.2010.11.26.07.43.30
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 26 Nov 2010 07:43:19 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 26 Nov 2010 22:41:39 +0700
+        Fri, 26 Nov 2010 07:43:45 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 26 Nov 2010 22:42:26 +0700
 X-Mailer: git-send-email 1.7.3.2.316.gda8b3
 In-Reply-To: <1290785563-15339-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162240>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162241>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- t/t1510-repo-setup.sh |  130 +++++++++++++++++++++++++++++++++++++++++=
+ t/t1510-repo-setup.sh |  337 +++++++++++++++++++++++++++++++++++++++++=
 ++++++++
- 1 files changed, 130 insertions(+), 0 deletions(-)
+ 1 files changed, 337 insertions(+), 0 deletions(-)
 
 diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
-index db52f36..47d6c4b 100755
+index 47d6c4b..0027274 100755
 --- a/t/t1510-repo-setup.sh
 +++ b/t/t1510-repo-setup.sh
-@@ -2954,4 +2954,134 @@ EOF
- 	test_repo 20/sub
+@@ -3084,4 +3084,341 @@ EOF
+ 	test_repo 21/sub
  '
 =20
 +#
-+# case #21.1
++# case #22.1
 +#
 +############################################################
 +#
 +# Input:
 +#
-+#  - GIT_WORK_TREE is set
-+#  - GIT_DIR is not set
++#  - GIT_WORK_TREE is not set
++#  - GIT_DIR is set
 +#  - core.worktree is set
 +#  - .git is a directory
 +#  - cwd is inside .git
 +#
 +# Output:
 +#
-+# GIT_WORK_TREE/core.worktree are ignored -> #20.1
++# bare attribute is ignored
++#
++#  - worktree is at core.worktree
++#  - cwd is at worktree root
++#  - prefix is calculated
++#  - git_dir is at $GIT_DIR
++#  - cwd can be outside worktree
 +
-+test_expect_success '#21.1: setup' '
++test_expect_success '#22.1: setup' '
 +	unset GIT_DIR GIT_WORK_TREE &&
-+	mkdir 21 21/sub &&
-+	cd 21 &&
++	mkdir 22 &&
++	cd 22 &&
 +	git init &&
-+	git config core.worktree non-existent &&
-+	GIT_WORK_TREE=3Dnon-existent-too &&
-+	export GIT_WORK_TREE &&
-+	mkdir .git/wt .git/wt/sub &&
++	mkdir .git/sub .git/wt .git/wt/sub &&
 +	cd ..
 +'
 +
-+test_expect_failure '#21.1: at .git' '
-+	cat >21/.git/expected <<EOF &&
++test_expect_success '#22.1: GIT_DIR(rel), core.worktree=3D. at .git' '
++	cat >22/.git/expected <<EOF &&
 +setup: git_dir: .
-+setup: worktree: (null)
-+setup: cwd: $TRASH_DIRECTORY/21/.git
++setup: worktree: $TRASH_DIRECTORY/22/.git
++setup: cwd: $TRASH_DIRECTORY/22/.git
 +setup: prefix: (null)
 +EOF
-+	test_repo 21/.git
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree "=
+$TRASH_DIRECTORY/22/.git" &&
++	test_repo 22/.git .
 +'
 +
-+test_expect_failure '#21.1: in .git/wt' '
-+	cat >21/.git/wt/expected <<EOF &&
-+setup: git_dir: $TRASH_DIRECTORY/21/.git
-+setup: worktree: (null)
-+setup: cwd: $TRASH_DIRECTORY/21/.git/wt
++test_expect_success '#22.1: GIT_DIR(rel), core.worktree=3D.(rel) at .g=
+it' '
++	cat >22/.git/expected <<EOF &&
++setup: git_dir: .
++setup: worktree: $TRASH_DIRECTORY/22/.git
++setup: cwd: $TRASH_DIRECTORY/22/.git
 +setup: prefix: (null)
 +EOF
-+	test_repo 21/.git/wt
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree .=
+ &&
++	test_repo 22/.git .
 +'
 +
-+test_expect_failure '#21.1: in .git/wt/sub' '
-+	cat >21/.git/wt/sub/expected <<EOF &&
-+setup: git_dir: $TRASH_DIRECTORY/21/.git
-+setup: worktree: (null)
-+setup: cwd: $TRASH_DIRECTORY/21/.git/wt/sub
++test_expect_success '#22.1: GIT_DIR, core.worktree=3D. at .git' '
++	cat >22/.git/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22/.git
++setup: cwd: $TRASH_DIRECTORY/22/.git
 +setup: prefix: (null)
 +EOF
-+	test_repo 21/.git/wt/sub
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree "=
+$TRASH_DIRECTORY/22/.git" &&
++	test_repo 22/.git "$TRASH_DIRECTORY/22/.git"
++'
++
++test_expect_success '#22.1: GIT_DIR, core.worktree=3D.(rel) at root' '
++	cat >22/.git/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22/.git
++setup: cwd: $TRASH_DIRECTORY/22/.git
++setup: prefix: (null)
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree .=
+ &&
++	test_repo 22/.git "$TRASH_DIRECTORY/22/.git"
++'
++
++test_expect_failure '#22.1: GIT_DIR(rel), core.worktree=3D. in .git/su=
+b' '
++	cat >22/.git/sub/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22/.git
++setup: cwd: $TRASH_DIRECTORY/22/.git
++setup: prefix: sub/
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree "=
+$TRASH_DIRECTORY/22/.git" &&
++	test_repo 22/.git/sub ..
++'
++
++test_expect_failure '#22.1: GIT_DIR(rel), core.worktree=3D.(rel) in .g=
+it/sub' '
++	cat >22/.git/sub/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22/.git
++setup: cwd: $TRASH_DIRECTORY/22/.git
++setup: prefix: sub/
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree .=
+ &&
++	test_repo 22/.git/sub/ ..
++'
++
++test_expect_success '#22.1: GIT_DIR, core.worktree=3D. in .git/sub' '
++	cat >22/.git/sub/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22/.git
++setup: cwd: $TRASH_DIRECTORY/22/.git
++setup: prefix: sub/
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree "=
+$TRASH_DIRECTORY/22/.git" &&
++	test_repo 22/.git/sub "$TRASH_DIRECTORY/22/.git"
++'
++
++test_expect_success '#22.1: GIT_DIR, core.worktree=3D.(rel) in .git/su=
+b' '
++	cat >22/.git/sub/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22/.git
++setup: cwd: $TRASH_DIRECTORY/22/.git
++setup: prefix: sub/
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree .=
+ &&
++	test_repo 22/.git/sub "$TRASH_DIRECTORY/22/.git"
++'
++
++test_expect_success '#22.1: GIT_DIR(rel), core.worktree=3Dwt at .git' =
+'
++	cat >22/.git/expected <<EOF &&
++setup: git_dir: .
++setup: worktree: $TRASH_DIRECTORY/22/.git/wt
++setup: cwd: $TRASH_DIRECTORY/22/.git
++setup: prefix: (null)
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree "=
+$TRASH_DIRECTORY/22/.git/wt" &&
++	test_repo 22/.git .
++'
++
++test_expect_success '#22.1: GIT_DIR(rel), core.worktree=3Dwt(rel) at .=
+git' '
++	cat >22/.git/expected <<EOF &&
++setup: git_dir: .
++setup: worktree: $TRASH_DIRECTORY/22/.git/wt
++setup: cwd: $TRASH_DIRECTORY/22/.git
++setup: prefix: (null)
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree w=
+t &&
++	test_repo 22/.git .
++'
++
++test_expect_success '#22.1: GIT_DIR, core.worktree=3Dwt(rel) at .git' =
+'
++	cat >22/.git/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22/.git/wt
++setup: cwd: $TRASH_DIRECTORY/22/.git
++setup: prefix: (null)
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree w=
+t &&
++	test_repo 22/.git "$TRASH_DIRECTORY/22/.git"
++'
++
++test_expect_success '#22.1: GIT_DIR, core.worktree=3Dwt at .git' '
++	cat >22/.git/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22/.git/wt
++setup: cwd: $TRASH_DIRECTORY/22/.git
++setup: prefix: (null)
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree "=
+$TRASH_DIRECTORY/22/.git/wt" &&
++	test_repo 22/.git "$TRASH_DIRECTORY/22/.git"
++'
++
++test_expect_success '#22.1: GIT_DIR(rel), core.worktree=3Dwt in .git/s=
+ub' '
++	cat >22/.git/sub/expected <<EOF &&
++setup: git_dir: ..
++setup: worktree: $TRASH_DIRECTORY/22/.git/wt
++setup: cwd: $TRASH_DIRECTORY/22/.git/sub
++setup: prefix: (null)
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree "=
+$TRASH_DIRECTORY/22/.git/wt" &&
++	test_repo 22/.git/sub ..
++'
++
++test_expect_success '#22.1: GIT_DIR(rel), core.worktree=3Dwt(rel) in .=
+git/sub' '
++	cat >22/.git/sub/expected <<EOF &&
++setup: git_dir: ..
++setup: worktree: $TRASH_DIRECTORY/22/.git/wt
++setup: cwd: $TRASH_DIRECTORY/22/.git/sub
++setup: prefix: (null)
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree w=
+t &&
++	test_repo 22/.git/sub ..
++'
++
++test_expect_success '#22.1: GIT_DIR, core.worktree=3Dwt(rel) in .git/s=
+ub' '
++	cat >22/.git/sub/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22/.git/wt
++setup: cwd: $TRASH_DIRECTORY/22/.git/sub
++setup: prefix: (null)
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree w=
+t &&
++	test_repo 22/.git/sub "$TRASH_DIRECTORY/22/.git"
++'
++
++test_expect_success '#22.1: GIT_DIR, core.worktree=3Dwt in .git/sub' '
++	cat >22/.git/sub/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22/.git/wt
++setup: cwd: $TRASH_DIRECTORY/22/.git/sub
++setup: prefix: (null)
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree "=
+$TRASH_DIRECTORY/22/.git/wt" &&
++	test_repo 22/.git/sub "$TRASH_DIRECTORY/22/.git"
++'
++
++test_expect_failure '#22.1: GIT_DIR(rel), core.worktree=3D.. at .git' =
+'
++	cat >22/.git/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22
++setup: cwd: $TRASH_DIRECTORY/22
++setup: prefix: .git/
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree "=
+$TRASH_DIRECTORY/22" &&
++	test_repo 22/.git .
++'
++
++test_expect_failure '#22.1: GIT_DIR(rel), core.worktree=3D..(rel) at .=
+git' '
++	cat >22/.git/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22
++setup: cwd: $TRASH_DIRECTORY/22
++setup: prefix: .git/
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree .=
+=2E &&
++	test_repo 22/.git .
++'
++
++test_expect_success '#22.1: GIT_DIR, core.worktree=3D..(rel) at .git' =
+'
++	cat >22/.git/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22
++setup: cwd: $TRASH_DIRECTORY/22
++setup: prefix: .git/
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree .=
+=2E &&
++	test_repo 22/.git "$TRASH_DIRECTORY/22/.git"
++'
++
++test_expect_success '#22.1: GIT_DIR, core.worktree=3D.. at .git' '
++	cat >22/.git/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22
++setup: cwd: $TRASH_DIRECTORY/22
++setup: prefix: .git/
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree "=
+$TRASH_DIRECTORY/22" &&
++	test_repo 22/.git "$TRASH_DIRECTORY/22/.git"
++'
++
++test_expect_failure '#22.1: GIT_DIR(rel), core.worktree=3D.. in .git/s=
+ub' '
++	cat >22/.git/sub/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22
++setup: cwd: $TRASH_DIRECTORY/22
++setup: prefix: .git/sub/
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree "=
+$TRASH_DIRECTORY/22" &&
++	test_repo 22/.git/sub ..
++'
++
++test_expect_failure '#22.1: GIT_DIR(rel), core.worktree=3D..(rel) in .=
+git/sub' '
++	cat >22/.git/sub/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22
++setup: cwd: $TRASH_DIRECTORY/22
++setup: prefix: .git/sub/
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree .=
+=2E &&
++	test_repo 22/.git/sub ..
++'
++
++test_expect_success '#22.1: GIT_DIR, core.worktree=3D..(rel) in .git/s=
+ub' '
++	cat >22/.git/sub/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22
++setup: cwd: $TRASH_DIRECTORY/22
++setup: prefix: .git/sub/
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree .=
+=2E &&
++	test_repo 22/.git/sub "$TRASH_DIRECTORY/22/.git"
++'
++
++test_expect_success '#22.1: GIT_DIR, core.worktree=3D.. in .git/sub' '
++	cat >22/.git/sub/expected <<EOF &&
++setup: git_dir: $TRASH_DIRECTORY/22/.git
++setup: worktree: $TRASH_DIRECTORY/22
++setup: cwd: $TRASH_DIRECTORY/22
++setup: prefix: .git/sub/
++EOF
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.worktree "=
+$TRASH_DIRECTORY/22" &&
++	test_repo 22/.git/sub "$TRASH_DIRECTORY/22/.git"
 +'
 +
 +#
-+# case #21.2
++# case #22.2
 +#
 +############################################################
 +#
 +# Input:
 +#
-+#  - GIT_WORK_TREE is set
-+#  - GIT_DIR is not set
++#  - GIT_WORK_TREE is not set
++#  - GIT_DIR is set
 +#  - core.worktree is set
 +#  - .git is a directory
 +#  - core.bare is set
 +#
 +# Output:
 +#
-+# GIT_WORK_TREE/core.worktree are ignored -> #20.2
++# core.worktree and core.bare conflict, won't fly.
 +
-+test_expect_success '#21.2: setup' '
-+	git config --file=3D"$TRASH_DIRECTORY/21/.git/config" core.bare true
++test_expect_success '#22.2: setup' '
++	git config --file=3D"$TRASH_DIRECTORY/22/.git/config" core.bare true
 +'
 +
-+test_expect_failure '#21.2: at .git' '
-+	cat >21/.git/expected <<EOF &&
-+setup: git_dir: .
-+setup: worktree: (null)
-+setup: cwd: $TRASH_DIRECTORY/21/.git
-+setup: prefix: (null)
-+EOF
-+	test_repo 21/.git
++test_expect_failure '#22.2: at .git' '
++	(
++	cd 22/.git &&
++	GIT_DIR=3D. &&
++	export GIT_DIR &&
++	test_must_fail git symbolic-ref HEAD 2>result &&
++	grep "core.bare and core.worktree do not make sense" result
++	)
 +'
 +
-+test_expect_failure '#21.2: in .git/wt' '
-+	cat >21/.git/wt/expected <<EOF &&
-+setup: git_dir: $TRASH_DIRECTORY/21/.git
-+setup: worktree: (null)
-+setup: cwd: $TRASH_DIRECTORY/21/.git/wt
-+setup: prefix: (null)
-+EOF
-+	test_repo 21/.git/wt
-+'
-+
-+test_expect_failure '#21.2: in .git/wt/sub' '
-+	cat >21/.git/wt/sub/expected <<EOF &&
-+setup: git_dir: $TRASH_DIRECTORY/21/.git
-+setup: worktree: (null)
-+setup: cwd: $TRASH_DIRECTORY/21/.git/wt/sub
-+setup: prefix: (null)
-+EOF
-+	test_repo 21/.git/wt/sub
-+'
-+
-+test_expect_failure '#21.2: at root' '
-+	cat >21/expected <<EOF &&
-+setup: git_dir: .git
-+setup: worktree: (null)
-+setup: cwd: $TRASH_DIRECTORY/21
-+setup: prefix: (null)
-+EOF
-+	test_repo 21
-+'
-+
-+test_expect_failure '#21.2: in subdir' '
-+	cat >21/sub/expected <<EOF &&
-+setup: git_dir: $TRASH_DIRECTORY/21/.git
-+setup: worktree: (null)
-+setup: cwd: $TRASH_DIRECTORY/21/sub
-+setup: prefix: (null)
-+EOF
-+	test_repo 21/sub
++test_expect_failure '#22.2: at root' '
++	(
++	cd 22 &&
++	GIT_DIR=3D.git &&
++	export GIT_DIR &&
++	test_must_fail git symbolic-ref HEAD 2>result &&
++	grep "core.bare and core.worktree do not make sense" result
++	)
 +'
 +
  test_done
