@@ -1,91 +1,77 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 5/5] Revert "excluded_1(): support exclude files in index"
-Date: Sat, 27 Nov 2010 01:17:47 +0700
-Message-ID: <1290795467-7570-6-git-send-email-pclouds@gmail.com>
-References: <1290795467-7570-1-git-send-email-pclouds@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH V2] git-send-email.perl: Deduplicate "to:" and "cc:"
+ entries with names
+Date: Fri, 26 Nov 2010 10:34:36 -0800
+Message-ID: <7vmxowq6gz.fsf@alter.siamese.dyndns.org>
+References: <1290272809.27951.30.camel@Joe-Laptop> <m2mxp3zr88.fsf@igel.home>
+ <1290286877.31117.15.camel@Joe-Laptop> <4CE84FF3.2070906@pcharlan.com>
+ <1290294365.31117.40.camel@Joe-Laptop>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Niedier <jrnieder@gmail.com>, tfransosi@gmail.com
-X-From: git-owner@vger.kernel.org Fri Nov 26 19:19:49 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Pete Harlan <pgit@pcharlan.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	git <git@vger.kernel.org>
+To: Joe Perches <joe@perches.com>
+X-From: git-owner@vger.kernel.org Fri Nov 26 19:35:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PM2td-0003TJ-Cz
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 19:19:45 +0100
+	id 1PM38K-0002SB-Cw
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 19:34:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755440Ab0KZSTm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Nov 2010 13:19:42 -0500
-Received: from mail-pz0-f66.google.com ([209.85.210.66]:54970 "EHLO
-	mail-pz0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751027Ab0KZSTl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Nov 2010 13:19:41 -0500
-Received: by mail-pz0-f66.google.com with SMTP id 26so481191pzk.1
-        for <git@vger.kernel.org>; Fri, 26 Nov 2010 10:19:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=lM8ZFkDz9y4dn9WZ2nYVIAfCPl9DPwJGND5I5nJpC9U=;
-        b=iJMe71zgOw+ZWrrph9atFZTOBSTmxyT/GmP2xdfVR+qvzvqjiqIRd/3ZXqVqysJXhR
-         jquFMUFHWVTuX5nYA3HfGEXzVyzZ/XhniJM05JY8NcWEObhaELrwb8ZQBlGTSKjGPG3o
-         tw+438OPn1z16qcCEDKTj51LXpFz8Tm8pfYWI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=YbHWpbU9AeN2e7fWHcxPZ36WPRkNALH2n5n1E3Ne2049bR04rNrdALMvsDkxnuNC6B
-         BE4hmaNuCmMq3W0ev+cQBU3Cn/QKE6ZbXE+u20Hbc3zOwQUiqkM4Jnyo9eCQkaLppJhy
-         d6PB2FRnfQLlmzAMpcGMSjNPGnAhdPYTuk7Us=
-Received: by 10.142.234.1 with SMTP id g1mr2737403wfh.142.1290795581696;
-        Fri, 26 Nov 2010 10:19:41 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.252.168])
-        by mx.google.com with ESMTPS id e14sm2858994wfg.20.2010.11.26.10.19.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 26 Nov 2010 10:19:40 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 27 Nov 2010 01:18:38 +0700
-X-Mailer: git-send-email 1.7.3.2.316.gda8b3
-In-Reply-To: <1290795467-7570-1-git-send-email-pclouds@gmail.com>
+	id S1755171Ab0KZSev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Nov 2010 13:34:51 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59169 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754497Ab0KZSeu (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Nov 2010 13:34:50 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9287B2006;
+	Fri, 26 Nov 2010 13:35:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=KjK4ztKs5knOEwoIb+5pdd3pMgs=; b=k9/v7N6djOW/zNFpSzhf4HQ
+	VZj7HlLfy06buKX2omHblCnccRKXmjmjrrzzGt7mHRLPHhnTxnfx5G+z95bjQvJ6
+	5T7XOeZ2PAYFkq3ubbexm4UDtJJwvct4EerE7J1pQQtTfNtvXVhPaihRQBehpdQd
+	Q8+rLIv3Ka3YLoWDbKjQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=m+YNVvDm+e9ttE/Ij5X0l/cqSkjqo+ceiFe1qCy8lEef5Pbus
+	zqWuvHxIudLQ2Tecq+KmMqzkLfeu10X6FL7Rj+W+n36hrWNJRk8jzwZcFwGIkWNr
+	CkGpEIK0waj93yk+QnXb90kM1NAp4gMiz0Q3CWL1+bBQKJgzq5o0Hp/uXw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 421D22005;
+	Fri, 26 Nov 2010 13:34:59 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B40D42004; Fri, 26 Nov 2010
+ 13:34:53 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DFA465AA-F98B-11DF-820A-DF8536391E49-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162270>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162271>
 
-This reverts commit c84de70781674a35b9bfd20aa5bc8c47582615df.
-The commit provided a workaround for matching directories in
-index. But it is no longer needed.
+Joe Perches <joe@perches.com> writes:
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- dir.c |    7 -------
- 1 files changed, 0 insertions(+), 7 deletions(-)
+> If an email address in the "to:" list is in the style
+> "First Last <email@domain.tld>", ie: not just a bare
+> address like "email@domain.tld", and the same named
+> entry style exists in the "cc:" list, the current
+> logic will not remove the entry from the "cc:" list.
+>
+> Add logic to better deduplicate the "cc:" list by also
+> matching the email address with angle brackets.
 
-diff --git a/dir.c b/dir.c
-index 39eb7a3..d059aa1 100644
---- a/dir.c
-+++ b/dir.c
-@@ -371,13 +371,6 @@ int excluded_from_list(const char *pathname,
- 			int to_exclude =3D x->to_exclude;
-=20
- 			if (x->flags & EXC_FLAG_MUSTBEDIR) {
--				if (!dtype) {
--					if (!prefixcmp(pathname, exclude) &&
--					    pathname[x->patternlen] =3D=3D '/')
--						return to_exclude;
--					else
--						continue;
--				}
- 				if (*dtype =3D=3D DT_UNKNOWN)
- 					*dtype =3D get_dtype(NULL, pathname, pathlen);
- 				if (*dtype !=3D DT_DIR)
---=20
-1.7.3.2.316.gda8b3
+Thanks; this is an improvement from the current behaviour.  We do cull
+duplicates if you have the same address listed on @cc twice, but we don't
+do the similar culling between To:/Cc: headers.
+
+I wonder if we should remove addresses from To: and Cc: if the same
+address appears in @bcclist, by the way, but that is a separate topic.
+
+Thanks.
