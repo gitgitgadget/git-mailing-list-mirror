@@ -1,56 +1,71 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH/RFC 04/20] rebase: remove unused rebase state 'prev_head'
-Date: Fri, 26 Nov 2010 08:54:19 +0100
-Message-ID: <4CEF67AB.6050700@drmicha.warpmail.net>
-References: <1290715083-16919-1-git-send-email-martin.von.zweigbergk@gmail.com> <1290715083-16919-5-git-send-email-martin.von.zweigbergk@gmail.com>
+From: Bond <jamesbond.2k.g@gmail.com>
+Subject: Re: using git with Google Code
+Date: Fri, 26 Nov 2010 16:25:08 +0530
+Message-ID: <AANLkTi=7_U3yTYHNFZD6Lfwxe77xyD1kS29egLEwAEeB@mail.gmail.com>
+References: <AANLkTiksVbmUX9QE6B385UjboqcvgAo+mwKP_X--P+83@mail.gmail.com>
+	<20101125150357.GB16049@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 26 08:56:36 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 26 11:55:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLtAW-0007vI-A9
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 08:56:32 +0100
+	id 1PLvxW-0003D5-4r
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 11:55:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753518Ab0KZH41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Nov 2010 02:56:27 -0500
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:45078 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751278Ab0KZH41 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Nov 2010 02:56:27 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id A3A0425B;
-	Fri, 26 Nov 2010 02:56:26 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Fri, 26 Nov 2010 02:56:26 -0500
-X-Sasl-enc: LmFUwk6APF1xv/S0zDlYjYSsaXXAJa/wzzu7yeIYDDI7 1290758186
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 9477D5E52BD;
-	Fri, 26 Nov 2010 02:56:25 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
-In-Reply-To: <1290715083-16919-5-git-send-email-martin.von.zweigbergk@gmail.com>
+	id S1754710Ab0KZKzL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Nov 2010 05:55:11 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:49034 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754678Ab0KZKzK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Nov 2010 05:55:10 -0500
+Received: by iwn7 with SMTP id 7so560793iwn.19
+        for <git@vger.kernel.org>; Fri, 26 Nov 2010 02:55:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=USKALzyMxoYZrD4/NHD7rKx0EiUCFJK4FwP2BMCBhtE=;
+        b=O+mrAT/QAHqqIG2k0mdBotWazkmgkyy6Vlbc7zsTslgvP58+ioWgE16t6FG9ealUif
+         INpxPmi2zk8/Zj9J+56Wrc7B1kHggr6lnp94/pyV/wSdI2EUk8rJyUR9ponEz+knldnt
+         GDxb8ceZggKjkTnqS+d9ydNIl23uTjOvTF+Xo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=uQM9xGRcWEuEHxQk7JAcoAJF9SIFo5EB66dGku8UO0Ufa2PmGPTIt19u4/wIdcg6pa
+         gWy1+gqLqIqsOVz4uoHCwDN4yy0/1uyXzGw/Nhv1YHvtBofDnzHzxg7h+7oOrCz2ejFE
+         8Da2i5EintLSxt+b832GLprZHRgxTcd+9aIdY=
+Received: by 10.42.176.133 with SMTP id be5mr603970icb.487.1290768908278; Fri,
+ 26 Nov 2010 02:55:08 -0800 (PST)
+Received: by 10.42.167.69 with HTTP; Fri, 26 Nov 2010 02:55:08 -0800 (PST)
+In-Reply-To: <20101125150357.GB16049@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162208>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162209>
 
-Martin von Zweigbergk venit, vidit, dixit 25.11.2010 20:57:
-> The rebase state 'prev_head' is not used. Remove it.
-> 
-> Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-> ---
-
-The actual value of prev_head was never used. But the check for its
-non-nullness made sure that git-rev-parse HEAD^0 succeeded when
-$merge_dir was created. Have you made sure that we don't need that check?
-
-Michael
+On Thu, Nov 25, 2010 at 8:33 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Bond wrote:
+>
+>> git svn clone --username me =A0https://myproject.googlecode.com/svn/=
+trunk
+>> git: 'svn' is not a git command. See 'git --help'.
+>>
+>> Did you mean one of these?
+>> =A0 =A0 =A0 fsck
+>> =A0 =A0 =A0 show
+>
+> Is git-svn installed?
+>
+I do not remember if it was installed or not.After reading your
+message I did an apt-get to git-svn I am using Ubuntu 10.04  64 bit.
+On my project there is no single file right now.
