@@ -1,87 +1,86 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH 1/5] cache.h: remove surrounding brackes and realign CE_* constants
-Date: Fri, 26 Nov 2010 17:20:11 -0200
-Message-ID: <AANLkTinwP=tDYyeyjX8uUChtvOeVmT4QfZjxT0A67hop@mail.gmail.com>
-References: <1290795467-7570-1-git-send-email-pclouds@gmail.com>
-	<1290795467-7570-2-git-send-email-pclouds@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git-gui: commit message box doesn't respond to enter (only
+ return)
+Date: Fri, 26 Nov 2010 14:38:55 -0600
+Message-ID: <20101126203855.GA23258@burratino>
+References: <20101126170956.25856.63131.reportbug@alsuren-thinkpad.cbg.collabora.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Jonathan Niedier <jrnieder@gmail.com>
-To: =?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41jIER1eQ==?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Nov 26 20:20:25 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
+	David Laban <alsuren+debbugs@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 26 21:39:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PM3qK-0001FC-Sx
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 20:20:25 +0100
+	id 1PM54b-0006PY-IB
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 21:39:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755342Ab0KZTUP convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Nov 2010 14:20:15 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:64911 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752509Ab0KZTUO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Nov 2010 14:20:14 -0500
-Received: by bwz15 with SMTP id 15so2100948bwz.19
-        for <git@vger.kernel.org>; Fri, 26 Nov 2010 11:20:12 -0800 (PST)
+	id S1751302Ab0KZUjH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Nov 2010 15:39:07 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:52785 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751027Ab0KZUjG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Nov 2010 15:39:06 -0500
+Received: by gyb11 with SMTP id 11so1112355gyb.19
+        for <git@vger.kernel.org>; Fri, 26 Nov 2010 12:39:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=GN3M2bP0Gyrn3c5agSlB1ZwiNGu4rrfk3bAt9Tj1rgk=;
-        b=vXkHqG/WehQI/fQ0RayAjoGu5gpzg9CJ/WCcN7I5M03+MS02TKL//DSsd7VNnPpAXT
-         Xhc7lEo6OoRf2IIpytQ87PZiM0zUiOLKsiq214MoZPhxAu52yIFPtv2tA0+lQNfwVVM3
-         wRvUN8PyUPEauAQKrGRjUqXxtBql9EQbqZubM=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=W2yv8YKh6gxLCMo23L6Blh/bT5Yp+guiWTHVEsZQPQc=;
+        b=xEuEyLJ8WjPG3aVEMrvvRM5beHeHyv4JF2RE/LLaSDrS1CWqIXePENh4Adhzon6HJe
+         zBlO6ANe9jz2pf5y/ymuMYw7PteQBaTNDiq0rjsmyQZfyyfuj4cUY1lHnw7jb8TcZRUb
+         vQ/Fnzcbz6PJk3SbjIecAhwCNtQazqQHNf6+w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=iyMi35lmSg9dkP6ny8yjWpPAoE3W+GDuqt6RgfOrOfY74q3/V39fC7asWqUyM0JWx7
-         ArsK3qyJ8AZ5MkxYRwjX3II6YOhGpiCjSnDw7xD1lyqAlgWneq7c8Hf0ZXaZNCJeS4hJ
-         71Q3yo0TVO79dxycQ1zBmahCwTeJzlCgmX0iA=
-Received: by 10.204.114.141 with SMTP id e13mr2315398bkq.94.1290799211567;
- Fri, 26 Nov 2010 11:20:11 -0800 (PST)
-Received: by 10.204.58.71 with HTTP; Fri, 26 Nov 2010 11:20:11 -0800 (PST)
-In-Reply-To: <1290795467-7570-2-git-send-email-pclouds@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=I8ptNyzQWWDcKB87cKx5nj3dJEGmSQvzaFAWpGgSOMQi4xsxzE/sCQ+n8m+5bDhBm/
+         WW2saBJcTFQviaJvezvZ5BTviM1v98R4DUuBprYjgOPSXOcxGHqXqLs0tcxlMO7XnVO0
+         j93mZUwaE7qsfs88Hmsr5Sb0pI84kF8cxfmuY=
+Received: by 10.151.78.2 with SMTP id f2mr5619913ybl.417.1290803944940;
+        Fri, 26 Nov 2010 12:39:04 -0800 (PST)
+Received: from burratino (adsl-68-255-101-216.dsl.chcgil.ameritech.net [68.255.101.216])
+        by mx.google.com with ESMTPS id q4sm2802754yba.14.2010.11.26.12.39.02
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 26 Nov 2010 12:39:03 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20101126170956.25856.63131.reportbug@alsuren-thinkpad.cbg.collabora.co.uk>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162276>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162277>
 
-2010/11/26 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com=
->:
+Hi Pat,
+
+David Laban wrote at http://bugs.debian.org/605041:
+
+> Package: git-gui
+> Version: 1:1.7.2.3-2
+> Severity: minor
 >
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
-> ---
-> =C2=A0cache.h | =C2=A0 25 ++++++++++++-------------
-> =C2=A01 files changed, 12 insertions(+), 13 deletions(-)
+> If I click into the messagebox and hit enter, nothing happens.
 >
-> diff --git a/cache.h b/cache.h
-> index 33decd9..4819cf5 100644
-> --- a/cache.h
-> +++ b/cache.h
-> @@ -170,26 +170,25 @@ struct cache_entry {
-> =C2=A0*
-> =C2=A0* In-memory only flags
-> =C2=A0*/
-> -#define CE_UPDATE =C2=A0 =C2=A0(0x10000)
-> -#define CE_REMOVE =C2=A0 =C2=A0(0x20000)
-> -#define CE_UPTODATE =C2=A0(0x40000)
-> -#define CE_ADDED =C2=A0 =C2=A0 (0x80000)
-> +#define CE_UPDATE =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00x=
-10000
-> +#define CE_REMOVE =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00x=
-20000
-> +#define CE_UPTODATE =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A00x40000
-> +#define CE_ADDED =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 0x=
-80000
+> This is annoying because if I'm adding a new paragraph to my commit message, 
+> I will often do <click> <enter><enter> <start typing as normal>
 >
-Thanks for fixing this. Maybe these hex can be rewriting as 1 << 0, 1
-<< 1 and so on?
+> Don't ask me why I do this. I think enter is a lighter/easier to press
+> key than return, and is also on the path that my hand takes between the mouse
+> and the rest of the keyboard.
+>
+> I have also provisionally reported the following bug in tk, but I feel like
+> a bit of a n00b for doing so.
+>
+> http://sf.net/tracker/?func=detail&aid=3119824&group_id=12997&atid=112997
+
+I can't reproduce this because this laptop does not have a distinct
+"numpad enter" key.
+
+Thoughts?
+Jonathan
