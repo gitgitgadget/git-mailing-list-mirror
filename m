@@ -1,99 +1,57 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH 00/18] WIP implement cherry-pick/revert --continue
-Date: Fri, 26 Nov 2010 00:28:36 -0600
-Message-ID: <20101126062836.GF18751@burratino>
-References: <20101125210138.5188.13115.chriscool@tuxfamily.org>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: Breaking t1510-repo-setup.sh tests in pu
+Date: Fri, 26 Nov 2010 08:51:04 +0100
+Message-ID: <4CEF66E8.1050806@viscovery.net>
+References: <AANLkTim=_0WiphBv-RBhJ2i9rGzXvz8yKcZcm_7pYXFc@mail.gmail.com> <AANLkTikvXhKoRg4a0FuyW8cG45b6AM9+NbbHuJQWtb4L@mail.gmail.com> <AANLkTinhgMhrcMtPKL0aOrkeVgo8NE8Sq0fuPuCcbdbq@mail.gmail.com> <AANLkTim1G__J6KAnd+pNmKWwEDTHexUSJU2E7=7WFZmp@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Daniel Barkalow <barkalow@iabervon.org>,
-	Jeff King <peff@peff.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Fri Nov 26 07:29:04 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Nov 26 08:51:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PLrns-0001PO-2G
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 07:29:04 +0100
+	id 1PLt5P-0005rC-5E
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 08:51:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751394Ab0KZG2o (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Nov 2010 01:28:44 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:41852 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750860Ab0KZG2n (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Nov 2010 01:28:43 -0500
-Received: by gwj20 with SMTP id 20so795557gwj.19
-        for <git@vger.kernel.org>; Thu, 25 Nov 2010 22:28:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=jPs2Jrl1LTvqg7WFyrebkeXs97isuVg6yEB3QeBiLAQ=;
-        b=sC4eAHaL7yPtg+i67obi+jJKELpSgJaVwnMgaAp0F7ea1edBJk5TRkAvJX9x6TsZPA
-         M0rhjtwafqAsz/HePTxaUSvxqwd7wXrYZUvY7dzd3WrgPbJQTLsCk+67NkAUwc3wkyp2
-         wXPNT2izoVuSpHqcJ8vZ1IhU/pvIByxSG/fzA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=GpQk/tpjaJvdcZdavSFT6lCO1NB32Njg41pQBwBhyaKn6AvGwLLR8pM/dUEuYrA2jA
-         6fnjxd9QHF29eg1WbPo7E1pzOOWdTSNUi6pkrkjnNvL6Na2Apd0kdDY9ZtPbY7iPzIOn
-         x464YUKq2lqEDNTQnYPy8CF34Ruo2DROMmV90=
-Received: by 10.151.155.21 with SMTP id h21mr1007797ybo.154.1290752921287;
-        Thu, 25 Nov 2010 22:28:41 -0800 (PST)
-Received: from burratino (adsl-68-255-101-216.dsl.chcgil.sbcglobal.net [68.255.101.216])
-        by mx.google.com with ESMTPS id m46sm1041105yha.44.2010.11.25.22.28.39
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 25 Nov 2010 22:28:40 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20101125210138.5188.13115.chriscool@tuxfamily.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753291Ab0KZHvJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Nov 2010 02:51:09 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:47907 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753186Ab0KZHvI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Nov 2010 02:51:08 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1PLt5F-00042c-Ay; Fri, 26 Nov 2010 08:51:05 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 01CE81660F;
+	Fri, 26 Nov 2010 08:51:04 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <AANLkTim1G__J6KAnd+pNmKWwEDTHexUSJU2E7=7WFZmp@mail.gmail.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162207>
 
-Hi Christian,
+Am 11/26/2010 3:45, schrieb Nguyen Thai Ngoc Duy:
+> OK it's probably bashisms. I think it will pass if you run it with
+> bash :-P I'll resend the series later without bash specific
+> constructs.
 
-Christian Couder wrote:
+Sure, it is. This:
 
-> Many patches in this series are replacing calls to "die()" by
-> "return error()", because the TODO and DONE files are written
-> only when cherry-pick fails. This is efficient but perhaps it
-> would be simpler and safer to write them before each cherry-pick
-> just in case it fails, so that the "die()" calls don't need to
-> be removed.
+   GIT_DIR="$TRASH_DIRECTORY/2/.git" test_repo 2/sub
 
-Another possibility would be to use set_die_routine()/atexit()/
-sigchain_push_common(), but the "always write" solution does seem
-simpler.
+does not work the same way in all shells when test_repo is a shell
+function. You have to export GIT_DIR explicitly before the function call.
+(But since in this case, test_repo invokes its own subshell anyway, you
+better do it in the function.)
 
-> (17):
-
-Perhaps too many. :)
-
-I like where this is going.  My main complaint is the commit messages;
-given a clear explanation of the design it should not be too hard for
-others to help write documentation, enhancements, and tests, but
-without it is much harder.
-
-Nit: the style of commit message in patch 16 is unnecessarily
-demoralizing.  It basically says "track down the history in this repo
-that may not exist in 2050 if you want to know what this patch is
-about".  I think it would be better to say
-
-	This code was written as part of the git sequencer
-	Google Summer of Code project, 2008
-
-and let the rest of the commit message tell the important details.
-Readers can google for the detailed history.
-
-Thanks for your work.
-Jonathan
+-- Hannes
