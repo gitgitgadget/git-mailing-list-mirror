@@ -1,124 +1,77 @@
-From: Cory Fields <FOSS@AtlasTechnologiesInc.com>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 Subject: Re: 'git replace' and pushing
-Date: Fri, 26 Nov 2010 20:59:16 -0500
-Message-ID: <AANLkTikvbZwt0=Om98WZzPGCC71mLpXAz=N18x4ZQA2p@mail.gmail.com>
-References: <AANLkTinzPCeCJ486cysmk981HE61=dv9MS7E8Ap4rQ5r@mail.gmail.com>
-	<4CEE2060.4020507@drmicha.warpmail.net>
-	<AANLkTimQ3fjPb+YVJ5i8EAgui+gd5rfnXMvdQPJPeUtA@mail.gmail.com>
-	<20101126214325.GC23462@burratino>
-	<7vvd3jptch.fsf@alter.siamese.dyndns.org>
-	<AANLkTi=FjSFLsbXf2Rp_Onm26yyxX+xSPrh2pB=_f5RU@mail.gmail.com>
+Date: Fri, 26 Nov 2010 21:29:30 +0100 (CET)
+Message-ID: <alpine.DEB.1.10.1011262114410.17721@debian>
+References: <AANLkTinzPCeCJ486cysmk981HE61=dv9MS7E8Ap4rQ5r@mail.gmail.com> <4CEE2060.4020507@drmicha.warpmail.net> <AANLkTimQ3fjPb+YVJ5i8EAgui+gd5rfnXMvdQPJPeUtA@mail.gmail.com> <20101126214325.GC23462@burratino> <7vvd3jptch.fsf@alter.siamese.dyndns.org>
+ <AANLkTi=FjSFLsbXf2Rp_Onm26yyxX+xSPrh2pB=_f5RU@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 27 02:59:34 2010
+To: Cory Fields <FOSS@atlastechnologiesinc.com>
+X-From: git-owner@vger.kernel.org Sat Nov 27 03:29:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMA4b-0007rz-Mj
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 02:59:34 +0100
+	id 1PMAXR-0000AT-5Y
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 03:29:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753532Ab0K0B7T convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Nov 2010 20:59:19 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:63869 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753376Ab0K0B7S convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Nov 2010 20:59:18 -0500
-Received: by wwa36 with SMTP id 36so2691341wwa.1
-        for <git@vger.kernel.org>; Fri, 26 Nov 2010 17:59:17 -0800 (PST)
-Received: by 10.227.174.206 with SMTP id u14mr3131775wbz.40.1290823156399;
- Fri, 26 Nov 2010 17:59:16 -0800 (PST)
-Received: by 10.227.154.10 with HTTP; Fri, 26 Nov 2010 17:59:16 -0800 (PST)
+	id S1753725Ab0K0C3P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Nov 2010 21:29:15 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:55621 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753565Ab0K0C3P (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Nov 2010 21:29:15 -0500
+Received: by vws3 with SMTP id 3so552038vws.19
+        for <git@vger.kernel.org>; Fri, 26 Nov 2010 18:29:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:x-x-sender:to:cc
+         :subject:in-reply-to:message-id:references:user-agent:mime-version
+         :content-type;
+        bh=PijT14kAO5yLG3resClGF0k4fNK3uLdEKwr1cI9ikBo=;
+        b=HL/CldWMP+DOoNhDII5yjur9b0ylwsaczoPSovuuClZA9+7acMA5EMb15JZ6I1NoWv
+         IG0wV+pvrEj7ZzsZqdAlKjlQYUQIqW57gRO0oQ8k4Sd97DYq6bT5cfmlBlo8s2dMAplX
+         GvByxCZyTqCVaPh1J9HLkjOU/RGg3scSsXFiI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        b=gCqvoWzl4JGEcRPM0x26RVmDRTMoZuLpiuIND3JzWEY4w+Nectz3g1fLOZwxFLFkvk
+         jGO4LZzSmZkP1+tX3a67ZQUkCT+F+XgSksYstvpofu/d7S1ZVWIOXxurYNk0ZbvTTiY9
+         uPK4TdkwROjPmFe79lXLhXZaPmAejcLqiYMuc=
+Received: by 10.220.186.10 with SMTP id cq10mr739821vcb.111.1290824954284;
+        Fri, 26 Nov 2010 18:29:14 -0800 (PST)
+Received: from [192.168.1.103] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id p22sm351395vcf.44.2010.11.26.18.29.13
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 26 Nov 2010 18:29:13 -0800 (PST)
+X-X-Sender: martin@debian
 In-Reply-To: <AANLkTi=FjSFLsbXf2Rp_Onm26yyxX+xSPrh2pB=_f5RU@mail.gmail.com>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162295>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162296>
 
-On Fri, Nov 26, 2010 at 8:58 PM, Cory Fields
-<FOSS@atlastechnologiesinc.com> wrote:
-> On Fri, Nov 26, 2010 at 6:18 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
->> Jonathan Nieder <jrnieder@gmail.com> writes:
->>
->>> =C2=A0Real history
->>> =C2=A0------------
->>> =C2=A04' --- 5 --- 6
->>>
->>> =C2=A01 --- 2 --- 3 --- 4
->>>
->>> =C2=A0Fake history
->>> =C2=A0------------
->>> =C2=A01 --- 2 --- 3 --- 4 --- 5 --- 6
->>>
->>> =C2=A0Replacement ref
->>> =C2=A0---------------
->>> =C2=A04' --> 4
->>>
->>> This way, a person a person can fetch either piece of real history
->>> without trouble, and if they fetch the replacement ref, too, the
->>> history is pasted together.
->>>
->>> It is not possible in git to push a commit without its ancestors;
->>> replacement refs do not change that.
->>
->> True, but I suspect the above picture pretty much satisfies Cory's i=
-nitial
->> wish, no? =C2=A0You can fetch recent 4'--5---6 history as if 4' were=
- the root
->> commit, and if you fetched replacement that tells us to pretend that=
- 4'
->> has 3 as its parent (and the history leading to 3), you will get a d=
-eeper
->> history.
->>
->
-> Yes, both of these can be accomplished. I've managed to get that part
-> working, where a
-> default clone pulls in half history, and fetching refs/replace gives
-> you the rest. The only
-> problem is that it requires a filter-branch before pushing. Otherwise=
-,
-> 4 gets pushed rather
-> than 4', meaning that clones will require all the objects. So it
-> works, but I'll have to spend
-> quite a while making it 'perfect' so that I only have to rewrite hist=
-ory once.
->
-> A shallow clone does not fit for us, because we want the default clon=
-e
+On Fri, 26 Nov 2010, Cory Fields wrote:
+
+> A shallow clone does not fit for us, because we want the default clone
 > to only pull half.
 > Having a public 1gb repository that will be cloned quite often is
 > bound to make our host
 > unhappy, so we're doing everything we can to get the size down.
->
-> Also, maybe I haven't made this clear... the "real" commit IDs need t=
-o
-> match the "fake"
-> ones in order to prevent confusion. I think that's the part that make=
-s
-> this so difficult.
-> Otherwise, something like this [1] would work just fine (probably
-> exactly what Junio was
-> suggesting)
->
-> Any other suggestions? Or do I just have to face the fact that I'm
-> going to have to break
-> hashes?
->
-> [1] http://progit.org/2010/03/17/replace.html
->
-> Cory
->
 
-Sorry for the stupid wrapping.. gmail and I are not getting along in
-this thread!
+At the GitTogether last month, my colleague brought up the subject of
+how to cope with repositories growing over time. The conclusion from
+the discussions was that shallow clones would proabably be the best
+option in general. FYI, even though it may not help you right now,
+having a default shallow clone depth configured in the repository on
+the server was also discussed.
 
-Cory
+/Martin
