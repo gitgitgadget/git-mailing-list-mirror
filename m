@@ -1,102 +1,82 @@
-From: "Eric" <cheung65@web.de>
-Subject: Mr Cheung.
-Date: Fri, 26 Nov 2010 23:24:06 -0800
-Message-ID: <201011262227.oAQMR9qc099144@vsmtp3.jaring.my>
-Reply-To: <chngeric@aol.com>
+From: David Fries <david@fries.net>
+Subject: [PATCH 0/3] gitk: improve dark background
+Date: Fri, 26 Nov 2010 16:41:36 -0600
+Message-ID: <20101126224136.GA26477@spacedout.fries.net>
+References: <1289451597-6950-1-git-send-email-david@fries.net>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
-	boundary="----=_NextPart_000_006F_01C2A9A6.467DBCA0"
-To: undisclosed-recipients:;
-X-From: git-owner@vger.kernel.org Fri Nov 26 23:33:42 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: gitster@pobox.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Nov 26 23:41:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PM6rM-0004TT-NT
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 23:33:41 +0100
+	id 1PM6zN-000076-RT
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 23:41:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751843Ab0KZWdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Nov 2010 17:33:35 -0500
-Received: from vsmtp3.jaring.my ([192.228.250.83]:58322 "EHLO vsmtp3.jaring.my"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751625Ab0KZWdf (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Nov 2010 17:33:35 -0500
-Received: from localhost (localhost.jaring.my [127.0.0.1])
-	by vsmtp3.jaring.my (8.14.3/8.14.3) with ESMTP id oAQMRZqS099254;
-	Sat, 27 Nov 2010 06:27:35 +0800 (MYT)
-	(envelope-from cheung65@web.de)
-X-Virus-Scanned: by JARING Malware Filters (jaring.my)
-Received: from vsmtp3.jaring.my ([127.0.0.1])
-	by localhost (vsmtp3.jaring.my [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id ATj-hW1+V498; Sat, 27 Nov 2010 06:27:34 +0800 (MYT)
-Received: from User (ip-80-226-28-228.vodafone-net.de [80.226.28.228])
-	(authenticated bits=0)
-	by vsmtp3.jaring.my (8.14.3/8.14.3) with ESMTP id oAQMR9qc099144;
-	Sat, 27 Nov 2010 06:27:12 +0800 (MYT)
-	(envelope-from cheung65@web.de)
-X-Priority: 3
-X-MSMail-Priority: Normal
-X-Mailer: Microsoft Outlook Express 6.00.2600.0000
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+	id S1752010Ab0KZWlw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Nov 2010 17:41:52 -0500
+Received: from SpacedOut.fries.net ([67.64.210.234]:47255 "EHLO
+	SpacedOut.fries.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751880Ab0KZWlv (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Nov 2010 17:41:51 -0500
+Received: from SpacedOut.fries.net (david@localhost [127.0.0.1])
+	by SpacedOut.fries.net (8.14.3/8.14.3/Debian-9.4) with ESMTP id oAQMfb1N026706
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 26 Nov 2010 16:41:37 -0600
+Received: (from david@localhost)
+	by SpacedOut.fries.net (8.14.3/8.14.3/Submit) id oAQMfaNB026705;
+	Fri, 26 Nov 2010 16:41:36 -0600
+Content-Disposition: inline
+In-Reply-To: <1289451597-6950-1-git-send-email-david@fries.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Greylist: Sender passed SPF test, not delayed by milter-greylist-4.3.7 (SpacedOut.fries.net [127.0.0.1]); Fri, 26 Nov 2010 16:41:37 -0600 (CST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 6.5 points;
- *  1.9 DATE_IN_FUTURE_06_12 Date: is 6 to 12 hours after Received: date
- *  0.6 US_DOLLARS_3 BODY: Mentions millions of $ ($NN,NNN,NNN.NN)
- *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
- *      [score: 0.4518]
- *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
- *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162282>
 
-This is a multi-part message in MIME format.
+Junio,
 
-------=_NextPart_000_006F_01C2A9A6.467DBCA0
-Content-Type: text/plain;
-	charset="Windows-1251"
-Content-Transfer-Encoding: 7bit
+I submitted the 'gitk: improve dark background' patch to the list,
+made improvements based on the feedback, and submitted the result two
+weeks ago without any further feedback.  I put my changes off of
+master, but gitk is identical in both maint and master.  Can you pull
+the changes?
 
-Eric Cheung.,
+branch gitk_colors from
+git://gitorious.org/~dfries/git/dfriess-git-mainline.git
 
-Mitt namn är Eric Cheung., Jag jobbar med Hang Seng Bank. Det är summan av
-$ 15,500,000.00 i min bank "Hang Seng Bank, Hong Kong.
+This e-mail is also a replay to the last posting of the patches.
 
-Jag vill göra överföringen av $ 15,500,000.00. Jag värva för dig
-hjälp i att sprida denna transaction.I för avsikt att ge 50% av den totala
-ersättningsfonden för din hjälp.
+On Wed, Nov 10, 2010 at 10:59:54PM -0600, David Fries wrote:
+> The gitk preferences allow for the user to select different colors.
+> The setui is even set to dynamically detect how light or dark the
+> background is and set the selection color to be the opposite, but
+> there are a few other color selections that don't currently work with
+> a dark background such as the black outlines.  This patch improves the
+> color selection.  In some cases it just needs to use the current
+> forground color, other places it is more complicated.
+> 
+> The gitk_colors branch can be pulled from,
+> git://gitorious.org/~dfries/git/dfriess-git-mainline.git
+> 
+> my relevant .gitk config file settings,
+> 
+> set mainfont {Helvetica 8}
+> set textfont {Courier 8}
+> set uifont {Helvetica 9 bold}
+> set uicolor grey85
+> set bgcolor black
+> set fgcolor white
+> set colors {green red blue magenta darkgrey brown orange}
+> set diffcolors {red green cyan}
+> set markbgcolor #404060
+> set selectbgcolor gray50
 
-Skulle du vara intresserad så skicka mig ett mail på min privata e-post
-1. Fullständigt namn
-2. Privat telefonnummer
-3. Nuvarande bostadsadress
-(Chngeric@aol.com).
-
-Hälsningar,
-chngeric@aol.com
-Eric Cheung.
-
-------=_NextPart_000_006F_01C2A9A6.467DBCA0
-Content-Type: application/octet-stream;
-	name="cheung  small.txt"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment;
-	filename="cheung  small.txt"
-
-TXIgRXJpYyBDaGV1bmcuLCANCg0KTXkgbmFtZSBpcyBFcmljIENoZXVuZy4s
-IEkgd29yayB3aXRoIHRoZSBIYW5nIFNlbmcgQmFuay4gVGhlcmUgaXMgdGhl
-IHN1bSBvZg0KJCAxNSw1MDAsMDAwLjAwIGluIG15IGJhbmsgIkhhbmcgU2Vu
-ZyBCYW5rLCBIb25nIEtvbmcuDQoNCkkgd2lzaCB0byBtYWtlIHRoZSB0cmFu
-c2ZlciBvZiB0aGUgJCAxNSw1MDAsMDAwLjAwLiBJIHRvIHNvbGljaXQgZm9y
-IHlvdQ0KYXNzaXN0YW5jZSBpbiBlZmZlY3RpbmcgdGhpcyB0cmFuc2FjdGlv
-bi5JIGludGVuZCB0byBnaXZlIDUwJSBvZiB0aGUgdG90YWwNCnRoZSBjb21w
-ZW5zYXRpb24gZnVuZCBmb3IgeW91ciBhc3Npc3RhbmNlLg0KDQpTaG91bGQg
-eW91IGJlIEludGVyZXN0ZWQgcGxlYXNlIHNlbmQgbWUgYW4gZW1haWwgb24g
-bXkgcHJpdmF0ZSBlbWFpbA0KMS4gRnVsbCBuYW1lcw0KMi4gUHJpdmF0ZSBw
-aG9uZSBudW1iZXINCjMuIEN1cnJlbnQgcmVzaWRlbnRpYWwgYWRkcmVzcw0K
-KGNobmdlcmljQGFvbC5jb20pLg0KDQpSZWdhcmRzLA0KY2huZ2VyaWNAYW9s
-LmNvbQ0KRXJpYyBDaGV1bmcu
-
-------=_NextPart_000_006F_01C2A9A6.467DBCA0--
+-- 
+David Fries <david@fries.net>
+http://fries.net/~david/ (PGP encryption key available)
