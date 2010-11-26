@@ -1,8 +1,9 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 0/5] Sparse checkout fixes
-Date: Sat, 27 Nov 2010 01:17:42 +0700
-Message-ID: <1290795467-7570-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 1/5] cache.h: remove surrounding brackes and realign CE_* constants
+Date: Sat, 27 Nov 2010 01:17:43 +0700
+Message-ID: <1290795467-7570-2-git-send-email-pclouds@gmail.com>
+References: <1290795467-7570-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -10,83 +11,103 @@ Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?=
 	<pclouds@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
 	Jonathan Niedier <jrnieder@gmail.com>, tfransosi@gmail.com
-X-From: git-owner@vger.kernel.org Fri Nov 26 19:19:17 2010
+X-From: git-owner@vger.kernel.org Fri Nov 26 19:19:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PM2tA-0003DD-E8
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 19:19:16 +0100
+	id 1PM2tA-0003DD-Vc
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 19:19:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755313Ab0KZSTD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Nov 2010 13:19:03 -0500
-Received: from mail-px0-f194.google.com ([209.85.212.194]:35506 "EHLO
-	mail-px0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751027Ab0KZSTB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Nov 2010 13:19:01 -0500
-Received: by pxi13 with SMTP id 13so480150pxi.1
-        for <git@vger.kernel.org>; Fri, 26 Nov 2010 10:19:01 -0800 (PST)
+	id S1755358Ab0KZSTK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Nov 2010 13:19:10 -0500
+Received: from mail-pw0-f66.google.com ([209.85.160.66]:36343 "EHLO
+	mail-pw0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751027Ab0KZSTJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Nov 2010 13:19:09 -0500
+Received: by pwj5 with SMTP id 5so492729pwj.1
+        for <git@vger.kernel.org>; Fri, 26 Nov 2010 10:19:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=+uDyFZVIVwSmo45QOMhIDaFUmvEP0dXa5eiusXu5LlI=;
-        b=u+K7IzsrxWPctYj4qwais0gNu3Q2OuIpEDq6r9mArgXZz2oZILitRd8y6WPb5G5Cyk
-         wn4dP5FbuHhNjh931uok58t4X42bW5DO54J7G0Pcf/4xwJgvwiAnQLzEcIhCXKzP6uZ1
-         a2x5+eBe/OcvxuUdCYcORfbiB4TYkGL+6uz48=
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=9Hv3CL96AJ9y+UiVJvNFiGFKioCVMKyJFMFbhjqpmDo=;
+        b=pgfMtT/E0ICQt42GoZrHDlEENI6w0za4vY2rYgOYVHt3az38UnVSU89LGbKWakcuRK
+         2tMJCLf5AIo9OHW7s/dEIUGufDLLNEUMl3gAWamcaL88ntAiAGgWQZshFFJqBArm2NAG
+         3vduIQgaP8gUjQNz3OvrYrjvrHfInG2kQn3wE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=btChc4BSUqzWLJ9yAl9P1xe6QKJhBv8MaQfkFbP5qBe9HEvh3U5o1zDDZ74WTxY/ZY
-         zCWpxqS+M3tBUhma31JSRBcqHHW7Xy2YApUVJ6bTQ2W7txZImugHVs7dP0ynMI17cvlS
-         q7EX9S+UjIzq7Usj1+97X1KhRzbYtLf/IUkPw=
-Received: by 10.142.164.9 with SMTP id m9mr2739903wfe.97.1290795541095;
-        Fri, 26 Nov 2010 10:19:01 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=MHlS9m+qTjxI8rzw6kfpmVpAx5Na3D3szObS3beSn15ZCSzA/gsKIDRpuI3tUY1s4P
+         sIeYoczDJmjvm6lTF/O3INdjH9+hflfzgcF2G9tDFkMh/xhhLj0iOFX+Kx17UpnBE/MN
+         PE6F4x9I/qyS7bhtbCzIPGCD8laoq9jNY30QQ=
+Received: by 10.142.224.11 with SMTP id w11mr2740651wfg.126.1290795549066;
+        Fri, 26 Nov 2010 10:19:09 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.252.168])
-        by mx.google.com with ESMTPS id b11sm2860676wff.9.2010.11.26.10.18.54
+        by mx.google.com with ESMTPS id w42sm2858639wfh.15.2010.11.26.10.19.04
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 26 Nov 2010 10:18:58 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 27 Nov 2010 01:17:56 +0700
+        Fri, 26 Nov 2010 10:19:08 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 27 Nov 2010 01:18:06 +0700
 X-Mailer: git-send-email 1.7.3.2.316.gda8b3
+In-Reply-To: <1290795467-7570-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162266>
 
-[on top of nd/maint-fix-add-typo-detection]
 
-This fixes a sparse pattern sometimes won't match a directory if
- - it does not end with a slash
- - it has wildcards
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ cache.h |   25 ++++++++++++-------------
+ 1 files changed, 12 insertions(+), 13 deletions(-)
 
-The series also improves performance a bit, thanks to 3/5, skip-worktre=
-e
-bits are precomputed.
-
-Improvements in the previous round [1] are left out. I will need to
-polish them a bit more.
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/161477
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (5):
-  cache.h: remove surrounding brackes and realign CE_* constants
-  dir.c: add free_excludes()
-  unpack-trees: move all skip-worktree checks back to unpack_trees()
-  unpack-trees: fix sparse checkout's "unable to match directories"
-  Revert "excluded_1(): support exclude files in index"
-
- Documentation/git-read-tree.txt      |    7 -
- cache.h                              |   26 ++--
- dir.c                                |   19 ++-
- dir.h                                |    1 +
- t/t1011-read-tree-sparse-checkout.sh |   14 ++-
- unpack-trees.c                       |  240 ++++++++++++++++++++++++++=
-++++----
- 6 files changed, 254 insertions(+), 53 deletions(-)
-
+diff --git a/cache.h b/cache.h
+index 33decd9..4819cf5 100644
+--- a/cache.h
++++ b/cache.h
+@@ -170,26 +170,25 @@ struct cache_entry {
+  *
+  * In-memory only flags
+  */
+-#define CE_UPDATE    (0x10000)
+-#define CE_REMOVE    (0x20000)
+-#define CE_UPTODATE  (0x40000)
+-#define CE_ADDED     (0x80000)
++#define CE_UPDATE              0x10000
++#define CE_REMOVE              0x20000
++#define CE_UPTODATE            0x40000
++#define CE_ADDED               0x80000
+=20
+-#define CE_HASHED    (0x100000)
+-#define CE_UNHASHED  (0x200000)
+-#define CE_CONFLICTED (0x800000)
++#define CE_HASHED             0x100000
++#define CE_UNHASHED           0x200000
++#define CE_WT_REMOVE          0x400000 /* remove in work directory */
++#define CE_CONFLICTED         0x800000
+=20
+-#define CE_WT_REMOVE (0x400000) /* remove in work directory */
+-
+-#define CE_UNPACKED  (0x1000000)
++#define CE_UNPACKED          0x1000000
+=20
+ /*
+  * Extended on-disk flags
+  */
+-#define CE_INTENT_TO_ADD 0x20000000
+-#define CE_SKIP_WORKTREE 0x40000000
++#define CE_INTENT_TO_ADD    0x20000000
++#define CE_SKIP_WORKTREE    0x40000000
+ /* CE_EXTENDED2 is for future extension */
+-#define CE_EXTENDED2 0x80000000
++#define CE_EXTENDED2        0x80000000
+=20
+ #define CE_EXTENDED_FLAGS (CE_INTENT_TO_ADD | CE_SKIP_WORKTREE)
+=20
 --=20
 1.7.3.2.316.gda8b3
