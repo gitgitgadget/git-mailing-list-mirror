@@ -1,137 +1,140 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 02/47] Add t1510 and basic rules that run repo setup
-Date: Fri, 26 Nov 2010 22:31:58 +0700
-Message-ID: <1290785563-15339-3-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 03/47] t1510: setup case #0
+Date: Fri, 26 Nov 2010 22:31:59 +0700
+Message-ID: <1290785563-15339-4-git-send-email-pclouds@gmail.com>
 References: <1290785563-15339-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>, Junio C Hamano <gitster@pobox.com>
+	<pclouds@gmail.com>
 To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Nov 26 16:34:49 2010
+X-From: git-owner@vger.kernel.org Fri Nov 26 16:35:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PM0K0-0000mL-FN
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 16:34:48 +0100
+	id 1PM0Ka-00019H-Ue
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 16:35:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752204Ab0KZPen convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Nov 2010 10:34:43 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:53916 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751582Ab0KZPem (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Nov 2010 10:34:42 -0500
-Received: by pzk6 with SMTP id 6so348637pzk.19
-        for <git@vger.kernel.org>; Fri, 26 Nov 2010 07:34:42 -0800 (PST)
+	id S1754856Ab0KZPfS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Nov 2010 10:35:18 -0500
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:32981 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751249Ab0KZPfQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Nov 2010 10:35:16 -0500
+Received: by pva4 with SMTP id 4so350820pva.19
+        for <git@vger.kernel.org>; Fri, 26 Nov 2010 07:35:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=54bX5VNJgUP/lgYtviNf235xxppLBcvfxe8XWai8e98=;
-        b=ABSneRXXZ1ud0tkmSb0/1qU+Lr09uPaFsVrrr3Fb7HUyTHBvN7nC9oTKjnxn2g++xK
-         iDsMVTQZCoDvHN6bOGif4mNg/4DvHOJsnPPax+2k4aSFvwXBs1ijQSrkmHeSXQlhLUAr
-         aqYzBfh2Bdys5kKd7M86EPOvpauuHq/mS7k1g=
+        bh=CFL1PZK2y20tiybilZRL2grJHFzrcRqUchhrFFUPcho=;
+        b=pxUXt5O12fqYT85Q3/rNdWcZOxdBaS6uoWE8wEzYRoCBm4eGKbLGn6YtMk0UXh+wMX
+         hKiYhuSzxmzAnUShDFWnfrHV3hsZAc+rPs3oujSkCGQk71sc6KQfVh6dSMdaOlZ9cSmc
+         D9o0kp1DaHKMBJru51CKbuj7EvlHN0i0QXVbA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=Hf4cZztcH4HMeh03GwpvnXNeyc1cjWVGhFMjpeuYz6MJBhMgqJItot99726Zc7cuHC
-         qmyjpg+iLcBX/TeSIENFCIdHxEtLvtkq82/oReVUzzTXv6/y6VCNOJuA4yfpVKjP5QNn
-         dHMy6tzVU54a327DVxlLlj6VqGCOZ3drBZOAQ=
-Received: by 10.142.165.8 with SMTP id n8mr2199436wfe.319.1290785682077;
-        Fri, 26 Nov 2010 07:34:42 -0800 (PST)
+        b=fUrXoGsg/90DKEBIs9v0Br5V2OaZ0qmDWXk2lfsBHI7tNgh4Zc5YxQfvD6JnUm9+tF
+         TQkECNS5a69Lw+lXezVNYCANnHa5qFrjwtPtOz0IegDsWtLsHZqhsXPskcrCZozyzPOU
+         HYiZeqqyfEoxkFAPhmoKkrk6bcN3etUVsGaLk=
+Received: by 10.142.153.7 with SMTP id a7mr2526456wfe.104.1290785716160;
+        Fri, 26 Nov 2010 07:35:16 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.252.168])
-        by mx.google.com with ESMTPS id b11sm2674948wff.9.2010.11.26.07.34.34
+        by mx.google.com with ESMTPS id p8sm2678007wff.4.2010.11.26.07.35.08
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 26 Nov 2010 07:34:40 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 26 Nov 2010 22:33:29 +0700
+        Fri, 26 Nov 2010 07:35:14 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 26 Nov 2010 22:33:47 +0700
 X-Mailer: git-send-email 1.7.3.2.316.gda8b3
 In-Reply-To: <1290785563-15339-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162218>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162219>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
 ---
- t/t1510-repo-setup.sh |   59 +++++++++++++++++++++++++++++++++++++++++=
-++++++++
- 1 files changed, 59 insertions(+), 0 deletions(-)
- create mode 100755 t/t1510-repo-setup.sh
+ t/t1510-repo-setup.sh |   53 +++++++++++++++++++++++++++++++++++++++++=
+++++++-
+ 1 files changed, 51 insertions(+), 2 deletions(-)
 
 diff --git a/t/t1510-repo-setup.sh b/t/t1510-repo-setup.sh
-new file mode 100755
-index 0000000..623807d
---- /dev/null
+index 623807d..641731c 100755
+--- a/t/t1510-repo-setup.sh
 +++ b/t/t1510-repo-setup.sh
-@@ -0,0 +1,59 @@
-+#!/bin/sh
+@@ -41,8 +41,10 @@ test_description=3D'Tests of cwd/prefix/worktree/git=
+dir setup in all cases'
+=20
+ test_repo() {
+ 	(
+-	if [ -n "$1" ]; then cd "$1"; fi &&
+-	if [ -f trace ]; then rm trace; fi &&
++	cd "$1" &&
++	if [ -n "$2" ]; then GIT_DIR=3D"$2" && export GIT_DIR; fi &&
++	if [ -n "$3" ]; then GIT_WORK_TREE=3D"$3" && export GIT_WORK_TREE; fi=
+ &&
++	rm -f trace &&
+ 	GIT_TRACE=3D"`pwd`/trace" git symbolic-ref HEAD >/dev/null &&
+ 	grep '^setup: ' trace >result &&
+ 	test_cmp expected result
+@@ -56,4 +58,51 @@ test_repo() {
+ # Bit 4 =3D bare repo
+ # Case# =3D encoding of the above 5 bits
+=20
++#
++# Case #0
++#
++############################################################
++#
++# Input:
++#
++#  - GIT_WORK_TREE is not set
++#  - GIT_DIR is not set
++#  - core.worktree is not set
++#  - .git is a directory
++#  - core.bare is not set, cwd is outside .git
++#
++# Output:
++#
++#  - worktree is .git's parent directory
++#  - cwd is at worktree root dir
++#  - prefix is calculated
++#  - git_dir is set to ".git"
++#  - cwd can't be outside worktree
 +
-+test_description=3D'Tests of cwd/prefix/worktree/gitdir setup in all c=
-ases'
++test_expect_success '#0: setup' '
++	unset GIT_DIR GIT_WORK_TREE &&
++	mkdir 0 0/sub &&
++	cd 0 && git init && cd ..
++'
 +
-+. ./test-lib.sh
++test_expect_success '#0: at root' '
++	cat >0/expected <<EOF &&
++setup: git_dir: .git
++setup: worktree: $TRASH_DIRECTORY/0
++setup: cwd: $TRASH_DIRECTORY/0
++setup: prefix: (null)
++EOF
++	test_repo 0
++'
 +
-+#
-+# A few rules for repo setup:
-+#
-+# 1. GIT_DIR is relative to user's cwd. --git-dir is equivalent to
-+#    GIT_DIR.
-+#
-+# 2. .git file is relative to parent directory. .git file is basically
-+#    symlink in disguise. The directory where .git file points to will
-+#    become new git_dir.
-+#
-+# 3. core.worktree is relative to git_dir.
-+#
-+# 4. GIT_WORK_TREE is relative to user's cwd. --work-tree is
-+#    equivalent to GIT_WORK_TREE.
-+#
-+# 5. GIT_WORK_TREE/core.worktree is only effective if GIT_DIR is set
-+#    Uneffective worktree settings should be warned.
-+#
-+# 6. Effective GIT_WORK_TREE overrides core.worktree and core.bare
-+#
-+# 7. Effective core.worktree conflicts with core.bare
-+#
-+# 8. If GIT_DIR is set but neither worktree nor bare setting is given,
-+#    original cwd becomes worktree.
-+#
-+# 9. If .git discovery is done inside a repo, the repo becomes a bare
-+#    repo. .git discovery is performed if GIT_DIR is not set.
-+#
-+# 10. If no worktree is available, cwd remains unchanged, prefix is
-+#     NULL.
-+#
-+# 11. When user's cwd is outside worktree, cwd remains unchanged,
-+#     prefix is NULL.
-+#
++test_expect_success '#0: in subdir' '
++	cat >0/sub/expected <<EOF &&
++setup: git_dir: .git
++setup: worktree: $TRASH_DIRECTORY/0
++setup: cwd: $TRASH_DIRECTORY/0
++setup: prefix: sub/
++EOF
++	test_repo 0/sub
++'
 +
-+test_repo() {
-+	(
-+	if [ -n "$1" ]; then cd "$1"; fi &&
-+	if [ -f trace ]; then rm trace; fi &&
-+	GIT_TRACE=3D"`pwd`/trace" git symbolic-ref HEAD >/dev/null &&
-+	grep '^setup: ' trace >result &&
-+	test_cmp expected result
-+	)
-+}
-+
-+# Bit 0 =3D GIT_WORK_TREE
-+# Bit 1 =3D GIT_DIR
-+# Bit 2 =3D core.worktree
-+# Bit 3 =3D .git is a file
-+# Bit 4 =3D bare repo
-+# Case# =3D encoding of the above 5 bits
-+
-+test_done
+ test_done
 --=20
 1.7.3.2.316.gda8b3
