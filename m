@@ -1,82 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/2] Document toplevel gitconfig file
-Date: Sat, 27 Nov 2010 09:52:02 -0600
-Message-ID: <20101127155202.GA25598@burratino>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 0/2] Create a shared config file
+Date: Sat, 27 Nov 2010 23:04:09 +0700
+Message-ID: <AANLkTi=6Q_MB-5kjZLCha30h0A4qdjhLhWUY0mLuCuoc@mail.gmail.com>
 References: <cover.1290870041.git.nathan.panike@gmail.com>
- <f15d6598e5e90de3bcdb8caf706735ac4809ad36.1290870042.git.nathan.panike@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: "Nathan W. Panike" <nathan.panike@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 27 17:02:27 2010
+X-From: git-owner@vger.kernel.org Sat Nov 27 17:04:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMNEI-0002Go-Sv
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 17:02:27 +0100
+	id 1PMNGa-0003Gg-Nj
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 17:04:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752744Ab0K0PwO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Nov 2010 10:52:14 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:37848 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752553Ab0K0PwN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Nov 2010 10:52:13 -0500
-Received: by gwj20 with SMTP id 20so1356742gwj.19
-        for <git@vger.kernel.org>; Sat, 27 Nov 2010 07:52:13 -0800 (PST)
+	id S1752938Ab0K0QEo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Nov 2010 11:04:44 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:59300 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752816Ab0K0QEn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Nov 2010 11:04:43 -0500
+Received: by wwa36 with SMTP id 36so3129471wwa.1
+        for <git@vger.kernel.org>; Sat, 27 Nov 2010 08:04:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=4ikcpAjVLhYw3Sv/bZMU/xGIibqGyhU+6i/LlONZ/3A=;
-        b=WhHEg1Sv+bEcxcZ5LCS03z9lQZpdw/20/x2qhxQc83CFMiMETdo8VEBf+z22xGImXR
-         W6cZGgBwZJXAqiIE3QOFxx1+1fFDaeRSAvkQKt0v0hPb+xiE/v97d7JLka1T3oIkt+gt
-         LM3g5Tgn6ZR589iZE7LKY+92WukaR8dCnOXiw=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=MQAQ6Up/MrONmcK/Zp+4E9LpzBqSrFndaqRT6dkYMlQ=;
+        b=p01alzpMBvgb/YOj34b+5kQdGxnD0Z0LjmZErpsLxy6ofpglWkgLrNa4ESkU4VaTBt
+         xwyehD+H0YlsCKiyMWNTkui3dtTXGUXn1oGCDhSDWuH14Nl1dEErI+hDKp2YC3aIBpCq
+         H/67uKe6as84sZK16Xni3IaeSF7hd5df66+AI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=UkORiiHXzfTR46ecLMhgy1Ix8Myi94R6cao+sMk1F2h4JL0idyE48ctUDwNyqFzmA8
-         e//HHc/1WZUODjd0XIyu6LcQYVZ0nwoZMUiBP9OuZxK2cge+8WpFhT6WCEUCBtO4f9xd
-         y5WcUy6F/ef6Q+xVLcGXaSjRfTRhvI/hJiVWY=
-Received: by 10.150.191.9 with SMTP id o9mr6988581ybf.444.1290873132918;
-        Sat, 27 Nov 2010 07:52:12 -0800 (PST)
-Received: from burratino (adsl-68-255-101-216.dsl.chcgil.ameritech.net [68.255.101.216])
-        by mx.google.com with ESMTPS id y29sm1975169yhc.0.2010.11.27.07.52.09
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 27 Nov 2010 07:52:11 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <f15d6598e5e90de3bcdb8caf706735ac4809ad36.1290870042.git.nathan.panike@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=m8PWrVagska4rffp0V0OzH2CdZ/crMcvtUN//vNaR2Mk92cEbxdyhiVV4jkKKIxvSn
+         CIQtonWTlVnCMm2gJ8LtEyqml4oB4Javzk0lt1uitoJM42qiOcSgkMZRmV64tDSxOmVg
+         vfGfmQ8af4Z+6IGV9GW4MrO5bIRyz5nAFAAXk=
+Received: by 10.216.91.82 with SMTP id g60mr3160559wef.49.1290873881081; Sat,
+ 27 Nov 2010 08:04:41 -0800 (PST)
+Received: by 10.216.21.14 with HTTP; Sat, 27 Nov 2010 08:04:09 -0800 (PST)
+In-Reply-To: <cover.1290870041.git.nathan.panike@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162313>
 
-Nathan W. Panike wrote:
+On Sat, Nov 27, 2010 at 10:00 PM, Nathan W. Panike
+<nathan.panike@gmail.com> wrote:
+> Configuration should normally be on a per-repository or per-user basi=
+s. =C2=A0There
+> are cases where it would be helpful to have a project share configura=
+tion
+> across repositories and between developers. =C2=A0Normally this happe=
+ns only via
+> e-mail or IRC or by word-of-mouth. =C2=A0The solution implemented by =
+these patches
+> is to have a .gitconfig file in the toplevel of the repository.
 
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -8,6 +8,17 @@ is used to store the configuration for that repository, and
->  fallback values for the `.git/config` file. The file `/etc/gitconfig`
->  can be used to store a system-wide default configuration.
->  
-> +One can also create a `.gitconfig` file in the toplevel of the
-> +repository. This config file will then be propogated to collaborators
-> +when they pull from your repository.  Only `alias` config variables are
-> +allowed to be set in this `.gitconfig` file.  One can turn off the
-> +shared `.gitconfig` by setting the environment variable
-> +'GIT_CONFIG_NOSHARED' to 1; it will then be propogated but will not be
-> +used for configuration settings.
-
-Please no.  Why not set up aliases in a setup-aliases.sh script and
-mention it in your README?
-
-If I clone a repository to investigate it and then a typo results in
-
-	$ git lgo
-
-emptying my $HOME directory, I would not call that a feature.
+Or save the shared config in the repository and add an instruction in
+$GIT_DIR/config to include such config blob. We can worry less about
+malicious config that way. If you are extremely nervous about it, you
+can always point to a specific blob that you have checked.
+--=20
+Duy
