@@ -1,79 +1,89 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH/RFC 00/20] Refactor rebase
-Date: Sat, 27 Nov 2010 02:24:56 +0100
-Message-ID: <AANLkTi=UbW5r3zY6j=erA7RzDWLYEe=z84=Qt+QarVCp@mail.gmail.com>
-References: <1290715083-16919-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <alpine.DEB.1.10.1011252120450.17721@debian> <AANLkTikyQTA3b8+subR2FTL9zFBt_dGqNxjsjP+fwE-n@mail.gmail.com>
- <alpine.DEB.1.10.1011261954350.17721@debian>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/3] gitk: improve dark background
+Date: Fri, 26 Nov 2010 17:34:35 -0800
+Message-ID: <7vd3prpn10.fsf@alter.siamese.dyndns.org>
+References: <1289451597-6950-1-git-send-email-david@fries.net>
+ <20101126224136.GA26477@spacedout.fries.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Nov 27 02:25:33 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
+To: David Fries <david@fries.net>
+X-From: git-owner@vger.kernel.org Sat Nov 27 02:34:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PM9Xc-0004l9-ID
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 02:25:29 +0100
+	id 1PM9go-000888-Kz
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 02:34:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753460Ab0K0BZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Nov 2010 20:25:18 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:61597 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753289Ab0K0BZR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Nov 2010 20:25:17 -0500
-Received: by ywl5 with SMTP id 5so1188394ywl.19
-        for <git@vger.kernel.org>; Fri, 26 Nov 2010 17:25:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=8E7LBUQNiu9+Z9PpQVqFdLVezblUX6A+2vwk/uqyZNA=;
-        b=Tii60Yx+kdjhbktnskWlU5XbRKPJX87MzTYgwZgtwvYVrXtelJpiAq+zK1uv5BC0BI
-         /w6pWjAIw/mkUNGnr+o1yMo4UR6O9Zd1JnDUWyY0L6Gj4a0Fe1jVK6NpONHb0N4IM7Vy
-         SCLLUUrRqJXX0b23p0cYBsreznvn+TpNykv1Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=mUhLWaiV2qbgcp4mbpiFndRJr/K897pXI3TWuKjW9oL9BIHiqEw0A+PCHvy7f2qTXV
-         lhHGlwwE01hCJnXkaloB9F7T9zZC9EESkFubnT4M/jnaeq46JwPVmiikk4jy8sF5hoAz
-         G7TLAy6LG5Q2Q3uSvLiMMZtl7pWgPdc/SLyAo=
-Received: by 10.150.196.17 with SMTP id t17mr5902752ybf.302.1290821116843;
- Fri, 26 Nov 2010 17:25:16 -0800 (PST)
-Received: by 10.151.100.19 with HTTP; Fri, 26 Nov 2010 17:24:56 -0800 (PST)
-In-Reply-To: <alpine.DEB.1.10.1011261954350.17721@debian>
+	id S1753375Ab0K0Ber (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Nov 2010 20:34:47 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62304 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753237Ab0K0Beq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Nov 2010 20:34:46 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E9F7D2E30;
+	Fri, 26 Nov 2010 20:35:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=s9zA5Nmnv7zwVleE92I6kdmtsU4=; b=c0vozH
+	89r/oPSK6Oa9ztyJn+3lUCVZM+fjyLhJHmFCHZsYOHGs3DcSxMWxFEhfrpMSHvOA
+	fhASsUeqHlhu6uF5RHscRGZzpRi0xiV/FxgOfV4IG3YhTg3U2pu75/BXNL3TwY84
+	BfxkeZAUYgX5qjCjMXhr+it/SKyW2u7pNrxwI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Z08tq+00kj2ru4ImK399RBL85Z3cz1aY
+	Kl7ZxYRz9xLLdwx/5U8x8kYscX/pbJoImHhQNA2MTjvN2DR6xQYtwFAQCh6Bk24g
+	b+q3I/pS6C4wm1OK5SM4Mvf7xy+ZQ55dEPUUHPQbUe16wk2EIYvA7rugJ1GzjDea
+	2VJ4DRr2t2s=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8A9072E2E;
+	Fri, 26 Nov 2010 20:34:58 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 56A862E2D; Fri, 26 Nov 2010
+ 20:34:54 -0500 (EST)
+In-Reply-To: <20101126224136.GA26477@spacedout.fries.net> (David Fries's
+ message of "Fri\, 26 Nov 2010 16\:41\:36 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8B9727FA-F9C6-11DF-B7A5-DF8536391E49-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162290>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162291>
 
-Heya,
+David Fries <david@fries.net> writes:
 
-On Fri, Nov 26, 2010 at 20:16, Martin von Zweigbergk
-<martin.von.zweigbergk@gmail.com> wrote:
-> They touch the same code as 729ec9e (rebase --abort: do not update
-> branch ref), 7baf9c4 (rebase: support --verify) and 92c62a3 (Porcelain
-> scripts: Rewrite cryptic "needs update" error message). However, it is
-> only 7baf9c4 that would have to be more or less redone if I did not
-> base the patch set on it. Do I understand correctly that I should
-> therefore have based them directly off of 7baf9c4?
+> I submitted the 'gitk: improve dark background' patch to the list,
+> made improvements based on the feedback, and submitted the result two
+> weeks ago without any further feedback.  I put my changes off of
+> master, but gitk is identical in both maint and master.  Can you pull
+> the changes?
 
-Yes, I think that'd be preferable, unless Junio disagrees?
+I saw the patch, but I didn't really look at it (I don't use gitk very
+often, and I am an old-fashioned "darker ink on lighter sheet" user so I
+wouldn't be a good judge on your change).
 
-> I suppose it is not worth resending this time. Tell me if you think
-> otherwise.
+I don't take patches to gitk or git-gui directly to my tree.  Please Cc:
+the maintainer of that part of the system (Paulus, whom I am Cc'ing this
+message) the next time.
 
-Yeah, you can just wait to rebase with the next iteration.
+Thanks.
 
--- 
-Cheers,
-
-Sverre Rabbelier
+> branch gitk_colors from
+> git://gitorious.org/~dfries/git/dfriess-git-mainline.git
+>
+> This e-mail is also a replay to the last posting of the patches.
+>
+> On Wed, Nov 10, 2010 at 10:59:54PM -0600, David Fries wrote:
+>> The gitk preferences allow for the user to select different colors.
+>> The setui is even set to dynamically detect how light or dark the
+>> background is and set the selection color to be the opposite, but
+>> there are a few other color selections that don't currently work with
+>> a dark background such as the black outlines.  This patch improves the
+>> color selection.  In some cases it just needs to use the current
+>> forground color, other places it is more complicated.
+>> ...
