@@ -1,59 +1,146 @@
-From: Bond <jamesbond.2k.g@gmail.com>
-Subject: Re: how to git with google code
-Date: Sat, 27 Nov 2010 08:20:41 +0530
-Message-ID: <AANLkTik_HMVsHuvA00ZCcGJaOS_m8Tipq_fDyLucG9wN@mail.gmail.com>
-References: <AANLkTi=5muNrriBoU0ZGnMqQUOjrJAvwLfyYO07-Ad3m@mail.gmail.com>
-	<4CEFCE5E.1050003@drmicha.warpmail.net>
+From: Daniel Barkalow <barkalow@iabervon.org>
+Subject: Re: [RFC/PATCH 08/18] revert: refactor code into a new pick_commits()
+ function
+Date: Fri, 26 Nov 2010 22:50:55 -0500 (EST)
+Message-ID: <alpine.LNX.2.00.1011262215540.14365@iabervon.org>
+References: <20101125210138.5188.13115.chriscool@tuxfamily.org> <20101125212050.5188.13304.chriscool@tuxfamily.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Sat Nov 27 03:51:06 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Stephan Beyer <s-beyer@gmx.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+To: Christian Couder <chriscool@tuxfamily.org>
+X-From: git-owner@vger.kernel.org Sat Nov 27 04:51:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMAsT-0006qp-Dq
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 03:51:05 +0100
+	id 1PMBoU-0007WL-W4
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 04:51:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754157Ab0K0Cuo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Nov 2010 21:50:44 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:34314 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754093Ab0K0Cum (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Nov 2010 21:50:42 -0500
-Received: by iwn35 with SMTP id 35so139062iwn.19
-        for <git@vger.kernel.org>; Fri, 26 Nov 2010 18:50:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=HFhFmxoiaBY+ISMHz0H6U9evM5nuxEpCTKOQEQqNF6o=;
-        b=ZW/ecIWxg5wQE1toTqdQPqWOWM+53+f5Kbxq9MLQZU5IweEGNhOde/NXbCosFBBtcP
-         MVJjPeDD9xGhcDxCe5Ttl6Y/8Kg4oxth078E4sRTJn96SzxbwPn7eXoWx0EOAnJA0CBv
-         ynCqUDSs/TvC0HY0fUGLQPEqoXRzFBj8d/Ol4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=lP0uG/adsec3uz7tdTODhxVqklgTOK5oqHiCqDmQQh2woCTctFpuBDaP9hUQPPAmuU
-         6dU9nQ1AAA1cNJHbYQOE4g3oKzyzF4T9fnyOqri4l6gRx/tMKumAVBiAFigaj0ppUaKM
-         soRGMeJEeToUsUTw4lPoWpHWTF8rJsu+3oN5o=
-Received: by 10.42.222.138 with SMTP id ig10mr858506icb.65.1290826241436; Fri,
- 26 Nov 2010 18:50:41 -0800 (PST)
-Received: by 10.42.166.202 with HTTP; Fri, 26 Nov 2010 18:50:41 -0800 (PST)
-In-Reply-To: <4CEFCE5E.1050003@drmicha.warpmail.net>
+	id S1751459Ab0K0Du5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Nov 2010 22:50:57 -0500
+Received: from iabervon.org ([66.92.72.58]:40421 "EHLO iabervon.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750994Ab0K0Du4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Nov 2010 22:50:56 -0500
+Received: (qmail 28985 invoked by uid 1000); 27 Nov 2010 03:50:55 -0000
+Received: from localhost (sendmail-bs@127.0.0.1)
+  by localhost with SMTP; 27 Nov 2010 03:50:55 -0000
+In-Reply-To: <20101125212050.5188.13304.chriscool@tuxfamily.org>
+User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162297>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162298>
 
-On Fri, Nov 26, 2010 at 8:42 PM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
->
-> http://code.google.com/p/support/wiki/ImportingFromGit
-Your link says
-"Naturally, your official source tree lives on some Git-capable server,"
-which is not the case.I have it on my local machine and I never used git before.
+On Thu, 25 Nov 2010, Christian Couder wrote:
+
+> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
+> ---
+>  builtin/revert.c |   38 ++++++++++++++++++++++----------------
+>  1 files changed, 22 insertions(+), 16 deletions(-)
+> 
+> diff --git a/builtin/revert.c b/builtin/revert.c
+> index 443b529..1f20251 100644
+> --- a/builtin/revert.c
+> +++ b/builtin/revert.c
+> @@ -578,36 +578,28 @@ static void read_and_refresh_cache(const char *me)
+>  	rollback_lock_file(&index_lock);
+>  }
+>  
+> -static int revert_or_cherry_pick(int argc, const char **argv, int revert, int edit)
+> +static int pick_commits(struct args_info *infos)
+>  {
+> -	struct args_info infos;
+>  	struct rev_info revs;
+>  	struct commit *commit;
+>  
+> -	memset(&infos, 0, sizeof(infos));
+> -	git_config(git_default_config, NULL);
+> -	infos.action = revert ? REVERT : CHERRY_PICK;
+> -	me = revert ? "revert" : "cherry-pick";
+> -	setenv(GIT_REFLOG_ACTION, me, 0);
+> -	parse_args(argc, argv, &infos);
+> -
+> -	if (infos.allow_ff) {
+> -		if (infos.signoff)
+> +	if (infos->allow_ff) {
+> +		if (infos->signoff)
+>  			die("cherry-pick --ff cannot be used with --signoff");
+> -		if (infos.no_commit)
+> +		if (infos->no_commit)
+>  			die("cherry-pick --ff cannot be used with --no-commit");
+> -		if (infos.no_replay)
+> +		if (infos->no_replay)
+>  			die("cherry-pick --ff cannot be used with -x");
+> -		if (infos.edit)
+> +		if (infos->edit)
+>  			die("cherry-pick --ff cannot be used with --edit");
+>  	}
+>  
+>  	read_and_refresh_cache(me);
+>  
+> -	prepare_revs(&revs, &infos);
+> +	prepare_revs(&revs, infos);
+>  
+>  	while ((commit = get_revision(&revs))) {
+> -		int res = do_pick_commit(&infos, commit);
+> +		int res = do_pick_commit(infos, commit);
+>  		if (res)
+>  			return res;
+>  	}
+> @@ -615,6 +607,20 @@ static int revert_or_cherry_pick(int argc, const char **argv, int revert, int ed
+>  	return 0;
+>  }
+>  
+> +static int revert_or_cherry_pick(int argc, const char **argv, int revert, int edit)
+> +{
+> +	struct args_info infos;
+> +
+> +	git_config(git_default_config, NULL);
+> +	me = revert ? "revert" : "cherry-pick";
+> +	setenv(GIT_REFLOG_ACTION, me, 0);
+> +	memset(&infos, 0, sizeof(infos));
+> +	infos.action = revert ? REVERT : CHERRY_PICK;
+> +	parse_args(argc, argv, &infos);
+> +
+> +	return pick_commits(&infos);
+> +}
+> +
+
+I think it would be more obvious to put this into cmd_revert and 
+cmd_cherry_pick, and have them call pick_commits directly. In fact, you 
+could probably make things more clear by calling your "struct args_info" 
+instead "struct pick_commits_args" (like a lot of other 
+"struct {cmd}_args" we already have for similar situations).
+
+While there's no reason to do it here, pick_commits() is a sensible 
+operation that other builtins might want to call, particularly with the 
+error return instead of die(), so it would be nice to name things suitably 
+for that usage. That also avoids Junio's objection to the arguments to 
+revert_or_cherry_pick() by not having the function with the objectionable 
+arguments at all.
+
+For that matter, you have a lot of commits in this series that put globals 
+into a struct and pass the struct around and change the arguments to the 
+functions that actually do things. I think it would be easier to 
+understand if you squashed all of these together into a single commit, 
+which does all of the necessary changes to function prototypes. And I 
+think it would be similarly better to have a single commit that makes all 
+of the places that call die() not do that, rather than getting some of 
+them in each of several patches.
+
+>  int cmd_revert(int argc, const char **argv, const char *prefix)
+>  {
+>  	return revert_or_cherry_pick(argc, argv, 1, isatty(0));
+> -- 
+> 1.7.3.2.504.g59d466
+> 
+> 
+> 
