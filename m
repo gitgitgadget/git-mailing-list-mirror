@@ -1,129 +1,115 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: 'git replace' and pushing
-Date: Sat, 27 Nov 2010 01:52:36 -0600
-Message-ID: <20101127075236.GB24433@burratino>
-References: <AANLkTinzPCeCJ486cysmk981HE61=dv9MS7E8Ap4rQ5r@mail.gmail.com>
- <4CEE2060.4020507@drmicha.warpmail.net>
- <AANLkTimQ3fjPb+YVJ5i8EAgui+gd5rfnXMvdQPJPeUtA@mail.gmail.com>
- <20101126214325.GC23462@burratino>
- <7vvd3jptch.fsf@alter.siamese.dyndns.org>
- <AANLkTi=FjSFLsbXf2Rp_Onm26yyxX+xSPrh2pB=_f5RU@mail.gmail.com>
+Subject: Re: [PATCH] commit: Append commit_list prefix in two function names.
+Date: Sat, 27 Nov 2010 02:29:33 -0600
+Message-ID: <20101127082933.GA24840@burratino>
+References: <0b9cde68dcdfddc13a91a63f9deb3384576164de.1289768501.git.tfransosi@gmail.com>
+ <20101114211905.GB10150@burratino>
+ <AANLkTi=V7e-KFhKVDLjH4TvoT6U3xmFieo5uqigPhqKF@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org
-To: Cory Fields <FOSS@AtlasTechnologiesInc.com>
-X-From: git-owner@vger.kernel.org Sat Nov 27 08:54:54 2010
+Cc: git@vger.kernel.org
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 27 09:29:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMFcR-0003nx-6N
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 08:54:51 +0100
+	id 1PMGAI-0006eu-0X
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 09:29:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751383Ab0K0Hwm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Nov 2010 02:52:42 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:49241 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751154Ab0K0Hwm (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Nov 2010 02:52:42 -0500
-Received: by gwj20 with SMTP id 20so1260128gwj.19
-        for <git@vger.kernel.org>; Fri, 26 Nov 2010 23:52:41 -0800 (PST)
+	id S1751818Ab0K0I3l convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Nov 2010 03:29:41 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:32875 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751290Ab0K0I3k (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Nov 2010 03:29:40 -0500
+Received: by gyb11 with SMTP id 11so1263555gyb.19
+        for <git@vger.kernel.org>; Sat, 27 Nov 2010 00:29:40 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :content-transfer-encoding:in-reply-to:user-agent;
-        bh=KmB4bMgo7fJfQmxPq13QopvUpdvSfeffXf4x4gJMLIg=;
-        b=F+RZ8UZr69aZoeBkcZPDqKCGIrkUghWCiODOhgK7Bu/9mkQptJz71JL89TYbLM6opt
-         Tbj3MBUsvreloTqJs7wYeQY1R3ereItja2g1SpSmPbKktxScWZdIJfLwmA+FhOon6u92
-         VzQBUfGhYPIiQBPYOryn6CvZXAAeMykNZVcP0=
+        bh=NVxKGcqE/zSe6qsmzcyS4Pb+ZQZvL2o+bKEGUufU+1Y=;
+        b=Dv9XJLUMi5L3v6b2Y/G6O56H22JiFZuvb9FJpPgwGcAd5CmFRjeS6OIjC1Xp3y3NL2
+         JMcYRirYSyGcL5gVS0wB6JTud9M7tZzdMkyQULznfX80aZf710qc4Kq2yC8SWbSpRfXx
+         eLOJOJkmwTJcfWdus+XxiwQpxGQZ8nKXD1faE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:content-transfer-encoding
          :in-reply-to:user-agent;
-        b=kHHw4Isiu6X+QkNmn/TxmkQvXTVAWghWBJ3cBOFl0IEzPHerjMLYmbA5rFaEOEjulg
-         lbOCq/EE5uSntBrkU2yWe6lam8rSgMTdcJO/Vb6WCQuZ0SvAq1FoON6yLljGjO4M3zsw
-         eFc2iiprgV/c8h2F53qm6xWKcKfL6Qf3WwPz8=
-Received: by 10.100.94.1 with SMTP id r1mr2297213anb.76.1290844361513;
-        Fri, 26 Nov 2010 23:52:41 -0800 (PST)
-Received: from burratino ([68.255.101.216])
-        by mx.google.com with ESMTPS id x36sm3041623anx.14.2010.11.26.23.52.39
+        b=uByHwpu4AZ7yxZHlq2/dpMjruzidIsTN89pTJiO9A5DfwoL36AFiWOWpAXCKYOoYme
+         th1/9c4EMI9RURetW5gs6ly6KOqCcLDuParcIM/ICC1Fi6NY/qXqJVsRAMqUnZ+40p2F
+         lUSJgBHW2OJXXNPHW2rAo+aZ6rkPCF/hOyaDU=
+Received: by 10.100.172.15 with SMTP id u15mr2328957ane.51.1290846579808;
+        Sat, 27 Nov 2010 00:29:39 -0800 (PST)
+Received: from burratino (adsl-68-255-101-216.dsl.chcgil.ameritech.net [68.255.101.216])
+        by mx.google.com with ESMTPS id i10sm3073733anh.12.2010.11.27.00.29.38
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 26 Nov 2010 23:52:40 -0800 (PST)
+        Sat, 27 Nov 2010 00:29:38 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <AANLkTi=FjSFLsbXf2Rp_Onm26yyxX+xSPrh2pB=_f5RU@mail.gmail.com>
+In-Reply-To: <AANLkTi=V7e-KFhKVDLjH4TvoT6U3xmFieo5uqigPhqKF@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162304>
 
-Cory Fields wrote:
-> On Fri, Nov 26, 2010 at 6:18 PM, Junio C Hamano <gitster@pobox.com> w=
-rote:
+Thiago Farina wrote:
+> On Sun, Nov 14, 2010 at 7:19 PM, Jonathan Nieder <jrnieder@gmail.com>=
+ wrote:
 
->> True, but I suspect the above picture pretty much satisfies Cory's i=
-nitial
->> wish, no? =C2=A0You can fetch recent 4'--5---6 history as if 4' were=
- the root
->> commit, and if you fetched replacement that tells us to pretend that=
- 4'
->> has 3 as its parent (and the history leading to 3), you will get a d=
-eeper
->> history.
+>> This gives the oft-used insert_by_name() function a fairly long name=
+:
+>>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit_list_insert_by_name
+>>
+>> The proposed name is long enough to be unwieldly. =C2=A0It might hav=
+e
+>> the virtue of fitting better with some of the commit_list lib:
+>>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit_list_count
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit_list_insert
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0free_commit_list
+>>
+>> Compare:
+>>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0sort_by_date
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0pop_most_recent_commit
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0sort_in_topological_order
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0pop_commit
+>>
 >
-> Yes, both of these can be accomplished. I've managed to get that part
-> working, where a default clone pulls in half history, and fetching
-> refs/replace gives you the rest. The only problem is that it requires=
- a
-> filter-branch before pushing.
+> I don't understand what you are arguing here. Is about the size of
+> "commit_list_insert_by_name"? I don't care about it's size,
 
-That's a one-time thing, not per-push, right?  A filter-branch would
-indeed be needed to transform the history
+=46or code clarity, length of function names can matter...
 
- 1 --- 2 --- 3 --- 4 --- 5' --- 6'
+> I just
+> want to make it consistent by adding commit_list in the functions tha=
+t
+> are part of the commit_list API.
 
-into
+=2E.. though this consideration is probably more important.
 
- 1 --- 2 --- 3 --- 4
- 4' --- 5 --- 6
+>> Perhaps this change would work better if some of the others were
+>> renamed at the same time?
+>
+> I don't think so, this would increasing the size of the change and
+> make it less readable.
 
-and that is unavoidable: the object names encode the entire list of
-ancestors, you cannot push an object without its ancestors, etc.
-But afterwards you can build on the history rooted at 4' and all
-should be well, and you can use checkout --orphan to get a new
-root when the current line of history is about to grow too long.
+Even if split up into multiple patches?  I don't think it makes much
+sense to say "functions in the commit_list API all start with
+commit_list_" while at the same time leaving half of the functions in
+the commit_list API without that suffix.
 
-In other words, the distinction between real history and fake history
-is very relevant.  Object transport only cares about the real history
-(barring bugs); if you want to tweak what objects get transferred, you
-really need to rewrite the real history (or use --depth).
-
-> A shallow clone does not fit for us, because we want the default clon=
-e to
-> only pull half.  Having a public 1gb repository that will be cloned q=
-uite
-> often is bound to make our host unhappy, so we're doing everything we=
- can to
-> get the size down.
-
-Why not publish a "git bundle" of the first 1gb using HTTP,
-BitTorrent, or some other cache-friendly protocol and use a hook to
-reject attempts to fetch too many objects at once from the host?
-
-> Also, maybe I haven't made this clear... the "real" commit IDs need t=
-o
-> match the "fake" ones in order to prevent confusion.
-
-Not sure what this means.  But commit IDs are defined based on
-content, and for simplicity and sanity the object transport machinery
-deliberately does not look beyond that.
+By the way, how did this come up?  Presumably some particular code
+was confusing?  If so, that information could be useful as an example
+in the log message.
 
 Regards,
 Jonathan
