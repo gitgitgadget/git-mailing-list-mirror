@@ -1,69 +1,74 @@
-From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
-Subject: http://tech.slashdot.org/comments.pl?sid=1885890&cid=34358134
-Date: Sat, 27 Nov 2010 17:33:07 +0000
-Message-ID: <AANLkTinTsn4PP8VxJX=pUOYKtoybCxqB0+-p9kNRGMj8@mail.gmail.com>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: Patchbombing or not, that is the question
+Date: Sat, 27 Nov 2010 15:40:29 -0200
+Message-ID: <AANLkTimKdwrsYQHGL=KaoQEmv3FLJzS+M=5xdQi+A5Ny@mail.gmail.com>
+References: <AANLkTi=C4opog2SfU9R_=dSOGY_5+0WYtFL8BNqcOwUw@mail.gmail.com>
+	<20101127172757.GA1858@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Nov 27 18:33:17 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 27 18:40:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMOeC-0000vW-9b
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 18:33:16 +0100
+	id 1PMOlJ-0004Fi-2o
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 18:40:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753044Ab0K0RdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 27 Nov 2010 12:33:11 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:39090 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752361Ab0K0RdI (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 27 Nov 2010 12:33:08 -0500
-Received: by qyk11 with SMTP id 11so9213565qyk.19
-        for <git@vger.kernel.org>; Sat, 27 Nov 2010 09:33:07 -0800 (PST)
+	id S1753103Ab0K0Rkb convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Nov 2010 12:40:31 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:60905 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752892Ab0K0Rkb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 27 Nov 2010 12:40:31 -0500
+Received: by bwz15 with SMTP id 15so2701397bwz.19
+        for <git@vger.kernel.org>; Sat, 27 Nov 2010 09:40:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=GBZSLmgTLc2LmoI1yC2wQEkEjlwTlpUzgv4ftsbf7TM=;
-        b=Kuz/jm2aGwY6iG8A003EZPIjq5ArhgkROkQNqVZLnRW0zBmv0e9ceGXtDxFdAJhBuC
-         M5bEBLy1QmzopzVhZPdpW1jM5oeposv/cAtSCijyulLEIFAa04IVvoRMgnZcTWPfvL15
-         a8q2NOg67YWQjf94sFyYRfmQn2DhRHnB/a0ts=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ooV2PUXV0cGHsWj9LefaErZmWG9wXuj7mB3LbvqpZnA=;
+        b=Q/zJ1sPCOPNGMOgs8MTY04f8nUCAyFqUIp1x/l2plFRbjmi3wRQ6znjQaUOtZyt+R5
+         sSkM6W2eITxKQu+AczOoAktFx1Y+qP/6aWHwverpcY8M254WFyjYyheQn3diSw/4EoVb
+         UnffmTC7gzWEIaScBigLx3KP99gGTxisXoql8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=f+YC6UUu2UhXiVrqTEgS4G6F8du5Rr/aGQGk/Fik74DOGjPwxY3X1OVbYE+J1LXSJ2
-         UaOkX1ilbYLFPV4ib5BjaZx2g1T+iXctzUpcRjVz3dLirmyOjkKOm64NGP+OJNB0rfem
-         5gwGyUE0s0d7Zns8JbUnEUZn/ics0/PYUEDLg=
-Received: by 10.229.241.194 with SMTP id lf2mr3014054qcb.164.1290879187325;
- Sat, 27 Nov 2010 09:33:07 -0800 (PST)
-Received: by 10.220.112.210 with HTTP; Sat, 27 Nov 2010 09:33:07 -0800 (PST)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=lobXWIQestiHicgx/Uylh9iH97UCKRCNTfVt4aul1VQ4c8HQgelTceZ5gczzEEFLIt
+         NHgI4VHy8HJxKfXuhOUhtns2LV9HadKMCITLkNSyIYtun/TFsfptoSiuoWRM/A+MewrL
+         ttB7uYDxn65+9evbRIdOGVCUCFrkNq4hyN9t8=
+Received: by 10.204.60.66 with SMTP id o2mr1145455bkh.13.1290879629376; Sat,
+ 27 Nov 2010 09:40:29 -0800 (PST)
+Received: by 10.204.58.71 with HTTP; Sat, 27 Nov 2010 09:40:29 -0800 (PST)
+In-Reply-To: <20101127172757.GA1858@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162317>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162318>
 
-On Wed, Sep 22, 2010 at 11:20 AM, Luke Kenneth Casson Leighton
-<luke.leighton@gmail.com> wrote:
-> i trust that nobody will make the comment "but source code couldn't
-> possibly be considered dangerous enough to block using ACTA" and this
-> might go some way towards explaining one - not all - one i repeat just
-> one of the factors why i believe that free software development
-> _needs_ tools which can side-step single-point-of-failure locations
-> that can be blocked by stupid fucking "agreements" like ACTA.
-
- i trust that the above subject-line comment, or more specifically its
-constituent links, begins to hint at why i believe it is important
-that git-over-p2p be given a higher priority than it is at present.
-you can easily join the dots to see where this government insanity is
-going: it won't be long before this insanity is utilised to take
-control of free software web sites just because they happen to be
-hosting tools which MIGHT be utilised "for copyright infringment".
-it's bad enough that the DMCA exists and can be used to intimidate
-sourceforget into removing rtmpdump - now imagine if someone decided
-to take control of sourceforget ok actually yeah maybe that's not so
-great a loss after all but it's the PRINCIPLE damnit :)
-
- l.
+On Sat, Nov 27, 2010 at 3:27 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Giuseppe Bilotta wrote:
+>
+>> I prepared a bunch of patches to add support to some other browsers =
+to
+>> git-web--browse (opera, seamonkey, elinks). Currently I did one patc=
+h
+>> per browser. Should I squash them all together?
+>
+> Yeah, I'd squash them. =C2=A0(But I think either way would be fine.)
+>
+> Could you support
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0[browser "chromium-browser"]
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0cmd=3Dchromium=
+-browser
+>
+Yeah, that would be great!
