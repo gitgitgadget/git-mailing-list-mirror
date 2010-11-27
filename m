@@ -1,97 +1,383 @@
 From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH] commit: Append commit_list prefix in two function names.
-Date: Fri, 26 Nov 2010 23:54:05 -0200
-Message-ID: <AANLkTi=V7e-KFhKVDLjH4TvoT6U3xmFieo5uqigPhqKF@mail.gmail.com>
-References: <0b9cde68dcdfddc13a91a63f9deb3384576164de.1289768501.git.tfransosi@gmail.com>
-	<20101114211905.GB10150@burratino>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Nov 27 02:59:08 2010
+Subject: [PATCH] commit: Add commit_list prefix in two function names.
+Date: Fri, 26 Nov 2010 23:58:14 -0200
+Message-ID: <d54570f130ee69bbc17ced62caa35147ecd5867b.1290822956.git.tfransosi@gmail.com>
+Cc: jrnieder@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Nov 27 02:59:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMA4B-0007kI-PL
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 02:59:08 +0100
+	id 1PMA4C-0007kI-J7
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 02:59:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753399Ab0K0ByJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Nov 2010 20:54:09 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:64153 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753278Ab0K0ByH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 26 Nov 2010 20:54:07 -0500
-Received: by bwz15 with SMTP id 15so2310419bwz.19
-        for <git@vger.kernel.org>; Fri, 26 Nov 2010 17:54:06 -0800 (PST)
+	id S1753465Ab0K0B5z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Nov 2010 20:57:55 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:64371 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753407Ab0K0B5z (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Nov 2010 20:57:55 -0500
+Received: by gxk22 with SMTP id 22so1195546gxk.19
+        for <git@vger.kernel.org>; Fri, 26 Nov 2010 17:57:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=fodVtFz886R7mRTV7zDawdgaZ6qoQrxo3FGNmbk8hwk=;
-        b=MRR12NmRIAWCW75hFdqtYINg6liExAp69eidP4ejewMtE8vSVg4MQBvZPqWy8jIlxL
-         jaUZFn2flIWVFMOFkzTZ4q2NFyOvIivw7okzHzOtf5HTvHlaxcTtR6fgJulKnAWwVN4K
-         iQP01EyC1r5hSlg4lZXEOfuwP1fu0UXOFbS6M=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=xeXV3QuNRQ8f2gvJkYJDN7wcQgXOirklE///W7vDbrg=;
+        b=pZCr7Z2xfZCnnopZXTVzXIzvY5DzinhzK4oQYKn6zJlccjW09OCw0iHMIJgWaU61TT
+         ZWUaqap5oETBQFUUyJROghplcVyy9ZoW7nHB1bYO4dnhMHPz0lgMUhFJTpHuktd65N5h
+         PCqfkvezRI4fti3Lcn8caGUbnjWtCZROI0DOA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Ia2ekQTX0JNMz6M2QXrFpuo5WTiErp3Q1CtebJ/njSsOfYuEsOhGVJ4SKCN9qXUJS+
-         7H5PU7W51LwfPAy4b4in8Pilnpr5fXOFuprjmDxSuJTZ/Gz9+Ce/9S9FoyAqWhAGRVO0
-         ptrPSycNHcr+D93h8+XTWYr8l7t6+zHFfSock=
-Received: by 10.204.62.17 with SMTP id v17mr2549774bkh.67.1290822845938; Fri,
- 26 Nov 2010 17:54:05 -0800 (PST)
-Received: by 10.204.58.71 with HTTP; Fri, 26 Nov 2010 17:54:05 -0800 (PST)
-In-Reply-To: <20101114211905.GB10150@burratino>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=PALDJgPUSpEZ2d9UHZ2q4aIlj3XqP9bi74v1TzdVi+tR/4D74XPpwz8+oWb/4Rgy1o
+         WJUiBWdSnU3bdYH3VLWtZA7ok4LdLEQzglptMqkbgKPdaC7zObsU0sxgGdGtutP54wtA
+         DE8YtRSKZGefDkn03OBfxLesNlgtg5opa57Cc=
+Received: by 10.90.105.3 with SMTP id d3mr5352375agc.142.1290823073449;
+        Fri, 26 Nov 2010 17:57:53 -0800 (PST)
+Received: from localhost ([186.205.6.151])
+        by mx.google.com with ESMTPS id f4sm1641788yhc.3.2010.11.26.17.57.50
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 26 Nov 2010 17:57:52 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.161.g3089c
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162292>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162293>
 
-On Sun, Nov 14, 2010 at 7:19 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Thiago Farina wrote:
->
->> Append commit_lis prefix to insert_by_date function and to sort_by_d=
-ate,
->> so it's clear that these functions refer to commit_list structure.
->
-> Nits: by "Append" I think you mean "Add"; missing "t" after commit_li=
-s.
->
-Thanks, I will fix this in a follow up.
+Add commit_list prefix to insert_by_date function and to sort_by_date,
+so it's clear that these functions refer to commit_list structure.
 
-> This gives the oft-used insert_by_name() function a fairly long name:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit_list_insert_by_name
->
-> The proposed name is long enough to be unwieldly. =C2=A0It might have
-> the virtue of fitting better with some of the commit_list lib:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit_list_count
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit_list_insert
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0free_commit_list
->
-> Compare:
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0sort_by_date
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0pop_most_recent_commit
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0sort_in_topological_order
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0pop_commit
->
+Signed-off-by: Thiago Farina <tfransosi@gmail.com>
+---
+ builtin/describe.c    |    6 +++---
+ builtin/fetch-pack.c  |    4 ++--
+ builtin/show-branch.c |    6 +++---
+ commit.c              |   24 ++++++++++++------------
+ commit.h              |   10 +++++-----
+ revision.c            |   12 ++++++------
+ sha1_name.c           |    2 +-
+ upload-pack.c         |    4 ++--
+ walker.c              |    2 +-
+ 9 files changed, 35 insertions(+), 35 deletions(-)
 
-I don't understand what you are arguing here. Is about the size of
-"commit_list_insert_by_name"? I don't care about it's size, I just
-want to make it consistent by adding commit_list in the functions that
-are part of the commit_list API.
-
-> Perhaps this change would work better if some of the others were
-> renamed at the same time?
->
-
-I don't think so, this would increasing the size of the change and
-make it less readable.
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 43caff2..9304dd0 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -189,7 +189,7 @@ static unsigned long finish_depth_computation(
+ 			struct commit *p = parents->item;
+ 			parse_commit(p);
+ 			if (!(p->object.flags & SEEN))
+-				insert_by_date(p, list);
++				commit_list_insert_by_date(p, list);
+ 			p->object.flags |= c->object.flags;
+ 			parents = parents->next;
+ 		}
+@@ -300,7 +300,7 @@ static void describe(const char *arg, int last_one)
+ 			struct commit *p = parents->item;
+ 			parse_commit(p);
+ 			if (!(p->object.flags & SEEN))
+-				insert_by_date(p, &list);
++				commit_list_insert_by_date(p, &list);
+ 			p->object.flags |= c->object.flags;
+ 			parents = parents->next;
+ 		}
+@@ -328,7 +328,7 @@ static void describe(const char *arg, int last_one)
+ 	qsort(all_matches, match_cnt, sizeof(all_matches[0]), compare_pt);
+ 
+ 	if (gave_up_on) {
+-		insert_by_date(gave_up_on, &list);
++		commit_list_insert_by_date(gave_up_on, &list);
+ 		seen_commits--;
+ 	}
+ 	seen_commits += finish_depth_computation(&list, &all_matches[0]);
+diff --git a/builtin/fetch-pack.c b/builtin/fetch-pack.c
+index dbd8b7b..b999413 100644
+--- a/builtin/fetch-pack.c
++++ b/builtin/fetch-pack.c
+@@ -47,7 +47,7 @@ static void rev_list_push(struct commit *commit, int mark)
+ 			if (parse_commit(commit))
+ 				return;
+ 
+-		insert_by_date(commit, &rev_list);
++		commit_list_insert_by_date(commit, &rev_list);
+ 
+ 		if (!(commit->object.flags & COMMON))
+ 			non_common_revs++;
+@@ -436,7 +436,7 @@ static int mark_complete(const char *path, const unsigned char *sha1, int flag,
+ 	if (o && o->type == OBJ_COMMIT) {
+ 		struct commit *commit = (struct commit *)o;
+ 		commit->object.flags |= COMPLETE;
+-		insert_by_date(commit, &complete);
++		commit_list_insert_by_date(commit, &complete);
+ 	}
+ 	return 0;
+ }
+diff --git a/builtin/show-branch.c b/builtin/show-branch.c
+index 8663cca..da69581 100644
+--- a/builtin/show-branch.c
++++ b/builtin/show-branch.c
+@@ -243,7 +243,7 @@ static void join_revs(struct commit_list **list_p,
+ 			if (mark_seen(p, seen_p) && !still_interesting)
+ 				extra--;
+ 			p->object.flags |= flags;
+-			insert_by_date(p, list_p);
++			commit_list_insert_by_date(p, list_p);
+ 		}
+ 	}
+ 
+@@ -859,7 +859,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 		 */
+ 		commit->object.flags |= flag;
+ 		if (commit->object.flags == flag)
+-			insert_by_date(commit, &list);
++			commit_list_insert_by_date(commit, &list);
+ 		rev[num_rev] = commit;
+ 	}
+ 	for (i = 0; i < num_rev; i++)
+@@ -868,7 +868,7 @@ int cmd_show_branch(int ac, const char **av, const char *prefix)
+ 	if (0 <= extra)
+ 		join_revs(&list, &seen, num_rev, extra);
+ 
+-	sort_by_date(&seen);
++	commit_list_sort_by_date(&seen);
+ 
+ 	if (merge_base)
+ 		return show_merge_base(seen, num_rev);
+diff --git a/commit.c b/commit.c
+index 0094ec1..554dcc3 100644
+--- a/commit.c
++++ b/commit.c
+@@ -360,7 +360,7 @@ void free_commit_list(struct commit_list *list)
+ 	}
+ }
+ 
+-struct commit_list * insert_by_date(struct commit *item, struct commit_list **list)
++struct commit_list * commit_list_insert_by_date(struct commit *item, struct commit_list **list)
+ {
+ 	struct commit_list **pp = list;
+ 	struct commit_list *p;
+@@ -374,11 +374,11 @@ struct commit_list * insert_by_date(struct commit *item, struct commit_list **li
+ }
+ 
+ 
+-void sort_by_date(struct commit_list **list)
++void commit_list_sort_by_date(struct commit_list **list)
+ {
+ 	struct commit_list *ret = NULL;
+ 	while (*list) {
+-		insert_by_date((*list)->item, &ret);
++		commit_list_insert_by_date((*list)->item, &ret);
+ 		*list = (*list)->next;
+ 	}
+ 	*list = ret;
+@@ -398,7 +398,7 @@ struct commit *pop_most_recent_commit(struct commit_list **list,
+ 		struct commit *commit = parents->item;
+ 		if (!parse_commit(commit) && !(commit->object.flags & mark)) {
+ 			commit->object.flags |= mark;
+-			insert_by_date(commit, list);
++			commit_list_insert_by_date(commit, list);
+ 		}
+ 		parents = parents->next;
+ 	}
+@@ -487,7 +487,7 @@ void sort_in_topological_order(struct commit_list ** list, int lifo)
+ 
+ 	/* process the list in topological order */
+ 	if (!lifo)
+-		sort_by_date(&work);
++		commit_list_sort_by_date(&work);
+ 
+ 	pptr = list;
+ 	*list = NULL;
+@@ -513,7 +513,7 @@ void sort_in_topological_order(struct commit_list ** list, int lifo)
+ 			 */
+ 			if (--parent->indegree == 1) {
+ 				if (!lifo)
+-					insert_by_date(parent, &work);
++					commit_list_insert_by_date(parent, &work);
+ 				else
+ 					commit_list_insert(parent, &work);
+ 			}
+@@ -573,10 +573,10 @@ static struct commit_list *merge_bases_many(struct commit *one, int n, struct co
+ 	}
+ 
+ 	one->object.flags |= PARENT1;
+-	insert_by_date(one, &list);
++	commit_list_insert_by_date(one, &list);
+ 	for (i = 0; i < n; i++) {
+ 		twos[i]->object.flags |= PARENT2;
+-		insert_by_date(twos[i], &list);
++		commit_list_insert_by_date(twos[i], &list);
+ 	}
+ 
+ 	while (interesting(list)) {
+@@ -594,7 +594,7 @@ static struct commit_list *merge_bases_many(struct commit *one, int n, struct co
+ 		if (flags == (PARENT1 | PARENT2)) {
+ 			if (!(commit->object.flags & RESULT)) {
+ 				commit->object.flags |= RESULT;
+-				insert_by_date(commit, &result);
++				commit_list_insert_by_date(commit, &result);
+ 			}
+ 			/* Mark parents of a found merge stale */
+ 			flags |= STALE;
+@@ -608,7 +608,7 @@ static struct commit_list *merge_bases_many(struct commit *one, int n, struct co
+ 			if (parse_commit(p))
+ 				return NULL;
+ 			p->object.flags |= flags;
+-			insert_by_date(p, &list);
++			commit_list_insert_by_date(p, &list);
+ 		}
+ 	}
+ 
+@@ -618,7 +618,7 @@ static struct commit_list *merge_bases_many(struct commit *one, int n, struct co
+ 	while (list) {
+ 		struct commit_list *next = list->next;
+ 		if (!(list->item->object.flags & STALE))
+-			insert_by_date(list->item, &result);
++			commit_list_insert_by_date(list->item, &result);
+ 		free(list);
+ 		list = next;
+ 	}
+@@ -711,7 +711,7 @@ struct commit_list *get_merge_bases_many(struct commit *one,
+ 	result = NULL;
+ 	for (i = 0; i < cnt; i++) {
+ 		if (rslt[i])
+-			insert_by_date(rslt[i], &result);
++			commit_list_insert_by_date(rslt[i], &result);
+ 	}
+ 	free(rslt);
+ 	return result;
+diff --git a/commit.h b/commit.h
+index 9113bbe..7fbebb5 100644
+--- a/commit.h
++++ b/commit.h
+@@ -38,20 +38,20 @@ struct commit *lookup_commit_reference_gently(const unsigned char *sha1,
+ 					      int quiet);
+ 
+ int parse_commit_buffer(struct commit *item, void *buffer, unsigned long size);
+-
+ int parse_commit(struct commit *item);
+ 
+ /* Find beginning and length of commit subject. */
+ int find_commit_subject(const char *commit_buffer, const char **subject);
+ 
+-struct commit_list * commit_list_insert(struct commit *item, struct commit_list **list_p);
++struct commit_list *commit_list_insert(struct commit *item,
++					struct commit_list **list);
+ unsigned commit_list_count(const struct commit_list *l);
+-struct commit_list * insert_by_date(struct commit *item, struct commit_list **list);
++struct commit_list *commit_list_insert_by_date(struct commit *item,
++			            struct commit_list **list);
++void commit_list_sort_by_date(struct commit_list **list);
+ 
+ void free_commit_list(struct commit_list *list);
+ 
+-void sort_by_date(struct commit_list **list);
+-
+ /* Commit formats */
+ enum cmit_fmt {
+ 	CMIT_FMT_RAW,
+diff --git a/revision.c b/revision.c
+index b1c1890..f8d4f87 100644
+--- a/revision.c
++++ b/revision.c
+@@ -444,15 +444,15 @@ static void try_to_simplify_commit(struct rev_info *revs, struct commit *commit)
+ 	commit->object.flags |= TREESAME;
+ }
+ 
+-static void insert_by_date_cached(struct commit *p, struct commit_list **head,
++static void commit_list_insert_by_date_cached(struct commit *p, struct commit_list **head,
+ 		    struct commit_list *cached_base, struct commit_list **cache)
+ {
+ 	struct commit_list *new_entry;
+ 
+ 	if (cached_base && p->date < cached_base->item->date)
+-		new_entry = insert_by_date(p, &cached_base->next);
++		new_entry = commit_list_insert_by_date(p, &cached_base->next);
+ 	else
+-		new_entry = insert_by_date(p, head);
++		new_entry = commit_list_insert_by_date(p, head);
+ 
+ 	if (cache && (!*cache || p->date < (*cache)->item->date))
+ 		*cache = new_entry;
+@@ -494,7 +494,7 @@ static int add_parents_to_list(struct rev_info *revs, struct commit *commit,
+ 			if (p->object.flags & SEEN)
+ 				continue;
+ 			p->object.flags |= SEEN;
+-			insert_by_date_cached(p, list, cached_base, cache_ptr);
++			commit_list_insert_by_date_cached(p, list, cached_base, cache_ptr);
+ 		}
+ 		return 0;
+ 	}
+@@ -521,7 +521,7 @@ static int add_parents_to_list(struct rev_info *revs, struct commit *commit,
+ 		p->object.flags |= left_flag;
+ 		if (!(p->object.flags & SEEN)) {
+ 			p->object.flags |= SEEN;
+-			insert_by_date_cached(p, list, cached_base, cache_ptr);
++			commit_list_insert_by_date_cached(p, list, cached_base, cache_ptr);
+ 		}
+ 		if (revs->first_parent_only)
+ 			break;
+@@ -1891,7 +1891,7 @@ int prepare_revision_walk(struct rev_info *revs)
+ 		if (commit) {
+ 			if (!(commit->object.flags & SEEN)) {
+ 				commit->object.flags |= SEEN;
+-				insert_by_date(commit, &revs->commits);
++				commit_list_insert_by_date(commit, &revs->commits);
+ 			}
+ 		}
+ 		e++;
+diff --git a/sha1_name.c b/sha1_name.c
+index 3e856b8..a96de0b 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -683,7 +683,7 @@ static int handle_one_ref(const char *path,
+ 	}
+ 	if (object->type != OBJ_COMMIT)
+ 		return 0;
+-	insert_by_date((struct commit *)object, list);
++	commit_list_insert_by_date((struct commit *)object, list);
+ 	object->flags |= ONELINE_SEEN;
+ 	return 0;
+ }
+diff --git a/upload-pack.c b/upload-pack.c
+index f05e422..b40a43f 100644
+--- a/upload-pack.c
++++ b/upload-pack.c
+@@ -366,7 +366,7 @@ static int reachable(struct commit *want)
+ {
+ 	struct commit_list *work = NULL;
+ 
+-	insert_by_date(want, &work);
++	commit_list_insert_by_date(want, &work);
+ 	while (work) {
+ 		struct commit_list *list = work->next;
+ 		struct commit *commit = work->item;
+@@ -387,7 +387,7 @@ static int reachable(struct commit *want)
+ 		for (list = commit->parents; list; list = list->next) {
+ 			struct commit *parent = list->item;
+ 			if (!(parent->object.flags & REACHABLE))
+-				insert_by_date(parent, &work);
++				commit_list_insert_by_date(parent, &work);
+ 		}
+ 	}
+ 	want->object.flags |= REACHABLE;
+diff --git a/walker.c b/walker.c
+index 11d9052..dce7128 100644
+--- a/walker.c
++++ b/walker.c
+@@ -207,7 +207,7 @@ static int mark_complete(const char *path, const unsigned char *sha1, int flag,
+ 	struct commit *commit = lookup_commit_reference_gently(sha1, 1);
+ 	if (commit) {
+ 		commit->object.flags |= COMPLETE;
+-		insert_by_date(commit, &complete);
++		commit_list_insert_by_date(commit, &complete);
+ 	}
+ 	return 0;
+ }
+-- 
+1.7.3.2.161.g3089c
