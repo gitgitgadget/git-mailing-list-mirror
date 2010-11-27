@@ -1,97 +1,102 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: 'git replace' and pushing
-Date: Fri, 26 Nov 2010 15:43:25 -0600
-Message-ID: <20101126214325.GC23462@burratino>
-References: <AANLkTinzPCeCJ486cysmk981HE61=dv9MS7E8Ap4rQ5r@mail.gmail.com>
- <4CEE2060.4020507@drmicha.warpmail.net>
- <AANLkTimQ3fjPb+YVJ5i8EAgui+gd5rfnXMvdQPJPeUtA@mail.gmail.com>
+From: "Eric" <cheung65@web.de>
+Subject: Mr Cheung.
+Date: Fri, 26 Nov 2010 23:24:06 -0800
+Message-ID: <201011262227.oAQMR9qc099144@vsmtp3.jaring.my>
+Reply-To: <chngeric@aol.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Cory Fields <FOSS@AtlasTechnologiesInc.com>
-X-From: git-owner@vger.kernel.org Fri Nov 26 23:00:09 2010
+Content-Type: multipart/mixed;
+	boundary="----=_NextPart_000_006F_01C2A9A6.467DBCA0"
+To: undisclosed-recipients:;
+X-From: git-owner@vger.kernel.org Fri Nov 26 23:33:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PM6Ku-0004ZA-P4
-	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 23:00:09 +0100
+	id 1PM6rM-0004TT-NT
+	for gcvg-git-2@lo.gmane.org; Fri, 26 Nov 2010 23:33:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751612Ab0KZWAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Nov 2010 17:00:00 -0500
-Received: from mail-yx0-f194.google.com ([209.85.213.194]:54806 "EHLO
-	mail-yx0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751281Ab0KZV77 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Nov 2010 16:59:59 -0500
-X-Greylist: delayed 986 seconds by postgrey-1.27 at vger.kernel.org; Fri, 26 Nov 2010 16:59:59 EST
-Received: by yxg6 with SMTP id 6so1798898yxg.1
-        for <git@vger.kernel.org>; Fri, 26 Nov 2010 13:59:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=WxH5BzXOPm0ijZi8u90a6UYVyrBZQPC6bTubPdNRhp4=;
-        b=ATpwkjSmRlO/UinwD6WittC81usgg6eNDZvY6dlX2EqXRXLwrxXbz65msD5XqWHAuW
-         vdSc9mNAvT0xSvQOUBsEG4b6A+7waDaNgDfdMJK/hbHzBXJSdSgkokaJj2tJp7NJKQWz
-         StJGr/VcZ+AUawowm5mSj88C2sp/LDUxc3Dqo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=iZ8LcGPi05DyMHGuYBWjs8sgcNjGqXOsgS/VtP08+PiyexTQL2HgdZ6c+B7nbZ0MEB
-         nBxeJQDa8kKA4t0TDgu9r3/GGvXpEHzkbbKn+XUbE7sUv/+RqKkeUwQpj0pDZtSXRJRm
-         5e7Evhf5q0J9g4vE2agmYwzmigP1ZHEzimcdY=
-Received: by 10.151.103.13 with SMTP id f13mr5812710ybm.218.1290807812293;
-        Fri, 26 Nov 2010 13:43:32 -0800 (PST)
-Received: from burratino (adsl-68-255-101-216.dsl.chcgil.sbcglobal.net [68.255.101.216])
-        by mx.google.com with ESMTPS id y29sm1501954yhc.0.2010.11.26.13.43.30
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 26 Nov 2010 13:43:31 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTimQ3fjPb+YVJ5i8EAgui+gd5rfnXMvdQPJPeUtA@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751843Ab0KZWdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 26 Nov 2010 17:33:35 -0500
+Received: from vsmtp3.jaring.my ([192.228.250.83]:58322 "EHLO vsmtp3.jaring.my"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751625Ab0KZWdf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 26 Nov 2010 17:33:35 -0500
+Received: from localhost (localhost.jaring.my [127.0.0.1])
+	by vsmtp3.jaring.my (8.14.3/8.14.3) with ESMTP id oAQMRZqS099254;
+	Sat, 27 Nov 2010 06:27:35 +0800 (MYT)
+	(envelope-from cheung65@web.de)
+X-Virus-Scanned: by JARING Malware Filters (jaring.my)
+Received: from vsmtp3.jaring.my ([127.0.0.1])
+	by localhost (vsmtp3.jaring.my [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id ATj-hW1+V498; Sat, 27 Nov 2010 06:27:34 +0800 (MYT)
+Received: from User (ip-80-226-28-228.vodafone-net.de [80.226.28.228])
+	(authenticated bits=0)
+	by vsmtp3.jaring.my (8.14.3/8.14.3) with ESMTP id oAQMR9qc099144;
+	Sat, 27 Nov 2010 06:27:12 +0800 (MYT)
+	(envelope-from cheung65@web.de)
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162280>
+X-Spam-Report: 6.5 points;
+ *  1.9 DATE_IN_FUTURE_06_12 Date: is 6 to 12 hours after Received: date
+ *  0.6 US_DOLLARS_3 BODY: Mentions millions of $ ($NN,NNN,NNN.NN)
+ *  0.0 BAYES_50 BODY: Bayesian spam probability is 40 to 60%
+ *      [score: 0.4518]
+ *  0.8 MSOE_MID_WRONG_CASE MSOE_MID_WRONG_CASE
+ *  3.1 FORGED_MUA_OUTLOOK Forged mail pretending to be from MS Outlook
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162281>
 
-Hi Cory,
+This is a multi-part message in MIME format.
 
-Cory Fields wrote:
+------=_NextPart_000_006F_01C2A9A6.467DBCA0
+Content-Type: text/plain;
+	charset="Windows-1251"
+Content-Transfer-Encoding: 7bit
 
-> I realize that allowing replacements to be pushed "behind users backs", so
-> I guess not respecting it makes sense.
->
-> But is there no way that I can pull this off without rewriting hashes?
+Eric Cheung.,
 
-The usual way to accomplish what you are talking about would be like
-this:
+Mitt namn är Eric Cheung., Jag jobbar med Hang Seng Bank. Det är summan av
+$ 15,500,000.00 i min bank "Hang Seng Bank, Hong Kong.
 
- Real history
- ------------
- 4' --- 5 --- 6
+Jag vill göra överföringen av $ 15,500,000.00. Jag värva för dig
+hjälp i att sprida denna transaction.I för avsikt att ge 50% av den totala
+ersättningsfonden för din hjälp.
 
- 1 --- 2 --- 3 --- 4
+Skulle du vara intresserad så skicka mig ett mail på min privata e-post
+1. Fullständigt namn
+2. Privat telefonnummer
+3. Nuvarande bostadsadress
+(Chngeric@aol.com).
 
- Fake history
- ------------
- 1 --- 2 --- 3 --- 4 --- 5 --- 6
+Hälsningar,
+chngeric@aol.com
+Eric Cheung.
 
- Replacement ref
- ---------------
- 4' --> 4
+------=_NextPart_000_006F_01C2A9A6.467DBCA0
+Content-Type: application/octet-stream;
+	name="cheung  small.txt"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment;
+	filename="cheung  small.txt"
 
-This way, a person a person can fetch either piece of real history
-without trouble, and if they fetch the replacement ref, too, the
-history is pasted together.
+TXIgRXJpYyBDaGV1bmcuLCANCg0KTXkgbmFtZSBpcyBFcmljIENoZXVuZy4s
+IEkgd29yayB3aXRoIHRoZSBIYW5nIFNlbmcgQmFuay4gVGhlcmUgaXMgdGhl
+IHN1bSBvZg0KJCAxNSw1MDAsMDAwLjAwIGluIG15IGJhbmsgIkhhbmcgU2Vu
+ZyBCYW5rLCBIb25nIEtvbmcuDQoNCkkgd2lzaCB0byBtYWtlIHRoZSB0cmFu
+c2ZlciBvZiB0aGUgJCAxNSw1MDAsMDAwLjAwLiBJIHRvIHNvbGljaXQgZm9y
+IHlvdQ0KYXNzaXN0YW5jZSBpbiBlZmZlY3RpbmcgdGhpcyB0cmFuc2FjdGlv
+bi5JIGludGVuZCB0byBnaXZlIDUwJSBvZiB0aGUgdG90YWwNCnRoZSBjb21w
+ZW5zYXRpb24gZnVuZCBmb3IgeW91ciBhc3Npc3RhbmNlLg0KDQpTaG91bGQg
+eW91IGJlIEludGVyZXN0ZWQgcGxlYXNlIHNlbmQgbWUgYW4gZW1haWwgb24g
+bXkgcHJpdmF0ZSBlbWFpbA0KMS4gRnVsbCBuYW1lcw0KMi4gUHJpdmF0ZSBw
+aG9uZSBudW1iZXINCjMuIEN1cnJlbnQgcmVzaWRlbnRpYWwgYWRkcmVzcw0K
+KGNobmdlcmljQGFvbC5jb20pLg0KDQpSZWdhcmRzLA0KY2huZ2VyaWNAYW9s
+LmNvbQ0KRXJpYyBDaGV1bmcu
 
-It is not possible in git to push a commit without its ancestors;
-replacement refs do not change that.  However, it is sort of possible
-to fetch a commit without its ancestors using the --depth option to
-clone and fetch.
-
-Hope that helps,
-Jonathan
+------=_NextPart_000_006F_01C2A9A6.467DBCA0--
