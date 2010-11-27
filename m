@@ -1,89 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 0/3] gitk: improve dark background
-Date: Fri, 26 Nov 2010 17:34:35 -0800
-Message-ID: <7vd3prpn10.fsf@alter.siamese.dyndns.org>
-References: <1289451597-6950-1-git-send-email-david@fries.net>
- <20101126224136.GA26477@spacedout.fries.net>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH] commit: Append commit_list prefix in two function names.
+Date: Fri, 26 Nov 2010 23:54:05 -0200
+Message-ID: <AANLkTi=V7e-KFhKVDLjH4TvoT6U3xmFieo5uqigPhqKF@mail.gmail.com>
+References: <0b9cde68dcdfddc13a91a63f9deb3384576164de.1289768501.git.tfransosi@gmail.com>
+	<20101114211905.GB10150@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Paul Mackerras <paulus@samba.org>
-To: David Fries <david@fries.net>
-X-From: git-owner@vger.kernel.org Sat Nov 27 02:34:59 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Nov 27 02:59:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PM9go-000888-Kz
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 02:34:59 +0100
+	id 1PMA4B-0007kI-PL
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 02:59:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753375Ab0K0Ber (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Nov 2010 20:34:47 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62304 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753237Ab0K0Beq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Nov 2010 20:34:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E9F7D2E30;
-	Fri, 26 Nov 2010 20:35:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=s9zA5Nmnv7zwVleE92I6kdmtsU4=; b=c0vozH
-	89r/oPSK6Oa9ztyJn+3lUCVZM+fjyLhJHmFCHZsYOHGs3DcSxMWxFEhfrpMSHvOA
-	fhASsUeqHlhu6uF5RHscRGZzpRi0xiV/FxgOfV4IG3YhTg3U2pu75/BXNL3TwY84
-	BfxkeZAUYgX5qjCjMXhr+it/SKyW2u7pNrxwI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Z08tq+00kj2ru4ImK399RBL85Z3cz1aY
-	Kl7ZxYRz9xLLdwx/5U8x8kYscX/pbJoImHhQNA2MTjvN2DR6xQYtwFAQCh6Bk24g
-	b+q3I/pS6C4wm1OK5SM4Mvf7xy+ZQ55dEPUUHPQbUe16wk2EIYvA7rugJ1GzjDea
-	2VJ4DRr2t2s=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8A9072E2E;
-	Fri, 26 Nov 2010 20:34:58 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 56A862E2D; Fri, 26 Nov 2010
- 20:34:54 -0500 (EST)
-In-Reply-To: <20101126224136.GA26477@spacedout.fries.net> (David Fries's
- message of "Fri\, 26 Nov 2010 16\:41\:36 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8B9727FA-F9C6-11DF-B7A5-DF8536391E49-77302942!a-pb-sasl-sd.pobox.com
+	id S1753399Ab0K0ByJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 26 Nov 2010 20:54:09 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:64153 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753278Ab0K0ByH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 26 Nov 2010 20:54:07 -0500
+Received: by bwz15 with SMTP id 15so2310419bwz.19
+        for <git@vger.kernel.org>; Fri, 26 Nov 2010 17:54:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=fodVtFz886R7mRTV7zDawdgaZ6qoQrxo3FGNmbk8hwk=;
+        b=MRR12NmRIAWCW75hFdqtYINg6liExAp69eidP4ejewMtE8vSVg4MQBvZPqWy8jIlxL
+         jaUZFn2flIWVFMOFkzTZ4q2NFyOvIivw7okzHzOtf5HTvHlaxcTtR6fgJulKnAWwVN4K
+         iQP01EyC1r5hSlg4lZXEOfuwP1fu0UXOFbS6M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=Ia2ekQTX0JNMz6M2QXrFpuo5WTiErp3Q1CtebJ/njSsOfYuEsOhGVJ4SKCN9qXUJS+
+         7H5PU7W51LwfPAy4b4in8Pilnpr5fXOFuprjmDxSuJTZ/Gz9+Ce/9S9FoyAqWhAGRVO0
+         ptrPSycNHcr+D93h8+XTWYr8l7t6+zHFfSock=
+Received: by 10.204.62.17 with SMTP id v17mr2549774bkh.67.1290822845938; Fri,
+ 26 Nov 2010 17:54:05 -0800 (PST)
+Received: by 10.204.58.71 with HTTP; Fri, 26 Nov 2010 17:54:05 -0800 (PST)
+In-Reply-To: <20101114211905.GB10150@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162291>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162292>
 
-David Fries <david@fries.net> writes:
-
-> I submitted the 'gitk: improve dark background' patch to the list,
-> made improvements based on the feedback, and submitted the result two
-> weeks ago without any further feedback.  I put my changes off of
-> master, but gitk is identical in both maint and master.  Can you pull
-> the changes?
-
-I saw the patch, but I didn't really look at it (I don't use gitk very
-often, and I am an old-fashioned "darker ink on lighter sheet" user so I
-wouldn't be a good judge on your change).
-
-I don't take patches to gitk or git-gui directly to my tree.  Please Cc:
-the maintainer of that part of the system (Paulus, whom I am Cc'ing this
-message) the next time.
-
-Thanks.
-
-> branch gitk_colors from
-> git://gitorious.org/~dfries/git/dfriess-git-mainline.git
+On Sun, Nov 14, 2010 at 7:19 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Thiago Farina wrote:
 >
-> This e-mail is also a replay to the last posting of the patches.
+>> Append commit_lis prefix to insert_by_date function and to sort_by_d=
+ate,
+>> so it's clear that these functions refer to commit_list structure.
 >
-> On Wed, Nov 10, 2010 at 10:59:54PM -0600, David Fries wrote:
->> The gitk preferences allow for the user to select different colors.
->> The setui is even set to dynamically detect how light or dark the
->> background is and set the selection color to be the opposite, but
->> there are a few other color selections that don't currently work with
->> a dark background such as the black outlines.  This patch improves the
->> color selection.  In some cases it just needs to use the current
->> forground color, other places it is more complicated.
->> ...
+> Nits: by "Append" I think you mean "Add"; missing "t" after commit_li=
+s.
+>
+Thanks, I will fix this in a follow up.
+
+> This gives the oft-used insert_by_name() function a fairly long name:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit_list_insert_by_name
+>
+> The proposed name is long enough to be unwieldly. =C2=A0It might have
+> the virtue of fitting better with some of the commit_list lib:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit_list_count
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0commit_list_insert
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0free_commit_list
+>
+> Compare:
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0sort_by_date
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0pop_most_recent_commit
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0sort_in_topological_order
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0pop_commit
+>
+
+I don't understand what you are arguing here. Is about the size of
+"commit_list_insert_by_name"? I don't care about it's size, I just
+want to make it consistent by adding commit_list in the functions that
+are part of the commit_list API.
+
+> Perhaps this change would work better if some of the others were
+> renamed at the same time?
+>
+
+I don't think so, this would increasing the size of the change and
+make it less readable.
