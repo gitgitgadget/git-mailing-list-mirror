@@ -1,146 +1,122 @@
-From: Daniel Barkalow <barkalow@iabervon.org>
-Subject: Re: [RFC/PATCH 08/18] revert: refactor code into a new pick_commits()
- function
-Date: Fri, 26 Nov 2010 22:50:55 -0500 (EST)
-Message-ID: <alpine.LNX.2.00.1011262215540.14365@iabervon.org>
-References: <20101125210138.5188.13115.chriscool@tuxfamily.org> <20101125212050.5188.13304.chriscool@tuxfamily.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 1/5] cache.h: realign and use (1 << x) form for CE_* constants
+Date: Sat, 27 Nov 2010 13:22:16 +0700
+Message-ID: <1290838936-25601-1-git-send-email-pclouds@gmail.com>
+References: <AANLkTinwP=tDYyeyjX8uUChtvOeVmT4QfZjxT0A67hop@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Stephan Beyer <s-beyer@gmx.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-To: Christian Couder <chriscool@tuxfamily.org>
-X-From: git-owner@vger.kernel.org Sat Nov 27 04:51:03 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jonathan Niedier <jrnieder@gmail.com>, tfransosi@gmail.com
+X-From: git-owner@vger.kernel.org Sat Nov 27 07:24:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMBoU-0007WL-W4
-	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 04:51:03 +0100
+	id 1PMED0-0001nN-Pn
+	for gcvg-git-2@lo.gmane.org; Sat, 27 Nov 2010 07:24:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751459Ab0K0Du5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 26 Nov 2010 22:50:57 -0500
-Received: from iabervon.org ([66.92.72.58]:40421 "EHLO iabervon.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750994Ab0K0Du4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 26 Nov 2010 22:50:56 -0500
-Received: (qmail 28985 invoked by uid 1000); 27 Nov 2010 03:50:55 -0000
-Received: from localhost (sendmail-bs@127.0.0.1)
-  by localhost with SMTP; 27 Nov 2010 03:50:55 -0000
-In-Reply-To: <20101125212050.5188.13304.chriscool@tuxfamily.org>
-User-Agent: Alpine 2.00 (LNX 1167 2008-08-23)
+	id S1752662Ab0K0GXr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 27 Nov 2010 01:23:47 -0500
+Received: from mail-pw0-f66.google.com ([209.85.160.66]:40047 "EHLO
+	mail-pw0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751147Ab0K0GXd (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 27 Nov 2010 01:23:33 -0500
+Received: by pwj5 with SMTP id 5so571888pwj.1
+        for <git@vger.kernel.org>; Fri, 26 Nov 2010 22:23:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=gPcsM7m/Yw4GEk8drTZv2cpz2Ce4aY3xwyX0/Wsd2gA=;
+        b=WZUvt90p0LlChhmLECjw6diksG6RmDDqSQS1b8Cib2L4DeZNNaQWxKJOU3fh0L7MsR
+         HShGvMNGZEj3jdW0TV7EYuheLLlpobcyR0SHfMdAgPZhetXMpYGUTYL8cCIwOSS30Yiy
+         AEb2UcNeHP/TFEI++RxfaC7Szi9iQ6pdqeYGU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=bp2aDQopsgH7qZJJC4wBuA65t8r1AII+CHaEdLPokw2FjhIfC0CPjf9z1oOjfDLMBC
+         GxLJCosvIQGU6+M8bD4jaShvyhG8I6CHWtJ/dkzEy19r8ih5VWVSrnlW9g2zbPAkn0l7
+         sepGWoQXWZG5lsvYO8wZVooDIHCgN6/KKD+fg=
+Received: by 10.142.237.4 with SMTP id k4mr3257655wfh.171.1290839012745;
+        Fri, 26 Nov 2010 22:23:32 -0800 (PST)
+Received: from pclouds@gmail.com ([115.73.252.168])
+        by mx.google.com with ESMTPS id b11sm3669952wff.21.2010.11.26.22.23.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 26 Nov 2010 22:23:31 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 27 Nov 2010 13:22:17 +0700
+X-Mailer: git-send-email 1.7.3.2.316.gda8b3
+In-Reply-To: <AANLkTinwP=tDYyeyjX8uUChtvOeVmT4QfZjxT0A67hop@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162299>
 
-On Thu, 25 Nov 2010, Christian Couder wrote:
 
-> Signed-off-by: Christian Couder <chriscool@tuxfamily.org>
-> ---
->  builtin/revert.c |   38 ++++++++++++++++++++++----------------
->  1 files changed, 22 insertions(+), 16 deletions(-)
-> 
-> diff --git a/builtin/revert.c b/builtin/revert.c
-> index 443b529..1f20251 100644
-> --- a/builtin/revert.c
-> +++ b/builtin/revert.c
-> @@ -578,36 +578,28 @@ static void read_and_refresh_cache(const char *me)
->  	rollback_lock_file(&index_lock);
->  }
->  
-> -static int revert_or_cherry_pick(int argc, const char **argv, int revert, int edit)
-> +static int pick_commits(struct args_info *infos)
->  {
-> -	struct args_info infos;
->  	struct rev_info revs;
->  	struct commit *commit;
->  
-> -	memset(&infos, 0, sizeof(infos));
-> -	git_config(git_default_config, NULL);
-> -	infos.action = revert ? REVERT : CHERRY_PICK;
-> -	me = revert ? "revert" : "cherry-pick";
-> -	setenv(GIT_REFLOG_ACTION, me, 0);
-> -	parse_args(argc, argv, &infos);
-> -
-> -	if (infos.allow_ff) {
-> -		if (infos.signoff)
-> +	if (infos->allow_ff) {
-> +		if (infos->signoff)
->  			die("cherry-pick --ff cannot be used with --signoff");
-> -		if (infos.no_commit)
-> +		if (infos->no_commit)
->  			die("cherry-pick --ff cannot be used with --no-commit");
-> -		if (infos.no_replay)
-> +		if (infos->no_replay)
->  			die("cherry-pick --ff cannot be used with -x");
-> -		if (infos.edit)
-> +		if (infos->edit)
->  			die("cherry-pick --ff cannot be used with --edit");
->  	}
->  
->  	read_and_refresh_cache(me);
->  
-> -	prepare_revs(&revs, &infos);
-> +	prepare_revs(&revs, infos);
->  
->  	while ((commit = get_revision(&revs))) {
-> -		int res = do_pick_commit(&infos, commit);
-> +		int res = do_pick_commit(infos, commit);
->  		if (res)
->  			return res;
->  	}
-> @@ -615,6 +607,20 @@ static int revert_or_cherry_pick(int argc, const char **argv, int revert, int ed
->  	return 0;
->  }
->  
-> +static int revert_or_cherry_pick(int argc, const char **argv, int revert, int edit)
-> +{
-> +	struct args_info infos;
-> +
-> +	git_config(git_default_config, NULL);
-> +	me = revert ? "revert" : "cherry-pick";
-> +	setenv(GIT_REFLOG_ACTION, me, 0);
-> +	memset(&infos, 0, sizeof(infos));
-> +	infos.action = revert ? REVERT : CHERRY_PICK;
-> +	parse_args(argc, argv, &infos);
-> +
-> +	return pick_commits(&infos);
-> +}
-> +
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ 2010/11/27 Thiago Farina <tfransosi@gmail.com>:
+ > Thanks for fixing this. Maybe these hex can be rewriting as 1 << 0, =
+1
+ > << 1 and so on?
+ >
 
-I think it would be more obvious to put this into cmd_revert and 
-cmd_cherry_pick, and have them call pick_commits directly. In fact, you 
-could probably make things more clear by calling your "struct args_info" 
-instead "struct pick_commits_args" (like a lot of other 
-"struct {cmd}_args" we already have for similar situations).
+ It does look better. There a few 0xXXXX constants above, but they
+ are short enough.
 
-While there's no reason to do it here, pick_commits() is a sensible 
-operation that other builtins might want to call, particularly with the 
-error return instead of die(), so it would be nice to name things suitably 
-for that usage. That also avoids Junio's objection to the arguments to 
-revert_or_cherry_pick() by not having the function with the objectionable 
-arguments at all.
+ cache.h |   25 ++++++++++++-------------
+ 1 files changed, 12 insertions(+), 13 deletions(-)
 
-For that matter, you have a lot of commits in this series that put globals 
-into a struct and pass the struct around and change the arguments to the 
-functions that actually do things. I think it would be easier to 
-understand if you squashed all of these together into a single commit, 
-which does all of the necessary changes to function prototypes. And I 
-think it would be similarly better to have a single commit that makes all 
-of the places that call die() not do that, rather than getting some of 
-them in each of several patches.
-
->  int cmd_revert(int argc, const char **argv, const char *prefix)
->  {
->  	return revert_or_cherry_pick(argc, argv, 1, isatty(0));
-> -- 
-> 1.7.3.2.504.g59d466
-> 
-> 
-> 
+diff --git a/cache.h b/cache.h
+index 33decd9..f9545a1 100644
+--- a/cache.h
++++ b/cache.h
+@@ -170,26 +170,25 @@ struct cache_entry {
+  *
+  * In-memory only flags
+  */
+-#define CE_UPDATE    (0x10000)
+-#define CE_REMOVE    (0x20000)
+-#define CE_UPTODATE  (0x40000)
+-#define CE_ADDED     (0x80000)
++#define CE_UPDATE            (1 << 16)
++#define CE_REMOVE            (1 << 17)
++#define CE_UPTODATE          (1 << 18)
++#define CE_ADDED             (1 << 19)
+=20
+-#define CE_HASHED    (0x100000)
+-#define CE_UNHASHED  (0x200000)
+-#define CE_CONFLICTED (0x800000)
++#define CE_HASHED            (1 << 20)
++#define CE_UNHASHED          (1 << 21)
++#define CE_WT_REMOVE         (1 << 22) /* remove in work directory */
++#define CE_CONFLICTED        (1 << 23)
+=20
+-#define CE_WT_REMOVE (0x400000) /* remove in work directory */
+-
+-#define CE_UNPACKED  (0x1000000)
++#define CE_UNPACKED          (1 << 24)
+=20
+ /*
+  * Extended on-disk flags
+  */
+-#define CE_INTENT_TO_ADD 0x20000000
+-#define CE_SKIP_WORKTREE 0x40000000
++#define CE_INTENT_TO_ADD     (1 << 29)
++#define CE_SKIP_WORKTREE     (1 << 30)
+ /* CE_EXTENDED2 is for future extension */
+-#define CE_EXTENDED2 0x80000000
++#define CE_EXTENDED2         (1 << 31)
+=20
+ #define CE_EXTENDED_FLAGS (CE_INTENT_TO_ADD | CE_SKIP_WORKTREE)
+=20
+--=20
+1.7.3.2.316.gda8b3
