@@ -1,183 +1,147 @@
-From: Daniel Reichelt <debian@nachtgeist.net>
-Subject: Re: gitweb: false base href sent when integrated via reverse proxy
- and path_info is active
-Date: Sun, 28 Nov 2010 21:30:38 +0100
-Message-ID: <4CF2BBEE.2050808@nachtgeist.net>
-References: <20101128081048.13668.67286.reportbug@sb74.startrek> <20101128162720.GB18335@burratino> <AANLkTinM8qyL9DafMx4XWBQ5RUeWABKVc5mNjdVEkQfZ@mail.gmail.com> <201011281847.40233.jnareb@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb: false base href sent when integrated via reverse proxy and path_info is active
+Date: Sun, 28 Nov 2010 22:07:01 +0100
+Message-ID: <201011282207.03261.jnareb@gmail.com>
+References: <20101128081048.13668.67286.reportbug@sb74.startrek> <201011281847.40233.jnareb@gmail.com> <4CF2BBEE.2050808@nachtgeist.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
 Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 28 21:39:59 2010
+To: Daniel Reichelt <debian@nachtgeist.net>
+X-From: git-owner@vger.kernel.org Sun Nov 28 22:07:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMo2Q-0002j7-HB
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 21:39:59 +0100
+	id 1PMoSu-0002CI-Qo
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 22:07:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752021Ab0K1Ujx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Nov 2010 15:39:53 -0500
-Received: from srv04.jarevo.de ([88.198.54.146]:62362 "EHLO srv04.jarevo.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751772Ab0K1Ujw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Nov 2010 15:39:52 -0500
-X-Greylist: delayed 550 seconds by postgrey-1.27 at vger.kernel.org; Sun, 28 Nov 2010 15:39:51 EST
-Received: from localhost (localhost [127.0.0.1])
-	by srv04.jarevo.de (Postfix) with ESMTP id 8F9823071;
-	Sun, 28 Nov 2010 21:30:39 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at srv04.jarevo.de
-Received: from srv04.jarevo.de ([127.0.0.1])
-	by localhost (srv04.jarevo.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id vAeaeZn-GH5k; Sun, 28 Nov 2010 21:30:39 +0100 (CET)
-Received: from [10.0.0.1] (localhost [127.0.0.1])
-	by srv04.jarevo.de (Postfix) with ESMTPA id 91F373070;
-	Sun, 28 Nov 2010 21:30:38 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101030 Icedove/3.0.10
-In-Reply-To: <201011281847.40233.jnareb@gmail.com>
+	id S1752815Ab0K1VHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Nov 2010 16:07:15 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:55038 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751961Ab0K1VHO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Nov 2010 16:07:14 -0500
+Received: by fxm15 with SMTP id 15so1912201fxm.19
+        for <git@vger.kernel.org>; Sun, 28 Nov 2010 13:07:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=2OTCJIzTB3IVPswtL9hspLD9GQpuzkuwzOJzgl2Qrn8=;
+        b=oSNvfuUGhfu0stsa3K1uE+p2QVxHqjZEvHFQGXWORG6ITfdPufyvRA2js4RSWN0Tef
+         cELrVd4HdtKzz1erRqDxhIzG40uPJTQB76snpnLFdGEMr5OIk8zZNZY5kmWftavARYiQ
+         TSqUJnN3flfYjQF15kvEJrjfpu00j9C4BDnh4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=SFhbxaf/O/CSZzi9zEQQfrUE7g0BrM0l/0oJO/3SVWlNxH67Gz7dFCDaeV4TNRP8Tb
+         bBtABUE/rbFJeXVtf6UfONRBuZT1GOwJIuA+hbkONlHwAW+p8iR66tXHz2T8rk/omRNS
+         nRyFC6zha/CpG4HwWxEVamYfKVs2ayVhRmblk=
+Received: by 10.223.96.137 with SMTP id h9mr4483564fan.54.1290978433212;
+        Sun, 28 Nov 2010 13:07:13 -0800 (PST)
+Received: from [192.168.1.13] (abwq157.neoplus.adsl.tpnet.pl [83.8.240.157])
+        by mx.google.com with ESMTPS id a25sm984917fak.20.2010.11.28.13.07.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 28 Nov 2010 13:07:12 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4CF2BBEE.2050808@nachtgeist.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162360>
 
-Hi all
+On Sun, 28 Nov 2010, Daniel Reichelt wrote:
 
->> I'm not familiar with the way reverse proxies operate. Is there some
->> information that the script can scrape to understand that its request
->> is being reverse-proxied?
-
-Nope. Reverse proxy works like this:
-- a "public" apache VirtualHost receives an http(s) request for a
-certain URL /a/b/c... and has the location /a/.* configured as a
-revProxy location
-- the public vhost repeats that request to the revProxy target
-- the revProxy target receives a request from the "public" vhost and
-serves it as usual (this is were the gitweb.cgi script actually is run,
-only seeing the request made by the public vhost, not the initially
-requesting client, thus all information about the publicly visible git
-URI is lost and never gets passed on to gitweb.cgi)
-- the public vhost receives the response and forwards it to the client,
-pretending he himself had answered the request
-
-
->> Lacking that, a plain
->>
->> our $base_url  = 'whatever';
->>
->> in the gitweb config should probably work
-
-Nope again, I'm afraid it doesn't (see further down)
-
-
-> See also gitweb/README, the "Gitweb config file variables" section:
+>>> Lacking that, a plain
+>>>
+>>> our $base_url  = 'whatever';
+>>>
+>>> in the gitweb config should probably work
 > 
->  * $base_url
->    Base URL for relative URLs in pages generated by gitweb,
->    (e.g. $logo, $favicon, @stylesheets if they are relative URLs),
->    needed and used only for URLs with nonempty PATH_INFO via
->    <base href="$base_url">.  Usually gitweb sets its value correctly,
->                              ^^^^^^^
->    and there is no need to set this variable, e.g. to $my_uri or "/".
+> Nope again, I'm afraid it doesn't (see further down)
+
+Strange, it works for me (see below). 
+ 
+>> See also gitweb/README, the "Gitweb config file variables" section:
+>> 
+>>  * $base_url
+>>    Base URL for relative URLs in pages generated by gitweb,
+>>    (e.g. $logo, $favicon, @stylesheets if they are relative URLs),
+>>    needed and used only for URLs with nonempty PATH_INFO via
+>>    <base href="$base_url">.  Usually gitweb sets its value correctly,
+>>                              ^^^^^^^
+>>    and there is no need to set this variable, e.g. to $my_uri or "/".
+>> 
+>> The key word here is "usually" ;-)
+>> 
 > 
-> The key word here is "usually" ;-)
+> *oops* thank you all for the hint! I totally missed that.
 > 
+> However, I just tried that and it failed. $base_url gets ignored in
+> gitweb.conf and even setting $my_url and $my_uri in gitweb.conf seems to
+> have no effect at all. For testing purposes I printed the relevant
+> variables to the html header:
+> 
+> 
+> gitweb.conf:
+> ************
 
-*oops* thank you all for the hint! I totally missed that.
-
-However, I just tried that and it failed. $base_url gets ignored in
-gitweb.conf and even setting $my_url and $my_uri in gitweb.conf seems to
-have no effect at all. For testing purposes I printed the relevant
-variables to the html header:
-
-
-gitweb.conf:
-************
-our $feature{'pathinfo'}{'default'} = [1];
-our $base_url = "https://foobar";
-our $my_url = "https://foo";
-our $my_uri = "https://bar";
-************
-
-gitweb.cgi:3424
-************
-# the stylesheet, favicon etc urls won't work correctly with path_info
-# unless we set the appropriate base URL
-if ($ENV{'PATH_INFO'}) {
-        print "<base href=\"".esc_url($base_url)."\" />\n";
-}
-print "<!--
-$base_url
-$my_url
-$my_uri
--->";
-************
+The default name of gitweb config file is gitweb_config.perl, not 
+gitweb.conf.  Are you sure you are picking correct config file?
 
 
-- git repo listing
-public url: https://sb74/projects/gitweb
-revProxy url: https://localhost:446/projects/gitweb
-************
-<head>
-<meta http-equiv="content-type" content="application/xhtml+xml;
-charset=utf-8"/>
-<meta name="generator" content="gitweb/1.7.2.3 git/1.7.2.3"/>
-<meta name="robots" content="index, nofollow"/>
-<title>localhost Git</title>
-<!--
-		https://sb74:446/projects/gitweb
-		https://sb74:446/projects/gitweb
-		/projects/gitweb
-		--><link rel="stylesheet" type="text/css"
-href="/projects/gitweb/gitweb/gitweb.css"/>
-<link rel="alternate" title="localhost Git projects list"
-href="/projects/gitweb?a=project_index" type="text/plain; charset=utf-8" />
-<link rel="alternate" title="localhost Git projects feeds"
-href="/projects/gitweb?a=opml" type="text/x-opml" />
-<link rel="shortcut icon" href="/projects/gitweb/gitweb/git-favicon.png"
-type="image/png" />
-</head>
-************
+> our $feature{'pathinfo'}{'default'} = [1];
+> our $base_url = "https://foobar";
+> our $my_url = "https://foo";
+> our $my_uri = "https://bar";
 
+Try adding
 
-- git summary of repo "test1"
-public url: https://sb74/projects/gitweb/test1/summary
-revProxy url: https://localhost:446/projects/gitweb/test1/summary
-************
-<head>
-<meta http-equiv="content-type" content="application/xhtml+xml;
-charset=utf-8"/>
-<meta name="generator" content="gitweb/1.7.2.3 git/1.7.2.3"/>
-<meta name="robots" content="index, nofollow"/>
-<title>localhost Git - test1/summary</title>
-<base href="https://sb74:446/projects/gitweb" />
-<!--
-		https://sb74:446/projects/gitweb
-		https://sb74:446/projects/gitweb
-		/projects/gitweb
-		--><link rel="stylesheet" type="text/css"
-href="/projects/gitweb/gitweb/gitweb.css"/>
-<link rel="alternate" title="test1 - log - RSS feed"
-href="/projects/gitweb/test1/rss" type="application/rss+xml" />
-<link rel="alternate" title="test1 - log - RSS feed (no merges)"
-href="/projects/gitweb/test1/rss?opt=--no-merges"
-type="application/rss+xml" />
-<link rel="alternate" title="test1 - log - Atom feed"
-href="/projects/gitweb/test1/atom?opt=--no-merges"
-type="application/atom+xml" />
-<link rel="alternate" title="test1 - log - Atom feed (no merges)"
-href="/projects/gitweb/test1/atom?opt=--no-merges"
-type="application/atom+xml" />
+  our $site_name = "foo";
 
-<link rel="shortcut icon" href="/projects/gitweb/gitweb/git-favicon.png"
-type="image/png" />
-</head>
-************
+to check if you are picking correct config file.
 
-Any ideas?
+> - git summary of repo "test1"
+> public url: https://sb74/projects/gitweb/test1/summary
+> revProxy url: https://localhost:446/projects/gitweb/test1/summary
+> ************
+> <head>
+> <meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8"/>
+> <meta name="generator" content="gitweb/1.7.2.3 git/1.7.2.3"/>
+> <meta name="robots" content="index, nofollow"/>
+> <title>localhost Git - test1/summary</title>
+> <base href="https://sb74:446/projects/gitweb" />
+[...]
+> </head>
 
-Regards
-Daniel
+I get the following when running with config file that contains:
+
+  our $version = "current";
+  [...]
+  our $site_name = "[localhost]";
+  [...]
+  our $base_url = "https://localhost/gitweb/";
+
+$ gitweb-run.sh "" "/git.git"
+  [...]
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+  <meta name="generator" content="gitweb/current git/1.7.3.2.171.g8ccd7"/>
+  <meta name="robots" content="index, nofollow"/>
+  <title>[localhost] - git.git/summary</title>
+  <base href="https://localhost/gitweb/" />
+  [...]
+
+So it works for me.
+-- 
+Jakub Narebski
+Poland
