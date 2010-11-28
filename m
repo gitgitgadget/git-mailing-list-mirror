@@ -1,88 +1,88 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: how to git with google code
-Date: Sun, 28 Nov 2010 15:18:22 +0800
-Message-ID: <AANLkTi=1vVBiHeoYGzY+0Y6w7zXc3yhgZUHRH_v7ZauV@mail.gmail.com>
-References: <AANLkTi=5muNrriBoU0ZGnMqQUOjrJAvwLfyYO07-Ad3m@mail.gmail.com>
-	<4CEFCE5E.1050003@drmicha.warpmail.net>
-	<AANLkTik_HMVsHuvA00ZCcGJaOS_m8Tipq_fDyLucG9wN@mail.gmail.com>
-	<AANLkTi=kuAkJSeJAWYQokOM2NFo08_98Eoodw_cz_c0r@mail.gmail.com>
-	<AANLkTimSdCOqC_nyLi4FsHPcJ+L9CnYzFK5OyQBoWUC7@mail.gmail.com>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH] rebase: pass --signoff option to git am
+Date: Sun, 28 Nov 2010 09:00:08 +0100
+Message-ID: <AANLkTim+vJuZ9bJnROqbzN8O-K8NVyi8zHYokDNqOjqa@mail.gmail.com>
+References: <1290856542-6070-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <AANLkTi=qAus_w18sYXP7m+jtQOGtgkNrsxgiNcbHevC7@mail.gmail.com> <alpine.DEB.1.10.1011272002090.26955@debian>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Bond <jamesbond.2k.g@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 28 08:18:31 2010
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 28 09:02:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMbWo-0005qa-Nv
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 08:18:31 +0100
+	id 1PMcCl-0002VQ-6v
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 09:01:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751729Ab0K1HSY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Nov 2010 02:18:24 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:55918 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751701Ab0K1HSY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 28 Nov 2010 02:18:24 -0500
-Received: by eye27 with SMTP id 27so1474743eye.19
-        for <git@vger.kernel.org>; Sat, 27 Nov 2010 23:18:22 -0800 (PST)
+	id S1751781Ab0K1IB0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Nov 2010 03:01:26 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:35663 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751750Ab0K1IBZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Nov 2010 03:01:25 -0500
+Received: by iwn5 with SMTP id 5so616769iwn.19
+        for <git@vger.kernel.org>; Sun, 28 Nov 2010 00:01:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=dtvwiyrwcKZwE4fyEqCtpEnsIwLGQ+o/QCKTc9KXczc=;
-        b=lvmHirST0qbTjd5UxCbB2+L8XygE7m6hOk/jQBehyjn/O8BuByArZYPIbaSyyq5Aw+
-         JNyKjYkLQm8XfmbkYck2xg0ancDUfXTjM9+BkcjQQZv5PYNvlyil6rO1P8ySPYUh7/bt
-         zK5h5bOThxx3lVn/MPfeTp0XU9GhsAQHRczVM=
+        bh=VCl2wBVAI1V5z6OvNR6u83Pa7DOhz1+QLfImw6aKsVM=;
+        b=aeCrITgvi/zYNRKNmCEVtOW1VSyoSJTF3yDOA7p+haYLs3C76A/sQCf+ghLNLOFe2x
+         gTyoJMIozEZH/fJq3sFwE5C0yKgzGl0qZ/hkDj0Y5VUtoF0N0TUPDcMYURyXdFfPUkIo
+         VxLkhmCrdz1pah+w8Rbp/aLlOH/G8sgYVHNhQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=B/MzBmn0tqWvbZEpXxY+c9xMOsxdk+xvDMWAYdxshISurvDD5YZSaiqO53UwEZ9F7H
-         xLw2rPp6XE/BBjzJeFB7Bm66TAdslnXzrvd0QLW9efBtk8kKd3A0Zz5WPdafo1JoZrSG
-         /9cQGKutRCB9SXFrb7Mx8QBCkNRi00wYM5NAg=
-Received: by 10.213.13.3 with SMTP id z3mr5381666ebz.28.1290928702508; Sat, 27
- Nov 2010 23:18:22 -0800 (PST)
-Received: by 10.213.112.195 with HTTP; Sat, 27 Nov 2010 23:18:22 -0800 (PST)
-In-Reply-To: <AANLkTimSdCOqC_nyLi4FsHPcJ+L9CnYzFK5OyQBoWUC7@mail.gmail.com>
+        b=wEUxUFSRntwd9k08HuorXEozfmUDw2K5ldUa3zq/pcQ/Q1mLzGrHcfhonds793Nu6g
+         tAoDkNSe9OYfJUo2gWgKNDCvloYPOf+qj1wFCSqVL79odN9cNGQfH0WR53SWfaci+Ncf
+         qXiJBwORu6IDSJ5axY8otFdSFu32xJYCnbMks=
+Received: by 10.231.13.138 with SMTP id c10mr3889851iba.57.1290931281207; Sun,
+ 28 Nov 2010 00:01:21 -0800 (PST)
+Received: by 10.231.17.135 with HTTP; Sun, 28 Nov 2010 00:00:08 -0800 (PST)
+In-Reply-To: <alpine.DEB.1.10.1011272002090.26955@debian>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162338>
 
-On Sun, Nov 28, 2010 at 12:36 PM, Bond <jamesbond.2k.g@gmail.com> wrote=
-:
-> On Sun, Nov 28, 2010 at 9:57 AM, Tay Ray Chuan <rctay89@gmail.com> wr=
-ote:
->> Hi,
->> You can take "official source tree" and "Git-capable server" to be
->> your git repo that you git init-ed in your first post. But it's empt=
-y
->> isn't it? So, just skip the "git fetch" step. That leaves:
+On Sat, Nov 27, 2010 at 8:05 PM, Martin von Zweigbergk
+<martin.von.zweigbergk@gmail.com> wrote:
+>
+> On Sun, 28 Nov 2010, Sverre Rabbelier wrote:
+>
+>> Heya,
 >>
->> =A0$ git svn clone ...
->> =A0$ cd trunk
+>> On Sat, Nov 27, 2010 at 12:15, Giuseppe Bilotta
+>> <giuseppe.bilotta@gmail.com> wrote:
+>> > =A0-p::
+>> > =A0--preserve-merges::
+>> > =A0 =A0 =A0 =A0Instead of ignoring merges, try to recreate them.
+>> > +
+>> > +--signoff::
+>> > + =A0 =A0 =A0 This flag is passed to 'git am' to sign off all the =
+rebased
+>> > + =A0 =A0 =A0 commits (see linkgit:git-am[1]).
+>> > + =A0 =A0 =A0 Incompatible with the --interactive option.
 >>
->> Then go on from there.
-> What do I do from that is what I asked in first post of this thread?
+>> The one above that does have a shorthand (-p), why should we (not?)
+>> give --signoff it's customary -s shorthand here?
+>
+> The '-s' flag is unfortunately already taken. It is used for
+> specifying a merge strategy.
 
-Assuming you did
-
-  $ git svn clone http://svn.googlecode/url/to/your/repo
-
-You'd have a git repo that is "linked" to the Google Code svn repo.
-Now go inside the git repo and do whatever you want. That was what I
-thought you were looking for in this thread.
-
-But if you need advice on "how to do stuff in git", (eg. adding files,
-commit, push), just google for a git tutorial, I'm sure there are some
-pretty good ones out there.
+In fact, this is why I was a little skeptical myself about submitting
+this patch. What if people start remembering that rebase supports
+--signoff and implicity assume that -s is also a valid shortcut? Funky
+errors. (I've been bittem myself by similar situations for whitespace
+support. Can I pass -b or not? Will it mean --ignore-whitespace?)
 
 --=20
-Cheers,
-Ray Chuan
+Giuseppe "Oblomov" Bilotta
