@@ -1,83 +1,95 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: gitweb: false base href sent when integrated via reverse proxy
- and path_info is active
-Date: Sun, 28 Nov 2010 12:12:15 -0600
-Message-ID: <20101128181215.GB19545@burratino>
-References: <20101128081048.13668.67286.reportbug@sb74.startrek>
- <20101128162720.GB18335@burratino>
- <AANLkTinM8qyL9DafMx4XWBQ5RUeWABKVc5mNjdVEkQfZ@mail.gmail.com>
- <201011281847.40233.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org,
-	Daniel Reichelt <debian@nachtgeist.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 28 19:12:28 2010
+From: "ZHANG, Le" <r0bertz@gentoo.org>
+Subject: [PATCH v4 0/4] add --recode-patch parameter to mailinfo and am
+Date: Mon, 29 Nov 2010 03:10:13 +0800
+Message-ID: <1290971417-4474-1-git-send-email-r0bertz@gentoo.org>
+Cc: "ZHANG, Le" <r0bertz@gentoo.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Nov 28 20:10:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMljg-0007GD-Eg
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 19:12:28 +0100
+	id 1PMmdw-00012S-CR
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 20:10:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753896Ab0K1SMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Nov 2010 13:12:22 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:55532 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753795Ab0K1SMV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Nov 2010 13:12:21 -0500
-Received: by gyb11 with SMTP id 11so1648045gyb.19
-        for <git@vger.kernel.org>; Sun, 28 Nov 2010 10:12:20 -0800 (PST)
+	id S1753991Ab0K1TK3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Nov 2010 14:10:29 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:57955 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753866Ab0K1TK2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Nov 2010 14:10:28 -0500
+Received: by pwj3 with SMTP id 3so638058pwj.19
+        for <git@vger.kernel.org>; Sun, 28 Nov 2010 11:10:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=wmIsdZMOWINlQtbtmqSri/3cV1p3l8SoNSDlnqvqoAk=;
-        b=mU8OAZCqSXybb+nHc14sNtFdxFrB4ltWpMBG2WoVRoYEg6SemDv/uECf1hYMBXRQuR
-         vtEsDwRClB00IM3J7GvMnXI2GSjuHklOB2TXmXQnI1qWpspdcX8pHBDyE4tkVcYHdqEN
-         QFkyswAY4pyOWEPfKjIuQg+Pv2/EXwZ9CMueE=
+        h=domainkey-signature:received:received:sender:from:to:cc:subject
+         :date:message-id:x-mailer;
+        bh=9Gx5/6Nv8PphfoFcTi1wWgbQ7F3KxzSIVgmde3PXQxQ=;
+        b=tEQjNmCLxbBy29Y34j1afw1EesjmSO+oXf/rrqdpYa899Vn3oaFfi6HmR3DDKsS/tg
+         pWAEtEw9VJeK8kxaiLUV02ll3tJWR2EBJHZ9iwXuQ8qrH2jpgCdsqUeUyLrnBeVSwLhH
+         plIFG1b7J37jcp/VdMDWn++4UtgSZ0HebNOgM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=jT+jJAyKLVIkmA40II2wJJyAZEFeRo8f9t/7iPnm0q9zgg7Fv05VRikx9lJhkvHYSQ
-         yExhUUxQDQUMl7lWCdDBmSWA1BE+R1TPMJN4iYU2KlJ13s8FDVcyr3BnMrQBQ0D1BHuh
-         ntUhbULRCEvGlFm1Jn+XytqgBO9GOTahA4Av0=
-Received: by 10.150.199.17 with SMTP id w17mr8987697ybf.301.1290967940532;
-        Sun, 28 Nov 2010 10:12:20 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id p1sm2713191ybn.5.2010.11.28.10.12.18
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 28 Nov 2010 10:12:19 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <201011281847.40233.jnareb@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=sender:from:to:cc:subject:date:message-id:x-mailer;
+        b=QxkalitkpUSpubLfXQjnvJodr8pmGkW7S7X6qA0mkzWuCaqPs0XcMANE2FSdovfY/E
+         u83WTRqNgNZdrBFQcnfACDP53mx9Fw9BYNmrEJ8w58GEPrc0JXxBLR378b1gE/p6xDLG
+         Xgh8F+s+YUfqFVGq7QZZFM1BL8ZY3ZyrYx8xM=
+Received: by 10.142.241.14 with SMTP id o14mr3052088wfh.262.1290971428356;
+        Sun, 28 Nov 2010 11:10:28 -0800 (PST)
+Received: from localhost ([183.37.0.219])
+        by mx.google.com with ESMTPS id w22sm6314012wfd.7.2010.11.28.11.10.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 28 Nov 2010 11:10:27 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.344.gb3680.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162344>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162345>
 
-Jakub Narebski wrote:
+I have a translation project which uses UTF-8 as charset.
+So the patch must be encoded in UTF-8, not just the commit msg etc.
+And we use google group as our mailing list.
 
-> See also gitweb/README, the "Gitweb config file variables" section:
-> 
->  * $base_url
->    Base URL for relative URLs in pages generated by gitweb,
->    (e.g. $logo, $favicon, @stylesheets if they are relative URLs),
->    needed and used only for URLs with nonempty PATH_INFO via
->    <base href="$base_url">.  Usually gitweb sets its value correctly,
->                              ^^^^^^^
->    and there is no need to set this variable, e.g. to $my_uri or "/".
-> 
-> The key word here is "usually" ;-)
+Recently, mails saved from gmail are encoded using local charset if all the
+characters in the patch are in that specific local charset even if the orignal
+mail is in UTF-8. This seems smart but it caused inconvenience for
+our project.
 
-Thanks, all.  That helps.
+Since we have no control on what google will do, so I took another way,
+i.e. add this option to git-mailinfo. I hope this could benefit others as
+well.
 
-No time for it at the moment, but I'm taking this as evidence that
-we need a gitweb.conf(5) manual page. :)  Would you be interested
-in such a thing (as POD or asciidoc)?
+Changelog:
 
-Jonathan
+v4 -> v3:
+* Added a target_charset parameter to convert_to_utf8() in mailinfo.c.
+* Introduced a new config varible: i18n.patchencoding, which will be used solely
+  by --recode-patch parameter.
+
+v2 -> v3:
+* Removed 'const' type qualifier from handle_patch()'s parameter
+* Fixed typos in commit msg
+
+v1 -> v2:
+* Clarified how -u/--encoding is handled in git-mailinfo's documentation
+
+
+ZHANG, Le (4):
+  mailinfo.c: convert_to_utf8(): added a target_charset parameter
+  i18n.patchencoding: introduce a new config variable
+  git mailinfo: added a --recode-patch parameter
+  git am: added a --recode-patch parameter
+
+ Documentation/git-am.txt       |    4 ++++
+ Documentation/git-mailinfo.txt |    6 +++++-
+ builtin/mailinfo.c             |   27 +++++++++++++++++----------
+ cache.h                        |    1 +
+ config.c                       |    3 +++
+ environment.c                  |    1 +
+ git-am.sh                      |   13 +++++++++++--
+ 7 files changed, 42 insertions(+), 13 deletions(-)
+
+-- 
+1.7.3.2.344.gb3680.dirty
