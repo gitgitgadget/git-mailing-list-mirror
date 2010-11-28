@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 1/4] fast-import: stricter parsing of integer options
-Date: Sun, 28 Nov 2010 13:42:46 -0600
-Message-ID: <20101128194246.GB19998@burratino>
+Subject: [PATCH 2/4] fast-import: clarify documentation of "feature" command
+Date: Sun, 28 Nov 2010 13:43:57 -0600
+Message-ID: <20101128194357.GC19998@burratino>
 References: <1287147256-9457-1-git-send-email-david.barr@cordelta.com>
  <1287147256-9457-2-git-send-email-david.barr@cordelta.com>
  <20101128194131.GA19998@burratino>
@@ -13,45 +13,45 @@ Cc: Git Mailing List <git@vger.kernel.org>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Junio C Hamano <gitster@pobox.com>
 To: David Barr <david.barr@cordelta.com>
-X-From: git-owner@vger.kernel.org Sun Nov 28 20:42:59 2010
+X-From: git-owner@vger.kernel.org Sun Nov 28 20:44:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMn9H-0002nk-9D
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 20:42:59 +0100
+	id 1PMnAo-0003FM-H5
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 20:44:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753992Ab0K1Tmy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Nov 2010 14:42:54 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:44890 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752513Ab0K1Tmx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Nov 2010 14:42:53 -0500
-Received: by yxt3 with SMTP id 3so1163845yxt.19
-        for <git@vger.kernel.org>; Sun, 28 Nov 2010 11:42:53 -0800 (PST)
+	id S1754184Ab0K1ToF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Nov 2010 14:44:05 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:39667 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754032Ab0K1ToD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Nov 2010 14:44:03 -0500
+Received: by ywl5 with SMTP id 5so1671829ywl.19
+        for <git@vger.kernel.org>; Sun, 28 Nov 2010 11:44:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=gGrcAajqcGNeiVn5M88ikaggUk2/ocyzZyoFH4u8LkI=;
-        b=fjqECeGLn+Z+XcEp1J/yIZpaepGuwMLPMyit0I1ekr0rSSqGcveT6O/huD6UvL1x7e
-         Y8MuSOp5puOMn3qEO6o+e1R6Wdg5xRBm/ykheOrTse5LpQvWDdL66KWpB3PYCJgSz0Nr
-         qxh6YZYJJbNxP2RUqMzCqY/kGNGrM/CVtvvxE=
+        bh=y9sfMth6ckzvP8mxkW4uin3iexyq4DdA/5QRnSD4mK4=;
+        b=B2jPjCvRQNrlVPVSB3/nht6qcmZVEh5LrQ+rjcLB/cLyKwbMpZMkD83aVWmQWlK6uH
+         syq1RnrLxWg7i/cRJFxo1p+vCidMyoEyKmOat988pfd5PW9OSrAreg5dLtbEpgmFSIMq
+         VM0r/Y9UOWVxF2o9ElcTfJjCX0KNuVwm+n1VI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=xAMsT7RYC4J+vK3sC8rq5LKR4zno3cFgQzoRfO9mrcPESC0MymZjAkA/+7a6/zETeB
-         gGsO4n6h8Zd29zjD8nyCgLGs1r/+RL4BU49nDtkLtUyjuJ7e5zJ2t/jvC3e3MUAmd4J5
-         bs3LSl6a+QSlvsOgtv70B/HnCHTV1rwIoGxy8=
-Received: by 10.150.92.12 with SMTP id p12mr9140886ybb.69.1290973371664;
-        Sun, 28 Nov 2010 11:42:51 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id q31sm1049067yba.18.2010.11.28.11.42.49
+        b=oQRlqpY0p2XIlQEfor8tGIWfOugYy9xE3QwhlUQdgpHiDLKrXmK1xtogIXzG6T1U1V
+         aPIBw+L0XwvLeBvS0HAOF/7/lEYEBKjpDkHGJsF6tmrXxRY38Zr70jsysxoxvygZv1+E
+         RPQJYtWSrxaZo0gs6JD0CgghZqhfC5EUZQO7A=
+Received: by 10.150.196.2 with SMTP id t2mr8987832ybf.205.1290973442683;
+        Sun, 28 Nov 2010 11:44:02 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
+        by mx.google.com with ESMTPS id k16sm2756721ybe.12.2010.11.28.11.44.00
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 28 Nov 2010 11:42:50 -0800 (PST)
+        Sun, 28 Nov 2010 11:44:01 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20101128194131.GA19998@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -59,69 +59,80 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162355>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162356>
 
-Check the result from strtoul to avoid accepting arguments like
---depth=-1 and --active-branches=foo,bar,baz.
+The "feature" command allows streams to specify options for the import
+that must not be ignored.  Logically, they are part of the stream,
+even though technically most supported features are synonyms to
+command-line options.
 
-Requested-by: Ramkumar Ramachandra <artagnon@gmail.com>
+Make this more obvious by being more explicit about how the analogy
+between most "feature" commands and command-line options works.  Treat
+the feature (import-marks) that does not fit this analogy separately.
+
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Acked-by: Sverre Rabbelier <srabbelier@gmail.com>
 ---
-See http://thread.gmane.org/gmane.comp.version-control.git/159117/focus=159236
-for context.
+Side note: I am thinking of introducing a syntax
 
- fast-import.c          |   13 +++++++++++--
- t/t9300-fast-import.sh |    8 ++++++++
- 2 files changed, 19 insertions(+), 2 deletions(-)
+	'feature' SP 'command' SP <command name> LF
 
-diff --git a/fast-import.c b/fast-import.c
-index 74f08bd..959afef 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -2745,16 +2745,25 @@ static void option_date_format(const char *fmt)
- 		die("unknown --date-format argument %s", fmt);
- }
+which would just check if <command name> is a recognized command.
+This way, when a feature introduces a new command, it would get
+a feature name to go along with that with no extra effort.
+
+In particular, it is not obvious to me whether cat-blob, ls-tree,
+and so on ought to be considered a single feature but with the
+feature command syntax, we could dodge the issue. :)  Sane?
+
+ Documentation/git-fast-import.txt |   33 +++++++++++++++------------------
+ 1 files changed, 15 insertions(+), 18 deletions(-)
+
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index 19082b0..3bf04e3 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -878,28 +878,25 @@ Require that fast-import supports the specified feature, or abort if
+ it does not.
  
-+static unsigned long ulong_arg(const char *option, const char *arg)
-+{
-+	char *endptr;
-+	unsigned long rv = strtoul(arg, &endptr, 0);
-+	if (strchr(arg, '-') || endptr == arg || *endptr)
-+		die("%s: argument must be an unsigned integer", option);
-+	return rv;
-+}
-+
- static void option_depth(const char *depth)
- {
--	max_depth = strtoul(depth, NULL, 0);
-+	max_depth = ulong_arg("--depth", depth);
- 	if (max_depth > MAX_DEPTH)
- 		die("--depth cannot exceed %u", MAX_DEPTH);
- }
+ ....
+-	'feature' SP <feature> LF
++	'feature' SP <feature> ('=' <argument>)? LF
+ ....
  
- static void option_active_branches(const char *branches)
- {
--	max_active_branches = strtoul(branches, NULL, 0);
-+	max_active_branches = ulong_arg("--active-branches", branches);
- }
+-The <feature> part of the command may be any string matching
+-^[a-zA-Z][a-zA-Z-]*$ and should be understood by fast-import.
++The <feature> part of the command may be any one of the following:
  
- static void option_export_marks(const char *marks)
-diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 131f032..2c27da6 100755
---- a/t/t9300-fast-import.sh
-+++ b/t/t9300-fast-import.sh
-@@ -1528,6 +1528,14 @@ test_expect_success 'R: unknown commandline options are rejected' '\
-     test_must_fail git fast-import --non-existing-option < /dev/null
- '
+-Feature work identical as their option counterparts with the
+-exception of the import-marks feature, see below.
++date-format::
++export-marks::
++relative-marks::
++no-relative-marks::
++force::
++	Act as though the corresponding command-line option with
++	a leading '--' was passed on the command line
++	(see OPTIONS, above).
  
-+test_expect_success 'R: die on invalid option argument' '
-+	echo "option git active-branches=-5" |
-+	test_must_fail git fast-import &&
-+	echo "option git depth=" |
-+	test_must_fail git fast-import &&
-+	test_must_fail git fast-import --depth="5 elephants" </dev/null
-+'
-+
- cat >input <<EOF
- option non-existing-vcs non-existing-option
- EOF
+-The following features are currently supported:
+-
+-* date-format
+-* import-marks
+-* export-marks
+-* relative-marks
+-* no-relative-marks
+-* force
+-
+-The import-marks behaves differently from when it is specified as
+-commandline option in that only one "feature import-marks" is allowed
+-per stream. Also, any --import-marks= specified on the commandline
+-will override those from the stream (if any).
++import-marks::
++	Like --import-marks except in two respects: first, only one
++	"feature import-marks" command is allowed per stream;
++	second, an --import-marks= command-line option overrides
++	any "feature import-marks" command in the stream.
+ 
+ `option`
+ ~~~~~~~~
