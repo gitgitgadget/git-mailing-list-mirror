@@ -1,121 +1,102 @@
 From: "ZHANG, Le" <r0bertz@gentoo.org>
-Subject: [PATCH v4 1/4] mailinfo.c: convert_to_utf8(): added a target_charset parameter
-Date: Mon, 29 Nov 2010 03:10:14 +0800
-Message-ID: <1290971417-4474-2-git-send-email-r0bertz@gentoo.org>
+Subject: [PATCH v4 2/4] i18n.patchencoding: introduce a new config variable
+Date: Mon, 29 Nov 2010 03:10:15 +0800
+Message-ID: <1290971417-4474-3-git-send-email-r0bertz@gentoo.org>
 References: <1290971417-4474-1-git-send-email-r0bertz@gentoo.org>
 Cc: "ZHANG, Le" <r0bertz@gentoo.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 28 20:10:52 2010
+X-From: git-owner@vger.kernel.org Sun Nov 28 20:11:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMmeB-000182-AV
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 20:10:51 +0100
+	id 1PMmeK-0001A8-Rf
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 20:11:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754040Ab0K1TKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Nov 2010 14:10:42 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:42660 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753866Ab0K1TKl (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Nov 2010 14:10:41 -0500
-Received: by gwj20 with SMTP id 20so1663586gwj.19
-        for <git@vger.kernel.org>; Sun, 28 Nov 2010 11:10:40 -0800 (PST)
+	id S1754050Ab0K1TKw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Nov 2010 14:10:52 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:55102 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753866Ab0K1TKv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Nov 2010 14:10:51 -0500
+Received: by gyb11 with SMTP id 11so1661632gyb.19
+        for <git@vger.kernel.org>; Sun, 28 Nov 2010 11:10:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:sender:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references;
-        bh=zPtm8FNaCVu/rR6fiQGBXX839FCgQw62s479Jv8ca4Y=;
-        b=qRX6X0GiQdr648Imw8MqTLpHeg7L0CatkyVqOMH0XplsrEg9z3/SaL8vWf+M28ud6+
-         PSkKeuxtBwHHvWkWdT/DChgr1KP71YLu0NF9JgqWDqlgabmKldKFwxQUNSE8LiZ4K7MX
-         mrXmA7KRLrm9ED7c9/dxRRazfj3H5iw9l7/B0=
+        bh=0HrgtdRW5Ugg4XlGR6Bwmr7S2GHO4uQJNhGAZSMd33o=;
+        b=gO+CTvlcWlWD4sRYHqnKTgcAfF4N7QqqPGdXNBv+LgYaLgxK6VCRp7lNs18um3nZQ0
+         8fOxqeSCSig/qkE271vo7SEdAtny9PjVjYvErj7j1PO2tWGt0YsCbMX4QaubTkfXG44Q
+         fKCn2hQZ4TpNlpMJvDUKCb7HYe6spUEt4E51o=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        b=N+c4c29bBhuDSgkpNIqYGYu1gqrsmUMzpaxMDg7k5Ijz/Oq8xdkSDgVmPSSN0L3/6y
-         LR+RV+nRGsYkizr+BsNCWXfPRMbbp3t0WbHgincM8tFwAuFWF6vtQR0oF08Su4djjiMm
-         1TLVZVMylroS4uAu9wiEbO7GlfgGU/J8cLgR4=
-Received: by 10.151.46.18 with SMTP id y18mr8913660ybj.324.1290971440612;
-        Sun, 28 Nov 2010 11:10:40 -0800 (PST)
+        b=tOYnHwQaFWEHfSJ7mVGhRlTyOitxbgP/qSarsvrK7rWU5pCnPd6v0lHIQHBdAjSj2m
+         4MqTW/Y2b1XrlES8l5SwJbwupnMZ/CUXwlSq3SCPK2URV8yfCFZLaLWLk2SI/aaKNyOo
+         KQaIHUkTM9yy8X5Aww19zLeTl8HBk7csr0IdI=
+Received: by 10.150.185.1 with SMTP id i1mr7220123ybf.370.1290971450555;
+        Sun, 28 Nov 2010 11:10:50 -0800 (PST)
 Received: from localhost ([183.37.0.219])
-        by mx.google.com with ESMTPS id q8sm3989321ybk.12.2010.11.28.11.10.37
+        by mx.google.com with ESMTPS id e24sm4791729ana.2.2010.11.28.11.10.47
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 28 Nov 2010 11:10:39 -0800 (PST)
+        Sun, 28 Nov 2010 11:10:49 -0800 (PST)
 X-Mailer: git-send-email 1.7.3.2.344.gb3680.dirty
 In-Reply-To: <1290971417-4474-1-git-send-email-r0bertz@gentoo.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162346>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162347>
 
-This is required for my recode-patch patch which needs a seperate patch_charset variable.
+This varible will be used by git mailinfo's --recode-patch parameter only.
 
 Signed-off-by: ZHANG, Le <r0bertz@gentoo.org>
 ---
- builtin/mailinfo.c |   16 ++++++++--------
- 1 files changed, 8 insertions(+), 8 deletions(-)
+ cache.h       |    1 +
+ config.c      |    3 +++
+ environment.c |    1 +
+ 3 files changed, 5 insertions(+), 0 deletions(-)
 
-diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
-index 2320d98..1406d9f 100644
---- a/builtin/mailinfo.c
-+++ b/builtin/mailinfo.c
-@@ -492,22 +492,22 @@ static const char *guess_charset(const struct strbuf *line, const char *target_c
- 	return "ISO8859-1";
- }
+diff --git a/cache.h b/cache.h
+index 33decd9..d04aeff 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1015,6 +1015,7 @@ extern int user_ident_explicitly_given;
+ extern int user_ident_sufficiently_given(void);
  
--static void convert_to_utf8(struct strbuf *line, const char *charset)
-+static void convert_to_utf8(struct strbuf *line, const char *charset, const char *target_charset)
- {
- 	char *out;
+ extern const char *git_commit_encoding;
++extern const char *git_patch_encoding;
+ extern const char *git_log_output_encoding;
+ extern const char *git_mailmap_file;
  
- 	if (!charset || !*charset) {
--		charset = guess_charset(line, metainfo_charset);
-+		charset = guess_charset(line, target_charset);
- 		if (!charset)
- 			return;
- 	}
+diff --git a/config.c b/config.c
+index c63d683..14b0f92 100644
+--- a/config.c
++++ b/config.c
+@@ -674,6 +674,9 @@ static int git_default_i18n_config(const char *var, const char *value)
+ 	if (!strcmp(var, "i18n.commitencoding"))
+ 		return git_config_string(&git_commit_encoding, var, value);
  
--	if (!strcasecmp(metainfo_charset, charset))
-+	if (!strcasecmp(target_charset, charset))
- 		return;
--	out = reencode_string(line->buf, metainfo_charset, charset);
-+	out = reencode_string(line->buf, target_charset, charset);
- 	if (!out)
- 		die("cannot convert from %s to %s",
--		    charset, metainfo_charset);
-+		    charset, target_charset);
- 	strbuf_attach(line, out, strlen(out), strlen(out));
- }
++	if (!strcmp(var, "i18n.patchencoding"))
++		return git_config_string(&git_patch_encoding, var, value);
++
+ 	if (!strcmp(var, "i18n.logoutputencoding"))
+ 		return git_config_string(&git_log_output_encoding, var, value);
  
-@@ -577,7 +577,7 @@ static int decode_header_bq(struct strbuf *it)
- 			break;
- 		}
- 		if (metainfo_charset)
--			convert_to_utf8(dec, charset_q.buf);
-+			convert_to_utf8(dec, charset_q.buf, metainfo_charset);
- 
- 		strbuf_addbuf(&outbuf, dec);
- 		strbuf_release(dec);
-@@ -602,7 +602,7 @@ static void decode_header(struct strbuf *it)
- 	 * This can be binary guck but there is no charset specified.
- 	 */
- 	if (metainfo_charset)
--		convert_to_utf8(it, "");
-+		convert_to_utf8(it, "", metainfo_charset);
- }
- 
- static void decode_transfer_encoding(struct strbuf *line)
-@@ -796,7 +796,7 @@ static int handle_commit_msg(struct strbuf *line)
- 
- 	/* normalize the log message to UTF-8. */
- 	if (metainfo_charset)
--		convert_to_utf8(line, charset.buf);
-+		convert_to_utf8(line, charset.buf, metainfo_charset);
- 
- 	if (use_scissors && is_scissors_line(line)) {
- 		int i;
+diff --git a/environment.c b/environment.c
+index de5581f..b2870f4 100644
+--- a/environment.c
++++ b/environment.c
+@@ -23,6 +23,7 @@ int log_all_ref_updates = -1; /* unspecified */
+ int warn_ambiguous_refs = 1;
+ int repository_format_version;
+ const char *git_commit_encoding;
++const char *git_patch_encoding;
+ const char *git_log_output_encoding;
+ int shared_repository = PERM_UMASK;
+ const char *apply_default_whitespace;
 -- 
 1.7.3.2.344.gb3680.dirty
