@@ -1,95 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv7.1 3/4 (amend)] gitweb: File based caching layer (from git.kernel.org)
-Date: Sun, 28 Nov 2010 12:31:46 +0100
-Message-ID: <201011281231.46786.jnareb@gmail.com>
-References: <201010311021.55917.jnareb@gmail.com> <201011130056.24222.jnareb@gmail.com> <201011281223.03141.jnareb@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: gitweb: false base href sent when integrated via reverse proxy
+ and path_info is active
+Date: Sun, 28 Nov 2010 10:27:20 -0600
+Message-ID: <20101128162720.GB18335@burratino>
+References: <20101128081048.13668.67286.reportbug@sb74.startrek>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
-	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Petr Baudis <pasky@ucw.cz>, admin@repo.or.cz
+Content-Type: text/plain; charset=us-ascii
+Cc: Daniel Reichelt <debian@nachtgeist.net>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 28 12:32:04 2010
+X-From: git-owner@vger.kernel.org Sun Nov 28 17:28:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMfU8-00068z-G9
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 12:32:00 +0100
+	id 1PMk6x-0003Uz-3J
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 17:28:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752601Ab0K1Lby convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Nov 2010 06:31:54 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:57651 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752358Ab0K1Lby (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Nov 2010 06:31:54 -0500
-Received: by bwz15 with SMTP id 15so3073887bwz.19
-        for <git@vger.kernel.org>; Sun, 28 Nov 2010 03:31:52 -0800 (PST)
+	id S1753468Ab0K1Q11 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Nov 2010 11:27:27 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:41904 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753283Ab0K1Q10 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Nov 2010 11:27:26 -0500
+Received: by gxk22 with SMTP id 22so1627053gxk.19
+        for <git@vger.kernel.org>; Sun, 28 Nov 2010 08:27:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=XcNsbQtKv97XGgqpiOnsJrFvm5oRujABwCWbkXnTwyw=;
-        b=AvlchiORsl7F1jO7jLFaGF8OY3W8bJe+CduyBMblhqDg3+I8dzkYVa7iflimwDM2on
-         GaGkAhF9dXpmX+E3OEQ+sfiZ4qTzG2S6UbBhz3RunX4uxS+FqKbL2+asOKQUGr3M8z8C
-         q4M6JaEB71RTZoGKF5MfX8PSqvEKLZ8cUny0k=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=XMAUNP2bbVeJ6pP0Tt1aytF41Uj4RI4Tbl5gO8k0uuw=;
+        b=sta3f2DuUANBSUTixYRAvv4jerJOEpWtkKsv6E0ixu9vaUfymMHzKOzWZrqGlkC9zt
+         /Icy7oFPOt3KtWFvryyf4I80nSxDSp3rAPRaenCuDsoWVitxvDq6x5Jh9cHNp7LY/0p2
+         cp4CtzSf/XKev0AyYM8IOR6altBZKm7a9mX0A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=NDeC/bioL1/Mnfe/Tbf/kJqera2poS+RoA1EMb1BKtz1/tb2T0LC3UWIpFODHaachD
-         GkqIa17oIJams7ePIMzUefrDjkBzhgjiyigrA9tcBlJBrF5GlW6gjPD0ZI1nOK5iQG+P
-         +QBfKY0ZsHYIout7zX0JsF4zKhZd9sW7+G4bQ=
-Received: by 10.204.77.15 with SMTP id e15mr3734955bkk.45.1290943911683;
-        Sun, 28 Nov 2010 03:31:51 -0800 (PST)
-Received: from [192.168.1.13] (abwq157.neoplus.adsl.tpnet.pl [83.8.240.157])
-        by mx.google.com with ESMTPS id b17sm1425096bku.8.2010.11.28.03.31.49
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 28 Nov 2010 03:31:50 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201011281223.03141.jnareb@gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=KLFo1TkSrIV5K0px4jT/t8mSUgkaMT1zfGj62bSFE7mu4Fq1/jLmjjVFLjUqX+CAjI
+         a4qO+9LCAQtsM1kes8vR6BrSFgvhDvAZIVxvRbEcr9gaJgtnjU0PdW17Gj9yigNpvMJ+
+         9+7vxKdElRzcEp4/kkSjQtyP78JEafpQWTKmQ=
+Received: by 10.151.158.7 with SMTP id k7mr8579076ybo.405.1290961644789;
+        Sun, 28 Nov 2010 08:27:24 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
+        by mx.google.com with ESMTPS id f4sm2588927yhc.3.2010.11.28.08.27.22
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 28 Nov 2010 08:27:23 -0800 (PST)
 Content-Disposition: inline
+In-Reply-To: <20101128081048.13668.67286.reportbug@sb74.startrek>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162340>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162341>
 
-On Sun, 28 Nov 2010, Jakub Narebski wrote:
-> On Sat, 13 Nov 2010, Jakub Narebski wrote:
->=20
-> > +sub cacheUpdate {
-> > +=A0=A0=A0=A0=A0=A0=A0my ($action,$areForked) =3D @_;
-> > +=A0=A0=A0=A0=A0=A0=A0my $lockingStatus;
-> > +=A0=A0=A0=A0=A0=A0=A0my $fileData =3D "";
-> > +
-> > +=A0=A0=A0=A0=A0=A0=A0if($backgroundCache){
-> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0open(cacheFileBG, '>:=
-utf8', "$fullhashpath.bg");
-> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0my $lockStatBG =3D fl=
-ock(cacheFileBG,LOCK_EX|LOCK_NB);
-> > +
-> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0$lockStatus =3D $lock=
-StatBG;
-> > +=A0=A0=A0=A0=A0=A0=A0}else{
-> > +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0open(cacheFile, '>:ut=
-f8', \$fullhashpath);
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
- =A0 =A0 =A0 =A0 ^^^^^^^^^^^^^^
->=20
-> I have made mistake with this line when moving $caching_enabled check
-> out of cache_fetch to its caller.
->=20
-> Reusing $fullhashpath variable as a *capture buffer* (it has nothing
-> to do with path; it is not a filename no longer) wouldn't help there.
+Hi Jakub et al,
 
-Errr... I meant that this abuse didn't help avoiding my mistake.
+Daniel Reichelt wrote[1]:
 
---=20
-Jakub Narebski
-Poland
+> I just noticed that integrating gitweb via reverse proxy is impossible when
+> path_info is enabled in gitweb.conf. The base href sent on gitweb.cgi:3427
+> contains the "internal" URL called by the reverse proxy mechanism, not the
+> original one called by the user agent which makes it impossible for the
+> client to display CSS, images, etc...
+> 
+> I suggest an additional config variable, e.g.
+> $feature{'pathinfo'}{'basehrefoverride'} which could override the base href
+> tag determinted by the cgi script (or disable sending a base href tag at all
+> - at least I was able to achieve my desired setup by adjusting the URLs for
+> CSS etc in gitweb.conf to fitting absolute URLs).
+
+Any advice for Daniel?  Is it a good idea?
+
+Regards,
+Jonathan
+
+[1] http://bugs.debian.org/605217
