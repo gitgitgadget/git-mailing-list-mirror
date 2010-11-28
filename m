@@ -1,139 +1,137 @@
 From: "ZHANG, Le" <r0bertz@gentoo.org>
-Subject: [PATCH v4 3/4] git mailinfo: added a --recode-patch parameter
-Date: Mon, 29 Nov 2010 03:10:16 +0800
-Message-ID: <1290971417-4474-4-git-send-email-r0bertz@gentoo.org>
+Subject: [PATCH v4 4/4] git am: added a --recode-patch parameter
+Date: Mon, 29 Nov 2010 03:10:17 +0800
+Message-ID: <1290971417-4474-5-git-send-email-r0bertz@gentoo.org>
 References: <1290971417-4474-1-git-send-email-r0bertz@gentoo.org>
 Cc: "ZHANG, Le" <r0bertz@gentoo.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Nov 28 20:11:13 2010
+X-From: git-owner@vger.kernel.org Sun Nov 28 20:11:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMmeX-0001GJ-Bz
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 20:11:13 +0100
+	id 1PMmeY-0001GJ-2g
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 20:11:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754058Ab0K1TLF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Nov 2010 14:11:05 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:45177 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753866Ab0K1TLB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Nov 2010 14:11:01 -0500
-Received: by pzk6 with SMTP id 6so587766pzk.19
-        for <git@vger.kernel.org>; Sun, 28 Nov 2010 11:11:00 -0800 (PST)
+	id S1754061Ab0K1TLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Nov 2010 14:11:10 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:50803 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753866Ab0K1TLJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Nov 2010 14:11:09 -0500
+Received: by pwj3 with SMTP id 3so638121pwj.19
+        for <git@vger.kernel.org>; Sun, 28 Nov 2010 11:11:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:sender:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references;
-        bh=EDBS9M1qtwivlso16A8cMO86awTEHWzF+zY/aRY/9vk=;
-        b=C0+0S6HH5Go2KRgzZICAYnRDU/+XNbtdlr/yJ1T0NByt2IDPUHRMdf5Fx+xwjHIqLT
-         8qImbQjiH1mAN9I6HqZGxniP7Ea3b5ogoJSfDgMdhUoFUcHkl2jHs3VAbGyuuVVZKrGV
-         4/7b+J2pQOaM57KkQlbmXeJv/UrkLyid+q4nw=
+        bh=+cFrAh4f2wTTr4GSyO1bs6P5MZJMHT6HC4y+8sMM9gM=;
+        b=XcILLNejjC+8062U9DOEY2ZQpM4o2Slghe1AeoeUev1skDVAYJ3SmZ0AyGO1fvdYKx
+         YTEvdnKod3t/7swVx3NCTHlBcyJGFZrn3NpNOaq3qXLqG+/BpQbeCicm7rQc8pJxMFNk
+         cfaq59OlKEGdAkMSngGlwL58yNSYR4ogVEh9Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=sender:from:to:cc:subject:date:message-id:x-mailer:in-reply-to
          :references;
-        b=JDQHPHAv3zy5RQ/gHH8AUKd1lFm9yX/TX1tcXDD4LD+aNWr7vR7zfku7Sjx9ytI3Z5
-         D8850Q7B0aULrKv8W683+Rn6p7kTpuZ6jOLKdkd3CLXe7ELDKq87jjoHAaK+WwtcQPIc
-         JW6vUNya5iC2E0TZpubS8J1++V7RUDoZ2IJ/M=
-Received: by 10.142.128.1 with SMTP id a1mr4482695wfd.282.1290971460842;
-        Sun, 28 Nov 2010 11:11:00 -0800 (PST)
+        b=vokt0fHEb828muNY+gWcw56cvwcqLG7QiV1QSzaeVyNfItchrDuBrHcOHKWxVjs6+7
+         oNMCX//0r8NBKbP/FMkAn7ozq9wsizpxZTvThdotxPM98fuxNOewivv713H+4bd/VQbc
+         Zfbgdauvp/f7owTa+TP9RuiOFGpDQC/0vsYWo=
+Received: by 10.143.159.18 with SMTP id l18mr4497077wfo.98.1290971468888;
+        Sun, 28 Nov 2010 11:11:08 -0800 (PST)
 Received: from localhost ([183.37.0.219])
-        by mx.google.com with ESMTPS id e14sm6319805wfg.20.2010.11.28.11.10.57
+        by mx.google.com with ESMTPS id e14sm6319976wfg.20.2010.11.28.11.11.05
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 28 Nov 2010 11:10:59 -0800 (PST)
+        Sun, 28 Nov 2010 11:11:07 -0800 (PST)
 X-Mailer: git-send-email 1.7.3.2.344.gb3680.dirty
 In-Reply-To: <1290971417-4474-1-git-send-email-r0bertz@gentoo.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162349>
 
-When this parameter is specified, patch will be converted to a target encoding before applied.
-The target encoding defaults to UTF-8. It could also be specified by i18n.patchencoding.
+When this parameter is specified, git am will pass this parameter to git mailinfo.
 
 Signed-off-by: ZHANG, Le <r0bertz@gentoo.org>
 ---
- Documentation/git-mailinfo.txt |    6 +++++-
- builtin/mailinfo.c             |   11 +++++++++--
- 2 files changed, 14 insertions(+), 3 deletions(-)
+ Documentation/git-am.txt |    4 ++++
+ git-am.sh                |   13 +++++++++++--
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-mailinfo.txt b/Documentation/git-mailinfo.txt
-index 3ea5aad..3e84817 100644
---- a/Documentation/git-mailinfo.txt
-+++ b/Documentation/git-mailinfo.txt
-@@ -45,7 +45,7 @@ OPTIONS
- 	them.  This used to be optional but now it is the default.
- +
- Note that the patch is always used as-is without charset
--conversion, even with this flag.
-+conversion, even with this flag; use '--recode-patch' for that.
- 
- --encoding=<encoding>::
- 	Similar to -u.  But when re-coding, the charset specified here is
-@@ -54,6 +54,10 @@ conversion, even with this flag.
- -n::
- 	Disable all charset re-coding of the metadata.
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 51297d0..24ba5ec 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -73,6 +73,10 @@ default.   You can use `--no-utf8` to override this.
+ 	Pass `-n` flag to 'git mailinfo' (see
+ 	linkgit:git-mailinfo[1]).
  
 +--recode-patch::
-+	Convert the patch from the e-mail to UTF-8 (or the value of the
-+	configuration variable i18n.patchencoding if it is set).
++	Pass `--recode-patch` flag to 'git mailinfo' (see
++	linkgit:git-mailinfo[1]).
 +
- --scissors::
- 	Remove everything in body before a scissors line.  A line that
- 	mainly consists of scissors (either ">8" or "8<") and perforation
-diff --git a/builtin/mailinfo.c b/builtin/mailinfo.c
-index 1406d9f..96181e6 100644
---- a/builtin/mailinfo.c
-+++ b/builtin/mailinfo.c
-@@ -12,6 +12,8 @@ static FILE *cmitmsg, *patchfile, *fin, *fout;
- static int keep_subject;
- static int keep_non_patch_brackets_in_subject;
- static const char *metainfo_charset;
-+static const char *patch_charset;
-+static int recode_patch;
- static struct strbuf line = STRBUF_INIT;
- static struct strbuf name = STRBUF_INIT;
- static struct strbuf email = STRBUF_INIT;
-@@ -828,8 +830,10 @@ static int handle_commit_msg(struct strbuf *line)
- 	return 0;
- }
+ -3::
+ --3way::
+ 	When the patch does not apply cleanly, fall back on
+diff --git a/git-am.sh b/git-am.sh
+index df09b42..8010119 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -14,6 +14,7 @@ b,binary*       (historical option -- no-op)
+ q,quiet         be quiet
+ s,signoff       add a Signed-off-by line to the commit message
+ u,utf8          recode into utf8 (default)
++recode-patch    pass --recode-patch flag to git-mailinfo
+ k,keep          pass -k flag to git-mailinfo
+ keep-cr         pass --keep-cr flag to git-mailsplit for mbox format
+ no-keep-cr      do not pass --keep-cr flag to git-mailsplit independent of am.keepcr
+@@ -295,7 +296,7 @@ split_patches () {
+ prec=4
+ dotest="$GIT_DIR/rebase-apply"
+ sign= utf8=t keep= keepcr= skip= interactive= resolved= rebasing= abort=
+-resolvemsg= resume= scissors= no_inbody_headers=
++resolvemsg= resume= scissors= no_inbody_headers= recode_patch=
+ git_apply_opt=
+ committer_date_is_author_date=
+ ignore_date=
+@@ -321,6 +322,8 @@ do
+ 		utf8=t ;; # this is now default
+ 	--no-utf8)
+ 		utf8= ;;
++	--recode-patch)
++		recode_patch=t ;;
+ 	-k|--keep)
+ 		keep=t ;;
+ 	-c|--scissors)
+@@ -464,6 +467,7 @@ else
+ 	echo "$threeway" >"$dotest/threeway"
+ 	echo "$sign" >"$dotest/sign"
+ 	echo "$utf8" >"$dotest/utf8"
++	echo "$recode_patch" >"$dotest/recode_patch"
+ 	echo "$keep" >"$dotest/keep"
+ 	echo "$keepcr" >"$dotest/keepcr"
+ 	echo "$scissors" >"$dotest/scissors"
+@@ -505,6 +509,10 @@ then
+ else
+ 	utf8=-n
+ fi
++if test "$(cat "$dotest/recode_patch")" = t
++then
++	recodepatch=--recode-patch
++fi
+ if test "$(cat "$dotest/keep")" = t
+ then
+ 	keep=-k
+@@ -581,7 +589,8 @@ do
+ 	# by the user, or the user can tell us to do so by --resolved flag.
+ 	case "$resume" in
+ 	'')
+-		git mailinfo $keep $no_inbody_headers $scissors $utf8 "$dotest/msg" "$dotest/patch" \
++		git mailinfo $keep $no_inbody_headers $scissors $utf8 \
++			$recodepatch "$dotest/msg" "$dotest/patch" \
+ 			<"$dotest/$msgnum" >"$dotest/info" ||
+ 			stop_here $this
  
--static void handle_patch(const struct strbuf *line)
-+static void handle_patch(struct strbuf *line)
- {
-+	if (recode_patch)
-+		convert_to_utf8(line, charset.buf, patch_charset);
- 	fwrite(line->buf, 1, line->len, patchfile);
- 	patch_lines++;
- }
-@@ -1021,7 +1025,7 @@ static int git_mailinfo_config(const char *var, const char *value, void *unused)
- }
- 
- static const char mailinfo_usage[] =
--	"git mailinfo [-k|-b] [-u | --encoding=<encoding> | -n] [--scissors | --no-scissors] msg patch < mail >info";
-+	"git mailinfo [-k|-b] [-u | --encoding=<encoding> | -n] [--recode-patch] [--scissors | --no-scissors] msg patch < mail >info";
- 
- int cmd_mailinfo(int argc, const char **argv, const char *prefix)
- {
-@@ -1034,6 +1038,7 @@ int cmd_mailinfo(int argc, const char **argv, const char *prefix)
- 
- 	def_charset = (git_commit_encoding ? git_commit_encoding : "UTF-8");
- 	metainfo_charset = def_charset;
-+	patch_charset = git_patch_encoding ? git_patch_encoding : "UTF-8";
- 
- 	while (1 < argc && argv[1][0] == '-') {
- 		if (!strcmp(argv[1], "-k"))
-@@ -1046,6 +1051,8 @@ int cmd_mailinfo(int argc, const char **argv, const char *prefix)
- 			metainfo_charset = NULL;
- 		else if (!prefixcmp(argv[1], "--encoding="))
- 			metainfo_charset = argv[1] + 11;
-+		else if (!prefixcmp(argv[1], "--recode-patch"))
-+			recode_patch = 1;
- 		else if (!strcmp(argv[1], "--scissors"))
- 			use_scissors = 1;
- 		else if (!strcmp(argv[1], "--no-scissors"))
 -- 
 1.7.3.2.344.gb3680.dirty
