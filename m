@@ -1,117 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb: false base href sent when integrated via reverse proxy and path_info is active
-Date: Sun, 28 Nov 2010 18:47:38 +0100
-Message-ID: <201011281847.40233.jnareb@gmail.com>
-References: <20101128081048.13668.67286.reportbug@sb74.startrek> <20101128162720.GB18335@burratino> <AANLkTinM8qyL9DafMx4XWBQ5RUeWABKVc5mNjdVEkQfZ@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: gitweb: false base href sent when integrated via reverse proxy
+ and path_info is active
+Date: Sun, 28 Nov 2010 12:12:15 -0600
+Message-ID: <20101128181215.GB19545@burratino>
+References: <20101128081048.13668.67286.reportbug@sb74.startrek>
+ <20101128162720.GB18335@burratino>
+ <AANLkTinM8qyL9DafMx4XWBQ5RUeWABKVc5mNjdVEkQfZ@mail.gmail.com>
+ <201011281847.40233.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+Content-Type: text/plain; charset=us-ascii
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org,
 	Daniel Reichelt <debian@nachtgeist.net>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Nov 28 18:53:01 2010
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Nov 28 19:12:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMlQp-0001Nv-VU
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 18:53:00 +0100
+	id 1PMljg-0007GD-Eg
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 19:12:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753862Ab0K1Rrw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Nov 2010 12:47:52 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:61796 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753795Ab0K1Rrv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Nov 2010 12:47:51 -0500
-Received: by fxm15 with SMTP id 15so1838996fxm.19
-        for <git@vger.kernel.org>; Sun, 28 Nov 2010 09:47:49 -0800 (PST)
+	id S1753896Ab0K1SMW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Nov 2010 13:12:22 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:55532 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753795Ab0K1SMV (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Nov 2010 13:12:21 -0500
+Received: by gyb11 with SMTP id 11so1648045gyb.19
+        for <git@vger.kernel.org>; Sun, 28 Nov 2010 10:12:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=Q5kCg5UI3ph3dsDByrqfjRoPEeSySxm2ovOSHNN6TuM=;
-        b=p23hXJ3TVTR/y9Dh+DkxK3Fr773/HFqMb1SOeQhhWqaCWwwwp1McJYvdq8wCJO9sCv
-         x9XG1Z7s92IIJnYf6E2g6mg5kXEIS9A30kInpPmgqCR3natHcF+7ElPg3sqbTZlU4H8Q
-         fuxvzNP/gKBikoJVGJE2cMfmJlFawG4dk6Q9A=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=wmIsdZMOWINlQtbtmqSri/3cV1p3l8SoNSDlnqvqoAk=;
+        b=mU8OAZCqSXybb+nHc14sNtFdxFrB4ltWpMBG2WoVRoYEg6SemDv/uECf1hYMBXRQuR
+         vtEsDwRClB00IM3J7GvMnXI2GSjuHklOB2TXmXQnI1qWpspdcX8pHBDyE4tkVcYHdqEN
+         QFkyswAY4pyOWEPfKjIuQg+Pv2/EXwZ9CMueE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=NEzJ6tN8UpHqP37QA1SQ/wLikwkN/kkAzsjgjPRFsVva0ZbDdkXqodBxVOSxfpqDEF
-         XfyXiiQ71GdTTC7SRGbxHx7sEVc3IUes0OmpksjrPA/f/2vfyp+8cJO8vmoqRwiTjwQ/
-         Q0dTJ3xDGvZqrDa7AnciSghHh3WvVKrEvv67w=
-Received: by 10.223.120.193 with SMTP id e1mr4321101far.106.1290966469838;
-        Sun, 28 Nov 2010 09:47:49 -0800 (PST)
-Received: from [192.168.1.13] (abwq157.neoplus.adsl.tpnet.pl [83.8.240.157])
-        by mx.google.com with ESMTPS id n3sm950572faa.29.2010.11.28.09.47.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 28 Nov 2010 09:47:47 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <AANLkTinM8qyL9DafMx4XWBQ5RUeWABKVc5mNjdVEkQfZ@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=jT+jJAyKLVIkmA40II2wJJyAZEFeRo8f9t/7iPnm0q9zgg7Fv05VRikx9lJhkvHYSQ
+         yExhUUxQDQUMl7lWCdDBmSWA1BE+R1TPMJN4iYU2KlJ13s8FDVcyr3BnMrQBQ0D1BHuh
+         ntUhbULRCEvGlFm1Jn+XytqgBO9GOTahA4Av0=
+Received: by 10.150.199.17 with SMTP id w17mr8987697ybf.301.1290967940532;
+        Sun, 28 Nov 2010 10:12:20 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
+        by mx.google.com with ESMTPS id p1sm2713191ybn.5.2010.11.28.10.12.18
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 28 Nov 2010 10:12:19 -0800 (PST)
 Content-Disposition: inline
+In-Reply-To: <201011281847.40233.jnareb@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162343>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162344>
 
-On Sun, 28 Nov 2010, Giuseppe Bilotta wrote:
-> On Sun, Nov 28, 2010 at 5:27 PM, Jonathan Nieder <jrnieder@gmail.com>=
- wrote:
->> Hi Jakub et al,
->>
->> Daniel Reichelt wrote[1]:
->>
->>> I just noticed that integrating gitweb via reverse proxy is impossi=
-ble when
->>> path_info is enabled in gitweb.conf. The base href sent on gitweb.c=
-gi:3427
->>> contains the "internal" URL called by the reverse proxy mechanism, =
-not the
->>> original one called by the user agent which makes it impossible for=
- the
->>> client to display CSS, images, etc...
->>>
->>> I suggest an additional config variable, e.g.
->>> $feature{'pathinfo'}{'basehrefoverride'} which could override the b=
-ase href
->>> tag determinted by the cgi script (or disable sending a base href t=
-ag at all
->>> - at least I was able to achieve my desired setup by adjusting the =
-URLs for
->>> CSS etc in gitweb.conf to fitting absolute URLs).
->>
->> Any advice for Daniel? =A0Is it a good idea?
->=20
-> I'm not familiar with the way reverse proxies operate. Is there some
-> information that the script can scrape to understand that its request
-> is being reverse-proxied? Or are there options that the reverse
-> proxies can be configured with to pretend that the URL is not being
-> rewritten? These would be better solutions.
->=20
-> Lacking that, a plain
->=20
-> our $base_url  =3D 'whatever';
->=20
-> in the gitweb config should probably work, as the gitweb config is
-> evaluated _after_ the internal URI variables are set. Can the bug
-> submitter confirm that this does indeed work?
+Jakub Narebski wrote:
 
-See also gitweb/README, the "Gitweb config file variables" section:
+> See also gitweb/README, the "Gitweb config file variables" section:
+> 
+>  * $base_url
+>    Base URL for relative URLs in pages generated by gitweb,
+>    (e.g. $logo, $favicon, @stylesheets if they are relative URLs),
+>    needed and used only for URLs with nonempty PATH_INFO via
+>    <base href="$base_url">.  Usually gitweb sets its value correctly,
+>                              ^^^^^^^
+>    and there is no need to set this variable, e.g. to $my_uri or "/".
+> 
+> The key word here is "usually" ;-)
 
- * $base_url
-   Base URL for relative URLs in pages generated by gitweb,
-   (e.g. $logo, $favicon, @stylesheets if they are relative URLs),
-   needed and used only for URLs with nonempty PATH_INFO via
-   <base href=3D"$base_url">.  Usually gitweb sets its value correctly,
-                             ^^^^^^^
-   and there is no need to set this variable, e.g. to $my_uri or "/".
+Thanks, all.  That helps.
 
-The key word here is "usually" ;-)
+No time for it at the moment, but I'm taking this as evidence that
+we need a gitweb.conf(5) manual page. :)  Would you be interested
+in such a thing (as POD or asciidoc)?
 
---=20
-Jakub Narebski
-Poland
+Jonathan
