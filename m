@@ -1,147 +1,81 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: gitweb: false base href sent when integrated via reverse proxy and path_info is active
-Date: Sun, 28 Nov 2010 22:07:01 +0100
-Message-ID: <201011282207.03261.jnareb@gmail.com>
-References: <20101128081048.13668.67286.reportbug@sb74.startrek> <201011281847.40233.jnareb@gmail.com> <4CF2BBEE.2050808@nachtgeist.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: gitweb: false base href sent when integrated via reverse proxy
+ and path_info is active
+Date: Sun, 28 Nov 2010 15:10:55 -0600
+Message-ID: <20101128211054.GA20203@burratino>
+References: <20101128081048.13668.67286.reportbug@sb74.startrek>
+ <20101128162720.GB18335@burratino>
+ <AANLkTinM8qyL9DafMx4XWBQ5RUeWABKVc5mNjdVEkQfZ@mail.gmail.com>
+ <201011281847.40233.jnareb@gmail.com>
+ <4CF2BBEE.2050808@nachtgeist.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
+	git@vger.kernel.org
 To: Daniel Reichelt <debian@nachtgeist.net>
-X-From: git-owner@vger.kernel.org Sun Nov 28 22:07:21 2010
+X-From: git-owner@vger.kernel.org Sun Nov 28 22:11:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMoSu-0002CI-Qo
-	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 22:07:21 +0100
+	id 1PMoWd-0003Gs-9k
+	for gcvg-git-2@lo.gmane.org; Sun, 28 Nov 2010 22:11:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752815Ab0K1VHP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Nov 2010 16:07:15 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:55038 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751961Ab0K1VHO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Nov 2010 16:07:14 -0500
-Received: by fxm15 with SMTP id 15so1912201fxm.19
-        for <git@vger.kernel.org>; Sun, 28 Nov 2010 13:07:13 -0800 (PST)
+	id S1753163Ab0K1VLF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Nov 2010 16:11:05 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:34253 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751961Ab0K1VLD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Nov 2010 16:11:03 -0500
+Received: by gyb11 with SMTP id 11so1689287gyb.19
+        for <git@vger.kernel.org>; Sun, 28 Nov 2010 13:11:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=2OTCJIzTB3IVPswtL9hspLD9GQpuzkuwzOJzgl2Qrn8=;
-        b=oSNvfuUGhfu0stsa3K1uE+p2QVxHqjZEvHFQGXWORG6ITfdPufyvRA2js4RSWN0Tef
-         cELrVd4HdtKzz1erRqDxhIzG40uPJTQB76snpnLFdGEMr5OIk8zZNZY5kmWftavARYiQ
-         TSqUJnN3flfYjQF15kvEJrjfpu00j9C4BDnh4=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=It3HXo/Wp/v4McE6WPFh8lWaJU0NIbPO3OYWaVtqA48=;
+        b=GLepgfywzrLduaIUuH3Rgv4Ql0cHM1YXcUWLnIijnJ2l1rkmnNj/XGVr8UD1KJFqfJ
+         CAXlb7N6MzVaQWejhEm53gHPzM6BCCn6wVM0olkrsvIWZKPUFn6QR7NjlslLNkK6Da75
+         sAwC8PXI5C+2TnyhHlyf5P+/D7T+0widHn9to=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=SFhbxaf/O/CSZzi9zEQQfrUE7g0BrM0l/0oJO/3SVWlNxH67Gz7dFCDaeV4TNRP8Tb
-         bBtABUE/rbFJeXVtf6UfONRBuZT1GOwJIuA+hbkONlHwAW+p8iR66tXHz2T8rk/omRNS
-         nRyFC6zha/CpG4HwWxEVamYfKVs2ayVhRmblk=
-Received: by 10.223.96.137 with SMTP id h9mr4483564fan.54.1290978433212;
-        Sun, 28 Nov 2010 13:07:13 -0800 (PST)
-Received: from [192.168.1.13] (abwq157.neoplus.adsl.tpnet.pl [83.8.240.157])
-        by mx.google.com with ESMTPS id a25sm984917fak.20.2010.11.28.13.07.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 28 Nov 2010 13:07:12 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4CF2BBEE.2050808@nachtgeist.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=LHiptlovOFfQofuNU9lplVXsxl21yWkXhgWx0AluQ1kLXdVhBMuVU+3FfvLyXCN/i3
+         IwZnN9GUAuf8AmHmDVggJczx3afRdTGpXtilIa9PRKHO8ee2aAe/HeaW1GFwT601HP2D
+         tZsCdn7eJL0znmIt8f7AvX5tp7aVvZW8YFfJc=
+Received: by 10.100.251.1 with SMTP id y1mr1984021anh.56.1290978661724;
+        Sun, 28 Nov 2010 13:11:01 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
+        by mx.google.com with ESMTPS id i10sm4894461anh.32.2010.11.28.13.10.59
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 28 Nov 2010 13:11:00 -0800 (PST)
 Content-Disposition: inline
+In-Reply-To: <4CF2BBEE.2050808@nachtgeist.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162361>
 
-On Sun, 28 Nov 2010, Daniel Reichelt wrote:
+Daniel Reichelt wrote:
 
->>> Lacking that, a plain
->>>
->>> our $base_url  = 'whatever';
->>>
->>> in the gitweb config should probably work
-> 
-> Nope again, I'm afraid it doesn't (see further down)
-
-Strange, it works for me (see below). 
- 
->> See also gitweb/README, the "Gitweb config file variables" section:
->> 
->>  * $base_url
->>    Base URL for relative URLs in pages generated by gitweb,
->>    (e.g. $logo, $favicon, @stylesheets if they are relative URLs),
->>    needed and used only for URLs with nonempty PATH_INFO via
->>    <base href="$base_url">.  Usually gitweb sets its value correctly,
->>                              ^^^^^^^
->>    and there is no need to set this variable, e.g. to $my_uri or "/".
->> 
->> The key word here is "usually" ;-)
->> 
-> 
-> *oops* thank you all for the hint! I totally missed that.
-> 
 > However, I just tried that and it failed. $base_url gets ignored in
 > gitweb.conf and even setting $my_url and $my_uri in gitweb.conf seems to
-> have no effect at all. For testing purposes I printed the relevant
-> variables to the html header:
-> 
-> 
-> gitweb.conf:
-> ************
+> have no effect at all.
 
-The default name of gitweb config file is gitweb_config.perl, not 
-gitweb.conf.  Are you sure you are picking correct config file?
+Aha.  The bug fixed by v1.7.3-rc0~85^2 (gitweb: allow configurations
+that change with each request, 2010-07-30) strikes again.
 
+Daniel, could you try again with version 1:1.7.2.3-2.1 (from Debian sid)?
 
-> our $feature{'pathinfo'}{'default'} = [1];
-> our $base_url = "https://foobar";
-> our $my_url = "https://foo";
-> our $my_uri = "https://bar";
+Jakub, we should probably tweak evaluate_uri to do something special if
+$base_url is already set, or advertise that $base_url needs to be set
+in per_request_config when that feature is enabled.
 
-Try adding
-
-  our $site_name = "foo";
-
-to check if you are picking correct config file.
-
-> - git summary of repo "test1"
-> public url: https://sb74/projects/gitweb/test1/summary
-> revProxy url: https://localhost:446/projects/gitweb/test1/summary
-> ************
-> <head>
-> <meta http-equiv="content-type" content="application/xhtml+xml; charset=utf-8"/>
-> <meta name="generator" content="gitweb/1.7.2.3 git/1.7.2.3"/>
-> <meta name="robots" content="index, nofollow"/>
-> <title>localhost Git - test1/summary</title>
-> <base href="https://sb74:446/projects/gitweb" />
-[...]
-> </head>
-
-I get the following when running with config file that contains:
-
-  our $version = "current";
-  [...]
-  our $site_name = "[localhost]";
-  [...]
-  our $base_url = "https://localhost/gitweb/";
-
-$ gitweb-run.sh "" "/git.git"
-  [...]
-  <head>
-  <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
-  <meta name="generator" content="gitweb/current git/1.7.3.2.171.g8ccd7"/>
-  <meta name="robots" content="index, nofollow"/>
-  <title>[localhost] - git.git/summary</title>
-  <base href="https://localhost/gitweb/" />
-  [...]
-
-So it works for me.
--- 
-Jakub Narebski
-Poland
+Thanks again.
+Jonathan
