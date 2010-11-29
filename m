@@ -1,118 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH/RFC] gitweb: Preserve $base_url if it was set
-Date: Mon, 29 Nov 2010 09:57:21 -0800
-Message-ID: <7vr5e457y6.fsf@alter.siamese.dyndns.org>
-References: <20101128081048.13668.67286.reportbug@sb74.startrek>
- <4CF2BBEE.2050808@nachtgeist.net> <20101128211054.GA20203@burratino>
- <201011282305.39975.jnareb@gmail.com> <20101129001908.GA26358@burratino>
+From: Jeremy Huddleston <jeremyhu@apple.com>
+Subject: [PATCH updated] Fallback on _NSGetExecutablePath to get the executable
+ path if using argv[0] fails
+Date: Mon, 29 Nov 2010 13:29:39 -0500
+Message-ID: <DD9829B7-8851-41CF-BCC6-2676B6015028@apple.com>
+References: <051964C9-0507-4CCB-A111-55CA36652F00@apple.com>
+ <AANLkTimwRJqje1-HhzKj-L-5-2CvhTC0+Pr0Cvj7d_kc@mail.gmail.com>
+ <20101129171211.GL8037@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Daniel Reichelt <debian@nachtgeist.net>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 29 18:57:45 2010
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>,
+	Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 29 19:29:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PN7yy-0006h2-RF
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 18:57:45 +0100
+	id 1PN8U4-0004iX-Ib
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 19:29:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754913Ab0K2R5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Nov 2010 12:57:39 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42097 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751203Ab0K2R5i (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Nov 2010 12:57:38 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A677420D9;
-	Mon, 29 Nov 2010 12:57:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8+2Xj7k5fHkxUzF5GPT/gilEA30=; b=sD6WLm
-	unX3A45Z/WTk9IQ5f7ZTFS/bzuqJKLJwzz1MQUO0g5jFBy3vUHQdZymktg28NQnX
-	pFccn28rTbvVMdL5Fz0fHd8yj1LRqB8bLE8sLhoIsz6bI+uIa0/SwC5To3MbB3k6
-	vMAbwvW+fQvXV0FdEsZ/NrdCAwkAqX6/sRZno=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=re182ND+ZfY/haWvJZ1xdUDdXqnunbRd
-	PXmrLTiW8p4R9HNBfryBDJFEpBg89pNmL3nYw1q1cshYLYHSx5/bpr67VC2ug7Ab
-	RIqz3z9k6lwlUegy3fD0p1+THIeWhk5nEVoAApF196x+a01LbRWjKD7iosHmMo2E
-	MCsJJpmYRTU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 53D6720D8;
-	Mon, 29 Nov 2010 12:57:50 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4835A20D7; Mon, 29 Nov 2010
- 12:57:41 -0500 (EST)
-In-Reply-To: <20101129001908.GA26358@burratino> (Jonathan Nieder's message of
- "Sun\, 28 Nov 2010 18\:19\:08 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2E564396-FBE2-11DF-BF01-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
+	id S1751848Ab0K2S3p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Nov 2010 13:29:45 -0500
+Received: from mail-out3.apple.com ([17.254.13.22]:52845 "EHLO
+	mail-out3.apple.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750925Ab0K2S3o (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Nov 2010 13:29:44 -0500
+Received: from relay16.apple.com (relay16.apple.com [17.128.113.55])
+	by mail-out3.apple.com (Postfix) with ESMTP id E1DBEBB9B115
+	for <git@vger.kernel.org>; Mon, 29 Nov 2010 10:29:43 -0800 (PST)
+X-AuditID: 11807137-b7bf5ae000001937-fc-4cf3f117e925
+Received: from elliott.apple.com (elliott.apple.com [17.151.62.13])
+	by relay16.apple.com (Apple SCV relay) with SMTP id 27.E3.06455.711F3FC4; Mon, 29 Nov 2010 10:29:43 -0800 (PST)
+Received: from [17.153.103.154] by elliott.apple.com
+ (Sun Java(tm) System Messaging Server 6.3-7.04 (built Sep 26 2008; 32bit))
+ with ESMTPSA id <0LCN005KXSPGF160@elliott.apple.com> for git@vger.kernel.org;
+ Mon, 29 Nov 2010 10:29:43 -0800 (PST)
+In-reply-to: <20101129171211.GL8037@burratino>
+X-Mailer: Apple Mail (2.1082)
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162410>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162411>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Jakub Narebski wrote:
->
->> If $base_url was defined, then do not redefine it in evaluate_uri().
->
-> How about $my_uri and $my_url?
->
-> What happens if $ENV{PATH_INFO} or $cgi->url(...) changes between
-> requests?  This is partly my ignorance: perhaps FastCGI et al
-> guarantee that such configuration changes can't happen within a single
-> process?
->
-> Maintaining backward compatibility while avoiding this last concern
-> seems hard....
-> It is tempting to change the documentation now and worry about code
-> changes later.  Something like this?
->
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+This adds better support for RUNTIME_PREFIX on Mac OS X.  The previous codepath
+would only work if argv[0] contained the full path to the executable or $PATH
+already contained /path/to/libexec/git-core.  We use _NSGetExecutablePath here
+to find the full path (and thus prepend the correct libexec/git-core to $PATH)
+in the case where argv[0] does not contain the full path to the executable.
 
-Sounds like a sensible thing to do; narrows an interface with two
-variables into a more flexible new interface with a single variable.
+Signed-off-by: Jeremy Huddleston <jeremyhu@apple.com>
+Reviewed-by: Matt Wright <mww@apple.com>
+---
+ exec_cmd.c |   17 +++++++++++++++++
+ 1 files changed, 17 insertions(+), 0 deletions(-)
 
-> ---
-> diff --git a/gitweb/README b/gitweb/README
-> index 6646fda..a9421e0 100644
-> --- a/gitweb/README
-> +++ b/gitweb/README
-> @@ -177,13 +177,15 @@ not include variables usually directly set during build):
->   * $my_url, $my_uri
->     Full URL and absolute URL of gitweb script;
->     in earlier versions of gitweb you might have need to set those
-> -   variables, now there should be no need to do it.
-> +   variables, now there should be no need to do it.  See
-> +   $per_request_config if you need to set them still.
->   * $base_url
->     Base URL for relative URLs in pages generated by gitweb,
->     (e.g. $logo, $favicon, @stylesheets if they are relative URLs),
->     needed and used only for URLs with nonempty PATH_INFO via
->     <base href="$base_url">.  Usually gitweb sets its value correctly,
->     and there is no need to set this variable, e.g. to $my_uri or "/".
-> +   See $per_request_config if you need to set it anyway.
->   * $home_link
->     Target of the home link on top of all pages (the first part of view
->     "breadcrumbs").  By default set to absolute URI of a page ($my_uri).
-> @@ -252,7 +254,10 @@ not include variables usually directly set during build):
->       sub { $ENV{GL_USER} = $cgi->remote_user || "gitweb"; }
->     Otherwise it is treated as boolean value: if true gitweb would process
->     config file once per request, if false it would process config file only
-> -   once.  The default is true.
-> +   once.  Note: $my_url, $my_uri, and $base_url are overwritten with
-> +   their default values before every request, so if you want to change
-> +   them, be sure to set this variable to true or a code reference effecting
-> +   the desired changes.  The default is true.
->  
->  Projects list file format
->  ~~~~~~~~~~~~~~~~~~~~~~~~~
+diff --git a/exec_cmd.c b/exec_cmd.c
+index bf22570..182fd3a 100644
+--- a/exec_cmd.c
++++ b/exec_cmd.c
+@@ -3,6 +3,10 @@
+ #include "quote.h"
+ #define MAX_ARGS	32
+ 
++#if defined(__APPLE__) && defined(RUNTIME_PREFIX)
++#include <mach-o/dyld.h>
++#endif
++
+ extern char **environ;
+ static const char *argv_exec_path;
+ static const char *argv0_path;
+@@ -53,6 +57,19 @@ const char *git_extract_argv0_path(const char *argv0)
+ 	if (slash >= argv0) {
+ 		argv0_path = xstrndup(argv0, slash - argv0);
+ 		return slash + 1;
++#if defined(__APPLE__)
++	} else {
++		char new_argv0[PATH_MAX];
++		uint32_t new_argv0_s = PATH_MAX;
++		if(_NSGetExecutablePath(new_argv0, &new_argv0_s) == 0) {
++			slash = new_argv0 + strlen(new_argv0);
++			while (new_argv0 <= slash && !is_dir_sep(*slash))
++		                slash--;
++
++			if (slash >= new_argv0)
++				argv0_path = xstrndup(new_argv0, slash - new_argv0);
++		}
++#endif
+ 	}
+ 
+ 	return argv0;
+-- 
+1.7.3.2
