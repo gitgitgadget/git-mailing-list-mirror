@@ -1,126 +1,113 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH/RFC] gitweb: Preserve $base_url if it was set
-Date: Sun, 28 Nov 2010 18:19:08 -0600
-Message-ID: <20101129001908.GA26358@burratino>
-References: <20101128081048.13668.67286.reportbug@sb74.startrek>
- <4CF2BBEE.2050808@nachtgeist.net>
- <20101128211054.GA20203@burratino>
- <201011282305.39975.jnareb@gmail.com>
+Subject: Re: [PATCH 1/4] parse-options: allow git commands to invent new
+ option types
+Date: Sun, 28 Nov 2010 22:03:54 -0600
+Message-ID: <20101129040354.GA30187@burratino>
+References: <1287544320-8499-1-git-send-email-pclouds@gmail.com>
+ <1287544320-8499-4-git-send-email-pclouds@gmail.com>
+ <20101022063837.GA6081@burratino>
+ <20101022064258.GB6081@burratino>
+ <7v8w1qnkr1.fsf@alter.siamese.dyndns.org>
+ <20101024072032.GA23455@burratino>
+ <20101024081316.GA29630@burratino>
+ <20101024081507.GB29630@burratino>
+ <4CC55C67.8080908@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Daniel Reichelt <debian@nachtgeist.net>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 29 02:23:28 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
+To: Stephen Boyd <bebarino@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 29 05:19:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMsSl-0007QP-Dm
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 02:23:27 +0100
+	id 1PMvD1-00043Y-V3
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 05:19:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752970Ab0K2BXW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Nov 2010 20:23:22 -0500
-Received: from mail-yw0-f66.google.com ([209.85.213.66]:45028 "EHLO
+	id S1754778Ab0K2ETS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 28 Nov 2010 23:19:18 -0500
+Received: from mail-yw0-f66.google.com ([209.85.213.66]:59293 "EHLO
 	mail-yw0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752605Ab0K2BXV (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Nov 2010 20:23:21 -0500
-Received: by ywi6 with SMTP id 6so3832407ywi.1
-        for <git@vger.kernel.org>; Sun, 28 Nov 2010 17:23:20 -0800 (PST)
+	with ESMTP id S1754730Ab0K2ETR (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 28 Nov 2010 23:19:17 -0500
+Received: by ywi6 with SMTP id 6so3867577ywi.1
+        for <git@vger.kernel.org>; Sun, 28 Nov 2010 20:19:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=//HITVqYSXP1lStI0rtjgDFSf3DWgF4y5t/vNYPTlY8=;
-        b=jQE24rsDwpRJr180GsGe+CqBYFa9c7ScrXP9VMelgkeMvs1lgkamqRnBj7o0CDbSGi
-         cdA8WD9AJGDaDa7Ob12M0N4/EJjhp2Ppszt6EpCMTDwXP/Mf9h/6sDoP91Ifjztw1jPv
-         fl8F5Br4WnCdvjgyRvPB8lrPCOwCmbrEIJzYM=
+        bh=l0RTMXfnCtl9YHf+9lPyGWKchf2s2f99W2yIAwsaIzM=;
+        b=NbwFpygUBWHck0goGszFLqTFx19k6CUnuUkjLwp1Hs3EkhNQwfl0ObAFl3fzKHXyo0
+         6yb83KCWCQGMY0hMED5hnk74x448kCWLiJrR+UNevZdlUGVFZaZey49TDlrweEmL61UW
+         PnZ5YO9xpubUh3V+KEWKsPDniOG3IU69PbLEE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=VaIvI51RGGMYB2bS0NX8m19DEU/t80s2jwn9wCTo9t8t2OkCXK0VWzeVz+/F7gaQ8Q
-         63ORDuvQkqskBVuaMHt0cTRBUA28vOKVTm3aFZJtMqTF1HWt25V9K0Vydnf9Zgk7gwvz
-         STapLHS4n57N7VeFiKz4Ns68s6j8m4a0HU0xI=
-Received: by 10.150.201.7 with SMTP id y7mr9151390ybf.406.1290989954892;
-        Sun, 28 Nov 2010 16:19:14 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id w19sm2902198ybe.4.2010.11.28.16.19.13
+        b=PAG1y9eeya+YvdL+3aj/aH/+meRKyQKiayefcG324yXYxiQMkiZOVt21ql942itW8q
+         vJENzhTJzwKysq/rlKV1GcXbh3vzW4KMf1k4s04n/FY6i0xIo+wiKL/VPJYqmj3JIgIr
+         Cqg75aBpCPELwo7a+9s673VS9wPcoOQUTD2MU=
+Received: by 10.150.144.16 with SMTP id r16mr9456903ybd.204.1291003442936;
+        Sun, 28 Nov 2010 20:04:02 -0800 (PST)
+Received: from burratino ([68.255.109.73])
+        by mx.google.com with ESMTPS id f2sm3527260ybh.17.2010.11.28.20.04.00
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 28 Nov 2010 16:19:14 -0800 (PST)
+        Sun, 28 Nov 2010 20:04:01 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <201011282305.39975.jnareb@gmail.com>
+In-Reply-To: <4CC55C67.8080908@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162374>
 
-Jakub Narebski wrote:
+Stephen Boyd wrote:
 
-> If $base_url was defined, then do not redefine it in evaluate_uri().
+> Is there an actual use case where someone needs to completely override
+> get_value()? If you move this into the case statement then we get the
+> generic error checking of get_value() with the benefits of being able to
+> modify the context within a callback.
 
-How about $my_uri and $my_url?
+Yes, I like this idea.
 
-What happens if $ENV{PATH_INFO} or $cgi->url(...) changes between
-requests?  This is partly my ignorance: perhaps FastCGI et al
-guarantee that such configuration changes can't happen within a single
-process?
+> We could also probably use the
+> return value of the low level callback to indicate whether or not to
+> take some action after parsing the option. Perhaps something like
+> quiting the option parsing loop when encountering such an option?
 
-Maintaining backward compatibility while avoiding this last concern
-seems hard.  Since gitweb_config can contain something like
+I'd rather not, since that would involve anticipating needs in advance.
+This is meant to be a back door for ugly and unusual option types that
+the mainstream API does not take care of yet.  It seems best to allow
+arbitrary effects.
 
-	$my_uri =~ s/foo/bar/;
+[...]
+>> -#define OPT_SHORT 1
+>> -#define OPT_UNSET 2
+[...]
+>> +++ b/parse-options.h
+>> @@ -40,8 +41,16 @@ enum parse_opt_option_flags {
+>>  	PARSE_OPT_SHELL_EVAL = 256
+>>  };
+>>  
+>> +enum parse_opt_ll_flags {
+>> +	OPT_SHORT = 1,
+>> +	OPT_UNSET = 2
+>> +};
+>> +
+>
+> I hope this isn't necessary.
 
-one would want to populate $my_uri in advance.  Meanwhile, if the
-default for $my_uri could change between requests, we would want to be
-able to detect the case when $my_uri is not set.  But what if
-gitweb_config contains
+Because of namespace or something else?
 
-	$my_uri = "something";
+> This reminds me, we can probably simplify that "takes no value" error
+> path in get_value() (see below).
 
-where "something" happens to match the default value for $my_uri in
-the first request?
+Nice.
 
-It is tempting to change the documentation now and worry about code
-changes later.  Something like this?
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-diff --git a/gitweb/README b/gitweb/README
-index 6646fda..a9421e0 100644
---- a/gitweb/README
-+++ b/gitweb/README
-@@ -177,13 +177,15 @@ not include variables usually directly set during build):
-  * $my_url, $my_uri
-    Full URL and absolute URL of gitweb script;
-    in earlier versions of gitweb you might have need to set those
--   variables, now there should be no need to do it.
-+   variables, now there should be no need to do it.  See
-+   $per_request_config if you need to set them still.
-  * $base_url
-    Base URL for relative URLs in pages generated by gitweb,
-    (e.g. $logo, $favicon, @stylesheets if they are relative URLs),
-    needed and used only for URLs with nonempty PATH_INFO via
-    <base href="$base_url">.  Usually gitweb sets its value correctly,
-    and there is no need to set this variable, e.g. to $my_uri or "/".
-+   See $per_request_config if you need to set it anyway.
-  * $home_link
-    Target of the home link on top of all pages (the first part of view
-    "breadcrumbs").  By default set to absolute URI of a page ($my_uri).
-@@ -252,7 +254,10 @@ not include variables usually directly set during build):
-      sub { $ENV{GL_USER} = $cgi->remote_user || "gitweb"; }
-    Otherwise it is treated as boolean value: if true gitweb would process
-    config file once per request, if false it would process config file only
--   once.  The default is true.
-+   once.  Note: $my_url, $my_uri, and $base_url are overwritten with
-+   their default values before every request, so if you want to change
-+   them, be sure to set this variable to true or a code reference effecting
-+   the desired changes.  The default is true.
- 
- Projects list file format
- ~~~~~~~~~~~~~~~~~~~~~~~~~
+Thanks,
+Jonathan
