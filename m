@@ -1,95 +1,77 @@
-From: Matthew Ruffalo <mmr15@case.edu>
-Subject: [PATCH/RFC 1/3] diffstat width: #define defaults in diff.h
-Date: Sun, 28 Nov 2010 18:50:41 -0500
-Message-ID: <4CF2EAD1.8030007@case.edu>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH] commit: Append commit_list prefix in two function names.
+Date: Sun, 28 Nov 2010 22:05:09 -0200
+Message-ID: <AANLkTi=hBzyufVoPrWJ1ngjzc0CZ0e202MaBtke9s_eR@mail.gmail.com>
+References: <0b9cde68dcdfddc13a91a63f9deb3384576164de.1289768501.git.tfransosi@gmail.com>
+	<20101114211905.GB10150@burratino>
+	<AANLkTi=V7e-KFhKVDLjH4TvoT6U3xmFieo5uqigPhqKF@mail.gmail.com>
+	<20101127082933.GA24840@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 29 00:56:53 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 29 01:05:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PMr6y-0002Ao-Mt
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 00:56:53 +0100
+	id 1PMrFA-0004Ht-5a
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 01:05:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754340Ab0K1X4r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 28 Nov 2010 18:56:47 -0500
-Received: from mpv1.tis.cwru.edu ([129.22.105.36]:61814 "EHLO
-	mpv1.tis.cwru.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754327Ab0K1X4q (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 28 Nov 2010 18:56:46 -0500
-Received: from mpv7.TIS.CWRU.edu (mpv7.tis.cwru.edu [129.22.104.170])
-	by mpv1.tis.cwru.edu (MOS 4.1.9-GA)
-	with ESMTP id BEB22486
-	for <git@vger.kernel.org>;
-	Sun, 28 Nov 2010 18:50:43 -0500
-Received: from mail-qy0-f175.google.com (mail-qy0-f175.google.com [209.85.216.175])
-	by mpv7.TIS.CWRU.edu (MOS 4.1.9-GA)
-	with ESMTP id OUP45731
-	for <git@vger.kernel.org>;
-	Sun, 28 Nov 2010 18:50:43 -0500
-Received: by mail-qy0-f175.google.com with SMTP id 8so8909972qyk.13
-        for <git@vger.kernel.org>; Sun, 28 Nov 2010 15:50:43 -0800 (PST)
-Received: by 10.224.2.199 with SMTP id 7mr4646120qak.203.1290988242948;
-        Sun, 28 Nov 2010 15:50:42 -0800 (PST)
-Received: from [10.0.8.11] (cpe-184-56-209-12.neo.res.rr.com [184.56.209.12])
-        by mx.google.com with ESMTPS id l14sm2779561qck.29.2010.11.28.15.50.42
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 28 Nov 2010 15:50:42 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+	id S1753723Ab0K2AFM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 28 Nov 2010 19:05:12 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:41732 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752776Ab0K2AFL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 28 Nov 2010 19:05:11 -0500
+Received: by bwz15 with SMTP id 15so3416649bwz.19
+        for <git@vger.kernel.org>; Sun, 28 Nov 2010 16:05:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=pUs+FuHApxzuH1E1CMJ0bO/lXRBLfpSXqnU5+HZ6hK0=;
+        b=toRdHh+OAW5bwZ23eRokwtPEzQvozFGEVq+47ZQa+xOaWWgPPm+X6/gXJK8OFeey75
+         RXqWRXTxWnY9BfcTulBIWjRQplTjW+J9fz08ze4aJtBo0y3ReLWmG0jAPADcjF3MzVUa
+         7uxTgSbdgBS7b3Sxz4al6K5RVSNJbB5jDvMiY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=gZEGp3eyNqjq8AY7J8N/eWyYDOxfbQrXUrgnIzM+xvIBNRXvhs3hbgTPMV7kEsfzeN
+         nZiVwftnEtk1J8yIoqIa+8IleRSnM9hQMMTw2yiB8gY1t05tfft9Ndo0Y6EN/DZDipYQ
+         +NNspQztpsS3f7QtGULt8kKdtER1yJICmaCqY=
+Received: by 10.204.55.2 with SMTP id s2mr4245813bkg.40.1290989109959; Sun, 28
+ Nov 2010 16:05:09 -0800 (PST)
+Received: by 10.204.58.71 with HTTP; Sun, 28 Nov 2010 16:05:09 -0800 (PST)
+In-Reply-To: <20101127082933.GA24840@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162369>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162370>
 
->From 500a39e27a12151703924f42a97a50c528c289c8 Mon Sep 17 00:00:00 2001
-From: Matthew Ruffalo <matthew.ruffalo@case.edu>
-Date: Sun, 28 Nov 2010 13:33:59 -0500
-Subject: [PATCH 1/3] diffstat width: #define defaults in diff.h
+On Sat, Nov 27, 2010 at 6:29 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Even if split up into multiple patches? =C2=A0I don't think it makes =
+much
+> sense to say "functions in the commit_list API all start with
+> commit_list_"
+I didn't say that in the patch.
 
-Signed-off-by: Matthew Ruffalo <matthew.ruffalo@case.edu>
----
- diff.c |    4 ++--
- diff.h |    3 +++
- 2 files changed, 5 insertions(+), 2 deletions(-)
+> while at the same time leaving half of the functions in
+> the commit_list API without that suffix.
+>
+What's is the problem with this? I don't see a reason to do this to
+all the functions in the same time. I prefer to do this in small
+patches. But it seems Junio is not going to pick this up?
 
-diff --git a/diff.c b/diff.c
-index c248bc6..a151681 100644
---- a/diff.c
-+++ b/diff.c
-@@ -1247,8 +1247,8 @@ static void show_stats(struct diffstat_t *data,
-struct diff_options *options)
-                line_prefix = msg->buf;
-        }
- 
--       width = options->stat_width ? options->stat_width : 80;
--       name_width = options->stat_name_width ? options->stat_name_width
-: 50;
-+       width = options->stat_width ? options->stat_width :
-DIFF_STAT_DEFAULT_WIDTH;
-+       name_width = options->stat_name_width ? options->stat_name_width
-: DIFF_STAT_DEFAULT_NAME_WIDTH;
- 
-        /* Sanity: give at least 5 columns to the graph,
-         * but leave at least 10 columns for the name.
-diff --git a/diff.h b/diff.h
-index 0083d92..7b509c5 100644
---- a/diff.h
-+++ b/diff.h
-@@ -86,6 +86,9 @@ typedef struct strbuf *(*diff_prefix_fn_t)(struct
-diff_options *opt, void *data)
- #define DIFF_XDL_SET(opts, flag)    ((opts)->xdl_opts |= XDF_##flag)
- #define DIFF_XDL_CLR(opts, flag)    ((opts)->xdl_opts &= ~XDF_##flag)
- 
-+#define DIFF_STAT_DEFAULT_WIDTH       80
-+#define DIFF_STAT_DEFAULT_NAME_WIDTH  50
-+
- enum diff_words_type {
-        DIFF_WORDS_NONE = 0,
-        DIFF_WORDS_PORCELAIN,
--- 
-1.7.1
+> By the way, how did this come up? =C2=A0Presumably some particular co=
+de
+> was confusing?
+It became with the idea of API, we see this with strbuf and
+string_list. And this would be good to make the code more easy to
+read.
