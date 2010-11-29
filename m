@@ -1,83 +1,97 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v4 2/4] i18n.patchencoding: introduce a new config
- variable
-Date: Mon, 29 Nov 2010 12:23:21 -0800
-Message-ID: <7vlj4b3mme.fsf@alter.siamese.dyndns.org>
-References: <1290971417-4474-1-git-send-email-r0bertz@gentoo.org>
- <1290971417-4474-3-git-send-email-r0bertz@gentoo.org>
+Subject: Re: [PATCHv2 3/3] cvsimport.txt: document the mapping between config
+ and options
+Date: Mon, 29 Nov 2010 12:23:53 -0800
+Message-ID: <7v7hfv3mli.fsf@alter.siamese.dyndns.org>
+References: <4CF2ADC9.8020504@drmicha.warpmail.net>
+ <317523448870044a68311f811b42bd9461b90d43.1290973138.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: "ZHANG\, Le" <r0bertz@gentoo.org>
-X-From: git-owner@vger.kernel.org Mon Nov 29 21:23:38 2010
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Nov 29 21:24:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNAG7-0001Kf-Sv
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 21:23:36 +0100
+	id 1PNAGj-0001ZM-G0
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 21:24:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753255Ab0K2UX3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Nov 2010 15:23:29 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47503 "EHLO
+	id S1753359Ab0K2UYB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Nov 2010 15:24:01 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48121 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751501Ab0K2UX3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Nov 2010 15:23:29 -0500
+	with ESMTP id S1751501Ab0K2UYA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Nov 2010 15:24:00 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6DE5A3779;
-	Mon, 29 Nov 2010 15:23:46 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D3D643788;
+	Mon, 29 Nov 2010 15:24:17 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=pWswMURrnHXUh1ExKMC2/wUfQoQ=; b=Tx4uXFuvEtZTF6obDK5zaFn
-	2S4D3ewCsOeeDRDj/XmI3xrRqaWK8fhomGEVsLcj3JUcsmDslEVVdrm+QepvI/uj
-	dnov92hXsS4j0uQBjxEfZfrP/eQv8IJm5GM675ttw+HE3EQ7KkHPSyOZSj54fjvQ
-	G+Q1jdABVy7RekuXIrPc=
+	sasl; bh=Kh3LZhik97Q8gexyY68jebjmt0M=; b=uuC7ZojrE/tFRkWUedfGQ+M
+	DVAJkIY9S7H6iTmpzUDk/bLY86Fp9uVeP+CYGlcELQ5hOW9hWncs81TzHJvYaabl
+	HyJ139mHJjNX9Hj5NXvJcPjq7NdMu5Ek2lLE7VFnoWwxGjmC2y23UqSrh9MCDjS1
+	yH4QJgnEJHBnKCKviIgY=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=MVCC4zjWV78muWpU4WG20yypxtmgiuXDkApdTV8zlSeskyCPG
-	JtwES8WS96nFEhGUhNZ3PjAfw5Zn4nYAHrEg8aiJ/3iM5PlqfGk97JywxdVu+e6h
-	ItKtQjrtxzxTbSTMRRHtohvQjndOg3CCMDaaiA+RsVPGDdnV+MplVqCLuU=
+	dns; s=sasl; b=EuIVGImvL3fiZb5LmOeAEl3SrQpfuUIfOU4MfVNsHi4ZVZsgh
+	0HRM0fp4aflmzdAtov9t0gdhjhURxfpilyWaQveEWoI7qrtSZU/awqQQKoWP8ysb
+	k4bQZh4Vv05fE/lsk0tnt38BAX++Kk8AkibqD+yXQkCYgzNBfGNijDP0B4=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4B5633778;
-	Mon, 29 Nov 2010 15:23:44 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B28823786;
+	Mon, 29 Nov 2010 15:24:15 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 35CA53777; Mon, 29 Nov 2010
- 15:23:40 -0500 (EST)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9229E3785; Mon, 29 Nov 2010
+ 15:24:12 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 901B5B52-FBF6-11DF-AE80-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: A2D61714-FBF6-11DF-AE80-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162423>
 
-"ZHANG, Le" <r0bertz@gentoo.org> writes:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> This varible will be used by git mailinfo's --recode-patch parameter only.
+> Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+> ---
+>  Documentation/git-cvsimport.txt |    7 +++++++
+>  1 files changed, 7 insertions(+), 0 deletions(-)
+>
+> diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
+> index 608cd63..b5d5b27 100644
+> --- a/Documentation/git-cvsimport.txt
+> +++ b/Documentation/git-cvsimport.txt
+> @@ -176,6 +176,13 @@ messages, bug-tracking systems, email archives, and the like.
+>  -h::
+>  	Print a short usage message and exit.
+>  
+> +CONFIG
+> +------
+> +For any option '-x' you can set the config variable 'cvsimport.x' to the value
+> +you would specify for '-x', or to 'true' for a boolean option. For an
+> +uppercase option '-X' use the config variable 'cvsimport.xx' (or
+> +'cvsimport.XX').
+> +
 
-I have a few complaints and observations about this:
+I still think this is not about fixing "parsing" as 2/3 states but about
+"working around the initial design flaw of how configuration variables are
+used in cvsimport" in that the initial design didn't take it into account
+that the last component of a configuration variable is case insensitive.
 
- - The patch order is screwed up in the series.  Without knowing what
-   the --recode-patch option does, the reader is forced to look-ahead
-   before judging this patch.
+While mapping -X to .xx may be a usable workaround, it looks really ugly.
+Worse, if we are going to give long command line options to the command
+someday, we will really regret it doing it the way your patch does.
 
- - No documentation in the same patch as the feature is added.  I am
-   guessing that the new configuration variable (and the new option we
-   will see laster) means "the patchfile I got is in this encoding but the
-   mail header does not mark it as such, so I am giving what encoding it
-   is", but this forces the reader to look-ahead.
+Would it be a better alternative to give conflicting but rarely used
+uppercase options longer option name synonyms, and have them specified in
+the gitconfig file in their full names?  Then we can disambiguate with
+something like
 
- - "It will be used by ... only", says who?  In an environment where
-   people send patches in a local encoding but want to keep their
-   repository in a different encoding, it may not be totally implausible
-   to wish "format-patch" to pay attention to this variable to _produce_
-   the output in that encoding, especially given the name of the variable
-   that does not say anything about in which direction it is used, no?
+    [cvsimport]
+    	generate-cvs-revisions = yes
+        remote = origin
 
- - Assuming that I guessed the meaning of this option and parameter right,
-   I am not sure if this should be a configuration variable.  It implies
-   that the majority of patches, if not all, are in this single local
-   encoding that is different from the encoding used in the repository.
-   Is it common?  I dunno.
+which would be more readable, no?
