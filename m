@@ -1,83 +1,76 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: git commit synopsis typo?
-Date: Mon, 29 Nov 2010 13:37:58 -0400
-Message-ID: <20101129173758.GA2279@gnu.kitenet.net>
+From: Alfonso de la Osa <arfonzi@gmail.com>
+Subject: One file is in one place in the server's repo but in another in local ones.
+Date: Mon, 29 Nov 2010 18:39:38 +0100
+Message-ID: <AANLkTi=CC8wa+C3xq5fc6mM58-Xo8yXRuFox6Yx9Uqvw@mail.gmail.com>
+References: <AANLkTinRExEjYMHbUZevtR7nSbO1sbqMH8UCY0x5t1s1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="AhhlLboLdkugWU4S"
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Nov 29 18:38:10 2010
+X-From: git-owner@vger.kernel.org Mon Nov 29 18:39:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PN7g2-0005ZM-1j
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 18:38:10 +0100
+	id 1PN7hX-0006Iq-WA
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 18:39:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755272Ab0K2RiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Nov 2010 12:38:07 -0500
-Received: from wren.kitenet.net ([80.68.85.49]:47481 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754847Ab0K2RiF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Nov 2010 12:38:05 -0500
-Received: from gnu.kitenet.net (dialup-4.153.251.123.Dial1.Atlanta1.Level3.net [4.153.251.123])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id B264D11915E
-	for <git@vger.kernel.org>; Mon, 29 Nov 2010 12:38:03 -0500 (EST)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id CE90D4EB45; Mon, 29 Nov 2010 13:37:58 -0400 (JEST)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754992Ab0K2Rjk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Nov 2010 12:39:40 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:59730 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755355Ab0K2Rjj convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Nov 2010 12:39:39 -0500
+Received: by qwb7 with SMTP id 7so4741237qwb.19
+        for <git@vger.kernel.org>; Mon, 29 Nov 2010 09:39:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=tdDuMzQem6mGspDweJ6ebKOJ4gpLw3og0bHels6+JrM=;
+        b=IK0iP8GsuRkxFLbPphoopzBTR/OwCEABT5PxjaPQb5IaMDKyYOY0GmTFILjA96pPvB
+         J1Lkjic0vMQmZzpVjqFYbFBTXD1bt6zoGOyw4O3uTHNQV/tDzMt9YSHeKvvZJULEPyas
+         rIlr4VsK3mfYi5O6NtrurD0R1XEftkA/GT2/Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        b=u8N2CP+X4ZsuzWyNJHlO38eupzUfwLQCjS7eLhh3w03okMFvGWs/aLsXwFWL0kTgEe
+         6F1YszsKVneAtPECpC4g3j6p/s6EqWwzF7iTp5jt15utE9MqMg/ehMFKUAdgCWnjKItI
+         p4O/7s4RFe1DMIhJKAeV0AkpIQqxc9ZMGaJ44=
+Received: by 10.229.97.13 with SMTP id j13mr4993478qcn.251.1291052378782; Mon,
+ 29 Nov 2010 09:39:38 -0800 (PST)
+Received: by 10.229.240.6 with HTTP; Mon, 29 Nov 2010 09:39:38 -0800 (PST)
+In-Reply-To: <AANLkTinRExEjYMHbUZevtR7nSbO1sbqMH8UCY0x5t1s1@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162407>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162408>
 
+Hi,
+I have a problem, it may be a bug.
+I have only one branch (master),
+I pushed some changes when I moved one file to a folder that was
+called in the same way than the original but in lowercase
+lib/Imagine/Imagine.php =3D> lib/imagine/Imagine.php,
+Then I decided to move it back and removed the new folder and pushed
+it in another commit.
+so the file is like this: lib/Imagine/Imagine.php again, the lowercase
+folder imagine exist no more
+But now the repo has two folders Imagine and imagine, when I change
+anything, the repo takes the changes: added a README file,
+changed some lines in Imagine.php (the conflicted file), and
+everything goes right, in my computers everything is in the place, but
+in github or when I do a new clone, the file is in the wrong folder
+(with the last changes ok, but in the wrong place) and is the only
+thing that is not ok.
+How can I test if this is a bug? how can I solve it if it isn't?
+Thank you for your time!
 
---AhhlLboLdkugWU4S
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+--
 
-Shouldn't the -i and -o options be listed before the -- option?
-
-       git commit [-a | --interactive] [-s] [-v] [-u<mode>] [--amend] [--dr=
-y-run]
-                  [(-c | -C) <commit>] [-F <file> | -m <msg>] [--reset-auth=
-or]
-                  [--allow-empty] [--allow-empty-message] [--no-verify] [-e=
-] [--author=3D<author>]
-                  [--date=3D<date>] [--cleanup=3D<mode>] [--status | --no-s=
-tatus] [--]
-                  [[-i | -o ]<file>...]
-
---=20
-see shy jo
-
---AhhlLboLdkugWU4S
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQIVAwUBTPPk88kQ2SIlEuPHAQjBtRAAs8Y+CzBzsqfyX2v38nujuJ2Nl13xJSTM
-VqTEKu1USvRggXK6PHSsYjQ7DcnqgWds1++gYt2Czzhhzp20jRZsoLKPL8eRRkSi
-8tT7RRul4pVMJVDjDA01WQ9gi1lRnbLecw7EHmp5PbWqw+1DXjj7KBN0dAgSHtLq
-wDS9tDoi6JN2sxi1vh75N/Xgz+0MW8gwwmSLZkhjE7yfcMI8PoqevuGqwLz2MFsr
-1w4yGEGxdNHSBZFZzze+4OJ5o4TXeYmEUarQp1cm8Qd1GZiNAfbdYHC0QrKtaA3Z
-Kn5A84Of6AKwgNkqIBPVNVOxZQmQKrEpcr1yoESLdiC1CQe8rvwOgDRy7yEavN8/
-gqyyqeQ3w4nImbjRrUQ5fg9sZGYJ0pJKo5bDtV3hZhm+f5QJqb+SekMDkOz/RrSj
-6vK57xH3FjPl5rfFZupUvbWkFfIhgd+oUavqzoSauh+YLDGy4oGbAAYPcDrYaYSa
-hPLrk/ETuoQ5PEskAj7ob5kVpgw+GfQ75EWW86y0emvgVFUYAU+QT3VtO0rwd64C
-C0F6bbOh7leJTQmg8AFy6Ni0Q/c9s74aFT3sX6kTwu7j5cwEzM8BO/GV5G1v5zZ2
-Y0yQh3UE/IpnVhsmEySbiSUDer+sr/mh3UjDHpKKe9ekoGVyVPSZRCMi61s1JggJ
-czO8NAuLL4I=
-=p+En
------END PGP SIGNATURE-----
-
---AhhlLboLdkugWU4S--
+alfonso.delaosa@gmail.com
+Alfonso=A0de la Osa
