@@ -1,73 +1,64 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: Re: http://tech.slashdot.org/comments.pl?sid=1885890&cid=34358134
-Date: Mon, 29 Nov 2010 11:27:44 -0800
-Message-ID: <4CF3FEB0.9040806@eaglescrag.net>
-References: <AANLkTinTsn4PP8VxJX=pUOYKtoybCxqB0+-p9kNRGMj8@mail.gmail.com>	 <AANLkTim0FeCE94R1zacOxGiEP8vZRSoDqNuNRUotnd9B@mail.gmail.com>	 <AANLkTima6meFsovFS-15X7CMTD53n=kkvueKrOeN4Yd4@mail.gmail.com>	 <AANLkTi=aCRGNtKxrPLH81H8_NvpBNOmJ-0MHgRms2a3T@mail.gmail.com> <1291025571.4262.21.camel@wpalmer.simply-domain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	Luke Kenneth Casson Leighton <luke.leighton@gmail.com>,
-	git <git@vger.kernel.org>
-To: Will Palmer <wmpalmer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 29 20:26:42 2010
+From: Jeremy Huddleston <jeremyhu@apple.com>
+Subject: Re: [PATCH] Fallback on _NSGetExecutablePath to get the executable path if using argv[0] fails
+Date: Mon, 29 Nov 2010 15:07:38 -0500
+Message-ID: <BED9E026-6804-4ABF-A26D-8F20699BAD0B@apple.com>
+References: <051964C9-0507-4CCB-A111-55CA36652F00@apple.com> <AANLkTimwRJqje1-HhzKj-L-5-2CvhTC0+Pr0Cvj7d_kc@mail.gmail.com> <20101129171211.GL8037@burratino> <37CD335A-00A7-4074-BD39-4FCDEEB3D083@apple.com> <20101129185030.GB9441@burratino>
+Mime-Version: 1.0 (Apple Message framework v1082)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: Thiago Farina <tfransosi@gmail.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 29 21:13:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PN9N2-0007KT-27
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 20:26:40 +0100
+	id 1PNA6i-0005p1-RD
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 21:13:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751868Ab0K2T0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Nov 2010 14:26:35 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:44569 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751436Ab0K2T0e (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Nov 2010 14:26:34 -0500
-Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id oATJQVGA000745
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Mon, 29 Nov 2010 11:26:31 -0800
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.12) Gecko/20100907 Fedora/3.0.7-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.7
-In-Reply-To: <1291025571.4262.21.camel@wpalmer.simply-domain>
-X-Enigmail-Version: 1.0.1
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Mon, 29 Nov 2010 11:26:32 -0800 (PST)
+	id S1752018Ab0K2UNr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Nov 2010 15:13:47 -0500
+Received: from cloud.CS.Berkeley.EDU ([128.32.36.234]:60179 "EHLO
+	mail.outersquare.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751497Ab0K2UNr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Nov 2010 15:13:47 -0500
+X-Greylist: delayed 355 seconds by postgrey-1.27 at vger.kernel.org; Mon, 29 Nov 2010 15:13:47 EST
+Received: from localhost (localhost [127.0.0.1])
+	by mail.outersquare.org (Postfix) with ESMTP id 12FAC53FC9;
+	Mon, 29 Nov 2010 12:07:52 -0800 (PST)
+X-Virus-Scanned: amavisd-new at mail.outersquare.org
+Received: from mail.outersquare.org ([127.0.0.1])
+	by localhost (mail.outersquare.org [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id 4CClCHoshGQl; Mon, 29 Nov 2010 12:07:41 -0800 (PST)
+Received: from [192.168.1.100] (c-71-235-225-119.hsd1.ct.comcast.net [71.235.225.119])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	(Authenticated sender: jeremy@mail.outersquare.org)
+	by mail.outersquare.org (Postfix) with ESMTPSA id 4BF3753F7B;
+	Mon, 29 Nov 2010 12:07:40 -0800 (PST)
+In-Reply-To: <20101129185030.GB9441@burratino>
+X-Mailer: Apple Mail (2.1082)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162418>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162419>
 
-> I want my version control software to use p2p concepts for efficiency. I
-> don't want my version control software to be a p2p client any more than
-> I want my text-editor to be a mail client.
 
-Keep in mind that adding p2p concepts to something doesn't make it more
-efficient, in fact in most cases it makes it dramatically *LESS* efficient.
+On Nov 29, 2010, at 13:50, Jonathan Nieder wrote:
 
-git-torrent like concepts have come up in the past, and I keep pointing
-out how and why they likely won't be useful.  The biggest reason: there
-is no advantage for a client to stay in the cloud once they have their
-data.  You can force this, sure, but clones are seldom and rare to begin
-with (as you mentioned) so there won't be a very large cloud to pull
-from to start with.  With that in mind, I really see no advantage to p2p
-inside of the git core at all.  It adds a lot of complexity for little gain.
+> Jeremy Huddleston wrote:
+>> On Nov 29, 2010, at 12:12, Jonathan Nieder wrote:
+> 
+>>> The section "2) #ifdefs are ugly" of
+>>> linux-2.6/Documentation/SubmittingPatches explains the rationale.
+>> 
+>> I agree, but I don't really see a way around it here since this API is specific to OS X.
+> 
+> Did you actually read that section? :)
 
-Now you do mention things that would be useful:
+Yes, but I don't have the time to "do it right" right now ... I'm contributing the patch that we are using back to the community in the spirit of OSS development, but I don't have the time resources currently to "do it right" at present.  I'll come back to it once time allows if nobody else picks it up.
 
-- Ability to resume a clone that you only have a partial download for
-(maybe just pack files?)
-- Ability to include something like a 'meta-link' like list of
-repositories to check for data (inferred from the multiple download
-locations)
-
-There are things we can learn from p2p, but I don't think adding it to
-git is actually useful.
-
-Just my $0.02 though.
-
-- John 'Warthog9' Hawley
+Thanks,
+Jeremy
