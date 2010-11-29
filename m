@@ -1,251 +1,133 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH v3] help: always suggest common-cmds if prefix of cmd
-Date: Mon, 29 Nov 2010 12:20:35 +0100
-Message-ID: <AANLkTin34AfYnFY5e9B1cuyckfLXU2=qXFciFaaNGt9f@mail.gmail.com>
-References: <AANLkTinKDqykfuV5=oHav9PRehDtJZct_q=zm7p8PAeo@mail.gmail.com>
- <1290787239-4508-1-git-send-email-kusmabite@gmail.com> <7voc9bpqj2.fsf@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, ziade.tarek@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 29 12:21:09 2010
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [PATCH] Fix use of hunk tag for non-hunk content.
+Date: Mon, 29 Nov 2010 12:41:52 +0100
+Message-ID: <02730a5b5e904409da58c7f5ebe40e16e7adc1f1.1291019649.git.bert.wesarg@googlemail.com>
+Cc: git@vger.kernel.org, Bert Wesarg <bert.wesarg@googlemail.com>
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Mon Nov 29 12:42:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PN1n9-0007dV-To
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 12:21:08 +0100
+	id 1PN27X-0005yD-ER
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 12:42:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753332Ab0K2LU6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Nov 2010 06:20:58 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:62813 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752914Ab0K2LU5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Nov 2010 06:20:57 -0500
-Received: by bwz15 with SMTP id 15so3776033bwz.19
-        for <git@vger.kernel.org>; Mon, 29 Nov 2010 03:20:56 -0800 (PST)
+	id S1753070Ab0K2LmA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Nov 2010 06:42:00 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:42737 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752935Ab0K2Ll7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Nov 2010 06:41:59 -0500
+Received: by ewy5 with SMTP id 5so1835291ewy.19
+        for <git@vger.kernel.org>; Mon, 29 Nov 2010 03:41:58 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=s6T3huUkACk07bbSdOkUXRLLsMx7Jv3+xftE0B3+Gxk=;
-        b=ugtvG8nOSv/7TCEdqeGr4H9cb/GvD3U0C6pmQnpD5oZgEMhgrDahtFsGBDKgVhc3b+
-         wNmzylU9WpOT0cEVVy/bVmv1DeyrBpC2YNTI+FmDx4kxoqiON0cxbFAJEChD5/9kpyLV
-         N9nB95WIVzA5lHx9I4YYTgbz1tf2AwBkRM2XA=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=kWAek7BVZUV2bFFS9dk+yV7GT0H+zr4UKqNwYW5sahA=;
+        b=Oxn9gGMPcU7Xugsu26g5b+YF+FzPPcoA9mv+aAoInT/JDNgmQG1T+6vwBLBaA6H/he
+         k/gLmIAX9fOTU7X47CRSYCUmFgGXj0ZdJLrSWzu7fZl/kXNQLgiX7AElCGzZeWxki9Fr
+         EEzhfr5i6V4GHlM2vsra/wj/vcYwB2h/56MLE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=Jln2VcsrrvmyE1MRBvx8+CEjjx0ScE+rAuQcUY9Kca86oj5gtXxwEg5PzUETa4SaKk
-         mQDJUVxicO7rd/dgt0wtTvSNKTRCZYaQijYZsfhmtbHhQvyzC5N4I0/wyFHEfEVHP435
-         eJwZBXzADUPlN8+ytnOEw1WRyGPj0pfts3Lqg=
-Received: by 10.204.118.209 with SMTP id w17mr4576193bkq.107.1291029656358;
- Mon, 29 Nov 2010 03:20:56 -0800 (PST)
-Received: by 10.204.33.73 with HTTP; Mon, 29 Nov 2010 03:20:35 -0800 (PST)
-In-Reply-To: <7voc9bpqj2.fsf@alter.siamese.dyndns.org>
+        d=googlemail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=ViGCWHpYYYT9W/3d3OEUwlIz1UK1+a3unpsr46aAOr27YTaxczKoxhWEMXI0WpJj37
+         Mk9STXZlBdoXh4786iQ1iPe/Uj0l27r18jtAwYrQkr8iZMXfHLnswYLA7NENTtnV/2Le
+         8f8xfeb2pyxOaadb77rYJsfS3YH8Lq6rnGvK0=
+Received: by 10.213.16.72 with SMTP id n8mr269318eba.38.1291030918089;
+        Mon, 29 Nov 2010 03:41:58 -0800 (PST)
+Received: from localhost ([92.116.141.185])
+        by mx.google.com with ESMTPS id q58sm5046911eeh.21.2010.11.29.03.41.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 29 Nov 2010 03:41:57 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.1200.ge4bf6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162384>
 
-Sorry for the late reply, I've been out sick.
+The hunk tag d_@ lost its blue forground color in "apply color information
+from git diff output" (2010-10-22, 8f85599). But this tag was also used
+for non-hunk content like untracked file mime types or git submodules.
 
-On Sat, Nov 27, 2010 at 1:18 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Erik Faye-Lund <kusmabite@gmail.com> writes:
->
->> @@ -320,9 +321,16 @@ const char *help_unknown_cmd(const char *cmd)
->> =A0 =A0 =A0 uniq(&main_cmds);
->>
->> =A0 =A0 =A0 /* This reuses cmdname->len for similarity index */
->> - =A0 =A0 for (i =3D 0; i < main_cmds.cnt; ++i)
->> - =A0 =A0 =A0 =A0 =A0 =A0 main_cmds.names[i]->len =3D
->> + =A0 =A0 for (i =3D 0; i < main_cmds.cnt; ++i) {
->> + =A0 =A0 =A0 =A0 =A0 =A0 main_cmds.names[i]->len =3D 1 +
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 levenshtein(cmd, main_cm=
-ds.names[i]->name, 0, 2, 1, 4);
->> + =A0 =A0 =A0 =A0 =A0 =A0 for (n =3D 0; n < ARRAY_SIZE(common_cmds);=
- ++n) {
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (!strcmp(main_cmds.name=
-s[i]->name,
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 common_cmds[n].nam=
-e) &&
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 !prefixcmp(main_cm=
-ds.names[i]->name, cmd))
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 main_cmds.=
-names[i]->len =3D 0;
->> + =A0 =A0 =A0 =A0 =A0 =A0 }
->> + =A0 =A0 }
->
-> This is an error codepath so performance would not matter much, but t=
-his
-> is doing it in an unnecessarily slow way, no? =A0At this point, both =
-arrays
-> are sorted the same way, so we should be able to walk common_cmds[]
-> alongside the main_cmds.names[] (see below).
->
+Introduce a new tag for this type of content which has the blue forground
+again.
 
-I like it, thanks!
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+---
+ git-gui.sh   |    2 ++
+ lib/diff.tcl |   14 +++++++-------
+ 2 files changed, 9 insertions(+), 7 deletions(-)
 
->> + =A0 =A0 if (n < main_cmds.cnt) {
->> + =A0 =A0 =A0 =A0 =A0 =A0 best_similarity =3D main_cmds.names[n++]->=
-len;
->> + =A0 =A0 =A0 =A0 =A0 =A0 while (n < main_cmds.cnt &&
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0best_similarity =3D=3D main=
-_cmds.names[n]->len)
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ++n;
->> + =A0 =A0 } else
->> + =A0 =A0 =A0 =A0 =A0 =A0 best_similarity =3D 0;
->
-> Think about what does this case _means_... The end user input was so
-> ambiguous that it prefix matched all the common commands! =A0Is it re=
-ally
-> similar enough?
->
-> Note that most of the time main_cmds[] has more than what common_cmds=
-[]
-> has, and because prefix match is done only against common_cmds[],
-> "everything is a prefix-match" never happens. =A0You might want to ma=
-rk it
-> as a BUG(), but someday we may change the rules to give 0 to non comm=
-on
-> commands with prefix match under some condition, so thinking these ra=
-re
-> corner cases through would defend ourselves from future gotchas.
->
-> How about doing it this way instead? =A0Isn't it more readable?
->
-
-Yes, this is better. But:
-
-> diff --git a/help.c b/help.c
-> index 7f4928e..7654f1b 100644
-> --- a/help.c
-> +++ b/help.c
-> @@ -3,6 +3,7 @@
-> =A0#include "exec_cmd.h"
-> =A0#include "levenshtein.h"
-> =A0#include "help.h"
-> +#include "common-cmds.h"
->
-> =A0/* most GUI terminals set COLUMNS (although some don't export it) =
-*/
-> =A0static int term_columns(void)
-> @@ -298,7 +299,8 @@ static void add_cmd_list(struct cmdnames *cmds, s=
-truct cmdnames *old)
-> =A0}
->
-> =A0/* An empirically derived magic number */
-> -#define SIMILAR_ENOUGH(x) ((x) < 6)
-> +#define SIMILARITY_FLOOR 7
-> +#define SIMILAR_ENOUGH(x) ((x) < SIMILARITY_FLOOR)
->
-> =A0const char *help_unknown_cmd(const char *cmd)
-> =A0{
-> @@ -319,10 +321,28 @@ const char *help_unknown_cmd(const char *cmd)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0sizeof(main_cmds.names), cmdname_compare);
-> =A0 =A0 =A0 =A0uniq(&main_cmds);
->
-> - =A0 =A0 =A0 /* This reuses cmdname->len for similarity index */
-> - =A0 =A0 =A0 for (i =3D 0; i < main_cmds.cnt; ++i)
-> + =A0 =A0 =A0 /* This abuses cmdname->len for levenshtein distance */
-> + =A0 =A0 =A0 for (i =3D 0, n =3D 0; i < main_cmds.cnt; i++) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 int cmp =3D 0; /* avoid compiler stupid=
-ity */
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 const char *candidate =3D main_cmds.nam=
-es[i]->name;
-> +
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* Does the candidate appear in common_=
-cmds list? */
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 while (n < ARRAY_SIZE(common_cmds) &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0(cmp =3D strcmp(common_c=
-mds[n].name, candidate)) < 0)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 n++;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if ((n < ARRAY_SIZE(common_cmds)) && !c=
-mp) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* Yes, this is one of =
-the common commands */
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 n++; /* use the entry f=
-rom common_cmds[] */
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (!prefixcmp(candidat=
-e, cmd)) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* Give=
- prefix match a very good score */
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 main_cm=
-ds.names[i]->len =3D 0;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 continu=
-e;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
-> +
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0main_cmds.names[i]->len =3D
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 levenshtein(cmd, main_c=
-mds.names[i]->name, 0, 2, 1, 4);
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 levenshtein(cmd, candid=
-ate, 0, 2, 1, 4) + 1;
-> + =A0 =A0 =A0 }
->
-> =A0 =A0 =A0 =A0qsort(main_cmds.names, main_cmds.cnt,
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0sizeof(*main_cmds.names), levenshtein_comp=
-are);
-> @@ -330,10 +350,21 @@ const char *help_unknown_cmd(const char *cmd)
-> =A0 =A0 =A0 =A0if (!main_cmds.cnt)
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0die ("Uh oh. Your system reports no Gi=
-t commands at all.");
->
-> - =A0 =A0 =A0 best_similarity =3D main_cmds.names[0]->len;
-> - =A0 =A0 =A0 n =3D 1;
-> - =A0 =A0 =A0 while (n < main_cmds.cnt && best_similarity =3D=3D main=
-_cmds.names[n]->len)
-> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 ++n;
-> + =A0 =A0 =A0 /* skip and count prefix matches */
-> + =A0 =A0 =A0 for (n =3D 0; n < main_cmds.cnt && !main_cmds.names[n]-=
->len; n++)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 ; /* still counting */
-> +
-> + =A0 =A0 =A0 if (main_cmds.cnt <=3D n) {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* prefix matches with everything? that=
- is too ambiguous */
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 best_similarity =3D SIMILARITY_FLOOR + =
-1;
-
-=46or this code-path to trigger we would have to be able to prefix-matc=
-h
-every common command AND every "main command" must be included in
-common commands. At the same time. The only possible way to
-prefix-match all commands is if they all start with the same letter.
-Do you really think this is a situation we could ever end up in? Every
-git command being a common-command, starting with the same letter?
-
-This is basically unreachable code. Perhaps it'd be even clearer just t=
-o die:
-
-if (main_cmds.cnt <=3D n)
-	die("Prefix-matched everyting, what's going on?");
-
-
-> + =A0 =A0 =A0 } else {
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* count all the most similar ones */
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 for (best_similarity =3D main_cmds.name=
-s[n++]->len;
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0(n < main_cmds.cnt &&
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 best_similarity =3D=3D main=
-_cmds.names[n]->len);
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0n++)
-> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ; /* still counting */
-> + =A0 =A0 =A0 }
-> =A0 =A0 =A0 =A0if (autocorrect && n =3D=3D 1 && SIMILAR_ENOUGH(best_s=
-imilarity)) {
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0const char *assumed =3D main_cmds.name=
-s[0]->name;
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0main_cmds.names[0] =3D NULL;
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+diff --git a/git-gui.sh b/git-gui.sh
+index 38362fa..c85a53c 100755
+--- a/git-gui.sh
++++ b/git-gui.sh
+@@ -3331,6 +3331,8 @@ foreach {n c} {0 black 1 red4 2 green4 3 yellow4 4 blue4 5 magenta4 6 cyan4 7 gr
+ }
+ $ui_diff tag configure clr1 -font font_diffbold
+ 
++$ui_diff tag conf d_info -foreground blue -font font_diffbold
++
+ $ui_diff tag conf d_cr -elide true
+ $ui_diff tag conf d_@ -font font_diffbold
+ $ui_diff tag conf d_+ -foreground {#00a000}
+diff --git a/lib/diff.tcl b/lib/diff.tcl
+index 8fea947..8435635 100644
+--- a/lib/diff.tcl
++++ b/lib/diff.tcl
+@@ -208,32 +208,32 @@ proc show_other_diff {path w m cont_info} {
+ 			$ui_diff insert end [append \
+ 				"* " \
+ 				[mc "Git Repository (subproject)"] \
+-				"\n"] d_@
++				"\n"] d_info
+ 		} elseif {![catch {set type [exec file $path]}]} {
+ 			set n [string length $path]
+ 			if {[string equal -length $n $path $type]} {
+ 				set type [string range $type $n end]
+ 				regsub {^:?\s*} $type {} type
+ 			}
+-			$ui_diff insert end "* $type\n" d_@
++			$ui_diff insert end "* $type\n" d_info
+ 		}
+ 		if {[string first "\0" $content] != -1} {
+ 			$ui_diff insert end \
+ 				[mc "* Binary file (not showing content)."] \
+-				d_@
++				d_info
+ 		} else {
+ 			if {$sz > $max_sz} {
+ 				$ui_diff insert end [mc \
+ "* Untracked file is %d bytes.
+ * Showing only first %d bytes.
+-" $sz $max_sz] d_@
++" $sz $max_sz] d_info
+ 			}
+ 			$ui_diff insert end $content
+ 			if {$sz > $max_sz} {
+ 				$ui_diff insert end [mc "
+ * Untracked file clipped here by %s.
+ * To see the entire file, use an external editor.
+-" [appname]] d_@
++" [appname]] d_info
+ 			}
+ 		}
+ 		$ui_diff conf -state disabled
+@@ -442,10 +442,10 @@ proc read_diff {fd conflict_size cont_info} {
+ 		} elseif {$is_submodule_diff} {
+ 			if {$line == ""} continue
+ 			if {[regexp {^Submodule } $line]} {
+-				set tags d_@
++				set tags d_info
+ 			} elseif {[regexp {^\* } $line]} {
+ 				set line [string replace $line 0 1 {Submodule }]
+-				set tags d_@
++				set tags d_info
+ 			} else {
+ 				set op [string range $line 0 2]
+ 				switch -- $op {
+-- 
+1.7.3.2.1200.ge4bf6
