@@ -1,111 +1,171 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH 1/2] [RFC] Use --find- instead of --detect- as prefix for long forms of -M and -C.
-Date: Mon, 29 Nov 2010 14:52:59 -0800
-Message-ID: <34E173EF-658B-49CC-99C4-C455074D4A05@sb.org>
-References: <1289420833-20602-1-git-send-email-ydirson@altern.org> <1289420833-20602-2-git-send-email-ydirson@altern.org> <7884E3F5-D622-49E2-BEBE-12936F388C30@sb.org> <7vmxorzr8k.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1082)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Yann Dirson <ydirson@altern.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Nov 29 23:53:26 2010
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH 1/6] Introduce sorted-array binary-search function.
+Date: Mon, 29 Nov 2010 23:57:16 +0100
+Message-ID: <1291071441-11808-2-git-send-email-ydirson@altern.org>
+References: <1291071441-11808-1-git-send-email-ydirson@altern.org>
+Cc: Yann Dirson <ydirson@altern.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Nov 29 23:57:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNCb7-0008Bu-Kk
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 23:53:26 +0100
+	id 1PNCfJ-0001U5-2a
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 23:57:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755257Ab0K2WxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Nov 2010 17:53:05 -0500
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:62284 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755242Ab0K2WxC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Nov 2010 17:53:02 -0500
-Received: by pva4 with SMTP id 4so783193pva.19
-        for <git@vger.kernel.org>; Mon, 29 Nov 2010 14:53:02 -0800 (PST)
-Received: by 10.142.163.2 with SMTP id l2mr6263125wfe.376.1291071181941;
-        Mon, 29 Nov 2010 14:53:01 -0800 (PST)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id w42sm8083263wfh.15.2010.11.29.14.53.00
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 29 Nov 2010 14:53:00 -0800 (PST)
-In-Reply-To: <7vmxorzr8k.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1082)
+	id S1755169Ab0K2W5k (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Nov 2010 17:57:40 -0500
+Received: from smtp5-g21.free.fr ([212.27.42.5]:33217 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752388Ab0K2W5i (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Nov 2010 17:57:38 -0500
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 86757D4807F;
+	Mon, 29 Nov 2010 23:57:32 +0100 (CET)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1PNCf5-000356-9s; Mon, 29 Nov 2010 23:57:31 +0100
+X-Mailer: git-send-email 1.7.2.3
+In-Reply-To: <1291071441-11808-1-git-send-email-ydirson@altern.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162439>
 
-On Nov 29, 2010, at 2:42 PM, Junio C Hamano wrote:
+We use a cpp-based template mechanism to declare the array and its
+management data, as well as a search function.
+Thanks to Jonathan Nieder for this design idea.
 
->> I'm not sure I like the wording --find-copies and --find-renames. Maybe I'm
->> just being silly, but it sounds like those are directives, saying "I want you
->> to find copies/renames", as opposed to just saying "while you're working you
->> should also detect copies/renames". The original flag --find-copies-harder
->> is a bit different, because it's modifying the action of finding copies
->> rather than making finding copies the prime directive.
->> 
->> On the other hand, --detect-copies and --detect-renames sounds to me like
->> you're just telling it that it should, well, detect copies/renames as it goes
->> about its business.
-> 
-> Hmm, but your "harder is different" comes from the knowledge of how it
-> works (namely, the set of paths the frontend feeds to diffcore is made
-> larger), which does not concern the end user.  Also the same logic of
-> yours can be applied to argue for renaming "detect renames" to "find
-> renames", as it _does_ tell diffcore to activate the rename finding
-> machinery, i.e. it is modifying the action of computing the differences.
-
-I will admit I am not an unbiased observer, but I still think
---find-copies-harder is less of a directive and more of a modifier than
---find-copies is.
-
-> So I think using the same verb would make sense, either by introducing a
-> new synonym "detect-copies-harder", or by giving longer "find-copies" and
-> "find-renames" options to not-so-hard ones.
-
-Given my druthers, I'd prefer to go with --detect-copies-harder, but at this
-point I don't have as much of a strong preference anymore.
-
--Kevin Ballard
-
--- 8< --
-Subject: [PATCH] diff: add --detect-copies-harder as a synonym for --find-copies-harder
-
-
-Signed-off-by: Kevin Ballard <kevin@sb.org>
+Signed-off-by: Yann Dirson <ydirson@altern.org>
 ---
- Documentation/diff-options.txt |    1 +
- diff.c                         |    2 +-
- 2 files changed, 2 insertions(+), 1 deletions(-)
+ Makefile       |    1 +
+ sorted-array.h |  104 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 105 insertions(+), 0 deletions(-)
+ create mode 100644 sorted-array.h
 
-diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
-index f3e9538..7246e10 100644
---- a/Documentation/diff-options.txt
-+++ b/Documentation/diff-options.txt
-@@ -251,6 +251,7 @@ endif::git-log[]
- 	If `n` is specified, it has the same meaning as for `-M<n>`.
- 
- --find-copies-harder::
-+--detect-copies-harder::
- 	For performance reasons, by default, `-C` option finds copies only
- 	if the original file of the copy was modified in the same
- 	changeset.  This flag makes the command
-diff --git a/diff.c b/diff.c
-index 6991ed4..faa8dc0 100644
---- a/diff.c
-+++ b/diff.c
-@@ -3198,7 +3198,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
- 		DIFF_OPT_SET(options, TEXT);
- 	else if (!strcmp(arg, "-R"))
- 		DIFF_OPT_SET(options, REVERSE_DIFF);
--	else if (!strcmp(arg, "--find-copies-harder"))
-+	else if (!strcmp(arg, "--find-copies-harder") || !strcmp(arg, "--detect-copies-harder"))
- 		DIFF_OPT_SET(options, FIND_COPIES_HARDER);
- 	else if (!strcmp(arg, "--follow"))
- 		DIFF_OPT_SET(options, FOLLOW_RENAMES);
+diff --git a/Makefile b/Makefile
+index 919ed2b..4b26976 100644
+--- a/Makefile
++++ b/Makefile
+@@ -539,6 +539,7 @@ LIB_H += run-command.h
+ LIB_H += sha1-lookup.h
+ LIB_H += sideband.h
+ LIB_H += sigchain.h
++LIB_H += sorted-array.h
+ LIB_H += strbuf.h
+ LIB_H += string-list.h
+ LIB_H += submodule.h
+diff --git a/sorted-array.h b/sorted-array.h
+new file mode 100644
+index 0000000..20219e7
+--- /dev/null
++++ b/sorted-array.h
+@@ -0,0 +1,104 @@
++#ifndef SORTED_ARRAY_H_
++#define SORTED_ARRAY_H_
++
++#define declare_sorted_array(MAYBESTATIC,ELEMTYPE,LIST)			\
++MAYBESTATIC ELEMTYPE *LIST;						\
++MAYBESTATIC int LIST##_nr, LIST##_alloc;
++
++/* internal func: the implementation */
++#define declare_gen_binsearch(MAYBESTATIC,ELEMTYPE,FUNCNAME,INITTYPE)	\
++MAYBESTATIC int FUNCNAME(						\
++	ELEMTYPE *list, int list_nr,					\
++	int(*cmp_func)(INITTYPE ref, ELEMTYPE *elem),			\
++	INITTYPE data)							\
++{									\
++	int lo, hi;							\
++									\
++	lo = 0;								\
++	hi = list_nr;							\
++	while (hi > lo) {						\
++		int mid = (hi + lo) >> 1;				\
++		int cmp = cmp_func(data, list + mid);			\
++		if (!cmp)						\
++			return mid;					\
++		if (cmp < 0)						\
++			hi = mid;					\
++		else							\
++			lo = mid + 1;					\
++	}								\
++	return -lo - 1;							\
++}
++
++#define declare_gen_sorted_insert(MAYBESTATIC,ELEMTYPE,FUNCNAME,SEARCHFUNC,INITTYPE) \
++MAYBESTATIC int FUNCNAME(						\
++	ELEMTYPE **list_p, int *list_nr_p, int *list_alloc_p,		\
++	int(*cmp_func)(INITTYPE ref, ELEMTYPE *elem),			\
++	void(*init_func)(ELEMTYPE *elem, INITTYPE init),		\
++	INITTYPE data)							\
++{									\
++	int pos = SEARCHFUNC(*list_p, *list_nr_p, cmp_func, data);	\
++	if (pos >= 0) 							\
++		return pos;						\
++	/* not found */							\
++	pos = -pos - 1;							\
++	/* insert to make it at "pos" */				\
++	if (*list_alloc_p <= *list_nr_p) {				\
++		(*list_alloc_p) = alloc_nr((*list_alloc_p));		\
++		*list_p = xrealloc(*list_p,				\
++				   (*list_alloc_p) * sizeof(**list_p)); \
++	}								\
++	(*list_nr_p)++;							\
++	if (pos < *list_nr_p)						\
++		memmove(*list_p + pos + 1, *list_p + pos,		\
++			(*list_nr_p - pos - 1) * sizeof(**list_p));	\
++	init_func(&(*list_p)[pos], data);				\
++	return -pos - 1;						\
++}
++
++/*
++ * Returns the position of the element if found pre-existing in the
++ * list, or if not found, -pos-1 where pos is where the element was
++ * inserted if insert_ok, or would have been inserted if !insert_ok.
++ */
++#define declare_sorted_array_search_check(MAYBESTATIC,FUNCNAME,INITTYPE,GENSEARCH,LIST,CMP) \
++MAYBESTATIC int FUNCNAME(INITTYPE data)					\
++{									\
++	return GENSEARCH(LIST, LIST##_nr, CMP, data);			\
++}
++
++#define declare_sorted_array_insert_check(MAYBESTATIC,FUNCNAME,INITTYPE,GENINSERT,LIST,CMP,INIT) \
++MAYBESTATIC int FUNCNAME(INITTYPE data)					\
++{									\
++	return GENINSERT(&LIST, &LIST##_nr, &LIST##_alloc,		\
++			 CMP, INIT, data);				\
++}
++
++/*
++ * Insert, and just tell whether the searched element was pre-existing
++ * in the list or not.
++ */
++#define declare_sorted_array_insert_checkbool(MAYBESTATIC,FUNCNAME,INITTYPE,GENINSERT,LIST,CMP,INIT) \
++MAYBESTATIC int FUNCNAME(INITTYPE data)					\
++{									\
++	int idx = GENINSERT(&LIST, &LIST##_nr, &LIST##_alloc,		\
++			    CMP, INIT, data);				\
++	if (idx < 0)							\
++		return 0;						\
++	return 1;							\
++}
++
++/*
++ * Search for element, inserting it if requested.  Returns address of
++ * the element found or newly-inserted, or NULL if not found and
++ * insertion was not requested.
++ */
++#define declare_sorted_array_search_elem(MAYBESTATIC,ELEMTYPE,FUNCNAME,INITTYPE,GENSEARCH,LIST,CMP) \
++MAYBESTATIC ELEMTYPE *FUNCNAME(INITTYPE data)				\
++{									\
++	int idx = GENSEARCH(LIST, LIST##_nr, CMP, data);		\
++	if (idx < 0)							\
++		return NULL;						\
++	return &(LIST[idx]);						\
++}
++
++#endif
 -- 
-1.7.3.2.615.g83f72.dirty
+1.7.2.3
