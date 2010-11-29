@@ -1,83 +1,73 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCH 3/6] web--browse: split valid_tool list
-Date: Mon, 29 Nov 2010 20:19:06 +0100
-Message-ID: <AANLkTik7611p5gun+CmyvOVpcm=_dXVo9FzP_tw7cbRU@mail.gmail.com>
-References: <1291042075-19983-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1291042075-19983-4-git-send-email-giuseppe.bilotta@gmail.com> <20101129164435.GI8037@burratino>
+From: "J.H." <warthog19@eaglescrag.net>
+Subject: Re: http://tech.slashdot.org/comments.pl?sid=1885890&cid=34358134
+Date: Mon, 29 Nov 2010 11:27:44 -0800
+Message-ID: <4CF3FEB0.9040806@eaglescrag.net>
+References: <AANLkTinTsn4PP8VxJX=pUOYKtoybCxqB0+-p9kNRGMj8@mail.gmail.com>	 <AANLkTim0FeCE94R1zacOxGiEP8vZRSoDqNuNRUotnd9B@mail.gmail.com>	 <AANLkTima6meFsovFS-15X7CMTD53n=kkvueKrOeN4Yd4@mail.gmail.com>	 <AANLkTi=aCRGNtKxrPLH81H8_NvpBNOmJ-0MHgRms2a3T@mail.gmail.com> <1291025571.4262.21.camel@wpalmer.simply-domain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 29 20:19:33 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
+	Luke Kenneth Casson Leighton <luke.leighton@gmail.com>,
+	git <git@vger.kernel.org>
+To: Will Palmer <wmpalmer@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 29 20:26:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PN9G8-0004BT-9Z
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 20:19:32 +0100
+	id 1PN9N2-0007KT-27
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 20:26:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751290Ab0K2TT1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Nov 2010 14:19:27 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:36120 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750860Ab0K2TT1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Nov 2010 14:19:27 -0500
-Received: by ywl5 with SMTP id 5so2251960ywl.19
-        for <git@vger.kernel.org>; Mon, 29 Nov 2010 11:19:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=24OOvmDwBM5QiXBZZDd45OlyCST3L83yxECnBwzL7dU=;
-        b=t4gwqZQIlCUZP0u+VpE+ryCpVsCUlEBpjlNf4M2pCWiOIl462j4pi89CuPH754jmQi
-         j8zb6oQyfszdSAu+jY6nlFGw2fMqB1fR0nQK+p0tkYT2E0ipcIVw8dEr3Q/+kqxhMpS8
-         YA/0riie88lS8zGeHECWbBqv40c9B97wEVqrY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=ZRywCbjnPzRqsB9rHBQNES2ELtXaF60IYvBR19pLnhF3X9F1d5COqs4annwKZ5Hj4R
-         Ie5cAAXRuXvhyl9kDeyjsCkNT831Wlybv3t3ubcB76UmANpbrMVuzFavIWi66YyDhvd6
-         fGdDBxVsc/huawNSvI4aUOwNc+jO7UXgI36pI=
-Received: by 10.231.14.10 with SMTP id e10mr6048041iba.132.1291058366469; Mon,
- 29 Nov 2010 11:19:26 -0800 (PST)
-Received: by 10.231.17.135 with HTTP; Mon, 29 Nov 2010 11:19:06 -0800 (PST)
-In-Reply-To: <20101129164435.GI8037@burratino>
+	id S1751868Ab0K2T0f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Nov 2010 14:26:35 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:44569 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751436Ab0K2T0e (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Nov 2010 14:26:34 -0500
+Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id oATJQVGA000745
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Mon, 29 Nov 2010 11:26:31 -0800
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.12) Gecko/20100907 Fedora/3.0.7-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.7
+In-Reply-To: <1291025571.4262.21.camel@wpalmer.simply-domain>
+X-Enigmail-Version: 1.0.1
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Mon, 29 Nov 2010 11:26:32 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162417>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162418>
 
-On Mon, Nov 29, 2010 at 5:44 PM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Giuseppe Bilotta wrote:
->
->> --- a/git-web--browse.sh
->> +++ b/git-web--browse.sh
->> @@ -31,7 +31,8 @@ valid_custom_tool()
->>
->> =A0valid_tool() {
->> =A0 =A0 =A0 case "$1" in
->> - =A0 =A0 firefox | iceweasel | chrome | google-chrome | chromium | =
-konqueror | w3m | links | lynx | dillo | open | start)
->> + =A0 =A0 firefox|iceweasel|chrome|google-chrome|chromium\
->> + =A0 =A0 |konqueror|w3m|links|lynx|dillo|open|start)
->
-> micronit: I think this looks better as
->
-> =A0 =A0 =A0 =A0firefox|iceweasel|chrome|google-chrome|chromium| \
-> =A0 =A0 =A0 =A0konqueror|w3m|links|lynx|dillo|open|start)
->
-> , with the | on the end of the first line.
+> I want my version control software to use p2p concepts for efficiency. I
+> don't want my version control software to be a p2p client any more than
+> I want my text-editor to be a mail client.
 
-I opted for the | at the beginning of the line to give a better idea
-of the continuation, but I don't have a strong preference in that
-direction, so I can fix it up as you suggested, unless there are
-specific indications from the 'higher ups' ;-)
+Keep in mind that adding p2p concepts to something doesn't make it more
+efficient, in fact in most cases it makes it dramatically *LESS* efficient.
 
---=20
-Giuseppe "Oblomov" Bilotta
+git-torrent like concepts have come up in the past, and I keep pointing
+out how and why they likely won't be useful.  The biggest reason: there
+is no advantage for a client to stay in the cloud once they have their
+data.  You can force this, sure, but clones are seldom and rare to begin
+with (as you mentioned) so there won't be a very large cloud to pull
+from to start with.  With that in mind, I really see no advantage to p2p
+inside of the git core at all.  It adds a lot of complexity for little gain.
+
+Now you do mention things that would be useful:
+
+- Ability to resume a clone that you only have a partial download for
+(maybe just pack files?)
+- Ability to include something like a 'meta-link' like list of
+repositories to check for data (inferred from the multiple download
+locations)
+
+There are things we can learn from p2p, but I don't think adding it to
+git is actually useful.
+
+Just my $0.02 though.
+
+- John 'Warthog9' Hawley
