@@ -1,70 +1,146 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Fallback on _NSGetExecutablePath to get the executable
- path if using argv[0] fails
-Date: Mon, 29 Nov 2010 12:50:30 -0600
-Message-ID: <20101129185030.GB9441@burratino>
-References: <051964C9-0507-4CCB-A111-55CA36652F00@apple.com>
- <AANLkTimwRJqje1-HhzKj-L-5-2CvhTC0+Pr0Cvj7d_kc@mail.gmail.com>
- <20101129171211.GL8037@burratino>
- <37CD335A-00A7-4074-BD39-4FCDEEB3D083@apple.com>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCH 5/6] web--browse: use (x-)www-browser if available
+Date: Mon, 29 Nov 2010 20:05:01 +0100
+Message-ID: <AANLkTimec0prJ29MR3N7GtHJ1FCkk+7=1UJtqiaLZqhK@mail.gmail.com>
+References: <1291042075-19983-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <1291042075-19983-6-git-send-email-giuseppe.bilotta@gmail.com> <AANLkTinGustedMv9rm+RgGMQckfxgbTPA+Yqpz7vqTfm@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thiago Farina <tfransosi@gmail.com>, git@vger.kernel.org
-To: Jeremy Huddleston <jeremyhu@apple.com>
-X-From: git-owner@vger.kernel.org Mon Nov 29 19:50:50 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Christian Couder <christian.couder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Nov 29 20:05:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PN8oH-0006lk-5d
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 19:50:45 +0100
+	id 1PN92f-00053h-21
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 20:05:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752119Ab0K2Suk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Nov 2010 13:50:40 -0500
-Received: from mail-fx0-f66.google.com ([209.85.161.66]:34533 "EHLO
-	mail-fx0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751422Ab0K2Suj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Nov 2010 13:50:39 -0500
-Received: by fxm9 with SMTP id 9so2015044fxm.1
-        for <git@vger.kernel.org>; Mon, 29 Nov 2010 10:50:38 -0800 (PST)
+	id S1752088Ab0K2TF0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Nov 2010 14:05:26 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:50092 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751992Ab0K2TFX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 29 Nov 2010 14:05:23 -0500
+Received: by iwn5 with SMTP id 5so474660iwn.19
+        for <git@vger.kernel.org>; Mon, 29 Nov 2010 11:05:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=LaA/uJRX6jBgjG5hg1H/96uQ1W01D17fLQ4Z4nK4rr8=;
-        b=JybvO65MHUY0JkE6QOvPxwo8bvComDNRWbkTENBfSFAC8sJTMfilZ43KX0aWwZxmH1
-         9sfkRF2gaEfAYHP6BUV6nu+tG+WVUgwRMys11KBnW4ApKMeoNzjWMuI7+YpQpCYRPku2
-         ts2FQFfgYrCRMn4CDcZcd2fx0Hy5pO996y0VM=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=E7+KIb142WMMwwcNRF9g7BMy6T6JOl7HDoVOIaaZAl4=;
+        b=RNtRIByoCnQ1tXzhuAHgWDN7V+pte4/Z/DqnRFlevsRiTidbfmHdm5jQpdtEHGkB1q
+         0NuNUYlYO+p09Ft2kRVysgA/eXyt9YBVxH5n1nFcgxjG1++aCOkmxG2tEleQ7avGQUpV
+         jFXLWHjOK7zqE9xvVweMwCIzIt6WUheyib/tU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Q3FTy3KVYa9GkZURU+0kIGb4xXadQAU9+qt2RyCkrP/L8yI7ZLpSIcQy4GZX8hoNVG
-         egxR6tSFsGdYnapzCAHyH1r+I6mAJV6/3fNCHdX3ZzD4GsIxzkOzbzsCyFm7aQX6m2t9
-         P6AzVrE4ozmqyMedj5nAIVDAqMtdShZwAOwR4=
-Received: by 10.223.93.204 with SMTP id w12mr5644903fam.103.1291056638515;
-        Mon, 29 Nov 2010 10:50:38 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
-        by mx.google.com with ESMTPS id e6sm1328566fav.8.2010.11.29.10.50.36
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 29 Nov 2010 10:50:37 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <37CD335A-00A7-4074-BD39-4FCDEEB3D083@apple.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Gdx1GgURnFkaduMrcILOB3qQclFOLNQaciRwk2ANsxAKd8d0SwViN6jghOe16VBJW2
+         6FrHYqC1h3srlN3kDUGXVE2ey2MFCWCdNgHC1E/9ndxKCS/cR5M1aihqDujPj9ZVZCau
+         Fisy0D9rRTGZqr/wrvtuuCS9vP73iI5ljnOH0=
+Received: by 10.231.20.65 with SMTP id e1mr2796166ibb.32.1291057522230; Mon,
+ 29 Nov 2010 11:05:22 -0800 (PST)
+Received: by 10.231.17.135 with HTTP; Mon, 29 Nov 2010 11:05:01 -0800 (PST)
+In-Reply-To: <AANLkTinGustedMv9rm+RgGMQckfxgbTPA+Yqpz7vqTfm@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162414>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162415>
 
-Jeremy Huddleston wrote:
-> On Nov 29, 2010, at 12:12, Jonathan Nieder wrote:
-
->> The section "2) #ifdefs are ugly" of
->> linux-2.6/Documentation/SubmittingPatches explains the rationale.
+On Mon, Nov 29, 2010 at 5:18 PM, Christian Couder
+<christian.couder@gmail.com> wrote:
+> Hi,
 >
-> I agree, but I don't really see a way around it here since this API is specific to OS X.
+> On Mon, Nov 29, 2010 at 3:47 PM, Giuseppe Bilotta
+> <giuseppe.bilotta@gmail.com> wrote:
+>>
+>> +# Debian and derivatives use x-www-browser or www-browser to set
+>> +# the default browser for the system
+>> +if test -z "$browser" ; then
+>> + =A0 =A0 =A0 wwwbrowser=3D"/usr/bin/www-browser"
+>> + =A0 =A0 =A0 if test -n "$DISPLAY"; then
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 wwwbrowser=3D"/usr/bin/x-www-browser $=
+wwwbrowser"
+>> + =A0 =A0 =A0 fi
+>> + =A0 =A0 =A0 for i in $wwwbrowser; do
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if test -x $i ; then
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 verstring=3D"$($i --ve=
+rsion 2> /dev/null | head -n 1)"
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 browser=3D"$(echo "$ve=
+rstring" | cut -f1 -d' ' | tr A-Z a-z)"
+>
+> Stupid questions:
+>
+> Did you check that all the browser we support accept the --version op=
+tion?
 
-Did you actually read that section? :)
+I don't have all of them readily available, so I checked with
+Mozilla-based browsers, Opera, Chromium, elinks, lynx, w3m. I'm
+missing konqueror and dillo.
+
+> What if we add support for a new one that doesn't ?
+
+I think that the worse issue would be (x-)www-browser linking to
+something that doesn't support --version regardless of wether we
+support it or not.
+
+> Shouldn't we add something like :
+>
+> test -z "$browser" && browser=3D"$(readlink $i)"
+
+My first idea was to go for something like browser=3D"$(basename
+$(readlink $i))" (not sure why you would need test -z before). Since
+it would need special-casing anyway (e.g. chromium-browser ->
+chromium), I opted out for the --version way so that (1) we could
+catch one of our friendly cases even if the binary was called
+something else and (2) some invocation paths try to get the version
+anyway, so we could do it once and for all.
+
+> And are you sure that when they support --version, the first word of
+> the output is
+> better than "$(readlink $i)"?
+
+Probably depends on the metric used for 'better' ;-)
+
+> What if we add support for a new one?
+
+Then when adding it we should also look at its --version output and
+see if it needs special treatment.
+
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 case "$browser" in
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 mozilla)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 browse=
+r=3D"$(echo "$verstring" | cut -f2 -d' ' | tr A-Z a-z)"
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 google)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 browse=
+r=3D"google-chrome"
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ;;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 esac
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if valid_tool "$browse=
+r" ; then
+>
+> valid_tool "$browser" is called once here...
+>
+>> -else
+>> +else if test -z "$browser_path"; then
+>> =A0 =A0 =A0 =A0valid_tool "$browser" || die "Unknown browser '$brows=
+er'."
+>
+> ...valid_tool "$browser" is called again here if it failed above, and
+> here we die,
+> so isn't it clearer to die as soon as we call it and it fails?
+
+We allow valid_tool to be false in the x-www-browser case, in which
+case we test www-browser, and if it's still not valid we go on and use
+the previous paths. So we cannot die in case of an invalid
+(x-)www-browser. But there's a bug in the www-brower testing, it needs
+an else that resets browser to the empty string.
+
+--=20
+Giuseppe "Oblomov" Bilotta
