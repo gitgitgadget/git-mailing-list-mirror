@@ -1,63 +1,43 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 00/47] nd/setup updates on pu
-Date: Mon, 29 Nov 2010 13:29:25 -0800
-Message-ID: <7v1v6324zu.fsf@alter.siamese.dyndns.org>
-References: <1290785563-15339-1-git-send-email-pclouds@gmail.com>
+From: Yann Dirson <ydirson@free.fr>
+Subject: Re: [PATCH 1/2] [RFC] Use --find- instead of --detect- as prefix
+ for long forms of -M and -C.
+Date: Mon, 29 Nov 2010 22:53:55 +0100
+Message-ID: <20101129215355.GA3445@home.lan>
+References: <1289420833-20602-1-git-send-email-ydirson@altern.org>
+ <1289420833-20602-2-git-send-email-ydirson@altern.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Nov 29 22:29:41 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: GIT list <git@vger.kernel.org>
+To: gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Nov 29 22:54:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNBI4-0005Gl-3r
-	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 22:29:40 +0100
+	id 1PNBfn-0007nx-O2
+	for gcvg-git-2@lo.gmane.org; Mon, 29 Nov 2010 22:54:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751606Ab0K2V3f convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 29 Nov 2010 16:29:35 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35836 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750860Ab0K2V3e convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 29 Nov 2010 16:29:34 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 20C0C315F;
-	Mon, 29 Nov 2010 16:29:51 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=2Y3KV8Qi7fXC
-	rmnBU12MmpX5xJ0=; b=G+LqGjwlyxNy9QphXghRedRA3PkL5IrkvQxOAw/yOr9t
-	+l1GTq3fIV062V2qdmBr8ktBsXblurHRKmNXEdFUW3In9Gbw7mZqyRCGfW2zxpFo
-	Gzxf4UfVwtGZ5hyS+wHtlz4UVHnkh1VXu+/FCnaDZ9i1i1xxqLT0S1tfU8lRxVw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=fVcAeo
-	ssIEeB4krK8KtvZq9U3z10lFfoTdmJ8Jthi9ibivNyOtYnP9XFBhckI3wi78rVBJ
-	+gi8rnn7fokLeskJ7CD7x1pWrB7YuNkI9uCQSEgsVADNl46DswKvlZu6BTsApj9g
-	U97ZC1iNKYux0RqG1Nww4TiUULYuyBD3dS5Vs=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F3BB6315E;
-	Mon, 29 Nov 2010 16:29:48 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C10B3315B; Mon, 29 Nov 2010
- 16:29:45 -0500 (EST)
-In-Reply-To: <1290785563-15339-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Fri\, 26 Nov
- 2010 22\:31\:56 +0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CB296582-FBFF-11DF-864D-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
+	id S1753248Ab0K2VyF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Nov 2010 16:54:05 -0500
+Received: from smtp5-g21.free.fr ([212.27.42.5]:51966 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751519Ab0K2VyE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Nov 2010 16:54:04 -0500
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 3FCDED480FB;
+	Mon, 29 Nov 2010 22:53:57 +0100 (CET)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1PNBfY-0001GO-0o; Mon, 29 Nov 2010 22:53:56 +0100
+Content-Disposition: inline
+In-Reply-To: <1289420833-20602-2-git-send-email-ydirson@altern.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162431>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162432>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
-
-> Only tests are updated to eliminate bashisms. Tested on busybox ash.
-
-Thanks for your attention to detail; will replace.
+So is there an official decision that this idea was a bad one and
+should I drop this patch from my outq ?
