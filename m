@@ -1,8 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 3/6] parse-options: allow git commands to invent new option
- types
-Date: Mon, 29 Nov 2010 21:08:53 -0600
-Message-ID: <20101130030853.GD5326@burratino>
+Subject: [PATCH 4/6] parse-options: make resuming easier after
+ PARSE_OPT_STOP_AT_NON_OPTION
+Date: Mon, 29 Nov 2010 21:09:33 -0600
+Message-ID: <20101130030933.GE5326@burratino>
 References: <1287544320-8499-1-git-send-email-pclouds@gmail.com>
  <1287544320-8499-4-git-send-email-pclouds@gmail.com>
  <20101022063837.GA6081@burratino>
@@ -17,45 +17,45 @@ Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
 	git@vger.kernel.org, Stephen Boyd <bebarino@gmail.com>,
 	Pierre Habouzit <madcoder@debian.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 30 04:09:13 2010
+X-From: git-owner@vger.kernel.org Tue Nov 30 04:09:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNGad-0003FI-L5
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Nov 2010 04:09:11 +0100
+	id 1PNGbF-0003RI-SZ
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Nov 2010 04:09:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752184Ab0K3DJG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 29 Nov 2010 22:09:06 -0500
-Received: from mail-vw0-f66.google.com ([209.85.212.66]:48969 "EHLO
+	id S1752544Ab0K3DJo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 29 Nov 2010 22:09:44 -0500
+Received: from mail-vw0-f66.google.com ([209.85.212.66]:38523 "EHLO
 	mail-vw0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750826Ab0K3DJE (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 29 Nov 2010 22:09:04 -0500
-Received: by vws15 with SMTP id 15so467384vws.1
-        for <git@vger.kernel.org>; Mon, 29 Nov 2010 19:09:03 -0800 (PST)
+	with ESMTP id S1752473Ab0K3DJo (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 29 Nov 2010 22:09:44 -0500
+Received: by vws15 with SMTP id 15so467504vws.1
+        for <git@vger.kernel.org>; Mon, 29 Nov 2010 19:09:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=eFXKfkH2G49XSqrQMV6nFK1lziZObJ+LUot4DBp9Crk=;
-        b=hOLs4jU+tenFna7nIXSMAw0vzDv3n4oOOb0pjKYQFsFENyVP9OMWga0bZ1i9O5cn6L
-         JNUqznb2LZ9KFyNHyOGeKFRPm5cKbbIY2elGz41Nyl4rMjTSvO2jZ7i2R94wDetzsG2B
-         ikonN2OooDWTXjgAFdeR5QcF0nCFL+jqrST4c=
+        bh=Aapt9E3opQl9aHfsRU3jCYNwRUjwi6OY2SGvcBIzJOs=;
+        b=dTK9mPSFqX7x8XKO/BAI7TTvAq1wYhyrRTlaGlY4lrcfnrviC+oMMDqe5R+U8Ba2J6
+         vojqMTxvONCbLwYu4BKvTzlwclTUWiQgciFVurdFSCwqQfsv/+sfx/RSzAnx3UvWMxi8
+         /ijrupmIC5RmDSAhqPgfjhGYZCBGPFYE6B2D8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=MVkp7qL/oWOpnxbXM8gsmDhQ4HbNqrnpbj9KnlAcypmEhN7xa0nman3mbVbVbMjSQ8
-         b0Duwtw6lcBQx30LwGQYDJxHP17i7En64h5dWrujo/kd2AVIo3e2VhCiZV9B+tcrt4if
-         8Os9FmbzhoiLcEN0NrtDys4+e5oQRwA5RXIak=
-Received: by 10.220.93.81 with SMTP id u17mr333348vcm.121.1291086543777;
-        Mon, 29 Nov 2010 19:09:03 -0800 (PST)
+        b=t8GRswTwPtGMsDQjOF7PzwLaUlRnZN0WD2Pl8A8PE0ahUqlqqSbd6DXNotLzJ3Obme
+         Q6eEGwbyozfDe2xkBkfgRT396lP+2g+odxy1wcPX4Cxy8IndN1tgWlwUrCZ3IKez8Iom
+         RSkcZId+E7pu6ATWSghtVveZl4eTo3CoVprCI=
+Received: by 10.220.189.136 with SMTP id de8mr1707600vcb.30.1291086583253;
+        Mon, 29 Nov 2010 19:09:43 -0800 (PST)
 Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
-        by mx.google.com with ESMTPS id b26sm1860166vby.13.2010.11.29.19.09.01
+        by mx.google.com with ESMTPS id q3sm903735vcr.27.2010.11.29.19.09.41
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 29 Nov 2010 19:09:02 -0800 (PST)
+        Mon, 29 Nov 2010 19:09:41 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20101130025223.GA5326@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -63,97 +63,52 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162466>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162467>
 
-parse-options provides a variety of option behaviors, including
-OPTION_CALLBACK, which should take care of just about any sane
-behavior.  All supported behaviors obey the following constraint:
+Introduce a PARSE_OPT_NON_OPTION state, so parse_option_step()
+callers can easily distinguish between non-options and other
+reasons for option parsing termination (like "--").
 
- A --foo option can only accept (and base its behavior on)
- one argument, which would be the following command-line
- argument in the "unsticked" form.
-
-Alas, some existing git commands have options that do not obey that
-constraint.  For example, update-index --cacheinfo takes three
-arguments, and update-index --resolve takes all later parameters as
-arguments.
-
-Introduces an OPTION_LOWLEVEL_CALLBACK backdoor to parse-options so
-such option types can be supported without tempting inventors of other
-commands through mention in the public API.  Commands can set the
-callback field to a function accepting three arguments: the option
-parsing context, the option itself, and a flag indicating whether the
-the option was negated.  When the option is encountered, that function
-is called to take over from get_value().  The return value should be
-zero for success, -1 for usage errors.
-
-Thanks to Stephen Boyd for API guidance.
-
-Improved-by: Stephen Boyd <bebarino@gmail.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-Changes from v1:
+As before.
 
-. lowlevel callbacks inherit standard get_value argument
-  checking
-. lowlevel callbacks cannot tailor error messages based on
-  long vs short option
-. OPT_UNSET and OPT_SHORT therefore do not need to be exposed
-. brief mention in parse-options.h comments.
-
-We can always tweak the API again later.  None of the examples in
-update-index even pay attention to the "unset" bit.
-
- parse-options.c |    3 +++
- parse-options.h |    8 +++++++-
- 2 files changed, 10 insertions(+), 1 deletions(-)
+ parse-options.c |    3 ++-
+ parse-options.h |    1 +
+ 2 files changed, 3 insertions(+), 1 deletions(-)
 
 diff --git a/parse-options.c b/parse-options.c
-index bc92d69..38c8fd3 100644
+index 38c8fd3..df8299c 100644
 --- a/parse-options.c
 +++ b/parse-options.c
-@@ -81,6 +81,9 @@ static int get_value(struct parse_opt_ctx_t *p,
- 		return opterror(opt, "takes no value", flags);
- 
- 	switch (opt->type) {
-+	case OPTION_LOWLEVEL_CALLBACK:
-+		return (*(parse_opt_ll_cb *)opt->callback)(p, opt, unset);
-+
- 	case OPTION_BIT:
- 		if (unset)
- 			*(int *)opt->value &= ~opt->defval;
+@@ -384,7 +384,7 @@ int parse_options_step(struct parse_opt_ctx_t *ctx,
+ 			if (parse_nodash_opt(ctx, arg, options) == 0)
+ 				continue;
+ 			if (ctx->flags & PARSE_OPT_STOP_AT_NON_OPTION)
+-				break;
++				return PARSE_OPT_NON_OPTION;
+ 			ctx->out[ctx->cpidx++] = ctx->argv[0];
+ 			continue;
+ 		}
+@@ -466,6 +466,7 @@ int parse_options(int argc, const char **argv, const char *prefix,
+ 	switch (parse_options_step(&ctx, options, usagestr)) {
+ 	case PARSE_OPT_HELP:
+ 		exit(129);
++	case PARSE_OPT_NON_OPTION:
+ 	case PARSE_OPT_DONE:
+ 		break;
+ 	default: /* PARSE_OPT_UNKNOWN */
 diff --git a/parse-options.h b/parse-options.h
-index d982f0f..bd0fe16 100644
+index bd0fe16..2cd23af 100644
 --- a/parse-options.h
 +++ b/parse-options.h
-@@ -17,6 +17,7 @@ enum parse_opt_type {
- 	OPTION_STRING,
- 	OPTION_INTEGER,
- 	OPTION_CALLBACK,
-+	OPTION_LOWLEVEL_CALLBACK,
- 	OPTION_FILENAME
+@@ -167,6 +167,7 @@ extern NORETURN void usage_msg_opt(const char *msg,
+ enum {
+ 	PARSE_OPT_HELP = -1,
+ 	PARSE_OPT_DONE,
++	PARSE_OPT_NON_OPTION,
+ 	PARSE_OPT_UNKNOWN
  };
  
-@@ -43,6 +44,10 @@ enum parse_opt_option_flags {
- struct option;
- typedef int parse_opt_cb(const struct option *, const char *arg, int unset);
- 
-+struct parse_opt_ctx_t;
-+typedef int parse_opt_ll_cb(struct parse_opt_ctx_t *ctx,
-+				const struct option *opt, int unset);
-+
- /*
-  * `type`::
-  *   holds the type of the option, you must have an OPTION_END last in your
-@@ -87,7 +92,8 @@ typedef int parse_opt_cb(const struct option *, const char *arg, int unset);
-  *				useful for users of OPTION_NEGBIT.
-  *
-  * `callback`::
-- *   pointer to the callback to use for OPTION_CALLBACK.
-+ *   pointer to the callback to use for OPTION_CALLBACK or
-+ *   OPTION_LOWLEVEL_CALLBACK.
-  *
-  * `defval`::
-  *   default value to fill (*->value) with for PARSE_OPT_OPTARG.
 -- 
 1.7.2.3
