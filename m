@@ -1,151 +1,99 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 11/15] vcs-svn: More dump format sanity checks
-Date: Tue, 30 Nov 2010 13:48:33 -0600
-Message-ID: <20101130194833.GA9064@burratino>
-References: <20101118050023.GA14861@burratino>
- <20101120004525.GA17445@burratino>
- <20101120005334.GL17445@burratino>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: Git Gui does not want to work on chunk level
+Date: Tue, 30 Nov 2010 22:19:38 +0100
+Message-ID: <AANLkTimz17vodjS7K_ts2pcoZHTo2eb9=FaWwEyhihsa@mail.gmail.com>
+References: <c6c947f60808270216k2feb8f9ar765cdee1fc3910ee@mail.gmail.com>
+	<c6c947f60809031223i575ca3fdya357588610bb72e8@mail.gmail.com>
+	<20080903230814.GJ28315@spearce.org>
+	<c6c947f60809040220t589e65bfkbd693fd335792069@mail.gmail.com>
+	<20080904143723.GB23708@spearce.org>
+	<c6c947f60809040754g34e60633lcd5f872ac5e80158@mail.gmail.com>
+	<20080905045327.GA31166@spearce.org>
+	<48CE09EF.7090609@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	David Barr <david.barr@cordelta.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Nov 30 20:49:03 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Alexander Gladysh <agladysh@gmail.com>,
+	git-users@googlegroups.com, git@vger.kernel.org,
+	Pat Thoyts <patthoyts@users.sourceforge.net>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Tue Nov 30 22:19:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNWCE-0000YQ-O1
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Nov 2010 20:49:03 +0100
+	id 1PNXc2-0002ii-Um
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Nov 2010 22:19:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756574Ab0K3Tsn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Nov 2010 14:48:43 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37561 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756521Ab0K3Tsl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Nov 2010 14:48:41 -0500
-Received: by fxm8 with SMTP id 8so1512613fxm.19
-        for <git@vger.kernel.org>; Tue, 30 Nov 2010 11:48:40 -0800 (PST)
+	id S1751511Ab0K3VTl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 30 Nov 2010 16:19:41 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:62936 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750816Ab0K3VTk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 30 Nov 2010 16:19:40 -0500
+Received: by yxt3 with SMTP id 3so2500125yxt.19
+        for <git@vger.kernel.org>; Tue, 30 Nov 2010 13:19:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=fzucSNRPruHPbTmJqc1V9JI0OHi3iqIWikgklSkFJTo=;
-        b=ABRbdBw3Uub44zGEw4zmbGU9Z4QmVUIz61oacfJEV9YZKjbwVGVv594WzGrFlu+Wj8
-         RDNhju78JDOSK7TBRufjlmODstIpVDn3HiyGISoFcTPopwjLg3enBwGiqdCPUC6CF+ix
-         3FTJS/LSgbw4sGKTLQO8LvnWQEWjyG2cgWgTY=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=zjAQ8WYjx0C29f2o49479TIHRGnoncGEX+sNrqsS+kw=;
+        b=ddqsf2kbv7/qak+nygVgvTc+6vIvpo8PnBWoIEk+CoiWlSfcATAXN1TtPlBPRIbMsx
+         uzwTQ/uGBYz9ds5uhkWfagM5P5UQzoafziQrj564mIlvhGNTIq9voP5OIG4xjX6pAPMc
+         yPUIDk80nLzsolbTrz3t91CWuR2uV44BuJsps=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=L4eas0/W+WLS7LPNbgnwxQeycRqHhz97l4F3OGt+K9WMzgfFo4cG9XZ4ZnoGvRPVU4
-         R/1SlkYXyPK5qCJOvygGhQZ7ubyrmtwFaHDJjkYy/sKH9CT4roAz+l01VIy0B4ZOL3Uw
-         niwRi0NfFxV5MheHrjYp3A+Ap8SX0QVQytvAo=
-Received: by 10.223.83.196 with SMTP id g4mr7307293fal.63.1291146520390;
-        Tue, 30 Nov 2010 11:48:40 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id n1sm1785354fam.16.2010.11.30.11.48.38
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 30 Nov 2010 11:48:39 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20101120005334.GL17445@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=bDbApMYCJgchXqXwr/s+6pTFIaAbeaU5vQjI6Q1wmiv/61DDfg9AgMwg/WXe9pORdZ
+         zJ+ihl4uIvsw4PkyJY83I/FHObeyJ+NAVcLEMAAxJhJM4fzxL9Ge38oRaipyi3wkMSUI
+         /cYTQAinP+E2mLaDiTlN/TIAqwag8GouLlQMU=
+Received: by 10.42.223.138 with SMTP id ik10mr104186icb.425.1291151979705;
+ Tue, 30 Nov 2010 13:19:39 -0800 (PST)
+Received: by 10.42.175.71 with HTTP; Tue, 30 Nov 2010 13:19:38 -0800 (PST)
+In-Reply-To: <48CE09EF.7090609@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162488>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162489>
 
-Jonathan Nieder wrote:
+On Mon, Sep 15, 2008 at 09:08, Johannes Sixt <j.sixt@viscovery.net> wro=
+te:
+> Shawn O. Pearce schrieb:
+>> git-gui: Fix diff parsing for lines starting with "--" or "++"
+>>
+>> Languages like Lua and SQL use "--" to mark a line as commented out.
+>> If this appears at column 0 and is part of the pre-image we may see
+>> "--- foo" in the diff, indicating that the line whose content is
+>> =C2=A0"-- foo" has been removed from the new version.
+>>
+>> git-gui was incorrectly parsing "--- foo" as the old file name
+>> in the file header, causing it to generate a bad patch file when
+>> the user tried to stage or unstage a hunk or the selected line.
+>> We need to keep track of where we are in the parsing so that we do
+>> not misread a deletion or addition record as part of the header.
+>
+> This (slightly) breaks parsing of new files and removed files that ar=
+e
+> staged by showing the file names in the diff header:
+>
+> =C2=A0new file mode 100644
+> =C2=A0--- /dev/null
+> =C2=A0+++ b/foo
+> =C2=A0@@ -0,0 +1 @@
+> =C2=A0+foo
 
-> --- a/vcs-svn/svndump.c
-> +++ b/vcs-svn/svndump.c
-> @@ -181,12 +181,22 @@ static void handle_node(void)
-[...]
-> +		if (mode == REPO_MODE_DIR && type != REPO_MODE_DIR)
-> +			die("invalid dump: cannot modify a directory into a file");
+I just noticed the same, and ask me why this report wasn't honored.
 
-This is tripping for me in a revision like so:
+Also git may spill out 2 diffs for type changes (file to symlink, for
+example). In this case the we should probably disable any hunk- or
+line-level (un)staging.
 
- Revision-number: 692
- Prop-content-length: 110
- Content-length: 110
+Bert
 
- [revprops snipped]
-
- Node-path: lxanew/DCNsnetwork.cpp
- Node-kind: file
- Node-action: add
- Node-copyfrom-rev: 691
- Node-copyfrom-path: DCNsnetwork.cpp
-
-
- Node-path: DCNsnetwork.cpp
- Node-action: delete
-
-The import up to and including rev 691 works fine.  Rev 691:
-
- Revision-number: 691
- Prop-content-length: 110
- Content-length: 110
-
-[props snipped]
-
- Node-path: lxanew/CorpusWordCollection.cpp
- Node-kind: file
- Node-action: add
- Node-copyfrom-rev: 690
- Node-copyfrom-path: CorpusWordCollection.cpp
-
-
- Node-path: CorpusWordCollection.cpp
- Node-action: delete
-
-Pretty similar, right?  In the target repository:
-
- $ git ls-tree HEAD -- DCNsnetwork.cpp
- 100644 blob f92d77cc88cc50e9ca333604d22db83f0668828a    DCNsnetwork.cpp
-
-DCNsnetwork.cpp was added in r688, which looks like so:
-
- Revision-number: 688
- Prop-content-length: 186
- Content-length: 186
-
-[props and many new files snipped]
-
- Node-path: DCNsnetwork.cpp
- Node-kind: file
- Node-action: add
- Prop-delta: true
- Prop-content-length: 10
- Text-delta: true
- Text-content-length: 2999
- Text-content-md5: 48fd4d31d16f90ab449b4d223fc3d7f8
- Content-length: 3009
-
- PROPS-END
- SVN^@^@^@<97>)^C<97>)<80><97>)// snetwork.cpp: implementation of the snetwork class.
- [...]
-
-So apparently repo_add failed.  Hints?
-
-Here's an unrelated simplification, noticed while debugging.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index d0d3de6..d1ec9a5 100644
---- a/vcs-svn/svndump.c
-+++ b/vcs-svn/svndump.c
-@@ -219,6 +219,7 @@ static void handle_node(void)
- 			die("invalid dump: adds node without text");
- 		repo_add(node_ctx.dst, type, mark);
- 		old_mark = 0;
-+		node_ctx.type = type;
- 	} else {
- 		die("invalid dump: Node-path block lacks Node-action");
- 	}
+>
+> -- Hannes
