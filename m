@@ -1,72 +1,67 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH/RFC 04/20] rebase: remove unused rebase state 'prev_head'
-Date: Tue, 30 Nov 2010 08:29:05 +0100
-Message-ID: <4CF4A7C1.3000202@drmicha.warpmail.net>
-References: <1290715083-16919-1-git-send-email-martin.von.zweigbergk@gmail.com> <1290715083-16919-5-git-send-email-martin.von.zweigbergk@gmail.com> <4CEF67AB.6050700@drmicha.warpmail.net> <7v7hfv262a.fsf@alter.siamese.dyndns.org>
+From: Yann Dirson <dirson@bertin.fr>
+Subject: Re: [PATCH 1/2] [RFC] Use --find- instead of --detect- as prefix for
+Date: Tue, 30 Nov 2010 08:28:08 +0100
+Organization: Bertin Technologies
+Message-ID: <20101130082808.415dc3c1@chalon.bertin.fr>
+References: <7vfwujy7co.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Nov 30 08:31:27 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: gister@pobox.com, kevin@sb.org
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Nov 30 08:38:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNKgP-00028X-F3
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Nov 2010 08:31:25 +0100
+	id 1PNKna-00046f-LL
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Nov 2010 08:38:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753982Ab0K3HbU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Nov 2010 02:31:20 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:37157 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753480Ab0K3HbT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 30 Nov 2010 02:31:19 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 8D048525;
-	Tue, 30 Nov 2010 02:31:19 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Tue, 30 Nov 2010 02:31:19 -0500
-X-Sasl-enc: V6gLsnkImtxLe/UC0431PHiNt+OtAuLime80BE5+1LFs 1291102279
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 331604051EC;
-	Tue, 30 Nov 2010 02:31:18 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
-In-Reply-To: <7v7hfv262a.fsf@alter.siamese.dyndns.org>
+	id S1754080Ab0K3Hip (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Nov 2010 02:38:45 -0500
+Received: from blois.bertin.fr ([195.68.26.9]:38160 "EHLO blois.bertin.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754011Ab0K3Hip (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Nov 2010 02:38:45 -0500
+Received: from blois.bertin.fr (localhost [127.0.0.1])
+	by postfix.imss70 (Postfix) with ESMTP id 123FB542BE
+	for <git@vger.kernel.org>; Tue, 30 Nov 2010 08:38:43 +0100 (CET)
+Received: from YPORT1 (yport1.bertin.fr [192.168.1.13])
+	by blois.bertin.fr (Postfix) with ESMTP id CCA6A542C5
+	for <git@vger.kernel.org>; Tue, 30 Nov 2010 08:38:42 +0100 (CET)
+Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
+ (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
+ with ESMTPPA id <0LCO00MJIT8IGVB0@yport1.innovation.bertin.fr> for
+ git@vger.kernel.org; Tue, 30 Nov 2010 08:38:42 +0100 (CET)
+In-reply-to: <7vfwujy7co.fsf@alter.siamese.dyndns.org>
+X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
+X-TM-AS-Product-Ver: IMSS-7.0.0.8200-6.0.0.1038-17798.005
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162472>
 
-Junio C Hamano venit, vidit, dixit 29.11.2010 22:06:
-> Michael J Gruber <git@drmicha.warpmail.net> writes:
-> 
->> Martin von Zweigbergk venit, vidit, dixit 25.11.2010 20:57:
->>> The rebase state 'prev_head' is not used. Remove it.
->>>
->>> Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
->>> ---
->>
->> The actual value of prev_head was never used. But the check for its
->> non-nullness made sure that git-rev-parse HEAD^0 succeeded when
->> $merge_dir was created. Have you made sure that we don't need that check?
-> 
-> I think we are Ok.
-> 
-> It was a bit sloppy of 9e4bc7d (rebase: cleanup rebasing with --merge,
-> 2006-06-24) to use the output from `git-rev-parse HEAD^0`, which would
-> give you "HEAD^0" as string when HEAD does not exist.  Even though the
-> command itself will exit with non-zero status, the exit status was never
-> checked.  After 9e4bc7d (rebase: cleanup rebasing with --merge,
-> 2006-06-24), we didn't seem to have any reason to use $prev_head, iow,
-> this change was probably way overdue.
+Junio:
+> Kevin wrote:
+> > Given my druthers, I'd prefer to go with --detect-copies-harder, but
+> > at this point I don't have as much of a strong preference anymore.
+>
+> The patch is smaller, and we often say "rename detection", not "rename
+> finding", so it may probably make more sense.
 
-Good! I just wanted to make sure that it wasn't used in some opaque way.
+OTOH:
 
-Michael
+* when cumulated to the still-recent patch adding the long forms, not
+  using a synonym is shorter
+
+* if it is just "adding a synonym" without deprecation, it only
+  adds a new option for little gain; OTOH deprecating such an old
+  option may not be such a good idea (not to mention it would make the
+  patch longer ;)
+
+* The --find-* forms are still shorter to spell
+
+-- 
+Yann Dirson - Bertin Technologies
