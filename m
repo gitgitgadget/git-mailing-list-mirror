@@ -1,58 +1,92 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [PATCH] Match lightweight tags too in bash prompt
-Date: Tue, 30 Nov 2010 10:04:51 -0800
-Message-ID: <AANLkTi=0+s164XkWHho1++hvnTCAFg5=GGfMbHF4ugTE@mail.gmail.com>
-References: <AANLkTikeH=MODho_GsZP5VPQmt2NOoHyfw2pbt4yqGkt@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: gitweb: false base href sent when integrated via reverse proxy and path_info is active
+Date: Tue, 30 Nov 2010 19:22:09 +0100
+Message-ID: <201011301922.11695.jnareb@gmail.com>
+References: <20101128081048.13668.67286.reportbug@sb74.startrek> <201011281847.40233.jnareb@gmail.com> <20101128181215.GB19545@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: knittl <knittl89@googlemail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 30 19:05:25 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>, git@vger.kernel.org,
+	Daniel Reichelt <debian@nachtgeist.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 30 19:22:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNUZu-0005v0-1M
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Nov 2010 19:05:22 +0100
+	id 1PNUqm-0002oX-Bp
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Nov 2010 19:22:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755304Ab0K3SFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Nov 2010 13:05:14 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:58625 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754884Ab0K3SFM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Nov 2010 13:05:12 -0500
-Received: by iwn10 with SMTP id 10so35243iwn.19
-        for <git@vger.kernel.org>; Tue, 30 Nov 2010 10:05:11 -0800 (PST)
-Received: by 10.231.35.202 with SMTP id q10mr7685693ibd.88.1291140311548; Tue,
- 30 Nov 2010 10:05:11 -0800 (PST)
-Received: by 10.231.154.5 with HTTP; Tue, 30 Nov 2010 10:04:51 -0800 (PST)
-In-Reply-To: <AANLkTikeH=MODho_GsZP5VPQmt2NOoHyfw2pbt4yqGkt@mail.gmail.com>
+	id S1756100Ab0K3SW2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Nov 2010 13:22:28 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:44862 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756124Ab0K3SWZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Nov 2010 13:22:25 -0500
+Received: by bwz15 with SMTP id 15so5283306bwz.19
+        for <git@vger.kernel.org>; Tue, 30 Nov 2010 10:22:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=3A297B1jCilKZ41uYeQiJtAoG7vp3bRbwJKilfEQnF4=;
+        b=OIg3Edyw9DYG8ktV5fZreZFvrAmZ0NGCV7UvKiPOjJnI+qa9f2wYMy45K/ccxpvPGj
+         wL3vclEsFegn1pOgvQoeIQjoyl7tMxRrwdI9KRl5f96rg6GwYT4RJ7bsh4IEQ497W5DD
+         0zqC97yA/Z52GQ+kGk8oQecUBMXpewzbT7TBw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=OB/BS4vsWw8/ujQTKMkEqp1XS3egiUUqoT9I4/S7GIc/uAWPzMkepWC468jB8Ih98Q
+         FGuWLUWW0jzlNklyoV9SkMkO3QnTz7RylXCbpis0p95vYt95HrkMcBa1ep2eUKZC0SSw
+         KqEv0MnBjGjc/Z3wUlrPxo8reRPqj6+2kbG9o=
+Received: by 10.204.97.146 with SMTP id l18mr7242865bkn.118.1291141344004;
+        Tue, 30 Nov 2010 10:22:24 -0800 (PST)
+Received: from [192.168.1.13] (abwm72.neoplus.adsl.tpnet.pl [83.8.236.72])
+        by mx.google.com with ESMTPS id a24sm615011fak.3.2010.11.30.10.22.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 30 Nov 2010 10:22:21 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20101128181215.GB19545@burratino>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162486>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162487>
 
-On Fri, Nov 19, 2010 at 7:43 AM, knittl <knittl89@googlemail.com> wrote:
-> From 1fea30e0167681917b4f40a3cb2cde9a90706011 Mon Sep 17 00:00:00 2001
-> From: Daniel Knittl-Frank <knittl89+git@googlemail.com>
-> Date: Fri, 19 Nov 2010 16:40:02 +0100
-> Subject: [PATCH] Match lightweight tags too in bash prompt
->
-> provide `--tags` to git describe
+On Sun, 28 Nov 2010, Jonathan Nieder wrote:
+> Jakub Narebski wrote:
+> 
+> > See also gitweb/README, the "Gitweb config file variables" section:
+> > 
+> >  * $base_url
+> >    Base URL for relative URLs in pages generated by gitweb,
+> >    (e.g. $logo, $favicon, @stylesheets if they are relative URLs),
+> >    needed and used only for URLs with nonempty PATH_INFO via
+> >    <base href="$base_url">.  Usually gitweb sets its value correctly,
+> >                              ^^^^^^^
+> >    and there is no need to set this variable, e.g. to $my_uri or "/".
+> > 
+> > The key word here is "usually" ;-)
+> 
+> Thanks, all.  That helps.
+> 
+> No time for it at the moment, but I'm taking this as evidence that
+> we need a gitweb.conf(5) manual page. :)  Would you be interested
+> in such a thing (as POD or asciidoc)?
 
-Missing signed-off-by-line.
+Well, both git-gui and gitk have their documentation in Documentation/
+(in AsciiDoc format), so perhaps it is time to add Documentation/gitweb.txt
+and possibly also Documentation/gitweb_config.txt (or gitweb.conf.txt).
 
-> ---
->
-> bash prompt would display a commit's sha1, when checking out a lightweight tag.
-> provide --tags to git describe in the completion script, so it will
-> display the name
-> of the tag (as it already does for annotated tags)
-
-This information is useful justification for the change.  It should
-therefore appear in the commit message, above the --- line.
-
+With exception of t/README, the gitweb/README file is largest, with around
+570 lines, while next largest is (discarding also git-gui/po/README) main
+README file with around 50 lines.
 -- 
-Shawn.
+Jakub Narebski
+Poland
