@@ -1,138 +1,58 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] parse-options: always show arghelp when LITERAL_ARGHELP is
- set
-Date: Tue, 30 Nov 2010 10:00:59 -0600
-Message-ID: <20101130160059.GA31844@burratino>
-References: <1287544320-8499-1-git-send-email-pclouds@gmail.com>
- <1287544320-8499-4-git-send-email-pclouds@gmail.com>
- <20101022063837.GA6081@burratino>
- <20101022064258.GB6081@burratino>
- <7v8w1qnkr1.fsf@alter.siamese.dyndns.org>
- <20101024072032.GA23455@burratino>
- <20101024081316.GA29630@burratino>
- <20101130025223.GA5326@burratino>
- <20101130031549.GG5326@burratino>
- <4CF4B234.9060206@gmail.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [PATCH] Match lightweight tags too in bash prompt
+Date: Tue, 30 Nov 2010 10:04:51 -0800
+Message-ID: <AANLkTi=0+s164XkWHho1++hvnTCAFg5=GGfMbHF4ugTE@mail.gmail.com>
+References: <AANLkTikeH=MODho_GsZP5VPQmt2NOoHyfw2pbt4yqGkt@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Nov 30 17:01:29 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: knittl <knittl89@googlemail.com>
+X-From: git-owner@vger.kernel.org Tue Nov 30 19:05:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNSdy-0002fz-Ly
-	for gcvg-git-2@lo.gmane.org; Tue, 30 Nov 2010 17:01:27 +0100
+	id 1PNUZu-0005v0-1M
+	for gcvg-git-2@lo.gmane.org; Tue, 30 Nov 2010 19:05:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754325Ab0K3QBS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Nov 2010 11:01:18 -0500
-Received: from mail-vw0-f66.google.com ([209.85.212.66]:58450 "EHLO
-	mail-vw0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754250Ab0K3QBR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Nov 2010 11:01:17 -0500
-Received: by vws15 with SMTP id 15so506911vws.1
-        for <git@vger.kernel.org>; Tue, 30 Nov 2010 08:01:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=kpjb/87eeCqbEHzZFE2V10yLPp3FLqJ26CF4E5k/CaY=;
-        b=WzFP/TIGfs1+BnN1fnz0T5fWbbKKJhDsB4rjAjNy6Qgxgy5dCBdrLqVmHZK8ke9ZZT
-         qqBlFXn29os1p/bjpFLZj/3zlmL58pJh7Li8aab2GSdPla5+Y9xmecI/03XBWWwVB/I6
-         73PJwZ6GOzNs52o+bxmgIGG59rbz2/InBvbF4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=mVLCXhdskWjNwtW5wTYHEnFGbMPrPESjNiCaxOpYyqZr6NeIVP2DW2Kio/fMmTUXW9
-         Ulwq3dzQZ6TSerkHd8K1/BcxzsNi/VGf8jfZApci8S+e8Pl/N8smXyHW+BaGJTLcw9wY
-         HU5kYCFaEsDsfm3KhFs6BQezUzMPaavfspxHs=
-Received: by 10.220.177.198 with SMTP id bj6mr326603vcb.257.1291132876397;
-        Tue, 30 Nov 2010 08:01:16 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
-        by mx.google.com with ESMTPS id m10sm1018638vcf.21.2010.11.30.08.01.13
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 30 Nov 2010 08:01:14 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4CF4B234.9060206@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755304Ab0K3SFO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 30 Nov 2010 13:05:14 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:58625 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754884Ab0K3SFM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 30 Nov 2010 13:05:12 -0500
+Received: by iwn10 with SMTP id 10so35243iwn.19
+        for <git@vger.kernel.org>; Tue, 30 Nov 2010 10:05:11 -0800 (PST)
+Received: by 10.231.35.202 with SMTP id q10mr7685693ibd.88.1291140311548; Tue,
+ 30 Nov 2010 10:05:11 -0800 (PST)
+Received: by 10.231.154.5 with HTTP; Tue, 30 Nov 2010 10:04:51 -0800 (PST)
+In-Reply-To: <AANLkTikeH=MODho_GsZP5VPQmt2NOoHyfw2pbt4yqGkt@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162486>
 
-The PARSE_OPT_LITERAL_ARGHELP flag allows a program to override the
-usual "<argument> for mandatory, [argument] for optional" markup
-in its help message.  Extend it by allowing the usual "no text for
-disallowed" to be overridden, too (for options with PARSE_OPT_NOARG |
-PARSE_OPT_LITERAL_ARGHELP, which was previously an unsupported
-combination).
-
-So now a person can impose ugly usage messages like
-
-	--refresh [--] <pathspec>...
-	                      don't add, only refresh the index
-
-but more importantly, update-index can correctly advertise
-
-	--cacheinfo <mode> <object> <path>
-	                      add the specified entry to the index
-
-without unsetting PARSE_OPT_NOARG and making that '--cacheinfo=<mode>'
-'<object>' '<path>'.
-
-Noticed-by: Stephen Boyd <bebarino@gmail.com>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Stephen Boyd wrote:
-> On 11/29/10 19:15, Jonathan Nieder wrote:
->> +		{OPTION_LOWLEVEL_CALLBACK, 0, "cacheinfo", NULL,
->> +			"<mode> <object> <path>",
->> +			"add the specified entry to the index",
->> +			PARSE_OPT_NOARG | PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
->> +			(parse_opt_cb *) cacheinfo_callback},
+On Fri, Nov 19, 2010 at 7:43 AM, knittl <knittl89@googlemail.com> wrote:
+> From 1fea30e0167681917b4f40a3cb2cde9a90706011 Mon Sep 17 00:00:00 2001
+> From: Daniel Knittl-Frank <knittl89+git@googlemail.com>
+> Date: Fri, 19 Nov 2010 16:40:02 +0100
+> Subject: [PATCH] Match lightweight tags too in bash prompt
 >
-> Doesn't this take arguments and thus shouldn't be marked
-> PARSE_OPT_NOARG? Confused.
+> provide `--tags` to git describe
 
-Yes, that deserves a comment.
+Missing signed-off-by-line.
 
-			PARSE_OPT_NOARG |	/* disallow sticky --cacheinfo=<mode> form */
-			PARSE_OPT_NONEG | PARSE_OPT_LITERAL_ARGHELP,
-
->> @@ -602,151 +799,48 @@ int cmd_update_index(int argc, const char **argv, const char *prefix)
-[...]
->> +	parse_options_start(&ctx, argc, argv, prefix,
->> +			    PARSE_OPT_STOP_AT_NON_OPTION);
+> ---
 >
-> This will need to take options too, sorry.
+> bash prompt would display a commit's sha1, when checking out a lightweight tag.
+> provide --tags to git describe in the completion script, so it will
+> display the name
+> of the tag (as it already does for annotated tags)
 
-That would just be a merge artifact, no? :)  Thanks for a pointer.
+This information is useful justification for the change.  It should
+therefore appear in the commit message, above the --- line.
 
-If all goes well, I'll reroll the series with your patch later today.
-
- parse-options.c |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
-
-diff --git a/parse-options.c b/parse-options.c
-index df8299c..71ebd9e 100644
---- a/parse-options.c
-+++ b/parse-options.c
-@@ -552,7 +552,8 @@ static int usage_with_options_internal(struct parse_opt_ctx_t *ctx,
- 		if (opts->type == OPTION_NUMBER)
- 			pos += fprintf(outfile, "-NUM");
- 
--		if (!(opts->flags & PARSE_OPT_NOARG))
-+		if ((opts->flags & PARSE_OPT_LITERAL_ARGHELP) ||
-+		    !(opts->flags & PARSE_OPT_NOARG))
- 			pos += usage_argh(opts, outfile);
- 
- 		if (pos <= USAGE_OPTS_WIDTH)
 -- 
-1.7.2.3
+Shawn.
