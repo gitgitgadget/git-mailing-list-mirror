@@ -1,106 +1,135 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Ralf Thielow <ralf.thielow@googlemail.com>
 Subject: Re: [PATCH] commit: Remove backward goto in read_craft_line()
-Date: Wed, 01 Dec 2010 13:19:32 -0800
-Message-ID: <7vwrnttcm3.fsf@alter.siamese.dyndns.org>
+Date: Wed, 1 Dec 2010 22:40:55 +0100
+Message-ID: <AANLkTikoh01_gQAZ3Js4cTfdRioKrR6GHAPDBvUOZm8P@mail.gmail.com>
 References: <1291230959-3894-1-git-send-email-ralf.thielow@googlemail.com>
- <20101201194441.GB27347@burratino> <7vaakputxs.fsf@alter.siamese.dyndns.org>
- <20101201203132.GB27845@burratino>
- <AANLkTinLuF74UKaTMNX84FJt+PNoKkkOr3LaXDSCFqdz@mail.gmail.com>
+	<20101201194441.GB27347@burratino>
+	<7vaakputxs.fsf@alter.siamese.dyndns.org>
+	<20101201203132.GB27845@burratino>
+	<AANLkTinLuF74UKaTMNX84FJt+PNoKkkOr3LaXDSCFqdz@mail.gmail.com>
+	<7vwrnttcm3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Ralf Thielow <ralf.thielow@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 01 22:19:58 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 01 22:41:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNu5h-0008Ei-U8
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 22:19:54 +0100
+	id 1PNuQA-0001rH-JT
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 22:41:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755553Ab0LAVTo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 16:19:44 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63033 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751740Ab0LAVTn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 16:19:43 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D71C239A9;
-	Wed,  1 Dec 2010 16:20:00 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=5qwT7sA0+9z8fHHcNWjTPPo2ZJA=; b=LqWLA9
-	Q72FzFUhtaB3DeDJs35HnoKoBJU8sW5Tr671V9r+JFqtD+aiFYPFdPr3keUoKZEJ
-	XHuwUMCzPW7N5Jae31JlcQpnhZje/WQkJIum900HHCpRD4K/AP8PxoI994mmtMQ1
-	nRQvjXsGlLKxqed02Bmh6QySqSn98iQF4XrHc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FEolUoDiPwbv48JRYcogNxgauMXFQ+kL
-	7QfcbPiMp4eej4dIEyw5o/gARYVNd1fonn4TNJOY9rK9abJpfsZVWFUsHcxhaqv/
-	u8vV7IWg1L8WuL2Wlo0bziplcdDzn1ouBaltuBuJR2rd0SUTlF6KNFdzAK6LRnkW
-	34HhjQ/sydI=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8C7C339A8;
-	Wed,  1 Dec 2010 16:19:57 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 53EC939A6; Wed,  1 Dec 2010
- 16:19:53 -0500 (EST)
-In-Reply-To: <AANLkTinLuF74UKaTMNX84FJt+PNoKkkOr3LaXDSCFqdz@mail.gmail.com>
- (Ralf Thielow's message of "Wed\, 1 Dec 2010 21\:44\:42 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: BF8F77C4-FD90-11DF-B4DA-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
+	id S1753941Ab0LAVk5 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Dec 2010 16:40:57 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:44521 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751637Ab0LAVk4 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Dec 2010 16:40:56 -0500
+Received: by eye27 with SMTP id 27so3880470eye.19
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 13:40:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Bs6mTubA7HraKUUo5Xm0UryAjn2V8XAFpi0fYbnaqCg=;
+        b=KJg/M3Jrz0b7TUtORrRzmbI8LXmAQnyB1AsvBbb/UdMKhseE9KdKEYRfw8BlQyE0sg
+         t49ldgj0qQPKBswx8/V9AIysOuq3zsnl73N07obqL4W9fp5zcCre9Ad/G22KK73Ds7i+
+         djlvwXHF1aq7r4DwweiWejm688RlP7O2v/ArE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=grxeib2MW3NQfxjnqkDPPc79wW2wtCOJ9jesWp58XEToaqy1Y5A4ePPxCn1cIQa9iV
+         fIdDRW4zzGzLjrBDajajDVwGXXPJLR/WbwqZq4P5+5Sdevn/zKMqMCv/qKAZIQxYhdgk
+         bjy9pH5mfJzCcfHzDH+pC+0R8Jwm9U7pusBnc=
+Received: by 10.213.31.74 with SMTP id x10mr5187446ebc.49.1291239655432; Wed,
+ 01 Dec 2010 13:40:55 -0800 (PST)
+Received: by 10.213.9.83 with HTTP; Wed, 1 Dec 2010 13:40:55 -0800 (PST)
+In-Reply-To: <7vwrnttcm3.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162617>
 
-Ralf Thielow <ralf.thielow@googlemail.com> writes:
+I remember about a peoble (not on this project) who sad that
+also a little change like this should includes in the sources because
+it's make the code better without fixing a bug or add a new feature.
+But in my experience these patches are not very popular.
+But sure, I understand your reasons, Junio.
+The statement from above is not even true.
 
->> If "--show-c-function" output is the problem, perhaps we should know a bit
->> better about what C function header looks like?
+2010/12/1 Junio C Hamano <gitster@pobox.com>:
+> Ralf Thielow <ralf.thielow@googlemail.com> writes:
 >
-> In fact the "--show-c-function" output is the problem. But I think that
-> a change can't be rejected because of another issue.
-
-Well, I never said anything about rejection nor acceptance.
-
-> The style of placing "goto"-statements, which leave a function to the
-> end of that is used in many other projects. And I think
-> it's very usefull.
-
-It is a good discipline to follow in general to place an exceptional case
-at the end if you jump out of the general flow.  But because the affected
-function was so small, its readability doesn't benefit very much from the
-discipline (in other words, you knew about a good discipline, but applied
-it to a wrong function).  The patch was small and obviously correct, so it
-will not hurt, but it will not make the world greatly a better place,
-either.
-
-IOW, it was a "Meh" topic for me.
-
-It was more important to discuss Jonathan's "leave SP at the beginning of
-a goto label to please --show-c-function" from the maintainer's point of
-view, as people may remember it as a rule and start sending patches that
-follow it, which I will need to deal with in the future.  I do not think
-that one is a good rule.
-
-Now that we have dealt with that more important business of letting people
-know that protecting goto labels with a leading SP is _not_ the rule ;-),
-I am happy with this discussion.
-
-And often I forget about the original issue when a discussion reaches this
-stage of happiness.  So thanks for reminding me.
-
-As I said, even though I do not think the particular function you touched
-badly needs the discipline applied, it would not hurt, and it obviously is
-the right thing to do (iow, if the function were written from day one in a
-way your patch reorganized it, we would never accept a patch to change it
-into today's shape of jumping backwards).  For one thing, it would remove
-an example from the codebase people can point at to make excuses when
-responding to a review of their patch that adds a backward goto to a much
-larger function.
-
-Will queue after massaging the log message somewhat.  Thanks.
+>>> If "--show-c-function" output is the problem, perhaps we should kno=
+w a bit
+>>> better about what C function header looks like?
+>>
+>> In fact the "--show-c-function" output is the problem. But I think t=
+hat
+>> a change can't be rejected because of another issue.
+>
+> Well, I never said anything about rejection nor acceptance.
+>
+>> The style of placing "goto"-statements, which leave a function to th=
+e
+>> end of that is used in many other projects. And I think
+>> it's very usefull.
+>
+> It is a good discipline to follow in general to place an exceptional =
+case
+> at the end if you jump out of the general flow. =C2=A0But because the=
+ affected
+> function was so small, its readability doesn't benefit very much from=
+ the
+> discipline (in other words, you knew about a good discipline, but app=
+lied
+> it to a wrong function). =C2=A0The patch was small and obviously corr=
+ect, so it
+> will not hurt, but it will not make the world greatly a better place,
+> either.
+>
+> IOW, it was a "Meh" topic for me.
+>
+> It was more important to discuss Jonathan's "leave SP at the beginnin=
+g of
+> a goto label to please --show-c-function" from the maintainer's point=
+ of
+> view, as people may remember it as a rule and start sending patches t=
+hat
+> follow it, which I will need to deal with in the future. =C2=A0I do n=
+ot think
+> that one is a good rule.
+>
+> Now that we have dealt with that more important business of letting p=
+eople
+> know that protecting goto labels with a leading SP is _not_ the rule =
+;-),
+> I am happy with this discussion.
+>
+> And often I forget about the original issue when a discussion reaches=
+ this
+> stage of happiness. =C2=A0So thanks for reminding me.
+>
+> As I said, even though I do not think the particular function you tou=
+ched
+> badly needs the discipline applied, it would not hurt, and it obvious=
+ly is
+> the right thing to do (iow, if the function were written from day one=
+ in a
+> way your patch reorganized it, we would never accept a patch to chang=
+e it
+> into today's shape of jumping backwards). =C2=A0For one thing, it wou=
+ld remove
+> an example from the codebase people can point at to make excuses when
+> responding to a review of their patch that adds a backward goto to a =
+much
+> larger function.
+>
+> Will queue after massaging the log message somewhat. =C2=A0Thanks.
+>
