@@ -1,59 +1,67 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: Re: [PATCH] git-add.txt: Order options alphabetically
-Date: Wed, 01 Dec 2010 21:29:57 +0200
-Organization: Private
-Message-ID: <87bp55uw96.fsf@picasso.cante.net>
-References: <1291218145-13016-1-git-send-email-jari.aalto@cante.net>
-	<1291229622.11917.14.camel@drew-northup.unet.maine.edu>
+From: Dun Peal <dunpealer@gmail.com>
+Subject: Proper way to checkout a tag?
+Date: Wed, 1 Dec 2010 13:38:00 -0600
+Message-ID: <AANLkTi=b12n0J+Qg4S7i9dnbMHoWvPS3OXP0CDZevT_4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 01 20:35:18 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Dec 01 20:38:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNsST-00057v-6l
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 20:35:17 +0100
+	id 1PNsVU-0006UT-QI
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 20:38:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756587Ab0LATfH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 14:35:07 -0500
-Received: from lo.gmane.org ([80.91.229.12]:46882 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755625Ab0LATfG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 14:35:06 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PNsSG-000504-Ba
-	for git@vger.kernel.org; Wed, 01 Dec 2010 20:35:04 +0100
-Received: from a91-155-187-216.elisa-laajakaista.fi ([91.155.187.216])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 20:35:04 +0100
-Received: from jari.aalto by a91-155-187-216.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 20:35:04 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-155-187-216.elisa-laajakaista.fi
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.2 (gnu/linux)
-Cancel-Lock: sha1:npSAbbwpXb088++kjCm/f1d+bUI=
+	id S932081Ab0LATiD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 14:38:03 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:57508 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755399Ab0LATiA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 14:38:00 -0500
+Received: by qwb7 with SMTP id 7so7440396qwb.19
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 11:38:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=yXVSw5bRm6fzFndhcC1NM4L5OAAVwZMk2im0bStz/0s=;
+        b=O+IMJ1Ct5enslEAHAe9aAKQSbuil25d9vvI8XA8jeVDT+PVo7B+oZTJ4TH2Uv8Gpbc
+         TvvYtucfQFdrlJ57Z6pBPgav5Sws8Z68YZ7V5fxcO9CbgNqXw3FiMhrcksDo6I3bDFDX
+         jpEpxiJvkE/nMNHi1PpTGEL8p/aGHAz1R7qD8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=wPmhvs9Zo8roWdwx9SCtXGDcCX61rZtGEhhRaSdTIrwYU8m5Tvki/SO5Xxv0BIzdWX
+         vehi9/Wq4hx7PfF+c5wiRBIsrdcyR+Ljxc8KfX8ZkrHmwhuIaLJ6zheJVzwH6JPqYpda
+         y+Qr2HDc/He7/8TGLRhgjxgDYoyxbzp1yYls0=
+Received: by 10.224.74.13 with SMTP id s13mr8317453qaj.149.1291232280290; Wed,
+ 01 Dec 2010 11:38:00 -0800 (PST)
+Received: by 10.220.128.133 with HTTP; Wed, 1 Dec 2010 11:38:00 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162580>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162581>
 
-2010-12-01 20:53 Drew Northup <drew.northup@maine.edu>:
-> (lacking a commit message to tell me), WHY? [alphabetical]
+Hi. We tag our releases with names like "release-0", "release-1" and
+so forth. Tags (lightweight ones) seem like the perfect markers for
+these releases since we want a reference that can't ever change (as
+opposed to a head).
 
-Quoting <http://permalink.gmane.org/gmane.comp.version-control.git/162552>
+The problem is that since there's no head pointing to each release, if
+our users just:
 
-    - You read from top to bottom, therefore A-Z.
-    - GNU project uses it in manual pages. It looks good, it looks
-      professional, it looks clean. And it works when searching (= no
-      oriantation problems regardless of tools; even when you print on
-      paper when you don't have any computerized aids to help your search.).
+$ git checkout release-1
 
-Jari
+When they want to build that release, they get into a detached HEAD
+state. I've always construed detached HEAD as a non-standard state,
+and it doesn't seem proper to reach it regularly in the course of a
+standard operation like checking out past releases.
+
+It's particularly confusing for our users who are new to Git.
+
+Any thoughts, or alternative methods to do this?
+
+Thanks, D
