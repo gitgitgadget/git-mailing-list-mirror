@@ -1,74 +1,88 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [PATCH] git-add.txt: Order options alphabetically
-Date: Wed, 01 Dec 2010 14:45:06 -0500
-Message-ID: <1291232706.11917.35.camel@drew-northup.unet.maine.edu>
-References: <1291218145-13016-1-git-send-email-jari.aalto@cante.net>
-	 <1291229622.11917.14.camel@drew-northup.unet.maine.edu>
-	 <87bp55uw96.fsf@picasso.cante.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3 2/3] cvsimport: fix the parsing of uppercase config
+ options
+Date: Wed, 01 Dec 2010 11:47:29 -0800
+Message-ID: <7vvd3duvfy.fsf@alter.siamese.dyndns.org>
+References: <cover.1291207768.git.git@drmicha.warpmail.net>
+ <7vd3pmw9n5.fsf@alter.siamese.dyndns.org>
+ <b61288036e756c78709438491416d573459a732e.1291207768.git.git@drmicha.warpmail.net> <AANLkTi=cb0i28oGi9vrYfEyU_fPHhQGhNNtramtCpCHy@mail.gmail.com> <20101201160503.GB26120@burratino> <m3aakp4g5o.fsf@localhost.localdomain> <20101201163406.GD26120@burratino> <4CF67D36.9020908@drmicha.warpmail.net> <20101201175815.GB7774@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Wed Dec 01 20:46:27 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 01 20:47:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNsdG-0002Em-23
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 20:46:26 +0100
+	id 1PNsei-00032d-Nl
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 20:47:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756667Ab0LATqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 14:46:21 -0500
-Received: from basalt.its.maine.edu ([130.111.32.66]:52056 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755819Ab0LATqU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 14:46:20 -0500
-Received: from [130.111.39.151] (drew-northup.unet.maine.edu [130.111.39.151])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id oB1JjBnj026416
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 1 Dec 2010 14:45:16 -0500
-In-Reply-To: <87bp55uw96.fsf@picasso.cante.net>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=2
-	Fuz1=2 Fuz2=2
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: oB1JjBnj026416
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1291837537.76306@ObYQtEjwRhhcmGJdT+BdJw
+	id S1756772Ab0LATrt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 14:47:49 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33823 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756769Ab0LATrq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 14:47:46 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8BA232C7D;
+	Wed,  1 Dec 2010 14:48:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=VNV0SIvzT5nJyHbYKd4xMWS4jp0=; b=JmQ3w6
+	iO54W0c4J2Nlxw/yTj0wIY9+mEcWFD2XCinjB5qF7BNp/rl130xHvmyJ9xMGZhCM
+	UppVhhFfCEN1SiWg/4J464oU0hqkI1hOP05qMOcxO66tcc/Km/B8tj2eLIHIOQu0
+	Vpj7XDrfPOZdGckfFYIq31EvUR90P5kBdg8Hc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UiODNm7VedzUhswGEYk1pwpY90KrQcJI
+	8gE2nTzGH5xCGLAA3d4RVGh665ZfpklT2nUsa/VsHp/Z5FS+DcnfrM/zkMJ01Jg8
+	Nl4fjhv5b2VcHfZe2QrL5oFNvqJdrzTQieDmUbzlanWj13hUTUrNFnIRAA/hAYZn
+	KiMTm3MWb0A=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0ED2D2C67;
+	Wed,  1 Dec 2010 14:47:58 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0C1222C61; Wed,  1 Dec 2010
+ 14:47:49 -0500 (EST)
+In-Reply-To: <20101201175815.GB7774@sigill.intra.peff.net> (Jeff King's
+ message of "Wed\, 1 Dec 2010 12\:58\:15 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E5AC5E52-FD83-11DF-A817-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162587>
 
+Jeff King <peff@peff.net> writes:
 
-On Wed, 2010-12-01 at 21:29 +0200, Jari Aalto wrote:
-> 2010-12-01 20:53 Drew Northup <drew.northup@maine.edu>:
-> > (lacking a commit message to tell me), WHY? [alphabetical]
-> 
-> Quoting <http://permalink.gmane.org/gmane.comp.version-control.git/162552>
-> 
->     - You read from top to bottom, therefore A-Z.
->     - GNU project uses it in manual pages. It looks good, it looks
->       professional, it looks clean. And it works when searching (= no
->       oriantation problems regardless of tools; even when you print on
->       paper when you don't have any computerized aids to help your search.).
-> 
-> Jari
+> If there are short config options that work, though, we should probably
+> keep them. It surely can't be that hard for the perl code to accept both
+> "cvsimport.r" and "cvsimport.remote" for "-r" and
+> "cvsimport.generaterevisions" (or whatever) for "-R"?
 
-THAT belongs in a commit message!!!
+I'd agree.  The current parameter set we give to GetOptions is:
 
-As an aside, you haven't looked at the sed and gawk manpages, have you?
+    haivmkuo:d:p:r:C:z:s:M:P:A:S:L:R
 
-Alphabetic order fairly often looks nice, but it is not always the right
-answer.
+and I notice that we cannot sanely access A, M, P, R, S and their
+lowercase counterparts.
 
--- 
--Drew Northup N1XIM
-   AKA RvnPhnx on OPN
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+It shouldn't be too hard to interpret the single letter options for the
+currently supported set but only for lowercase letters plus '-C <arg>' and
+'-L <arg>' (because there are no lowercase ones that crash with them), and
+give long config names to at least the ones inaccessible with the above.
+
+Wouldn't that give us a regression-free solution to the immediate problem
+at hand?
+
+Supporting long options on the command line, and giving long config name
+synonyms to the lowercase ones, would be a plus for consistency's sake,
+but that probably is a separate topic.
