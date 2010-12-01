@@ -1,321 +1,77 @@
-From: jari.aalto@cante.net
-Subject: [PATCH] git-commit.txt: Order options alphabetically
-Date: Wed,  1 Dec 2010 16:58:46 +0200
-Organization: Private
-Message-ID: <1291215526-11428-1-git-send-email-jari.aalto@cante.net>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Cc: Jari Aalto <jari.aalto@cante.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 01 15:58:56 2010
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCHv3 2/3] cvsimport: fix the parsing of uppercase config options
+Date: Wed, 1 Dec 2010 09:59:42 -0500
+Message-ID: <AANLkTi=cb0i28oGi9vrYfEyU_fPHhQGhNNtramtCpCHy@mail.gmail.com>
+References: <cover.1291207768.git.git@drmicha.warpmail.net>
+ <7vd3pmw9n5.fsf@alter.siamese.dyndns.org> <b61288036e756c78709438491416d573459a732e.1291207768.git.git@drmicha.warpmail.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Dec 01 16:00:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNo91-0004pO-Mr
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 15:58:56 +0100
+	id 1PNoAL-0005WF-KR
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 16:00:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753258Ab0LAO6u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 09:58:50 -0500
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:48808 "EHLO
-	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752857Ab0LAO6u (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 09:58:50 -0500
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id 6E4C58C35C
-	for <git@vger.kernel.org>; Wed,  1 Dec 2010 16:58:48 +0200 (EET)
-Received: from emh02.mail.saunalahti.fi ([62.142.5.108])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A065A9653FC; Wed, 01 Dec 2010 16:58:48 +0200
-Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
-	by emh02.mail.saunalahti.fi (Postfix) with ESMTP id 477E62BD4B
-	for <git@vger.kernel.org>; Wed,  1 Dec 2010 16:58:47 +0200 (EET)
-Received: from [192.168.1.5] (helo=picasso.cante.net)
-	by picasso.cante.net with esmtp (Exim 4.72)
-	(envelope-from <jari.aalto@cante.net>)
-	id 1PNo8s-0002yk-SO; Wed, 01 Dec 2010 16:58:46 +0200
-X-Mailer: git-send-email 1.7.2.3
-X-SA-Exim-Connect-IP: 192.168.1.5
-X-SA-Exim-Mail-From: jari.aalto@cante.net
-X-SA-Exim-Scanned: No (on picasso.cante.net); SAEximRunCond expanded to false
-X-Antivirus: VAMS
+	id S1753770Ab0LAPAG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Dec 2010 10:00:06 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:56631 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753669Ab0LAPAF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Dec 2010 10:00:05 -0500
+Received: by iwn35 with SMTP id 35so26984iwn.19
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 07:00:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=mtLbIIotKZFlzmCMcEaeD0XsbX2dd7ICeDCPIE8Mb10=;
+        b=CE1uy0Z0g3b6K1B5EYoGRUHO/A7I0hnHTNt4TAhfM3IpMVy1s7oMZoyzZLgWXIo0sX
+         tOIgmv5Z3g/Pdo2C8QO5GzIn1FoOBvKBs5rlnZsSzJUBGNRifanj9GXNSTKa3eHLx94K
+         xJD5zI3IMk+PdNVSkJK6laEdVlpKM8cVtf3X8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=CqmDh2pW1x+Ce1c9YS3bTvzG6YQophoXihu42X7dpatORb0T1K+E6IhW3/ZyacckdZ
+         V97YBkkZNm/ZZdV4TX/kw+2/os6JNkPjv0zqQyteNMGhVTKAsyTq2SHKNs3NOHcqNuEh
+         8jFHUU/+6AIqBygX+yfZNuWibnlDA6nBZDfvk=
+Received: by 10.231.31.136 with SMTP id y8mr8945727ibc.145.1291215603509; Wed,
+ 01 Dec 2010 07:00:03 -0800 (PST)
+Received: by 10.231.33.1 with HTTP; Wed, 1 Dec 2010 06:59:42 -0800 (PST)
+In-Reply-To: <b61288036e756c78709438491416d573459a732e.1291207768.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162526>
 
-From: Jari Aalto <jari.aalto@cante.net>
+On Wed, Dec 1, 2010 at 7:53 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Fix this by making cvsimport expect the config item "cvsimport.capita=
+l-r"
+> for the command line option "-R" etc.
+
+Good point to fix this, thanks. But 'capital-r' will muddy the waters
+further. When accepting configuration from git-config, make all these
+values the full expanded name.
+
+So cvsimport.remote (for -r) and cvsimport.revisions (or
+trackrevisions perhaps) seem more appropriate.
+
+cheers,
 
 
-Signed-off-by: Jari Aalto <jari.aalto@cante.net>
----
- Documentation/git-commit.txt |  220 +++++++++++++++++++++---------------=
-------
- 1 files changed, 110 insertions(+), 110 deletions(-)
-
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index 42fb1f5..770f20b 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -59,73 +59,6 @@ OPTIONS
- 	been modified and deleted, but new files you have not
- 	told git about are not affected.
-=20
---C <commit>::
----reuse-message=3D<commit>::
--	Take an existing commit object, and reuse the log message
--	and the authorship information (including the timestamp)
--	when creating the commit.
--
---c <commit>::
----reedit-message=3D<commit>::
--	Like '-C', but with '-c' the editor is invoked, so that
--	the user can further edit the commit message.
--
----reset-author::
--	When used with -C/-c/--amend options, declare that the
--	authorship of the resulting commit now belongs of the committer.
--	This also renews the author timestamp.
--
----short::
--	When doing a dry-run, give the output in the short-format. See
--	linkgit:git-status[1] for details. Implies `--dry-run`.
--
----porcelain::
--	When doing a dry-run, give the output in a porcelain-ready
--	format. See linkgit:git-status[1] for details. Implies
--	`--dry-run`.
--
---z::
--	When showing `short` or `porcelain` status output, terminate
--	entries in the status output with NUL, instead of LF. If no
--	format is given, implies the `--porcelain` output format.
--
---F <file>::
----file=3D<file>::
--	Take the commit message from the given file.  Use '-' to
--	read the message from the standard input.
--
----author=3D<author>::
--	Override the commit author. Specify an explicit author using the
--	standard `A U Thor <author@example.com>` format. Otherwise <author>
--	is assumed to be a pattern and is used to search for an existing
--	commit by that author (i.e. rev-list --all -i --author=3D<author>);
--	the commit author is then copied from the first such commit found.
--
----date=3D<date>::
--	Override the author date used in the commit.
--
---m <msg>::
----message=3D<msg>::
--	Use the given <msg> as the commit message.
--
---t <file>::
----template=3D<file>::
--	Use the contents of the given file as the initial version
--	of the commit message. The editor is invoked and you can
--	make subsequent changes. If a message is specified using
--	the `-m` or `-F` options, this option has no effect. This
--	overrides the `commit.template` configuration variable.
--
---s::
----signoff::
--	Add Signed-off-by line by the committer at the end of the commit
--	log message.
--
---n::
----no-verify::
--	This option bypasses the pre-commit and commit-msg hooks.
--	See also linkgit:githooks[5].
--
- --allow-empty::
- 	Usually recording a commit that has the exact same tree as its
- 	sole parent commit is a mistake, and the command prevents you
-@@ -138,23 +71,6 @@ OPTIONS
-        empty commit message without using plumbing commands like
-        linkgit:git-commit-tree[1].
-=20
----cleanup=3D<mode>::
--	This option sets how the commit message is cleaned up.
--	The  '<mode>' can be one of 'verbatim', 'whitespace', 'strip',
--	and 'default'. The 'default' mode will strip leading and
--	trailing empty lines and #commentary from the commit message
--	only if the message is to be edited. Otherwise only whitespace
--	removed. The 'verbatim' mode does not change message at all,
--	'whitespace' removes just leading/trailing whitespace lines
--	and 'strip' removes both whitespace and commentary.
--
---e::
----edit::
--	The message taken from file with `-F`, command line with
--	`-m`, and from file with `-C` are usually used as the
--	commit log message unmodified.  This option lets you
--	further edit the message taken from these sources.
--
- --amend::
- 	Used to amend the tip of the current branch. Prepare the tree
- 	object you would want to replace the latest commit as usual
-@@ -180,6 +96,68 @@ You should understand the implications of rewriting h=
-istory if you
- amend a commit that has already been published.  (See the "RECOVERING
- FROM UPSTREAM REBASE" section in linkgit:git-rebase[1].)
-=20
-+--author=3D<author>::
-+	Override the commit author. Specify an explicit author using the
-+	standard `A U Thor <author@example.com>` format. Otherwise <author>
-+	is assumed to be a pattern and is used to search for an existing
-+	commit by that author (i.e. rev-list --all -i --author=3D<author>);
-+	the commit author is then copied from the first such commit found.
-+
-+-c <commit>::
-+--reedit-message=3D<commit>::
-+	Like '-C', but with '-c' the editor is invoked, so that
-+	the user can further edit the commit message.
-+
-+-C <commit>::
-+--reuse-message=3D<commit>::
-+	Take an existing commit object, and reuse the log message
-+	and the authorship information (including the timestamp)
-+	when creating the commit.
-+
-+--cleanup=3D<mode>::
-+	This option sets how the commit message is cleaned up.
-+	The  '<mode>' can be one of 'verbatim', 'whitespace', 'strip',
-+	and 'default'. The 'default' mode will strip leading and
-+	trailing empty lines and #commentary from the commit message
-+	only if the message is to be edited. Otherwise only whitespace
-+	removed. The 'verbatim' mode does not change message at all,
-+	'whitespace' removes just leading/trailing whitespace lines
-+	and 'strip' removes both whitespace and commentary.
-+
-+--date=3D<date>::
-+	Override the author date used in the commit.
-+
-+--dry-run::
-+	Do not create a commit, but show a list of paths that are
-+	to be committed, paths with local changes that will be left
-+	uncommitted and paths that are untracked.
-+
-+-e::
-+--edit::
-+	The message taken from file with `-F`, command line with
-+	`-m`, and from file with `-C` are usually used as the
-+	commit log message unmodified.  This option lets you
-+	further edit the message taken from these sources.
-+
-+-F <file>::
-+--file=3D<file>::
-+	Take the commit message from the given file.  Use '-' to
-+	read the message from the standard input.
-+
-+-m <msg>::
-+--message=3D<msg>::
-+	Use the given <msg> as the commit message.
-+
-+-n::
-+--no-verify::
-+	This option bypasses the pre-commit and commit-msg hooks.
-+	See also linkgit:githooks[5].
-+
-+--no-status::
-+	Do not include the output of linkgit:git-status[1] in the
-+	commit message template when using an editor to prepare the
-+	default commit message.  See option `--status'.
-+
- -i::
- --include::
- 	Before making a commit out of staged contents so far,
-@@ -199,6 +177,50 @@ FROM UPSTREAM REBASE" section in linkgit:git-rebase[=
-1].)
- 	the last commit without committing changes that have
- 	already been staged.
-=20
-+-q::
-+--quiet::
-+	Suppress commit summary message.
-+
-+--status::
-+	Include the output of linkgit:git-status[1] in the commit
-+	message template when using an editor to prepare the commit
-+	message.  Defaults to on, but can be used to override
-+	configuration variable commit.status.  See option `--no-status'.
-+
-+--porcelain::
-+	When doing a dry-run, give the output in a porcelain-ready
-+	format. See linkgit:git-status[1] for details. Implies
-+	`--dry-run`.
-+
-+--reset-author::
-+	When used with -C/-c/--amend options, declare that the
-+	authorship of the resulting commit now belongs of the committer.
-+	This also renews the author timestamp.
-+
-+-s::
-+--signoff::
-+	Add Signed-off-by line by the committer at the end of the commit
-+	log message.
-+
-+--short::
-+	When doing a dry-run, give the output in the short-format. See
-+	linkgit:git-status[1] for details. Implies `--dry-run`.
-+
-+-t <file>::
-+--template=3D<file>::
-+	Use the contents of the given file as the initial version
-+	of the commit message. The editor is invoked and you can
-+	make subsequent changes. If a message is specified using
-+	the `-m` or `-F` options, this option has no effect. This
-+	overrides the `commit.template` configuration variable.
-+
-+-v::
-+--verbose::
-+	Show unified diff between the HEAD commit and what
-+	would be committed at the bottom of the commit message
-+	template.  Note that this diff output doesn't have its
-+	lines prefixed with '#'.
-+
- -u[<mode>]::
- --untracked-files[=3D<mode>]::
- 	Show untracked files (Default: 'all').
-@@ -216,32 +238,10 @@ See linkgit:git-config[1] for configuration variabl=
-e
- used to change the default for when the option is not
- specified.
-=20
---v::
----verbose::
--	Show unified diff between the HEAD commit and what
--	would be committed at the bottom of the commit message
--	template.  Note that this diff output doesn't have its
--	lines prefixed with '#'.
--
---q::
----quiet::
--	Suppress commit summary message.
--
----dry-run::
--	Do not create a commit, but show a list of paths that are
--	to be committed, paths with local changes that will be left
--	uncommitted and paths that are untracked.
--
----status::
--	Include the output of linkgit:git-status[1] in the commit
--	message template when using an editor to prepare the commit
--	message.  Defaults to on, but can be used to override
--	configuration variable commit.status.
--
----no-status::
--	Do not include the output of linkgit:git-status[1] in the
--	commit message template when using an editor to prepare the
--	default commit message.
-+-z::
-+	When showing `short` or `porcelain` status output, terminate
-+	entries in the status output with NUL, instead of LF. If no
-+	format is given, implies the `--porcelain` output format.
-=20
- \--::
- 	Do not interpret any more arguments as options.
+m
 --=20
-1.7.2.3
+=A0martin.langhoff@gmail.com
+=A0martin@laptop.org -- School Server Architect
+=A0- ask interesting questions
+=A0- don't get distracted with shiny stuff=A0 - working code first
+=A0- http://wiki.laptop.org/go/User:Martinlanghoff
