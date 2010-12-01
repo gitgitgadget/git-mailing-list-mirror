@@ -1,97 +1,81 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Proper way to checkout a tag?
-Date: Wed, 1 Dec 2010 13:51:25 -0600
-Message-ID: <20101201195125.GC27347@burratino>
-References: <AANLkTi=b12n0J+Qg4S7i9dnbMHoWvPS3OXP0CDZevT_4@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] bash: Match lightweight tags in prompt
+Date: Wed, 01 Dec 2010 11:53:58 -0800
+Message-ID: <7vr5e1uv55.fsf@alter.siamese.dyndns.org>
+References: <AANLkTinvAnGh6PU2bRrx_uGU81zjVHcFmZWwqpKpjO=1@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git ML <git@vger.kernel.org>
-To: Dun Peal <dunpealer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 01 20:51:42 2010
+Cc: git@vger.kernel.org, Shawn Pearce <spearce@spearce.org>
+To: knittl <knittl89@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 01 20:54:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNsiL-0005FM-DN
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 20:51:41 +0100
+	id 1PNskq-0007r7-LA
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 20:54:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756746Ab0LATvf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 14:51:35 -0500
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:58272 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755529Ab0LATve (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 14:51:34 -0500
-Received: by wwb39 with SMTP id 39so151153wwb.1
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 11:51:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=FE/P+2/CD0LqiObATFb7Go6djMCrCwD7SDc9kZpNGSg=;
-        b=J4yBGexkGli0YuGt9iJIUeyq8awjfFAuxd9YjZflzpH9s1UvbDZpOZec4qxUe3zw65
-         pSzVZGSOG9c0xBAetQkogsAID/zjCv5TTEW0mmXz0HmohkhCMcNVO6t3O76UI9uGFD+Z
-         Rqin97UrJ1z0xdFERf1RPThfne97YIgI2hQTA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=FArHS77saa9Lkk6arI6ozr0WyUN0VNz7LD5mrMaASHP2hudqUElv5VD/ohBC0O1lbF
-         y7dQnChMJuIFFtfgwOG6lUSRzS2/x+rkDnISyDRAmjBSA8jKWVyPBMzmnxYq/b9aXrc8
-         /an3oD2UunscOoiDuGLFiSm3EwmqVjyCvjBpM=
-Received: by 10.227.137.197 with SMTP id x5mr10020148wbt.198.1291233093157;
-        Wed, 01 Dec 2010 11:51:33 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
-        by mx.google.com with ESMTPS id 11sm246019wbj.1.2010.12.01.11.51.31
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 01 Dec 2010 11:51:32 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=b12n0J+Qg4S7i9dnbMHoWvPS3OXP0CDZevT_4@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756803Ab0LATyJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 14:54:09 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45275 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756756Ab0LATyI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 14:54:08 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 923172D5E;
+	Wed,  1 Dec 2010 14:54:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=aQzaw5/GHmvkuEpV5ihdiT+DfPE=; b=fMR0HI
+	E8Xdqgouba5zuyATZslGOhptgvFwtiC9dvsCTMh/fLak05yriMhlCcDao7RrTw8I
+	tOAJuKtZVYmqhcG+jIUB9aqbjt0RugnOWjIA04vtJAVXZEXiwIWwSn5xO85MAwdF
+	acNvrYgjUvwpe/hNGHJCyamnvnaCLOjiWwP84=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TE4JfoyktV/z57id9AVXMe6wZ2D7SO2n
+	tu5DHqFXngsV2PJDx79jJJk58xMLOmBAe46lvZ3lTSCSnxQ1uHtmPPwnZbrO/6Db
+	RS8OOkYImpRWwrthMocaFEu7OcoxstJGxQhoaSyUWxZ8v9Mq0/PR6lgGibmhaYWI
+	s5dUQztoA+Y=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 59CA12D53;
+	Wed,  1 Dec 2010 14:54:23 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4003E2D52; Wed,  1 Dec 2010
+ 14:54:18 -0500 (EST)
+In-Reply-To: <AANLkTinvAnGh6PU2bRrx_uGU81zjVHcFmZWwqpKpjO=1@mail.gmail.com>
+ (knittl's message of "Wed\, 1 Dec 2010 14\:17\:00 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CB55793E-FD84-11DF-AE7C-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162589>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162590>
 
-Hi,
+knittl <knittl89@googlemail.com> writes:
 
-Dun Peal wrote:
+> From 6be63c5bc1a411a13a012a6508a7301bed7faec6 Mon Sep 17 00:00:00 2001
+> From: Daniel Knittl-Frank <knittl89+git@googlemail.com>
+> Date: Fri, 19 Nov 2010 16:40:02 +0100
+> Subject: [PATCH] bash: Match lightweight tags in prompt
 
-> The problem is that since there's no head pointing to each release, if
-> our users just:
-> 
-> $ git checkout release-1
-> 
-> When they want to build that release, they get into a detached HEAD
-> state. I've always construed detached HEAD as a non-standard state,
-> and it doesn't seem proper to reach it regularly in the course of a
-> standard operation like checking out past releases.
-> 
-> It's particularly confusing for our users who are new to Git.
+Please drop these lines next time, so that I do not have to remove them in
+my editor before applying.
 
-Any ideas for making the detached state more friendly?
+> the bash prompt would display a commit's SHA1 when having checked out a
+> lightweight tag.  provide `--tags` to `git describe` in the completion
+> script, so it will display lightweight tag names (as it already does for
+> annotated tags)
 
-The idea is this: when you check out a tag or a remote-tracking
-branch, it is not to make changes to it.  Tags are unchanging,
-remote-tracking branches track remote state that the user does not
-directly control.  So what does it mean to check out such a thing?
+Hmph.  Is your Shift-key broken (probably not, as you spelled SHA in
+capital)?
 
-There are two possibilities:
+> Signed-off-by: Daniel Knittl-Frank <knittl89+git@googlemail.com>
+> ---
+> version two of my patch, adding the missing s-o-b and extending commit message
+>
+> the diff is still the same as v1
 
-If you are checking out that commit to examine it, test it, maybe
-write a few one-off patches, then any work built from there does not
-need to be remembered (except in the HEAD reflog, to avoid expensive
-accidents).  You can make an experiment permanent with
-
-	git checkout -b newbranch
-
-If you are starting a new line of development, it needs to get a name.
-Long ago this was the only use case supported.  Even today it is often
-a good way to go:
-
-	git checkout -b newbranch release-1
-
-Hope that helps.
-Jonathan
+Thanks; will apply (no need for resend).
