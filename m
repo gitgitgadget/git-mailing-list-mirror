@@ -1,91 +1,67 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv3 2/3] cvsimport: fix the parsing of uppercase config
- options
-Date: Wed, 1 Dec 2010 11:01:40 -0600
-Message-ID: <20101201170140.GG26120@burratino>
-References: <cover.1291207768.git.git@drmicha.warpmail.net>
- <7vd3pmw9n5.fsf@alter.siamese.dyndns.org>
- <b61288036e756c78709438491416d573459a732e.1291207768.git.git@drmicha.warpmail.net>
- <AANLkTi=cb0i28oGi9vrYfEyU_fPHhQGhNNtramtCpCHy@mail.gmail.com>
- <20101201160503.GB26120@burratino>
- <m3aakp4g5o.fsf@localhost.localdomain>
- <20101201163406.GD26120@burratino>
- <4CF67D36.9020908@drmicha.warpmail.net>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: [PATCH] Documentation/config.txt: Order variables alphabetically
+Date: Wed, 01 Dec 2010 19:10:55 +0200
+Organization: Private
+Message-ID: <87vd3dv2ow.fsf@picasso.cante.net>
+References: <1291209174-9239-1-git-send-email-jari.aalto@cante.net>
+	<201012011557.30849.jnareb@gmail.com>
+	<20101201150917.GD6537@picasso.cante.net>
+	<201012011737.53652.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Jeff King <peff@peff.net>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Dec 01 18:01:56 2010
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 01 18:11:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNq43-0003iB-D2
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 18:01:55 +0100
+	id 1PNqDV-0000kG-R4
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 18:11:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754820Ab0LARBu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 12:01:50 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:56491 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752940Ab0LARBt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 12:01:49 -0500
-Received: by vws16 with SMTP id 16so444088vws.19
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 09:01:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=mucyRvMIDVzvLxh3OhgnBwDUou8YeFu8EV0McFsbRbg=;
-        b=dOfQ5JEuycimURC++O8nQHL3+2s1zoxb4LsNqAlrXzZANd/FB90SqZb6rM3crdchZi
-         0pfaobafx8bjGjtmE2v4QWcJX6ihEqzdvT7X6lkwBVD1iEOg7eQCMsldy+Zcy8jgoTa/
-         3P0nVKWuMa9X87pPsP99akqaZVFnFv08iY9rU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=tVJ8iMjdV5usB8NpHtIfQdAIoBr/G+SIUM4eG0OTlvyiED/hVmYCeEF+PmyFhCTEMg
-         RrWlgkUBIiJQu/43qBgXhA9PecobBBzNPZwOQcjyYMuxEgQ4UTTdRJlOssosemNyjZdn
-         hEWhQ5qiO6TLXY3+ImQzXa55Ud7Sc5qwp9uHE=
-Received: by 10.220.179.205 with SMTP id br13mr49488vcb.178.1291222908829;
-        Wed, 01 Dec 2010 09:01:48 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id c40sm51680vcs.1.2010.12.01.09.01.46
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 01 Dec 2010 09:01:47 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4CF67D36.9020908@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755434Ab0LARLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 12:11:10 -0500
+Received: from lo.gmane.org ([80.91.229.12]:34922 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755387Ab0LARLK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 12:11:10 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PNqCw-0000Ou-Tm
+	for git@vger.kernel.org; Wed, 01 Dec 2010 18:11:06 +0100
+Received: from a91-155-187-216.elisa-laajakaista.fi ([91.155.187.216])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 18:11:06 +0100
+Received: from jari.aalto by a91-155-187-216.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 18:11:06 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-187-216.elisa-laajakaista.fi
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.2 (gnu/linux)
+Cancel-Lock: sha1:h7dBrW63wysojof3o4Zsjx4rjLg=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162550>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162551>
 
-Michael J Gruber wrote:
+2010-12-01 18:37 Jakub Narebski <jnareb@gmail.com>:
+> Having related config variables together is IMVHO more important than
+> having config variables sorted alphabetically.
 
-> So you guys are going to break current behaviour (for "cvsimport.r" etc.)?
+That's subjective criteria. I doubt there are many related one that
+can't be handled with standard "see also".
 
-Actual git cvsimport users get the real vote.
+A small percentage of variables that "group" is bad criteria for general
+use. Especially when confix.txt contains somewhere 250 options.
 
-But yes, I would like to break current behavior for cvsimport.r, since
-the current behavior is insane.  On the other hand, I think it is fine
-to preserve the current behavior for cvsimport.d.
+Most of the time you want to look up X. And alpha order is what doctor
+ordered.
 
-Meanwhile we would get better documentation and self-describing
-command lines:
+Same for command line options. You read zillions of scripts and cryptic
+options. You want to consult manual page to see what an option means. Again
+you're searching A-Z.
 
-	git cvsimport --cvshead=master --authors-file=$(pwd)/.git/cvs-authors \
-		... etc ...
-
-> I hate it when simple things get held up like this.
-
-Perhaps it is a case of everyone knowing what an ugly shed is and thus
-spending the time to make it a little better.
-
-Anyway, feel free to ignore me in this case if you want.
-Jonathan
+Jari
