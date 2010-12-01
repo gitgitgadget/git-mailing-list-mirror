@@ -1,273 +1,101 @@
-From: jari.aalto@cante.net
-Subject: [PATCH] git-clone.txt: order options alphabetically
-Date: Wed,  1 Dec 2010 22:09:32 +0200
-Organization: Private
-Message-ID: <1291234172-20927-1-git-send-email-jari.aalto@cante.net>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Cc: Jari Aalto <jari.aalto@cante.net>
-To: git@vger.kernel.org
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] add: introduce add.ignoreerrors synonym for
+ add.ignore-errors
+Date: Wed, 01 Dec 2010 12:09:12 -0800
+Message-ID: <7vipzduufr.fsf@alter.siamese.dyndns.org>
+References: <cover.1291207768.git.git@drmicha.warpmail.net>
+ <7vd3pmw9n5.fsf@alter.siamese.dyndns.org>
+ <b61288036e756c78709438491416d573459a732e.1291207768.git.git@drmicha.warpmail.net> <AANLkTi=cb0i28oGi9vrYfEyU_fPHhQGhNNtramtCpCHy@mail.gmail.com> <20101201160503.GB26120@burratino> <m3aakp4g5o.fsf@localhost.localdomain> <20101201163406.GD26120@burratino> <20101201175517.GA7774@sigill.intra.peff.net> <20101201183615.GA27024@burratino> <20101201184659.GA9147@sigill.intra.peff.net> <20101201185711.GD27024@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+	Martin Langhoff <martin.langhoff@gmail.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
 X-From: git-owner@vger.kernel.org Wed Dec 01 21:09:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNszt-0006vW-CH
+	id 1PNszs-0006vW-SD
 	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 21:09:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756542Ab0LAUJg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 15:09:36 -0500
-Received: from emh04.mail.saunalahti.fi ([62.142.5.110]:50279 "EHLO
-	emh04.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756478Ab0LAUJf (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 15:09:35 -0500
-Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh04-2.mail.saunalahti.fi (Postfix) with SMTP id 5053113B913
-	for <git@vger.kernel.org>; Wed,  1 Dec 2010 22:09:34 +0200 (EET)
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116])
-	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A0391746885; Wed, 01 Dec 2010 22:09:34 +0200
-Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
-	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id 1F217E51A3
-	for <git@vger.kernel.org>; Wed,  1 Dec 2010 22:09:32 +0200 (EET)
-Received: from [192.168.1.5] (helo=picasso.cante.net)
-	by picasso.cante.net with esmtp (Exim 4.72)
-	(envelope-from <jari.aalto@cante.net>)
-	id 1PNszc-0005Rx-Lq; Wed, 01 Dec 2010 22:09:32 +0200
-X-Mailer: git-send-email 1.7.2.3
-X-SA-Exim-Connect-IP: 192.168.1.5
-X-SA-Exim-Mail-From: jari.aalto@cante.net
-X-SA-Exim-Scanned: No (on picasso.cante.net); SAEximRunCond expanded to false
-X-Antivirus: VAMS
+	id S1756454Ab0LAUJb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 15:09:31 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35572 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756362Ab0LAUJ3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 15:09:29 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4B7942F5F;
+	Wed,  1 Dec 2010 15:09:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=TvU+919IlXPbORYakx4nZVt9NME=; b=jvL8OW
+	jSyldiKBSHZxDNqCtvm5doqzHxESY82wWCKAawY50JHRBKEYRjRP9g5CT+sUB3my
+	5a2MfRAZGXsrmuvOFvFmoq2XV0hl5Et0PqS5RjekmE5H9SpCQKBx8ClLzVrDqZhF
+	OOoRdAvXf+HnW2ZBQEaQn8FoHatq5s7xBqBxE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=abwQ7E7JvV3paGF2D6ML3DpDCzbQOEmH
+	5uEavslXIdx0D+7xhe0+cdIZlfGlpz1rynEByr+jANSRYd1XXbiM0yOy2DM+IwB2
+	JQ4tkQ2i4+hNjRj5SOshVNlDLg5hDdDCtnawFXW8ztdQabQpI5ImUYL4oFVlXLmz
+	BXjLxyePO0U=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DB7292F58;
+	Wed,  1 Dec 2010 15:09:40 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id E80C02F56; Wed,  1 Dec 2010
+ 15:09:32 -0500 (EST)
+In-Reply-To: <20101201185711.GD27024@burratino> (Jonathan Nieder's message of
+ "Wed\, 1 Dec 2010 12\:57\:11 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: EE39825E-FD86-11DF-A223-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162596>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162597>
 
-From: Jari Aalto <jari.aalto@cante.net>
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
+> Jeff King wrote:
+>
+>> Yes, looks good to me. You could potentially drop the old one from the
+>> config:
+>> ...
+>> which may be less confusing to new users (who might ask "is there a
+>> difference between the two?").
+>
+> Right, I prefer to keep it documented for the old and forgetful users
+> (who might ask "why does this configuration work?").
 
-Signed-off-by: Jari Aalto <jari.aalto@cante.net>
----
- Documentation/git-clone.txt |  173 ++++++++++++++++++++++---------------=
-------
- 1 files changed, 87 insertions(+), 86 deletions(-)
+We actually need to stress the fact that _only_ newer git will understand
+"add.ignoreErrors", so people with older git (especially the ones who need
+to use both older and newer versions of git) may need to keep using the
+older form in their configuration, no?
 
-diff --git a/Documentation/git-clone.txt b/Documentation/git-clone.txt
-index 42e7021..35f5017 100644
---- a/Documentation/git-clone.txt
-+++ b/Documentation/git-clone.txt
-@@ -37,8 +37,37 @@ configuration variables.
-=20
- OPTIONS
- -------
----local::
-+
-+--bare::
-+	Make a 'bare' GIT repository.  That is, instead of
-+	creating `<directory>` and placing the administrative
-+	files in `<directory>/.git`, make the `<directory>`
-+	itself the `$GIT_DIR`. This obviously implies the `-n`
-+	because there is nowhere to check out the working tree.
-+	Also the branch heads at the remote are copied directly
-+	to corresponding local branch heads, without mapping
-+	them to `refs/remotes/origin/`.  When this option is
-+	used, neither remote-tracking branches nor the related
-+	configuration variables are created.
-+
-+-b <name>::
-+--branch <name>::
-+	Instead of pointing the newly created HEAD to the branch pointed
-+	to by the cloned repository's HEAD, point to `<name>` branch
-+	instead. In a non-bare repository, this is the branch that will
-+	be checked out.
-+
-+--depth <depth>::
-+	Create a 'shallow' clone with a history truncated to the
-+	specified number of revisions.  A shallow repository has a
-+	number of limitations (you cannot clone or fetch from
-+	it, nor push from nor into it), but is adequate if you
-+	are only interested in the recent history of a large project
-+	with a long history, and would want to send in fixes
-+	as patches.
-+
- -l::
-+--local::
- 	When the repository to clone from is on a local machine,
- 	this flag bypasses the normal "git aware" transport
- 	mechanism and clones the repository by making a copy of
-@@ -52,13 +81,61 @@ OPTIONS
- 	but still avoid the usual "git aware" transport
- 	mechanism, `--no-hardlinks` can be used.
-=20
-+--mirror::
-+	Set up a mirror of the source repository.  This implies `--bare`.
-+	Compared to `--bare`, `--mirror` not only maps local branches of the
-+	source to local branches of the target, it maps all refs (including
-+	remote-tracking branches, notes etc.) and sets up a refspec configurati=
-on such
-+	that all these refs are overwritten by a `git remote update` in the
-+	target repository.
-+
-+-n::
-+--no-checkout::
-+	No checkout of HEAD is performed after the clone is complete.
-+
- --no-hardlinks::
- 	Optimize the cloning process from a repository on a
- 	local filesystem by copying files under `.git/objects`
- 	directory.
-=20
----shared::
-+-o <name>::
-+--origin <name>::
-+	Instead of using the remote name `origin` to keep track
-+	of the upstream repository, use `<name>`.
-+
-+--progress::
-+	Progress status is reported on the standard error stream
-+	by default when it is attached to a terminal, unless -q
-+	is specified. This flag forces progress status even if the
-+	standard error stream is not directed to a terminal.
-+
-+-q::
-+--quiet::
-+	Operate quietly.  Progress is not reported to the standard
-+	error stream. This flag is also passed to the `rsync'
-+	command when given.
-+
-+--recursive::
-+--recurse-submodules::
-+	After the clone is created, initialize all submodules within,
-+	using their default settings. This is equivalent to running
-+	`git submodule update --init --recursive` immediately after
-+	the clone is finished. This option is ignored if the cloned
-+	repository does not have a worktree/checkout (i.e. if any of
-+	`--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
-+
-+--reference <repository>::
-+	If the reference repository is on the local machine,
-+	automatically setup `.git/objects/info/alternates` to
-+	obtain objects from the reference repository.  Using
-+	an already existing repository as an alternate will
-+	require fewer objects to be copied from the repository
-+	being cloned, reducing network and local storage costs.
-++
-+*NOTE*: see the NOTE for the `--shared` option.
-+
- -s::
-+--shared::
- 	When the repository to clone is on the local machine,
- 	instead of using hard links, automatically setup
- 	`.git/objects/info/alternates` to share the objects
-@@ -85,96 +162,20 @@ If you want to break the dependency of a repository =
-cloned with `-s` on
- its source repository, you can simply run `git repack -a` to copy all
- objects from the source repository into a pack in the cloned repository.
-=20
----reference <repository>::
--	If the reference repository is on the local machine,
--	automatically setup `.git/objects/info/alternates` to
--	obtain objects from the reference repository.  Using
--	an already existing repository as an alternate will
--	require fewer objects to be copied from the repository
--	being cloned, reducing network and local storage costs.
--+
--*NOTE*: see the NOTE for the `--shared` option.
--
----quiet::
---q::
--	Operate quietly.  Progress is not reported to the standard
--	error stream. This flag is also passed to the `rsync'
--	command when given.
--
----verbose::
---v::
--	Run verbosely. Does not affect the reporting of progress status
--	to the standard error stream.
--
----progress::
--	Progress status is reported on the standard error stream
--	by default when it is attached to a terminal, unless -q
--	is specified. This flag forces progress status even if the
--	standard error stream is not directed to a terminal.
--
----no-checkout::
---n::
--	No checkout of HEAD is performed after the clone is complete.
--
----bare::
--	Make a 'bare' GIT repository.  That is, instead of
--	creating `<directory>` and placing the administrative
--	files in `<directory>/.git`, make the `<directory>`
--	itself the `$GIT_DIR`. This obviously implies the `-n`
--	because there is nowhere to check out the working tree.
--	Also the branch heads at the remote are copied directly
--	to corresponding local branch heads, without mapping
--	them to `refs/remotes/origin/`.  When this option is
--	used, neither remote-tracking branches nor the related
--	configuration variables are created.
--
----mirror::
--	Set up a mirror of the source repository.  This implies `--bare`.
--	Compared to `--bare`, `--mirror` not only maps local branches of the
--	source to local branches of the target, it maps all refs (including
--	remote-tracking branches, notes etc.) and sets up a refspec configurati=
-on such
--	that all these refs are overwritten by a `git remote update` in the
--	target repository.
--
----origin <name>::
---o <name>::
--	Instead of using the remote name `origin` to keep track
--	of the upstream repository, use `<name>`.
--
----branch <name>::
---b <name>::
--	Instead of pointing the newly created HEAD to the branch pointed
--	to by the cloned repository's HEAD, point to `<name>` branch
--	instead. In a non-bare repository, this is the branch that will
--	be checked out.
-+--template=3D<template_directory>::
-+	Specify the directory from which templates will be used;
-+	(See the "TEMPLATE DIRECTORY" section of linkgit:git-init[1].)
-=20
----upload-pack <upload-pack>::
- -u <upload-pack>::
-+--upload-pack <upload-pack>::
- 	When given, and the repository to clone from is accessed
- 	via ssh, this specifies a non-default path for the command
- 	run on the other end.
-=20
----template=3D<template_directory>::
--	Specify the directory from which templates will be used;
--	(See the "TEMPLATE DIRECTORY" section of linkgit:git-init[1].)
--
----depth <depth>::
--	Create a 'shallow' clone with a history truncated to the
--	specified number of revisions.  A shallow repository has a
--	number of limitations (you cannot clone or fetch from
--	it, nor push from nor into it), but is adequate if you
--	are only interested in the recent history of a large project
--	with a long history, and would want to send in fixes
--	as patches.
--
----recursive::
----recurse-submodules::
--	After the clone is created, initialize all submodules within,
--	using their default settings. This is equivalent to running
--	`git submodule update --init --recursive` immediately after
--	the clone is finished. This option is ignored if the cloned
--	repository does not have a worktree/checkout (i.e. if any of
--	`--no-checkout`/`-n`, `--bare`, or `--mirror` is given)
-+-v::
-+--verbose::
-+	Run verbosely. Does not affect the reporting of progress status
-+	to the standard error stream.
-=20
- <repository>::
- 	The (possibly remote) repository to clone from.  See the
---=20
-1.7.2.3
+Perhaps phrasing it like this, and then issue v1.7.{0,1,2,3}.X maintenance
+release to reduce the chance of inconveniencing the users?
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index 1df0f65..5b6f667 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -539,9 +539,12 @@ core.sparseCheckout::
+ 	linkgit:git-read-tree[1] for more information.
+ 
+ add.ignore-errors::
++add.ignoreErrors::
+ 	Tells 'git add' to continue adding files when some files cannot be
+ 	added due to indexing errors. Equivalent to the '--ignore-errors'
+-	option of linkgit:git-add[1].
++	option of linkgit:git-add[1].  Older versions of git accept only
++	`add.ignore-errors`, whose name goes against the convention, so
++	newer versions of git honor `add.ignoreErrors` as well.
+ 
+ alias.*::
+ 	Command aliases for the linkgit:git[1] command wrapper - e.g.
