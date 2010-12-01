@@ -1,68 +1,119 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: gitweb: false base href sent when integrated via reverse proxy
- and path_info is active
-Date: Tue, 30 Nov 2010 19:25:10 -0800
-Message-ID: <7v8w0aw4x5.fsf@alter.siamese.dyndns.org>
-References: <20101128081048.13668.67286.reportbug@sb74.startrek>
- <201011281847.40233.jnareb@gmail.com> <20101128181215.GB19545@burratino>
- <201011301922.11695.jnareb@gmail.com>
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: [PATCH 5/6] web--browse: use (x-)www-browser if available
+Date: Wed, 1 Dec 2010 11:59:13 +0100
+Message-ID: <AANLkTinzCeaiFoL4a-+c6wuJoUQ68zC9vE8AoHfmvN-F@mail.gmail.com>
+References: <1291042075-19983-1-git-send-email-giuseppe.bilotta@gmail.com>
+	<1291042075-19983-6-git-send-email-giuseppe.bilotta@gmail.com>
+	<AANLkTinGustedMv9rm+RgGMQckfxgbTPA+Yqpz7vqTfm@mail.gmail.com>
+	<AANLkTimec0prJ29MR3N7GtHJ1FCkk+7=1UJtqiaLZqhK@mail.gmail.com>
+	<AANLkTik9R2dRDDBUHBZ_OKPKto0wDAxr1V0uL=q4bU+4@mail.gmail.com>
+	<AANLkTik-OKsUK2aJCDR0Q-FyQM=rrFQmx=Hwdyr5NzYt@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>,
-	git@vger.kernel.org, Daniel Reichelt <debian@nachtgeist.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 01 04:25:35 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 01 11:59:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNdK0-00068t-5k
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 04:25:32 +0100
+	id 1PNkPA-0004Nd-JZ
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 11:59:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754152Ab0LADZ0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 30 Nov 2010 22:25:26 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44435 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753968Ab0LADZZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 30 Nov 2010 22:25:25 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DB86A358A;
-	Tue, 30 Nov 2010 22:25:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=RMX3+a+xLBlas+CdyLAY85bua3g=; b=VvUs3Y
-	whREX4vhKRiHesx2XxIXeE1WCc5kgMiVgJcZpCAkLr2r4wDytXu4wQTitNqKhoS3
-	4L8quMmtCSlHI5u8g+Z8fw0oZ4oauTWMBfVVmygW/HwxQoudDByM2NlKxVqIk5pX
-	BUc1Rps062XxuVFGZ8azFz0aYNyTVzY2cLdPU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bmFcvzy5l9es0onDlKLoNlF+Kgbhu2h8
-	w0gMCKXWpcOxA4GY1oAbN5ixRh9kWTILGE4g3TJXYukHt01QKpbP+okWx3CTimX1
-	2TRN2iblN7fOvdKOS9ifu9mqSt/gyEdO1TmupNVwcG4vukDGz1jEWDfGSezlXJKa
-	/JNaflP8qyQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8D2073589;
-	Tue, 30 Nov 2010 22:25:37 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 16FCD3588; Tue, 30 Nov 2010
- 22:25:30 -0500 (EST)
-In-Reply-To: <201011301922.11695.jnareb@gmail.com> (Jakub Narebski's message
- of "Tue\, 30 Nov 2010 19\:22\:09 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AA686626-FCFA-11DF-A886-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
+	id S1752755Ab0LAK7P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 05:59:15 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:35410 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752147Ab0LAK7P (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 05:59:15 -0500
+Received: by wyb28 with SMTP id 28so6799500wyb.19
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 02:59:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=tVM+ViMOvXVaG79KAU9F7A5ZFT+cwlnCICGyPc4bz38=;
+        b=wqkZhaCnQ8aVg/EJ6vMmPZXSvnUVlOzhN1+0eb3MzwkDbepv9YwyCyCj9Q/QgMMbFw
+         IJC2+b22C3sOKyix40kLgkMM418g/XMwDbEeFAHHIyaSk0uk7UlYUrbD4+2wpMuL3qSP
+         q6V/RHMjb01k1DUtwWkpCetX7Z4aBvklE94TI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=C8MDtqzXhtKdb0cZT6ipA+GlCjToCY1c8KxSzmhsAyO8E7KaR34T5ed7dXHtv6Bnct
+         4MuiLxb/iFUT7dzfLLAUlgSRQT8GCoTY42FpTgu3ODODCagGVKNPKWH++5awsiNeKvMd
+         itiS11SMD0v88Ccgsu8MbBAUtEPaPAJzKdzN8=
+Received: by 10.216.5.1 with SMTP id 1mr987795wek.2.1291201153663; Wed, 01 Dec
+ 2010 02:59:13 -0800 (PST)
+Received: by 10.216.85.213 with HTTP; Wed, 1 Dec 2010 02:59:13 -0800 (PST)
+In-Reply-To: <AANLkTik-OKsUK2aJCDR0Q-FyQM=rrFQmx=Hwdyr5NzYt@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162497>
 
-Jakub Narebski <jnareb@gmail.com> writes:
+On Tue, Nov 30, 2010 at 9:22 AM, Giuseppe Bilotta
+<giuseppe.bilotta@gmail.com> wrote:
+> On Tue, Nov 30, 2010 at 5:02 AM, Christian Couder
+> <christian.couder@gmail.com> wrote:
+>> On Mon, Nov 29, 2010 at 8:05 PM, Giuseppe Bilotta
+>> <giuseppe.bilotta@gmail.com> wrote:
+>>> We allow valid_tool to be false in the x-www-browser case, in which
+>>> case we test www-browser, and if it's still not valid we go on and use
+>>> the previous paths. So we cannot die in case of an invalid
+>>> (x-)www-browser.
+>>
+>> Yeah, you are right, but we could die after the "for i in $wwwbrowser"
+>> loop if both are invalid.
+>
+> Why? If both are invalid, proceeding with the previous strategy of
+> looking for a browser we _should_ be looking for any browser we know
+> about, even if it's not set as the default system browser.
 
-> Well, both git-gui and gitk have their documentation in Documentation/
-> (in AsciiDoc format), so perhaps it is time to add Documentation/gitweb.txt
-> and possibly also Documentation/gitweb_config.txt (or gitweb.conf.txt).
+Currently we have:
 
-That indeed sounds like a good idea to me.
+97     if test -n "$browser" && ! valid_tool "$browser"; then
+98         echo >&2 "git config option $opt set to unknown browser: $browser"
+99         echo >&2 "Resetting to default..."
+100         unset browser
+101     fi
+
+So if we want to be consistent with that behavior, we should probably do the
+same thing if (x-)www-browser is set but we don't support it.
+
+>>> But there's a bug in the www-brower testing, it needs
+>>> an else that resets browser to the empty string.
+>>
+>> I thought it was by design that you did not reset it...
+>> So yeah it is clearer and nicer for the user if you either reset
+>> browser or just die if both (x-)www-browser are invalid. If you decide
+>> to reset browser, perhaps a warning or an information message telling
+>> that both are unknown would be nice.
+>
+> I can do that. Should it be a warning about reporting the lack of
+> support to us, or just a warning that we are not going to use it even
+> if it's defined?
+
+I think it should be a warning that we are not going to use it even
+if it's defined, to be consistent with the code pasted above.
+
+If you think of something better or want to remove the warnings, please do
+it in another patch.
+
+> While we're at it: I was considering adding support for the BROWSER
+> env var (a colon-separated list of browsers executables or "browser
+> %s" strings).
+>
+> All of this is going to make the web--browse script very similar to
+> the sensible-browser script in Debian, with the difference that we go
+> at length to ensure that stuff is opened in a new tab, whereas
+> Debian's sensible-browser doesn't. Should we just support
+> sensible-browser instead of (x-)www-browser/BROWSER, and let it open
+> anything?
+
+I think most users prefer to open stuff in a new tab if possible.
+
+Thanks,
+Christian.
