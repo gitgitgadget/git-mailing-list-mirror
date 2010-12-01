@@ -1,66 +1,75 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv3 3/3] cvsimport.txt: document the mapping between config and options
-Date: Wed,  1 Dec 2010 13:53:22 +0100
-Message-ID: <84f63e5082da0bf483175584399688385fb6002d.1291207768.git.git@drmicha.warpmail.net>
-References: <7vd3pmw9n5.fsf@alter.siamese.dyndns.org>
-Cc: Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 01 13:56:20 2010
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH] Match lightweight tags too in bash prompt
+Date: Wed, 1 Dec 2010 11:08:06 -0200
+Message-ID: <AANLkTik3GS6By4=k2oV77jUkyF5570qc56jgWGG9+gZr@mail.gmail.com>
+References: <AANLkTikeH=MODho_GsZP5VPQmt2NOoHyfw2pbt4yqGkt@mail.gmail.com>
+	<AANLkTi=0+s164XkWHho1++hvnTCAFg5=GGfMbHF4ugTE@mail.gmail.com>
+	<AANLkTinoZbSqwtiRwZ5+FZyn=6y7usgFi6p-JVUUTM5g@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Shawn Pearce <spearce@spearce.org>, git@vger.kernel.org
+To: knittl <knittl89@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 01 14:08:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNmEG-0003d0-TD
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 13:56:13 +0100
+	id 1PNmQJ-0001Xt-FG
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 14:08:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755204Ab0LAMzt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 07:55:49 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:36454 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755173Ab0LAMzo (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Dec 2010 07:55:44 -0500
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 11C9B5FA;
-	Wed,  1 Dec 2010 07:55:44 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Wed, 01 Dec 2010 07:55:44 -0500
-X-Sasl-enc: /xG5+A7A2LLepj6rREEK27N1bouxIwYF1SJaiatMIjcE 1291208143
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 8B0675E0507;
-	Wed,  1 Dec 2010 07:55:43 -0500 (EST)
-X-Mailer: git-send-email 1.7.3.2.617.g84f63
-In-Reply-To: <7vd3pmw9n5.fsf@alter.siamese.dyndns.org>
-In-Reply-To: <cover.1291207768.git.git@drmicha.warpmail.net>
-References: <cover.1291207768.git.git@drmicha.warpmail.net>
+	id S1755072Ab0LANIJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 08:08:09 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:41737 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754918Ab0LANIH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 08:08:07 -0500
+Received: by bwz15 with SMTP id 15so6092913bwz.19
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 05:08:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=T7VlYhb0bEwwAZ44ydnGtOOg6iCaGmEoMCz3utvJYug=;
+        b=Tr/X9hQbgr2rhPmBKaa9PQYOoiJStm3tvF9NQQoF/NAllpt2lqHapKLDLk4jaZsPQt
+         qdVOaIc2nKl9cTyY2P3yujVW84PVVXT1bsGRYro64GkgQmiERk+Gzmg/AXJeJJ6G4iSV
+         lT7tUPi7S9J4Wj5FSnGaxhtkA7vgIPyqjGEkY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=FuhNMLdcG3YB6pYhvXwVTGhN+J8wyIYHfl50GA21vcZKhZ8dxduetljz3HXh4Wiq3W
+         YgRp/n11nCTPeC0nI9urC2Cd+67WleJFckeFnRNvbCL7fkeJ/GmfvY5/PRhq/EWIYHJD
+         //VgHI3A7rGcaXCvHg3Zvkh7oaDbGeppzp7uA=
+Received: by 10.204.62.17 with SMTP id v17mr2449282bkh.67.1291208886207; Wed,
+ 01 Dec 2010 05:08:06 -0800 (PST)
+Received: by 10.204.58.71 with HTTP; Wed, 1 Dec 2010 05:08:06 -0800 (PST)
+In-Reply-To: <AANLkTinoZbSqwtiRwZ5+FZyn=6y7usgFi6p-JVUUTM5g@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162509>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162510>
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
- Documentation/git-cvsimport.txt |    7 +++++++
- 1 files changed, 7 insertions(+), 0 deletions(-)
+On Tue, Nov 30, 2010 at 9:16 PM, knittl <knittl89@googlemail.com> wrote:
+> On Tue, Nov 30, 2010 at 7:04 PM, Shawn Pearce <spearce@spearce.org> wrote:
+>> On Fri, Nov 19, 2010 at 7:43 AM, knittl <knittl89@googlemail.com> wrote:
+>>> From 1fea30e0167681917b4f40a3cb2cde9a90706011 Mon Sep 17 00:00:00 2001
+>>> From: Daniel Knittl-Frank <knittl89+git@googlemail.com>
+>>> Date: Fri, 19 Nov 2010 16:40:02 +0100
+>>> Subject: [PATCH] Match lightweight tags too in bash prompt
+>>>
+>>> provide `--tags` to git describe
+>>
+>> Missing signed-off-by-line.
+>
+> i mentioned the s-o-b line already in my forward-mail ;)
+>
 
-diff --git a/Documentation/git-cvsimport.txt b/Documentation/git-cvsimport.txt
-index 608cd63..fc77a3b 100644
---- a/Documentation/git-cvsimport.txt
-+++ b/Documentation/git-cvsimport.txt
-@@ -176,6 +176,13 @@ messages, bug-tracking systems, email archives, and the like.
- -h::
- 	Print a short usage message and exit.
- 
-+CONFIG
-+------
-+For any option '-x' you can set the config variable 'cvsimport.x' to the value
-+you would specify for '-x', or to 'true' for a boolean option. For an
-+uppercase option '-X' use the config variable 'cvsimport.capital-x' (or
-+'cvsimport.capital-X').
-+
- OUTPUT
- ------
- If '-v' is specified, the script reports what it is doing.
--- 
-1.7.3.2.617.g84f63
+I don't see it. You mean the From: line? If yes, that is not the
+convention used here.
+
+You have to add a line:
+Signed-off-by: Your Name <you@example.com>
+
+Take a look at Documentation/SubmittingPatches
