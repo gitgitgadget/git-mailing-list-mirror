@@ -1,84 +1,85 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH v3] Documentation/config.txt: Order variables
- alphabetically
-Date: Wed, 1 Dec 2010 10:13:11 -0600
-Message-ID: <20101201161311.GC26120@burratino>
-References: <87eia1wo5v.fsf@picasso.cante.net>
- <31def5a4a6256e6fdef8a03372cda98460f61c47.1291217124.git.jari.aalto@cante.net>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: [PATCHv3 2/3] cvsimport: fix the parsing of uppercase config options
+Date: Wed, 1 Dec 2010 11:18:14 -0500
+Message-ID: <AANLkTinJD_WRBxFBMs-p5ox0wZWZvddhSfan0yhaNyGk@mail.gmail.com>
+References: <cover.1291207768.git.git@drmicha.warpmail.net>
+ <7vd3pmw9n5.fsf@alter.siamese.dyndns.org> <b61288036e756c78709438491416d573459a732e.1291207768.git.git@drmicha.warpmail.net>
+ <AANLkTi=cb0i28oGi9vrYfEyU_fPHhQGhNNtramtCpCHy@mail.gmail.com> <20101201160503.GB26120@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: jari.aalto@cante.net
-X-From: git-owner@vger.kernel.org Wed Dec 01 17:13:28 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 01 17:18:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNpJ9-0001Fs-GZ
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 17:13:27 +0100
+	id 1PNpOG-000487-Ck
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 17:18:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751263Ab0LAQNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 11:13:21 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:52115 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750826Ab0LAQNU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 11:13:20 -0500
-Received: by vws16 with SMTP id 16so392995vws.19
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 08:13:19 -0800 (PST)
+	id S1754957Ab0LAQSg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Dec 2010 11:18:36 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:59998 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752756Ab0LAQSf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Dec 2010 11:18:35 -0500
+Received: by iwn35 with SMTP id 35so95634iwn.19
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 08:18:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=Aik9neeQP65I3/4BT/Pu8a/YFxTun7wwb5+gJ95n4zQ=;
-        b=pN3YefjunHWyIoappWqudbkRDGaf2Ozig20HjI9ocpb7OuKoWOmx3o0RH7ag5SjWsz
-         EUHBlhtka5+sZrwrxOqsor3guzlFUrv9bqnFfT48LJGpsJ/Qy89F+aJtJAJ1LnhqjV0A
-         cGqDlBzdw5rIrj/ZqQ9vCE8VB+OLAKshoOUcs=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=0aM/VDlQMPiCk9qVXDu1CmMtF5anJ/HHlYS95oO9dqo=;
+        b=PiviQpNJ0J1OPipjcDgQ4C0tg8TEcXeqEV+uUAvPJtQqKWOxFNjgznZkd+zQGgB2e3
+         59KLSkMDzdyF0qbzdVthawcy3BMTMuAZslY7lUbjN2kFh2XZv+ZuWFYbjc0j9dJsKuHc
+         nujVkNwqxZ5pb87GCaSe/eIbJSCO2mx2IyMHw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=l1bzW6g1lNUciGbdrJK4fs590s1SLt2tvx3n47NRe7sMqMHMLqxt9vgIrMunDykOMr
-         Tkliip7/Rq8Og2n+13pUK5S4eauuX+yaSvylL0DFwGnUKrlc06AKCJG4102jiQfSECZ0
-         QXi+lsjHTYEk/Jb7EaIdzVw9V5aHqroPbUTug=
-Received: by 10.220.86.149 with SMTP id s21mr2065647vcl.27.1291219999404;
-        Wed, 01 Dec 2010 08:13:19 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id l14sm37116vcr.18.2010.12.01.08.13.17
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 01 Dec 2010 08:13:18 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <31def5a4a6256e6fdef8a03372cda98460f61c47.1291217124.git.jari.aalto@cante.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=UI40p0Zl0Oe616b5atMUWi3Pwi1sNF0wfgy9vRWydLYC35EVYvOhfAVf1kzRgf07a0
+         UkQwmJOL5ryX7TNVDAHrf5y8l8HmulWBpXbeUTxs2fDX1M0j6X1lSyaoVcuBUZy27ws6
+         do7k7v9m1Kbw1cCouNprUKW7N/eaJJEMP5RQ8=
+Received: by 10.231.143.202 with SMTP id w10mr9011260ibu.195.1291220314973;
+ Wed, 01 Dec 2010 08:18:34 -0800 (PST)
+Received: by 10.231.33.1 with HTTP; Wed, 1 Dec 2010 08:18:14 -0800 (PST)
+In-Reply-To: <20101201160503.GB26120@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162543>
 
-Hi,
+On Wed, Dec 1, 2010 at 11:05 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> I somewhat like this idea. =A0So let's build a full table, shall
+> we? =A0The embedded dashes are meant for the command-line options
+> rather than the config file.
 
-jari.aalto@cante.net wrote:
+The suggested expansions sound good to me, with one comment:
 
-> From: Jari Aalto <jari.aalto@cante.net>
+> =A0 =A0 =A0 =A0-o =A0 =A0 =A0mainline
 
-Could you or some other interested person give a diff of just the
-lines with ::, as well as confirming that the other lines did not
-change, only shuffled around?  It would be nice to get a sense of the
-net effect of the change.
+I am not sure about this one. The 'o' originally stood for 'origin'
+branch (back when git didn't use 'origin/master', or maybe I was stuck
+with Cogito's mental model).
 
-Regardless of the answer, it needs justification _in the log message_.
-Putting this in alphabetical order may make it easier for people to
-decide where to add their future config variables, but they will
-wonder why that order, and whether it is worth changing again.
+It is the branchname for CVS HEAD; it defaults to 'origin' -- given
+today's conventions it should be 'master'.
 
-FWIW the "my man pager is broken" justification doesn't seem so strong
-to me.  The "my hardcopy of the manual doesn't have an easy search
-function" seems more compelling, except that there is work in progress
-to fix that by splitting documentation of config vars by affected
-command and making gitconfig(5) proper into an index.
+I would call it cvshead.
 
-Hope that helps,
-Jonathan
+
+
+
+m
+--=20
+=A0martin.langhoff@gmail.com
+=A0martin@laptop.org -- School Server Architect
+=A0- ask interesting questions
+=A0- don't get distracted with shiny stuff=A0 - working code first
+=A0- http://wiki.laptop.org/go/User:Martinlanghoff
