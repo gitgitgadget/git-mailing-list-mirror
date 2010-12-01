@@ -1,91 +1,197 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: [PATCH]  commit: Remove backward goto in read_craft_line()
-Date: Wed,  1 Dec 2010 20:59:06 +0100
-Message-ID: <1291233546-4962-1-git-send-email-ralf.thielow@googlemail.com>
-Cc: Ralf Thielow <ralf.thielow@googlemail.com>
+From: jari.aalto@cante.net
+Subject: [PATCH] Documentation/*merge*.txt: Order options alphabetically
+Date: Wed,  1 Dec 2010 22:00:47 +0200
+Organization: Private
+Message-ID: <1291233647-20494-1-git-send-email-jari.aalto@cante.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Cc: Jari Aalto <jari.aalto@cante.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 01 20:59:25 2010
+X-From: git-owner@vger.kernel.org Wed Dec 01 21:00:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNspm-00024l-Dp
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 20:59:22 +0100
+	id 1PNsrI-0002gk-FU
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 21:00:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756812Ab0LAT7O (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 14:59:14 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:64516 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755478Ab0LAT7N (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 14:59:13 -0500
-Received: by gwj20 with SMTP id 20so3674076gwj.19
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 11:59:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=fddKS5pw/HaG7TwUkO9/nNBofh5yXbitbxAVdJvbajc=;
-        b=FJLnsTBHepfRE1cI2m/AcgchlmeKKymnx+npCv8m16grt4++/bPbPPG/ekhkxuJrOM
-         TfmmS/a+/hwCHKwQnZ6d6llcKHzXDKm83JNHDS2xK5FrkAQNbuvc6irnWhQFsjYaLGTw
-         ICrPLZH2w2AYfNetAS6xVnH+IEXugcez3+0Lw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=dfYb3G+JMmmaHlYOluZFnHXM0WcnE1bJiC+ARDBkKHZLi9kpVxucO3nBlDubW8FrSI
-         8I9pDyZpqAxRPMGL2Qk+87nbOORkoaSFMv9lHMLEdOiqbWEnkMZ0IoWcfSjLV55TnTQy
-         wIU4+KNgh6NIzh4J0MMq79z4eOTIMvMK7WCdM=
-Received: by 10.223.122.201 with SMTP id m9mr8765172far.79.1291233552367;
-        Wed, 01 Dec 2010 11:59:12 -0800 (PST)
-Received: from localhost.localdomain (dslb-094-223-220-166.pools.arcor-ip.net [94.223.220.166])
-        by mx.google.com with ESMTPS id n15sm171849fam.36.2010.12.01.11.59.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 01 Dec 2010 11:59:11 -0800 (PST)
-X-Mailer: git-send-email 1.7.1
+	id S1756645Ab0LAUAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 15:00:51 -0500
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:35993 "EHLO
+	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754756Ab0LAUAu (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 15:00:50 -0500
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh02-2.mail.saunalahti.fi (Postfix) with SMTP id 7F01AEF658
+	for <git@vger.kernel.org>; Wed,  1 Dec 2010 22:00:49 +0200 (EET)
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A00CCC7753E; Wed, 01 Dec 2010 22:00:49 +0200
+Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
+	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id 5AB4E1C638A
+	for <git@vger.kernel.org>; Wed,  1 Dec 2010 22:00:48 +0200 (EET)
+Received: from [192.168.1.5] (helo=picasso.cante.net)
+	by picasso.cante.net with esmtp (Exim 4.72)
+	(envelope-from <jari.aalto@cante.net>)
+	id 1PNsr9-0005Kz-Sd; Wed, 01 Dec 2010 22:00:47 +0200
+X-Mailer: git-send-email 1.7.2.3
+X-SA-Exim-Connect-IP: 192.168.1.5
+X-SA-Exim-Mail-From: jari.aalto@cante.net
+X-SA-Exim-Scanned: No (on picasso.cante.net); SAEximRunCond expanded to false
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162593>
 
- Bad graft data is noticed in several places in read_graft_line and
- in each case we go back to the first site of detection.  Move the
- error handling to the end of the function for better readability.
+From: Jari Aalto <jari.aalto@cante.net>
 
-Signed-off-by: Ralf Thielow <ralf.thielow@googlemail.com>
+In git-merge.txt, define asciidoc variable to flag processing in
+merge-options.txt. Move all options from git-merge.txt to
+merge-options.txt so that that options can be presented in
+alphabetical order.
+
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
 ---
- commit.c |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
+ Documentation/git-merge.txt     |   19 +----------
+ Documentation/merge-options.txt |   66 +++++++++++++++++++++++++--------=
+-----
+ 2 files changed, 45 insertions(+), 40 deletions(-)
 
-diff --git a/commit.c b/commit.c
-index 0094ec1..642ee34 100644
---- a/commit.c
-+++ b/commit.c
-@@ -137,12 +137,8 @@ struct commit_graft *read_graft_line(char *buf, int len)
- 		buf[--len] = '\0';
- 	if (buf[0] == '#' || buf[0] == '\0')
- 		return NULL;
--	if ((len + 1) % 41) {
--	bad_graft_data:
--		error("bad graft data: %s", buf);
--		free(graft);
--		return NULL;
--	}
-+	if ((len + 1) % 41)
-+		goto bad_graft_data;
- 	i = (len + 1) / 41 - 1;
- 	graft = xmalloc(sizeof(*graft) + 20 * i);
- 	graft->nr_parent = i;
-@@ -155,6 +151,10 @@ struct commit_graft *read_graft_line(char *buf, int len)
- 			goto bad_graft_data;
- 	}
- 	return graft;
-+ bad_graft_data:
-+	error("bad graft data: %s", buf);
-+	free(graft);
-+	return NULL;
- }
- 
- static int read_graft_file(const char *graft_file)
--- 
-1.7.1
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index d43416d..4a62d36 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -51,26 +51,11 @@ new scripts.  It is the same as `git merge -m <msg> <=
+commit>...`.
+ discouraged: while possible, it leaves you in a state that is hard to
+ back out of in the case of a conflict.
+=20
+-
+ OPTIONS
+ -------
+-include::merge-options.txt[]
+=20
+--m <msg>::
+-	Set the commit message to be used for the merge commit (in
+-	case one is created).
+-+
+-If `--log` is specified, a shortlog of the commits being merged
+-will be appended to the specified message.
+-+
+-The 'git fmt-merge-msg' command can be
+-used to give a good default for automated 'git merge'
+-invocations.
+-
+---rerere-autoupdate::
+---no-rerere-autoupdate::
+-	Allow the rerere mechanism to update the index with the
+-	result of auto-conflict resolution if possible.
++:git-merge: 1
++include::merge-options.txt[]
+=20
+ <commit>...::
+ 	Commits, usually other branch heads, to merge into our branch.
+diff --git a/Documentation/merge-options.txt b/Documentation/merge-option=
+s.txt
+index e33e0f8..29aef16 100644
+--- a/Documentation/merge-options.txt
++++ b/Documentation/merge-options.txt
+@@ -16,6 +16,11 @@ inspect and further tweak the merge result before comm=
+itting.
+ With --no-ff Generate a merge commit even if the merge
+ resolved as a fast-forward.
+=20
++--ff-only::
++	Refuse to merge and exit with a non-zero status unless the
++	current `HEAD` is already up-to-date or the merge can be
++	resolved as a fast-forward.
++
+ --log[=3D<n>]::
+ --no-log::
+ 	In addition to branch names, populate the log message with
+@@ -25,6 +30,38 @@ resolved as a fast-forward.
+ With --no-log do not list one-line descriptions from the
+ actual commits being merged.
+=20
++ifdef::git-merge[]
++-m <msg>::
++	Set the commit message to be used for the merge commit (in
++	case one is created).
+++
++If `--log` is specified, a shortlog of the commits being merged
++will be appended to the specified message.
+++
++The 'git fmt-merge-msg' command can be
++used to give a good default for automated 'git merge'
++invocations.
++endif::git-merge[]
++
++ifndef::git-pull[]
++-q::
++--quiet::
++	Operate quietly.
++
++ifdef::git-merge[]
++--rerere-autoupdate::
++--no-rerere-autoupdate::
++	Allow the rerere mechanism to update the index with the
++	result of auto-conflict resolution if possible.
++endif::git-merge[]
++
++-s <strategy>::
++--strategy=3D<strategy>::
++	Use the given merge strategy; can be supplied more than
++	once to specify them in the order they should be tried.
++	If there is no `-s` option, a built-in list of strategies
++	is used instead ('git merge-recursive' when merging a single
++	head, 'git merge-octopus' otherwise).
+=20
+ --stat::
+ -n::
+@@ -49,35 +86,18 @@ merge.
+ With --no-squash perform the merge and commit the result. This
+ option can be used to override --squash.
+=20
+---ff-only::
+-	Refuse to merge and exit with a non-zero status unless the
+-	current `HEAD` is already up-to-date or the merge can be
+-	resolved as a fast-forward.
+-
+--s <strategy>::
+---strategy=3D<strategy>::
+-	Use the given merge strategy; can be supplied more than
+-	once to specify them in the order they should be tried.
+-	If there is no `-s` option, a built-in list of strategies
+-	is used instead ('git merge-recursive' when merging a single
+-	head, 'git merge-octopus' otherwise).
+-
+--X <option>::
+---strategy-option=3D<option>::
+-	Pass merge strategy specific option through to the merge
+-	strategy.
+-
+ --summary::
+ --no-summary::
+ 	Synonyms to --stat and --no-stat; these are deprecated and will be
+ 	removed in the future.
+=20
+-ifndef::git-pull[]
+--q::
+---quiet::
+-	Operate quietly.
+-
+ -v::
+ --verbose::
+ 	Be verbose.
+ endif::git-pull[]
++
++-X <option>::
++--strategy-option=3D<option>::
++	Pass merge strategy specific option through to the merge
++	strategy.
++
+--=20
+1.7.2.3
