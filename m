@@ -1,93 +1,62 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Documentation/config.txt: Order variables alphabetically
-Date: Thu, 2 Dec 2010 00:38:52 +0100
-Message-ID: <201012020038.55019.jnareb@gmail.com>
-References: <1291209174-9239-1-git-send-email-jari.aalto@cante.net> <87vd3dv2ow.fsf@picasso.cante.net> <20101201180332.GC7774@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jari Aalto <jari.aalto@cante.net>,
-	Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 02 00:39:16 2010
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: [PATCH] git-commit.txt: Order options alphabetically
+Date: Wed, 1 Dec 2010 15:40:22 -0800
+Message-ID: <4BA22C80-9F0C-4F5F-8DBF-3E49D3D9C36A@sb.org>
+References: <1291215526-11428-1-git-send-email-jari.aalto@cante.net> <20101201165043.GF26120@burratino> <87r5e1v2g8.fsf@picasso.cante.net> <7vzkspuw8g.fsf@alter.siamese.dyndns.org> <87r5e1t93o.fsf@picasso.cante.net> <2C3777CB-2DDD-4FF5-842B-23F7EF838611@sb.org> <8762vdt7oo.fsf@picasso.cante.net>
+Mime-Version: 1.0 (Apple Message framework v1082)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Thu Dec 02 00:40:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNwGV-0004oX-F1
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 00:39:11 +0100
+	id 1PNwHq-0005Me-SG
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 00:40:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756341Ab0LAXjF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 18:39:05 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:52076 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755655Ab0LAXjE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 18:39:04 -0500
-Received: by bwz15 with SMTP id 15so6686443bwz.19
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 15:39:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=cqRdPzzUy1Ds362TaBKw8JxD69S9L2nsiaecINKTuoU=;
-        b=LbUnq84WvJJjVQ6geT3K/lLe5gL8OIaZP3sBv5STdmkm1/h29n571u7F7mZVdz6eNV
-         P6pUVZVWauJPTkq66zREIgcssa1Ktpd7Zs4xUoQgpxrPJOxYdO6mVE/y3OibG8lIDUbF
-         LYSqkXZso/1aoxZLNyqUkoLtKnrjqeFyhL0r4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=hcpr8Ba3dyUfOM1VZm3pqCkizee+gJqZYpSXy0Y6G2p2RWZPBDDU82orKOF12FbOwy
-         EJD3jI8vbSmewpdsGqaQv7yZLm5Rxdlppc5XqhuBrtDI+we+ENqoeiT9n2bBLkWoPPek
-         wbFN9Ny8lRyeY9GMrq7XnoL9//AmD/a4Uz87Y=
-Received: by 10.204.52.132 with SMTP id i4mr9203456bkg.65.1291246741976;
-        Wed, 01 Dec 2010 15:39:01 -0800 (PST)
-Received: from [192.168.1.13] (abvl90.neoplus.adsl.tpnet.pl [83.8.209.90])
-        by mx.google.com with ESMTPS id g8sm3719626bkg.11.2010.12.01.15.38.59
+	id S1756578Ab0LAXka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 18:40:30 -0500
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:60826 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756369Ab0LAXka convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Dec 2010 18:40:30 -0500
+Received: by pva4 with SMTP id 4so1164773pva.19
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 15:40:26 -0800 (PST)
+Received: by 10.142.179.21 with SMTP id b21mr9738014wff.432.1291246826592;
+        Wed, 01 Dec 2010 15:40:26 -0800 (PST)
+Received: from [10.8.0.89] ([69.170.160.74])
+        by mx.google.com with ESMTPS id v19sm626635wfh.12.2010.12.01.15.40.25
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 01 Dec 2010 15:39:00 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20101201180332.GC7774@sigill.intra.peff.net>
-Content-Disposition: inline
+        Wed, 01 Dec 2010 15:40:25 -0800 (PST)
+In-Reply-To: <8762vdt7oo.fsf@picasso.cante.net>
+X-Mailer: Apple Mail (2.1082)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162651>
 
-On Wed, 1 Dec 2010, Jeff King wrote:
-> On Wed, Dec 01, 2010 at 07:10:55PM +0200, Jari Aalto wrote:
+On Dec 1, 2010, at 3:05 PM, Jari Aalto wrote:
+
+> 2010-12-02 00:49 Kevin Ballard <kevin@sb.org>:
+>> You may want to invest in a spell-checker.
+>> ... Manaula pages are not primarily used to learn things, they are
+>> used as reference.
+>> 
+>> Most certainly they are used to learn things. Especially with tools like git.
+>> Don't know what options you can give to git-diff? Read the manpage!
 > 
-> > 2010-12-01 18:37 Jakub Narebski <jnareb@gmail.com>:
-> > > Having related config variables together is IMVHO more important than
-> > > having config variables sorted alphabetically.
-> > 
-> > That's subjective criteria. I doubt there are many related one that
-> > can't be handled with standard "see also".
-> 
-> Don't we already have a plan and some patches in flight (from Thomas) to
-> turn the master list into a straight one-line-per-config index (which
-> probably _should_ be alphabetized), and then put related options into
-> their respective manpages (which effectively sorts them by
-> functionality)?
+> That little word "primarily." You don't find anyone who learnt from
+> manual page first is person is on his 20's. Google is full of Git
+> videos. Guess which won the sexiest contest.
 
-Actually Thomas Rast patches (the 'tr/config-doc', not even in 'pu')
-are about finding config variables referenced in individual manpages
-but not in list of config variables, and adding reference to them in
-list of all config variables.  Sorting list of variables is orthogonal
-to that (though first version sorted by default).
+How about me? I'm 25, I've been using git for a couple of years, and the manpages
+have always been my primary documentation.
 
-> 
-> This patch is just going to cause conflicts with Thomas's, and in the
-> end will be obsoleted by it.
+The videos are great at convincing people to use git. But people always turn to
+the manpages in order to learn the details.
 
-Could be obsoleted, yes (if we chose sorting).  Cause confict, no; at
-least if first patch in series is generated by script, as described in
-http://permalink.gmane.org/gmane.comp.version-control.git/162145
--- 
-Jakub Narebski
-Poland
+-Kevin Ballard
