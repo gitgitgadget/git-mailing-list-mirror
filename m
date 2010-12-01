@@ -1,101 +1,100 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Documentation/config.txt: Order variables alphabetically
-Date: Wed, 01 Dec 2010 05:58:45 -0800 (PST)
-Message-ID: <m3eia14mu7.fsf@localhost.localdomain>
-References: <1291209174-9239-1-git-send-email-jari.aalto@cante.net>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: How to get rid of doubled branch after renaming a branch in svn-repository
+Date: Wed, 01 Dec 2010 15:01:32 +0100
+Message-ID: <4CF6553C.70500@drmicha.warpmail.net>
+References: <0a6b49e3cc0b08a717c0d6141073f32d@tropezien.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Wed Dec 01 14:59:25 2010
+To: pacco@tropezien.de
+X-From: git-owner@vger.kernel.org Wed Dec 01 15:04:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNnDQ-0000Jq-QO
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 14:59:25 +0100
+	id 1PNnHr-0002pF-Py
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 15:04:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755173Ab0LAN6z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 08:58:55 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:54586 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755049Ab0LAN6s (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 08:58:48 -0500
-Received: by bwz15 with SMTP id 15so6141576bwz.19
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 05:58:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=GGhOhGfIW0R48E3T6mR4l614n0fMh8PSHAIGWnTKkCs=;
-        b=eZWpTjU/3PfZfki95WHcWsLxbNFbkPFQopUj9k13JtGRTJ586hMUf5IiJ0MyLKmHky
-         vX7Qnnvq6QoQc1zg2LXV+WosOF5m8NjaopyzSXlQBr3Azs7Cjbddvq07/CsXZAtg05Zz
-         IIgQ4RiyTuyHaEmOH9+QxqsEnm2KRWnke87g0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=xkhwe1SwZwCAQmzXgHtBpEKwyVOFmW1Prdjc1dSPX3I7zBJrpPB/OsSYUeQJGgu+7t
-         ZUmQpgLthtTpbG6xbaf/iVh2aE6FD9LcJGcM/KZnKknSL42aPSkSyTTfzmZyDEvHamEw
-         GK2VOfKbxe3Ejkpytr0/y/4q8UdJd4fV6OVsY=
-Received: by 10.204.69.200 with SMTP id a8mr8415118bkj.36.1291211926946;
-        Wed, 01 Dec 2010 05:58:46 -0800 (PST)
-Received: from localhost.localdomain (abvl90.neoplus.adsl.tpnet.pl [83.8.209.90])
-        by mx.google.com with ESMTPS id 11sm3412182bkj.0.2010.12.01.05.58.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 01 Dec 2010 05:58:45 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oB1Dw9CL020959;
-	Wed, 1 Dec 2010 14:58:20 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id oB1Dvr6Y020955;
-	Wed, 1 Dec 2010 14:57:53 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1291209174-9239-1-git-send-email-jari.aalto@cante.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1755338Ab0LAODt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 09:03:49 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:40541 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755138Ab0LAODs (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Dec 2010 09:03:48 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id EE33B5A9;
+	Wed,  1 Dec 2010 09:03:47 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute3.internal (MEProxy); Wed, 01 Dec 2010 09:03:47 -0500
+X-Sasl-enc: 8CElgCC6RIfNFLfFs3oMQdv871nxH217vKWll1+Igs4A 1291212227
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 77809407C59;
+	Wed,  1 Dec 2010 09:03:47 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
+In-Reply-To: <0a6b49e3cc0b08a717c0d6141073f32d@tropezien.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162518>
 
-jari.aalto@cante.net writes:
-
-> From: Jari Aalto <jari.aalto@cante.net>
+pacco@tropezien.de venit, vidit, dixit 01.12.2010 13:48:
+>  Hi,
 > 
+>  I'm using git-svn as a tracking-tool for a Subversion repository.
+>  I currently detected an unexpected branch, seeming dead, but visible 
+>  using 'git branch -a'. I checked the svn log and saw that someone has 
+>  moved/renamed a branch. That results in a deletion of the old branch and 
+>  an adding of a copy of the old branch with the new branch name.
 > 
-> Signed-off-by: Jari Aalto <jari.aalto@cante.net>
-> ---
->  Documentation/config.txt | 1698 +++++++++++++++++++++++-----------------------
->  1 files changed, 852 insertions(+), 846 deletions(-)
+>  The scenario is like that:
+> 
+>  $ git branch -a
+>  * master
+>    remotes/svnrepos/git-svn-test
+> 
+>  # Rename the branch (move) in the SVN-repos
+>  $ svn mv https://svn.repos/branches/git-svn-test 
+>  https://svn.repos/branches/git-svn-test-new
+> 
+>  # Update git-repository
+>  $ git svn fetch
+> 
+>  $ git branch -a
+>  * master
+>    remotes/svnrepos/git-svn-test
+>    remotes/svnrepos/git-svn-test-new
+> 
+>  You see the problem. Within Subversion simply a new repository version 
+>  now no longer "showing" the git-svn-test-branch was created. But within 
+>  git both branches stay visible.
+>  Well, I know that renaming a branch is really not that favoured action.
+>  But I expected that git-svn gathers also this deletion and removes the 
+>  obsolete branch.
+> 
+>  So, am I doing something wrong? Or am I expecting the wrong behaviour? 
+>  Or is that simply a feature, not a bug, and must be handled manually?
+> 
 
-Why?  What such large change is for?
+Branches in svn and git are different. If you delete a branch in svn,
+the "content" is still there in the sense that it is there in previous
+revisions. You only delete a pointer in your svn-filesystem.
 
-Note that currently config variables are grouped by functionality: for
-example core.eol and core.safecrlf, or core.compression and
-core.loosecompression are close to each other.
+In git, a branch points at a commit, and deleting a branch means making
+that commit pointerless (unless it is pointed to by other branches or
+tags). So far there's some similarity. But now, if that commit and all
+its descendants are "pointerless" (can't be reached from a named ref)
+git will garbage collect them after a while. They're considered pointless ;)
 
-I like the fact that we have first advice.*, then core.*, then mostly
-alphabetically sorted rest of configuration variables.
+svn records the rename as a copy+delete (it also sets some rename info
+which git-svn seems to ignore). So, git-svn stays on the safe side by
+keeping the branch. Note that deleting the branch would possibly delete
+at least some info since the branch name is not recorded in the commit
+(if you use svn.noMetadata).
 
-> diff --git a/Documentation/config.txt b/Documentation/config.txt
-> index 6a6c0b5..6e92623 100644
-> --- a/Documentation/config.txt
-> +++ b/Documentation/config.txt
-> @@ -142,313 +142,251 @@ advice.*::
->  	detachedHead::
->  		Advice shown when you used linkgit::git-checkout[1] to
->  		move to the detach HEAD state, to instruct how to create
-> -		a local branch after the fact.  Default: true.
-> +		a local branch after the fact.	Default: true.
+You can safely delete the branch if you're sure its head commit is
+contained in some other branch (as will be for an ordinary rename).
 
-This change has nothing to do with ordering variables alphabetically,
-therefore IMHO it belongs in separate patch.
-
-[...]
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+Michael
