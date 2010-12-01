@@ -1,111 +1,61 @@
-From: Ralf Thielow <ralf.thielow@googlemail.com>
-Subject: Re: [PATCH] commit: Remove backward goto in read_craft_line()
-Date: Wed, 1 Dec 2010 21:44:42 +0100
-Message-ID: <AANLkTinLuF74UKaTMNX84FJt+PNoKkkOr3LaXDSCFqdz@mail.gmail.com>
-References: <1291230959-3894-1-git-send-email-ralf.thielow@googlemail.com>
-	<20101201194441.GB27347@burratino>
-	<7vaakputxs.fsf@alter.siamese.dyndns.org>
-	<20101201203132.GB27845@burratino>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 01 21:44:53 2010
+From: Peter van der Does <peter@avirtualhome.com>
+Subject: [PATCH v4 0/2] *** SUBJECT HERE ***
+Date: Wed,  1 Dec 2010 15:49:40 -0500
+Message-ID: <1291236582-28603-1-git-send-email-peter@avirtualhome.com>
+Cc: Peter van der Does <peter@avirtualhome.com>, git@vger.kernel.org,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Dec 01 21:50:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNtXm-0007EZ-Al
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 21:44:50 +0100
+	id 1PNtd0-0001dh-6k
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 21:50:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756617Ab0LAUoo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Dec 2010 15:44:44 -0500
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:43504 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752371Ab0LAUoo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Dec 2010 15:44:44 -0500
-Received: by ewy5 with SMTP id 5so3857758ewy.19
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 12:44:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=r/YawMkPLgphJBuAbiRLRdOBuke0ULAJF2Z1aqLdzm8=;
-        b=wd9i+jS93lKrtVdHaMcUNutV8H0d12u5uIya9Yttb9a0EK/+C4Cw/L2cM+4yOE7ZNc
-         JMRXHF/Ou67hwJ9vJnVRAPsVS7aTy0xGBRYVgohPynVQBR7nVU3m2mZCvC4cH/7M05h+
-         n05cwyc52/HUERKcJ/OoFG0/9iHodh8ovBNS8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=yFopAcf/EpYpqJXd0iURxpvmO+bpRFM1PC10HlJiX0HhNCce44IbyHqaS/MhiNeNvb
-         eYN4XW/7tk0szE20Fn8szIBmh5oLhEQ/jOc/Q4/vlsrl6iTQ2wQUcltGCURmcedeW2WY
-         hZybo95uTe6vEfRZm2ZAWD9EZw6psyq4iTWis=
-Received: by 10.213.8.65 with SMTP id g1mr6051136ebg.49.1291236282655; Wed, 01
- Dec 2010 12:44:42 -0800 (PST)
-Received: by 10.213.9.83 with HTTP; Wed, 1 Dec 2010 12:44:42 -0800 (PST)
-In-Reply-To: <20101201203132.GB27845@burratino>
+	id S1757035Ab0LAUuH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 15:50:07 -0500
+Received: from morn.lunarbreeze.com ([216.227.218.220]:38247 "EHLO
+	morn.lunarbreeze.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756387Ab0LAUuG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 15:50:06 -0500
+Received: from c-69-248-93-14.hsd1.nj.comcast.net ([69.248.93.14] helo=monza.grandprix.int)
+	by morn.lunarbreeze.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <peter@avirtualhome.com>)
+	id 1PNtcp-0004fw-Bb; Wed, 01 Dec 2010 12:50:03 -0800
+Received: from MonteCarlo.grandprix.int. (montecarlo.grandprix.int [192.168.1.102])
+	by monza.grandprix.int (Postfix) with ESMTPA id 88E2BD79EE;
+	Wed,  1 Dec 2010 15:50:00 -0500 (EST)
+X-Mailer: git-send-email 1.7.3.2
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - morn.lunarbreeze.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - avirtualhome.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162607>
 
-> If "--show-c-function" output is the problem, perhaps we should know =
-a bit
-> better about what C function header looks like?
+*** BLURB HERE ***
+Make git-completion Bash 4 compatible.
 
-In fact the "--show-c-function" output is the problem. But I think that
-a change can't be rejected because of another issue.
-The style of placing "goto"-statements, which leave a function to the
-end of that is used in many other projects. And I think
-it's very usefull.
+I've made the following changes since v3:
+- Patch is based upon the next branch.
+- Grammatical error in commit message
 
-2010/12/1 Jonathan Nieder <jrnieder@gmail.com>:
-> Junio C Hamano wrote:
->> Jonathan Nieder <jrnieder@gmail.com> writes:
->
->>> A space before the "bad_graft_data:" label would improve future
->>> diff --show-c-function output.
->>
->> Hmm, I actually do not think we encourage that (nor we should).
->>
->> =C2=A0 =C2=A0 $ git grep -e '^ [a-z0-9]*:' -- '*.c' | wc -l
->> =C2=A0 =C2=A0 23
->> =C2=A0 =C2=A0 $ git grep -e '^[a-z0-9]*:' -- '*.c' | wc -l
->> =C2=A0 =C2=A0 42
->>
->> If "--show-c-function" output is the problem, perhaps we should know=
- a bit
->> better about what C function header looks like?
->
-> Thanks for checking. =C2=A0Yes, I think so.
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0$ git grep --show-function strbuf_release =
--- http.c
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0http.c=3Dstatic int http_request(const cha=
-r *url, void *result, int target, int options)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0http.c: strbuf_release(&buf);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0http.c=3Dcleanup:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0http.c: strbuf_release(&tmpfile);
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0http.c=3Dint http_fetch_ref(const char *ba=
-se, struct ref *ref)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0http.c: strbuf_release(&buffer);
->
-> The following gives me some joy.
->
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> ---
-> diff --git a/.gitattributes b/.gitattributes
-> index 5e98806..5888a53 100644
-> --- a/.gitattributes
-> +++ b/.gitattributes
-> @@ -1,3 +1,4 @@
-> =C2=A0* whitespace=3D!indent,trail,space
-> =C2=A0*.[ch] whitespace=3Dindent,trail,space
-> +*.[ch] diff=3Dcpp
-> =C2=A0*.sh whitespace=3Dindent,trail,space
->
+Peter van der Does (2):
+  Introduce functions from bash-completion project.
+  Use the new functions to get the current cword.
+
+ contrib/completion/git-completion.bash |  446 ++++++++++++++++++++++++++------
+ 1 files changed, 363 insertions(+), 83 deletions(-)
+
+-- 
+1.7.3.2
