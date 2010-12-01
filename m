@@ -1,76 +1,120 @@
-From: <pacco@tropezien.de>
-Subject: Re: How to get rid of doubled branch after renaming a branch in
- svn-repository
-Date: Wed, 01 Dec 2010 16:08:12 +0100
-Message-ID: <35e60ee2f6d83801d130d53a56a8ae18@tropezien.de>
-References: <0a6b49e3cc0b08a717c0d6141073f32d@tropezien.de>
- <4CF6553C.70500@drmicha.warpmail.net>
+From: jari <jari.aalto@cante.net>
+Subject: Re: [PATCH] Documentation/config.txt: Order variables
+ alphabetically
+Date: Wed, 1 Dec 2010 17:09:17 +0200
+Message-ID: <20101201150917.GD6537@picasso.cante.net>
+References: <1291209174-9239-1-git-send-email-jari.aalto@cante.net>
+ <m3eia14mu7.fsf@localhost.localdomain>
+ <20101201142920.GB6537@picasso.cante.net>
+ <201012011557.30849.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
- charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Dec 01 16:08:20 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 01 16:09:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNoI7-0001dk-RE
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 16:08:20 +0100
+	id 1PNoJD-0002CA-NU
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 16:09:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752532Ab0LAPIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 10:08:14 -0500
-Received: from mail.croxxserver.de ([78.46.191.12]:52895 "EHLO
-	mail.croxxserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751417Ab0LAPIO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 10:08:14 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by mail.croxxserver.de (Postfix) with ESMTP id 68D958FC214;
-	Wed,  1 Dec 2010 16:08:13 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at srv.croxxserver.de
-Received: from mail.croxxserver.de ([78.46.191.12])
-	by localhost (croxxserver.de [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id AlNNcgANS7wE; Wed,  1 Dec 2010 16:08:12 +0100 (CET)
-Received: from webmail.croxxserver.de (mail.croxxserver.de [78.46.191.12])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	(Authenticated sender: pacco@tropezien.de)
-	by mail.croxxserver.de (Postfix) with ESMTPSA id D98758FC212;
-	Wed,  1 Dec 2010 16:08:12 +0100 (CET)
-In-Reply-To: <4CF6553C.70500@drmicha.warpmail.net>
-X-Sender: pacco@tropezien.de
-User-Agent: RoundCube Webmail
+	id S1753039Ab0LAPJW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 10:09:22 -0500
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:55709 "EHLO
+	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752803Ab0LAPJW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 10:09:22 -0500
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id 1B70A18CFE7;
+	Wed,  1 Dec 2010 17:09:21 +0200 (EET)
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A0746518046; Wed, 01 Dec 2010 17:09:21 +0200
+Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
+	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id 25BD11C638F;
+	Wed,  1 Dec 2010 17:09:17 +0200 (EET)
+Received: from jaalto by picasso.cante.net with local (Exim 4.72)
+	(envelope-from <jaalto@picasso.cante.net>)
+	id 1PNoJ3-00030w-R5; Wed, 01 Dec 2010 17:09:17 +0200
+Content-Disposition: inline
+In-Reply-To: <201012011557.30849.jnareb@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: jaalto@picasso.cante.net
+X-SA-Exim-Scanned: No (on picasso.cante.net); SAEximRunCond expanded to false
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162529>
 
- Hi Michael,
+On 2010-12-01 15:57, Jakub Narebski wrote:
+| On Wed, 1 Dec 2010, Jari Aalto wrote:
+| > On 2010-12-01 05:58, Jakub Narebski wrote:
+| > | jari.aalto@cante.net writes:
+| > | 
+| > | > From: Jari Aalto <jari.aalto@cante.net>
+| > | > 
+| > | > 
+| > | > Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+| > | > ---
+| > | >  Documentation/config.txt | 1698 +++++++++++++++++++++++-----------------------
+| > | >  1 files changed, 852 insertions(+), 846 deletions(-)
+| > | 
+| > | Why?  What such large change is for?
+| > | 
+| > | Note that currently config variables are grouped by functionality: for
+| > | example core.eol and core.safecrlf, or core.compression and
+| > | core.loosecompression are close to each other.
+| 
+| What about the above?
 
- On Wed, 01 Dec 2010 15:01:32 +0100, Michael J Gruber 
- <git@drmicha.warpmail.net> wrote:
- [snipped]
-> svn records the rename as a copy+delete (it also sets some rename 
-> info
-> which git-svn seems to ignore). So, git-svn stays on the safe side by
-> keeping the branch. Note that deleting the branch would possibly 
-> delete
-> at least some info since the branch name is not recorded in the 
-> commit
-> (if you use svn.noMetadata).
->
-> You can safely delete the branch if you're sure its head commit is
-> contained in some other branch (as will be for an ordinary rename).
+We use standard biblical refences:
 
- thank you for your explanation. I suspected that this issue might be a 
- mixture of different VCS-philosophy and uncertainty-handling.
- Okay, then I will delete the branch manually. Of course I would have 
- preferred to have an automatic solution, because I got attention on this 
- renaming by accident. I hope renaming a branch will not become a new 
- trend in repository actions.
+	 Se ....
 
- pacco
+Suggest what is needed, and it will be so.
+
+| > The phone books have an index where to up information.
+| > 
+| >     - When you see script and it use VARIABLE, you look it from
+| >       manual page
+| 
+| Manpages (and 'git <cmd> --help') are displayed in pager, so you can
+| always search for option in a pager (e.g. '/' in 'less', the default
+| pager).
+
+Yuck, it's real fun start backward/forward ping-pong when you dont'
+know the directions and can't rely on standard A-Z index.
+
+| > It is same as putting option in alphabetical order. See GNU cp(1),
+| > ssh(1) etc.
+| 
+| In git documentation command line options are not in alphabetical order,
+| but grouped by functionality, therefore your argument is invalid.
+
+I see that only in pages that have tens and tens and tens of options..
+
+The problem is more the asciidoc's. Various bits and pices are
+"included" in place and make orderign the options impossile in some
+pages.
+
+Let's get all pages in shape with A-Z in this regard. That's a god
+quality goal.
+
+| > There are zillion values and for a reference, alphabetical order makes
+| > sense.
+| 
+| I agree that alphabetical order makes sense for glossary; I disagree that
+| it makes sense here.
+
+About 60% in git-config is already in alpha order (core.*, sendmail.*
+etc), so there is not really much that is changing.
+
+Well. If standard reading order is not the standard, I don't know what
+is.
+
+Jari
