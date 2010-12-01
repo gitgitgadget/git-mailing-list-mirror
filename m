@@ -1,72 +1,101 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: msysgit clone/pull/fetch broken
-Date: Wed, 1 Dec 2010 14:37:56 +0100
-Message-ID: <AANLkTinaxO1FVb-MvY91mscUcpNtbxQH0vTvE4YJrJtB@mail.gmail.com>
-References: <loom.20101201T141924-761@post.gmane.org>
-Reply-To: kusmabite@gmail.com
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] Documentation/config.txt: Order variables alphabetically
+Date: Wed, 01 Dec 2010 05:58:45 -0800 (PST)
+Message-ID: <m3eia14mu7.fsf@localhost.localdomain>
+References: <1291209174-9239-1-git-send-email-jari.aalto@cante.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: =?ISO-8859-1?B?Wm9sdOFuRvx6ZXNp?= <zfuzesi@eaglet.hu>
-X-From: git-owner@vger.kernel.org Wed Dec 01 14:38:23 2010
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Wed Dec 01 14:59:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNmt5-00078X-3x
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 14:38:23 +0100
+	id 1PNnDQ-0000Jq-QO
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 14:59:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755041Ab0LANiS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Dec 2010 08:38:18 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:56690 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754182Ab0LANiR convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Dec 2010 08:38:17 -0500
-Received: by fxm20 with SMTP id 20so56047fxm.19
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 05:38:16 -0800 (PST)
+	id S1755173Ab0LAN6z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 08:58:55 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:54586 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755049Ab0LAN6s (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 08:58:48 -0500
+Received: by bwz15 with SMTP id 15so6141576bwz.19
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 05:58:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=3zcRHpggQnJNJlcxm6M60AFcrsUAKCtTD/ZAJZE3Aq8=;
-        b=W4Wa8iJgWP34AOOxJO9tU4nSeQxtTLqnvduM2pwedCAElxJePgyXSwqw3ruG4yyOqU
-         lPcGJtDXoxRkklnJoUPzCeuoZwgTTrSN75QN+tOQtOrKBLoeuc97Beve8dlrdT5cof9a
-         Gs6AfO2qbqHyRwUX9d9krSpVmHw1vmaIIn1rI=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=GGhOhGfIW0R48E3T6mR4l614n0fMh8PSHAIGWnTKkCs=;
+        b=eZWpTjU/3PfZfki95WHcWsLxbNFbkPFQopUj9k13JtGRTJ586hMUf5IiJ0MyLKmHky
+         vX7Qnnvq6QoQc1zg2LXV+WosOF5m8NjaopyzSXlQBr3Azs7Cjbddvq07/CsXZAtg05Zz
+         IIgQ4RiyTuyHaEmOH9+QxqsEnm2KRWnke87g0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=OT3/N8ngumwObXmO92ZHeUGWW2uiJbA1kUfBF8xMF23++aMtyD9LKuKEXjziNugJwY
-         GSmh7Kh9qYr56vCwxr4S9+06PiQn9f08absHSKRwuvwxE4JIq8w4rp6SAhUrNBv7gxoD
-         W2RexyQs0koIRQEFGYmE/F0tSbzCCopDtVVhI=
-Received: by 10.223.71.205 with SMTP id i13mr4129172faj.102.1291210696221;
- Wed, 01 Dec 2010 05:38:16 -0800 (PST)
-Received: by 10.223.72.206 with HTTP; Wed, 1 Dec 2010 05:37:56 -0800 (PST)
-In-Reply-To: <loom.20101201T141924-761@post.gmane.org>
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=xkhwe1SwZwCAQmzXgHtBpEKwyVOFmW1Prdjc1dSPX3I7zBJrpPB/OsSYUeQJGgu+7t
+         ZUmQpgLthtTpbG6xbaf/iVh2aE6FD9LcJGcM/KZnKknSL42aPSkSyTTfzmZyDEvHamEw
+         GK2VOfKbxe3Ejkpytr0/y/4q8UdJd4fV6OVsY=
+Received: by 10.204.69.200 with SMTP id a8mr8415118bkj.36.1291211926946;
+        Wed, 01 Dec 2010 05:58:46 -0800 (PST)
+Received: from localhost.localdomain (abvl90.neoplus.adsl.tpnet.pl [83.8.209.90])
+        by mx.google.com with ESMTPS id 11sm3412182bkj.0.2010.12.01.05.58.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 01 Dec 2010 05:58:45 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oB1Dw9CL020959;
+	Wed, 1 Dec 2010 14:58:20 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id oB1Dvr6Y020955;
+	Wed, 1 Dec 2010 14:57:53 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1291209174-9239-1-git-send-email-jari.aalto@cante.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162517>
 
-On Wed, Dec 1, 2010 at 2:31 PM, Zolt=E1nF=FCzesi <zfuzesi@eaglet.hu> wr=
-ote:
-> Hi, I can't clone/pull/fetch from any of my repositories with the lat=
-est stable
-> version (1.7.3.2.430.g208247) on Windows.
->
-> $ git clone --recursive git://server/user/project.git
-> Cloning into project...
-> fatal: failed to read object <sha1>: No error
->
-> After reverting commit 3ba7a065527a27f45659398e882feaa1165cbb4c ("A l=
-oose object
-> is not corrupt if it cannot be read due to EMFILE") it works.
->
-> On Linux everything is fine.
+jari.aalto@cante.net writes:
 
-I've already submitted a patch-series that address this issue:
-<1290533444-3404-1-git-send-email-kusmabite@gmail.com>
+> From: Jari Aalto <jari.aalto@cante.net>
+> 
+> 
+> Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+> ---
+>  Documentation/config.txt | 1698 +++++++++++++++++++++++-----------------------
+>  1 files changed, 852 insertions(+), 846 deletions(-)
+
+Why?  What such large change is for?
+
+Note that currently config variables are grouped by functionality: for
+example core.eol and core.safecrlf, or core.compression and
+core.loosecompression are close to each other.
+
+I like the fact that we have first advice.*, then core.*, then mostly
+alphabetically sorted rest of configuration variables.
+
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index 6a6c0b5..6e92623 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -142,313 +142,251 @@ advice.*::
+>  	detachedHead::
+>  		Advice shown when you used linkgit::git-checkout[1] to
+>  		move to the detach HEAD state, to instruct how to create
+> -		a local branch after the fact.  Default: true.
+> +		a local branch after the fact.	Default: true.
+
+This change has nothing to do with ordering variables alphabetically,
+therefore IMHO it belongs in separate patch.
+
+[...]
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
