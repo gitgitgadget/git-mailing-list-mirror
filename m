@@ -1,66 +1,99 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: Re: [PATCH] git-commit.txt: Order options alphabetically
-Date: Thu, 02 Dec 2010 01:05:59 +0200
-Organization: Private
-Message-ID: <8762vdt7oo.fsf@picasso.cante.net>
-References: <1291215526-11428-1-git-send-email-jari.aalto@cante.net>
-	<20101201165043.GF26120@burratino> <87r5e1v2g8.fsf@picasso.cante.net>
-	<7vzkspuw8g.fsf@alter.siamese.dyndns.org>
-	<87r5e1t93o.fsf@picasso.cante.net>
-	<2C3777CB-2DDD-4FF5-842B-23F7EF838611@sb.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v3 00/10] update-index: migrate to parse-options API
+Date: Wed, 1 Dec 2010 17:27:29 -0600
+Message-ID: <20101201232728.GA31815@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Stephen Boyd <bebarino@gmail.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	Pierre Habouzit <madcoder@debian.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 02 00:10:17 2010
+X-From: git-owner@vger.kernel.org Thu Dec 02 00:27:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNvoV-0001E3-5A
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 00:10:15 +0100
+	id 1PNw5V-0000C3-AO
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 00:27:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756557Ab0LAXKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 18:10:08 -0500
-Received: from lo.gmane.org ([80.91.229.12]:54905 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756525Ab0LAXKH (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 18:10:07 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PNvoK-000160-FW
-	for git@vger.kernel.org; Thu, 02 Dec 2010 00:10:04 +0100
-Received: from a91-155-187-216.elisa-laajakaista.fi ([91.155.187.216])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 00:10:04 +0100
-Received: from jari.aalto by a91-155-187-216.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 00:10:04 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-155-187-216.elisa-laajakaista.fi
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.2 (gnu/linux)
-Cancel-Lock: sha1:Kp4MquAH80uRJWf5sXUYXIVUEmc=
+	id S1755158Ab0LAX1o convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Dec 2010 18:27:44 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:35116 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753502Ab0LAX1n (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 18:27:43 -0500
+Received: by vws16 with SMTP id 16so759173vws.19
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 15:27:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition
+         :content-transfer-encoding:user-agent;
+        bh=d5M+iVHfN85ZOjc5fEz09VCD5Kdp1DehllA+ofrZi7Y=;
+        b=rDyxF+1/f6QIS/O4he0uOQj+rc7VYwguZH1AwjiQka9oGyFg3L6hDr7nzgvJHcmIWv
+         c5LYLbUUyVNjc1tkWZgXhH8szveZ/26d0LjDYvUR3xbPVYXVLuNDawxqqNLTYdm4D3IZ
+         /jYlvKLqYkABfa/YRISzXdSALeHH9aViKKEFM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:content-transfer-encoding:user-agent;
+        b=CSGDtQ55lOKgRHE/ryyabmoUawOdC60WbEE0KYLenxJ/+Q0j045kYY2BfGZR5B1WC9
+         ZryWU9z2QA4gcfq4N6g1qKXRivOz6qwDpgFICIKrxvj86uU5lOzJd8Ym4kUoDWcGMkmh
+         XsqCl75L57tU5t2vBrpPMpovR9YnaifgUHEho=
+Received: by 10.220.180.138 with SMTP id bu10mr2355475vcb.265.1291246060143;
+        Wed, 01 Dec 2010 15:27:40 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
+        by mx.google.com with ESMTPS id y14sm152659vch.28.2010.12.01.15.27.37
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 01 Dec 2010 15:27:38 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162637>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162638>
 
-2010-12-02 00:49 Kevin Ballard <kevin@sb.org>:
-> You may want to invest in a spell-checker.
->  ... Manaula pages are not primarily used to learn things, they are
->  used as reference.
->
-> Most certainly they are used to learn things. Especially with tools like git.
-> Don't know what options you can give to git-diff? Read the manpage!
+This adapts "git update-index" to use the parse-options API
+(with resulting perks like nice "-h" output).  Doing so reveals
+some potential improvements to parse-options infrastructure, too.
 
-That little word "primarily." You don't find anyone who learnt from
-manual page first is person is on his 20's. Google is full of Git
-videos. Guess which won the sexiest contest.
+See [1] for the previous version.  This version incorporates the
+last few suggestions by Stephen.  The iffiest bit is still
+handling of the --cacheinfo option.
 
-I'm addressing the current audience, this generation, not old farts like
-me. Linus, Hamano et all, when computers were Golden age and Z-something.
+Thanks to Stephen and Junio for advice.  Patches applies to maint,
+for no particular reason.
 
-Jari
+[1] http://thread.gmane.org/gmane.comp.version-control.git/159386/focus=
+=3D162463
+
+Jonathan Nieder (7):
+  parse-options: clearer reporting of API misuse
+  parse-options: move NODASH sanity checks to parse_options_check
+  parse-options: sanity check PARSE_OPT_NOARG flag
+  parse-options: never suppress arghelp if LITERAL_ARGHELP is set
+  parse-options: allow git commands to invent new option types
+  parse-options: make resuming easier after
+    PARSE_OPT_STOP_AT_NON_OPTION
+  update-index: migrate to parse-options API
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (1):
+  setup: save prefix (original cwd relative to toplevel) in
+    startup_info
+
+Stephen Boyd (2):
+  parse-options: Don't call parse_options_check() so much
+  parse-options: do not infer PARSE_OPT_NOARG from option type
+
+ builtin/blame.c        |    2 +-
+ builtin/shortlog.c     |    2 +-
+ builtin/update-index.c |  392 ++++++++++++++++++++++++++++++----------=
+--------
+ cache.h                |    1 +
+ parse-options.c        |   85 +++++------
+ parse-options.h        |   11 +-
+ setup.c                |    4 +-
+ 7 files changed, 299 insertions(+), 198 deletions(-)
