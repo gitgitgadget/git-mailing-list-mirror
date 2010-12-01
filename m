@@ -1,40 +1,40 @@
 From: jari.aalto@cante.net
-Subject: [PATCH] git-branch.txt: order options alphabetically
-Date: Wed,  1 Dec 2010 22:26:41 +0200
+Subject: [PATCH] git-ls-files.txt: order options alphabetically
+Date: Wed,  1 Dec 2010 22:31:29 +0200
 Organization: Private
-Message-ID: <1291235201-21651-1-git-send-email-jari.aalto@cante.net>
+Message-ID: <1291235489-21802-1-git-send-email-jari.aalto@cante.net>
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 Cc: Jari Aalto <jari.aalto@cante.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 01 21:26:52 2010
+X-From: git-owner@vger.kernel.org Wed Dec 01 21:31:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNtGL-00078p-VR
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 21:26:50 +0100
+	id 1PNtLH-0000uN-Hz
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 21:31:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756808Ab0LAU0p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 15:26:45 -0500
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:45441 "EHLO
-	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756695Ab0LAU0o (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 15:26:44 -0500
-Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 4A8F0C7BC7
-	for <git@vger.kernel.org>; Wed,  1 Dec 2010 22:26:43 +0200 (EET)
-Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
-	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A0450B46914; Wed, 01 Dec 2010 22:26:43 +0200
+	id S1756960Ab0LAUbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 15:31:33 -0500
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:54517 "EHLO
+	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755529Ab0LAUbc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 15:31:32 -0500
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id 04A178C6A6
+	for <git@vger.kernel.org>; Wed,  1 Dec 2010 22:31:31 +0200 (EET)
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A024C401269; Wed, 01 Dec 2010 22:31:31 +0200
 Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
-	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id 304541C6385
-	for <git@vger.kernel.org>; Wed,  1 Dec 2010 22:26:42 +0200 (EET)
+	by emh04.mail.saunalahti.fi (Postfix) with ESMTP id D8AEE41BE5
+	for <git@vger.kernel.org>; Wed,  1 Dec 2010 22:31:29 +0200 (EET)
 Received: from [192.168.1.5] (helo=picasso.cante.net)
 	by picasso.cante.net with esmtp (Exim 4.72)
 	(envelope-from <jari.aalto@cante.net>)
-	id 1PNtGD-0005dd-HL; Wed, 01 Dec 2010 22:26:41 +0200
+	id 1PNtKr-0005g4-9p; Wed, 01 Dec 2010 22:31:29 +0200
 X-Mailer: git-send-email 1.7.2.3
 X-SA-Exim-Connect-IP: 192.168.1.5
 X-SA-Exim-Mail-From: jari.aalto@cante.net
@@ -44,186 +44,195 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162604>
 
 From: Jari Aalto <jari.aalto@cante.net>
 
 
 Signed-off-by: Jari Aalto <jari.aalto@cante.net>
 ---
- Documentation/git-branch.txt |  108 +++++++++++++++++++++---------------=
+ Documentation/git-ls-files.txt |  123 ++++++++++++++++++++--------------=
 ------
- 1 files changed, 54 insertions(+), 54 deletions(-)
+ 1 files changed, 62 insertions(+), 61 deletions(-)
 
-diff --git a/Documentation/git-branch.txt b/Documentation/git-branch.txt
-index 9106d38..b4a56f9 100644
---- a/Documentation/git-branch.txt
-+++ b/Documentation/git-branch.txt
-@@ -63,6 +63,23 @@ way to clean up all obsolete remote-tracking branches.
+diff --git a/Documentation/git-ls-files.txt b/Documentation/git-ls-files.=
+txt
+index 86abd13..4b88940 100644
+--- a/Documentation/git-ls-files.txt
++++ b/Documentation/git-ls-files.txt
+@@ -30,6 +30,15 @@ shown:
 =20
  OPTIONS
  -------
 +
-+-a::
-+	List both remote-tracking branches and local branches.
++\--::
++	Do not interpret any more arguments as options.
 +
-+--abbrev=3D<length>::
-+	Alter the sha1's minimum display length in the output listing.
-+	The default value is 7.  See also `--no-abbrev'.
++--abbrev[=3D<n>]::
++	Instead of showing the full 40-byte hexadecimal object
++	lines, show only a partial prefix.
++	Non default number of digits can be specified with --abbrev=3D<n>.
 +
-+--color[=3D<when>]::
-+	Color branches to highlight current, local, and
-+	remote-tracking branches.
-+	The value must be always (the default), never, or auto.  See
-+	also `--no-color'.
-+
-+--contains <commit>::
-+	Only list branches which contain the specified commit.
-+
- -d::
- 	Delete a branch. The branch must be fully merged in its
- 	upstream branch, or in `HEAD` if no upstream was set with
-@@ -71,6 +88,11 @@ OPTIONS
- -D::
- 	Delete a branch irrespective of its merged status.
+ -c::
+ --cached::
+ 	Show cached files in the output (default)
+@@ -38,53 +47,32 @@ OPTIONS
+ --deleted::
+ 	Show deleted files in the output
 =20
-+-f::
-+--force::
-+	Reset <branchname> to <startpoint> if <branchname> exists
-+	already. Without `-f` 'git branch' refuses to change an existing branch=
-.
-+
- -l::
- 	Create the branch's reflog.  This activates recording of
- 	all changes made to the branch ref, enabling use of date
-@@ -78,45 +100,39 @@ OPTIONS
- 	Note that in non-bare repositories, reflogs are usually
- 	enabled by default by the `core.logallrefupdates` config option.
-=20
---f::
----force::
--	Reset <branchname> to <startpoint> if <branchname> exists
--	already. Without `-f` 'git branch' refuses to change an existing branch=
-.
+--m::
+---modified::
+-	Show modified files in the output
 -
- -m::
- 	Move/rename a branch and the corresponding reflog.
-=20
-+--merged [<commit>]::
-+	Only list branches whose tips are reachable from the
-+	specified commit (HEAD if not specified).  See also `--no-merged'.
-+
- -M::
- 	Move/rename a branch even if the new branch name already exists.
-=20
----color[=3D<when>]::
--	Color branches to highlight current, local, and
--	remote-tracking branches.
--	The value must be always (the default), never, or auto.
-+--no-abbrev::
-+	Display the full sha1s in the output listing rather than abbreviating t=
-hem.
-=20
- --no-color::
- 	Turn off branch colors, even when the configuration file gives the
--	default to color output.
--	Same as `--color=3Dnever`.
-+	default to color output.  Same as `--color=3Dnever`.
-=20
---r::
--	List or delete (if used with -d) the remote-tracking branches.
+--o::
+---others::
+-	Show other (i.e. untracked) files in the output
 -
---a::
--	List both remote-tracking branches and local branches.
-+--no-merged [<commit>]::
-+	Only list branches whose tips are not reachable from the
-+	specified commit (HEAD if not specified).
+--i::
+---ignored::
+-	Show only ignored files in the output. When showing files in the
+-	index, print only those matched by an exclude pattern. When
+-	showing "other" files, show only those matched by an exclude
+-	pattern.
+-
+--s::
+---stage::
+-	Show staged contents' object name, mode bits and stage number in the ou=
+tput.
++--debug::
++	After each line that describes a file, add more data about its
++	cache entry.  This is intended to show as much information as
++	possible for manual inspection; the exact format may change at
++	any time.
 =20
---v::
----verbose::
--	Show sha1 and commit subject line for each head, along with
--	relationship to upstream branch (if any). If given twice, print
--	the name of the upstream branch, as well.
-+--no-track::
-+	Do not set up "upstream" configuration, even if the
-+	branch.autosetupmerge configuration variable is true.
+ --directory::
++--no-empty-directory::
+ 	If a whole directory is classified as "other", show just its
+ 	name (with a trailing slash) and not its whole contents.
 =20
----abbrev=3D<length>::
--	Alter the sha1's minimum display length in the output listing.
--	The default value is 7.
-+-r::
-+	List or delete (if used with -d) the remote-tracking branches.
+---no-empty-directory::
+-	Do not list empty directories. Has no effect without --directory.
+-
+--u::
+---unmerged::
+-	Show unmerged files in the output (forces --stage)
++	Alternatively do not list empty directories. Has no effect
++	without `--directory'.
 =20
----no-abbrev::
--	Display the full sha1s in the output listing rather than abbreviating t=
-hem.
-+--set-upstream::
-+	If specified branch does not exist yet or if '--force' has been
-+	given, acts exactly like '--track'. Otherwise sets up configuration
-+	like '--track' would when creating the branch, except that where
-+	branch points to is not changed.
+--k::
+---killed::
+-	Show files on the filesystem that need to be removed due
+-	to file/directory conflicts for checkout-index to
+-	succeed.
+-
+--z::
+-	\0 line termination on output.
++--error-unmatch::
++	If any <file> does not appear in the index, treat this as an
++	error (return 1).
+=20
+--x <pattern>::
+ --exclude=3D<pattern>::
++-x <pattern>::
+ 	Skip untracked files matching pattern.
+ 	Note that pattern is a shell wildcard pattern. See EXCLUDE PATTERNS
+ 	below for more information.
+=20
+--X <file>::
+ --exclude-from=3D<file>::
++-X <file>::
+ 	Read exclude patterns from <file>; 1 per line.
+=20
+ --exclude-per-directory=3D<file>::
+@@ -95,16 +83,36 @@ OPTIONS
+ 	Add the standard git exclusions: .git/info/exclude, .gitignore
+ 	in each directory, and the user's global exclusion file.
+=20
+---error-unmatch::
+-	If any <file> does not appear in the index, treat this as an
+-	error (return 1).
++--full-name::
++	When run from a subdirectory, the command usually
++	outputs paths relative to the current directory.  This
++	option forces paths to be output relative to the project
++	top directory.
+=20
+---with-tree=3D<tree-ish>::
+-	When using --error-unmatch to expand the user supplied
+-	<file> (i.e. path pattern) arguments to paths, pretend
+-	that paths which were removed in the index since the
+-	named <tree-ish> are still present.  Using this option
+-	with `-s` or `-u` options does not make any sense.
++-i::
++--ignored::
++	Show only ignored files in the output. When showing files in the
++	index, print only those matched by an exclude pattern. When
++	showing "other" files, show only those matched by an exclude
++	pattern.
++
++-k::
++--killed::
++	Show files on the filesystem that need to be removed due
++	to file/directory conflicts for checkout-index to
++	succeed.
++
++-m::
++--modified::
++	Show modified files in the output
++
++-o::
++--others::
++	Show other (i.e. untracked) files in the output
++
++-s::
++--stage::
++	Show staged contents' object name, mode bits and stage number in the ou=
+tput.
 =20
  -t::
- --track::
-@@ -133,26 +149,11 @@ want `git checkout` and `git branch` to always beha=
-ve as if '--no-track'
- were given. Set it to `always` if you want this behavior when the
- start-point is either a local or remote-tracking branch.
+ 	This feature is semi-deprecated. For scripting purpose,
+@@ -124,31 +132,24 @@ a space) at the start of each line:
+ 	C::	modified/changed
+ 	K::	to be killed
+ 	?::	other
++-u::
++--unmerged::
++	Show unmerged files in the output (forces --stage)
 =20
----no-track::
--	Do not set up "upstream" configuration, even if the
--	branch.autosetupmerge configuration variable is true.
--
----set-upstream::
--	If specified branch does not exist yet or if '--force' has been
--	given, acts exactly like '--track'. Otherwise sets up configuration
--	like '--track' would when creating the branch, except that where
--	branch points to is not changed.
--
----contains <commit>::
--	Only list branches which contain the specified commit.
--
----merged [<commit>]::
--	Only list branches whose tips are reachable from the
--	specified commit (HEAD if not specified).
--
----no-merged [<commit>]::
--	Only list branches whose tips are not reachable from the
--	specified commit (HEAD if not specified).
-+-v::
-+--verbose::
-+	Show sha1 and commit subject line for each head, along with
-+	relationship to upstream branch (if any). If given twice, print
-+	the name of the upstream branch, as well.
+ -v::
+ 	Similar to `-t`, but use lowercase letters for files
+ 	that are marked as 'assume unchanged' (see
+ 	linkgit:git-update-index[1]).
 =20
- <branchname>::
- 	The name of the branch to create or delete.
-@@ -160,18 +161,17 @@ start-point is either a local or remote-tracking br=
-anch.
- 	linkgit:git-check-ref-format[1].  Some of these checks
- 	may restrict the characters allowed in a branch name.
-=20
--<start-point>::
--	The new branch head will point to this commit.  It may be
--	given as a branch name, a commit-id, or a tag.  If this
--	option is omitted, the current HEAD will be used instead.
+---full-name::
+-	When run from a subdirectory, the command usually
+-	outputs paths relative to the current directory.  This
+-	option forces paths to be output relative to the project
+-	top directory.
 -
--<oldbranch>::
--	The name of an existing branch to rename.
+---abbrev[=3D<n>]::
+-	Instead of showing the full 40-byte hexadecimal object
+-	lines, show only a partial prefix.
+-	Non default number of digits can be specified with --abbrev=3D<n>.
 -
- <newbranch>::
- 	The new name for an existing branch. The same restrictions as for
- 	<branchname> apply.
+---debug::
+-	After each line that describes a file, add more data about its
+-	cache entry.  This is intended to show as much information as
+-	possible for manual inspection; the exact format may change at
+-	any time.
++--with-tree=3D<tree-ish>::
++	When using --error-unmatch to expand the user supplied
++	<file> (i.e. path pattern) arguments to paths, pretend
++	that paths which were removed in the index since the
++	named <tree-ish> are still present.  Using this option
++	with `-s` or `-u` options does not make any sense.
 =20
-+<oldbranch>::
-+	The name of an existing branch to rename.
-+
-+<start-point>::
-+	The new branch head will point to this commit.  It may be
-+	given as a branch name, a commit-id, or a tag.  If this
-+	option is omitted, the current HEAD will be used instead.
+-\--::
+-	Do not interpret any more arguments as options.
++-z::
++	\0 line termination on output.
 =20
- Examples
- --------
+ <file>::
+ 	Files to show. If no files are given all files which match the other
 --=20
 1.7.2.3
