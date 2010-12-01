@@ -1,116 +1,88 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv3 2/3] cvsimport: fix the parsing of uppercase config options
-Date: Wed, 01 Dec 2010 08:23:13 -0800 (PST)
-Message-ID: <m3aakp4g5o.fsf@localhost.localdomain>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv3 2/3] cvsimport: fix the parsing of uppercase config
+ options
+Date: Wed, 1 Dec 2010 10:34:06 -0600
+Message-ID: <20101201163406.GD26120@burratino>
 References: <cover.1291207768.git.git@drmicha.warpmail.net>
-	<7vd3pmw9n5.fsf@alter.siamese.dyndns.org>
-	<b61288036e756c78709438491416d573459a732e.1291207768.git.git@drmicha.warpmail.net>
-	<AANLkTi=cb0i28oGi9vrYfEyU_fPHhQGhNNtramtCpCHy@mail.gmail.com>
-	<20101201160503.GB26120@burratino>
+ <7vd3pmw9n5.fsf@alter.siamese.dyndns.org>
+ <b61288036e756c78709438491416d573459a732e.1291207768.git.git@drmicha.warpmail.net>
+ <AANLkTi=cb0i28oGi9vrYfEyU_fPHhQGhNNtramtCpCHy@mail.gmail.com>
+ <20101201160503.GB26120@burratino>
+ <m3aakp4g5o.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Martin Langhoff <martin.langhoff@gmail.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 01 17:23:23 2010
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Jeff King <peff@peff.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 01 17:34:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNpSk-0006MH-5W
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 17:23:22 +0100
+	id 1PNpdN-0003wX-0W
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 17:34:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752798Ab0LAQXR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 11:23:17 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:50336 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752603Ab0LAQXQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 11:23:16 -0500
-Received: by gyb11 with SMTP id 11so3503968gyb.19
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 08:23:16 -0800 (PST)
+	id S1753859Ab0LAQeQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 11:34:16 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:53765 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753034Ab0LAQeP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 11:34:15 -0500
+Received: by vws16 with SMTP id 16so415157vws.19
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 08:34:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=uWqS06R8niDG89a7swAeb/XOrrlJBdWaoU8KWE5iS9k=;
-        b=r547nuWQ0j3WCWwsGQhv5T2L1Ab1ULzCyJJPi6l4OLQqUxpoisQSET6pSOpG8GPe1a
-         vv7EYXbveNXcr6MWrBUaCXaONJ0uanUe5m7p+HI7ydUXsBcu3Ty32cC/wUYT4YpSS6nc
-         EoKffQebnIfi0TiiE1hlYF5cU8tDyhXVClgsE=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=FTSzHAPjjwpI6XnPrjqw3XgJ/AN1jlaVholdOAi1gOQ=;
+        b=mxJEYxqx22X/eKEITCW7CiG22kyVjtYuiQVaD54gMh8bG83Al5Lbf5xcR8jp/xQUPB
+         BWsI2zVCGb8Im3uFMAf+ehT4o/GNaFymGoR6LyC2PtBVNmrah4oGfeWYsTTwx5wZSIFP
+         miJKFVQN9wEI6PsOxoLx5jYjqu4ZUrDqmbwng=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=wshCP7gKpos/VBbrBSSQidCxsgcm6rs0HtB/AQkMmSKm0uEhPbuS3gFnKao84TtMel
-         /B+7iPJVEz43rTOgWODOW3gvCoZgcs/pRoFfihzLUHiMMh0sjG7q3lnAktMcJ4Wy8AqU
-         ucFnwvueUDsMObH2lmoFPgDV62HBrTAWba0Y0=
-Received: by 10.204.73.75 with SMTP id p11mr8720263bkj.46.1291220594464;
-        Wed, 01 Dec 2010 08:23:14 -0800 (PST)
-Received: from localhost.localdomain (abvl90.neoplus.adsl.tpnet.pl [83.8.209.90])
-        by mx.google.com with ESMTPS id 11sm3501910bkj.0.2010.12.01.08.23.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 01 Dec 2010 08:23:13 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oB1GMaFZ023683;
-	Wed, 1 Dec 2010 17:22:41 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id oB1GMCV8023677;
-	Wed, 1 Dec 2010 17:22:12 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <20101201160503.GB26120@burratino>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=AqVoKi+yV24rYz090QgSQL45BAEBXlZQYnrlJ2J6BMkRi4vRxqc3oAy0T8xSlQsIKr
+         PLDsHP9Kp0NDIPpu1SdA9srK9/rSew8nN1ECAyD1GMYvSr+xYmTQclOyxKIE9PI8+P7a
+         OH0hzxOqLm2YmohvSkypQ2aVtcuotZU0u+xYg=
+Received: by 10.220.182.199 with SMTP id cd7mr42264vcb.176.1291221254706;
+        Wed, 01 Dec 2010 08:34:14 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
+        by mx.google.com with ESMTPS id j7sm41702vcr.39.2010.12.01.08.34.12
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 01 Dec 2010 08:34:13 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <m3aakp4g5o.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162545>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+(+cc: Jeff, config parsing wizard)
 
-> Martin Langhoff wrote:
-> 
-> > So cvsimport.remote (for -r) and cvsimport.revisions (or
-> > trackrevisions perhaps) seem more appropriate.
-> 
-> I somewhat like this idea.  So let's build a full table, shall
-> we?  The embedded dashes are meant for the command-line options
-> rather than the config file.
-> 
-> 	-v	verbosity
-> 	-d	cvsroot
-> 	-C	[doesn't make sense in a config file; you've already
-> 		 found where to read the configuration from, right?]
-> 	-r	remote
-> 	-o	mainline
-> 	-i	import-only
-> 	-k	kill-keywords
-> 	-u	replace-underscores
-> 	-s	replace-slashes
-> 	-p	cvsps-options
-> 	-z	fuzz
-> 	-P	[doesn't make much sense in a config file; for one-shot use]
-> 	-m	detect-merges
-> 	-M	merge-regex
-> 	-S	ignore-paths
-> 	-a	import-all
-> 	-L	max-commits
-> 	-A	authors-file
-> 	-R	track-revisions
-> 	-h	[doesn't make sense in a config file]
-> 
-> Hmm?
+Jakub Narebski wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Good idea, though I'd rather we avoid new convention for multi word
-names separated with '-' (multi-word), but rather use camel case
-(multiWord).
+>> I somewhat like this idea.  So let's build a full table, shall
+>> we?  The embedded dashes are meant for the command-line options
+>> rather than the config file.
+[...]
+> Good idea, though I'd rather we avoid new convention for multi word
+> names separated with '-' (multi-word), but rather use camel case
+> (multiWord).
 
-Currently we have only unfortunate exception of `add.ignore-errors',
-all others use either same case (`core.ignorecase') or camelCase
-(`core.ignoreStat`).
+No disagreement there. :)
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+> Currently we have only unfortunate exception of `add.ignore-errors',
+
+Maybe we can teach the config file parser to ignore dashes in addition
+to case (except in the names of [genus "species"] headings)?  That
+would be an incompatible change for third-party tools, though, so
+maybe "git config" would have to take an explicit --strip-dashes
+flag to do it.
