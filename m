@@ -1,75 +1,68 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [PATCH] git-commit.txt: Order options alphabetically
-Date: Wed, 1 Dec 2010 14:49:02 -0800
-Message-ID: <2C3777CB-2DDD-4FF5-842B-23F7EF838611@sb.org>
-References: <1291215526-11428-1-git-send-email-jari.aalto@cante.net> <20101201165043.GF26120@burratino> <87r5e1v2g8.fsf@picasso.cante.net> <7vzkspuw8g.fsf@alter.siamese.dyndns.org> <87r5e1t93o.fsf@picasso.cante.net>
-Mime-Version: 1.0 (Apple Message framework v1082)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Wed Dec 01 23:49:12 2010
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: [PATCH] git-reset.txt: Use commit~1 notation over commit^
+Date: Thu, 02 Dec 2010 00:49:24 +0200
+Organization: Private
+Message-ID: <87ipzdt8gb.fsf@picasso.cante.net>
+References: <1291227258-17922-1-git-send-email-jari.aalto@cante.net>
+	<1291230820.11917.25.camel@drew-northup.unet.maine.edu>
+	<877hftuvvz.fsf@picasso.cante.net>
+	<26B3CE3C-0C45-4D0B-8588-3769467AF527@sb.org>
+Mime-Version: 1.0
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 01 23:50:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNvU7-0008Bw-HR
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 23:49:11 +0100
+	id 1PNvVD-0000Cs-Gx
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 23:50:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756430Ab0LAWtG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 17:49:06 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:32960 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756130Ab0LAWtE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Dec 2010 17:49:04 -0500
-Received: by pwj3 with SMTP id 3so1207668pwj.19
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 14:49:04 -0800 (PST)
-Received: by 10.142.89.20 with SMTP id m20mr9650776wfb.13.1291243744080;
-        Wed, 01 Dec 2010 14:49:04 -0800 (PST)
-Received: from [10.8.0.89] ([69.170.160.74])
-        by mx.google.com with ESMTPS id v19sm576690wfh.12.2010.12.01.14.49.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 01 Dec 2010 14:49:03 -0800 (PST)
-In-Reply-To: <87r5e1t93o.fsf@picasso.cante.net>
-X-Mailer: Apple Mail (2.1082)
+	id S1756676Ab0LAWuL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 17:50:11 -0500
+Received: from lo.gmane.org ([80.91.229.12]:36372 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756332Ab0LAWuK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 17:50:10 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PNvUy-00005V-Jr
+	for git@vger.kernel.org; Wed, 01 Dec 2010 23:50:04 +0100
+Received: from a91-155-187-216.elisa-laajakaista.fi ([91.155.187.216])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 23:50:04 +0100
+Received: from jari.aalto by a91-155-187-216.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 23:50:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-187-216.elisa-laajakaista.fi
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.2 (gnu/linux)
+Cancel-Lock: sha1:hx9oMvHe3J/tW+AoXneUWypLmME=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162630>
 
-You may want to invest in a spell-checker.
+2010-12-02 00:01 Kevin Ballard <kevin@sb.org>:
+> On Dec 1, 2010, at 11:37 AM, Jari Aalto wrote:
+>
+> Your patch isn't touching any example of HEAD^^^^^^^. Every single one that
+> you've changed was a simple HEAD^.
 
-On Dec 1, 2010, at 2:35 PM, Jari Aalto wrote:
+Yes of course:
 
->> the documentation is often more useful if the options are
->> grouped together by features and concepts they relate to.
-> 
-> Where do you see grouping all the sudden? Manaula pages are not
-> primarily used to learn things, they are used as reference. Just like
-> Book indexes.
+    >> What people appreciate, while learning, is constency. Sticking to one
+    >> notation is better than giving multiple choices.
 
-Most certainly they are used to learn things. Especially with tools like git.
-Don't know what options you can give to git-diff? Read the manpage!
+> And this, I feel, is absolutely wrong.
 
-> I haven't seed anyone for 10's of years who would have read full manaul
-> page from top to botton; every single line at one stop.
-> 
-> They come and go, come and go to read it. Learn bit by bit. And there is
-> the strenght od proper indexing, the alphabetical.
+Whatever you feel. Consistency is important viewpoint. Try explaining to
+a group of people these two variations. The make them write scripts to
+use git commands. Guess which notation they choose? The "^" isnt' even
+scriptable.
 
-Indexing, sure, but the actual manpage is not an index. A-Z ordering makes
-no sense for the manpage. When people read, chunk by chunk, they expect
-related functionality. It especially helps with discoverability. For example,
-I know of the -w flag to git-diff that tells it to ignore whitespace. I'm not
-certain this does exactly what I want, so I pop open the manpage, search for
--w, and read it. And I'm right, it doesn't do what I want. But right next to
-it is the flag -b, and that _does_ do precisely what I want. If the manpage
-was ordered alphabetically, I'd likely have never found the -b flag. As it is,
-all 3 whitespace-related flags to git-diff are grouped together, and it helps
-not only with reading the manpage for the first time (as I learn all related
-concepts at the same time), but with discovering the related flags when I go
-back to read documentation on the flags I already know.
-
--Kevin Ballard
+Jari
