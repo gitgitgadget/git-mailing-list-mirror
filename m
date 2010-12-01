@@ -1,82 +1,85 @@
-From: Howard Miller <howard@e-learndesign.co.uk>
-Subject: Re: Merging (only) subdirectories
-Date: Wed, 1 Dec 2010 12:55:55 +0000
-Message-ID: <AANLkTi=gDdasJ1gsAgSCxQ5a3pWvTNCfiaSn5h-WUt1C@mail.gmail.com>
-References: <AANLkTimZc0r8WBOsE73V=7SKdZgONiCKfYCk7rBrCY3F@mail.gmail.com>
-	<AANLkTik-d8oys9h=wFRnyt8sukTsSymaw5LGM39BU2K=@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv3 1/3] cvsimport: partial whitespace cleanup
+Date: Wed,  1 Dec 2010 13:53:20 +0100
+Message-ID: <468f815beeede312f98daa66986ce8bf887724b3.1291207768.git.git@drmicha.warpmail.net>
+References: <7vd3pmw9n5.fsf@alter.siamese.dyndns.org>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Wed Dec 01 13:56:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNmEH-0003d0-DH
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 13:56:13 +0100
+	id 1PNmED-0003d0-9i
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 13:56:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755202Ab0LAMz6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 07:55:58 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:52699 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754951Ab0LAMz5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 07:55:57 -0500
-Received: by yxt3 with SMTP id 3so2843224yxt.19
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 04:55:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:sender:received
-         :in-reply-to:references:date:x-google-sender-auth:message-id:subject
-         :from:to:cc:content-type;
-        bh=bPry/7LqZnjKo9Au377gZXtZEa68e8rzbUGfdkqQ4QU=;
-        b=UvWKYBMJAeZxZ8lEKrlwgnY2VtvzSamRBilrzRVFPvWxtespgGmTPEGXYKaJbDpqIh
-         Pr8r2o8+6h2YMVs/TumRVd5mRaZsSdP/5dJpLRHbSctGSGo4SDHzZ7gOmS+BZygqsNwv
-         1K8QQ5AdB4YH/zSaECZWo+O88OBZL62JaL8mE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        b=BqbqCoKDAl39mpD1xfrqV1CZhKEaNVJBoI3pjYN20tZjJz5Zdf1btmnrffaFQR063D
-         Dw6A1txcf5+xCusfN2It5UJIXiRUyULE7QXjCOkDKtLhfS7VM3W0d+7CD3JwP/WtNMj1
-         IoiJSq4kyzvDRHJYRgHhB7ROjAvr1kfHlX5xg=
-Received: by 10.101.56.12 with SMTP id i12mr4534422ank.142.1291208155194; Wed,
- 01 Dec 2010 04:55:55 -0800 (PST)
-Received: by 10.100.38.15 with HTTP; Wed, 1 Dec 2010 04:55:55 -0800 (PST)
-In-Reply-To: <AANLkTik-d8oys9h=wFRnyt8sukTsSymaw5LGM39BU2K=@mail.gmail.com>
-X-Google-Sender-Auth: 9Kdu1sc71MLmjTnu8cGlJEOo7zE
+	id S1755194Ab0LAMzm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 07:55:42 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:49526 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755175Ab0LAMzk (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 1 Dec 2010 07:55:40 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 4E57F59E;
+	Wed,  1 Dec 2010 07:55:40 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute1.internal (MEProxy); Wed, 01 Dec 2010 07:55:40 -0500
+X-Sasl-enc: R4/cakcSKBk8iIKmfq4an1Ts/6a25UedUEKZgdAecvYZ 1291208139
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id B7C335E086B;
+	Wed,  1 Dec 2010 07:55:39 -0500 (EST)
+X-Mailer: git-send-email 1.7.3.2.617.g84f63
+In-Reply-To: <7vd3pmw9n5.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <cover.1291207768.git.git@drmicha.warpmail.net>
+References: <cover.1291207768.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162507>
 
-On 1 December 2010 12:36, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
-> On Wed, Dec 1, 2010 at 6:18 PM, Howard Miller
-> <howard@e-learndesign.co.uk> wrote:
->> What I would like to do is to be able to merge branch B into branch A
->> but ONLY stuff that concerns the theme directory. I don't think this
->> is possible. I'm reluctant to keep themes in a completely separate
->> repo as that just makes testing them more problematic.
->
-> I don't know. Maybe you can use topic branch. The idea is that you and
-> other theme designers branch out from a known point, then make changes
-> in the theme directory only. You guys can merge from each other's tree
-> because nobody would change anything outside theme directory.
-> Occasionally you can merge back upstream for testing with new code,
-> but don't push that merge until your theme is ready. Once your theme
-> rolls out, you can either keep working on your topic branch, or throw
-> it away and branch out again.
->
-> Also, please consider submodules if theme dir is totally independent.
-> I don't see how it makes it problematic for testing. git-subtree [1]
-> might be of your interest too.
->
-> [1] https://github.com/apenwarr/git-subtree
-> --
-> Duy
->
+in preparation of the config parse patch
 
-Thanks! Again, I need to go and do some reading to see if those things
-fit my needs.
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ git-cvsimport.perl |   16 ++++++++--------
+ 1 files changed, 8 insertions(+), 8 deletions(-)
+
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index d27abfe..7888b77 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -91,8 +91,8 @@ sub write_author_info($) {
+ 
+ # convert getopts specs for use by git config
+ sub read_repo_config {
+-    # Split the string between characters, unless there is a ':'
+-    # So "abc:de" becomes ["a", "b", "c:", "d", "e"]
++	# Split the string between characters, unless there is a ':'
++	# So "abc:de" becomes ["a", "b", "c:", "d", "e"]
+ 	my @opts = split(/ *(?!:)/, shift);
+ 	foreach my $o (@opts) {
+ 		my $key = $o;
+@@ -100,13 +100,13 @@ sub read_repo_config {
+ 		my $arg = 'git config';
+ 		$arg .= ' --bool' if ($o !~ /:$/);
+ 
+-        chomp(my $tmp = `$arg --get cvsimport.$key`);
++		chomp(my $tmp = `$arg --get cvsimport.$key`);
+ 		if ($tmp && !($arg =~ /--bool/ && $tmp eq 'false')) {
+-            no strict 'refs';
+-            my $opt_name = "opt_" . $key;
+-            if (!$$opt_name) {
+-                $$opt_name = $tmp;
+-            }
++			no strict 'refs';
++			my $opt_name = "opt_" . $key;
++			if (!$$opt_name) {
++				$$opt_name = $tmp;
++			}
+ 		}
+ 	}
+ }
+-- 
+1.7.3.2.617.g84f63
