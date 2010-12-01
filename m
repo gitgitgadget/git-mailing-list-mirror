@@ -1,94 +1,97 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [PATCH] git-add.txt: Order options alphabetically
-Date: Wed, 01 Dec 2010 14:49:50 -0500
-Message-ID: <1291232990.11917.40.camel@drew-northup.unet.maine.edu>
-References: <1291218145-13016-1-git-send-email-jari.aalto@cante.net>
-	 <1291229622.11917.14.camel@drew-northup.unet.maine.edu>
-	 <87fwuhuwdu.fsf@picasso.cante.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Proper way to checkout a tag?
+Date: Wed, 1 Dec 2010 13:51:25 -0600
+Message-ID: <20101201195125.GC27347@burratino>
+References: <AANLkTi=b12n0J+Qg4S7i9dnbMHoWvPS3OXP0CDZevT_4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Wed Dec 01 20:50:17 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Git ML <git@vger.kernel.org>
+To: Dun Peal <dunpealer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 01 20:51:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNsgw-0004OY-V9
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 20:50:15 +0100
+	id 1PNsiL-0005FM-DN
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 20:51:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756712Ab0LATuD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 14:50:03 -0500
-Received: from beryl.its.maine.edu ([130.111.32.94]:37791 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756169Ab0LATuC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 14:50:02 -0500
-Received: from [130.111.39.151] (drew-northup.unet.maine.edu [130.111.39.151])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id oB1Jntb4022573
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 1 Dec 2010 14:49:55 -0500
-In-Reply-To: <87fwuhuwdu.fsf@picasso.cante.net>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=2 Fuz1=2
-	Fuz2=2
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: oB1Jntb4022573
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1291837797.22631@8bxWfWRdufUB8Az96b6YNg
+	id S1756746Ab0LATvf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 14:51:35 -0500
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:58272 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755529Ab0LATve (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 14:51:34 -0500
+Received: by wwb39 with SMTP id 39so151153wwb.1
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 11:51:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=FE/P+2/CD0LqiObATFb7Go6djMCrCwD7SDc9kZpNGSg=;
+        b=J4yBGexkGli0YuGt9iJIUeyq8awjfFAuxd9YjZflzpH9s1UvbDZpOZec4qxUe3zw65
+         pSzVZGSOG9c0xBAetQkogsAID/zjCv5TTEW0mmXz0HmohkhCMcNVO6t3O76UI9uGFD+Z
+         Rqin97UrJ1z0xdFERf1RPThfne97YIgI2hQTA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=FArHS77saa9Lkk6arI6ozr0WyUN0VNz7LD5mrMaASHP2hudqUElv5VD/ohBC0O1lbF
+         y7dQnChMJuIFFtfgwOG6lUSRzS2/x+rkDnISyDRAmjBSA8jKWVyPBMzmnxYq/b9aXrc8
+         /an3oD2UunscOoiDuGLFiSm3EwmqVjyCvjBpM=
+Received: by 10.227.137.197 with SMTP id x5mr10020148wbt.198.1291233093157;
+        Wed, 01 Dec 2010 11:51:33 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
+        by mx.google.com with ESMTPS id 11sm246019wbj.1.2010.12.01.11.51.31
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 01 Dec 2010 11:51:32 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=b12n0J+Qg4S7i9dnbMHoWvPS3OXP0CDZevT_4@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162588>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162589>
 
+Hi,
 
-On Wed, 2010-12-01 at 21:27 +0200, Jari Aalto wrote:
-> 2010-12-01 20:53 Drew Northup <drew.northup@maine.edu>:
-> > On Wed, 2010-12-01 at 17:42 +0200, jari.aalto@cante.net wrote:
-> > First off, this patch (and set I've seen thus far) has little no commit
-> > message.
+Dun Peal wrote:
+
+> The problem is that since there's no head pointing to each release, if
+> our users just:
 > 
-> There is no point of making it any longer as it is basically the same
-> for everything. I don't think we want to see long identical copies of
-> explanations over and over in "git log".
+> $ git checkout release-1
 > 
-> > Did you plan on changing the the short help displayed by git add -h as
-> > well?
+> When they want to build that release, they get into a detached HEAD
+> state. I've always construed detached HEAD as a non-standard state,
+> and it doesn't seem proper to reach it regularly in the course of a
+> standard operation like checking out past releases.
 > 
-> Don't know. At this time, I happen to have some free time. But that's a
-> good candidate for followup work.
-> 
-> Jari
+> It's particularly confusing for our users who are new to Git.
 
-First, before I reply to your post proper, I am going to echo others on
-this list--unless you see a good specific reason to prune the CC/reply
-list please leave it intact and use "reply all" and not "reply to list"
-here once a conversation has been started. (Other lists may have
-different conventions, and I am still absorbing some of the ones used
-here myself...)
+Any ideas for making the detached state more friendly?
 
-That said, like changes should be grouped together in closely related
-patchsets. It makes life easier for everybody. Don't worry about using
-virtually the same commit message over and over again if that's what is
-actually appropriate. Junio may very well rebase/restructure patches
-that need it (I haven't checked to see how often he bothers) and will
-tell you if patch structure is completely out of line or unusable--but
-that's not the same as others actually reviewing the changes themselves.
+The idea is this: when you check out a tag or a remote-tracking
+branch, it is not to make changes to it.  Tags are unchanging,
+remote-tracking branches track remote state that the user does not
+directly control.  So what does it mean to check out such a thing?
 
-See 
+There are two possibilities:
 
-Message-ID: <20101201165043.GF26120@burratino>
+If you are checking out that commit to examine it, test it, maybe
+write a few one-off patches, then any work built from there does not
+need to be remembered (except in the HEAD reflog, to avoid expensive
+accidents).  You can make an experiment permanent with
 
-These changes should be a bundle, this bundle should have a "meta
-message", and each element should have a commit message.
+	git checkout -b newbranch
 
+If you are starting a new line of development, it needs to get a name.
+Long ago this was the only use case supported.  Even today it is often
+a good way to go:
 
--- 
--Drew Northup N1XIM
-   AKA RvnPhnx on OPN
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+	git checkout -b newbranch release-1
+
+Hope that helps.
+Jonathan
