@@ -1,89 +1,65 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH v3] help: always suggest common-cmds if prefix of cmd
-Date: Wed, 1 Dec 2010 15:33:06 +0100
-Message-ID: <AANLkTi=OyK+Qvin9FjrUTyEacxHVLjBG77Qg_PPoC6kK@mail.gmail.com>
-References: <AANLkTinKDqykfuV5=oHav9PRehDtJZct_q=zm7p8PAeo@mail.gmail.com>
- <1290787239-4508-1-git-send-email-kusmabite@gmail.com> <7voc9bpqj2.fsf@alter.siamese.dyndns.org>
- <AANLkTin34AfYnFY5e9B1cuyckfLXU2=qXFciFaaNGt9f@mail.gmail.com> <7vvd3g58ja.fsf@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
+From: jari <jari.aalto@cante.net>
+Subject: Re: [PATCH] Documentation/config.txt: Order variables
+ alphabetically
+Date: Wed, 1 Dec 2010 16:34:36 +0200
+Message-ID: <20101201143436.GC6537@picasso.cante.net>
+References: <1291209174-9239-1-git-send-email-jari.aalto@cante.net>
+ <m3eia14mu7.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, ziade.tarek@gmail.com
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 01 15:33:36 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 01 15:41:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNnkV-0000O5-IW
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 15:33:35 +0100
+	id 1PNns8-0004NE-1M
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 15:41:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755234Ab0LAOda convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Dec 2010 09:33:30 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:60108 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752752Ab0LAOd3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Dec 2010 09:33:29 -0500
-Received: by fxm20 with SMTP id 20so110025fxm.19
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 06:33:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=6L6ZIoxexbLlz+LL9E6aDxsiceoseXMqynxB7D1pPlc=;
-        b=HNUdk4V9oxP272j/DsyLO7NWPtzjVt/mwVqRmXkxloICu45FVhmz/WVh572Ief2Iy8
-         DRMhwPSHC0DGAMGC2y6RQ8htT8hgfr7xtA9P2el2ZhMTGC5wABaR4/BEEG/SXYqhGvuL
-         uSMNsLzKAKjLImhs/fqEq8oDM+ho4GpH5zIGQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=T0DSJmOaTgH7x9jun/27BnjsJzwgWcm6hXqig0erOD50wUfEzqzG6blhL3jertqpf3
-         /XvnTGRQ09tjaeuVmzfrmCC/mZsgdIovVoSzUEU0lEFtQiL6j7/nRWiBE3fxGNwxj6N/
-         FKvRb7s/9sOMLqZ7KB6vqGI/H/iGUlxxqs87A=
-Received: by 10.223.71.205 with SMTP id i13mr4197347faj.102.1291214008135;
- Wed, 01 Dec 2010 06:33:28 -0800 (PST)
-Received: by 10.223.72.206 with HTTP; Wed, 1 Dec 2010 06:33:06 -0800 (PST)
-In-Reply-To: <7vvd3g58ja.fsf@alter.siamese.dyndns.org>
+	id S1755039Ab0LAOlX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 09:41:23 -0500
+Received: from emh03.mail.saunalahti.fi ([62.142.5.109]:51774 "EHLO
+	emh03.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752752Ab0LAOlW (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 09:41:22 -0500
+X-Greylist: delayed 402 seconds by postgrey-1.27 at vger.kernel.org; Wed, 01 Dec 2010 09:41:22 EST
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh03-2.mail.saunalahti.fi (Postfix) with SMTP id 10E6BEBFFA;
+	Wed,  1 Dec 2010 16:34:39 +0200 (EET)
+Received: from emh03.mail.saunalahti.fi ([62.142.5.109])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A0414A02C54; Wed, 01 Dec 2010 16:34:39 +0200
+Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
+	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id 89AC1158A65;
+	Wed,  1 Dec 2010 16:34:36 +0200 (EET)
+Received: from jaalto by picasso.cante.net with local (Exim 4.72)
+	(envelope-from <jaalto@picasso.cante.net>)
+	id 1PNnlU-0002ir-2B; Wed, 01 Dec 2010 16:34:36 +0200
+Content-Disposition: inline
+In-Reply-To: <m3eia14mu7.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: <locally generated>
+X-SA-Exim-Mail-From: jaalto@picasso.cante.net
+X-SA-Exim-Scanned: No (on picasso.cante.net); SAEximRunCond expanded to false
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162521>
 
-On Mon, Nov 29, 2010 at 6:44 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Erik Faye-Lund <kusmabite@gmail.com> writes:
->
->> For this code-path to trigger we would have to be able to prefix-mat=
-ch
->> every common command AND every "main command" must be included in
->> common commands. At the same time. The only possible way to
->> prefix-match all commands is if they all start with the same letter.
->> Do you really think this is a situation we could ever end up in? Eve=
-ry
->> git command being a common-command, starting with the same letter?
->>
->> This is basically unreachable code. Perhaps it'd be even clearer jus=
-t to die:
->>
->> if (main_cmds.cnt <=3D n)
->> =A0 =A0 =A0 die("Prefix-matched everyting, what's going on?");
->
-> Well, the same letter can be an empty string:
->
-> =A0 =A0 =A0 =A0$ git ''
->
+On 2010-12-01 05:58, Jakub Narebski wrote:
+| >  		Advice shown when you used linkgit::git-checkout[1] to
+| >  		move to the detach HEAD state, to instruct how to create
+| > -		a local branch after the fact.  Default: true.
+| > +		a local branch after the fact.	Default: true.
+| 
+| This change has nothing to do with ordering variables alphabetically,
+| therefore IMHO it belongs in separate patch.
 
-Indeed, my bad.
+Hm, I tabified the content, so it chnaged inserted " " to "^I". Fix
+will follow.
 
-> Didn't I already suggest BUG() there? =A0Also, saying "too ambiguous"=
- would
-> make the codepath give "... See 'git --help'" message, I think.
->
-
-Sure. I was considering just taking your version verbatim. But let's
-see what happens, perhaps I get inspired ;)
+Jari
