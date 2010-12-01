@@ -1,97 +1,74 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] add: introduce add.ignoreerrors synonym for
- add.ignore-errors
-Date: Wed, 1 Dec 2010 12:57:11 -0600
-Message-ID: <20101201185711.GD27024@burratino>
-References: <cover.1291207768.git.git@drmicha.warpmail.net>
- <7vd3pmw9n5.fsf@alter.siamese.dyndns.org>
- <b61288036e756c78709438491416d573459a732e.1291207768.git.git@drmicha.warpmail.net>
- <AANLkTi=cb0i28oGi9vrYfEyU_fPHhQGhNNtramtCpCHy@mail.gmail.com>
- <20101201160503.GB26120@burratino>
- <m3aakp4g5o.fsf@localhost.localdomain>
- <20101201163406.GD26120@burratino>
- <20101201175517.GA7774@sigill.intra.peff.net>
- <20101201183615.GA27024@burratino>
- <20101201184659.GA9147@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-commit.txt: (synopsis): move -i and -o before "--"
+Date: Wed, 01 Dec 2010 11:01:56 -0800
+Message-ID: <7v4oaxwc4b.fsf@alter.siamese.dyndns.org>
+References: <7vlj4b280b.fsf@alter.siamese.dyndns.org>
+ <74d884bbd76bf090472b123f8053f095cda523f9.1291215072.git.jari.aalto@cante.net> <20101201163930.GE26120@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Martin Langhoff <martin.langhoff@gmail.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 01 19:57:31 2010
+Cc: jari.aalto@cante.net, git@vger.kernel.org,
+	Joey Hess <joey@kitenet.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 01 20:02:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNrrq-0002B1-23
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 19:57:26 +0100
+	id 1PNrwh-0004mr-AI
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 20:02:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755259Ab0LAS5V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 13:57:21 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:62671 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754784Ab0LAS5U (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 13:57:20 -0500
-Received: by vws16 with SMTP id 16so566077vws.19
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 10:57:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=qvuA+lUpNPE3/SPmVS17e0Hkoz9V6aXN4/FRr/EH3j0=;
-        b=xH8o492Trf4rbuZ1ui6OGZiLBYJkG3iqsBtGWMPjq7wuCQfO5cA++GgLLXiL4hdge7
-         JUyfNweYxyNhQtrE1L6R1/XWLMLqY/zp7BDszup7XkdqeS8luyBZcnAHm7Rkqs7+ppE9
-         JQFWXE1LvwGFvxW8af+hHSSlhDGLsj6DkgfqQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=eHb27Iu6yz46kIA5eVJYjcRy4J82ah8pVO78dSXE8gNTikXBRsDxoP7fM8wrG+A3yk
-         H2Wf3JGwHVIT/fpko7r/+4WSNDFSVTYAPZ39feK98umRS3kqRpRmK9ieLzDPnUkFXIYY
-         9Jq4EllSqf+lRmknU6Dk75mrgoj2zDDynvFqg=
-Received: by 10.220.195.71 with SMTP id eb7mr1966597vcb.203.1291229839462;
-        Wed, 01 Dec 2010 10:57:19 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id p22sm80705vcf.20.2010.12.01.10.57.17
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 01 Dec 2010 10:57:18 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20101201184659.GA9147@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756338Ab0LATCM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 14:02:12 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56289 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755670Ab0LATCL (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 14:02:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A591124E9;
+	Wed,  1 Dec 2010 14:02:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Vmp3ZKp+oIxLqndUfocuk9ABSzc=; b=llKXbJ
+	hyTjrPA6dQtgRtCg0m7dsnCLGvreMdFj6e0EsgAXW+Q+hXf98b/7AlLx6dRrGxka
+	qoO1NdLQe2jseakbzXSk4juctjABn4OTOImJUo1wyEzpDTzyGBaJUVoOd7qYuO73
+	SADMJvjO+dab/pVt/zGRnMGxV1znTBMxN7FsU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=SvIyLrsqQglPSi5x8hgygsgPO5dZw5vJ
+	dNb6Xj5DCTekg/KB2MN3eortVdFoRmQobZT0qWdOfawEn+urwDM58dXZWVTyuoJ5
+	XDtqyhAItBuGeZsHM7yVxHjay8M2ZKuTBHbaDFlKWubYM7JTZfzdZBlgK3RauBYE
+	9hw7L8srs4I=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 64B5824E7;
+	Wed,  1 Dec 2010 14:02:22 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 08C2C24E6; Wed,  1 Dec 2010
+ 14:02:16 -0500 (EST)
+In-Reply-To: <20101201163930.GE26120@burratino> (Jonathan Nieder's message of
+ "Wed\, 1 Dec 2010 10\:39\:30 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8719454A-FD7D-11DF-86C6-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162573>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162574>
 
-Jeff King wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> Yes, looks good to me. You could potentially drop the old one from the
-> config:
+> jari.aalto@cante.net wrote:
 >
->> --- a/Documentation/config.txt
->> +++ b/Documentation/config.txt
->> @@ -553,6 +553,7 @@ core.sparseCheckout::
->>  	Enable "sparse checkout" feature. See section "Sparse checkout" in
->>  	linkgit:git-read-tree[1] for more information.
->>  
->> +add.ignoreErrors::
->>  add.ignore-errors::
->>  	Tells 'git add' to continue adding files when some files cannot be
->>  	added due to indexing errors. Equivalent to the '--ignore-errors'
+>> From: Jari Aalto <jari.aalto@cante.net>
 >
-> which may be less confusing to new users (who might ask "is there a
-> difference between the two?").
-
-Right, I prefer to keep it documented for the old and forgetful users
-(who might ask "why does this configuration work?").
-
-> But I don't have a strong feeling on it, so either way:
+> "The -i and -o options cannot be used after --, so do not get the reader's
+> hopes up by suggesting they can.
 >
-> Acked-by: Jeff King <peff@peff.net>
+> Reported-by: Joey Hess <joey@kitenet.net>"
+> ...
+> While at it, shouldn't we get rid of the extra space after "-o"?
 
-Thanks again for the help.
+Will do all of these at my end.
+
+Thanks for an excellent coach to other contributors, as always.
