@@ -1,144 +1,109 @@
-From: jari.aalto@cante.net
-Subject: [PATCH] merge-options.txt: order options alphabetically
-Date: Wed,  1 Dec 2010 19:36:37 +0200
-Organization: Private
-Message-ID: <1291224997-16813-1-git-send-email-jari.aalto@cante.net>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Cc: Jari Aalto <jari.aalto@cante.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 01 18:36:48 2010
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH] git-commit.txt: Order options alphabetically
+Date: Wed, 01 Dec 2010 09:48:57 -0800 (PST)
+Message-ID: <m362vd4c6h.fsf@localhost.localdomain>
+References: <1291215526-11428-1-git-send-email-jari.aalto@cante.net>
+	<20101201165043.GF26120@burratino> <87r5e1v2g8.fsf@picasso.cante.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Wed Dec 01 18:49:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNqbm-0007J8-DZ
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 18:36:46 +0100
+	id 1PNqno-0006jL-HC
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 18:49:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755329Ab0LARgl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 12:36:41 -0500
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:36831 "EHLO
-	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755111Ab0LARgk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 12:36:40 -0500
-Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 6F69BC7CA0
-	for <git@vger.kernel.org>; Wed,  1 Dec 2010 19:36:39 +0200 (EET)
-Received: from emh04.mail.saunalahti.fi ([62.142.5.110])
-	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A02BE56BF50; Wed, 01 Dec 2010 19:36:39 +0200
-Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
-	by emh04.mail.saunalahti.fi (Postfix) with ESMTP id 6251941BE2
-	for <git@vger.kernel.org>; Wed,  1 Dec 2010 19:36:38 +0200 (EET)
-Received: from [192.168.1.5] (helo=picasso.cante.net)
-	by picasso.cante.net with esmtp (Exim 4.72)
-	(envelope-from <jari.aalto@cante.net>)
-	id 1PNqbd-0004Nb-Ry; Wed, 01 Dec 2010 19:36:37 +0200
-X-Mailer: git-send-email 1.7.2.3
-X-SA-Exim-Connect-IP: 192.168.1.5
-X-SA-Exim-Mail-From: jari.aalto@cante.net
-X-SA-Exim-Scanned: No (on picasso.cante.net); SAEximRunCond expanded to false
-X-Antivirus: VAMS
+	id S1754864Ab0LARtB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 12:49:01 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:60802 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752940Ab0LARtA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 12:49:00 -0500
+Received: by fxm20 with SMTP id 20so302672fxm.19
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 09:48:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=JKU1nC+jT1oiewAjSKs0lqo+Zskm+h8Z7pYDX5oClcs=;
+        b=piTbiTeBbWYZXfNKUmPZPiRO/2fzCWD6t/KZqxPMCouE+zhqRl8kT+LbxYI9IYftBb
+         e6Ktau6ZKYv9EQG981l4IOUdj62DRDJMj6o4yXQerVW37p7Og+xweFFgPLzqSp45hYHV
+         HvTeOVMNEmbCHKfITdWvQ1wKhuJdrQmW4yjtY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=Z/o6izE6/WmLeeH2xuKPpXWEx1xLZIKS8Lno+dlvJVXpRYG5jsKIqaFNzcexw1HTcX
+         rYWhjUmBb9BhBkSdJuiU5ec44Z+PB0bMmBS5s1YBQRsOdUCQQ+tjejQkQTZD0iN4mOKS
+         65k6WzdUUfA5MdOIquqSHJXqO7OCL1WHxc6Dc=
+Received: by 10.223.70.133 with SMTP id d5mr4084229faj.64.1291225738954;
+        Wed, 01 Dec 2010 09:48:58 -0800 (PST)
+Received: from localhost.localdomain (abvl90.neoplus.adsl.tpnet.pl [83.8.209.90])
+        by mx.google.com with ESMTPS id o17sm112783fal.25.2010.12.01.09.48.56
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 01 Dec 2010 09:48:57 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oB1HmPPc025123;
+	Wed, 1 Dec 2010 18:48:36 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id oB1Hm7b5025087;
+	Wed, 1 Dec 2010 18:48:07 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <87r5e1v2g8.fsf@picasso.cante.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162554>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162555>
 
-From: Jari Aalto <jari.aalto@cante.net>
+Jari, could you please do not cull Cc list, if possible?  Thanks in
+advance.
 
+Jari Aalto <jari.aalto@cante.net> writes:
+> 2010-12-01 18:50 Jonathan Nieder <jrnieder@gmail.com>:
 
-Signed-off-by: Jari Aalto <jari.aalto@cante.net>
----
- Documentation/merge-options.txt |   51 +++++++++++++++++++--------------=
-------
- 1 files changed, 25 insertions(+), 26 deletions(-)
+> > If the goal is sorted option lists in all manpages, that will _have_
+> > to be automated.
+> 
+> Who is going to write that script? I'm afraid that will never happen.
+> 
+> It's easier and faster to edit. One page at a time. As time allows.
+> Nobody is going take vacation and do it once for all. Bit by bit is
+> better approach.
 
-diff --git a/Documentation/merge-options.txt b/Documentation/merge-option=
-s.txt
-index e33e0f8..15b6236 100644
---- a/Documentation/merge-options.txt
-+++ b/Documentation/merge-options.txt
-@@ -16,6 +16,11 @@ inspect and further tweak the merge result before comm=
-itting.
- With --no-ff Generate a merge commit even if the merge
- resolved as a fast-forward.
-=20
-+--ff-only::
-+	Refuse to merge and exit with a non-zero status unless the
-+	current `HEAD` is already up-to-date or the merge can be
-+	resolved as a fast-forward.
-+
- --log[=3D<n>]::
- --no-log::
- 	In addition to branch names, populate the log message with
-@@ -25,15 +30,13 @@ resolved as a fast-forward.
- With --no-log do not list one-line descriptions from the
- actual commits being merged.
-=20
--
----stat::
---n::
----no-stat::
--	Show a diffstat at the end of the merge. The diffstat is also
--	controlled by the configuration option merge.stat.
--+
--With -n or --no-stat do not show a diffstat at the end of the
--merge.
-+-s <strategy>::
-+--strategy=3D<strategy>::
-+	Use the given merge strategy; can be supplied more than
-+	once to specify them in the order they should be tried.
-+	If there is no `-s` option, a built-in list of strategies
-+	is used instead ('git merge-recursive' when merging a single
-+	head, 'git merge-octopus' otherwise).
-=20
- --squash::
- --no-squash::
-@@ -49,23 +52,14 @@ merge.
- With --no-squash perform the merge and commit the result. This
- option can be used to override --squash.
-=20
----ff-only::
--	Refuse to merge and exit with a non-zero status unless the
--	current `HEAD` is already up-to-date or the merge can be
--	resolved as a fast-forward.
--
---s <strategy>::
----strategy=3D<strategy>::
--	Use the given merge strategy; can be supplied more than
--	once to specify them in the order they should be tried.
--	If there is no `-s` option, a built-in list of strategies
--	is used instead ('git merge-recursive' when merging a single
--	head, 'git merge-octopus' otherwise).
--
---X <option>::
----strategy-option=3D<option>::
--	Pass merge strategy specific option through to the merge
--	strategy.
-+--stat::
-+-n::
-+--no-stat::
-+	Show a diffstat at the end of the merge. The diffstat is also
-+	controlled by the configuration option merge.stat.
-++
-+With -n or --no-stat do not show a diffstat at the end of the
-+merge.
-=20
- --summary::
- --no-summary::
-@@ -77,6 +71,11 @@ ifndef::git-pull[]
- --quiet::
- 	Operate quietly.
-=20
-+-X <option>::
-+--strategy-option=3D<option>::
-+	Pass merge strategy specific option through to the merge
-+	strategy.
-+
- -v::
- --verbose::
- 	Be verbose.
---=20
-1.7.2.3
+But because some manpages "include" other pages (to refactor common
+options), it would be impossible to sort alphabetically options in all
+manpages.  So why bother with impossible?  It would only introduce
+inconsistency.
+
+> > why would I want sorted option lists in all manpages?
+> 
+> Does that really need an answer? You read from top to bottom, therefore
+> A-Z. Well, GNU uses it in manual pages. 
+
+What do you mean by "GNU" here?
+
+>                                          It looks good, it looks
+> professional, it looks clean. And it works when searching (= no
+> orientation problems).
+
+It works if you have separate user's documentation from reference
+documentation.  GNU projects were meant to have manpages as reference,
+and info pages as user's documentation.  Options sorted alphabetically
+might make sense for reference documentation.  
+
+But git manpages doesn't serve _only_ as reference documentation.  And
+learning commands from manpages where options are sorted alphabetically
+instead of grouped together by function *suck* big time.
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
