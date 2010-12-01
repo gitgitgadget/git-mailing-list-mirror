@@ -1,80 +1,76 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Re: [PATCHv2 3/3] cvsimport.txt: document the mapping between config
- and options
-Date: Wed, 1 Dec 2010 10:02:40 -0500
-Message-ID: <AANLkTimEU8RhhaJkv6WdKw3V-6stptRA0Z5SYbLxXNAR@mail.gmail.com>
-References: <4CF2ADC9.8020504@drmicha.warpmail.net> <317523448870044a68311f811b42bd9461b90d43.1290973138.git.git@drmicha.warpmail.net>
- <7v7hfv3mli.fsf@alter.siamese.dyndns.org> <4CF4AE49.7090406@drmicha.warpmail.net>
- <7vd3pmw9n5.fsf@alter.siamese.dyndns.org>
+From: <pacco@tropezien.de>
+Subject: Re: How to get rid of doubled branch after renaming a branch in
+ svn-repository
+Date: Wed, 01 Dec 2010 16:08:12 +0100
+Message-ID: <35e60ee2f6d83801d130d53a56a8ae18@tropezien.de>
+References: <0a6b49e3cc0b08a717c0d6141073f32d@tropezien.de>
+ <4CF6553C.70500@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 01 16:03:15 2010
+Content-Type: text/plain;
+ charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Dec 01 16:08:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNoD9-00076t-OU
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 16:03:12 +0100
+	id 1PNoI7-0001dk-RE
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 16:08:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753175Ab0LAPDD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Dec 2010 10:03:03 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:45975 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751417Ab0LAPDC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Dec 2010 10:03:02 -0500
-Received: by iwn35 with SMTP id 35so29941iwn.19
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 07:03:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ejp49Cml9lSVZoFq54Jh8IhcIoh2kk1BagKm1JFNRTM=;
-        b=u7OkfyTNywFUwEjFUSE7mwrXyI3v1SndHzfaAJid69tqzhEcrEw8W6yl7F2+HtnL2K
-         41Uma4SsLyY9pXfiuHyk+lUZPqjxYebT7r0P6/MHX1PnIhyxd0Y1pz6A5Sdx9WIP2Jkq
-         Pe4tu+1MwhW/a+mDHEd1/vsqBVg60sUQInDaA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Phg95B/i41Q+D839T9xtQ14VQ3nRJrk4KJrdkQPYSCusZ06EGLehSyJlrQW4ipD/+k
-         KsV8DQFCrUihVNLl/rSoU3qjfqZesVwMUpLs0cUQuK+uReB3CUiJoiJA1i9/S/4TRX9x
-         00BAL3VuMrnA9GdVpnTkAp+gJ+GHWMgMcZ6MM=
-Received: by 10.231.10.193 with SMTP id q1mr8918113ibq.70.1291215781289; Wed,
- 01 Dec 2010 07:03:01 -0800 (PST)
-Received: by 10.231.33.1 with HTTP; Wed, 1 Dec 2010 07:02:40 -0800 (PST)
-In-Reply-To: <7vd3pmw9n5.fsf@alter.siamese.dyndns.org>
+	id S1752532Ab0LAPIO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 10:08:14 -0500
+Received: from mail.croxxserver.de ([78.46.191.12]:52895 "EHLO
+	mail.croxxserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751417Ab0LAPIO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 10:08:14 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by mail.croxxserver.de (Postfix) with ESMTP id 68D958FC214;
+	Wed,  1 Dec 2010 16:08:13 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at srv.croxxserver.de
+Received: from mail.croxxserver.de ([78.46.191.12])
+	by localhost (croxxserver.de [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id AlNNcgANS7wE; Wed,  1 Dec 2010 16:08:12 +0100 (CET)
+Received: from webmail.croxxserver.de (mail.croxxserver.de [78.46.191.12])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	(Authenticated sender: pacco@tropezien.de)
+	by mail.croxxserver.de (Postfix) with ESMTPSA id D98758FC212;
+	Wed,  1 Dec 2010 16:08:12 +0100 (CET)
+In-Reply-To: <4CF6553C.70500@drmicha.warpmail.net>
+X-Sender: pacco@tropezien.de
+User-Agent: RoundCube Webmail
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162527>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162528>
 
-On Tue, Nov 30, 2010 at 8:43 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
->> [cvsimport]
->> =A0 =A0 =A0 r =3D origin
->> =A0 =A0 =A0 capital-r =3D yes
+ Hi Michael,
+
+ On Wed, 01 Dec 2010 15:01:32 +0100, Michael J Gruber 
+ <git@drmicha.warpmail.net> wrote:
+ [snipped]
+> svn records the rename as a copy+delete (it also sets some rename 
+> info
+> which git-svn seems to ignore). So, git-svn stays on the safe side by
+> keeping the branch. Note that deleting the branch would possibly 
+> delete
+> at least some info since the branch name is not recorded in the 
+> commit
+> (if you use svn.noMetadata).
 >
-> I think we can live with that. =A0If it is easier to implement, that'=
-s very
-> good.
+> You can safely delete the branch if you're sure its head commit is
+> contained in some other branch (as will be for an ordinary rename).
 
-Sorry, had not seen this discussion. Though I will obviously defer to
-you guys, I don't like it -- not short term, not long term.
+ thank you for your explanation. I suspected that this issue might be a 
+ mixture of different VCS-philosophy and uncertainty-handling.
+ Okay, then I will delete the branch manually. Of course I would have 
+ preferred to have an automatic solution, because I got attention on this 
+ renaming by accident. I hope renaming a branch will not become a new 
+ trend in repository actions.
 
-Short-name opts should not auto-read from git-config -- it's a misfire.
-
-
-
-m
---=20
-=A0martin.langhoff@gmail.com
-=A0martin@laptop.org -- School Server Architect
-=A0- ask interesting questions
-=A0- don't get distracted with shiny stuff=A0 - working code first
-=A0- http://wiki.laptop.org/go/User:Martinlanghoff
+ pacco
