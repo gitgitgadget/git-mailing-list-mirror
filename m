@@ -1,40 +1,40 @@
 From: jari.aalto@cante.net
-Subject: [PATCH] git-push.txt: order options alphabetically
-Date: Wed,  1 Dec 2010 22:12:25 +0200
+Subject: [PATCH] git-config.txt: Order options alphabetically
+Date: Wed,  1 Dec 2010 22:15:47 +0200
 Organization: Private
-Message-ID: <1291234345-21070-1-git-send-email-jari.aalto@cante.net>
+Message-ID: <1291234547-21201-1-git-send-email-jari.aalto@cante.net>
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 Cc: Jari Aalto <jari.aalto@cante.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 01 21:12:54 2010
+X-From: git-owner@vger.kernel.org Wed Dec 01 21:16:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNt2r-0000Kk-1l
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 21:12:53 +0100
+	id 1PNt5q-0001qQ-4t
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 21:15:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756880Ab0LAUMa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 15:12:30 -0500
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:42968 "EHLO
-	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756862Ab0LAUM3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 15:12:29 -0500
-Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
-	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id CFBF0C7E0D
-	for <git@vger.kernel.org>; Wed,  1 Dec 2010 22:12:27 +0200 (EET)
-Received: from emh03.mail.saunalahti.fi ([62.142.5.109])
-	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
-	with SMTP (gateway) id A01755CBBF7; Wed, 01 Dec 2010 22:12:27 +0200
+	id S1755895Ab0LAUPx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 15:15:53 -0500
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117]:45530 "EHLO
+	emh07.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755642Ab0LAUPw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 15:15:52 -0500
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh07-2.mail.saunalahti.fi (Postfix) with SMTP id 513DB18CF00
+	for <git@vger.kernel.org>; Wed,  1 Dec 2010 22:15:51 +0200 (EET)
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A03D7B4E25B; Wed, 01 Dec 2010 22:15:51 +0200
 Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
-	by emh03.mail.saunalahti.fi (Postfix) with ESMTP id AC920158A69
-	for <git@vger.kernel.org>; Wed,  1 Dec 2010 22:12:26 +0200 (EET)
+	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id 3891327D82
+	for <git@vger.kernel.org>; Wed,  1 Dec 2010 22:15:49 +0200 (EET)
 Received: from [192.168.1.5] (helo=picasso.cante.net)
 	by picasso.cante.net with esmtp (Exim 4.72)
 	(envelope-from <jari.aalto@cante.net>)
-	id 1PNt2P-0005UG-H0; Wed, 01 Dec 2010 22:12:25 +0200
+	id 1PNt5f-0005WN-48; Wed, 01 Dec 2010 22:15:47 +0200
 X-Mailer: git-send-email 1.7.2.3
 X-SA-Exim-Connect-IP: 192.168.1.5
 X-SA-Exim-Mail-From: jari.aalto@cante.net
@@ -44,212 +44,187 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162599>
 
 From: Jari Aalto <jari.aalto@cante.net>
 
 
 Signed-off-by: Jari Aalto <jari.aalto@cante.net>
 ---
- Documentation/git-push.txt |  142 ++++++++++++++++++++++----------------=
+ Documentation/git-config.txt |  121 +++++++++++++++++++++---------------=
 ------
- 1 files changed, 72 insertions(+), 70 deletions(-)
+ 1 files changed, 60 insertions(+), 61 deletions(-)
 
-diff --git a/Documentation/git-push.txt b/Documentation/git-push.txt
-index e11660a..0cc5b88 100644
---- a/Documentation/git-push.txt
-+++ b/Documentation/git-push.txt
-@@ -26,51 +26,22 @@ documentation for linkgit:git-receive-pack[1].
+diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
+index 543dd64..baeeebc 100644
+--- a/Documentation/git-config.txt
++++ b/Documentation/git-config.txt
+@@ -64,15 +64,27 @@ This command will fail if:
+ OPTIONS
+ -------
 =20
- OPTIONS[[OPTIONS]]
- ------------------
--<repository>::
--	The "remote" repository that is destination of a push
--	operation.  This parameter can be either a URL
--	(see the section <<URLS,GIT URLS>> below) or the name
--	of a remote (see the section <<REMOTES,REMOTES>> below).
+---replace-all::
+-	Default behavior is to replace at most one line. This replaces
+-	all lines matching the key (and optionally the value_regex).
 -
--<refspec>...::
--	The format of a <refspec> parameter is an optional plus
--	`{plus}`, followed by the source ref <src>, followed
--	by a colon `:`, followed by the destination ref <dst>.
--	It is used to specify with what <src> object the <dst> ref
--	in the remote repository is to be updated.
--+
--The <src> is often the name of the branch you would want to push, but
--it can be any arbitrary "SHA-1 expression", such as `master~4` or
--`HEAD` (see linkgit:gitrevisions[7]).
--+
--The <dst> tells which ref on the remote side is updated with this
--push. Arbitrary expressions cannot be used here, an actual ref must
--be named. If `:`<dst> is omitted, the same ref as <src> will be
--updated.
--+
--The object referenced by <src> is used to update the <dst> reference
--on the remote side, but by default this is only allowed if the
--update can fast-forward <dst>.  By having the optional leading `{plus}`,
--you can tell git to update the <dst> ref even when the update is not a
--fast-forward.  This does *not* attempt to merge <src> into <dst>.  See
--EXAMPLES below for details.
--+
--`tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`.
--+
--Pushing an empty <src> allows you to delete the <dst> ref from
--the remote repository.
--+
--The special refspec `:` (or `{plus}:` to allow non-fast-forward updates)
--directs git to push "matching" branches: for every branch that exists on
--the local side, the remote side is updated if a branch of the same name
--already exists on the remote side.  This is the default operation mode
--if no explicit refspec is found (that is neither on the command line
--nor in any Push line of the corresponding remotes file---see below).
+ --add::
+ 	Adds a new line to the option without altering any existing
+ 	values.  This is the same as providing '^$' as the value_regex
+ 	in `--replace-all`.
 =20
- --all::
- 	Instead of naming each ref to push, specifies that all
- 	refs under `refs/heads/` be pushed.
-=20
-+--delete::
-+	All listed refs are deleted from the remote repository. This is
-+	the same as prefixing all refs with a colon.
++-e::
++--edit::
++	Opens an editor to modify the specified config file; either
++	'--system', '--global', or repository (default).
 +
-+-f::
-+--force::
-+	Usually, the command refuses to update a remote ref that is
-+	not an ancestor of the local ref used to overwrite it.
-+	This flag disables the check.  This can cause the
-+	remote repository to lose commits; use it with care.
++--bool::
++	'git config' will ensure that the output is "true" or "false"
 +
- --mirror::
- 	Instead of naming each ref to push, specifies that all
- 	refs under `refs/` (which includes but is not
-@@ -91,14 +62,17 @@ nor in any Push line of the corresponding remotes fil=
-e---see below).
- 	will be tab-separated and sent to stdout instead of stderr.  The full
- 	symbolic names of the refs will be given.
++--bool-or-int::
++	'git config' will ensure that the output matches the format of
++	either --bool or --int, as described above.
++
++-f config-file::
++--file config-file::
++	Use the given config file instead of the one specified by GIT_CONFIG.
++
+ --get::
+ 	Get the value for a given key (optionally filtered by a regex
+ 	matching the value). Returns error code 1 if the key was not
+@@ -82,6 +94,23 @@ OPTIONS
+ 	Like get, but does not fail if the number of values for the key
+ 	is not exactly one.
 =20
----delete::
--	All listed refs are deleted from the remote repository. This is
--	the same as prefixing all refs with a colon.
-+--progress::
-+	Progress status is reported on the standard error stream
-+	by default when it is attached to a terminal, unless -q
-+	is specified. This flag forces progress status even if the
-+	standard error stream is not directed to a terminal.
++--get-color name [default]::
++
++	Find the color configured for `name` (e.g. `color.diff.new`) and
++	output it as the ANSI color escape sequence to the standard
++	output.  The optional `default` parameter is used instead, if
++	there is no color configured for `name`.
++
++--get-colorbool name [stdout-is-tty]::
++	Find the color setting for `name` (e.g. `color.diff`) and output
++	"true" or "false".  `stdout-is-tty` should be either "true" or
++	"false", and is taken into account when configuration says
++	"auto".  If `stdout-is-tty` is missing, then checks the standard
++	output of the command itself, and exits with status 0 if color
++	is to be used, or exits with status 1 otherwise.
++	When the color setting for `name` is undefined, the command uses
++	`color.ui` as fallback.
++
+ --get-regexp::
+ 	Like --get-all, but interprets the name as a regular expression.
+ 	Also outputs the key names.
+@@ -95,6 +124,33 @@ from all available files.
+ +
+ See also <<FILES>>.
 =20
----tags::
--	All refs under `refs/tags` are pushed, in
--	addition to refspecs explicitly listed on the command
--	line.
-+-q::
-+--quiet::
-+	Suppress all output, including the listing of updated refs,
-+	unless an error occurs. Progress is not reported to the standard
-+	error stream.
++--int::
++	'git config' will ensure that the output is a simple
++	decimal number.  An optional value suffix of 'k', 'm', or 'g'
++	in the config file will cause the value to be multiplied
++	by 1024, 1048576, or 1073741824 prior to output.
++
++-l::
++--list::
++	List all variables set in config file.
++
++--path::
++	'git-config' will expand leading '{tilde}' to the value of
++	'$HOME', and '{tilde}user' to the home directory for the
++	specified user.  This option has no effect when setting the
++	value (but you can use 'git config bla {tilde}/' from the
++	command line to let your shell do the expansion).
++
++--remove-section::
++	Remove the given section from the configuration file.
++
++--rename-section::
++	Rename the given section to a new name.
++
++--replace-all::
++	Default behavior is to replace at most one line. This replaces
++	all lines matching the key (and optionally the value_regex).
++
+ --system::
+ 	For writing options: write to system-wide $(prefix)/etc/gitconfig
+ 	rather than the repository .git/config.
+@@ -104,46 +160,12 @@ rather than from all available files.
+ +
+ See also <<FILES>>.
 =20
- --receive-pack=3D<git-receive-pack>::
- --exec=3D<git-receive-pack>::
-@@ -107,13 +81,6 @@ nor in any Push line of the corresponding remotes fil=
-e---see below).
- 	repository over ssh, and you do not have the program in
- 	a directory on the default $PATH.
-=20
---f::
----force::
--	Usually, the command refuses to update a remote ref that is
--	not an ancestor of the local ref used to overwrite it.
--	This flag disables the check.  This can cause the
--	remote repository to lose commits; use it with care.
+--f config-file::
+---file config-file::
+-	Use the given config file instead of the one specified by GIT_CONFIG.
 -
- --repo=3D<repository>::
- 	This option is only relevant if no <repository> argument is
- 	passed in the invocation. In this case, 'git push' derives the
-@@ -132,12 +99,10 @@ is that #1 always pushes to "public" whereas #2 push=
-es to "public"
- only if the current branch does not track a remote branch. This is
- useful if you write an alias or script around 'git push'.
+---remove-section::
+-	Remove the given section from the configuration file.
+-
+---rename-section::
+-	Rename the given section to a new name.
+-
+ --unset::
+ 	Remove the line matching the key from config file.
 =20
---u::
----set-upstream::
--	For every branch that is up to date or successfully pushed, add
--	upstream (tracking) reference, used by argument-less
--	linkgit:git-pull[1] and other commands. For more information,
--	see 'branch.<name>.merge' in linkgit:git-config[1].
-+--tags::
-+	All refs under `refs/tags` are pushed, in
-+	addition to refspecs explicitly listed on the command
-+	line.
+ --unset-all::
+ 	Remove all lines matching the key from config file.
 =20
- --thin::
- --no-thin::
-@@ -146,21 +111,58 @@ useful if you write an alias or script around 'git =
-push'.
- 	receiver share many of the same objects in common. The default is
- 	\--thin.
+--l::
+---list::
+-	List all variables set in config file.
+-
+---bool::
+-	'git config' will ensure that the output is "true" or "false"
+-
+---int::
+-	'git config' will ensure that the output is a simple
+-	decimal number.  An optional value suffix of 'k', 'm', or 'g'
+-	in the config file will cause the value to be multiplied
+-	by 1024, 1048576, or 1073741824 prior to output.
+-
+---bool-or-int::
+-	'git config' will ensure that the output matches the format of
+-	either --bool or --int, as described above.
+-
+---path::
+-	'git-config' will expand leading '{tilde}' to the value of
+-	'$HOME', and '{tilde}user' to the home directory for the
+-	specified user.  This option has no effect when setting the
+-	value (but you can use 'git config bla {tilde}/' from the
+-	command line to let your shell do the expansion).
+-
+ -z::
+ --null::
+ 	For all options that output values and/or keys, always
+@@ -153,29 +175,6 @@ See also <<FILES>>.
+ 	output without getting confused e.g. by values that
+ 	contain line breaks.
 =20
---q::
----quiet::
--	Suppress all output, including the listing of updated refs,
--	unless an error occurs. Progress is not reported to the standard
--	error stream.
-+-u::
-+--set-upstream::
-+	For every branch that is up to date or successfully pushed, add
-+	upstream (tracking) reference, used by argument-less
-+	linkgit:git-pull[1] and other commands. For more information,
-+	see 'branch.<name>.merge' in linkgit:git-config[1].
-=20
- -v::
- --verbose::
- 	Run verbosely.
-=20
----progress::
--	Progress status is reported on the standard error stream
--	by default when it is attached to a terminal, unless -q
--	is specified. This flag forces progress status even if the
--	standard error stream is not directed to a terminal.
-+<refspec>...::
-+	The format of a <refspec> parameter is an optional plus
-+	`{plus}`, followed by the source ref <src>, followed
-+	by a colon `:`, followed by the destination ref <dst>.
-+	It is used to specify with what <src> object the <dst> ref
-+	in the remote repository is to be updated.
-++
-+The <src> is often the name of the branch you would want to push, but
-+it can be any arbitrary "SHA-1 expression", such as `master~4` or
-+`HEAD` (see linkgit:gitrevisions[7]).
-++
-+The <dst> tells which ref on the remote side is updated with this
-+push. Arbitrary expressions cannot be used here, an actual ref must
-+be named. If `:`<dst> is omitted, the same ref as <src> will be
-+updated.
-++
-+The object referenced by <src> is used to update the <dst> reference
-+on the remote side, but by default this is only allowed if the
-+update can fast-forward <dst>.  By having the optional leading `{plus}`,
-+you can tell git to update the <dst> ref even when the update is not a
-+fast-forward.  This does *not* attempt to merge <src> into <dst>.  See
-+EXAMPLES below for details.
-++
-+`tag <tag>` means the same as `refs/tags/<tag>:refs/tags/<tag>`.
-++
-+Pushing an empty <src> allows you to delete the <dst> ref from
-+the remote repository.
-++
-+The special refspec `:` (or `{plus}:` to allow non-fast-forward updates)
-+directs git to push "matching" branches: for every branch that exists on
-+the local side, the remote side is updated if a branch of the same name
-+already exists on the remote side.  This is the default operation mode
-+if no explicit refspec is found (that is neither on the command line
-+nor in any Push line of the corresponding remotes file---see below).
-+
-+<repository>::
-+	The "remote" repository that is destination of a push
-+	operation.  This parameter can be either a URL
-+	(see the section <<URLS,GIT URLS>> below) or the name
-+	of a remote (see the section <<REMOTES,REMOTES>> below).
-+
-=20
- include::urls-remotes.txt[]
-=20
+---get-colorbool name [stdout-is-tty]::
+-
+-	Find the color setting for `name` (e.g. `color.diff`) and output
+-	"true" or "false".  `stdout-is-tty` should be either "true" or
+-	"false", and is taken into account when configuration says
+-	"auto".  If `stdout-is-tty` is missing, then checks the standard
+-	output of the command itself, and exits with status 0 if color
+-	is to be used, or exits with status 1 otherwise.
+-	When the color setting for `name` is undefined, the command uses
+-	`color.ui` as fallback.
+-
+---get-color name [default]::
+-
+-	Find the color configured for `name` (e.g. `color.diff.new`) and
+-	output it as the ANSI color escape sequence to the standard
+-	output.  The optional `default` parameter is used instead, if
+-	there is no color configured for `name`.
+-
+--e::
+---edit::
+-	Opens an editor to modify the specified config file; either
+-	'--system', '--global', or repository (default).
+-
+ [[FILES]]
+ FILES
+ -----
 --=20
 1.7.2.3
