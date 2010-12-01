@@ -1,63 +1,61 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCHv2 3/3] cvsimport.txt: document the mapping between config
- and options
-Date: Wed, 01 Dec 2010 16:34:44 +0100
-Message-ID: <4CF66B14.7000600@drmicha.warpmail.net>
-References: <4CF2ADC9.8020504@drmicha.warpmail.net> <317523448870044a68311f811b42bd9461b90d43.1290973138.git.git@drmicha.warpmail.net> <7v7hfv3mli.fsf@alter.siamese.dyndns.org> <4CF4AE49.7090406@drmicha.warpmail.net> <7vd3pmw9n5.fsf@alter.siamese.dyndns.org> <AANLkTimEU8RhhaJkv6WdKw3V-6stptRA0Z5SYbLxXNAR@mail.gmail.com>
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: [PATCH] Documentation/config.txt: Order variables alphabetically
+Date: Wed, 01 Dec 2010 17:37:36 +0200
+Organization: Private
+Message-ID: <87zkspv70f.fsf@picasso.cante.net>
+References: <1291209174-9239-1-git-send-email-jari.aalto@cante.net>
+	<m3eia14mu7.fsf@localhost.localdomain>
+	<20101201142920.GB6537@picasso.cante.net>
+	<201012011557.30849.jnareb@gmail.com>
+	<20101201150917.GD6537@picasso.cante.net>
+	<AANLkTindMBh4dzo-VG2vPrKfgNZVUhs0-5AEU2fWChaC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 01 16:37:40 2010
+Content-Type: text/plain
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 01 16:40:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNokS-0008Jl-Oy
-	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 16:37:37 +0100
+	id 1PNon2-00017S-F6
+	for gcvg-git-2@lo.gmane.org; Wed, 01 Dec 2010 16:40:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754513Ab0LAPhE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 10:37:04 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:37063 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754440Ab0LAPhA (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Dec 2010 10:37:00 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id E4FC593;
-	Wed,  1 Dec 2010 10:36:59 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Wed, 01 Dec 2010 10:36:59 -0500
-X-Sasl-enc: t1lP97vxkigPf1PGLn0TzgG330YtRsYw6taSObAHaOam 1291217819
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 52F555E7ABD;
-	Wed,  1 Dec 2010 10:36:59 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
-In-Reply-To: <AANLkTimEU8RhhaJkv6WdKw3V-6stptRA0Z5SYbLxXNAR@mail.gmail.com>
+	id S1754599Ab0LAPkI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 10:40:08 -0500
+Received: from lo.gmane.org ([80.91.229.12]:56022 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753042Ab0LAPkH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 10:40:07 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PNomq-00010W-M0
+	for git@vger.kernel.org; Wed, 01 Dec 2010 16:40:06 +0100
+Received: from a91-155-187-216.elisa-laajakaista.fi ([91.155.187.216])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 16:40:04 +0100
+Received: from jari.aalto by a91-155-187-216.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 01 Dec 2010 16:40:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-187-216.elisa-laajakaista.fi
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.2 (gnu/linux)
+Cancel-Lock: sha1:tpZk5yGlD9V9MqPBsJo2rnIc/PQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162534>
 
-Martin Langhoff venit, vidit, dixit 01.12.2010 16:02:
-> On Tue, Nov 30, 2010 at 8:43 PM, Junio C Hamano <gitster@pobox.com> wrote:
->>> [cvsimport]
->>>       r = origin
->>>       capital-r = yes
->>
->> I think we can live with that.  If it is easier to implement, that's very
->> good.
-> 
-> Sorry, had not seen this discussion. Though I will obviously defer to
-> you guys, I don't like it -- not short term, not long term.
-> 
-> Short-name opts should not auto-read from git-config -- it's a misfire.
+2010-12-01 17:19 Erik Faye-Lund <kusmabite@gmail.com>:
+> I still haven't heard a compelling argument why alphabetical ordering
+> is better than logical ordering...
 
-Well, you're free to change that. There *are no* long options for
-cvsimport right now. And it does accept short config variables (though
-undocumented) right now. That pretty much describes the two obstacles
-you'd be running into.
+>From previous mail (spelling adjusted):
 
-Michael
+    "About 60% in git-config is already in alpha order (core.*, sendmail.*
+    etc), so there is not really that much what would be changing."
+
+Jari
