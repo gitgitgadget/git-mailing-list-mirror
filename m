@@ -1,69 +1,67 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: [PATCH] git-reset.txt: Use commit~1 notation over commit^
-Date: Thu, 02 Dec 2010 18:44:58 +0100
-Message-ID: <m262vcqdb9.fsf@igel.home>
-References: <1291227258-17922-1-git-send-email-jari.aalto@cante.net>
-	<1291230820.11917.25.camel@drew-northup.unet.maine.edu>
-	<877hftuvvz.fsf@picasso.cante.net>
-	<7vfwuhtafr.fsf@alter.siamese.dyndns.org>
-	<AANLkTik8TNedGBQh7KXvRSf3HTTQf2-yMJC4VA4OOBjQ@mail.gmail.com>
-	<87sjygspgy.fsf@picasso.cante.net>
-	<buo39qg8zrf.fsf@dhlpc061.dev.necel.com>
-	<87bp54s770.fsf@picasso.cante.net> <87mxoos4a8.fsf@catnip.gol.com>
-	<20101202132053.GF6537@picasso.cante.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Miles Bader <miles@gnu.org>, git@vger.kernel.org
-To: jari <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Thu Dec 02 18:45:14 2010
+From: Sylvain Rabot <sylvain.rabot@f-secure.com>
+Subject: [PATCH] documentation: escape '~' in git revert
+Date: Thu,  2 Dec 2010 18:36:33 +0100
+Message-ID: <1291311393-31843-1-git-send-email-sylvain.rabot@f-secure.com>
+Cc: Sylvain Rabot <sylvain.rabot@f-secure.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 02 18:46:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PODDS-0004Ya-25
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 18:45:10 +0100
+	id 1PODEg-0005D4-QZ
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 18:46:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757273Ab0LBRpD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 12:45:03 -0500
-Received: from mail-out.m-online.net ([212.18.0.9]:39728 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757171Ab0LBRpC (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 12:45:02 -0500
-Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id 6AE991C08A4F;
-	Thu,  2 Dec 2010 18:44:59 +0100 (CET)
-Received: from igel.home (ppp-88-217-120-23.dynamic.mnet-online.de [88.217.120.23])
-	by mail.mnet-online.de (Postfix) with ESMTP id 3D2EC1C001DA;
-	Thu,  2 Dec 2010 18:44:59 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id DA6D7CA2A0; Thu,  2 Dec 2010 18:44:58 +0100 (CET)
-X-Yow: Is this TERMINAL fun?
-In-Reply-To: <20101202132053.GF6537@picasso.cante.net> (jari's message of
-	"Thu, 2 Dec 2010 15:20:53 +0200")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.90 (gnu/linux)
+	id S1757573Ab0LBRqV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 12:46:21 -0500
+Received: from fsmail-out.f-secure.com ([193.110.108.171]:35898 "EHLO
+	fsmail-out.f-secure.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757303Ab0LBRqV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 12:46:21 -0500
+X-Greylist: delayed 570 seconds by postgrey-1.27 at vger.kernel.org; Thu, 02 Dec 2010 12:46:20 EST
+Received: from fsav4im2 (fsav4im2.f-secure.com [193.110.108.82])
+	by fsmail-out.f-secure.com (Postfix) with SMTP id 130F1340AA
+	for <git@vger.kernel.org>; Thu,  2 Dec 2010 19:36:49 +0200 (EET)
+Received: from fsintra.f-secure.com (unknown [10.128.128.79])
+ by fsav4im2 ([193.110.108.82]:25) (F-Secure Anti-Virus for Internet Mail 6.61.110 Release)
+ with SMTP; Thu, 2 Dec 2010 17:36:22 -0000
+ (envelope-from <sylvain.rabot@f-secure.com>)
+Received: from isis.agematis.loc (unknown [10.121.180.18])
+	by fsintra.f-secure.com (Postfix) with ESMTP id 6B60826064;
+	Thu,  2 Dec 2010 19:36:46 +0200 (EET)
+X-Mailer: git-send-email 1.7.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162715>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162716>
 
-jari <jari.aalto@cante.net> writes:
+backslashing '~' characters do not have any effect, quoting with +++ has.
 
-> Not that it matters, but have you happende to notice that all git
-> outputs use
->
->     commit~N
->
-> notation. Not the
->
->     commit^
+Signed-off-by: Sylvain Rabot <sylvain.rabot@f-secure.com>
+---
+ Documentation/git-revert.txt |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Did you try "git show-branch -a" recently?
-
-Andreas.
-
+diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+index f40984d..9368892 100644
+--- a/Documentation/git-revert.txt
++++ b/Documentation/git-revert.txt
+@@ -82,12 +82,12 @@ effect to your index in a row.
+ 
+ EXAMPLES
+ --------
+-git revert HEAD~3::
++git revert HEAD+++~+++3::
+ 
+ 	Revert the changes specified by the fourth last commit in HEAD
+ 	and create a new commit with the reverted changes.
+ 
+-git revert -n master\~5..master~2::
++git revert -n master+++~+++5..master+++~+++2::
+ 
+ 	Revert the changes done by commits from the fifth last commit
+ 	in master (included) to the third last commit in master
 -- 
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
-"And now for something completely different."
+1.7.3.2
