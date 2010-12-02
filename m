@@ -1,68 +1,62 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [PATCH] git-reset.txt: Use commit~1 notation over commit^
-Date: Thu, 02 Dec 2010 15:17:24 +0900
-Message-ID: <buo39qg8zrf.fsf@dhlpc061.dev.necel.com>
-References: <1291227258-17922-1-git-send-email-jari.aalto@cante.net>
-	<1291230820.11917.25.camel@drew-northup.unet.maine.edu>
-	<877hftuvvz.fsf@picasso.cante.net>
-	<7vfwuhtafr.fsf@alter.siamese.dyndns.org>
-	<AANLkTik8TNedGBQh7KXvRSf3HTTQf2-yMJC4VA4OOBjQ@mail.gmail.com>
-	<87sjygspgy.fsf@picasso.cante.net>
-Mime-Version: 1.0
-Content-Type: text/plain
-Cc: git@vger.kernel.org
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Thu Dec 02 07:17:39 2010
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: [PATCH] Abort mergetool on read error from stdinput
+Date: Thu,  2 Dec 2010 07:28:21 +0100
+Message-ID: <1291271301-12511-1-git-send-email-robin.rosenberg@dewire.com>
+Cc: git@vger.kernel.org, Robin Rosenberg <robin.rosenberg@dewire.com>
+To: junkio@cox.net
+X-From: git-owner@vger.kernel.org Thu Dec 02 07:28:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PO2U6-0003Q5-Hr
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 07:17:38 +0100
+	id 1PO2et-0006Fj-Pd
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 07:28:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757224Ab0LBGRd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 01:17:33 -0500
-Received: from TYO201.gate.nec.co.jp ([202.32.8.193]:55003 "EHLO
-	tyo201.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756959Ab0LBGRc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 01:17:32 -0500
-Received: from mailgate3.nec.co.jp ([10.7.69.195])
-	by tyo201.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id oB26HPxA002472;
-	Thu, 2 Dec 2010 15:17:25 +0900 (JST)
-Received: (from root@localhost) by mailgate3.nec.co.jp (8.11.7/3.7W-MAILGATE-NEC)
-	id oB26HPR08425; Thu, 2 Dec 2010 15:17:25 +0900 (JST)
-Received: from relay51.aps.necel.com ([10.29.19.60])
-	by vgate02.nec.co.jp (8.14.4/8.14.4) with ESMTP id oB26GVlm027662;
-	Thu, 2 Dec 2010 15:17:25 +0900 (JST)
-Received: from relay51.aps.necel.com ([10.29.19.20] [10.29.19.20]) by relay51.aps.necel.com with ESMTP; Thu, 2 Dec 2010 15:17:24 +0900
-Received: from dhlpc061 ([10.114.96.28] [10.114.96.28]) by relay51.aps.necel.com with ESMTP; Thu, 2 Dec 2010 15:17:24 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)
-	id 919EF52E21E; Thu,  2 Dec 2010 15:17:24 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-Reply-To: <87sjygspgy.fsf@picasso.cante.net> (Jari Aalto's message of "Thu,
-	02 Dec 2010 07:39:25 +0200")
+	id S1757241Ab0LBG2l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 01:28:41 -0500
+Received: from mail.dewire.com ([83.140.172.130]:9136 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756959Ab0LBG2k (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 01:28:40 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 29F988003A9;
+	Thu,  2 Dec 2010 07:28:39 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id KcX+E8lFBOA6; Thu,  2 Dec 2010 07:28:38 +0100 (CET)
+Received: from Robin-Rosenbergs-MacBook-Pro.local.com (unknown [10.9.0.2])
+	by dewire.com (Postfix) with ESMTP id 9DA88800366;
+	Thu,  2 Dec 2010 07:28:38 +0100 (CET)
+X-Mailer: git-send-email 1.7.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162678>
 
-Jari Aalto <jari.aalto@cante.net> writes:
->> Additionaly, you must know about the ^ notation. That is the only way
->> refer to the second parent HEAD^2, for example.
->
-> If "must" is a requirement, I have to regret that there has yet to have
-> been a situation where I would ahve a need to refer to "second parent".
->
-> I guess most of the basic features can be used without it.
+If you press e.g Ctrl-C the interactive merge goes into an
+infinite loop that is somewhat tricky to stop. Abort the script
+if bash read fails.
 
-It doesn't matter.  There needs to be a better reason than "Jari doesn't
-like it."
+Signed-off-by: Robin Rosenberg <robin.rosenberg@dewire.com>
+---
+ git-mergetool--lib.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
--Miles
-
+diff --git a/git-mergetool--lib.sh b/git-mergetool--lib.sh
+index 77d4aee..2fc2886 100644
+--- a/git-mergetool--lib.sh
++++ b/git-mergetool--lib.sh
+@@ -35,7 +35,7 @@ check_unchanged () {
+ 		while true; do
+ 			echo "$MERGED seems unchanged."
+ 			printf "Was the merge successful? [y/n] "
+-			read answer
++			read answer < /dev/tty || exit 1
+ 			case "$answer" in
+ 			y*|Y*) status=0; break ;;
+ 			n*|N*) status=1; break ;;
 -- 
-Somebody has to do something, and it's just incredibly pathetic that it
-has to be us.  -- Jerry Garcia
+1.7.2.3
