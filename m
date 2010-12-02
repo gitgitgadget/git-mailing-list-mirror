@@ -1,65 +1,69 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: cannot find hash in the log output
-Date: Thu, 2 Dec 2010 14:57:08 -0500
-Message-ID: <AANLkTi=5b26aPLm_Byqg=c9=sPpg5jEPDDpf1J9WgOdY@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: cannot find hash in the log output
+Date: Thu, 02 Dec 2010 12:48:20 -0800
+Message-ID: <7v8w07rje3.fsf@alter.siamese.dyndns.org>
+References: <AANLkTi=5b26aPLm_Byqg=c9=sPpg5jEPDDpf1J9WgOdY@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 02 20:57:22 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 02 21:48:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POFHJ-0002cu-38
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 20:57:17 +0100
+	id 1POG4w-00028Y-EK
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 21:48:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757947Ab0LBT5L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 14:57:11 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:56688 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757709Ab0LBT5K (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 14:57:10 -0500
-Received: by bwz15 with SMTP id 15so7601082bwz.19
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 11:57:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:date:message-id
-         :subject:from:to:content-type;
-        bh=Ay9VY17uahaC+ADgPx1Kkc1thQDwE1+ljW2LGpBdbWg=;
-        b=gkSEbi9AqZQFt3VN26aNG1wpjGb9sKyR6Ndqc4lDIQgaq7vFfkt8kNbxAUxGTKd8sS
-         QCqP+zKCdDJL+CConwq8U9LF+aSWSAwI9jwkMzIci+f+PTlr/URcLwE8YqXI/TU1rTe+
-         YM0b9uo46KZz2L+isuKOjKR2G7SfWwnJJIjJs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=PyAGNgdaMkz78KHMashSsY8Ufv56RKR/X6n4d9/HJxQ0M3N37/3+Kdn0paXbZfb4pG
-         BbsgLaar1eRuuy/AlhulekTB2iftIXsm7KRxTfSGOUrZ/TUWShqzEeqpSLUwZna9eggt
-         oADp/WUVkHPcl8KmwUxnWsC1yKR1RdJdTGo/4=
-Received: by 10.204.57.18 with SMTP id a18mr1331751bkh.164.1291319828964; Thu,
- 02 Dec 2010 11:57:08 -0800 (PST)
-Received: by 10.204.152.206 with HTTP; Thu, 2 Dec 2010 11:57:08 -0800 (PST)
+	id S1756328Ab0LBUs3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 15:48:29 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48485 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752971Ab0LBUs2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 15:48:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D2AC7343D;
+	Thu,  2 Dec 2010 15:48:47 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; s=sasl; bh=vFTFils+WADBorPR9/HpTb9BoBo=; b=lKuTaq
+	XtkgXtQCp6QdLN4kgvhVUVvyHU6B5hzLMp1RyisFP7kvfK/kcWgbZGv+4baEExOp
+	PpGRSZD2LT9FwY15R60QmspAJiULMY8MKdIWkiYFEMpUnX0tJcuC4t0GtwLuhVkS
+	R/29VzVWEaxCJD0qfTUXXxYoWMtOXEeGmLVhE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UhTqanwQW29ui0T9+r7D38y3QiCWLW3O
+	NdVrgSCVoIFmcJ/+xBC/lJkoMrWB/IpmxJMhP7OLflQDqqEKrsbravkVDfaVgy7S
+	pmdf/Fk9hXoWeTsYV2GaIl5s/DWI0yC2tmtNqwYQz4PzAXDzVKsix5LHiHvpNHf4
+	0/2tmWa+0X0=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AD707343C;
+	Thu,  2 Dec 2010 15:48:45 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B18B0343B; Thu,  2 Dec 2010
+ 15:48:42 -0500 (EST)
+In-Reply-To: <AANLkTi=5b26aPLm_Byqg=c9=sPpg5jEPDDpf1J9WgOdY@mail.gmail.com>
+ (Eugene Sajine's message of "Thu\, 2 Dec 2010 14\:57\:08 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8E32B9B4-FE55-11DF-83CA-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162744>
 
-Hi,
+Eugene Sajine <euguess@gmail.com> writes:
 
-I have a strange issue (git v 1.7.3.2). I'm cloning the repository,
-navigating to the folder containing some scripts and performing
-git hash-object <one_of_my_scripts>
+> I have a strange issue (git v 1.7.3.2). I'm cloning the repository,
+> navigating to the folder containing some scripts and performing
+> git hash-object <one_of_my_scripts>
+>
+> Then I'm trying to run:
+>
+> git log --raw --no-abbrev | grep <resulting SHA1 from previous command>
+>
+> And i don't see anything.
 
-Then I'm trying to run:
-
-git log --raw --no-abbrev | grep <resulting SHA1 from previous command>
-
-And i don't see anything.
-
-How is that possible, considering no local changes to the file has
-been done, working directory clean?? How could the file get into this
-state?
-
-Thanks,
-Eugene
+Do you see it in the output from "git ls-tree -r HEAD"?
