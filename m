@@ -1,105 +1,98 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 02/10] parse-options: clearer reporting of API misuse
-Date: Wed, 1 Dec 2010 22:57:07 -0600
-Message-ID: <20101202045707.GA32125@burratino>
-References: <20101201232728.GA31815@burratino>
- <20101201232923.GC31815@burratino>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Stephen Boyd <bebarino@gmail.com>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Pierre Habouzit <madcoder@debian.org>
+From: jari.aalto@cante.net
+Subject: [PATCH] git-cherry.txt: Change symbol marks in graph.
+Date: Thu,  2 Dec 2010 07:18:13 +0200
+Organization: Private
+Message-ID: <1291267093-29855-1-git-send-email-jari.aalto@cante.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Cc: Jari Aalto <jari.aalto@cante.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 02 05:57:27 2010
+X-From: git-owner@vger.kernel.org Thu Dec 02 06:18:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PO1ET-0006gf-Op
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 05:57:26 +0100
+	id 1PO1Yu-0003fb-Mz
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 06:18:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756982Ab0LBE5T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 23:57:19 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:61647 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756869Ab0LBE5S (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 23:57:18 -0500
-Received: by gyb11 with SMTP id 11so3888664gyb.19
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 20:57:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=k9wAP9EOOTOk00S+OnN+rinpXd2byvIhLdgu8QA8Dqs=;
-        b=NFuQ9J5hP/rSdQZeJsoNp4YW2t48UKFbez0FxCXTdgd+lmVcOEKwhMZI5DceOqOdpN
-         pRrnadhoUYPoPss/XKMQNjRZBhT5SCvRi1UmHIqvb2Sjn0flQ8+cawPrTkza2+lstVLD
-         G+AKAOVLC28kcrUbbhFD2I3yj1u6j5qqeG0WY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=lMvl9PWWKducFWhUo8/mK1BBX+3wHTSyCPRZcQ/Fp4OUkPU+l1HuvbloLiV3ZPIKhF
-         Dtmu0tzlwngsQh9pUapLcRFCepEXjqMlQE7I6dj/65AIMzoE7vc7uxkW6W4CK6ZyHBWU
-         Ot5+Z4gna3KczDRv3YQrvD3rmqDOo57MT0OnE=
-Received: by 10.151.150.11 with SMTP id c11mr607679ybo.413.1291265837862;
-        Wed, 01 Dec 2010 20:57:17 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id g25sm19163yhc.22.2010.12.01.20.57.16
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 01 Dec 2010 20:57:17 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20101201232923.GC31815@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756895Ab0LBFSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 00:18:20 -0500
+Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:35624 "EHLO
+	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756869Ab0LBFSR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 00:18:17 -0500
+Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
+	by emh02-2.mail.saunalahti.fi (Postfix) with SMTP id B85D0EF53B
+	for <git@vger.kernel.org>; Thu,  2 Dec 2010 07:18:15 +0200 (EET)
+Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
+	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
+	with SMTP (gateway) id A07C05AF5DE; Thu, 02 Dec 2010 07:18:15 +0200
+Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
+	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id 9FF381C6383
+	for <git@vger.kernel.org>; Thu,  2 Dec 2010 07:18:14 +0200 (EET)
+Received: from [192.168.1.5] (helo=picasso.cante.net)
+	by picasso.cante.net with esmtp (Exim 4.72)
+	(envelope-from <jari.aalto@cante.net>)
+	id 1PO1Yb-0007lx-Pn; Thu, 02 Dec 2010 07:18:13 +0200
+X-Mailer: git-send-email 1.7.2.3
+X-SA-Exim-Connect-IP: 192.168.1.5
+X-SA-Exim-Mail-From: jari.aalto@cante.net
+X-SA-Exim-Scanned: No (on picasso.cante.net); SAEximRunCond expanded to false
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162666>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162667>
 
-Jonathan Nieder wrote:
+From: Jari Aalto <jari.aalto@cante.net>
 
-> --- a/parse-options.c
-> +++ b/parse-options.c
-> @@ -316,24 +323,12 @@ static void check_typos(const char *arg, const struct option *options)
->  
->  static void parse_options_check(const struct option *opts)
->  {
-> -	int err = 0;
-> -
->  	for (; opts->type != OPTION_END; opts++) {
->  		if ((opts->flags & PARSE_OPT_LASTARG_DEFAULT) &&
-> -		    (opts->flags & PARSE_OPT_OPTARG)) {
-> -			if (opts->long_name) {
-> -				error("`--%s` uses incompatible flags "
-> -				      "LASTARG_DEFAULT and OPTARG", opts->long_name);
-> -			} else {
-> -				error("`-%c` uses incompatible flags "
-> -				      "LASTARG_DEFAULT and OPTARG", opts->short_name);
-> -			}
-> -			err |= 1;
-> -		}
-> +		    (opts->flags & PARSE_OPT_OPTARG))
-> +			optbug(opts, "uses incompatible flags "
-> +				"LASTARG_DEFAULT and OPTARG");
->  	}
-> -
-> -	if (err)
-> -		exit(129);
+The common commit were marked with a minus sign (-), but that is
+usually interpreted as something less or substracted. Use natural
+equal sign (=3D). Commits that are not in upstream were marked with plus
+sign (+) but a question mark (?) is visually a litle more striking
+(erect) in context where all other signs are "flat". It also helps
+visually impared to see difference between (* ... ?) as opposed to
+similar signs (* ... +).
 
-Hmph, this is simpler but it does not report all errors any more.
-So it would be better to do:
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ Documentation/git-cherry.txt |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
 
-	int err = 0;
-
-	for (; opts->type != OPTION_END; opts++) {
-		if ((opts->flags & PARSE_OPT_LASTARG_DEFAULT) &&
-		    (opts->flags & PARSE_OPT_OPTARG))
-			err |= optbug(opts, "uses incompatible flags "
-						"LASTARG_DEFAULT and OPTARG");
-	}
-	if (err)
-		exit(128);
-
-Sorry about that.
+diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.txt
+index fed115a..f342582 100644
+--- a/Documentation/git-cherry.txt
++++ b/Documentation/git-cherry.txt
+@@ -19,13 +19,13 @@ the 'git patch-id' program.
+ Every commit that doesn't exist in the <upstream> branch
+ has its id (sha1) reported, prefixed by a symbol.  The ones that have
+ equivalent change already
+-in the <upstream> branch are prefixed with a minus (-) sign, and those
+-that only exist in the <head> branch are prefixed with a plus (+) symbol=
+:
++in the <upstream> branch are prefixed with a equal (=3D) sign, and those
++that only exist in the <head> branch are prefixed with a question mark (=
+?) symbol:
+=20
+-               __*__*__*__*__> <upstream>
++               _*__*__*__*__> <upstream>
+               /
+     fork-point
+-              \__+__+__-__+__+__-__+__> <head>
++              \__?__?__=3D__?__?__=3D__?__> <head>
+=20
+=20
+ If a <limit> has been given then the commits along the <head> branch up
+@@ -34,7 +34,7 @@ to and including <limit> are not reported:
+                __*__*__*__*__> <upstream>
+               /
+     fork-point
+-              \__*__*__<limit>__-__+__> <head>
++              \__*__*__<limit>__=3D__?__> <head>
+=20
+=20
+ Because 'git cherry' compares the changeset rather than the commit id
+--=20
+1.7.2.3
