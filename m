@@ -1,76 +1,72 @@
-From: David Michael Barr <david.barr@cordelta.com>
-Subject: Re: [PATCH] fast-import: add 'ls' command
-Date: Thu, 2 Dec 2010 23:57:18 +1100
-Message-ID: <2F775519-BF60-4885-BAC1-1A09F7E0D9B2@cordelta.com>
-References: <1291286420-13591-1-git-send-email-david.barr@cordelta.com> <1291286420-13591-2-git-send-email-david.barr@cordelta.com> <AANLkTi=HuPK+q_+hdkg4yK45UcoOA5PAGi4OmsojCsFa@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1082)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 02 13:57:35 2010
+From: Miles Bader <miles@gnu.org>
+Subject: Re: [PATCH] git-reset.txt: Use commit~1 notation over commit^
+Date: Thu, 02 Dec 2010 22:17:03 +0900
+Message-ID: <87mxoos4a8.fsf@catnip.gol.com>
+References: <1291227258-17922-1-git-send-email-jari.aalto@cante.net>
+	<1291230820.11917.25.camel@drew-northup.unet.maine.edu>
+	<877hftuvvz.fsf@picasso.cante.net>
+	<7vfwuhtafr.fsf@alter.siamese.dyndns.org>
+	<AANLkTik8TNedGBQh7KXvRSf3HTTQf2-yMJC4VA4OOBjQ@mail.gmail.com>
+	<87sjygspgy.fsf@picasso.cante.net>
+	<buo39qg8zrf.fsf@dhlpc061.dev.necel.com>
+	<87bp54s770.fsf@picasso.cante.net>
+Mime-Version: 1.0
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Thu Dec 02 14:17:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PO8j4-0000KO-6w
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 13:57:30 +0100
+	id 1PO92Y-0001ae-6k
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 14:17:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757524Ab0LBM5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 07:57:25 -0500
-Received: from ironport1-mx.cbr1.mail-filtering.com.au ([203.88.115.241]:28856
-	"EHLO ironport1-mx.cbr1.mail-filtering.com.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755394Ab0LBM5Y (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Dec 2010 07:57:24 -0500
-X-IronPort-Anti-Spam-Filtered: true
-X-IronPort-Anti-Spam-Result: Av0EADkm90zLWHsF/2dsb2JhbACjGAhxuUaIToVHBA
-X-IronPort-AV: E=Sophos;i="4.59,288,1288530000"; 
-   d="scan'208";a="294161402"
-Received: from node2.alpha.aussiehq.net.au ([203.88.123.5])
-  by ironport1-mta.cbr1.mail-filtering.com.au with ESMTP; 02 Dec 2010 23:57:19 +1100
-Received: (qmail 21535 invoked from network); 2 Dec 2010 23:57:19 +1100
-Received: from d110-33-95-167.mit3.act.optusnet.com.au (HELO ?192.168.1.1?) (110.33.95.167)
-  by 203.88.123.185 with SMTP; 2 Dec 2010 23:57:19 +1100
-In-Reply-To: <AANLkTi=HuPK+q_+hdkg4yK45UcoOA5PAGi4OmsojCsFa@mail.gmail.com>
-X-Mailer: Apple Mail (2.1082)
+	id S1757514Ab0LBNRN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 08:17:13 -0500
+Received: from smtp12.dentaku.gol.com ([203.216.5.74]:33327 "EHLO
+	smtp12.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757491Ab0LBNRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 08:17:09 -0500
+Received: from 218.231.154.28.eo.eaccess.ne.jp ([218.231.154.28] helo=catnip.gol.com)
+	by smtp12.dentaku.gol.com with esmtpa (Dentaku)
+	id 1PO921-0003Gh-B7; Thu, 02 Dec 2010 22:17:05 +0900
+Received: by catnip.gol.com (Postfix, from userid 1000)
+	id 15FB1DF97; Thu,  2 Dec 2010 22:17:03 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+In-Reply-To: <87bp54s770.fsf@picasso.cante.net> (Jari Aalto's message of "Thu,
+	02 Dec 2010 14:14:11 +0200")
+X-Virus-Scanned: ClamAV GOL (outbound)
+X-Abuse-Complaints: abuse@gol.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162702>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162703>
 
-Hi Sverre,
+Jari Aalto <jari.aalto@cante.net> writes:
+>> It doesn't matter.  There needs to be a better reason than "Jari doesn't
+>> like it."
+>
+> This has nothing to do with liking. It how infomation is read. When
+> information is consistent, it lessens cognitive load.
 
->> There are two forms of the 'ls' command, one that takes a tree-ish and
->> one relative to the index. Allow the tree-ish variant to be used anywhere
->> a comment is allowed. Allow the index variant to be used within a commit
->> where file change commands would be used.
-> 
-> The commit message doesn't explain why the index variant isn't allowed
-> anywhere a comment is allowed. I assume that's because there's a
-> half-constructed index if you're in the middle of a modify operation
-> or such?
+No, it has to do with your trying to impose your personal tastes.
 
-The index variant is allowed between file change commands,
-at which the index should be consistent albeit deferred for hashing.
-I believe this is the only place where there's naturally an implicit
-active tree.
+^ (and ^^, etc) is a simpler and easier concept to deal with, and
+sufficient for the vast majority of tasks -- beyond 1 or 2 levels,
+it's typically easier to just use an absolute reference cut-and-pasted
+from git log output than it is to count commits and get the right
+value to use with ~ (and from experience, unless you're careful, it's
+very easy to get counts for ~ wrong).  So it's ~ that's the "expert
+notation", not ^.
 
-Simply, "relative to the index" only makes sense when describing
-a commit.
+[How do I know?   Because I've _been_ a git beginner, and spent a long
+time trying to learn git.]
 
-Unfortunately, the list server dropped my summary email :(
-The patch was supposed to be marked as a RFC and I gave an outline
-of the intended use.
+-Miles
 
-The key features I need for svn-fe are access to the index for the
-current commit and access to the content of older marked commits.
-
-NB: This version doesn't support unquoted paths.
-
---
-David Barr
+-- 
+Discriminate, v.i. To note the particulars in which one person or thing is,
+if possible, more objectionable than another.
