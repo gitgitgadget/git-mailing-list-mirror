@@ -1,65 +1,68 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: [PATCH] git-cherry.txt: Change symbol marks in graph.
-Date: Thu, 02 Dec 2010 12:05:33 +0100
-Message-ID: <4CF77D7D.90507@drmicha.warpmail.net>
-References: <1291267093-29855-1-git-send-email-jari.aalto@cante.net> <m31v604nc0.fsf@localhost.localdomain>
+From: Josef Wolf <jw@raven.inka.de>
+Subject: Problems using perl's Git.pm module
+Date: Thu, 2 Dec 2010 12:40:03 +0100
+Message-ID: <20101202114003.GA26070@raven.wolf.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 02 12:08:01 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 02 13:00:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PO716-0008Ls-G5
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 12:08:00 +0100
+	id 1PO7qA-0006VQ-Ue
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 13:00:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757412Ab0LBLHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 06:07:53 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43944 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755440Ab0LBLHw (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Dec 2010 06:07:52 -0500
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id BCC6252F;
-	Thu,  2 Dec 2010 06:07:51 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute3.internal (MEProxy); Thu, 02 Dec 2010 06:07:51 -0500
-X-Sasl-enc: VdDX7bZXlyyXAT3CNmrkB2ct3c8PrvDYdtg+wdD7aS5Z 1291288071
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 9FFE6406094;
-	Thu,  2 Dec 2010 06:07:49 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
-In-Reply-To: <m31v604nc0.fsf@localhost.localdomain>
+	id S1757439Ab0LBMAk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 07:00:40 -0500
+Received: from quechua.inka.de ([193.197.184.2]:55533 "EHLO mail.inka.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751633Ab0LBMAk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 07:00:40 -0500
+X-Greylist: delayed 1231 seconds by postgrey-1.27 at vger.kernel.org; Thu, 02 Dec 2010 07:00:40 EST
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1PO7WC-0002pP-2x; Thu, 02 Dec 2010 12:40:08 +0100
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id 9F33576336; Thu,  2 Dec 2010 12:40:03 +0100 (CET)
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162692>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162693>
 
-Jakub Narebski venit, vidit, dixit 02.12.2010 09:00:
-> Jari Aalto <jari.aalto@cante.net> writes:
-> 
->> From: Jari Aalto <jari.aalto@cante.net>
->>
->> The common commit were marked with a minus sign (-), but that is
->> usually interpreted as something less or substracted. Use natural
->> equal sign (=). Commits that are not in upstream were marked with plus
->> sign (+) but a question mark (?) is visually a litle more striking
->> (erect) in context where all other signs are "flat". It also helps
->> visually impared to see difference between (* ... ?) as opposed to
->> similar signs (* ... +).
-> 
-> Reading comprehension FAIL.  The graph in question uses '+' and '-' because
-> that is what 'git cherry' *output( uses ('+' included, '-' excluded).  They
-> are very natural in git-cherry output (diff-like).
+Hello folks,
 
-Yep, and I so wished that git-cherry had different output that I even
-saw a git-cherry patch where there was none...
+I am trying to use perl's Git.pm module, but for some reason, it keeps
+bailing out:
 
-So, +1 from me if this comes with an actual code patch.
+  jw@raven:~/testrepos> git st
+  # On branch master
+  nothing to commit (working directory clean)
+  
+  jw@raven:~/testrepos> ./test.pl
+  # On branch master
+  nothing to commit (working directory clean)
+  status failed w/ code 1 at ./test.pl line 9
+  
+  jw@raven:~/testrepos> cat test.pl
+  #! /usr/bin/perl
+  
+  use strict;
+  use warnings;
+  use Git;
+  
+  my $repo = Git->repository (Directory => '.');
+  git_cmd_try { $repo->command_noisy('status') }
+                       '%s failed w/ code %d';
+  
+  print "Never reach this line\n";
+  
+  jw@raven:~/testrepos> 
 
-Michael
+Any ideas why the status command keeps bailing out on an entire clean
+repository?
