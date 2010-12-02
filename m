@@ -1,59 +1,58 @@
-From: thussvm <thuss@volunteermatch.org>
-Subject: git p4 submit always tries to re-apply every patch
-Date: Wed, 1 Dec 2010 18:30:39 -0800 (PST)
-Message-ID: <1291257039313-5794578.post@n2.nabble.com>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: [PATCH] git-reset.txt: Use commit~1 notation over commit^
+Date: Thu, 02 Dec 2010 11:46:08 +0900
+Message-ID: <87k4js51u7.fsf@catnip.gol.com>
+References: <1291227258-17922-1-git-send-email-jari.aalto@cante.net>
+	<1291230820.11917.25.camel@drew-northup.unet.maine.edu>
+	<877hftuvvz.fsf@picasso.cante.net>
+	<7vfwuhtafr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 02 03:30:49 2010
+Content-Type: text/plain
+Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 02 03:46:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNywa-00062v-8t
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 03:30:48 +0100
+	id 1PNzBx-0002GT-RV
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 03:46:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756743Ab0LBCak (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 1 Dec 2010 21:30:40 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:42642 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756606Ab0LBCaj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 1 Dec 2010 21:30:39 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <thuss@volunteermatch.org>)
-	id 1PNywR-0003Ee-CC
-	for git@vger.kernel.org; Wed, 01 Dec 2010 18:30:39 -0800
+	id S1756800Ab0LBCqQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 1 Dec 2010 21:46:16 -0500
+Received: from smtp12.dentaku.gol.com ([203.216.5.74]:57319 "EHLO
+	smtp12.dentaku.gol.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755739Ab0LBCqP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 21:46:15 -0500
+Received: from 218.231.154.28.eo.eaccess.ne.jp ([218.231.154.28] helo=catnip.gol.com)
+	by smtp12.dentaku.gol.com with esmtpa (Dentaku)
+	id 1PNzBR-0001Qf-L5; Thu, 02 Dec 2010 11:46:09 +0900
+Received: by catnip.gol.com (Postfix, from userid 1000)
+	id E3EE22175; Thu,  2 Dec 2010 11:46:08 +0900 (JST)
+System-Type: x86_64-unknown-linux-gnu
+In-Reply-To: <7vfwuhtafr.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+	message of "Wed, 01 Dec 2010 14:06:32 -0800")
+X-Virus-Scanned: ClamAV GOL (outbound)
+X-Abuse-Complaints: abuse@gol.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162663>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162664>
 
+Junio C Hamano <gitster@pobox.com> writes:
+> And "HEAD^" is shorter and much easier to type, and more importantly, it
+> is more often used in the wild, so the readers of the documentation needs
+> to know it anyway to understand what other people do.
 
-Whenever I run a git p4 submit after a git pull from the origin it tries to
-re-apply every commit, even ones that were already submitted previously
-(which results in self generated conflicts). What's interesting is that this
-works:
+Seriously:  People like ^.
 
-git p4 submit <--- submit some changes
-git p4 submit <--- no changes to submit, so it recognizes that it's up to
-date
+This doc change is not good (and seems to demonstrate a lack of
+familiarity with typical git usage)....
 
-but as soon as I throw in a git pull origin master (even if there is nothing
-new on the origin) it loses track and on the next submit it tries to
-re-apply EVERYTHING. For example:
+-Miles
 
-git p4 submit <--- no changes to submit
-git pull origin master <--- no activity on the git server side so no changes
-applied
-git p4 submit <--- tries to re-apply all changes that were already submitted
-earlier
-
-Is git pull origin master somehow wiping out git p4's notion of which
-changes have been applied and which haven't?
 -- 
-View this message in context: http://git.661346.n2.nabble.com/git-p4-submit-always-tries-to-re-apply-every-patch-tp5794578p5794578.html
-Sent from the git mailing list archive at Nabble.com.
+o The existentialist, not having a pillow, goes everywhere with the book by
+  Sullivan, _I am going to spit on your graves_.
