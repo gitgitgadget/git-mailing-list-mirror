@@ -1,94 +1,69 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] fast-import: add 'ls' command
-Date: Thu, 2 Dec 2010 11:37:22 -0600
-Message-ID: <20101202173722.GE3962@burratino>
-References: <1291286420-13591-1-git-send-email-david.barr@cordelta.com>
- <1291286420-13591-2-git-send-email-david.barr@cordelta.com>
- <AANLkTi=HuPK+q_+hdkg4yK45UcoOA5PAGi4OmsojCsFa@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] git-reset.txt: Use commit~1 notation over commit^
+Date: Thu, 02 Dec 2010 18:44:58 +0100
+Message-ID: <m262vcqdb9.fsf@igel.home>
+References: <1291227258-17922-1-git-send-email-jari.aalto@cante.net>
+	<1291230820.11917.25.camel@drew-northup.unet.maine.edu>
+	<877hftuvvz.fsf@picasso.cante.net>
+	<7vfwuhtafr.fsf@alter.siamese.dyndns.org>
+	<AANLkTik8TNedGBQh7KXvRSf3HTTQf2-yMJC4VA4OOBjQ@mail.gmail.com>
+	<87sjygspgy.fsf@picasso.cante.net>
+	<buo39qg8zrf.fsf@dhlpc061.dev.necel.com>
+	<87bp54s770.fsf@picasso.cante.net> <87mxoos4a8.fsf@catnip.gol.com>
+	<20101202132053.GF6537@picasso.cante.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: David Barr <david.barr@cordelta.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 02 18:37:55 2010
+Cc: Miles Bader <miles@gnu.org>, git@vger.kernel.org
+To: jari <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Thu Dec 02 18:45:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POD6M-0000qQ-Do
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 18:37:50 +0100
+	id 1PODDS-0004Ya-25
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 18:45:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757895Ab0LBRhf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 12:37:35 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:57400 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757871Ab0LBRhd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 12:37:33 -0500
-Received: by vws16 with SMTP id 16so1180084vws.19
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 09:37:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=h+Tsq/jSM2iexuYEXkxvIygSwxFId0goAA1ikH5PyUc=;
-        b=Pil/Sp751mZplHv6kKjOKRLjE3iOQQBReu9qFV+134VGY7SRJG0Bgi7RO4jqgKwy2H
-         HP0O7cYcCOspwrMxWKyAD7UVc7Ea9163uzF50nbQQVW+GcwC/5ny7JvskLIG4wTWoHDL
-         Jfol/seJSE7EZdJxBXurGLgfMu/709vnAWPik=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=L+960tXQ/YPPXpM69t4rIjP1/VhIiYXbSXcYVxpx5Db1DmF3pJF8P3TgBvcWyQtWYz
-         g7gUKsijzI5JRQnbeQPHUs12P/eqfAuly9NqTa7RzSsxhwrTOhOFxmdqbKuxOTQ9dqku
-         d3HdWV/MHST3PgO76+wAAUqQfnsZDn3tKuXRs=
-Received: by 10.220.188.135 with SMTP id da7mr100298vcb.214.1291311453055;
-        Thu, 02 Dec 2010 09:37:33 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id fs21sm259588vbb.0.2010.12.02.09.37.31
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 02 Dec 2010 09:37:32 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=HuPK+q_+hdkg4yK45UcoOA5PAGi4OmsojCsFa@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757273Ab0LBRpD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 12:45:03 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:39728 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757171Ab0LBRpC (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 12:45:02 -0500
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 6AE991C08A4F;
+	Thu,  2 Dec 2010 18:44:59 +0100 (CET)
+Received: from igel.home (ppp-88-217-120-23.dynamic.mnet-online.de [88.217.120.23])
+	by mail.mnet-online.de (Postfix) with ESMTP id 3D2EC1C001DA;
+	Thu,  2 Dec 2010 18:44:59 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id DA6D7CA2A0; Thu,  2 Dec 2010 18:44:58 +0100 (CET)
+X-Yow: Is this TERMINAL fun?
+In-Reply-To: <20101202132053.GF6537@picasso.cante.net> (jari's message of
+	"Thu, 2 Dec 2010 15:20:53 +0200")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.90 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162714>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162715>
 
-Sverre Rabbelier wrote:
-> On Thu, Dec 2, 2010 at 11:40, David Barr <david.barr@cordelta.com> wrote:
+jari <jari.aalto@cante.net> writes:
 
->> There are two forms of the 'ls' command, one that takes a tree-ish and
->> one relative to the index. Allow the tree-ish variant to be used anywhere
->> a comment is allowed. Allow the index variant to be used within a commit
->> where file change commands would be used.
+> Not that it matters, but have you happende to notice that all git
+> outputs use
 >
-> The commit message doesn't explain why the index variant isn't allowed
-> anywhere a comment is allowed. I assume that's because there's a
-> half-constructed index if you're in the middle of a modify operation
-> or such?
+>     commit~N
+>
+> notation. Not the
+>
+>     commit^
 
-I somewhat agree.  Actually I would go further: the word "index" brings
-to mind .git/index and its in-core counterpart, so at the same time as
-documenting it better, we might look into making it more self-
-explanatory.  Maybe a syntax like
+Did you try "git show-branch -a" recently?
 
-	ls current "path/to/entry"
+Andreas.
 
-would make it clearer that this is about directory entries in
-fast-import's active commit and not necessarily the usual index file?
-
-I am not sure what syntax other vcs-es use for tree-ishes.  To avoid
-name clashes (what if 'current' is the low-level name of a tree-ish?),
-an alternative might be
-
-	ls-tree :11 "path/to/historical/entry"
-	ls "path/to/current/entry"
-
-Hm (just musing).
-Jonathan
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
