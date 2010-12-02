@@ -1,117 +1,93 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-reset.txt: Use commit~1 notation over commit^
-Date: Thu, 02 Dec 2010 10:54:03 -0800
-Message-ID: <7vvd3cqa44.fsf@alter.siamese.dyndns.org>
-References: <877hftuvvz.fsf@picasso.cante.net>
- <7vfwuhtafr.fsf@alter.siamese.dyndns.org>
- <AANLkTik8TNedGBQh7KXvRSf3HTTQf2-yMJC4VA4OOBjQ@mail.gmail.com>
- <87sjygspgy.fsf@picasso.cante.net> <buo39qg8zrf.fsf@dhlpc061.dev.necel.com>
- <87bp54s770.fsf@picasso.cante.net> <87mxoos4a8.fsf@catnip.gol.com>
- <20101202132053.GF6537@picasso.cante.net> <m262vcqdb9.fsf@igel.home>
- <7veia0rrew.fsf@alter.siamese.dyndns.org>
- <20101202184617.GA20225@sigill.intra.peff.net>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCHv7.3 1/4 (bugfix)] gitweb: Prepare for splitting gitweb
+Date: Thu, 2 Dec 2010 20:01:31 +0100
+Message-ID: <201012022001.31739.jnareb@gmail.com>
+References: <201010311021.55917.jnareb@gmail.com> <201012021117.16183.jnareb@gmail.com> <7vtyiwrs8e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	jari <jari.aalto@cante.net>, Miles Bader <miles@gnu.org>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 02 19:54:26 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, John 'Warthog9' Hawley <warthog9@kernel.org>,
+	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
+	Petr Baudis <pasky@ucw.cz>, admin@repo.or.cz
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 02 20:01:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POEIU-0004cv-4w
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 19:54:26 +0100
+	id 1POEPc-00085I-5f
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 20:01:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757265Ab0LBSyU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 13:54:20 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38922 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753274Ab0LBSyU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 13:54:20 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8E3AD247C;
-	Thu,  2 Dec 2010 13:54:39 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uaHT+5oS2B5YNYlSJp+tm+NRiVA=; b=IA9dI0
-	Aqo34EM5S+bCoshT6Ta9p8I7Ltf+5jvLco+ZXQNgy0YXLlZ4/1k5ZTy55jkYGLoO
-	08Tt0gUrNk7uTQVr2rzzg7CkIPgPvxr/MryNWU8nuQn4KPl9bcCPg54FmCGFDgfX
-	l2vbf/X/gshMh4LHESyZ77zbfhKW5rP7OfB0s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=vUR9xUN4adHFwq17ahwLcCz3tx8dLjhq
-	xZZ7HmIvuEMWyLIA7Y2OqWKRQRZ50msOPe3Lda5fXnfK2+ENpo4X7nn471ibc4BP
-	HsBtbRjfP3swL7jsyoxAA9IP9rrTqkv2wsuJNNxTQEr1ompF+sHxEUEuf+aMjsf3
-	eOJg4pIBwBE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3AC842479;
-	Thu,  2 Dec 2010 13:54:34 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2A4D92473; Thu,  2 Dec 2010
- 13:54:25 -0500 (EST)
-In-Reply-To: <20101202184617.GA20225@sigill.intra.peff.net> (Jeff King's
- message of "Thu\, 2 Dec 2010 13\:46\:17 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9A75AA5C-FE45-11DF-800C-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
+	id S1757802Ab0LBTBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 14:01:43 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:48982 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757569Ab0LBTBn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 14:01:43 -0500
+Received: by bwz15 with SMTP id 15so7550834bwz.19
+        for <git@vger.kernel.org>; Thu, 02 Dec 2010 11:01:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=Xiag5/VcTUAIa2O/QMMvsd0bpAF/HnzUiF82q7Za5Os=;
+        b=wRPm3EgWRsnJc6IJ46Ys8+XT/LEzvDAgRKqVGIgxjUylwW0O+rJR1X9u+1AZOrLzip
+         2lnV7U6Aoruk+U9njhcDpZSG+7GxtG94VuyBlBQyyeScc+k1pIHIO44VHCQzzc2nMAvL
+         q4OTAbrU1BF5UsisW6T0UY3M9Nnp9oQS9P+7I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=d3V+F9Jlu7xaNKJXnMuusL+uuReIbzURMTFj+LHog4YY6H1Oq+hnxTRQOw8YTIketw
+         aq2CZYbCEgkY7fSs065k98TkIN77FqJAfLezYJ4/n062YnEKuaAtwZUpOHRmpt4/N0rI
+         mmMSXJk58hO9H0DMfEgxCoYieYZfATazQ4Q1U=
+Received: by 10.204.98.15 with SMTP id o15mr1278826bkn.136.1291316501403;
+        Thu, 02 Dec 2010 11:01:41 -0800 (PST)
+Received: from [192.168.1.13] (abwq166.neoplus.adsl.tpnet.pl [83.8.240.166])
+        by mx.google.com with ESMTPS id f12sm261891bkf.16.2010.12.02.11.01.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 02 Dec 2010 11:01:38 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7vtyiwrs8e.fsf@alter.siamese.dyndns.org>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162732>
 
-Jeff King <peff@peff.net> writes:
+On Thu, 2 Dec 2010, Junio C Hamano wrote:
 
-> On Thu, Dec 02, 2010 at 09:55:03AM -0800, Junio C Hamano wrote:
->
->> Perhaps we need to also fix "git name-rev master^" which currently does
->> not try to reduce "master~1" to "master^".
->
-> This patch does it:
->
-> diff --git a/builtin/name-rev.c b/builtin/name-rev.c
-> index c946a82..417bae5 100644
-> --- a/builtin/name-rev.c
-> +++ b/builtin/name-rev.c
-> @@ -142,8 +142,12 @@ static const char *get_rev_name(const struct object *o)
->  		int len = strlen(n->tip_name);
->  		if (len > 2 && !strcmp(n->tip_name + len - 2, "^0"))
->  			len -= 2;
-> -		snprintf(buffer, sizeof(buffer), "%.*s~%d", len, n->tip_name,
-> -				n->generation);
-> +		if (n->generation == 1)
-> +			snprintf(buffer, sizeof(buffer), "%.*s^", len,
-> +				 n->tip_name);
-> +		else
-> +			snprintf(buffer, sizeof(buffer), "%.*s~%d", len,
-> +				 n->tip_name, n->generation);
->  
->  		return buffer;
->  	}
->
-> but I am not sure the results are always more readable. I think "foo^"
-> is perhaps nicer than "foo~1". But in more complex examples, I kind of
-> think the ~1 is easier to read. E.g.:
->
->   # old
->   $ git name-rev 9904fadf
->   9904fadf tags/v1.7.3-rc2~1^2~1
->
->   # new
->   $ git name-rev 9904fadf
->   9904fadf tags/v1.7.3-rc2~1^2^
+> Hmm, how did you find the issue, and more importantly, how did I or other
+> people who saw this patch so easily fail to notice it?
 
-Curious.  Why does the "first take the first parent of rc2" is left as-is,
-while "then lastly take its parent" does get shortened?
+When working on my total rewrite of J.H. gitweb caching series, available
+as 'gitweb/cache-kernel-pu' branch in git://repo.or.cz/git/jnareb-git.git
+and git://github.com/jnareb/git.git repositories I finally did a *clean*
+reinstal (i.e. remove whole directory, then run "make install-gitweb").
+This branch uses the same "gitweb: Prepare for splitting gitweb" patch
+(cherry-picked back and forth).
+ 
+> FWIW, I do run "make install" from the toplevel as part of my pre-push
+> test, so I _should_ have noticed it.
+> 
+> Ah, I don't run the install step for a revision that does not pass its
+> selftest, so I haven't run "make install" on 'pu' for some time.  That may
+> explain it.
 
-> Somehow the visual appearance of "^2^" ends up being more confusing to
-> me than ~1^2~1, I guess because in the latter there is a regular set of
-> modifier-number pairs.
->
-> But I admit that is just my subjective opinion.
->
-> -Peff
+Hmmm... I thought that "make install" doesn't install gitweb, but it does
+with "$(MAKE) -C gitweb install"... though I am not sure if "make all"
+builds gitweb (runs "make gitweb").
+ 
+> Anyway thanks for a fixup.
+> 
+
+Sorry for the bug.
+
+-- 
+Jakub Narebski
+Poland
