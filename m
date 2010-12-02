@@ -1,93 +1,114 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCHv7.3 1/4 (bugfix)] gitweb: Prepare for splitting gitweb
-Date: Thu, 2 Dec 2010 20:01:31 +0100
-Message-ID: <201012022001.31739.jnareb@gmail.com>
-References: <201010311021.55917.jnareb@gmail.com> <201012021117.16183.jnareb@gmail.com> <7vtyiwrs8e.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] git-reset.txt: Use commit~1 notation over commit^
+Date: Thu, 2 Dec 2010 14:05:54 -0500
+Message-ID: <20101202190553.GB20225@sigill.intra.peff.net>
+References: <AANLkTik8TNedGBQh7KXvRSf3HTTQf2-yMJC4VA4OOBjQ@mail.gmail.com>
+ <87sjygspgy.fsf@picasso.cante.net>
+ <buo39qg8zrf.fsf@dhlpc061.dev.necel.com>
+ <87bp54s770.fsf@picasso.cante.net>
+ <87mxoos4a8.fsf@catnip.gol.com>
+ <20101202132053.GF6537@picasso.cante.net>
+ <m262vcqdb9.fsf@igel.home>
+ <7veia0rrew.fsf@alter.siamese.dyndns.org>
+ <20101202184617.GA20225@sigill.intra.peff.net>
+ <7vvd3cqa44.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, John 'Warthog9' Hawley <warthog9@kernel.org>,
-	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
-	Petr Baudis <pasky@ucw.cz>, admin@repo.or.cz
+Content-Type: text/plain; charset=utf-8
+Cc: Andreas Schwab <schwab@linux-m68k.org>,
+	jari <jari.aalto@cante.net>, Miles Bader <miles@gnu.org>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 02 20:01:49 2010
+X-From: git-owner@vger.kernel.org Thu Dec 02 20:06:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POEPc-00085I-5f
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 20:01:48 +0100
+	id 1POETh-0001mb-Fu
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 20:06:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757802Ab0LBTBn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 14:01:43 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:48982 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757569Ab0LBTBn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 14:01:43 -0500
-Received: by bwz15 with SMTP id 15so7550834bwz.19
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 11:01:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=Xiag5/VcTUAIa2O/QMMvsd0bpAF/HnzUiF82q7Za5Os=;
-        b=wRPm3EgWRsnJc6IJ46Ys8+XT/LEzvDAgRKqVGIgxjUylwW0O+rJR1X9u+1AZOrLzip
-         2lnV7U6Aoruk+U9njhcDpZSG+7GxtG94VuyBlBQyyeScc+k1pIHIO44VHCQzzc2nMAvL
-         q4OTAbrU1BF5UsisW6T0UY3M9Nnp9oQS9P+7I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=d3V+F9Jlu7xaNKJXnMuusL+uuReIbzURMTFj+LHog4YY6H1Oq+hnxTRQOw8YTIketw
-         aq2CZYbCEgkY7fSs065k98TkIN77FqJAfLezYJ4/n062YnEKuaAtwZUpOHRmpt4/N0rI
-         mmMSXJk58hO9H0DMfEgxCoYieYZfATazQ4Q1U=
-Received: by 10.204.98.15 with SMTP id o15mr1278826bkn.136.1291316501403;
-        Thu, 02 Dec 2010 11:01:41 -0800 (PST)
-Received: from [192.168.1.13] (abwq166.neoplus.adsl.tpnet.pl [83.8.240.166])
-        by mx.google.com with ESMTPS id f12sm261891bkf.16.2010.12.02.11.01.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 02 Dec 2010 11:01:38 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vtyiwrs8e.fsf@alter.siamese.dyndns.org>
+	id S1757699Ab0LBTFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 14:05:55 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:41631 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755427Ab0LBTFy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 14:05:54 -0500
+Received: (qmail 15296 invoked by uid 111); 2 Dec 2010 19:05:54 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 02 Dec 2010 19:05:54 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 02 Dec 2010 14:05:54 -0500
 Content-Disposition: inline
+In-Reply-To: <7vvd3cqa44.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162733>
 
-On Thu, 2 Dec 2010, Junio C Hamano wrote:
+On Thu, Dec 02, 2010 at 10:54:03AM -0800, Junio C Hamano wrote:
 
-> Hmm, how did you find the issue, and more importantly, how did I or other
-> people who saw this patch so easily fail to notice it?
-
-When working on my total rewrite of J.H. gitweb caching series, available
-as 'gitweb/cache-kernel-pu' branch in git://repo.or.cz/git/jnareb-git.git
-and git://github.com/jnareb/git.git repositories I finally did a *clean*
-reinstal (i.e. remove whole directory, then run "make install-gitweb").
-This branch uses the same "gitweb: Prepare for splitting gitweb" patch
-(cherry-picked back and forth).
- 
-> FWIW, I do run "make install" from the toplevel as part of my pre-push
-> test, so I _should_ have noticed it.
+> > but I am not sure the results are always more readable. I think "foo^"
+> > is perhaps nicer than "foo~1". But in more complex examples, I kind of
+> > think the ~1 is easier to read. E.g.:
+> >
+> >   # old
+> >   $ git name-rev 9904fadf
+> >   9904fadf tags/v1.7.3-rc2~1^2~1
+> >
+> >   # new
+> >   $ git name-rev 9904fadf
+> >   9904fadf tags/v1.7.3-rc2~1^2^
 > 
-> Ah, I don't run the install step for a revision that does not pass its
-> selftest, so I haven't run "make install" on 'pu' for some time.  That may
-> explain it.
+> Curious.  Why does the "first take the first parent of rc2" is left as-is,
+> while "then lastly take its parent" does get shortened?
 
-Hmmm... I thought that "make install" doesn't install gitweb, but it does
-with "$(MAKE) -C gitweb install"... though I am not sure if "make all"
-builds gitweb (runs "make gitweb").
+Because my patch is crappy and I didn't spend more than 30 seconds
+testing it? :)
+
+It needs a similar change elsewhere, so the full patch should be:
+
+diff --git a/builtin/name-rev.c b/builtin/name-rev.c
+index c946a82..03d7bce 100644
+--- a/builtin/name-rev.c
++++ b/builtin/name-rev.c
+@@ -64,9 +64,15 @@ copy_data:
  
-> Anyway thanks for a fixup.
-> 
+ 			if (len > 2 && !strcmp(tip_name + len - 2, "^0"))
+ 				len -= 2;
+-			if (generation > 0)
+-				sprintf(new_name, "%.*s~%d^%d", len, tip_name,
++			if (generation > 0) {
++				int w = sprintf(new_name, "%.*s", len, tip_name);
++				if (generation == 1)
++					sprintf(new_name + w, "^^%d",
++						parent_number);
++				else
++					sprintf(new_name + w, "~%d^%d",
+ 						generation, parent_number);
++			}
+ 			else
+ 				sprintf(new_name, "%.*s^%d", len, tip_name,
+ 						parent_number);
+@@ -142,8 +148,12 @@ static const char *get_rev_name(const struct object *o)
+ 		int len = strlen(n->tip_name);
+ 		if (len > 2 && !strcmp(n->tip_name + len - 2, "^0"))
+ 			len -= 2;
+-		snprintf(buffer, sizeof(buffer), "%.*s~%d", len, n->tip_name,
+-				n->generation);
++		if (n->generation == 1)
++			snprintf(buffer, sizeof(buffer), "%.*s^", len,
++				 n->tip_name);
++		else
++			snprintf(buffer, sizeof(buffer), "%.*s~%d", len,
++				 n->tip_name, n->generation);
+ 
+ 		return buffer;
+ 	}
 
-Sorry for the bug.
+However, IMHO that looks even worse:
 
--- 
-Jakub Narebski
-Poland
+  $ git name-rev 9904fadf
+  9904fadf tags/v1.7.3-rc2^^2^
+
+-Peff
