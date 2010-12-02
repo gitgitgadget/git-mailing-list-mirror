@@ -1,62 +1,85 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: clearcase migration to git
-Date: Wed, 1 Dec 2010 20:23:24 -0500
-Message-ID: <AANLkTimX3jovT=a2hvJvWR741t+C4x1B0WthSXcqb66t@mail.gmail.com>
-References: <AANLkTintgZKHW+9aeqN=JPG34X6wqeCNOC0jpdFaWmrN@mail.gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] git-add.txt: Order options alphabetically
+Date: Thu, 2 Dec 2010 02:36:05 +0100
+Message-ID: <20101202013605.GA5221@neumann>
+References: <1291218145-13016-1-git-send-email-jari.aalto@cante.net>
+	<1291229622.11917.14.camel@drew-northup.unet.maine.edu>
+	<87bp55uw96.fsf@picasso.cante.net>
+	<1291232706.11917.35.camel@drew-northup.unet.maine.edu>
+	<8739qhuo09.fsf@picasso.cante.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Lynn Lin <lynn.xin.lin@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 02 02:23:32 2010
+Cc: git@vger.kernel.org, Drew Northup <drew.northup@maine.edu>
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Thu Dec 02 02:36:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PNxtT-0008AY-7V
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 02:23:31 +0100
+	id 1PNy5m-0003qg-VK
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 02:36:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755637Ab0LBBXZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Dec 2010 20:23:25 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:41502 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754069Ab0LBBXY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 1 Dec 2010 20:23:24 -0500
-Received: by qwb7 with SMTP id 7so7765076qwb.19
-        for <git@vger.kernel.org>; Wed, 01 Dec 2010 17:23:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RHLJ4xgPUUIDzdnHvq6pbkIOMmdjViu98MS0qQKJbJo=;
-        b=l9ZyeTLDiCcoRvkaaWBr/FQp//zbtV5OfqkSO3t1JBeZNBVcE19mH0AQV5CtxU83Km
-         CWyXW4WyBtT9SEANzgtYSTv97PSbU8MxtE2c3rf7+MUyIA5V/Yn3mM6Q89n8h1ZKYivm
-         PokN/0ly7oj/V+AeyxkgUTkPE81u3FbQyF1J8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=pVKGNcw5R+GmN+rce3qHE85Ut1g75CeElN0TuLScia9mUrsyMVi2IzF0C3DLvIaRHI
-         czAQ6SQrG3V6M4tiA/kteqxM/qR2NhmioOUvUObS3pseTcGGNERW2EIBO3wa0bwEYM2k
-         tvZ0GZEsceKSeIKeHxxZHfgAvhqEVNSODmz3A=
-Received: by 10.224.137.38 with SMTP id u38mr8473127qat.151.1291253004112;
- Wed, 01 Dec 2010 17:23:24 -0800 (PST)
-Received: by 10.224.182.10 with HTTP; Wed, 1 Dec 2010 17:23:24 -0800 (PST)
-In-Reply-To: <AANLkTintgZKHW+9aeqN=JPG34X6wqeCNOC0jpdFaWmrN@mail.gmail.com>
+	id S1755471Ab0LBBgJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 1 Dec 2010 20:36:09 -0500
+Received: from moutng.kundenserver.de ([212.227.17.10]:57411 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751335Ab0LBBgI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 1 Dec 2010 20:36:08 -0500
+Received: from localhost6.localdomain6 (p5B130DE7.dip0.t-ipconnect.de [91.19.13.231])
+	by mrelayeu.kundenserver.de (node=mreu1) with ESMTP (Nemesis)
+	id 0Lno43-1Ol2Zl2rOB-00hLvq; Thu, 02 Dec 2010 02:36:06 +0100
+Content-Disposition: inline
+In-Reply-To: <8739qhuo09.fsf@picasso.cante.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:13SbBr44tICbqONhBro3iR+cn0idJu1iUz59E2AJ9tV
+ U7SaIk2buaz5x/yOQvKCG8HMCJPsIU+zPfdgUrXOD976Hr9FyM
+ bcFVZh0++dPh8d/Jq0zm36OxoIayi2BU6uPVlh3RJCPAzrnBdP
+ hWW1T9x0fbYuK+UdRTHB08UESHCmQa4AMtzf/mEdZkPijFjT1w
+ ig0SOYH++Awu5vcRC8x2A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162661>
 
-On Wed, Dec 1, 2010 at 8:14 PM, Lynn Lin <lynn.xin.lin@gmail.com> wrote=
-:
-> All,
-> =C2=A0 =C2=A0is there any tools recommended that migrate clearcase to=
- git?
+Please don't cull Cc list.
 
-Base or UCM?
 
-/Martin
+Hi,
+
+On Thu, Dec 02, 2010 at 12:28:06AM +0200, Jari Aalto wrote:
+> 2010-12-01 21:45 Drew Northup <drew.northup@maine.edu>:
+> > On Wed, 2010-12-01 at 21:29 +0200, Jari Aalto wrote:
+> >
+> >> 2010-12-01 20:53 Drew Northup <drew.northup@maine.edu>:
+> >> > (lacking a commit message to tell me), WHY? [alphabetical]
+> >>=20
+> >> Quoting <http://permalink.gmane.org/gmane.comp.version-control.git=
+/162552>
+> >>=20
+> >>     - You read from top to bottom, therefore A-Z.
+> >>     - GNU project uses it in manual pages. It looks good, it looks
+> >>       professional, it looks clean. And it works when searching (=3D=
+ no
+> >>       oriantation problems regardless of tools; even when you prin=
+t on
+> >>       paper when you don't have any computerized aids to help your=
+ search.).
+> >>=20
+> >> Jari
+> >
+> > THAT belongs in a commit message!!!
+>=20
+> It does not. No need to clutter 10's of message that long in there..
+
+It definitely does.
+
+People doing 'git log -- Documentation/git-add.txt' in the future will
+want to see it, just as well as people doing 'git log --
+Documentation/git-commit.txt', or 'git log --
+Documentation/git-reset.txt', or ....
+
+HtH,
+G=E1bor
