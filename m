@@ -1,77 +1,113 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] documentation: escape '~' in git revert
-Date: Thu, 2 Dec 2010 12:32:57 -0600
-Message-ID: <20101202183257.GH3962@burratino>
-References: <1291311393-31843-1-git-send-email-sylvain.rabot@f-secure.com>
- <20101202175013.GF3962@burratino>
- <7vzksoqbjd.fsf@alter.siamese.dyndns.org>
+From: demerphq <demerphq@gmail.com>
+Subject: Re: Problems using perl's Git.pm module
+Date: Thu, 2 Dec 2010 19:41:00 +0100
+Message-ID: <AANLkTimKKssBbtuLKCqG9WGbOe+-CH4pc5PDaNxCH_PS@mail.gmail.com>
+References: <20101202114003.GA26070@raven.wolf.lan>
+	<AANLkTi=8=k9iNWzTnGz821k9A_CZNiEt_KkC8TXu6oS_@mail.gmail.com>
+	<7vpqtkrrtc.fsf@alter.siamese.dyndns.org>
+	<AANLkTikQdw3aafsfP+SCQ-z9_TZrPJx694QOSeNTrvp6@mail.gmail.com>
+	<20101202181425.GG3962@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sylvain Rabot <sylvain.rabot@f-secure.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 02 19:33:16 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
+	Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org,
+	Petr Baudis <pasky@suse.cz>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 02 19:41:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PODy0-0003QC-BT
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 19:33:16 +0100
+	id 1POE5e-0007Ax-8p
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 19:41:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757253Ab0LBSdL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 13:33:11 -0500
-Received: from mail-ww0-f66.google.com ([74.125.82.66]:33802 "EHLO
-	mail-ww0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752816Ab0LBSdK (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 13:33:10 -0500
-Received: by wwe15 with SMTP id 15so592181wwe.1
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 10:33:09 -0800 (PST)
+	id S1757660Ab0LBSlE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Dec 2010 13:41:04 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:60560 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755002Ab0LBSlC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Dec 2010 13:41:02 -0500
+Received: by vws16 with SMTP id 16so1246574vws.19
+        for <git@vger.kernel.org>; Thu, 02 Dec 2010 10:41:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=dGvN6/JfFvegvunHMet3mhpmXaE5ilmLEzgzeoR3FQQ=;
-        b=mVj1yh4juRd9E0om3QTpmDIgAaPbG7HOztAhX5AJSBWYYeZIlaO1Lh/I5RZ9PR8THc
-         sLurWl42mi6rKzpKPfO6uUopIZjX2O4lrNC0YW92/gEADCs9tNGgYqWsEFmWV3+U0eIS
-         53pQcFn2A/sroaf7GXElVDWflcgkhMcV/lpmk=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=TOthPquWQn75ZXgVyHg9hCm/Xn1hLmjZGCeLcZP5GsQ=;
+        b=Se8c44JbZLQqCu3vU6GTnPPhRqIT6mWxGFg7HYSYGpKwP22kG3lprtZfEkCPNQjZp/
+         lIUsn5e3hp/VAiNNDBk/bFbu3rpFfpjWfocKkdqjDkNB4/kMknGvXewKtnHoZIk0ikR6
+         5KJQdpi66AtaXo4IMv2wAl5YS0sWrofQSVq+c=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=I07mJaiyFH56DZRfJ2qKQPVtjRaWVp9s8IE50Kx4O0Gsk1ZJgzdzhP4jooMzdlurkU
-         JoYxYPN6cP8LJKFsfcRVIEI+Pxsqzk4pZldig0/2UwNzy0PaCCOFAB5y425ioR20hUNw
-         4tc6gZrK4BHVv+URrM1srDIAwa4MXd3bt9gG0=
-Received: by 10.216.162.70 with SMTP id x48mr3887713wek.4.1291314789048;
-        Thu, 02 Dec 2010 10:33:09 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id x15sm429880weq.7.2010.12.02.10.33.06
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 02 Dec 2010 10:33:07 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vzksoqbjd.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=cQA4ceD4uGaLsA1DGEQeWDqtBeLRM9Q9LfUPVOXQbFySwqGx5jUZFx9eRwkL2GMUMV
+         UjvOuGwWjAF/wDwyhV1hEP9XMsq02cyyAaIhCgjMHxE0Cv56fG5UQsqXQxvkJGGAfZ5w
+         4ZyWNOFz3HrA7SO7jd/nq7ueiZC+eoszDpHe4=
+Received: by 10.229.246.79 with SMTP id lx15mr347010qcb.30.1291315260990; Thu,
+ 02 Dec 2010 10:41:00 -0800 (PST)
+Received: by 10.229.192.193 with HTTP; Thu, 2 Dec 2010 10:41:00 -0800 (PST)
+In-Reply-To: <20101202181425.GG3962@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162729>
 
-Junio C Hamano wrote:
+On 2 December 2010 19:14, Jonathan Nieder <jrnieder@gmail.com> wrote:
+> demerphq wrote:
+>> On 2 December 2010 18:46, Junio C Hamano <gitster@pobox.com> wrote:
+>> > =C6var Arnfj=F6r=F0 Bjarmason <avarab@gmail.com> writes:
+>
+>>>> Why are you using it? It's for internal use only.
+>>>
+>>> That is not a valid question nor answer, I am afraid.
+>>
+>> So you are saying that it is for more than internal use?
+>
+> I assume so. =A0I had guessed the same thing (that it is meant to be
+> generally useful), based on the following:
+>
+> =A0- it is installed to be usable with a simple "use Git"
+> =A0 automatically
 
-> There is one funny I do not understand (oh, well, I admit that I do not
-> understand many funnies around AsciiDoc).  The two extra lines you would
-> find if you drop "::$" from the above, namely,
-> 
->     git-rebase.txt:    git rebase --onto topicA~5 topicA~3 topicA
->     user-manual.txt:$ git merge-file hello.c~2 hello.c~1 hello.c~3
-> 
-> do not seem to suffer from this issue.  IOW, it seems to affect only the
-> enumeration head items.
+Well that is true. But im not sure that is a good reason.
 
-FWIW I suspect those are both "literal" environments, thus governed
-by the rule described in v1.6.0-rc0~152 (git-format-patch(1): fix
-stray \ in output, 2008-07-02).
 
-Based on "git grep -e '~[^~].*~' -- Documentation/", I think you found
-them all, unless there are some examples span multiple lines.
+> =A0- "perldoc Git" tells me that this module gives Perl scripts an ea=
+sy
+> =A0 way to interface the Git version control system, not that it is a=
+n
+> =A0 implementation artifact
+
+Any perl module, or script, or podfile installed in a place that
+perldoc knows about is available to perldoc.
+
+> =A0- tools like "git svn" were not historically part of core git, and
+> =A0 usage by them was not exactly internal use.
+
+Well, the counter  arguments are:
+
+No back-compat layer for older gits. Tight binding to a particular git
+- no availability of upgrades independent of upgrading git. No
+availability or review of the module on the standard venues for doing
+so for Perl modules. CPAN, CPANTESTERS, smoke reports, etc.
+
+And well the line:
+
+# Totally unstable API.
+$VERSION =3D '0.01';
+
+STRONGLY suggests that the module should not be used by code outside
+the Git package itself.
+
+Cheers,
+yves
+
+
+--=20
+perl -Mre=3Ddebug -e "/just|another|perl|hacker/"
