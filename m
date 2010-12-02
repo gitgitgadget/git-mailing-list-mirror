@@ -1,98 +1,88 @@
-From: jari.aalto@cante.net
-Subject: [PATCH] git-cherry.txt: Change symbol marks in graph.
-Date: Thu,  2 Dec 2010 07:18:13 +0200
+From: Jari Aalto <jari.aalto@cante.net>
+Subject: Re: [PATCH] git-commit.txt: Order options alphabetically
+Date: Thu, 02 Dec 2010 07:35:45 +0200
 Organization: Private
-Message-ID: <1291267093-29855-1-git-send-email-jari.aalto@cante.net>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Cc: Jari Aalto <jari.aalto@cante.net>
+Message-ID: <871v60u47i.fsf@picasso.cante.net>
+References: <1291215526-11428-1-git-send-email-jari.aalto@cante.net>
+	<20101201165043.GF26120@burratino> <87r5e1v2g8.fsf@picasso.cante.net>
+	<7vzkspuw8g.fsf@alter.siamese.dyndns.org>
+	<87r5e1t93o.fsf@picasso.cante.net>
+	<2C3777CB-2DDD-4FF5-842B-23F7EF838611@sb.org>
+	<8762vdt7oo.fsf@picasso.cante.net>
+	<4BA22C80-9F0C-4F5F-8DBF-3E49D3D9C36A@sb.org>
+Mime-Version: 1.0
+Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 02 06:18:37 2010
+X-From: git-owner@vger.kernel.org Thu Dec 02 06:36:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PO1Yu-0003fb-Mz
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 06:18:33 +0100
+	id 1PO1pt-0008SU-FQ
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 06:36:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756895Ab0LBFSU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 00:18:20 -0500
-Received: from emh02.mail.saunalahti.fi ([62.142.5.108]:35624 "EHLO
-	emh02.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756869Ab0LBFSR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 00:18:17 -0500
-Received: from saunalahti-vams (vs3-10.mail.saunalahti.fi [62.142.5.94])
-	by emh02-2.mail.saunalahti.fi (Postfix) with SMTP id B85D0EF53B
-	for <git@vger.kernel.org>; Thu,  2 Dec 2010 07:18:15 +0200 (EET)
-Received: from emh07.mail.saunalahti.fi ([62.142.5.117])
-	by vs3-10.mail.saunalahti.fi ([62.142.5.94])
-	with SMTP (gateway) id A07C05AF5DE; Thu, 02 Dec 2010 07:18:15 +0200
-Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
-	by emh07.mail.saunalahti.fi (Postfix) with ESMTP id 9FF381C6383
-	for <git@vger.kernel.org>; Thu,  2 Dec 2010 07:18:14 +0200 (EET)
-Received: from [192.168.1.5] (helo=picasso.cante.net)
-	by picasso.cante.net with esmtp (Exim 4.72)
-	(envelope-from <jari.aalto@cante.net>)
-	id 1PO1Yb-0007lx-Pn; Thu, 02 Dec 2010 07:18:13 +0200
-X-Mailer: git-send-email 1.7.2.3
-X-SA-Exim-Connect-IP: 192.168.1.5
-X-SA-Exim-Mail-From: jari.aalto@cante.net
-X-SA-Exim-Scanned: No (on picasso.cante.net); SAEximRunCond expanded to false
-X-Antivirus: VAMS
+	id S1755100Ab0LBFf7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 00:35:59 -0500
+Received: from lo.gmane.org ([80.91.229.12]:47365 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751912Ab0LBFf6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 00:35:58 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PO1pl-0008P7-A8
+	for git@vger.kernel.org; Thu, 02 Dec 2010 06:35:57 +0100
+Received: from a91-155-187-216.elisa-laajakaista.fi ([91.155.187.216])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 02 Dec 2010 06:35:57 +0100
+Received: from jari.aalto by a91-155-187-216.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 02 Dec 2010 06:35:57 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: a91-155-187-216.elisa-laajakaista.fi
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.2 (gnu/linux)
+Cancel-Lock: sha1:MoOnNDOCL9WaIKl/HRd7e8nW0ZQ=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162667>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162668>
 
-From: Jari Aalto <jari.aalto@cante.net>
+2010-12-02 01:40 Kevin Ballard <kevin@sb.org>:
+> On Dec 1, 2010, at 3:05 PM, Jari Aalto wrote:
+>> That little word "primarily." You don't find anyone who learnt from
+>> manual page first is person is on his 20's. Google is full of Git
+>> videos. Guess which won the sexiest contest.
+>
+> How about me? I'm 25, I've been using git for a couple of years, and
+> the manpages have always been my primary documentation.
 
-The common commit were marked with a minus sign (-), but that is
-usually interpreted as something less or substracted. Use natural
-equal sign (=3D). Commits that are not in upstream were marked with plus
-sign (+) but a question mark (?) is visually a litle more striking
-(erect) in context where all other signs are "flat". It also helps
-visually impared to see difference between (* ... ?) as opposed to
-similar signs (* ... +).
+And your background before that (those 5 years?). Can you say that
+you're an average, to fit a imagned genralized 20's audience? I'm sure
+you have heard how hard it is nowadays to teach programming or Software
+Engineering in Universities.
 
-Signed-off-by: Jari Aalto <jari.aalto@cante.net>
----
- Documentation/git-cherry.txt |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+> The videos are great at convincing people to use git. But people
+> always turn to the manpages in order to learn the details.
 
-diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.txt
-index fed115a..f342582 100644
---- a/Documentation/git-cherry.txt
-+++ b/Documentation/git-cherry.txt
-@@ -19,13 +19,13 @@ the 'git patch-id' program.
- Every commit that doesn't exist in the <upstream> branch
- has its id (sha1) reported, prefixed by a symbol.  The ones that have
- equivalent change already
--in the <upstream> branch are prefixed with a minus (-) sign, and those
--that only exist in the <head> branch are prefixed with a plus (+) symbol=
-:
-+in the <upstream> branch are prefixed with a equal (=3D) sign, and those
-+that only exist in the <head> branch are prefixed with a question mark (=
-?) symbol:
-=20
--               __*__*__*__*__> <upstream>
-+               _*__*__*__*__> <upstream>
-               /
-     fork-point
--              \__+__+__-__+__+__-__+__> <head>
-+              \__?__?__=3D__?__?__=3D__?__> <head>
-=20
-=20
- If a <limit> has been given then the commits along the <head> branch up
-@@ -34,7 +34,7 @@ to and including <limit> are not reported:
-                __*__*__*__*__> <upstream>
-               /
-     fork-point
--              \__*__*__<limit>__-__+__> <head>
-+              \__*__*__<limit>__=3D__?__> <head>
-=20
-=20
- Because 'git cherry' compares the changeset rather than the commit id
---=20
-1.7.2.3
+"Details". You said it. They are consulted.
+
+Not to learn as a primary method per se. The manual pages are too
+technical; not really their fault, they are supposed to be. As "manuals"
+are.
+
+The progression goes:
+
+    - Google, more Google, and yet more Google (or the next line swapped)
+    - Videos, and Google blogs
+    - Co-worker, Co-student, Co-<whatever>
+    - Git Book, The Pro Book etc. (when there is time, free of other duties).
+    - And more Google.
+    ... man pages at the bottom after you have used Git for some time.
+
+To add perspective: there is no manual pages in Windows. What you have
+is a browser that is one click away from information.
+
+Jari
