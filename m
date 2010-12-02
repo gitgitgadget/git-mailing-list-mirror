@@ -1,90 +1,244 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: msysgit clone/pull/fetch broken
-Date: Thu, 2 Dec 2010 13:43:50 +0100
-Message-ID: <AANLkTi=cPj2poOpZa3M-UVjQmjQ3BKj3FBJHQc_+Z6Vb@mail.gmail.com>
-References: <loom.20101201T141924-761@post.gmane.org> <AANLkTinaxO1FVb-MvY91mscUcpNtbxQH0vTvE4YJrJtB@mail.gmail.com>
- <loom.20101202T081807-557@post.gmane.org>
-Reply-To: kusmabite@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?ISO-8859-1?B?Wm9sdOFuRvx6ZXNp?= <zfuzesi@eaglet.hu>
-X-From: git-owner@vger.kernel.org Thu Dec 02 13:44:20 2010
+From: David Barr <david.barr@cordelta.com>
+Subject: [PATCH] fast-import: add 'ls' command
+Date: Thu,  2 Dec 2010 21:40:20 +1100
+Message-ID: <1291286420-13591-2-git-send-email-david.barr@cordelta.com>
+References: <1291286420-13591-1-git-send-email-david.barr@cordelta.com>
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	David Barr <david.barr@cordelta.com>
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 02 13:46:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PO8WH-0002m9-Fg
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 13:44:17 +0100
+	id 1PO8YD-0003Zl-JS
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 13:46:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932078Ab0LBMoM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Dec 2010 07:44:12 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:33174 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755394Ab0LBMoL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Dec 2010 07:44:11 -0500
-Received: by fxm20 with SMTP id 20so1084291fxm.19
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 04:44:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=+dGHNHwgwaZGZgAZ1XHp28Rw6GYVo7o/mg1FFE6n3IU=;
-        b=NmXp7hPfAAsj4PD498yTNID3SwJWR2B/MQfkZ8TCwf2/zYrdId2ugNKhR/abrASSaj
-         udMr+/1FdOAiZcn+MTdHwsbyU4Vb/6E2OlVbJokfrFwr94ukYogYxu+emL5QcXsnV7kz
-         V6y8tV4JsgH1X3wDOb3R4ND2poLcoMKnUxHDc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=OemQPd1bMGPRqVGtfbfr1TaY6i7wGsmsu8bJBg9bi+pfKV7IZ0o2fjl19J+DJPE4Wg
-         9ZeS2FeTjwdU1J7ADt2I6xFNz6mEP47BMKunzBvAj/c2bw9L3B4PfeR1gwUEL4bcBQ5f
-         ZrukhFwYrrfYILdw4yzxsQmp1slU/x+FKDKUY=
-Received: by 10.223.81.70 with SMTP id w6mr537384fak.18.1291293850343; Thu, 02
- Dec 2010 04:44:10 -0800 (PST)
-Received: by 10.223.95.202 with HTTP; Thu, 2 Dec 2010 04:43:50 -0800 (PST)
-In-Reply-To: <loom.20101202T081807-557@post.gmane.org>
+	id S932114Ab0LBMqM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 07:46:12 -0500
+Received: from fallbackmx08.syd.optusnet.com.au ([211.29.132.10]:34240 "EHLO
+	fallbackmx08.syd.optusnet.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932117Ab0LBMqK (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Dec 2010 07:46:10 -0500
+Received: from mail09.syd.optusnet.com.au (mail09.syd.optusnet.com.au [211.29.132.190])
+	by fallbackmx08.syd.optusnet.com.au (8.13.1/8.13.1) with ESMTP id oB2Ah9wU029770
+	for <git@vger.kernel.org>; Thu, 2 Dec 2010 21:43:09 +1100
+Received: from localhost.localdomain (d110-33-95-167.mit3.act.optusnet.com.au [110.33.95.167])
+	by mail09.syd.optusnet.com.au (8.13.1/8.13.1) with ESMTP id oB2Af6XH018562;
+	Thu, 2 Dec 2010 21:41:38 +1100
+X-Mailer: git-send-email 1.7.3
+In-Reply-To: <1291286420-13591-1-git-send-email-david.barr@cordelta.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162699>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162700>
 
-On Thu, Dec 2, 2010 at 8:28 AM, Zolt=E1nF=FCzesi <zfuzesi@eaglet.hu> wr=
-ote:
-> Erik Faye-Lund <kusmabite <at> gmail.com> writes:
->
->>
->> On Wed, Dec 1, 2010 at 2:31 PM, Zolt=E1nF=FCzesi <zfuzesi <at> eagle=
-t.hu> wrote:
->> > Hi, I can't clone/pull/fetch from any of my repositories with the =
-latest
-> stable
->> > version (1.7.3.2.430.g208247) on Windows.
->> >
->> > $ git clone --recursive git://server/user/project.git
->> > Cloning into project...
->> > fatal: failed to read object <sha1>: No error
->> >
->> > After reverting commit 3ba7a065527a27f45659398e882feaa1165cbb4c ("=
-A loose
-> object
->> > is not corrupt if it cannot be read due to EMFILE") it works.
->> >
->> > On Linux everything is fine.
->>
->> I've already submitted a patch-series that address this issue:
->> <1290533444-3404-1-git-send-email-kusmabite <at> gmail.com>
->>
->
-> Thanks! Could you give me the sha1(s) of those patches? I've found so=
-me of your
-> recent patches, but they have already been merged into master.
->
+There are two forms of the 'ls' command, one that takes a tree-ish and
+one relative to the index. Allow the tree-ish variant to be used anywhere
+a comment is allowed. Allow the index variant to be used within a commit
+where file change commands would be used.
 
-I don't think the patches has been merged yet, so I don't really have
-a SHA-1 for the series. But you could pull the topic from
-git://repo.or.cz/git/kusma.git work/win32-dirent
+The syntax is as such:
+
+ 'ls' SP <dataref> SP path LF
+
+and
+
+ 'ls' SP 'index' SP path LF
+
+Based-on-patch-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: David Barr <david.barr@cordelta.com>
+---
+ fast-import.c |  127 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 files changed, 125 insertions(+), 2 deletions(-)
+
+diff --git a/fast-import.c b/fast-import.c
+index fbc70cd..854398a 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -24,10 +24,12 @@ Format of STDIN stream:
+     commit_msg
+     ('from' sp committish lf)?
+     ('merge' sp committish lf)*
+-    file_change*
++    (file_change | ls)*
+     lf?;
+   commit_msg ::= data;
+ 
++  ls ::= 'ls' sp 'index' sp path_str lf;
++
+   file_change ::= file_clr
+     | file_del
+     | file_rnm
+@@ -132,7 +134,7 @@ Format of STDIN stream:
+   ts    ::= # time since the epoch in seconds, ascii base10 notation;
+   tz    ::= # GIT style timezone;
+ 
+-     # note: comments and cat requests may appear anywhere
++     # note: comments, ls and cat requests may appear anywhere
+      # in the input, except within a data command.  Any form
+      # of the data command always escapes the related input
+      # from comment processing.
+@@ -141,7 +143,9 @@ Format of STDIN stream:
+      # must be the first character on that line (an lf
+      # preceded it).
+      #
++
+   cat_blob ::= 'cat-blob' sp (hexsha1 | idnum) lf;
++  ls_tree  ::= 'ls' sp (hexsha1 | idnum) sp path_str lf;
+ 
+   comment ::= '#' not_lf* lf;
+   not_lf  ::= # Any byte that is not ASCII newline (LF);
+@@ -369,6 +373,7 @@ static int cat_blob_fd = STDOUT_FILENO;
+ 
+ static void parse_argv(void);
+ static void parse_cat_blob(void);
++static void parse_ls(struct branch *b);
+ 
+ /* Signal handling */
+ static volatile sig_atomic_t checkpoint_requested;
+@@ -2607,6 +2612,8 @@ static void parse_new_commit(void)
+ 			note_change_n(b, prev_fanout);
+ 		else if (!strcmp("deleteall", command_buf.buf))
+ 			file_change_deleteall(b);
++		else if (!prefixcmp(command_buf.buf, "ls "))
++			parse_ls(b);
+ 		else {
+ 			unread_command_buf = 1;
+ 			break;
+@@ -2830,6 +2837,120 @@ static void parse_cat_blob(void)
+ 	cat_blob(oe, sha1);
+ }
+ 
++static struct object_entry *parse_treeish_dataref(const char** r)
++{
++	unsigned char sha1[20];
++	struct object_entry *e;
++
++	if (**r == ':') {
++		char *x;
++		e = find_mark(strtoumax(*r + 1, &x, 10));
++		if (x == *r + 1)
++			die("Invalid mark: %s", command_buf.buf);
++		if (!e)
++			die("Unknown mark: %s", command_buf.buf);
++		*r = x;
++		hashcpy(sha1, e->idx.sha1);
++	} else {
++		if (get_sha1_hex(*r, sha1))
++			die("Invalid SHA1: %s", command_buf.buf);
++		e = find_object(sha1);
++		*r += 40;
++	}
++
++	for (;;) {
++		unsigned long size;
++		void *buf;
++		if (!e) {
++			enum object_type type = sha1_object_info(sha1, NULL);
++			if (type < 0)
++				die("object not found: %s", sha1_to_hex(sha1));
++			e = insert_object(sha1);
++			e->type = type;
++			e->pack_id = MAX_PACK_ID;
++			e->idx.offset = 1;
++		}
++		if (e->type == OBJ_TREE)
++			break;
++
++		if (e->type != OBJ_COMMIT && e->type != OBJ_TAG)
++			die("Not a treeish: %s", command_buf.buf);
++
++		if (e->pack_id != MAX_PACK_ID) {
++			buf = gfi_unpack_entry(e, &size);
++		} else {
++			enum object_type type;
++			buf = read_sha1_file(sha1, &type, &size);
++		}
++		if (!buf)
++			die("Can't load object %s", sha1_to_hex(sha1));
++
++		if (e->type == OBJ_COMMIT) {
++			if (size < 40 + strlen("tree ") ||
++			    get_sha1_hex(buf + strlen("tree "), sha1))
++				die("Invalid SHA1 in commit: %s", command_buf.buf);
++		} else {
++			if (size < 40 + strlen("object ") ||
++			    get_sha1_hex(buf + strlen("object "), sha1))
++				die("Invalid SHA1 in tag: %s", command_buf.buf);
++		}
++		free(buf);
++		e = find_object(sha1);
++	}
++
++	return e;
++}
++
++static void print_ls(int mode, unsigned char *sha1, char *path)
++{
++	enum object_type type;
++	struct strbuf line = STRBUF_INIT;
++	type = sha1_object_info(sha1, NULL);
++	/* mode SP type SP object_name TAB path LF */
++	strbuf_addf(&line, "%o %s %s\t%s\n",
++			mode, typename(type), sha1_to_hex(sha1), path);
++	cat_blob_write(line.buf, line.len);
++	strbuf_release(&line);
++}
++
++static void parse_ls(struct branch *b)
++{
++	const char *p;
++	struct strbuf uq = STRBUF_INIT;
++	struct tree_entry *root = NULL;
++	struct tree_entry leaf = {0};
++
++	/* ls SP <treeish> SP <path> */
++	p = command_buf.buf + strlen("ls ");
++	if(!prefixcmp(p, "index")) {
++		p += strlen("index");
++		if (!b)
++			die("Not in a commit: %s", command_buf.buf);
++		root = &b->branch_tree;
++	} else {
++		struct object_entry *e = parse_treeish_dataref(&p);
++		root = new_tree_entry();
++		hashcpy(root->versions[1].sha1, e->idx.sha1);
++		load_tree(root);
++	}
++	if (*p++ != ' ')
++		die("Missing space after SHA1: %s", command_buf.buf);
++	if (unquote_c_style(&uq, p, &p))
++		die("Invalid path: %s", command_buf.buf);
++	if (*p)
++		die("Garbage after path: %s", command_buf.buf);
++	tree_content_get(root, uq.buf, &leaf);
++	if (!leaf.versions[1].mode)
++		die("Path %s not in branch", uq.buf);
++	/* Allow new trees to be listed. */
++	if (S_ISDIR(leaf.versions[1].mode))
++		store_tree(&leaf);
++	print_ls(leaf.versions[1].mode, leaf.versions[1].sha1, uq.buf);
++	strbuf_release(&uq);
++	if (!b || root != &b->branch_tree)
++		release_tree_entry(root);
++}
++
+ static void checkpoint(void)
+ {
+ 	checkpoint_requested = 0;
+@@ -3128,6 +3249,8 @@ int main(int argc, const char **argv)
+ 	while (read_next_command() != EOF) {
+ 		if (!strcmp("blob", command_buf.buf))
+ 			parse_new_blob();
++		else if (!prefixcmp(command_buf.buf, "ls "))
++			parse_ls(NULL);
+ 		else if (!prefixcmp(command_buf.buf, "commit "))
+ 			parse_new_commit();
+ 		else if (!prefixcmp(command_buf.buf, "tag "))
+-- 
+1.7.3
