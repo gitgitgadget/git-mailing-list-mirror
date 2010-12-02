@@ -1,73 +1,65 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: (minor) problems with gitk
-Date: Thu, 2 Dec 2010 11:51:05 +0100
-Message-ID: <20101202105105.GA20016@pengutronix.de>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: [PATCH] git-cherry.txt: Change symbol marks in graph.
+Date: Thu, 02 Dec 2010 12:05:33 +0100
+Message-ID: <4CF77D7D.90507@drmicha.warpmail.net>
+References: <1291267093-29855-1-git-send-email-jari.aalto@cante.net> <m31v604nc0.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 02 11:51:17 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jari Aalto <jari.aalto@cante.net>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 02 12:08:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PO6kv-0000CO-64
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 11:51:17 +0100
+	id 1PO716-0008Ls-G5
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 12:08:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756060Ab0LBKvI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Dec 2010 05:51:08 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:43142 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751748Ab0LBKvH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 05:51:07 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1PO6kj-0006pD-IB
-	for git@vger.kernel.org; Thu, 02 Dec 2010 11:51:05 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1PO6kj-0006sA-HM
-	for git@vger.kernel.org; Thu, 02 Dec 2010 11:51:05 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1757412Ab0LBLHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 06:07:53 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:43944 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755440Ab0LBLHw (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Dec 2010 06:07:52 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id BCC6252F;
+	Thu,  2 Dec 2010 06:07:51 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute3.internal (MEProxy); Thu, 02 Dec 2010 06:07:51 -0500
+X-Sasl-enc: VdDX7bZXlyyXAT3CNmrkB2ct3c8PrvDYdtg+wdD7aS5Z 1291288071
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 9FFE6406094;
+	Thu,  2 Dec 2010 06:07:49 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
+In-Reply-To: <m31v604nc0.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162692>
 
-Hello,
+Jakub Narebski venit, vidit, dixit 02.12.2010 09:00:
+> Jari Aalto <jari.aalto@cante.net> writes:
+> 
+>> From: Jari Aalto <jari.aalto@cante.net>
+>>
+>> The common commit were marked with a minus sign (-), but that is
+>> usually interpreted as something less or substracted. Use natural
+>> equal sign (=). Commits that are not in upstream were marked with plus
+>> sign (+) but a question mark (?) is visually a litle more striking
+>> (erect) in context where all other signs are "flat". It also helps
+>> visually impared to see difference between (* ... ?) as opposed to
+>> similar signs (* ... +).
+> 
+> Reading comprehension FAIL.  The graph in question uses '+' and '-' because
+> that is what 'git cherry' *output( uses ('+' included, '-' excluded).  They
+> are very natural in git-cherry output (diff-like).
 
-just to let you know ...
+Yep, and I so wished that git-cherry had different output that I even
+saw a git-cherry patch where there was none...
 
-(This happens with Debian's git 1.7.2.3.)
+So, +1 from me if this comes with an actual code patch.
 
-If gitk only shows a few commits such that the canvas containing the
-list isn't completely filled, I can scroll the commits down using the
-mouse wheel.  Then clicking on a commit doesn't work anymore.  I have t=
-o
-click in the upper area of the canvas to change the focus, that feels
-scary.  I would expect that scrolling doesn't work at all.
-
-When changing the highlight drop box to "touching paths" and entering a
-string starting with / sometimes a message on the console is printed
-("oops, git diff-tree died") sometimes together with an error dialog.
-I would expect here that this path is smoothly ignored.  (Maybe unless =
-the
-path specifies the working copy?).
-
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+Michael
