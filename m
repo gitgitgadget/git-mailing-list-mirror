@@ -1,117 +1,152 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] documentation: escape '~' in git revert
-Date: Thu, 02 Dec 2010 11:23:50 -0800
-Message-ID: <7vipzcq8qh.fsf@alter.siamese.dyndns.org>
-References: <1291311393-31843-1-git-send-email-sylvain.rabot@f-secure.com>
- <20101202175013.GF3962@burratino> <7vzksoqbjd.fsf@alter.siamese.dyndns.org>
- <20101202183257.GH3962@burratino>
+From: Jan =?UTF-8?B?S3LDvGdlcg==?= <jk@jk.gs>
+Subject: Re: [PATCH] git-commit.txt: Order options alphabetically
+Date: Thu, 2 Dec 2010 20:30:01 +0100
+Message-ID: <20101202203001.3793718d@jk.gs>
+References: <1291215526-11428-1-git-send-email-jari.aalto@cante.net>
+	<20101201165043.GF26120@burratino>
+	<87r5e1v2g8.fsf@picasso.cante.net>
+	<7vzkspuw8g.fsf@alter.siamese.dyndns.org>
+	<295D1E95-1C61-4960-8C9C-BDB0BD4A1A50@sb.org>
+	<87mxopt8my.fsf@picasso.cante.net>
+	<E02740CE-37EE-4701-BB2D-18AD493D1C05@sb.org>
+	<87aakpt7uw.fsf@picasso.cante.net>
+	<20101202095324.34237fb2@jk.gs>
+	<87fwugs7pf.fsf@picasso.cante.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sylvain Rabot <sylvain.rabot@f-secure.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 02 20:24:11 2010
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Kevin Ballard <kevin@sb.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Thu Dec 02 20:30:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POElG-0002df-E4
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 20:24:10 +0100
+	id 1POEr8-0005Zb-Rd
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 20:30:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757186Ab0LBTYE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 14:24:04 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55066 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754102Ab0LBTYD (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 14:24:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 752412A0E;
-	Thu,  2 Dec 2010 14:24:20 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=8nKXECP/pXcnpggz/oL24pkixK0=; b=Gkh/JA
-	fWlpwF3pDKdlK6hrzPEYEYyhei2XyMSx9OHDTpEtDDfe8+hgK8+zWpX7gSQ1O8mJ
-	QVAiLcUTpo7t6jCrcrKffqladUCxVg4oXJal8GTFFJa1YmE70RDMlwXYGkQHZe30
-	eV5GXTUNGzqhzgWbGpDVTBJ25/vljO4JZRTaY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=mjrko0oDMf0Ln4cIO4ygN7W/J0FWPkqL
-	/iGSY8m2mqhNo3onzJhUarDZa0N9toeXhqJBYJwEusXifqKqh5bl2leBmQaqD8OS
-	qIgGEh4lPVjTBUI8tyH8hiGZRD584qdnOtf7EpeIK5+2uGfwaMFmVVifZVyV+5eq
-	xiXhls/ayps=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 340952A0A;
-	Thu,  2 Dec 2010 14:24:17 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C0BDF2A08; Thu,  2 Dec 2010
- 14:24:12 -0500 (EST)
-In-Reply-To: <20101202183257.GH3962@burratino> (Jonathan Nieder's message of
- "Thu\, 2 Dec 2010 12\:32\:57 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C130EEAA-FE49-11DF-AFD6-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
+	id S1757642Ab0LBTaI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 14:30:08 -0500
+Received: from zoidberg.org ([88.198.6.61]:58333 "EHLO cthulhu.zoidberg.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754221Ab0LBTaH (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 14:30:07 -0500
+Received: from jk.gs (xdsl-89-0-52-203.netcologne.de [::ffff:89.0.52.203])
+  (AUTH: LOGIN jast, SSL: TLSv1/SSLv3,128bits,AES128-SHA)
+  by cthulhu.zoidberg.org with esmtp; Thu, 02 Dec 2010 20:30:04 +0100
+  id 004002A0.4CF7F3BC.00007AAE
+In-Reply-To: <87fwugs7pf.fsf@picasso.cante.net>
+X-Mailer: Claws Mail 3.7.7 (GTK+ 2.22.0; i686-pc-linux-gnu)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162738>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162739>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+[Cc unculled again; I will ignore all further posts from you until you
+stop culling or explain why you are ignoring all requests to stop
+culling.]
 
-> FWIW I suspect those are both "literal" environments, thus governed
-> by the rule described in v1.6.0-rc0~152 (git-format-patch(1): fix
-> stray \ in output, 2008-07-02).
->
-> Based on "git grep -e '~[^~].*~' -- Documentation/", I think you found
-> them all, unless there are some examples span multiple lines.
+--- Jari Aalto <jari.aalto@cante.net> wrote:
 
-Thanks.  I'll queue this on 'maint' then.
+> Yes, that's the standard way of doing groups. Just like it's being
+> done in other manual pages that are huge. But it is not being done in
+> small manual pages. GNU project certainly doesn't in general.
 
--- >8 --
-Subject: [PATCH] Documentation: Fix mark-up of lines with more than one tilde
+What makes the GNU project the gold standard? They've got some pretty
+weird conventions, such as their coding style.
 
-The manual pages of cherry-pick and revert had examples with two revisions
-on the same line in the examples section, that looked like this:
+> I agree tat doing "groups" makes only sense on pages that have large
+> number of options. For a screenful, it's more distracting than worth.
 
-    git cherry-pick master~4 master~2::
+You are "agreeing with" something I didn't say. That's not very helpful.
 
-Unfortunately, this is taken as a mark-up to make the part between two
-tildes, "4 master", subscript.  Use {tilde} to make it explicit that we
-do want ~ characters in these places (backslash does not help).
+> Well. In my experience (having watched others to learn) the manual
+> pages are not the source used for learning.
 
-Reported-by: Sylvain Rabot <sylvain.rabot@f-secure.com>
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Documentation/git-cherry-pick.txt |    2 +-
- Documentation/git-revert.txt      |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+They were for me.
 
-diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index 3c96fa8..7300870 100644
---- a/Documentation/git-cherry-pick.txt
-+++ b/Documentation/git-cherry-pick.txt
-@@ -92,7 +92,7 @@ git cherry-pick ^HEAD master::
- 	Apply the changes introduced by all commits that are ancestors
- 	of master but not of HEAD to produce new commits.
- 
--git cherry-pick master\~4 master~2::
-+git cherry-pick master{tilde}4 master{tilde}2::
- 
- 	Apply the changes introduced by the fifth and third last
- 	commits pointed to by master and create 2 new commits with
-diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-index f40984d..752fc88 100644
---- a/Documentation/git-revert.txt
-+++ b/Documentation/git-revert.txt
-@@ -87,7 +87,7 @@ git revert HEAD~3::
- 	Revert the changes specified by the fourth last commit in HEAD
- 	and create a new commit with the reverted changes.
- 
--git revert -n master\~5..master~2::
-+git revert -n master{tilde}5..master{tilde}2::
- 
- 	Revert the changes done by commits from the fifth last commit
- 	in master (included) to the third last commit in master
--- 
-1.7.3.2.642.g8b3da
+>     - They are technical documentation
+
+I want related things in technical documentation to be grouped.
+
+>     - They are reference documentation
+
+I want related things in reference documentation to be grouped.
+
+>     - They are visited, then discarded, visited and discarded.
+
+Correct. Especially for that reason, I want related things to be
+grouped. I don't want to scroll through the entire list of options just
+to find everything related to what I want to do.
+
+>     - Someone throws up a git command (IRC #git, Blogs, Web page).
+> What do all those unreadable one letter options mean? Gosh they don't
+>       even mean the save accross different git* programs.
+
+The only realistic way around that is to stop using 
+
+>       > He searches manual pages A-Z, easy to spot all options. Not
+>       > interested in related things. He tries to understand the
+>       > command, script etc.
+
+Because everyone always knows whether the desired option is called
+--skip-foo, --no-use-foo, --disable-foo, --no-foo, --antifoo or --bar?
+
+In virtually all cases, I know what I want but not the name of the
+option. It rarely happens that I know the name of the option but not
+what it does.
+
+>       This person just wants to solve a problem, get things done, the
+>       faster the better. The easier the better, the less thinking the
+>       better.
+
+As mentioned, I believe that alphabetic ordering makes it harder and
+take longer.
+
+>       > He digestestes all. Related options, related pages, flipping
+>       > form man to man as he knows all the glory details is just
+>       > there.
+
+Even then, learning works better if you learn things grouped by
+similarities. Alphabetic ordering of the material just makes it harder.
+You don't see the English teachers hand out vocabulary lessons in
+alphabetic order, do you?
+
+> There are 100+ manual pages in the git distribution. You get even
+> disoriented in shere numbers of them. And you have to throw dice to
+> figure out in what page that information might be you are currently in
+> need.
+
+That is correct, but none of your patches change anything about that.
+
+> It's classical case of how to arrange information for easy retrieval.
+> Think Libraries as model.
+
+Have you ever been inside a library? The bookshelves are not ordered
+alphabetically. There is a section for physics and a section for
+zoology and a section for architecture. That makes it easier to find.
+
+In fact, even before the advent of computers, the catalogs of libraries
+were available in two forms: alphabetically ordered (which only helps
+if you know the exact name of what you are looking for) and ordered by
+category (which is pretty much the only way to find something if you
+don't know exactly what you want, unless you want to read the whole
+catalog back to front).
+
+
+
+In any case, we can go around in circles forever on this. Our opinions
+are different, and if we don't accept each others' arguments, nothing
+will ever come of this. The next stage in a productive discussion is to
+either stop bothering or to produce evidence. If you have any
+scientific evidence that alphabetically ordered lists make it easier to
+find things the names of which you don't know, I'll be happy to look at
+it.
+
+-Jan
