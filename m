@@ -1,109 +1,76 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [PATCH] git-reset.txt: Use commit~1 notation over commit^
-Date: Thu, 02 Dec 2010 07:51:06 -0500
-Message-ID: <1291294266.20062.10.camel@drew-northup.unet.maine.edu>
-References: <1291227258-17922-1-git-send-email-jari.aalto@cante.net>
-	 <1291230820.11917.25.camel@drew-northup.unet.maine.edu>
-	 <877hftuvvz.fsf@picasso.cante.net>
-	 <7vfwuhtafr.fsf@alter.siamese.dyndns.org>
-	 <AANLkTik8TNedGBQh7KXvRSf3HTTQf2-yMJC4VA4OOBjQ@mail.gmail.com>
-	 <87sjygspgy.fsf@picasso.cante.net> <buo39qg8zrf.fsf@dhlpc061.dev.necel.com>
-	 <87bp54s770.fsf@picasso.cante.net>
-Mime-Version: 1.0
-Content-Type: text/plain
+From: David Michael Barr <david.barr@cordelta.com>
+Subject: Re: [PATCH] fast-import: add 'ls' command
+Date: Thu, 2 Dec 2010 23:57:18 +1100
+Message-ID: <2F775519-BF60-4885-BAC1-1A09F7E0D9B2@cordelta.com>
+References: <1291286420-13591-1-git-send-email-david.barr@cordelta.com> <1291286420-13591-2-git-send-email-david.barr@cordelta.com> <AANLkTi=HuPK+q_+hdkg4yK45UcoOA5PAGi4OmsojCsFa@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1082)
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Miles Bader <miles@gnu.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Santi =?ISO-8859-1?Q?B=E9jar?= <santi@agolina.net>
-To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Thu Dec 02 13:52:36 2010
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 02 13:57:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PO8eH-0006Oe-M4
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 13:52:34 +0100
+	id 1PO8j4-0000KO-6w
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 13:57:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757513Ab0LBMw1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 07:52:27 -0500
-Received: from basalt.its.maine.edu ([130.111.32.66]:37572 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755394Ab0LBMw0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 07:52:26 -0500
-Received: from [130.111.39.151] (drew-northup.unet.maine.edu [130.111.39.151])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id oB2Cp9C1005500
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 2 Dec 2010 07:51:14 -0500
-In-Reply-To: <87bp54s770.fsf@picasso.cante.net>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=5
-	Fuz1=5 Fuz2=5
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: oB2Cp9C1005500
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1291899076.49441@8gDBU+VkLASuHHU8RrMKiA
+	id S1757524Ab0LBM5Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 07:57:25 -0500
+Received: from ironport1-mx.cbr1.mail-filtering.com.au ([203.88.115.241]:28856
+	"EHLO ironport1-mx.cbr1.mail-filtering.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755394Ab0LBM5Y (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Dec 2010 07:57:24 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0EADkm90zLWHsF/2dsb2JhbACjGAhxuUaIToVHBA
+X-IronPort-AV: E=Sophos;i="4.59,288,1288530000"; 
+   d="scan'208";a="294161402"
+Received: from node2.alpha.aussiehq.net.au ([203.88.123.5])
+  by ironport1-mta.cbr1.mail-filtering.com.au with ESMTP; 02 Dec 2010 23:57:19 +1100
+Received: (qmail 21535 invoked from network); 2 Dec 2010 23:57:19 +1100
+Received: from d110-33-95-167.mit3.act.optusnet.com.au (HELO ?192.168.1.1?) (110.33.95.167)
+  by 203.88.123.185 with SMTP; 2 Dec 2010 23:57:19 +1100
+In-Reply-To: <AANLkTi=HuPK+q_+hdkg4yK45UcoOA5PAGi4OmsojCsFa@mail.gmail.com>
+X-Mailer: Apple Mail (2.1082)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162702>
 
+Hi Sverre,
 
-On Thu, 2010-12-02 at 14:14 +0200, Jari Aalto wrote:
-> 2010-12-02 08:17 Miles Bader <miles@gnu.org>:
-> > Jari Aalto <jari.aalto@cante.net> writes:
-> >
-> >>> Additionaly, you must know about the ^ notation. That is the only way
-> >>> refer to the second parent HEAD^2, for example.
-> >>
-> >> If "must" is a requirement, I have to regret that there has yet to have
-> >> been a situation where I would ahve a need to refer to "second parent".
-> >>
-> >> I guess most of the basic features can be used without it.
-> >
-> > It doesn't matter.  There needs to be a better reason than "Jari doesn't
-> > like it."
+>> There are two forms of the 'ls' command, one that takes a tree-ish and
+>> one relative to the index. Allow the tree-ish variant to be used anywhere
+>> a comment is allowed. Allow the index variant to be used within a commit
+>> where file change commands would be used.
 > 
-> This has nothing to do with liking. It how infomation is read. When
-> information is consistent, it lessens cognitive load.
-> 
-> In the  "fine print" git-rev-parse(1) there can be the gory details.
-> 
-> most of the commenters probably are already experts and therefor wear
-> "expert glasses on". It's not necessarily the same for starters.
-> Certainly not when you try to teach 100 people. One form is much better
-> in that situation than variations. You only do it at the end:
-> 
->     "[After finishing 6 week training] Btw, if you need more details
->     look at...."
-> 
-> Experts can later pick anything they want.
-> 
-> Jari
+> The commit message doesn't explain why the index variant isn't allowed
+> anywhere a comment is allowed. I assume that's because there's a
+> half-constructed index if you're in the middle of a modify operation
+> or such?
 
-I have worked in instructional settings, as the instructor. I can say
-flat out that this is an incomplete view of the learning patterns of
-people being newly exposed to a concept or a technology. Besides, many
-people who consult manpages often think of themselves as experts (and
-may think better of the idea after consulting the documentation).
+The index variant is allowed between file change commands,
+at which the index should be consistent albeit deferred for hashing.
+I believe this is the only place where there's naturally an implicit
+active tree.
 
-The reality is that learning is not nearly as proscribed and rote a
-process as you are making it out to be. Rote memorization is good for
-learning multiplications tables, alphabets, and the approximate values
-of e and pi. It is not particularly suited for learning grammars and
-syntaxes--which is why language and algebra are typically not taught
-that way. Programming and using computers benefits greatly from
-presenting multiple varied examples--even to the supposed experts who
-probably don't know it all either.
+Simply, "relative to the index" only makes sense when describing
+a commit.
 
-Leave the odd examples in the manpages--people depend on them being
-there.
+Unfortunately, the list server dropped my summary email :(
+The patch was supposed to be marked as a RFC and I gave an outline
+of the intended use.
 
--- 
--Drew Northup N1XIM
-   AKA RvnPhnx on OPN
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+The key features I need for svn-fe are access to the index for the
+current commit and access to the content of older marked commits.
+
+NB: This version doesn't support unquoted paths.
+
+--
+David Barr
