@@ -1,99 +1,70 @@
-From: Jari Aalto <jari.aalto@cante.net>
-Subject: [PATCH v2] git-cherry.txt: Change symbol marks in graph.
-Date: Thu, 02 Dec 2010 14:28:48 +0200
-Organization: Private
-Message-ID: <8762vcs6in.fsf_-_@picasso.cante.net>
-References: <4CF7543B.6060900@drmicha.warpmail.net>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH] fast-import: add 'ls' command
+Date: Thu, 2 Dec 2010 13:37:24 +0100
+Message-ID: <AANLkTi=HuPK+q_+hdkg4yK45UcoOA5PAGi4OmsojCsFa@mail.gmail.com>
+References: <1291286420-13591-1-git-send-email-david.barr@cordelta.com> <1291286420-13591-2-git-send-email-david.barr@cordelta.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 02 13:29:47 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: David Barr <david.barr@cordelta.com>
+X-From: git-owner@vger.kernel.org Thu Dec 02 13:37:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PO8IF-0003hJ-4m
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 13:29:47 +0100
+	id 1PO8Q7-00089M-Ft
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 13:37:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757550Ab0LBM3K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 07:29:10 -0500
-Received: from lo.gmane.org ([80.91.229.12]:55552 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757538Ab0LBM3C (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 07:29:02 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PO8HU-0003Ns-JF
-	for git@vger.kernel.org; Thu, 02 Dec 2010 13:29:00 +0100
-Received: from a91-155-187-216.elisa-laajakaista.fi ([91.155.187.216])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 13:29:00 +0100
-Received: from jari.aalto by a91-155-187-216.elisa-laajakaista.fi with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 13:29:00 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: a91-155-187-216.elisa-laajakaista.fi
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.2 (gnu/linux)
-In-Reply-to: <4CF7543B.6060900@drmicha.warpmail.net>
-Cancel-Lock: sha1:eXufZh1SsTeeoIONeb4VpvpFHRA=
+	id S1757458Ab0LBMhq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 07:37:46 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:55976 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757441Ab0LBMhp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 07:37:45 -0500
+Received: by yxt3 with SMTP id 3so3540104yxt.19
+        for <git@vger.kernel.org>; Thu, 02 Dec 2010 04:37:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=L8d0MPYKO5haypyd6nAuJ1KS+YRrAmg4KFLKq4dp7lE=;
+        b=iTCPnnkiNXa79O3WgZo7OccDBehJ1jl3vhB2idjeOrW0MtKhkJcYSxyIOIOQ628T7W
+         UujDfxU8WzHMj1vfQmZW1iXgPJcvtCuX118K0SlSyCbNLvhgBjI7PG+clhgEN3ygNkUY
+         H89fHoK9R5qztcMi7RzoZ/Q697yMjRi+YhFsE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=qBJOCT8SMwH2yOcu4WggCXH/zTYl55qiiwzxMXbdfibj9KJZ6slBh2VvtFeWHj+UlF
+         /b1hOVyGl+pGq8pdTcEiEXzPdUZ/ID4vOQ5r9yAdrTMl24qdIRvwAhKHQdeoHwSKNErg
+         r764l8knx2BMfKLfosA0dOl225O9RNSe4tUDs=
+Received: by 10.151.10.3 with SMTP id n3mr1377292ybi.245.1291293464392; Thu,
+ 02 Dec 2010 04:37:44 -0800 (PST)
+Received: by 10.151.100.19 with HTTP; Thu, 2 Dec 2010 04:37:24 -0800 (PST)
+In-Reply-To: <1291286420-13591-2-git-send-email-david.barr@cordelta.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162696>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162697>
 
-The common commit were marked with a minus sign (-), but that is
-usually interpreted as something less or substracted. Use natural
-equal sign (=). Commits that are not in upstream were marked with plus
-sign (+) but a question mark (?) is visually a litle more striking
-(erect) in context where all other signs are "flat". It also helps
-visually impared to see difference between (= ... ?).
+Heya,
 
-Signed-off-by: Jari Aalto <jari.aalto@cante.net>
----
- Documentation/git-cherry.txt |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+On Thu, Dec 2, 2010 at 11:40, David Barr <david.barr@cordelta.com> wrote:
+> There are two forms of the 'ls' command, one that takes a tree-ish and
+> one relative to the index. Allow the tree-ish variant to be used anywhere
+> a comment is allowed. Allow the index variant to be used within a commit
+> where file change commands would be used.
 
-    Revised:
+The commit message doesn't explain why the index variant isn't allowed
+anywhere a comment is allowed. I assume that's because there's a
+half-constructed index if you're in the middle of a modify operation
+or such?
 
-    >> +in the <upstream> branch are prefixed with a equal (=) sign, and those
-    >
-    > "an equal"
-
-
-diff --git a/Documentation/git-cherry.txt b/Documentation/git-cherry.txt
-index fed115a..f49eded 100644
---- a/Documentation/git-cherry.txt
-+++ b/Documentation/git-cherry.txt
-@@ -19,13 +19,13 @@ the 'git patch-id' program.
- Every commit that doesn't exist in the <upstream> branch
- has its id (sha1) reported, prefixed by a symbol.  The ones that have
- equivalent change already
--in the <upstream> branch are prefixed with a minus (-) sign, and those
--that only exist in the <head> branch are prefixed with a plus (+) symbol:
-+in the <upstream> branch are prefixed with an equal sign (=), and those
-+that only exist in the <head> branch are prefixed with a question mark (?) symbol:
- 
--               __*__*__*__*__> <upstream>
-+               _*__*__*__*__> <upstream>
-               /
-     fork-point
--              \__+__+__-__+__+__-__+__> <head>
-+              \__?__?__=__?__?__=__?__> <head>
- 
- 
- If a <limit> has been given then the commits along the <head> branch up
-@@ -34,7 +34,7 @@ to and including <limit> are not reported:
-                __*__*__*__*__> <upstream>
-               /
-     fork-point
--              \__*__*__<limit>__-__+__> <head>
-+              \__*__*__<limit>__=__?__> <head>
- 
- 
- Because 'git cherry' compares the changeset rather than the commit id
 -- 
-1.7.2.3
+Cheers,
+
+Sverre Rabbelier
