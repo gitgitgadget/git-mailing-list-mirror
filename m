@@ -1,226 +1,118 @@
 From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [PATCH] git-commit.txt: Order options alphabetically
-Date: Thu, 02 Dec 2010 06:23:16 -0800 (PST)
-Message-ID: <m3wrns2r2d.fsf@localhost.localdomain>
+Date: Thu, 02 Dec 2010 06:27:58 -0800 (PST)
+Message-ID: <m3sjyg2qtc.fsf@localhost.localdomain>
 References: <1291215526-11428-1-git-send-email-jari.aalto@cante.net>
 	<20101201165043.GF26120@burratino> <87r5e1v2g8.fsf@picasso.cante.net>
-	<7vzkspuw8g.fsf@alter.siamese.dyndns.org>
-	<295D1E95-1C61-4960-8C9C-BDB0BD4A1A50@sb.org>
-	<87mxopt8my.fsf@picasso.cante.net>
-	<E02740CE-37EE-4701-BB2D-18AD493D1C05@sb.org>
-	<87aakpt7uw.fsf@picasso.cante.net> <20101202095324.34237fb2@jk.gs>
-	<87fwugs7pf.fsf@picasso.cante.net>
+	<m362vd4c6h.fsf@localhost.localdomain>
+	<87k4jtuyky.fsf@picasso.cante.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, =?iso-8859-15?q?Jan_Kr=FCger?= <jk@jk.gs>,
-	Kevin Ballard <kevin@sb.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
 To: Jari Aalto <jari.aalto@cante.net>
-X-From: git-owner@vger.kernel.org Thu Dec 02 15:23:29 2010
+X-From: git-owner@vger.kernel.org Thu Dec 02 15:28:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POA4F-0007nr-QI
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 15:23:28 +0100
+	id 1POA8l-0001bv-BS
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 15:28:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757827Ab0LBOXV convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Dec 2010 09:23:21 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:45431 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757813Ab0LBOXU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Dec 2010 09:23:20 -0500
-Received: by ywl5 with SMTP id 5so4102874ywl.19
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 06:23:19 -0800 (PST)
+	id S932133Ab0LBO2D (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 09:28:03 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:38941 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932121Ab0LBO2B (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 09:28:01 -0500
+Received: by fxm20 with SMTP id 20so1181404fxm.19
+        for <git@vger.kernel.org>; Thu, 02 Dec 2010 06:28:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:received
          :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=MnyY7r8Gn4rIRHfJmJ52GV4SOhCCMfTyrIgiXd+yCoo=;
-        b=C1sqSBjTJta6yHY/tumxxCIWjEKibqDCgriCfsJ6YvVW0Rb4iV0OrwkOR52WnQ6947
-         hF7aI73Vi0lFYk2rS57D22YXzL+d1eGeqTMgX0V8iNlfzNZrCUtqyCECVqn7L9ZL3cUQ
-         7NIc26ZFtCCWQd9RbKQ/3vHLy3B6SgFWnpKek=
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=M4EAJw5YA1UxSDZ3iHr1nxbIvpBghVksHXcdVDFMgFY=;
+        b=jgo6Zf2yuouedfb3WhGjBJ/krmbJVVCicg/r6aXTi5WtkCNbWr9vIiVjtDZyoQ61EO
+         MfCOkYmcW9ZaK5RYFDVO81mb6StbI24EpGPblftf3Op/HcgAgAnqK5yXXM2bagGB9ynC
+         LXfACXlZdQfOEyVeEu47N2tPr28w6f6vJqgjo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=PK7FGeIzxzoAN1KGweHeEKkjPy0lsJHd8+6ZvY93D1vBeA/zOGZAPwp1SaBt/rgMAK
-         ThdQrbHqrRk5094Wm04CivLdVU9uYvVdFUeLrH2NG5FGq6rT+msqtea9QrhyCjaRbQ7z
-         AXSPJZz3pXHQWasAItCGf1p55Wq7V54oMUW6U=
-Received: by 10.223.115.203 with SMTP id j11mr663394faq.35.1291299799092;
-        Thu, 02 Dec 2010 06:23:19 -0800 (PST)
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=R9YGW9xvdVSkSJBTfFqjqR5qWAum7yUZeVkeRa1xF+Ye4YWgrcjxHIthIpsSPQGz8/
+         p9ewmW8qfqcDgWpoR4rvVoB5O/rujG9jcrF/VTc7u2HjuIAryJOj6r0uTpQ96NmcwRS1
+         1iblEjxB8YfQhljcFbjbnuWlbBSskhReegmt4=
+Received: by 10.223.109.200 with SMTP id k8mr647546fap.136.1291300080017;
+        Thu, 02 Dec 2010 06:28:00 -0800 (PST)
 Received: from localhost.localdomain (abwq166.neoplus.adsl.tpnet.pl [83.8.240.166])
-        by mx.google.com with ESMTPS id y3sm199500fai.14.2010.12.02.06.23.07
+        by mx.google.com with ESMTPS id n1sm200319fam.40.2010.12.02.06.27.57
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 02 Dec 2010 06:23:16 -0800 (PST)
+        Thu, 02 Dec 2010 06:27:58 -0800 (PST)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oB2EMKnP021383;
-	Thu, 2 Dec 2010 15:22:30 +0100
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oB2ERRfE021452;
+	Thu, 2 Dec 2010 15:27:37 +0100
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id oB2ELllR021378;
-	Thu, 2 Dec 2010 15:21:47 +0100
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id oB2ERBll021447;
+	Thu, 2 Dec 2010 15:27:11 +0100
 X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <87fwugs7pf.fsf@picasso.cante.net>
+In-Reply-To: <87k4jtuyky.fsf@picasso.cante.net>
 User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162707>
-
-Please do not cull Cc-list, i.e. respond replying to all people who
-participate in given (sub)thread.  (If it is not possible, tell why).
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162708>
 
 Jari Aalto <jari.aalto@cante.net> writes:
-> 2010-12-02 10:53 Jan Kr=FCger <jk@jk.gs>:
-> > [Cc un-culled]
+> 2010-12-01 19:48 Jakub Narebski <jnareb@gmail.com>:
+> > > 2010-12-01 18:50 Jonathan Nieder <jrnieder@gmail.com>:
 > >
-> > --- Jari Aalto <jari.aalto@cante.net> wrote:
+> > But because some manpages "include" other pages (to refactor common
+> > options), it would be impossible to sort alphabetically options in all
+> > manpages.  So why bother with impossible?  It would only introduce
+> > inconsistency.
+> 
+> Decreasing entropy is better goal even if we cannot make it perfect. We
+> do what we can. And there are many pages that don't use include.
+
+Increasing inconsistency is not good, and that would be the final side
+effect.
+ 
+> I don't mind work. You just watch and lean back.
+
+But we do mind unnecessary code churn (well, in this case documentation
+churn).  Unless you regard it as "academical" exercise.
+ 
+The final decision on merging in (accepting) changes lies at git
+maintainer.
+
+> > > professional, it looks clean. And it works when searching (= no
+> > > orientation problems).
 > >
-> > > The reader have to guess "imagined groups"? Hm, that's interestin=
-g.
-> >
-> > Perhaps a more desirable (and agreeable) patch would introduce grou=
-p
-> > subheadings, then?
->=20
-> Yes, that's the standard way of doing groups. Just like it's being do=
-ne
-> in other manual pages that are huge. But it is not being done in smal=
-l
-> manual pages. GNU project certainly doesn't in general.
+> > It works if you have separate user's documentation from reference
+> > documentation.  GNU projects were meant to have manpages as reference,
+> > and info pages as user's documentation.  Options sorted alphabetically
+> > might make sense for reference documentation.
+> 
+> It makes sense regardless. Printing literature and how people read and
+> search information hasn't changed since printing was invented.
 
-Note that GNU project produced many more or less stupid/smart
-conventions.  It doesn't mean that we should follow them blindly
-(alphabetical sorting of options in manpages, GNU ChangeLog format,
-GNU indent style for C).
+How people search information *has* changed since printing was invented.
 
->=20
-> I agree that doing "groups" makes only sense on pages that have large
-> number of options. For a screenful, it's more distracting than worth.
+> > But git manpages doesn't serve _only_ as reference documentation.  And
+> > learning commands from manpages where options are sorted alphabetically
+> > instead of grouped together by function *suck* big time.
+> 
+> Nope. Manual pages are not where people learn things any more. They
+> Google. They buy books. They copy from fellow worker.
+> 
+> The manual pages main use it as reference material. We don't need to
+> fight the obvious.
 
-The other side of the fact that creating subsections grouping types of
-options makes only sense for pages/groups that have large number of
-options is that we need sorting by function, grouping related options
-together.  See also use case below.
+Counterexample: Perl manpages.
 
-> > In rev-list-related options we already have a couple of explicit
-> > groups.
->=20
-> I can't find that manual page or file under Documentation/, could you
-> help here?
-
-"man git-rev-list", Documentation/rev-list-options.txt
-=20
-[...]
-> Well. In my experience (having watched others to learn) the manual pa=
-ges
-> are not the source used for learning.
-
-Counterexample: Perl.
-
-> People go to the manual pages once they have a specific need for
-> infomation and details. I could sketch these uses of manual pages:
->=20
->     - Someone throws up a git command (IRC #git, Blogs, Web page). Wh=
-at
->       do all those unreadable one letter options mean? Gosh they don'=
-t
->       even mean the same accross different git* programs.
->=20
->       > He searches manual pages A-Z, easy to spot all options. Not
->       > interested in related things. He tries to understand the
->       > command, script etc.
-
-Contrived use case.  Disregarded.
-
->=20
->     - Someone is learning Git.
->=20
->       > He certainly does not start from manual pages. Other soources=
- of
->       > information are more in to him. Besides  Windows does not hav=
-e those.
-
-Did you check that 'man git-<cmd>' doesn't work on git on MS Windows
-(msysGit, git from Cygwin)?
-
-You can always use 'git --help <cmd>'.
-
->       > We might guess what MySGIt as other do: they reach Google but=
-ton.
->=20
->       This person just wants to solve a problem, get things done, the
->       faster the better. The easier the better, the less thinking the
->       better.
-
-They read "Git User's Manual", or "Pro Git", or perhaps "Git Community =
-Book"
-(the first included with git, the second and third available on-line).
-
->=20
->     - Geek. He wants to learn inside out.
->=20
->       > He digests all. Related options, related pages, flipping
->       > form man to man as he knows all the glory details is just the=
-re.
-
-And for geek grouping related options/config variables together is
-helpful.
-
-
-You omitted very important use case, something that was mentioned more
-than once in this and related threads:
-
-      - Someone wants to know/remember how to do something in Git.
-        Assume that this someone knows git quite well, but not by heart=
-=2E
-
-      Here there is example that was give to you in this thread (or
-      related subthread), namely someone checking the name of option th=
-at
-      ignores whitespace, and because related options are grouped toget=
-her
-      the he/she realizes that he/she wants different but related optio=
-n
-      (-b/--ignore-space-change vs -w/--ignore-all-space).
-
-      Another example could be someone searching for config options tha=
-t
-      affect git (re)packing performance.  Currently those config optio=
-ns
-      are grouped together.
-
-      If options are sorted alphabetically this task is made much harde=
-r.
-      Note that he/she know how to use searching in pager or web browse=
-r.
-
-> It all depends if it is desireable to make pages more approachable to
-> the average group, or are they kept to serve only small core audience=
-=2E
->=20
-> There are 100+ manual pages in the git distribution. You get even
-> disoriented in sheer numbers of them. And you have to throw dice to
-> figure out in what page that information might be you are currently i=
-n
-> need.
->=20
-> It's classical case of how to arrange information for easy retrieval.
-> Think Libraries as model.
-
-Computerized index, or manual?  Perhaps it is classical case, but it is
-outdated: modern solutions use folksonomies / labels / tagging rather t=
-han
-Trove / Dewey classification or alphabetical sorting.
-
---=20
+-- 
 Jakub Narebski
 Poland
 ShadeHawk on #git
