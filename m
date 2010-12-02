@@ -1,57 +1,134 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: Problems using perl's Git.pm module
-Date: Thu, 2 Dec 2010 14:23:32 +0100
-Message-ID: <AANLkTi=8=k9iNWzTnGz821k9A_CZNiEt_KkC8TXu6oS_@mail.gmail.com>
-References: <20101202114003.GA26070@raven.wolf.lan>
+From: Peter van der Does <peter@avirtualhome.com>
+Subject: Re: [PATCH v4 0/2] Make git-completion Bash 4 compatible
+Date: Thu, 2 Dec 2010 09:16:13 -0500
+Message-ID: <20101202091613.6ac8f816@MonteCarlo.grandprix.int>
+References: <1291236582-28603-1-git-send-email-peter@avirtualhome.com>
+	<20101202091624.GB1771@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Josef Wolf <jw@raven.inka.de>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 02 14:23:40 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	SZEDER =?ISO-8859-1?B?R+Fib3I=?= <szeder@ira.uka.de>,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Kevin Ballard <kevin@sb.org>,
+	Mathias Lafeldt <misfire@debugon.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 02 15:16:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PO98N-0004hF-LE
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 14:23:39 +0100
+	id 1PO9xc-0004Jc-AK
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 15:16:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757464Ab0LBNXe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 08:23:34 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:47405 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756773Ab0LBNXd (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 08:23:33 -0500
-Received: by fxm20 with SMTP id 20so1122018fxm.19
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 05:23:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:content-type;
-        bh=m9JNvO40d43ckp5ayVaFrp1pM994DpjZpl7SMuo3J/0=;
-        b=frXCPTVpIybNLfiqWm0n2a3UpBU5DywGIk1fD9q8AIF2MaC8Ovhzng4G44tZqxG6YL
-         11zHtNx4z1I4An4ZANavkqa9Vm1ZCNfuGfYf+LXJbVPfPKk3aY90g0OkHPYGNAo1OCC0
-         BE4SEdfSSpGfynDMwzsZMxTcpMSJFuD8sfYdg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :content-type;
-        b=T2tZqJ9oKAaapsjhLZoT/N/RSMJjZ/dMiJY+7X7pqgo9oXFWbHiVYie/WSDcH1NtmM
-         kAnM8coVawzVKjO/cwzR9NpW0xGKhIqr2ppzbjdaQH/PGXYG0c9nzcsNIJvjzrgKqmoQ
-         nAhn9Sy9Pr0EBjgHpm8e2XdkEx1qd/UACETwQ=
-Received: by 10.223.71.207 with SMTP id i15mr607197faj.9.1291296212335; Thu,
- 02 Dec 2010 05:23:32 -0800 (PST)
-Received: by 10.223.74.207 with HTTP; Thu, 2 Dec 2010 05:23:32 -0800 (PST)
-In-Reply-To: <20101202114003.GA26070@raven.wolf.lan>
+	id S1757735Ab0LBOQ1 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Dec 2010 09:16:27 -0500
+Received: from morn.lunarbreeze.com ([216.227.218.220]:43306 "EHLO
+	morn.lunarbreeze.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757445Ab0LBOQ0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 2 Dec 2010 09:16:26 -0500
+Received: from c-69-248-93-14.hsd1.nj.comcast.net ([69.248.93.14] helo=monza.grandprix.int)
+	by morn.lunarbreeze.com with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.69)
+	(envelope-from <peter@avirtualhome.com>)
+	id 1PO9xJ-0004Nr-Pg; Thu, 02 Dec 2010 06:16:18 -0800
+Received: from MonteCarlo.grandprix.int (montecarlo.grandprix.int [192.168.1.102])
+	by monza.grandprix.int (Postfix) with ESMTPA id D24A3D79EE;
+	Thu,  2 Dec 2010 09:16:14 -0500 (EST)
+In-Reply-To: <20101202091624.GB1771@burratino>
+X-Mailer: Claws Mail 3.7.6 (GTK+ 2.22.0; i486-pc-linux-gnu)
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - morn.lunarbreeze.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - avirtualhome.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162705>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162706>
 
-On Thu, Dec 2, 2010 at 12:40, Josef Wolf <jw@raven.inka.de> wrote:
-> I am trying to use perl's Git.pm module, but for some reason, it keeps
-> bailing out:
+On Thu, 2 Dec 2010 03:16:24 -0600
+Jonathan Nieder <jrnieder@gmail.com> wrote:
 
-Why are you using it? It's for internal use only.
+> Hi again,
+>=20
+> Peter van der Does wrote:
+>=20
+> > Make git-completion Bash 4 compatible.
+>=20
+> Thanks again for this work and sorry for all the fuss.
+>=20
+> > Peter van der Does (2):
+> >   Introduce functions from bash-completion project.
+>=20
+> This patch introduces a minor regression in that it breaks the
+> (already somewhat incomplete) zsh support.  Should be fixable by
+> falling back to using COMP_WORDS on zsh.
+>=20
+> >   Use the new functions to get the current cword.
+>=20
+> This one introduces some subtle differences between commands and imho
+> does more than it set out to do, by differentiating word splitting
+> behavior between commands.  bash 3 was not splitting COMP_WORDS at
+> equal signs or colons, ever.  Maybe we can start with that and then
+> make refinements on top later.
+>=20
+> While trying that out, I had an idea.  The patch depends on
+> understanding the bash-completion library function introduced by patc=
+h
+> 1, but I think we can avoid that by rearranging the patch series like
+> this:
+>=20
+>  1. If _get_comp_words_by_ref is already defined, use it to fetch
+>     completion words.  Otherwise, just use COMP_WORDS (using a stub
+>     _get_comp_words_by_ref), maintaining the current behavior.
+>     [shown below]
+>=20
+>  2. Import the definition of _get_comp_words_by_ref from the
+>     bash-completion lib and use it if ZSH_VERSION is unset.
+>=20
+>  3. Further refinements, if needed.
+>=20
+> What do you think?
+>=20
 
-Couldn't you use one of the Perl Git wrappers on the CPAN?
+I like the idea and we should go with this solution.
+
+If by importing you mean using :
+[CODE]. /git_bash_completion-functions[/CODE] in the
+contrib/completion/git-completion.bash script, which would be the best
+solution imho. The question is where to place that the function file.
+
+This would also means changing the documentation inside the
+git-completion.bash script, currently the instructions are:
+[QUOTE]
+# To use these routines:
+#
+#    1) Copy this file to somewhere (e.g. ~/.git-completion.sh).
+#    2) Added the following line to your .bashrc:
+#        source ~/.git-completion.sh
+[/QUOTE]
+
+It would have to include copying the functions file somewhere as well.
+
+Or we could use the method used now and include the functions in the
+git-completion.bash script.
+
+I'll be waiting for further feedback from G=E1bor, as he mentioned on t=
+he
+list of he had some little changes to fix some minor nits and bugs
+before completely implementing this solution.
+
+--=20
+Peter van der Does
+
+GPG key: E77E8E98
+
+IRC: Ganseki on irc.freenode.net
+Twitter: @petervanderdoes
