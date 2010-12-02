@@ -1,75 +1,91 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: cannot find hash in the log output
-Date: Thu, 2 Dec 2010 16:07:20 -0500
-Message-ID: <AANLkTimExbMn4-E-zuAGmi+p1wNAHoetpeyr2SK6vGxk@mail.gmail.com>
-References: <AANLkTi=5b26aPLm_Byqg=c9=sPpg5jEPDDpf1J9WgOdY@mail.gmail.com>
-	<7v8w07rje3.fsf@alter.siamese.dyndns.org>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC/PATCH] Re: git submodule -b ... of current HEAD fails
+Date: Thu, 02 Dec 2010 22:11:13 +0100
+Message-ID: <4CF80B71.3010309@web.de>
+References: <20101201171814.GC6439@ikki.ethgen.de> <20101201185046.GB27024@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 02 22:07:29 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Klaus Ethgen <Klaus@Ethgen.de>,
+	Sven Verdoolaege <skimo@kotnet.org>, mlevedahl@gmail.com
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 02 22:12:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POGNE-00035e-4l
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 22:07:28 +0100
+	id 1POGRu-0005pI-QS
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 22:12:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757867Ab0LBVHW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 16:07:22 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:56901 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757454Ab0LBVHW (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 16:07:22 -0500
-Received: by bwz15 with SMTP id 15so7662662bwz.19
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 13:07:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=QeHlUk5v2Bk3Fy0dXQvaNZu7k4h9Gg1uOzMsxTYzOCw=;
-        b=l0tM1vo46MiAKN+vgDxbSgBkcUxQ+T1Ptfum4niCsPXNoCbGb80fvnTKlS5FWwJEMa
-         8AWtJMi60rBl8jWW8fActfGalKIesOMDBFebA/n08tPi8NtKZt15TtkgzEZewQS+/p0v
-         71Yl5LNnY9gIwgiS0Dg8CY/PQE61Pecj+Xvhg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=ngM2k7FWvDeodfCTDQ0venyfg4TxH6k2o1z6HL+lmxTD2M2V4nqWYB0FNKVTuEgybG
-         M4GZvrXxolWZJVBHBvvYOUZtBhy/jpi2nDiMBCsEbAfqk6Cj10ah8PXYgZ8fRNKF8dvE
-         iLpQTmzAEBGpJIk+e5UeF3OnjyvHU6uTlj4SQ=
-Received: by 10.204.66.204 with SMTP id o12mr1462929bki.29.1291324040288; Thu,
- 02 Dec 2010 13:07:20 -0800 (PST)
-Received: by 10.204.152.206 with HTTP; Thu, 2 Dec 2010 13:07:20 -0800 (PST)
-In-Reply-To: <7v8w07rje3.fsf@alter.siamese.dyndns.org>
+	id S1758031Ab0LBVMJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Dec 2010 16:12:09 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:43704 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757967Ab0LBVMI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 16:12:08 -0500
+Received: from smtp03.web.de  ( [172.20.0.65])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 2127717B063B5;
+	Thu,  2 Dec 2010 22:11:18 +0100 (CET)
+Received: from [93.246.39.92] (helo=[192.168.178.51])
+	by smtp03.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1POGQw-0000wg-00; Thu, 02 Dec 2010 22:11:18 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <20101201185046.GB27024@burratino>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19fgyEQAoekcfqVjlHMgy+RqwN8qD2JE0iz73uR
+	O47+breT6GRw/uXd53YDNFZ+nimBKUn3SHEzLt9VMYZT2jvFa8
+	f0OiEmhcGxmru5bMqYYw==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162747>
 
-On Thu, Dec 2, 2010 at 3:48 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Eugene Sajine <euguess@gmail.com> writes:
->
->> I have a strange issue (git v 1.7.3.2). I'm cloning the repository,
->> navigating to the folder containing some scripts and performing
->> git hash-object <one_of_my_scripts>
->>
->> Then I'm trying to run:
->>
->> git log --raw --no-abbrev | grep <resulting SHA1 from previous command>
->>
->> And i don't see anything.
->
-> Do you see it in the output from "git ls-tree -r HEAD"?
->
+Am 01.12.2010 19:50, schrieb Jonathan Nieder:
+> 	git submodule add -b $branch $repository
+>=20
+> fails when HEAD already points to $branch in $repository.
+>=20
+> Reported-by: Klaus Ethgen <Klaus@Ethgen.de>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+> Hi Klaus,
+>=20
+> Klaus Ethgen wrote at <http://bugs.debian.org/605600>:
+>=20
+>> Strange problem, if I create a submodule of an other repository givi=
+ng
+>> the currently used HEAD branch I get the error: =C2=BBfatal: git che=
+ckout:
+>> branch myimbabranch already exists=C2=AB while when giving other bra=
+nch
+>> work well.
+>=20
+> Interesting.  The problem is in cmd_add of git-submodule.sh; this
+> patch demonstrates a quick fix.  Jens, any idea why git submodule
+> is not using "clone --branch" directly?
+
+Nope, these lines date back to the time before I got involved in the
+submodule business ... Seems like this "git checkout" was added in
+March 2008 by Mark Levedahl (CCed), maybe he can shed some light on
+that.
+
+But to me your change looks good, so feel free to add:
+Acked-by: Jens Lehmann <Jens.Lehmann@web.de>
 
 
-yes. I do see it with your command.
-
-git ls-tree -r HEAD | grep <resulting SHA1 from git hash-object>
-
-Thanks,
-Eugene
+> diff --git a/git-submodule.sh b/git-submodule.sh
+> index 33bc41f..6242d7f 100755
+> --- a/git-submodule.sh
+> +++ b/git-submodule.sh
+> @@ -241,7 +241,7 @@ cmd_add()
+>  			# ash fails to wordsplit ${branch:+-b "$branch"...}
+>  			case "$branch" in
+>  			'') git checkout -f -q ;;
+> -			?*) git checkout -f -q -b "$branch" "origin/$branch" ;;
+> +			?*) git checkout -f -q -B "$branch" "origin/$branch" ;;
+>  			esac
+>  		) || die "Unable to checkout submodule '$path'"
+>  	fi
+>=20
