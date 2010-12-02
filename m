@@ -1,79 +1,88 @@
-From: Sylvain Rabot <sylvain@abstraction.fr>
-Subject: [PATCH] documentation: replace wrongly evalutated backslashed '~' characters
-Date: Thu,  2 Dec 2010 20:15:24 +0100
-Message-ID: <1291317324-19594-1-git-send-email-sylvain@abstraction.fr>
-References: <7vzksoqbjd.fsf@alter.siamese.dyndns.org>
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sylvain Rabot <sylvain.rabot@f-secure.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sylvain Rabot <sylvain@abstraction.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 02 20:15:50 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fast-import: add 'ls' command
+Date: Thu, 02 Dec 2010 11:20:09 -0800
+Message-ID: <7vr5e0q8wm.fsf@alter.siamese.dyndns.org>
+References: <1291286420-13591-1-git-send-email-david.barr@cordelta.com>
+ <1291286420-13591-2-git-send-email-david.barr@cordelta.com>
+ <AANLkTi=HuPK+q_+hdkg4yK45UcoOA5PAGi4OmsojCsFa@mail.gmail.com>
+ <20101202173722.GE3962@burratino>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	David Barr <david.barr@cordelta.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 02 20:21:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POEdC-0006eq-10
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 20:15:50 +0100
+	id 1POEi7-0000t4-Gf
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 20:20:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758038Ab0LBTPd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 14:15:33 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:55913 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757322Ab0LBTPc (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 14:15:32 -0500
-Received: by wyb28 with SMTP id 28so8553636wyb.19
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 11:15:31 -0800 (PST)
-Received: by 10.227.138.129 with SMTP id a1mr744699wbu.6.1291317331019;
-        Thu, 02 Dec 2010 11:15:31 -0800 (PST)
-Received: from localhost.localdomain (85-168-196-51.rev.numericable.fr [85.168.196.51])
-        by mx.google.com with ESMTPS id f35sm644364wbf.2.2010.12.02.11.15.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 02 Dec 2010 11:15:29 -0800 (PST)
-X-Mailer: git-send-email 1.7.3.2
-In-Reply-To: <7vzksoqbjd.fsf@alter.siamese.dyndns.org>
+	id S1757792Ab0LBTUb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 14:20:31 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35273 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757456Ab0LBTU2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 14:20:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4DBB42987;
+	Thu,  2 Dec 2010 14:20:46 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=plcI+EHPMfvq2kYWau0KRdaFwZ8=; b=yDbjxK
+	9Oxz2vulcRSClm1Lao0G2AYq+pKZdu8BrBV67XKB6CyfLZTHNPlscC9VV71pPVFJ
+	4GfXj0qaNIvbChzNfLId6T0DkHkwddcDZjPIWRTmrRXEpSxIRxQboSb3o9rOS6N1
+	rUROmugJu5jKQC4tAkBwrQmfR9Eefuoq+sk+s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=s7NObqtQC84lad1d+Scu4yKYDaW9OsbM
+	K+Rm7zNeji8Aoaw3CKtrL1JHdtKs/uxaNWC0tgN913P15fOPHqi/37w7mcmBz27B
+	TwbVmpv5nGjD30GzLynIxdJRD3kyqeMGMaGexRR3vIo6B+HpDVqnT/Pbcoht9yXe
+	Df7cAWpYGCo=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DABFC297C;
+	Thu,  2 Dec 2010 14:20:39 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 18DB1296F; Thu,  2 Dec 2010
+ 14:20:31 -0500 (EST)
+In-Reply-To: <20101202173722.GE3962@burratino> (Jonathan Nieder's message of
+ "Thu\, 2 Dec 2010 11\:37\:22 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3FA998E6-FE49-11DF-914A-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162736>
 
-Sometimes when there is more than one '~' on a line
-it gets evaluated even if being backslashed and cause
-'~' characters to be removed in the man pages.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Signed-off-by: Sylvain Rabot <sylvain@abstraction.fr>
----
- Documentation/git-cherry-pick.txt |    2 +-
- Documentation/git-revert.txt      |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+> I somewhat agree.  Actually I would go further: the word "index" brings
+> to mind .git/index and its in-core counterpart, so at the same time as
+> documenting it better, we might look into making it more self-
+> explanatory.  Maybe a syntax like
+>
+> 	ls current "path/to/entry"
+>
+> would make it clearer that this is about directory entries in
+> fast-import's active commit and not necessarily the usual index file?
 
-diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
-index 3c96fa8..7300870 100644
---- a/Documentation/git-cherry-pick.txt
-+++ b/Documentation/git-cherry-pick.txt
-@@ -92,7 +92,7 @@ git cherry-pick ^HEAD master::
- 	Apply the changes introduced by all commits that are ancestors
- 	of master but not of HEAD to produce new commits.
- 
--git cherry-pick master\~4 master~2::
-+git cherry-pick master{tilde}4 master{tilde}2::
- 
- 	Apply the changes introduced by the fifth and third last
- 	commits pointed to by master and create 2 new commits with
-diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
-index f40984d..752fc88 100644
---- a/Documentation/git-revert.txt
-+++ b/Documentation/git-revert.txt
-@@ -87,7 +87,7 @@ git revert HEAD~3::
- 	Revert the changes specified by the fourth last commit in HEAD
- 	and create a new commit with the reverted changes.
- 
--git revert -n master\~5..master~2::
-+git revert -n master{tilde}5..master{tilde}2::
- 
- 	Revert the changes done by commits from the fifth last commit
- 	in master (included) to the third last commit in master
--- 
-1.7.3.2
+I think that explains the feature better.  I was wondering if the stream
+somehow wanted to access the state the index of the repository happens to
+be.
+
+> I am not sure what syntax other vcs-es use for tree-ishes.  To avoid
+> name clashes (what if 'current' is the low-level name of a tree-ish?),
+> an alternative might be
+>
+> 	ls-tree :11 "path/to/historical/entry"
+> 	ls "path/to/current/entry"
+
+Is it an option to use "ls" for both cases and treat one-arg and two-arg
+cases differently?
