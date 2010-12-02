@@ -1,74 +1,78 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] documentation: escape '~' in git revert
-Date: Thu, 2 Dec 2010 11:50:13 -0600
-Message-ID: <20101202175013.GF3962@burratino>
-References: <1291311393-31843-1-git-send-email-sylvain.rabot@f-secure.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Problems using perl's Git.pm module
+Date: Thu, 02 Dec 2010 09:51:50 -0800
+Message-ID: <7vipzcrrk9.fsf@alter.siamese.dyndns.org>
+References: <20101202114003.GA26070@raven.wolf.lan>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Sylvain Rabot <sylvain.rabot@f-secure.com>
-X-From: git-owner@vger.kernel.org Thu Dec 02 18:50:31 2010
+To: Josef Wolf <jw@raven.inka.de>
+X-From: git-owner@vger.kernel.org Thu Dec 02 18:52:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PODIc-0007B2-Be
-	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 18:50:30 +0100
+	id 1PODKA-0007v1-1e
+	for gcvg-git-2@lo.gmane.org; Thu, 02 Dec 2010 18:52:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757703Ab0LBRuZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 2 Dec 2010 12:50:25 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:62179 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752971Ab0LBRuY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 12:50:24 -0500
-Received: by gxk1 with SMTP id 1so1333518gxk.19
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 09:50:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=DeoEGJM5fSzMZLaHtWtJNJFHobLJ1raeDFjee2NN7p0=;
-        b=KvPqaCB/guHvNKfYP/vu67KauNzspp4I+1VtYzt9PDVTwCBF8fRHswShrZnP6SMU/j
-         U2CGtB/FQtbOlQdYe3xE3J68QpMgZFwQuJYBTdlJtYoSvzfuCDD+SSkGDTP6oVoLz7kU
-         +rRG0UjKjZkgugGYrcvAqjSxf4f4tkhmXMKL4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=wYANw/Vgy2BwRpF62wTtadHpVPUd1uLEg7AUxth2GluLMcNZUfy1XWRRdyMhlCshVg
-         gDl8jfkKyd77WQ2Rh++ngOklM+LwiGJBtbyqR8m9jiYrhDKSUJo9AR+ieTmNZ5uMjGTa
-         2qxfINWE5vVF53v9H7lvruyyYHHmRo1ouN1B8=
-Received: by 10.151.14.7 with SMTP id r7mr2118368ybi.19.1291312224154;
-        Thu, 02 Dec 2010 09:50:24 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id v10sm455756yhg.45.2010.12.02.09.50.22
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 02 Dec 2010 09:50:23 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1291311393-31843-1-git-send-email-sylvain.rabot@f-secure.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1757798Ab0LBRv7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 12:51:59 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37679 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757466Ab0LBRv7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 12:51:59 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 029653B95;
+	Thu,  2 Dec 2010 12:52:18 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=d2Ht+ww1YNLSrNMpGU8S/yPywJ8=; b=c3GL7Y
+	LsXhF1PLxKLdoBMJcpVhivAX1msZ0s9J4Xao6QQRqXH3QJqvflDJF0NZ9iTyxSSs
+	ULwZTg55oqofVpKlaVRPUFMJ0TGbiX7KBrilvaQYeiX19dTOoJsUmf3QxRNV5+NL
+	ZWA8DpTpxRS9LSUKIN46EGc4EcWnrO3j+Tlv8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=fwsbxz3+wirXPB7gGbF5Frelkxgk97Az
+	IXNjL+H6Zt96iRlkEBuShYUP0uY1pS6RboCjmYa1MST53wP8us9aGFfYsCxp0hLM
+	oOOnbJNaP8BdixMQ3DsIkz2IanPRtC86765AglBpCF5MvvMzJTlo+lwZWDzuLZ4p
+	He1Ead1flyY=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D53E13B94;
+	Thu,  2 Dec 2010 12:52:15 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id EAD433B93; Thu,  2 Dec 2010
+ 12:52:12 -0500 (EST)
+In-Reply-To: <20101202114003.GA26070@raven.wolf.lan> (Josef Wolf's message of
+ "Thu\, 2 Dec 2010 12\:40\:03 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E63810F0-FE3C-11DF-A71E-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162720>
 
-Hi,
+Josef Wolf <jw@raven.inka.de> writes:
 
-Sylvain Rabot wrote:
+>   jw@raven:~/testrepos> git st
+>   # On branch master
+>   nothing to commit (working directory clean)
 
-> backslashing '~' characters do not have any effect, quoting with +++ has.
+I take it that you have "alias.st.cmd = status".
 
-Odd.  The first example already looks okay here.
+Observe what this gives you:
 
-> +++ b/Documentation/git-revert.txt
-[...]
-> -git revert -n master\~5..master~2::
-> +git revert -n master+++~+++5..master+++~+++2::
+    $ git st; echo $?
 
-Please use the {tilde} entity instead of +++, since the former (1) does
-not make text monospace and (2) works with older asciidoc.
+If you are running pre-1.7.0 version of git, I think "git status" was a
+synonym to "git commit --dry-run" and exited with non-zero status to
+signal the caller that there is nothing to commit, which is...
 
-Good catch, thanks.
+>   jw@raven:~/testrepos> ./test.pl
+>   # On branch master
+>   nothing to commit (working directory clean)
+>   status failed w/ code 1 at ./test.pl line 9
+
+...consistent with what we see here.
