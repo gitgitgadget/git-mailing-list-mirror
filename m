@@ -1,76 +1,65 @@
-From: jari.aalto@cante.net
-Subject: [PATCH] git-pull.txt: Mention branch.autosetuprebase
-Date: Fri,  3 Dec 2010 10:20:54 +0200
-Organization: Private
-Message-ID: <1291364454-9849-1-git-send-email-jari.aalto@cante.net>
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Cc: Jari Aalto <jari.aalto@cante.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 03 09:21:14 2010
+From: Josef Wolf <jw@raven.inka.de>
+Subject: Re: Problems using perl's Git.pm module
+Date: Fri, 3 Dec 2010 09:27:01 +0100
+Message-ID: <20101203082701.GC26070@raven.wolf.lan>
+References: <20101202114003.GA26070@raven.wolf.lan>
+ <AANLkTi=8=k9iNWzTnGz821k9A_CZNiEt_KkC8TXu6oS_@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 03 09:30:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POQtE-0006C8-S0
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 09:21:13 +0100
+	id 1POR25-0000Wv-Lp
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 09:30:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757806Ab0LCIVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 03:21:04 -0500
-Received: from emh03.mail.saunalahti.fi ([62.142.5.109]:56796 "EHLO
-	emh03.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756853Ab0LCIVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 03:21:03 -0500
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh03-2.mail.saunalahti.fi (Postfix) with SMTP id B4E69EC01D
-	for <git@vger.kernel.org>; Fri,  3 Dec 2010 10:21:00 +0200 (EET)
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A0499D75893; Fri, 03 Dec 2010 10:21:00 +0200
-Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
-	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id AA23A27D86
-	for <git@vger.kernel.org>; Fri,  3 Dec 2010 10:20:59 +0200 (EET)
-Received: from [192.168.1.5] (helo=picasso.cante.net)
-	by picasso.cante.net with esmtp (Exim 4.72)
-	(envelope-from <jari.aalto@cante.net>)
-	id 1POQsy-0002ZK-4V; Fri, 03 Dec 2010 10:20:56 +0200
-X-Mailer: git-send-email 1.7.2.3
-X-SA-Exim-Connect-IP: 192.168.1.5
-X-SA-Exim-Mail-From: jari.aalto@cante.net
-X-SA-Exim-Scanned: No (on picasso.cante.net); SAEximRunCond expanded to false
-X-Antivirus: VAMS
+	id S1758436Ab0LCIaO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Dec 2010 03:30:14 -0500
+Received: from quechua.inka.de ([193.197.184.2]:43535 "EHLO mail.inka.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755243Ab0LCIaN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 03:30:13 -0500
+Received: from raven.inka.de (uucp@[127.0.0.1])
+	by mail.inka.de with uucp (rmailwrap 0.5) 
+	id 1POR1v-00035U-L6; Fri, 03 Dec 2010 09:30:11 +0100
+Received: by raven.inka.de (Postfix, from userid 1000)
+	id 6735976337; Fri,  3 Dec 2010 09:27:01 +0100 (CET)
+Mail-Followup-To: Josef Wolf <jw@raven.inka.de>,
+	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= Bjarmason <avarab@gmail.com>,
+	git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=8=k9iNWzTnGz821k9A_CZNiEt_KkC8TXu6oS_@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162771>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162772>
 
-From: Jari Aalto <jari.aalto@cante.net>
+On Thu, Dec 02, 2010 at 02:23:32PM +0100, =C6var Arnfj=F6r=F0 Bjarmason=
+ wrote:
+> On Thu, Dec 2, 2010 at 12:40, Josef Wolf <jw@raven.inka.de> wrote:
+> > I am trying to use perl's Git.pm module, but for some reason, it ke=
+eps
+> > bailing out:
+> Why are you using it?
 
-In "Options related to merging" mention also related option
-branch.autosetuprebase in git-config(1).
+1. It is always available whenever git is available, so I don't need to
+   search/install additional packages just to hack some scripts. If you
+   have to support multiple distros/OS'es, it starts getting a PITA to
+   find out what/how to install those additional packages.
 
-Signed-off-by: Jari Aalto <jari.aalto@cante.net>
----
- Documentation/git-pull.txt |    5 +++--
- 1 files changed, 3 insertions(+), 2 deletions(-)
+2. Since it is used by the core developers, I assumed that it would be
+   more robust than some third-party wrappers.
 
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index e47361f..7b4caac 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -98,8 +98,9 @@ include::merge-options.txt[]
- 	fetched, the rebase uses that information to avoid rebasing
- 	non-local changes.
- +
--See `branch.<name>.rebase` in linkgit:git-config[1] if you want to make
--`git pull` always use `{litdd}rebase` instead of merging.
-+See `branch.<name>.rebase` and `branch.autosetuprebase` in
-+linkgit:git-config[1] if you want to make `git pull` always use
-+`{litdd}rebase` instead of merging.
- +
- [NOTE]
- This is a potentially _dangerous_ mode of operation.
---=20
-1.7.2.3
+3. Since it is bundled with git, I'd not expect any version mismatches.
+   With a third-party wrapper, version mismatches are much more likely.
+
+> Couldn't you use one of the Perl Git wrappers on the CPAN?
+
+Which one would you suggest?
