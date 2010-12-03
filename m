@@ -1,91 +1,71 @@
-From: =?ISO-8859-15?Q?Dirk_S=FCsserott?= <newsletter@dirk.my1.cc>
-Subject: Q about git rev-parse {--is-inside-work-tree, --show-cdup}
-Date: Fri, 03 Dec 2010 22:06:36 +0100
-Message-ID: <4CF95BDC.60506@dirk.my1.cc>
+From: Jeff King <peff@peff.net>
+Subject: Re: cannot find hash in the log output
+Date: Fri, 3 Dec 2010 16:11:58 -0500
+Message-ID: <20101203211158.GA2632@sigill.intra.peff.net>
+References: <AANLkTi=5b26aPLm_Byqg=c9=sPpg5jEPDDpf1J9WgOdY@mail.gmail.com>
+ <7v8w07rje3.fsf@alter.siamese.dyndns.org>
+ <AANLkTimExbMn4-E-zuAGmi+p1wNAHoetpeyr2SK6vGxk@mail.gmail.com>
+ <AANLkTinAUfFge-AcfQevG2_9Gi3oOPy+-SrEZrfp4byn@mail.gmail.com>
+ <20101203175212.GA8267@sigill.intra.peff.net>
+ <AANLkTim59JP-fuVTeLwxV0bktbdCq04P8XzxVmbu2Qjd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Dec 03 22:06:48 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 03 22:12:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POcq6-00056O-9H
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 22:06:46 +0100
+	id 1POcvJ-0007eL-Vr
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 22:12:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753969Ab0LCVGk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 16:06:40 -0500
-Received: from smtprelay02.ispgateway.de ([80.67.31.36]:42379 "EHLO
-	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753695Ab0LCVGj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 16:06:39 -0500
-X-Greylist: delayed 5392 seconds by postgrey-1.27 at vger.kernel.org; Fri, 03 Dec 2010 16:06:39 EST
-Received: from [84.176.55.82] (helo=[192.168.2.100])
-	by smtprelay02.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1POcpy-0002tF-2d
-	for git@vger.kernel.org; Fri, 03 Dec 2010 22:06:38 +0100
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.12) Gecko/20101027 Lightning/1.0b2 Thunderbird/3.1.6
-X-Df-Sender: 757646
+	id S1753493Ab0LCVME (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 16:12:04 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:43098 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752659Ab0LCVMD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 16:12:03 -0500
+Received: (qmail 26094 invoked by uid 111); 3 Dec 2010 21:12:00 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (129.79.255.205)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 03 Dec 2010 21:12:00 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Dec 2010 16:11:58 -0500
+Content-Disposition: inline
+In-Reply-To: <AANLkTim59JP-fuVTeLwxV0bktbdCq04P8XzxVmbu2Qjd@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162856>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162857>
 
-Hi together,
+On Fri, Dec 03, 2010 at 03:10:40PM -0500, Eugene Sajine wrote:
 
-I wrote some shell scripts that do sth with my git repositories. I place
-my scripts in my ~/bin folder (not in the repo). So the first step in my
-scripts is always to check whether they get called from whithin a git
-repo and bail out if they don't.
+> Yes this does make sense to me. Although it is not necessary to have
+> conflicts during the merge - recursive merge as i understand also can
+> create new blobs.
 
+I haven't thought about it too hard, but I don't see why any merge would
+create a new blob unless there is a conflict. Otherwise you are always
+taking one of the blobs that already exists in some other part of
+history.
 
-I do this like so:
+> Now as this is pretty much clear: don't you think that the information
+> about one blob content changed during the merge should be present in
+> the merge commit info?
 
----------------------
-if [ "$(git rev-parse --is-inside-work-tree)" = "true" ] # (1)
-then
-      here=$(pwd)
-      cdup=$(git rev-parse --show-cdup);    # (2a)
-      cdup=${cdup:-"."}                     # (2b)
-      cd $cdup                              # (2c)
+No. We suppress "uninteresting" parts of merges by default because they
+are mostly clutter. If you really want to see them, use "-m".
 
-      [do sth useful from the topdir]
+> It seems strange that git log <filename> contains merge commit, but
+> git whatchanged <filename> doesn't show the merge commit, while this
+> merge commit actually had a change of content in the file,
 
-      cd $here
-      exit 0;
-else
-      echo "Not inside a git working tree."
-      exit 1;
-fi
----------------------
+The fact that git whatchanged does not show merge commits by default is
+just historical. There is really no need for whatchanged to exist at all
+these days, now that "git log" can do diffs internally. In fact, it is
+simply implemented these days as "git log" with a few different
+defaults.
 
-I have two questions:
-
-1. Wouldn't it be useful, if "git rev-parse" (1) had an option "-q" that
-simply indicates whether "--is-inside-work-tree" is true by means of the
-return code? Actually it has an option "-q" but that doesn't work with
-"--is-inside-work-tree".
-
-2. Wouldn't it be useful, if "git rev-parse --show-cdup" (2a) would
-return a dot "." instead of nothing if we are already in the topdir?
-That would make the steps (2a), (2b), (2c) to a simple "cd $(git
-rev-parse --show-cdup)".
-
-(For those who aren't familiar with shell programming: (2b) means: 'if
-$cdup is empty, then set it to "."'.)
-
-I know that 2. is a problem, because "git rev-parse" is a plumbing tool.
-People likely rely on "--show-dup" to return an empty string. But what
-about 1.? I think there's no harm if "-q" would work for
-"--is-inside-work-tree" as well.
-
-BTW: I'm sorry that all my sentences start with "I". ;-)
-
-What do you think? If appreciated, I'd like to work on a patch for (1).
-
-Cheers,
-     Dirk
+-Peff
