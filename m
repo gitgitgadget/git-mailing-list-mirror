@@ -1,63 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: cannot find hash in the log output
-Date: Fri, 3 Dec 2010 16:52:44 -0500
-Message-ID: <20101203215244.GA4278@sigill.intra.peff.net>
-References: <AANLkTi=5b26aPLm_Byqg=c9=sPpg5jEPDDpf1J9WgOdY@mail.gmail.com>
- <7v8w07rje3.fsf@alter.siamese.dyndns.org>
- <AANLkTimExbMn4-E-zuAGmi+p1wNAHoetpeyr2SK6vGxk@mail.gmail.com>
- <AANLkTinAUfFge-AcfQevG2_9Gi3oOPy+-SrEZrfp4byn@mail.gmail.com>
- <20101203175212.GA8267@sigill.intra.peff.net>
- <AANLkTim59JP-fuVTeLwxV0bktbdCq04P8XzxVmbu2Qjd@mail.gmail.com>
- <20101203211158.GA2632@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 5/7] web--browse: better support for chromium
+Date: Fri, 03 Dec 2010 13:57:49 -0800
+Message-ID: <7vipzamsde.fsf@alter.siamese.dyndns.org>
+References: <1291394861-11989-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <1291394861-11989-6-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 03 22:52:52 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 03 22:58:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POdYh-0007j5-PC
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 22:52:52 +0100
+	id 1POddr-0001TR-0E
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 22:58:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751557Ab0LCVwr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 16:52:47 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:55843 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750709Ab0LCVwq (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 16:52:46 -0500
-Received: (qmail 26720 invoked by uid 111); 3 Dec 2010 21:52:46 -0000
-Received: from Unknown (HELO sigill.intra.peff.net) (129.79.255.205)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 03 Dec 2010 21:52:46 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Dec 2010 16:52:44 -0500
-Content-Disposition: inline
-In-Reply-To: <20101203211158.GA2632@sigill.intra.peff.net>
+	id S1752659Ab0LCV6F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 16:58:05 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64378 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751785Ab0LCV6D (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 16:58:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BB31B3C35;
+	Fri,  3 Dec 2010 16:58:20 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Cy2P29nJ2tsCN83toEiLxNwnmLE=; b=v8OkJ/
+	w+1TuNaBQRpotxOYCxOx9bB/WT31pE2vVlA98/drxvr19LuFVFyDNl74bYQATv3k
+	n87Ghh+2nwy/fwm7by2zzP5Tm15f4Q9J+E6HzpPzioMxE2Oh/nB8U58pzv/iqDvy
+	1vjWBC0mJO34C5T0JW/v4IvZMy2ZQCi5HSU9s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=q1KM2wFDQ/puWeFXUMSvkL0xlmyXYtFJ
+	8PYF7DgKhOY2isuWz3iekFz6LGlF1b3G4rjzTwc3aRo9s5r2ksiF3jGgWPV8ddwz
+	pKs2uyHNm/kml3Yvz8RtDM5sdacbf+k2A2W56TrIsaTim+yFTcW3NTev4xXBjGLK
+	DqXMrRA+KQA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7A7423C31;
+	Fri,  3 Dec 2010 16:58:16 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DCFC83C2D; Fri,  3 Dec 2010
+ 16:58:10 -0500 (EST)
+In-Reply-To: <1291394861-11989-6-git-send-email-giuseppe.bilotta@gmail.com>
+ (Giuseppe Bilotta's message of "Fri\,  3 Dec 2010 17\:47\:39 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 6EA71DA0-FF28-11DF-BD08-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162863>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162864>
 
-On Fri, Dec 03, 2010 at 04:11:58PM -0500, Jeff King wrote:
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-> > Yes this does make sense to me. Although it is not necessary to have
-> > conflicts during the merge - recursive merge as i understand also can
-> > create new blobs.
-> 
-> I haven't thought about it too hard, but I don't see why any merge would
-> create a new blob unless there is a conflict. Otherwise you are always
-> taking one of the blobs that already exists in some other part of
-> history.
+>  init_browser_path() {
+>  	browser_path=$(git config "browser.$1.path")
+> +	if test -z "$browser_path" -a "$1" = chromium ; then
+> +		type chromium-browser > /dev/null 2>&1 && browser_path=chromium-browser
+> +	fi
+>  	test -z "$browser_path" && browser_path="$1"
 
-Er, sorry, this is totally wrong. For some reason I said "conflict"
-(repeatedly) when I meant "trivial merge". I guess my brain is not
-working today.
+We tolerate
 
-Any time you have to do file-level merging (i.e., because both sides
-of the merge touched that path) you will create a new blob, conflicts or
-no.
+	test && test && effect
 
--Peff
+and even encourage when the construct is short enough, over
+
+	if test && test
+        then
+        	effect
+	fi
+
+But because you are writing an "if" block anyway, I think the above should
+be like this:
+
+	if test -z "$browser_path" &&
+           test "$1" = chromium &&
+           type chromium-browser >/dev/null 2>&1
+	then
+        	browser_path=chromium-browser
+	fi
+	browser_path=${browser_path:-"$1"}
+
+Yours is:
+
+	if test && test
+        then
+        	test && effect
+	fi
+
+which is less than readable, no?
