@@ -1,108 +1,69 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv2 5/7] web--browse: better support for chromium
-Date: Fri, 3 Dec 2010 23:25:09 +0100
-Message-ID: <AANLkTinGzZQZo9yZtVtztu5CEXT8G10H6=EdbSM3PAwh@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 1/7] CodingGuidelines: mention whitespace preferences
+ for shell scripts
+Date: Fri, 03 Dec 2010 14:28:27 -0800
+Message-ID: <7v39qemqyc.fsf@alter.siamese.dyndns.org>
 References: <1291394861-11989-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1291394861-11989-6-git-send-email-giuseppe.bilotta@gmail.com> <7vipzamsde.fsf@alter.siamese.dyndns.org>
+ <1291394861-11989-2-git-send-email-giuseppe.bilotta@gmail.com>
+ <7vsjyemt1f.fsf@alter.siamese.dyndns.org>
+ <AANLkTi=PmGR23AMog4UWQVNKPWrDUM_kYWV_Bn1vvSwE@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 03 23:25:42 2010
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 03 23:28:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POe4R-00046V-Qm
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 23:25:40 +0100
+	id 1POe7S-0005C5-59
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 23:28:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753454Ab0LCWZb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Dec 2010 17:25:31 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:47088 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753146Ab0LCWZa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Dec 2010 17:25:30 -0500
-Received: by iwn6 with SMTP id 6so385883iwn.19
-        for <git@vger.kernel.org>; Fri, 03 Dec 2010 14:25:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=9nbkgTsXUJziqzS4ssJKBrv6NpQ7PGeuA7LGvTBPcCo=;
-        b=Z/p6VujTegF90SHZArtpzzOco1+rvsz3cYVunPihmKA/jrP/DORDP1eUyTSiCibjkt
-         xgPxKjC8b2k9VrFCWYAhzNTUjcd4wGO2MRKLYTOJc26QyBJzCiJp6IKiBt+vhsWJdAam
-         zprkESe3B5uqGfL1dyXn2mDALPPkp6m/taXAM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=X9yVWKeGu5toBXZ1BU9dNTqF5rPCflxulU75UXQgygMvpHQCQRb+rM3ZsmD9v7JUYT
-         VS8JjhhS8TyWM2yHLWwJWftJxZfnkMKhNPOGZiwTgW2LpfAXR9aOenVCUybIBLo1OCiW
-         xvVCundpCVvYwI/T6d1hBdmuuQQgu5TR08zX0=
-Received: by 10.231.14.135 with SMTP id g7mr2391386iba.106.1291415130038; Fri,
- 03 Dec 2010 14:25:30 -0800 (PST)
-Received: by 10.231.39.3 with HTTP; Fri, 3 Dec 2010 14:25:09 -0800 (PST)
-In-Reply-To: <7vipzamsde.fsf@alter.siamese.dyndns.org>
+	id S1753163Ab0LCW2l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 17:28:41 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44051 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752362Ab0LCW2k (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 17:28:40 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 235163FC8;
+	Fri,  3 Dec 2010 17:28:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=X4hQyOHFDQv7UjMPBoKjz70dBnw=; b=IZKOgB
+	8ILAOoCtqGVB1gPXxmZksWfO0MFLexNp0bXeebquikKvJy9Jb/HVY5THhZF7+U1u
+	9+d5JmUB1IbQ7ZzGRXs8nbdEsKkejJgWo5WsguDbFCXtiDZR7gjUS1kITKSjwmEz
+	d0zfFVsWoQCkavHOgD7TUcjFRBMRcp1GLxCHw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qLuKj2N0FSNkeshKKkBaYEpCNrD0dyhp
+	MVR6XCCrk4u49B7Ep2DzUJ4eept8RWbmj8fljECE2IWiNUT2V6d+H415tVD0sdzP
+	gvTs7wqzQqONO+k3XRdHp1c3GfTHMubUcT36bPTi1kwbnT92gFbaN9ZxioWbrWw3
+	MlyHPkw8t8U=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D50693FC6;
+	Fri,  3 Dec 2010 17:28:54 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 814F83FC5; Fri,  3 Dec 2010
+ 17:28:49 -0500 (EST)
+In-Reply-To: <AANLkTi=PmGR23AMog4UWQVNKPWrDUM_kYWV_Bn1vvSwE@mail.gmail.com>
+ (Giuseppe Bilotta's message of "Fri\, 3 Dec 2010 23\:02\:03 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B66642F2-FF2C-11DF-B50C-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162870>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162871>
 
-On Fri, Dec 3, 2010 at 10:57 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
->
->> =A0init_browser_path() {
->> =A0 =A0 =A0 browser_path=3D$(git config "browser.$1.path")
->> + =A0 =A0 if test -z "$browser_path" -a "$1" =3D chromium ; then
->> + =A0 =A0 =A0 =A0 =A0 =A0 type chromium-browser > /dev/null 2>&1 && =
-browser_path=3Dchromium-browser
->> + =A0 =A0 fi
->> =A0 =A0 =A0 test -z "$browser_path" && browser_path=3D"$1"
->
-> We tolerate
->
-> =A0 =A0 =A0 =A0test && test && effect
->
-> and even encourage when the construct is short enough, over
->
-> =A0 =A0 =A0 =A0if test && test
-> =A0 =A0 =A0 =A0then
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0effect
-> =A0 =A0 =A0 =A0fi
->
-> But because you are writing an "if" block anyway, I think the above s=
-hould
-> be like this:
->
-> =A0 =A0 =A0 =A0if test -z "$browser_path" &&
-> =A0 =A0 =A0 =A0 =A0 test "$1" =3D chromium &&
-> =A0 =A0 =A0 =A0 =A0 type chromium-browser >/dev/null 2>&1
-> =A0 =A0 =A0 =A0then
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0browser_path=3Dchromium-browser
-> =A0 =A0 =A0 =A0fi
-> =A0 =A0 =A0 =A0browser_path=3D${browser_path:-"$1"}
->
-> Yours is:
->
-> =A0 =A0 =A0 =A0if test && test
-> =A0 =A0 =A0 =A0then
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0test && effect
-> =A0 =A0 =A0 =A0fi
->
-> which is less than readable, no?
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-Absolutely. Actually, this final form is a side-effect on some
-experimentations I was doing, thinking about doing something similar
-with google-chrome vs chrome (in which case the body of the if would
-get a case switch or something like that). I'll clean it up, unless
-somebody can actually confirm that we do want these other special
-cases.
+> Good idea. I'll rephrase in that sense and add a couple more entries
+> about the | spacing and long case arm splitting, for the next rehash
+> of the series.
 
---=20
-Giuseppe "Oblomov" Bilotta
+Hm, I don't think there needs a rehash of the whole thing.  This one is
+ready for 'maint' with the rewording), and 2-4 looked Ok.
