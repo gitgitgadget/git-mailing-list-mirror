@@ -1,70 +1,82 @@
-From: Josef Wolf <jw@raven.inka.de>
-Subject: Re: Problems using perl's Git.pm module
-Date: Fri, 3 Dec 2010 09:38:28 +0100
-Message-ID: <20101203083827.GD26070@raven.wolf.lan>
-References: <20101202114003.GA26070@raven.wolf.lan>
- <AANLkTi=8=k9iNWzTnGz821k9A_CZNiEt_KkC8TXu6oS_@mail.gmail.com>
- <7vpqtkrrtc.fsf@alter.siamese.dyndns.org>
- <AANLkTikQdw3aafsfP+SCQ-z9_TZrPJx694QOSeNTrvp6@mail.gmail.com>
- <20101202181425.GG3962@burratino>
- <AANLkTimKKssBbtuLKCqG9WGbOe+-CH4pc5PDaNxCH_PS@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
-To: demerphq <demerphq@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 03 09:40:21 2010
+From: jari.aalto@cante.net
+Subject: [PATCH] git-pull.txt: Add picture to --rebase option
+Date: Fri,  3 Dec 2010 10:41:09 +0200
+Organization: Private
+Message-ID: <1291365669-10439-1-git-send-email-jari.aalto@cante.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Cc: Jari Aalto <jari.aalto@cante.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 03 09:41:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PORBk-0003wj-Rp
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 09:40:21 +0100
+	id 1PORCi-0004Qe-Ma
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 09:41:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753505Ab0LCIkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 03:40:13 -0500
-Received: from quechua.inka.de ([193.197.184.2]:45156 "EHLO mail.inka.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751802Ab0LCIkM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 03:40:12 -0500
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1PORBa-0003ea-Sv; Fri, 03 Dec 2010 09:40:10 +0100
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id A2CDB76337; Fri,  3 Dec 2010 09:38:28 +0100 (CET)
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>,
-	demerphq <demerphq@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	=?iso-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	git@vger.kernel.org, Petr Baudis <pasky@suse.cz>
-Content-Disposition: inline
-In-Reply-To: <AANLkTimKKssBbtuLKCqG9WGbOe+-CH4pc5PDaNxCH_PS@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754003Ab0LCIlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 03:41:16 -0500
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111]:49801 "EHLO
+	emh05.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751802Ab0LCIlP (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 03:41:15 -0500
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh05-2.mail.saunalahti.fi (Postfix) with SMTP id CBA1C8C373
+	for <git@vger.kernel.org>; Fri,  3 Dec 2010 10:41:13 +0200 (EET)
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A07690AF39C; Fri, 03 Dec 2010 10:41:13 +0200
+Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
+	by emh04.mail.saunalahti.fi (Postfix) with ESMTP id C009941BED
+	for <git@vger.kernel.org>; Fri,  3 Dec 2010 10:41:12 +0200 (EET)
+Received: from [192.168.1.5] (helo=picasso.cante.net)
+	by picasso.cante.net with esmtp (Exim 4.72)
+	(envelope-from <jari.aalto@cante.net>)
+	id 1PORCX-0002in-Qy; Fri, 03 Dec 2010 10:41:10 +0200
+X-Mailer: git-send-email 1.7.2.3
+X-SA-Exim-Connect-IP: 192.168.1.5
+X-SA-Exim-Mail-From: jari.aalto@cante.net
+X-SA-Exim-Scanned: No (on picasso.cante.net); SAEximRunCond expanded to false
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162774>
 
-On Thu, Dec 02, 2010 at 07:41:00PM +0100, demerphq wrote:
-> Well, the counter  arguments are:
-> 
-> No back-compat layer for older gits. Tight binding to a particular git
-> - no availability of upgrades independent of upgrading git.
+From: Jari Aalto <jari.aalto@cante.net>
 
-I don't understand this one. Why do you need independent upgrades here?
-Since Git.pm comes with git core, the installed version of Git.pm should
-always match the installed version of git.
+Illustrate what are the effects of the the option.
 
-> No
-> availability or review of the module on the standard venues for doing
-> so for Perl modules. CPAN, CPANTESTERS, smoke reports, etc.
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ Documentation/git-pull.txt |   12 ++++++++++++
+ 1 files changed, 12 insertions(+), 0 deletions(-)
 
-A module on CPAN has better tests for perl integration.
-A module in git-core has better tests for git integration.
-
-You trade one for the other. The question is which is more critical. IMHO,
-git-integration is more critical.
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index e47361f..25eb6de 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -106,6 +106,18 @@ This is a potentially _dangerous_ mode of operation.
+ It rewrites history, which does not bode well when you
+ published that history already.  Do *not* use this option
+ unless you have read linkgit:git-rebase[1] carefully.
+++
++The effects of this option are:
++------------
++    [initial]
++    o---o---o---A--B   Your work in commit A and B
++
++    [git pull --rebase]
++    o---o---o---*---*--A--B
++                |   |
++                New updates merged in. Your work is rebased
++                on top of them.
++------------
+=20
+ --no-rebase::
+ 	Override earlier --rebase.
+--=20
+1.7.2.3
