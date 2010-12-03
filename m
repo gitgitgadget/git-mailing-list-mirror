@@ -1,123 +1,112 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH 2/1] bash: eliminate dependency on bash_completion lib
-Date: Thu, 2 Dec 2010 18:07:23 -0600
-Message-ID: <20101203000723.GB8438@burratino>
-References: <1291236582-28603-1-git-send-email-peter@avirtualhome.com>
- <20101202091624.GB1771@burratino>
- <20101202091613.6ac8f816@MonteCarlo.grandprix.int>
- <20101202210207.GA4994@burratino>
- <20101202234053.GB3577@neumann>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: bash 4.0 breaks some completion scripts
+Date: Fri, 3 Dec 2010 01:11:57 +0100
+Message-ID: <20101203001157.GC3577@neumann>
+References: <20101027235919.GB30490@burratino>
+	<20101202233848.GA8438@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter van der Does <peter@avirtualhome.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Marc Branchaud <marcnarc@xiplink.com>,
-	Brian Gernhardt <brian@gernhardtsoftware.com>,
+Cc: 601632@bugs.debian.org,
+	Peter van der Does <peter@avirtualhome.com>,
 	Kevin Ballard <kevin@sb.org>,
-	Mathias Lafeldt <misfire@debugon.org>
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Fri Dec 03 01:08:06 2010
+	Mathias Lafeldt <misfire@debugon.org>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 03 01:12:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POJC1-0005CS-MR
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 01:08:06 +0100
+	id 1POJFz-0006fK-B6
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 01:12:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758074Ab0LCAHt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Dec 2010 19:07:49 -0500
-Received: from mail-qy0-f194.google.com ([209.85.216.194]:64898 "EHLO
-	mail-qy0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756216Ab0LCAHt (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 2 Dec 2010 19:07:49 -0500
-Received: by qyk4 with SMTP id 4so2714628qyk.1
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 16:07:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=CaSVbrIIep+gxAq9VZGzXHKnkonkl1KBdrVRk6ZQtkA=;
-        b=fd3xPR23g0bhCXl8HTBiDI/RDx0Lunf0qvviJ4BsfaXFelSXlzmnWqPzyLxoumqV7u
-         KrGPY3676kkoj67EoyV4yJn98eMheJMhkXmE8Ta1V022jbqQUgjikz6NEaiirEcqrWqF
-         vIJEJISb/mpLrZlpSv3DkgG62HAJ+GXBiZsdQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=fWWU3oIKO4nl9ogz3oQI0vqjL7CpO97qegVwrOkRkwWn5+WG8dU5LmE+kBbxSKbiqC
-         Nfxhmg4+xDgXr/4VBZCARE7PU7BdGoXxqXLganA2UnheqLm0iPEQ8VfOmBkTkGYqgFSA
-         ioxT87GHIeb1M902pYQPxUzK0UGN9y4d0ZqZk=
-Received: by 10.229.96.206 with SMTP id i14mr579158qcn.268.1291334856557;
-        Thu, 02 Dec 2010 16:07:36 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id l14sm757493qck.17.2010.12.02.16.07.33
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 02 Dec 2010 16:07:35 -0800 (PST)
+	id S1758120Ab0LCAMF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Dec 2010 19:12:05 -0500
+Received: from moutng.kundenserver.de ([212.227.126.186]:55311 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757824Ab0LCAME (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 19:12:04 -0500
+Received: from localhost6.localdomain6 (p5B130C9F.dip0.t-ipconnect.de [91.19.12.159])
+	by mrelayeu.kundenserver.de (node=mrbap1) with ESMTP (Nemesis)
+	id 0LeBRc-1Oau1J3szs-00q7EX; Fri, 03 Dec 2010 01:11:58 +0100
 Content-Disposition: inline
-In-Reply-To: <20101202234053.GB3577@neumann>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20101202233848.GA8438@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:u8ew4Wgy/0Qg5ztI8KAU9EdhDXYe3MjgQDC06oPJBwA
+ l3YBN/OkNXpuM5lDV+oKXh/bC/+vCaGu5PuBAH1aZKBKlldTra
+ aaPxmCD7HmqHmgcC+ju9fQam+YWsggRRDTL9Jn/sHDOzhyP1UV
+ iTMdbBsT6Mo3Uqc8/+kZtenbEAU2gEo58q25D2lWSUMUbpXuD9
+ tlY5zkWPzTpQDFEwjghFg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162754>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162755>
 
-SZEDER G=C3=A1bor wrote:
+Hi,
 
-> Bash's programmable completion provides the COMP_WORDS array variable=
-,
-> which holds the individual words in the current command line.  In Bas=
-h
-> versions prior to v4 "words are split on shell metacharacters as the
-> shell parser would separate them" (quote from bash v3.2.48's man
-> page).  This behavior has changed with Bash v4, and the command line
-> "is split into words as readline would split it, using COMP_WORDBREAK=
-S
-> as" "the set of characters that the readline library treats as word
-> separators" (quote from bash v4's man page).
->
-> Since COMP_WORDBREAKS contains the characters : and =3D by default, t=
-his
-> behavior change in Bash also affects git's completion script.  For
-> example, when using Bash v4 the completion script can't provide
-> possible options for a command line argument (e.g. git log
-> --pretty=3D<TAB><TAB> lists files, but it should list possible log
-> formats).
+
+On Thu, Dec 02, 2010 at 05:38:48PM -0600, Jonathan Nieder wrote:
+> Jonathan Nieder wrote:
 >=20
+> > Bash 4.0 changed the rules for completion word splitting so that
+> > they are incompatible with 3.x.  I think some Breaks: will be neede=
+d
+> > to ensure smooth upgrades.
 >=20
-> I would really, _really_ like to have the above text in the commit
-> message (either in yours or in Peter's), because it took me weeks to
-> figure this out ;)
+> Just FYI: Ah, at last some clarity!
+>=20
+> From the bash 3 manual:
+>=20
+>  COMP_WORDS
+> 	An array variable (see Arrays below) consisting of the
+> 	individual words in the current command line.  The
+> 	words are split on shell metacharacters as the shell
+> 	parser would separate them.  This variable is
+> 	available only in shell functions invoked by the
+> 	programmable completion facilities (see Programmable
+> 	Completion below).
+>=20
+> From the bash 4 manual:
+>=20
+>  COMP_WORDS
+> 	An array variable (see Arrays below) consisting of the
+> 	individual words in the current command line.  The
+> 	line is split into words as readline would split it,
+> 	using COMP_WORDBREAKS as described above.  This
+> 	variable is available only in shell functions invoked
+> 	by the programmable completion facilities (see
+> 	Programmable Completion below).
 
-Sounds good.
+Oh dear, oh dear.  I've just sent a reply to your message on the git
+list with basically the same findigs. [1]
 
-> (I'm still wondering what Bash v3.x was doing with COMP_WORDBREAKS,
-> though...)
+> The workaround used by the bash-completion scripts is to paste words
+> from COMP_WORDS together (in _get_comp_words_by_ref).
+>=20
+> If only the NEWS file had mentioned it. :) =20
 
-Based on v1.5.6.4~9^2 (bash completion: Resolve git show ref:path<tab>
-losing ref: portion, 2008-07-15) it seems COMP_WORDBREAKS determined
-the interpretation of COMPREPLY (result of completion).  Of course it
-also governed standard filename completion.
+Actually, the NEWS file does mention it (and Peter noted it right at
+the start! [2]):
 
-> On Thu, Dec 02, 2010 at 03:02:07PM -0600, Jonathan Nieder wrote:
+i.  The programmable completion code now uses the same set of character=
+s as
+    readline when breaking the command line into a list of words.
 
->> +++ b/contrib/completion/git-completion.bash
->> @@ -327,7 +327,102 @@ __gitcomp_1 ()
-[...]
->> +# This function can be used to access a tokenized list of words
->> +# on the command line:
->> +#
->> +#	__reassemble_comp_words_by_ref '=3D:'
->
-> __git_reassemble_comp_words_by_ref?
-[...]
->>  if ! type _get_comp_words_by_ref >/dev/null 2>&1; then
->> +if [[ -n $ZSH_VERSION ]]; then
->
-> This should be ${ZSH_VERSION-} to keep 'set -u' environments happy.
+But it's really easy to misinterpret this statement, because there is
+and there was a $COMP_WORDBREAKS, so the first thing that
+comes to mind is that the set of characters in $COMP_WORDBREAKS is
+changed, leaving you puzzled for weeks when you discover that the
+set of characters is still the same.
 
-Nice catches; thanks.
+
+Best,
+G=E1bor
+
+
+[1] http://marc.info/?l=3Dgit&m=3D129133327312420&w=3D2
+[2] http://thread.gmane.org/gmane.comp.version-control.git/159516/focus=
+=3D159628
