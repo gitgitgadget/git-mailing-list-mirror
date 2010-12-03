@@ -1,106 +1,159 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCHv7.4 0/4] Gitweb caching v7.2
-Date: Fri,  3 Dec 2010 20:25:31 +0100
-Message-ID: <1291404335-25541-1-git-send-email-jnareb@gmail.com>
+Subject: [PATCHv7.4 2/4] gitweb: add output buffering and associated functions
+Date: Fri,  3 Dec 2010 20:25:33 +0100
+Message-ID: <1291404335-25541-3-git-send-email-jnareb@gmail.com>
+References: <1291404335-25541-1-git-send-email-jnareb@gmail.com>
 Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
 	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
 	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Jakub Narebski <jnareb@gmail.com>
+	Thomas Rast <trast@student.ethz.ch>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 03 20:26:09 2010
+X-From: git-owner@vger.kernel.org Fri Dec 03 20:26:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PObGi-0002FV-IW
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 20:26:09 +0100
+	id 1PObH4-0002Rm-D6
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 20:26:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752006Ab0LCT0B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 14:26:01 -0500
+	id S1752178Ab0LCT0H (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 14:26:07 -0500
 Received: from mail-bw0-f46.google.com ([209.85.214.46]:59210 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751677Ab0LCT0A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 14:26:00 -0500
-Received: by bwz15 with SMTP id 15so8656191bwz.19
-        for <git@vger.kernel.org>; Fri, 03 Dec 2010 11:25:57 -0800 (PST)
+	with ESMTP id S1751689Ab0LCT0E (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 14:26:04 -0500
+Received: by mail-bw0-f46.google.com with SMTP id 15so8656191bwz.19
+        for <git@vger.kernel.org>; Fri, 03 Dec 2010 11:26:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=xLV1R4pxVuElGmNK4IkMv2PHzO2xfSKFfNGsazctx08=;
-        b=tusgV2y9MjNua2VLSXJg4KvhHOg1GJLiZv5Wg8fwkaDPL9j/oLcUuHAXEbq8QG3igs
-         LV95ikas21hx2aOnHR5PsAFOEVvMr4mHjOVzoA6e/LUXKUcF0DJoElqrKM816uquGwq7
-         uzTFFqJQvffnC1whQS6GHiSLd6X5qlAduvND4=
+         :message-id:x-mailer:in-reply-to:references;
+        bh=5E5uSOl+xNOfaH6ZbW5J0YZX1Wqj9KG1j8JGN6yfYTo=;
+        b=tpQfeOJFTc7T0tj8LAjGPUA1UvP1Khn/kY1ZKMRU7hJLMCMVpKwMWRr6K74WdN1rgV
+         cDoz0MWJBrT5IIU3UuieuuYtCV7zLHptGhV0/lQTGsiwcde1xhPtl0a1+Q1ZLdhk+5Q7
+         7Dh89oySh/OMaKj2XBugNf7U36AwGjdViEFcc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=Hv16Jz0vMPvtZSl6SLTyCD1B3L3l740B9GYCwNpAdtFatFFDyYLYBJwZtoTX6DFaIW
-         V7wPP1puo1TwAP4d5603GDyCsC6uQzsl96s0JOnObLA1EKZv+C78ilGL03/D1JERGj4t
-         Y+ozcyJtFregRzy0lWVttAKCRCfsmXEZh6JQ0=
-Received: by 10.204.116.201 with SMTP id n9mr3015850bkq.138.1291404355611;
-        Fri, 03 Dec 2010 11:25:55 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=pVzAisHBRO+8I1HQaFUh8IsuF9B+3Dp1Mmo47Rbb1HIsgRHZNalrywgJyOokATPHxi
+         CRwBehMZiNN7x4UzzEyrNZ/EhqZGde8mDG2y4im/mIkAFIxLt2Q7jgJ1VQ0pBbIbYkW9
+         0F1RMuwMZ6+zIp6w6IYWRv8QYsxsCVGd82XeI=
+Received: by 10.204.114.77 with SMTP id d13mr3033627bkq.150.1291404361249;
+        Fri, 03 Dec 2010 11:26:01 -0800 (PST)
 Received: from localhost.localdomain (abrz239.neoplus.adsl.tpnet.pl [83.8.119.239])
-        by mx.google.com with ESMTPS id b17sm1064634bku.8.2010.12.03.11.25.52
+        by mx.google.com with ESMTPS id b17sm1064634bku.8.2010.12.03.11.25.59
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 03 Dec 2010 11:25:53 -0800 (PST)
+        Fri, 03 Dec 2010 11:26:00 -0800 (PST)
 X-Mailer: git-send-email 1.7.3
+In-Reply-To: <1291404335-25541-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162831>
 
-This series is a bit fixed up and a tiny bit cleaned up version of
-"Gitweb caching v7" series from John 'Warthog9' Hawley:
-  http://thread.gmane.org/gmane.comp.version-control.git/160147
+From: John 'Warthog9' Hawley <warthog9@eaglescrag.net>
 
-This version of this series is based on top of 'master'
+This adds output buffering for gitweb, mainly in preparation for
+caching support.  This is a dramatic change to how caching was being
+done, mainly in passing around the variable manually and such.
+
+This centrally flips the entire STDOUT to a variable, which after the
+completion of the run, flips it back and does a print on the resulting
+data.
+
+This should save on the previous 10K line patch (or so) that adds more
+explicit output passing.
+
+[jn: modified reset_output to silence 'gitweb.perl: Name "main::STDOUT_REAL"
+ used only once: possible typo at ../gitweb/gitweb.perl line 1130.' warning]
+
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+Reminder: it uses
+
+  open STDOUT, ">&", \*STDOUT_REAL;
+
+rather than
+
+  open(STDOUT,">&STDOUT_REAL");
+
+to silence spurious (invalid) warning
+
+  gitweb.perl: Name "main::STDOUT_REAL" used only once: possible typo
+  at ../gitweb/gitweb.perl line 1130.
 
 
-Compared to initial v7.1 fixup of "Gitweb caching v7" series it
-contains fix to "gitweb: Prepare for splitting gitweb" preventing
-installation and fix to "gitweb: File based caching layer (from
-git.kernel.org)" that generated problems with t9501 test, as noticed
-by Thomas Rast in
-  http://article.gmane.org/gmane.comp.version-control.git/162787
-  http://marc.info/?l=git&m=129137257619613&w=2
+This version is identical to 
+  [PATCHv7.1 2/4] gitweb: add output buffering and associated functions
+  Message-Id: <1288607092-31458-3-git-send-email-jnareb@gmail.com>
+  http://article.gmane.org/gmane.comp.version-control.git/160475
 
-It also includes trivial fixup in "gitweb: Minimal testing of gitweb
-caching"... but still those new tests don't pass, at least for me.
-John Hawley is (according to information from #git IRC channel) is
-working on "Gitweb caching v8"; I hope that it is fixed there.
+ gitweb/gitweb.perl |   29 +++++++++++++++++++++++++++++
+ 1 files changed, 29 insertions(+), 0 deletions(-)
 
-Shortlog:
-~~~~~~~~~
-Jakub Narebski (2):
-  gitweb: Prepare for splitting gitweb
-  gitweb: Minimal testing of gitweb caching
-
-John 'Warthog9' Hawley (2):
-  gitweb: add output buffering and associated functions
-  gitweb: File based caching layer (from git.kernel.org)
-
-Table of contents:
-~~~~~~~~~~~~~~~~~~
- [PATCHv7.4 1/4] gitweb: Prepare for splitting gitweb
- [PATCHv7.4 2/4] gitweb: add output buffering and associated functions
- [PATCHv7.4 3/4] gitweb: File based caching layer (from git.kernel.org)
- [PATCHv7.4 4/4] gitweb: Minimal testing of gitweb caching
-
-Diffstat:
-~~~~~~~~~
- gitweb/Makefile                           |   21 ++-
- gitweb/gitweb.perl                        |  136 +++++++++++-
- gitweb/lib/cache.pl                       |  348 +++++++++++++++++++++++++++++
- gitweb/static/gitweb.css                  |    6 +
- t/gitweb-lib.sh                           |   15 ++
- t/t9500-gitweb-standalone-no-errors.sh    |   20 ++
- t/t9501-gitweb-standalone-http-status.sh  |   13 +
- t/t9502-gitweb-standalone-parse-output.sh |   33 +++
- 8 files changed, 581 insertions(+), 11 deletions(-)
- create mode 100644 gitweb/lib/cache.pl
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index cfa511c..cae0e34 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -39,6 +39,9 @@ BEGIN {
+ 
+ our $version = "++GIT_VERSION++";
+ 
++# Output buffer variable
++our $output = "";
++
+ our ($my_url, $my_uri, $base_url, $path_info, $home_link);
+ sub evaluate_uri {
+ 	our $cgi;
+@@ -1134,6 +1137,25 @@ sub evaluate_argv {
+ 	);
+ }
+ 
++sub change_output {
++	our $output;
++
++	# Trap the 'proper' STDOUT to STDOUT_REAL for things like error messages and such
++	open(STDOUT_REAL,">&STDOUT") or die "Unable to capture STDOUT $!\n";
++
++	# Close STDOUT, so that it isn't being used anymore.
++	close STDOUT;
++
++	# Trap STDOUT to the $output variable, which is what I was using in the original
++	# patch anyway.
++	open(STDOUT,">", \$output) || die "Unable to open STDOUT: $!"; #open STDOUT handle to use $var
++}
++
++sub reset_output {
++	# This basically takes STDOUT_REAL and puts it back as STDOUT
++	open STDOUT, ">&", \*STDOUT_REAL;
++}
++
+ sub run {
+ 	evaluate_argv();
+ 
+@@ -1145,7 +1167,10 @@ sub run {
+ 		$pre_dispatch_hook->()
+ 			if $pre_dispatch_hook;
+ 
++		change_output();
+ 		run_request();
++		reset_output();
++		print $output;
+ 
+ 		$post_dispatch_hook->()
+ 			if $post_dispatch_hook;
+@@ -3655,6 +3680,10 @@ sub die_error {
+ 		500 => '500 Internal Server Error',
+ 		503 => '503 Service Unavailable',
+ 	);
++	# Reset the output so that we are actually going to STDOUT as opposed
++	# to buffering the output.
++	reset_output();
++
+ 	git_header_html($http_responses{$status}, undef, %opts);
+ 	print <<EOF;
+ <div class="page_body">
 -- 
 1.7.3
