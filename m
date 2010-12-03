@@ -1,134 +1,178 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: [PATCH/RFC] git-gui: disable (un)staging for files with
- typechange flags
-Date: Fri, 3 Dec 2010 14:34:40 +0100
-Message-ID: <AANLkTimz-XZQzTygKxQDJ+E6ZJm1+8aZNuKfZ6-AwQh3@mail.gmail.com>
-References: <50fc511f363e8b13b9b1a27db71136d262c95f0d.1291155371.git.bert.wesarg@googlemail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: What's cooking in git.git (Nov 2010, #03; Wed, 24)
+Date: Fri, 3 Dec 2010 15:12:44 +0100
+Message-ID: <201012031512.45793.jnareb@gmail.com>
+References: <7vk4k2rt2m.fsf@alter.siamese.dyndns.org> <201012031402.49169.jnareb@gmail.com> <201012031406.55854.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Bert Wesarg <bert.wesarg@googlemail.com>,
-	Gustaf Hendeby <hendeby@isy.liu.se>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Fri Dec 03 14:34:48 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Dec 03 15:13:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POVmh-0000VY-MR
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 14:34:48 +0100
+	id 1POWNk-0002Xh-Pn
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 15:13:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754755Ab0LCNem convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Dec 2010 08:34:42 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:42042 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751669Ab0LCNel convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Dec 2010 08:34:41 -0500
-Received: by ywl5 with SMTP id 5so4758760ywl.19
-        for <git@vger.kernel.org>; Fri, 03 Dec 2010 05:34:41 -0800 (PST)
+	id S1758143Ab0LCOM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 09:12:59 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:46175 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755006Ab0LCOM6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 09:12:58 -0500
+Received: by bwz15 with SMTP id 15so8362012bwz.19
+        for <git@vger.kernel.org>; Fri, 03 Dec 2010 06:12:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=X4BROhhCcznV0fmgAYWaPkqDJjr4LPff6h6xwG9+M34=;
-        b=t5aiZh0hCxL5BuC+JnjsgIC7x5hz6sAeP17FOSOg2Pdv9HQlSmUaR6H0OMRQbyC+FJ
-         MuwmzojyvNCdsdiY3NZVV7UtBeVZmjSZJfXQ3/2BKaxg1OMCAe5jvHU4afBxiMXzewsY
-         gGyUnxySgQFgwQB7ZAaS5N0A8bdxec0GY5jAQ=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=epXGLvzHahWA9xfA2W6mN2zKKAM632lNuiHWXOBGM2g=;
+        b=dsqLtcKomf5/Z1QudbMNt9h1n5i1qJptBo8ppZ17AM997L4VjD7Er0RzXO/Df26/CR
+         s7X6qVizIxdDDpI2spmEApob3USLLFg14fW1Tct3yPUsjOHhM3n75f0z8ziYCFxGLsl5
+         vHfcz5BRlriOo6XXO7TN5Lg9bbrGxcFCRowig=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=uA+gSd/kqu8leyVDBcwfCBAWgHxGP95TKTDriWtkKVubWgtdEtsAJNdj5cvhoTM2yA
-         48EFCNNEDgo+3w8FVQ2WwIeX8ha+2V4EwEQOFdqrPj+WhA15JgtUOdoi3Jkt3u7wNatC
-         tU1YNht0FQp1FyjaVi6zGZS/U8qrdPGv9lt8A=
-Received: by 10.42.222.200 with SMTP id ih8mr458048icb.23.1291383280507; Fri,
- 03 Dec 2010 05:34:40 -0800 (PST)
-Received: by 10.42.175.71 with HTTP; Fri, 3 Dec 2010 05:34:40 -0800 (PST)
-In-Reply-To: <50fc511f363e8b13b9b1a27db71136d262c95f0d.1291155371.git.bert.wesarg@googlemail.com>
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=QIB4lX1c7LclOIOR5RO+jkh0RNL/tOCCLeRGdXYqL7VhXRNFnCFBbZNWnx6u6TKdIK
+         h/1EGsZXh9oRTD2hhLDhJ+bB1ZLYEmwP48f8gPbDV652JS1gnouIxbOqnzpjuUEUrsji
+         FY2RUWoVZrvTneYca+qGOv8E5szBlfuOYmjlQ=
+Received: by 10.204.114.77 with SMTP id d13mr2425432bkq.150.1291385577128;
+        Fri, 03 Dec 2010 06:12:57 -0800 (PST)
+Received: from [192.168.1.13] (abrz239.neoplus.adsl.tpnet.pl [83.8.119.239])
+        by mx.google.com with ESMTPS id 11sm914693bkj.0.2010.12.03.06.12.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 03 Dec 2010 06:12:55 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201012031406.55854.trast@student.ethz.ch>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162800>
 
-[ Adding Gustaf Hendeby, the author of the first patch to support type =
-changes ]
+On Fri, 3 Dec 2010, Thomas Rast wrote:
+> Jakub Narebski wrote:
+> > Could you add 'exit' just after second test in 
+> > t/t9502-gitweb-standalone-parse-output.sh test script, or running it
+> > with `--immediate' option, and show us the results (after 'cd t') of
+> > 
+> >   $ file "trash directory.t9502-gitweb-standalone-parse-output/gitweb.body"
+> >   should be:
+> > 
+> >     trash directory.t9502-gitweb-standalone-parse-output/gitweb.body: tar archive
+> 
+> Well, you're onto something...
+> 
+>   trash directory.t9502-gitweb-standalone-parse-output$ file *
+>   file_list:          empty
+>   foo:                ASCII text
+>   gitweb.body:        empty
+>   gitweb_config.perl: perl script text executable
+>   gitweb.headers:     ASCII text, with CRLF line terminators
+>   gitweb.log:         empty
+>   gitweb.output:      ASCII text, with CRLF line terminators
+>   GLOB(0xdf18fc0):    tar archive
+> 
+> Huh.  Seems something got confused about what to use as a filename?
 
-On Tue, Nov 30, 2010 at 23:21, Bert Wesarg <bert.wesarg@googlemail.com>=
- wrote:
-> This covers also the case for newly added files in the index. Like th=
-is:
->
-> =C2=A0 =C2=A0echo bar >foo
-> =C2=A0 =C2=A0git add foo
-> =C2=A0 =C2=A0rm foo
-> =C2=A0 =C2=A0ln -s bar foo
->
-> This will result in an state of AT. And for cases where the type chan=
-ge is
-> staged, and the new type was modified after the staging. Like this (c=
-ont.):
->
-> =C2=A0 =C2=A0git add foo
-> =C2=A0 =C2=A0git commit -mfoo
-> =C2=A0 =C2=A0rm foo
-> =C2=A0 =C2=A0echo bar >foo
-> =C2=A0 =C2=A0git add foo
-> =C2=A0 =C2=A0echo baz >foo
->
-> Will result in an state of TM for foo.
->
-> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
-> ---
-> =C2=A0git-gui.sh | =C2=A0 =C2=A06 ++++--
-> =C2=A01 files changed, 4 insertions(+), 2 deletions(-)
->
-> diff --git a/git-gui.sh b/git-gui.sh
-> index 38362fa..1bebcf1 100755
-> --- a/git-gui.sh
-> +++ b/git-gui.sh
-> @@ -1993,7 +1993,9 @@ foreach i {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{MD {mc "Stage=
-d for commit, missing"}}
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{_T {mc "File =
-type changed, not staged"}}
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 {AT {mc "File type=
- changed, old type staged for commit"}}
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{T_ {mc "File =
-type changed, staged"}}
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 {TM {mc "Staged fi=
-le type change, modification not staged"}}
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{_O {mc "Untra=
-cked, not staged"}}
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0{A_ {mc "Stage=
-d for commit"}}
-> @@ -3533,8 +3535,8 @@ proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X =
-Y} {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0|| $current_diff_path eq {}
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0|| {__} eq $state
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0|| {_O} eq $state
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 || {_T} eq $state
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 || {T_} eq $state
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 || [string match {?T} $state]
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 || [string match {T?} $state]
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0|| [has_textconv $current_diff_path]} {
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0set s disabled
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0} else {
-> --
-> 1.7.3.2.1200.ge4bf6
->
->
+Hmmm... let me examine 17b15d4 (gitweb: File based caching layer
+(from git.kernel.org), 2010-11-01)
+
+Ah, I see.  It looks like I forgot to update git_blob_plain and 
+git_snapshot when I was modifying original patch by J.H. (which didn't
+pass test suite for other reasons) to have test for $caching_enabled
+outside cache_fetch().
+
+Could you try if the following patch applied on top of 17b15d4 fixes
+it for you?  If it does, I'll resend fixed series (yet again, I'm sorry
+Junio).
+
+It is not most elegant solution.
+
+
+Sidenote: 
+
+  open BINOUT, '>', \$fullhashbinpath
+
+should open in-memory file, and not be equivalent to
+
+  open BINOUT, '>', "\$fullhashbinpath"
+
+Hmmm... in the case of !$caching_enabled, $fullhasbinpath is *STDOUT.
+
+
+BTW replacing 
+
+  open BINOUT, '>', \$fullhashbinpath
+
+with
+
+  open BINOUT, '>&STDOUT'
+
+or
+
+  open BINOUT, '>&', \$fullhashbinpath
+
+could be simpler, alternate solution.
+
+-- 8< -- 8< --
+diff --git i/gitweb/gitweb.perl w/gitweb/gitweb.perl
+index abaeec6..3d787c1 100755
+--- i/gitweb/gitweb.perl
++++ w/gitweb/gitweb.perl
+@@ -5648,13 +5648,14 @@ sub git_blob_plain {
+ 	local $/ = undef;
+ 	if ($caching_enabled) {
+ 		open BINOUT, '>', $fullhashbinpath or die_error(500, "Could not open bin dump file");
+-	}else{
+-		open BINOUT, '>', \$fullhashbinpath or die_error(500, "Could not open bin dump file");
++		binmode BINOUT, ':raw';
++		print BINOUT <$fd>;
++		close BINOUT;
++	} else {
++		binmode STDOUT, ':raw';
++		print <$fd>;
++		binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
+ 	}
+-	binmode BINOUT, ':raw';
+-	print BINOUT <$fd>;
+-	binmode BINOUT, ':utf8'; # as set at the beginning of gitweb.cgi
+-	close BINOUT;
+ 	close $fd;
+ }
+ 
+@@ -5941,13 +5942,14 @@ sub git_snapshot {
+ 		or die_error(500, "Execute git-archive failed");
+ 	if ($caching_enabled) {
+ 		open BINOUT, '>', $fullhashbinpath or die_error(500, "Could not open bin dump file");
+-	}else{
+-		open BINOUT, '>', \$fullhashbinpath or die_error(500, "Could not open bin dump file");
++		binmode BINOUT, ':raw';
++		print BINOUT <$fd>;
++		close BINOUT;
++	} else {
++		binmode STDOUT, ':raw';
++		print <$fd>;
++		binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
+ 	}
+-	binmode BINOUT, ':raw';
+-	print BINOUT <$fd>;
+-	binmode BINOUT, ':utf8'; # as set at the beginning of gitweb.cgi
+-	close BINOUT;
+ 	close $fd;
+ }
+ 
+
+-- >8 -- >8 -- 
+-- 
+Jakub Narebski
+Poland
