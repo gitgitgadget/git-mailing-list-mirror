@@ -1,130 +1,127 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv2 5/7] web--browse: better support for chromium
-Date: Fri,  3 Dec 2010 17:47:39 +0100
-Message-ID: <1291394861-11989-6-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCHv2 7/7] web--browse: look at the BROWSER env var
+Date: Fri,  3 Dec 2010 17:47:41 +0100
+Message-ID: <1291394861-11989-8-git-send-email-giuseppe.bilotta@gmail.com>
 References: <1291394861-11989-1-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: Christian Couder <christian.couder@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 03 17:48:40 2010
+X-From: git-owner@vger.kernel.org Fri Dec 03 17:48:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POYoJ-0007II-3x
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 17:48:39 +0100
+	id 1POYoK-0007II-IF
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 17:48:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753423Ab0LCQsS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 11:48:18 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:47167 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753098Ab0LCQsQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 11:48:16 -0500
-Received: by mail-ww0-f44.google.com with SMTP id 36so10251895wwa.1
-        for <git@vger.kernel.org>; Fri, 03 Dec 2010 08:48:16 -0800 (PST)
+	id S1753466Ab0LCQsY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 11:48:24 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:38941 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753098Ab0LCQsW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 11:48:22 -0500
+Received: by mail-wy0-f174.google.com with SMTP id 28so9636145wyb.19
+        for <git@vger.kernel.org>; Fri, 03 Dec 2010 08:48:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=MEpF2CX5UFaxjL6RNw32CUUfpKY9V1VKiLBMGmYiy5M=;
-        b=xQTPjoe1O/bXQPvuuRR6mfJXl2ADBMEn59jLTBdRLRlFmMgqqjFVLTlca3LMh4Mgez
-         o90lrL4DZ77/cu6Kp4ICO4mBPTHVZ1BgKYzm7g8tkhxNSRa7nsOjCcOyfx4FPeergj5K
-         /v7jSGy7kzdNCkEuvzrYI6jzpsOgDrlK2EKPw=
+        bh=ahUbDIEwymWvf0AqGtMl2o3OaSpF5F98rTiWS/5tHA4=;
+        b=gFHkPVPCEISNCOnAJpBXC0/ajTOJGMl9orA9vGeZPfeWYJ3n/LS4YgDU2KYlz/+uYB
+         FNViNVzBjQVboPaS7IWzSgK9UCkHnjoaE5VWyueNKXP+G8rGAM1mO4+yU+yNp/9N/8Xj
+         X4hXgVacoNXta5+XzsX7UgolR16TA7mnsOflQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=hboaAFlx0qVFekhqRwIqhpK6W9XvhZH0pYkZM5QMLGe3Jw6qmM/K9hjrKsHSBCS/ML
-         yFS/go6C2TrmPu3i5f53DJJ9kVM2n9gpYLFpd5sDKXsNQ86C9LBMI0hurFUgM6wp5wL3
-         XOobrU55iTEi7bt06ferENPTyN5KPjk2wsla0=
-Received: by 10.216.4.2 with SMTP id 2mr2161145wei.87.1291394894997;
-        Fri, 03 Dec 2010 08:48:14 -0800 (PST)
+        b=cvxOodSGyKAijODcPF0YSHq/qi4FwquYxgZg1gJhPVrdwJPeM4GlwsQIZy3RSNx8gh
+         O7D0FjIJ1riyC5VdK2ZvlK+hMOlVglPHFP+wJKhNlQatLiboXph/lrj25SFg4cRMUvsy
+         uI+CGnM+UsASL/vDiyztHmkyBeJA03krEYjj0=
+Received: by 10.227.129.71 with SMTP id n7mr2136396wbs.128.1291394901861;
+        Fri, 03 Dec 2010 08:48:21 -0800 (PST)
 Received: from localhost (nat.ct.ingv.it [193.206.223.100])
-        by mx.google.com with ESMTPS id 7sm976364wet.0.2010.12.03.08.48.13
+        by mx.google.com with ESMTPS id m10sm1392559wbc.22.2010.12.03.08.48.20
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 03 Dec 2010 08:48:14 -0800 (PST)
+        Fri, 03 Dec 2010 08:48:21 -0800 (PST)
 X-Mailer: git-send-email 1.7.3.2.664.g294b8.dirty
 In-Reply-To: <1291394861-11989-1-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162811>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162812>
 
-On Debian-based distributions, Chromium the browser is available under
-the name chromium-browser rather than chromium, to prevent conflicts
-with the Chromium B.S.U. game.
+The BROWSER environment variables is used in Debian-based systems to set
+the user-preferred browser(s).
 
-Look for chromium-browser first when setting the path for chromium, and
-also add chromium-browser as a supported browser name. Document the
-dual-name support, and mention the dual-name support for
-(google-)chrome too.
+It contains a colon-separate list of commands to (try to) execute
+to open a web page. Each item in the list is allowed to have a %s
+placeholder to be replaced by the URL, in which case we try to run the
+command as is. If no placeholder is found, we only look at the command
+name to see if it matches one of our known browsers.
 
 Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- Documentation/git-web--browse.txt |    4 ++--
- git-web--browse.sh                |   11 +++++++----
- 2 files changed, 9 insertions(+), 6 deletions(-)
+ git-web--browse.sh |   45 +++++++++++++++++++++++++++++++++++++++++++++
+ 1 files changed, 45 insertions(+), 0 deletions(-)
 
-diff --git a/Documentation/git-web--browse.txt b/Documentation/git-web--browse.txt
-index 5d3ae07..c0416e5 100644
---- a/Documentation/git-web--browse.txt
-+++ b/Documentation/git-web--browse.txt
-@@ -22,8 +22,8 @@ The following browsers (or commands) are currently supported:
- * iceweasel
- * seamonkey
- * iceape
--* chromium
--* google-chrome
-+* chromium (also supported as chromium-browser)
-+* google-chrome (also supported as chrome)
- * konqueror (this is the default under KDE, see 'Note about konqueror' below)
- * opera
- * w3m (this is the default outside graphical environments)
 diff --git a/git-web--browse.sh b/git-web--browse.sh
-index 48e5a28..d0e99f5 100755
+index 48ea168..e3dbbe3 100755
 --- a/git-web--browse.sh
 +++ b/git-web--browse.sh
-@@ -31,7 +31,8 @@ valid_custom_tool()
+@@ -138,6 +138,51 @@ then
+ 	fi
+ fi
  
- valid_tool() {
- 	case "$1" in
--	firefox | iceweasel | seamonkey | iceape | chrome | google-chrome | chromium |\
-+	firefox | iceweasel | seamonkey | iceape |\
-+	chrome | google-chrome | chromium | chromium-browser |\
- 	konqueror | opera | w3m | elinks | links | lynx | dillo | open | start)
- 		;; # happy
- 	*)
-@@ -42,6 +43,9 @@ valid_tool() {
- 
- init_browser_path() {
- 	browser_path=$(git config "browser.$1.path")
-+	if test -z "$browser_path" -a "$1" = chromium ; then
-+		type chromium-browser > /dev/null 2>&1 && browser_path=chromium-browser
-+	fi
- 	test -z "$browser_path" && browser_path="$1"
- }
- 
-@@ -104,7 +108,7 @@ fi
- 
- if test -z "$browser" ; then
- 	if test -n "$DISPLAY"; then
--		browser_candidates="firefox iceweasel google-chrome chrome chromium konqueror opera seamonkey iceape w3m elinks links lynx dillo"
-+		browser_candidates="firefox iceweasel google-chrome chrome chromium chromium-browser konqueror opera seamonkey iceape w3m elinks links lynx dillo"
- 		if test "$KDE_FULL_SESSION" = "true"; then
- 			browser_candidates="konqueror $browser_candidates"
- 		fi
-@@ -147,8 +151,7 @@ firefox|iceweasel|seamonkey|iceape)
- 	test "$vers" -lt 2 && NEWTAB=''
- 	"$browser_path" $NEWTAB "$@" &
- 	;;
--google-chrome|chrome|chromium)
--	# Actual command for chromium is chromium-browser.
-+google-chrome|chrome|chromium|chromium-browser)
- 	# No need to specify newTab. It's default in chromium
- 	eval "$browser_path" "$@" &
- 	;;
++# Debian and derivatives provide a sensible-brower script that tries to
++# invoke the user or system preferred browser most appropriate for the
++# current situation (X or no X, GNOME or other/no DE).
++# We do not use the sensible-browser script directly since it doesn't
++# allow us to open pages in a new tab, but we can use the underlying
++# infrastructure to find the browser to use if the user didn't choose
++# one. This is done by looking at the BROWSER environment variable
++# first, and at the *www-browser links if the first search is
++# unsuccesful.
++
++# The BROWSER environment variable is a colon-separate list of commands
++# to (try and) execute to launch the browser. sensible-browser allows
++# each BROWSER entry to contain a %s placeholder that will be replaced
++# by the URL to be opened.
++# If an entry contains a %s we run it as-is, without doing any detection, on
++# the premise that it represents the exact way the user expects the browser to
++# be called. If the execution fails, we do not bail out, since the
++# failure might be due to the entry being for a graphical browser and
++# the GUI not being available, which is the reason why multiple entries
++# can be specified in BROWSER in the first place.
++# An entry without a %s is only taken as indication of the preferred
++# browser, so we proceed with our usual detection logic.
++if test -z "$browser" -a -n "$BROWSER"; then
++	OLDIFS="$IFS"
++	IFS=:
++	for i in $BROWSER; do
++		case "$i" in
++			*sensible-browser*)
++				;; # skip
++			*%s*)
++				IFS="$OLDIFS"
++				cmd=$(printf "$i\n" "$*")
++				$cmd && exit 0
++				;;
++			*)
++				prog=$(which "$i" 2> /dev/null)
++				if test -n "$prog" -a -x "$prog" && valid_exe "$prog" ; then
++					break
++				fi
++				;;
++		esac
++	done
++	IFS="$OLDIFS"
++fi
++
+ # Debian and derivatives use gnome-www-browser, x-www-browser or www-browser to
+ # set the default browser for the system. If the user did not specify a tool and
+ # we detect that one of the *www-browser links to a supported one, we pick it.
 -- 
 1.7.3.2.664.g294b8.dirty
