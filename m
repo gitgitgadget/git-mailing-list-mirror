@@ -1,84 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv2 1/7] CodingGuidelines: mention whitespace preferences
- for shell scripts
-Date: Fri, 03 Dec 2010 13:43:24 -0800
-Message-ID: <7vsjyemt1f.fsf@alter.siamese.dyndns.org>
-References: <1291394861-11989-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1291394861-11989-2-git-send-email-giuseppe.bilotta@gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Q about git rev-parse {--is-inside-work-tree, --show-cdup}
+Date: Fri, 3 Dec 2010 16:50:32 -0500
+Message-ID: <20101203215032.GB3972@sigill.intra.peff.net>
+References: <4CF95BDC.60506@dirk.my1.cc>
+ <7v4oauo8fj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 03 22:43:55 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Dirk =?utf-8?Q?S=C3=BCsserott?= <newsletter@dirk.my1.cc>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 03 22:50:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POdQ0-0003w0-QK
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 22:43:53 +0100
+	id 1POdWa-0006nU-L8
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 22:50:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753448Ab0LCVnj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 16:43:39 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63003 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753422Ab0LCVnh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 16:43:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5FC4E3A6B;
-	Fri,  3 Dec 2010 16:43:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=hvfC9r/ik5I+saUo7B/QXVadAdM=; b=KbdgMT
-	IIdyO8DEgS7jZwmWwQva4xQ00kbis3NPL7uHPGk9/ekFSGmKmrkVvcg1BpSf+bXL
-	65DT70y/uDbdSsJX2bqu17SlRKBR/l6LDF2QEH7pO8vOA14hSpg9XnTR+xEgCsGY
-	k5tc/V/fRH95QME/AthW9VLLZ5/CXge2uvtl4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jxnOzDUvySxtdmW78kw/+CFr4zYk8Hm6
-	p+zRygsGn5FQKw5/X+Gq9KBhtqorchDEGNn7wivw8GIu6SbQg5aThXFuOYAyb2O7
-	VyL//o76vyWkc0y32DTfm9DUaabYse4p+uMqIJKNqg/YBvkgkMau1Ws9dRIi/5Oy
-	Bwz/6UoMlpI=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EF79D3A67;
-	Fri,  3 Dec 2010 16:43:51 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9684C3A60; Fri,  3 Dec 2010
- 16:43:46 -0500 (EST)
-In-Reply-To: <1291394861-11989-2-git-send-email-giuseppe.bilotta@gmail.com>
- (Giuseppe Bilotta's message of "Fri\,  3 Dec 2010 17\:47\:35 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6B5B84E4-FF26-11DF-96B4-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
+	id S1752858Ab0LCVuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 16:50:35 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:55839 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752659Ab0LCVue (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 16:50:34 -0500
+Received: (qmail 26655 invoked by uid 111); 3 Dec 2010 21:50:33 -0000
+Received: from Unknown (HELO sigill.intra.peff.net) (129.79.255.205)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 03 Dec 2010 21:50:33 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Dec 2010 16:50:32 -0500
+Content-Disposition: inline
+In-Reply-To: <7v4oauo8fj.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162862>
 
-Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
+On Fri, Dec 03, 2010 at 01:25:36PM -0800, Junio C Hamano wrote:
 
-> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-> ---
->  Documentation/CodingGuidelines |    4 ++++
->  1 files changed, 4 insertions(+), 0 deletions(-)
->
-> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGuidelines
-> index 5aa2d34..a9191d0 100644
-> --- a/Documentation/CodingGuidelines
-> +++ b/Documentation/CodingGuidelines
-> @@ -31,6 +31,10 @@ But if you must have a list of rules, here they are.
->  
->  For shell scripts specifically (not exhaustive):
->  
-> + - We use tabs for indentation.
-> +
-> + - Case arms are not indented with respect to the case and esac lines.
+> > 1. Wouldn't it be useful, if "git rev-parse" (1) had an option "-q" that
+> > simply indicates whether "--is-inside-work-tree" is true by means of the
+> > return code? Actually it has an option "-q" but that doesn't work with
+> > "--is-inside-work-tree".
+> 
+> That would break existing scripts that expect "-q" to squelch only the
+> error output, no?  I think the risk of breaking existing scripts that
+> other people wrote over time that you (and I) haven't seen outweighs any
+> benefit (i.e. "if test $(rev-parse...) = true" vs "if rev-parse...") you
+> are seeing here.
 
-Thanks.
-I am tempted to rephrase the latter as:
+Right now "-q" doesn't do _anything_ for --is-inside-work-tree, AFAICT.
+It is a useless no-op. So I don't know if we are breaking anybody. What
+does somebody doing "git rev-parse -q --is-inside-work-tree" expect to
+happen?
 
-    Case arms are indented at the same depth as case and esac lines.
+I don't see why they would expect it to suppress error output. Usually
+"-q" is about "suppress non-essential output, but keep errors coming".
+If you wanted to suppress errors, you would use "2>/dev/null".
 
-It makes it less hard to read and understand without negation.
+That being said, in my original reply I only half-thought about Dirk's
+problem, and considered more the number of times "git rev-parse -q" has
+annoyed me in the past by doing nothing[1], and just assumed this was
+another such case. It really isn't that hard to just check $(git
+rev-parse) in this instance.
+
+-Peff
+
+[1] I wish I could remember my exact case. It's something that I
+remember coming up no more than once every month or two, but that annoys
+me every time, because it doesn't do what I expect.
+
+-Peff
