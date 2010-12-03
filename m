@@ -1,77 +1,72 @@
-From: Andreas Schwab <schwab@linux-m68k.org>
-Subject: Re: Problem in Patches with commit-messages containing non-ascii
-Date: Fri, 03 Dec 2010 20:03:22 +0100
-Message-ID: <m2r5dyd6h1.fsf@igel.home>
-References: <4CF8D243.50108@gmx.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/4] fast-import: let importers retrieve blobs
+Date: Fri, 3 Dec 2010 13:06:43 -0600
+Message-ID: <20101203190643.GC14049@burratino>
+References: <1287147256-9457-1-git-send-email-david.barr@cordelta.com>
+ <20101128194131.GA19998@burratino>
+ <20101128194501.GD19998@burratino>
+ <201012031130.06008.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Martin =?utf-8?Q?Kr=C3=BCger?= <martin.krueger@gmx.com>
-X-From: git-owner@vger.kernel.org Fri Dec 03 20:03:30 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: David Barr <david.barr@cordelta.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Fri Dec 03 20:07:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POauo-0008Qj-6f
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 20:03:30 +0100
+	id 1POayG-0001t9-UE
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 20:07:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753899Ab0LCTDZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Dec 2010 14:03:25 -0500
-Received: from mail-out.m-online.net ([212.18.0.10]:47320 "EHLO
-	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753726Ab0LCTDY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 14:03:24 -0500
-Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
-	by mail-out.m-online.net (Postfix) with ESMTP id EEE2A188A189;
-	Fri,  3 Dec 2010 20:03:22 +0100 (CET)
-Received: from igel.home (ppp-93-104-128-221.dynamic.mnet-online.de [93.104.128.221])
-	by mail.mnet-online.de (Postfix) with ESMTP id E40E41C000A0;
-	Fri,  3 Dec 2010 20:03:22 +0100 (CET)
-Received: by igel.home (Postfix, from userid 501)
-	id 7D060CA2A0; Fri,  3 Dec 2010 20:03:22 +0100 (CET)
-X-Yow: How many retired bricklayers from FLORIDA are out purchasing
- PENCIL SHARPENERS right NOW??
-In-Reply-To: <4CF8D243.50108@gmx.com> ("Martin =?utf-8?Q?Kr=C3=BCger=22's?=
- message of "Fri, 03
-	Dec 2010 12:19:31 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.90 (gnu/linux)
+	id S1753937Ab0LCTHA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 14:07:00 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:38964 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753905Ab0LCTG7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 14:06:59 -0500
+Received: by vws16 with SMTP id 16so1926923vws.19
+        for <git@vger.kernel.org>; Fri, 03 Dec 2010 11:06:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=IgNhGbPvWYYdImnGgjn7LCwikFzQVOeE3F4ZAESpfCI=;
+        b=JBk4epyoScXOctIZfns3/KtbcM0HL404j6hugElK3vjWqLnwNnWSYYeCO1cs01NgWc
+         gcE2JzL77CH2EjPlvj7h9cNerqkUx5uX1XDurJ5Nc/T2oHuWDtf2f7VwlCWbYrxHUzcz
+         cyFOEUq8Ve19vpgahWyhT86fb5Z2kqe1k0gqc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ofSwB91QKwzwnptMWo8Ogz0bhKPYBlzUAETcxrkmDym9k8KsUf68CJ9ESu5DZfSpAd
+         Oi52Lbi0+45IoJ6EMv9gDKuWfMnYus77WFGD55neINhoFM+/Xv8zRplukq6noWj+yVTV
+         0Dnw72IfXeGh5KEhC9jqYfjG79SkJTcOwhrOE=
+Received: by 10.220.180.193 with SMTP id bv1mr513089vcb.12.1291403218525;
+        Fri, 03 Dec 2010 11:06:58 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
+        by mx.google.com with ESMTPS id e18sm366150vcf.36.2010.12.03.11.06.55
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 03 Dec 2010 11:06:56 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <201012031130.06008.trast@student.ethz.ch>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162827>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162828>
 
-Martin Kr=C3=BCger <martin.krueger@gmx.com> writes:
+Thomas Rast wrote:
 
-> Then git generates this patch:
->
-> From ea2cd63dfe9b3ac3581b6cff8b13a52e69066242 Mon Sep 17 00:00:00 200=
-1
-> From: martin <martin@chad.upnx.de>
-> Date: Fri, 19 Nov 2010 18:58:58 +0100
-> Subject: [PATCH] =3D?UTF-8?q?Methoden=3D20=3DC3=3DBCberall=3D20angepa=
-sst.?=3D
->  =3D?UTF-8?q?Ausser=3D20Aussnahmen?=3D
-> MIME-Version: 1.0
-> Content-Type: text/plain; charset=3DUTF-8
-> Content-Transfer-Encoding: 8bit
->
-> Applyin leads to a correct commit-Messsage:
->
-> commit 62d06e3415ec0726dbd58c11ed93771502b77805
-> Author: martin <martin@chad.upnx.de>
-> Date:   Fri Nov 19 18:58:58 2010 +0100
->
->     Methoden =C3=BCberall angepasst.Ausser Aussnahmen
+> In any case I cannot see a reason to use this construct: 'dd' reads
+> from stdin by default, so you could just leave away the option.
 
-That's at least missing a space after the period.
-
-Andreas.
-
---=20
-Andreas Schwab, schwab@linux-m68k.org
-GPG Key fingerprint =3D 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4=
-ED5
-"And now for something completely different."
+Yes, sorry about that.  I had confused dd with 'tar' which defaults to
+rmt0 on some systems.  Fixed locally.
