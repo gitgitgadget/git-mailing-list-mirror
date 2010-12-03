@@ -1,82 +1,70 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 3/4] fast-import: let importers retrieve blobs
-Date: Fri, 3 Dec 2010 14:26:50 -0600
-Message-ID: <20101203202650.GA15517@burratino>
-References: <1287147256-9457-1-git-send-email-david.barr@cordelta.com>
- <20101128194131.GA19998@burratino>
- <20101128194501.GD19998@burratino>
- <201012031130.06008.trast@student.ethz.ch>
- <7vsjyeobka.fsf@alter.siamese.dyndns.org>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: Merging (only) subdirectories
+Date: Fri, 3 Dec 2010 21:38:24 +0100
+Message-ID: <20101203203824.GA14508@nibiru.local>
+References: <AANLkTimZc0r8WBOsE73V=7SKdZgONiCKfYCk7rBrCY3F@mail.gmail.com> <AANLkTik-d8oys9h=wFRnyt8sukTsSymaw5LGM39BU2K=@mail.gmail.com> <20101203105957.GA14783@nibiru.local> <AANLkTina5UwRZVGOVdnAJe0U2B_rCiGhoOdSArw6ZQd+@mail.gmail.com>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>,
-	David Barr <david.barr@cordelta.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 03 21:34:29 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 03 21:43:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POcKr-00087K-54
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 21:34:29 +0100
+	id 1POcTb-0003aK-Sj
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 21:43:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753580Ab0LCUeY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 15:34:24 -0500
-Received: from mail-ew0-f45.google.com ([209.85.215.45]:33861 "EHLO
-	mail-ew0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752527Ab0LCUeX (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 15:34:23 -0500
-X-Greylist: delayed 436 seconds by postgrey-1.27 at vger.kernel.org; Fri, 03 Dec 2010 15:34:23 EST
-Received: by mail-ew0-f45.google.com with SMTP id 10so5933885ewy.4
-        for <git@vger.kernel.org>; Fri, 03 Dec 2010 12:34:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=QbWERl4TQ2tCS0MzRevyYKuCI+2weYdAX+/c/3Jn8aw=;
-        b=j9ZCvWWKpttH48YwlrtBOQWF9vD/Fl5I7yHiXzr5RFBNM0JFja8J8C9tLN0DY8+kcg
-         JSKTD/g7ExwR7zk/P6k8cJx4XoE7RBWvx9889hKryPssdN95DviMoaHTKBnoAU44fuEG
-         EZhUqH8jrAuL7sjG51MzZpdi1E6ilIx3BK7fo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=AUZpwNTsQgrq+J0iBJUYAoXacFCuMyqdor4su1ZMREgEX1pSZCeuJoA0rXMDh3GjB4
-         N2RNAsFXgI9uXJYJFno1FUbJWkt3gDggL/qHz7ny3CUaTNINteTpltXFm/BOC9ewWVQX
-         /Qt/V0Q1oZqsoxZnIPGNMXjuruq51iqFlF4GA=
-Received: by 10.213.22.66 with SMTP id m2mr1330064ebb.76.1291408026713;
-        Fri, 03 Dec 2010 12:27:06 -0800 (PST)
-Received: from burratino ([68.255.109.73])
-        by mx.google.com with ESMTPS id q58sm1847170eeh.3.2010.12.03.12.27.04
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 03 Dec 2010 12:27:05 -0800 (PST)
+	id S1753722Ab0LCUn0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 15:43:26 -0500
+Received: from caprica.metux.de ([82.165.128.25]:50935 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752659Ab0LCUn0 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Dec 2010 15:43:26 -0500
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id oB3KjoYx030516
+	for <git@vger.kernel.org>; Fri, 3 Dec 2010 21:45:51 +0100
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id oB3KjIU4030465
+	for git@vger.kernel.org; Fri, 3 Dec 2010 21:45:18 +0100
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id oB3KcOkk016570
+	for git@vger.kernel.org; Fri, 3 Dec 2010 21:38:24 +0100
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vsjyeobka.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <AANLkTina5UwRZVGOVdnAJe0U2B_rCiGhoOdSArw6ZQd+@mail.gmail.com>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162846>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162847>
 
-Junio C Hamano wrote:
+* Howard Miller <howard@e-learndesign.co.uk> wrote:
 
-> Output from
-> 
->     $ git grep -n -e /dev/ --and --not -e /dev/null t/
+> This type of thing was actually the one thing I can think of that
+> cvs/svn made easy as they keep the repo info in each directory :)  
 
-FWIW
+Besides the fact that their underlying data model makes things
+like merging particularily hard (svn initially had no branch
+concept at all ;-o).
 
-	$ git grep -e 'dd if='
+BTW: M$-TFS combines the worst of all ...
 
-shows a few missed harmless examples.  Perhaps
 
-	$ git grep -e '/dev/[^n]'
+cu
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
 
-would have been the simplest way to catch them.
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
