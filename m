@@ -1,71 +1,73 @@
-From: Stephen Boyd <bebarino@gmail.com>
-Subject: Re: [PATCH 1/6] parse-options: sanity check PARSE_OPT_NOARG flag
-Date: Thu, 02 Dec 2010 23:35:35 -0800
-Message-ID: <4CF89DC7.2050806@gmail.com>
-References: <1287544320-8499-1-git-send-email-pclouds@gmail.com> <1287544320-8499-4-git-send-email-pclouds@gmail.com> <20101022063837.GA6081@burratino> <20101022064258.GB6081@burratino> <7v8w1qnkr1.fsf@alter.siamese.dyndns.org> <20101024072032.GA23455@burratino> <20101024081316.GA29630@burratino> <20101130025223.GA5326@burratino> <20101130025551.GB5326@burratino> <4CF4B21B.5030401@gmail.com> <7v7hftt7vy.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Fallback on _NSGetExecutablePath to get the executable
+ path if using argv[0] fails
+Date: Fri, 3 Dec 2010 01:42:59 -0600
+Message-ID: <20101203074259.GB18202@burratino>
+References: <051964C9-0507-4CCB-A111-55CA36652F00@apple.com>
+ <AANLkTimwRJqje1-HhzKj-L-5-2CvhTC0+Pr0Cvj7d_kc@mail.gmail.com>
+ <20101129171211.GL8037@burratino>
+ <7534C13D-A52A-4BA4-B8C5-14E17CFA0351@sb.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTg==?= =?UTF-8?B?Z+G7jWMgRHV5?= 
-	<pclouds@gmail.com>, git@vger.kernel.org,
-	Pierre Habouzit <madcoder@debian.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 03 08:36:29 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Thiago Farina <tfransosi@gmail.com>,
+	Jeremy Huddleston <jeremyhu@apple.com>, git@vger.kernel.org
+To: Kevin Ballard <kevin@sb.org>
+X-From: git-owner@vger.kernel.org Fri Dec 03 08:43:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POQBw-00006L-UH
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 08:36:29 +0100
+	id 1POQId-0002GF-7g
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 08:43:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756654Ab0LCHgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 02:36:23 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:45127 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754292Ab0LCHgW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 02:36:22 -0500
-Received: by qwb7 with SMTP id 7so9296794qwb.19
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 23:36:21 -0800 (PST)
+	id S1755694Ab0LCHnS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 02:43:18 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:62837 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751709Ab0LCHnR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 02:43:17 -0500
+Received: by gwj20 with SMTP id 20so4623219gwj.19
+        for <git@vger.kernel.org>; Thu, 02 Dec 2010 23:43:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=O1Su1EUDbrpTG9G26tCPkkyc0emKKFOszFYCtvBOg40=;
-        b=atu5GaFycawPecZKx/oqnbxOIXroqwA7v1OkXiWljf5v+AIKA/KWeCV9kV7uqCNSRO
-         3MsYFp2VeKZGofuMe2nsh1r5JPlkSokB/S7ziqpaQzOkK7TDjuwfegJIQpYVdg7ND/k/
-         WeYdsp10krBrSH+aG5nNcyHprFoSIA/eUimfw=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=ZxjlW7lMfoWvlcvQ35eQ2fkDk4UHUxvKin0z/g67g/c=;
+        b=LpbehZazUj3HQHjAxLp1DQR0T6ybcuJ13TNeuh+sFrS/H3xX9bbh1phg/Wgy4Zoore
+         et+RBL6rTW2IIHL8juEhSOR6sQmyR7xkajuqkqS2mGy7Da0vv+gdN1215EvRM6Sz3ulB
+         7hJgHu0c5vReBzjt24kPK5Bkt/xxs15CQ8PIA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=EAYCH25b8KaP0wozBSRR0XjHzvMnyBHfwA61goALJ2c8uYB9mk+X5tECbqQxv8qsY3
-         fiUAIlY+fLZ2nFEtOcAe16YH0Q+avjIDP6NFf9CjftoGXhSVr5uY/b5gaEEf+fHkmV7v
-         33OAzKHetf0o0Mav/Auka+wDs90rwsuqOalBU=
-Received: by 10.224.67.212 with SMTP id s20mr969610qai.118.1291361781586;
-        Thu, 02 Dec 2010 23:36:21 -0800 (PST)
-Received: from [192.168.1.104] ([75.85.182.25])
-        by mx.google.com with ESMTPS id s34sm1026860qcp.44.2010.12.02.23.35.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 02 Dec 2010 23:36:20 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101108 Lightning/1.0b3pre Thunderbird/3.1.6
-In-Reply-To: <7v7hftt7vy.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=UX3g/E/SUwxCXsGg5KlwXs0cZ7fMhLTaWUy5xQq9eT/ZuHs6vhuW5MXPfzRfF7NQeF
+         TXhLCEjbL/DXHfoNQBcKVGKND5JCWaL50V1tizlV0gMHD4LoJ1PV5+sS+hK2RFv3FKC/
+         tXC9qxy/8gqiwa0dOf0ifU7iSBFkI6qGKzBFI=
+Received: by 10.150.204.4 with SMTP id b4mr3132440ybg.415.1291362196565;
+        Thu, 02 Dec 2010 23:43:16 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
+        by mx.google.com with ESMTPS id 54sm905899yhl.32.2010.12.02.23.43.12
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 02 Dec 2010 23:43:15 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7534C13D-A52A-4BA4-B8C5-14E17CFA0351@sb.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162764>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162765>
 
-On 12/01/10 15:01, Junio C Hamano wrote:
-> Stephen Boyd <bebarino@gmail.com> writes:
-> 
->> Looks like parse_options_check() is being called for each
->> parse_options_step(). Here's a patch to fix that. Junio, this can
->> probably be applied to maint.
-> 
-> Looks correct, but why is it a maint material?
-> 
+Kevin Ballard wrote:
+> On Nov 29, 2010, at 9:12 AM, Jonathan Nieder wrote:
 
-Possible performance regression? Which is why its qualified with probably.
+>> The section "2) #ifdefs are ugly" of
+>> linux-2.6/Documentation/SubmittingPatches explains the rationale.
+>
+> Might this be worth pulling into git.git/Documentation/CodingGuidelines?
+
+Yes, the example there includes good advice I wish I had received
+sooner, and Documentation/CodingGuidelines seems like a good place to
+help people find it.  Do you have some wording in mind?
