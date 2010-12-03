@@ -1,76 +1,89 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: BUG: git pull --rebase on detatched head prints a lot of usage warnings
-Date: Fri, 3 Dec 2010 23:16:11 +0100
-Message-ID: <AANLkTimgk-jqyKD+ab=bHZLVH3F52WqCjr4v3chMY_Fv@mail.gmail.com>
-References: <AANLkTimyCG6zVhc4znWPWwipd0bn-YT2FrOT=T0AgHNW@mail.gmail.com>
- <20101203190050.GB14049@burratino> <AANLkTin-9pb7cxsAvDqWj3So47_zq5co9TZRWux9ezxz@mail.gmail.com>
- <AANLkTikwdqQpmyxZu-kp7UHjYnKuVxs8urxM=9c=66H0@mail.gmail.com> <7vbp52o9c6.fsf@alter.siamese.dyndns.org>
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: Re: [PATCHv2 4/7] web--browse: support opera, seamonkey and elinks
+Date: Fri, 3 Dec 2010 23:22:08 +0100
+Message-ID: <AANLkTi=DdQd5MgU2bp5sb5b5t1bzXpwf8WSJ=boSbc5q@mail.gmail.com>
+References: <1291394861-11989-1-git-send-email-giuseppe.bilotta@gmail.com>
+ <1291394861-11989-5-git-send-email-giuseppe.bilotta@gmail.com> <7vei9yms6u.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 03 23:16:42 2010
+X-From: git-owner@vger.kernel.org Fri Dec 03 23:22:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POdvj-0000UG-Cu
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 23:16:39 +0100
+	id 1POe1V-0002w6-N5
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 23:22:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753910Ab0LCWQd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Dec 2010 17:16:33 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:38146 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753384Ab0LCWQc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Dec 2010 17:16:32 -0500
-Received: by qwb7 with SMTP id 7so10132155qwb.19
-        for <git@vger.kernel.org>; Fri, 03 Dec 2010 14:16:32 -0800 (PST)
-Received: by 10.229.212.5 with SMTP id gq5mr1669856qcb.275.1291414591989; Fri,
- 03 Dec 2010 14:16:31 -0800 (PST)
-Received: by 10.229.59.42 with HTTP; Fri, 3 Dec 2010 14:16:11 -0800 (PST)
-In-Reply-To: <7vbp52o9c6.fsf@alter.siamese.dyndns.org>
+	id S1753339Ab0LCWWc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Dec 2010 17:22:32 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:63808 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751876Ab0LCWWc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Dec 2010 17:22:32 -0500
+Received: by iwn6 with SMTP id 6so383639iwn.19
+        for <git@vger.kernel.org>; Fri, 03 Dec 2010 14:22:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=+QskE04Dc64L7r+/SviSkz1awytzDz9cDe9F7C4GasU=;
+        b=uL8PWhj+YpopcrZcNLNnUxLsxnfB8JusPPBoWVQNzINJjAChZbKVAe8bi7Y9kB9ACT
+         RtgGu55upGahWyOwjvltCaLS2jKOX6v6PIHpRtoMsHFnTRBZOX+VG90XznFnKEID9g/g
+         bfJVW9Kpjz7SCp1NOboNGEZg/CGJXJgTBNpC4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=WDL4MEttijDE40kMNAZDdhzEBy8zxSbEDd1Kk1CIj9ia2lgV0AWLrjZRGTtSozFy2N
+         QvEv8Qip6FyPWruBsWWvkp/xzatRYLf6YNE0M8B5DaoKJ4GW7lzGqyBN4FjztIg39OC5
+         vzfy5PFmdGFbCBV82FbXUv3QSsN5F4WSpUPF4=
+Received: by 10.231.12.131 with SMTP id x3mr2454930ibx.31.1291414951009; Fri,
+ 03 Dec 2010 14:22:31 -0800 (PST)
+Received: by 10.231.39.3 with HTTP; Fri, 3 Dec 2010 14:22:08 -0800 (PST)
+In-Reply-To: <7vei9yms6u.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162868>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162869>
 
-On Fri, Dec 3, 2010 at 10:06 PM, Junio C Hamano <gitster@pobox.com> wro=
+On Fri, Dec 3, 2010 at 11:01 PM, Junio C Hamano <gitster@pobox.com> wro=
 te:
-> Santi B=E9jar <santi@agolina.net> writes:
+> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 >
->> I also think it fixes, but I wonder if it's the best fix. One thing =
-is
->> that show-branch is an ancillary command, and not a plumbing command
->> (but there is already a call to show-branch, but it should probably =
-be
->> change to merge-base now that it handles three commit as arguments).
+>> -w3m|links|lynx|open)
+>> +w3m|elinks|links|lynx|open)
+>> =A0 =A0 =A0 eval "$browser_path" "$@"
+>> =A0 =A0 =A0 ;;
+>> =A0start)
+>> =A0 =A0 =A0 exec "$browser_path" '"web-browse"' "$@"
+>> =A0 =A0 =A0 ;;
+>> -dillo)
+>> +opera|dillo)
+>> =A0 =A0 =A0 "$browser_path" "$@" &
+>> =A0 =A0 =A0 ;;
 >
-> Are you sure "show-branch --merge-base A B C" and "merge-base A B C" =
-are
-> meant to compute the same thing?
-
-No, I'm not sure. In fact the documentation explicit says that they
-are different. But I fail to see when it matters, and more
-specifically (now that I've reread the docs), what is the point of
-"merge-base A B C".
-
-Just a data point, show-branch --merge-base is only used once in the
-code, in git-pull.sh, but "git merge-base A B C" is not used (at least
-using my grep).
-
-Or the equivalent is the undocumented "git merge-base --octopus A B C"?
-
+> Not a complaint on your patch, but is there a reason we say "eval", "=
+exec"
+> and "(nothing)" in these three case arms?
 >
-> I do not think ancillary necessarily means Porcelain, but that is a
-> separate issue.
+> The above makes the interpretation of $browser_path and $@ inconsiste=
+nt
+> between lynx family codepath (which would apply $IFS to find the brow=
+ser)
+> and dillo and start family codepath (which would not), and I am wonde=
+ring
+> if that difference is intended.
 
-Me neither. But is the promise to not change the behavior/output as
-hard as with plumbing?
+I was wondering about this myself, but since I couldn't come up with
+an explanation I opted for leaving things as they were. Lacking an
+explanation I can also provide a patch to standardize invocation.
 
-Santi
+--=20
+Giuseppe "Oblomov" Bilotta
