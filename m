@@ -1,77 +1,63 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: path/to/some/file: needs update
-Date: Fri, 3 Dec 2010 12:52:51 -0600
-Message-ID: <20101203185250.GA14049@burratino>
+Date: Fri, 03 Dec 2010 19:58:55 +0100
+Message-ID: <vpqk4jq3cpc.fsf@bauges.imag.fr>
 References: <AANLkTinsUZCUJamUHWN=H7tyL5nKACmEcyvG6hpsTDtv@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git <git@vger.kernel.org>
 To: Patrick Doyle <wpdster@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 03 19:53:19 2010
+X-From: git-owner@vger.kernel.org Fri Dec 03 19:59:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POaku-0002ku-OV
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 19:53:17 +0100
+	id 1POaqW-0005lG-6N
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 19:59:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753837Ab0LCSxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 13:53:11 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:57715 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753512Ab0LCSxK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 13:53:10 -0500
-Received: by fxm20 with SMTP id 20so2497080fxm.19
-        for <git@vger.kernel.org>; Fri, 03 Dec 2010 10:53:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=VC/XePz/2u0oHwBm95oXugKRCECFzdLyP9rVkIiQ0wA=;
-        b=C4jypALuHADciluRw4W5emFe5tGholifew5nUF4KT4aUFZLcfzCPEqbEsJoGGictSP
-         pLIRiR3WtRutOWijceNPgmIeDlPvoxJZ62NE3yvNOE4D9OQ3Kl+MId18XdzD/O3YVrYJ
-         nTwF/4FYGJDPhaRGxgxGHe7PlrjqakJurEGCM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Mo3XElIkJMKkkvuALXbXhatq4VCXzDHp9OSh3WXEYXpicUqQm1KFjTYn1qXgQN7qh0
-         yzXNzRgr4JwFrbgnjYzYDMH8ODnBRDY44qbPVW/uB05kag8Kf2EDx1CEBsuOkJVlXfk+
-         h6k1ypcX0F1Bn2E+qla4zVcUWgXYTwGwDMPOE=
-Received: by 10.223.79.13 with SMTP id n13mr2572844fak.139.1291402388736;
-        Fri, 03 Dec 2010 10:53:08 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id r24sm745869fax.27.2010.12.03.10.53.06
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 03 Dec 2010 10:53:07 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTinsUZCUJamUHWN=H7tyL5nKACmEcyvG6hpsTDtv@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753663Ab0LCS66 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 13:58:58 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:55073 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751759Ab0LCS66 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 13:58:58 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id oB3IgNsH011650
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 3 Dec 2010 19:42:23 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1POaqN-0006m1-G4; Fri, 03 Dec 2010 19:58:55 +0100
+In-Reply-To: <AANLkTinsUZCUJamUHWN=H7tyL5nKACmEcyvG6hpsTDtv@mail.gmail.com> (Patrick Doyle's message of "Fri\, 3 Dec 2010 13\:34\:24 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Fri, 03 Dec 2010 19:42:23 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: oB3IgNsH011650
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1292006544.10249@Sq0y4zahRp1i5QR8f7IWSg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162824>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162825>
 
-Hi,
+Patrick Doyle <wpdster@gmail.com> writes:
 
-Patrick Doyle wrote:
-
-> Needless to say, I was able to calm them down.  But it occurred to me
-> that "needs update" isn't necessarily the most helpful message and
-> that "error: ... Cannot merge" could offer a little more explanation.
+> path/to/some/file: needs update.
 >
-> I'm happy to submit the trivial patch changing "needs update" to
-> "locally modified".  I suspect there might be some ramifications in
-> terms of scripts that expect the old message to be there
-[...]
-> What do folks think?
+> Then things got worse... one of the messages said:
+>
+> error: Entry 'path/to/some/binaryfile' not uptodate.  Cannot merge
 
-I think you are quite right, on both counts.
+Which commands triggered these messages? Which version of Git?
 
-See v1.6.0-rc0~4 ("needs update" considered harmful, 2008-07-20) and
-v1.5.6-rc0~7^2 (unpack-trees: allow Porcelain to give different error
-messages, 2008-05-17) for inspiration.  Do you remember which
-porcelain command was making trouble in this example?
+AFAICT, these messages never appear anymore in normal (porcelain) use
+in recent Gits.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
