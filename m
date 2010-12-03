@@ -1,106 +1,87 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: duplicate commits after git rebase -i HEAD~10
-Date: Fri, 3 Dec 2010 10:34:35 -0500
-Message-ID: <20101203153435.GA6069@sigill.intra.peff.net>
-References: <AANLkTi=W9MyCuOuk49AtCxR7nTa5xkddY_2HkhOvQip-@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Mathieu Malaterre <mathieu.malaterre@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 03 16:34:44 2010
+From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+Subject: [PATCHv2 0/7] web--browse cleanup and extensions
+Date: Fri,  3 Dec 2010 17:47:34 +0100
+Message-ID: <1291394861-11989-1-git-send-email-giuseppe.bilotta@gmail.com>
+Cc: Christian Couder <christian.couder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 03 17:48:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POXem-0001ei-9c
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 16:34:44 +0100
+	id 1POYnn-0006zs-Py
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 17:48:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751826Ab0LCPej (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 10:34:39 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:33658 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751085Ab0LCPei (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 10:34:38 -0500
-Received: (qmail 23013 invoked by uid 111); 3 Dec 2010 15:34:36 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 03 Dec 2010 15:34:36 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 03 Dec 2010 10:34:35 -0500
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=W9MyCuOuk49AtCxR7nTa5xkddY_2HkhOvQip-@mail.gmail.com>
+	id S1753340Ab0LCQsC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 11:48:02 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:47167 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751740Ab0LCQsA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 11:48:00 -0500
+Received: by wwa36 with SMTP id 36so10251895wwa.1
+        for <git@vger.kernel.org>; Fri, 03 Dec 2010 08:47:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=TvZ64BScRaxKTkYcXe+ePsMT5guIeFHbVcLiI832h6g=;
+        b=h0B2I7N2v1+vGIxJqDg7ecNO7UzTyN1JBGEoDnFRzlCv7KR1FHiiyQMH4ABSeWR9z+
+         TtYqEfUv13UZNtjJW7FnoRlABBlOIuC+ucivU3kcW6oxwHXjpXMPolgOqMY25DgBkVjf
+         YdsOLS1iWGtgDKHzcdYQjgc8ZVeqO1Uv3vgng=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=b3JrsSloeW8rjMAXygDCyG3mN4d6VcfRX9uoyTuSCVTXN69CpgRP3KFMHNclrBbS7F
+         hVrgtEP3PMC5ZyrbHCxA9WFQp+Vyb7rH7slxOJ4ALBWcYOHclQJpe9ZSpHPny2vMGw/q
+         Hw00YhIVXJhLXlTWnz6uZF3mvbN0EEmm50Irc=
+Received: by 10.216.173.4 with SMTP id u4mr886834wel.87.1291394879187;
+        Fri, 03 Dec 2010 08:47:59 -0800 (PST)
+Received: from localhost (nat.ct.ingv.it [193.206.223.100])
+        by mx.google.com with ESMTPS id x28sm975314weq.16.2010.12.03.08.47.45
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 03 Dec 2010 08:47:46 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.664.g294b8.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162806>
 
-On Fri, Dec 03, 2010 at 04:04:53PM +0100, Mathieu Malaterre wrote:
+This second issue of the web--browse cleanup and extension patchset
+has seen some stylistic changes in the first patches as discussed on the
+ML, and a new patch to add support for the BROWSER env var. Support for
+xdg-open is still missing, due to the lack of an obvious way to suggest
+opening pages in new tabs (same reason why we don't directly support
+Debian's sensible-browser).
 
->   I am trying to understand what I did wrong in my git rebase and
-> eventually I would like to repair my mistakes. Basically after a git
-> rebase, I ended up with duplicate *identical* commits. One was on the
-> master branch and one was on a local branch which was merge to master.
+I'm quite convinced that the first 4 patches (up to the "support opera,
+seamonkey and elinks" patch, inclusive) are ready for merging.
 
-They're not quite identical. They may make the same logical change, but
-they are based on different history.
+The fifth patch is slightly more extensive than in the previous
+iteration, including chromium-browser as a supported option, but still
+looking for chromium-browser first even when browser=chromium.
 
-The mistake you made is to rebase commits that have been published on
-another branch. Generally you would throw away the "originals" after
-rebasing, but in this case, the master branch already knows about them
-(due to the merge), so that may not be an option.
+The last two patches are more RFCish. I tried to include the changes
+suggested by Christian, unless of course I forgot something. Suggestions
+on possible ways to improve the proposed approach are welcome.
 
-How you proceed with fixing it depends on what your history looks like,
-and how much of it you are willing to rewrite. From your description,
-your history looks something like:
+Giuseppe Bilotta (7):
+  CodingGuidelines: mention whitespace preferences for shell scripts
+  web--browse: coding style
+  web--browse: split valid_tool list
+  web--browse: support opera, seamonkey and elinks
+  web--browse: better support for chromium
+  web--browse: use (x-)www-browser if available
+  web--browse: look at the BROWSER env var
 
-             F----G <-- original branch
-            /      \
-  ...A--B--C--D--E--M <-- master
-            \
-             F'--G' <-- rebased branch
+ Documentation/CodingGuidelines    |    4 +
+ Documentation/git-web--browse.txt |   10 ++
+ git-web--browse.sh                |  276 +++++++++++++++++++++++++------------
+ 3 files changed, 203 insertions(+), 87 deletions(-)
 
-where F' is the commit matching F, and so forth. Due to merge M, master
-contains the commits from the original branch, but your newly rebased
-branch has the matching ones.
-
-If you have not actually published the merged value of master to anyone
-else, and you have not built anything on top of master, then it is safe
-to redo that merge, like:
-
-  git checkout master
-  git reset --hard HEAD^
-  git merge your-branch
-
-If you have built on top of master, you can still redo the merge, but
-you would then need to replay those new commits on top of the new merge:
-
- # make a new branch at master just before the merge; you will have to
- # find the commit id of the merge via "git log" or gitk
- git checkout tmp-branch M^
-
- # now redo the merge, using the rebased commits
- git merge your-branch
-
- # and now we rebase master, using just the commits from _after_ the
- # merge, on top of our re-done merge
- git rebase --onto tmp-branch M master
-
- # the rebase command leaves us on "master" as a side effect; we can now
- # delete tmp-branch
- git branch -d tmp-branch
-
-If you have published your merged master for others to build on top of,
-then you probably don't want to rewrite it, as it will cause pain for
-others. Just live with the commits you've published, and redo your
-changes as new commits on top. To restore the state of your-branch to
-what it was before the rebase, look in the reflog ("git log -g
-your-branch"), then reset it ("git checkout your-branch; git reset
---hard your-branch@{1}" (or whatever reflog entry looks to be correct)).
-
-You may want to also look at this thread, which shows a similar problem,
-and in which I drew a lot more pictures, which may help explain:
-
-  http://article.gmane.org/gmane.comp.version-control.git/161823
-
--Peff
+-- 
+1.7.3.2.664.g294b8.dirty
