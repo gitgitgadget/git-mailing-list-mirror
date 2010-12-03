@@ -1,83 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH] Re: git submodule -b ... of current HEAD fails
-Date: Fri, 3 Dec 2010 01:10:37 -0600
-Message-ID: <20101203071037.GA18202@burratino>
-References: <20101201171814.GC6439@ikki.ethgen.de>
- <20101201185046.GB27024@burratino>
- <4CF80B71.3010309@web.de>
+From: Stephen Boyd <bebarino@gmail.com>
+Subject: Re: [PATCH 1/6] parse-options: sanity check PARSE_OPT_NOARG flag
+Date: Thu, 02 Dec 2010 23:35:35 -0800
+Message-ID: <4CF89DC7.2050806@gmail.com>
+References: <1287544320-8499-1-git-send-email-pclouds@gmail.com> <1287544320-8499-4-git-send-email-pclouds@gmail.com> <20101022063837.GA6081@burratino> <20101022064258.GB6081@burratino> <7v8w1qnkr1.fsf@alter.siamese.dyndns.org> <20101024072032.GA23455@burratino> <20101024081316.GA29630@burratino> <20101130025223.GA5326@burratino> <20101130025551.GB5326@burratino> <4CF4B21B.5030401@gmail.com> <7v7hftt7vy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Klaus Ethgen <Klaus@Ethgen.de>,
-	Sven Verdoolaege <skimo@kotnet.org>, mlevedahl@gmail.com,
-	ben@ben.com
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Fri Dec 03 08:11:04 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTg==?= =?UTF-8?B?Z+G7jWMgRHV5?= 
+	<pclouds@gmail.com>, git@vger.kernel.org,
+	Pierre Habouzit <madcoder@debian.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 03 08:36:29 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POPnI-0008Bz-ME
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 08:11:01 +0100
+	id 1POQBw-00006L-UH
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 08:36:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755769Ab0LCHKy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 02:10:54 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:64048 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755348Ab0LCHKx (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 02:10:53 -0500
-Received: by ywl5 with SMTP id 5so4608689ywl.19
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 23:10:53 -0800 (PST)
+	id S1756654Ab0LCHgX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 02:36:23 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:45127 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754292Ab0LCHgW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 02:36:22 -0500
+Received: by qwb7 with SMTP id 7so9296794qwb.19
+        for <git@vger.kernel.org>; Thu, 02 Dec 2010 23:36:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=EGJQSIJP1FTapAWxghLWhDvLoYKJkcFTqmmpSTETEME=;
-        b=aSz2lKso3AHwp8aRN7WFfSp0616PdvjNjOiPOL4twD+U4U0IxcYyX3MMQ0aWhTb53a
-         bVhBrNtz9WJLtdxuMOAovkjEUTQa6E35HL9p+FhU3F4n6KLRSUQk5MSii7OTvT3dFjeF
-         a7WmSyu+91+M1fl28ia/2DMdJAxo+DJHm/ZKo=
+        h=domainkey-signature:received:received:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=O1Su1EUDbrpTG9G26tCPkkyc0emKKFOszFYCtvBOg40=;
+        b=atu5GaFycawPecZKx/oqnbxOIXroqwA7v1OkXiWljf5v+AIKA/KWeCV9kV7uqCNSRO
+         3MsYFp2VeKZGofuMe2nsh1r5JPlkSokB/S7ziqpaQzOkK7TDjuwfegJIQpYVdg7ND/k/
+         WeYdsp10krBrSH+aG5nNcyHprFoSIA/eUimfw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Iy1/+BfnrHje+euAkpHMTBvkwmbLUJUAJ9LwFa7HRfiaSXYjKgRjwYcK6BkXnutEgb
-         B+mJ5MlnSEgVEc18v3JKDxuPIZbMybuvAfHwadWKA0YqXdG/paVONxMl0f7wHyu+3DSO
-         fLKA0N1AFiMMQwTFza83+EK+V9PeuuuqZeb2o=
-Received: by 10.150.52.20 with SMTP id z20mr3157223ybz.193.1291360253078;
-        Thu, 02 Dec 2010 23:10:53 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
-        by mx.google.com with ESMTPS id f73sm901260yhc.4.2010.12.02.23.10.50
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 02 Dec 2010 23:10:51 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4CF80B71.3010309@web.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=EAYCH25b8KaP0wozBSRR0XjHzvMnyBHfwA61goALJ2c8uYB9mk+X5tECbqQxv8qsY3
+         fiUAIlY+fLZ2nFEtOcAe16YH0Q+avjIDP6NFf9CjftoGXhSVr5uY/b5gaEEf+fHkmV7v
+         33OAzKHetf0o0Mav/Auka+wDs90rwsuqOalBU=
+Received: by 10.224.67.212 with SMTP id s20mr969610qai.118.1291361781586;
+        Thu, 02 Dec 2010 23:36:21 -0800 (PST)
+Received: from [192.168.1.104] ([75.85.182.25])
+        by mx.google.com with ESMTPS id s34sm1026860qcp.44.2010.12.02.23.35.55
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 02 Dec 2010 23:36:20 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101108 Lightning/1.0b3pre Thunderbird/3.1.6
+In-Reply-To: <7v7hftt7vy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162764>
 
-Jens Lehmann wrote:
-> Am 01.12.2010 19:50, schrieb Jonathan Nieder:
+On 12/01/10 15:01, Junio C Hamano wrote:
+> Stephen Boyd <bebarino@gmail.com> writes:
+> 
+>> Looks like parse_options_check() is being called for each
+>> parse_options_step(). Here's a patch to fix that. Junio, this can
+>> probably be applied to maint.
+> 
+> Looks correct, but why is it a maint material?
+> 
 
->>                                  Jens, any idea why git submodule
->> is not using "clone --branch" directly?
->
-> Nope, these lines date back to the time before I got involved in the
-> submodule business ... Seems like this "git checkout" was added in
-> March 2008 by Mark Levedahl (CCed), maybe he can shed some light on
-> that.
-
-Ah, so the problem is that "clone --branch" did not exist.  Sorry for
-the noise.
-
-Another question can be also be easily answered by history examination:
-the series of checks in module_clone are because 70c7ac22d:git-clone.sh
-did not have checks of its own for the target directory.
-
-So there is some simplification within grasp.
-
-'night,
-Jonathan
+Possible performance regression? Which is why its qualified with probably.
