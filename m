@@ -1,94 +1,90 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv2 1/7] CodingGuidelines: mention whitespace preferences
- for shell scripts
-Date: Fri, 3 Dec 2010 23:02:03 +0100
-Message-ID: <AANLkTi=PmGR23AMog4UWQVNKPWrDUM_kYWV_Bn1vvSwE@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 6/7] web--browse: use (x-)www-browser if available
+Date: Fri, 03 Dec 2010 14:15:08 -0800
+Message-ID: <7vaakmmrkj.fsf@alter.siamese.dyndns.org>
 References: <1291394861-11989-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1291394861-11989-2-git-send-email-giuseppe.bilotta@gmail.com> <7vsjyemt1f.fsf@alter.siamese.dyndns.org>
+ <1291394861-11989-7-git-send-email-giuseppe.bilotta@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 03 23:02:31 2010
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 03 23:15:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POdi2-0003Go-AY
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 23:02:30 +0100
+	id 1POdue-0008Ug-CE
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 23:15:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752916Ab0LCWCZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Dec 2010 17:02:25 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:45557 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751582Ab0LCWCY convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Dec 2010 17:02:24 -0500
-Received: by iwn6 with SMTP id 6so367145iwn.19
-        for <git@vger.kernel.org>; Fri, 03 Dec 2010 14:02:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=nGQvILLlrXM4I0y7YLWGfUKW6wS5YOmPWHyWmLiI1T4=;
-        b=LTS7ipYTORx3lRRWv6hp10Ok7+YIHq0rdoXb6lMF4k7CulgyNPkP2IpVeyGvSh5com
-         OvfXnbH1QLB/bcKy7mPiZHkq2FRAxEmKEjjtRQOB2ogFtkK5Mn5FA2rf/tDpY94OvQ+L
-         KSlhaTSpBEDis3CsWP5wmp542wqrxV/ky5Oy8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=r2iLLnVoPNyHPtGAgf1XZ/HQgEVwU0ZoSOB7dd+5X1opmF9aj6QWwNSQoPVtrvy7w+
-         gyczQneDduoazuiF0n+v+jnOBK+kAQY3rkJsciJMKi9D4OdYYSCcOznerJCZyeUdc2Rq
-         kHe7iQnzoZ7+KJc2W9BzelxxVBkyCcEfhU/3M=
-Received: by 10.231.36.12 with SMTP id r12mr2371375ibd.156.1291413744036; Fri,
- 03 Dec 2010 14:02:24 -0800 (PST)
-Received: by 10.231.39.3 with HTTP; Fri, 3 Dec 2010 14:02:03 -0800 (PST)
-In-Reply-To: <7vsjyemt1f.fsf@alter.siamese.dyndns.org>
+	id S1753766Ab0LCWP0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 17:15:26 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57635 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752393Ab0LCWPZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 17:15:25 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5F4033E52;
+	Fri,  3 Dec 2010 17:15:43 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=h5lOAKh37LjPToU5EO/iK5fYQW8=; b=lrcoCf
+	vU9/kQFx6yH7mK5ZYkVaqPWpHzI2Nw94hfV06Bt4+A39Ue0GgZJoapG3E7cw4C+E
+	DAsazrSqpMQ+Etp5AiEhucQRATfI1nCbY1WxloR+/NZLMaxgVACY0RmmavJugpeT
+	aZIKmU+ebLV2uHW3BVm0othAps7C2GwSQTYc8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cj5nyilhzjgoqjwZz/+6Hzj7ozwDvsKj
+	LVgPeimUvDmgTn52zoJIdLe0AFYFQheoMjdSh/lzWNUzPmjRloV03MDolTkRS0M9
+	RW2PrbxkA3rQCDcXLk4A/8LNedaqqdfzso1ZLJIt/Zj+6ng+hYQY7XYvoRp/X8QZ
+	Htg5eKxyqeU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 19F233E51;
+	Fri,  3 Dec 2010 17:15:39 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 582AA3E4C; Fri,  3 Dec 2010
+ 17:15:30 -0500 (EST)
+In-Reply-To: <1291394861-11989-7-git-send-email-giuseppe.bilotta@gmail.com>
+ (Giuseppe Bilotta's message of "Fri\,  3 Dec 2010 17\:47\:40 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DC171F28-FF2A-11DF-B11C-CDEAE6EC64FC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162866>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162867>
 
-On Fri, Dec 3, 2010 at 10:43 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
->
->> Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
->> ---
->> =A0Documentation/CodingGuidelines | =A0 =A04 ++++
->> =A01 files changed, 4 insertions(+), 0 deletions(-)
->>
->> diff --git a/Documentation/CodingGuidelines b/Documentation/CodingGu=
-idelines
->> index 5aa2d34..a9191d0 100644
->> --- a/Documentation/CodingGuidelines
->> +++ b/Documentation/CodingGuidelines
->> @@ -31,6 +31,10 @@ But if you must have a list of rules, here they a=
-re.
->>
->> =A0For shell scripts specifically (not exhaustive):
->>
->> + - We use tabs for indentation.
->> +
->> + - Case arms are not indented with respect to the case and esac lin=
-es.
->
-> Thanks.
-> I am tempted to rephrase the latter as:
->
-> =A0 =A0Case arms are indented at the same depth as case and esac line=
-s.
->
-> It makes it less hard to read and understand without negation.
+Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
 
-Good idea. I'll rephrase in that sense and add a couple more entries
-about the | spacing and long case arm splitting, for the next rehash
-of the series.
+> Debian and derivatives have an alternatives-based default browser
+> configuration that uses the /usr/bin/gnome-www-browser,
+> /usr/bin/x-www-browser and /usr/bin/www-browser symlinks.
+>
+> When no browser is selected by the user and the Debian alternatives are
+> available, try to see if they are one of our recognized selection and
+> in the affermative case use it. Otherwise, warn the user about them
+> being unsupported and move on with the previous detection logic.
 
---=20
-Giuseppe "Oblomov" Bilotta
+A "please step back a bit" question.  Does the packaging guideline of
+Debian say that non-browser applications should take these links as "end
+user preference" when opening HTML pages?
+
+The behaviour of unconfigured git across platforms would become less
+consistent if we do this, while the behaviour of random programs on one
+particular platform (Debian) would become more consistent.
+
+I am not saying that is necessarily a bad thing.  I just want to
+understand the motivation.
+
+> +# check if a given executable is a browser we like
+> +valid_exe() {
+
+Call it valid_browser_executable or something, please.
+
+> +	testexe="$1"
+> +	basename=$(basename $(readlink -f "$testexe"))
+
+Are we saying "readlink" must exist on the system?  This dependency is
+new, I think.
