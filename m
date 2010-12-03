@@ -1,102 +1,71 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 06/10] parse-options: never suppress arghelp if
- LITERAL_ARGHELP is set
-Date: Fri, 3 Dec 2010 03:40:20 -0600
-Message-ID: <20101203094020.GA11910@burratino>
-References: <20101201232728.GA31815@burratino>
- <20101201233136.GG31815@burratino>
- <4CF8B55F.8020203@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCHv3] git-rebase--interactive.sh: extend "edit" command to
+ be more useful
+Date: Fri, 03 Dec 2010 10:55:26 +0100
+Message-ID: <4CF8BE8E.4090100@viscovery.net>
+References: <20101110015327.GB1503@burratino> <1290629960-60917-1-git-send-email-kevin@sb.org> <20101203080603.GC18202@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	Pierre Habouzit <madcoder@debian.org>
-To: Stephen Boyd <bebarino@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 03 10:40:44 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Kevin Ballard <kevin@sb.org>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Yann Dirson <dirson@bertin.fr>,
+	Eric Raible <raible@nextest.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 03 10:55:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POS8B-0001ap-Ek
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 10:40:43 +0100
+	id 1POSMc-0007R4-Iw
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 10:55:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756484Ab0LCJkh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 04:40:37 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:40413 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755694Ab0LCJkg (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 04:40:36 -0500
-Received: by ywl5 with SMTP id 5so4656976ywl.19
-        for <git@vger.kernel.org>; Fri, 03 Dec 2010 01:40:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=aVXkwdBQ8/i+MpcvucBbDCsBkAMRG4Di4fIfwOfd4nc=;
-        b=MYa7VeSE/DenodN99VZgEUAzpOP/KuywA+aL4b6dWBiiTLkTIE+K6+Uohgd3EYE32K
-         liWv8CkqLVbzhYJsvh9ZZqUSFzUUFoLPjdKS1lqwzXBCA/GXFwgTb5RAiWqCe2vsoWoi
-         7GgbOQnY0cZeUarCiUioV6Bm+vttpLmyeXbTA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=lsEL2qF6XLtqb/ZKsJXqjeoVPLROLvKTMseTlmTZ5Xe9Jpe+vkJu5nmlT7Y564z4WM
-         ARu9ml/MQywrLadsJclJAfzNqQLyxxotAP8eRX4dgpbxBG8ZW9aCHQ5/XVrvOhvi17d1
-         xZB7ko7FiDstnES2mDBspupsG1ccjooCT8uc4=
-Received: by 10.151.7.10 with SMTP id k10mr3321374ybi.433.1291369235471;
-        Fri, 03 Dec 2010 01:40:35 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id f23sm387993ybh.10.2010.12.03.01.40.33
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 03 Dec 2010 01:40:34 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4CF8B55F.8020203@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932286Ab0LCJzd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 04:55:33 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:27158 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755769Ab0LCJzc (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 04:55:32 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1POSMQ-000629-Sv; Fri, 03 Dec 2010 10:55:27 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 95B3B1660F;
+	Fri,  3 Dec 2010 10:55:26 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <20101203080603.GC18202@burratino>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162783>
 
-Stephen Boyd wrote:
-> On 12/01/10 15:31, Jonathan Nieder wrote:
+Am 12/3/2010 9:06, schrieb Jonathan Nieder:
+> Kevin Ballard wrote:
+>> +			sha1="${line%% *}"
+>> +			rest="${line#* }"
+>> +			echo "$sha1" > "$DOTEST"/stopped-sha
+> 
+> Maybe this can be done without relying on details of --pretty=oneline
+> format?
 
->> The motivation is to allow update-index to correctly advertise
->> 
->> 	--cacheinfo <mode> <object> <path>
->> 	                      add the specified entry to the index
->> 
->> while abusing PARSE_OPT_NOARG to disallow the "sticked form"
->> 
->> 	--cacheinfo=<mode> <object> <path>
-[...]
-> parse-options should accept both forms of --cacheinfo above if the
-> option isn't marked PARSE_OPT_NOARG. Marking it NOARG to get rid of the
-> equals sign in the usage seems wrong when both the equals sign and no
-> equals sign can be accepted.
+No. This is a matter of the syntax of the recipe file. If the details of
+--pretty=oneline ever changed, then the way how the boilerplate recipe
+file is generated would have to be changed accordingly.
 
-Just to clarify: the NOARG was not meant to affect the usage message
-but the actual accepted usage.  The idea was that
+> 
+> 			sha1=$(git rev-parse --short HEAD)
+> 			rest=$(git show -s --format=%s HEAD)
 
-	git update-index --cacheinfo=100644 87a8767c87b file.c
+Shouldn't $sha1 be the one given in the recipe rather than current HEAD?
 
-should be rejected, because if it is accepted that would tempt people
-to try
+But most importantly, since $rest is echoed on the terminal, it MUST be
+derived from the recipe ($line). Rationale: I replace the commit subject
+in the recipe by a reminder what I intend to do when the "edit" command
+stops---I don't care so much what the commit subject is.
 
-	git update-index --cacheinfo=100644 -q 87a8767c87b file.c
-
-which fails.  That is, the argument to --cacheinfo is not <mode>,
-since --cacheinfo takes _three_ arguments and therefore the sticked
-form sends a wrong message.
-
-> I know this is a bit more code, but it also means that we don't have
-> this approach bite someone else down the line when they make assumptions
-> about options marked as NOARG not taking arguments.
->
-> We should probably add another check like "if argh is set and
-> PARSE_OPT_NOARG is true error out" so this can't be done.
-
-I agree with your conclusion.  Let's drop this patch, and I'll look
-into adding the check and a PARSE_OPT_NOSTICKED flag.
+-- Hannes
