@@ -1,68 +1,81 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: Way to specify an exclusion refspec?
-Date: Fri, 3 Dec 2010 02:20:15 +0100
-Message-ID: <AANLkTimXg0M8H_WrgqMJx=_r+Q=ghp1N9WaQq8NSgWCX@mail.gmail.com>
-References: <AANLkTi=YPJKvNW3PKcaSTRSPFCARHC=hn2OtSYOoe7DA@mail.gmail.com>
+From: Ben Jackson <ben@ben.com>
+Subject: Re: [RFC/PATCH] Re: git submodule -b ... of current HEAD fails
+Date: Thu, 2 Dec 2010 17:21:56 -0800
+Message-ID: <20101203012155.GA30999@kronos.home.ben.com>
+References: <20101201171814.GC6439@ikki.ethgen.de> <20101201185046.GB27024@burratino> <4CF80B71.3010309@web.de> <4CF844E5.5010808@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git ML <git@vger.kernel.org>
-To: Dun Peal <dunpealer@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 03 02:20:46 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jens Lehmann <Jens.Lehmann@web.de>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Klaus Ethgen <Klaus@Ethgen.de>,
+	Sven Verdoolaege <skimo@kotnet.org>
+To: Mark Levedahl <mlevedahl@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 03 02:35:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POKKH-000069-Kk
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 02:20:42 +0100
+	id 1POKYy-0004ZX-Dc
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 02:35:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758312Ab0LCBUg convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 2 Dec 2010 20:20:36 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:63250 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1758251Ab0LCBUg convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 2 Dec 2010 20:20:36 -0500
-Received: by gxk1 with SMTP id 1so1562350gxk.19
-        for <git@vger.kernel.org>; Thu, 02 Dec 2010 17:20:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=/i8w3oq+I3Z0jFS10w6Ze52AGidqxxFJ8QsulxFJ5IE=;
-        b=COqifFBytJtRV6ZPo858nHxCNY1p0Yu/6/xPRspNSixwZQSSnEZ9GebdZXkTBoIgeF
-         qDe7UdO+BLrmOdhgALhhdEDljwm2Qr4TWk1ZPdfP2v48gZkNa+8+uHHnwImE/vog4FLF
-         R/omhIF6YY42KT7jhnCmyYaItIrWybIVi0IB0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=ryE2Vk7bTlut6E2ZHpKKhSdf4vKvnEn2AL1ewSkpLPuTSyrK1fxUAvv+/iAs/FFdWF
-         PnPfQWtMMztDf0lRQ8s4R8zYIjBphwOl/Bs0QW0DDx4+Yj3qm2c8RrI7ePSJRoSg7INm
-         kghHZCOgDgs9a6hTJpgmBFrPCjpRzyStkni/Q=
-Received: by 10.150.196.17 with SMTP id t17mr2616863ybf.302.1291339235310;
- Thu, 02 Dec 2010 17:20:35 -0800 (PST)
-Received: by 10.151.100.19 with HTTP; Thu, 2 Dec 2010 17:20:15 -0800 (PST)
-In-Reply-To: <AANLkTi=YPJKvNW3PKcaSTRSPFCARHC=hn2OtSYOoe7DA@mail.gmail.com>
+	id S1758334Ab0LCBfr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 2 Dec 2010 20:35:47 -0500
+Received: from kronos.home.ben.com ([71.117.242.19]:49710 "EHLO
+	kronos.home.ben.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1758273Ab0LCBfq (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 2 Dec 2010 20:35:46 -0500
+X-Greylist: delayed 816 seconds by postgrey-1.27 at vger.kernel.org; Thu, 02 Dec 2010 20:35:46 EST
+Received: from kronos.home.ben.com (localhost [127.0.0.1])
+	by kronos.home.ben.com (8.14.3/8.14.3) with ESMTP id oB31LuPs031773;
+	Thu, 2 Dec 2010 17:21:56 -0800 (PST)
+Received: (from bjj@localhost)
+	by kronos.home.ben.com (8.14.3/8.14.3/Submit) id oB31LuT6031772;
+	Thu, 2 Dec 2010 17:21:56 -0800 (PST)
+	(envelope-from bjj)
+Content-Disposition: inline
+In-Reply-To: <4CF844E5.5010808@gmail.com>
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162758>
 
-Heya,
+On Thu, Dec 02, 2010 at 08:16:21PM -0500, Mark Levedahl wrote:
+> On 12/02/2010 04:11 PM, Jens Lehmann wrote:
+> > Nope, these lines date back to the time before I got involved in the
+> > submodule business ... Seems like this "git checkout" was added in
+> > March 2008 by Mark Levedahl (CCed), maybe he can shed some light on
+> > that.
+> >
+> > But to me your change looks good, so feel free to add:
+> > Acked-by: Jens Lehmann<Jens.Lehmann@web.de>
+> >
+> >
+> >> diff --git a/git-submodule.sh b/git-submodule.sh
+> >> index 33bc41f..6242d7f 100755
+> >> --- a/git-submodule.sh
+> >> +++ b/git-submodule.sh
+> >> @@ -241,7 +241,7 @@ cmd_add()
+> >>   			# ash fails to wordsplit ${branch:+-b "$branch"...}
+> >>   			case "$branch" in
+> >>   			'') git checkout -f -q ;;
+> >> -			?*) git checkout -f -q -b "$branch" "origin/$branch" ;;
+> >> +			?*) git checkout -f -q -B "$branch" "origin/$branch" ;;
+> >>   			esac
+> >>   		) || die "Unable to checkout submodule '$path'"
+> >>   	fi
+> >>
+> These lines were actually added by Ben Jackson in commit ea10b60c91 in 
+> 2009, long after I last touched that module.
 
-On Thu, Dec 2, 2010 at 23:17, Dun Peal <dunpealer@gmail.com> wrote:
-> But how about specifying an exclusion refspec? =C2=A0For instance, we=
- want
-> to fetch all heads (`*`) except `foo`, or all heads beginning in "ba"
-> (`ba*`) except `bar`.
+I didn't mean to change any functionality -- I just wanted to fix a
+portability problem (/bin/sh is ash on FreeBSD, hence the comment at the
+top of the context).  Looks like `checkout -B' (capital B) didn't even
+exist at that time.  Seems reasonable, though.
 
-This has come up before, it's not currently possible, but I think
-there's interest in having it implemented.
-
---=20
-Cheers,
-
-Sverre Rabbelier
+-- 
+Ben Jackson AD7GD
+<ben@ben.com>
+http://www.ben.com/
