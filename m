@@ -1,115 +1,81 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
 Subject: Re: What's cooking in git.git (Nov 2010, #03; Wed, 24)
-Date: Fri, 3 Dec 2010 14:02:48 +0100
-Message-ID: <201012031402.49169.jnareb@gmail.com>
-References: <7vk4k2rt2m.fsf@alter.siamese.dyndns.org> <201012031213.06321.jnareb@gmail.com> <201012031222.33635.trast@student.ethz.ch>
+Date: Fri, 3 Dec 2010 14:06:55 +0100
+Message-ID: <201012031406.55854.trast@student.ethz.ch>
+References: <7vk4k2rt2m.fsf@alter.siamese.dyndns.org> <201012031222.33635.trast@student.ethz.ch> <201012031402.49169.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Dec 03 14:03:10 2010
+	Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 03 14:07:07 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POVI4-0002TJ-J4
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 14:03:08 +0100
+	id 1POVLq-0004KU-LM
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 14:07:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751605Ab0LCNDD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 08:03:03 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:45327 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750837Ab0LCNDB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 08:03:01 -0500
-Received: by fxm20 with SMTP id 20so2152464fxm.19
-        for <git@vger.kernel.org>; Fri, 03 Dec 2010 05:03:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=bQjaf1GFQABO71HxzjOaFlAegwIBwvEOR3Itzs2DTCw=;
-        b=u0G41kBg8LczM3f7OzDfA/VL4G/Yzxzm9MgRvv9rvJvNMM3wTinGYOIselrBOE+oew
-         d2rX+/wgrDBPT6TspF91lCO3h88hS/v6vT/gbYBDku6V7eUCVVXJLIerxYgWsWbxIt0j
-         otCXK9z3V0scazIOCUXmz80CzI7+XEEBo0DZ0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=Q7Q8zp8Zvc/4ae0StylD3JUrXZqn1GAevvKfcRJfQE854nqFY+OyhhFKSNc9vZSEq+
-         OcjPoJkKKswZAPmQTfMVRTsfM+AOWmuoH3a9tbLT8L6WzCRkE3kGdQi4TKncwbCX0AoX
-         9zSHWjQ0OBgLxuMVn0Wzf2VbNloUR5j+X8SwA=
-Received: by 10.223.86.8 with SMTP id q8mr323827fal.101.1291381380064;
-        Fri, 03 Dec 2010 05:03:00 -0800 (PST)
-Received: from [192.168.1.13] (abrz239.neoplus.adsl.tpnet.pl [83.8.119.239])
-        by mx.google.com with ESMTPS id a24sm230826fak.1.2010.12.03.05.02.55
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 03 Dec 2010 05:02:56 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201012031222.33635.trast@student.ethz.ch>
-Content-Disposition: inline
+	id S1754392Ab0LCNG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 08:06:58 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:26310 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752716Ab0LCNG5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 08:06:57 -0500
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Fri, 3 Dec
+ 2010 14:06:44 +0100
+Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.218.12; Fri, 3 Dec
+ 2010 14:06:56 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-rc3-git6-8-desktop; KDE/4.5.3; x86_64; ; )
+In-Reply-To: <201012031402.49169.jnareb@gmail.com>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162796>
 
-On Fri, 3 Dec 2010, Thomas Rast wrote:
-> Jakub Narebski wrote:
-> > On Fri, 3 Dec 2010, Thomas Rast wrote:
-
-> > > "gitweb: File based caching layer (from git.kernel.org)" does not work
-> > > on my automated tester:
-> [...]
-> > What are the results of relevant part of
-> > 
-> >  $ cd t
-> >  $ ./t9502-gitweb-standalone-parse-output.sh --debug
-> > 
-> > output?
+Jakub Narebski wrote:
+> Could you add 'exit' just after second test in 
+> t/t9502-gitweb-standalone-parse-output.sh test script, or running it
+> with `--immediate' option, and show us the results (after 'cd t') of
 > 
->   ok 1 - setup
->   FULL_ID  = 1005c80cc11c531d327b12195027cbbb4ff9e3cb
->   SHORT_ID = 1005c80
->   not ok - 2 snapshot: full sha1
->   #       
->   #               gitweb_run "p=.git;a=snapshot;h=$FULL_ID;sf=tar" &&
->   #               check_snapshot ".git-$SHORT_ID"
->   #       
->   Status: 200 OK
->   Content-disposition: inline; filename=".git-1005c80.tar"
->   Content-Type: application/x-tar
+>   $ file "trash directory.t9502-gitweb-standalone-parse-output/gitweb.body"
+>   should be:
 > 
-> They all fail after that, the rest of the output is at the end.  
+>     trash directory.t9502-gitweb-standalone-parse-output/gitweb.body: tar archive
 
-Could you add 'exit' just after second test in 
-t/t9502-gitweb-standalone-parse-output.sh test script, or running it
-with `--immediate' option, and show us the results (after 'cd t') of
+Well, you're onto something...
 
-  $ file "trash directory.t9502-gitweb-standalone-parse-output/gitweb.body"
-  should be:
+  trash directory.t9502-gitweb-standalone-parse-output$ file *
+  file_list:          empty
+  foo:                ASCII text
+  gitweb.body:        empty
+  gitweb_config.perl: perl script text executable
+  gitweb.headers:     ASCII text, with CRLF line terminators
+  gitweb.log:         empty
+  gitweb.output:      ASCII text, with CRLF line terminators
+  GLOB(0xdf18fc0):    tar archive
 
-    trash directory.t9502-gitweb-standalone-parse-output/gitweb.body: tar archive
+Huh.  Seems something got confused about what to use as a filename?
 
-  $ grep '<head>' "trash directory.t9502-gitweb-standalone-parse-output/gitweb.body"
-  should be empty
+> > OTOH if I check out v1.7.3.1-48-g5768176 instead, where the test
+> > works ok, it looks like this: [...]
+> 
+> Could you bisect to commit that introduces breakage?
 
-  $ du -b "trash directory.t9502-gitweb-standalone-parse-output/gitweb.body"
-  should be:
+That's what the automatic tester does by itself (again under
+valgrind), and it came back with "gitweb: File based caching layer
+(from git.kernel.org)", i.e., 17b15d4.  I should have pointed out that
+this was already a bisection in the first mail.
 
-    10240   trash directory.t9502-gitweb-standalone-parse-output/gitweb.body
+(The manual runs on the server now verified that the bisecter worked
+ok, so it really is that commit.)
 
-> OTOH if I check out v1.7.3.1-48-g5768176 instead, where the test
-> works ok, it looks like this: [...]
-
-Could you bisect to commit that introduces breakage?
-
-Thanks in advance.
 -- 
-Jakub Narebski
-Poland
+Thomas Rast
+trast@{inf,student}.ethz.ch
