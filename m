@@ -1,81 +1,83 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: What's cooking in git.git (Nov 2010, #03; Wed, 24)
-Date: Fri, 3 Dec 2010 14:06:55 +0100
-Message-ID: <201012031406.55854.trast@student.ethz.ch>
-References: <7vk4k2rt2m.fsf@alter.siamese.dyndns.org> <201012031222.33635.trast@student.ethz.ch> <201012031402.49169.jnareb@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Problem in Patches with commit-messages containing non-ascii
+Date: Fri, 03 Dec 2010 14:08:20 +0100
+Message-ID: <4CF8EBC4.7060107@drmicha.warpmail.net>
+References: <4CF8D243.50108@gmx.com> <20101203135944.31d7cfbf@jk.gs>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 03 14:07:07 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?UTF-8?B?TWFydGluIEtyw7xnZXI=?= <martin.krueger@gmx.com>,
+	git@vger.kernel.org
+To: =?UTF-8?B?SmFuIEtyw7xnZXI=?= <jk@jk.gs>
+X-From: git-owner@vger.kernel.org Fri Dec 03 14:10:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POVLq-0004KU-LM
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 14:07:02 +0100
+	id 1POVPN-00067X-Kj
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 14:10:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754392Ab0LCNG6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 08:06:58 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:26310 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752716Ab0LCNG5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 08:06:57 -0500
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Fri, 3 Dec
- 2010 14:06:44 +0100
-Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.218.12; Fri, 3 Dec
- 2010 14:06:56 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-rc3-git6-8-desktop; KDE/4.5.3; x86_64; ; )
-In-Reply-To: <201012031402.49169.jnareb@gmail.com>
-X-Originating-IP: [129.132.153.233]
+	id S1755846Ab0LCNKj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Dec 2010 08:10:39 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54879 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754392Ab0LCNKi (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 3 Dec 2010 08:10:38 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id ED54156D;
+	Fri,  3 Dec 2010 08:10:37 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Fri, 03 Dec 2010 08:10:37 -0500
+X-Sasl-enc: /IOy/O1wOJPYotSwLQambCgRT/5KQ+1q7MvbTLTmqhO0 1291381837
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 58215400D83;
+	Fri,  3 Dec 2010 08:10:37 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
+In-Reply-To: <20101203135944.31d7cfbf@jk.gs>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162796>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162797>
 
-Jakub Narebski wrote:
-> Could you add 'exit' just after second test in 
-> t/t9502-gitweb-standalone-parse-output.sh test script, or running it
-> with `--immediate' option, and show us the results (after 'cd t') of
-> 
->   $ file "trash directory.t9502-gitweb-standalone-parse-output/gitweb.body"
->   should be:
-> 
->     trash directory.t9502-gitweb-standalone-parse-output/gitweb.body: tar archive
+Jan Kr=C3=BCger venit, vidit, dixit 03.12.2010 13:59:
+> --- Martin Kr=C3=BCger <martin.krueger@gmx.com> wrote:
+>=20
+>> Consider this log-Message:
+>> commit ea2cd63dfe9b3ac3581b6cff8b13a52e69066242
+>> Author: martin <martin@chad.upnx.de>
+>> Date:   Fri Nov 19 18:58:58 2010 +0100
+>>
+>>     Methoden =C3=BCberall angepasst.
+>>     Ausser Aussnahmen
+>>
+>=20
+> FWIW, support for multi-line summaries is very limited. Several
+> tools assume that the log message has this format:
+>=20
+> <Summary in one line>
+> <Blank line>
+> <Details>
+>=20
+> So one could argue that your patch fixes something that isn't really
+> supported anyway.
+>=20
+>> [...]
+>>
+>> Applyin leads to a correct commit-Messsage:
+>>
+>> commit 62d06e3415ec0726dbd58c11ed93771502b77805
+>> Author: martin <martin@chad.upnx.de>
+>> Date:   Fri Nov 19 18:58:58 2010 +0100
+>>
+>>     Methoden =C3=BCberall angepasst.Ausser Aussnahmen
+>=20
+> How is that correct? It's different from the original commit message.
+>=20
+> -Jan
 
-Well, you're onto something...
+Also, it is "Au=C3=9Fer Ausnahmen" even after the latest spelling refor=
+m ;)
 
-  trash directory.t9502-gitweb-standalone-parse-output$ file *
-  file_list:          empty
-  foo:                ASCII text
-  gitweb.body:        empty
-  gitweb_config.perl: perl script text executable
-  gitweb.headers:     ASCII text, with CRLF line terminators
-  gitweb.log:         empty
-  gitweb.output:      ASCII text, with CRLF line terminators
-  GLOB(0xdf18fc0):    tar archive
-
-Huh.  Seems something got confused about what to use as a filename?
-
-> > OTOH if I check out v1.7.3.1-48-g5768176 instead, where the test
-> > works ok, it looks like this: [...]
-> 
-> Could you bisect to commit that introduces breakage?
-
-That's what the automatic tester does by itself (again under
-valgrind), and it came back with "gitweb: File based caching layer
-(from git.kernel.org)", i.e., 17b15d4.  I should have pointed out that
-this was already a bisection in the first mail.
-
-(The manual runs on the server now verified that the bisecter worked
-ok, so it really is that commit.)
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Michael
