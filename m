@@ -1,178 +1,90 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: What's cooking in git.git (Nov 2010, #03; Wed, 24)
-Date: Fri, 3 Dec 2010 15:12:44 +0100
-Message-ID: <201012031512.45793.jnareb@gmail.com>
-References: <7vk4k2rt2m.fsf@alter.siamese.dyndns.org> <201012031402.49169.jnareb@gmail.com> <201012031406.55854.trast@student.ethz.ch>
+Subject: Re: [PATCH] git-pull.txt: Add picture to --rebase option
+Date: Fri, 03 Dec 2010 06:56:24 -0800 (PST)
+Message-ID: <m3oc923nyz.fsf@localhost.localdomain>
+References: <1291365669-10439-1-git-send-email-jari.aalto@cante.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Dec 03 15:13:09 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jari Aalto <jari.aalto@cante.net>
+X-From: git-owner@vger.kernel.org Fri Dec 03 15:56:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POWNk-0002Xh-Pn
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 15:13:05 +0100
+	id 1POX3q-0006kU-0o
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 15:56:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758143Ab0LCOM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 09:12:59 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:46175 "EHLO
+	id S1751438Ab0LCO43 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 09:56:29 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:45885 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755006Ab0LCOM6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 09:12:58 -0500
-Received: by bwz15 with SMTP id 15so8362012bwz.19
-        for <git@vger.kernel.org>; Fri, 03 Dec 2010 06:12:57 -0800 (PST)
+	with ESMTP id S1751168Ab0LCO41 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 09:56:27 -0500
+Received: by bwz15 with SMTP id 15so8402496bwz.19
+        for <git@vger.kernel.org>; Fri, 03 Dec 2010 06:56:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=epXGLvzHahWA9xfA2W6mN2zKKAM632lNuiHWXOBGM2g=;
-        b=dsqLtcKomf5/Z1QudbMNt9h1n5i1qJptBo8ppZ17AM997L4VjD7Er0RzXO/Df26/CR
-         s7X6qVizIxdDDpI2spmEApob3USLLFg14fW1Tct3yPUsjOHhM3n75f0z8ziYCFxGLsl5
-         vHfcz5BRlriOo6XXO7TN5Lg9bbrGxcFCRowig=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=uj6eKMO9815g4jvX+mI69vvumo8XneC/EHKc0tnxQ1g=;
+        b=UsKmhPoCSIipAW+3vIG5smvDhTnx/m7eN4KvjnJm83fRMo+k0KM5jlgk8ReTWuMj4+
+         Dtc3PZju7GFTnFX1LSNFho/cQrXtZgJcW0XxHtV1sKMXJJU56TqGd1X2wFxG8gBGOQbm
+         srkiNVfcDcxesIef0PFQFSzS89OkQ2ZmL9ZDU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=QIB4lX1c7LclOIOR5RO+jkh0RNL/tOCCLeRGdXYqL7VhXRNFnCFBbZNWnx6u6TKdIK
-         h/1EGsZXh9oRTD2hhLDhJ+bB1ZLYEmwP48f8gPbDV652JS1gnouIxbOqnzpjuUEUrsji
-         FY2RUWoVZrvTneYca+qGOv8E5szBlfuOYmjlQ=
-Received: by 10.204.114.77 with SMTP id d13mr2425432bkq.150.1291385577128;
-        Fri, 03 Dec 2010 06:12:57 -0800 (PST)
-Received: from [192.168.1.13] (abrz239.neoplus.adsl.tpnet.pl [83.8.119.239])
-        by mx.google.com with ESMTPS id 11sm914693bkj.0.2010.12.03.06.12.52
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=RiItHUxRC4X7+MyxRyTDsTUv2oXeN+S979f3be63ATz/EmC8aR9/O5rB9Hl6KKWznW
+         PbO2eAcDaK7/zWzbmmGVgYY5qdy4sRZWQaHTIUXizcUhXg3UC0IWfLrRrGuOdNsTmQlZ
+         gL9foVuEDkXzsM32q6wwvMNIbqroJfOnnKWt4=
+Received: by 10.204.119.15 with SMTP id x15mr2454374bkq.22.1291388186542;
+        Fri, 03 Dec 2010 06:56:26 -0800 (PST)
+Received: from localhost.localdomain (abrz239.neoplus.adsl.tpnet.pl [83.8.119.239])
+        by mx.google.com with ESMTPS id d11sm258078bkd.10.2010.12.03.06.56.23
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 03 Dec 2010 06:12:55 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201012031406.55854.trast@student.ethz.ch>
-Content-Disposition: inline
+        Fri, 03 Dec 2010 06:56:24 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oB3EtpkS021744;
+	Fri, 3 Dec 2010 15:56:01 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id oB3EtWri021740;
+	Fri, 3 Dec 2010 15:55:32 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <1291365669-10439-1-git-send-email-jari.aalto@cante.net>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162800>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162801>
 
-On Fri, 3 Dec 2010, Thomas Rast wrote:
-> Jakub Narebski wrote:
-> > Could you add 'exit' just after second test in 
-> > t/t9502-gitweb-standalone-parse-output.sh test script, or running it
-> > with `--immediate' option, and show us the results (after 'cd t') of
-> > 
-> >   $ file "trash directory.t9502-gitweb-standalone-parse-output/gitweb.body"
-> >   should be:
-> > 
-> >     trash directory.t9502-gitweb-standalone-parse-output/gitweb.body: tar archive
+jari.aalto@cante.net writes:
+
+> From: Jari Aalto <jari.aalto@cante.net>
 > 
-> Well, you're onto something...
+> Illustrate what are the effects of the the option.
 > 
->   trash directory.t9502-gitweb-standalone-parse-output$ file *
->   file_list:          empty
->   foo:                ASCII text
->   gitweb.body:        empty
->   gitweb_config.perl: perl script text executable
->   gitweb.headers:     ASCII text, with CRLF line terminators
->   gitweb.log:         empty
->   gitweb.output:      ASCII text, with CRLF line terminators
->   GLOB(0xdf18fc0):    tar archive
-> 
-> Huh.  Seems something got confused about what to use as a filename?
+> Signed-off-by: Jari Aalto <jari.aalto@cante.net>
 
-Hmmm... let me examine 17b15d4 (gitweb: File based caching layer
-(from git.kernel.org), 2010-11-01)
+> ++
+> +The effects of this option are:
+> +------------
+> +    [initial]
+> +    o---o---o---A--B   Your work in commit A and B
+> +
+> +    [git pull --rebase]
+> +    o---o---o---*---*--A--B
+> +                |   |
+> +                New updates merged in. Your work is rebased
+> +                on top of them.
+> +------------
 
-Ah, I see.  It looks like I forgot to update git_blob_plain and 
-git_snapshot when I was modifying original patch by J.H. (which didn't
-pass test suite for other reasons) to have test for $caching_enabled
-outside cache_fetch().
+Good idea.  Thanks.
 
-Could you try if the following patch applied on top of 17b15d4 fixes
-it for you?  If it does, I'll resend fixed series (yet again, I'm sorry
-Junio).
-
-It is not most elegant solution.
-
-
-Sidenote: 
-
-  open BINOUT, '>', \$fullhashbinpath
-
-should open in-memory file, and not be equivalent to
-
-  open BINOUT, '>', "\$fullhashbinpath"
-
-Hmmm... in the case of !$caching_enabled, $fullhasbinpath is *STDOUT.
-
-
-BTW replacing 
-
-  open BINOUT, '>', \$fullhashbinpath
-
-with
-
-  open BINOUT, '>&STDOUT'
-
-or
-
-  open BINOUT, '>&', \$fullhashbinpath
-
-could be simpler, alternate solution.
-
--- 8< -- 8< --
-diff --git i/gitweb/gitweb.perl w/gitweb/gitweb.perl
-index abaeec6..3d787c1 100755
---- i/gitweb/gitweb.perl
-+++ w/gitweb/gitweb.perl
-@@ -5648,13 +5648,14 @@ sub git_blob_plain {
- 	local $/ = undef;
- 	if ($caching_enabled) {
- 		open BINOUT, '>', $fullhashbinpath or die_error(500, "Could not open bin dump file");
--	}else{
--		open BINOUT, '>', \$fullhashbinpath or die_error(500, "Could not open bin dump file");
-+		binmode BINOUT, ':raw';
-+		print BINOUT <$fd>;
-+		close BINOUT;
-+	} else {
-+		binmode STDOUT, ':raw';
-+		print <$fd>;
-+		binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
- 	}
--	binmode BINOUT, ':raw';
--	print BINOUT <$fd>;
--	binmode BINOUT, ':utf8'; # as set at the beginning of gitweb.cgi
--	close BINOUT;
- 	close $fd;
- }
- 
-@@ -5941,13 +5942,14 @@ sub git_snapshot {
- 		or die_error(500, "Execute git-archive failed");
- 	if ($caching_enabled) {
- 		open BINOUT, '>', $fullhashbinpath or die_error(500, "Could not open bin dump file");
--	}else{
--		open BINOUT, '>', \$fullhashbinpath or die_error(500, "Could not open bin dump file");
-+		binmode BINOUT, ':raw';
-+		print BINOUT <$fd>;
-+		close BINOUT;
-+	} else {
-+		binmode STDOUT, ':raw';
-+		print <$fd>;
-+		binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
- 	}
--	binmode BINOUT, ':raw';
--	print BINOUT <$fd>;
--	binmode BINOUT, ':utf8'; # as set at the beginning of gitweb.cgi
--	close BINOUT;
- 	close $fd;
- }
- 
-
--- >8 -- >8 -- 
 -- 
 Jakub Narebski
 Poland
+ShadeHawk on #git
