@@ -1,64 +1,76 @@
-From: Josef Wolf <jw@raven.inka.de>
-Subject: Re: Problems using perl's Git.pm module
-Date: Fri, 3 Dec 2010 09:14:14 +0100
-Message-ID: <20101203081414.GB26070@raven.wolf.lan>
-References: <20101202114003.GA26070@raven.wolf.lan>
- <7vipzcrrk9.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 03 09:20:22 2010
+From: jari.aalto@cante.net
+Subject: [PATCH] git-pull.txt: Mention branch.autosetuprebase
+Date: Fri,  3 Dec 2010 10:20:54 +0200
+Organization: Private
+Message-ID: <1291364454-9849-1-git-send-email-jari.aalto@cante.net>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Cc: Jari Aalto <jari.aalto@cante.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 03 09:21:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POQsP-0005xR-W6
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 09:20:22 +0100
+	id 1POQtE-0006C8-S0
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 09:21:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758504Ab0LCIUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 03:20:13 -0500
-Received: from quechua.inka.de ([193.197.184.2]:42312 "EHLO mail.inka.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751781Ab0LCIUM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 03:20:12 -0500
-Received: from raven.inka.de (uucp@[127.0.0.1])
-	by mail.inka.de with uucp (rmailwrap 0.5) 
-	id 1POQsD-0002Z3-DR; Fri, 03 Dec 2010 09:20:09 +0100
-Received: by raven.inka.de (Postfix, from userid 1000)
-	id 5B51F76337; Fri,  3 Dec 2010 09:14:14 +0100 (CET)
-Mail-Followup-To: Josef Wolf <jw@raven.inka.de>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <7vipzcrrk9.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1757806Ab0LCIVE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 03:21:04 -0500
+Received: from emh03.mail.saunalahti.fi ([62.142.5.109]:56796 "EHLO
+	emh03.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756853Ab0LCIVD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 03:21:03 -0500
+Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
+	by emh03-2.mail.saunalahti.fi (Postfix) with SMTP id B4E69EC01D
+	for <git@vger.kernel.org>; Fri,  3 Dec 2010 10:21:00 +0200 (EET)
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
+	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
+	with SMTP (gateway) id A0499D75893; Fri, 03 Dec 2010 10:21:00 +0200
+Received: from picasso.cante.net (a91-155-187-216.elisa-laajakaista.fi [91.155.187.216])
+	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id AA23A27D86
+	for <git@vger.kernel.org>; Fri,  3 Dec 2010 10:20:59 +0200 (EET)
+Received: from [192.168.1.5] (helo=picasso.cante.net)
+	by picasso.cante.net with esmtp (Exim 4.72)
+	(envelope-from <jari.aalto@cante.net>)
+	id 1POQsy-0002ZK-4V; Fri, 03 Dec 2010 10:20:56 +0200
+X-Mailer: git-send-email 1.7.2.3
+X-SA-Exim-Connect-IP: 192.168.1.5
+X-SA-Exim-Mail-From: jari.aalto@cante.net
+X-SA-Exim-Scanned: No (on picasso.cante.net); SAEximRunCond expanded to false
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162770>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162771>
 
-On Thu, Dec 02, 2010 at 09:51:50AM -0800, Junio C Hamano wrote:
-> Josef Wolf <jw@raven.inka.de> writes:
-> 
-> >   jw@raven:~/testrepos> git st
-> >   # On branch master
-> >   nothing to commit (working directory clean)
-> I take it that you have "alias.st.cmd = status".
+From: Jari Aalto <jari.aalto@cante.net>
 
-Yes, I'm still strongly tied to svn ;-)
+In "Options related to merging" mention also related option
+branch.autosetuprebase in git-config(1).
 
-> Observe what this gives you:
-> 
->     $ git st; echo $?
+Signed-off-by: Jari Aalto <jari.aalto@cante.net>
+---
+ Documentation/git-pull.txt |    5 +++--
+ 1 files changed, 3 insertions(+), 2 deletions(-)
 
-1
-
-> If you are running pre-1.7.0 version of git, I think "git status" was a
-> synonym to "git commit --dry-run" and exited with non-zero status to
-> signal the caller that there is nothing to commit, which is...
-
-It's 1.6.4.2, so I guess you're right.
-
-Thanks!
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index e47361f..7b4caac 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -98,8 +98,9 @@ include::merge-options.txt[]
+ 	fetched, the rebase uses that information to avoid rebasing
+ 	non-local changes.
+ +
+-See `branch.<name>.rebase` in linkgit:git-config[1] if you want to make
+-`git pull` always use `{litdd}rebase` instead of merging.
++See `branch.<name>.rebase` and `branch.autosetuprebase` in
++linkgit:git-config[1] if you want to make `git pull` always use
++`{litdd}rebase` instead of merging.
+ +
+ [NOTE]
+ This is a potentially _dangerous_ mode of operation.
+--=20
+1.7.2.3
