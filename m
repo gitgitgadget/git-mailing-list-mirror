@@ -1,105 +1,193 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
 Subject: Re: What's cooking in git.git (Nov 2010, #03; Wed, 24)
-Date: Fri, 3 Dec 2010 12:13:05 +0100
-Message-ID: <201012031213.06321.jnareb@gmail.com>
-References: <7vk4k2rt2m.fsf@alter.siamese.dyndns.org> <201012031136.09156.trast@student.ethz.ch>
+Date: Fri, 3 Dec 2010 12:22:33 +0100
+Message-ID: <201012031222.33635.trast@student.ethz.ch>
+References: <7vk4k2rt2m.fsf@alter.siamese.dyndns.org> <201012031136.09156.trast@student.ethz.ch> <201012031213.06321.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Dec 03 12:13:30 2010
+	Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 03 12:22:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POTZr-0005uX-RT
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 12:13:24 +0100
+	id 1POTiu-0001uA-DF
+	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 12:22:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932397Ab0LCLNS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 3 Dec 2010 06:13:18 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:59006 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932346Ab0LCLNR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 06:13:17 -0500
-Received: by fxm20 with SMTP id 20so2069828fxm.19
-        for <git@vger.kernel.org>; Fri, 03 Dec 2010 03:13:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=tou/lrt9KWnLzDva+q5FY+ywaAf0iJB3YHp+nYI8Nlw=;
-        b=Lp8ZVVjx9V5nXUtH8WLmYI/DFHJNSKg9EYH9Oqp1ciNtvHzrXEkwQKWMpS5r4sKqJm
-         mF7BY1xjNY0I2kFTm3su9Z3oY8NY9wq8quFo9PRhYFdgVIdYdHyn/nzHU6zy4dZlRiVt
-         W1Q8lcQIJmIMWfXst/M5a628Qel6IIu0Krajc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=sViJQSc2H75/PLwwUvVp/rkttS6abaXACFi841WiX5lNUsULgKXLs0Zq6rr7BBSGfY
-         3l1pnrTOFoDYZ+oDLtMl/gyBqNU0m8BLKXkSF84UdS9g8qj2TGEd/N73j2AX5dhWKlZX
-         7WLkIeFKmzauEufMAs+SNzw/Oh6DAcHBDLoM0=
-Received: by 10.223.122.16 with SMTP id j16mr1964665far.133.1291374796220;
-        Fri, 03 Dec 2010 03:13:16 -0800 (PST)
-Received: from [192.168.1.13] (abrz239.neoplus.adsl.tpnet.pl [83.8.119.239])
-        by mx.google.com with ESMTPS id n3sm571617faa.5.2010.12.03.03.13.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 03 Dec 2010 03:13:14 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <201012031136.09156.trast@student.ethz.ch>
-Content-Disposition: inline
+	id S1757747Ab0LCLWg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 06:22:36 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:21318 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755508Ab0LCLWf (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 06:22:35 -0500
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Fri, 3 Dec
+ 2010 12:22:22 +0100
+Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
+ (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.218.12; Fri, 3 Dec
+ 2010 12:22:33 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-rc3-git6-8-desktop; KDE/4.5.3; x86_64; ; )
+In-Reply-To: <201012031213.06321.jnareb@gmail.com>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162791>
 
-On Fri, 3 Dec 2010, Thomas Rast wrote:
-> Junio C Hamano wrote:
-> > * jh/gitweb-caching (2010-11-01) 4 commits
-> >  - gitweb: Minimal testing of gitweb caching
-> >  - gitweb: File based caching layer (from git.kernel.org)
-> >  - gitweb: add output buffering and associated functions
-> >  - gitweb: Prepare for splitting gitweb
+Jakub Narebski wrote:
+> On Fri, 3 Dec 2010, Thomas Rast wrote:
+> > "gitweb: File based caching layer (from git.kernel.org)" does not work
+> > on my automated tester:
+[...]
+> What are the results of relevant part of
 > 
-> "gitweb: File based caching layer (from git.kernel.org)" does not work
-> on my automated tester:
+>  $ cd t
+>  $ ./t9502-gitweb-standalone-parse-output.sh --debug
 > 
->   ok 1 - setup
-> 
->   expecting success: 
->           gitweb_run "p=.git;a=snapshot;h=$FULL_ID;sf=tar" &&
->           check_snapshot ".git-$SHORT_ID"
-> 
->   basename=.git-1005c80
->   tar: This does not look like a tar archive
->   tar: Error exit delayed from previous errors
->   not ok - 2 snapshot: full sha1
->   #       
->   #               gitweb_run "p=.git;a=snapshot;h=$FULL_ID;sf=tar" &&
->   #               check_snapshot ".git-$SHORT_ID"
->   #       
-> 
-> Should I disable something with a Makefile option, or is that a bug?
-> 
-> (If you need more data you need to tell me what to look for, since I
-> don't usually do gitweb.  The above is just the relevant snippet from
-> 'make test' output).
+> output?
 
-What are the results of relevant part of
+  ok 1 - setup
+  FULL_ID  = 1005c80cc11c531d327b12195027cbbb4ff9e3cb
+  SHORT_ID = 1005c80
+  not ok - 2 snapshot: full sha1
+  #       
+  #               gitweb_run "p=.git;a=snapshot;h=$FULL_ID;sf=tar" &&
+  #               check_snapshot ".git-$SHORT_ID"
+  #       
+  Status: 200 OK
+  Content-disposition: inline; filename=".git-1005c80.tar"
+  Content-Type: application/x-tar
 
- $ cd t
- $ ./t9502-gitweb-standalone-parse-output.sh --debug
+They all fail after that, the rest of the output is at the end.  OTOH
+if I check out v1.7.3.1-48-g5768176 instead, where the test works ok,
+it looks like this:
 
-output?
+  ok 1 - setup
+  FULL_ID  = 1005c80cc11c531d327b12195027cbbb4ff9e3cb
+  SHORT_ID = 1005c80
+  ok 2 - snapshot: full sha1
+  Status: 200 OK
+  Content-disposition: inline; filename=".git-1005c80.tar"
+  Content-Type: application/x-tar
 
-Gitweb output caching should be turned off by default, so it shouldn't
-affect tests before 'enable caching' test.
+In other words, I cannot see a difference except that it fails. :-(
+
+> Gitweb output caching should be turned off by default, so it shouldn't
+> affect tests before 'enable caching' test.
+
+Well, my test setup has a slight habit of uncovering bugs in odd code
+paths since it usually runs under valgrind in a cronjob (i.e. without
+a tty).  However, this one also fails when run normally.
+
+In case it matters, this is RHEL5.5 with
+
+  $ perl --version
+  This is perl, v5.8.8 built for x86_64-linux-thread-multi
+
+
+
+--- Rest of the --debug output ---
+not ok - 3 snapshot: shortened sha1
+#       
+#               gitweb_run "p=.git;a=snapshot;h=$SHORT_ID;sf=tar" &&
+#               check_snapshot ".git-$SHORT_ID"
+#       
+Status: 200 OK
+Content-disposition: inline; filename=".git-1005c80.tar"
+Content-Type: application/x-tar
+
+not ok - 4 snapshot: almost full sha1
+#       
+#               ID=$(git rev-parse --short=30 HEAD) &&
+#               gitweb_run "p=.git;a=snapshot;h=$ID;sf=tar" &&
+#               check_snapshot ".git-$SHORT_ID"
+#       
+Status: 200 OK
+Content-disposition: inline; filename=".git-1005c80.tar"
+Content-Type: application/x-tar
+
+not ok - 5 snapshot: HEAD
+#       
+#               gitweb_run "p=.git;a=snapshot;h=HEAD;sf=tar" &&
+#               check_snapshot ".git-HEAD-$SHORT_ID"
+#       
+Status: 200 OK
+Content-disposition: inline; filename=".git-HEAD-1005c80.tar"
+Content-Type: application/x-tar
+
+not ok - 6 snapshot: short branch name (master)
+#       
+#               gitweb_run "p=.git;a=snapshot;h=master;sf=tar" &&
+#               ID=$(git rev-parse --verify --short=7 master) &&
+#               check_snapshot ".git-master-$ID"
+#       
+Status: 200 OK
+Content-disposition: inline; filename=".git-master-1005c80.tar"
+Content-Type: application/x-tar
+
+not ok - 7 snapshot: short tag name (first)
+#       
+#               gitweb_run "p=.git;a=snapshot;h=first;sf=tar" &&
+#               ID=$(git rev-parse --verify --short=7 first) &&
+#               check_snapshot ".git-first-$ID"
+#       
+Status: 200 OK
+Content-disposition: inline; filename=".git-first-1005c80.tar"
+Content-Type: application/x-tar
+
+not ok - 8 snapshot: full branch name (refs/heads/master)
+#       
+#               gitweb_run "p=.git;a=snapshot;h=refs/heads/master;sf=tar" &&
+#               ID=$(git rev-parse --verify --short=7 master) &&
+#               check_snapshot ".git-master-$ID"
+#       
+Status: 200 OK
+Content-disposition: inline; filename=".git-master-1005c80.tar"
+Content-Type: application/x-tar
+
+not ok - 9 snapshot: full tag name (refs/tags/first)
+#       
+#               gitweb_run "p=.git;a=snapshot;h=refs/tags/first;sf=tar" &&
+#               check_snapshot ".git-first"
+#       
+Status: 200 OK
+Content-disposition: inline; filename=".git-first.tar"
+Content-Type: application/x-tar
+
+ok 10 - snapshot: hierarchical branch name (xx/test)
+Status: 200 OK
+Content-disposition: inline; filename=".git-xx.test-1005c80.tar"
+Content-Type: application/x-tar
+
+ok 11 - setup for caching tests (utf8 commit, binary file)
+ok 12 - enable caching
+not ok - 13 caching enabled, HTML output, generating cache
+#       
+#                       gitweb_run "p=.git;a=patch" &&
+#                       mv gitweb.body cache.html &&
+#                       test_cmp no_cache.html cache.html
+#               
+ok 14 - caching enabled, HTML output, cached version
+not ok - 15 caching enabled, binary output, generating cache
+#       
+#                       gitweb_run "p=.git;a=blob_plain;f=image.png" &&
+#                       mv gitweb.body cache.png &&
+#                       cmp no_cache.png cache.png
+#               
+not ok - 16 caching enabled, binary output, cached version
+#       
+#                       gitweb_run "p=.git;a=blob_plain;f=image.png" &&
+#                       mv gitweb.body cache.png &&
+#                       cmp no_cache.png cache.png
+#               
+# failed 11 among 16 test(s)
+1..16
+
 -- 
-Jakub Narebski
-Poland
+Thomas Rast
+trast@{inf,student}.ethz.ch
