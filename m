@@ -1,68 +1,48 @@
-From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
-Subject: Re: Q about git rev-parse {--is-inside-work-tree, --show-cdup}
-Date: Sat, 04 Dec 2010 16:12:39 +0100
-Message-ID: <4CFA5A67.2020108@dirk.my1.cc>
-References: <4CF95BDC.60506@dirk.my1.cc> <7v4oauo8fj.fsf@alter.siamese.dyndns.org> <20101203215032.GB3972@sigill.intra.peff.net>
+From: weloki <weloki@gmail.com>
+Subject: Can't seem to commit
+Date: Sat, 4 Dec 2010 08:33:04 -0800 (PST)
+Message-ID: <1291480384128-5803287.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Dec 04 16:12:50 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 04 17:33:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POtn8-00069y-9L
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Dec 2010 16:12:50 +0100
+	id 1POv34-0000EE-CD
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Dec 2010 17:33:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755311Ab0LDPMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Dec 2010 10:12:44 -0500
-Received: from smtprelay01.ispgateway.de ([80.67.31.39]:52127 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751560Ab0LDPMo (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Dec 2010 10:12:44 -0500
-Received: from [217.87.113.135] (helo=[192.168.2.100])
-	by smtprelay01.ispgateway.de with esmtpa (Exim 4.68)
-	(envelope-from <newsletter@dirk.my1.cc>)
-	id 1POtmz-0004B5-J7; Sat, 04 Dec 2010 16:12:41 +0100
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.12) Gecko/20101027 Lightning/1.0b2 Thunderbird/3.1.6
-In-Reply-To: <20101203215032.GB3972@sigill.intra.peff.net>
-X-Df-Sender: 757646
+	id S1755417Ab0LDQdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Dec 2010 11:33:06 -0500
+Received: from kuber.nabble.com ([216.139.236.158]:47686 "EHLO
+	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755303Ab0LDQdE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Dec 2010 11:33:04 -0500
+Received: from jim.nabble.com ([192.168.236.80])
+	by kuber.nabble.com with esmtp (Exim 4.63)
+	(envelope-from <weloki@gmail.com>)
+	id 1POv2m-0001nP-KS
+	for git@vger.kernel.org; Sat, 04 Dec 2010 08:33:04 -0800
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162895>
 
-Am 03.12.2010 22:50 schrieb Jeff King:
-> On Fri, Dec 03, 2010 at 01:25:36PM -0800, Junio C Hamano wrote:
->
->> That would break existing scripts that expect "-q" to squelch only the
->> error output, no?  I think the risk of breaking existing scripts that
->> other people wrote over time that you (and I) haven't seen outweighs any
->> benefit (i.e. "if test $(rev-parse...) = true" vs "if rev-parse...") you
->> are seeing here.
->
-> Right now "-q" doesn't do _anything_ for --is-inside-work-tree, AFAICT.
-> It is a useless no-op. So I don't know if we are breaking anybody. What
-> does somebody doing "git rev-parse -q --is-inside-work-tree" expect to
-> happen?
->
 
-Peff, Junio, thanks for your answers.
-
-I already had a suspicion that changing plumbing tools like
-rev-parse was a bad idea. You confirmed that. However, I still
-think it's a little bug that "--show-dup" returns an empty string
-instead of a dot when already in topdir. But it's too late to
-change that, I guess. I didn't know about Peff's suggestions
-"git-sh-setup" and "--show-toplevel". They may help me.
-
-@Peff, right, it's annoying that -q sometimes works and
-sometimes doesn't. To my opinion switches like --quiet and
---verbose should _always_ work.
-
-     Dirk
+There is probably an easy solution to this but I'm seeing something really
+weird...
+I can't seem to commit anything to my new branch. When I try to commit it
+just says "no changes added to commit (use "git add" and/or "git commit
+-a")"
+When I try to do git add it doesn't seem to do anything.
+When I try to push it says "Everything up-to-date", but when I look at the
+branch on github my files aren't there.
+Strangely I was able to do everything fine with a different branch I created
+afterwards.
+-- 
+View this message in context: http://git.661346.n2.nabble.com/Can-t-seem-to-commit-tp5803287p5803287.html
+Sent from the git mailing list archive at Nabble.com.
