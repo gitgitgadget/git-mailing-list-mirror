@@ -1,77 +1,66 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 14/14] wt-status.c: Initialise variable to suppress msvc
- warning
-Date: Sat, 4 Dec 2010 14:52:06 -0600
-Message-ID: <20101204205206.GB3170@burratino>
-References: <4CFA92A2.4030801@ramsay1.demon.co.uk>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: [PATCH 02/14] msvc: git-daemon.exe: Fix linker "unresolved externals"
+ error
+Date: Sat, 04 Dec 2010 18:55:51 +0000
+Message-ID: <4CFA8EB7.9070000@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Johannes Sixt <j6t@kdbg.org>,
 	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Sat Dec 04 21:52:32 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 04 21:55:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POz5n-0005Sc-TT
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Dec 2010 21:52:28 +0100
+	id 1POz92-0006kZ-PR
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Dec 2010 21:55:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755982Ab0LDUwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Dec 2010 15:52:25 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:46728 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755860Ab0LDUwZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Dec 2010 15:52:25 -0500
-Received: by ywl5 with SMTP id 5so5369568ywl.19
-        for <git@vger.kernel.org>; Sat, 04 Dec 2010 12:52:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=gLoUl2nf76DpY4w0pABzqtq2tmqiSRvyulERiYpB2sE=;
-        b=d1Fg1CTNLyMUdbfNun3Y8e5LkBYPREuwZqLUaXNplRdUvoo4HXSBDcjAMi18bFFPsI
-         yuXTjH003JUiNzu1RwpyI9TgGbjC3BemraJslg0GqNEfKvt7nhthhd3e1dQ5WlFvkWdm
-         LqRfFldw+WHKdiiZZGMWGPk/i4ea894Kw4+7k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=SBBrJodYLbcAF3adaf0RkRXmT4/RmhtxdUlOmIx6bdaekyL7waxTMHWFD0I4LEzigt
-         Q0MltluDLJL0XR6wq3TMJWtocESY/pKUI9l3EUny76WBBt7BM9GGOoiM/1cVYrX7wMgo
-         FKJdhn0L52rnwjK/9AdrQj70dYu5w8GYGq61s=
-Received: by 10.150.136.16 with SMTP id j16mr6317862ybd.442.1291495942909;
-        Sat, 04 Dec 2010 12:52:22 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id v8sm1994920yhg.40.2010.12.04.12.52.21
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 04 Dec 2010 12:52:22 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4CFA92A2.4030801@ramsay1.demon.co.uk>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755983Ab0LDUzo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Dec 2010 15:55:44 -0500
+Received: from anchor-post-1.mail.demon.net ([195.173.77.132]:42893 "EHLO
+	anchor-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1755945Ab0LDUzn (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 4 Dec 2010 15:55:43 -0500
+X-Greylist: delayed 1036 seconds by postgrey-1.27 at vger.kernel.org; Sat, 04 Dec 2010 15:55:43 EST
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by anchor-post-1.mail.demon.net with esmtp (Exim 4.69)
+	id 1POysE-0001E1-h9; Sat, 04 Dec 2010 20:38:26 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162907>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162908>
 
-Ramsay Jones wrote:
 
-> --- a/wt-status.c
-> +++ b/wt-status.c
-> @@ -149,7 +149,7 @@ static void wt_status_print_change_data(struct wt_status *s,
->  {
->  	struct wt_status_change_data *d = it->util;
->  	const char *c = color(change_type, s);
-> -	int status = status;
-> +	int status = 0;
+The msvc linker complains about external symbols referenced by
+the new poll() emulation code. In particular, it complains about
+the DispatchMessage(), PeekMessage(), TranslateMessage() and
+MsgWaitForMultipleObjects() functions.
 
-Just for the record (I assume you are already aware of this):
+In order to satisfy the external references, we link against the
+user32.lib library.
 
- http://thread.gmane.org/gmane.comp.version-control.git/133278/focus=133422
- http://thread.gmane.org/gmane.comp.version-control.git/124676/focus=124803
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+ Makefile |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-I personally feel lukewarm about this kind of change.  Is it possible to
-suppress this warning from msvc?
+diff --git a/Makefile b/Makefile
+index 1d42413..bda9fa6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1087,7 +1087,7 @@ ifeq ($(uname_S),Windows)
+ 	COMPAT_OBJS = compat/msvc.o compat/fnmatch/fnmatch.o compat/winansi.o compat/win32/pthread.o compat/win32/syslog.o compat/win32/sys/poll.o
+ 	COMPAT_CFLAGS = -D__USE_MINGW_ACCESS -DNOGDI -DHAVE_STRING_H -DHAVE_ALLOCA_H -Icompat -Icompat/fnmatch -Icompat/regex -Icompat/fnmatch -Icompat/win32 -DSTRIP_EXTENSION=\".exe\"
+ 	BASIC_LDFLAGS = -IGNORE:4217 -IGNORE:4049 -NOLOGO -SUBSYSTEM:CONSOLE -NODEFAULTLIB:MSVCRT.lib
+-	EXTLIBS = advapi32.lib shell32.lib wininet.lib ws2_32.lib
++	EXTLIBS = user32.lib advapi32.lib shell32.lib wininet.lib ws2_32.lib
+ 	PTHREAD_LIBS =
+ 	lib =
+ ifndef DEBUG
+-- 
+1.7.3
