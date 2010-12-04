@@ -1,91 +1,87 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCHv2 6/7] web--browse: use (x-)www-browser if available
-Date: Fri, 3 Dec 2010 18:42:25 -0600
-Message-ID: <20101204004225.GA15906@burratino>
-References: <1291394861-11989-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1291394861-11989-7-git-send-email-giuseppe.bilotta@gmail.com>
- <7vaakmmrkj.fsf@alter.siamese.dyndns.org>
- <AANLkTinWD53M2VjiWgeA0Qwx3OHzR2A09Y+AB2B9o1df@mail.gmail.com>
+Subject: Re: git reset and ctime
+Date: Fri, 3 Dec 2010 18:51:32 -0600
+Message-ID: <20101204005131.GB15906@burratino>
+References: <AANLkTimyYTup+PqJFJ+2g-tVwWXA2bxTT3noonEuKBSu@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Christian Couder <christian.couder@gmail.com>
-To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 04 01:42:50 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: ghazel@gmail.com
+X-From: git-owner@vger.kernel.org Sat Dec 04 01:51:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POgDB-0005H1-0z
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Dec 2010 01:42:49 +0100
+	id 1POgLy-00008L-RI
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Dec 2010 01:51:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754058Ab0LDAmn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Dec 2010 19:42:43 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:36739 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753515Ab0LDAmm (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 3 Dec 2010 19:42:42 -0500
-Received: by yxt3 with SMTP id 3so4597155yxt.19
-        for <git@vger.kernel.org>; Fri, 03 Dec 2010 16:42:42 -0800 (PST)
+	id S1753451Ab0LDAvs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 3 Dec 2010 19:51:48 -0500
+Received: from mail-gx0-f180.google.com ([209.85.161.180]:65081 "EHLO
+	mail-gx0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752527Ab0LDAvs (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 19:51:48 -0500
+X-Greylist: delayed 154215 seconds by postgrey-1.27 at vger.kernel.org; Fri, 03 Dec 2010 19:51:48 EST
+Received: by gxk19 with SMTP id 19so5420848gxk.11
+        for <git@vger.kernel.org>; Fri, 03 Dec 2010 16:51:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=JjeqDZm9hcWwM6qycZb9st6GdGb66xKeRxqSloCUEr8=;
-        b=ch2SEXtq3IumKyc2ZpbqUJCS1r5SRakDPI9P6bhxmPMxAiamwFOElS88L4tJUuAc62
-         19Tfs2vXgnbgQ1C1lMKBwC/7DHNZ8rnf6JxepxQj1aQCuBOxbCPRp6sDGLiBKvthyq8N
-         1ufHyzU1b2YGnavKH3/zz3Qx7kD3nk34DiLHI=
+         :in-reply-to:user-agent;
+        bh=StIjTpxai7jfKBhK3K9jseRcH8OS9nZ6/+HQIpjYq/I=;
+        b=vbdkn2yYZ0I1cLy4Nr9DW/x/XiutAq6qx3FRKXId5uF2l+yGVyPL6KmpBnAVTn2S5Z
+         tdgxOm3As5jxHKoKRPX9ZBRfzZ0bXYNU3To4BQ/itmH1VI+o3rOTbi6gtDwcOD9Fpsus
+         3o78blfusynDAN8Ne7nOmMnWfNcE1c5i3UhT8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=pu1zCWB9LIwFrA4iY5xI9QfqDKgn7LachqYzZiEtNMhazTxRUyswY2z8uOHT6wyfpM
-         n8WfQoA+/UtJbUiUk2irATd8N+4c0QHBDM34Lgqy04qhRT2peBOhGc/P+7wh8n4/rDxZ
-         CQF/x8V8bTV8Ea2i4MEKLhd+ghWPwMlM7CgD8=
-Received: by 10.150.51.10 with SMTP id y10mr2102561yby.286.1291423361861;
-        Fri, 03 Dec 2010 16:42:41 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
-        by mx.google.com with ESMTPS id f46sm1436295yhc.33.2010.12.03.16.42.39
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=WH3bghEUYCgT1tl1Al0dirkf+wfFSfkVEUCXz7Odn1EqtRv5sBbRvpZCOt8C8t6y9W
+         1/VMYQzHvpR1XmIaS6mQ2jLY/EIxioR9NMIQGUXZWLUzgPHDsx9vwZV08cnjE/KFYwwP
+         WNcpaI4psgsUOfi0YMAo8sduOSs8kOUguhJsA=
+Received: by 10.100.189.17 with SMTP id m17mr1984493anf.19.1291423906070;
+        Fri, 03 Dec 2010 16:51:46 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
+        by mx.google.com with ESMTPS id t1sm2368805ano.23.2010.12.03.16.51.44
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 03 Dec 2010 16:42:40 -0800 (PST)
+        Fri, 03 Dec 2010 16:51:45 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <AANLkTinWD53M2VjiWgeA0Qwx3OHzR2A09Y+AB2B9o1df@mail.gmail.com>
+In-Reply-To: <AANLkTimyYTup+PqJFJ+2g-tVwWXA2bxTT3noonEuKBSu@mail.gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162876>
 
-Giuseppe Bilotta wrote:
+Hi Greg,
 
-> I do believe that Debian encourages the use of sensible-browser (that
-> does the BROWSER and *www-browser check itself) rather than manually
-> going to look at those specifications.
+ghazel@gmail.com wrote:
 
-My impression (by analogy with policy =C2=A711.4 "Editors and pagers") =
-is
-that one is encouraged to make the default configurable at compile
-time and use
+> I've encountered a strange issue where "git reset --hard" insists on
+> "Checking out files ..." when all that is changed is the ctime
 
- - first $BROWSER
- - then something desktop-specific
- - then the configured default
+There is a performance trade-off.  Refreshing the index requires
+reading+hashing the existing file if the stat information changed;
+this could be faster or slower than blindly overwriting depending on
+the situation.
 
-and set that default to www-browser or x-www-browser, depending on
-whether your program uses X.  That way, non-Debian systems benefit
-from the changes you introduce, too.
+That said, I have no strong objection to an implicit refresh in "git
+reset" (performance-sensitive scripts should be using read-tree
+directly anyway).  Have you tried making that change to
+builtin/reset.c?  How does it perform in practice?
 
-> An alternative approach would be to get rid of the *www-browser and
-> BROWSER patches, and just use xdg-open if it's available. Which again
-> raises the issue of how to enforce opening the page in a new tab.
+>              My deploy process (capistrano) maintains a cached copy of
+> a git repo, which it fetches, resets, and then hardlinks files from
+> when a deploy occurs ( https://github.com/37signals/fast_remote_cache
+> ). The hardlinking step is meant to save the time of copying the file.
+> but hardlinking changes the ctime of the source files.
 
-Yes, in this case that is the ideal (assuming xdg-utils has wide
-enough adoption).
+Interesting.  Setting "[core] trustctime = false" in the repository
+configuration could be a good solution (no performance downside I can
+think of).
 
-I think xdg-open has just as much a reason as we do to encourage
-opening the page in a new tab.  Would it be hard to make that happen?
+Hope that helps,
+Jonathan
