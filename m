@@ -1,75 +1,91 @@
-From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: Re: [PATCHv2 1/7] CodingGuidelines: mention whitespace preferences
- for shell scripts
-Date: Fri, 3 Dec 2010 23:46:11 +0100
-Message-ID: <AANLkTinDAZ2O6CHjK-7bmtUn42+z06A3BdXfURWV6mZt@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCHv2 6/7] web--browse: use (x-)www-browser if available
+Date: Fri, 3 Dec 2010 18:42:25 -0600
+Message-ID: <20101204004225.GA15906@burratino>
 References: <1291394861-11989-1-git-send-email-giuseppe.bilotta@gmail.com>
- <1291394861-11989-2-git-send-email-giuseppe.bilotta@gmail.com>
- <7vsjyemt1f.fsf@alter.siamese.dyndns.org> <AANLkTi=PmGR23AMog4UWQVNKPWrDUM_kYWV_Bn1vvSwE@mail.gmail.com>
- <7v39qemqyc.fsf@alter.siamese.dyndns.org>
+ <1291394861-11989-7-git-send-email-giuseppe.bilotta@gmail.com>
+ <7vaakmmrkj.fsf@alter.siamese.dyndns.org>
+ <AANLkTinWD53M2VjiWgeA0Qwx3OHzR2A09Y+AB2B9o1df@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Christian Couder <christian.couder@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 03 23:46:39 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Christian Couder <christian.couder@gmail.com>
+To: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 04 01:42:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POeOk-00043m-69
-	for gcvg-git-2@lo.gmane.org; Fri, 03 Dec 2010 23:46:38 +0100
+	id 1POgDB-0005H1-0z
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Dec 2010 01:42:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753732Ab0LCWqd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Dec 2010 17:46:33 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:46432 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753422Ab0LCWqc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 3 Dec 2010 17:46:32 -0500
-Received: by iwn6 with SMTP id 6so404710iwn.19
-        for <git@vger.kernel.org>; Fri, 03 Dec 2010 14:46:32 -0800 (PST)
+	id S1754058Ab0LDAmn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 3 Dec 2010 19:42:43 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:36739 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753515Ab0LDAmm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 3 Dec 2010 19:42:42 -0500
+Received: by yxt3 with SMTP id 3so4597155yxt.19
+        for <git@vger.kernel.org>; Fri, 03 Dec 2010 16:42:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Y4AE6dIwHvlZtC8y18OerO77BZe2d9jFpSEseUYttK0=;
-        b=b1P5uzGcUD4YTSd6WqxWwksHp0qN5hDpYahmxGRa8sow5Y7RhUD58YoLQ5acIZGRBZ
-         85gxGP3BthYluZjE3j9hXahPIMm3kG54jakfkwmawWOhKUGDv6UqFtgF3EHNIXZkaLG8
-         pKyHBOqbzM8Mbp2hZB3xhkFwN0qA3Q4LIRLNg=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=JjeqDZm9hcWwM6qycZb9st6GdGb66xKeRxqSloCUEr8=;
+        b=ch2SEXtq3IumKyc2ZpbqUJCS1r5SRakDPI9P6bhxmPMxAiamwFOElS88L4tJUuAc62
+         19Tfs2vXgnbgQ1C1lMKBwC/7DHNZ8rnf6JxepxQj1aQCuBOxbCPRp6sDGLiBKvthyq8N
+         1ufHyzU1b2YGnavKH3/zz3Qx7kD3nk34DiLHI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=E+k1PBVPA3tHL6n75QBeV0zP4Wya1CilDTRq2SV5a9+0d3msESlY9dEk0aBGXREzTd
-         0/CmEWGuz5Ny53Pzc4333Tk9MMu2z2mNiyKUj7vC0ntJ14nF1+MoWU4t51GmTIHlvQL5
-         yDqBh6G6UQKjqx4Q0WNoFbWjvdzE8Axw+1oxM=
-Received: by 10.231.14.135 with SMTP id g7mr2413033iba.106.1291416392056; Fri,
- 03 Dec 2010 14:46:32 -0800 (PST)
-Received: by 10.231.39.3 with HTTP; Fri, 3 Dec 2010 14:46:11 -0800 (PST)
-In-Reply-To: <7v39qemqyc.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=pu1zCWB9LIwFrA4iY5xI9QfqDKgn7LachqYzZiEtNMhazTxRUyswY2z8uOHT6wyfpM
+         n8WfQoA+/UtJbUiUk2irATd8N+4c0QHBDM34Lgqy04qhRT2peBOhGc/P+7wh8n4/rDxZ
+         CQF/x8V8bTV8Ea2i4MEKLhd+ghWPwMlM7CgD8=
+Received: by 10.150.51.10 with SMTP id y10mr2102561yby.286.1291423361861;
+        Fri, 03 Dec 2010 16:42:41 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
+        by mx.google.com with ESMTPS id f46sm1436295yhc.33.2010.12.03.16.42.39
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 03 Dec 2010 16:42:40 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTinWD53M2VjiWgeA0Qwx3OHzR2A09Y+AB2B9o1df@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162875>
 
-On Fri, Dec 3, 2010 at 11:28 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Giuseppe Bilotta <giuseppe.bilotta@gmail.com> writes:
->
->> Good idea. I'll rephrase in that sense and add a couple more entries
->> about the | spacing and long case arm splitting, for the next rehash
->> of the series.
->
-> Hm, I don't think there needs a rehash of the whole thing. =A0This on=
-e is
-> ready for 'maint' with the rewording), and 2-4 looked Ok.
+Giuseppe Bilotta wrote:
 
-Ok then. Do you still want the two extra entries or are they superfluou=
-s too?
+> I do believe that Debian encourages the use of sensible-browser (that
+> does the BROWSER and *www-browser check itself) rather than manually
+> going to look at those specifications.
 
---=20
-Giuseppe "Oblomov" Bilotta
+My impression (by analogy with policy =C2=A711.4 "Editors and pagers") =
+is
+that one is encouraged to make the default configurable at compile
+time and use
+
+ - first $BROWSER
+ - then something desktop-specific
+ - then the configured default
+
+and set that default to www-browser or x-www-browser, depending on
+whether your program uses X.  That way, non-Debian systems benefit
+from the changes you introduce, too.
+
+> An alternative approach would be to get rid of the *www-browser and
+> BROWSER patches, and just use xdg-open if it's available. Which again
+> raises the issue of how to enforce opening the page in a new tab.
+
+Yes, in this case that is the ideal (assuming xdg-utils has wide
+enough adoption).
+
+I think xdg-open has just as much a reason as we do to encourage
+opening the page in a new tab.  Would it be hard to make that happen?
