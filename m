@@ -1,86 +1,151 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH 06/14] match-trees.c: Initialise variables to suppress msvc
- warnings
-Date: Sat, 04 Dec 2010 19:05:47 +0000
-Message-ID: <4CFA910B.6040708@ramsay1.demon.co.uk>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH] git submodule: Remove now obsolete tests before cloning a
+ repo
+Date: Sun, 05 Dec 2010 00:27:35 +0100
+Message-ID: <4CFACE67.1080206@web.de>
+References: <20101201171814.GC6439@ikki.ethgen.de> <20101201185046.GB27024@burratino> <4CF80B71.3010309@web.de> <20101203071037.GA18202@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 04 22:23:14 2010
+Cc: git@vger.kernel.org, Klaus Ethgen <Klaus@Ethgen.de>,
+	Sven Verdoolaege <skimo@kotnet.org>, mlevedahl@gmail.com,
+	ben@ben.com, Junio C Hamano <gitster@pobox.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 05 00:32:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POzZa-0001Tm-5G
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Dec 2010 22:23:14 +0100
+	id 1PP1ay-00064h-Vx
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 00:32:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755947Ab0LDVXJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Dec 2010 16:23:09 -0500
-Received: from anchor-post-1.mail.demon.net ([195.173.77.132]:44720 "EHLO
-	anchor-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755843Ab0LDVXI (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Dec 2010 16:23:08 -0500
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-1.mail.demon.net with esmtp (Exim 4.69)
-	id 1POyso-0001PA-iU; Sat, 04 Dec 2010 20:39:03 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S1755025Ab0LDX2z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Dec 2010 18:28:55 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:42736 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753830Ab0LDX2z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Dec 2010 18:28:55 -0500
+Received: from smtp06.web.de  ( [172.20.5.172])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 9C9EF17BA13B6;
+	Sun,  5 Dec 2010 00:27:36 +0100 (CET)
+Received: from [93.246.44.149] (helo=[192.168.178.51])
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1PP1Vw-0007zP-00; Sun, 05 Dec 2010 00:27:36 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <20101203071037.GA18202@burratino>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+u+DyQ61FIxzH47+v+kVxTBUpYe7NOymB0o4ab
+	pD38hPo4BZ4BPP+4mFayQIRSLZSXg87yLgnBFQgTTC61/jv5Gp
+	yDdKp26C0VahMxHXH3+w==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162923>
 
+Since 55892d23 "git clone" itself checks that the destination path is not
+a file but an empty directory if it exists, so there is no need anymore
+for module_clone() to check that too.
 
-The msvc compiler thinks that several variables could be used
-while uninitialised and issues 12 warnings like:
+Two tests have been added to test the behavior of "git submodule add" when
+path is a file or a directory (A subshell had to be added to the former
+last test to stay in the right directory).
 
-    ...\git\match-trees.c(75) : warning C4700: uninitialized local \
-        variable 'elem1' used
-    ...\git\match-trees.c(76) : warning C4700: uninitialized local \
-        variable 'elem2' used
-    ...\git\match-trees.c(77) : warning C4700: uninitialized local \
-        variable 'path1' used
-    ...\git\match-trees.c(78) : warning C4700: uninitialized local \
-        variable 'path2' used
-    ...\git\match-trees.c(79) : warning C4700: uninitialized local \
-        variable 'mode1' used
-    ...\git\match-trees.c(80) : warning C4700: uninitialized local \
-        variable 'mode2' used
-
-In order to suppress the warnings, we simply initialise the char
-pointer variables to NULL and the int variables to zero.
-
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
 ---
- match-trees.c |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/match-trees.c b/match-trees.c
-index 26f7ed1..de050d0 100644
---- a/match-trees.c
-+++ b/match-trees.c
-@@ -72,12 +72,12 @@ static int score_trees(const unsigned char *hash1, const unsigned char *hash2)
- 		die("%s is not a tree", sha1_to_hex(hash2));
- 	init_tree_desc(&two, two_buf, size);
- 	while (one.size | two.size) {
--		const unsigned char *elem1 = elem1;
--		const unsigned char *elem2 = elem2;
--		const char *path1 = path1;
--		const char *path2 = path2;
--		unsigned mode1 = mode1;
--		unsigned mode2 = mode2;
-+		const unsigned char *elem1 = NULL;
-+		const unsigned char *elem2 = NULL;
-+		const char *path1 = NULL;
-+		const char *path2 = NULL;
-+		unsigned mode1 = 0;
-+		unsigned mode2 = 0;
- 		int cmp;
- 
- 		if (one.size)
+Am 03.12.2010 08:10, schrieb Jonathan Nieder:
+> Jens Lehmann wrote:
+>> Am 01.12.2010 19:50, schrieb Jonathan Nieder:
+> 
+>>>                                  Jens, any idea why git submodule
+>>> is not using "clone --branch" directly?
+>>
+>> Nope, these lines date back to the time before I got involved in the
+>> submodule business ... Seems like this "git checkout" was added in
+>> March 2008 by Mark Levedahl (CCed), maybe he can shed some light on
+>> that.
+> 
+> Ah, so the problem is that "clone --branch" did not exist.  Sorry for
+> the noise.
+> 
+> Another question can be also be easily answered by history examination:
+> the series of checks in module_clone are because 70c7ac22d:git-clone.sh
+> did not have checks of its own for the target directory.
+> 
+> So there is some simplification within grasp.
+
+Maybe something like this?
+
+
+ git-submodule.sh           |   14 --------------
+ t/t7400-submodule-basic.sh |   28 +++++++++++++++++++++++-----
+ 2 files changed, 23 insertions(+), 19 deletions(-)
+
+diff --git a/git-submodule.sh b/git-submodule.sh
+index 33bc41f..8085876 100755
+--- a/git-submodule.sh
++++ b/git-submodule.sh
+@@ -93,20 +93,6 @@ module_clone()
+ 	url=$2
+ 	reference="$3"
+
+-	# If there already is a directory at the submodule path,
+-	# expect it to be empty (since that is the default checkout
+-	# action) and try to remove it.
+-	# Note: if $path is a symlink to a directory the test will
+-	# succeed but the rmdir will fail. We might want to fix this.
+-	if test -d "$path"
+-	then
+-		rmdir "$path" 2>/dev/null ||
+-		die "Directory '$path' exists, but is neither empty nor a git repository"
+-	fi
+-
+-	test -e "$path" &&
+-	die "A file already exist at path '$path'"
+-
+ 	if test -n "$reference"
+ 	then
+ 		git-clone "$reference" -n "$url" "$path"
+diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
+index 782b0a3..2c49db9 100755
+--- a/t/t7400-submodule-basic.sh
++++ b/t/t7400-submodule-basic.sh
+@@ -421,11 +421,29 @@ test_expect_success 'add submodules without specifying an explicit path' '
+ 		git commit -m "repo commit 1"
+ 	) &&
+ 	git clone --bare repo/ bare.git &&
+-	cd addtest &&
+-	git submodule add "$submodurl/repo" &&
+-	git config -f .gitmodules submodule.repo.path repo &&
+-	git submodule add "$submodurl/bare.git" &&
+-	git config -f .gitmodules submodule.bare.path bare
++	(
++		cd addtest &&
++		git submodule add "$submodurl/repo" &&
++		git config -f .gitmodules submodule.repo.path repo &&
++		git submodule add "$submodurl/bare.git" &&
++		git config -f .gitmodules submodule.bare.path bare
++	)
++'
++
++test_expect_success 'add should fail when path is used by a file' '
++	(
++		cd addtest &&
++		touch file &&
++		test_must_fail	git submodule add "$submodurl/repo" file
++	)
++'
++
++test_expect_success 'add should fail when path is used by an existing directory' '
++	(
++		cd addtest &&
++		mkdir empty-dir &&
++		test_must_fail git submodule add "$submodurl/repo" empty-dir
++	)
+ '
+
+ test_done
 -- 
-1.7.3
+1.7.3.2.657.g92628.dirty
