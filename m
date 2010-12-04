@@ -1,79 +1,77 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 01/14] msvc: Fix compilation errors in
- compat/win32/sys/poll.c
-Date: Sat, 4 Dec 2010 14:45:41 -0600
-Message-ID: <20101204204541.GA3170@burratino>
-References: <4CFA8E64.6070402@ramsay1.demon.co.uk>
+Subject: Re: [PATCH 14/14] wt-status.c: Initialise variable to suppress msvc
+ warning
+Date: Sat, 4 Dec 2010 14:52:06 -0600
+Message-ID: <20101204205206.GB3170@burratino>
+References: <4CFA92A2.4030801@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	kusmabite@gmail.com, GIT Mailing-list <git@vger.kernel.org>
+	GIT Mailing-list <git@vger.kernel.org>
 To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Sat Dec 04 21:46:53 2010
+X-From: git-owner@vger.kernel.org Sat Dec 04 21:52:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POz0P-0003YJ-1O
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Dec 2010 21:46:53 +0100
+	id 1POz5n-0005Sc-TT
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Dec 2010 21:52:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755805Ab0LDUqF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Dec 2010 15:46:05 -0500
-Received: from mail-gx0-f180.google.com ([209.85.161.180]:47112 "EHLO
-	mail-gx0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755729Ab0LDUqE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Dec 2010 15:46:04 -0500
-Received: by gxk19 with SMTP id 19so5793977gxk.11
-        for <git@vger.kernel.org>; Sat, 04 Dec 2010 12:46:03 -0800 (PST)
+	id S1755982Ab0LDUwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Dec 2010 15:52:25 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:46728 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755860Ab0LDUwZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Dec 2010 15:52:25 -0500
+Received: by ywl5 with SMTP id 5so5369568ywl.19
+        for <git@vger.kernel.org>; Sat, 04 Dec 2010 12:52:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=do79uItAi2e2g6Pdj9ibSI+tT51nXFaUDpDypPWe0WE=;
-        b=waOjUpMDrzAhy5K4zwcpsDLH5tjTZSfFOnJLs2WweLsLWaBSxXRIhBcwcbNZIY/OpY
-         7bbCGn2kiPTXpw7g6LkjcLqqVDxAeD+tc5divTZzf5Ngk7XUeNJxiEH7KiUB8e2UPpQM
-         KJ/H9RZ7/r6jMdMtcxTt+eDjFU91GKXCLdKMw=
+        bh=gLoUl2nf76DpY4w0pABzqtq2tmqiSRvyulERiYpB2sE=;
+        b=d1Fg1CTNLyMUdbfNun3Y8e5LkBYPREuwZqLUaXNplRdUvoo4HXSBDcjAMi18bFFPsI
+         yuXTjH003JUiNzu1RwpyI9TgGbjC3BemraJslg0GqNEfKvt7nhthhd3e1dQ5WlFvkWdm
+         LqRfFldw+WHKdiiZZGMWGPk/i4ea894Kw4+7k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=PB0nPSaPRiFmgVvvVf04TcxYMm0nDNRaQ9IBMHZobfn3mQYOU1JRdHX7DF0yoEUyeb
-         akP7rndl3cpbfTDfRetCBscpv/hbg88nM/9AnjBLs/P6O5lcI0tYZ9ebCtE4Bq8oipr8
-         CAlG8v+VUCityudn4PiYO+8KfRyWds3IjDC/E=
-Received: by 10.151.102.10 with SMTP id e10mr6225373ybm.364.1291495563171;
-        Sat, 04 Dec 2010 12:46:03 -0800 (PST)
+        b=SBBrJodYLbcAF3adaf0RkRXmT4/RmhtxdUlOmIx6bdaekyL7waxTMHWFD0I4LEzigt
+         Q0MltluDLJL0XR6wq3TMJWtocESY/pKUI9l3EUny76WBBt7BM9GGOoiM/1cVYrX7wMgo
+         FKJdhn0L52rnwjK/9AdrQj70dYu5w8GYGq61s=
+Received: by 10.150.136.16 with SMTP id j16mr6317862ybd.442.1291495942909;
+        Sat, 04 Dec 2010 12:52:22 -0800 (PST)
 Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id q8sm510604ybk.0.2010.12.04.12.46.01
+        by mx.google.com with ESMTPS id v8sm1994920yhg.40.2010.12.04.12.52.21
         (version=SSLv3 cipher=RC4-MD5);
-        Sat, 04 Dec 2010 12:46:02 -0800 (PST)
+        Sat, 04 Dec 2010 12:52:22 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <4CFA8E64.6070402@ramsay1.demon.co.uk>
+In-Reply-To: <4CFA92A2.4030801@ramsay1.demon.co.uk>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162906>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162907>
 
 Ramsay Jones wrote:
 
-> The msvc winsock2.h header file conditionally defines or declares
-> poll() related symbols which cause many macro redefinition errors,
-> a struct type redefinition error and syntax errors. These symbols
-> are defined in support of the WSAPoll() API, new in Windows Vista,
-> when the symbol _WIN32_WINNT is defined and _WIN32_WINNT >= 0x0600.
+> --- a/wt-status.c
+> +++ b/wt-status.c
+> @@ -149,7 +149,7 @@ static void wt_status_print_change_data(struct wt_status *s,
+>  {
+>  	struct wt_status_change_data *d = it->util;
+>  	const char *c = color(change_type, s);
+> -	int status = status;
+> +	int status = 0;
 
-Could it make sense to define this at the same time as _GNU_SOURCE et
-al?
+Just for the record (I assume you are already aware of this):
 
-	#define _ALL_SOURCE 1
-	#define _GNU_SOURCE 1
-	#define _BSD_SOURCE 1
-	#define _NETBSD_SOURCE 1
-	#define _SGI_SOURCE 1
-	#define _WIN32_WINNT 0x0502
+ http://thread.gmane.org/gmane.comp.version-control.git/133278/focus=133422
+ http://thread.gmane.org/gmane.comp.version-control.git/124676/focus=124803
 
-Haven't thought carefully about the consequences, though; your patch
-is probably safer.
+I personally feel lukewarm about this kind of change.  Is it possible to
+suppress this warning from msvc?
