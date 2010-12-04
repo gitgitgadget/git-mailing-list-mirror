@@ -1,77 +1,68 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 3/4] fast-import: let importers retrieve blobs
-Date: Sat, 4 Dec 2010 14:24:32 +0100
-Message-ID: <201012041424.33146.trast@student.ethz.ch>
-References: <1287147256-9457-1-git-send-email-david.barr@cordelta.com> <20101128194501.GD19998@burratino> <201012031130.06008.trast@student.ethz.ch>
+From: =?UTF-8?B?RGlyayBTw7xzc2Vyb3R0?= <newsletter@dirk.my1.cc>
+Subject: Re: Q about git rev-parse {--is-inside-work-tree, --show-cdup}
+Date: Sat, 04 Dec 2010 16:12:39 +0100
+Message-ID: <4CFA5A67.2020108@dirk.my1.cc>
+References: <4CF95BDC.60506@dirk.my1.cc> <7v4oauo8fj.fsf@alter.siamese.dyndns.org> <20101203215032.GB3972@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: David Barr <david.barr@cordelta.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 04 14:29:52 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Dec 04 16:12:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POsBS-00064O-E3
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Dec 2010 14:29:50 +0100
+	id 1POtn8-00069y-9L
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Dec 2010 16:12:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754998Ab0LDNYh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Dec 2010 08:24:37 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:58289 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754944Ab0LDNYg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 4 Dec 2010 08:24:36 -0500
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Sat, 4 Dec
- 2010 14:24:20 +0100
-Received: from pctrast.inf.ethz.ch (84.74.105.24) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.218.12; Sat, 4 Dec
- 2010 14:24:34 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-rc3-git6-8-desktop; KDE/4.5.3; x86_64; ; )
-In-Reply-To: <201012031130.06008.trast@student.ethz.ch>
-X-Originating-IP: [84.74.105.24]
+	id S1755311Ab0LDPMo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Dec 2010 10:12:44 -0500
+Received: from smtprelay01.ispgateway.de ([80.67.31.39]:52127 "EHLO
+	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751560Ab0LDPMo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Dec 2010 10:12:44 -0500
+Received: from [217.87.113.135] (helo=[192.168.2.100])
+	by smtprelay01.ispgateway.de with esmtpa (Exim 4.68)
+	(envelope-from <newsletter@dirk.my1.cc>)
+	id 1POtmz-0004B5-J7; Sat, 04 Dec 2010 16:12:41 +0100
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.12) Gecko/20101027 Lightning/1.0b2 Thunderbird/3.1.6
+In-Reply-To: <20101203215032.GB3972@sigill.intra.peff.net>
+X-Df-Sender: 757646
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162893>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162894>
 
-Thomas Rast wrote:
-> Jonathan Nieder wrote:
-> > +test_expect_success PIPE 'R: copy using cat-file' '
-> [...]
-> > +	dd if=/dev/stdin of=blob bs=$size count=1 <&3 &&
-> 
-> This breaks my automated tester, though I am not sure exactly why.  It
-> runs RHEL5, and I have
-> 
->   lrwxrwxrwx 1 root root 15 Sep  1 09:25 /dev/stdin -> /proc/self/fd/0
+Am 03.12.2010 22:50 schrieb Jeff King:
+> On Fri, Dec 03, 2010 at 01:25:36PM -0800, Junio C Hamano wrote:
+>
+>> That would break existing scripts that expect "-q" to squelch only the
+>> error output, no?  I think the risk of breaking existing scripts that
+>> other people wrote over time that you (and I) haven't seen outweighs any
+>> benefit (i.e. "if test $(rev-parse...) = true" vs "if rev-parse...") you
+>> are seeing here.
+>
+> Right now "-q" doesn't do _anything_ for --is-inside-work-tree, AFAICT.
+> It is a useless no-op. So I don't know if we are breaking anybody. What
+> does somebody doing "git rev-parse -q --is-inside-work-tree" expect to
+> happen?
+>
 
-Ah, answering my own question: on my normal box, strace'ing dd[1] in
-such an invocation uses
+Peff, Junio, thanks for your answers.
 
-  open("/dev/stdin", O_RDONLY)            = 3
-  dup2(3, 0)                              = 0
-  close(3)                                = 0
+I already had a suspicion that changing plumbing tools like
+rev-parse was a bad idea. You confirmed that. However, I still
+think it's a little bug that "--show-dup" returns an empty string
+instead of a dot when already in topdir. But it's too late to
+change that, I guess. I didn't know about Peff's suggestions
+"git-sh-setup" and "--show-toplevel". They may help me.
 
-OTOH on RHEL5[2] it tries a different order:
+@Peff, right, it's annoying that -q sometimes works and
+sometimes doesn't. To my opinion switches like --quiet and
+--verbose should _always_ work.
 
-  close(0)                                = 0
-  open("/dev/stdin", O_RDONLY)            = -1 ENOENT (No such file or directory)
-
-Oops.
-
-
-[1] dd --version says: dd (coreutils) 7.1
-[2] dd (coreutils) 5.97
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+     Dirk
