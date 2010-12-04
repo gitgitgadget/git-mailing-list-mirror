@@ -1,66 +1,76 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH 09/14] merge-recursive.c: Initialise variable to suppress
- msvc warning
-Date: Sat, 04 Dec 2010 19:08:18 +0000
-Message-ID: <4CFA91A2.9090409@ramsay1.demon.co.uk>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 01/14] msvc: Fix compilation errors in compat/win32/sys/poll.c
+Date: Sat, 4 Dec 2010 22:22:23 +0100
+Message-ID: <201012042222.23384.j6t@kdbg.org>
+References: <4CFA8E64.6070402@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 04 22:16:50 2010
+Cc: Junio C Hamano <gitster@pobox.com>, kusmabite@gmail.com,
+	"GIT Mailing-list" <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Sat Dec 04 22:22:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1POzTN-00074i-HY
-	for gcvg-git-2@lo.gmane.org; Sat, 04 Dec 2010 22:16:49 +0100
+	id 1POzYs-0001Am-GP
+	for gcvg-git-2@lo.gmane.org; Sat, 04 Dec 2010 22:22:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756119Ab0LDVQo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 4 Dec 2010 16:16:44 -0500
-Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:43461 "EHLO
-	anchor-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755843Ab0LDVQo (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 4 Dec 2010 16:16:44 -0500
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1POysx-0001tr-pI; Sat, 04 Dec 2010 20:39:12 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S1755878Ab0LDVWZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 4 Dec 2010 16:22:25 -0500
+Received: from bsmtp2.bon.at ([213.33.87.16]:41419 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1755779Ab0LDVWZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 4 Dec 2010 16:22:25 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 19EF210012;
+	Sat,  4 Dec 2010 22:22:28 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 7B39A19F5E9;
+	Sat,  4 Dec 2010 22:22:23 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <4CFA8E64.6070402@ramsay1.demon.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162919>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162920>
 
+On Samstag, 4. Dezember 2010, Ramsay Jones wrote:
+> The msvc winsock2.h header file conditionally defines or declares
+> poll() related symbols which cause many macro redefinition errors,
+> a struct type redefinition error and syntax errors. These symbols
+> are defined in support of the WSAPoll() API, new in Windows Vista,
+> when the symbol _WIN32_WINNT is defined and _WIN32_WINNT >= 0x0600.
+>
+> In order to avoid the compilation errors, we set _WIN32_WINNT to
+> 0x0502 (which would target Windows Server 2003) prior to including
+> the winsock2.h header file.
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+> ---
+>  compat/win32/sys/poll.c |    3 +++
+>  1 files changed, 3 insertions(+), 0 deletions(-)
+>
+> diff --git a/compat/win32/sys/poll.c b/compat/win32/sys/poll.c
+> index 7e74ebe..708a6c9 100644
+> --- a/compat/win32/sys/poll.c
+> +++ b/compat/win32/sys/poll.c
+> @@ -34,6 +34,9 @@
+>
+>  #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+>  # define WIN32_NATIVE
+> +# if defined (_MSC_VER)
+> +#  define _WIN32_WINNT 0x0502
+> +# endif
+>  # include <winsock2.h>
+>  # include <windows.h>
+>  # include <io.h>
 
-The msvc compiler thinks a variable could be used while
-uninitialised and issues the following warning:
+Don't you have to do the same in git-compat-util.h?
 
-    ...\git\merge-recursive.c(1599) : warning C4700: uninitialized local \
-        variable 'mrtree' used
-
-In order to suppress the warning we simply initialise the mrtree
-pointer variable to NULL.
-
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
- merge-recursive.c |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/merge-recursive.c b/merge-recursive.c
-index 16c2dbe..d5423ad 100644
---- a/merge-recursive.c
-+++ b/merge-recursive.c
-@@ -1596,7 +1596,7 @@ int merge_recursive(struct merge_options *o,
- {
- 	struct commit_list *iter;
- 	struct commit *merged_common_ancestors;
--	struct tree *mrtree = mrtree;
-+	struct tree *mrtree = NULL;
- 	int clean;
- 
- 	if (show(o, 4)) {
--- 
-1.7.3
+-- Hannes
