@@ -1,137 +1,82 @@
-From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 5/6] Use sorted-array API for commit.c's commit_graft.
-Date: Sun,  5 Dec 2010 11:34:06 +0100
-Message-ID: <1291545247-4151-6-git-send-email-ydirson@altern.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v5] generalizing sorted-array handling
+Date: Sun, 5 Dec 2010 04:44:26 -0600
+Message-ID: <20101205104426.GG4332@burratino>
 References: <1291545247-4151-1-git-send-email-ydirson@altern.org>
-Cc: Yann Dirson <ydirson@altern.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 05 11:34:51 2010
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Yann Dirson <ydirson@altern.org>
+X-From: git-owner@vger.kernel.org Sun Dec 05 11:44:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPBvc-0002k7-Gk
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 11:34:48 +0100
+	id 1PPC5Q-0007a8-Ce
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 11:44:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754353Ab0LEKea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Dec 2010 05:34:30 -0500
-Received: from smtp5-g21.free.fr ([212.27.42.5]:40210 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754126Ab0LEKe3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Dec 2010 05:34:29 -0500
-Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 1062BD480DD;
-	Sun,  5 Dec 2010 11:34:22 +0100 (CET)
-Received: from yann by home.lan with local (Exim 4.72)
-	(envelope-from <ydirson@free.fr>)
-	id 1PPBv8-000167-N7; Sun, 05 Dec 2010 11:34:18 +0100
-X-Mailer: git-send-email 1.7.2.3
+	id S1754653Ab0LEKoq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Dec 2010 05:44:46 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:47421 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754601Ab0LEKop (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Dec 2010 05:44:45 -0500
+Received: by iwn6 with SMTP id 6so2003207iwn.19
+        for <git@vger.kernel.org>; Sun, 05 Dec 2010 02:44:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=2LLLViM0iNUDcysP6KpWXni5ncSoC8hlGqr8LnsXVJA=;
+        b=SYk+mRqLKfd7vY5kfxM8NbAAYq0x9d39i/sVQV7S6yTp8IRCKaVFR6sKoXh2lz1jFo
+         A49acGUfYPGIWyKD+YO6leRoHk6ki90GpWvN9xgravxLMrqhyHLWhpofhoMCGk0PQ5VZ
+         in96npjWB8pi56UQmj9wjuiEcVU4BfO4RTvkw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=LQFJo544YK1OWq2+WZOTUoMwAzAb/Nlb8GVWzZaSC7IvWkbmPqOGYxWKGJZ6e68uRM
+         AiD0RHcpKS2P9bvauAy5RLnohKXZsFp5XqaojauAmf14BhtxxbvQ2rbj5PEcbLyv/Fiy
+         ntDgpNoaipgKVaIS+V1jAmcvXJI3Vs7N707Vo=
+Received: by 10.42.166.7 with SMTP id m7mr801809icy.273.1291545884899;
+        Sun, 05 Dec 2010 02:44:44 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
+        by mx.google.com with ESMTPS id d21sm3775483ibg.21.2010.12.05.02.44.43
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 05 Dec 2010 02:44:43 -0800 (PST)
+Content-Disposition: inline
 In-Reply-To: <1291545247-4151-1-git-send-email-ydirson@altern.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162941>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162942>
 
-Factorizing code fixes off-by-one error in the duplicated code (caused
-mostly harmless anticipated growing of the array).
+Yann Dirson wrote:
 
-Signed-off-by: Yann Dirson <ydirson@altern.org>
----
- commit.c |   62 +++++++++++++++++++++++++++-----------------------------------
- 1 files changed, 27 insertions(+), 35 deletions(-)
+> * better API documentation (was previously lacking or plain obsolete)
 
-diff --git a/commit.c b/commit.c
-index 2d9265d..b7aeee4 100644
---- a/commit.c
-+++ b/commit.c
-@@ -6,6 +6,7 @@
- #include "diff.h"
- #include "revision.h"
- #include "notes.h"
-+#include "sorted-array.h"
- 
- int save_commit_buffer = 1;
- 
-@@ -76,33 +77,37 @@ static unsigned long parse_commit_date(const char *buf, const char *tail)
- 	return strtoul(dateptr, NULL, 10);
- }
- 
--static struct commit_graft **commit_graft;
--static int commit_graft_alloc, commit_graft_nr;
--
--static int commit_graft_pos(const unsigned char *sha1)
-+static int commit_graft_cmp(const unsigned char *ref_sha1, struct commit_graft **elem)
- {
--	int lo, hi;
--	lo = 0;
--	hi = commit_graft_nr;
--	while (lo < hi) {
--		int mi = (lo + hi) / 2;
--		struct commit_graft *graft = commit_graft[mi];
--		int cmp = hashcmp(sha1, graft->sha1);
--		if (!cmp)
--			return mi;
--		if (cmp < 0)
--			hi = mi;
--		else
--			lo = mi + 1;
--	}
--	return -lo - 1;
-+	return hashcmp(ref_sha1, (*elem)->sha1);
- }
-+declare_sorted_array(static, struct commit_graft *, commit_graft);
-+declare_gen_binsearch(static, struct commit_graft *, _commit_graft_pos,
-+		      const unsigned char *);
-+declare_sorted_array_search_check(static, commit_graft_pos, const unsigned char *,
-+				  _commit_graft_pos, commit_graft, commit_graft_cmp);
- 
-+// FIXME: do we want to/can we remove INITTYPE from gen_binsearch ?
-+static int commit_graft_cmp2(struct commit_graft *ref_graft, struct commit_graft **elem)
-+{
-+	return commit_graft_cmp(ref_graft->sha1, elem);
-+}
-+declare_gen_binsearch(static, struct commit_graft *, _commit_graft_pos2,
-+		      struct commit_graft *);
-+static void commit_graft_init(struct commit_graft **elem, struct commit_graft *ref_graft)
-+{
-+	*elem = ref_graft;
-+}
-+declare_gen_sorted_insert(static, struct commit_graft *, _register_commit_graft0,
-+			  _commit_graft_pos2, struct commit_graft *)
-+declare_sorted_array_insert_check(static, register_commit_graft0, struct commit_graft *,
-+				  _register_commit_graft0, commit_graft,
-+				  commit_graft_cmp2, commit_graft_init);
- int register_commit_graft(struct commit_graft *graft, int ignore_dups)
- {
--	int pos = commit_graft_pos(graft->sha1);
-+	int pos = register_commit_graft0(graft);
- 
--	if (0 <= pos) {
-+	if (pos >= 0) {
- 		if (ignore_dups)
- 			free(graft);
- 		else {
-@@ -111,19 +116,6 @@ int register_commit_graft(struct commit_graft *graft, int ignore_dups)
- 		}
- 		return 1;
- 	}
--	pos = -pos - 1;
--	if (commit_graft_alloc <= ++commit_graft_nr) {
--		commit_graft_alloc = alloc_nr(commit_graft_alloc);
--		commit_graft = xrealloc(commit_graft,
--					sizeof(*commit_graft) *
--					commit_graft_alloc);
--	}
--	if (pos < commit_graft_nr)
--		memmove(commit_graft + pos + 1,
--			commit_graft + pos,
--			(commit_graft_nr - pos - 1) *
--			sizeof(*commit_graft));
--	commit_graft[pos] = graft;
- 	return 0;
- }
- 
--- 
-1.7.2.3
+Thanks!  In general I find it is easiest to read and write
+documentation out of line for this sort of thing.  That way, even
+after the documentation grows obsolete it doesn't seem so out of
+place.
+
+See Documentation/technical/api-strbuf.txt, api-sigchain, and
+api-allocation-growing for some nice (up-to-date) examples.
+
+In particular:
+
+> * This API is very verbose, and I'm not happy with that aspect.
+
+Could you give a quick stripped-down usage example?
+
+[...]
+> Adding "simple" API variants that would call all the necessary stuff
+> would help code readability, but adding yet more entry points seems a
+> dubious approach.
+
+On the contrary, simple API variants don't sound so bad to me,
+once the fundamentals are in good shape.
