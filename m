@@ -1,98 +1,82 @@
 From: Thiago Farina <tfransosi@gmail.com>
 Subject: Re: [PATCH] commit: Add commit_list prefix to reduce_heads function.
-Date: Sun, 5 Dec 2010 10:18:47 -0200
-Message-ID: <AANLkTinAT3kotKQTS6eS1SLigNzSp6grAU7WNRbHf3N=@mail.gmail.com>
+Date: Sun, 5 Dec 2010 10:23:14 -0200
+Message-ID: <AANLkTikxibh4QkxzokhBYQ+dMS3W6PkDaDLuqm5qN+6v@mail.gmail.com>
 References: <a3f4bdc2d5f5d13c772a82de9afe2691b8a12863.1291514223.git.tfransosi@gmail.com>
-	<20101205021837.GA24614@burratino>
+	<7vsjycx05o.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 05 13:18:56 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 05 13:23:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPDYN-0002BU-Kx
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 13:18:55 +0100
+	id 1PPDcg-0003oo-Nh
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 13:23:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755156Ab0LEMSt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Dec 2010 07:18:49 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:50650 "EHLO
+	id S1755170Ab0LEMXR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Dec 2010 07:23:17 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:62094 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755008Ab0LEMSs convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Dec 2010 07:18:48 -0500
-Received: by bwz15 with SMTP id 15so9744898bwz.19
-        for <git@vger.kernel.org>; Sun, 05 Dec 2010 04:18:47 -0800 (PST)
+	with ESMTP id S1755062Ab0LEMXQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Dec 2010 07:23:16 -0500
+Received: by bwz15 with SMTP id 15so9747045bwz.19
+        for <git@vger.kernel.org>; Sun, 05 Dec 2010 04:23:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:received:received:in-reply-to
          :references:date:message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=+jKwM6f4LoJJIWWnC+Rfz+eHGUMtXKY0u5YyI6r4r3k=;
-        b=R3SAAQRjoSE9gFEa3xRFBNBA0j4JBsBNSZvQiTD8N8oaInsBqB5OtkUF79kgWMpJyy
-         EdqVb8hsNaQv+BrA5W3bnDSXaCQewnwvB4BZX+32QcdwLp7zAsU766EJPK/Vr35MTi6A
-         0RFxC3xKrzLXYYG0gH8lWNmQbtMcupQSBRI6w=
+        bh=PLsOu7BdafD9SbYKCKdFN+WFq+iukbgX9RpO1EFhUW4=;
+        b=FjNbTxtKSBI4rNXJd+p6IBGunivXi6+XENfNlmPc5hLvXQ88sd6IYlumCEIOeFLl4U
+         i5gw9aSt1Kp0keDPwJ+HOewNxzUhONsBS+HoHOUX6fNJ/vJgHJwmSJLxTirfdWL8NmK9
+         vTmY08L51vkHckYJd7ppmMQdh+9m/3DmpI9I0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=lWeEMf8Wj5aO79surwnWKOwH+fGH3AiPSEVNIAw9HDcCxkWGiwdgdI6rDGb0lEZmL5
-         05yxmYLd2kkJS5gfzGCLzm07XEPlhxof7s+DHG9+M/KpWFJCA0f2olgbZmOh+t+gxvS4
-         Y7k801v+7DSqL9IsPpj8fYrch0nJa4FXxNERU=
-Received: by 10.204.59.81 with SMTP id k17mr4611414bkh.148.1291551527414; Sun,
- 05 Dec 2010 04:18:47 -0800 (PST)
-Received: by 10.204.58.71 with HTTP; Sun, 5 Dec 2010 04:18:47 -0800 (PST)
-In-Reply-To: <20101205021837.GA24614@burratino>
+        b=cBpZDFtXOi64gRapP95sDgKcPiezubKHcrmL/W9qEi6aKtu8azQ3HfNHic8NoKI4nb
+         JFMicdDvh98H9xgfv28nG1GzK+l9Zpy1Eea7vUU+IJU1q+0PIgH9pYfeHxO8PVRDvLuw
+         QMwJhZVt49MZVtAVmzaplRmk9g+P2zxxfLwJQ=
+Received: by 10.204.60.66 with SMTP id o2mr4663521bkh.13.1291551794759; Sun,
+ 05 Dec 2010 04:23:14 -0800 (PST)
+Received: by 10.204.58.71 with HTTP; Sun, 5 Dec 2010 04:23:14 -0800 (PST)
+In-Reply-To: <7vsjycx05o.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162946>
 
-On Sun, Dec 5, 2010 at 12:18 AM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Thiago Farina wrote:
+On Sun, Dec 5, 2010 at 3:24 AM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Thiago Farina <tfransosi@gmail.com> writes:
 >
 >> Signed-off-by: Thiago Farina <tfransosi@gmail.com>
 >
-> I know that the context is part of an effort to make the commit_list
-> functions into something more of a self-contained API, but the
-> reader does not know that. =C2=A0Perhaps you could say some words abo=
-ut
-> that in the change description: what's wrong with the current
-> situation, what context does this change come from, and what positive
-> effect would it have?
+> I really do not like this.
 >
-> Beyond that, I must say I do not think this goes far enough to seem
-> useful. =C2=A0If I wondered what reduce_heads did, wouldn't
-> commit_list_reduce_heads be even more confusing? (ignoring the typo)
->
-> Perhaps a more natural way to proceed would be as follows:
->
-> =C2=A0. first, collect the functions to be treated as a module and
-> =C2=A0 list them in Documentation/technical (in this case, perhaps
-> =C2=A0 api-revision-walking or a new api-commit-list)
->
-What you want here? That I describe the functions in these files? Why
-me? Why not the person who wrote them?
+I don't feel very strong about it. And as I learned from Jonathan, I
+don't care if you will take or not. I think my intention was good, but
+I can't please everybody
 
-> =C2=A0. next, describe their current meaning. =C2=A0If this requires
-> =C2=A0 apologizing for the name,
-Apologize? For what? I don't understand what you mean here.
+I was just trying to put commit_list in a better shape and resemble it
+in a more explicit API.
 
-> that's a good hint that a name=C2=A0 change might be worthwhile
+> The use of type "struct commit_list" to hold the set of parent commit=
+s is
+> incidental; if we had "struct commit_set", we would have written a
+> function with the same purpose, and named it the same "reduce_HEADS".
 >
-> =C2=A0. finally, tweak signatures (names and arguments) based on the
-> =C2=A0 results from step 2 and update the documentation at the same
-> =C2=A0 time.
+> Adding commit_list to the name makes the code harder to read (and typ=
+e)
+> with little added benefit. =C2=A0"LIST"-ness is not the important par=
+t.
 >
-I'd prefer to do just that step.
+> If a function takes a commit_list, named "reduce_HEADS",
 
-> That way, people used to the current functions would at least have
-> some documentation to help them adjust. =C2=A0What do you think?
->
-I think it's a good procedure for someone more familiar with this
-functions to do this. Perhaps, you or Junio?
+What? reduce_HEADS ? HEADS with CAPSLOCK?
