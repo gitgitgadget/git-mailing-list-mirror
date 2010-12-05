@@ -1,82 +1,67 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH] commit: Add commit_list prefix to reduce_heads function.
-Date: Sun, 5 Dec 2010 10:23:14 -0200
-Message-ID: <AANLkTikxibh4QkxzokhBYQ+dMS3W6PkDaDLuqm5qN+6v@mail.gmail.com>
-References: <a3f4bdc2d5f5d13c772a82de9afe2691b8a12863.1291514223.git.tfransosi@gmail.com>
-	<7vsjycx05o.fsf@alter.siamese.dyndns.org>
+From: aleksi.aalto@iki.fi
+Subject: Re: What's cooking in git.git (Dec 2010, #01; Sat, 4)
+Date: Sun, 5 Dec 2010 14:36:01 +0200 (EET)
+Message-ID: <alpine.SOC.2.00.1012051420230.18993@kekkonen.cs.hut.fi>
+References: <7voc90wx36.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 05 13:23:23 2010
+X-From: git-owner@vger.kernel.org Sun Dec 05 13:43:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPDcg-0003oo-Nh
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 13:23:23 +0100
+	id 1PPDvs-0004sk-OY
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 13:43:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755170Ab0LEMXR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Dec 2010 07:23:17 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:62094 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755062Ab0LEMXQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Dec 2010 07:23:16 -0500
-Received: by bwz15 with SMTP id 15so9747045bwz.19
-        for <git@vger.kernel.org>; Sun, 05 Dec 2010 04:23:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=PLsOu7BdafD9SbYKCKdFN+WFq+iukbgX9RpO1EFhUW4=;
-        b=FjNbTxtKSBI4rNXJd+p6IBGunivXi6+XENfNlmPc5hLvXQ88sd6IYlumCEIOeFLl4U
-         i5gw9aSt1Kp0keDPwJ+HOewNxzUhONsBS+HoHOUX6fNJ/vJgHJwmSJLxTirfdWL8NmK9
-         vTmY08L51vkHckYJd7ppmMQdh+9m/3DmpI9I0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=cBpZDFtXOi64gRapP95sDgKcPiezubKHcrmL/W9qEi6aKtu8azQ3HfNHic8NoKI4nb
-         JFMicdDvh98H9xgfv28nG1GzK+l9Zpy1Eea7vUU+IJU1q+0PIgH9pYfeHxO8PVRDvLuw
-         QMwJhZVt49MZVtAVmzaplRmk9g+P2zxxfLwJQ=
-Received: by 10.204.60.66 with SMTP id o2mr4663521bkh.13.1291551794759; Sun,
- 05 Dec 2010 04:23:14 -0800 (PST)
-Received: by 10.204.58.71 with HTTP; Sun, 5 Dec 2010 04:23:14 -0800 (PST)
-In-Reply-To: <7vsjycx05o.fsf@alter.siamese.dyndns.org>
+	id S1755380Ab0LEMnH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Dec 2010 07:43:07 -0500
+Received: from dusk.niksula.hut.fi ([130.233.40.6]:39934 "EHLO
+	mail.niksula.hut.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755356Ab0LEMnG (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Dec 2010 07:43:06 -0500
+X-Greylist: delayed 421 seconds by postgrey-1.27 at vger.kernel.org; Sun, 05 Dec 2010 07:43:06 EST
+Received: by mail.niksula.hut.fi (Postfix, from userid 60001)
+	id EE51974785; Sun,  5 Dec 2010 14:36:02 +0200 (EET)
+X-Spam-Checker-Version: SpamAssassin 3.3.1-niksula20080612 (2010-03-16) on dusk
+X-Spam-Level: 
+X-Spam-Status: No, score=0.0 required=5.0 tests=none autolearn=disabled
+	version=3.3.1-niksula20080612
+X-Spam-Niksula: No
+Received: from kekkonen.cs.hut.fi (kekkonen.cs.hut.fi [130.233.41.50])
+	by mail.niksula.hut.fi (Postfix) with ESMTP id F29ED74783;
+	Sun,  5 Dec 2010 14:36:01 +0200 (EET)
+Received: from localhost (ajaalto@localhost)
+	by kekkonen.cs.hut.fi (8.14.3+Sun/8.14.3/Submit) with ESMTP id oB5Ca1d3026271;
+	Sun, 5 Dec 2010 14:36:01 +0200 (EET)
+X-Authentication-Warning: kekkonen.cs.hut.fi: ajaalto owned process doing -bs
+X-X-Sender: ajaalto@kekkonen.cs.hut.fi
+In-Reply-To: <7voc90wx36.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (SOC 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162947>
 
-On Sun, Dec 5, 2010 at 3:24 AM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Thiago Farina <tfransosi@gmail.com> writes:
+On Sat, 4 Dec 2010, Junio C Hamano wrote:
+> * aa/status-hilite-branch (2010-11-18) 1 commit
+> - status: show branchname with a configurable color
 >
->> Signed-off-by: Thiago Farina <tfransosi@gmail.com>
->
-> I really do not like this.
->
-I don't feel very strong about it. And as I learned from Jonathan, I
-don't care if you will take or not. I think my intention was good, but
-I can't please everybody
+> I am indifferent/uninterested; I don't see anything wrong with it, but I
+> do not find coloring the field particularly useful myself.
 
-I was just trying to put commit_list in a better shape and resemble it
-in a more explicit API.
+The idea for this patch came from my daywork, where I have lately been 
+trying to teach new users effective use of Git. We promote heavy usage of 
+"git status" for new users in order for them to understand what all the 
+basic commands do. A great amount of users fail to notice in which branch 
+they are even when looking at the status message. I think this small tweak 
+could help at least some of such new users without causing considerable 
+harm for more advanced users.
 
-> The use of type "struct commit_list" to hold the set of parent commit=
-s is
-> incidental; if we had "struct commit_set", we would have written a
-> function with the same purpose, and named it the same "reduce_HEADS".
->
-> Adding commit_list to the name makes the code harder to read (and typ=
-e)
-> with little added benefit. =C2=A0"LIST"-ness is not the important par=
-t.
->
-> If a function takes a commit_list, named "reduce_HEADS",
+And as Jeff pointed out, this is already the default beharivour in vim for 
+commit messages. I have always found it quite reasonable.
 
-What? reduce_HEADS ? HEADS with CAPSLOCK?
+:Aga
