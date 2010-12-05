@@ -1,71 +1,103 @@
-From: Patrick Rouleau <pfrouleau@gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2010, #01; Sat, 4)
-Date: Sun, 5 Dec 2010 15:51:58 +0000 (UTC)
-Message-ID: <loom.20101205T162647-790@post.gmane.org>
-References: <7voc90wx36.fsf@alter.siamese.dyndns.org> <alpine.SOC.2.00.1012051420230.18993@kekkonen.cs.hut.fi>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] commit: Add commit_list prefix to reduce_heads function.
+Date: Sun, 5 Dec 2010 11:09:19 -0600
+Message-ID: <20101205170919.GA7913@burratino>
+References: <a3f4bdc2d5f5d13c772a82de9afe2691b8a12863.1291514223.git.tfransosi@gmail.com>
+ <20101205021837.GA24614@burratino>
+ <AANLkTinAT3kotKQTS6eS1SLigNzSp6grAU7WNRbHf3N=@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 05 16:52:25 2010
+Cc: git@vger.kernel.org
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 05 18:09:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPGsz-0004Ke-3Z
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 16:52:25 +0100
+	id 1PPI5w-0002hm-Mp
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 18:09:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756152Ab0LEPwP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Dec 2010 10:52:15 -0500
-Received: from lo.gmane.org ([80.91.229.12]:56599 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755282Ab0LEPwP (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Dec 2010 10:52:15 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PPGsm-0004FP-8x
-	for git@vger.kernel.org; Sun, 05 Dec 2010 16:52:12 +0100
-Received: from modemcable243.80-176-173.mc.videotron.ca ([173.176.80.243])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 05 Dec 2010 16:52:12 +0100
-Received: from pfrouleau by modemcable243.80-176-173.mc.videotron.ca with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sun, 05 Dec 2010 16:52:12 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 173.176.80.243 (Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/534.7 (KHTML, like Gecko) Chrome/7.0.517.44 Safari/534.7)
+	id S1756039Ab0LERJl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Dec 2010 12:09:41 -0500
+Received: from mail-gx0-f180.google.com ([209.85.161.180]:39145 "EHLO
+	mail-gx0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754838Ab0LERJl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Dec 2010 12:09:41 -0500
+Received: by gxk19 with SMTP id 19so6131699gxk.11
+        for <git@vger.kernel.org>; Sun, 05 Dec 2010 09:09:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=d4s2T/TvTc01PftvSsb0d2PR9rBccB7dfBVMC0QlkdE=;
+        b=qaWBetIIqM2fBj1kX/AbQg55UffQXHYso25Gk57aUrcU2zxXHJPdILem86e7fTHiro
+         Uoiu2rstb1FSYx6LuKEZ3HG5hfRxpcalRJjd279/WPkfA70KNn8sK8xI286e9Bn01v/B
+         WAGUgbwwkcPRsHVCyWbrN59MMMb9njax1Y1Js=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ohFLuu4w3mu20GFtbiP+96cX4m8ydEIBMFLwkHAlluduLxHc11e0Purskf3ePz3+MD
+         Jlx0x3+iF/MirJUUjPV01mCJA29w+7z5AnPEvEp6HQlVk2MEJcHWYoNrQqipJb597muK
+         b3dxhCp9F6sApkTPCU6MlDbetJPA/4BAiM1vk=
+Received: by 10.150.134.2 with SMTP id h2mr5720763ybd.132.1291568980425;
+        Sun, 05 Dec 2010 09:09:40 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
+        by mx.google.com with ESMTPS id y11sm2491188yhc.8.2010.12.05.09.09.38
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 05 Dec 2010 09:09:39 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTinAT3kotKQTS6eS1SLigNzSp6grAU7WNRbHf3N=@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162951>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162952>
 
- <aleksi.aalto <at> iki.fi> writes:
+Thiago Farina wrote:
 
-> 
-> On Sat, 4 Dec 2010, Junio C Hamano wrote:
-> > * aa/status-hilite-branch (2010-11-18) 1 commit
-> > - status: show branchname with a configurable color
-> >
-> > I am indifferent/uninterested; I don't see anything wrong with it, but I
-> > do not find coloring the field particularly useful myself.
-> 
-> The idea for this patch came from my daywork, where I have lately been 
-> trying to teach new users effective use of Git. We promote heavy usage of 
-> "git status" for new users in order for them to understand what all the 
-> basic commands do. A great amount of users fail to notice in which branch 
-> they are even when looking at the status message. I think this small tweak 
-> could help at least some of such new users without causing considerable 
-> harm for more advanced users.
+> I think it's a good procedure for someone more familiar with this
+> functions to do this. Perhaps, you or Junio?
 
-I see the same problem at my daywork. 
+If you are not familiar enough with the functions to document them
+(perhaps with help from the list) then yes, renaming them is a bad
+idea.  I am not inclined to do it because I like the current name.
 
-But like others, I'm not sure about the default color. I would opt for green 
-which is the default used by the branch command for highlight the current branch.
+The ideal patch is a great sort of present: first a bug report, then
+the resolution to that bug.  When the patch proper goes awry, at least
+there is the bug report.  I think you are trying to convey a bug but
+you haven't explained it.  Maybe it is
 
-Maybe we can add an empty line after the branch name, to make it stand out a bit 
-more, with or without color?
+ - "The reduce_heads function being used in various contexts, where it
+   is not obvious what it means.  If you add commit_list to the name,
+   then <such and such> becomes obvious.  So I suggest renaming."	or
+
+ - "In my program, I have my _own_ reduce_heads function with
+   different meaning so I cannot easily copy the commit_list functions
+   to use them.  Please make it easier by putting commit_list functions
+   in a well defined namespace."	or
+
+ - "Some code is manipulating commit_lists directly and violating
+   their invariants.  Please make it easier to build a cheat-sheet
+   listing commit_list functions, to translate from
+   bad-field-manipulation-ese to using-the-right-functions-ese."	or
+
+ - "At my office there is a style guide indicating that each function
+   should live in a module with some other functions and be named to
+   indicate so (like perf, with its sched__* etc functions).  The idea
+   is that code with a simple high-level structure tends to be easier
+   to understand and we need to understand the code we use.  Can we
+   start changing the code to fit this style guide, so there is less
+   resistance to using it at my office?"
+
+In a way, these are straw men; sorry about that.  The answer to each
+would be different.  FWIW from my pov the answer to _none_ of these
+would be "sure, let's rename the functions", for different reasons in
+each case.
+
+I do not think this is an atypical example at all.  I would have
+prefered not to spend time on patches that require guessing what
+problem is being solved.
