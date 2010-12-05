@@ -1,56 +1,61 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: What's cooking in git.git (Dec 2010, #01; Sat, 4)
-Date: Sun, 05 Dec 2010 16:00:34 +0100
-Message-ID: <4CFBA912.2080905@drmicha.warpmail.net>
-References: <7voc90wx36.fsf@alter.siamese.dyndns.org>
+From: Yann Dirson <ydirson@free.fr>
+Subject: Missing tags v1.0.1 and v1.0.2 on kernel.org
+Date: Sun, 5 Dec 2010 16:04:16 +0100
+Message-ID: <20101205150416.GC2803@home.lan>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Dec 05 16:00:22 2010
+Content-Type: text/plain; charset=us-ascii
+To: GIT list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Dec 05 16:04:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPG4b-00044j-Vo
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 16:00:22 +0100
+	id 1PPG8b-0006EN-PW
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 16:04:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755155Ab0LEPAD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Dec 2010 10:00:03 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54484 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754777Ab0LEPAC (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 5 Dec 2010 10:00:02 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id F3E7C5FB;
-	Sun,  5 Dec 2010 10:00:00 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Sun, 05 Dec 2010 10:00:01 -0500
-X-Sasl-enc: DrGio4VtbOGaFPNDf59mJVf5VAo1QLALq/YmQ52/9Zxx 1291561200
-Received: from localhost.localdomain (p548586F4.dip0.t-ipconnect.de [84.133.134.244])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 557255E1F6F;
-	Sun,  5 Dec 2010 10:00:00 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
-In-Reply-To: <7voc90wx36.fsf@alter.siamese.dyndns.org>
+	id S1755518Ab0LEPEY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Dec 2010 10:04:24 -0500
+Received: from smtp5-g21.free.fr ([212.27.42.5]:57219 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755282Ab0LEPEX (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Dec 2010 10:04:23 -0500
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 118F3D480C8
+	for <git@vger.kernel.org>; Sun,  5 Dec 2010 16:04:17 +0100 (CET)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1PPG8O-0002sA-NM
+	for git@vger.kernel.org; Sun, 05 Dec 2010 16:04:16 +0100
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162950>
 
-Junio C Hamano venit, vidit, dixit 05.12.2010 07:30:
-...
-> 
-> * mg/cvsimport (2010-11-28) 3 commits
->  - cvsimport.txt: document the mapping between config and options
->  - cvsimport: fix the parsing of uppercase config options
->  - cvsimport: partial whitespace cleanup
-> 
-> I was being lazy and said "Ok" to "cvsimport.capital-r" but luckily other
-> people injected sanity to the discussion.  Weatherbaloon patch sent, but
+When fetching from git://github.com/gitster/git.git in my local repo
+originally cloned from git://git.kernel.org/pub/scm/git/git.git, I
+notice 2 unexpected new tags: v1.0.1 and v1.0.2.
 
-I assume I should try and not read too much into this...
+It looks like those 2 old tags were not pushed to kernel.org:
 
-Michael
+$ git ls-remote origin|grep '1\.0\.[0-4]$'
+f665776185ad074b236c00751d666da7d1977dbe        refs/tags/v1.0.0
+ccefd6e899a861f911052e47eabe4f77c09163ec        refs/tags/v1.0.3
+1e6455d0c3f9ee79c461bd68aafad8b7f8765c8a        refs/tags/v1.0.4
+
+OTOH there are v1.0.0a and v1.0.0b on kernel.org, which match the same
+revs:
+
+$ git rev-parse v1.0.1^{}
+e4e79a217576d24ef4d73b620766f62b155bcd98
+$ git rev-parse v1.0.0a^{}
+e4e79a217576d24ef4d73b620766f62b155bcd98
+$ git rev-parse v1.0.2^{}
+8d712aafd2df3c1f5147a28947f98cefe667cf76
+$ git rev-parse v1.0.0b^{}
+8d712aafd2df3c1f5147a28947f98cefe667cf76
+
+Don't we want those 2 tags on kernel.org too for consistency ?
