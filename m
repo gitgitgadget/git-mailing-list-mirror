@@ -1,287 +1,209 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Status of the svn remote helper project (Dec 2010, #1)
-Date: Sun, 5 Dec 2010 05:37:17 -0600
-Message-ID: <20101205113717.GH4332@burratino>
-References: <20101107112129.GA30042@burratino>
- <20101121063149.GA15449@burratino>
+From: Yann Dirson <ydirson@free.fr>
+Subject: Re: [PATCH v5] generalizing sorted-array handling
+Date: Sun, 5 Dec 2010 13:02:38 +0100
+Message-ID: <20101205120238.GB7466@home.lan>
+References: <1291545247-4151-1-git-send-email-ydirson@altern.org>
+ <20101205104426.GG4332@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	David Barr <david.barr@cordelta.com>,
-	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
-	Tomas Carnecky <tom@dbservice.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 05 12:37:48 2010
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 05 13:02:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPCuZ-0002SH-GE
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 12:37:48 +0100
+	id 1PPDIq-0003yI-AB
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 13:02:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755272Ab0LELhl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Dec 2010 06:37:41 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:64188 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755155Ab0LELhj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Dec 2010 06:37:39 -0500
-Received: by iwn6 with SMTP id 6so2041103iwn.19
-        for <git@vger.kernel.org>; Sun, 05 Dec 2010 03:37:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=2F/k4p7gxB68fZGUpEIFwpz/Z17+5KdjuKFNimuVvw4=;
-        b=SjsMJfk4SocwFirNfa5YKhe2ldHYClVNRFabMvSnJ2v8zGwB0Dmp8b+oDSn4AgA0y3
-         C1xgY9vAskoLodIkonP2F8UDFNetiQQj537yxtZRZfqQ3NAJCueuHFw3NXYDFNagWNc+
-         SKOxMhj15bNVlxpZccUgWEQcKrQjPzvZSpglo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=hocP57SnLX1q6JrJqq5wlXJixuqKNKNNm2874+gGZWDhx3+y0ntDh5Nuwe8BWs4tlo
-         Pkisg32tUblsZleJ8zAswoQSIjWklFeb7iZVBUo4f/tRK+fTzkr4XG+/MbKmZV6Sq8+Z
-         oXKgRmmPRuVDJ8Y8GQuL/S221EqQcX0xtW+gY=
-Received: by 10.231.17.141 with SMTP id s13mr4444096iba.11.1291549056925;
-        Sun, 05 Dec 2010 03:37:36 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
-        by mx.google.com with ESMTPS id gy41sm3833285ibb.23.2010.12.05.03.37.33
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 05 Dec 2010 03:37:35 -0800 (PST)
+	id S1754895Ab0LEMCr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Dec 2010 07:02:47 -0500
+Received: from smtp5-g21.free.fr ([212.27.42.5]:41304 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754462Ab0LEMCq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Dec 2010 07:02:46 -0500
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 9F4FDD48079;
+	Sun,  5 Dec 2010 13:02:39 +0100 (CET)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1PPDIc-0002SD-FV; Sun, 05 Dec 2010 13:02:38 +0100
 Content-Disposition: inline
-In-Reply-To: <20101121063149.GA15449@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20101205104426.GG4332@burratino>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162943>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162944>
 
-It's been a couple of months since I mentioned that it would be
-possible for a simple svn remote helper on top of svn-fe to be usable
-in a couple of weeks.  I still believe a read-only importer is _just_
-within grasp; but there are plenty of tempting and interesting topics
-to work on in the stack below that, too.
+On Sun, Dec 05, 2010 at 04:44:26AM -0600, Jonathan Nieder wrote:
+> Yann Dirson wrote:
+> 
+> > * better API documentation (was previously lacking or plain obsolete)
+> 
+> Thanks!  In general I find it is easiest to read and write
+> documentation out of line for this sort of thing.  That way, even
+> after the documentation grows obsolete it doesn't seem so out of
+> place.
+> 
+> See Documentation/technical/api-strbuf.txt, api-sigchain, and
+> api-allocation-growing for some nice (up-to-date) examples.
 
-That said, the collection of topics cooking is already satisfying.
-Time for cleaning up additional branches for the tree seems short;
-patch series and branches that are ready for wider testing as-is would
-be fantastic (and should be based on a merge of 'master' and as few of
-the topics listed below as possible).
+OK, can do that.
 
-Excluding changes taken from the 'jch' branch, relative to last time
-we have
+> In particular:
+> 
+> > * This API is very verbose, and I'm not happy with that aspect.
+> 
+> Could you give a quick stripped-down usage example?
 
- Makefile                          |    4 +-
- contrib/svn-fe/svn-filter-root.py |  107 ++++++++++++++++++++++++
- contrib/svn-fe/testme.sh          |    4 +-
- fast-import.c                     |  164 ++++++++++++++++++++++++++++++++++---
- t/t9011-svn-da.sh                 |   10 +-
- t/t9300-fast-import.sh            |    6 +-
- test-treap.c                      |   11 ++-
- vcs-svn/repo_tree.c               |    4 +-
- vcs-svn/sliding_window.c          |   11 ++-
- vcs-svn/trp.h                     |    3 +-
- vcs-svn/trp.txt                   |   10 ++-
- 11 files changed, 298 insertions(+), 36 deletions(-)
+Well, patches 2-5 in the series provide good examples - probably
+better seen with the "New version" checkbos in gitk, did not find a
+commandline flag equivalent (is there one ?).
 
-The added fast-import code implements the 'ls' command.
+Patch 4 is probably the simplest example: we use the new macros to
+define the same insert API (except for the "number of element" var,
+which used a non-standard naming scheme here).  Since the lookup API
+was only used inside the insert func, there was no need for a lookup
+wrapper here, so we just declare the generic search+ insert funcs, and
+an insert wrapper.
 
-Most of the changes are one-liners and small cleanups.  The most
-visible change in practice should be the fix for the mysterious
-historical-files-appearing-as-directories bug in repo_tree.
+---------------------------- builtin/pack-objects.c ----------------------------
+index 3cbeb29..887a55c 100644
+@@ -16,6 +16,7 @@
+ #include "list-objects.h"
+ #include "progress.h"
+ #include "refs.h"
++#include "sorted-array.h"
+ 
+ #ifndef NO_PTHREADS
+ #include <pthread.h>
+@@ -871,45 +872,23 @@ static void add_pbase_object(struct tree_desc *tree,
+ 	}
+ }
+ 
++static int unsigned_cmp(unsigned ref, unsigned *elem)
+ {
++	if (ref == *elem)
++		return 0;
++	if (ref < *elem)
++		return -1;
++	return 1;
+ }
++static void unsigned_init(unsigned *elem, unsigned ref)
+ {
++	*elem = ref;
+ }
++declare_sorted_array(static, unsigned, done_pbase_paths);
++declare_gen_binsearch(static, unsigned, done_pbase_path_pos, unsigned);
++declare_gen_sorted_insert(static, unsigned, _check_pbase_path, done_pbase_path_pos, unsigned);
++declare_sorted_array_insert_checkbool(static, check_pbase_path, unsigned, _check_pbase_path,
++				      done_pbase_paths, unsigned_cmp, unsigned_init);
+ 
+ static void add_preferred_base_object(const char *name)
+ {
+@@ -987,7 +966,7 @@ static void cleanup_preferred_base(void)
+ 
+ 	free(done_pbase_paths);
+ 	done_pbase_paths = NULL;
++	done_pbase_paths_nr = done_pbase_paths_alloc = 0;
+ }
+ 
+ static void check_object(struct object_entry *entry)
+----------------------------
 
-As always, a merge of the branches listed below is available as
 
-	git://repo.or.cz/git/jrn.git vcs-svn-pu
+Patch 2 is a more complete example, where the oiginal API used a
+single function with an additional boolean arg to select the
+behaviour.  So here we also define a search wrapper, and this make the
+callsites more explicit.
 
-and individual topic branches are also available in that repository
-under the refs/topics namespace.
+------------------------------ diffcore-rename.c ------------------------------
+index df41be5..a655017 100644
+@@ -5,52 +5,36 @@
+ #include "diff.h"
+ #include "diffcore.h"
+ #include "hash.h"
++#include "sorted-array.h"
+ 
+ /* Table of rename/copy destinations */
+ 
++struct diff_rename_dst {
+ 	struct diff_filespec *two;
+ 	struct diff_filepair *pair;
++};
+ 
++static int rename_dst_cmp(struct diff_filespec *ref_spec, struct diff_rename_dst *elem)
+ {
++	return strcmp(ref_spec->path, elem->two->path);
++}
++static void rename_dst_init(struct diff_rename_dst *elem, struct diff_filespec *ref_spec)
++{
++	elem->two = alloc_filespec(ref_spec->path);
++	fill_filespec(elem->two, ref_spec->sha1, ref_spec->mode);
++	elem->pair = NULL;
+ }
++declare_sorted_array(static, struct diff_rename_dst, rename_dst);
++declare_gen_binsearch(static, struct diff_rename_dst, _locate_rename_dst,
++		      struct diff_filespec *);
++declare_sorted_array_search_elem(static, struct diff_rename_dst, locate_rename_dst,
++				 struct diff_filespec *, _locate_rename_dst,
++				 rename_dst, rename_dst_cmp);
++declare_gen_sorted_insert(static, struct diff_rename_dst, _register_rename_dst,
++			  _locate_rename_dst, struct diff_filespec *);
++declare_sorted_array_insert_checkbool(static, register_rename_dst, struct diff_filespec *,
++				      _register_rename_dst,
++				      rename_dst, rename_dst_cmp, rename_dst_init);
+ 
+ /* Table of rename/copy src files */
+ static struct diff_rename_src {
+@@ -437,7 +421,7 @@ void diffcore_rename(struct diff_options *options)
+ 				 strcmp(options->single_follow, p->two->path))
+ 				continue; /* not interested */
+ 			else
++				register_rename_dst(p->two);
+ 		}
+ 		else if (!DIFF_FILE_VALID(p->two)) {
+ 			/*
+@@ -582,7 +566,7 @@ void diffcore_rename(struct diff_options *options)
+ 			 * not been turned into a rename/copy already.
+ 			 */
+ 			struct diff_rename_dst *dst =
++				locate_rename_dst(p->two);
+ 			if (dst && dst->pair) {
+ 				diff_q(&outq, dst->pair);
+ 				pair_to_free = p;
+@@ -613,7 +597,7 @@ void diffcore_rename(struct diff_options *options)
+ 			if (DIFF_PAIR_BROKEN(p)) {
+ 				/* broken delete */
+ 				struct diff_rename_dst *dst =
++					locate_rename_dst(p->one);
+ 				if (dst && dst->pair)
+ 					/* counterpart is now rename/copy */
+ 					pair_to_free = p;
+------------------------------
 
---------------------------------------------------
-[Cooking]
-* jn/svndiff0 (2010-11-06) 24 commits
-- vcs-svn: Allow deltas to copy from preimage
-- vcs-svn: Reject deltas that read past end of preimage
-- vcs-svn: Let deltas use data from postimage
-- vcs-svn: Reject deltas that do not consume all inline data
-- vcs-svn: Check declared number of output bytes
-- vcs-svn: Implement copyfrom_data delta instruction
-- vcs-svn: Read instructions from deltas
-- vcs-svn: Read inline data from deltas
-- vcs-svn: Read the preimage while applying deltas
-- vcs-svn: Skeleton of an svn delta parser
-- compat: helper for detecting unsigned overflow
-- vcs-svn: Learn to check for SVN\0 magic
-- vcs-svn: Learn to parse variable-length integers
-- vcs-svn: Add code to maintain a sliding view of a file
-- vcs-svn: Allow character-oriented input
-- vcs-svn: Allow input errors to be detected early
-- vcs-svn: Let callers peek ahead to find stream end
-- vcs-svn: Add binary-safe read() function
-- vcs-svn: Improve support for reading large files
-- vcs-svn: Make buffer_skip_bytes() report partial reads
-- vcs-svn: Teach line_buffer to handle multiple input files
-- vcs-svn: Collect line_buffer data in a struct
-- vcs-svn: Replace buffer_read_string() memory pool with a strbuf
-- vcs-svn: Eliminate global byte_buffer[] array
+> [...]
+> > Adding "simple" API variants that would call all the necessary stuff
+> > would help code readability, but adding yet more entry points seems a
+> > dubious approach.
+> 
+> On the contrary, simple API variants don't sound so bad to me,
+> once the fundamentals are in good shape.
 
-Well tested and should be ready for wide use.
+The problem is with the number of combinations.  We already have
+potentially 6 wrappers (not all of which are defined yet), with:
 
-Is there some tool (a hex editor?) that can be used to easily read
-and write deltas?  The "printf and test against 'svnadmin load'"
-method is a bit time confusing.
+* operation: search | insert
+* return-value semantic: check | checkbool | elem
 
-* db/recognize-v3 (2010-11-20) 2 commits
-- vcs-svn: Allow simple v3 dumps (no deltas yet)
-- vcs-svn: Error out for v3 dumps
+If we add to these basic building-blocks:
 
-A bugfix and the framework for a feature.  Probably the bugfix
-should be pushed toward 'maint'.
+* wrapper variants that declare the generic func: we double the count
+* insert-wrapper variants that declare the generic search: *1.5
 
-* db/prop-delta (2010-11-20) 16 commits
-- vcs-svn: Simplify handling of deleted properties
-- vcs-svn: Implement Prop-delta handling
-- vcs-svn: Sharpen parsing of property lines
-- vcs-svn: Split off function for handling of individual properties
-- vcs-svn: Make source easier to read on small screens
-- vcs-svn: More dump format sanity checks
-- vcs-svn: Reject path nodes without Node-action
-- vcs-svn: Delay read of per-path properties
-- vcs-svn: Combine repo_replace and repo_modify functions
-- vcs-svn: Replace = Delete + Add
-- vcs-svn: handle_node: Handle deletion case early
-- vcs-svn: Use mark to indicate nodes with included text
-- vcs-svn: Unclutter handle_node by introducing have_props var
-- vcs-svn: Eliminate node_ctx.mark global
-- vcs-svn: Eliminate node_ctx.srcRev global
-- vcs-svn: Check for errors from open()
-(this branch uses db/recognize-v3.)
-
-All but the tip commit are from 'pu'.
-
-* db/fast-import-blob-access (2010-12-04) 5 commits
-- fast-import: add 'ls' command
-- fast-import: Allow cat-blob requests at arbitrary points in stream
-- fast-import: let importers retrieve blobs
-- fast-import: clarify documentation of "feature" command
-- fast-import: stricter parsing of integer options
-
-A proof of concept for the protocol targetting another repository
-format (hg?) would be a great comfort.
-
-Synchronization overhead seems to be a big problem.  If someone can
-use "top -b" output to produce a nice timechart explaining this then
-I would be happy to take a look.
-
-* db/fast-import-object-reuse (2010-11-24) 1 commit
-- fast-import: insert new object entries at start of hash bucket
-
-A speedup.  Acked by Shawn, taken from 'pu'.
-
-* jn/fast-import-ondemand-checkpoint (2010-11-24) 1 commit
-- fast-import: treat SIGUSR1 as a request to access objects early
-
-Taken from 'pu'.
-
-* jn/svn-fe-makefile (2010-12-04) 1 commit
-- Makefile: dependencies for vcs-svn tests
-
-Seems to have been forgotten?  Simplified commit message, otherwise
-unchanged.
-
-* xx/thinner-wrapper-svndiff0 (2010-11-07) 1 commit
-- svn-fe: stop linking to libz and libxdiff
-(this branch uses jn/svndiff0 and jn/thinner-wrapper.)
-
-Simplification.  jn/thinner-wrapper is part of 'jch'.
-
-* rr/svnfe-tests-no-perl (2010-11-23) 1 commit
-- t9010 (svn-fe): Eliminate dependency on svn perl bindings
-
->From 'pu'.
-
-* db/text-delta (2010-11-20) 10 commits
-- fixup! vcs-svn: tweak sliding window code to tolerate excessive
-  readahead
-- fixup! svn-fe: Test script for handling of dumps with --deltas
-- svn-fe: Test script for handling of dumps with --deltas
-- vcs-svn: Implement text-delta handling
-- vcs-svn: Teach line_buffer about temporary files
-- vcs-svn: tweak sliding window code to tolerate excessive readahead
-- vcs-svn: Let caller set up sliding window for delta preimage
-- vcs-svn: Read delta preimage from file descriptor
-- vcs-svn: Introduce fd_buffer routines
-- vcs-svn: Introduce repo_read_path to check the content at a path
-- vcs-svn: Internal fast_export_save_blob helper
-- Merge branch 'db/fast-import-blob-access' (early part) into
-  db/text-delta
-- Merge branch 'jn/svndiff0' into db/text-delta
-(this branch uses db/recognize-v3, db/prop-delta, db/fast-import-blob-access,
-and jn/svndiff0.)
-
-It works!
-
-* db/svn-extract-branches (2010-11-20) 1 commit
-- svn-fe: Script to remap svn history
-
-Very rough but let's merge it so it doesn't get forgotten.
-
-* jn/maint-svn-fe (2010-12-05) 2 commits
-- vcs-svn: fix intermittent repo_tree corruption
-- treap: make treap_insert return inserted node
-
-Fixes an old bug.  Hoping for feedback or an ack from someone familiar
-svn-fe internals; afterwards, would fast-track to maint.
-
----------------------------------------------------
-[Graduated]
-* jn/thinner-wrapper (2010-11-06) 7 commits
- - Remove pack file handling dependency from wrapper.o
- - pack-objects: mark file-local variable static
- - wrapper: give zlib wrappers their own translation unit
- - strbuf: move strbuf_branchname to sha1_name.c
- - path helpers: move git_mkstemp* to wrapper.c
- - wrapper: move odb_* to environment.c
- - wrapper: move xmmap() to sha1_file.c
-
-Part of 'jch' now.
-
---------------------------------------------------
-[Out of tree, stalled]
-
-* tc/remote-helper-usability: $gmane/157860
- . Register new packs after the remote helper is done fetching
- . Properly record history of the notes ref
- . Fix ls-remote output when displaying impure refs
- . Add git-remote-svn
- . Introduce the git fast-import-helper
- . Rename get_mode() to decode_tree_mode() and export it
- . Allow the transport fetch command to add additional refs
- . Allow more than one keepfile in the transport
- . Remote helper: accept ':<value> <name>' as a response to 'list'
-
-The fourth-from-top seems a bit hard to review.  If it really is
-necessary to introduce a separate program with a separate interface,
-maybe a compile-time flag to choose between them would help?
-
-* rr/remote-helper: http://github.com/artagnon/git
- . remote-svn: Write in fetch functionality
- . run-command: Protect the FD 3 from being grabbed
- . remote-svn: Build a pipeline for the import using svnrdump
- . run-command: Extend child_process to include a backchannel FD
- . Allow the transport fetch command to add additional refs
- . Remote helper: accept ':<value> <name>' as a response to 'list'
- . test-svn-fe: Allow for a dumpfile on stdin
- . contrib/svn-fe: Fast script to remap svn history
- . Add Tom's remote helper for reference
- . Add a stubby remote-svn remote helper
- . Add a correct svndiff applier
-
-Work in progress, waiting on lower levels to be more functional
-(in particular, svn-fe does not support incremental imports yet).
-
-* sb/svn-fe-example: $gmane/159054
+... which gives something like 18 wrappers.  And this number will
+still raise by 6 each time we feel the need for a new return-value
+semantic.
