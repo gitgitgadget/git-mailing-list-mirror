@@ -1,76 +1,116 @@
 From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH v5] generalizing sorted-array handling
-Date: Sun,  5 Dec 2010 11:34:01 +0100
-Message-ID: <1291545247-4151-1-git-send-email-ydirson@altern.org>
+Subject: [PATCH 6/6] [WIP] subvert sorted-array to replace binary-search in unpack-objects.
+Date: Sun,  5 Dec 2010 11:34:07 +0100
+Message-ID: <1291545247-4151-7-git-send-email-ydirson@altern.org>
+References: <1291545247-4151-1-git-send-email-ydirson@altern.org>
+Cc: Yann Dirson <ydirson@altern.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 05 11:34:48 2010
+X-From: git-owner@vger.kernel.org Sun Dec 05 11:34:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPBvb-0002k7-GE
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 11:34:47 +0100
+	id 1PPBvd-0002k7-0l
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 11:34:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753914Ab0LEKeZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Dec 2010 05:34:25 -0500
-Received: from smtp5-g21.free.fr ([212.27.42.5]:40097 "EHLO smtp5-g21.free.fr"
+	id S1754518Ab0LEKee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Dec 2010 05:34:34 -0500
+Received: from smtp5-g21.free.fr ([212.27.42.5]:40181 "EHLO smtp5-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753003Ab0LEKeY (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Dec 2010 05:34:24 -0500
+	id S1753003Ab0LEKe2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Dec 2010 05:34:28 -0500
 Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 991ACD4812B
-	for <git@vger.kernel.org>; Sun,  5 Dec 2010 11:34:19 +0100 (CET)
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 2FDFDD480BF;
+	Sun,  5 Dec 2010 11:34:21 +0100 (CET)
 Received: from yann by home.lan with local (Exim 4.72)
 	(envelope-from <ydirson@free.fr>)
-	id 1PPBv8-00015t-E6
-	for git@vger.kernel.org; Sun, 05 Dec 2010 11:34:18 +0100
+	id 1PPBv8-00016A-P5; Sun, 05 Dec 2010 11:34:18 +0100
 X-Mailer: git-send-email 1.7.2.3
+In-Reply-To: <1291545247-4151-1-git-send-email-ydirson@altern.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162935>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162936>
 
-Changes from v4:
+Signed-off-by: Yann Dirson <ydirson@altern.org>
+---
+ builtin/unpack-objects.c |   41 ++++++++++++++++++++++++++---------------
+ 1 files changed, 26 insertions(+), 15 deletions(-)
 
-* better API documentation (was previously lacking or plain obsolete)
-* added one more wrapper (used by yet-to-be-resent bulk-* series
-
-Notes on current API:
-
-* The macro names are a bit heavy-weight.  Better ideas welcome.
-
-* This API is very verbose, and I'm not happy with that aspect.
-
-It could be made less so, eg. causing insert wrappers to auto-declare
-the required generic insert func, and causing the latter auto-declare
-the required generic search func.  That would cause duplication of the
-generic search func in many cases.
-
-The duplication problem would not be an issue if we add an automatic
-call to declare_gen_sorted_insert() in declare_sorted_array_insert_*,
-but we would loose the symetry with the search API.
-
-Adding "simple" API variants that would call all the necessary stuff
-would help code readability, but adding yet more entry points seems a
-dubious approach.
-
-Or is that just the "use cpp for templating" just inadequate here ?
-
-* could gain a dealloc API, to minimize the explicit use of the _nr
-  and _alloc vars
-
-
-The following binary-search occurences were not converted:
-
-* read-cache.c::index_name_pos has widely-used API with 2 low-coupled
-  cmp/init params: sorted-array could be generalized at the cost of
-  using stdarg, but is it worth it ?
-
-* pack-revindex.c::find_pack_revindex is a bit special and needs more
-  thought
-
-* cache-tree.c::subtree_pos and sha1_file::find_pack_entry_one too
-
-* sha1_lookup.c stuff probably too special
+diff --git a/builtin/unpack-objects.c b/builtin/unpack-objects.c
+index f63973c..b0c15e6 100644
+--- a/builtin/unpack-objects.c
++++ b/builtin/unpack-objects.c
+@@ -11,6 +11,7 @@
+ #include "progress.h"
+ #include "decorate.h"
+ #include "fsck.h"
++#include "sorted-array.h"
+ 
+ static int dry_run, quiet, recover, has_errors, strict;
+ static const char unpack_usage[] = "git unpack-objects [-n] [-q] [-r] [--strict] < pack-file";
+@@ -157,7 +158,25 @@ struct obj_info {
+ #define FLAG_OPEN (1u<<20)
+ #define FLAG_WRITTEN (1u<<21)
+ 
+-static struct obj_info *obj_list;
++/*
++ * FIXME: obj_info is a sorted array, but we read it as a whole, we
++ * don't need insertion features.  This allows us to abuse unused
++ * obj_info_nr later as a means of specifying an upper bound for
++ * binary search.  obj_info_alloc shall be eliminated by the compiler
++ * as unused.
++ */
++static int obj_info_cmp(off_t ref, struct obj_info *elem)
++{
++	if (ref == elem->offset)
++		return 0;
++	if (ref < elem->offset)
++		return -1;
++	return 1;
++}
++declare_sorted_array(static, struct obj_info, obj_list);
++declare_gen_binsearch(static, struct obj_info, _obj_list_check, off_t);
++declare_sorted_array_search_check(static, obj_list_check, off_t, _obj_list_check,
++				  obj_list, obj_info_cmp);
+ static unsigned nr_objects;
+ 
+ /*
+@@ -356,7 +375,7 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
+ 		unsigned base_found = 0;
+ 		unsigned char *pack, c;
+ 		off_t base_offset;
+-		unsigned lo, mid, hi;
++		int pos;
+ 
+ 		pack = fill(1);
+ 		c = *pack;
+@@ -380,19 +399,11 @@ static void unpack_delta_entry(enum object_type type, unsigned long delta_size,
+ 			free(delta_data);
+ 			return;
+ 		}
+-		lo = 0;
+-		hi = nr;
+-		while (lo < hi) {
+-			mid = (lo + hi)/2;
+-			if (base_offset < obj_list[mid].offset) {
+-				hi = mid;
+-			} else if (base_offset > obj_list[mid].offset) {
+-				lo = mid + 1;
+-			} else {
+-				hashcpy(base_sha1, obj_list[mid].sha1);
+-				base_found = !is_null_sha1(base_sha1);
+-				break;
+-			}
++		obj_list_nr = nr; /* kludge to bound the search */
++		pos = obj_list_check(base_offset);
++		if (pos >= 0) {
++			hashcpy(base_sha1, obj_list[pos].sha1);
++			base_found = !is_null_sha1(base_sha1);
+ 		}
+ 		if (!base_found) {
+ 			/*
+-- 
+1.7.2.3
