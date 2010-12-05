@@ -1,133 +1,152 @@
 From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 3/6] Convert diffcore-rename's rename_src to the new sorted-array API.
-Date: Sun,  5 Dec 2010 11:34:04 +0100
-Message-ID: <1291545247-4151-4-git-send-email-ydirson@altern.org>
+Subject: [PATCH 2/6] Convert diffcore-rename's rename_dst to the new sorted-array API.
+Date: Sun,  5 Dec 2010 11:34:03 +0100
+Message-ID: <1291545247-4151-3-git-send-email-ydirson@altern.org>
 References: <1291545247-4151-1-git-send-email-ydirson@altern.org>
 Cc: Yann Dirson <ydirson@altern.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 05 11:34:51 2010
+X-From: git-owner@vger.kernel.org Sun Dec 05 11:34:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPBve-0002k7-2G
+	id 1PPBve-0002k7-Ig
 	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 11:34:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754532Ab0LEKef (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Dec 2010 05:34:35 -0500
-Received: from smtp5-g21.free.fr ([212.27.42.5]:40287 "EHLO smtp5-g21.free.fr"
+	id S1754449Ab0LEKek (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Dec 2010 05:34:40 -0500
+Received: from smtp5-g21.free.fr ([212.27.42.5]:40269 "EHLO smtp5-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754427Ab0LEKec (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Dec 2010 05:34:32 -0500
+	id S1754493Ab0LEKee (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Dec 2010 05:34:34 -0500
 Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 72F98D4804C;
-	Sun,  5 Dec 2010 11:34:26 +0100 (CET)
+	by smtp5-g21.free.fr (Postfix) with ESMTP id EE0EBD4814A;
+	Sun,  5 Dec 2010 11:34:28 +0100 (CET)
 Received: from yann by home.lan with local (Exim 4.72)
 	(envelope-from <ydirson@free.fr>)
-	id 1PPBv8-000161-Ik; Sun, 05 Dec 2010 11:34:18 +0100
+	id 1PPBv8-00015y-HA; Sun, 05 Dec 2010 11:34:18 +0100
 X-Mailer: git-send-email 1.7.2.3
 In-Reply-To: <1291545247-4151-1-git-send-email-ydirson@altern.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162939>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162940>
 
-There was no compelling reason to pass separately two members of a
-single struct to the insert function.  That's a happy coincidence.
+The sorted-array API splits search and insert into two separated
+functions, which makes the caller code more clear.
 
 Signed-off-by: Yann Dirson <ydirson@altern.org>
 ---
- diffcore-rename.c |   57 ++++++++++++++++++----------------------------------
- 1 files changed, 20 insertions(+), 37 deletions(-)
+ diffcore-rename.c |   66 ++++++++++++++++++++---------------------------------
+ 1 files changed, 25 insertions(+), 41 deletions(-)
 
 diff --git a/diffcore-rename.c b/diffcore-rename.c
-index a655017..7e35a82 100644
+index df41be5..a655017 100644
 --- a/diffcore-rename.c
 +++ b/diffcore-rename.c
-@@ -37,46 +37,29 @@ declare_sorted_array_insert_checkbool(static, register_rename_dst, struct diff_f
- 				      rename_dst, rename_dst_cmp, rename_dst_init);
+@@ -5,52 +5,36 @@
+ #include "diff.h"
+ #include "diffcore.h"
+ #include "hash.h"
++#include "sorted-array.h"
  
- /* Table of rename/copy src files */
--static struct diff_rename_src {
-+
-+struct diff_rename_src {
- 	struct diff_filespec *one;
- 	unsigned short score; /* to remember the break score */
--} *rename_src;
--static int rename_src_nr, rename_src_alloc;
+ /* Table of rename/copy destinations */
+ 
+-static struct diff_rename_dst {
++struct diff_rename_dst {
+ 	struct diff_filespec *two;
+ 	struct diff_filepair *pair;
+-} *rename_dst;
+-static int rename_dst_nr, rename_dst_alloc;
 +};
  
--static struct diff_rename_src *register_rename_src(struct diff_filespec *one,
--						   unsigned short score)
-+static int rename_src_cmp(struct diff_filepair *ref_pair, struct diff_rename_src *elem)
+-static struct diff_rename_dst *locate_rename_dst(struct diff_filespec *two,
+-						 int insert_ok)
++static int rename_dst_cmp(struct diff_filespec *ref_spec, struct diff_rename_dst *elem)
  {
 -	int first, last;
 -
 -	first = 0;
--	last = rename_src_nr;
+-	last = rename_dst_nr;
 -	while (last > first) {
 -		int next = (last + first) >> 1;
--		struct diff_rename_src *src = &(rename_src[next]);
--		int cmp = strcmp(one->path, src->one->path);
+-		struct diff_rename_dst *dst = &(rename_dst[next]);
+-		int cmp = strcmp(two->path, dst->two->path);
 -		if (!cmp)
--			return src;
+-			return dst;
 -		if (cmp < 0) {
 -			last = next;
 -			continue;
 -		}
 -		first = next+1;
 -	}
--
+-	/* not found */
+-	if (!insert_ok)
+-		return NULL;
 -	/* insert to make it at "first" */
--	if (rename_src_alloc <= rename_src_nr) {
--		rename_src_alloc = alloc_nr(rename_src_alloc);
--		rename_src = xrealloc(rename_src,
--				      rename_src_alloc * sizeof(*rename_src));
+-	if (rename_dst_alloc <= rename_dst_nr) {
+-		rename_dst_alloc = alloc_nr(rename_dst_alloc);
+-		rename_dst = xrealloc(rename_dst,
+-				      rename_dst_alloc * sizeof(*rename_dst));
 -	}
--	rename_src_nr++;
--	if (first < rename_src_nr)
--		memmove(rename_src + first + 1, rename_src + first,
--			(rename_src_nr - first - 1) * sizeof(*rename_src));
--	rename_src[first].one = one;
--	rename_src[first].score = score;
--	return &(rename_src[first]);
-+	return strcmp(ref_pair->one->path, elem->one->path);
+-	rename_dst_nr++;
+-	if (first < rename_dst_nr)
+-		memmove(rename_dst + first + 1, rename_dst + first,
+-			(rename_dst_nr - first - 1) * sizeof(*rename_dst));
+-	rename_dst[first].two = alloc_filespec(two->path);
+-	fill_filespec(rename_dst[first].two, two->sha1, two->mode);
+-	rename_dst[first].pair = NULL;
+-	return &(rename_dst[first]);
++	return strcmp(ref_spec->path, elem->two->path);
 +}
-+static void rename_src_init(struct diff_rename_src *elem, struct diff_filepair *ref_pair)
++static void rename_dst_init(struct diff_rename_dst *elem, struct diff_filespec *ref_spec)
 +{
-+	elem->one = ref_pair->one;
-+	elem->score = ref_pair->score;
++	elem->two = alloc_filespec(ref_spec->path);
++	fill_filespec(elem->two, ref_spec->sha1, ref_spec->mode);
++	elem->pair = NULL;
  }
-+declare_sorted_array(static, struct diff_rename_src, rename_src);
-+declare_gen_binsearch(static, struct diff_rename_src, _locate_rename_src,
-+		      struct diff_filepair *);
-+declare_gen_sorted_insert(static, struct diff_rename_src, _register_rename_src,
-+			  _locate_rename_src, struct diff_filepair *);
-+declare_sorted_array_insert_checkbool(static, register_rename_src, struct diff_filepair *,
-+				      _register_rename_src,
-+				      rename_src, rename_src_cmp, rename_src_init);
++declare_sorted_array(static, struct diff_rename_dst, rename_dst);
++declare_gen_binsearch(static, struct diff_rename_dst, _locate_rename_dst,
++		      struct diff_filespec *);
++declare_sorted_array_search_elem(static, struct diff_rename_dst, locate_rename_dst,
++				 struct diff_filespec *, _locate_rename_dst,
++				 rename_dst, rename_dst_cmp);
++declare_gen_sorted_insert(static, struct diff_rename_dst, _register_rename_dst,
++			  _locate_rename_dst, struct diff_filespec *);
++declare_sorted_array_insert_checkbool(static, register_rename_dst, struct diff_filespec *,
++				      _register_rename_dst,
++				      rename_dst, rename_dst_cmp, rename_dst_init);
  
- static int basename_same(struct diff_filespec *src, struct diff_filespec *dst)
- {
-@@ -433,7 +416,7 @@ void diffcore_rename(struct diff_options *options)
- 			 */
- 			if (p->broken_pair && !p->score)
- 				p->one->rename_used++;
--			register_rename_src(p->one, p->score);
-+			register_rename_src(p);
+ /* Table of rename/copy src files */
+ static struct diff_rename_src {
+@@ -437,7 +421,7 @@ void diffcore_rename(struct diff_options *options)
+ 				 strcmp(options->single_follow, p->two->path))
+ 				continue; /* not interested */
+ 			else
+-				locate_rename_dst(p->two, 1);
++				register_rename_dst(p->two);
  		}
- 		else if (detect_rename == DIFF_DETECT_COPY) {
+ 		else if (!DIFF_FILE_VALID(p->two)) {
  			/*
-@@ -441,7 +424,7 @@ void diffcore_rename(struct diff_options *options)
- 			 * one, to indicate ourselves as a user.
+@@ -582,7 +566,7 @@ void diffcore_rename(struct diff_options *options)
+ 			 * not been turned into a rename/copy already.
  			 */
- 			p->one->rename_used++;
--			register_rename_src(p->one, p->score);
-+			register_rename_src(p);
- 		}
- 	}
- 	if (rename_dst_nr == 0 || rename_src_nr == 0)
+ 			struct diff_rename_dst *dst =
+-				locate_rename_dst(p->two, 0);
++				locate_rename_dst(p->two);
+ 			if (dst && dst->pair) {
+ 				diff_q(&outq, dst->pair);
+ 				pair_to_free = p;
+@@ -613,7 +597,7 @@ void diffcore_rename(struct diff_options *options)
+ 			if (DIFF_PAIR_BROKEN(p)) {
+ 				/* broken delete */
+ 				struct diff_rename_dst *dst =
+-					locate_rename_dst(p->one, 0);
++					locate_rename_dst(p->one);
+ 				if (dst && dst->pair)
+ 					/* counterpart is now rename/copy */
+ 					pair_to_free = p;
 -- 
 1.7.2.3
