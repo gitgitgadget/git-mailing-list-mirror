@@ -1,152 +1,137 @@
 From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 2/6] Convert diffcore-rename's rename_dst to the new sorted-array API.
-Date: Sun,  5 Dec 2010 11:34:03 +0100
-Message-ID: <1291545247-4151-3-git-send-email-ydirson@altern.org>
+Subject: [PATCH 5/6] Use sorted-array API for commit.c's commit_graft.
+Date: Sun,  5 Dec 2010 11:34:06 +0100
+Message-ID: <1291545247-4151-6-git-send-email-ydirson@altern.org>
 References: <1291545247-4151-1-git-send-email-ydirson@altern.org>
 Cc: Yann Dirson <ydirson@altern.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 05 11:34:52 2010
+X-From: git-owner@vger.kernel.org Sun Dec 05 11:34:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPBve-0002k7-Ig
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 11:34:50 +0100
+	id 1PPBvc-0002k7-Gk
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 11:34:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754449Ab0LEKek (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Dec 2010 05:34:40 -0500
-Received: from smtp5-g21.free.fr ([212.27.42.5]:40269 "EHLO smtp5-g21.free.fr"
+	id S1754353Ab0LEKea (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Dec 2010 05:34:30 -0500
+Received: from smtp5-g21.free.fr ([212.27.42.5]:40210 "EHLO smtp5-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754493Ab0LEKee (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Dec 2010 05:34:34 -0500
+	id S1754126Ab0LEKe3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Dec 2010 05:34:29 -0500
 Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id EE0EBD4814A;
-	Sun,  5 Dec 2010 11:34:28 +0100 (CET)
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 1062BD480DD;
+	Sun,  5 Dec 2010 11:34:22 +0100 (CET)
 Received: from yann by home.lan with local (Exim 4.72)
 	(envelope-from <ydirson@free.fr>)
-	id 1PPBv8-00015y-HA; Sun, 05 Dec 2010 11:34:18 +0100
+	id 1PPBv8-000167-N7; Sun, 05 Dec 2010 11:34:18 +0100
 X-Mailer: git-send-email 1.7.2.3
 In-Reply-To: <1291545247-4151-1-git-send-email-ydirson@altern.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162941>
 
-The sorted-array API splits search and insert into two separated
-functions, which makes the caller code more clear.
+Factorizing code fixes off-by-one error in the duplicated code (caused
+mostly harmless anticipated growing of the array).
 
 Signed-off-by: Yann Dirson <ydirson@altern.org>
 ---
- diffcore-rename.c |   66 ++++++++++++++++++++---------------------------------
- 1 files changed, 25 insertions(+), 41 deletions(-)
+ commit.c |   62 +++++++++++++++++++++++++++-----------------------------------
+ 1 files changed, 27 insertions(+), 35 deletions(-)
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index df41be5..a655017 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -5,52 +5,36 @@
+diff --git a/commit.c b/commit.c
+index 2d9265d..b7aeee4 100644
+--- a/commit.c
++++ b/commit.c
+@@ -6,6 +6,7 @@
  #include "diff.h"
- #include "diffcore.h"
- #include "hash.h"
+ #include "revision.h"
+ #include "notes.h"
 +#include "sorted-array.h"
  
- /* Table of rename/copy destinations */
+ int save_commit_buffer = 1;
  
--static struct diff_rename_dst {
-+struct diff_rename_dst {
- 	struct diff_filespec *two;
- 	struct diff_filepair *pair;
--} *rename_dst;
--static int rename_dst_nr, rename_dst_alloc;
-+};
- 
--static struct diff_rename_dst *locate_rename_dst(struct diff_filespec *two,
--						 int insert_ok)
-+static int rename_dst_cmp(struct diff_filespec *ref_spec, struct diff_rename_dst *elem)
- {
--	int first, last;
--
--	first = 0;
--	last = rename_dst_nr;
--	while (last > first) {
--		int next = (last + first) >> 1;
--		struct diff_rename_dst *dst = &(rename_dst[next]);
--		int cmp = strcmp(two->path, dst->two->path);
--		if (!cmp)
--			return dst;
--		if (cmp < 0) {
--			last = next;
--			continue;
--		}
--		first = next+1;
--	}
--	/* not found */
--	if (!insert_ok)
--		return NULL;
--	/* insert to make it at "first" */
--	if (rename_dst_alloc <= rename_dst_nr) {
--		rename_dst_alloc = alloc_nr(rename_dst_alloc);
--		rename_dst = xrealloc(rename_dst,
--				      rename_dst_alloc * sizeof(*rename_dst));
--	}
--	rename_dst_nr++;
--	if (first < rename_dst_nr)
--		memmove(rename_dst + first + 1, rename_dst + first,
--			(rename_dst_nr - first - 1) * sizeof(*rename_dst));
--	rename_dst[first].two = alloc_filespec(two->path);
--	fill_filespec(rename_dst[first].two, two->sha1, two->mode);
--	rename_dst[first].pair = NULL;
--	return &(rename_dst[first]);
-+	return strcmp(ref_spec->path, elem->two->path);
-+}
-+static void rename_dst_init(struct diff_rename_dst *elem, struct diff_filespec *ref_spec)
-+{
-+	elem->two = alloc_filespec(ref_spec->path);
-+	fill_filespec(elem->two, ref_spec->sha1, ref_spec->mode);
-+	elem->pair = NULL;
+@@ -76,33 +77,37 @@ static unsigned long parse_commit_date(const char *buf, const char *tail)
+ 	return strtoul(dateptr, NULL, 10);
  }
-+declare_sorted_array(static, struct diff_rename_dst, rename_dst);
-+declare_gen_binsearch(static, struct diff_rename_dst, _locate_rename_dst,
-+		      struct diff_filespec *);
-+declare_sorted_array_search_elem(static, struct diff_rename_dst, locate_rename_dst,
-+				 struct diff_filespec *, _locate_rename_dst,
-+				 rename_dst, rename_dst_cmp);
-+declare_gen_sorted_insert(static, struct diff_rename_dst, _register_rename_dst,
-+			  _locate_rename_dst, struct diff_filespec *);
-+declare_sorted_array_insert_checkbool(static, register_rename_dst, struct diff_filespec *,
-+				      _register_rename_dst,
-+				      rename_dst, rename_dst_cmp, rename_dst_init);
  
- /* Table of rename/copy src files */
- static struct diff_rename_src {
-@@ -437,7 +421,7 @@ void diffcore_rename(struct diff_options *options)
- 				 strcmp(options->single_follow, p->two->path))
- 				continue; /* not interested */
- 			else
--				locate_rename_dst(p->two, 1);
-+				register_rename_dst(p->two);
+-static struct commit_graft **commit_graft;
+-static int commit_graft_alloc, commit_graft_nr;
+-
+-static int commit_graft_pos(const unsigned char *sha1)
++static int commit_graft_cmp(const unsigned char *ref_sha1, struct commit_graft **elem)
+ {
+-	int lo, hi;
+-	lo = 0;
+-	hi = commit_graft_nr;
+-	while (lo < hi) {
+-		int mi = (lo + hi) / 2;
+-		struct commit_graft *graft = commit_graft[mi];
+-		int cmp = hashcmp(sha1, graft->sha1);
+-		if (!cmp)
+-			return mi;
+-		if (cmp < 0)
+-			hi = mi;
+-		else
+-			lo = mi + 1;
+-	}
+-	return -lo - 1;
++	return hashcmp(ref_sha1, (*elem)->sha1);
+ }
++declare_sorted_array(static, struct commit_graft *, commit_graft);
++declare_gen_binsearch(static, struct commit_graft *, _commit_graft_pos,
++		      const unsigned char *);
++declare_sorted_array_search_check(static, commit_graft_pos, const unsigned char *,
++				  _commit_graft_pos, commit_graft, commit_graft_cmp);
+ 
++// FIXME: do we want to/can we remove INITTYPE from gen_binsearch ?
++static int commit_graft_cmp2(struct commit_graft *ref_graft, struct commit_graft **elem)
++{
++	return commit_graft_cmp(ref_graft->sha1, elem);
++}
++declare_gen_binsearch(static, struct commit_graft *, _commit_graft_pos2,
++		      struct commit_graft *);
++static void commit_graft_init(struct commit_graft **elem, struct commit_graft *ref_graft)
++{
++	*elem = ref_graft;
++}
++declare_gen_sorted_insert(static, struct commit_graft *, _register_commit_graft0,
++			  _commit_graft_pos2, struct commit_graft *)
++declare_sorted_array_insert_check(static, register_commit_graft0, struct commit_graft *,
++				  _register_commit_graft0, commit_graft,
++				  commit_graft_cmp2, commit_graft_init);
+ int register_commit_graft(struct commit_graft *graft, int ignore_dups)
+ {
+-	int pos = commit_graft_pos(graft->sha1);
++	int pos = register_commit_graft0(graft);
+ 
+-	if (0 <= pos) {
++	if (pos >= 0) {
+ 		if (ignore_dups)
+ 			free(graft);
+ 		else {
+@@ -111,19 +116,6 @@ int register_commit_graft(struct commit_graft *graft, int ignore_dups)
  		}
- 		else if (!DIFF_FILE_VALID(p->two)) {
- 			/*
-@@ -582,7 +566,7 @@ void diffcore_rename(struct diff_options *options)
- 			 * not been turned into a rename/copy already.
- 			 */
- 			struct diff_rename_dst *dst =
--				locate_rename_dst(p->two, 0);
-+				locate_rename_dst(p->two);
- 			if (dst && dst->pair) {
- 				diff_q(&outq, dst->pair);
- 				pair_to_free = p;
-@@ -613,7 +597,7 @@ void diffcore_rename(struct diff_options *options)
- 			if (DIFF_PAIR_BROKEN(p)) {
- 				/* broken delete */
- 				struct diff_rename_dst *dst =
--					locate_rename_dst(p->one, 0);
-+					locate_rename_dst(p->one);
- 				if (dst && dst->pair)
- 					/* counterpart is now rename/copy */
- 					pair_to_free = p;
+ 		return 1;
+ 	}
+-	pos = -pos - 1;
+-	if (commit_graft_alloc <= ++commit_graft_nr) {
+-		commit_graft_alloc = alloc_nr(commit_graft_alloc);
+-		commit_graft = xrealloc(commit_graft,
+-					sizeof(*commit_graft) *
+-					commit_graft_alloc);
+-	}
+-	if (pos < commit_graft_nr)
+-		memmove(commit_graft + pos + 1,
+-			commit_graft + pos,
+-			(commit_graft_nr - pos - 1) *
+-			sizeof(*commit_graft));
+-	commit_graft[pos] = graft;
+ 	return 0;
+ }
+ 
 -- 
 1.7.2.3
