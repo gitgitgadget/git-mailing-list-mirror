@@ -1,7 +1,7 @@
 From: Yann Dirson <ydirson@altern.org>
-Subject: [PATCH 1/6] Introduce sorted-array binary-search function.
-Date: Sun,  5 Dec 2010 11:34:02 +0100
-Message-ID: <1291545247-4151-2-git-send-email-ydirson@altern.org>
+Subject: [PATCH 3/6] Convert diffcore-rename's rename_src to the new sorted-array API.
+Date: Sun,  5 Dec 2010 11:34:04 +0100
+Message-ID: <1291545247-4151-4-git-send-email-ydirson@altern.org>
 References: <1291545247-4151-1-git-send-email-ydirson@altern.org>
 Cc: Yann Dirson <ydirson@altern.org>
 To: git@vger.kernel.org
@@ -11,210 +11,123 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPBvc-0002k7-0P
-	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 11:34:48 +0100
+	id 1PPBve-0002k7-2G
+	for gcvg-git-2@lo.gmane.org; Sun, 05 Dec 2010 11:34:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754253Ab0LEKe2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Dec 2010 05:34:28 -0500
-Received: from smtp5-g21.free.fr ([212.27.42.5]:40118 "EHLO smtp5-g21.free.fr"
+	id S1754532Ab0LEKef (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 5 Dec 2010 05:34:35 -0500
+Received: from smtp5-g21.free.fr ([212.27.42.5]:40287 "EHLO smtp5-g21.free.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753066Ab0LEKeZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Dec 2010 05:34:25 -0500
+	id S1754427Ab0LEKec (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 5 Dec 2010 05:34:32 -0500
 Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 99D5CD48156;
-	Sun,  5 Dec 2010 11:34:19 +0100 (CET)
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 72F98D4804C;
+	Sun,  5 Dec 2010 11:34:26 +0100 (CET)
 Received: from yann by home.lan with local (Exim 4.72)
 	(envelope-from <ydirson@free.fr>)
-	id 1PPBv8-00015v-Fi; Sun, 05 Dec 2010 11:34:18 +0100
+	id 1PPBv8-000161-Ik; Sun, 05 Dec 2010 11:34:18 +0100
 X-Mailer: git-send-email 1.7.2.3
 In-Reply-To: <1291545247-4151-1-git-send-email-ydirson@altern.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162938>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162939>
 
-We use a cpp-based template mechanism to declare the array and its
-management data, as well as a search function.
-Thanks to Jonathan Nieder for this design idea.
+There was no compelling reason to pass separately two members of a
+single struct to the insert function.  That's a happy coincidence.
 
 Signed-off-by: Yann Dirson <ydirson@altern.org>
 ---
- Makefile       |    1 +
- sorted-array.h |  153 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 154 insertions(+), 0 deletions(-)
- create mode 100644 sorted-array.h
+ diffcore-rename.c |   57 ++++++++++++++++++----------------------------------
+ 1 files changed, 20 insertions(+), 37 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 1d42413..ced07df 100644
---- a/Makefile
-+++ b/Makefile
-@@ -539,6 +539,7 @@ LIB_H += run-command.h
- LIB_H += sha1-lookup.h
- LIB_H += sideband.h
- LIB_H += sigchain.h
-+LIB_H += sorted-array.h
- LIB_H += strbuf.h
- LIB_H += string-list.h
- LIB_H += submodule.h
-diff --git a/sorted-array.h b/sorted-array.h
-new file mode 100644
-index 0000000..dc4be87
---- /dev/null
-+++ b/sorted-array.h
-@@ -0,0 +1,153 @@
-+#ifndef SORTED_ARRAY_H_
-+#define SORTED_ARRAY_H_
+diff --git a/diffcore-rename.c b/diffcore-rename.c
+index a655017..7e35a82 100644
+--- a/diffcore-rename.c
++++ b/diffcore-rename.c
+@@ -37,46 +37,29 @@ declare_sorted_array_insert_checkbool(static, register_rename_dst, struct diff_f
+ 				      rename_dst, rename_dst_cmp, rename_dst_init);
+ 
+ /* Table of rename/copy src files */
+-static struct diff_rename_src {
 +
-+/*
-+ * Declare an array of given type, together with its management
-+ * variable holding currently-allocated number of elements and number
-+ * of elements effectively used.
-+ */
-+#define declare_sorted_array(MAYBESTATIC,ELEMTYPE,LIST)			\
-+MAYBESTATIC ELEMTYPE *LIST;						\
-+MAYBESTATIC int LIST##_nr, LIST##_alloc;
-+
-+/*
-+ * Declare FUNCNAME as a binary-search function on sorted-arrays of
-+ * ELEMTYPE elements, search term being be of type INITTYPE.
-+ *
-+ * The resulting function can act on any ELEMTYPE* list, using any
-+ * suitable comparison function taking an INITTYPE argument and a
-+ * pointer to an ELEMTYPE argument, and returning an int with the same
-+ * meaning as strcmp.  If the element is found, it returns the index
-+ * in the list where it was found; if it is not found, it returns
-+ * (-pos - 1), where "pos" is the index in the list where the element
-+ * would be inserted.
-+ *
-+ * See below for macros to define more specific functions tailored to
-+ * a given list, and with output suitable to various usages.
-+ */
-+#define declare_gen_binsearch(MAYBESTATIC,ELEMTYPE,FUNCNAME,INITTYPE)	\
-+MAYBESTATIC int FUNCNAME(						\
-+	ELEMTYPE *list, int list_nr,					\
-+	int(*cmp_func)(INITTYPE ref, ELEMTYPE *elem),			\
-+	INITTYPE data)							\
-+{									\
-+	int lo, hi;							\
-+									\
-+	lo = 0;								\
-+	hi = list_nr;							\
-+	while (hi > lo) {						\
-+		int mid = (hi + lo) >> 1;				\
-+		int cmp = cmp_func(data, list + mid);			\
-+		if (!cmp)						\
-+			return mid;					\
-+		if (cmp < 0)						\
-+			hi = mid;					\
-+		else							\
-+			lo = mid + 1;					\
-+	}								\
-+	return -lo - 1;							\
++struct diff_rename_src {
+ 	struct diff_filespec *one;
+ 	unsigned short score; /* to remember the break score */
+-} *rename_src;
+-static int rename_src_nr, rename_src_alloc;
++};
+ 
+-static struct diff_rename_src *register_rename_src(struct diff_filespec *one,
+-						   unsigned short score)
++static int rename_src_cmp(struct diff_filepair *ref_pair, struct diff_rename_src *elem)
+ {
+-	int first, last;
+-
+-	first = 0;
+-	last = rename_src_nr;
+-	while (last > first) {
+-		int next = (last + first) >> 1;
+-		struct diff_rename_src *src = &(rename_src[next]);
+-		int cmp = strcmp(one->path, src->one->path);
+-		if (!cmp)
+-			return src;
+-		if (cmp < 0) {
+-			last = next;
+-			continue;
+-		}
+-		first = next+1;
+-	}
+-
+-	/* insert to make it at "first" */
+-	if (rename_src_alloc <= rename_src_nr) {
+-		rename_src_alloc = alloc_nr(rename_src_alloc);
+-		rename_src = xrealloc(rename_src,
+-				      rename_src_alloc * sizeof(*rename_src));
+-	}
+-	rename_src_nr++;
+-	if (first < rename_src_nr)
+-		memmove(rename_src + first + 1, rename_src + first,
+-			(rename_src_nr - first - 1) * sizeof(*rename_src));
+-	rename_src[first].one = one;
+-	rename_src[first].score = score;
+-	return &(rename_src[first]);
++	return strcmp(ref_pair->one->path, elem->one->path);
 +}
-+
-+/*
-+ * Declare FUNCNAME as a function to search for an element in
-+ * sorted-arrays of ELEMTYPE elements, inserting it if it was not
-+ * found, search term being be of type INITTYPE.  The position where
-+ * to insert will be given found by SEARCHFUNC, which must be
-+ * compatible with the search functions defined by
-+ * declare_gen_binsearch().
-+ *
-+ * The resulting function takes the same arguments as similar search
-+ * functions, with the addition of a function to initialize the
-+ * newly-allocated element from the search term.
-+ */
-+#define declare_gen_sorted_insert(MAYBESTATIC,ELEMTYPE,FUNCNAME,SEARCHFUNC,INITTYPE) \
-+MAYBESTATIC int FUNCNAME(						\
-+	ELEMTYPE **list_p, int *list_nr_p, int *list_alloc_p,		\
-+	int(*cmp_func)(INITTYPE ref, ELEMTYPE *elem),			\
-+	void(*init_func)(ELEMTYPE *elem, INITTYPE init),		\
-+	INITTYPE data)							\
-+{									\
-+	int pos = SEARCHFUNC(*list_p, *list_nr_p, cmp_func, data);	\
-+	if (pos >= 0) 							\
-+		return pos;						\
-+	/* not found */							\
-+	pos = -pos - 1;							\
-+	/* insert to make it at "pos" */				\
-+	if (*list_alloc_p <= *list_nr_p) {				\
-+		(*list_alloc_p) = alloc_nr((*list_alloc_p));		\
-+		*list_p = xrealloc(*list_p,				\
-+				   (*list_alloc_p) * sizeof(**list_p)); \
-+	}								\
-+	(*list_nr_p)++;							\
-+	if (pos < *list_nr_p)						\
-+		memmove(*list_p + pos + 1, *list_p + pos,		\
-+			(*list_nr_p - pos - 1) * sizeof(**list_p));	\
-+	init_func(&(*list_p)[pos], data);				\
-+	return -pos - 1;						\
-+}
-+
-+/*
-+ * Returns the position of the element if found pre-existing in the
-+ * list, or if not found, -pos-1 where pos is where the element would
-+ * have been inserted.
-+ */
-+#define declare_sorted_array_search_check(MAYBESTATIC,FUNCNAME,INITTYPE,GENSEARCH,LIST,CMP) \
-+MAYBESTATIC int FUNCNAME(INITTYPE data)					\
-+{									\
-+	return GENSEARCH(LIST, LIST##_nr, CMP, data);			\
-+}
-+
-+/*
-+ * Returns the position of the element if found pre-existing in the
-+ * list, or if not found inserts it, and returns -pos-1 where pos is
-+ * where the element was inserted.
-+ */
-+#define declare_sorted_array_insert_check(MAYBESTATIC,FUNCNAME,INITTYPE,GENINSERT,LIST,CMP,INIT) \
-+MAYBESTATIC int FUNCNAME(INITTYPE data)					\
-+{									\
-+	return GENINSERT(&LIST, &LIST##_nr, &LIST##_alloc,		\
-+			 CMP, INIT, data);				\
-+}
-+
-+/*
-+ * Insert, and just tell whether the searched element was pre-existing
-+ * in the list or not.
-+ */
-+#define declare_sorted_array_insert_checkbool(MAYBESTATIC,FUNCNAME,INITTYPE,GENINSERT,LIST,CMP,INIT) \
-+MAYBESTATIC int FUNCNAME(INITTYPE data)					\
-+{									\
-+	int idx = GENINSERT(&LIST, &LIST##_nr, &LIST##_alloc,		\
-+			    CMP, INIT, data);				\
-+	if (idx < 0)							\
-+		return 0;						\
-+	return 1;							\
-+}
-+
-+/*
-+ * Search for element.  Returns address of the element found, or NULL
-+ * if not found.
-+ */
-+#define declare_sorted_array_search_elem(MAYBESTATIC,ELEMTYPE,FUNCNAME,INITTYPE,GENSEARCH,LIST,CMP) \
-+MAYBESTATIC ELEMTYPE *FUNCNAME(INITTYPE data)				\
-+{									\
-+	int idx = GENSEARCH(LIST, LIST##_nr, CMP, data);		\
-+	if (idx < 0)							\
-+		return NULL;						\
-+	return &(LIST[idx]);						\
-+}
-+
-+/*
-+ * Insert element if not there already.  Returns address of the
-+ * element found or newly-inserted.
-+ */
-+#define declare_sorted_array_insert_elem(MAYBESTATIC,ELEMTYPE,FUNCNAME,INITTYPE,GENINSERT,LIST,CMP,INIT) \
-+MAYBESTATIC ELEMTYPE *FUNCNAME(INITTYPE data)				\
-+{									\
-+	int idx = GENINSERT(&LIST, &LIST##_nr, &LIST##_alloc,		\
-+			    CMP, INIT, data);				\
-+	if (idx < 0)							\
-+		idx = -idx - 1;						\
-+	return &(LIST[idx]);						\
-+}
-+
-+#endif
++static void rename_src_init(struct diff_rename_src *elem, struct diff_filepair *ref_pair)
++{
++	elem->one = ref_pair->one;
++	elem->score = ref_pair->score;
+ }
++declare_sorted_array(static, struct diff_rename_src, rename_src);
++declare_gen_binsearch(static, struct diff_rename_src, _locate_rename_src,
++		      struct diff_filepair *);
++declare_gen_sorted_insert(static, struct diff_rename_src, _register_rename_src,
++			  _locate_rename_src, struct diff_filepair *);
++declare_sorted_array_insert_checkbool(static, register_rename_src, struct diff_filepair *,
++				      _register_rename_src,
++				      rename_src, rename_src_cmp, rename_src_init);
+ 
+ static int basename_same(struct diff_filespec *src, struct diff_filespec *dst)
+ {
+@@ -433,7 +416,7 @@ void diffcore_rename(struct diff_options *options)
+ 			 */
+ 			if (p->broken_pair && !p->score)
+ 				p->one->rename_used++;
+-			register_rename_src(p->one, p->score);
++			register_rename_src(p);
+ 		}
+ 		else if (detect_rename == DIFF_DETECT_COPY) {
+ 			/*
+@@ -441,7 +424,7 @@ void diffcore_rename(struct diff_options *options)
+ 			 * one, to indicate ourselves as a user.
+ 			 */
+ 			p->one->rename_used++;
+-			register_rename_src(p->one, p->score);
++			register_rename_src(p);
+ 		}
+ 	}
+ 	if (rename_dst_nr == 0 || rename_src_nr == 0)
 -- 
 1.7.2.3
