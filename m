@@ -1,125 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.3.3
-Date: Mon, 06 Dec 2010 07:28:13 -0800
-Message-ID: <7vy682syya.fsf@alter.siamese.dyndns.org>
-References: <7vk4jrppeu.fsf@alter.siamese.dyndns.org>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: What's cooking in git.git (Dec 2010, #01; Sat, 4)
+Date: Mon, 6 Dec 2010 13:39:27 -0200
+Message-ID: <AANLkTikVfXxJU3bOEFh3kSpwA=95EhzPAfhVYJ-Oi0Zd@mail.gmail.com>
+References: <7voc90wx36.fsf@alter.siamese.dyndns.org>
+	<4CFBA912.2080905@drmicha.warpmail.net>
+	<7v4oasvvao.fsf@alter.siamese.dyndns.org>
+	<4CFCA4E6.30209@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Mon Dec 06 16:29:00 2010
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Mon Dec 06 16:39:37 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1PPczr-0001u1-Gz
-	for glk-linux-kernel-3@lo.gmane.org; Mon, 06 Dec 2010 16:28:59 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1PPdA8-0007GU-Hr
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 16:39:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753399Ab0LFP2z (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Mon, 6 Dec 2010 10:28:55 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47435 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750837Ab0LFP2x (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Mon, 6 Dec 2010 10:28:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B16EA2B12;
-	Mon,  6 Dec 2010 10:29:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:in-reply-to:message-id:references:mime-version
-	:content-type; s=sasl; bh=x35R6VvXp03lGyv1p7Vj99b5zPw=; b=JeqbpT
-	ADnbgS0lRLanLr4t0ZSZuxFmeLy7/4dlYg4Nbs/KdcbZgW7t/zIVR7dF2Sn1IcgL
-	WSNw9ns/8q3yri1GtLylPSucPneiDNaNQ4ANalx/ySd11zr3x+jXKnCvoWOAK2KY
-	u6D9h50lYaZ9LAB0QEHiECKFN38Bo5ibQ/LkU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:in-reply-to:message-id:references:mime-version
-	:content-type; q=dns; s=sasl; b=Es4Z9Nu8wWqffVSkCab86eqUGgIDbDXT
-	XoDyaiU6piQ6G0k1tjUD2Ncw52wMGqMc59yIMoKyiQgmxHLO/LoALqFaQxyzGZpQ
-	U9OYCsHg60AY49KeMKKNQY23v8YdI3goM+ZSd7A23+yIQ4h5fMO80CkGKif5brmv
-	Dxq1ODtzOSs=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7AA1C2B0D;
-	Mon,  6 Dec 2010 10:29:11 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7E5622AF3; Mon,  6 Dec 2010
- 10:28:39 -0500 (EST)
-In-Reply-To: <7vk4jrppeu.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Thu\, 02 Dec 2010 18\:21\:13 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 910969DA-014D-11E0-8469-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1753206Ab0LFPja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Dec 2010 10:39:30 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56983 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750837Ab0LFPj3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Dec 2010 10:39:29 -0500
+Received: by fxm20 with SMTP id 20so4298490fxm.19
+        for <git@vger.kernel.org>; Mon, 06 Dec 2010 07:39:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=TiQmaZFBLWFnPh5dLvTpZMoi1nchaii/ieKFITj2G4U=;
+        b=xg5s6xV2OpBw0lnL3R+ZiEn9477/yHjPuq4MaxXGoix3M0KnRUofZr1pneMbKRXLaW
+         64zCjKYWFYj9Ckv0OJoFP1/dMom1jgylh6uLdXVNhsgR1gQ74EwRN+23iQQiBwKMkLKS
+         nDI8GDLHZgS06HalzhLt/tIodbSGHYsLUmO3Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=k7sJdbyDIxC2s2teMXQK00uW6qTCiWzzWj6mxNPlsGJmOSD4jUDvYofFh2Vi5rVdgI
+         QO4L7ZZC3lNUdA/pEh6KYX+gaESdGM1DLp1VgNlvX6R8z4xINg3i2A45jgyi+Wqn/E7w
+         w3KMlRd6U8BangXXmCEYyJCXcyFqv2AOh3DPk=
+Received: by 10.223.122.132 with SMTP id l4mr5712530far.21.1291649968446; Mon,
+ 06 Dec 2010 07:39:28 -0800 (PST)
+Received: by 10.204.58.71 with HTTP; Mon, 6 Dec 2010 07:39:27 -0800 (PST)
+In-Reply-To: <4CFCA4E6.30209@drmicha.warpmail.net>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162995>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162996>
 
-The latest maintenance release Git 1.7.3.3 is available at the
-usual places:
+On Mon, Dec 6, 2010 at 6:55 AM, Michael J Gruber
+<git@drmicha.warpmail.net> wrote:
+> Exactly, and you're doing a good job of it.
+Yeah, he does a good a job. :)
 
-  http://www.kernel.org/pub/software/scm/git/
+> It can lead to the impression (on the contributors' side) that even simple patches are
+> difficult to "get in", and can lead to frustration, of course.
 
-  git-1.7.3.3.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.7.3.3.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.7.3.3.tar.{gz,bz2}		(preformatted docs)
+This resumes some of my frustrations here, and maybe the other
+contributors here too. So is not just me that has this impression.
+Hope the experience can be improved in future.
 
-The RPM binary packages for a few architectures are found in:
-
-  RPMS/$arch/git-*-1.7.3.3-1.fc11.$arch.rpm	(RPM)
-
-
-
-Git v1.7.3.3 Release Notes
-==========================
-
-In addition to the usual fixes, this release also includes support for
-the new "add.ignoreErrors" name given to the existing "add.ignore-errors"
-configuration variable.
-
-The next version, Git 1.7.4, and future versions, will support both
-old and incorrect name and the new corrected name, but without this
-backport, users who want to use the new name "add.ignoreErrors" in
-their repositories cannot use older versions of Git.
-
-Fixes since v1.7.3.2
---------------------
-
- * "git apply" segfaulted when a bogus input is fed to it.
-
- * Running "git cherry-pick --ff" on a root commit segfaulted.
-
- * "diff", "blame" and friends incorrectly applied textconv filters to
-   symlinks.
-
- * Highlighting of whitespace breakage in "diff" output was showing
-   incorrect amount of whitespaces when blank-at-eol is set and the line
-   consisted only of whitespaces and a TAB.
-
- * "diff" was overly inefficient when trying to find the line to use for
-   the function header (i.e. equivalent to --show-c-function of GNU diff).
-
- * "git imap-send" depends on libcrypto but our build rule relied on the
-   linker to implicitly link it via libssl, which was wrong.
-
- * "git merge-file" can be called from within a subdirectory now.
-
- * "git repack -f" expanded and recompressed non-delta objects in the
-   existing pack, which was wasteful.  Use new "-F" option if you really
-   want to (e.g. when changing the pack.compression level).
-
- * "git rev-list --format="...%x00..." incorrectly chopped its output
-   at NUL.
-
- * "git send-email" did not correctly remove duplicate mail addresses from
-   the Cc: header that appear on the To: header.
-
- * The completion script (in contrib/completion) ignored lightweight tags
-   in __git_ps1().
-
- * "git-blame" mode (in contrib/emacs) didn't say (require 'format-spec)
-   even though it depends on it; it didn't work with Emacs 22 or older
-   unless Gnus is used.
-
- * "git-p4" (in contrib/) did not correctly handle deleted files.
-
-Other minor fixes and documentation updates are also included.
+> But it also ensures that we don't have even more work later on, trying to work
+> around a half-thought-through earlier change.
+>
+And this is also true.
