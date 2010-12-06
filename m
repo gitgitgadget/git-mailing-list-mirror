@@ -1,96 +1,85 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: git-gui: commit message box doesn't respond to enter (only return)
-Date: Mon, 06 Dec 2010 20:55:45 +0000
-Message-ID: <87mxoiy626.fsf@fox.patthoyts.tk>
-References: <20101126170956.25856.63131.reportbug@alsuren-thinkpad.cbg.collabora.co.uk>
-	<20101126203855.GA23258@burratino>
-	<20101126232825.GE3264@localhost.localdomain>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git diff --summary only seems to work when combined with --stat
+Date: Mon, 6 Dec 2010 15:03:04 -0600
+Message-ID: <20101206210304.GA9735@burratino>
+References: <AANLkTimCAy8kcQaKNaxz4UJp2ZB=_HeRMmeaQ5ZHNV4g@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	David Laban <alsuren+debbugs@gmail.com>
-To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Mon Dec 06 22:01:05 2010
+Cc: Git <git@vger.kernel.org>
+To: demerphq <demerphq@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 06 22:03:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPiBD-00040P-Jq
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 22:01:03 +0100
+	id 1PPiDP-0005Bt-RB
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 22:03:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753743Ab0LFVA5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Dec 2010 16:00:57 -0500
-Received: from smtp-out5.blueyonder.co.uk ([195.188.213.8]:34671 "EHLO
-	smtp-out5.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753709Ab0LFVA5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Dec 2010 16:00:57 -0500
-Received: from [172.23.170.147] (helo=anti-virus03-10)
-	by smtp-out5.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1PPiB0-0000vV-Q4; Mon, 06 Dec 2010 21:00:52 +0000
-Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
-	by asmtp-out6.blueyonder.co.uk with esmtpa (Exim 4.52)
-	id 1PPi66-0005xc-Lm; Mon, 06 Dec 2010 20:55:46 +0000
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 8FE0F218F6; Mon,  6 Dec 2010 20:55:45 +0000 (GMT)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <20101126232825.GE3264@localhost.localdomain> (Konstantin
-	Khomoutov's message of "Sat, 27 Nov 2010 02:28:25 +0300")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1752926Ab0LFVDP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Dec 2010 16:03:15 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:45208 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752049Ab0LFVDO (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Dec 2010 16:03:14 -0500
+Received: by wyb28 with SMTP id 28so12465438wyb.19
+        for <git@vger.kernel.org>; Mon, 06 Dec 2010 13:03:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=fH5C/sFxVFJvi7z+mwQ9cVYm9BypC7olXlPH6BL9xUk=;
+        b=aLewnVtKUa4eOUHqFg37QpYOaBwHHma9XhNrb9WkVJKiSbb7XHZmFIghLFIUfK43LK
+         DQBuGNvD0p0Vt4Y9X8e1bFkeGoPT8phO3afgpskAecxkHwCmjYvyO+Xmj1PH8PPBS3DF
+         nCwDhzLk/vdLm+qzQJhqo9+3iws6DMM5+MvIg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=bhgbi4F/pRWiI+/DGqWSRraQDcyOKnOziRVBu0t7RTO7XBwSPBtAblpY/JTKVK5b3t
+         BuVo68BS3fXbtKIW8xiSO1QN62CE+58HmpPO2dvkhKDzIByyFLRBES1AvZDpguAmkMSQ
+         yc+2Uxw3Y4TRhYKhsMXmGHpx42Epbtw4IQGss=
+Received: by 10.216.30.65 with SMTP id j43mr5577701wea.20.1291669392833;
+        Mon, 06 Dec 2010 13:03:12 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
+        by mx.google.com with ESMTPS id e12sm2578527wer.36.2010.12.06.13.03.10
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 06 Dec 2010 13:03:11 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTimCAy8kcQaKNaxz4UJp2ZB=_HeRMmeaQ5ZHNV4g@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163021>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163022>
 
-Konstantin Khomoutov <flatworm@users.sourceforge.net> writes:
+Hi Yves,
 
->On Fri, Nov 26, 2010 at 02:38:55PM -0600, Jonathan Nieder wrote:
->
->> David Laban wrote at http://bugs.debian.org/605041:
->> 
->> > Package: git-gui
->> > Version: 1:1.7.2.3-2
->> > Severity: minor
->> >
->> > If I click into the messagebox and hit enter, nothing happens.
->> >
->> > This is annoying because if I'm adding a new paragraph to my commit message, 
->> > I will often do <click> <enter><enter> <start typing as normal>
->> >
->> > Don't ask me why I do this. I think enter is a lighter/easier to press
->> > key than return, and is also on the path that my hand takes between the mouse
->> > and the rest of the keyboard.
->> >
->> > I have also provisionally reported the following bug in tk, but I feel like
->> > a bit of a n00b for doing so.
->> >
->> > http://sf.net/tracker/?func=detail&aid=3119824&group_id=12997&atid=112997
->> 
->> I can't reproduce this because this laptop does not have a distinct
->> "numpad enter" key.
->I've tested it on Debian Squeeze and added another comment on the
->upstream bug report. In short: KP_Enter is not bound to any action in
->Tk text widgets in X11, at least in 8.5.9.
->
->But git-gui can be trivially patched to support this; that would be a
->one-lineer. So if it is desired and will be accepted, I could prepare a
->patch.
->
+demerphq wrote:
 
-I've no problem with that. On unix the messagebox bindings are applied
-directly to the dialog window (.__tk__messagebox) and it does include
-Dialog in the bindtags so you could use
- bind Dialog <Key-KP_Enter> { .... }
-except that might affect other dialogs too. That might not be a
-problem. On Windows the messagebox is native so the bindings there are
-whatever are standard.
+> It seems like the --summary option only works in combination --stat.
+> 
+> It doesn't seem to work if I use it by itself, nor in combination with
+> --name-status or --num-stat. And depending on the order, it either
+> does nothing, or causes a usage note.
 
--- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+It is tricky, but as you noticed --summary is not actually about the
+diffstat.  --summary affects the output summarizing new files and
+renamed files.
+
+Example:
+
+	$ git diff --summary v1.7.2..v1.7.3
+	delete mode 100644 Documentation/RelNotes-1.5.0.1.txt
+	delete mode 100644 Documentation/RelNotes-1.5.0.2.txt
+	[...]
+
+> $ git diff --name-status --sumary HEAD^
+> usage: git diff <options> <rev>{0,2} -- <path>*
+
+There is an 'm' missing here. :)
+
+Hope that helps,
+Jonathan
