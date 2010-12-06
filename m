@@ -1,195 +1,369 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH jn/svn-fe] vcs-svn: Allow change nodes for root of tree (/)
-Date: Mon, 6 Dec 2010 16:19:32 -0600
-Message-ID: <20101206221931.GA13401@burratino>
-References: <20101118050023.GA14861@burratino>
- <20101120004525.GA17445@burratino>
- <20101120005334.GL17445@burratino>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: =?UTF-8?q?=5BPATCH=2006/24=5D=20gitweb/lib=20-=20Simple=20output=20capture=20by=20redirecting=20STDOUT?=
+Date: Tue,  7 Dec 2010 00:10:51 +0100
+Message-ID: <1291677069-6559-7-git-send-email-jnareb@gmail.com>
+References: <1291677069-6559-1-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	David Barr <david.barr@cordelta.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
+	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	demerphq <demerphq@gmail.com>,
+	Aevar Arnfjord Bjarmason <avarab@gmail.com>,
+	Thomas Adam <thomas@xteddy.org>,
+	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 06 23:19:54 2010
+X-From: git-owner@vger.kernel.org Tue Dec 07 00:12:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPjPW-0000uE-7o
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 23:19:54 +0100
+	id 1PPkE0-0008Ec-SU
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 00:12:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753839Ab0LFWTt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Dec 2010 17:19:49 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:60907 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753617Ab0LFWTs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Dec 2010 17:19:48 -0500
-Received: by wyb28 with SMTP id 28so12543753wyb.19
-        for <git@vger.kernel.org>; Mon, 06 Dec 2010 14:19:46 -0800 (PST)
+	id S1752423Ab0LFXL7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Dec 2010 18:11:59 -0500
+Received: from mail-ew0-f45.google.com ([209.85.215.45]:50271 "EHLO
+	mail-ew0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752138Ab0LFXL6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Dec 2010 18:11:58 -0500
+Received: by ewy10 with SMTP id 10so7581892ewy.4
+        for <git@vger.kernel.org>; Mon, 06 Dec 2010 15:11:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=t2t1kamBrdXNNTrJTQY/yxrW4u4EvvMXsbkDnTph6Po=;
-        b=VORiwyeHjCvOIgM1OyH/rxwrzbpvPsaxqp8oGN9IDAojco+Xjr6iYz1VlXKsVnpcfd
-         y2sLPLlPCEayd1lrCO6Pa6yVDMZY7XJHD5v8gsNmkQRE6o4EgoC13jkor//DIpQYTvta
-         vTjNW7BQJRe+WQqxDAP9XgIrHQgQvJk7Z+mfM=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=D59iOyZwNpjv8uYnNTdJLYO0F2tn8N7BwnGo8l1ammM=;
+        b=p3NSh0LhBYdNT3vsfdl6HirO+e845U8qpinNO/J6gik7G6tPZCPQb8Jdj/LacfZdvL
+         19HCSNoLgksKj0ODjqsfeRsDn/6y9Oi+jd1uadx2gSCI7Vdx91pDAxaAntIXL/87xMnC
+         PYPMDfB6XpHcAdX3n0Ansnmb5soeL97cHYWH0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ibpysek58hoW4k1oQ6hannYfVRzNc7XqFm+r00g7s3B6FCefV6MKIGDp2m0F/jKBLm
-         cINl7Tmta4DUQcOGPf6gT6EtzNoBWnGkOSyvgalc2LdHpP5wbsvKRFSWhm+TY8katJlA
-         +eW2gB2NCqgcwhl7gLJUkVUKMl4n70sUFVegI=
-Received: by 10.227.148.19 with SMTP id n19mr6424032wbv.175.1291673986791;
-        Mon, 06 Dec 2010 14:19:46 -0800 (PST)
-Received: from burratino ([68.255.109.73])
-        by mx.google.com with ESMTPS id h29sm3781435wbc.15.2010.12.06.14.19.43
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=n5MvTo3zMW3Lgk9iIJDu69KI2FKYWOnxXPNBRm9leLg/oc1jPTIq324lqt/XgXERLQ
+         g0+riFfdMZoeipdXafNhQdZEYKn50qekxlidjCHhIXz3lOyaO4CQLhDRyDYYSBEJxPoG
+         ZvfOiqzy0WouUwpMKjoLwC7kxOocVWzZyQX1A=
+Received: by 10.213.32.6 with SMTP id a6mr149824ebd.31.1291677117227;
+        Mon, 06 Dec 2010 15:11:57 -0800 (PST)
+Received: from localhost.localdomain (abwg200.neoplus.adsl.tpnet.pl [83.8.230.200])
+        by mx.google.com with ESMTPS id y5sm5190626eeh.22.2010.12.06.15.11.55
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 06 Dec 2010 14:19:45 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20101120005334.GL17445@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        Mon, 06 Dec 2010 15:11:56 -0800 (PST)
+X-Mailer: git-send-email 1.7.3
+In-Reply-To: <1291677069-6559-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163033>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163034>
 
-It is not uncommon for a svn repository to include change records for
-properties at the top level of the tracked tree:
+Add GitwebCache::Capture::Simple package, which captures output by
+redirecting STDOUT to in-memory file (saving what is printed to
+scalar), earlier saving original STDOUT to restore it when finished
+capturing.
 
-	Node-path: 
-	Node-kind: dir
-	Node-action: change
-	Prop-delta: true
-	Prop-content-length: 43
-	Content-length: 43
+GitwebCache::Capture::Simple preserves PerlIO layers, both those set
+before started capturing output, and those set during capture.  The
+exceptions is the 'scalar' layer, which needs additional parameter,
+and which for proper handling needs non-core module PerlIO::Util.
 
-	K 10
-	svn:ignore
-	V 11
-	build-area
+No care was taken to handle the following special cases (prior to
+starting capture): closed STDOUT, STDOUT reopened to scalar reference,
+tied STDOUT.  You shouldn't modify STDOUT during capture.
 
-	PROPS-END
+Includes separate tests for capturing output in
+t9504/test_capture_interface.pl which is run as external test from
+t9504-gitweb-capture-interface.sh.  It tests capturing of utf8 data
+printed in :utf8 mode, and of binary data (containing invalid utf8) in
+:raw mode.
 
-Unfortunately a recent svn-fe change (vcs-svn: More dump format sanity
-checks, 2010-11-19) causes such nodes to be rejected with the error
-message
+Note that nested capturing doesn't work (and probably couldn't be made
+to work when capturing to in-memory file), but this feature wouldn't
+be needed for capturing gitweb output (to cache it).
 
-	fatal: invalid dump: path to be modified is missing
 
-The repo_tree module does not keep a dirent for the root of the tree.
-Add a block to the dump parser to take care of this case.
+This patch was based on "gitweb: add output buffering and associated
+functions" patch by John 'Warthog9' Hawley (J.H.) in "Gitweb caching v7=
+"
+series, and on code of Capture::Tiny by David Golden (Apache License 2.=
+0).
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Based-on-work-by: John 'Warthog9' Hawley <warthog9@kernel.org>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
- t/t9010-svn-fe.sh |   73 +++++++++++++++++++++++++++++++++++++++++++++++++++++
- vcs-svn/svndump.c |    5 +++-
- 2 files changed, 77 insertions(+), 1 deletions(-)
+In previous version of this series the basic (default) capturing
+engine was GitwebCache::Capture::SelectFH, which made use of
+select(FH) to change default filehandle used for print and printf
+without filehandle argument (print LIST).  This required changing
+  binmode STDOUT, <mode>
+to
+  binmode select(), <mode>
+in gitweb.perl, which is now not necessary.
 
-diff --git a/t/t9010-svn-fe.sh b/t/t9010-svn-fe.sh
-index 7dc0670..04ce97d 100755
---- a/t/t9010-svn-fe.sh
-+++ b/t/t9010-svn-fe.sh
-@@ -580,6 +580,79 @@ test_expect_success 'property deltas supported' '
- 	test_cmp expect actual
- '
- 
-+test_expect_success 'properties on /' '
-+	reinit_git &&
-+	cat <<-\EOF >expect &&
-+	OBJID
-+	OBJID
-+	:000000 100644 OBJID OBJID A	greeting
-+	EOF
-+	sed -e "s/X$//" <<-\EOF >changeroot.dump &&
-+	SVN-fs-dump-format-version: 3
+To simplify code this time we don't use GitwebCache::Capture as base
+class providing common features, but we reserve space to add it if we
+feel it necessary (e.g. when adding more capturing engines).
+
+Even re-layering is probably not necessary in the case of gitweb, as
+we set ':utf8' mode at beginning, and if we change it to ':raw' it is
+always after we started capture.
+
+Original "Gitweb caching v7" used capturing to in-memory files in the
+case when caching was disabled; in my minimal fixup i.e. in the
+"Gitweb caching v7.x" threads capturing to in-memory file is not done
+at all; output is redirected straight to cache file (or equivalent).
+The same would be done later in this series.
+
+ gitweb/lib/GitwebCache/Capture/Simple.pm           |   96 ++++++++++++=
+++++++++
+ ...erface.sh =3D> t9504-gitweb-capture-interface.sh} |   10 +-
+ t/t9504/test_capture_interface.pl                  |   91 ++++++++++++=
++++++++
+ 3 files changed, 192 insertions(+), 5 deletions(-)
+ create mode 100644 gitweb/lib/GitwebCache/Capture/Simple.pm
+ copy t/{t9503-gitweb-caching-interface.sh =3D> t9504-gitweb-capture-in=
+terface.sh} (66%)
+ create mode 100755 t/t9504/test_capture_interface.pl
+
+diff --git a/gitweb/lib/GitwebCache/Capture/Simple.pm b/gitweb/lib/Gitw=
+ebCache/Capture/Simple.pm
+new file mode 100644
+index 0000000..3585e58
+--- /dev/null
++++ b/gitweb/lib/GitwebCache/Capture/Simple.pm
+@@ -0,0 +1,96 @@
++# gitweb - simple web interface to track changes in git repositories
++#
++# (C) 2010, Jakub Narebski <jnareb@gmail.com>
++#
++# This program is licensed under the GPLv2
 +
-+	Revision-number: 1
-+	Prop-content-length: 10
-+	Content-length: 10
++#
++# Simple output capturing via redirecting STDOUT to in-memory file.
++#
 +
-+	PROPS-END
++# This is the same mechanism that Capture::Tiny uses, only simpler;
++# we don't capture STDERR at all, we don't tee, we don't support
++# capturing output of external commands.
 +
-+	Node-path: greeting
-+	Node-kind: file
-+	Node-action: add
-+	Text-content-length: 0
-+	Prop-content-length: 10
-+	Content-length: 10
++package GitwebCache::Capture::Simple;
 +
-+	PROPS-END
++use strict;
++use warnings;
 +
-+	Revision-number: 2
-+	Prop-content-length: 10
-+	Content-length: 10
++use PerlIO;
 +
-+	PROPS-END
++# Constructor
++sub new {
++	my $class =3D shift;
 +
-+	Node-path: X
-+	Node-kind: dir
-+	Node-action: change
-+	Prop-delta: true
-+	Prop-content-length: 43
-+	Content-length: 43
++	my $self =3D {};
++	$self =3D bless($self, $class);
 +
-+	K 10
-+	svn:ignore
-+	V 11
-+	build-area
++	return $self;
++}
 +
-+	PROPS-END
-+	EOF
-+	echo Revision-number: 2 &&
-+	echo Prop-content-length: $(wc -c <revprops) &&
-+	echo Content-length: $(wc -c <revprops) &&
-+	echo &&
-+	cat revprops &&
-+	echo &&
-+	cat <<-\EOF
-+	Node-path: script.sh
-+	Node-kind: file
-+	Node-action: change
-+	Prop-delta: true
-+	Prop-content-length: 30
-+	Content-length: 30
++sub capture {
++	my ($self, $code) =3D @_;
 +
-+	D 14
-+	svn:executable
-+	PROPS-END
-+	EOF
-+	test-svn-fe changeroot.dump >stream &&
-+	git fast-import <stream &&
-+	{
-+		git rev-list HEAD |
-+		git diff-tree --root --always --stdin |
-+		sed "s/$_x40/OBJID/g"
-+	} >actual &&
-+	test_cmp expect actual
-+'
++	$self->capture_start();
++	$code->();
++	return $self->capture_stop();
++}
 +
- test_expect_success 'deltas for typechange' '
- 	reinit_git &&
- 	cat >expect <<-\EOF &&
-diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index d2a5347..6543b51 100644
---- a/vcs-svn/svndump.c
-+++ b/vcs-svn/svndump.c
-@@ -203,7 +203,10 @@ static void handle_node(void)
- 	}
- 	if (mark && type == REPO_MODE_DIR)
- 		die("invalid dump: directories cannot have text attached");
--	if (node_ctx.action == NODEACT_CHANGE) {
-+	if (node_ctx.action == NODEACT_CHANGE && !~*node_ctx.dst) {
-+		if (type != REPO_MODE_DIR)
-+			die("invalid dump: root of tree is not a regular file");
-+	} else if (node_ctx.action == NODEACT_CHANGE) {
- 		uint32_t mode = repo_modify_path(node_ctx.dst, 0, mark);
- 		if (!mode)
- 			die("invalid dump: path to be modified is missing");
--- 
-1.7.2.4
++# --------------------------------------------------------------------=
+--
++
++# Start capturing data (STDOUT)
++sub capture_start {
++	my $self =3D shift;
++
++	# save copy of real STDOUT via duplicating it
++	my @layers =3D PerlIO::get_layers(\*STDOUT);
++	open $self->{'orig_stdout'}, ">&", \*STDOUT
++		or die "Couldn't dup STDOUT for capture: $!";
++
++	# close STDOUT, so that it isn't used anymode (to have it fd0)
++	close STDOUT;
++
++	# reopen STDOUT as in-memory file
++	$self->{'data'} =3D '';
++	unless (open STDOUT, '>', \$self->{'data'}) {
++		open STDOUT, '>&', fileno($self->{'orig_stdout'});
++		die "Couldn't reopen STDOUT as in-memory file for capture: $!";
++	}
++	_relayer(\*STDOUT, \@layers);
++
++	# started capturing
++	$self->{'capturing'} =3D 1;
++}
++
++# Stop capturing data (required for die_error)
++sub capture_stop {
++	my $self =3D shift;
++
++	# return if we didn't start capturing
++	return unless delete $self->{'capturing'};
++
++	# close in-memory file, and restore original STDOUT
++	my @layers =3D PerlIO::get_layers(\*STDOUT);
++	close STDOUT;
++	open STDOUT, '>&', fileno($self->{'orig_stdout'});
++	_relayer(\*STDOUT, \@layers);
++
++	return $self->{'data'};
++}
++
++# taken from Capture::Tiny by David Golden, Apache License 2.0
++# with debugging stripped out, and added filtering out 'scalar' layer
++sub _relayer {
++	my ($fh, $layers) =3D @_;
++
++	my %seen =3D ( unix =3D> 1, perlio =3D> 1, scalar =3D> 1 ); # filter =
+these out
++	my @unique =3D grep { !$seen{$_}++ } @$layers;
++
++	binmode($fh, join(":", ":raw", @unique));
++}
++
++
++1;
++__END__
++# end of package GitwebCache::Capture::Simple
+diff --git a/t/t9503-gitweb-caching-interface.sh b/t/t9504-gitweb-captu=
+re-interface.sh
+similarity index 66%
+copy from t/t9503-gitweb-caching-interface.sh
+copy to t/t9504-gitweb-capture-interface.sh
+index 819da1d..82623f1 100755
+--- a/t/t9503-gitweb-caching-interface.sh
++++ b/t/t9504-gitweb-capture-interface.sh
+@@ -3,10 +3,10 @@
+ # Copyright (c) 2010 Jakub Narebski
+ #
+=20
+-test_description=3D'gitweb caching interface
++test_description=3D'gitweb capturing interface
+=20
+-This test checks caching interface used in gitweb caching, and caching
+-infrastructure (GitwebCache::* modules).'
++This test checks capturing interface used for capturing gitweb output
++in gitweb caching (GitwebCache::Capture* modules).'
+=20
+ # for now we are running only cache interface tests
+ . ./test-lib.sh
+@@ -28,7 +28,7 @@ fi
+ test_external_has_tap=3D1
+=20
+ test_external \
+-	'GitwebCache::* Perl API (in gitweb/lib/)' \
+-	"$PERL_PATH" "$TEST_DIRECTORY"/t9503/test_cache_interface.pl
++	'GitwebCache::Capture Perl API (in gitweb/lib/)' \
++	"$PERL_PATH" "$TEST_DIRECTORY"/t9504/test_capture_interface.pl
+=20
+ test_done
+diff --git a/t/t9504/test_capture_interface.pl b/t/t9504/test_capture_i=
+nterface.pl
+new file mode 100755
+index 0000000..47ab804
+--- /dev/null
++++ b/t/t9504/test_capture_interface.pl
+@@ -0,0 +1,91 @@
++#!/usr/bin/perl
++use lib (split(/:/, $ENV{GITPERLLIB}));
++
++use warnings;
++use strict;
++use utf8;
++
++use Test::More;
++
++# test source version
++use lib $ENV{GITWEBLIBDIR} || "$ENV{GIT_BUILD_DIR}/gitweb/lib";
++
++# ....................................................................
++
++use_ok('GitwebCache::Capture::Simple');
++diag("Using lib '$INC[0]'");
++diag("Testing '$INC{'GitwebCache/Capture/Simple.pm'}'");
++
++# Test setting up capture
++#
++my $capture =3D new_ok('GitwebCache::Capture::Simple' =3D> [], 'The $c=
+apture');
++
++# Test capturing
++#
++sub capture_block (&) {
++	return $capture->capture(shift);
++}
++
++diag('Should not print anything except test results and diagnostic');
++my $test_data =3D 'Capture this';
++my $captured =3D capture_block {
++	print $test_data;
++};
++is($captured, $test_data, 'capture simple data');
++
++binmode STDOUT, ':utf8';
++$test_data =3D <<'EOF';
++Za=C5=BC=C3=B3=C5=82=C4=87 g=C4=99si=C4=85 ja=C5=BA=C5=84
++EOF
++utf8::decode($test_data);
++$captured =3D capture_block {
++	binmode STDOUT, ':utf8';
++
++	print $test_data;
++};
++utf8::decode($captured);
++is($captured, $test_data, 'capture utf8 data');
++
++$test_data =3D '|\x{fe}\x{ff}|\x{9F}|\000|'; # invalid utf-8
++$captured =3D capture_block {
++	binmode STDOUT, ':raw';
++
++	print $test_data;
++};
++is($captured, $test_data, 'capture raw data');
++
++# Test nested capturing
++#
++TODO: {
++	local $TODO =3D "not required for capturing gitweb output";
++	no warnings;
++
++	my $outer_capture =3D GitwebCache::Capture::Simple->new();
++	$captured =3D $outer_capture->capture(sub {
++		print "pre|";
++		my $captured =3D $capture->capture(sub {
++			print "INNER";
++		});
++		print lc($captured);
++		print "|post";
++	});
++	is($captured, "pre|inner|post", 'nested capture');
++}
++
++SKIP: {
++	skip "Capture::Tiny not available", 1
++		unless eval { require Capture::Tiny; };
++
++	$captured =3D Capture::Tiny::capture(sub {
++		my $inner =3D $capture->capture(sub {
++			print "INNER";
++		});
++	});
++	is($captured, '', "doesn't print while capturing");
++}
++
++done_testing();
++
++# Local Variables:
++# coding: utf-8
++# End:
+--=20
+1.7.3
