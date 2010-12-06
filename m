@@ -1,84 +1,81 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: Can't seem to commit
-Date: Mon, 06 Dec 2010 21:54:37 +1300
-Message-ID: <4CFCA4CD.4050100@gmail.com>
-References: <1291480384128-5803287.post@n2.nabble.com> <4CFCA445.2020205@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: What's cooking in git.git (Dec 2010, #01; Sat, 4)
+Date: Mon, 06 Dec 2010 09:55:02 +0100
+Message-ID: <4CFCA4E6.30209@drmicha.warpmail.net>
+References: <7voc90wx36.fsf@alter.siamese.dyndns.org> <4CFBA912.2080905@drmicha.warpmail.net> <7v4oasvvao.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: weloki <weloki@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 06 09:54:06 2010
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 06 09:57:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPWph-0007FK-VV
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 09:54:06 +0100
+	id 1PPWsw-0000C4-G6
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 09:57:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752133Ab0LFIxw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Dec 2010 03:53:52 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:64089 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752098Ab0LFIxw (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Dec 2010 03:53:52 -0500
-Received: by pzk6 with SMTP id 6so1792228pzk.19
-        for <git@vger.kernel.org>; Mon, 06 Dec 2010 00:53:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=KT5vdSmMi8gOSvxU2fE7oZF8bpWE9XxN4LDazMoH/CQ=;
-        b=CNfijxCsQi+oNfGbv4Xw8e3TaU8VpLQKG/iyDHvqYRUG1wPiGtqeQk2K2JYDOCR1wq
-         o9Y9jQl0PmAmwQ9mHlGSsaYkSdFs3b8e3LrJd5QqTlbdawwgVQjASqBRqoKWyWhNzBZE
-         tK+Fi6zWJC0ovYkwPcwEMIgEzVK+6JcqMUAA8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=rtBAAO1dXyupep4SP0Oax12AF2g82+8DOnYmDU/itzlB0L/S+RA7aexEn+EZd5mMNm
-         WR4NvToyBtFy95R1EEBYhTnCW2z6kEIbipTUZqIRVBj4gVBJz804rByE5GoDhxcfGBrU
-         KW/KkcRxwyVVCA3//1eQrNIC9eqvCOlp5iR+8=
-Received: by 10.143.162.5 with SMTP id p5mr4741425wfo.230.1291625631819;
-        Mon, 06 Dec 2010 00:53:51 -0800 (PST)
-Received: from laptop.site (115-188-15-163.jetstream.xtra.co.nz [115.188.15.163])
-        by mx.google.com with ESMTPS id y42sm7010879wfd.22.2010.12.06.00.53.49
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 06 Dec 2010 00:53:50 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-GB; rv:1.9.1.15) Gecko/20101026 SUSE/3.0.10 Thunderbird/3.0.10
-In-Reply-To: <4CFCA445.2020205@gmail.com>
+	id S1751993Ab0LFI5W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Dec 2010 03:57:22 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:57760 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751620Ab0LFI5V (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Dec 2010 03:57:21 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 0C1E12C1;
+	Mon,  6 Dec 2010 03:57:21 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute3.internal (MEProxy); Mon, 06 Dec 2010 03:57:21 -0500
+X-Sasl-enc: wJ0IFmltZr+OTVx1DYdHChXbjvm4/qGTFzhQyd5bUcFw 1291625840
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 5AF745E16F4;
+	Mon,  6 Dec 2010 03:57:20 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
+In-Reply-To: <7v4oasvvao.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162986>
 
-Sorry for the dupe, I forgot to CC the list.
+Junio C Hamano venit, vidit, dixit 05.12.2010 21:06:
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+> 
+>> Junio C Hamano venit, vidit, dixit 05.12.2010 07:30:
+>> ...
+>>>
+>>> * mg/cvsimport (2010-11-28) 3 commits
+>>>  - cvsimport.txt: document the mapping between config and options
+>>>  - cvsimport: fix the parsing of uppercase config options
+>>>  - cvsimport: partial whitespace cleanup
+>>>
+>>> I was being lazy and said "Ok" to "cvsimport.capital-r" but luckily other
+>>> people injected sanity to the discussion.  Weatherbaloon patch sent, but
+>>
+>> I assume I should try and not read too much into this...
+> 
+> No, you shouldn't.  I wasn't questioning _your_ sanity, and if you took it
+> that way, I apologize.
 
-On 05/12/10 05:33, weloki wrote:
->
-> There is probably an easy solution to this but I'm seeing something really
-> weird...
-> I can't seem to commit anything to my new branch. When I try to commit it
-> just says "no changes added to commit (use "git add" and/or "git commit
-> -a")"
-> When I try to do git add it doesn't seem to do anything.
-> When I try to push it says "Everything up-to-date", but when I look at the
-> branch on github my files aren't there.
-> Strangely I was able to do everything fine with a different branch I created
-> afterwards.
+No need to. I was pointing out a potentially misunderstandable
+formulation without misunderstanding it ;)
 
-One thing to check is where you're pushing to ("git remote show origin"
-should tell you). You may also want to check the value of "git config
-branch.master.merge", "git config remote.origin.url" and "git config
-push.default".
+> I as the maintainer have different priority from contributors.  The
+> contributed patches want to "get the job done" first, and their solution
+> only need to be "correct and not too ugly".
+> 
+> I however in addition need to make sure that the changes make sense in the
+> longer term,
 
-For me these are
-refs/heads/master
-<my github project>
-tracking
+Exactly, and you're doing a good job of it. It can lead to the
+impression (on the contributors' side) that even simple patches are
+difficult to "get in", and can lead to frustration, of course. But it
+also ensures that we don't have even more work later on, trying to work
+around a half-thought-through earlier change.
 
-Also on a very fresh repository you need to use "git push origin
-master:refs/heads/master" to create the master branch on the remote end.
+[In this particular case, I reckoned cvsimport basically hasn't got much
+"later" left, but who knows when cvs2git is ready for incremental sync.]
+
+Michael
