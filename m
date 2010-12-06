@@ -1,8 +1,7 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [RFC PATCH 24/24] gitweb: Add beginnings of cache administration page (proof of concept)
-Date: Tue,  7 Dec 2010 00:11:09 +0100
-Message-ID: <1291677069-6559-25-git-send-email-jnareb@gmail.com>
-References: <1291677069-6559-1-git-send-email-jnareb@gmail.com>
+Subject: [PATCHv6/RFC 00/24] gitweb: Simple file based output caching
+Date: Tue,  7 Dec 2010 00:10:45 +0100
+Message-ID: <1291677069-6559-1-git-send-email-jnareb@gmail.com>
 Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
 	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
 	Junio C Hamano <gitster@pobox.com>,
@@ -11,304 +10,256 @@ Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
 	Thomas Adam <thomas@xteddy.org>,
 	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 07 00:17:57 2010
+X-From: git-owner@vger.kernel.org Tue Dec 07 00:18:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPkJg-0002Va-Gk
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 00:17:57 +0100
+	id 1PPkK1-0002dM-2j
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 00:18:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753384Ab0LFXRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Dec 2010 18:17:51 -0500
-Received: from mail-ey0-f171.google.com ([209.85.215.171]:37279 "EHLO
-	mail-ey0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753039Ab0LFXRv (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Dec 2010 18:17:51 -0500
-X-Greylist: delayed 323 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 Dec 2010 18:17:05 EST
-Received: by mail-ey0-f171.google.com with SMTP id 5so8018462eyg.2
-        for <git@vger.kernel.org>; Mon, 06 Dec 2010 15:17:50 -0800 (PST)
+	id S1753230Ab0LFXSL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Dec 2010 18:18:11 -0500
+Received: from mail-ew0-f45.google.com ([209.85.215.45]:57330 "EHLO
+	mail-ew0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751204Ab0LFXSK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Dec 2010 18:18:10 -0500
+Received: by ewy10 with SMTP id 10so7584639ewy.4
+        for <git@vger.kernel.org>; Mon, 06 Dec 2010 15:18:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=7LjUBUOPrHg8Dcqs+zh0t8wTXhxabxGq1WHPKlDzu1I=;
-        b=E/W6CtejR3reMQhIIdd+Mgzl24/66OvxsTbcGu6BGg+rJLzuByJVJKhRDH2KJAcNPJ
-         txqEjpk1Ak513gY61ApiBeB4p/E3C34FrlHAGaV/YgADhLVdaICnA/Y0k2dgVAhpYPuO
-         dw0NxnzizdJtxaJaI5oNCGdfgKSOhJOUIl0mE=
+         :message-id:x-mailer;
+        bh=hZRsTBkLytDoX1UD4wAAphuZA22ZMmgz2gGlfwTPtYQ=;
+        b=wrHICPmp/DqQTGDGFv4c/oKY1VC/E+wAyxUb7YTPNwUrJjERg9//GhfBkBOaiJPmaq
+         d1uiUd5vmJbM8rozfHtfGLugsuI5cpz4JeTg3w/U9prfYVxmXlmRzVe+8x2veGjoQuhw
+         O28GzD6vXFcpuUw8+VxZO1U/ceXlDseJ/FaKM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=AMa1rAhhIagJOQifi5yopV2hcy/CEjXncTurBtTDAAjNAb5ov/mz2R+fNpaKWHJtsC
-         u/+QRMu7YeU3eCOKOvkZTZLVjeiQGCfq64dGAU9Mr0piVpJk0yav7GC3QD86gP2Gv7YS
-         shlDDAuoo0QtKGnfnlHytN7imQhJcPoTxn3NU=
-Received: by 10.14.29.71 with SMTP id h47mr5100982eea.29.1291677161143;
-        Mon, 06 Dec 2010 15:12:41 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=kL8+XoqbJ0mN0T9wiPGbFxPtyBc8L8XPJJUL/AoTibiJrj/tgim2bR6iozyDZ44wPy
+         bq6Qn0FZWnrRLevnMk/opBhsO2N1sp67fu1pXfy5kC7P625/z4JU5OwbkV1sTXVecYKE
+         4uk8zHQFpckFQSc7GxM4FJcQ7OWT+WosRI6ao=
+Received: by 10.213.36.5 with SMTP id r5mr6603009ebd.3.1291677098941;
+        Mon, 06 Dec 2010 15:11:38 -0800 (PST)
 Received: from localhost.localdomain (abwg200.neoplus.adsl.tpnet.pl [83.8.230.200])
-        by mx.google.com with ESMTPS id y5sm5190626eeh.22.2010.12.06.15.12.39
+        by mx.google.com with ESMTPS id y5sm5190626eeh.22.2010.12.06.15.11.34
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 06 Dec 2010 15:12:40 -0800 (PST)
+        Mon, 06 Dec 2010 15:11:36 -0800 (PST)
 X-Mailer: git-send-email 1.7.3
-In-Reply-To: <1291677069-6559-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163051>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163052>
 
-Currently cache administration page ('cache' action) shows estimated
-size of cache, and provides link to clearing cache.
+[I Cc-ed everybody who *might* be interested in this series.  I am
+ sorry if it included somebody by mistake]
 
-Cache administration page is visible only on local computer; the same
-is true with respect to ability to clear cache.  Those are bare
-beginnings of autorization framework.
+This 22+ patches long series (2 last patches are proof of concept) is
+intended as replacement (rewrite) of "Gitweb caching v7" series from
+John 'Warthog9' Hawley (J.H.):
 
-If you can use cache administration page, you will see 'admin' link at
-the botom of the page to it.
+  http://thread.gmane.org/gmane.comp.version-control.git/160147
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This is "frontend" (interface) patch for gitweb cache management.
+This is sixth version (6th release) of this series, and is available
+in the following repositories (links are to web interface):
 
-This is very much work in progress, sent to git mailing list as a
-proof of concept.  Would something like that (perhaps with more
-advanced authorization for admin) be useful?
+  http://repo.or.cz/w/git/jnareb-git.git
+  http://github.com/jnareb/git
 
-The 'cache' page looks like this:
+as 'gitweb/cache-kernel-v6' branch.  Earlier versions are available at
+http://repo.or.cz/w/git/jnareb-git.git as 'gitweb/cache-kernel-v5'
+(previous version) to 'gitweb/cache-kernel' (first version).
 
-  Cache location      Size	 
-  ------------------+---------+--------------
-  cache/gitweb        14 KiB	[Clear cache]
-  ------------------+---------+--------------
+Previous version of this series was sent to git mailing list as:
 
-where '[Clear cache]' is a submit button.
+  [PATCHv5 00/17] gitweb: Simple file based output caching
+  Message-Id: <1286402526-13143-1-git-send-email-jnareb@gmail.com>
+  http://thread.gmane.org/gmane.comp.version-control.git/158313
 
-
-Compared to previous series there is now 'admin' link that leads to
-cache administration page, which is present only if you have
-permissions to access said page.
-
-Also for empty cache we show '-'.  
-
-Code was made slightly safer, though still I wouldn't use it in
-production, as there might be a chance that remote attacker could
-possibly clear cache (meaning I didn't prove that it couldn't happen).
+You can find link to next to previous version, et cetera.
 
 
-In the final version this patch should probably be split into a few
-smaller commits, for example:
-* adding support for $opts{'-title'} to git_header_html
-* action_is_cacheable subroutine
-* human_readable_size (which could also be used in 'tree' view at request)
-* xxx_admin_auth_ok, i.e. authorization and authentication for admin and
-  write actions in gitweb
-* 'cache' (i.e. cache admin) and 'clear_cache' (worker) methods
+The main ideas in lifted from J.H. patches are the following
+(features in common with "Gitweb caching v7" series by John Hawley):
 
- gitweb/gitweb.perl |  138 ++++++++++++++++++++++++++++++++++++++++++++++++++--
- 1 files changed, 134 insertions(+), 4 deletions(-)
+* caching captured output of gitweb in flat files, without any
+  serialization (caching raw data)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 1521bf2..66e240f 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -25,6 +25,8 @@ use Encode;
- use Fcntl qw(:mode :flock);
- use File::Find qw();
- use File::Basename qw(basename);
-+use POSIX; # for POSIX::ceil($x)
-+
- binmode STDOUT, ':utf8';
- 
- our $t0;
-@@ -888,6 +890,10 @@ sub evaluate_actions_info {
- 	map { $actions_info{$_}{'output_format'} = undef }
- 		qw(blob_plain object);
- 	$actions_info{'snapshot'}{'output_format'} = 'binary';
-+
-+	# specify uncacheable actions
-+	map { $actions_info{$_}{'uncacheable'} = 1 }
-+		qw(cache clear_cache);
- }
- 
- sub action_outputs_html {
-@@ -895,6 +901,11 @@ sub action_outputs_html {
- 	return $actions_info{$action}{'output_format'} eq 'html';
- }
- 
-+sub action_is_cacheable {
-+	my $action = shift;
-+	return !$actions_info{$action}{'uncacheable'};
-+}
-+
- sub browser_is_robot {
- 	return 1 if !exists $ENV{'HTTP_USER_AGENT'}; # gitweb run as script
- 	if (eval { require HTTP::BrowserDetect; }) {
-@@ -1245,12 +1256,13 @@ sub dispatch {
- 	if (!defined($actions{$action})) {
- 		die_error(400, "Unknown action");
- 	}
--	if ($action !~ m/^(?:opml|project_list|project_index)$/ &&
-+	if ($action !~ m/^(?:opml|project_list|project_index|cache|clear_cache)$/ &&
- 	    !$project) {
- 		die_error(400, "Project needed");
- 	}
- 
--	if ($caching_enabled) {
-+	if ($caching_enabled &&
-+	    action_is_cacheable($action)) {
- 		# human readable key identifying gitweb output
- 		my $output_key = href(-replay => 1, -full => 1, -path_info => 0);
- 
-@@ -1397,6 +1409,10 @@ sub configure_caching {
- 		require GitwebCache::Capture::Simple;
- 		$capture = GitwebCache::Capture::Simple->new();
- 	}
-+
-+	# some actions are available only if cache is turned on
-+	$actions{'cache'} = \&git_cache_admin;
-+	$actions{'clear_cache'} = \&git_cache_clear;
- }
- 
- run();
-@@ -3760,7 +3776,7 @@ sub git_header_html {
- 	my $expires = shift;
- 	my %opts = @_;
- 
--	my $title = get_page_title();
-+	my $title = $opts{'-title'} || get_page_title();
- 	my $content_type;
- 	# require explicit support from the UA if we are to send the page as
- 	# 'application/xhtml+xml', otherwise send it as plain old 'text/html'.
-@@ -3936,10 +3952,18 @@ sub git_footer_html {
- 
- 	} else {
- 		print $cgi->a({-href => href(project=>undef, action=>"opml"),
--		              -class => $feed_class}, "OPML") . " ";
-+		              -class => $feed_class}, "OPML") . "\n";
- 		print $cgi->a({-href => href(project=>undef, action=>"project_index"),
- 		              -class => $feed_class}, "TXT") . "\n";
-+
- 	}
-+
-+	if ($actions{'cache'} &&
-+	    cache_admin_auth_ok()) {
-+		print $cgi->a({-href => href(project=>undef, action=>"cache"),
-+		              -class => $feed_class}, "<i>admin</i>") . "\n";
-+	}
-+
- 	print "</div>\n"; # class="page_footer"
- 
- 	# timing info doesn't make much sense with output (response) caching,
-@@ -7412,3 +7436,109 @@ XML
- </opml>
- XML
- }
-+
-+# see Number::Bytes::Human
-+sub human_readable_size {
-+	my $bytes = shift || return;
-+
-+	my @units = ('', 'KiB', 'MiB', 'GiB', 'TiB');
-+	my $block = 1024;
-+
-+	my $x = $bytes;
-+	my $unit;
-+	foreach (@units) {
-+		$unit = $_, last if POSIX::ceil($x) < $block;
-+		$x /= $block;
-+	}
-+
-+	my $num;
-+	if ($x < 10.0) {
-+		$num = sprintf("%.1f", POSIX::ceil($x*10)/10); 
-+	} else {
-+		$num = sprintf("%d", POSIX::ceil($x));
-+	}
-+
-+	return "$num $unit";
-+}
-+
-+sub cache_admin_auth_ok {
-+	if (defined $ENV{'REMOTE_ADDR'}) {
-+		if (defined $ENV{'SERVER_ADDR'}) {
-+			# SERVER_ADDR is not in RFC 3875
-+			return $ENV{'SERVER_ADDR'} eq $ENV{'REMOTE_ADDR'};
-+		} elsif ($ENV{'REMOTE_ADDR'} =~ m!^(?:127\.0\.0\.1|::1/128)$!) {
-+			# localhost in IPv4 or IPv6
-+			return 1;
-+		}
-+	} else {
-+		# REMOTE_ADDR not defined, probably calling gitweb as script
-+		return 1;
-+	}
-+
-+	# restrict all but specified cases
-+	return 0;
-+}
-+
-+sub git_cache_admin {
-+	$caching_enabled
-+		or die_error(403, "Caching disabled");
-+	cache_admin_auth_ok()
-+		or die_error(403, "Cache administration not allowed");
-+	$cache && ref($cache)
-+		or die_error(500, "Cache is not present");
-+
-+	git_header_html(undef, undef,
-+		-title => to_utf8($site_name) . " - Gitweb cache");
-+
-+	print <<'EOF_HTML';
-+<table class="cache_admin">
-+<tr><th>Cache location</th><th>Size</th><th>&nbsp;</th></tr>
-+EOF_HTML
-+	print '<tr class="light">' .
-+	      '<td class="path">' . esc_path($cache->path_to_namespace()) . '</td>' .
-+	      '<td>';
-+	my $size;
-+	if ($cache->can('size')) {
-+		$size = $cache->size();
-+	} elsif ($cache->can('get_size')) {
-+		$size = $cache->get_size();
-+	}
-+	if (defined $size) {
-+		print human_readable_size($size);
-+	} else {
-+		print '-';
-+	}
-+	print '</td><td>';
-+	if ($cache->can('clear')) {
-+		print $cgi->start_form({-method => "POST",
-+		                        -action => $my_uri,
-+		                        -enctype => CGI::URL_ENCODED}) .
-+		      $cgi->input({-name=>"a", -value=>"clear_cache", -type=>"hidden"}) .
-+		      $cgi->submit({-label => 'Clear cache'}) .
-+		      $cgi->end_form();
-+	}
-+	print <<'EOF_HTML';
-+</td></tr>
-+</table>
-+EOF_HTML
-+
-+	git_footer_html();
-+}
-+
-+sub git_cache_clear {
-+	$caching_enabled
-+		or die_error(403, "Caching disabled");
-+	cache_admin_auth_ok()
-+		or die_error(403, "Clearing cache not allowed");
-+	$cache && ref($cache)
-+		or die_error(500, "Cache is not present");
-+
-+	if ($cgi->request_method() eq 'POST') {
-+
-+		$cache->clear();
-+	}
-+
-+	#print "cleared";
-+	print $cgi->redirect(-uri => href(action=>'cache', -full=>1),
-+	                     -status => '303 See Other');
-+}
+* using global (per-cache, not per-entry) expiration time, and
+  using difference between mtime of cache file and current time
+  for expiration
+
+* using file locking (flock) to prevent 'cache miss stampede'
+  problem, i.e. to ensure that only one process is (re)generating
+  cache entry
+
+* serving stale but not too old version, and regenerating data
+  in background, to avoid waiting for data to be regenerated
+
+* progress info indicator based on http-equiv refresh trick
+  (described in more detail how it works in the commit message)
+
+* capturing gitweb output by redirecting STDOUT to cache entry file
+
+
+The main differences between this patch series and "Gitweb caching v7"
+(and my minimal fixups in "Gitweb caching v7.[1-3]") are the following:
+
+* features are added piece by piece in multiple patches (22 patches
+  covering v7 features vs 3-4 patches in v7/v7.x series), making it
+  hopefully easier to review, as patches are smaller.  OTOH this series
+  is much longer...
+
+* In J.H. series subroutines responsible for capturing gitweb output are
+  in gitweb.perl, and subroutines responsible for caching are in lib/cache.pl
+  (cache.pm in original patch).  cache.pl/cache.pm uses variables and
+  subroutines from gitweb script, so it couldn't be made into Perl module;
+  therefore we have to use 'do' rather than 'require' to load it.
+
+  In this series GitwebCache::Capture::Simple module is responsible for
+  capturing [gitweb] output, GitwebCache::SimpleFileCache and
+  GitwebCache::FileCacheWithLocking are responsible for caching, and
+  GitwebCache::CacheOutput is about caching captured output (ties them
+  together).  This allowed "unit" testing, i.e. testing each module
+  in isolation (tests t9503 - t9505).
+
+* GitwebCache::CacheOutput::cache_output (equivalent of cache_fetch from
+  cache.pm in J.H. patch) supports any cache supporting ->get / ->set or
+  ->compute interface (e.g. Cache::FileCache from Cache::Cache, or CHI
+  with 'File' driver, or Cache::FastMmap) - it is described in gitweb/README
+  in "Gitweb caching" section.
+
+  For this capturing engine (GitwebCache::Capture::Simple) supports returning
+  captured output (via capturing to in-memory file).
+
+  Tested once upon a time with Cache::FileCache $cache.
+
+* There is no difference between treating actions with binary output or
+  possibly binary output like 'snapshot' or 'blob_plain' (which use binary
+  or ':raw' mode) and other actions (which use text or ':utf8' mode).
+  GitwebCache::Capture::Simple captures transformed output i.e. raw bytes,
+  so data from cache is dumped to STDOUT (to web browser) in ':raw' mode.
+
+* Instead of disabling caching of 'blame_incremental' action (so it is
+  used without caching), this alternate to plain 'blame' action is
+  disabled if caching is turned off.
+
+  In the future 'blame_interactive' would use cache for caching its
+  initial output and for caching 'blame_data' it uses.
+
+* Configuring cache is done via %cache_options (and %generating_options)
+  instead of via gitweb config variables.  For example instead of 
+  $minCacheTime there is $cache_options{'expires_min'}.
+
+  It is also more configurable than in J.H. patch; more parameters can be
+  changed (like e.g. factor multiplying get_loadavg() in adaptive cache
+  lifetime; 'check_load', 'generating_info', 'on_error' are configurable
+  callbacks).
+
+  "gitweb: Support legacy options used by kernel.org caching engine"
+  patch in this series makes this rewrite support configuration variables
+  used by "Gitweb caching v7" series.
+
+* This rewrite uses lexical filehandles, i.e.
+
+    open my $fh, '>', $filename
+
+  instead of globals that J.H. patch uses
+
+    open FH, '>', $filename
+
+  (though it hides it in "open(cacheFile, '<', $filename)").  J.H. is
+  working on "Gitweb caching v8" and I think he would address that issue
+  there.
+
+* When generating cache in background process, the background process
+  daemonizes itself.  Therefore it should be safe to enable / use
+  'background_cache' also for persistent environments, like mod_perl via
+  ModPerl::Registry, FastCGI when run as gitweb.fcgi, PSGI via gitweb.psgi
+  wrapper that git-instaweb generates.
+
+- Other changes might be mentioned in comments to individual patches
+
+Two last patches in this series introduce proof of concept cache
+administration page, where you can currently check how much file space is
+used by cache, and where you can also safely clean cache (remove all
+entries).  Those two patches are slightly outside scope of "gitweb output
+caching", and that is why I refer to this series as 22+ patches long
+(there are 24 patches in total).
+
+Previous version of this series had
+  gitweb/lib - Benchmarking GitwebCache::SimpleFileCache (in t/9603/)
+  gitweb/lib - Alternate ways of capturing output
+as two last patche in the series.  They are missing in this release.
+
+
+The following changes since commit 0b0cd0e0a29a139f418991dd769ea4266ffec370:
+
+  Merge branch 'jn/ignore-doc' (2010-12-03 16:13:06 -0800)
+
+are available in the git repository at:
+
+  git://repo.or.cz/git/jnareb-git.git gitweb/cache-kernel-v6
+
+Jakub Narebski (24):
+  t/test-lib.sh: Export also GIT_BUILD_DIR in test_external
+  gitweb: Prepare for splitting gitweb
+  gitweb/lib - Very simple file based cache
+  gitweb/lib - Stat-based cache expiration
+  gitweb/lib - Regenerate entry if the cache file has size of 0
+  gitweb/lib - Simple output capture by redirecting STDOUT
+  gitweb/lib - Cache captured output (using get/set)
+  gitweb: Add optional output caching
+  gitweb/lib - Adaptive cache expiration time
+  gitweb/lib - Use CHI compatibile (compute method) caching interface
+  gitweb/lib - capture output directly to cache entry file
+  gitweb/lib - Use locking to avoid 'cache miss stampede' problem
+  gitweb/lib - No need for File::Temp when locking
+  gitweb/lib - Serve stale data when waiting for filling cache
+  gitweb/lib - Regenerate (refresh) cache in background
+  gitweb: Introduce %actions_info, gathering information about actions
+  gitweb: Show appropriate "Generating..." page when regenerating cache
+  gitweb/lib - Configure running 'generating_info' when generating data
+  gitweb: Add startup delay to activity indicator for cache
+  gitweb/lib - Add support for setting error handler in cache
+  gitweb: Wrap die_error to use as error handler for caching engine
+  gitweb: Support legacy options used by kernel.org caching engine
+  gitweb/lib - Add clear() and size() methods to caching interface
+  gitweb: Add beginnings of cache administration page (proof of
+    concept)
+
+ gitweb/Makefile                                |   23 +-
+ gitweb/README                                  |   62 +++
+ gitweb/gitweb.perl                             |  544 +++++++++++++++++++-
+ gitweb/lib/GitwebCache/CacheOutput.pm          |  131 +++++
+ gitweb/lib/GitwebCache/Capture/Simple.pm       |  110 ++++
+ gitweb/lib/GitwebCache/FileCacheWithLocking.pm |  376 ++++++++++++++
+ gitweb/lib/GitwebCache/SimpleFileCache.pm      |  592 ++++++++++++++++++++++
+ t/gitweb-lib.sh                                |   12 +
+ t/t9500-gitweb-standalone-no-errors.sh         |   20 +
+ t/t9501-gitweb-standalone-http-status.sh       |   21 +
+ t/t9502-gitweb-standalone-parse-output.sh      |   33 ++
+ t/t9503-gitweb-caching-interface.sh            |   34 ++
+ t/t9503/test_cache_interface.pl                |  647 ++++++++++++++++++++++++
+ t/t9504-gitweb-capture-interface.sh            |   34 ++
+ t/t9504/test_capture_interface.pl              |  108 ++++
+ t/t9505-gitweb-cache.sh                        |   39 ++
+ t/t9505/test_cache_output.pl                   |   86 ++++
+ t/test-lib.sh                                  |    4 +-
+ 18 files changed, 2850 insertions(+), 26 deletions(-)
+ create mode 100644 gitweb/lib/GitwebCache/CacheOutput.pm
+ create mode 100644 gitweb/lib/GitwebCache/Capture/Simple.pm
+ create mode 100644 gitweb/lib/GitwebCache/FileCacheWithLocking.pm
+ create mode 100644 gitweb/lib/GitwebCache/SimpleFileCache.pm
+ create mode 100755 t/t9503-gitweb-caching-interface.sh
+ create mode 100755 t/t9503/test_cache_interface.pl
+ create mode 100755 t/t9504-gitweb-capture-interface.sh
+ create mode 100755 t/t9504/test_capture_interface.pl
+ create mode 100755 t/t9505-gitweb-cache.sh
+ create mode 100755 t/t9505/test_cache_output.pl
+
 -- 
 1.7.3
