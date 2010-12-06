@@ -1,63 +1,83 @@
-From: Konstantin Kivi <kkivi@yandex.ru>
-Subject: git fetch vs push, git am questions
-Date: Mon, 06 Dec 2010 23:27:55 +0300
-Message-ID: <99351291667275@web152.yandex.ru>
+From: demerphq <demerphq@gmail.com>
+Subject: git diff --summary only seems to work when combined with --stat
+Date: Mon, 6 Dec 2010 21:55:26 +0100
+Message-ID: <AANLkTimCAy8kcQaKNaxz4UJp2ZB=_HeRMmeaQ5ZHNV4g@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 06 21:28:07 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Dec 06 21:55:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPhfK-0003x0-Jp
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 21:28:06 +0100
+	id 1PPi5t-00010t-Ja
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 21:55:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753890Ab0LFU2A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Dec 2010 15:28:00 -0500
-Received: from forward13.mail.yandex.net ([95.108.130.120]:47343 "EHLO
-	forward13.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753628Ab0LFU2A (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Dec 2010 15:28:00 -0500
-Received: from web152.yandex.ru (web152.yandex.ru [95.108.131.165])
-	by forward13.mail.yandex.net (Yandex) with ESMTP id 783B61080B0A
-	for <git@vger.kernel.org>; Mon,  6 Dec 2010 23:27:58 +0300 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
-	t=1291667278; bh=HIMPFdHNyzKtMVl/v1tl0TIktu9mpkikZv8wciAF/Js=;
-	h=From:To:Subject:MIME-Version:Message-Id:Date:
-	 Content-Transfer-Encoding:Content-Type;
-	b=FkQn/bd7aqd3I1paGBiTbXYgbCSrGhp3kw03bUUL7TtXozHP7HLBLSITi/el/Nux5
-	 ASc00uGm7J8vs8RwGoBGkEt6ulIYSR7gimfi+y63poKWQh5wx0eIBQXtgVCe67r9IU
-	 TTyw9RZtH4s7ycXBsTAfYfdFc+X0zEfg6jM1vT94=
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by web152.yandex.ru (Yandex) with ESMTP id 7142967A0027
-	for <git@vger.kernel.org>; Mon,  6 Dec 2010 23:27:58 +0300 (MSK)
-Received: from konst.order.hcn-strela.ru (konst.order.hcn-strela.ru [91.192.71.209]) by mail.yandex.ru with HTTP;
-	Mon, 06 Dec 2010 23:27:55 +0300
-X-Mailer: Yamail [ http://yandex.ru ] 5.0
+	id S1753311Ab0LFUz2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Dec 2010 15:55:28 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:50727 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752745Ab0LFUz1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Dec 2010 15:55:27 -0500
+Received: by qwd7 with SMTP id 7so1702237qwd.19
+        for <git@vger.kernel.org>; Mon, 06 Dec 2010 12:55:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=WDTwpp6937ebA9j2AHWNsc7lHRxDQzDwKTldD4STlEw=;
+        b=Oq2qZH1lKWObbsE+6LB1ga2pn12AolG6F6ILU+xl+a1pWNIvooDK6XGUO/c/qazShN
+         5ohck6YrDbkBkS9MyVliPWZXVS5PhrATQ2g04/BUgBvmLSEmwS+/0eKFS50vZNqrQM/X
+         4uBysdtYyRStORQJlucnFNvPXpe5qUQT6MNQc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=eqfbMP4D4IENlyixu144kE8RpscqtWKRkeUq04cnq0752OYtmDXUzHMQHMPbSD1Yw2
+         bJ4CdADPPC1S1AMgRHYWrshDceDLfo/IbuCk8G9hUHtwHitxe01Vp5Z/BismdXqP149k
+         XViVT82rfyVDr8iodXlL4r0iczgMJ4X5G8UNQ=
+Received: by 10.229.183.135 with SMTP id cg7mr4715779qcb.296.1291668926713;
+ Mon, 06 Dec 2010 12:55:26 -0800 (PST)
+Received: by 10.229.192.193 with HTTP; Mon, 6 Dec 2010 12:55:26 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163019>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163020>
 
-HI all
-I honestly tried to find answers in various docs/books about git and failed, so I have to ask here.
- 
-1) Is it possible to achieve the same result with git fetch, as I have with git push. I have cloned a bare repository (2) from my repository (1) and 
-I want fetch made in (2) get all info contained in (1) . I talk only about 'master' here. git push from (1) to (2) does the job, but git fetch in (1) updates only origin/master, and not master.
-I also found that there is a notions of current branch in bare repository (master in my case), that stops my experiments of deleting master and making new master out of origin/master.
-How can I change current branch in bare repositry?
- 
-2) I read that git rebase used 'git am' internally. How can  force git am/apply to create conflicts like rebase does in form
- 
-<<<<<<old
-dksjfd
-========
->>>>>jfkjdfkd
- 
-instead of *.rej files 
+Hi,
 
-Best regard, Konstantin
+It seems like the --summary option only works in combination --stat.
+
+It doesn't seem to work if I use it by itself, nor in combination with
+--name-status or --num-stat. And depending on the order, it either
+does nothing, or causes a usage note.
+
+Is this intentional? If so, could it be reconsidered?  At the very
+least in combination with --name-status and by itself, I can kind of
+understand it not working with --numstat
+
+Ive tested with two gits, and it seems to be the same in both:
+
+git version 1.7.2.1 and git version 1.7.3.2.168.gd6b63
+
+Cheers,
+yves
+
+$ git diff --summary --stat HEAD^
+ somefile |   14 ++++++++++++--
+ 1 files changed, 12 insertions(+), 2 deletions(-)
+$ git diff --summary HEAD^
+$ git diff --summary --numstat HEAD^
+12      2       somefile
+$ git diff --summary --name-status HEAD^
+M       somefile
+$ git diff --name-status --sumary HEAD^
+usage: git diff <options> <rev>{0,2} -- <path>*
+$ git diff --numstat --sumary HEAD^
+usage: git diff <options> <rev>{0,2} -- <path>*
+
+
+
+-- 
+perl -Mre=debug -e "/just|another|perl|hacker/"
