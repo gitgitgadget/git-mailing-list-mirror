@@ -1,118 +1,76 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCHv3] parse-remote: handle detached HEAD
-Date: Mon, 06 Dec 2010 08:03:46 -0800
-Message-ID: <7vr5dusxb1.fsf@alter.siamese.dyndns.org>
-References: <7vfwubtw1g.fsf@alter.siamese.dyndns.org>
- <1291630811-16584-1-git-send-email-santi@agolina.net>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [ANNOUNCE] Git 1.7.3.3
+Date: Mon, 6 Dec 2010 17:51:18 +0100
+Message-ID: <AANLkTikqXU18wpBvB0rLB2OjUrDPyOzJh9fn4ohzLZWc@mail.gmail.com>
+References: <7vk4jrppeu.fsf@alter.siamese.dyndns.org>
+	<7vy682syya.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
-To: Santi =?utf-8?Q?B=C3=A9jar?= <santi@agolina.net>
-X-From: git-owner@vger.kernel.org Mon Dec 06 17:04:21 2010
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 06 17:51:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPdXx-0003cU-VJ
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 17:04:14 +0100
+	id 1PPeHg-0005i1-DK
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 17:51:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753645Ab0LFQD7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Dec 2010 11:03:59 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61378 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753632Ab0LFQD6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Dec 2010 11:03:58 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 82A39313A;
-	Mon,  6 Dec 2010 11:04:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=/HAvFnevsuZd
-	2q9tyA5hfdYSjzU=; b=ghQ3TqycBAvSPgRNRf1fDZ2ZmaGFiSNSHngqtBAPqWAM
-	Mvl4UcLXDifjjlq2TD77IT9yD2T1NGcoPxhpDbTzLI4AtL5La97eZKxDErzYay6F
-	G547owwxxA3tILv8jpJrGLmyvcpYr2l2T8N9rjYWUR/BMr5GTIBHatTDqN2Bhk4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=QozSl2
-	sTy4q6EsIWav834JmUSIT2c6s9P4vQFBeJxbM9OiTBvArJ3mK6s5T8w3hZTOln5L
-	O6aeXHbkmnnQDF6dJ5DIOHSpAVs7jol5NgZ6cN7GKaYLcTY4Ko0gACWLSIrBVZk9
-	sVgqLW/NIrd4MZeCsdXgBrzeg56G0aRvadcWU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 38AD13132;
-	Mon,  6 Dec 2010 11:04:16 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B806E3130; Mon,  6 Dec 2010
- 11:04:11 -0500 (EST)
-In-Reply-To: <1291630811-16584-1-git-send-email-santi@agolina.net> ("Santi
- =?utf-8?Q?B=C3=A9jar=22's?= message of "Mon\,  6 Dec 2010 11\:20\:11 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 79B46B9A-0152-11E0-8FD5-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1752951Ab0LFQvU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Dec 2010 11:51:20 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:47404 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752052Ab0LFQvT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Dec 2010 11:51:19 -0500
+Received: by fxm20 with SMTP id 20so4370512fxm.19
+        for <git@vger.kernel.org>; Mon, 06 Dec 2010 08:51:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=l0/R1xbpX8DlzGio5zAN59++Ih4bVMaciImbaa8CBbw=;
+        b=nlbOkYjUyXRAI5OGBFLnF/M6nEPro/z8Pm2eipDW6D0iVT+NQllYd63bQXDM/AsED4
+         Xpwy2iOrrH4QpwboqJW2PxOHeGvcmwQXH7HzH3aUQ0niqH8cLREk3q0nQWy4HYFHa/bv
+         r49ojnot+ZVNSwdAHiCIEkVOv7Dhc5nUDr7Zw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=e6VpBGjFbk8q2uZ3INmgMMOaDQyzOVTJtaTS9iMFP38De9LKdM7vxaTwBfa1eLM92J
+         y+/TrzKGMXBsyLbhrrxirPyas2IoYWfFZTr48wriLhTLUCCzO/FcSCytQ6YHSF3RYQC4
+         3OBb9ycXxLCcvuSbgbMStPVK87FP+WMEJyG/E=
+Received: by 10.223.122.196 with SMTP id m4mr1329395far.123.1291654278634;
+ Mon, 06 Dec 2010 08:51:18 -0800 (PST)
+Received: by 10.223.74.207 with HTTP; Mon, 6 Dec 2010 08:51:18 -0800 (PST)
+In-Reply-To: <7vy682syya.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162997>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162998>
 
-Santi B=C3=A9jar <santi@agolina.net> writes:
+On Mon, Dec 6, 2010 at 16:28, Junio C Hamano <gitster@pobox.com> wrote:
+> The latest maintenance release Git 1.7.3.3 is available at the
+> usual places:
 
-> get_remote_merge_branch with zero or one arguments returns the
-> upstream branch. But a detached HEAD does no have an upstream branch,
-> as it is not tracking anything. Handle this case testing the exit cod=
-e
-> of "git symbolic-ref -q HEAD".
->
-> Reported-by: Sverre Rabbelier <srabbelier@gmail.com>
-> Signed-off-by: Santi B=C3=A9jar <santi@agolina.net>
-> ---
->
->> If that is the case, shouldn't we be not calling "echo" at all to be=
-gin
->> with?  IOW, shouldn't the code read more like this?
->>
->>        curr_branch=3D$(git symbolic-ref -q HEAD) &&
->>        test "$origin" =3D "$default" &&
->>        echo ...
->
-> Or course, you are right. I didn't know/think about the exit
-> code... Thanks.
+\o/
 
-The calling codepath in git-pull that wants to determine remoteref and
-oldremoteref seems to expect get-remote-merge-branch to succeed in orde=
-r
-to find its $oldremoteref variable, and returning false in detached HEA=
-D
-case here will change what happens there---it won't run "rev-list -g"
-anymore and quits the codepath early, leaving the variable empty.
+> =C2=A0* "git-blame" mode (in contrib/emacs) didn't say (require 'form=
+at-spec)
+> =C2=A0 even though it depends on it; it didn't work with Emacs 22 or =
+older
+> =C2=A0 unless Gnus is used.
 
-But we do want to set the variable to an empty string in this case anyw=
-ay,
-so there is no harm done (it probably is what we actually want to happe=
-n).
+Was it Gnus in particular for some reason. Or just anything that
+incidentally loaded format-spec.el ?
 
-So this should be Ok.  Sverre, do you want to do another round of testi=
-ng
-just to be sure before I apply this?
-
-> Santi
->
->  git-parse-remote.sh |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-> index 5f47b18..4da72ae 100644
-> --- a/git-parse-remote.sh
-> +++ b/git-parse-remote.sh
-> @@ -66,7 +66,7 @@ get_remote_merge_branch () {
->  	    origin=3D"$1"
->  	    default=3D$(get_default_remote)
->  	    test -z "$origin" && origin=3D$default
-> -	    curr_branch=3D$(git symbolic-ref -q HEAD)
-> +	    curr_branch=3D$(git symbolic-ref -q HEAD) &&
->  	    [ "$origin" =3D "$default" ] &&
->  	    echo $(git for-each-ref --format=3D'%(upstream)' $curr_branch)
->  	    ;;
-> --=20
-> 1.7.3.3.399.g0d2be.dirty
+emacs.git $ git --no-pager grep "(require 'format-spec)"
+lisp/erc/erc-compat.el:(require 'format-spec)
+lisp/gnus/gnus-sieve.el:(require 'format-spec)
+lisp/gnus/mail-source.el:(require 'format-spec)
+lisp/image-dired.el:(require 'format-spec)
+lisp/net/tramp-compat.el:  (require 'format-spec)
+lisp/org/org-docbook.el:(require 'format-spec)
