@@ -1,7 +1,7 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 05/24] gitweb/lib - Regenerate entry if the cache file has size of 0
-Date: Tue,  7 Dec 2010 00:10:50 +0100
-Message-ID: <1291677069-6559-6-git-send-email-jnareb@gmail.com>
+Subject: [PATCH/RFC 22/24] gitweb: Support legacy options used by kernel.org caching engine
+Date: Tue,  7 Dec 2010 00:11:07 +0100
+Message-ID: <1291677069-6559-23-git-send-email-jnareb@gmail.com>
 References: <1291677069-6559-1-git-send-email-jnareb@gmail.com>
 Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
 	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
@@ -17,80 +17,107 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPkM2-0003kw-RK
+	id 1PPkM3-0003kw-Bb
 	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 00:20:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754194Ab0LFXUO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Dec 2010 18:20:14 -0500
-Received: from mail-ew0-f45.google.com ([209.85.215.45]:54993 "EHLO
-	mail-ew0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754151Ab0LFXUN (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1754180Ab0LFXUN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 6 Dec 2010 18:20:13 -0500
-Received: by ewy10 with SMTP id 10so7585538ewy.4
+Received: from mail-ew0-f45.google.com ([209.85.215.45]:58044 "EHLO
+	mail-ew0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753837Ab0LFXUM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Dec 2010 18:20:12 -0500
+Received: by mail-ew0-f45.google.com with SMTP id 10so7585290ewy.4
         for <git@vger.kernel.org>; Mon, 06 Dec 2010 15:20:11 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=ipBsaVNGET4DjAgVg7w3eXv2WHSEXhaOos7q+ti4lzU=;
-        b=O5xQ+kD0zwgQUQ+GUhnpA1BThODDfHrgF1Mqrh23mUWemdG7KBR2Nl6QLQaJesqV9g
-         3sR6181Z0TbDA38o+C1Ur4GZdv00LsrgAIpiIfmG5z/52C9p8bforAY/egJeoe/byUon
-         q4SfiUIxEaoMSxx2rI9QsRDboFyJfoekChxJ4=
+        bh=/3DergsPcYY5aII1HMbGw4q4Ce3crpQAGirXQQA1T6c=;
+        b=BilF0ayKPp+VeDw32RCrz+xR0zTNFRYLgJ/Lu5A68k/imz6bo/n8mb7IXv8Ugzdwd+
+         LTeEhjA5KELBC8A6s/uQmmfFA9Emu4CFL3ZcAjs3trBUjWEe5RJ+qmV531SG3PSplGqL
+         pqoE9DKA626rJJl7ochNXOQLzqPtc1Z6H69mA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=W9nrBvDKdxEVrqhnu4d/x9c6zTbVSVNiItZJf+yfNVwnrBRG2iVt10ay9tViVVEQZM
-         anoEbZrn+NEAHcUGd94eQWBfDqLgZ3mHbliU3nUQEOzBafcKitaXz2issYq+G27AwNsf
-         8GxXb2/toGoJh0HvOqj0OiicdRHhu+kXkgs8Y=
-Received: by 10.213.14.145 with SMTP id g17mr6607013eba.77.1291677115138;
-        Mon, 06 Dec 2010 15:11:55 -0800 (PST)
+        b=u2r43M1/dyedd4w/+T9HXQwmRSveSlWPCQS1yes/3otZPh9BTsYEaAYzO9QPl7G5AS
+         Bu77N3wgQ074YwPLW2Iiv4hEI9W+hQ2OsvdC1zHJX1nSFY6QteKYvjW4IdzS/3qhvXPc
+         y0TVCyFdzlhAjkOwwn5xcB57JChs0dDLyI7fg=
+Received: by 10.213.4.84 with SMTP id 20mr106028ebq.74.1291677156779;
+        Mon, 06 Dec 2010 15:12:36 -0800 (PST)
 Received: from localhost.localdomain (abwg200.neoplus.adsl.tpnet.pl [83.8.230.200])
-        by mx.google.com with ESMTPS id y5sm5190626eeh.22.2010.12.06.15.11.53
+        by mx.google.com with ESMTPS id y5sm5190626eeh.22.2010.12.06.15.12.34
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 06 Dec 2010 15:11:54 -0800 (PST)
+        Mon, 06 Dec 2010 15:12:36 -0800 (PST)
 X-Mailer: git-send-email 1.7.3
 In-Reply-To: <1291677069-6559-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163058>
 
-If the file representing cache entry has size 0 (in bytes), the cache
-entry is considered invalid, regardless of its freshness, even if cache
-expiration is turned off.
+Try to translate between config variables used by gitweb caching
+patches[1] by John 'Warthog9' Hawley (J.H.) used, among others, by
+git.kernel.org, and new %cache_options options, but only if the legacy
+config variables were set in the config file.
 
-[jh: This is a quick, and thankfully easy, check to regenerate the
-cache if the resulting file is of size 0.  This *SHOULDN'T* happen,
-but it is possible that it could and thus adding the check.]
+Note that $cache_enable is *not* translated to $caching_enabled.
 
-Based-on-commit-by: John 'Warthog9' Hawley <warthog9@eaglescrag.net>
+Footnotes:
+~~~~~~~~~~
+[1] See for example "Gitweb caching v7" thread on git mailing list:
+    http://thread.gmane.org/gmane.comp.version-control.git/160147
+
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-This patch is unchanged from previos version of this series.
+This patch was not present in previous version of this series.
 
-It is inspired by commit 22eb7af (Gitweb - Regenerate the cache if the
-resulting file has size of 0, 2010-09-23) on 'master' branch of
-git/warthog9/gitweb.git repository on git.kernel.org
+The drawback of this patch is that if any legacy config variable is set
+in config file, then any change to %cache_options covering the same area
+as legacy config variable would be ignored.  I don't see a better
+solution, unless we can somehow check if value of %cache_options was
+changed via gitweb config file.
 
-The "gitweb: File based caching layer (from git.kernel.org)" in
-"Gitweb caching v7" by J.H. incudes the same test.
+I wonder how useful this patch would be; do people using caching from
+"Gitweb caching v7" (caching feom git.kernel.org) configure it, or do
+they use default configuration?
 
- gitweb/lib/GitwebCache/SimpleFileCache.pm |    2 ++
- 1 files changed, 2 insertions(+), 0 deletions(-)
+ gitweb/gitweb.perl |   16 ++++++++++++++++
+ 1 files changed, 16 insertions(+), 0 deletions(-)
 
-diff --git a/gitweb/lib/GitwebCache/SimpleFileCache.pm b/gitweb/lib/GitwebCache/SimpleFileCache.pm
-index 790383d..bf74f7c 100644
---- a/gitweb/lib/GitwebCache/SimpleFileCache.pm
-+++ b/gitweb/lib/GitwebCache/SimpleFileCache.pm
-@@ -310,6 +310,8 @@ sub is_valid {
- 	# get its modification time
- 	my $mtime = (stat(_))[9] # _ to reuse stat structure used in -f test
- 		or die "Couldn't stat file '$path': $!";
-+	# cache entry is invalid if it is size 0 (in bytes)
-+	return 0 unless ((stat(_))[7] > 0);
- 
- 	# expire time can be set to never
- 	my $expires_in = $self->get_expires_in();
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 5904d27..1521bf2 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -284,6 +284,9 @@ our $caching_enabled = 0;
+ # Suggested mechanism:
+ # mv $cachedir $cachedir.flush && mkdir $cachedir && rm -rf $cachedir.flush
+ our $cache;
++
++# Legacy options configuring behavior of git.kernel.org caching
++our ($minCacheTime, $maxCacheTime, $cachedir, $backgroundCache, $maxCacheLife);
+ # You define site-wide cache options defaults here; override them with
+ # $GITWEB_CONFIG as necessary.
+ our %cache_options = (
+@@ -1363,6 +1366,19 @@ sub configure_caching {
+ 		$cache ||= 'GitwebCache::FileCacheWithLocking';
+ 		eval "require $cache";
+ 		die $@ if $@;
++
++		# support for legacy config variables configuring cache behavior
++		# (those variables are/were used by caching engine by John Hawley,
++		# used among others by custom gitweb at http://git.kernel.org);
++		# it assumes that if those variables are defined, then we should
++		# use them - no provision is made for having both legacy variables
++		# and new %cache_options set in config file(s).
++		$cache_options{'cache_root'} = $cachedir if defined $cachedir;
++		$cache_options{'expires_min'} = $minCacheTime if defined $minCacheTime;
++		$cache_options{'expires_max'} = $maxCacheTime if defined $maxCacheTime;
++		$cache_options{'background_cache'} = $backgroundCache if defined $backgroundCache;
++		$cache_options{'max_lifetime'} = $maxCacheLife if defined $maxCacheLife;
++
+ 		$cache = $cache->new({
+ 			%cache_options,
+ 			#'cache_root' => '/tmp/cache',
 -- 
 1.7.3
