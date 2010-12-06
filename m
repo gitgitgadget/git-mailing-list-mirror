@@ -1,208 +1,106 @@
-From: Anders Kaseorg <andersk@ksplice.com>
-Subject: =?UTF-8?Q?=5BPATCH=5D_describe=3A_Don=E2=80=99t_look_up_commits_with_--exact-match?=
-Date: Mon, 6 Dec 2010 02:22:15 -0500 (EST)
-Message-ID: <alpine.DEB.2.02.1012060221100.23348@dr-wily.mit.edu>
-References: <alpine.DEB.2.02.1011171830050.14285@dr-wily.mit.edu> <20101203084348.GD18202@burratino> <alpine.DEB.2.02.1012060149550.23348@dr-wily.mit.edu>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] describe: =?utf-8?B?RG9u4oCZ?= =?utf-8?Q?t?= look up
+ commits with --exact-match
+Date: Mon, 6 Dec 2010 01:32:14 -0600
+Message-ID: <20101206073214.GA3745@burratino>
+References: <alpine.DEB.2.02.1011171830050.14285@dr-wily.mit.edu>
+ <20101203084348.GD18202@burratino>
+ <alpine.DEB.2.02.1012060149550.23348@dr-wily.mit.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
 	Kirill Smelkov <kirr@mns.spb.ru>,
 	Thomas Rast <trast@student.ethz.ch>
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 06 08:22:26 2010
+To: Anders Kaseorg <andersk@ksplice.com>
+X-From: git-owner@vger.kernel.org Mon Dec 06 08:32:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPVOy-00037G-K7
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 08:22:25 +0100
+	id 1PPVYx-00068y-Vb
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 08:32:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750854Ab0LFHWT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Dec 2010 02:22:19 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:59134 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750748Ab0LFHWS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Dec 2010 02:22:18 -0500
-Received: by qwd7 with SMTP id 7so935768qwd.19
-        for <git@vger.kernel.org>; Sun, 05 Dec 2010 23:22:18 -0800 (PST)
-Received: by 10.229.88.213 with SMTP id b21mr3887345qcm.156.1291620137689;
-        Sun, 05 Dec 2010 23:22:17 -0800 (PST)
-Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
-        by mx.google.com with ESMTPS id k15sm3362498qcu.47.2010.12.05.23.22.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 05 Dec 2010 23:22:17 -0800 (PST)
-X-X-Sender: andersk@dr-wily.mit.edu
+	id S1751101Ab0LFHcj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Dec 2010 02:32:39 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:57584 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750748Ab0LFHci convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Dec 2010 02:32:38 -0500
+Received: by yxt3 with SMTP id 3so5306413yxt.19
+        for <git@vger.kernel.org>; Sun, 05 Dec 2010 23:32:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=ORRZLQorhC/VZqWP9+QfjxFal0bscSKk6RVdQHEjHg4=;
+        b=Lhgm4M92Ueb2ISHH2uyETREutdzBb/wF12DBJUrUAGGsGFhtDq3NoSCpt4uAMhR4r1
+         XhlBDF70MFdhm6BNIVU0frdBjAFiW5K4BfvfwN89PLnB84ZLiTYEzBnmEQcS2aG//zJp
+         rTl1qfNWKq330KQ/GY4cNPa5vN/Lulmmxa+j8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=CSwl1M2M7ORADefL7lCJY4TOCx0lYtkDWhKTTg2FdEM9AgfURZ/HfjcKyJlkWXq/5S
+         UNNms2/LmLG9z5uWA5CTE3G61yzsONEpq3wgZx+qq3JD42rGGr0SN6jDXkKbKq3dkA73
+         bmLq0LSYqw1j9+lZrZKvUaHMIgB9j7WlTFjho=
+Received: by 10.90.31.16 with SMTP id e16mr7442886age.21.1291620757511;
+        Sun, 05 Dec 2010 23:32:37 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
+        by mx.google.com with ESMTPS id v18sm2949677yhg.15.2010.12.05.23.32.35
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 05 Dec 2010 23:32:36 -0800 (PST)
+Content-Disposition: inline
 In-Reply-To: <alpine.DEB.2.02.1012060149550.23348@dr-wily.mit.edu>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162978>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162979>
 
-This makes =E2=80=98git describe --exact-match HEAD=E2=80=99 about 15 t=
-imes faster on
-a cold cache (2.3s instead of 35s) in a linux-2.6 repository with many
-packed tags.  That=E2=80=99s a huge win for the interactivity of the __=
-git_ps1
-shell prompt helper.
+Anders Kaseorg wrote:
+> On Fri, 3 Dec 2010, Jonathan Nieder wrote:
 
-Signed-off-by: Anders Kaseorg <andersk@mit.edu>
----
- builtin/describe.c |   64 ++++++++++++++++++++++++++------------------=
--------
- 1 files changed, 33 insertions(+), 31 deletions(-)
+>> Instead of looking up the commit to be matched exactly in the commit=
+s
+>> hash table, this makes a linear search.
+[...]
+> I don=E2=80=99t think it=E2=80=99s ever a problem: in my repository w=
+ith 1800 tags on a=20
+> warm cache, that loop accounts for about 0.1% of even the fastest=20
+> non-exact-match query (a commit right after a tag).
 
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 43caff2..0cddef1 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -22,7 +22,7 @@ static int tags;	/* Allow lightweight tags */
- static int longformat;
- static int abbrev =3D DEFAULT_ABBREV;
- static int max_candidates =3D 10;
--static int found_names;
-+static struct commit_name *names;
- static const char *pattern;
- static int always;
- static const char *dirty;
-@@ -34,6 +34,8 @@ static const char *diff_index_args[] =3D {
-=20
-=20
- struct commit_name {
-+	struct commit_name *next;
-+	unsigned char peeled[20];
- 	struct tag *tag;
- 	unsigned prio:2; /* annotated tag =3D 2, tag =3D 1, head =3D 0 */
- 	unsigned name_checked:1;
-@@ -78,31 +80,26 @@ static int replace_name(struct commit_name *e,
- }
-=20
- static void add_to_known_names(const char *path,
--			       struct commit *commit,
-+			       const unsigned char *peeled,
- 			       int prio,
- 			       const unsigned char *sha1)
- {
--	struct commit_name *e =3D commit->util;
- 	struct tag *tag =3D NULL;
--	if (replace_name(e, prio, sha1, &tag)) {
--		size_t len =3D strlen(path)+1;
--		free(e);
--		e =3D xmalloc(sizeof(struct commit_name) + len);
--		e->tag =3D tag;
--		e->prio =3D prio;
--		e->name_checked =3D 0;
--		hashcpy(e->sha1, sha1);
--		memcpy(e->path, path, len);
--		commit->util =3D e;
--	}
--	found_names =3D 1;
-+	size_t len =3D strlen(path)+1;
-+	struct commit_name *e =3D xmalloc(sizeof(struct commit_name) + len);
-+	hashcpy(e->peeled, peeled);
-+	e->tag =3D tag;
-+	e->prio =3D prio;
-+	e->name_checked =3D 0;
-+	hashcpy(e->sha1, sha1);
-+	memcpy(e->path, path, len);
-+	e->next =3D names;
-+	names =3D e;
- }
-=20
- static int get_name(const char *path, const unsigned char *sha1, int f=
-lag, void *cb_data)
- {
- 	int might_be_tag =3D !prefixcmp(path, "refs/tags/");
--	struct commit *commit;
--	struct object *object;
- 	unsigned char peeled[20];
- 	int is_tag, prio;
-=20
-@@ -110,16 +107,10 @@ static int get_name(const char *path, const unsig=
-ned char *sha1, int flag, void
- 		return 0;
-=20
- 	if (!peel_ref(path, peeled) && !is_null_sha1(peeled)) {
--		commit =3D lookup_commit_reference_gently(peeled, 1);
--		if (!commit)
--			return 0;
--		is_tag =3D !!hashcmp(sha1, commit->object.sha1);
-+		is_tag =3D !!hashcmp(sha1, peeled);
- 	} else {
--		commit =3D lookup_commit_reference_gently(sha1, 1);
--		object =3D parse_object(sha1);
--		if (!commit || !object)
--			return 0;
--		is_tag =3D object->type =3D=3D OBJ_TAG;
-+		hashcpy(peeled, sha1);
-+		is_tag =3D 0;
- 	}
-=20
- 	/* If --all, then any refs are used.
-@@ -142,7 +133,7 @@ static int get_name(const char *path, const unsigne=
-d char *sha1, int flag, void
- 		if (!prio)
- 			return 0;
- 	}
--	add_to_known_names(all ? path + 5 : path + 10, commit, prio, sha1);
-+	add_to_known_names(all ? path + 5 : path + 10, peeled, prio, sha1);
- 	return 0;
- }
-=20
-@@ -228,7 +219,7 @@ static void describe(const char *arg, int last_one)
- 	unsigned char sha1[20];
- 	struct commit *cmit, *gave_up_on =3D NULL;
- 	struct commit_list *list;
--	struct commit_name *n;
-+	struct commit_name *n, *e;
- 	struct possible_tag all_matches[MAX_TAGS];
- 	unsigned int match_cnt =3D 0, annotated_cnt =3D 0, cur_match;
- 	unsigned long seen_commits =3D 0;
-@@ -240,7 +231,12 @@ static void describe(const char *arg, int last_one=
-)
- 	if (!cmit)
- 		die("%s is not a valid '%s' object", arg, commit_type);
-=20
--	n =3D cmit->util;
-+	n =3D NULL;
-+	for (e =3D names; e; e =3D e->next) {
-+		if (!hashcmp(e->peeled, cmit->object.sha1) &&
-+		    replace_name(n, e->prio, e->sha1, &e->tag))
-+			n =3D e;
-+	}
- 	if (n && (tags || all || n->prio =3D=3D 2)) {
- 		/*
- 		 * Exact match to an existing ref.
-@@ -259,6 +255,12 @@ static void describe(const char *arg, int last_one=
-)
- 	if (debug)
- 		fprintf(stderr, "searching to describe %s\n", arg);
-=20
-+	for (e =3D names; e; e =3D e->next) {
-+		struct commit *c =3D lookup_commit_reference_gently(e->peeled, 1);
-+		if (c && replace_name(c->util, e->prio, e->sha1, &e->tag))
-+			c->util =3D e;
-+	}
-+
- 	list =3D NULL;
- 	cmit->object.flags =3D SEEN;
- 	commit_list_insert(cmit, &list);
-@@ -418,8 +420,8 @@ int cmd_describe(int argc, const char **argv, const=
- char *prefix)
- 		return cmd_name_rev(i + argc, args, prefix);
- 	}
-=20
--	for_each_ref(get_name, NULL);
--	if (!found_names && !always)
-+	for_each_rawref(get_name, NULL);
-+	if (!names && !always)
- 		die("No names found, cannot describe anything.");
-=20
- 	if (argc =3D=3D 0) {
---=20
-1.7.3.2
+Thanks for checking.  Makes sense.
+
+>>> -	for_each_ref(get_name, NULL);
+>>> +	for_each_rawref(get_name, NULL);
+>>
+>> Orthogonal change snuck in?
+>
+> This does fall under the category of =E2=80=9CDon=E2=80=99t lookup co=
+mmits,=E2=80=9D and is=20
+> necessary to get the speedup (otherwise for_each_ref has already look=
+ed up=20
+> the commits that the rest of the patch is trying to avoid looking up)=
+=2E =20
+
+Depends on what "Don't lookup commits" means, I suppose.  I
+think the difference between _ref and _rawref is
+
+      if (!(flags & DO_FOR_EACH_INCLUDE_BROKEN)) {
+            if (entry->flag & REF_BROKEN)
+                  return 0; /* ignore dangling symref */
+            if (!has_sha1_file(entry->sha1)) {
+                  error("%s does not point to a valid object!", entry->=
+name);
+                  return 0;
+            }
+      }
+
+so if I understand correctly, for_each_ref would still allow one to
+get away without unpacking the objects.  Is that correct?
