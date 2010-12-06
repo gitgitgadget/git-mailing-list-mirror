@@ -1,7 +1,7 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH 03/24] gitweb/lib - Very simple file based cache
-Date: Tue,  7 Dec 2010 00:10:48 +0100
-Message-ID: <1291677069-6559-4-git-send-email-jnareb@gmail.com>
+Subject: [PATCH/RFC 20/24] gitweb/lib - Add support for setting error handler in cache
+Date: Tue,  7 Dec 2010 00:11:05 +0100
+Message-ID: <1291677069-6559-21-git-send-email-jnareb@gmail.com>
 References: <1291677069-6559-1-git-send-email-jnareb@gmail.com>
 Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
 	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
@@ -11,587 +11,473 @@ Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
 	Thomas Adam <thomas@xteddy.org>,
 	Jakub Narebski <jnareb@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 07 00:19:13 2010
+X-From: git-owner@vger.kernel.org Tue Dec 07 00:19:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPkKs-0003Bh-2w
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 00:19:10 +0100
+	id 1PPkL3-0003IR-QB
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 00:19:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753709Ab0LFXTE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Dec 2010 18:19:04 -0500
+	id S1753991Ab0LFXTK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Dec 2010 18:19:10 -0500
 Received: from mail-ey0-f171.google.com ([209.85.215.171]:52756 "EHLO
 	mail-ey0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753638Ab0LFXTB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Dec 2010 18:19:01 -0500
-Received: by eyg5 with SMTP id 5so8019446eyg.2
-        for <git@vger.kernel.org>; Mon, 06 Dec 2010 15:19:00 -0800 (PST)
+	with ESMTP id S1753837Ab0LFXTJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Dec 2010 18:19:09 -0500
+Received: by mail-ey0-f171.google.com with SMTP id 5so8019446eyg.2
+        for <git@vger.kernel.org>; Mon, 06 Dec 2010 15:19:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=vpOiihVE4yakECVtLBeJNQ6TndUVaASZXbSuYpuA5ic=;
-        b=rK27oPbm8LEVKVQGHBiv2SllFA20t5D74Vr2m+x+lR2J5MAhlQE8qz2Zlr5SCBeq8H
-         ld4xwglnncwtVApotng0PSUyJz/LGFuNA424z/813TfnyeiCcUtJivqhpMFmJeyeD1tx
-         44EjjY5QD7/m/TAJb+dJdeKp5aSnItoEltB8I=
+        bh=JAulONxyCu2zR0U69x+eZvJ6h0vvhwXb21//CjCQjJ0=;
+        b=a73MkCYFWQlAdHyDdpoSsg4FKjgQSdl1SzNHhZLVyW6LFl2l/GiHCpXcbhBt/46JJo
+         ApAAYD21XUx6lDyq3bhQQaDU69SlGnzKy+vOnvEsHC0OI1RQXnAn/JRB68icdGNa9GVE
+         pBQSaT1XLzChO89qox4+ZGXYlsvLY/gh9OewA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=M+cOxvHyHIlG+EXCZXOFXF2upRAxzbLV5ixth/UTMJ5MCV4d6CfEettLrzzSJZYzgS
-         abvLQnKgAMjSwNwADky+cOq/jOWDSt4n9kj0dCQ7GUDMJQ+8GRWiXuv4rLDdnCmuDL9/
-         Hk9sc9fLvi6F0tX9GAURvqLNs9jWcMiTWOsZw=
-Received: by 10.213.2.209 with SMTP id 17mr144296ebk.37.1291677108178;
-        Mon, 06 Dec 2010 15:11:48 -0800 (PST)
+        b=ui5Nj9rDkKZUlGnDIKiJVYg5CHLTKqGUBLRJ9sEGI8tHkhYPzgVLR29Uz9J11R2gvQ
+         Q2RRH0UzvOQ2LeRliJQI3eC39z9hQ8PIaeWME8xBJHBIZ/ondcx1G/TlsPOwj0JR2t29
+         rkD3FOfmyShstdHLY9dKkkP7urBAmv6TLEej8=
+Received: by 10.213.3.20 with SMTP id 20mr5046143ebl.89.1291677152465;
+        Mon, 06 Dec 2010 15:12:32 -0800 (PST)
 Received: from localhost.localdomain (abwg200.neoplus.adsl.tpnet.pl [83.8.230.200])
-        by mx.google.com with ESMTPS id y5sm5190626eeh.22.2010.12.06.15.11.44
+        by mx.google.com with ESMTPS id y5sm5190626eeh.22.2010.12.06.15.12.27
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 06 Dec 2010 15:11:46 -0800 (PST)
+        Mon, 06 Dec 2010 15:12:31 -0800 (PST)
 X-Mailer: git-send-email 1.7.3
 In-Reply-To: <1291677069-6559-1-git-send-email-jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163054>
 
-This is first step towards implementing file based output (response)
-caching layer that is used on such large sites as kernel.org.
+GitwebCache::SimpleFileCache and GitwebCache::FileCacheWithLocking
+acquired support for 'on_error'/'error_handler' parameter, which
+accepts the same values as 'on_get_error' and 'on_set_error' option in
+CHI, with exception of support for "log".  The default is "die" (as it
+was before), though it now uses "croak" from Carp, rather than plain
+"die".
 
-This patch introduces GitwebCaching::SimpleFileCache package, which
-follows Cache::Cache / CHI interface, although do not implement it
-fully.  The intent of following established convention for cache
-interface is to be able to replace our simple file based cache,
-e.g. by the one using memcached.
-
-The data is stored in the cache as-is, without adding metadata (like
-expiration date), and without serialization (which means that one can
-store only scalar data).  At this point there is no support for
-expiring cache entries.
+Added basic test for 'on_error' in t9503: setting it to error handler
+that dies, and setting it to 'ignore'.
 
 
-The code of GitwebCaching::SimpleFileCache package in gitweb/lib
-was heavily based on file-based cache in Cache::Cache package, i.e.
-on Cache::FileCache, Cache::FileBackend and Cache::BaseCache, and on
-file-based cache in CHI, i.e. on CHI::Driver::File and CHI::Driver
-(including implementing atomic write, something that original patch
-lacks).  It tries to follow more modern CHI architecture, but without
-requiring Moose.  It is much simplified compared to both interfaces
-and their file-based drivers.
+The way error handler coderef is invoked is slightly different from
+the way CHI does it: the error handler doesn't pass key and raw error
+message as subsequent parameters.
 
-This patch does not yet enable output caching in gitweb (it doesn't
-have all required features yet); on the other hand it includes tests
-of cache Perl API in t/t9503-gitweb-caching-interface.sh.
+Because '$self->_handle_error($msg)' is used in place of 'die $msg',
+read_file and write_fh subroutines had to be converted to methods, to
+have access to $self.  Alternate solution would be to catch errors
+using "eval BLOCK" in ->get() and ->set() etc., like in CHI::Driver.
 
-Inspired-by-code-by: John 'Warthog9' Hawley <warthog9@kernel.org>
+Note that external subroutines that croak()/die() on error (like
+'mkpath' or 'tempfile') are now wrapped in eval block (this would be
+not necessary if alternate solution described above was used).
+
+
+While at it refactor ensuring that directory exists (for opening file
+for writing, possibly creating it) into ->ensure_path($dir) method.
+
 Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 ---
-This version is cleaned up from remainders of old-style code inspired
-by code in Cach::Cache distribution, and of cargo-culted code from
-examples in Perl documentation; it uses more modern Perl coding
-conventions.  Therefore it has significantly less warnings from
-Perl::Critic (though they are not eliminated entirely).
+This and the next patch are new and were not present in previous version
+of this series.  That is why this and next patch are marked as RFC.
 
-Contrary to some earlier versions we do not try to be operating system
-agnostic by using File::Spec; concatenating paths with '/' taken as
-directory separator is faster, and that is what gitweb uses anyway.
+The way CHI does it, by wrapping commands in eval { ... } (or using
+Try::Tiny) in ->get, ->set (and in our case also ->compute and
+->compute_fh, as those no longer are defined in term of ->get and ->set,
+or ->get/->set-like operations) could be a better solution.  Some
+dicsussion / thinking on it is required.
 
-Note that writing to cache entry file is done atomically via File::Temp
-and renaming file to final version.  This way we can ensure that gitweb
-wouldn't get halfway written file.  Use of File::Temp (which gives
-safety but unfortunately has negative impact on performance) will be
-made not necessary with introduction of locking.
 
-Because GitwebCache::SimpleFileCache (and its derivatives) use standard
-->new, ->get, ->set, ->compute methods / API / interface, then other
-caching engines such as Cache::Cache, Cache, CHI, Cache::Memcached or
-Cache::FastMmap can be used instead of this one.
+In "Gitweb caching v7" series cache.pl / cache.pm used die_error
+directly, and that is why it couldn't be a proper Perl module, and why
+it had to be loaded using 'do <file>' rather than 'require <package>'.
 
-Fast spew / fast slurp might be interesting, but they are obsoleted
-(unused) when redirecting output directly to cache entry file in later
-patch.
+Note however that compared to "Gitweb caching v7" in this patch we
+leak more, possibly sensitive, information like exact file that was
+attempted to open and location in source file.  OTOH it helps
+debugging errors in gitweb.
 
- gitweb/lib/GitwebCache/SimpleFileCache.pm |  336 +++++++++++++++++++++++++++++
- t/t9503-gitweb-caching-interface.sh       |   34 +++
- t/t9503/test_cache_interface.pl           |   85 ++++++++
- 3 files changed, 455 insertions(+), 0 deletions(-)
- create mode 100644 gitweb/lib/GitwebCache/SimpleFileCache.pm
- create mode 100755 t/t9503-gitweb-caching-interface.sh
- create mode 100755 t/t9503/test_cache_interface.pl
 
+Note that we might want to treat on_set_error and on_get_error
+differently, especially ENOSPC (No space left on device) on set.
+This is left for (optionally) the future commit.
+
+ gitweb/lib/GitwebCache/FileCacheWithLocking.pm |   25 ++++---
+ gitweb/lib/GitwebCache/SimpleFileCache.pm      |   88 +++++++++++++++++------
+ t/t9503/test_cache_interface.pl                |   44 ++++++++++++
+ 3 files changed, 124 insertions(+), 33 deletions(-)
+
+diff --git a/gitweb/lib/GitwebCache/FileCacheWithLocking.pm b/gitweb/lib/GitwebCache/FileCacheWithLocking.pm
+index 0823c55..d994b3a 100644
+--- a/gitweb/lib/GitwebCache/FileCacheWithLocking.pm
++++ b/gitweb/lib/GitwebCache/FileCacheWithLocking.pm
+@@ -63,6 +63,14 @@ use POSIX qw(setsid);
+ #  * 'increase_factor' [seconds / 100% CPU load]
+ #    Factor multiplying 'check_load' result when calculating cache lietime.
+ #    Defaults to 60 seconds for 100% SPU load ('check_load' returning 1.0).
++#  * 'on_error' (similar to CHI 'on_get_error'/'on_set_error')
++#    How to handle runtime errors occurring during cache gets and cache
++#    sets, which may or may not be considered fatal in your application.
++#    Options are:
++#    * "die" (the default) - call die() with an appropriate message
++#    * "warn" - call warn() with an appropriate message
++#    * "ignore" - do nothing
++#    * <coderef> - call this code reference with an appropriate message
+ #
+ # (all the above are inherited from GitwebCache::SimpleFileCache)
+ #
+@@ -155,10 +163,7 @@ sub get_lockname {
+ 	my $lockfile = $self->path_to_key($key, \my $dir) . '.lock';
+ 
+ 	# ensure that directory leading to lockfile exists
+-	if (!-d $dir) {
+-		eval { mkpath($dir, 0, 0777); 1 }
+-			or die "Couldn't mkpath '$dir' for lockfile: $!";
+-	}
++	$self->ensure_path($dir);
+ 
+ 	return $lockfile;
+ }
+@@ -174,7 +179,7 @@ sub _tempfile_to_path {
+ 
+ 	my $tempname = "$file.tmp";
+ 	open my $temp_fh, '>', $tempname
+-		or die "Couldn't open temporary file '$tempname' for writing: $!";
++		or $self->_handle_error("Couldn't open temporary file '$tempname' for writing: $!");
+ 
+ 	return ($temp_fh, $tempname);
+ }
+@@ -199,10 +204,10 @@ sub _wait_for_data {
+ 	if ($fetch_locked) {
+ 		@result = $fetch_code->();
+ 		close $lock_fh
+-			or die "Could't close lockfile '$lockfile': $!";
++			or $self->_handle_error("Could't close lockfile '$lockfile': $!");
+ 	} else {
+ 		close $lock_fh
+-			or die "Could't close lockfile '$lockfile': $!";
++			or $self->_handle_error("Could't close lockfile '$lockfile': $!");
+ 		@result = $fetch_code->();
+ 	}
+ 
+@@ -273,7 +278,7 @@ sub _compute_generic {
+ 	my $lock_state; # needed for loop condition
+ 	do {
+ 		open my $lock_fh, '+>', $lockfile
+-			or die "Could't open lockfile '$lockfile': $!";
++			or $self->_handle_error("Could't open lockfile '$lockfile': $!");
+ 
+ 		$lock_state = flock($lock_fh, LOCK_EX | LOCK_NB);
+ 		if ($lock_state) {
+@@ -282,12 +287,12 @@ sub _compute_generic {
+ 
+ 			# closing lockfile releases writer lock
+ 			close $lock_fh
+-				or die "Could't close lockfile '$lockfile': $!";
++				or $self->_handle_error("Could't close lockfile '$lockfile': $!");
+ 
+ 			if (!@result) {
+ 				# wait for background process to finish generating data
+ 				open $lock_fh, '<', $lockfile
+-					or die "Couldn't reopen (for reading) lockfile '$lockfile': $!";
++					or $self->_handle_error("Couldn't reopen (for reading) lockfile '$lockfile': $!");
+ 
+ 				@result = $self->_wait_for_data($key, $lock_fh, $lockfile,
+ 				                                $fetch_code, $fetch_locked);
 diff --git a/gitweb/lib/GitwebCache/SimpleFileCache.pm b/gitweb/lib/GitwebCache/SimpleFileCache.pm
-new file mode 100644
-index 0000000..2f26a6c
---- /dev/null
+index 21ec434..8d0a6d9 100644
+--- a/gitweb/lib/GitwebCache/SimpleFileCache.pm
 +++ b/gitweb/lib/GitwebCache/SimpleFileCache.pm
-@@ -0,0 +1,336 @@
-+# gitweb - simple web interface to track changes in git repositories
-+#
-+# (C) 2006, John 'Warthog9' Hawley <warthog19@eaglescrag.net>
-+# (C) 2010, Jakub Narebski <jnareb@gmail.com>
-+#
-+# This program is licensed under the GPLv2
-+
-+#
-+# Gitweb caching engine, simple file-based cache
-+#
-+
-+# Minimalistic cache that stores data in the filesystem, without serialization
-+# and currently without any kind of cache expiration (all keys last forever till
-+# they got explicitely removed).
-+#
-+# It follows Cache::Cache and CHI interfaces (but does not implement it fully)
-+
-+package GitwebCache::SimpleFileCache;
-+
-+use strict;
-+use warnings;
-+
-+use File::Path qw(mkpath);
-+use File::Temp qw(tempfile);
-+use Digest::MD5 qw(md5_hex);
-+
-+# by default, the cache nests all entries on the filesystem single
-+# directory deep, i.e. '60/b725f10c9c85c70d97880dfe8191b3' for
-+# key name (key digest) 60b725f10c9c85c70d97880dfe8191b3.
-+#
-+our $DEFAULT_CACHE_DEPTH = 1;
-+
-+# by default, the root of the cache is located in 'cache'.
-+#
-+our $DEFAULT_CACHE_ROOT = "cache";
-+
-+# by default we don't use cache namespace (empty namespace);
-+# empty namespace does not allow for simple implementation of clear() method.
-+#
-+our $DEFAULT_NAMESPACE = '';
-+
-+# ......................................................................
-+# constructor
-+
-+# The options are set by passing in a reference to a hash containing
-+# any of the following keys:
-+#  * 'namespace'
-+#    The namespace associated with this cache.  This allows easy separation of
-+#    multiple, distinct caches without worrying about key collision.  Defaults
-+#    to $DEFAULT_NAMESPACE.
-+#  * 'cache_root' (Cache::FileCache compatibile),
-+#    'root_dir' (CHI::Driver::File compatibile),
-+#    The location in the filesystem that will hold the root of the cache.
-+#    Defaults to $DEFAULT_CACHE_ROOT.
-+#  * 'cache_depth' (Cache::FileCache compatibile),
-+#    'depth' (CHI::Driver::File compatibile),
-+#    The number of subdirectories deep to cache object item.  This should be
-+#    large enough that no cache directory has more than a few hundred objects.
-+#    Defaults to $DEFAULT_CACHE_DEPTH unless explicitly set.
-+sub new {
-+	my $class = shift;
-+	my %opts = ref $_[0] ? %{ $_[0] } : @_;
-+
-+	my $self = {};
-+	$self = bless($self, $class);
-+
-+	my ($root, $depth, $ns);
-+	if (%opts) {
-+		$root =
-+			$opts{'cache_root'} ||
-+			$opts{'root_dir'};
-+		$depth =
-+			$opts{'cache_depth'} ||
-+			$opts{'depth'};
-+		$ns = $opts{'namespace'};
-+	}
-+	$root  = $DEFAULT_CACHE_ROOT  unless defined($root);
-+	$depth = $DEFAULT_CACHE_DEPTH unless defined($depth);
-+	$ns    = $DEFAULT_NAMESPACE   unless defined($ns);
-+
-+	$self->set_root($root);
-+	$self->set_depth($depth);
-+	$self->set_namespace($ns);
-+
-+	return $self;
+@@ -20,6 +20,7 @@ package GitwebCache::SimpleFileCache;
+ use strict;
+ use warnings;
+ 
++use Carp;
+ use File::Path qw(mkpath);
+ use File::Temp qw(tempfile);
+ use Digest::MD5 qw(md5_hex);
+@@ -77,6 +78,14 @@ our $DEFAULT_NAMESPACE = '';
+ #  * 'increase_factor' [seconds / 100% CPU load]
+ #    Factor multiplying 'check_load' result when calculating cache lietime.
+ #    Defaults to 60 seconds for 100% SPU load ('check_load' returning 1.0).
++#  * 'on_error' (similar to CHI 'on_get_error'/'on_set_error')
++#    How to handle runtime errors occurring during cache gets and cache
++#    sets, which may or may not be considered fatal in your application.
++#    Options are:
++#    * "die" (the default) - call die() with an appropriate message
++#    * "warn" - call warn() with an appropriate message
++#    * "ignore" - do nothing
++#    * <coderef> - call this code reference with an appropriate message
+ sub new {
+ 	my $class = shift;
+ 	my %opts = ref $_[0] ? %{ $_[0] } : @_;
+@@ -86,6 +95,7 @@ sub new {
+ 
+ 	my ($root, $depth, $ns);
+ 	my ($expires_min, $expires_max, $increase_factor, $check_load);
++	my ($on_error);
+ 	if (%opts) {
+ 		$root =
+ 			$opts{'cache_root'} ||
+@@ -102,6 +112,11 @@ sub new {
+ 			$opts{'expires_max'};
+ 		$increase_factor = $opts{'expires_factor'};
+ 		$check_load      = $opts{'check_load'};
++		$on_error =
++			$opts{'on_error'} ||
++			$opts{'on_get_error'} ||
++			$opts{'on_set_error'} ||
++			$opts{'error_handler'};
+ 	}
+ 	$root  = $DEFAULT_CACHE_ROOT  unless defined($root);
+ 	$depth = $DEFAULT_CACHE_DEPTH unless defined($depth);
+@@ -111,6 +126,9 @@ sub new {
+ 		if (!defined($expires_max) && exists $opts{'expires_in'});
+ 	$expires_max = -1 unless (defined($expires_max));
+ 	$increase_factor = 60 unless defined($increase_factor);
++	$on_error = "die"
++		unless (defined $on_error &&
++		        (ref($on_error) eq 'CODE' || $on_error =~ /^die|warn|ignore$/));
+ 
+ 	$self->set_root($root);
+ 	$self->set_depth($depth);
+@@ -119,6 +137,7 @@ sub new {
+ 	$self->set_expires_max($expires_max);
+ 	$self->set_increase_factor($increase_factor);
+ 	$self->set_check_load($check_load);
++	$self->set_on_error($on_error);
+ 
+ 	return $self;
+ }
+@@ -131,7 +150,8 @@ sub new {
+ 
+ # creates get_depth() and set_depth($depth) etc. methods
+ foreach my $i (qw(depth root namespace
+-                  expires_min expires_max increase_factor check_load)) {
++                  expires_min expires_max increase_factor check_load
++                  on_error)) {
+ 	my $field = $i;
+ 	no strict 'refs';
+ 	*{"get_$field"} = sub {
+@@ -234,7 +254,7 @@ sub path_to_key {
+ }
+ 
+ sub read_file {
+-	my $filename = shift;
++	my ($self, $filename) = @_;
+ 
+ 	# Fast slurp, adapted from File::Slurp::read, with unnecessary options removed
+ 	# via CHI::Driver::File (from CHI-0.33)
+@@ -255,12 +275,12 @@ sub read_file {
+ 	}
+ 
+ 	close $read_fh
+-		or die "Couldn't close file '$filename' opened for reading: $!";
++		or $self->_handle_error("Couldn't close file '$filename' opened for reading: $!");
+ 	return $buf;
+ }
+ 
+ sub write_fh {
+-	my ($write_fh, $filename, $data) = @_;
++	my ($self, $write_fh, $filename, $data) = @_;
+ 
+ 	# Fast spew, adapted from File::Slurp::write, with unnecessary options removed
+ 	# via CHI::Driver::File (from CHI-0.33)
+@@ -278,7 +298,20 @@ sub write_fh {
+ 	}
+ 
+ 	close $write_fh
+-		or die "Couldn't close file '$filename' opened for writing: $!";
++		or $self->_handle_error("Couldn't close file '$filename' opened for writing: $!");
 +}
 +
++sub ensure_path {
++	my $self = shift;
++	my $dir = shift || return;
 +
-+# ......................................................................
-+# accessors
-+
-+# http://perldesignpatterns.com/perldesignpatterns.html#AccessorPattern
-+
-+# creates get_depth() and set_depth($depth) etc. methods
-+foreach my $i (qw(depth root namespace)) {
-+	my $field = $i;
-+	no strict 'refs';
-+	*{"get_$field"} = sub {
-+		my $self = shift;
-+		return $self->{$field};
-+	};
-+	*{"set_$field"} = sub {
-+		my ($self, $value) = @_;
-+		$self->{$field} = $value;
-+	};
-+}
-+
-+
-+# ----------------------------------------------------------------------
-+# utility functions and methods
-+
-+# Return root dir for namespace (lazily built, cached)
-+sub path_to_namespace {
-+	my ($self) = @_;
-+
-+	if (!exists $self->{'path_to_namespace'}) {
-+		if (defined $self->{'namespace'} &&
-+		    $self->{'namespace'} ne '') {
-+			$self->{'path_to_namespace'} = "$self->{'root'}/$self->{'namespace'}";
-+		} else {
-+			$self->{'path_to_namespace'} =  $self->{'root'};
-+		}
-+	}
-+	return $self->{'path_to_namespace'};
-+}
-+
-+# $path = $cache->path_to_key($key);
-+# $path = $cache->path_to_key($key, \$dir);
-+#
-+# Take an human readable key, and return file path.
-+# Puts dirname of file path in second argument, if it is provided.
-+sub path_to_key {
-+	my ($self, $key, $dir_ref) = @_;
-+
-+	my @paths = ( $self->path_to_namespace() );
-+
-+	# Create a unique (hashed) key from human readable key
-+	my $filename = md5_hex($key); # or $digester->add($key)->hexdigest();
-+
-+	# Split filename so that it have DEPTH subdirectories,
-+	# where each subdirectory has a two-letter name
-+	push @paths, unpack("(a2)[$self->{'depth'}] a*", $filename);
-+	$filename = pop @paths;
-+
-+	# Join paths together, computing dir separately if $dir_ref was passed.
-+	my $filepath;
-+	if (defined $dir_ref && ref($dir_ref)) {
-+		my $dir = join('/', @paths);
-+		$filepath = "$dir/$filename";
-+		$$dir_ref = $dir;
-+	} else {
-+		$filepath = join('/', @paths, $filename);
-+	}
-+
-+	return $filepath;
-+}
-+
-+sub read_file {
-+	my $filename = shift;
-+
-+	# Fast slurp, adapted from File::Slurp::read, with unnecessary options removed
-+	# via CHI::Driver::File (from CHI-0.33)
-+	my $buf = '';
-+	open my $read_fh, '<', $filename
-+		or return;
-+	binmode $read_fh, ':raw';
-+
-+	my $size_left = -s $read_fh;
-+
-+	while ($size_left > 0) {
-+		my $read_cnt = sysread($read_fh, $buf, $size_left, length($buf));
-+		return unless defined $read_cnt;
-+
-+		last if $read_cnt == 0;
-+		$size_left -= $read_cnt;
-+		#last if $size_left <= 0;
-+	}
-+
-+	close $read_fh
-+		or die "Couldn't close file '$filename' opened for reading: $!";
-+	return $buf;
-+}
-+
-+sub write_fh {
-+	my ($write_fh, $filename, $data) = @_;
-+
-+	# Fast spew, adapted from File::Slurp::write, with unnecessary options removed
-+	# via CHI::Driver::File (from CHI-0.33)
-+	binmode $write_fh, ':raw';
-+
-+	my $size_left = length($data);
-+	my $offset = 0;
-+
-+	while ($size_left > 0) {
-+		my $write_cnt = syswrite($write_fh, $data, $size_left, $offset);
-+		return unless defined $write_cnt;
-+
-+		$size_left -= $write_cnt;
-+		$offset += $write_cnt; # == length($data);
-+	}
-+
-+	close $write_fh
-+		or die "Couldn't close file '$filename' opened for writing: $!";
-+}
-+
-+# ----------------------------------------------------------------------
-+# "private" utility functions and methods
-+
-+# take a file path to cache entry, and its directory
-+# return filehandle and filename of open temporary file,
-+# like File::Temp::tempfile
-+sub _tempfile_to_path {
-+	my ($file, $dir) = @_;
-+
-+	# tempfile will croak() if there is an error
-+	return tempfile("${file}_XXXXX",
-+		#DIR => $dir,
-+		'UNLINK' => 0, # ensure that we don't unlink on close; file is renamed
-+		'SUFFIX' => '.tmp');
-+}
-+
-+
-+# ----------------------------------------------------------------------
-+# worker methods
-+
-+sub fetch {
-+	my ($self, $key) = @_;
-+
-+	my $file = $self->path_to_key($key);
-+	return unless (defined $file && -f $file);
-+
-+	return read_file($file);
-+}
-+
-+sub store {
-+	my ($self, $key, $data) = @_;
-+
-+	my $dir;
-+	my $file = $self->path_to_key($key, \$dir);
-+	return unless (defined $file && defined $dir);
-+
-+	# ensure that directory leading to cache file exists
 +	if (!-d $dir) {
 +		# mkpath will croak()/die() if there is an error
-+		mkpath($dir, 0, 0777);
++		eval {
++			mkpath($dir, 0, 0777);
++			1;
++		} or $self->_handle_error($@);
 +	}
+ }
+ 
+ # ----------------------------------------------------------------------
+@@ -291,12 +324,27 @@ sub _tempfile_to_path {
+ 	my ($self, $file, $dir) = @_;
+ 
+ 	# tempfile will croak() if there is an error
+-	return tempfile("${file}_XXXXX",
+-		#DIR => $dir,
+-		'UNLINK' => 0, # ensure that we don't unlink on close; file is renamed
+-		'SUFFIX' => '.tmp');
++	my ($temp_fh, $tempname);
++	eval {
++		($temp_fh, $tempname) = tempfile("${file}_XXXXX",
++			#DIR => $dir,
++			'UNLINK' => 0, # ensure that we don't unlink on close; file is renamed
++			'SUFFIX' => '.tmp');
++	} or $self->_handle_error($@);
++	return ($temp_fh, $tempname);
+ }
+ 
++# based on _handle_get_error and _dispatch_error_msg from CHI::Driver
++sub _handle_error {
++	my ($self, $error) = @_;
 +
-+	# generate a temporary file
-+	my ($temp_fh, $tempname) = _tempfile_to_path($file, $dir);
-+	chmod 0666, $tempname
-+		or warn "Couldn't change permissions to 0666 / -rw-rw-rw- for '$tempname': $!";
-+
-+	write_fh($temp_fh, $tempname, $data);
-+
-+	rename($tempname, $file)
-+		or die "Couldn't rename temporary file '$tempname' to '$file': $!";
-+}
-+
-+# get size of an element associated with the $key (not the size of whole cache)
-+sub get_size {
-+	my ($self, $key) = @_;
-+
-+	my $path = $self->path_to_key($key)
-+		or return undef;
-+	if (-f $path) {
-+		return -s $path;
++	for ($self->get_on_error()) {
++		(ref($_) eq 'CODE') && do { $_->($error) };
++		/^ignore$/ && do { };
++		/^warn$/   && do { carp $error };
++		/^die$/    && do { croak $error };
 +	}
-+	return 0;
 +}
-+
-+
-+# ......................................................................
-+# interface methods
-+
-+# Removing and expiring
-+
-+# $cache->remove($key)
-+#
-+# Remove the data associated with the $key from the cache.
-+sub remove {
-+	my ($self, $key) = @_;
-+
-+	my $file = $self->path_to_key($key)
-+		or return;
-+	return unless -f $file;
-+	unlink($file)
-+		or die "Couldn't remove file '$file': $!";
-+}
-+
-+# Getting and setting
-+
-+# $cache->set($key, $data);
-+#
-+# Associates $data with $key in the cache, overwriting any existing entry.
-+# Returns $data.
-+sub set {
-+	my ($self, $key, $data) = @_;
-+
-+	return unless (defined $key && defined $data);
-+
-+	$self->store($key, $data);
-+
-+	return $data;
-+}
-+
-+# $data = $cache->get($key);
-+#
-+# Returns the data associated with $key.  If $key does not exist
-+# or has expired, returns undef.
-+sub get {
-+	my ($self, $key) = @_;
-+
-+	return $self->fetch($key);;
-+}
-+
-+# $data = $cache->compute($key, $code);
-+#
-+# Combines the get and set operations in a single call.  Attempts to
-+# get $key; if successful, returns the value.  Otherwise, calls $code
-+# and uses the return value as the new value for $key, which is then
-+# returned.
-+sub compute {
-+	my ($self, $key, $code) = @_;
-+
-+	my $data = $self->get($key);
-+	if (!defined $data) {
-+		$data = $code->();
-+		$self->set($key, $data);
-+	}
-+
-+	return $data;
-+}
-+
-+1;
-+__END__
-+# end of package GitwebCache::SimpleFileCache;
-diff --git a/t/t9503-gitweb-caching-interface.sh b/t/t9503-gitweb-caching-interface.sh
-new file mode 100755
-index 0000000..819da1d
---- /dev/null
-+++ b/t/t9503-gitweb-caching-interface.sh
-@@ -0,0 +1,34 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2010 Jakub Narebski
-+#
-+
-+test_description='gitweb caching interface
-+
-+This test checks caching interface used in gitweb caching, and caching
-+infrastructure (GitwebCache::* modules).'
-+
-+# for now we are running only cache interface tests
-+. ./test-lib.sh
-+
-+# this test is present in gitweb-lib.sh
-+if ! test_have_prereq PERL; then
-+	skip_all='perl not available, skipping test'
-+	test_done
-+fi
-+
-+"$PERL_PATH" -MTest::More -e 0 >/dev/null 2>&1 || {
-+	skip_all='perl module Test::More unavailable, skipping test'
-+	test_done
-+}
-+
-+# ----------------------------------------------------------------------
-+
-+# The external test will outputs its own plan
-+test_external_has_tap=1
-+
-+test_external \
-+	'GitwebCache::* Perl API (in gitweb/lib/)' \
-+	"$PERL_PATH" "$TEST_DIRECTORY"/t9503/test_cache_interface.pl
-+
-+test_done
+ 
+ # ----------------------------------------------------------------------
+ # worker methods
+@@ -307,7 +355,7 @@ sub fetch {
+ 	my $file = $self->path_to_key($key);
+ 	return unless (defined $file && -f $file);
+ 
+-	return read_file($file);
++	return $self->read_file($file);
+ }
+ 
+ sub store {
+@@ -318,20 +366,17 @@ sub store {
+ 	return unless (defined $file && defined $dir);
+ 
+ 	# ensure that directory leading to cache file exists
+-	if (!-d $dir) {
+-		# mkpath will croak()/die() if there is an error
+-		mkpath($dir, 0, 0777);
+-	}
++	$self->ensure_path($dir);
+ 
+ 	# generate a temporary file
+ 	my ($temp_fh, $tempname) = $self->_tempfile_to_path($file, $dir);
+ 	chmod 0666, $tempname
+ 		or warn "Couldn't change permissions to 0666 / -rw-rw-rw- for '$tempname': $!";
+ 
+-	write_fh($temp_fh, $tempname, $data);
++	$self->write_fh($temp_fh, $tempname, $data);
+ 
+ 	rename($tempname, $file)
+-		or die "Couldn't rename temporary file '$tempname' to '$file': $!";
++		or $self->_handle_error("Couldn't rename temporary file '$tempname' to '$file': $!");
+ }
+ 
+ # get size of an element associated with the $key (not the size of whole cache)
+@@ -362,7 +407,7 @@ sub remove {
+ 		or return;
+ 	return unless -f $file;
+ 	unlink($file)
+-		or die "Couldn't remove file '$file': $!";
++		or $self->_handle_error("Couldn't remove file '$file': $!");
+ }
+ 
+ # $cache->is_valid($key[, $expires_in])
+@@ -379,7 +424,7 @@ sub is_valid {
+ 	return 0 unless -f $path;
+ 	# get its modification time
+ 	my $mtime = (stat(_))[9] # _ to reuse stat structure used in -f test
+-		or die "Couldn't stat file '$path': $!";
++		or $self->_handle_error("Couldn't stat file '$path': $!");
+ 	# cache entry is invalid if it is size 0 (in bytes)
+ 	return 0 unless ((stat(_))[7] > 0);
+ 
+@@ -468,10 +513,7 @@ sub set_coderef_fh {
+ 	return unless (defined $path && defined $dir);
+ 
+ 	# ensure that directory leading to cache file exists
+-	if (!-d $dir) {
+-		# mkpath will croak()/die() if there is an error
+-		mkpath($dir, 0, 0777);
+-	}
++	$self->ensure_path($dir);
+ 
+ 	# generate a temporary file
+ 	my ($fh, $tempfile) = $self->_tempfile_to_path($path, $dir);
+@@ -481,7 +523,7 @@ sub set_coderef_fh {
+ 
+ 	close $fh;
+ 	rename($tempfile, $path)
+-		or die "Couldn't rename temporary file '$tempfile' to '$path': $!";
++		or $self->_handle_error("Couldn't rename temporary file '$tempfile' to '$path': $!");
+ 
+ 	open $fh, '<', $path or return;
+ 	return ($fh, $path);
 diff --git a/t/t9503/test_cache_interface.pl b/t/t9503/test_cache_interface.pl
-new file mode 100755
-index 0000000..1a3f374
---- /dev/null
+index 480cfbc..28a5c5e 100755
+--- a/t/t9503/test_cache_interface.pl
 +++ b/t/t9503/test_cache_interface.pl
-@@ -0,0 +1,85 @@
-+#!/usr/bin/perl
-+use lib (split(/:/, $ENV{GITPERLLIB}));
+@@ -9,6 +9,7 @@ use Fcntl qw(:DEFAULT);
+ use IO::Handle;
+ use IO::Select;
+ use IO::Pipe;
++use File::Basename;
+ 
+ use Test::More;
+ 
+@@ -475,6 +476,49 @@ subtest 'generating progress info' => sub {
+ $cache->set_expires_in(-1);
+ 
+ 
++# ----------------------------------------------------------------------
++# ERROR HANDLING
 +
-+use warnings;
-+use strict;
-+
-+use Test::More;
-+
-+# test source version
-+use lib $ENV{GITWEBLIBDIR} || "$ENV{GIT_BUILD_DIR}/gitweb/lib";
-+
-+
-+# Test creating a cache
++# Test 'on_error' handler
 +#
-+BEGIN { use_ok('GitwebCache::SimpleFileCache'); }
-+diag("Using lib '$INC[0]'");
-+diag("Testing '$INC{'GitwebCache/SimpleFileCache.pm'}'");
-+
-+my $cache = new_ok('GitwebCache::SimpleFileCache');
-+
-+# Test that default values are defined
-+#
-+ok(defined $GitwebCache::SimpleFileCache::DEFAULT_CACHE_ROOT,
-+	'$DEFAULT_CACHE_ROOT defined');
-+ok(defined $GitwebCache::SimpleFileCache::DEFAULT_CACHE_DEPTH,
-+	'$DEFAULT_CACHE_DEPTH defined');
-+
-+# Test accessors and default values for cache
-+#
++sub test_handler {
++	die "test_handler\n"; # newline needed
++}
 +SKIP: {
-+	skip 'default values not defined', 3
-+		unless ($GitwebCache::SimpleFileCache::DEFAULT_CACHE_ROOT &&
-+		        $GitwebCache::SimpleFileCache::DEFAULT_CACHE_DEPTH);
++	# prepare error condition
++	my $is_prepared = 1;
++	$is_prepared &&= $cache->set($key, $value);
++	$is_prepared &&= chmod 0555, dirname($cache->path_to_key($key));
 +
-+	is($cache->get_namespace(), '', "default namespace is ''");
-+	cmp_ok($cache->get_root(),  'eq', $GitwebCache::SimpleFileCache::DEFAULT_CACHE_ROOT,
-+		"default cache root is '$GitwebCache::SimpleFileCache::DEFAULT_CACHE_ROOT'");
-+	cmp_ok($cache->get_depth(), '==', $GitwebCache::SimpleFileCache::DEFAULT_CACHE_DEPTH,
-+		"default cache depth is $GitwebCache::SimpleFileCache::DEFAULT_CACHE_DEPTH");
++	my $ntests = 1; # in subtest
++	skip "could't prepare error condition for 'on_error' tests", $ntests
++		unless $is_prepared;
++	skip "cannot test reliably 'on_error' as root (id=$>)", $ntests
++		unless $> != 0;
++
++	subtest 'error handler' => sub {
++		my ($result, $error);
++
++		# check that error handler works
++		$cache->set_on_error(\&test_handler);
++		$result = eval {
++			$cache->remove($key);
++		} or $error = $@;
++		ok(!defined $result,         'on_error: died on error (via handler)');
++		diag("result is $result") if defined $result;
++		is($error, "test_handler\n", 'on_error: test_handler was used');
++
++		# check that "ignore" works
++		$cache->set_on_error('ignore');
++		$result = eval {
++			$cache->remove($key);
++		} or $error = $@;
++		ok(defined $result,          'on_error: error ignored if requested');
++	};
 +}
++chmod 0777, dirname($cache->path_to_key($key));
 +
-+# Test the getting, setting, and removal of a cached value
-+# (Cache::Cache interface)
-+#
-+my $key = 'Test Key';
-+my $value = 'Test Value';
 +
-+subtest 'Cache::Cache interface' => sub {
-+	foreach my $method (qw(get set remove)) {
-+		can_ok($cache, $method);
-+	}
-+
-+	$cache->set($key, $value);
-+	cmp_ok($cache->get_size($key), '>', 0, 'get_size after set, is greater than 0');
-+	is($cache->get($key), $value,          'get after set, returns cached value');
-+	$cache->remove($key);
-+	ok(!defined($cache->get($key)),        'get after remove, is undefined');
-+
-+	eval { $cache->remove('Not-Existent Key'); };
-+	ok(!$@,                                'remove on non-existent key doesn\'t die');
-+	diag($@) if $@;
-+
-+	done_testing();
-+};
-+
-+# Test the getting and setting of a cached value
-+# (CHI interface)
-+#
-+my $call_count = 0;
-+sub get_value {
-+	$call_count++;
-+	return $value;
-+}
-+subtest 'CHI interface' => sub {
-+	can_ok($cache, qw(compute));
-+
-+	is($cache->compute($key, \&get_value), $value, "compute 1st time (set) returns '$value'");
-+	is($cache->compute($key, \&get_value), $value, "compute 2nd time (get) returns '$value'");
-+	is($cache->compute($key, \&get_value), $value, "compute 3rd time (get) returns '$value'");
-+	cmp_ok($call_count, '==', 1, 'get_value() is called once from compute');
-+
-+	done_testing();
-+};
-+
-+done_testing();
+ done_testing();
+ 
+ 
 -- 
 1.7.3
