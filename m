@@ -1,79 +1,78 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
+From: Diego Elio =?ISO-8859-1?Q?Petten=F2?= <flameeyes@gmail.com>
 Subject: Re: [PATCH] imap-send: link against libcrypto for HMAC and others
-Date: Mon, 06 Dec 2010 00:28:24 -0500
-Message-ID: <1291613304.3339.12.camel@fixed-disk>
+Date: Mon, 06 Dec 2010 06:39:38 +0100
+Message-ID: <1291613978.4756.157.camel@yamato.local>
 References: <7vwro2sd83.fsf@alter.siamese.dyndns.org>
 	 <1290629033-20566-1-git-send-email-flameeyes@gmail.com>
+	 <1291613304.3339.12.camel@fixed-disk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Diego Elio =?ISO-8859-1?Q?Petten=F2?= <flameeyes@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 06 06:34:57 2010
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Anders Kaseorg <andersk@MIT.EDU>
+X-From: git-owner@vger.kernel.org Mon Dec 06 06:41:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPTiy-0007kC-PQ
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 06:34:57 +0100
+	id 1PPTp3-00011H-TA
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 06:41:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750854Ab0LFFev convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Dec 2010 00:34:51 -0500
-Received: from DMZ-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.36]:59831 "EHLO
-	dmz-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750733Ab0LFFeu (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Dec 2010 00:34:50 -0500
-X-AuditID: 12074424-b7b0bae000000a05-40-4cfc75f99758
-Received: from mailhub-auth-2.mit.edu ( [18.7.62.36])
-	by dmz-mailsec-scanner-7.mit.edu (Symantec Brightmail Gateway) with SMTP id 14.09.02565.9F57CFC4; Mon,  6 Dec 2010 00:34:49 -0500 (EST)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id oB65YmlC016199;
-	Mon, 6 Dec 2010 00:34:49 -0500
-Received: from [18.111.114.115] ([18.111.114.115])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id oB65Yk2I014777
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 6 Dec 2010 00:34:47 -0500 (EST)
-In-Reply-To: <1290629033-20566-1-git-send-email-flameeyes@gmail.com>
-X-Mailer: Evolution 2.32.1 
-X-Brightmail-Tracker: AAAAAA==
+	id S1750978Ab0LFFlI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Dec 2010 00:41:08 -0500
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:35717 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750732Ab0LFFlH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Dec 2010 00:41:07 -0500
+Received: by wwe15 with SMTP id 15so3434752wwe.1
+        for <git@vger.kernel.org>; Sun, 05 Dec 2010 21:41:05 -0800 (PST)
+Received: by 10.216.15.20 with SMTP id e20mr4494447wee.8.1291614064377;
+        Sun, 05 Dec 2010 21:41:04 -0800 (PST)
+Received: from [172.28.8.1] (host249-252-static.95-94-b.business.telecomitalia.it [94.95.252.249])
+        by mx.google.com with ESMTPS id x3sm2137700wes.22.2010.12.05.21.41.02
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 05 Dec 2010 21:41:03 -0800 (PST)
+In-Reply-To: <1291613304.3339.12.camel@fixed-disk>
+X-Mailer: Evolution 2.30.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162974>
 
-On Wed, 2010-11-24 at 21:03 +0100, Diego Elio Petten=C3=B2 wrote:
-> When using stricter linkers, such as GNU gold or Darwin ld, transitiv=
+Il giorno lun, 06/12/2010 alle 00.28 -0500, Anders Kaseorg ha scritto:
+> This broke the build with NO_OPENSSL=3D1, so Debian will need to reve=
+rt
+> it:
+
+I'll try a NO_OPENSSL build later on today and see to get it fixed.
+
+> Also, the Makefile already has a NEEDS_CRYPTO_WITH_SSL flag that=E2=80=
+=99s
+> automatically set on Darwin, Windows, and MinGW.  We shouldn=E2=80=99=
+t have two
+> mechanisms for addressing the same problem; maybe we just need to ena=
+ble
+> the existing flag on more (or all) platforms?
+
+No, these should be different issues; you may have a libssl (which uses
+libcrypto) requiring libcrypto to be linked in, even if you only use
+interfaces from libssl (and that's what NEEDS_CRYPTO_WITH_SSL seem to b=
 e
-> dependencies are not counted towards symbol resolution. If we don't
-> link imap-send to libcrypto, we'll have undefined references to the
-> HMAC_*, EVP_* and ERR_* functions families.
-> [=E2=80=A6]
->  git-imap-send$X: imap-send.o $(GITLIBS)
->  	$(QUIET_LINK)$(CC) $(ALL_CFLAGS) -o $@ $(ALL_LDFLAGS) $(filter %.o,=
-$^) \
-> -		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL)
-> +		$(LIBS) $(OPENSSL_LINK) $(OPENSSL_LIBSSL) $(LIB_4_CRYPTO)
+designed to deal with), but in this case what you have is rather
+imap-send using the libcrypto interfaces _as well as_ the libssl
+interfaces.
 
-This broke the build with NO_OPENSSL=3D1, so Debian will need to revert
-it:
+I have blogged a detailed analysis of the problem, if you wish to see
+the details:
 
-    CC imap-send.o
-    LINK git-imap-send
-/usr/bin/ld: cannot find -lcrypto
-collect2: ld returned 1 exit status
-make[1]: *** [git-imap-send] Error 1
+http://blog.flameeyes.eu/2010/11/26/it-s-not-all-gold-that-shines-why-u=
+nderlinking-is-a-bad-thing
 
-Also, the Makefile already has a NEEDS_CRYPTO_WITH_SSL flag that=E2=80=99=
-s
-automatically set on Darwin, Windows, and MinGW.  We shouldn=E2=80=99t =
-have two
-mechanisms for addressing the same problem; maybe we just need to enabl=
-e
-the existing flag on more (or all) platforms?
+--=20
+Diego Elio Petten=C3=B2 =E2=80=94 =E2=80=9CFlameeyes=E2=80=9D
+http://blog.flameeyes.eu/
 
-Anders
+If you found a .asc file in this mail and know not what it is,
+it's a GnuPG digital signature: http://www.gnupg.org/
