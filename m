@@ -1,57 +1,105 @@
-From: Ben Walton <bwalton@artsci.utoronto.ca>
-Subject: Re: path/to/some/file: needs update
-Date: Mon, 06 Dec 2010 15:47:27 -0500
-Message-ID: <1291668405-sup-122@pinkfloyd.chass.utoronto.ca>
-References: <AANLkTinsUZCUJamUHWN=H7tyL5nKACmEcyvG6hpsTDtv@mail.gmail.com> <vpqk4jq3cpc.fsf@bauges.imag.fr> <AANLkTinFHFzjLNb5PpoH8WG_3gHpo4LaZaUOYX-=PFYN@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Cc: Matthieu Moy <matthieu.moy@grenoble-inp.fr>,
-	git <git@vger.kernel.org>
-To: Patrick Doyle <wpdster@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 06 22:35:41 2010
+From: Pat Thoyts <patthoyts@users.sourceforge.net>
+Subject: Re: [PATCH/RFC] git-gui: disable (un)staging for files with typechange flags
+Date: Mon, 06 Dec 2010 21:48:46 +0000
+Message-ID: <87aakiy3lt.fsf@fox.patthoyts.tk>
+References: <50fc511f363e8b13b9b1a27db71136d262c95f0d.1291155371.git.bert.wesarg@googlemail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 06 22:50:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPiii-00056n-9a
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 22:35:40 +0100
+	id 1PPixO-0003us-EO
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 22:50:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753647Ab0LFVff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Dec 2010 16:35:35 -0500
-Received: from www.cquest.utoronto.ca ([192.82.128.5]:55753 "EHLO
-	www.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753217Ab0LFVfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Dec 2010 16:35:34 -0500
-X-Greylist: delayed 2882 seconds by postgrey-1.27 at vger.kernel.org; Mon, 06 Dec 2010 16:35:34 EST
-Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:41281 ident=93)
-	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
-	id 1PPhy4-0002SE-0O; Mon, 06 Dec 2010 15:47:28 -0500
-Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.63)
-	(envelope-from <bwalton@cquest.utoronto.ca>)
-	id 1PPhy3-0002o1-Vd; Mon, 06 Dec 2010 15:47:27 -0500
-In-reply-to: <AANLkTinFHFzjLNb5PpoH8WG_3gHpo4LaZaUOYX-=PFYN@mail.gmail.com>
-User-Agent: Sup/git
+	id S1754061Ab0LFVup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Dec 2010 16:50:45 -0500
+Received: from smtp-out5.blueyonder.co.uk ([195.188.213.8]:48416 "EHLO
+	smtp-out5.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753281Ab0LFVuo (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Dec 2010 16:50:44 -0500
+Received: from [172.23.170.147] (helo=anti-virus03-10)
+	by smtp-out5.blueyonder.co.uk with smtp (Exim 4.52)
+	id 1PPix8-0007zz-L6; Mon, 06 Dec 2010 21:50:35 +0000
+Received: from [77.99.239.132] (helo=fox.patthoyts.tk)
+	by asmtp-out6.blueyonder.co.uk with esmtpa (Exim 4.52)
+	id 1PPivP-0004zE-1U; Mon, 06 Dec 2010 21:48:47 +0000
+Received: by fox.patthoyts.tk (Postfix, from userid 1000)
+	id 90528218F6; Mon,  6 Dec 2010 21:48:46 +0000 (GMT)
+X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
+ qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
+ '?a?.s#@hl7CiTo'F"O!fvbL0
+X-Url: http://www.patthoyts.tk/
+X-Home-Page: http://www.patthoyts.tk/
+X-Web: http://www.patthoyts.tk/
+In-Reply-To: <50fc511f363e8b13b9b1a27db71136d262c95f0d.1291155371.git.bert.wesarg@googlemail.com>
+	(Bert Wesarg's message of "Tue, 30 Nov 2010 23:21:31 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163030>
 
-Excerpts from Patrick Doyle's message of Sun Dec 05 19:44:32 -0500 2010:
+Bert Wesarg <bert.wesarg@googlemail.com> writes:
 
-> I just checked.  The box they were using is an RHEL 5 box that has
-> 1.5.5.6 installed on it.  Perhaps it's time to upgrade their git.
-> I'll go see what repo I need to add to RHEL to get a more recent
-> git.
+>This covers also the case for newly added files in the index. Like this:
+>
+>    echo bar >foo
+>    git add foo
+>    rm foo
+>    ln -s bar foo
+>
+>This will result in an state of AT. And for cases where the type change is
+>staged, and the new type was modified after the staging. Like this (cont.):
+>
+>    git add foo
+>    git commit -mfoo
+>    rm foo
+>    echo bar >foo
+>    git add foo
+>    echo baz >foo
+>
+>Will result in an state of TM for foo.
+>
+>Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+>---
+> git-gui.sh |    6 ++++--
+> 1 files changed, 4 insertions(+), 2 deletions(-)
+>
+>diff --git a/git-gui.sh b/git-gui.sh
+>index 38362fa..1bebcf1 100755
+>--- a/git-gui.sh
+>+++ b/git-gui.sh
+>@@ -1993,7 +1993,9 @@ foreach i {
+> 		{MD {mc "Staged for commit, missing"}}
+> 
+> 		{_T {mc "File type changed, not staged"}}
+>+		{AT {mc "File type changed, old type staged for commit"}}
+> 		{T_ {mc "File type changed, staged"}}
+>+		{TM {mc "Staged file type change, modification not staged"}}
+> 
+> 		{_O {mc "Untracked, not staged"}}
+> 		{A_ {mc "Staged for commit"}}
+>@@ -3533,8 +3535,8 @@ proc popup_diff_menu {ctxm ctxmmg ctxmsm x y X Y} {
+> 			|| $current_diff_path eq {}
+> 			|| {__} eq $state
+> 			|| {_O} eq $state
+>-			|| {_T} eq $state
+>-			|| {T_} eq $state
+>+			|| [string match {?T} $state]
+>+			|| [string match {T?} $state]
+> 			|| [has_textconv $current_diff_path]} {
+> 			set s disabled
+> 		} else {
 
-I maintain a local set of 1.7.x rpms for git that are built for rhel5
-here.  I'm happy to share if it would help.
-
-Thanks
--Ben
---
-Ben Walton
-Systems Programmer - CHASS
-University of Toronto
-C:416.407.5610 | W:416.978.4302
+This seems fine. We do get a warning about an 'unhandled 2 way diff
+marker' when it bumps into the second 'diff --git a/foo b/foo' section
+but I'm not sure anything can be safely done about that.
+-- 
+Pat Thoyts                            http://www.patthoyts.tk/
+PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
