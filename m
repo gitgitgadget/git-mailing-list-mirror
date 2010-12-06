@@ -1,82 +1,73 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: Re: What's cooking in git.git (Dec 2010, #01; Sat, 4)
-Date: Mon, 06 Dec 2010 12:31:36 +0100
-Organization: Bertin Technologies
-Message-ID: <20101206123136.2acab63a@chalon.bertin.fr>
-References: <7v62v8ufyl.fsf@alter.siamese.dyndns.org>
- <20101206082948.1403cc5a@chalon.bertin.fr>
- <buopqtfmi85.fsf@dhlpc061.dev.necel.com>
- <20101206092122.21c19011@chalon.bertin.fr>
- <AANLkTimPC3-x1XFJ+t9uiFFXV6fg812ugF5vz9p=4GWB@mail.gmail.com>
- <20101206094806.10ae1ff2@chalon.bertin.fr>
- <AANLkTinJu0KzXZ2Rjbs2+XH7T=Gq5MOajxo51DHtqoGZ@mail.gmail.com>
+From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
+Subject: Re: [PATCHv3] parse-remote: handle detached HEAD
+Date: Mon, 6 Dec 2010 15:32:55 +0100
+Message-ID: <AANLkTik4LLCm3WzcKPkOY44M88vF7oT2nuLrv-S3L22X@mail.gmail.com>
+References: <7vfwubtw1g.fsf@alter.siamese.dyndns.org> <1291630811-16584-1-git-send-email-santi@agolina.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: gitster@pobox.com, git list <git@vger.kernel.org>
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Dec 06 12:42:01 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 06 15:33:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPZSC-0008DM-7r
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 12:42:00 +0100
+	id 1PPc86-0006F8-0r
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 15:33:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752162Ab0LFLly (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Dec 2010 06:41:54 -0500
-Received: from blois.bertin.fr ([195.68.26.9]:45213 "EHLO blois.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751610Ab0LFLlx (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Dec 2010 06:41:53 -0500
-Received: from blois.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id 7CB5C5437A
-	for <git@vger.kernel.org>; Mon,  6 Dec 2010 12:41:52 +0100 (CET)
-Received: from YPORT1 (yport1.bertin.fr [192.168.1.13])
-	by blois.bertin.fr (Postfix) with ESMTP id 46B8B5437B
-	for <git@vger.kernel.org>; Mon,  6 Dec 2010 12:41:52 +0100 (CET)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0LD000HVQ8HRFW40@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Mon, 06 Dec 2010 12:41:52 +0100 (CET)
-In-reply-to: <AANLkTinJu0KzXZ2Rjbs2+XH7T=Gq5MOajxo51DHtqoGZ@mail.gmail.com>
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8200-6.0.0.1038-17812.000
+	id S1753133Ab0LFOdT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Dec 2010 09:33:19 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:63440 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752712Ab0LFOdS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Dec 2010 09:33:18 -0500
+Received: by qyk12 with SMTP id 12so14522531qyk.19
+        for <git@vger.kernel.org>; Mon, 06 Dec 2010 06:33:17 -0800 (PST)
+Received: by 10.229.246.136 with SMTP id ly8mr4387700qcb.237.1291645997444;
+ Mon, 06 Dec 2010 06:33:17 -0800 (PST)
+Received: by 10.229.183.20 with HTTP; Mon, 6 Dec 2010 06:32:55 -0800 (PST)
+In-Reply-To: <1291630811-16584-1-git-send-email-santi@agolina.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162993>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162994>
 
-On Mon, 06 Dec 2010 18:13:06 +0900
-Miles Bader <miles@gnu.org> wrote:
+On Mon, Dec 6, 2010 at 11:20 AM, Santi B=E9jar <santi@agolina.net> wrot=
+e:
+> get_remote_merge_branch with zero or one arguments returns the
+> upstream branch. But a detached HEAD does no have an upstream branch,
+> as it is not tracking anything. Handle this case testing the exit cod=
+e
+> of "git symbolic-ref -q HEAD".
+>
+> Reported-by: Sverre Rabbelier <srabbelier@gmail.com>
+> Signed-off-by: Santi B=E9jar <santi@agolina.net>
+> ---
+>
+>> If that is the case, shouldn't we be not calling "echo" at all to be=
+gin
+>> with? =A0IOW, shouldn't the code read more like this?
+>>
+>> =A0 =A0 =A0 =A0curr_branch=3D$(git symbolic-ref -q HEAD) &&
+>> =A0 =A0 =A0 =A0test "$origin" =3D "$default" &&
+>> =A0 =A0 =A0 =A0echo ...
+>
+> Or course, you are right. I didn't know/think about the exit
+> code... Thanks.
 
-> On Mon, Dec 6, 2010 at 5:48 PM, Yann Dirson <dirson@bertin.fr> wrote:
-> it's is normal and good that option names are sometimes revisited and
-> improved -- nothing is perfect on the first try.  By keeping the old
-> option around as a deprecated alias, we avoid compatibility issues.
+Now that I think of... the final form of the patch is yours (Junio).
+=46eel free to add something like this to the commit message:
 
-... except Junio advocates *not* deprecating this one, since it is here
-since ages.
+=46inal patch form by Junio C Hamano
 
-> That doesn't mean there aren't _any_ issues, but they tend to be
-> pretty minor  (such as the "space used by the deprecation option" that
-> you complain about).
-> 
-> Maybe if you renamed every option simultaneously, there would be
-> confusion, but seriously, it's only one option.  It's not going to be
-> a problem.
+Or alternatively, take ownership of the patch and add something like
+"Patch handled by Santi B=E9jar but final patch form by Junio C Hamano"
+and:
 
-I'm not sure we want to use "it's only one option" as an excuse.  It
-can easily become a bad habit.
+Acked-by: Santi B=E9jar <santi@agolina.net>
 
-> There is no "usability" problem.
-
-Completion of "git diff --<TAB>" in stable branch gives 44 choices here.
-One of the most frequent criticisms about git I hear among coworkers is
-that there are so many commands and options.  Will be funny to explain
-them that "we just added another one, for no technical reason".
-
--- 
-Yann Dirson - Bertin Technologies
+Santi
