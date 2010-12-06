@@ -1,78 +1,82 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: What's cooking in git.git (Dec 2010, #01; Sat, 4)
-Date: Mon, 6 Dec 2010 18:13:06 +0900
-Message-ID: <AANLkTinJu0KzXZ2Rjbs2+XH7T=Gq5MOajxo51DHtqoGZ@mail.gmail.com>
-References: <7v62v8ufyl.fsf@alter.siamese.dyndns.org> <20101206082948.1403cc5a@chalon.bertin.fr>
- <buopqtfmi85.fsf@dhlpc061.dev.necel.com> <20101206092122.21c19011@chalon.bertin.fr>
- <AANLkTimPC3-x1XFJ+t9uiFFXV6fg812ugF5vz9p=4GWB@mail.gmail.com> <20101206094806.10ae1ff2@chalon.bertin.fr>
+From: =?UTF-8?q?Santi=20B=C3=A9jar?= <santi@agolina.net>
+Subject: [PATCHv3] parse-remote: handle detached HEAD
+Date: Mon,  6 Dec 2010 11:20:11 +0100
+Message-ID: <1291630811-16584-1-git-send-email-santi@agolina.net>
+References: <7vfwubtw1g.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: gitster@pobox.com, git list <git@vger.kernel.org>
-To: Yann Dirson <dirson@bertin.fr>
-X-From: git-owner@vger.kernel.org Mon Dec 06 10:14:07 2010
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 06 11:20:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPX94-0006bf-N0
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 10:14:07 +0100
+	id 1PPYBM-0004qB-8f
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 11:20:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752152Ab0LFJNt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Dec 2010 04:13:49 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:55438 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752070Ab0LFJNr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 6 Dec 2010 04:13:47 -0500
-Received: by fxm20 with SMTP id 20so3982161fxm.19
-        for <git@vger.kernel.org>; Mon, 06 Dec 2010 01:13:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received
-         :in-reply-to:references:from:date:x-google-sender-auth:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        bh=o9RTjI0Fv1vKhmVXP5kv10AW3vDUespbQb56tzJvhyU=;
-        b=Q5kWdcBFCSvSIEH8I16LScPLZZkJmYYXMMlaUc7QOhplPULowc8KFA7C94Ozn3hrcL
-         dPPvKUNXelTIONeirAZ1a6ouz+Ywsu4SLMzpqPrxHrHq9ItCet+xn3YrYm94V4kLlbvy
-         bBu1E1wweN+VYe/kgmt+jxKayeLPCBlNTuZ+U=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=saBPIgb+2l6JXL1i4cFagZAAA0XVAa/lMm+cJ2qewBMFT5h87332MLZTCBURsll4i4
-         WgzF4mAqVZR7j1to9/x7YOJu4TjawLlQfAFu7r/cZYuQJgO9mWDMTrBnvRpFzAyYh9o1
-         TKk9ZVxeIELlYqFx5WlAbMtAsDnV9YqRx2LoM=
-Received: by 10.223.103.2 with SMTP id i2mr5290200fao.115.1291626826495; Mon,
- 06 Dec 2010 01:13:46 -0800 (PST)
-Received: by 10.223.96.80 with HTTP; Mon, 6 Dec 2010 01:13:06 -0800 (PST)
-In-Reply-To: <20101206094806.10ae1ff2@chalon.bertin.fr>
-X-Google-Sender-Auth: MLiB29GlcSx7l6hYLcrg9xMLtHM
+	id S1751785Ab0LFKUX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Dec 2010 05:20:23 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:62558 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750985Ab0LFKUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Dec 2010 05:20:22 -0500
+Received: by wyb28 with SMTP id 28so11838424wyb.19
+        for <git@vger.kernel.org>; Mon, 06 Dec 2010 02:20:21 -0800 (PST)
+Received: by 10.227.141.134 with SMTP id m6mr5287860wbu.183.1291630817688;
+        Mon, 06 Dec 2010 02:20:17 -0800 (PST)
+Received: from localhost.localdomain (189.194.19.95.dynamic.jazztel.es [95.19.194.189])
+        by mx.google.com with ESMTPS id x28sm2246052weq.16.2010.12.06.02.20.15
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 06 Dec 2010 02:20:16 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.3.399.g0d2be.dirty
+In-Reply-To: <7vfwubtw1g.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162988>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162989>
 
-On Mon, Dec 6, 2010 at 5:48 PM, Yann Dirson <dirson@bertin.fr> wrote:
-> In the end, I still think the implications for the usability are what
-> matters, more than arguing about a subtle nuance of vocabulary.
+get_remote_merge_branch with zero or one arguments returns the
+upstream branch. But a detached HEAD does no have an upstream branch,
+as it is not tracking anything. Handle this case testing the exit code
+of "git symbolic-ref -q HEAD".
 
-There is no "usability" problem.
+Reported-by: Sverre Rabbelier <srabbelier@gmail.com>
+Signed-off-by: Santi B=C3=A9jar <santi@agolina.net>
+---
 
-it's is normal and good that option names are sometimes revisited and
-improved -- nothing is perfect on the first try.  By keeping the old
-option around as a deprecated alias, we avoid compatibility issues.
-That doesn't mean there aren't _any_ issues, but they tend to be
-pretty minor  (such as the "space used by the deprecation option" that
-you complain about).
+> If that is the case, shouldn't we be not calling "echo" at all to beg=
+in
+> with?  IOW, shouldn't the code read more like this?
+>
+>        curr_branch=3D$(git symbolic-ref -q HEAD) &&
+>        test "$origin" =3D "$default" &&
+>        echo ...
 
-Maybe if you renamed every option simultaneously, there would be
-confusion, but seriously, it's only one option.  It's not going to be
-a problem.
+Or course, you are right. I didn't know/think about the exit
+code... Thanks.
 
--Miles
+Santi
 
+ git-parse-remote.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-parse-remote.sh b/git-parse-remote.sh
+index 5f47b18..4da72ae 100644
+--- a/git-parse-remote.sh
++++ b/git-parse-remote.sh
+@@ -66,7 +66,7 @@ get_remote_merge_branch () {
+ 	    origin=3D"$1"
+ 	    default=3D$(get_default_remote)
+ 	    test -z "$origin" && origin=3D$default
+-	    curr_branch=3D$(git symbolic-ref -q HEAD)
++	    curr_branch=3D$(git symbolic-ref -q HEAD) &&
+ 	    [ "$origin" =3D "$default" ] &&
+ 	    echo $(git for-each-ref --format=3D'%(upstream)' $curr_branch)
+ 	    ;;
 --=20
-Cat is power. =A0Cat is peace.
+1.7.3.3.399.g0d2be.dirty
