@@ -1,69 +1,66 @@
-From: Yann Dirson <dirson@bertin.fr>
+From: Miles Bader <miles@gnu.org>
 Subject: Re: What's cooking in git.git (Dec 2010, #01; Sat, 4)
-Date: Mon, 06 Dec 2010 09:21:22 +0100
-Organization: Bertin Technologies
-Message-ID: <20101206092122.21c19011@chalon.bertin.fr>
-References: <7v62v8ufyl.fsf@alter.siamese.dyndns.org>
- <20101206082948.1403cc5a@chalon.bertin.fr>
- <buopqtfmi85.fsf@dhlpc061.dev.necel.com>
+Date: Mon, 6 Dec 2010 17:39:54 +0900
+Message-ID: <AANLkTimPC3-x1XFJ+t9uiFFXV6fg812ugF5vz9p=4GWB@mail.gmail.com>
+References: <7v62v8ufyl.fsf@alter.siamese.dyndns.org> <20101206082948.1403cc5a@chalon.bertin.fr>
+ <buopqtfmi85.fsf@dhlpc061.dev.necel.com> <20101206092122.21c19011@chalon.bertin.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: gitster@pobox.com, git list <git@vger.kernel.org>
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Mon Dec 06 09:31:51 2010
+To: Yann Dirson <dirson@bertin.fr>
+X-From: git-owner@vger.kernel.org Mon Dec 06 09:40:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPWU8-0007XU-VM
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 09:31:49 +0100
+	id 1PPWci-0002LV-Vg
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 09:40:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751542Ab0LFIbm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Dec 2010 03:31:42 -0500
-Received: from blois.bertin.fr ([195.68.26.9]:59974 "EHLO blois.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751035Ab0LFIbm (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Dec 2010 03:31:42 -0500
-Received: from blois.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id B9946543C1
-	for <git@vger.kernel.org>; Mon,  6 Dec 2010 09:31:38 +0100 (CET)
-Received: from YPORT1 (yport1.bertin.fr [192.168.1.13])
-	by blois.bertin.fr (Postfix) with ESMTP id 95BFB543B4
-	for <git@vger.kernel.org>; Mon,  6 Dec 2010 09:31:38 +0100 (CET)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0LCZ00HAFZOQFW10@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Mon, 06 Dec 2010 09:31:38 +0100 (CET)
-In-reply-to: <buopqtfmi85.fsf@dhlpc061.dev.necel.com>
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8200-6.0.0.1038-17810.004
+	id S1751627Ab0LFIkg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Dec 2010 03:40:36 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:36006 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751209Ab0LFIkf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Dec 2010 03:40:35 -0500
+Received: by fxm20 with SMTP id 20so3963406fxm.19
+        for <git@vger.kernel.org>; Mon, 06 Dec 2010 00:40:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:sender:received
+         :in-reply-to:references:from:date:x-google-sender-auth:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=KW9q8OpCZLqSbCTxKql/iDiK1Hg+Oeg5LFi3de/vJXc=;
+        b=ESyKODsDcsp4OJdS6thkJ41nAl39bhNuGdDXR9NgR1tu0fDlQd8ECjGujwbxLE7EJ+
+         N6zrNXA1Jza4ifBSRbp0AkIt2njtM8miMD9tln5+Em0szF8c/SkFCtVSI6MuyR6noage
+         H9wMjpkzL4EwKZk1DgTH87QyFzMVomd1NyUA8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=WwP1Ky3wWQtj8fYyO5uaKKiXeSOjdmOT0c8ZrRay6qovYikX2B8ZYu/sBHtmRfH9tH
+         F9jNy3vkqE8pq+Z/l3ICkX10MVxV/8w/PPXWoPvyjptR2xeqtyosExLKs9v9xcP1k/sA
+         VDOWDb7vJPdEKyEGNOclQk5UM5MjeIZbNsbHU=
+Received: by 10.223.86.4 with SMTP id q4mr5287886fal.20.1291624834464; Mon, 06
+ Dec 2010 00:40:34 -0800 (PST)
+Received: by 10.223.96.80 with HTTP; Mon, 6 Dec 2010 00:39:54 -0800 (PST)
+In-Reply-To: <20101206092122.21c19011@chalon.bertin.fr>
+X-Google-Sender-Auth: iM9NEcmsfBCtTjSCuEGPIgWC3LY
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162984>
 
-On Mon, 06 Dec 2010 17:13:46 +0900
-Miles Bader <miles@gnu.org> wrote:
+On Mon, Dec 6, 2010 at 5:21 PM, Yann Dirson <dirson@bertin.fr> wrote:
+> Seen that argument before.
+> 1. does anyone care ? (I personally don't)
 
-> Yann Dirson <dirson@bertin.fr> writes:
-> > But then, why not simply use --find-renames (since --detect-renames
-> > has luckily not been released ontl the masses yet), and avoid
-> > making similar-usage opts dissimilar and then adding a synonym just
-> > to make them similar the other way ?
-> 
-> "Find" and "detect" have different nuances.
-> 
-> "Detect" sounds somewhat passive/minor, so "detect renames" makes it
-> more clear that renames are detected _in addition_ to normal
-> processing.
+If nobody cared, you wouldn't get an argument.
 
-Seen that argument before.
-1. does anyone care ? (I personally don't)
-2. whether we care or not we have IMHO to face the implications, see my
-other mails about implications of both paths
+-Miles
 
--- 
-Yann Dirson - Bertin Technologies
+--=20
+Cat is power. =A0Cat is peace.
