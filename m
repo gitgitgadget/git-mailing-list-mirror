@@ -1,90 +1,106 @@
-From: aleksi.aalto@iki.fi
-Subject: Re: What's cooking in git.git (Dec 2010, #01; Sat, 4)
-Date: Mon, 6 Dec 2010 02:54:27 +0200 (EET)
-Message-ID: <alpine.SOC.2.00.1012060235180.18993@kekkonen.cs.hut.fi>
-References: <7voc90wx36.fsf@alter.siamese.dyndns.org> <20101205073938.GB15233@sigill.intra.peff.net> <7v8w04vvvr.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2] parse-remote: handle detached HEAD
+Date: Sun, 05 Dec 2010 19:33:31 -0800
+Message-ID: <7vfwubtw1g.fsf@alter.siamese.dyndns.org>
+References: <AANLkTi=yfuiFuatshYuS2Q0EV0Ytj-QFKpuXAWeGerQB@mail.gmail.com>
+ <1291593517-4406-1-git-send-email-santi@agolina.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 06 01:54:38 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
+To: Santi =?utf-8?Q?B=C3=A9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Mon Dec 06 04:34:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPPLi-0000o6-6f
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 01:54:38 +0100
+	id 1PPRq2-0001zh-4c
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 04:34:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752845Ab0LFAyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 5 Dec 2010 19:54:31 -0500
-Received: from dusk.niksula.hut.fi ([130.233.40.6]:42736 "EHLO
-	mail.niksula.hut.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752421Ab0LFAyb (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 5 Dec 2010 19:54:31 -0500
-Received: by mail.niksula.hut.fi (Postfix, from userid 60001)
-	id AB94C74CAD; Mon,  6 Dec 2010 02:54:29 +0200 (EET)
-X-Spam-Checker-Version: SpamAssassin 3.3.1-niksula20080612 (2010-03-16) on dusk
-X-Spam-Level: 
-X-Spam-Status: No, score=0.0 required=5.0 tests=none autolearn=disabled
-	version=3.3.1-niksula20080612
-X-Spam-Niksula: No
-Received: from kekkonen.cs.hut.fi (kekkonen.cs.hut.fi [130.233.41.50])
-	by mail.niksula.hut.fi (Postfix) with ESMTP id 45DDC74CAB;
-	Mon,  6 Dec 2010 02:54:28 +0200 (EET)
-Received: from localhost (ajaalto@localhost)
-	by kekkonen.cs.hut.fi (8.14.3+Sun/8.14.3/Submit) with ESMTP id oB60sRGo016818;
-	Mon, 6 Dec 2010 02:54:27 +0200 (EET)
-X-Authentication-Warning: kekkonen.cs.hut.fi: ajaalto owned process doing -bs
-X-X-Sender: ajaalto@kekkonen.cs.hut.fi
-In-Reply-To: <7v8w04vvvr.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (SOC 1167 2008-08-23)
+	id S1752231Ab0LFDdo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 5 Dec 2010 22:33:44 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59671 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751931Ab0LFDdn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 5 Dec 2010 22:33:43 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 559402294;
+	Sun,  5 Dec 2010 22:34:03 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=c7ZtE1CjSIfD
+	QA5JVZp34HY0MOk=; b=wzzqE11QMtvUBQNcCq59yQi5oKZWl8fY1NuL/5rxIPb6
+	DFk+3veHEPwc1AUy/zca3tJwVOoniCublw9HpQFh0SCHr3ufm3lYdnMqa6J5Dxbn
+	rXHo88tqLUlMYt3ZHwLdqkoC4yu1QV4RvrbvOiWBXZu0y1k5yH46BJPj75PDm44=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=N/SHiq
+	I8ULB/VO/kzO+h/dX+VhRJXziNXi/SbmoPKTW3Ms91yap1XBbMYzUgqiVLjMKXMv
+	Ub6G3Df2iPOHprpFYeo5m01sgYar4NWTN04SnSOwbCZV08y0lnhG2jd8r+d+Mlwo
+	6MIjetRvE8KsmSfuib2vS1dqV9cRaodDRSKa4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 261372293;
+	Sun,  5 Dec 2010 22:34:00 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B14772292; Sun,  5 Dec 2010
+ 22:33:55 -0500 (EST)
+In-Reply-To: <1291593517-4406-1-git-send-email-santi@agolina.net> ("Santi
+ =?utf-8?Q?B=C3=A9jar=22's?= message of "Mon\,  6 Dec 2010 00\:58\:37 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: AA082E44-00E9-11E0-AC99-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162969>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162970>
 
-On Sun, 5 Dec 2010, Junio C Hamano wrote:
-> Jeff King <peff@peff.net> writes:
+Santi B=C3=A9jar <santi@agolina.net> writes:
+
+> In get_remote_merge_branch 'git for-each-ref' is used to know the
+> upstream branch of the current branch ($curr_branch). But $curr_branc=
+h
+> can be empty when in detached HEAD, so the call to for-each-ref is
+> made without a pattern.
 >
->> On Sat, Dec 04, 2010 at 10:30:21PM -0800, Junio C Hamano wrote:
->>
->>> * aa/status-hilite-branch (2010-11-18) 1 commit
->>>  - status: show branchname with a configurable color
->>>
->>> I am indifferent/uninterested; I don't see anything wrong with it, but I
->>> do not find coloring the field particularly useful myself.
->>
->> I am not particularly interested, either, but FWIW, the gitcommit syntax
->> highlighting that ships with vim does highlight this, so there are at
->> least other people who think this is a good idea.
+> Quote the $curr_branch variable in the git for-each-ref call to alway=
+s
+> provide a pattern (the current branch or an empty string) Otherwise i=
+t
+> would mean all refs.
+
+What output do you want to see in this case?  "Nothing needs to be
+reported because on detached head you are not tracking anything?"
+
+If that is the case, shouldn't we be not calling "echo" at all to begin
+with?  IOW, shouldn't the code read more like this?
+
+	curr_branch=3D$(git symbolic-ref -q HEAD) &&
+        test "$origin" =3D "$default" &&
+	echo ...
+
+> Reported-by: Sverre Rabbelier <srabbelier@gmail.com>
+> Signed-off-by: Santi B=C3=A9jar <santi@agolina.net>
+> Tested-by: Sverre Rabbelier <srabbelier@gmail.com>
+> ---
+> Changes since v1:
+>   Tags for Reported-by and Tested-by.
 >
-> As you already know, when I say "'Meh' personally", I am not saying "I
-> want to forbid others to want it".
+>  git-parse-remote.sh |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
 >
-> How does vim highlight the other parts of that particular line?  Does it
-> keep them intact, or paint them in some other color?
-
-The default colorscheme results in the branchname being colored with a 
-different color than the rest of the header. Also the texts "Changes to be 
-committed:" and "Untracked files" are colored with the same color. However 
-with some other colorschemes, these texts have a different color from the 
-branchname.
-
-> I had this suspicion that the class of people who choose a non default
-> status.header color and the class of people who choose plain there (or
-> have been happy with the default) expect different things.  The former
-> prefer louder output, different pieces of information painted in different
-> colors to help them chromatically distinguish them.  The latter (including
-> myself) favor subdued output, without too many colors distacting them
-> while reading the output.
->
-> This suspicion further led me to think that the former would want this new
-> feature to paint the branch name in a color different from status.header
-> color, while the latter would want it in plain.  So the default of "plain"
-> would be a win for both audiences.
-
-This reasoning sounds good to me.
-
-:Aga
+> diff --git a/git-parse-remote.sh b/git-parse-remote.sh
+> index 5f47b18..07060c3 100644
+> --- a/git-parse-remote.sh
+> +++ b/git-parse-remote.sh
+> @@ -68,7 +68,7 @@ get_remote_merge_branch () {
+>  	    test -z "$origin" && origin=3D$default
+>  	    curr_branch=3D$(git symbolic-ref -q HEAD)
+>  	    [ "$origin" =3D "$default" ] &&
+> -	    echo $(git for-each-ref --format=3D'%(upstream)' $curr_branch)
+> +	    echo $(git for-each-ref --format=3D'%(upstream)' "$curr_branch"=
+)
+>  	    ;;
+>  	*)
+>  	    repo=3D$1
