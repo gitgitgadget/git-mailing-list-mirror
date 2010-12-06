@@ -1,70 +1,118 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2010, #01; Sat, 4)
-Date: Mon, 6 Dec 2010 13:39:27 -0200
-Message-ID: <AANLkTikVfXxJU3bOEFh3kSpwA=95EhzPAfhVYJ-Oi0Zd@mail.gmail.com>
-References: <7voc90wx36.fsf@alter.siamese.dyndns.org>
-	<4CFBA912.2080905@drmicha.warpmail.net>
-	<7v4oasvvao.fsf@alter.siamese.dyndns.org>
-	<4CFCA4E6.30209@drmicha.warpmail.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv3] parse-remote: handle detached HEAD
+Date: Mon, 06 Dec 2010 08:03:46 -0800
+Message-ID: <7vr5dusxb1.fsf@alter.siamese.dyndns.org>
+References: <7vfwubtw1g.fsf@alter.siamese.dyndns.org>
+ <1291630811-16584-1-git-send-email-santi@agolina.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Mon Dec 06 16:39:37 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>
+To: Santi =?utf-8?Q?B=C3=A9jar?= <santi@agolina.net>
+X-From: git-owner@vger.kernel.org Mon Dec 06 17:04:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPdA8-0007GU-Hr
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 16:39:36 +0100
+	id 1PPdXx-0003cU-VJ
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 17:04:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753206Ab0LFPja (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Dec 2010 10:39:30 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:56983 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750837Ab0LFPj3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Dec 2010 10:39:29 -0500
-Received: by fxm20 with SMTP id 20so4298490fxm.19
-        for <git@vger.kernel.org>; Mon, 06 Dec 2010 07:39:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=TiQmaZFBLWFnPh5dLvTpZMoi1nchaii/ieKFITj2G4U=;
-        b=xg5s6xV2OpBw0lnL3R+ZiEn9477/yHjPuq4MaxXGoix3M0KnRUofZr1pneMbKRXLaW
-         64zCjKYWFYj9Ckv0OJoFP1/dMom1jgylh6uLdXVNhsgR1gQ74EwRN+23iQQiBwKMkLKS
-         nDI8GDLHZgS06HalzhLt/tIodbSGHYsLUmO3Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=k7sJdbyDIxC2s2teMXQK00uW6qTCiWzzWj6mxNPlsGJmOSD4jUDvYofFh2Vi5rVdgI
-         QO4L7ZZC3lNUdA/pEh6KYX+gaESdGM1DLp1VgNlvX6R8z4xINg3i2A45jgyi+Wqn/E7w
-         w3KMlRd6U8BangXXmCEYyJCXcyFqv2AOh3DPk=
-Received: by 10.223.122.132 with SMTP id l4mr5712530far.21.1291649968446; Mon,
- 06 Dec 2010 07:39:28 -0800 (PST)
-Received: by 10.204.58.71 with HTTP; Mon, 6 Dec 2010 07:39:27 -0800 (PST)
-In-Reply-To: <4CFCA4E6.30209@drmicha.warpmail.net>
+	id S1753645Ab0LFQD7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 6 Dec 2010 11:03:59 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61378 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753632Ab0LFQD6 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 6 Dec 2010 11:03:58 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 82A39313A;
+	Mon,  6 Dec 2010 11:04:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=/HAvFnevsuZd
+	2q9tyA5hfdYSjzU=; b=ghQ3TqycBAvSPgRNRf1fDZ2ZmaGFiSNSHngqtBAPqWAM
+	Mvl4UcLXDifjjlq2TD77IT9yD2T1NGcoPxhpDbTzLI4AtL5La97eZKxDErzYay6F
+	G547owwxxA3tILv8jpJrGLmyvcpYr2l2T8N9rjYWUR/BMr5GTIBHatTDqN2Bhk4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=QozSl2
+	sTy4q6EsIWav834JmUSIT2c6s9P4vQFBeJxbM9OiTBvArJ3mK6s5T8w3hZTOln5L
+	O6aeXHbkmnnQDF6dJ5DIOHSpAVs7jol5NgZ6cN7GKaYLcTY4Ko0gACWLSIrBVZk9
+	sVgqLW/NIrd4MZeCsdXgBrzeg56G0aRvadcWU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 38AD13132;
+	Mon,  6 Dec 2010 11:04:16 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B806E3130; Mon,  6 Dec 2010
+ 11:04:11 -0500 (EST)
+In-Reply-To: <1291630811-16584-1-git-send-email-santi@agolina.net> ("Santi
+ =?utf-8?Q?B=C3=A9jar=22's?= message of "Mon\,  6 Dec 2010 11\:20\:11 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 79B46B9A-0152-11E0-8FD5-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/162997>
 
-On Mon, Dec 6, 2010 at 6:55 AM, Michael J Gruber
-<git@drmicha.warpmail.net> wrote:
-> Exactly, and you're doing a good job of it.
-Yeah, he does a good a job. :)
+Santi B=C3=A9jar <santi@agolina.net> writes:
 
-> It can lead to the impression (on the contributors' side) that even simple patches are
-> difficult to "get in", and can lead to frustration, of course.
-
-This resumes some of my frustrations here, and maybe the other
-contributors here too. So is not just me that has this impression.
-Hope the experience can be improved in future.
-
-> But it also ensures that we don't have even more work later on, trying to work
-> around a half-thought-through earlier change.
+> get_remote_merge_branch with zero or one arguments returns the
+> upstream branch. But a detached HEAD does no have an upstream branch,
+> as it is not tracking anything. Handle this case testing the exit cod=
+e
+> of "git symbolic-ref -q HEAD".
 >
-And this is also true.
+> Reported-by: Sverre Rabbelier <srabbelier@gmail.com>
+> Signed-off-by: Santi B=C3=A9jar <santi@agolina.net>
+> ---
+>
+>> If that is the case, shouldn't we be not calling "echo" at all to be=
+gin
+>> with?  IOW, shouldn't the code read more like this?
+>>
+>>        curr_branch=3D$(git symbolic-ref -q HEAD) &&
+>>        test "$origin" =3D "$default" &&
+>>        echo ...
+>
+> Or course, you are right. I didn't know/think about the exit
+> code... Thanks.
+
+The calling codepath in git-pull that wants to determine remoteref and
+oldremoteref seems to expect get-remote-merge-branch to succeed in orde=
+r
+to find its $oldremoteref variable, and returning false in detached HEA=
+D
+case here will change what happens there---it won't run "rev-list -g"
+anymore and quits the codepath early, leaving the variable empty.
+
+But we do want to set the variable to an empty string in this case anyw=
+ay,
+so there is no harm done (it probably is what we actually want to happe=
+n).
+
+So this should be Ok.  Sverre, do you want to do another round of testi=
+ng
+just to be sure before I apply this?
+
+> Santi
+>
+>  git-parse-remote.sh |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/git-parse-remote.sh b/git-parse-remote.sh
+> index 5f47b18..4da72ae 100644
+> --- a/git-parse-remote.sh
+> +++ b/git-parse-remote.sh
+> @@ -66,7 +66,7 @@ get_remote_merge_branch () {
+>  	    origin=3D"$1"
+>  	    default=3D$(get_default_remote)
+>  	    test -z "$origin" && origin=3D$default
+> -	    curr_branch=3D$(git symbolic-ref -q HEAD)
+> +	    curr_branch=3D$(git symbolic-ref -q HEAD) &&
+>  	    [ "$origin" =3D "$default" ] &&
+>  	    echo $(git for-each-ref --format=3D'%(upstream)' $curr_branch)
+>  	    ;;
+> --=20
+> 1.7.3.3.399.g0d2be.dirty
