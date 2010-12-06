@@ -1,303 +1,78 @@
 From: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
-Subject: [PATCHv3 1/6] web--browse: coding style
-Date: Mon,  6 Dec 2010 18:49:45 +0100
-Message-ID: <1291657790-3719-2-git-send-email-giuseppe.bilotta@gmail.com>
+Subject: [PATCHv3 2/6] web--browse: split valid_tool list
+Date: Mon,  6 Dec 2010 18:49:46 +0100
+Message-ID: <1291657790-3719-3-git-send-email-giuseppe.bilotta@gmail.com>
 References: <1291657790-3719-1-git-send-email-giuseppe.bilotta@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <christian.couder@gmail.com>,
 	Jonathan Nieder <jrnieder@gmail.com>,
 	Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 06 18:50:34 2010
+X-From: git-owner@vger.kernel.org Mon Dec 06 18:50:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPfCs-00066z-Fy
-	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 18:50:34 +0100
+	id 1PPfCt-00066z-1I
+	for gcvg-git-2@lo.gmane.org; Mon, 06 Dec 2010 18:50:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754195Ab0LFRuE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Dec 2010 12:50:04 -0500
+	id S1754197Ab0LFRuI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Dec 2010 12:50:08 -0500
 Received: from mail-ww0-f44.google.com ([74.125.82.44]:56472 "EHLO
 	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753530Ab0LFRuC (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Dec 2010 12:50:02 -0500
-Received: by wwa36 with SMTP id 36so13094000wwa.1
-        for <git@vger.kernel.org>; Mon, 06 Dec 2010 09:50:00 -0800 (PST)
+	with ESMTP id S1754191Ab0LFRuF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Dec 2010 12:50:05 -0500
+Received: by mail-ww0-f44.google.com with SMTP id 36so13094000wwa.1
+        for <git@vger.kernel.org>; Mon, 06 Dec 2010 09:50:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=ZlrI4qpfnD/vlyOuihN0CdqmeH/7oVkOl/V4qRPwAbA=;
-        b=o081jiphu50UX0vHyfRgSWQlAR02jySIp7mS97HNse08niWjL9Gw0d3Hu6MyrzMhw2
-         79xd00YntvMa1LLZtLGTEWzPMjJHi4jYIriega9c4I1LBSIyB8WZrz83A0IEWeZKxIe9
-         foWBCBFQ7xm+zmcMlRk6aOzMSVAdMEl2k+B2o=
+        bh=md0lMHPOP/l+dl2kCGXDrUFgYZXC54EJHr7MDe30NCY=;
+        b=vN575vOPyDk8drOhBppSptkfxZpVcXLvYbWhoAw0sryJcBaxxfW/MwXUh4PuwSPTJ+
+         cLcPrNsHtf2iTCQVi/W/Izm7v+cZe+ANFtI3FiK369KwZ7mf38WFXl07U+GhXAi3e7/u
+         Vk5USfm38jukBM7roHlhunMusu/RvbZPGKrJY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=vBiMUTddgxNouDpiVOgOmt9DwbUeHFikcHJg0fdzunzA3/6AW48xEy3sKfv1ewERpC
-         d2gYVgly0/OoDRY2Ra3vR5SjVZhU4S/xM90H0hC9N/WGCPpla9qiE6Eooy72PEiQGwoD
-         BEQcNepWoZV9xudtvEQNSdX+Jh03LnPlEBmtg=
-Received: by 10.227.132.77 with SMTP id a13mr6135143wbt.5.1291657800730;
-        Mon, 06 Dec 2010 09:50:00 -0800 (PST)
+        b=DcW0+Ar4aBY7VykZatL1QHBY+scZtPNQ8lIRcnlnG/eQOoEhTgjaApwIqvStSCVRzO
+         r15WUfoQmZns+mHqKHr8Wk0bUKGHBzcdqfZixqz5uCdPULQbmdGNZ5kV+EhHIneOTB8R
+         FgbkzTAMhovGyZsQ4lVbbc2oiiVbi3sU92Tu8=
+Received: by 10.227.145.134 with SMTP id d6mr6044393wbv.195.1291657804389;
+        Mon, 06 Dec 2010 09:50:04 -0800 (PST)
 Received: from localhost ([151.60.176.40])
-        by mx.google.com with ESMTPS id l51sm2481677wer.26.2010.12.06.09.49.58
+        by mx.google.com with ESMTPS id f35sm3609667wbf.14.2010.12.06.09.50.02
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 06 Dec 2010 09:49:59 -0800 (PST)
+        Mon, 06 Dec 2010 09:50:03 -0800 (PST)
 X-Mailer: git-send-email 1.7.3.2.664.g294b8.dirty
 In-Reply-To: <1291657790-3719-1-git-send-email-giuseppe.bilotta@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163004>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163005>
 
-Retab and deindent choices in case statements.
+It was getting too long, and we want to add some more.
 
 Signed-off-by: Giuseppe Bilotta <giuseppe.bilotta@gmail.com>
 ---
- git-web--browse.sh |  166 ++++++++++++++++++++++++++--------------------------
- 1 files changed, 83 insertions(+), 83 deletions(-)
+ git-web--browse.sh |    3 ++-
+ 1 files changed, 2 insertions(+), 1 deletions(-)
 
 diff --git a/git-web--browse.sh b/git-web--browse.sh
-index 3fc4166..7c4568f 100755
+index 7c4568f..e48e30d 100755
 --- a/git-web--browse.sh
 +++ b/git-web--browse.sh
-@@ -31,11 +31,11 @@ valid_custom_tool()
+@@ -31,7 +31,8 @@ valid_custom_tool()
  
  valid_tool() {
  	case "$1" in
--		firefox | iceweasel | chrome | google-chrome | chromium | konqueror | w3m | links | lynx | dillo | open | start)
--			;; # happy
--		*)
--			valid_custom_tool "$1" || return 1
--			;;
-+	firefox | iceweasel | chrome | google-chrome | chromium | konqueror | w3m | links | lynx | dillo | open | start)
-+		;; # happy
-+	*)
-+		valid_custom_tool "$1" || return 1
-+		;;
- 	esac
- }
- 
-@@ -46,139 +46,139 @@ init_browser_path() {
- 
- while test $# != 0
- do
--    case "$1" in
-+	case "$1" in
- 	-b|--browser*|-t|--tool*)
--	    case "$#,$1" in
-+		case "$#,$1" in
- 		*,*=*)
--		    browser=`expr "z$1" : 'z-[^=]*=\(.*\)'`
--		    ;;
-+			browser=`expr "z$1" : 'z-[^=]*=\(.*\)'`
-+			;;
- 		1,*)
--		    usage ;;
-+			usage ;;
- 		*)
--		    browser="$2"
--		    shift ;;
--	    esac
--	    ;;
-+			browser="$2"
-+			shift ;;
-+		esac
-+		;;
- 	-c|--config*)
--	    case "$#,$1" in
-+		case "$#,$1" in
- 		*,*=*)
--		    conf=`expr "z$1" : 'z-[^=]*=\(.*\)'`
--		    ;;
-+			conf=`expr "z$1" : 'z-[^=]*=\(.*\)'`
-+			;;
- 		1,*)
--		    usage ;;
-+			usage ;;
- 		*)
--		    conf="$2"
--		    shift ;;
--	    esac
--	    ;;
-+			conf="$2"
-+			shift ;;
-+		esac
-+		;;
- 	--)
--	    break
--	    ;;
-+		break
-+		;;
- 	-*)
--	    usage
--	    ;;
-+		usage
-+		;;
+-	firefox | iceweasel | chrome | google-chrome | chromium | konqueror | w3m | links | lynx | dillo | open | start)
++	firefox | iceweasel | chrome | google-chrome | chromium |\
++	konqueror | w3m | links | lynx | dillo | open | start)
+ 		;; # happy
  	*)
--	    break
--	    ;;
--    esac
--    shift
-+		break
-+		;;
-+	esac
-+	shift
- done
- 
- test $# = 0 && usage
- 
- if test -z "$browser"
- then
--    for opt in "$conf" "web.browser"
--    do
--	test -z "$opt" && continue
--	browser="`git config $opt`"
--	test -z "$browser" || break
--    done
--    if test -n "$browser" && ! valid_tool "$browser"; then
--	echo >&2 "git config option $opt set to unknown browser: $browser"
--	echo >&2 "Resetting to default..."
--	unset browser
--    fi
-+	for opt in "$conf" "web.browser"
-+	do
-+		test -z "$opt" && continue
-+		browser="`git config $opt`"
-+		test -z "$browser" || break
-+	done
-+	if test -n "$browser" && ! valid_tool "$browser"; then
-+		echo >&2 "git config option $opt set to unknown browser: $browser"
-+		echo >&2 "Resetting to default..."
-+		unset browser
-+	fi
- fi
- 
- if test -z "$browser" ; then
--    if test -n "$DISPLAY"; then
--	browser_candidates="firefox iceweasel google-chrome chrome chromium konqueror w3m links lynx dillo"
--	if test "$KDE_FULL_SESSION" = "true"; then
--	    browser_candidates="konqueror $browser_candidates"
-+	if test -n "$DISPLAY"; then
-+		browser_candidates="firefox iceweasel google-chrome chrome chromium konqueror w3m links lynx dillo"
-+		if test "$KDE_FULL_SESSION" = "true"; then
-+			browser_candidates="konqueror $browser_candidates"
-+		fi
-+	else
-+		browser_candidates="w3m links lynx"
- 	fi
--    else
--	browser_candidates="w3m links lynx"
--    fi
--    # SECURITYSESSIONID indicates an OS X GUI login session
--    if test -n "$SECURITYSESSIONID" \
--	    -o "$TERM_PROGRAM" = "Apple_Terminal" ; then
--	browser_candidates="open $browser_candidates"
--    fi
--    # /bin/start indicates MinGW
--    if test -x /bin/start; then
--	browser_candidates="start $browser_candidates"
--    fi
--
--    for i in $browser_candidates; do
--	init_browser_path $i
--	if type "$browser_path" > /dev/null 2>&1; then
--	    browser=$i
--	    break
-+	# SECURITYSESSIONID indicates an OS X GUI login session
-+	if test -n "$SECURITYSESSIONID" \
-+		-o "$TERM_PROGRAM" = "Apple_Terminal" ; then
-+		browser_candidates="open $browser_candidates"
- 	fi
--    done
--    test -z "$browser" && die "No known browser available."
-+	# /bin/start indicates MinGW
-+	if test -x /bin/start; then
-+		browser_candidates="start $browser_candidates"
-+	fi
-+
-+	for i in $browser_candidates; do
-+		init_browser_path $i
-+		if type "$browser_path" > /dev/null 2>&1; then
-+			browser=$i
-+			break
-+		fi
-+	done
-+	test -z "$browser" && die "No known browser available."
- else
--    valid_tool "$browser" || die "Unknown browser '$browser'."
-+	valid_tool "$browser" || die "Unknown browser '$browser'."
- 
--    init_browser_path "$browser"
-+	init_browser_path "$browser"
- 
--    if test -z "$browser_cmd" && ! type "$browser_path" > /dev/null 2>&1; then
--	die "The browser $browser is not available as '$browser_path'."
--    fi
-+	if test -z "$browser_cmd" && ! type "$browser_path" > /dev/null 2>&1; then
-+		die "The browser $browser is not available as '$browser_path'."
-+	fi
- fi
- 
- case "$browser" in
--    firefox|iceweasel)
-+firefox|iceweasel)
- 	# Check version because firefox < 2.0 does not support "-new-tab".
- 	vers=$(expr "$($browser_path -version)" : '.* \([0-9][0-9]*\)\..*')
- 	NEWTAB='-new-tab'
- 	test "$vers" -lt 2 && NEWTAB=''
- 	"$browser_path" $NEWTAB "$@" &
- 	;;
--    google-chrome|chrome|chromium)
-+google-chrome|chrome|chromium)
- 	# Actual command for chromium is chromium-browser.
- 	# No need to specify newTab. It's default in chromium
- 	eval "$browser_path" "$@" &
- 	;;
--    konqueror)
-+konqueror)
- 	case "$(basename "$browser_path")" in
--	    konqueror)
-+	konqueror)
- 		# It's simpler to use kfmclient to open a new tab in konqueror.
- 		browser_path="$(echo "$browser_path" | sed -e 's/konqueror$/kfmclient/')"
- 		type "$browser_path" > /dev/null 2>&1 || die "No '$browser_path' found."
- 		eval "$browser_path" newTab "$@"
- 		;;
--	    kfmclient)
-+	kfmclient)
- 		eval "$browser_path" newTab "$@"
- 		;;
--	    *)
-+	*)
- 		"$browser_path" "$@" &
- 		;;
- 	esac
- 	;;
--    w3m|links|lynx|open)
-+w3m|links|lynx|open)
- 	eval "$browser_path" "$@"
- 	;;
--    start)
--        exec "$browser_path" '"web-browse"' "$@"
--        ;;
--    dillo)
-+start)
-+	exec "$browser_path" '"web-browse"' "$@"
-+	;;
-+dillo)
- 	"$browser_path" "$@" &
- 	;;
--    *)
-+*)
- 	if test -n "$browser_cmd"; then
--	    ( eval $browser_cmd "$@" )
-+		( eval $browser_cmd "$@" )
- 	fi
- 	;;
- esac
+ 		valid_custom_tool "$1" || return 1
 -- 
 1.7.3.2.664.g294b8.dirty
