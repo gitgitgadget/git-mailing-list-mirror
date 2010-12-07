@@ -1,70 +1,101 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] logging branch deletion to help recovering from mistakes
-Date: Tue, 7 Dec 2010 12:06:23 -0500
-Message-ID: <20101207170623.GB21749@sigill.intra.peff.net>
-References: <7vlj42siu5.fsf@alter.siamese.dyndns.org>
- <AANLkTikbsyFUzZeu8R6yAND6spV6OnvYL08gYZ+ZgJCh@mail.gmail.com>
- <7vmxoiqeoq.fsf@alter.siamese.dyndns.org>
+From: "Alan Raison" <alan@theraisons.me.uk>
+Subject: RE: [PATCH] Corrected return values in post-receive-email.prep_for_email
+Date: Tue, 7 Dec 2010 17:10:04 -0000
+Message-ID: <002c01cb9631$972d6690$c58833b0$@me.uk>
+References: <002501cb962c$5fa3aa40$1eeafec0$@me.uk> <AANLkTikYnDNRPVd-wd4+3jsX2fBbjxODEGATN5dD7t1E@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 07 18:06:41 2010
+Content-Type: text/plain;
+	charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
+Cc: <git@vger.kernel.org>
+To: "'Thiago Farina'" <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 07 18:10:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQ0zq-0005Tj-Lg
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 18:06:35 +0100
+	id 1PQ13O-0007Mp-65
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 18:10:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752182Ab0LGRG1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Dec 2010 12:06:27 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:49422 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751871Ab0LGRG0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Dec 2010 12:06:26 -0500
-Received: (qmail 25430 invoked by uid 111); 7 Dec 2010 17:06:25 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 07 Dec 2010 17:06:25 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Dec 2010 12:06:23 -0500
-Content-Disposition: inline
-In-Reply-To: <7vmxoiqeoq.fsf@alter.siamese.dyndns.org>
+	id S1752344Ab0LGRKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Dec 2010 12:10:08 -0500
+Received: from gateway.bjss.co.uk ([77.86.30.29]:54655 "EHLO
+	gateway.bjss.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752141Ab0LGRKH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Dec 2010 12:10:07 -0500
+Received: from exchange.bjss.co.uk ([172.22.32.28]) by gateway.bjss.co.uk with Microsoft SMTPSVC(6.0.3790.4675);
+	 Tue, 7 Dec 2010 17:10:04 +0000
+Received: from kitkat ([172.22.33.188]) by exchange.bjss.co.uk with Microsoft SMTPSVC(6.0.3790.4675);
+	 Tue, 7 Dec 2010 17:10:04 +0000
+In-Reply-To: <AANLkTikYnDNRPVd-wd4+3jsX2fBbjxODEGATN5dD7t1E@mail.gmail.com>
+X-Mailer: Microsoft Office Outlook 12.0
+thread-index: AcuWLtxd3Wj1w4C9QlaTgWJReyW/aQAAYyVA
+Content-Language: en-gb
+X-OriginalArrivalTime: 07 Dec 2010 17:10:04.0395 (UTC) FILETIME=[972B43B0:01CB9631]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163091>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163092>
 
-On Mon, Dec 06, 2010 at 10:28:53PM -0800, Junio C Hamano wrote:
+In the main loop (lines 734 and 738 in the current master) the && and || operations assume true==0 and false==1; in line with shell defaults.
 
-> > Should this special log be mentioned in git-update-ref.txt or
-> > gitrepository-layout.txt?
-> 
-> Perhaps, but I wasn't sure if this patch itself is a good idea to begin
-> with.  Not the problem it tries to solve, but its approach.
-> 
-> For example, this cannot be shown with "reflog show" or "log -g" due to
-> the way these frontends locate the reflog file to read (the logic wants to
-> have an underlying ref).
+I tested it on a sourceforge shell (I think using Bash); error conditions reported an error to standard error, then proceeded to generate the email; if prep_for_email succeeded then no mail was sent.
 
-Yeah, I think this is not _quite_ what people want in this area. A base
-requirement from past discussions, I think, is that the whole reflog of
-the deleted branch be saved rather than just the tip. And then "reflog
-show" would make a lot more sense on such saved reflogs.
+HTH
 
-I'm not sure in practice how important that distinction is, as we are
-not saving deleted branch reflogs _at all_ right now, so the
-requirements are mostly speculation at this point.
+Alan
 
-The most recent discussion I recall is this one:
+-----Original Message-----
+From: Thiago Farina [mailto:tfransosi@gmail.com] 
+Sent: 07 December 2010 16:50
+To: Alan Raison
+Cc: git@vger.kernel.org
+Subject: Re: [PATCH] Corrected return values in post-receive-email.prep_for_email
 
-  http://thread.gmane.org/gmane.comp.version-control.git/144250/focus=145353
+Care to explain in the change log message why the return value should
+be 1 instead of 0?
 
-where the general idea was to just keep deleted reflogs around, append
-to them if the branch was recreated, and use a consistent renaming
-scheme to avoid D/F naming conflicts (e.g., "foo" is a deleted ref, and
-you create "foo/bar").
-
--Peff
+On Tue, Dec 7, 2010 at 2:32 PM, Alan Raison <alan@theraisons.me.uk> wrote:
+> ---
+>  contrib/hooks/post-receive-email |    6 +++---
+>  1 files changed, 3 insertions(+), 3 deletions(-)
+>
+> diff --git a/contrib/hooks/post-receive-email
+> b/contrib/hooks/post-receive-email
+> index 85724bf..020536d 100755
+> --- a/contrib/hooks/post-receive-email
+> +++ b/contrib/hooks/post-receive-email
+> @@ -150,7 +150,7 @@ prep_for_email()
+>                        # Anything else (is there anything else?)
+>                        echo >&2 "*** Unknown type of update to $refname
+> ($rev_type)"
+>                        echo >&2 "***  - no email generated"
+> -                       return 0
+> +                       return 1
+>                        ;;
+>        esac
+>
+> @@ -166,10 +166,10 @@ prep_for_email()
+>                esac
+>                echo >&2 "*** $config_name is not set so no email will be
+> sent"
+>                echo >&2 "*** for $refname update $oldrev->$newrev"
+> -               return 0
+> +               return 1
+>        fi
+>
+> -       return 1
+> +       return 0
+>  }
+>
+>  #
+> --
+> 1.7.3.1.msysgit.0
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+>
