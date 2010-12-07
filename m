@@ -1,148 +1,64 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Improved error messages when temporary file creation
- fails
-Date: Tue, 7 Dec 2010 13:09:20 -0600
-Message-ID: <20101207190920.GA22587@burratino>
-References: <20101207181633.GF25767@bzzt.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-rm.txt: Fix quoting
+Date: Tue, 07 Dec 2010 11:12:18 -0800
+Message-ID: <7vbp4xqtwt.fsf@alter.siamese.dyndns.org>
+References: <4CFDF388.6060907@drmicha.warpmail.net>
+ <73d13b752212b557c0dc157edea9a62122840e93.1291712241.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Arnout Engelen <arnouten@bzzt.net>
-X-From: git-owner@vger.kernel.org Tue Dec 07 20:09:44 2010
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Dec 07 20:12:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQ2uw-0003kR-Vv
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 20:09:39 +0100
+	id 1PQ2xo-00061C-Du
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 20:12:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753295Ab0LGTJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Dec 2010 14:09:33 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:38797 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753055Ab0LGTJd (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Dec 2010 14:09:33 -0500
-Received: by vws16 with SMTP id 16so254764vws.19
-        for <git@vger.kernel.org>; Tue, 07 Dec 2010 11:09:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=mpsfl67OGRo17pq/eJQIUZz/loMDZJ3148wbu8H98f4=;
-        b=pu2q8FvJtGFge7v+iTH8N0VpqPru/WK8UItD0nAHLWzfqX1xXSA3gkxBuegHfTF5aK
-         VXhJphVakhNqbATQbkfgQdibS1tVmAfa+h8wALRZOsMbUDSSLlSqLVhVinJHnBKesvM5
-         3RoM8hEH60M0spLsxP5eC/IQnTXfqGB6h6DkU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=PXQVVya4T8N4fX5h3fZq4R5qGHzzxwvh8vhzoWpnZZKa8ukGnzaQt72bwarASRRYAg
-         yDFv/qw/TVHM3zMId7h58EskQFWsAgDxHIkMeHPlaIa5neTOI+21bW6gD7bC8tzX5BZJ
-         2hx6+ULkab+Nxa2HpfG6ew1WiLXKIognqhMTw=
-Received: by 10.220.164.70 with SMTP id d6mr1968608vcy.130.1291748972378;
-        Tue, 07 Dec 2010 11:09:32 -0800 (PST)
-Received: from burratino ([68.255.109.73])
-        by mx.google.com with ESMTPS id y14sm878702vch.4.2010.12.07.11.09.30
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 07 Dec 2010 11:09:31 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20101207181633.GF25767@bzzt.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753318Ab0LGTMb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Dec 2010 14:12:31 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34904 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753136Ab0LGTMa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Dec 2010 14:12:30 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6BD562E36;
+	Tue,  7 Dec 2010 14:12:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rxXZv+5ZOI+u9HEk2TnIho00gkE=; b=Y/3k3K
+	qbucudCcL45ocMoWGUqueFECUOlrulAfa4nPr+/OGWqMkS1GUGGurYpiSPz3EvLt
+	J4CfgMPtm94yW8WgR+QadMLkvLTvBM/E+w3dIbZqqMZEXwIi9wsUE1wVtEZdAOin
+	VE3kIvE2PFRTbORtIuVQmCvLy7W3pHK8uRBL0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=JaozIHNDTLUTE4Yfo3+ghlrkSsvoXv4k
+	8LAVnxGyhWT02VIJE4ILBStLJkg/Mlnfd+BJvLw9I2s9pP3eXNNmUBLK6auXvNQf
+	qHFXSbcOml5r5veCmQ/deuIpdY5Oemap+iGpNnbd7pzSLMAyYyXQJ9EwWRrfJT+u
+	LNXoqJBVX6c=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 397A22E34;
+	Tue,  7 Dec 2010 14:12:47 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0DCA12E31; Tue,  7 Dec 2010
+ 14:12:42 -0500 (EST)
+In-Reply-To: <73d13b752212b557c0dc157edea9a62122840e93.1291712241.git.git@drmicha.warpmail.net> (Michael J. Gruber's message of "Tue\,  7 Dec 2010 10\:07\:11 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: FA002C56-0235-11E0-9474-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163115>
 
-Arnout Engelen wrote:
+Michael J Gruber <git@drmicha.warpmail.net> writes:
 
-> +			die_errno("Unable to create temporary file '%s' at %s", 
-> +				template, getcwd(NULL, 0));
+> -Using "git commit -a"
+> +Using ``git commit -a''
+>  ~~~~~~~~~~~~~~~~~~~~~
 
-This is a Linux libc/glibc-specific extension, alas.  On other platforms
-it would print "(null)" or segfault.
-
-Here's some other assorted tweaks.  I didn't bother to find your old
-patch in the mailing list archive to take a fuller change description
-from.
-
-Hope that helps,
-Jonathan
----
-diff --git a/test-mktemp.c b/test-mktemp.c
-index d392fa7..2e3b134 100644
---- a/test-mktemp.c
-+++ b/test-mktemp.c
-@@ -7,10 +7,9 @@
- 
- int main(int argc, char *argv[])
- {
--	if (argc != 2) {
-+	if (argc != 2)
- 		usage("Expected 1 parameter defining the temporary file template");
--	}
--	xmkstemp(strdup(argv[1]));
-+	xmkstemp(xstrdup(argv[1]));
- 
- 	return 0;
- }
-diff --git a/wrapper.c b/wrapper.c
-index 6640c87..cb9c9ad 100644
---- a/wrapper.c
-+++ b/wrapper.c
-@@ -197,19 +197,18 @@ FILE *xfdopen(int fd, const char *mode)
- int xmkstemp(char *template)
- {
- 	int fd;
--	char origtemplate[255];
--	strlcpy(origtemplate, template, 255);
-+	char origtemplate[256];
-+	strlcpy(origtemplate, template, sizeof(origtemplate));
- 
- 	fd = mkstemp(template);
- 	if (fd < 0) {
-+		int saved_errno = errno;
-+
- 		if (!template[0])
- 			template = origtemplate;
--
--		if (is_absolute_path(template))
--			die_errno("Unable to create temporary file '%s'", template);
--		else
--			die_errno("Unable to create temporary file '%s' at %s", 
--				template, getcwd(NULL, 0));
-+		template = make_nonrelative_path(template);
-+		errno = saved_errno;
-+		die_errno("Unable to create temporary file '%s'", template);
- 	}
- 	return fd;
- }
-@@ -330,19 +329,18 @@ int gitmkstemps(char *pattern, int suffix_len)
- int xmkstemp_mode(char *template, int mode)
- {
- 	int fd;
--	char origtemplate[255];
--	strlcpy(origtemplate, template, 255);
-+	char origtemplate[256];
-+	strlcpy(origtemplate, template, sizeof(origtemplate));
- 
- 	fd = git_mkstemp_mode(template, mode);
- 	if (fd < 0) {
-+		int saved_errno = errno;
-+
- 		if (!template[0])
- 			template = origtemplate;
--
--		if (is_absolute_path(template))
--			die_errno("Unable to create temporary file '%s'", template);
--		else
--			die_errno("Unable to create temporary file '%s' at %s", 
--				template, getcwd(NULL, 0));
-+		template = make_nonrelative_path(template);
-+		errno = saved_errno;
-+		die_errno("Unable to create temporary file '%s'", template);
- 	}
- 	return fd;
- }
+Can you keep the length of the underline the same here, or do you need to
+extend it?
