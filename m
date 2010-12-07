@@ -1,77 +1,94 @@
-From: dclist@gmail.com
-Subject: git-svn fails when svn.noMetaData is set
-Date: Mon, 06 Dec 2010 21:24:27 -0500
-Message-ID: <87bp4ytj50.fsf@invalid.clx>
+From: Jeff King <peff@peff.net>
+Subject: [BUG] yet another doc formatting problem
+Date: Tue, 7 Dec 2010 00:07:38 -0500
+Message-ID: <20101207050737.GA32485@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 07 03:32:39 2010
+X-From: git-owner@vger.kernel.org Tue Dec 07 06:07:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPnM6-0003DR-Dv
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 03:32:38 +0100
+	id 1PPpmM-0007qy-IC
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 06:07:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754935Ab0LGCb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Dec 2010 21:31:59 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:49521 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754771Ab0LGCb6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Dec 2010 21:31:58 -0500
-Received: by mail-qy0-f174.google.com with SMTP id 11so4401554qyk.19
-        for <git@vger.kernel.org>; Mon, 06 Dec 2010 18:31:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :message-id:user-agent:mime-version:content-type;
-        bh=sSbj9WoEbw18V2IWGlEzDcrLFVRerXy3QF2fE7Jfzt4=;
-        b=La5h325effTyJ/LfxY88jKjRKp0i5G4FMVPk7dvbIaHnZmk2154rhwHp2uwy70zUaF
-         M6UNN6lCRHsIZANgMW+ILZIkJqBR0gk3Uzw0IpcbQ+SGgrtrbUtQiuSnzpAs0jKqigA8
-         Glt/iqpKaixQf6GPuDD74VyNtWhl/dz9jOBP4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:message-id:user-agent:mime-version
-         :content-type;
-        b=bXg8sceUq49K8L0JZMS9CT9KwQFrYDwb9bY2crP66FLHtn0BbkWuUs+A4lNzDDHogO
-         sEU4i4xd1WpOgMNVzEEVZCSlamMM49R7H/IILQ8ED5bgdfoG93fSvHJBxwO9w4VywzE4
-         W7eXheGelHbPbpUbmJQmUN0JExN2/uoO8UXdg=
-Received: by 10.224.67.72 with SMTP id q8mr5157055qai.385.1291688671582;
-        Mon, 06 Dec 2010 18:24:31 -0800 (PST)
-Received: from localhost (bas1-montreal46-2925033342.dsl.bell.ca [174.88.119.126])
-        by mx.google.com with ESMTPS id l14sm4031678qck.29.2010.12.06.18.24.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 06 Dec 2010 18:24:30 -0800 (PST)
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
+	id S1750930Ab0LGFHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Dec 2010 00:07:49 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:58185 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750754Ab0LGFHs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Dec 2010 00:07:48 -0500
+Received: (qmail 20404 invoked by uid 111); 7 Dec 2010 05:07:45 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 07 Dec 2010 05:07:45 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Dec 2010 00:07:38 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163066>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163067>
 
+When I build git-rm.1, some of the headings look odd. For example:
 
-Run on git version 1.7.3. Analyzed the source code using commit
-0b0cd0e0a2.
+   Using  git commit -a""
+          If you intend that your next commit should record...
+   ...
+   Using  git add -A""
+          When accepting a new code drop for a vendor branch
 
-Steps to reproduce
-------------------
-1. Set svn.noMetaData to true globally.
-2. Invoke git svn clone on an svn repository
+Note the funny double-space and the weird "" at the end. I get the same
+thing from "git show origin/man:man1/git-rm.1 | nroff -man".
 
-What happens
-------------
-Fatal error: "Not a SCALAR reference at /usr/lib/git-core/git-svn line 1457"
+The source looks like this:
 
-What I expect to happen
------------------------
-The clone to complete successfully
+  $ git grep -A1 Using..git.commit git-rm.txt
+  git-rm.txt:Using "git commit -a"
+  git-rm.txt-~~~~~~~~~~~~~~~~~~~~~
 
-Analysis
---------
-The problem seems to be line 1457, where the variable 'v' is
-dereferenced and assigned a value --- $$v = $tmp ---- in combination
-with line 118, where the value of the variable 'v' for the option
-no-metadata is specified as a subroutine and, therefore, cannot be
-assigned a value in the manner defined on line 1457. I believe the same
-is true of other options that specify subroutines as their hash values.
+which looks sane to me. The generated xml also looks OK to me:
+
+  $ grep Using..git.commit git-rm.xml
+  <title>Using "git commit -a"</title>
+
+But the resulting roff doesn't:
+
+  $ grep Using..git.commit git-rm.1
+  .SS "Using "git commit \-a""
+
+which looks like a quoting error to me, which implies a bug in docbook.
+
+I guess we can hack around it with some XSL magic, but I am tempted to
+do the simple:
+
+diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
+index 71e3d9f..8ee559b 100644
+--- a/Documentation/git-rm.txt
++++ b/Documentation/git-rm.txt
+@@ -89,8 +89,8 @@ the paths that have disappeared from the filesystem. However,
+ depending on the use case, there are several ways that can be
+ done.
+ 
+-Using "git commit -a"
+-~~~~~~~~~~~~~~~~~~~~~
++Using git commit -a
++~~~~~~~~~~~~~~~~~~~
+ If you intend that your next commit should record all modifications
+ of tracked files in the working tree and record all removals of
+ files that have been removed from the working tree with `rm`
+@@ -98,8 +98,8 @@ files that have been removed from the working tree with `rm`
+ automatically notice and record all removals.  You can also have a
+ similar effect without committing by using `git add -u`.
+ 
+-Using "git add -A"
+-~~~~~~~~~~~~~~~~~~
++Using git add -A
++~~~~~~~~~~~~~~~~
+ When accepting a new code drop for a vendor branch, you probably
+ want to record both the removal of paths and additions of new paths
+ as well as modifications of existing paths.
+
+-Peff
