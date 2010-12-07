@@ -1,102 +1,115 @@
-From: Eric Blake <eblake@redhat.com>
-Subject: git format-patch should honor notes
-Date: Tue, 07 Dec 2010 14:53:09 -0700
-Organization: Red Hat
-Message-ID: <4CFEACC5.70005@redhat.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 1/2] describe: Use for_each_rawref
+Date: Tue, 07 Dec 2010 13:59:58 -0800
+Message-ID: <7vr5dtnt0h.fsf@alter.siamese.dyndns.org>
+References: <alpine.DEB.2.02.1011171830050.14285@dr-wily.mit.edu>
+ <20101203084348.GD18202@burratino>
+ <alpine.DEB.2.02.1012060149550.23348@dr-wily.mit.edu>
+ <20101206073214.GA3745@burratino>
+ <alpine.DEB.2.02.1012061159500.23348@dr-wily.mit.edu>
+ <20101207095818.GB1867@neumann>
+ <alpine.DEB.2.02.1012071320240.23348@dr-wily.mit.edu>
+ <alpine.DEB.2.02.1012071325100.23348@dr-wily.mit.edu>
+ <7vsjy9pdmg.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------enigF8C23594C8E68A0DA3DAB057"
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 07 22:53:18 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Kirill Smelkov <kirr@mns.spb.ru>,
+	Thomas Rast <trast@student.ethz.ch>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>
+To: Anders Kaseorg <andersk@ksplice.com>
+X-From: git-owner@vger.kernel.org Tue Dec 07 23:00:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQ5TJ-0005pf-0P
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 22:53:17 +0100
+	id 1PQ5aH-0000mz-Q5
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 23:00:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753403Ab0LGVxL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Dec 2010 16:53:11 -0500
-Received: from mx1.redhat.com ([209.132.183.28]:15349 "EHLO mx1.redhat.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751561Ab0LGVxK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Dec 2010 16:53:10 -0500
-Received: from int-mx12.intmail.prod.int.phx2.redhat.com (int-mx12.intmail.prod.int.phx2.redhat.com [10.5.11.25])
-	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id oB7LrA0p003560
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK)
-	for <git@vger.kernel.org>; Tue, 7 Dec 2010 16:53:10 -0500
-Received: from [10.3.113.117] (ovpn-113-117.phx2.redhat.com [10.3.113.117])
-	by int-mx12.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id oB7Lr9Ie007530;
-	Tue, 7 Dec 2010 16:53:09 -0500
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Mnenhy/0.8.3 Thunderbird/3.1.6
-X-Enigmail-Version: 1.1.2
-OpenPGP: url=http://people.redhat.com/eblake/eblake.gpg
-X-Scanned-By: MIMEDefang 2.68 on 10.5.11.25
+	id S1753422Ab0LGWAY convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Dec 2010 17:00:24 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45053 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753275Ab0LGWAY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Dec 2010 17:00:24 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8283D2970;
+	Tue,  7 Dec 2010 17:00:44 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=4ORy7qDmc9mj
+	p6hOc110yYmNGIQ=; b=n1vbxJHzWk6qun7uLEpenARKj2ZQv1dUW9tuF02TQCME
+	SCNRlBQNE0nZ/Nrsf+Ff/jVSC21FuK9/LBXLOtOg6MJXk4/Skmy2Ki0+riEYWoJT
+	3SwZQs35brNrTRr+FkoczlUr2YtOVdf04jUVi6pqa8s3nQpU5Wm/TgdGCBsioVc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=fbU0yK
+	JVgHiekUwgBm3lRaPiOay35xZmnqwlCljt3KGwkaMgkMTbpG4Fds4tx3sTR+rKo9
+	PAx4yyc54kSurjuxVYlJ7AlBRy8FMZrBzlqARaLDMFNR4CB5f09U+RmHofMXPO9z
+	Awsw2K/r1xp97+ue8cKoJ212iOPSZ1niCTyC0=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E895F295A;
+	Tue,  7 Dec 2010 17:00:34 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 105AF293D; Tue,  7 Dec 2010
+ 17:00:22 -0500 (EST)
+In-Reply-To: <7vsjy9pdmg.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
+ message of "Tue\, 07 Dec 2010 11\:49\:27 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 6AD373F4-024D-11E0-91AC-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163142>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enigF8C23594C8E68A0DA3DAB057
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: quoted-printable
+Junio C Hamano <gitster@pobox.com> writes:
 
-I'm just starting to experiment with 'git notes', because it seems to
-fit well with my workflow on several projects, except for one drawback.
+> Anders Kaseorg <andersk@ksplice.com> writes:
+>
+>> On Tue, 7 Dec 2010, Anders Kaseorg wrote:
+>>> Signed-off-by: Anders Kaseorg <andersk@ksplice.com>
+>>>=20
+>>> diff --git a/builtin/describe.c b/builtin/describe.c
+>>
+>> (Gaaah, sorry, I accidentally used format-patch -p here.  Won=E2=80=99=
+t happen=20
+>> again.  :-) )
+>
+> The default will work just fine, no?
+>
+> Also labelling them like "[PATCH v2 1/2]" would have been nicer to sp=
+ot
+> the progress of the series.
 
-My workflow is that I post patch series for upstream review via 'git
-send-email'.  Often, that results in feedback that requires me to
-amend/rebase my series, and post a v2 or v3 of the series.  By adding
-'git config notes.rewriteRef refs/notes/commits', I can add notes that
-will carry across my rebase, and remind me what I changed in v2 (for
-example, git notes add -m 'v2: fix foo, per mail xyz@example.com').
-This is handy for me, and I think it is also handy for reviewers -
-someone who took the time to read through v1 should know what I changed
-in response to their comments, and only have to focus in on commits with
-changes, rather than on the entire resent series.
+Two more requests.
 
-However, I think such review helps are informational only - that is, in
-'git send-email' parlance, they belong between the '-- ' and diffstat
-lines of the email, and not in the upstream commit.  After all, once my
-series is finally accepted upstream, it will no longer be rebased, and
-'git bisect' sees only the final version.  I see no reason for the
-commit message to carry the cruft of extra information that was only
-helpful during reviewing the amended series, nor any reason why upstream
-should carry around my notes.
+ * Please describe what was changed since earlier interations after "--=
+-"
+   lines;
 
-So, what I'm missing is the ability for 'git send-email' (or more
-fundamentally, 'git format-patch') to be able to include contents of a
-particular (set of) notes reference in each patch file it generates,
-where the note falls in the informative portion of the email, and is
-intentionally omitted from the upstream commit when someone else runs
-'git am' on my email.
+ * Please run tests before submitting patches.  It appears to break t74=
+07.
 
---=20
-Eric Blake   eblake@redhat.com    +1-801-349-2682
-Libvirt virtualization library http://libvirt.org
+What breaks in t7407 is "git submodule status --recursive" output.  In =
+my
+environment, it used to describe the tip as heads/master but after the
+patch it says remotes/origin/master.  The output from "describe --all"
+does not tiebreak between one branch from another, even though it does
+favor tags over branches (and tries to use annotated ones), so it is no=
+t a
+real regression in that sense, but then the test needs to be fixed not =
+to
+care about which equally good branches are shown.
 
-
---------------enigF8C23594C8E68A0DA3DAB057
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.11 (GNU/Linux)
-Comment: Public key at http://people.redhat.com/eblake/eblake.gpg
-Comment: Using GnuPG with Fedora - http://enigmail.mozdev.org/
-
-iQEcBAEBCAAGBQJM/qzFAAoJEKeha0olJ0NqCzIIAJvR9726i/K9vZX4z9NeR3RC
-yQpjBsUoL4/FgN9b3nwgkDIw0EGdkbVm61724m7dAlqYcnidO9VnvP3LmUFbZltn
-TWkehciQjFhN56Lpb+JfXY11dSOeuKAWSLTovQ/E16BwrlsfYH3XpzCRXV+h0eIr
-+C6GgbUSsA7PaXQi2xdEwIFDA8OQqPdXFrMr860h0Jj3Kz43epJhPoiWgsWd7NGi
-TAL08glut5XLrIb/sDmBAGzX0agIk9bxCB8p3UyLqERJiNN//t5+tCwYS9fz8SuI
-sGpKTuhvCyt6hq4O74yRJYv04kRvFFnq+N2XTkJfiHAPDV0PnTWrSfXr1qJqMyI=
-=nUUo
------END PGP SIGNATURE-----
-
---------------enigF8C23594C8E68A0DA3DAB057--
+Some might even argue that it is more relevant to show how the commit
+relates to remote-tracking branch heads.  That is a separate issue (if
+this position is widely supported, we would introduce another "prio"
+between "all others (0)" and "lightweight tags (1)" for remote-tracking
+branches), though.
