@@ -1,99 +1,77 @@
-From: "Neal Kreitzinger" <neal@rsss.com>
-Subject: Re: interfacing M$-TFS
-Date: Mon, 6 Dec 2010 19:20:11 -0600
-Message-ID: <idk26n$c5t$1@dough.gmane.org>
-References: <20101203210139.GB14508@nibiru.local>
+From: dclist@gmail.com
+Subject: git-svn fails when svn.noMetaData is set
+Date: Mon, 06 Dec 2010 21:24:27 -0500
+Message-ID: <87bp4ytj50.fsf@invalid.clx>
+Mime-Version: 1.0
+Content-Type: text/plain
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 07 02:21:54 2010
+X-From: git-owner@vger.kernel.org Tue Dec 07 03:32:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPmFb-0006Pa-Dl
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 02:21:51 +0100
+	id 1PPnM6-0003DR-Dv
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 03:32:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753599Ab0LGBVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Dec 2010 20:21:46 -0500
-Received: from lo.gmane.org ([80.91.229.12]:46138 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753161Ab0LGBVp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Dec 2010 20:21:45 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PPmFQ-0006Nv-SR
-	for git@vger.kernel.org; Tue, 07 Dec 2010 02:21:40 +0100
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Dec 2010 02:21:40 +0100
-Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Dec 2010 02:21:40 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-RFC2646: Format=Flowed; Original
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
+	id S1754935Ab0LGCb7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Dec 2010 21:31:59 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:49521 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754771Ab0LGCb6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Dec 2010 21:31:58 -0500
+Received: by mail-qy0-f174.google.com with SMTP id 11so4401554qyk.19
+        for <git@vger.kernel.org>; Mon, 06 Dec 2010 18:31:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :message-id:user-agent:mime-version:content-type;
+        bh=sSbj9WoEbw18V2IWGlEzDcrLFVRerXy3QF2fE7Jfzt4=;
+        b=La5h325effTyJ/LfxY88jKjRKp0i5G4FMVPk7dvbIaHnZmk2154rhwHp2uwy70zUaF
+         M6UNN6lCRHsIZANgMW+ILZIkJqBR0gk3Uzw0IpcbQ+SGgrtrbUtQiuSnzpAs0jKqigA8
+         Glt/iqpKaixQf6GPuDD74VyNtWhl/dz9jOBP4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:message-id:user-agent:mime-version
+         :content-type;
+        b=bXg8sceUq49K8L0JZMS9CT9KwQFrYDwb9bY2crP66FLHtn0BbkWuUs+A4lNzDDHogO
+         sEU4i4xd1WpOgMNVzEEVZCSlamMM49R7H/IILQ8ED5bgdfoG93fSvHJBxwO9w4VywzE4
+         W7eXheGelHbPbpUbmJQmUN0JExN2/uoO8UXdg=
+Received: by 10.224.67.72 with SMTP id q8mr5157055qai.385.1291688671582;
+        Mon, 06 Dec 2010 18:24:31 -0800 (PST)
+Received: from localhost (bas1-montreal46-2925033342.dsl.bell.ca [174.88.119.126])
+        by mx.google.com with ESMTPS id l14sm4031678qck.29.2010.12.06.18.24.29
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 06 Dec 2010 18:24:30 -0800 (PST)
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163065>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163066>
 
 
-"Enrico Weigelt" <weigelt@metux.de> wrote in message 
-news:20101203210139.GB14508@nibiru.local...
->
-> Hi folks,
->
->
-> is there any way for directly interfacing M$-TFS (w/o its svn proxy) ?
->
-> I'm currently working on an embedded linux project and my customer
-> has a company wide policy to put everything into - please put on
-> you intellectual seatbelt - M$ TFS.
->
-> Needless to mention that TFS' VCS stuff is practically unusable,
-> but some collegues still committing directly to TFS (haven't
-> conviced them to switch over to git), and releases have to be
-> put there, as QA folks dont know anything else.
->
-> My current workflow is:
->
-> #1: a main branch, frequently copied over TFS manually (;-o)
-> #2: lots of topic branches which get rebased onto master
-> #3: finished topic branches are rebased to latest master and
->    then copied over to and committed in TFS
->
-> Of course, that much manual work - especially with the need of
-> checking out / locking invidual files in TFS - really suxx and
-> wastes a lot of time. So I'm looking for way to:
->
-> a) track remote branches from TFS
-> b) push back changes into a TFS remote tracking branch
->
-> Both should be possible from Linux side, using the native protocol
-> (very unlikely that IT department can be convinced to install the
-> svn proxy for TFS).
->
->
->
-> thx
-> -- 
-> ----------------------------------------------------------------------
-> Enrico Weigelt, metux IT service -- http://www.metux.de/
->
-> phone:  +49 36207 519931  email: weigelt@metux.de
-> mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-> ----------------------------------------------------------------------
-> Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-> ----------------------------------------------------------------------
+Run on git version 1.7.3. Analyzed the source code using commit
+0b0cd0e0a2.
 
-I'm not familiar with TFS, but have you looked at the vendor-branch 
-methodology described in the git-rm manpage?  It seems like it could cover 
-just about anything.
+Steps to reproduce
+------------------
+1. Set svn.noMetaData to true globally.
+2. Invoke git svn clone on an svn repository
 
-v/r,
-Neal 
+What happens
+------------
+Fatal error: "Not a SCALAR reference at /usr/lib/git-core/git-svn line 1457"
+
+What I expect to happen
+-----------------------
+The clone to complete successfully
+
+Analysis
+--------
+The problem seems to be line 1457, where the variable 'v' is
+dereferenced and assigned a value --- $$v = $tmp ---- in combination
+with line 118, where the value of the variable 'v' for the option
+no-metadata is specified as a subroutine and, therefore, cannot be
+assigned a value in the manner defined on line 1457. I believe the same
+is true of other options that specify subroutines as their hash values.
