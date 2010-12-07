@@ -1,76 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] logging branch deletion to help recovering from mistakes
-Date: Tue, 7 Dec 2010 13:20:40 -0500
-Message-ID: <20101207182040.GA26770@sigill.intra.peff.net>
-References: <7vlj42siu5.fsf@alter.siamese.dyndns.org>
- <AANLkTikbsyFUzZeu8R6yAND6spV6OnvYL08gYZ+ZgJCh@mail.gmail.com>
- <7vmxoiqeoq.fsf@alter.siamese.dyndns.org>
- <20101207170623.GB21749@sigill.intra.peff.net>
- <AANLkTimnp3xCHp_3E7ry-5OQL3PFnYh=H8PhfzMN307C@mail.gmail.com>
+From: Anders Kaseorg <andersk@ksplice.com>
+Subject: [PATCH 1/2] describe: Use for_each_rawref
+Date: Tue, 7 Dec 2010 13:22:00 -0500 (EST)
+Message-ID: <alpine.DEB.2.02.1012071320240.23348@dr-wily.mit.edu>
+References: <alpine.DEB.2.02.1011171830050.14285@dr-wily.mit.edu> <20101203084348.GD18202@burratino> <alpine.DEB.2.02.1012060149550.23348@dr-wily.mit.edu> <20101206073214.GA3745@burratino> <alpine.DEB.2.02.1012061159500.23348@dr-wily.mit.edu>
+ <20101207095818.GB1867@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Tue Dec 07 19:20:49 2010
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Kirill Smelkov <kirr@mns.spb.ru>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Tue Dec 07 19:22:16 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQ29g-0003ho-JE
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 19:20:48 +0100
+	id 1PQ2B2-0004JO-6l
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 19:22:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753216Ab0LGSUo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Dec 2010 13:20:44 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:33083 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752070Ab0LGSUn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Dec 2010 13:20:43 -0500
-Received: (qmail 26541 invoked by uid 111); 7 Dec 2010 18:20:42 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 07 Dec 2010 18:20:42 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Dec 2010 13:20:40 -0500
-Content-Disposition: inline
-In-Reply-To: <AANLkTimnp3xCHp_3E7ry-5OQL3PFnYh=H8PhfzMN307C@mail.gmail.com>
+	id S1753403Ab0LGSWG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Dec 2010 13:22:06 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:52271 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753253Ab0LGSWE convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Dec 2010 13:22:04 -0500
+Received: by qyk11 with SMTP id 11so5298369qyk.19
+        for <git@vger.kernel.org>; Tue, 07 Dec 2010 10:22:03 -0800 (PST)
+Received: by 10.224.11.66 with SMTP id s2mr6000357qas.311.1291746122437;
+        Tue, 07 Dec 2010 10:22:02 -0800 (PST)
+Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
+        by mx.google.com with ESMTPS id m7sm4589028qck.13.2010.12.07.10.22.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 07 Dec 2010 10:22:01 -0800 (PST)
+X-X-Sender: andersk@dr-wily.mit.edu
+In-Reply-To: <20101207095818.GB1867@neumann>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163103>
 
-On Tue, Dec 07, 2010 at 10:14:19AM -0800, Shawn O. Pearce wrote:
+Don=E2=80=99t waste time checking for dangling refs; they wouldn=E2=80=99=
+t affect the
+output of =E2=80=98git describe=E2=80=99 anyway.  Although this doesn=E2=
+=80=99t gain much
+performance by itself, it does in conjunction with the next commit.
 
-> Per check-ref-format, ref names cannot contain two dots.  We could
-> archive ref logs by renaming them, $GIT_DIR/logs/refs/heads/foo
-> becomes $GIT_DIR/logs/refs/heads/foo..deleted-1.  If foo is created
-> and deleted again, it becomes foo..deleted-2.
-> 
-> This still causes problems for git reflog show / git log -g because
-> they want a current ref to enumerate the log of.
+Signed-off-by: Anders Kaseorg <andersk@ksplice.com>
 
-That seems reasonable to me. The "reflog show" limitation is just a
-matter of a simple code fix, though, isn't it? Is there a good reason
-for this restriction to exist? And even if there is, it would be simple
-to special case it for ..deleted-* branches.
-
-> A different approach might be to have $GIT_DIR/logs/refs/REF_ATTIC,
-> and special case that in git reflog show / git log -g.  When a
-> ref is deleted, append its entire log onto REF_ATTIC, between two
-> specially formatted marker lines.  When recovering a branch, copy
-> out the region from the REF_ATTIC log.
-
-That seems a lot less efficient, as we have to linearly search all of
-REF_ATTIC to get:
-
-  1. the reflog for one deleted branch
-
-  2. the list of deleted branches
-
-Neither of those is probably particularly performance critical, but it
-just seems like keeping the logs in files indexed by the original ref
-names is a more natural fit.
-
--Peff
+diff --git a/builtin/describe.c b/builtin/describe.c
+index 43caff2..700f740 100644
+--- a/builtin/describe.c
++++ b/builtin/describe.c
+@@ -418,7 +418,7 @@ int cmd_describe(int argc, const char **argv, const=
+ char *prefix)
+ 		return cmd_name_rev(i + argc, args, prefix);
+ 	}
+=20
+-	for_each_ref(get_name, NULL);
++	for_each_rawref(get_name, NULL);
+ 	if (!found_names && !always)
+ 		die("No names found, cannot describe anything.");
+=20
+--=20
+1.7.3.3
