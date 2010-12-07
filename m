@@ -1,110 +1,90 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Corrected return values in
- post-receive-email.prep_for_email
-Date: Tue, 07 Dec 2010 11:34:02 -0800
-Message-ID: <7v1v5tqswl.fsf@alter.siamese.dyndns.org>
-References: <002501cb962c$5fa3aa40$1eeafec0$@me.uk>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] logging branch deletion to help recovering from mistakes
+Date: Tue, 7 Dec 2010 14:38:05 -0500
+Message-ID: <20101207193804.GA27685@sigill.intra.peff.net>
+References: <7vlj42siu5.fsf@alter.siamese.dyndns.org>
+ <AANLkTikbsyFUzZeu8R6yAND6spV6OnvYL08gYZ+ZgJCh@mail.gmail.com>
+ <7vmxoiqeoq.fsf@alter.siamese.dyndns.org>
+ <20101207170623.GB21749@sigill.intra.peff.net>
+ <7v7hflqth1.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, "Kevin P. Fleming" <kpfleming@digium.com>
-To: "Alan Raison" <alan@theraisons.me.uk>
-X-From: git-owner@vger.kernel.org Tue Dec 07 20:34:21 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 07 20:38:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQ3Ip-0001MG-2C
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 20:34:19 +0100
+	id 1PQ3Mc-0003Lo-LP
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 20:38:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754325Ab0LGTeM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Dec 2010 14:34:12 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54300 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754224Ab0LGTeL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Dec 2010 14:34:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CE0A03152;
-	Tue,  7 Dec 2010 14:34:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; s=sasl; bh=ZKxAUo9dDZgjPIPeeP4l97ybzWY=; b=UhybMl
-	v2Vqh2tJHPfiLVElSlHTrKHdVAnqbvn0dm0QQVSXMct5Iua/Z+auJyQakoo5YGEo
-	6IPGMrmEpPG00TCAj+uBGkMN6S7gogxTypscfTR54t2j+vZ4Va0CjDcMnfLXxA2M
-	b2rpqi7P4+eLG14tDjM35O0UCNFA6unOBypCk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:in-reply-to:date:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=pmYFxSOsPfgGH4dv8HGv0b0bNZXu3s9K
-	QIR/ZK3RiuAROLGYZ5cW2xH3vsYhdaPODerTFOwMGFPXN+gpHy9ktVQWJg4EF+44
-	NJlVkwRWS0QwCFjFdGTYv2YkF6PdpIOrv9hgVSUBhyE6nZHqLYSWi+CC7ToE5BR8
-	ZENUrFT/w4k=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9D1C9314D;
-	Tue,  7 Dec 2010 14:34:30 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 57BD9314C; Tue,  7 Dec 2010
- 14:34:26 -0500 (EST)
-In-Reply-To: <002501cb962c$5fa3aa40$1eeafec0$@me.uk> (Alan Raison's message
- of "Tue\, 7 Dec 2010 16\:32\:43 -0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 02E1FFC2-0239-11E0-8D7E-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1753997Ab0LGTiI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Dec 2010 14:38:08 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:48899 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753190Ab0LGTiH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Dec 2010 14:38:07 -0500
+Received: (qmail 27675 invoked by uid 111); 7 Dec 2010 19:38:07 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 07 Dec 2010 19:38:07 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Dec 2010 14:38:05 -0500
+Content-Disposition: inline
+In-Reply-To: <7v7hflqth1.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163118>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163119>
 
-"Alan Raison" <alan@theraisons.me.uk> writes:
+On Tue, Dec 07, 2010 at 11:21:46AM -0800, Junio C Hamano wrote:
 
-> ---
->  contrib/hooks/post-receive-email |    6 +++---
->  1 files changed, 3 insertions(+), 3 deletions(-)
+> I am more worried about stuff in branch.<name>.* that are discarded upon
+> "branch -d".  Without the config items, you won't have a working:
+> 
+>     $ branch -d frotz
+>     $ branch --undelete frotz
+>     $ git checkout frotz
+>     $ git pull
 
-No sign-off, no description.
+Hmm, yeah, I didn't think about that. Two possible solutions:
 
-This is a regression introduced by 53cad69 (post-receive-email: ensure
-sent messages are not empty, 2010-09-10), I think.
+  1. Just leave it in .git/config. It is not hurting anything if the
+     branch does not exist, but it is cruft in a file the user might
+     look at.
 
-> diff --git a/contrib/hooks/post-receive-email
-> b/contrib/hooks/post-receive-email
-> index 85724bf..020536d 100755
-> --- a/contrib/hooks/post-receive-email
-> +++ b/contrib/hooks/post-receive-email
-> @@ -150,7 +150,7 @@ prep_for_email()
->  			# Anything else (is there anything else?)
->  			echo >&2 "*** Unknown type of update to $refname
-> ($rev_type)"
->  			echo >&2 "***  - no email generated"
-> -			return 0
-> +			return 1
+  2. Drop it into .git/config.dead/<branch_name>. When resurrecting a
+     branch, copy it back into .git/config.
 
-This used to "exit 1" before 53cad69 and I agree with the patch that
-signalling error with "return 1" is the right thing to do here.
+In both cases, when the reflog for the deleted branch is pruned to
+nothing, we delete the relevant config, too.
 
->  			;;
->  	esac
->  
-> @@ -166,10 +166,10 @@ prep_for_email()
->  		esac
->  		echo >&2 "*** $config_name is not set so no email will be
-> sent"
->  		echo >&2 "*** for $refname update $oldrev->$newrev"
-> -		return 0
-> +		return 1
+In the second case, I think you would have to take special care for
+something like:
 
-This used to "exit 0" before 53cad69 to cause the program stop before
-sending mails.  Again, I agree with the patch that signalling error is the
-right thing to do here.
+  $ git branch frotz origin/master
+  $ git branch -d frotz
+  $ git remote rename origin foo
+  $ git branch --undelete frotz
 
->  	fi
->  
-> -	return 1
-> +	return 0
+In the non-deleted case, this transparently renames branch.frotz.remote
+from "origin" to "foo". In the deleted case, we would need to make sure
+the dead config is updated, too.
 
-And this obviously is correct.
 
-Kevin, care to review and Ack?  Alan, care to add a few lines of patch
-description and sign-off?
+To be honest, I have never been that interested in a "branch --undelete"
+feature. I much more care about leaving the reflogs of deleted branches
+around, so I can "git checkout -b foo bar@{1}" later on[1]. That is, to
+me branch undeletion is not about bringing a branch back wholesale, but
+rather remembering commits so I can start a new branch there.
 
-Thanks.
+But I guess others might disagree.
+
+-Peff
+
+[1] Well, that and just piece of mind from knowing that "branch -d" is
+    not totally unrecoverable. Specifically, if we kept deleted reflogs
+    around, it would be safe(r) to turn on auto-prune on fetch, the lack
+    of which is something that seems to confuse new users.
