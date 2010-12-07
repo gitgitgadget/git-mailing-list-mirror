@@ -1,59 +1,99 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] logging branch deletion to help recovering from mistakes
-Date: Tue, 7 Dec 2010 08:18:28 +0700
-Message-ID: <AANLkTikbsyFUzZeu8R6yAND6spV6OnvYL08gYZ+ZgJCh@mail.gmail.com>
-References: <7vlj42siu5.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 07 02:19:09 2010
+From: "Neal Kreitzinger" <neal@rsss.com>
+Subject: Re: interfacing M$-TFS
+Date: Mon, 6 Dec 2010 19:20:11 -0600
+Message-ID: <idk26n$c5t$1@dough.gmane.org>
+References: <20101203210139.GB14508@nibiru.local>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 07 02:21:54 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPmCx-0005Yq-N9
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 02:19:08 +0100
+	id 1PPmFb-0006Pa-Dl
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 02:21:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753590Ab0LGBTA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 6 Dec 2010 20:19:00 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:34177 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753188Ab0LGBTA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 6 Dec 2010 20:19:00 -0500
-Received: by wyb28 with SMTP id 28so12687064wyb.19
-        for <git@vger.kernel.org>; Mon, 06 Dec 2010 17:18:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=3ZI+RlvyuXVxaG8GH9iLeSa68e2Bo47p0/fDcbnGVzs=;
-        b=kFdx/EsGtOjREAR3sHuTMehyOGsM9T4L63BLbnHF7YlYZv+Ipb3F0T/39mn5IL51JH
-         Jq/yTPIZjUBDq76jB1dq8DMviL0NhO+MTlSfjEmvUSyKIjvPB0dSdQ9IJGT+uS4jJkWK
-         ydUIAbsnGzqTyvWy+lQdT4hheZm9aIigXjtIQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=qO3DeqAGRmNDMYOCpI2WfUFYRTqkTwPWBVsliqocft+t/DQkQowbXwU/2t8xZoXkvB
-         4n+nKAnHbyWCMSfGxxrgHb2P0E3Os6kHJoPFWt0H1UfgfDJOvX8b//CNTG7SoG4xhqfa
-         +CFw0bWpiQLGegwpE7XUclmhVNpcWCb1I7YBQ=
-Received: by 10.216.30.144 with SMTP id k16mr821648wea.19.1291684738996; Mon,
- 06 Dec 2010 17:18:58 -0800 (PST)
-Received: by 10.216.158.83 with HTTP; Mon, 6 Dec 2010 17:18:28 -0800 (PST)
-In-Reply-To: <7vlj42siu5.fsf@alter.siamese.dyndns.org>
+	id S1753599Ab0LGBVq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 6 Dec 2010 20:21:46 -0500
+Received: from lo.gmane.org ([80.91.229.12]:46138 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753161Ab0LGBVp (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 6 Dec 2010 20:21:45 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PPmFQ-0006Nv-SR
+	for git@vger.kernel.org; Tue, 07 Dec 2010 02:21:40 +0100
+Received: from 67.63.162.200 ([67.63.162.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Dec 2010 02:21:40 +0100
+Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 07 Dec 2010 02:21:40 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 67.63.162.200
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-RFC2646: Format=Flowed; Original
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163064>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163065>
 
-On Tue, Dec 7, 2010 at 4:16 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> +#define BRANCH_DELETION_LOG "DELETED-REFS"
-> +
 
-Should this special log be mentioned in git-update-ref.txt or
-gitrepository-layout.txt?
--- 
-Duy
+"Enrico Weigelt" <weigelt@metux.de> wrote in message 
+news:20101203210139.GB14508@nibiru.local...
+>
+> Hi folks,
+>
+>
+> is there any way for directly interfacing M$-TFS (w/o its svn proxy) ?
+>
+> I'm currently working on an embedded linux project and my customer
+> has a company wide policy to put everything into - please put on
+> you intellectual seatbelt - M$ TFS.
+>
+> Needless to mention that TFS' VCS stuff is practically unusable,
+> but some collegues still committing directly to TFS (haven't
+> conviced them to switch over to git), and releases have to be
+> put there, as QA folks dont know anything else.
+>
+> My current workflow is:
+>
+> #1: a main branch, frequently copied over TFS manually (;-o)
+> #2: lots of topic branches which get rebased onto master
+> #3: finished topic branches are rebased to latest master and
+>    then copied over to and committed in TFS
+>
+> Of course, that much manual work - especially with the need of
+> checking out / locking invidual files in TFS - really suxx and
+> wastes a lot of time. So I'm looking for way to:
+>
+> a) track remote branches from TFS
+> b) push back changes into a TFS remote tracking branch
+>
+> Both should be possible from Linux side, using the native protocol
+> (very unlikely that IT department can be convinced to install the
+> svn proxy for TFS).
+>
+>
+>
+> thx
+> -- 
+> ----------------------------------------------------------------------
+> Enrico Weigelt, metux IT service -- http://www.metux.de/
+>
+> phone:  +49 36207 519931  email: weigelt@metux.de
+> mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+> ----------------------------------------------------------------------
+> Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+> ----------------------------------------------------------------------
+
+I'm not familiar with TFS, but have you looked at the vendor-branch 
+methodology described in the git-rm manpage?  It seems like it could cover 
+just about anything.
+
+v/r,
+Neal 
