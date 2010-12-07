@@ -1,101 +1,111 @@
-From: "Alan Raison" <alan@theraisons.me.uk>
-Subject: RE: [PATCH] Corrected return values in post-receive-email.prep_for_email
-Date: Tue, 7 Dec 2010 17:10:04 -0000
-Message-ID: <002c01cb9631$972d6690$c58833b0$@me.uk>
-References: <002501cb962c$5fa3aa40$1eeafec0$@me.uk> <AANLkTikYnDNRPVd-wd4+3jsX2fBbjxODEGATN5dD7t1E@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] git-rm.txt: Fix quoting
+Date: Tue, 7 Dec 2010 11:19:39 -0600
+Message-ID: <20101207171939.GA21105@burratino>
+References: <4CFDF388.6060907@drmicha.warpmail.net>
+ <73d13b752212b557c0dc157edea9a62122840e93.1291712241.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
-Cc: <git@vger.kernel.org>
-To: "'Thiago Farina'" <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 07 18:10:17 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
+	Junio C Hamano <gitster@pobox.com>
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Dec 07 18:19:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQ13O-0007Mp-65
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 18:10:14 +0100
+	id 1PQ1Co-0004Xf-FQ
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 18:19:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752344Ab0LGRKI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Dec 2010 12:10:08 -0500
-Received: from gateway.bjss.co.uk ([77.86.30.29]:54655 "EHLO
-	gateway.bjss.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752141Ab0LGRKH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Dec 2010 12:10:07 -0500
-Received: from exchange.bjss.co.uk ([172.22.32.28]) by gateway.bjss.co.uk with Microsoft SMTPSVC(6.0.3790.4675);
-	 Tue, 7 Dec 2010 17:10:04 +0000
-Received: from kitkat ([172.22.33.188]) by exchange.bjss.co.uk with Microsoft SMTPSVC(6.0.3790.4675);
-	 Tue, 7 Dec 2010 17:10:04 +0000
-In-Reply-To: <AANLkTikYnDNRPVd-wd4+3jsX2fBbjxODEGATN5dD7t1E@mail.gmail.com>
-X-Mailer: Microsoft Office Outlook 12.0
-thread-index: AcuWLtxd3Wj1w4C9QlaTgWJReyW/aQAAYyVA
-Content-Language: en-gb
-X-OriginalArrivalTime: 07 Dec 2010 17:10:04.0395 (UTC) FILETIME=[972B43B0:01CB9631]
+	id S1752781Ab0LGRTx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Dec 2010 12:19:53 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:42616 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751412Ab0LGRTw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Dec 2010 12:19:52 -0500
+Received: by vws16 with SMTP id 16so147117vws.19
+        for <git@vger.kernel.org>; Tue, 07 Dec 2010 09:19:51 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=86xhmo9vQlHoLRmjFxRDS8hTr/lF8WyIMHOIDEBKSLA=;
+        b=Qjbv4vRjSKTCn9/Jv4Lu80o5MkHWApnqxP+uEhesFJRtxT99KxLCtLEMOSHCDI0GO8
+         wYr0hWEdXhUfMpI11ZAMQObXW2kcmeVWID+8ndpUuKzXUCx2n0ew+ogVihL7c1B1Iq7a
+         9BmYzGm3D+6a7XBHTXZNAvluEBCAB6aEzo2LE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=QGFndcqhvjTb2zlu2uD8rQ/PGW7R5u6geBDr47QMgBpHm84+OzrncCdHpTc7SNaZTZ
+         NYijIQ8EROI+ij6wp0LHkBeWUgRLO6N30w7SLezgAoTK3Esa9zOHwlRp2McxZed1Nd1K
+         u1kJyrHWWV7YewsdAalUjbs1dvkAHkmiXKe0Q=
+Received: by 10.220.199.77 with SMTP id er13mr1982031vcb.47.1291742391614;
+        Tue, 07 Dec 2010 09:19:51 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
+        by mx.google.com with ESMTPS id j21sm842693vcr.34.2010.12.07.09.19.48
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 07 Dec 2010 09:19:49 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <73d13b752212b557c0dc157edea9a62122840e93.1291712241.git.git@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163093>
 
-In the main loop (lines 734 and 738 in the current master) the && and || operations assume true==0 and false==1; in line with shell defaults.
+Michael J Gruber wrote:
 
-I tested it on a sourceforge shell (I think using Bash); error conditions reported an error to standard error, then proceeded to generate the email; if prep_for_email succeeded then no mail was sent.
+> --- a/Documentation/git-rm.txt
+> +++ b/Documentation/git-rm.txt
+> @@ -111,8 +111,8 @@ tree using this command:
+>  git ls-files -z | xargs -0 rm -f
+>  ----------------
+>  
+> -and then "untar" the new code in the working tree. Alternately
+> -you could "rsync" the changes into the working tree.
+> +and then `untar` the new code in the working tree. Alternately
+> +you could `rsync` the changes into the working tree.
 
-HTH
+I like the patch.  Is there really an "untar" command?
 
-Alan
-
------Original Message-----
-From: Thiago Farina [mailto:tfransosi@gmail.com] 
-Sent: 07 December 2010 16:50
-To: Alan Raison
-Cc: git@vger.kernel.org
-Subject: Re: [PATCH] Corrected return values in post-receive-email.prep_for_email
-
-Care to explain in the change log message why the return value should
-be 1 instead of 0?
-
-On Tue, Dec 7, 2010 at 2:32 PM, Alan Raison <alan@theraisons.me.uk> wrote:
-> ---
->  contrib/hooks/post-receive-email |    6 +++---
->  1 files changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/contrib/hooks/post-receive-email
-> b/contrib/hooks/post-receive-email
-> index 85724bf..020536d 100755
-> --- a/contrib/hooks/post-receive-email
-> +++ b/contrib/hooks/post-receive-email
-> @@ -150,7 +150,7 @@ prep_for_email()
->                        # Anything else (is there anything else?)
->                        echo >&2 "*** Unknown type of update to $refname
-> ($rev_type)"
->                        echo >&2 "***  - no email generated"
-> -                       return 0
-> +                       return 1
->                        ;;
->        esac
->
-> @@ -166,10 +166,10 @@ prep_for_email()
->                esac
->                echo >&2 "*** $config_name is not set so no email will be
-> sent"
->                echo >&2 "*** for $refname update $oldrev->$newrev"
-> -               return 0
-> +               return 1
->        fi
->
-> -       return 1
-> +       return 0
->  }
->
->  #
-> --
-> 1.7.3.1.msysgit.0
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
->
+Maybe something like this on top?  ('rsync' is in italics because it
+is just a command name rather than a full command ready to be typed on
+the command line.)
+---
+diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
+index dd61ebd..0adbe8b 100644
+--- a/Documentation/git-rm.txt
++++ b/Documentation/git-rm.txt
+@@ -90,7 +90,7 @@ depending on the use case, there are several ways that can be
+ done.
+ 
+ Using ``git commit -a''
+-~~~~~~~~~~~~~~~~~~~~~
++~~~~~~~~~~~~~~~~~~~~~~~
+ If you intend that your next commit should record all modifications
+ of tracked files in the working tree and record all removals of
+ files that have been removed from the working tree with `rm`
+@@ -99,7 +99,7 @@ automatically notice and record all removals.  You can also have a
+ similar effect without committing by using `git add -u`.
+ 
+ Using ``git add -A''
+-~~~~~~~~~~~~~~~~~~
++~~~~~~~~~~~~~~~~~~~~
+ When accepting a new code drop for a vendor branch, you probably
+ want to record both the removal of paths and additions of new paths
+ as well as modifications of existing paths.
+@@ -111,8 +111,8 @@ tree using this command:
+ git ls-files -z | xargs -0 rm -f
+ ----------------
+ 
+-and then `untar` the new code in the working tree. Alternately
+-you could `rsync` the changes into the working tree.
++and then untar the new code in the working tree. Alternately
++you could 'rsync' the changes into the working tree.
+ 
+ After that, the easiest way to record all removals, additions, and
+ modifications in the working tree is:
