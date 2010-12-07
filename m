@@ -1,62 +1,100 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: [PATCH] completion: Add PS1 configuration for submodules
-Date: Tue, 7 Dec 2010 13:15:35 +0100
-Message-ID: <AANLkTin8JstkjEWaCGZuqpEXZnLMyudFm24K7Y3iCgX6@mail.gmail.com>
-References: <1291677763-55385-1-git-send-email-scott@appden.com>
+From: Konstantin Kivi <kkivi@yandex.ru>
+Subject: Re: git fetch vs push, git am questions
+Date: Tue, 07 Dec 2010 15:31:23 +0300
+Message-ID: <60371291725083@web106.yandex.ru>
+References: <99351291667275@web152.yandex.ru> <20101207002104.GG3264@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=koi8-r
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Scott Kyle <scott@appden.com>
-X-From: git-owner@vger.kernel.org Tue Dec 07 13:15:43 2010
+To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Tue Dec 07 13:42:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPwSM-0000H2-BS
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 13:15:42 +0100
+	id 1PPws5-0003mx-2x
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 13:42:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752629Ab0LGMPh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Dec 2010 07:15:37 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:43568 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751142Ab0LGMPg (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Dec 2010 07:15:36 -0500
-Received: by fxm20 with SMTP id 20so5251779fxm.19
-        for <git@vger.kernel.org>; Tue, 07 Dec 2010 04:15:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=fjZF1btyReoMxTOxIYYKhbS2GJbQVmDBl7c8FAF7rPE=;
-        b=TlYayHcBXoJdTSyLzB6yzm4uR/Vf8AmguFkpX8ZxMgIi0p0+O5i9q/OVqeUrRwn3ZU
-         TWJhJbP3xAUz5fFrTXh6ICmmf62hcjiHDTsodz16hlb75Dcq218HM32O3JyVLiZavzt2
-         E0wDVAvKiLUM9GPJkjaptbZfmCgpP6r9WB8aQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=jyeidG3nKKtnPbzQGFeKKLzRCCZxup1ZD2L4zlG8SM0zLN0ORwC+RL4ERVWWTe12xg
-         GEN6425cCWLr1cgVFvlrAwlda5CItP1GkVGAs0NT3VOTtr1nLttAVb2fVzu+U+GXtpqJ
-         AbnajxGhOHym8TREtp+FarwFJ6bBCe4Dis5MA=
-Received: by 10.223.69.140 with SMTP id z12mr1458589fai.142.1291724135389;
- Tue, 07 Dec 2010 04:15:35 -0800 (PST)
-Received: by 10.223.74.207 with HTTP; Tue, 7 Dec 2010 04:15:35 -0800 (PST)
-In-Reply-To: <1291677763-55385-1-git-send-email-scott@appden.com>
+	id S1752974Ab0LGMmM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Dec 2010 07:42:12 -0500
+Received: from forward7.mail.yandex.net ([77.88.61.37]:45740 "EHLO
+	forward7.mail.yandex.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752837Ab0LGMmL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Dec 2010 07:42:11 -0500
+X-Greylist: delayed 634 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Dec 2010 07:42:11 EST
+Received: from web106.yandex.ru (web106.yandex.ru [77.88.61.7])
+	by forward7.mail.yandex.net (Yandex) with ESMTP id 752381B0911A;
+	Tue,  7 Dec 2010 15:31:24 +0300 (MSK)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex.ru; s=mail;
+	t=1291725084; bh=M1zrgx70+7QEojpNn1lqNOiPgmsKizt9LSBK7QZPCng=;
+	h=From:To:Cc:In-Reply-To:References:Subject:MIME-Version:Message-Id:
+	 Date:Content-Transfer-Encoding:Content-Type;
+	b=aaCSlPrpjacrvwVwq8JR0nQ2e0zI4E6THm9YrJd0o6j8EwuH3pY8mRIC/C/fsLJjP
+	 6PEhnddwq469usln4RCJUgEzuNQPSohHwEwN2lXDBMkWNh3xXDQX3k4kogRWBnnEWn
+	 htRnOveUrb193Eaonc57Ob4bxQbMds5md3FtvP+I=
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by web106.yandex.ru (Yandex) with ESMTP id 6732F50809B;
+	Tue,  7 Dec 2010 15:31:24 +0300 (MSK)
+Received: from Comtekh-N-gw.rosprint.net (Comtekh-N-gw.rosprint.net [195.151.248.41]) by mail.yandex.ru with HTTP;
+	Tue, 07 Dec 2010 15:31:23 +0300
+In-Reply-To: <20101207002104.GG3264@localhost.localdomain>
+X-Mailer: Yamail [ http://yandex.ru ] 5.0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163076>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163077>
 
-On Tue, Dec 7, 2010 at 00:22, Scott Kyle <scott@appden.com> wrote:
-> For those who often work on repositories with submodules, the dirty
-> indicator for unstaged changes will almost always show because development
-> is simultaneously happening on those submodules. The config option
-> diff.ignoreSubmodules is not appropriate for this use because it has larger
-> implications.
 
-Wouldn't it be a lot better to instead add support for showing
-submodule dirtyness as distinct from the main tree's dirtyness? Then
-you could easily spot if you had either your tree / submodule tree
-changes, without just ignoring them.
+
+07.12.10, 03:21, "Konstantin Khomoutov" <flatworm@users.sourceforge.net=
+>:
+
+
+>  `git pull` does exactly that: fetch + merge (which should result in
+>  fast-forward in your case).
+
+pull does not work on bare repos.
+
+>  > I also found that there is a notions of current branch in bare rep=
+ository
+> > =9AHow can I change current branch in bare repositry?
+
+I think I will understand things better if I get what is 'current branc=
+h' for bare repository
+and how to change it
+
+>  By re-writing the HEAD ref (this behaviour is documented in the man =
+page
+>  of the `git clone` command, see the "--branch" option for instance).
+
+The repository already exists, so git-clone  will not help
+
+>  You can use the `git symbolic-ref` to update the HEAD ref.
+> =20
+
+Do you mean something like=20
+git symbolic-ref  master origin/master ?
+
+
+>  [...]
+> =20
+>  P.S.
+>  It's a bit strange you're playing with a bare repository in this way=
+=2E
+>  Usually a bare repository is supposed to be pushed to and pulled fro=
+m,
+>  not the other way round. Not that it's bad, but it may turn out you'=
+re
+>  inventing a convoluted workflow when there may be a simpler solution=
+=2E
+
+Yes, I see that push is easier, I only want to be sure I have full cont=
+rol on what is going on.
+
+
+--=20
+=F3 =D5=D7=C1=D6=C5=CE=C9=C5=CD, =EB=CF=CE=D3=D4=C1=CE=D4=C9=CE =EB=C9=D7=
+=C9
