@@ -1,94 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: [BUG] yet another doc formatting problem
-Date: Tue, 7 Dec 2010 00:07:38 -0500
-Message-ID: <20101207050737.GA32485@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] logging branch deletion to help recovering from mistakes
+Date: Mon, 06 Dec 2010 22:28:53 -0800
+Message-ID: <7vmxoiqeoq.fsf@alter.siamese.dyndns.org>
+References: <7vlj42siu5.fsf@alter.siamese.dyndns.org>
+ <AANLkTikbsyFUzZeu8R6yAND6spV6OnvYL08gYZ+ZgJCh@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 07 06:07:57 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 07 07:29:14 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPpmM-0007qy-IC
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 06:07:54 +0100
+	id 1PPr30-0004Nb-2w
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 07:29:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750930Ab0LGFHt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Dec 2010 00:07:49 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:58185 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750754Ab0LGFHs (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Dec 2010 00:07:48 -0500
-Received: (qmail 20404 invoked by uid 111); 7 Dec 2010 05:07:45 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 07 Dec 2010 05:07:45 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Dec 2010 00:07:38 -0500
-Content-Disposition: inline
+	id S1752174Ab0LGG3E (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Dec 2010 01:29:04 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38533 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752046Ab0LGG3D (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Dec 2010 01:29:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C1E4D30F6;
+	Tue,  7 Dec 2010 01:29:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6Qh2ThcnBQwmrHxj+5Ps7mqTlmM=; b=OsKS5B
+	h4roLW/9w5tAFRD3V6Bn7aYbCg8j35hYEjekJ4MTUrPjt9W0YLSN/BvxbXAJ92mW
+	5AktrRwETry4R731W66Y/VDItnXDh2nRc7y7odhWIVeqyeGbdwiKVeyOFd57/82Y
+	ZSctdwd6wAdiKpV6WFTQIpOIFytEz6CwGzc0o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oNKhiUPNv4dn1kfPT/K9m2sjBO4qE70L
+	qO/ATnZBVXIXhmtRmW32Md+f+bwIgwwuxTiH9mIL8KgJoKygk68zqEaeLatnMC6D
+	MzzqShpZpu3QbCmhmk4DCR5T8ETcBJ14qiwuvvd4b8dAceUNtJQtzUn6S2+ioXHJ
+	8Fqii7tYo5A=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9B7FF30F5;
+	Tue,  7 Dec 2010 01:29:19 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A349930F4; Tue,  7 Dec 2010
+ 01:29:16 -0500 (EST)
+In-Reply-To: <AANLkTikbsyFUzZeu8R6yAND6spV6OnvYL08gYZ+ZgJCh@mail.gmail.com>
+ (Nguyen Thai Ngoc Duy's message of "Tue\, 7 Dec 2010 08\:18\:28 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 5289E634-01CB-11E0-AABC-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163068>
 
-When I build git-rm.1, some of the headings look odd. For example:
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-   Using  git commit -a""
-          If you intend that your next commit should record...
-   ...
-   Using  git add -A""
-          When accepting a new code drop for a vendor branch
+> On Tue, Dec 7, 2010 at 4:16 AM, Junio C Hamano <gitster@pobox.com> wrote:
+>> +#define BRANCH_DELETION_LOG "DELETED-REFS"
+>> +
+>
+> Should this special log be mentioned in git-update-ref.txt or
+> gitrepository-layout.txt?
 
-Note the funny double-space and the weird "" at the end. I get the same
-thing from "git show origin/man:man1/git-rm.1 | nroff -man".
+Perhaps, but I wasn't sure if this patch itself is a good idea to begin
+with.  Not the problem it tries to solve, but its approach.
 
-The source looks like this:
-
-  $ git grep -A1 Using..git.commit git-rm.txt
-  git-rm.txt:Using "git commit -a"
-  git-rm.txt-~~~~~~~~~~~~~~~~~~~~~
-
-which looks sane to me. The generated xml also looks OK to me:
-
-  $ grep Using..git.commit git-rm.xml
-  <title>Using "git commit -a"</title>
-
-But the resulting roff doesn't:
-
-  $ grep Using..git.commit git-rm.1
-  .SS "Using "git commit \-a""
-
-which looks like a quoting error to me, which implies a bug in docbook.
-
-I guess we can hack around it with some XSL magic, but I am tempted to
-do the simple:
-
-diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-index 71e3d9f..8ee559b 100644
---- a/Documentation/git-rm.txt
-+++ b/Documentation/git-rm.txt
-@@ -89,8 +89,8 @@ the paths that have disappeared from the filesystem. However,
- depending on the use case, there are several ways that can be
- done.
- 
--Using "git commit -a"
--~~~~~~~~~~~~~~~~~~~~~
-+Using git commit -a
-+~~~~~~~~~~~~~~~~~~~
- If you intend that your next commit should record all modifications
- of tracked files in the working tree and record all removals of
- files that have been removed from the working tree with `rm`
-@@ -98,8 +98,8 @@ files that have been removed from the working tree with `rm`
- automatically notice and record all removals.  You can also have a
- similar effect without committing by using `git add -u`.
- 
--Using "git add -A"
--~~~~~~~~~~~~~~~~~~
-+Using git add -A
-+~~~~~~~~~~~~~~~~
- When accepting a new code drop for a vendor branch, you probably
- want to record both the removal of paths and additions of new paths
- as well as modifications of existing paths.
-
--Peff
+For example, this cannot be shown with "reflog show" or "log -g" due to
+the way these frontends locate the reflog file to read (the logic wants to
+have an underlying ref).
