@@ -1,90 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] logging branch deletion to help recovering from mistakes
-Date: Tue, 7 Dec 2010 14:38:05 -0500
-Message-ID: <20101207193804.GA27685@sigill.intra.peff.net>
-References: <7vlj42siu5.fsf@alter.siamese.dyndns.org>
- <AANLkTikbsyFUzZeu8R6yAND6spV6OnvYL08gYZ+ZgJCh@mail.gmail.com>
- <7vmxoiqeoq.fsf@alter.siamese.dyndns.org>
- <20101207170623.GB21749@sigill.intra.peff.net>
- <7v7hflqth1.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCH 2/1] bash: eliminate dependency on bash_completion lib
+Date: Tue, 7 Dec 2010 13:49:23 -0600
+Message-ID: <20101207194923.GD22587@burratino>
+References: <1291236582-28603-1-git-send-email-peter@avirtualhome.com>
+ <20101202091624.GB1771@burratino>
+ <20101202091613.6ac8f816@MonteCarlo.grandprix.int>
+ <20101202210207.GA4994@burratino>
+ <20101207160747.GD1867@neumann>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 07 20:38:15 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Peter van der Does <peter@avirtualhome.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Kevin Ballard <kevin@sb.org>,
+	Mathias Lafeldt <misfire@debugon.org>
+To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Tue Dec 07 20:49:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQ3Mc-0003Lo-LP
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 20:38:14 +0100
+	id 1PQ3Xg-0000gi-UJ
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 20:49:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753997Ab0LGTiI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Dec 2010 14:38:08 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:48899 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753190Ab0LGTiH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Dec 2010 14:38:07 -0500
-Received: (qmail 27675 invoked by uid 111); 7 Dec 2010 19:38:07 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 07 Dec 2010 19:38:07 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 07 Dec 2010 14:38:05 -0500
+	id S1754028Ab0LGTtf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 7 Dec 2010 14:49:35 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:49736 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753190Ab0LGTte convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 7 Dec 2010 14:49:34 -0500
+Received: by vws16 with SMTP id 16so288027vws.19
+        for <git@vger.kernel.org>; Tue, 07 Dec 2010 11:49:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=xNzrmy9Sat21Bl+ipofMhBjdAatRr6SJQcRN0DvFMY4=;
+        b=r/PhN+SkM2cqgY9OGzwn0TNQyvZ9VMCwXR/Yj6ay5vKxC8wUKHCWFYbdOaub3IuHML
+         hZYmqkc5NPS8lqjZx0CWlaPUufMcaGdQFTREsMywsR0bhPP9pZjZE143+PZ3+anJvmYp
+         HyCfSRwfny9DUwFE4B8fP0c6oDb3SSWPE1LPQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=VFg48TeK4vgkH0u2xtAiTMHk2NV3DfshzMs4q6xeAp5HPKoVBNf+MYAB/uYouXSpUb
+         p/zQlRTM8DI65EfTESjqUEJIVcL8RA1U3xAZU04IZ6sOT+y/2zUsrDLSJY+23YIjX9hS
+         IQ/oPn7YJwbjSdwfDDK3Cf+Sgl+0sBVEglp0o=
+Received: by 10.220.178.2 with SMTP id bk2mr827334vcb.166.1291751373013;
+        Tue, 07 Dec 2010 11:49:33 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
+        by mx.google.com with ESMTPS id y14sm889609vch.28.2010.12.07.11.49.30
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 07 Dec 2010 11:49:31 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <7v7hflqth1.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20101207160747.GD1867@neumann>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163119>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163120>
 
-On Tue, Dec 07, 2010 at 11:21:46AM -0800, Junio C Hamano wrote:
+SZEDER G=C3=A1bor wrote:
+> On Thu, Dec 02, 2010 at 03:02:07PM -0600, Jonathan Nieder wrote:
 
-> I am more worried about stuff in branch.<name>.* that are discarded upon
-> "branch -d".  Without the config items, you won't have a working:
-> 
->     $ branch -d frotz
->     $ branch --undelete frotz
->     $ git checkout frotz
->     $ git pull
+>> Add a minimal implementation of _get_comp_words_by_ref,
+>> the routine used to work around bash 4.0's COMP_WORDS semantics.
+>>=20
+>> Based on bash-completion 2.x (commit bf763033, 2010-10-26) but
+>> tweaked for simplicity and to allow zsh to at least parse the
+>> code.
+>
+> What is this patch based on?
 
-Hmm, yeah, I didn't think about that. Two possible solutions:
+Ah, sorry, applies to d93f4a297 (bash: work around bash 4.0 change in
+COMP_WORDS semantics, 2010-12-02).
 
-  1. Just leave it in .git/config. It is not hurting anything if the
-     branch does not exist, but it is cruft in a file the user might
-     look at.
-
-  2. Drop it into .git/config.dead/<branch_name>. When resurrecting a
-     branch, copy it back into .git/config.
-
-In both cases, when the reflog for the deleted branch is pruned to
-nothing, we delete the relevant config, too.
-
-In the second case, I think you would have to take special care for
-something like:
-
-  $ git branch frotz origin/master
-  $ git branch -d frotz
-  $ git remote rename origin foo
-  $ git branch --undelete frotz
-
-In the non-deleted case, this transparently renames branch.frotz.remote
-from "origin" to "foo". In the deleted case, we would need to make sure
-the dead config is updated, too.
-
-
-To be honest, I have never been that interested in a "branch --undelete"
-feature. I much more care about leaving the reflogs of deleted branches
-around, so I can "git checkout -b foo bar@{1}" later on[1]. That is, to
-me branch undeletion is not about bringing a branch back wholesale, but
-rather remembering commits so I can start a new branch there.
-
-But I guess others might disagree.
-
--Peff
-
-[1] Well, that and just piece of mind from knowing that "branch -d" is
-    not totally unrecoverable. Specifically, if we kept deleted reflogs
-    around, it would be safe(r) to turn on auto-prune on fetch, the lack
-    of which is something that seems to confuse new users.
+Can re-send in a few moments based on maint if you'd like.
