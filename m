@@ -1,114 +1,116 @@
-From: "Neal Kreitzinger" <neal@rsss.com>
-Subject: Re: git fetch vs push, git am questions
-Date: Tue, 7 Dec 2010 14:14:04 -0600
-Message-ID: <idm4j0$ov1$1@dough.gmane.org>
-References: <99351291667275@web152.yandex.ru>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 07 21:16:08 2010
+From: "Kevin P. Fleming" <kpfleming@digium.com>
+Subject: Re: [PATCH] Corrected return values in post-receive-email.prep_for_email
+Date: Tue, 07 Dec 2010 13:44:23 -0600
+Organization: Digium, Inc.
+Message-ID: <4CFE8E97.4020508@digium.com>
+References: <002501cb962c$5fa3aa40$1eeafec0$@me.uk> <7v1v5tqswl.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Alan Raison <alan@theraisons.me.uk>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 07 21:18:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQ3xI-0005If-6M
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 21:16:08 +0100
+	id 1PQ3zK-0006QP-2r
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 21:18:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753529Ab0LGUOk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Dec 2010 15:14:40 -0500
-Received: from lo.gmane.org ([80.91.229.12]:40891 "EHLO lo.gmane.org"
+	id S1754224Ab0LGUSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Dec 2010 15:18:08 -0500
+Received: from mail.digium.com ([216.207.245.2]:60011 "EHLO mail.digium.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752070Ab0LGUOj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Dec 2010 15:14:39 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PQ3vq-0004Wq-Ot
-	for git@vger.kernel.org; Tue, 07 Dec 2010 21:14:38 +0100
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Dec 2010 21:14:38 +0100
-Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 07 Dec 2010 21:14:38 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-RFC2646: Format=Flowed; Original
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
+	id S1753676Ab0LGUSH (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Dec 2010 15:18:07 -0500
+X-Greylist: delayed 2017 seconds by postgrey-1.27 at vger.kernel.org; Tue, 07 Dec 2010 15:18:06 EST
+Received: from zimbra.digium.internal ([10.24.55.203] helo=zimbra.hsv.digium.com)
+	by mail.digium.com with esmtp (Exim 4.69)
+	(envelope-from <kpfleming@digium.com>)
+	id 1PQ3Sa-00055B-MM; Tue, 07 Dec 2010 13:44:24 -0600
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra.hsv.digium.com (Postfix) with ESMTP id 98E63D8192;
+	Tue,  7 Dec 2010 13:44:24 -0600 (CST)
+Received: from zimbra.hsv.digium.com ([127.0.0.1])
+	by localhost (zimbra.hsv.digium.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id uf4XSuEaQIQo; Tue,  7 Dec 2010 13:44:23 -0600 (CST)
+Received: from [10.24.250.46] (unknown [10.24.250.46])
+	by zimbra.hsv.digium.com (Postfix) with ESMTPSA id B7291D8024;
+	Tue,  7 Dec 2010 13:44:23 -0600 (CST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <7v1v5tqswl.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163122>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163123>
 
-"Konstantin Kivi" <kkivi@yandex.ru> wrote in message 
-news:99351291667275@web152.yandex.ru...
-> HI all
-> I honestly tried to find answers in various docs/books about git and 
-> failed, so I have to ask here.
+On 12/07/2010 01:34 PM, Junio C Hamano wrote:
+> "Alan Raison"<alan@theraisons.me.uk>  writes:
 >
-> 1) Is it possible to achieve the same result with git fetch, as I have 
-> with git push. I have cloned a bare repository (2) from my repository (1) 
-> and
-> I want fetch made in (2) get all info contained in (1) . I talk only about 
-> 'master' here. git push from (1) to (2) does the job, but git fetch in (1) 
-> updates only origin/master, and not master.
-> I also found that there is a notions of current branch in bare repository 
-> (master in my case), that stops my experiments of deleting master and 
-> making new master out of origin/master.
-> How can I change current branch in bare repositry?
+>> ---
+>>   contrib/hooks/post-receive-email |    6 +++---
+>>   1 files changed, 3 insertions(+), 3 deletions(-)
 >
-> 2) I read that git rebase used 'git am' internally. How can  force git 
-> am/apply to create conflicts like rebase does in form
+> No sign-off, no description.
 >
-> <<<<<<old
-> dksjfd
-> ========
->>>>>>jfkjdfkd
+> This is a regression introduced by 53cad69 (post-receive-email: ensure
+> sent messages are not empty, 2010-09-10), I think.
 >
-> instead of *.rej files
+>> diff --git a/contrib/hooks/post-receive-email
+>> b/contrib/hooks/post-receive-email
+>> index 85724bf..020536d 100755
+>> --- a/contrib/hooks/post-receive-email
+>> +++ b/contrib/hooks/post-receive-email
+>> @@ -150,7 +150,7 @@ prep_for_email()
+>>   			# Anything else (is there anything else?)
+>>   			echo>&2 "*** Unknown type of update to $refname
+>> ($rev_type)"
+>>   			echo>&2 "***  - no email generated"
+>> -			return 0
+>> +			return 1
 >
-I think the --mirror technology was made for what you are trying to do.  I 
-created my bare repo as a mirror, but I see you don't want to recreate your 
-bare repo.  However, I think you can convert yours to a mirror by modding 
-your config for that repo.  With a bare repo that is a mirror, a git fetch 
-will make the bare repo look exactly like the remote repo it is mirroring. 
-That is, the mirror will get everything that the remote has.  If the mirror 
-has extra branches that the remote does not have then the mirror will also 
-keep the extra branches as is.  However, I think if you push from the mirror 
-to the remote the remote will get those extra branches so watch out for that 
-(I haven't tried it yet because I don't need to do that.)
+> This used to "exit 1" before 53cad69 and I agree with the patch that
+> signalling error with "return 1" is the right thing to do here.
+>
+>>   			;;
+>>   	esac
+>>
+>> @@ -166,10 +166,10 @@ prep_for_email()
+>>   		esac
+>>   		echo>&2 "*** $config_name is not set so no email will be
+>> sent"
+>>   		echo>&2 "*** for $refname update $oldrev->$newrev"
+>> -		return 0
+>> +		return 1
+>
+> This used to "exit 0" before 53cad69 to cause the program stop before
+> sending mails.  Again, I agree with the patch that signalling error is the
+> right thing to do here.
+>
+>>   	fi
+>>
+>> -	return 1
+>> +	return 0
+>
+> And this obviously is correct.
+>
+> Kevin, care to review and Ack?  Alan, care to add a few lines of patch
+> description and sign-off?
 
-You could play around with it on a testcopy of your bare repo:
+Acked-by: Kevin P. Fleming <kpfleming@digium.com>
 
-cp -rp barerepo.git testmirror.git
+Yeah, this is clearly my breakage; our internal version of this script 
+is so different that it has become hard to backport fixes to the 
+upstream version... or I just did a terrible job of it.
 
-will make a totally functional copy of your barerepo.git.  Then you could 
-mod the config of testmirror.git to try and convert it to a mirror.  The 
-mirror technology is on the git-clone manpage.  It doesn't explain it in 
-much detail, but this is what I've learned from playing around with it.  You 
-can first create a bare repo mirror with git-clone to find out what the 
-config setting are supposed to be.
+Alan, while you are in there fixing this, there is a remaining 'exit 0' 
+in prep_for_email (at line 147) that should be 'return 1' instead.
 
-For the push you can create a test copy of your remote:
-
-cp -rp remote testremote
-
-and then alter the config of testmirror.git to point to testremote.  If you 
-are pushing from testremote to testmirror.git then be sure to mod 
-testremote's config to point to testmirror.git.  I don't push from my remote 
-to my mirror because I use git fetch to get stuff from the remote to the 
-mirror.  You shouldn't need to git push from your remote to your mirror, 
-either.  However, you may have valid reasons for doing so, but I'm not sure 
-what they would be.
-
-I am using a mirror very heavily in productional work so I know it works 
-(for what I want).  I recommend you play around with it for yourself to get 
-a feel for it and not just go by what I say (the manpage does not explain it 
-very much).
-
-Hope this helps.
-
-v/r,
-Neal 
+-- 
+Kevin P. Fleming
+Digium, Inc. | Director of Software Technologies
+445 Jan Davis Drive NW - Huntsville, AL 35806 - USA
+skype: kpfleming | jabber: kfleming@digium.com
+Check us out at www.digium.com & www.asterisk.org
