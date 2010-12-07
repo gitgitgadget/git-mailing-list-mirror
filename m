@@ -1,95 +1,97 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH] git-rm.txt: Fix quoting
-Date: Tue,  7 Dec 2010 10:07:11 +0100
-Message-ID: <73d13b752212b557c0dc157edea9a62122840e93.1291712241.git.git@drmicha.warpmail.net>
-References: <4CFDF388.6060907@drmicha.warpmail.net>
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 07 10:09:40 2010
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] completion: Add PS1 configuration for submodules
+Date: Tue, 7 Dec 2010 10:40:57 +0100
+Message-ID: <20101207094057.GA6176@neumann>
+References: <1291677763-55385-1-git-send-email-scott@appden.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Scott Kyle <scott@appden.com>
+X-From: git-owner@vger.kernel.org Tue Dec 07 10:41:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PPtYJ-0006li-Kt
-	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 10:09:39 +0100
+	id 1PPu2l-0001eU-AZ
+	for gcvg-git-2@lo.gmane.org; Tue, 07 Dec 2010 10:41:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754243Ab0LGJJd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Dec 2010 04:09:33 -0500
-Received: from out2.smtp.messagingengine.com ([66.111.4.26]:59628 "EHLO
-	out2.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752990Ab0LGJJc (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 7 Dec 2010 04:09:32 -0500
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 9ED8E599;
-	Tue,  7 Dec 2010 04:09:31 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Tue, 07 Dec 2010 04:09:31 -0500
-X-Sasl-enc: 3yrzVdTUfNBLwwwon1ddx14o8rU3hm5xYLVyn7elWp/j 1291712971
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 1CEB35E6F4C;
-	Tue,  7 Dec 2010 04:09:31 -0500 (EST)
-X-Mailer: git-send-email 1.7.3.2.660.g7cc83
-In-Reply-To: <4CFDF388.6060907@drmicha.warpmail.net>
+	id S1753714Ab0LGJlB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Dec 2010 04:41:01 -0500
+Received: from moutng.kundenserver.de ([212.227.126.187]:58808 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752278Ab0LGJlA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Dec 2010 04:41:00 -0500
+Received: from localhost6.localdomain6 (p5B13086E.dip0.t-ipconnect.de [91.19.8.110])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0MF8TX-1PAI2j0ZFD-00GAhY; Tue, 07 Dec 2010 10:40:58 +0100
+Content-Disposition: inline
+In-Reply-To: <1291677763-55385-1-git-send-email-scott@appden.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:niClReUJ/ndlU1WiEsYz8LC6D6TSv7znm+wqFEOCsDW
+ YwISzT1XXoOk/jP5ILMFONHFwR4q+tYe0H3KiZs6lXDn1n1B6h
+ /JnbqAFcVzCLLA8g05SJa6WVU1I8F/JvJb7FWEO7/240J5ajmF
+ Z02dPW8cGPjHeSWdwWR0csOy5GajSMGpdKvfJdIJ3iDntF7qk+
+ uH4Uu4O6TA1CIOsxUjq+g==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163072>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163073>
 
-Literal " produces typographically incorrect quotations, but "works" in
-most circumstances. In the subheadings of git-rm.txt, it "works" for the
-html backend but not for the docbook conversion to nroff: double "" and
-spurious double spaces appear in the output.
+Hi Scott,
 
-Replace "incorrect" quotations by ``correct'' ones, and fix other
-"quotations" which are really `code fragments`.
 
-This should make git-rm.txt "-clean.
+On Mon, Dec 06, 2010 at 03:22:43PM -0800, Scott Kyle wrote:
+> For those who often work on repositories with submodules, the dirty
+> indicator for unstaged changes will almost always show because development
+> is simultaneously happening on those submodules. The config option
+> diff.ignoreSubmodules is not appropriate for this use because it has larger
+> implications.
+> 
+> Signed-off-by: Scott Kyle <scott@appden.com>
+> ---
+>  contrib/completion/git-completion.bash |    7 +++++--
+>  1 files changed, 5 insertions(+), 2 deletions(-)
+> 
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index 604fa79..539bcb1 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -37,7 +37,9 @@
+>  #       value, unstaged (*) and staged (+) changes will be shown next
+>  #       to the branch name.  You can configure this per-repository
+>  #       with the bash.showDirtyState variable, which defaults to true
+> -#       once GIT_PS1_SHOWDIRTYSTATE is enabled.
+> +#       once GIT_PS1_SHOWDIRTYSTATE is enabled.  You can also set
+> +#       GIT_PS1_IGNORESUBMODULES to a value that git diff understands
+> +#       to adjust the behavior of the dirty state indicator.
 
-Reported-by: Jeff King <peff@peff.net>
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-We still have a lingering inconsistency for denoting code fragments.
-Single backticks merely are a literal monospaced environment; html outputcolors
-this, nroff does not indicate it at all. I'm staying consistent with the
-surrounding text here.
+git diff "understands" a lot of things, therefore I'd like to be a bit
+more specific here by mentioning the --ignore-submodules= option:
 
- Documentation/git-rm.txt |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
++#       once GIT_PS1_SHOWDIRTYSTATE is enabled.  You can also set
++#       GIT_PS1_IGNORESUBMODULES to a value that git diff
++#       --ignore-submodules= understands to adjust the behavior of the
++#       dirty state indicator.
 
-diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-index 71e3d9f..dd61ebd 100644
---- a/Documentation/git-rm.txt
-+++ b/Documentation/git-rm.txt
-@@ -89,7 +89,7 @@ the paths that have disappeared from the filesystem. However,
- depending on the use case, there are several ways that can be
- done.
- 
--Using "git commit -a"
-+Using ``git commit -a''
- ~~~~~~~~~~~~~~~~~~~~~
- If you intend that your next commit should record all modifications
- of tracked files in the working tree and record all removals of
-@@ -98,7 +98,7 @@ files that have been removed from the working tree with `rm`
- automatically notice and record all removals.  You can also have a
- similar effect without committing by using `git add -u`.
- 
--Using "git add -A"
-+Using ``git add -A''
- ~~~~~~~~~~~~~~~~~~
- When accepting a new code drop for a vendor branch, you probably
- want to record both the removal of paths and additions of new paths
-@@ -111,8 +111,8 @@ tree using this command:
- git ls-files -z | xargs -0 rm -f
- ----------------
- 
--and then "untar" the new code in the working tree. Alternately
--you could "rsync" the changes into the working tree.
-+and then `untar` the new code in the working tree. Alternately
-+you could `rsync` the changes into the working tree.
- 
- After that, the easiest way to record all removals, additions, and
- modifications in the working tree is:
--- 
-1.7.3.2.660.g7cc83
+But it might be just me being unfamiliar with submodules.  Otherwise
+it looks good and reasonable to me.
+
+>  #
+>  #       You can also see if currently something is stashed, by setting
+>  #       GIT_PS1_SHOWSTASHSTATE to a nonempty value. If something is stashed,
+> @@ -286,7 +288,8 @@ __git_ps1 ()
+>  		elif [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
+>  			if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ]; then
+>  				if [ "$(git config --bool bash.showDirtyState)" != "false" ]; then
+> -					git diff --no-ext-diff --quiet --exit-code || w="*"
+> +					local ignore_submodules=${GIT_PS1_IGNORESUBMODULES+"--ignore-submodules=$GIT_PS1_IGNORESUBMODULES"}
+> +					git diff $ignore_submodules --no-ext-diff --quiet --exit-code || w="*"
+>  					if git rev-parse --quiet --verify HEAD >/dev/null; then
+>  						git diff-index --cached --quiet HEAD -- || i="+"
+>  					else
+> -- 
+> 1.7.3.3.574.g98527
+> 
+> 
