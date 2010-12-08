@@ -1,98 +1,77 @@
-From: Reynald Borer <reynald.borer@gmail.com>
+From: Patrick Doyle <wpdster@gmail.com>
 Subject: Re: git-svn checksum mismatch
-Date: Wed, 8 Dec 2010 16:17:01 +0100
-Message-ID: <AANLkTimVyCndGZQLUnVM9CCQmDfOHYywcfzBAL2w0gbC@mail.gmail.com>
-References: <AANLkTik0NBkjrPTzLp9ozMnnV+bng_u5Br1v+H4y6ed0@mail.gmail.com>
+Date: Wed, 8 Dec 2010 10:36:04 -0500
+Message-ID: <AANLkTinZocHeu3ho6U9oL=Q608NBJaUf-nKehppWaDYp@mail.gmail.com>
+References: <AANLkTik0NBkjrPTzLp9ozMnnV+bng_u5Br1v+H4y6ed0@mail.gmail.com> <AANLkTimVyCndGZQLUnVM9CCQmDfOHYywcfzBAL2w0gbC@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 08 16:17:46 2010
+Cc: git@vger.kernel.org
+To: Reynald Borer <reynald.borer@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 08 16:36:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQLm4-0005pI-Ge
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 16:17:44 +0100
+	id 1PQM4F-0008KC-FV
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 16:36:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755746Ab0LHPRW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Dec 2010 10:17:22 -0500
-Received: from mail-iw0-f172.google.com ([209.85.214.172]:54302 "EHLO
-	mail-iw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755722Ab0LHPRW (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Dec 2010 10:17:22 -0500
-Received: by iwn40 with SMTP id 40so1771295iwn.3
-        for <git@vger.kernel.org>; Wed, 08 Dec 2010 07:17:21 -0800 (PST)
+	id S1755313Ab0LHPg0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Dec 2010 10:36:26 -0500
+Received: from mail-fx0-f43.google.com ([209.85.161.43]:40712 "EHLO
+	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751669Ab0LHPgZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Dec 2010 10:36:25 -0500
+Received: by fxm18 with SMTP id 18so1199228fxm.2
+        for <git@vger.kernel.org>; Wed, 08 Dec 2010 07:36:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:content-type;
-        bh=SKqKEWdvDW/rIHPO9gW5p/imPiKHOV3Xlud7J5hs4ZA=;
-        b=wBWZ22lks1GqcRD4IL0mcC0O75GdYj4cmobydudn7Jl4DcyUPvoXEA/hsFoYvRH9NK
-         8KeuWZTUuBCGelNnDQeMy1K5OKI9mv3iRV42hl4grmtMRZIKdHVHzdTD5qJ7hkLpM6w5
-         UPHlIMk2FdcOGFmFX8VPI430Lza41E6t1HqIE=
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=eQ55de/4QHKkRQ3aPtrJDmIMJuolMHfRoVX+8EEa7Zs=;
+        b=XkCIKOKtor6FMBDYyldhLpDF1sqDt1eU8bmRQxmFeAzBZwX9BJTzDq1XxbeoMBHFFu
+         8A/tn3XcVp8uo47vDNLy5GaDUy83SvQQHeG1YqtnpiOP1bPq0ERPuIiQlGjLsnmCDkkz
+         jGmEHJ+Sqf5siJDGf8RRWNK8flrUEHzhW2GUA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type;
-        b=H0e1Nadi5iAVbDyNCkCFRi9UqVozFbZcob1KtbhtvNkt6JalBSv+8FbKPRBCyiTv1P
-         u7c/ZG6c3mqF6UdZt2ZmCC9R6kt2nEz2qiOZN4/v/6cY5FXOBArGi+NPvTat/A6usYoT
-         S8TQfCObW5bZKh2k5Rh49OXpPVWoQwneQGOtM=
-Received: by 10.231.11.77 with SMTP id s13mr9374671ibs.33.1291821441418; Wed,
- 08 Dec 2010 07:17:21 -0800 (PST)
-Received: by 10.231.17.2 with HTTP; Wed, 8 Dec 2010 07:17:01 -0800 (PST)
-In-Reply-To: <AANLkTik0NBkjrPTzLp9ozMnnV+bng_u5Br1v+H4y6ed0@mail.gmail.com>
+         :cc:content-type;
+        b=CO4Hg7BN05n+JrZxgv5Izrfb1RxDkJFPArL/uabc/dlGdKKwZLQwPj817YAqAPjyhM
+         FBz8JgbjDrZDmIrAMvUvoGhN2lC3tJN0kjGGblM3kpNcep0IcSbiSWUWh6bCEQtE611V
+         9PQJk9T1ZsFlpOXQK/obajj3UlU+xd5ewgx8w=
+Received: by 10.223.116.1 with SMTP id k1mr8627697faq.51.1291822584419; Wed,
+ 08 Dec 2010 07:36:24 -0800 (PST)
+Received: by 10.223.107.131 with HTTP; Wed, 8 Dec 2010 07:36:04 -0800 (PST)
+In-Reply-To: <AANLkTimVyCndGZQLUnVM9CCQmDfOHYywcfzBAL2w0gbC@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163199>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163200>
 
-Hi again,
+On Wed, Dec 8, 2010 at 10:17 AM, Reynald Borer <reynald.borer@gmail.com> wrote:
+> Hi again,
+>
+> Sorry to bother you again but I am still experiencing this problem. I
+> tried with a more up to date version of Git (version 1.7.3.2), and
+> this is still happening. I also tried to diagnose this issue but I am
+> completely lost.
+>
+> I am very annoyed because this is preventing me using Git on all my
+> SVN repos (2 are failing on 30...)
+>
+> Does anyone know how I could try to solve this issue?
 
-Sorry to bother you again but I am still experiencing this problem. I
-tried with a more up to date version of Git (version 1.7.3.2), and
-this is still happening. I also tried to diagnose this issue but I am
-completely lost.
+Tossing out a random theory with nothing to back it up...
 
-I am very annoyed because this is preventing me using Git on all my
-SVN repos (2 are failing on 30...)
+I don't know anything about the "well known checksum mismatch
+problem", but are you trying to check out the SVN repository onto a
+file system that is case insensitive, such as on a Windows or (default
+setup) Mac host?
 
-Does anyone know how I could try to solve this issue?
+If so, the repository might have files with different spellings such
+as README and Readme in the same directory, which will get clobbered
+on such a host.  I've run into that issue in the past in a different
+context.
 
-Thanks very much in advance.
-
-Regards,
-Reynald
-
----------- Forwarded message ----------
-From: Reynald Borer <reynald.borer@gmail.com>
-Date: Wed, Dec 8, 2010 at 3:28 PM
-Subject: git-svn checksum mismatch
-To: git@vger.kernel.org
-
-
-Hello all,
-
-I'm using git with a subversion repository and am experiencing the
-well known checksum mismatch problem when I try to fetch from our
-repository:
-
-r5289 = f110f54fc3a488639e8b645438c4538e7785228f (refs/remotes/trunk)
-Checksum mismatch:
-app/tnin/model/src/main/resources/etc/sql/migration_scripts/STX-12229.sql
-expected: c70c72fe170781e3279c37d0de637a55
-    got: f90d31e1fd8e0f88569f87eb087c06c9
-
-I have already been trying to diagnose this issue and have found
-nothing to fix it so far. I have tried to do a checkout with an svn
-client of the revision 5289, the previous one and then do an update,
-everything works fine when doing so.
-
-The only thing I see that may cause this issue is that the file has
-special svn property (eol-style=native).
-
-I am using git version version 1.7.2.3 (using svn 1.6.13).
-
-Thanks in advance for your help,
-Reynald Borer
+--wpd
