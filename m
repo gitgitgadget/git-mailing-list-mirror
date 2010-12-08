@@ -1,104 +1,118 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: cmd_cherry in builtin/log.c?
-Date: Wed, 8 Dec 2010 09:57:59 -0200
-Message-ID: <AANLkTik7+WAk0mx0G7b565eCihB5SGNBDuYLdfPzq7pr@mail.gmail.com>
-References: <AANLkTikXmc-3BBkxy-D8GNLAMXUOPghp78GpStZ-_wBW@mail.gmail.com>
-	<20101207173923.GA21483@burratino>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 02/14] msvc: git-daemon.exe: Fix linker "unresolved
+ externals" error
+Date: Wed, 8 Dec 2010 13:41:14 +0100
+Message-ID: <AANLkTi=oP2dNT_ju=wEsZkupV0Qf3zFci_mWQgCYh71Q@mail.gmail.com>
+References: <4CFA8EB7.9070000@ramsay1.demon.co.uk> <AANLkTi=cVTcaQTQqNeQoNHhUrEBZvE5B=aFDy=r+k0uQ@mail.gmail.com>
+ <4CFECD34.3080809@ramsay1.demon.co.uk>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>, rene.scharfe@lsrfire.ath.cx
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 08 12:58:10 2010
+Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Wed Dec 08 13:41:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQIev-00063P-Kn
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 12:58:09 +0100
+	id 1PQJL4-0002yQ-CW
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 13:41:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754758Ab0LHL6C convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Dec 2010 06:58:02 -0500
-Received: from mail-bw0-f45.google.com ([209.85.214.45]:41881 "EHLO
-	mail-bw0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754557Ab0LHL6A convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Dec 2010 06:58:00 -0500
-Received: by bwz16 with SMTP id 16so1197252bwz.4
-        for <git@vger.kernel.org>; Wed, 08 Dec 2010 03:57:59 -0800 (PST)
+	id S1754798Ab0LHMlg convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Dec 2010 07:41:36 -0500
+Received: from mail-fx0-f43.google.com ([209.85.161.43]:39897 "EHLO
+	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754408Ab0LHMlg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Dec 2010 07:41:36 -0500
+Received: by fxm18 with SMTP id 18so1006968fxm.2
+        for <git@vger.kernel.org>; Wed, 08 Dec 2010 04:41:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=l23Vp+yIb9wqGE8fY8ZL2SLdUuDFk1GKs3oKHcJ+2OY=;
-        b=WZ8qnw9mrEX4X40tE+Yrd6Y+w29wRyDA06MojzINeeUnaFFz5GxBr0zBb7kJaySBKY
-         17jyj6bm0xf/9S7Oq5endchAveiFQ0ufL4fZXlFR3Pd+eDlAIa0VRG5QtccvnExN/ygR
-         kh8Jjgh3Rmy7EpNhEV+1qudktHpgPD0m0qS98=
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=mR2PB97JrXBqKlyv24zSbdzU2vraSvLf+qj1h8hgjqc=;
+        b=qxeUzl8Eco0aQCwhMG/LM6EHYSmh50106+pevmJj7MVfY/Kj0h1HjupAzJoxa1K5gv
+         ZtQc8ogM54UqAs+hkeW3x7a0P0fSNeqSYfjwyhe/xMWu4V+0QVmPUsxyopha+5EZiwi/
+         CprF27UCHldpKMavgT61g7S4PXKcPp+guykQM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=iHnXu9dffBboKuTes5ETSRlo5TYEyg5QYjglFFl+Z9WOsmzylQrmtuL646gL5OsPOU
-         o7zrKe1+KZ7Wpd4D+VyVaB7gyXlvNKgXQJpljGJsNC7Oz73naHMVVxueVYuKa4mMMXN9
-         1xlyaD7wLnV6gXnd8yolOU8RD+3+9Ujvk928s=
-Received: by 10.204.47.65 with SMTP id m1mr1697439bkf.202.1291809479355; Wed,
- 08 Dec 2010 03:57:59 -0800 (PST)
-Received: by 10.204.58.71 with HTTP; Wed, 8 Dec 2010 03:57:59 -0800 (PST)
-In-Reply-To: <20101207173923.GA21483@burratino>
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=PUbll0+0qpCASu8ZSg9bLIkpfS8dSd9wZic//INh4rhO9e6YlvzQhYnHvVtoqmnp5j
+         GWQB9p3PJzFRF/rOojcJac6+SPx4i7I6qKDqsVXRoGveRM8hQwcIYjtSeX7N28HcWvps
+         oHNPLcl3lJJAacMcy0IR8tfPWyPWQhcfLbCP4=
+Received: by 10.223.83.8 with SMTP id d8mr8497515fal.94.1291812094727; Wed, 08
+ Dec 2010 04:41:34 -0800 (PST)
+Received: by 10.223.95.202 with HTTP; Wed, 8 Dec 2010 04:41:14 -0800 (PST)
+In-Reply-To: <4CFECD34.3080809@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163192>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163193>
 
-On Tue, Dec 7, 2010 at 3:39 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
-> Hi,
->
-> Thiago Farina wrote:
->
->> I was looking into builtin/log.c to see how it does --reverse and I
->> saw that cmd_cherry is there.
+On Wed, Dec 8, 2010 at 1:11 AM, Ramsay Jones <ramsay@ramsay1.demon.co.u=
+k> wrote:
+> Erik Faye-Lund wrote:
+>> On Sat, Dec 4, 2010 at 7:55 PM, Ramsay Jones <ramsay@ramsay1.demon.c=
+o.uk> wrote:
+>>> The msvc linker complains about external symbols referenced by
+>>> the new poll() emulation code. In particular, it complains about
+>>> the DispatchMessage(), PeekMessage(), TranslateMessage() and
+>>> MsgWaitForMultipleObjects() functions.
+>>>
+>>> In order to satisfy the external references, we link against the
+>>> user32.lib library.
+>>>
+>>> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+>>> ---
+>>> =A0Makefile | =A0 =A02 +-
+>>> =A01 files changed, 1 insertions(+), 1 deletions(-)
+>>>
+>>> diff --git a/Makefile b/Makefile
+>>> index 1d42413..bda9fa6 100644
+>>> --- a/Makefile
+>>> +++ b/Makefile
+>>> @@ -1087,7 +1087,7 @@ ifeq ($(uname_S),Windows)
+>>> =A0 =A0 =A0 =A0COMPAT_OBJS =3D compat/msvc.o compat/fnmatch/fnmatch=
+=2Eo compat/winansi.o compat/win32/pthread.o compat/win32/syslog.o comp=
+at/win32/sys/poll.o
+>>> =A0 =A0 =A0 =A0COMPAT_CFLAGS =3D -D__USE_MINGW_ACCESS -DNOGDI -DHAV=
+E_STRING_H -DHAVE_ALLOCA_H -Icompat -Icompat/fnmatch -Icompat/regex -Ic=
+ompat/fnmatch -Icompat/win32 -DSTRIP_EXTENSION=3D\".exe\"
+>>> =A0 =A0 =A0 =A0BASIC_LDFLAGS =3D -IGNORE:4217 -IGNORE:4049 -NOLOGO =
+-SUBSYSTEM:CONSOLE -NODEFAULTLIB:MSVCRT.lib
+>>> - =A0 =A0 =A0 EXTLIBS =3D advapi32.lib shell32.lib wininet.lib ws2_=
+32.lib
+>>> + =A0 =A0 =A0 EXTLIBS =3D user32.lib advapi32.lib shell32.lib winin=
+et.lib ws2_32.lib
+>>> =A0 =A0 =A0 =A0PTHREAD_LIBS =3D
+>>> =A0 =A0 =A0 =A0lib =3D
+>>> =A0ifndef DEBUG
 >>
->> I'm wondering, why is it there?
+>> Looks sane. But it's a bit odd - it currently builds fine without th=
+is
+>> patch from the IDE, but not from the makefile. Is the linker-libs
+>> different between these?
 >
-> Good question. =C2=A0So let's check.
+> Er... dunno! ;-) I don't use the IDE (except to read the msdn docs), =
+I'm
+> *much* more productive in vim (yeah, I'm a luddite!).
 >
-> =C2=A0$ git log --oneline -Scmd_cherry builtin/log.c
-> =C2=A081b50f3 Move 'builtin-*' into a 'builtin/' subdirectory
->
-> That wasn't too helpful. =C2=A0Okay, okay.
->
-> =C2=A0$ git log --oneline -Scmd_cherry -- builtin-log.c
-> =C2=A081b50f3 Move 'builtin-*' into a 'builtin/' subdirectory
-> =C2=A0e827633 Built-in cherry
->
-> Running "git show e827633" reveals that the core of the original
-> script is
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0for c in $inup
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0do
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0git-diff-tree =
--p $c
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0done | git-patch-id |
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0while read id name
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0do
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0echo $name >>$=
-patch/$id
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0done
->
-> while the core of the builtin version is
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0get_patch_ids(&revs, &patch_id_opts, prefi=
-x);
->
-> The latter function is static, introduced by v1.4.1~12^2~5
-> (format-patch: introduce "--ignore-if-in-upstream", 2006-06-25).
->
-> So the answer is that "git cherry" is considered a variant on
-> "git log" (like format-patch, show, and whatchanged) and that it uses
-> "git log" internals.
+> So, how did you create your project file? What does it say?
+> ie. you tell me! :-P
 >
 
-Yup, thanks for digging into it. Now makes sense.
+probably by contrib/buildsystems/generate, but I don't quite remember ;=
+)
+
+Anyway, if the result of contrib/buildsystems/generate builds
+differently than "make MSVC=3D1", then I consider this an issue with
+contrib/buildsystems/generate, not the MSVC-port.
+
+I can try to reproduce it at some point, but I'm really tight on time r=
+ight now.
