@@ -1,86 +1,80 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [WIP/RFH] format-patch: Allow diffs for first-parent history
-Date: Wed, 8 Dec 2010 04:52:09 -0600
-Message-ID: <20101208105209.GA4947@burratino>
-References: <f60b93ae61c0e3088112cd6e1185d9c66f623813.1291803440.git.git@drmicha.warpmail.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: git format-patch should honor notes
+Date: Wed, 8 Dec 2010 12:15:40 +0100
+Message-ID: <201012081215.40809.trast@student.ethz.ch>
+References: <4CFEACC5.70005@redhat.com> <20101207221151.GC1036@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Dec 08 11:52:31 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Eric Blake <eblake@redhat.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 08 12:15:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQHdP-0008Pw-0R
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 11:52:31 +0100
+	id 1PQHzw-0003zq-8U
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 12:15:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754580Ab0LHKwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Dec 2010 05:52:25 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:55949 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754522Ab0LHKwY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Dec 2010 05:52:24 -0500
-Received: by gyb11 with SMTP id 11so563215gyb.19
-        for <git@vger.kernel.org>; Wed, 08 Dec 2010 02:52:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=ZeyDkyVjjKoW3bXFMmrLByg96mDyTZQxh9kQRzrzga8=;
-        b=oq2mOpa+yLC4Ag0BlcyKvYiMtM/xMUek6tDLBNMp4ulJVDnE2kRY6NHGq2WNZNQJTn
-         3RCRqU6MingTx7/Jf7LRTheZuF85Q1QdQhRRDsmBZ6RwTuq4xV0g9/NVwHNzP/BVNjXd
-         t4KJOXwmqjGZ9dfxVCUCWxlIMSxNuk6W+YOLU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=is4wYOAoUA7wgksB//wPPk43a0aaZWGyOnvES+sXqSLqWOmavIR75JG5iwkGrWOL4b
-         2H+DkUR8JbRSskwSCrm/ZXls2Iu2q7o8nh9Z4Y3AP0k2IEy2vi8oYP4LtbqAK2kYeYNC
-         GX7q3jMEMsnfiPhE/C89hkEU5+/zehsxRvV34=
-Received: by 10.150.138.18 with SMTP id l18mr3889038ybd.106.1291805541410;
-        Wed, 08 Dec 2010 02:52:21 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
-        by mx.google.com with ESMTPS id d4sm342309ybi.12.2010.12.08.02.52.19
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 08 Dec 2010 02:52:20 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <f60b93ae61c0e3088112cd6e1185d9c66f623813.1291803440.git.git@drmicha.warpmail.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751607Ab0LHLPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Dec 2010 06:15:43 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:3329 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750960Ab0LHLPm (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Dec 2010 06:15:42 -0500
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 8 Dec
+ 2010 12:15:18 +0100
+Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 8 Dec
+ 2010 12:15:41 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-rc4-13-desktop; KDE/4.5.3; x86_64; ; )
+In-Reply-To: <20101207221151.GC1036@sigill.intra.peff.net>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163187>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163188>
 
-Michael J Gruber wrote:
+Jeff King wrote:
+> > My workflow is that I post patch series for upstream review via 'git
+> > send-email'.  Often, that results in feedback that requires me to
+> > amend/rebase my series, and post a v2 or v3 of the series.  By adding
+> > 'git config notes.rewriteRef refs/notes/commits', I can add notes that
+> > will carry across my rebase, and remind me what I changed in v2 (for
+> > example, git notes add -m 'v2: fix foo, per mail xyz@example.com').
+> 
+> Yeah, that is a workflow that some others have mentioned using here,
 
-> The attached patch teaches format-patch not to ignore merges (on
-> "--first-parent"), but I failed to track how "diff-tree" sets options
-> based on "-m"
+Incidentally it's what I wrote the rewriteRef support for :-)
 
-With hindsight, here's a search result:
+> too. And I think there is general agreement that notes should go after
+> the "---" in format-patch. We just need a working patch.
+> 
+> Thomas posted one in February:
+> 
+>   http://article.gmane.org/gmane.comp.version-control.git/140819
+> 
+> But there were some issues and it never got polished.
 
- $ git grep -e argv -- builtin/diff-tree.c
- int cmd_diff_tree(int argc, const char **argv, const char *prefix)
-         argc = setup_revisions(argc, argv, opt, &s_r_opt);
-                 const char *arg = *++argv;
+I got pretty frustrated with gfp being rather brittle.  It is very
+hard to insert anything anywhere in the output stream in such a way
+that the output is not affected in any *other* scenario where this
+option is disabled.
 
-So it's setup_revisions, in revision.c, which clears revs->ignore_merges
-when -m is detected.
+So I think a good angle of attack if you want to hack around on this
+would be to clean up gfp so that it becomes easier to work on, and/or
+come up with a better/cleaner place to insert the notes support than I
+had.
 
-Maybe it should clear revs->no_merges while at it?  I can't see any
-other meaningful meaning for
+That being said, the version I still use just shifts around a linefeed
+after the ---, IIRC, and so far nobody complained about that in
+practice ;-)
 
-	git alias.lg "log --no-merges"
-	git lg -m HEAD~2..HEAD
-
-or
-
-	git format-patch -m --first-parent HEAD~2..HEAD
-
-Meanwhile I would also be happy to see --first-parent imply -m, though
-that might be more controversial since -p -c --first-parent and
--p --cc --first-parent are also meaningful.
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
