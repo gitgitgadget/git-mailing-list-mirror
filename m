@@ -1,65 +1,60 @@
-From: Kevin Sheedy <kevinsheedy@gmail.com>
-Subject: Re: Push to all repositories
-Date: Wed, 8 Dec 2010 14:59:16 -0800 (PST)
-Message-ID: <1291849156593-5817177.post@n2.nabble.com>
-References: <1291829983410-5816069.post@n2.nabble.com> <20101208180049.GC5687@burratino>
-Mime-Version: 1.0
+From: Kevin Ballard <kevin@sb.org>
+Subject: [BUG] git-add doesn't apply filepatterns to tracked files
+Date: Wed, 8 Dec 2010 15:01:57 -0800
+Message-ID: <47FCD78C-5D8C-4FA5-88DC-26FDCC7361AD@sb.org>
+Mime-Version: 1.0 (Apple Message framework v1082)
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 08 23:59:22 2010
+To: git list <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 09 00:02:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQSyo-0006gQ-Fg
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 23:59:22 +0100
+	id 1PQT1T-0007uH-He
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 00:02:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756369Ab0LHW7R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Dec 2010 17:59:17 -0500
-Received: from kuber.nabble.com ([216.139.236.158]:58202 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756161Ab0LHW7R (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Dec 2010 17:59:17 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <kevinsheedy@gmail.com>)
-	id 1PQSyi-0002CM-JK
-	for git@vger.kernel.org; Wed, 08 Dec 2010 14:59:16 -0800
-In-Reply-To: <20101208180049.GC5687@burratino>
+	id S1756637Ab0LHXCB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Dec 2010 18:02:01 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:54121 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756548Ab0LHXCA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Dec 2010 18:02:00 -0500
+Received: by pwj3 with SMTP id 3so391360pwj.19
+        for <git@vger.kernel.org>; Wed, 08 Dec 2010 15:02:00 -0800 (PST)
+Received: by 10.142.60.13 with SMTP id i13mr3294528wfa.322.1291849319914;
+        Wed, 08 Dec 2010 15:01:59 -0800 (PST)
+Received: from [10.8.0.89] ([69.170.160.74])
+        by mx.google.com with ESMTPS id w22sm1495170wfd.7.2010.12.08.15.01.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 08 Dec 2010 15:01:59 -0800 (PST)
+X-Mailer: Apple Mail (2.1082)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163239>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163240>
 
+Ran across a rather bizarre bug today while trying to help someone in #git.
+It seems that git-add doesn't match filepatterns against tracked files,
+only against untracked files. Other tested commands (such as git-rm and
+git-ls-files) are happy to match tracked files, but not git-add.
 
-I would like (1), have the code changed under my feet.
-Obviously, this would exclude my locally modified files. Also, a user could
-lock local files or turn off automatic updates altogether.
+% git --version
+git version 1.7.3.3.576.gd872
+% ls -a
+./       ../      .git/    bar.txt  foo.txt
+% git status --short
+ M foo.txt
+?? bar.txt
+% git add '*.txt'
+% git status --short
+A  bar.txt
+ M foo.txt
 
-Clearcase dynamic views are a lovely way to collaborate with a team (despite
-their many technical problems). They remove the need to perform manual
-updates. Teams just stay in sync by default. There are fewer code
-collisions. Problems get spotted and fixed sooner. It you don't want
-something changed under your feet, that's supported too.
+There are no .gitignores in play here.
 
-I guess the question is: "By default, do you want the latest code or not?"
-(This is similar to how the Google Chrome Browser defaults to giving you
-updates. When you're not looking, it just updates itself in the background.
-You just trust that it will use this power wisely, and it does.)
+I haven't had time to investigate the source yet, as I'm still at work.
 
-It could work something like this:
-Every time a repository is cloned, the location of the new clone would be
-added to the repository. When a user does a push, it gets pushed out to
-everyone repository on this list. Each user could retain total control over
-these updates.
-
-Do you see any reason why this couldn't be added as an enhancement to git?
-
-Cheers
-Kev
--- 
-View this message in context: http://git.661346.n2.nabble.com/Push-to-all-repositories-tp5816069p5817177.html
-Sent from the git mailing list archive at Nabble.com.
+-Kevin Ballard
