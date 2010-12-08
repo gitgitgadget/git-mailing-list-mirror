@@ -1,53 +1,69 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: [PATCH] t9143: do not fail when unhandled.log.gz is not created
-Date: Wed, 8 Dec 2010 13:41:15 -0800
-Message-ID: <20101208214115.GA29131@dcvr.yhbt.net>
-References: <4CFA27E0.8070308@web.de> <20101206192326.GA12383@dcvr.yhbt.net> <4CFFB188.6000006@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	Torsten =?iso-8859-1?Q?B=F6gershausen?= <tboegi@web.de>
-To: Torsten =?iso-8859-1?Q?B=F6gershausen?= <totte.enea@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 08 22:41:21 2010
+From: "Neal Kreitzinger" <neal@rsss.com>
+Subject: Re: Vendor branches workflow
+Date: Wed, 8 Dec 2010 15:54:27 -0600
+Message-ID: <idoura$f8u$1@dough.gmane.org>
+References: <AANLkTi=s9p3RycRCrocHEzfc4L-pnU6S9xCKfEL7TP=i@mail.gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 08 22:55:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQRlJ-0008WK-4z
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 22:41:21 +0100
+	id 1PQRyj-0007vK-3I
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 22:55:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753397Ab0LHVlQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Dec 2010 16:41:16 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:36039 "EHLO dcvr.yhbt.net"
+	id S1755496Ab0LHVzG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Dec 2010 16:55:06 -0500
+Received: from lo.gmane.org ([80.91.229.12]:46937 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753455Ab0LHVlP (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Dec 2010 16:41:15 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id 2FBC51F503;
-	Wed,  8 Dec 2010 21:41:15 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <4CFFB188.6000006@gmail.com>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1752389Ab0LHVzF (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Dec 2010 16:55:05 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PQRyX-0007qN-UC
+	for git@vger.kernel.org; Wed, 08 Dec 2010 22:55:01 +0100
+Received: from 67.63.162.200 ([67.63.162.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 08 Dec 2010 22:55:01 +0100
+Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 08 Dec 2010 22:55:01 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 67.63.162.200
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-RFC2646: Format=Flowed; Original
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163226>
 
-Torsten B=F6gershausen <totte.enea@gmail.com> wrote:
-> If you agree, I will send a V2 version of the patch, which
-> will use the following:
-> ---------------------------
-> if test -r .git/svn/refs/remotes/git-svn/unhandled.log.gz
-> then
-> 	test_expect_success 'git svn gc produces a valid gzip file' '
-> 		 gunzip .git/svn/refs/remotes/git-svn/unhandled.log.gz
-> 		'
-> fi
+"Leonid Podolny" <leonidp.lists@gmail.com> wrote in message 
+news:AANLkTi=s9p3RycRCrocHEzfc4L-pnU6S9xCKfEL7TP=i@mail.gmail.com...
+> Hi, list,
+> I would like an advice on organizing a vendor branch workflow, to
+> minimize the risk of it biting me in the future.
+> In our project, we have two upstreams, which are rather massively
+> patched. One of the upstreams is an SF svn repository, the other
+> arrives in form of tgz's with sources. Now git is tracking the patched
+> version, and I want to add a vendor branch to simplify future vendor
+> drops.
+> Out of the SVN upstream, we use only specific directories.
+> So, two questions:
+> - How do I deal with unneeded directories? Do I filter them out before
+> commiting to the vendor branch or while merging the vendor branch into
+> the master?
+> - Do you think it would be a good idea to keep .svn directories around
+> at the vendor branch? (Kind of connected to the first question,
+> because if I keep the .svn's, I will also have to keep the unneeded
+> dirs).
 
-Yes, it's definitely a better test.  Thanks!
+The git-rm manpage explains a methodology for vendor branches.  Maybe you've 
+already read it...
 
---=20
-Eric Wong
+v/r,
+Neal 
