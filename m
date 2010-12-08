@@ -1,102 +1,108 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCHv2] git-rm.txt: Fix quoting
-Date: Wed,  8 Dec 2010 12:15:07 +0100
-Message-ID: <73d13b752212b557c0dc157edea9a62122840e93.1291806379.git.git@drmicha.warpmail.net>
-References: <20101207172542.GA25827@sigill.intra.peff.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 08 12:17:36 2010
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: t9010 broken in pu [Re: What's cooking in git.git (Dec 2010, #01; Sat, 4)]
+Date: Wed, 8 Dec 2010 12:23:47 +0100
+Message-ID: <201012081223.47642.trast@student.ethz.ch>
+References: <7voc90wx36.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 08 12:23:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQI1f-0004ph-W8
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 12:17:36 +0100
+	id 1PQI7n-0007nE-55
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 12:23:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751991Ab0LHLRb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Dec 2010 06:17:31 -0500
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:53710 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751723Ab0LHLRa (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Dec 2010 06:17:30 -0500
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 64DA02CB;
-	Wed,  8 Dec 2010 06:17:30 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute3.internal (MEProxy); Wed, 08 Dec 2010 06:17:30 -0500
-X-Sasl-enc: h7fLOcQnE4MCJFJEcooreKF5x+Er/SlZs1NG+FYPuOwn 1291807049
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id D024C401480;
-	Wed,  8 Dec 2010 06:17:29 -0500 (EST)
-X-Mailer: git-send-email 1.7.3.2.660.g7cc83
-In-Reply-To: <20101207172542.GA25827@sigill.intra.peff.net>
+	id S1753999Ab0LHLXu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Dec 2010 06:23:50 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:30149 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753669Ab0LHLXt (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Dec 2010 06:23:49 -0500
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 8 Dec
+ 2010 12:23:40 +0100
+Received: from pctrast.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 8 Dec
+ 2010 12:23:47 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-rc4-13-desktop; KDE/4.5.3; x86_64; ; )
+In-Reply-To: <7voc90wx36.fsf@alter.siamese.dyndns.org>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163190>
 
-Literal " produces typographically incorrect quotations, but "works" in
-most circumstances. In the subheadings of git-rm.txt, it "works" for the
-html backend but not for the docbook conversion to nroff: double "" and
-spurious double spaces appear in the output.
+Junio C Hamano wrote:
+> * jn/svn-fe (2010-11-19) 17 commits
+>  - vcs-svn: Implement Prop-delta handling
+>  - vcs-svn: Sharpen parsing of property lines
+>  - vcs-svn: Split off function for handling of individual properties
+>  - vcs-svn: Make source easier to read on small screens
+>  - vcs-svn: More dump format sanity checks
+>  - vcs-svn: Reject path nodes without Node-action
+>  - vcs-svn: Delay read of per-path properties
+>  - vcs-svn: Combine repo_replace and repo_modify functions
+>  - vcs-svn: Replace = Delete + Add
+>  - vcs-svn: handle_node: Handle deletion case early
+>  - vcs-svn: Use mark to indicate nodes with included text
+>  - vcs-svn: Unclutter handle_node by introducing have_props var
+>  - vcs-svn: Eliminate node_ctx.mark global
+>  - vcs-svn: Eliminate node_ctx.srcRev global
+>  - vcs-svn: Check for errors from open()
+>  - vcs-svn: Allow simple v3 dumps (no deltas yet)
+>  - vcs-svn: Error out for v3 dumps
+> 
+> Some RFC patches, to give them early and wider exposure.
 
-Replace "incorrect" quotations by ``correct'' ones, and fix other
-"quotations" which are really 'command names' resp. plain words.
+If I'm reading the test report right, the merge conflict in
+t/t9010-svn-fe.sh broke tests.  It bisects to 5ea8b68 (Merge branch
+'jn/svn-fe' into pu, 2010-12-07), failing with
 
-This should make git-rm.txt "-clean.
+  expecting success: 
+          svnadmin create simple-svn &&
+          svnadmin load simple-svn <"$TEST_DIRECTORY/t9135/svn.dump" &&
+          svn_cmd export "file://$PWD/simple-svn" simple-svnco &&
+          git init simple-git &&
+          test-svn-fe "$TEST_DIRECTORY/t9135/svn.dump" >simple.fe &&
+          (
+                  cd simple-git &&
+                  git fast-import <../simple.fe
+          ) &&
+          (
+                  cd simple-svnco &&
+                  git init &&
+                  git add . &&
+                  git fetch ../simple-git master &&
+                  git diff --exit-code FETCH_HEAD
+          )
 
-Reported-by: Jeff King <peff@peff.net>
-Helped-by: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+  svnadmin: Repository creation failed
+  svnadmin: Could not create top-level directory
+  svnadmin: 'simple-svn' exists and is non-empty
+  not ok - 18 t9135/svn.dump
 
----
-While we don't need to match the underlines to the header's length, it
-looks nicer. So v2 incorporates this and the other changes:
-- untar is not a command on proper OSs
-- rsync is not a complete command line (implicit style guide...)
+A quick reading of the merge suggests that you concatenated with an
+earlier test that goes
 
- Documentation/git-rm.txt |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
+  test_dump () {
+        label=$1
+        dump=$2
+        test_expect_success "$dump" '
+                svnadmin create "$label-svn" &&
+		# <snip>
+        '
+  }
+  
+  test_dump simple t9135/svn.dump
 
-diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
-index 71e3d9f..0adbe8b 100644
---- a/Documentation/git-rm.txt
-+++ b/Documentation/git-rm.txt
-@@ -89,8 +89,8 @@ the paths that have disappeared from the filesystem. However,
- depending on the use case, there are several ways that can be
- done.
- 
--Using "git commit -a"
--~~~~~~~~~~~~~~~~~~~~~
-+Using ``git commit -a''
-+~~~~~~~~~~~~~~~~~~~~~~~
- If you intend that your next commit should record all modifications
- of tracked files in the working tree and record all removals of
- files that have been removed from the working tree with `rm`
-@@ -98,8 +98,8 @@ files that have been removed from the working tree with `rm`
- automatically notice and record all removals.  You can also have a
- similar effect without committing by using `git add -u`.
- 
--Using "git add -A"
--~~~~~~~~~~~~~~~~~~
-+Using ``git add -A''
-+~~~~~~~~~~~~~~~~~~~~
- When accepting a new code drop for a vendor branch, you probably
- want to record both the removal of paths and additions of new paths
- as well as modifications of existing paths.
-@@ -111,8 +111,8 @@ tree using this command:
- git ls-files -z | xargs -0 rm -f
- ----------------
- 
--and then "untar" the new code in the working tree. Alternately
--you could "rsync" the changes into the working tree.
-+and then untar the new code in the working tree. Alternately
-+you could 'rsync' the changes into the working tree.
- 
- After that, the easiest way to record all removals, additions, and
- modifications in the working tree is:
+hence creating simple-svn, too.  So a rename or rm -rf should suffice.
+
 -- 
-1.7.3.2.662.g6fd5b8.dirty
+Thomas Rast
+trast@{inf,student}.ethz.ch
