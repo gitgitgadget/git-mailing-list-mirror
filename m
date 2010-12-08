@@ -1,68 +1,86 @@
-From: Jared Hance <jaredhance@gmail.com>
-Subject: Re: [PATCH] imap-send: link against libcrypto for HMAC and others
-Date: Tue, 7 Dec 2010 20:51:44 -0500
-Message-ID: <20101208015144.GA4868@localhost.localdomain>
-References: <7vwro2sd83.fsf@alter.siamese.dyndns.org>
- <1290629033-20566-1-git-send-email-flameeyes@gmail.com>
- <1291613304.3339.12.camel@fixed-disk>
- <1291613978.4756.157.camel@yamato.local>
- <7v39qbtoq9.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Improved error messages when temporary file creation
+ fails
+Date: Tue, 07 Dec 2010 18:01:07 -0800
+Message-ID: <7vpqtdm3a4.fsf@alter.siamese.dyndns.org>
+References: <20101207181633.GF25767@bzzt.net>
+ <7v62v5paj2.fsf@alter.siamese.dyndns.org> <20101207212041.GG25767@bzzt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 08 02:52:09 2010
+Cc: git@vger.kernel.org
+To: Arnout Engelen <arnouten@bzzt.net>
+X-From: git-owner@vger.kernel.org Wed Dec 08 03:01:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQ9CS-0007Sf-3t
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 02:52:08 +0100
+	id 1PQ9La-0002QH-2D
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 03:01:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932160Ab0LHBv4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Dec 2010 20:51:56 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:63362 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932078Ab0LHBvz (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Dec 2010 20:51:55 -0500
-Received: by qwa26 with SMTP id 26so637127qwa.19
-        for <git@vger.kernel.org>; Tue, 07 Dec 2010 17:51:54 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=alYfvt+hJMspY/a8cHYkx6bgWtg8By7gWBhwR2A9L88=;
-        b=bYFjEfpkMHVDvKexBsbRsxRMS93Gz0Ice1FDLBWTKlb2oQaTTaTO4N+ni7Qe46BhSD
-         wlCOFWm7dCoPVHnv6t+qvilItypIMDDap5TcHNqxz6pBH5a3dXCBU4EJVCgyVv83AGU/
-         2Axg0Y3Lq4plU8h6fz+FszPEDTj26Xfc2QidY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Z8rUdeVoBr1rzEacnojLhHMVZ142+NCOG54acr+5N5KgpDjIgbp8UxWq0urHd9m93A
-         qbOIoZW+3/JiRjqVGab1arp/UeFG+56/N2N8l8TZ35tSPyUCQu8XIZp/M34OrcGhu4Wk
-         2+MBSSQlZKoNxW6b2mQf33FrKBTCGnBtTF47k=
-Received: by 10.224.20.15 with SMTP id d15mr6382407qab.394.1291773114378;
-        Tue, 07 Dec 2010 17:51:54 -0800 (PST)
-Received: from localhost.localdomain (cpe-174-101-219-169.cinci.res.rr.com [174.101.219.169])
-        by mx.google.com with ESMTPS id nb14sm43901qcb.24.2010.12.07.17.51.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 07 Dec 2010 17:51:52 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7v39qbtoq9.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1756941Ab0LHCBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Dec 2010 21:01:19 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34285 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756366Ab0LHCBQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Dec 2010 21:01:16 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DC7CD29BC;
+	Tue,  7 Dec 2010 21:01:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=4a5kmfEEGXyzdJKQtIZf9razIas=; b=Vv8Sp2
+	R32959HSZTk3kN/4t9kuWIJlP/o7D8Ddjs+7ViwtkBcV4ZN8T4qduqh8ECYZj97O
+	ST9KIlBs0G8w5enwLhoCvGrxFL1N7TE9qiefa4cKFaDL6mQMBRfb/25xjSUTfU0i
+	XV/udv1fhk9y8AGuW6+ACbRgc4qB+e9JkckNk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=bQYz5JpBrsZdTJ6cXEp/0hQo3zp1HGSh
+	kBo0UwfpeqDzmXCcXe70SJLaSnTOSemhfK+MQJXIrzakkg6+RJXWJ4m6oYT8PYTC
+	pOtMSud8AC3w4nGdl+sJoXZR3JYM2umNE41ALXZMACEpEntrWCWa60zPQv9valzr
+	UE+/ND2hDWE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A715F29BB;
+	Tue,  7 Dec 2010 21:01:36 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6694529BA; Tue,  7 Dec 2010
+ 21:01:33 -0500 (EST)
+In-Reply-To: <20101207212041.GG25767@bzzt.net> (Arnout Engelen's message of
+ "Tue\, 7 Dec 2010 22\:20\:41 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 16B0D722-026F-11E0-8B61-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163158>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163159>
 
-> You are both correct; the point of NO_OPENSSL is not to link with anything
-> from openssl suite, so we need a separate mechanism to address this.
-> 
-> Anders, wouldn't this be a better fix for NO_OPENSSL build, than reverting
-> a fix for an incorrect ld invocation?
+Arnout Engelen <arnouten@bzzt.net> writes:
 
-Could we get this fixup patch into master? Leaving the original patch
-in without it doesn't seem like a good idea when it breaks the build.
+> Thanks to you and Jonathan again for the feedback.
+>
+> On Tue, Dec 07, 2010 at 12:56:17PM -0800, Junio C Hamano wrote:
+>> > +	char origtemplate[255];
+>> > +	strlcpy(origtemplate, template, 255);
+>> 
+>> Why "255"?
+>
+> Random - 'i had to choose something'.
+>
+>> It may happen to be sufficiently large for the current callers, but what
+>> provisions if any are made to help the compiler or the runtime protect us
+>> from new and broken callers?  Use of strlcpy() there hides the issue from
+>> the runtime by avoiding segfault, but it actively harms us by making the
+>> code silently behave incorrectly without segfaulting, no?
+>
+> Only in a small way: when a bigger template is encountered and the mkstemp 
+> call succeeds, there is no problem. Only when xmkstemp fails *and* clears the
+> template, the diagnostic error message shows a truncated version of the 
+> original.
+
+Ah, ok, it seems that I misread the patch.  This copy you are making is
+not used to actually construct the filename used for creating the
+temporary file, so there is no risk the function misbehaving; we would
+just give a truncated error report, which is no worse than what we have
+been giving the users anyway.
