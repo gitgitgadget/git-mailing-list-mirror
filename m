@@ -1,86 +1,82 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Improved error messages when temporary file creation
- fails
-Date: Tue, 07 Dec 2010 18:01:07 -0800
-Message-ID: <7vpqtdm3a4.fsf@alter.siamese.dyndns.org>
-References: <20101207181633.GF25767@bzzt.net>
- <7v62v5paj2.fsf@alter.siamese.dyndns.org> <20101207212041.GG25767@bzzt.net>
+Subject: Re: [PATCH] imap-send: link against libcrypto for HMAC and others
+Date: Tue, 07 Dec 2010 18:12:00 -0800
+Message-ID: <7vd3pdm2rz.fsf@alter.siamese.dyndns.org>
+References: <7vwro2sd83.fsf@alter.siamese.dyndns.org>
+ <1290629033-20566-1-git-send-email-flameeyes@gmail.com>
+ <1291613304.3339.12.camel@fixed-disk>
+ <1291613978.4756.157.camel@yamato.local>
+ <7v39qbtoq9.fsf@alter.siamese.dyndns.org>
+ <20101208015144.GA4868@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Arnout Engelen <arnouten@bzzt.net>
-X-From: git-owner@vger.kernel.org Wed Dec 08 03:01:37 2010
+Cc: Diego Elio =?utf-8?Q?Petten=C3=B2?= <flameeyes@gmail.com>
+To: Jared Hance <jaredhance@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 08 03:13:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQ9La-0002QH-2D
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 03:01:34 +0100
+	id 1PQ9X0-00075E-2N
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 03:13:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756941Ab0LHCBT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 7 Dec 2010 21:01:19 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34285 "EHLO
+	id S1756219Ab0LHCNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 7 Dec 2010 21:13:00 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47656 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756366Ab0LHCBQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 7 Dec 2010 21:01:16 -0500
+	with ESMTP id S1756143Ab0LHCM7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 7 Dec 2010 21:12:59 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DC7CD29BC;
-	Tue,  7 Dec 2010 21:01:38 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=4a5kmfEEGXyzdJKQtIZf9razIas=; b=Vv8Sp2
-	R32959HSZTk3kN/4t9kuWIJlP/o7D8Ddjs+7ViwtkBcV4ZN8T4qduqh8ECYZj97O
-	ST9KIlBs0G8w5enwLhoCvGrxFL1N7TE9qiefa4cKFaDL6mQMBRfb/25xjSUTfU0i
-	XV/udv1fhk9y8AGuW6+ACbRgc4qB+e9JkckNk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=bQYz5JpBrsZdTJ6cXEp/0hQo3zp1HGSh
-	kBo0UwfpeqDzmXCcXe70SJLaSnTOSemhfK+MQJXIrzakkg6+RJXWJ4m6oYT8PYTC
-	pOtMSud8AC3w4nGdl+sJoXZR3JYM2umNE41ALXZMACEpEntrWCWa60zPQv9valzr
-	UE+/ND2hDWE=
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 286AD2AD6;
+	Tue,  7 Dec 2010 21:13:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:cc
+	:subject:references:from:date:in-reply-to:message-id
+	:mime-version:content-type; s=sasl; bh=b5uLhh67GBXIs5utOaZK9n1AN
+	Jw=; b=Buuxn6Z751sksPmeq1PN4yZSg/Yj4dQcBpXZkv5ggTfg4wtceg699xlj6
+	J7s+ETZsRx/CRNDYG1s9KF05b2YRG47QfaHYkQVgV6LxSEMN+tSeVcAUN5vSKdpi
+	/0+Pai35sgUvzVknr+9uNR2Cncg5omnFCeU4ApiTLsaB+8b1Wk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:cc
+	:subject:references:from:date:in-reply-to:message-id
+	:mime-version:content-type; q=dns; s=sasl; b=Jp/6i0T4iZkK1lJMH7A
+	9R/svRGLFg+YuOo7gNQcMB+QC0tkCgJN1PmLZz1z8DGWeR/aUQ359WOm+lT6jY+f
+	kd+C7gqrPMbHiRnDuN5EYn75LXcHOFxPbqOD6bTDdejnNqQvIYXKem89EquNo74n
+	6+3KkzSnNWedQXERBJawHahs=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A715F29BB;
-	Tue,  7 Dec 2010 21:01:36 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D78F62ACE;
+	Tue,  7 Dec 2010 21:13:16 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6694529BA; Tue,  7 Dec 2010
- 21:01:33 -0500 (EST)
-In-Reply-To: <20101207212041.GG25767@bzzt.net> (Arnout Engelen's message of
- "Tue\, 7 Dec 2010 22\:20\:41 +0100")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 162542ABA; Tue,  7 Dec 2010
+ 21:12:29 -0500 (EST)
+Cc: Anders Kaseorg <andersk@MIT.EDU>, git@vger.kernel.org
+In-Reply-To: <20101208015144.GA4868@localhost.localdomain> (Jared Hance's
+ message of "Tue\, 7 Dec 2010 20\:51\:44 -0500")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 16B0D722-026F-11E0-8B61-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: B80ADB58-0270-11E0-8847-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163159>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163160>
 
-Arnout Engelen <arnouten@bzzt.net> writes:
+Jared Hance <jaredhance@gmail.com> writes:
 
-> Thanks to you and Jonathan again for the feedback.
->
-> On Tue, Dec 07, 2010 at 12:56:17PM -0800, Junio C Hamano wrote:
->> > +	char origtemplate[255];
->> > +	strlcpy(origtemplate, template, 255);
+>> You are both correct; the point of NO_OPENSSL is not to link with anything
+>> from openssl suite, so we need a separate mechanism to address this.
 >> 
->> Why "255"?
+>> Anders, wouldn't this be a better fix for NO_OPENSSL build, than reverting
+>> a fix for an incorrect ld invocation?
 >
-> Random - 'i had to choose something'.
->
->> It may happen to be sufficiently large for the current callers, but what
->> provisions if any are made to help the compiler or the runtime protect us
->> from new and broken callers?  Use of strlcpy() there hides the issue from
->> the runtime by avoiding segfault, but it actively harms us by making the
->> code silently behave incorrectly without segfaulting, no?
->
-> Only in a small way: when a bigger template is encountered and the mkstemp 
-> call succeeds, there is no problem. Only when xmkstemp fails *and* clears the
-> template, the diagnostic error message shows a truncated version of the 
-> original.
+> Could we get this fixup patch into master? Leaving the original patch
+> in without it doesn't seem like a good idea when it breaks the build.
 
-Ah, ok, it seems that I misread the patch.  This copy you are making is
-not used to actually construct the filename used for creating the
-temporary file, so there is no risk the function misbehaving; we would
-just give a truncated error report, which is no worse than what we have
-been giving the users anyway.
+That depends on what Diego and Anders would say/report, and that is why
+their address were on To/Cc in the message you are replying to.  Why did
+you cull Cc from your message?
+
+One thing I do not like about it is that the "fixup" is ugly.  It makes
+people expect to add $(LIB_4_CRYPTO) on their linker command line to get a
+correct linking with -lcrypto library, when all it does is _not_ to link
+with -lcrypto at all, so whatever program that uses it needs to know about
+NO_OPENSSL and refrain from using the symbols from that library.
