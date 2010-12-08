@@ -1,80 +1,102 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: git format-patch should honor notes
-Date: Wed, 8 Dec 2010 12:15:40 +0100
-Message-ID: <201012081215.40809.trast@student.ethz.ch>
-References: <4CFEACC5.70005@redhat.com> <20101207221151.GC1036@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Eric Blake <eblake@redhat.com>,
-	Michael J Gruber <git@drmicha.warpmail.net>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Dec 08 12:15:49 2010
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCHv2] git-rm.txt: Fix quoting
+Date: Wed,  8 Dec 2010 12:15:07 +0100
+Message-ID: <73d13b752212b557c0dc157edea9a62122840e93.1291806379.git.git@drmicha.warpmail.net>
+References: <20101207172542.GA25827@sigill.intra.peff.net>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 08 12:17:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQHzw-0003zq-8U
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 12:15:48 +0100
+	id 1PQI1f-0004ph-W8
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 12:17:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751607Ab0LHLPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Dec 2010 06:15:43 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:3329 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750960Ab0LHLPm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Dec 2010 06:15:42 -0500
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 8 Dec
- 2010 12:15:18 +0100
-Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 8 Dec
- 2010 12:15:41 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-rc4-13-desktop; KDE/4.5.3; x86_64; ; )
-In-Reply-To: <20101207221151.GC1036@sigill.intra.peff.net>
-X-Originating-IP: [129.132.153.233]
+	id S1751991Ab0LHLRb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Dec 2010 06:17:31 -0500
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:53710 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751723Ab0LHLRa (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Dec 2010 06:17:30 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 64DA02CB;
+	Wed,  8 Dec 2010 06:17:30 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute3.internal (MEProxy); Wed, 08 Dec 2010 06:17:30 -0500
+X-Sasl-enc: h7fLOcQnE4MCJFJEcooreKF5x+Er/SlZs1NG+FYPuOwn 1291807049
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id D024C401480;
+	Wed,  8 Dec 2010 06:17:29 -0500 (EST)
+X-Mailer: git-send-email 1.7.3.2.660.g7cc83
+In-Reply-To: <20101207172542.GA25827@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163189>
 
-Jeff King wrote:
-> > My workflow is that I post patch series for upstream review via 'git
-> > send-email'.  Often, that results in feedback that requires me to
-> > amend/rebase my series, and post a v2 or v3 of the series.  By adding
-> > 'git config notes.rewriteRef refs/notes/commits', I can add notes that
-> > will carry across my rebase, and remind me what I changed in v2 (for
-> > example, git notes add -m 'v2: fix foo, per mail xyz@example.com').
-> 
-> Yeah, that is a workflow that some others have mentioned using here,
+Literal " produces typographically incorrect quotations, but "works" in
+most circumstances. In the subheadings of git-rm.txt, it "works" for the
+html backend but not for the docbook conversion to nroff: double "" and
+spurious double spaces appear in the output.
 
-Incidentally it's what I wrote the rewriteRef support for :-)
+Replace "incorrect" quotations by ``correct'' ones, and fix other
+"quotations" which are really 'command names' resp. plain words.
 
-> too. And I think there is general agreement that notes should go after
-> the "---" in format-patch. We just need a working patch.
-> 
-> Thomas posted one in February:
-> 
->   http://article.gmane.org/gmane.comp.version-control.git/140819
-> 
-> But there were some issues and it never got polished.
+This should make git-rm.txt "-clean.
 
-I got pretty frustrated with gfp being rather brittle.  It is very
-hard to insert anything anywhere in the output stream in such a way
-that the output is not affected in any *other* scenario where this
-option is disabled.
+Reported-by: Jeff King <peff@peff.net>
+Helped-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 
-So I think a good angle of attack if you want to hack around on this
-would be to clean up gfp so that it becomes easier to work on, and/or
-come up with a better/cleaner place to insert the notes support than I
-had.
+---
+While we don't need to match the underlines to the header's length, it
+looks nicer. So v2 incorporates this and the other changes:
+- untar is not a command on proper OSs
+- rsync is not a complete command line (implicit style guide...)
 
-That being said, the version I still use just shifts around a linefeed
-after the ---, IIRC, and so far nobody complained about that in
-practice ;-)
+ Documentation/git-rm.txt |   12 ++++++------
+ 1 files changed, 6 insertions(+), 6 deletions(-)
 
+diff --git a/Documentation/git-rm.txt b/Documentation/git-rm.txt
+index 71e3d9f..0adbe8b 100644
+--- a/Documentation/git-rm.txt
++++ b/Documentation/git-rm.txt
+@@ -89,8 +89,8 @@ the paths that have disappeared from the filesystem. However,
+ depending on the use case, there are several ways that can be
+ done.
+ 
+-Using "git commit -a"
+-~~~~~~~~~~~~~~~~~~~~~
++Using ``git commit -a''
++~~~~~~~~~~~~~~~~~~~~~~~
+ If you intend that your next commit should record all modifications
+ of tracked files in the working tree and record all removals of
+ files that have been removed from the working tree with `rm`
+@@ -98,8 +98,8 @@ files that have been removed from the working tree with `rm`
+ automatically notice and record all removals.  You can also have a
+ similar effect without committing by using `git add -u`.
+ 
+-Using "git add -A"
+-~~~~~~~~~~~~~~~~~~
++Using ``git add -A''
++~~~~~~~~~~~~~~~~~~~~
+ When accepting a new code drop for a vendor branch, you probably
+ want to record both the removal of paths and additions of new paths
+ as well as modifications of existing paths.
+@@ -111,8 +111,8 @@ tree using this command:
+ git ls-files -z | xargs -0 rm -f
+ ----------------
+ 
+-and then "untar" the new code in the working tree. Alternately
+-you could "rsync" the changes into the working tree.
++and then untar the new code in the working tree. Alternately
++you could 'rsync' the changes into the working tree.
+ 
+ After that, the easiest way to record all removals, additions, and
+ modifications in the working tree is:
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.7.3.2.662.g6fd5b8.dirty
