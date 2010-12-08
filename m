@@ -1,87 +1,98 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Vendor branches workflow
-Date: Wed, 8 Dec 2010 03:09:08 -0600
-Message-ID: <20101208090908.GA4640@burratino>
-References: <AANLkTi=s9p3RycRCrocHEzfc4L-pnU6S9xCKfEL7TP=i@mail.gmail.com>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: Re: diff for deleted file only, when changed to directory
+Date: Wed, 8 Dec 2010 10:29:07 +0100
+Message-ID: <AANLkTikMf5qRaqkdiOKP_PBf=Q68fMc2U5WVN-7SWFYC@mail.gmail.com>
+References: <AANLkTimXOKC_9TJU1foNkTqPHouFPouzZw3XU_9Za=na@mail.gmail.com>
+	<20101208082103.GA4927@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Leonid Podolny <leonidp.lists@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 08 10:09:36 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 08 10:29:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQG1m-0001uc-GM
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 10:09:34 +0100
+	id 1PQGKv-00029m-JC
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 10:29:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753865Ab0LHJJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Dec 2010 04:09:28 -0500
-Received: from mail-gw0-f42.google.com ([74.125.83.42]:40895 "EHLO
-	mail-gw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752639Ab0LHJJ0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Dec 2010 04:09:26 -0500
-Received: by gwb20 with SMTP id 20so763599gwb.1
-        for <git@vger.kernel.org>; Wed, 08 Dec 2010 01:09:25 -0800 (PST)
+	id S1754468Ab0LHJ3K convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Dec 2010 04:29:10 -0500
+Received: from mail-iw0-f172.google.com ([209.85.214.172]:56469 "EHLO
+	mail-iw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754557Ab0LHJ3I convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Dec 2010 04:29:08 -0500
+Received: by iwn40 with SMTP id 40so1328321iwn.3
+        for <git@vger.kernel.org>; Wed, 08 Dec 2010 01:29:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=obpAcZJ0QVSiFX2Y7Eyv0ncI795UQ/K8cfkEgJ2hiBQ=;
-        b=ilZWdyKDNd5pcqa0jfC4Kde3U3/qQ9iXF9NQqmm79vXtqkUTcPy36ixkozeNR/n0Je
-         8gBajLqyO72YCtuw6r6KIDMCRwi4gRTPz3vXmxe1aoR8tnwCPIs2d5HesoUp6GHQsWQ8
-         oaz+5Xtbs1s3jEC2i4DwID+vGMwCCSbJBEhOM=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=3A7PJWaH9swwIDYJcfqsXThW6SRBoBu9Ar2UFRsznxE=;
+        b=JzbrKRnU9tBhry5Jh8LzQfk/HXFDFeYGh86oMD4ATXMDpKQcVsF7+2UU8UtULHPEyk
+         V0wKKUbv193GecuPGgvMczQrJh+9YPTDJ/U27xqgqyVbfAaDVZGVArR4MK6RjVdXo2r3
+         7AE4F/mMht06pULgEojqcY7NpNbImG6p60JZg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=mKDgU0TAYoy4hE7qqz1qBkV6X8bA4P/EhFd8lKs38wHVTNhljmS7gTZjX2fEWxBjmC
-         6kjVuxwuobHwcYgZ9O6Igw0nLDqYyluf2luy/8ugJtTA+pjpfifPgByD+SwSk5oIbhmF
-         GJTVY6eGrfFqwiXZgsC1MG959+L4D4PVL+K9o=
-Received: by 10.150.198.3 with SMTP id v3mr3724527ybf.81.1291799361283;
-        Wed, 08 Dec 2010 01:09:21 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
-        by mx.google.com with ESMTPS id q14sm295824ybk.19.2010.12.08.01.09.19
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 08 Dec 2010 01:09:20 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=s9p3RycRCrocHEzfc4L-pnU6S9xCKfEL7TP=i@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=EAqSzwz7QzEaR5tCKL5RSCDsLEM5H7RuRR0tFO62Fikx6ZPpXmX1fu42wrSP1EK/9x
+         Tjs0+7KFlCGMocfnnjn0V4WHV/3lOxJmzcYTCAcAfyE+f09JUrWfFlAEpN8gn0Qp4MkO
+         VIJqGF3j9y1GndFnu7ke5fyrtM02XobR337YQ=
+Received: by 10.42.224.136 with SMTP id io8mr81002icb.492.1291800547199; Wed,
+ 08 Dec 2010 01:29:07 -0800 (PST)
+Received: by 10.42.172.193 with HTTP; Wed, 8 Dec 2010 01:29:07 -0800 (PST)
+In-Reply-To: <20101208082103.GA4927@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163180>
 
-Hi Leonid,
-
-Leonid Podolny wrote:
-
-> In our project, we have two upstreams, which are rather massively
-> patched. One of the upstreams is an SF svn repository, the other
-> arrives in form of tgz's with sources. Now git is tracking the patched
-> version, and I want to add a vendor branch to simplify future vendor
-> drops.
+2010/12/8 Jonathan Nieder <jrnieder@gmail.com>:
+> Bert Wesarg wrote:
 >
-> Out of the SVN upstream, we use only specific directories.
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0git
+>> diff --cached -- foo shows me the diff for both the file foo and fil=
+e
+>> foo/bar.
+> [...]
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0 =C2=A0 =C2=A0But for the case
+>> file->directory, I would like to see only the deleted diff, not
+>> recursing into the directory.
+>
+> If I understand correctly, this is a documentation bug and feature
+> request.
+>
+> The documentation bug: the "git diff" documentation says something
+> like
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0git diff [--options] [<tree>[..<tree>]] [-=
+-] [<path>...]
+>
+> but the <path>s after "--" are actually patterns (path specifiers).
+> See [1] ([RFD] git glossary: define pathspec, 2010-11-29).
+>
+> The feature request: there is no way to specify an "exact match"
+> or "negative match" when specifying paths. =C2=A0At least "negative
+> match" has been suggested before.
+>
 
-If I were in this situation, I would use "git svn" with its
-ignore-paths option.  Like so:
+Thanks for the pointers.
 
-	git svn -Rsvn init --ignore-paths='^(?!directory-a|directory-b)' \
-		$url/trunk
+I don't expect that we can change <foo> to match only files and not dir=
+ectories.
 
-This way, using "git svn fetch" causes the history of these files to
-be fetched, and one can use gitk, git log -S, git bisect, and other
-familiar tools to browse through it.
+Bert
 
-Alternatively, a more usual vendor branch workflow (manually
-committing the relevant files) can work well, too.  In either case I
-would only track the upstream files relevant to the history of my
-project.  A .gitignore file can be useful to avoid accidentally
-tracking other files (like the .svn metadata).
-
-Hope that helps,
-Jonathan
+> [1] http://thread.gmane.org/gmane.comp.version-control.git/162379
+>
