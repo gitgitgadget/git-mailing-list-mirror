@@ -1,95 +1,86 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: git format-patch should honor notes
-Date: Wed, 8 Dec 2010 11:50:09 +0100
-Message-ID: <201012081150.09424.johan@herland.net>
-References: <4CFEACC5.70005@redhat.com> <201012081112.12112.johan@herland.net> <4CFF5CD2.2000009@drmicha.warpmail.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [WIP/RFH] format-patch: Allow diffs for first-parent history
+Date: Wed, 8 Dec 2010 04:52:09 -0600
+Message-ID: <20101208105209.GA4947@burratino>
+References: <f60b93ae61c0e3088112cd6e1185d9c66f623813.1291803440.git.git@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Eric Blake <eblake@redhat.com>,
-	Thomas Rast <trast@student.ethz.ch>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
 To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Wed Dec 08 11:50:38 2010
+X-From: git-owner@vger.kernel.org Wed Dec 08 11:52:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQHbZ-0007bz-UH
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 11:50:38 +0100
+	id 1PQHdP-0008Pw-0R
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 11:52:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754339Ab0LHKuc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Dec 2010 05:50:32 -0500
-Received: from smtp.opera.com ([213.236.208.81]:41435 "EHLO smtp.opera.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753607Ab0LHKub (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Dec 2010 05:50:31 -0500
-Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id oB8Ao9gF010578
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 8 Dec 2010 10:50:09 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <4CFF5CD2.2000009@drmicha.warpmail.net>
+	id S1754580Ab0LHKwZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Dec 2010 05:52:25 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:55949 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754522Ab0LHKwY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Dec 2010 05:52:24 -0500
+Received: by gyb11 with SMTP id 11so563215gyb.19
+        for <git@vger.kernel.org>; Wed, 08 Dec 2010 02:52:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=ZeyDkyVjjKoW3bXFMmrLByg96mDyTZQxh9kQRzrzga8=;
+        b=oq2mOpa+yLC4Ag0BlcyKvYiMtM/xMUek6tDLBNMp4ulJVDnE2kRY6NHGq2WNZNQJTn
+         3RCRqU6MingTx7/Jf7LRTheZuF85Q1QdQhRRDsmBZ6RwTuq4xV0g9/NVwHNzP/BVNjXd
+         t4KJOXwmqjGZ9dfxVCUCWxlIMSxNuk6W+YOLU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=is4wYOAoUA7wgksB//wPPk43a0aaZWGyOnvES+sXqSLqWOmavIR75JG5iwkGrWOL4b
+         2H+DkUR8JbRSskwSCrm/ZXls2Iu2q7o8nh9Z4Y3AP0k2IEy2vi8oYP4LtbqAK2kYeYNC
+         GX7q3jMEMsnfiPhE/C89hkEU5+/zehsxRvV34=
+Received: by 10.150.138.18 with SMTP id l18mr3889038ybd.106.1291805541410;
+        Wed, 08 Dec 2010 02:52:21 -0800 (PST)
+Received: from burratino (adsl-68-255-109-73.dsl.chcgil.ameritech.net [68.255.109.73])
+        by mx.google.com with ESMTPS id d4sm342309ybi.12.2010.12.08.02.52.19
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 08 Dec 2010 02:52:20 -0800 (PST)
 Content-Disposition: inline
-X-Scanned-By: MIMEDefang 2.64 on 213.236.208.81
+In-Reply-To: <f60b93ae61c0e3088112cd6e1185d9c66f623813.1291803440.git.git@drmicha.warpmail.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163186>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163187>
 
-On Wednesday 08 December 2010, Michael J Gruber wrote:
-> Johan Herland venit, vidit, dixit 08.12.2010 11:12:
-> > On Wednesday 08 December 2010, Michael J Gruber wrote:
-> >> Also, in order to be really useful, I would need a place to store
-> >> the cover letter also. I was experimenting a while back with a
-> >> design for annotating branchnames which "basically" worked but
-> >> haven't had time to really implement it. If I remember correctly,
-> >> I had to set up some "bogus" refs to keep my notes from being
-> >> garbage collected and was still figuring out the best place to put
-> >> them. I'll dig it up when I have time to.
-> >
-> > I believe the last time the issue of adding notes to branch names
-> > was discussed, the consensus was that rather than using notes, they
-> > could be stored using a custom entry in the config file, e.g.
-> >
-> >   git config branch.mybranch.description "Description of mybranch"
-> >
-> > I might have misremembered this, though.
->
-> They certainly "could". The question whether they "should" depends on
-> what they are used for:
->
-> - config is neither versioned nor easily shareable; perfect for your
-> own scratch notes to go away once work is done
->
-> - notes are versioned and can be shared (I don't need to tell
-> you...); perfect for longer term annotations you want to keep
->
-> Note that "sharing" here includes also pushing to your backup repo
-> and cloning around. I'd certainly put patch series cover letters in
-> the second category.
+Michael J Gruber wrote:
 
-True. I was wrong to equate cover letters with local-only branch name 
-descriptions.
+> The attached patch teaches format-patch not to ignore merges (on
+> "--first-parent"), but I failed to track how "diff-tree" sets options
+> based on "-m"
 
-As has been discussed before, you can use notes to store the cover 
-letter, the question is which SHA-1 to attach it to.
+With hindsight, here's a search result:
 
-Using a SHA-1 that doesn't exist in the repo (e.g. the SHA-1 of the 
-branch name) leaves the note vulnerable to 'git notes prune', but maybe 
-that is an acceptable restriction ('git notes prune' must be manually 
-invoked in any case). For extra safety, we could add a config option 
-that refuses 'git notes prune' for a given notes ref, something like:
+ $ git grep -e argv -- builtin/diff-tree.c
+ int cmd_diff_tree(int argc, const char **argv, const char *prefix)
+         argc = setup_revisions(argc, argv, opt, &s_r_opt);
+                 const char *arg = *++argv;
 
-  git config notes.mynotes.refusePrune true
+So it's setup_revisions, in revision.c, which clears revs->ignore_merges
+when -m is detected.
 
+Maybe it should clear revs->no_merges while at it?  I can't see any
+other meaningful meaning for
 
-...Johan
+	git alias.lg "log --no-merges"
+	git lg -m HEAD~2..HEAD
 
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+or
+
+	git format-patch -m --first-parent HEAD~2..HEAD
+
+Meanwhile I would also be happy to see --first-parent imply -m, though
+that might be more controversial since -p -c --first-parent and
+-p --cc --first-parent are also meaningful.
