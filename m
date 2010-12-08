@@ -1,84 +1,91 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: diff for deleted file only, when changed to directory
-Date: Wed, 8 Dec 2010 02:21:03 -0600
-Message-ID: <20101208082103.GA4927@burratino>
-References: <AANLkTimXOKC_9TJU1foNkTqPHouFPouzZw3XU_9Za=na@mail.gmail.com>
+From: Michael J Gruber <drmicha@warpmail.net>
+Subject: Re: git format-patch should honor notes
+Date: Wed, 08 Dec 2010 09:20:52 +0100
+Message-ID: <4CFF3FE4.4080104@warpmail.net>
+References: <4CFEACC5.70005@redhat.com> <20101207221151.GC1036@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 08 09:21:22 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Eric Blake <eblake@redhat.com>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 08 09:23:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQFH8-0002Ur-AO
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 09:21:22 +0100
+	id 1PQFJ2-0003FD-8U
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 09:23:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754274Ab0LHIVR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Dec 2010 03:21:17 -0500
-Received: from mail-gx0-f180.google.com ([209.85.161.180]:54618 "EHLO
-	mail-gx0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754045Ab0LHIVQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Dec 2010 03:21:16 -0500
-Received: by gxk19 with SMTP id 19so645350gxk.11
-        for <git@vger.kernel.org>; Wed, 08 Dec 2010 00:21:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=6Lv69BwrhiS2xdE5HCRTpssv1ZswVHw8sHGCNeS9GCo=;
-        b=Bc0Fq0IAJAXNlFvP2PdFf2FfjMC4kpdaGp29EIYoLD0LwLrdLrWu6LSP5ka6lMovrH
-         mJBvG2Z9h+RzIkHcZUywtDqsxI8wRucaN555HynjjweoQ/hhBH9C9DDtaOwjriArzm76
-         VC7iAXjIINtOGUdTH6wbxFyLHWMtdX8ZxUW14=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ePAWnWWwiIsOZdr/xo9vq5YDnsSOB6hTRjJn9sej7OdAw4Y3sZ1rNH4taNWhUsL/LS
-         w6k9sNQgKoiCOIs/WezriNHgZMMS9NtUExSa/x+vqfhooBOwz4vEYKuCSYKPetiyO8dF
-         MEF2lZC7/wHFVZpmSJMUemO/4pTvbvE7QiHhI=
-Received: by 10.151.147.17 with SMTP id z17mr3632977ybn.116.1291796475996;
-        Wed, 08 Dec 2010 00:21:15 -0800 (PST)
-Received: from burratino (adsl-68-255-109-73.dsl.chcgil.sbcglobal.net [68.255.109.73])
-        by mx.google.com with ESMTPS id u3sm761499yba.16.2010.12.08.00.21.14
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 08 Dec 2010 00:21:14 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTimXOKC_9TJU1foNkTqPHouFPouzZw3XU_9Za=na@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754296Ab0LHIXP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Dec 2010 03:23:15 -0500
+Received: from out3.smtp.messagingengine.com ([66.111.4.27]:45074 "EHLO
+	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753335Ab0LHIXO (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Dec 2010 03:23:14 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 7D645760;
+	Wed,  8 Dec 2010 03:23:14 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Wed, 08 Dec 2010 03:23:14 -0500
+X-Sasl-enc: Qs522eTI0qlS1kwLgclCzJXZ5+78R9jEFehSS40IgLi0 1291796593
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 6CE3C403C52;
+	Wed,  8 Dec 2010 03:23:13 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
+In-Reply-To: <20101207221151.GC1036@sigill.intra.peff.net>
+X-Enigmail-Version: 1.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163176>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163177>
 
-Bert Wesarg wrote:
+Jeff King venit, vidit, dixit 07.12.2010 23:11:
+> On Tue, Dec 07, 2010 at 02:53:09PM -0700, Eric Blake wrote:
+> 
+>> My workflow is that I post patch series for upstream review via 'git
+>> send-email'.  Often, that results in feedback that requires me to
+>> amend/rebase my series, and post a v2 or v3 of the series.  By adding
+>> 'git config notes.rewriteRef refs/notes/commits', I can add notes that
+>> will carry across my rebase, and remind me what I changed in v2 (for
+>> example, git notes add -m 'v2: fix foo, per mail xyz@example.com').
+>> This is handy for me, and I think it is also handy for reviewers -
+>> someone who took the time to read through v1 should know what I changed
+>> in response to their comments, and only have to focus in on commits with
+>> changes, rather than on the entire resent series.
+> 
+> Yeah, that is a workflow that some others have mentioned using here,
+> too. And I think there is general agreement that notes should go after
+> the "---" in format-patch. We just need a working patch.
+> 
+> Thomas posted one in February:
+> 
+>   http://article.gmane.org/gmane.comp.version-control.git/140819
+> 
+> But there were some issues and it never got polished. Michael suggested
+> that he does something similar here:
+> 
+>   http://article.gmane.org/gmane.comp.version-control.git/140819
+> 
+> but there was no indication on whether it happens manually or if he has
+> a patch. I don't know if anything else has happened in that area. I'm
+> sure if you feel like working on a patch it would be well received.
+> 
+> -Peff
 
->                                                                git
-> diff --cached -- foo shows me the diff for both the file foo and file
-> foo/bar.
-[...]
->                                              But for the case
-> file->directory, I would like to see only the deleted diff, not
-> recursing into the directory.
+I do it with ":r!git notes show" in vim (after "/---"), which has the
+advantage over "format-patch --show-notes" that the notes are not
+indented nor preceded by a "Notes:" header. (I wouldn't mind the
+latter.) This is comfortable enough to have kept me from writing a patch.
 
-If I understand correctly, this is a documentation bug and feature
-request.
+Also, in order to be really useful, I would need a place to store the
+cover letter also. I was experimenting a while back with a design for
+annotating branchnames which "basically" worked but haven't had time to
+really implement it. If I remember correctly, I had to set up some
+"bogus" refs to keep my notes from being garbage collected and was still
+figuring out the best place to put them. I'll dig it up when I have time to.
 
-The documentation bug: the "git diff" documentation says something
-like
-
-	git diff [--options] [<tree>[..<tree>]] [--] [<path>...]
-
-but the <path>s after "--" are actually patterns (path specifiers).
-See [1] ([RFD] git glossary: define pathspec, 2010-11-29).
-
-The feature request: there is no way to specify an "exact match"
-or "negative match" when specifying paths.  At least "negative
-match" has been suggested before.
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/162379
+Michael
