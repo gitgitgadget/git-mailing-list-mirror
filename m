@@ -1,98 +1,104 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: diff for deleted file only, when changed to directory
-Date: Wed, 8 Dec 2010 10:29:07 +0100
-Message-ID: <AANLkTikMf5qRaqkdiOKP_PBf=Q68fMc2U5WVN-7SWFYC@mail.gmail.com>
+Date: Wed, 8 Dec 2010 16:56:32 +0700
+Message-ID: <AANLkTinW4DjHnNORH3FRi7fQsYAf+Ky_Jr14ZxOu2So2@mail.gmail.com>
 References: <AANLkTimXOKC_9TJU1foNkTqPHouFPouzZw3XU_9Za=na@mail.gmail.com>
-	<20101208082103.GA4927@burratino>
+ <20101208082103.GA4927@burratino> <AANLkTikMf5qRaqkdiOKP_PBf=Q68fMc2U5WVN-7SWFYC@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git Mailing List <git@vger.kernel.org>,
-	=?UTF-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= <pclouds@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 08 10:29:24 2010
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Bert Wesarg <bert.wesarg@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 08 10:57:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQGKv-00029m-JC
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 10:29:21 +0100
+	id 1PQGlr-0005wx-8c
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 10:57:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754468Ab0LHJ3K convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Dec 2010 04:29:10 -0500
-Received: from mail-iw0-f172.google.com ([209.85.214.172]:56469 "EHLO
-	mail-iw0-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754557Ab0LHJ3I convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Dec 2010 04:29:08 -0500
-Received: by iwn40 with SMTP id 40so1328321iwn.3
-        for <git@vger.kernel.org>; Wed, 08 Dec 2010 01:29:07 -0800 (PST)
+	id S1754184Ab0LHJ5G convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Dec 2010 04:57:06 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:52751 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751782Ab0LHJ5D convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Dec 2010 04:57:03 -0500
+Received: by wwa36 with SMTP id 36so964882wwa.1
+        for <git@vger.kernel.org>; Wed, 08 Dec 2010 01:57:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
          :content-transfer-encoding;
-        bh=3A7PJWaH9swwIDYJcfqsXThW6SRBoBu9Ar2UFRsznxE=;
-        b=JzbrKRnU9tBhry5Jh8LzQfk/HXFDFeYGh86oMD4ATXMDpKQcVsF7+2UU8UtULHPEyk
-         V0wKKUbv193GecuPGgvMczQrJh+9YPTDJ/U27xqgqyVbfAaDVZGVArR4MK6RjVdXo2r3
-         7AE4F/mMht06pULgEojqcY7NpNbImG6p60JZg=
+        bh=I2RcGKyHrDWJXLrTWbG5WFEYQ7LXI/WAetTsexcZ7hU=;
+        b=qpFIPiGpfsC9kCiAB6DqoddMObYU1s7C/6e4rUh9SlUg2jKg4vy0THQuPfYPZCAAlv
+         b4g7pzUh0dN5SjIGxwHmP3CzJ5LK7cPnRHeWsWyldd3uLyY2dgexuvTfS7ZqvdkVegwm
+         4tV+pAVHFkUlkJQOy7AO2Yev0EobAW3awHzPs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=EAqSzwz7QzEaR5tCKL5RSCDsLEM5H7RuRR0tFO62Fikx6ZPpXmX1fu42wrSP1EK/9x
-         Tjs0+7KFlCGMocfnnjn0V4WHV/3lOxJmzcYTCAcAfyE+f09JUrWfFlAEpN8gn0Qp4MkO
-         VIJqGF3j9y1GndFnu7ke5fyrtM02XobR337YQ=
-Received: by 10.42.224.136 with SMTP id io8mr81002icb.492.1291800547199; Wed,
- 08 Dec 2010 01:29:07 -0800 (PST)
-Received: by 10.42.172.193 with HTTP; Wed, 8 Dec 2010 01:29:07 -0800 (PST)
-In-Reply-To: <20101208082103.GA4927@burratino>
+        b=YERfOZtOB/xuIWm8jbuayN2Xzokut1TFNDQDdxKcHXnixsocJloELkZmLOUlskyZjF
+         1VZVGR7AsGE3rdvEXqKLEHi3eKIFIWrYFT4qIAtCJUMEOSeChJNPIuMPtV2KzS0PnoxB
+         +xDCoo2jk8Q/9KEWyESzi6NIyp+yTCFfe7uVk=
+Received: by 10.216.169.6 with SMTP id m6mr444461wel.49.1291802222318; Wed, 08
+ Dec 2010 01:57:02 -0800 (PST)
+Received: by 10.216.158.83 with HTTP; Wed, 8 Dec 2010 01:56:32 -0800 (PST)
+In-Reply-To: <AANLkTikMf5qRaqkdiOKP_PBf=Q68fMc2U5WVN-7SWFYC@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163180>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163181>
 
-2010/12/8 Jonathan Nieder <jrnieder@gmail.com>:
-> Bert Wesarg wrote:
->
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+2010/12/8 Bert Wesarg <bert.wesarg@googlemail.com>:
+> 2010/12/8 Jonathan Nieder <jrnieder@gmail.com>:
+>> Bert Wesarg wrote:
+>>
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
  =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
 =A0 =C2=A0git
->> diff --cached -- foo shows me the diff for both the file foo and fil=
-e
->> foo/bar.
-> [...]
->> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+>>> diff --cached -- foo shows me the diff for both the file foo and fi=
+le
+>>> foo/bar.
+>> [...]
+>>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
  =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
 =C2=A0 =C2=A0 =C2=A0But for the case
->> file->directory, I would like to see only the deleted diff, not
->> recursing into the directory.
+>>> file->directory, I would like to see only the deleted diff, not
+>>> recursing into the directory.
+>>
+>> If I understand correctly, this is a documentation bug and feature
+>> request.
+>>
+>> The documentation bug: the "git diff" documentation says something
+>> like
+>>
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0git diff [--options] [<tree>[..<tree>]] [=
+--] [<path>...]
+>>
+>> but the <path>s after "--" are actually patterns (path specifiers).
+>> See [1] ([RFD] git glossary: define pathspec, 2010-11-29).
+>>
+>> The feature request: there is no way to specify an "exact match"
+>> or "negative match" when specifying paths. =C2=A0At least "negative
+>> match" has been suggested before.
+>>
 >
-> If I understand correctly, this is a documentation bug and feature
-> request.
+> Thanks for the pointers.
 >
-> The documentation bug: the "git diff" documentation says something
-> like
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0git diff [--options] [<tree>[..<tree>]] [-=
--] [<path>...]
->
-> but the <path>s after "--" are actually patterns (path specifiers).
-> See [1] ([RFD] git glossary: define pathspec, 2010-11-29).
->
-> The feature request: there is no way to specify an "exact match"
-> or "negative match" when specifying paths. =C2=A0At least "negative
-> match" has been suggested before.
->
+> I don't expect that we can change <foo> to match only files and not d=
+irectories.
 
-Thanks for the pointers.
+Try
 
-I don't expect that we can change <foo> to match only files and not dir=
-ectories.
+diff --cached -- '[f]'
 
-Bert
-
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/162379
->
+=46rom top of my memory, directory matching does not work with
+wildcards. By putting wildcards to your patterns, dir should never be
+matched again. I haven't tested it though.
+--=20
+Duy
