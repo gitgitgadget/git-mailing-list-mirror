@@ -1,59 +1,59 @@
-From: "Neal Kreitzinger" <neal@rsss.com>
-Subject: Re: Tonight's pushout
-Date: Wed, 8 Dec 2010 15:35:11 -0600
-Message-ID: <idotn7$9o7$1@dough.gmane.org>
-References: <7v8w01m27t.fsf@alter.siamese.dyndns.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 08 22:35:53 2010
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [RFC/PATCH] Re: git submodule -b ... of current HEAD fails
+Date: Wed, 08 Dec 2010 22:35:01 +0100
+Message-ID: <4CFFFA05.6070609@web.de>
+References: <20101201171814.GC6439@ikki.ethgen.de> <20101201185046.GB27024@burratino> <4CF80B71.3010309@web.de> <7vipz5nqd0.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Klaus Ethgen <Klaus@Ethgen.de>,
+	Sven Verdoolaege <skimo@kotnet.org>, mlevedahl@gmail.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 08 22:37:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQRg1-0005W6-2g
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 22:35:53 +0100
+	id 1PQRhE-00069M-7s
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 22:37:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753520Ab0LHVfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Dec 2010 16:35:48 -0500
-Received: from lo.gmane.org ([80.91.229.12]:45408 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751432Ab0LHVfr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Dec 2010 16:35:47 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PQRfv-0005UQ-02
-	for git@vger.kernel.org; Wed, 08 Dec 2010 22:35:47 +0100
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 08 Dec 2010 22:35:46 +0100
-Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 08 Dec 2010 22:35:46 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-RFC2646: Format=Flowed; Original
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
+	id S1755431Ab0LHVhE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Dec 2010 16:37:04 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:35075 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755474Ab0LHVgT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Dec 2010 16:36:19 -0500
+Received: from smtp01.web.de  ( [172.20.0.243])
+	by fmmailgate01.web.de (Postfix) with ESMTP id D1F7D18123C52;
+	Wed,  8 Dec 2010 22:35:01 +0100 (CET)
+Received: from [93.246.45.238] (helo=[192.168.178.51])
+	by smtp01.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1PQRfB-0006Da-00; Wed, 08 Dec 2010 22:35:01 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <7vipz5nqd0.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19OtijezUNyVX+rspu13ZKvDEyp9/AjLSoJd/v1
+	nQ7P+6xQY2aRlUD/C2EpqOfJooEAtphxpPPMjwhJkk4LGzruWa
+	znvqUxEy9jeHFAy71qJg==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163224>
 
-"prerelease freeze" is not in the git-workflows manpage.  I'm interested in 
-how you-all do this because I use the git-workflows mangpage to help me 
-figure out my workflows.  Can someone explain?
+Am 07.12.2010 23:57, schrieb Junio C Hamano:
+> Jens Lehmann <Jens.Lehmann@web.de> writes:
+> 
+>> Nope, these lines date back to the time before I got involved in the
+>> submodule business ... Seems like this "git checkout" was added in
+>> March 2008 by Mark Levedahl (CCed), maybe he can shed some light on
+>> that.
+>>
+>> But to me your change looks good, so feel free to add:
+>> Acked-by: Jens Lehmann <Jens.Lehmann@web.de>
+> 
+> Does either of you want to add a test for this?
 
-v/r,
-Neal
-
-"Junio C Hamano" <gitster@pobox.com> wrote in message 
-news:7v8w01m27t.fsf@alter.siamese.dyndns.org...
-> All four main integration branches in tonight's pushout will pass tests if
-> you drop three-tip commits from 'pu'.  That might be just showing that
-> there are some caps in the tests, but I am somewhat happier than usual.
->
-> Tomorrow, I hopefully will start moving stuff out of 'next' to 'master',
-> and 'pu' to 'next', in preparation for 1.7.4 prerelease freeze. 
+Will do.
