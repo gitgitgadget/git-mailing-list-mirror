@@ -1,78 +1,75 @@
-From: Tomas Carnecky <tom@dbservice.com>
-Subject: Re: Status of the svn remote helper project (Dec 2010, #1)
-Date: Wed, 08 Dec 2010 19:26:21 +0100
-Message-ID: <4CFFCDCD.9060602@dbservice.com>
-References: <20101107112129.GA30042@burratino> <20101121063149.GA15449@burratino> <20101205113717.GH4332@burratino>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 01/14] msvc: Fix compilation errors in compat/win32/sys/poll.c
+Date: Wed, 8 Dec 2010 20:42:06 +0100
+Message-ID: <201012082042.06935.j6t@kdbg.org>
+References: <4CFA8E64.6070402@ramsay1.demon.co.uk> <201012042222.23384.j6t@kdbg.org> <4CFECEBB.7060703@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	David Barr <david.barr@cordelta.com>,
-	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 08 19:26:37 2010
+Cc: Junio C Hamano <gitster@pobox.com>, kusmabite@gmail.com,
+	"GIT Mailing-list" <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Wed Dec 08 20:42:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQOiq-00027M-C3
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 19:26:36 +0100
+	id 1PQPud-0002C6-5g
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 20:42:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756052Ab0LHS0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Dec 2010 13:26:30 -0500
-Received: from office.neopsis.com ([78.46.209.98]:45935 "EHLO
-	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752464Ab0LHS03 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Dec 2010 13:26:29 -0500
-X-Spam-Status: No, hits=0.0 required=5.0
-	tests=AWL: 0.222,BAYES_00: -1.665,TOTAL_SCORE: -1.443,autolearn=ham
-X-Spam-Level: 
-Received: from calvin.local ([193.247.250.53])
-	(authenticated user tom@dbservice.com)
-	by office.neopsis.com
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
-	Wed, 8 Dec 2010 19:26:24 +0100
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
-In-Reply-To: <20101205113717.GH4332@burratino>
+	id S1756444Ab0LHTmL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Dec 2010 14:42:11 -0500
+Received: from bsmtp2.bon.at ([213.33.87.16]:26592 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756438Ab0LHTmK (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Dec 2010 14:42:10 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 22DCA2C4009;
+	Wed,  8 Dec 2010 20:42:06 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 064E519F831;
+	Wed,  8 Dec 2010 20:42:07 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <4CFECEBB.7060703@ramsay1.demon.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163213>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163214>
 
-  On 12/5/10 12:37 PM, Jonathan Nieder wrote:
-> --------------------------------------------------
-> [Out of tree, stalled]
+On Mittwoch, 8. Dezember 2010, Ramsay Jones wrote:
+> Johannes Sixt wrote:
+> > On Samstag, 4. Dezember 2010, Ramsay Jones wrote:
+> >> diff --git a/compat/win32/sys/poll.c b/compat/win32/sys/poll.c
+> >> index 7e74ebe..708a6c9 100644
+> >> --- a/compat/win32/sys/poll.c
+> >> +++ b/compat/win32/sys/poll.c
+> >> @@ -34,6 +34,9 @@
+> >>
+> >>  #if (defined _WIN32 || defined __WIN32__) && ! defined __CYGWIN__
+> >>  # define WIN32_NATIVE
+> >> +# if defined (_MSC_VER)
+> >> +#  define _WIN32_WINNT 0x0502
+> >> +# endif
+> >>  # include <winsock2.h>
+> >>  # include <windows.h>
+> >>  # include <io.h>
+> >
+> > Don't you have to do the same in git-compat-util.h?
 >
-> * tc/remote-helper-usability: $gmane/157860
->   . Register new packs after the remote helper is done fetching
->   . Properly record history of the notes ref
->   . Fix ls-remote output when displaying impure refs
->   . Add git-remote-svn
->   . Introduce the git fast-import-helper
->   . Rename get_mode() to decode_tree_mode() and export it
->   . Allow the transport fetch command to add additional refs
->   . Allow more than one keepfile in the transport
->   . Remote helper: accept ':<value>  <name>' as a response to 'list'
->
-> The fourth-from-top seems a bit hard to review.  If it really is
-> necessary to introduce a separate program with a separate interface,
-> maybe a compile-time flag to choose between them would help?
+> No. compat/win32/sys/poll.c doesn't include git-compat-util.h (and I
+> don't think it should),
 
-I simplified the code and the requirements on fast-import are much 
-lighter now. All I need is a way to tell fast-import to stop writing 
-refs and after each commit write its sha1 to stdout. It's possible to 
-modify fast-import.c with a small patch to make it behave like that. 
-However, I haven't followed the svn remote helper that much lately so I 
-don't know whether one of the other patches already modifies fast-import 
-in this way.
+I know and I agree.
 
- From the beginning my code was meant to be just an example how the 
-interaction between git and the svn remote helper could look like. For 
-example I save the svn rev <-> sha1 mapping in notes, which is appears 
-to work well. I'll take a look if I'll be able to use the svn-fe in my 
-script.
+> so adding it there would not solve the immediate 
+> problem.
 
-tom
+Didn't I say: "do the same..."? :-) So the question remains open. After all, 
+by doing so, you would make sure that the rest of git sees the same API 
+(struct definitions and #defined constants) as compat/win32/sys/poll.c, no?
+
+-- Hannes
