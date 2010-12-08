@@ -1,120 +1,86 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] git submodule -b ... of current HEAD fails
-Date: Thu, 09 Dec 2010 00:19:46 +0100
-Message-ID: <4D001292.3020503@web.de>
-References: <20101201171814.GC6439@ikki.ethgen.de> <20101201185046.GB27024@burratino> <4CF80B71.3010309@web.de> <7vipz5nqd0.fsf@alter.siamese.dyndns.org> <4CFFFA05.6070609@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Klaus Ethgen <Klaus@Ethgen.de>,
-	Sven Verdoolaege <skimo@kotnet.org>, mlevedahl@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 09 00:21:19 2010
+From: Kevin Ballard <kevin@sb.org>
+Subject: Re: [BUG] git-add doesn't apply filepatterns to tracked files
+Date: Wed, 8 Dec 2010 15:27:41 -0800
+Message-ID: <3A1EAFC5-8D24-4E4F-B1BB-B1E153964EB0@sb.org>
+References: <47FCD78C-5D8C-4FA5-88DC-26FDCC7361AD@sb.org> <7vipz3j228.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0 (Apple Message framework v1082)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: git list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 09 00:28:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQTJz-0000NK-FO
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 00:21:15 +0100
+	id 1PQTQs-0003PG-W0
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 00:28:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932141Ab0LHXVE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Dec 2010 18:21:04 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:56585 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932118Ab0LHXVD (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Dec 2010 18:21:03 -0500
-Received: from smtp07.web.de  ( [172.20.5.215])
-	by fmmailgate01.web.de (Postfix) with ESMTP id 961DB1812468D;
-	Thu,  9 Dec 2010 00:19:46 +0100 (CET)
-Received: from [93.246.38.49] (helo=[192.168.178.51])
-	by smtp07.web.de with asmtp (WEB.DE 4.110 #24)
-	id 1PQTIY-0003ET-00; Thu, 09 Dec 2010 00:19:46 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
-In-Reply-To: <4CFFFA05.6070609@web.de>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/BHyYUAKM0xBrom/4VQK2wjD2Jdxp8EYjp3fLJ
-	oD5DrtlmAUsKaL6CRKXzc7X2oH/84bOwlR3RstlR9LRainMVfd
-	fWhnferrVahS3YqV3KsA==
+	id S1753066Ab0LHX1t (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Dec 2010 18:27:49 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:47742 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750930Ab0LHX1t (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Dec 2010 18:27:49 -0500
+Received: by pwj3 with SMTP id 3so395164pwj.19
+        for <git@vger.kernel.org>; Wed, 08 Dec 2010 15:27:48 -0800 (PST)
+Received: by 10.142.136.3 with SMTP id j3mr3310569wfd.38.1291850868331;
+        Wed, 08 Dec 2010 15:27:48 -0800 (PST)
+Received: from [10.8.0.89] ([69.170.160.74])
+        by mx.google.com with ESMTPS id x18sm1521219wfa.11.2010.12.08.15.27.46
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 08 Dec 2010 15:27:47 -0800 (PST)
+In-Reply-To: <7vipz3j228.fsf@alter.siamese.dyndns.org>
+X-Mailer: Apple Mail (2.1082)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163242>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163243>
 
-	git submodule add -b $branch $repository
+On Dec 8, 2010, at 3:07 PM, Junio C Hamano wrote:
 
-fails when HEAD already points to $branch in $repository.
+> Kevin Ballard <kevin@sb.org> writes:
+> 
+>> It seems that git-add doesn't match filepatterns against tracked files,
+> 
+> This is an issue known for a long time (and the one I had been bitching
+> about every time I had a chance).  Tracked ones obey diff-index pathspec
+> rules (leading path match only) while untracked ones use gitignore
+> pathspec rules.
 
-When the freshly cloned submodules HEAD is the same as the checked out
-branch, it doesn't make sense to update it again as "git checkout -b"
-would fail with =BBfatal: git checkout: branch $branch already exists=AB=
-=2E
+If I understand you correctly, you're saying tracked files don't understand
+patterns because git-diff-index doesn't handle patterns? Is there some reason
+that git-diff-index doesn't support patterns? I tried a handful of commands
+and here's the pattern-matching behavior I saw:
 
-Reported-by: Klaus Ethgen <Klaus@Ethgen.de>
-Thanks-to: Jonathan Nieder <jrnieder@gmail.com>
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+git-add: patterns match untracked, but not tracked
+git-rm: patterns match tracked files, command doesn't work on untracked
+git-status: patterns match untracked, but not tracked
+git-ls-files: patterns match tracked, command doesn't work on untracked
+git-ls-tree: no pattern support
+git-check-attr: no pattern support
 
-Am 08.12.2010 22:35, schrieb Jens Lehmann:
-> Am 07.12.2010 23:57, schrieb Junio C Hamano:
->> Jens Lehmann <Jens.Lehmann@web.de> writes:
->>
->>> Nope, these lines date back to the time before I got involved in th=
-e
->>> submodule business ... Seems like this "git checkout" was added in
->>> March 2008 by Mark Levedahl (CCed), maybe he can shed some light on
->>> that.
->>>
->>> But to me your change looks good, so feel free to add:
->>> Acked-by: Jens Lehmann <Jens.Lehmann@web.de>
->>
->> Does either of you want to add a test for this?
->=20
-> Will do.
+Documentation is a bit sporadic here as well. git-add lists <filepattern>
+in its synopsis and options and defines this as supporting
+"fileglobs". No mention whatsoever of the tracked file limitation.
+git-rm only lists <file> in synopsis/options, but does document this
+as being a "fileglob". git-status uses <pathspec> in the synopsis, and
+doesn't even document this in the options. It only makes a reference
+in the description, calling it "paths". git-ls-files calls it <file>
+in both synopsis and options, and makes no mention whatsoever of globs.
+git-ls-tree uses <path> in both synopsis/options, but explicitly claims
+that this is really a pattern in the option documentation. Curious,
+given its complete lack of pattern matching. git-check-attr uses
+<list-of-paths> in the synopsis, with no mention in the options.
 
-And as it happens from time to time, while writing the test you find
-out that the first attempt to fix the bug didn't work as expected ...
+Overall, there's a few problems here. The first is that git-add and
+git-ls-files apply the git-diff-index rules for tracked files, but
+apply actual patterns to untracked files. The second is the documentation
+is inconsistent, both in the name of the argument, and in making it
+clear which commands actually support patterns (plus the documentation
+for git-ls-tree is explicitly wrong about pattern support). The third
+is we're inconsistent in which commands support patterns at all.
 
- git-submodule.sh           |    4 +++-
- t/t7400-submodule-basic.sh |    7 +++++++
- 2 files changed, 10 insertions(+), 1 deletions(-)
-
-diff --git a/git-submodule.sh b/git-submodule.sh
-index 33bc41f..bf2803f 100755
---- a/git-submodule.sh
-+++ b/git-submodule.sh
-@@ -241,7 +241,9 @@ cmd_add()
- 			# ash fails to wordsplit ${branch:+-b "$branch"...}
- 			case "$branch" in
- 			'') git checkout -f -q ;;
--			?*) git checkout -f -q -b "$branch" "origin/$branch" ;;
-+			?*) if [ "$(git branch)" !=3D "* $branch"  ]; then
-+				git checkout -f -q -b "$branch" "origin/$branch"
-+			fi ;;
- 			esac
- 		) || die "Unable to checkout submodule '$path'"
- 	fi
-diff --git a/t/t7400-submodule-basic.sh b/t/t7400-submodule-basic.sh
-index 782b0a3..e224da4 100755
---- a/t/t7400-submodule-basic.sh
-+++ b/t/t7400-submodule-basic.sh
-@@ -131,6 +131,13 @@ test_expect_success 'submodule add --branch' '
- 	test_cmp empty untracked
- '
-
-+test_expect_success 'submodule add --branch succeeds even when branch =
-is at HEAD' '
-+	(
-+		cd addtest &&
-+		git submodule add -b master "$submodurl" submod-existing-branch
-+	)
-+'
-+
- test_expect_success 'submodule add with ./ in path' '
- 	echo "refs/heads/master" >expect &&
- 	>empty &&
---=20
-1.7.3.3.580.ged75d
+-Kevin Ballard
