@@ -1,81 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2.1 3/4] describe: Store commit_names in a hash table by
- commit SHA1
-Date: Wed, 08 Dec 2010 14:50:48 -0800
-Message-ID: <7v1v5rkhfb.fsf@alter.siamese.dyndns.org>
-References: <alpine.DEB.2.02.1011171830050.14285@dr-wily.mit.edu>
- <20101203084348.GD18202@burratino>
- <alpine.DEB.2.02.1012060149550.23348@dr-wily.mit.edu>
- <20101206073214.GA3745@burratino>
- <alpine.DEB.2.02.1012061159500.23348@dr-wily.mit.edu>
- <7vfwu9qvew.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.2.02.1012072204371.23348@dr-wily.mit.edu>
- <alpine.DEB.2.02.1012072341570.23348@dr-wily.mit.edu>
- <alpine.DEB.2.02.1012072343300.23348@dr-wily.mit.edu>
- <alpine.DEB.2.02.1012081319320.23348@dr-wily.mit.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	Kirill Smelkov <kirr@mns.spb.ru>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Anders Kaseorg <andersk@ksplice.com>
-X-From: git-owner@vger.kernel.org Wed Dec 08 23:51:13 2010
+From: Yann Dirson <ydirson@altern.org>
+Subject: [PATCH v6] generalizing sorted-array handling
+Date: Wed,  8 Dec 2010 23:51:29 +0100
+Message-ID: <1291848695-24601-1-git-send-email-ydirson@altern.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 08 23:51:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQSqv-0002ao-41
-	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 23:51:13 +0100
+	id 1PQSrU-0002uD-QK
+	for gcvg-git-2@lo.gmane.org; Wed, 08 Dec 2010 23:51:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756455Ab0LHWvG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Dec 2010 17:51:06 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52688 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755071Ab0LHWvF (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Dec 2010 17:51:05 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9D8102343;
-	Wed,  8 Dec 2010 17:51:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=ffiK7sSlBKw96dZTLriPCvEWqtk=; b=St+s9MAOKRhw4F+tgleKhzD
-	IRAjVRIjwpqg7kjqLaHv/F8LfvGdFhQuF6HiSMvhGKTirjhCSTGttqaE9qhzPdqR
-	WCFjXaFx/12HofN4VKDRxlc9oAwRTIevrgBkP9qxUPFalsfgyvG4LsmsHmZj+5xt
-	qUegcu9VITSKJjIKTiAI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=tSVlnjCX/a/x5CkmU2D3EcvY5SJaOJEQ7G6JezicDt/w8qJMf
-	+OrbbosxXcxt35z2HFKZ6x2x0HE+Zs7iJvMoPIXJiDZmCujHj03TB2qGp85COfGB
-	g6spwhGoSynQuqOXsaAjPr9k/n2qJfyK5VpBZk5OgMk5GG9F3EgdOBOwgY=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3BD2E232B;
-	Wed,  8 Dec 2010 17:51:21 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 233D02320; Wed,  8 Dec 2010
- 17:51:12 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: ACF8ACC4-031D-11E0-ABB3-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S932100Ab0LHWvq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Dec 2010 17:51:46 -0500
+Received: from smtp5-g21.free.fr ([212.27.42.5]:49422 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932087Ab0LHWvp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Dec 2010 17:51:45 -0500
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 216F5D48028
+	for <git@vger.kernel.org>; Wed,  8 Dec 2010 23:51:39 +0100 (CET)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1PQSrK-0006Pg-Tv
+	for git@vger.kernel.org; Wed, 08 Dec 2010 23:51:38 +0100
+X-Mailer: git-send-email 1.7.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163231>
 
-Anders Kaseorg <andersk@ksplice.com> writes:
+I hope the improvements to the usage syntax in this version would help
+to get more feedback.  I don't plan to do much more structural work on
+this, unless reviewers complain.  I want to get my focus back to
+bulk-rename/builk-rm patches, which will make heavy use of this API.
 
-> @@ -44,6 +47,19 @@ static const char *prio_names[] = {
->  	"head", "lightweight", "annotated",
->  };
->  
-> +static inline unsigned int hash_sha1(const unsigned char *sha1)
-> +{
-> +	return *(unsigned int *)sha1;
-> +}
+Changes from v5:
 
-Do we know that all the archs we will be compiled on will be happy with
-this potentially unaligned access?  hash_filespec() in diffcore-rename.c
-is written in a way to avoid such an issue, and I would feel safer to see
-this do the same.
+* moved doc to Documentation/api-sorted-array.txt as suggested by
+  Jonathan Nieder, made it a bit more comprehensive as well.
+
+* changed API with:
+  * renamed low-level wrapper-decl macros with a leading underscore
+  * provide high-level wrapper-decl macros for everyday use, which
+    declare the required generic funcs for use (as static funcs)
+
+Those high-level macros make the entry points more numerousas
+previously noted, but we gain much in usage clarity, as well as
+consistent API (no more argument differences between macros of a
+single level)
+
+By using those macros we lose the control we had on all the
+intermediate funcs, but that should not be much of a problem.
+
+
+Notes on current API:
+
+* The macro names are a bit heavy-weight.  Better ideas welcome.
+
+* could gain a dealloc API, to minimize the explicit use of the _nr
+  and _alloc vars
+
+
+The following binary-search occurences were not converted:
+
+* read-cache.c::index_name_pos has widely-used API with 2 low-coupled
+  cmp/init params: sorted-array could be generalized at the cost of
+  using stdarg, but is it worth it ?
+
+* pack-revindex.c::find_pack_revindex is a bit special and needs more
+  thought
+
+* cache-tree.c::subtree_pos and sha1_file::find_pack_entry_one too
+
+* sha1_lookup.c stuff probably too special
