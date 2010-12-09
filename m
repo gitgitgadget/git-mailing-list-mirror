@@ -1,91 +1,57 @@
-From: Anders Kaseorg <andersk@ksplice.com>
-Subject: =?UTF-8?Q?=5BPATCH_v3_2=2F4=5D_describe=3A_Don=E2=80=99t_use_a_flex_array_in_struct_commit=5Fname?=
-Date: Thu, 9 Dec 2010 01:43:32 -0500 (EST)
-Message-ID: <alpine.DEB.2.02.1012090142560.23348@dr-wily.mit.edu>
-References: <alpine.DEB.2.02.1011171830050.14285@dr-wily.mit.edu> <20101203084348.GD18202@burratino> <alpine.DEB.2.02.1012060149550.23348@dr-wily.mit.edu> <20101206073214.GA3745@burratino> <alpine.DEB.2.02.1012061159500.23348@dr-wily.mit.edu>
- <7vfwu9qvew.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.02.1012072204371.23348@dr-wily.mit.edu> <alpine.DEB.2.02.1012072341570.23348@dr-wily.mit.edu> <alpine.DEB.2.02.1012072344000.23348@dr-wily.mit.edu> <7v7hfjkhfm.fsf@alter.siamese.dyndns.org>
- <alpine.DEB.2.02.1012081800540.23348@dr-wily.mit.edu> <alpine.DEB.2.02.1012090140390.23348@dr-wily.mit.edu>
+From: =?UTF-8?B?IkFsZWphbmRybyBSLiBTZWRlw7FvIg==?= <asedeno@MIT.EDU>
+Subject: Re: [PATCH] git-send-email: Accept -n as a synonym for --dry-run
+Date: Thu, 09 Dec 2010 01:39:02 -0500
+Message-ID: <4D007986.60809@mit.edu>
+References: <1291869878-19645-1-git-send-email-asedeno@mit.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Kirill Smelkov <kirr@mns.spb.ru>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 09 07:43:43 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 09 07:44:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQaE9-00060M-LV
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 07:43:41 +0100
+	id 1PQaEj-0006BT-Co
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 07:44:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754889Ab0LIGnf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Dec 2010 01:43:35 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:57423 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753426Ab0LIGne (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Dec 2010 01:43:34 -0500
-Received: by qwa26 with SMTP id 26so2239287qwa.19
-        for <git@vger.kernel.org>; Wed, 08 Dec 2010 22:43:33 -0800 (PST)
-Received: by 10.224.60.148 with SMTP id p20mr6516632qah.48.1291877013637;
-        Wed, 08 Dec 2010 22:43:33 -0800 (PST)
-Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
-        by mx.google.com with ESMTPS id t35sm972173qco.18.2010.12.08.22.43.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 08 Dec 2010 22:43:33 -0800 (PST)
-X-X-Sender: andersk@dr-wily.mit.edu
-In-Reply-To: <alpine.DEB.2.02.1012090140390.23348@dr-wily.mit.edu>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+	id S1754917Ab0LIGoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Dec 2010 01:44:13 -0500
+Received: from DMZ-MAILSEC-SCANNER-7.MIT.EDU ([18.7.68.36]:60223 "EHLO
+	dmz-mailsec-scanner-7.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754882Ab0LIGoM (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Dec 2010 01:44:12 -0500
+X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Dec 2010 01:44:12 EST
+X-AuditID: 12074424-b7b0bae000000a05-eb-4d00798fa916
+Received: from mailhub-auth-4.mit.edu ( [18.7.62.39])
+	by dmz-mailsec-scanner-7.mit.edu (Symantec Brightmail Gateway) with SMTP id 06.1D.02565.F89700D4; Thu,  9 Dec 2010 01:39:11 -0500 (EST)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id oB96dApA023469
+	for <git@vger.kernel.org>; Thu, 9 Dec 2010 01:39:11 -0500
+Received: from darkmatter.mit.edu (DARKMATTER.MIT.EDU [18.238.2.175])
+	(authenticated bits=0)
+        (User authenticated as smtp/darkmatter.mit.edu@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id oB96d9am015422
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Thu, 9 Dec 2010 01:39:10 -0500 (EST)
+Received: by darkmatter.mit.edu (Postfix, from userid 108)
+	id C6E1914C012; Thu,  9 Dec 2010 01:39:09 -0500 (EST)
+Received: from [18.238.2.136] (JABUN.MIT.EDU [18.238.2.136])
+	by darkmatter.mit.edu (Postfix) with ESMTPSA id 9A18514C011
+	for <git@vger.kernel.org>; Thu,  9 Dec 2010 01:39:09 -0500 (EST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <1291869878-19645-1-git-send-email-asedeno@mit.edu>
+X-Enigmail-Version: 1.1.1
+X-Brightmail-Tracker: AAAAARbjXuk=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163268>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163269>
 
-Now add_to_known_names overwrites commit_names in place when multiple
-tags point to the same commit.  This will make it easier to store
-commit_names in a hash table.
+I noticed I forgot to make the corresponding documentation change. I'll
+include it in the next version of this patch, though I'm waiting to see
+if there's any other feedback first.
 
-Signed-off-by: Anders Kaseorg <andersk@ksplice.com>
----
- builtin/describe.c |   12 ++++++------
- 1 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/builtin/describe.c b/builtin/describe.c
-index 700f740..5b8461d 100644
---- a/builtin/describe.c
-+++ b/builtin/describe.c
-@@ -38,7 +38,7 @@ struct commit_name {
- 	unsigned prio:2; /* annotated tag = 2, tag = 1, head = 0 */
- 	unsigned name_checked:1;
- 	unsigned char sha1[20];
--	char path[FLEX_ARRAY]; /* more */
-+	const char *path;
- };
- static const char *prio_names[] = {
- 	"head", "lightweight", "annotated",
-@@ -85,15 +85,15 @@ static void add_to_known_names(const char *path,
- 	struct commit_name *e = commit->util;
- 	struct tag *tag = NULL;
- 	if (replace_name(e, prio, sha1, &tag)) {
--		size_t len = strlen(path)+1;
--		free(e);
--		e = xmalloc(sizeof(struct commit_name) + len);
-+		if (!e) {
-+			e = xmalloc(sizeof(struct commit_name));
-+			commit->util = e;
-+		}
- 		e->tag = tag;
- 		e->prio = prio;
- 		e->name_checked = 0;
- 		hashcpy(e->sha1, sha1);
--		memcpy(e->path, path, len);
--		commit->util = e;
-+		e->path = path;
- 	}
- 	found_names = 1;
- }
--- 
-1.7.3.3
+-Alejandro
