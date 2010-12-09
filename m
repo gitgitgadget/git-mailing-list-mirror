@@ -1,114 +1,80 @@
-From: Anders Kaseorg <andersk@ksplice.com>
-Subject: Re: [PATCH v2 4/4] describe: Delay looking up commits until searching
- for an inexact match
-Date: Wed, 8 Dec 2010 18:47:36 -0500 (EST)
-Message-ID: <alpine.DEB.2.02.1012081800540.23348@dr-wily.mit.edu>
-References: <alpine.DEB.2.02.1011171830050.14285@dr-wily.mit.edu> <20101203084348.GD18202@burratino> <alpine.DEB.2.02.1012060149550.23348@dr-wily.mit.edu> <20101206073214.GA3745@burratino> <alpine.DEB.2.02.1012061159500.23348@dr-wily.mit.edu>
- <7vfwu9qvew.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.02.1012072204371.23348@dr-wily.mit.edu> <alpine.DEB.2.02.1012072341570.23348@dr-wily.mit.edu> <alpine.DEB.2.02.1012072344000.23348@dr-wily.mit.edu> <7v7hfjkhfm.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 0/2] [RFD] Using gitrevisions :/search style with other operators
+Date: Thu, 9 Dec 2010 07:30:45 +0700
+Message-ID: <AANLkTi=AyCxn=dcKQQmT0_6Oc36AX6XDA4Dhhk7WLSN0@mail.gmail.com>
+References: <1291820319-12455-1-git-send-email-pclouds@gmail.com> <201012082047.44022.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Kirill Smelkov <kirr@mns.spb.ru>,
-	Thomas Rast <trast@student.ethz.ch>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 09 01:12:03 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Kevin Ballard <kevin@sb.org>, Yann Dirson <dirson@bertin.fr>,
+	Jeff King <peff@peff.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 09 01:31:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQU78-0005rV-Tg
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 01:12:03 +0100
+	id 1PQUPq-0005bj-Qf
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 01:31:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752971Ab0LIAL6 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Dec 2010 19:11:58 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:35372 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752585Ab0LIAL5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Dec 2010 19:11:57 -0500
-Received: by qwa26 with SMTP id 26so1917486qwa.19
-        for <git@vger.kernel.org>; Wed, 08 Dec 2010 16:11:56 -0800 (PST)
-Received: by 10.229.75.10 with SMTP id w10mr7482329qcj.209.1291852059134;
-        Wed, 08 Dec 2010 15:47:39 -0800 (PST)
-Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
-        by mx.google.com with ESMTPS id x9sm716273qco.10.2010.12.08.15.47.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 08 Dec 2010 15:47:38 -0800 (PST)
-X-X-Sender: andersk@dr-wily.mit.edu
-In-Reply-To: <7v7hfjkhfm.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+	id S1755318Ab0LIAbR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 8 Dec 2010 19:31:17 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:51849 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753905Ab0LIAbQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 8 Dec 2010 19:31:16 -0500
+Received: by wwa36 with SMTP id 36so1828704wwa.1
+        for <git@vger.kernel.org>; Wed, 08 Dec 2010 16:31:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=4xLUixttpCm+idYf8f6zisYq6W7sfa/bVFO3sXQh0f8=;
+        b=f8/X4nxms+9qo3qSgSOMvFpmmCO06+vLQxDlBd8bkv/DRyEfb8xUoPcV2Ek5xyiXBl
+         yUTgOZ70hVL0f/k720tTRFbS8MFIiy6zLv3pEdzy14bSR+R4bYQIoRpz9FdDsloagmmM
+         Lt0ykIRE8vn7zRoPu/+fzu9hfr+Ii0ViOohAk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=f2HXUmv5OKWhDqbdcy0nz+GZEBNy3DaJ1Bi8zuNliFPJ18yEAWdJ5GDhIbmL+2bVQ8
+         PtP665B6PU7MEJKFL3e1hM/q69HcBHudNpLfn9KIiva5Q4SZgK/+M8uVWsK71s4pfKdx
+         XJdds5F8k6QcOMUZDnsMQgjN0SUa1heXkREsw=
+Received: by 10.216.188.131 with SMTP id a3mr1269843wen.4.1291854675516; Wed,
+ 08 Dec 2010 16:31:15 -0800 (PST)
+Received: by 10.216.158.83 with HTTP; Wed, 8 Dec 2010 16:30:45 -0800 (PST)
+In-Reply-To: <201012082047.44022.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163248>
 
-On Wed, 8 Dec 2010, Junio C Hamano wrote:
-> You seem to have gone in a slightly different direction with this rer=
-oll.
-> I am not sure if use of hash_table in this code would actually improv=
-e
-> anything (aside from the general readability and "reusing code from a=
- good
-> infrastructure is a good thing" principle), though, no matter how man=
-y
-> tags you have in your repository.  In the code from the earlier round=
-,
-> lookup_commit_reference_gently call in the fallback codepath to popul=
-ate
-> commit->util used the *obj_hash[] to quickly look up the commits with=
- the
-> same object name already.
+2010/12/9 Jakub Narebski <jnareb@gmail.com>:
+> I wonder if it would be possible to make :/<regex> (which looks a bit
+> like searching the index) to be an alias to --all^{/<regex>}...
 
-Yes; the problem now is that, in order to avoid calling replace_name()=20
-excessively, I need to resolve all multiply-tagged commits in one pass,=
-=20
-before I have those commits in the obj_hash.  This could have been done=
-=20
-with the linked list by deleting any commit_name from the linked list t=
-he=20
-first time replace_name() decides it should be superseded by a differen=
-t=20
-commit_name, but the hash table approach seems less fragile to me.  The=
-=20
-hash table also has the advantage of avoiding the O(#tags * #arguments)=
-=20
-complexity when describe is given many arguments.
+It looks a bit strange to my eyes to merge normal option name with
+revision syntax. But I think it's possible. Do we allow branch/tag
+name with leading '-'?
 
-Let me know if you=E2=80=99d like me to try it the other way.
+> Or if we can make ^{/<regex>} to act on revision range specified by
+> earlier commits, so for example foo..bar^{/<regex>} would work.
 
-> I don't know how the above would work in the face of hash collisions.
+There is another case: branch/tag selection. Instead of looking in all
+refs, people may want to look only in nd/* branches. My branches are
+almost flat, so I don't find any use. But someone might. And we can
+solve the "all branches" case above with simply "*". The exact syntax,
+I don't know.
 
-Oh right.  I=E2=80=99ll fix that.
+> As to :/!<regexp> form: isn't it reserved for non-match?
 
-static int set_util(void *chain)
-{
-	struct commit_name *n;
-	for (n =3D chain; n; n =3D n->next) {
-		struct commit *c =3D lookup_commit_reference_gently(n->peeled, 1);
-		if (c)
-			c->util =3D n;
-	}
-	return 0;
-}
+It is reserved and not attached with any meaning.
 
-> Do we know that all the archs we will be compiled on will be happy wi=
-th
-> this potentially unaligned access?  hash_filespec() in diffcore-renam=
-e.c
-> is written in a way to avoid such an issue, and I would feel safer to=
-=20
-> see this do the same.
+> Thank you for working on this.
 
-I=E2=80=99ll fix that too.
-
-static inline unsigned int hash_sha1(const unsigned char *sha1)
-{
-	unsigned int hash;
-	memcpy(&hash, sha1, sizeof(hash));
-	return hash;
-}
-
-Anders
+You're welcome. I needed to look for my branches in pu and was tired
+of copy/paste.
+-- 
+Duy
