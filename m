@@ -1,63 +1,95 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Push to all repositories
-Date: Thu, 9 Dec 2010 19:47:36 +0700
-Message-ID: <AANLkTim_4sqyrE=MFOVxskANNL9-z29=iH3grNae7Yt3@mail.gmail.com>
-References: <1291829983410-5816069.post@n2.nabble.com> <20101208180049.GC5687@burratino>
- <1291849156593-5817177.post@n2.nabble.com> <1291898174244-5818757.post@n2.nabble.com>
+From: "Alan Raison" <alan@theraisons.me.uk>
+Subject: [PATCH] Corrected return values in prep_for_email;
+Date: Thu, 9 Dec 2010 13:24:16 -0000
+Message-ID: <004201cb97a4$6127cc60$23776520$@me.uk>
+References: <002501cb962c$5fa3aa40$1eeafec0$@me.uk> <7v1v5tqswl.fsf@alter.siamese.dyndns.org> <4CFE8E97.4020508@digium.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Kevin Sheedy <kevinsheedy@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 09 13:48:17 2010
+Content-Type: text/plain;
+	charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: "'Kevin P. Fleming'" <kpfleming@digium.com>,
+	"'Junio C Hamano'" <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 09 14:24:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQfuy-0002hh-Ee
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 13:48:16 +0100
+	id 1PQgU2-0004XJ-5D
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 14:24:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756184Ab0LIMsI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Dec 2010 07:48:08 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:62165 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754944Ab0LIMsH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Dec 2010 07:48:07 -0500
-Received: by wyb28 with SMTP id 28so2235918wyb.19
-        for <git@vger.kernel.org>; Thu, 09 Dec 2010 04:48:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=Uky+zXMQY8DT7GczcnZ1IBWpsa8+EWTS1d/QEVa2G2Y=;
-        b=K+Ylq16zZ77ES6e5FuUNhh/YO5rLoTry2Joawl11Y06tChnCR+CWpM5dbzEfUht6Qu
-         NjJmJVmUPpnfeVd5QnZVuEhm2SKah4etX1mAgBRrJLb4e5AK2PUCgiXRKZnylKvfU35i
-         zuY4oWACEcza6XHa5IW9XhfdgFXfyZBr2xWwc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=KXTi0JB7odA8gFcJ6aSlQgCylNFsE8TcwaA7UUUQnCj+rVV5cIkyI74YhX5iVaDwtB
-         To7NMv4HV/2KTMRkY7zeh7dpJAbV6d/PON4hUp3oOhFNYMVaCxCXb7iwptOzZB7F5slP
-         XF1sB9UXzJnexsnPefbneTmwWo2psP9lwU66U=
-Received: by 10.216.24.134 with SMTP id x6mr521887wex.34.1291898886488; Thu,
- 09 Dec 2010 04:48:06 -0800 (PST)
-Received: by 10.216.158.83 with HTTP; Thu, 9 Dec 2010 04:47:36 -0800 (PST)
-In-Reply-To: <1291898174244-5818757.post@n2.nabble.com>
+	id S1756819Ab0LINYZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Dec 2010 08:24:25 -0500
+Received: from gateway.bjss.co.uk ([77.86.30.29]:36993 "EHLO
+	gateway.bjss.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755978Ab0LINYY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Dec 2010 08:24:24 -0500
+Received: from exchange.bjss.co.uk ([172.22.32.28]) by gateway.bjss.co.uk with Microsoft SMTPSVC(6.0.3790.4675);
+	 Thu, 9 Dec 2010 13:24:17 +0000
+Received: from kitkat ([172.22.33.188]) by exchange.bjss.co.uk with Microsoft SMTPSVC(6.0.3790.4675);
+	 Thu, 9 Dec 2010 13:24:17 +0000
+In-Reply-To: <4CFE8E97.4020508@digium.com>
+X-Mailer: Microsoft Office Outlook 12.0
+Thread-Index: AcuWRylNHE+witzbTUKvAHNYKsYlyABXN5Cw
+Content-Language: en-gb
+X-OriginalArrivalTime: 09 Dec 2010 13:24:17.0017 (UTC) FILETIME=[6120EE90:01CB97A4]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163280>
 
-On Thu, Dec 9, 2010 at 7:36 PM, Kevin Sheedy <kevinsheedy@gmail.com> wrote:
->
-> In summary, I think it would be cool if there was a programmatic way of
-> saying:
-> "Hey everybody, I've changed some code on branch x and I think you should
-> have it"
+>From ebe98d1c682f268b39a7eaf3ef529accbf0ac61c Mon Sep 17 00:00:00 2001
+From: Alan Raison <alan@theraisons.me.uk>
+Date: Mon, 6 Dec 2010 15:49:21 +0000
+Subject: [PATCH] Corrected return values in prep_for_email;
 
-See "update" hook in githooks man page. Add "pushall" alias for "for
-repo in..." from Jonathan's mail.
+Function was returning 0 for failure and 1 for success which was breaking
+the logic in the main loop.
+
+Corrected to return 0 for success, 1 for failure.  Function now also returns
+in all cases, rather than exiting.
+---
+ contrib/hooks/post-receive-email |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/hooks/post-receive-email
+b/contrib/hooks/post-receive-email
+index 85724bf..f99ea95 100755
+--- a/contrib/hooks/post-receive-email
++++ b/contrib/hooks/post-receive-email
+@@ -144,13 +144,13 @@ prep_for_email()
+ 			short_refname=${refname##refs/remotes/}
+ 			echo >&2 "*** Push-update of tracking branch,
+$refname"
+ 			echo >&2 "***  - no email generated."
+-			exit 0
++			return 1
+ 			;;
+ 		*)
+ 			# Anything else (is there anything else?)
+ 			echo >&2 "*** Unknown type of update to $refname
+($rev_type)"
+ 			echo >&2 "***  - no email generated"
+-			return 0
++			return 1
+ 			;;
+ 	esac
+ 
+@@ -166,10 +166,10 @@ prep_for_email()
+ 		esac
+ 		echo >&2 "*** $config_name is not set so no email will be
+sent"
+ 		echo >&2 "*** for $refname update $oldrev->$newrev"
+-		return 0
++		return 1
+ 	fi
+ 
+-	return 1
++	return 0
+ }
+ 
+ #
 -- 
-Duy
+1.7.3.1.msysgit.0
