@@ -1,78 +1,81 @@
-From: Miklos Vajna <vmiklos@frugalware.org>
-Subject: Re: git describe weird behaviour
-Date: Thu, 9 Dec 2010 02:33:23 +0100
-Message-ID: <20101209013323.GJ22105@genesis.frugalware.org>
-References: <20101110010016.GC22105@genesis.frugalware.org>
- <20101110041428.GA8955@sigill.intra.peff.net>
- <20101110140334.GJ22105@genesis.frugalware.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 0/2] [RFD] Using gitrevisions :/search style with other operators
+Date: Thu, 9 Dec 2010 08:42:51 +0700
+Message-ID: <AANLkTin1SjEzBnLd-HK9fANShLezAKHAOai9MyF-cuoT@mail.gmail.com>
+References: <1291820319-12455-1-git-send-email-pclouds@gmail.com>
+ <201012082047.44022.jnareb@gmail.com> <AANLkTi=AyCxn=dcKQQmT0_6Oc36AX6XDA4Dhhk7WLSN0@mail.gmail.com>
+ <201012090144.19858.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="7xmq1vjKKXL+YJuY"
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 09 02:33:41 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Kevin Ballard <kevin@sb.org>, Yann Dirson <dirson@bertin.fr>,
+	Jeff King <peff@peff.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 09 02:44:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQVO8-0005xa-8M
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 02:33:40 +0100
+	id 1PQVYO-000282-Tz
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 02:44:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755933Ab0LIBda (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 8 Dec 2010 20:33:30 -0500
-Received: from virgo.iok.hu ([212.40.97.103]:40834 "EHLO virgo.iok.hu"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752701Ab0LIBd3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 8 Dec 2010 20:33:29 -0500
-Received: from kag.elte.hu (kag.elte.hu [157.181.177.1])
-	by virgo.iok.hu (Postfix) with ESMTP id 176F758070;
-	Thu,  9 Dec 2010 02:33:25 +0100 (CET)
-Received: from genesis.frugalware.org (frugalware.elte.hu [157.181.177.34])
-	by kag.elte.hu (Postfix) with ESMTP id C459F44659;
-	Thu,  9 Dec 2010 02:33:24 +0100 (CET)
-Received: by genesis.frugalware.org (Postfix, from userid 1000)
-	id 683BB132C38D; Thu,  9 Dec 2010 02:33:24 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20101110140334.GJ22105@genesis.frugalware.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S932109Ab0LIBoE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Dec 2010 20:44:04 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:60476 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932107Ab0LIBoC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 8 Dec 2010 20:44:02 -0500
+Received: by wwa36 with SMTP id 36so1882895wwa.1
+        for <git@vger.kernel.org>; Wed, 08 Dec 2010 17:44:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=SyH5JcmKj6fCVFv8PU46nBJlOy0WRk0IOTKBXq78yoo=;
+        b=bZAOcnA9fILtIofQai02C7VWv5YnRxXn1D1pjrZnJFidY31p+AE7WwD4XHcxer/bcG
+         xalPvoMIznUZLOanJ85lqMW8W7G73faQcVx3gvOnJ/5TjwGwuVfdD2QcwfpNjjpCNgGD
+         E5UPbLpsNyJmv/6wtZM1QPiG8iYufUwQGegLA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=UgizHuV0+jKhfijLw0zF9Q02+NhAdhqik/KJPIt9Dci/3Y1PLzG9uMsZU+NrzXlDCP
+         RH/4h33T5yoJNm5vpcRBEXrLl/E9ZTUbWDou66kSLAl/YbODVrglyWE5tpRaVihXiJby
+         L9CnrVVq3AQivElSVQWasVlGBJqgKS1uxqyQo=
+Received: by 10.216.162.70 with SMTP id x48mr13350wek.4.1291859041278; Wed, 08
+ Dec 2010 17:44:01 -0800 (PST)
+Received: by 10.216.158.83 with HTTP; Wed, 8 Dec 2010 17:42:51 -0800 (PST)
+In-Reply-To: <201012090144.19858.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163253>
 
+On Thu, Dec 9, 2010 at 7:44 AM, Jakub Narebski <jnareb@gmail.com> wrote=
+:
+> On Thu, 9 Dec 2010, Nguyen Thai Ngoc Duy wrote:
+>> 2010/12/9 Jakub Narebski <jnareb@gmail.com>:
+>
+>> > I wonder if it would be possible to make :/<regex> (which looks a =
+bit
+>> > like searching the index) to be an alias to --all^{/<regex>}...
+>>
+>> It looks a bit strange to my eyes to merge normal option name with
+>> revision syntax. But I think it's possible. Do we allow branch/tag
+>> name with leading '-'?
+>
+> Well, with below proposal it would simply be
+>
+> =C2=A0--all ^{/<regexp>}
 
---7xmq1vjKKXL+YJuY
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+This hardly works with range and may conflict with "--all" being
+already used by some commands.
 
-On Wed, Nov 10, 2010 at 03:03:34PM +0100, Miklos Vajna <vmiklos@frugalware.=
-org> wrote:
-> > The patch below implements that in a very rough-and-dirty way. It does
-> > find the 1.4 tag in your repository that you expect. However:
->=20
-> Yes, works here as well:
->=20
-> $ ~/git/git/git describe
-> 1.4pre1-210-g48b67cd
-
-Any update on this? I still have this patch in my tree to get correct
-git describe output. :)
-
-Thanks.
-
---7xmq1vjKKXL+YJuY
-Content-Type: application/pgp-signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iEYEARECAAYFAk0AMeMACgkQe81tAgORUJY80QCfYq4vHdHJo37LnzRBPC8U45fY
-d5cAnRiT3yHdMsCKyayOP3CAmg3bNfkt
-=rqnL
------END PGP SIGNATURE-----
-
---7xmq1vjKKXL+YJuY--
+I think we can move '/' out of {}, the space between '/' and '{' can
+be used for optional parameters: ^/{foo}.
+--=20
+Duy
