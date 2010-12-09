@@ -1,86 +1,66 @@
-From: =?UTF-8?q?Alejandro=20R=2E=20Sede=C3=B1o?= <asedeno@MIT.EDU>
-Subject: [PATCH] git-send-email: Accept -n as a synonym for --dry-run
-Date: Wed,  8 Dec 2010 23:44:38 -0500
-Message-ID: <1291869878-19645-1-git-send-email-asedeno@mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 0/2] [RFD] Using gitrevisions :/search style with other
+ operators
+Date: Wed, 08 Dec 2010 21:15:33 -0800
+Message-ID: <7vaakfil1m.fsf@alter.siamese.dyndns.org>
+References: <1291820319-12455-1-git-send-email-pclouds@gmail.com>
+ <20101208180605.GD5687@burratino> <201012082051.09730.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 09 05:50:26 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Kevin Ballard <kevin@sb.org>,
+	Yann Dirson <dirson@bertin.fr>, Jeff King <peff@peff.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 09 06:16:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQYSX-0002Da-Bz
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 05:50:25 +0100
+	id 1PQYrQ-0002WC-Bf
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 06:16:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753939Ab0LIEtn convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 8 Dec 2010 23:49:43 -0500
-Received: from DMZ-MAILSEC-SCANNER-3.MIT.EDU ([18.9.25.14]:50909 "EHLO
-	dmz-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750819Ab0LIEtn (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 8 Dec 2010 23:49:43 -0500
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Wed, 08 Dec 2010 23:49:43 EST
-X-AuditID: 1209190e-b7b3bae000000a71-c0-4d005eb9dbeb
-Received: from mailhub-auth-3.mit.edu ( [18.9.21.43])
-	by dmz-mailsec-scanner-3.mit.edu (Symantec Brightmail Gateway) with SMTP id 18.9A.02673.9BE500D4; Wed,  8 Dec 2010 23:44:41 -0500 (EST)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id oB94ifie013413
-	for <git@vger.kernel.org>; Wed, 8 Dec 2010 23:44:41 -0500
-Received: from darkmatter.mit.edu (DARKMATTER.MIT.EDU [18.238.2.175])
-	(authenticated bits=0)
-        (User authenticated as smtp/darkmatter.mit.edu@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id oB94icUI001759
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT)
-	for <git@vger.kernel.org>; Wed, 8 Dec 2010 23:44:40 -0500 (EST)
-Received: by darkmatter.mit.edu (Postfix, from userid 32861)
-	id A7A5014C011; Wed,  8 Dec 2010 23:44:38 -0500 (EST)
-X-Mailer: git-send-email 1.7.3.3
-X-Brightmail-Tracker: AAAAAA==
+	id S1751169Ab0LIFP7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Dec 2010 00:15:59 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62518 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750819Ab0LIFP7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Dec 2010 00:15:59 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 722133FC6;
+	Thu,  9 Dec 2010 00:16:17 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EbQDxJRQP2OhvxK7rd2SdIn7aIg=; b=f/Eyz3
+	lqQ1EW42zG+zVRXXfr1RAS37xb8O3WXsFQUGtKVWsZiTgX+aw4mb6r2eyWcWpzRa
+	APEdwcpMKaCHvqgy+9Cj3Je97ykMmiIrV3ZY8ccfukPCWb9vKpohWTHS0kekf5FR
+	YlkOwnX6YcEPakh9MEa8zMfMEqWRkpC3+ZvOc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=b8DmGBwNvAk1aVYTJal78TDSOx0gnkId
+	XZoAsV5Br5XkFy9pyvhILQxgxMakUdlcDKqAKCHAwPS8oGKL1FZgWze+MLHVCYPg
+	l5lsXt4t4dG7BbxUrxGRaGTDyt30xp0y/B1Dhs00lUCGxNSvY9FyzKfNSrvgSsob
+	AhHNtAeXrmE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F267E3FC5;
+	Thu,  9 Dec 2010 00:16:09 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CB7A33FC0; Thu,  9 Dec 2010
+ 00:15:58 -0500 (EST)
+In-Reply-To: <201012082051.09730.jnareb@gmail.com> (Jakub Narebski's message
+ of "Wed\, 8 Dec 2010 20\:51\:08 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 6EF01FBC-0353-11E0-BF9B-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163262>
 
-git-send-email is not currently using -n for anything else, and it
-seems unlikely we will want to use it to mean anything else in the
-future, so add it as an alias for convenience.
+Jakub Narebski <jnareb@gmail.com> writes:
 
-Signed-off-by: Alejandro R. Sede=C3=B1o <asedeno@mit.edu>
----
- git-send-email.perl |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+> Second, consider ref^{:nth(10)/foo} in your workaround...
 
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 76565de..7e3df9a 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -85,7 +85,7 @@ git send-email [options] <file | directory | rev-list=
- options >
-     --confirm               <str>  * Confirm recipients before sending=
-;
-                                      auto, cc, compose, always, or nev=
-er.
-     --quiet                        * Output one line of info per email=
-=2E
--    --dry-run                      * Don't actually send the emails.
-+    -n, --dry-run                  * Don't actually send the emails.
-     --[no-]validate                * Perform patch sanity checks. Defa=
-ult on.
-     --[no-]format-patch            * understand any non optional argum=
-ents as
-                                      `git format-patch` ones.
-@@ -304,7 +304,7 @@ my $rc =3D GetOptions("sender|from=3Ds" =3D> \$send=
-er,
- 		    "suppress-cc=3Ds" =3D> \@suppress_cc,
- 		    "signed-off-cc|signed-off-by-cc!" =3D> \$signed_off_by_cc,
- 		    "confirm=3Ds" =3D> \$confirm,
--		    "dry-run" =3D> \$dry_run,
-+		    "dry-run|n" =3D> \$dry_run,
- 		    "envelope-sender=3Ds" =3D> \$envelope_sender,
- 		    "thread!" =3D> \$thread,
- 		    "validate!" =3D> \$validate,
---=20
-1.7.3.3
+Feels way over-engineered to me.
