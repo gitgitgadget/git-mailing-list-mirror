@@ -1,90 +1,148 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: [PATCH 5/8] git-gui: move 3way diff autodetect up
-Date: Thu,  9 Dec 2010 21:47:56 +0100
-Message-ID: <96986a5a805579d1e341fd0f5fa44ccf9b98b312.1291927657.git.bert.wesarg@googlemail.com>
-References: <babc4fe91e54e3923baa6f08cc92ee8ea494e704.1291927657.git.bert.wesarg@googlemail.com>
- <56141ad4622dfc1ee991c9ee3be90dbf3e99b744.1291927657.git.bert.wesarg@googlemail.com>
- <ae1d2af4dad878c54959a72989cb170376b7fb95.1291927657.git.bert.wesarg@googlemail.com>
- <cc7284fbd48c589af26dd8f3905fb4244fedbfda.1291927657.git.bert.wesarg@googlemail.com>
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
-	Bert Wesarg <bert.wesarg@googlemail.com>
-To: Pat Thoyts <patthoyts@users.sourceforge.net>
-X-From: git-owner@vger.kernel.org Thu Dec 09 21:48:41 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] get_sha1: support relative path "<obj>:<sth>" syntax
+Date: Thu, 09 Dec 2010 13:10:43 -0800
+Message-ID: <7vipz2fy98.fsf@alter.siamese.dyndns.org>
+References: <m3eiatfbg2.fsf@localhost.localdomain>
+ <1289407021-30287-1-git-send-email-pclouds@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, jnareb@gmail.com, dirson@bertin.fr,
+	kevin@sb.org, peff@peff.net
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 09 22:11:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQnPp-0003RY-LA
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 21:48:38 +0100
+	id 1PQnle-0007N2-RB
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 22:11:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757117Ab0LIUsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Dec 2010 15:48:19 -0500
-Received: from mail-fx0-f43.google.com ([209.85.161.43]:50756 "EHLO
-	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757196Ab0LIUsQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Dec 2010 15:48:16 -0500
-Received: by mail-fx0-f43.google.com with SMTP id 18so2916089fxm.2
-        for <git@vger.kernel.org>; Thu, 09 Dec 2010 12:48:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references:in-reply-to:references;
-        bh=DlN3Bgl4tE8OsYmMxMUkOWSNL83C7xhjJ5NojLxPRQ8=;
-        b=IgkUtTx9UxQdifPUcK7BRxWnlTtsFKi92V2HlmknRN6zyXDOLjSsOha/cjofv8AlFa
-         NOHpjTO8Tfj2id9kcl7GlVfUCk3vfASireLLqDTZo5yW6vX1rwAUmQzenXyfFX30d9y1
-         FDzNAICmSCpKMdnFsYjxUiDOX+FjLvCsT4Ks8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=coTZOzFEjr1FQi8a7MPpIDnpice3/y0XtYftGpNIu+ImMTmW9tYBX2muSKNY37nUav
-         HUQ2LK3ukVp9s8Ad0rmMkaxf1Cl02KNDSIvFMiDPv7oy/XMQm8w/zRbhDNdS9LeY8l6h
-         3+UEuUeBxXsQ0cCmKOqkPovdBQ9hhkafYm/Lg=
-Received: by 10.223.79.13 with SMTP id n13mr4635472fak.139.1291927695757;
-        Thu, 09 Dec 2010 12:48:15 -0800 (PST)
-Received: from localhost (p3E990761.dip.t-dialin.net [62.153.7.97])
-        by mx.google.com with ESMTPS id n15sm690395fam.36.2010.12.09.12.48.14
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 09 Dec 2010 12:48:14 -0800 (PST)
-X-Mailer: git-send-email 1.7.3.2.1200.ge4bf6
-In-Reply-To: <cc7284fbd48c589af26dd8f3905fb4244fedbfda.1291927657.git.bert.wesarg@googlemail.com>
-In-Reply-To: <babc4fe91e54e3923baa6f08cc92ee8ea494e704.1291927657.git.bert.wesarg@googlemail.com>
-References: <babc4fe91e54e3923baa6f08cc92ee8ea494e704.1291927657.git.bert.wesarg@googlemail.com>
+	id S1754325Ab0LIVLF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Dec 2010 16:11:05 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46957 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754060Ab0LIVLD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Dec 2010 16:11:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 602A0360E;
+	Thu,  9 Dec 2010 16:11:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=dnsjNOriq1kV
+	6nDFu0FHKmM4yUo=; b=LCj3GK+JWU7f/aIQnGHN1a9i6z6N9fkvLy8DObbgfiQE
+	V/HRwTSFW+tKqVN6nGobjLWxSkcB2x1A71cavNJ/iiYEgrmWRFA3iQHXyDs2a9wm
+	iKn3y7oobE0RpTehoo3b5ZtVuSh37fnQdRqRy1rUjIiLzZaULWDCZIfCXeFYSrg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=fP0Ikq
+	OIwuCSWYDflH77nS86zqMzkBX0N8toBlqEMWp+MvCN6cK8RVpw+8q961Aq6mkeyg
+	H1DOntio1ZgyheEpM3jhXcXdx567gOgVR16uc9TuhvFJVhHPNMrbv0/nyHsUCXnn
+	jqwMBfK98iMueP/jLYA4LQL+I9gJ/2M7VKFLc=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id F0ED7360D;
+	Thu,  9 Dec 2010 16:11:17 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C632E3607; Thu,  9 Dec 2010
+ 16:11:09 -0500 (EST)
+In-Reply-To: <1289407021-30287-1-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Wed\, 10 Nov
+ 2010 23\:37\:01 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DD2A4B80-03D8-11E0-9ACD-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163321>
 
-Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
----
- lib/diff.tcl |    7 ++++---
- 1 files changed, 4 insertions(+), 3 deletions(-)
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-diff --git a/lib/diff.tcl b/lib/diff.tcl
-index 20f50dd..2290919 100644
---- a/lib/diff.tcl
-+++ b/lib/diff.tcl
-@@ -393,6 +393,10 @@ proc read_diff {fd conflict_size cont_info} {
- 		#
- 		if {[regexp {^@@+ } $line]} {set ::current_diff_inheader 0}
- 
-+		# -- Automatically detect if this is a 3 way diff.
-+		#
-+		if {[string match {@@@ *} $line]} {set is_3way_diff 1}
-+
- 		if {$::current_diff_inheader} {
- 			append current_diff_header $line "\n"
- 
-@@ -413,9 +417,6 @@ proc read_diff {fd conflict_size cont_info} {
- 		}
- 
- 
--		# -- Automatically detect if this is a 3 way diff.
--		#
--		if {[string match {@@@ *} $line]} {set is_3way_diff 1}
- 
- 		if {[string match {new file *} $line]
- 			|| [regexp {^(old|new) mode *} $line]
--- 
-1.7.3.2.1200.ge4bf6
+> Currently :path and ref:path can be used to refer to a specific objec=
+t
+> in index or ref respectively. "path" component is absolute path. This
+> patch allows "path" to be written as "./path" or "../path", which is
+> relative to user's original cwd.
+>
+> This does not work in commands that startup_info is NULL
+> (i.e. non-builtin ones).
+> ---
+>  On Wed, Nov 10, 2010 at 07:26:20AM -0800, Jakub Narebski wrote:
+>  > The <obj>:<sth> is (with single exception of ':/<regexp>') about
+>  > selecting subitem (path): <tree-ish>:<path>, [:<stage>]:<path>
+>
+>  I feel the urge of keeping ':./path' and ':../path' out of this
+>  competition.
+>
+>  The idea is old although I don't remember if anybody has made any
+>  attempt to realize it: use './' and '../' to specify the given path
+>  is relative, not absolute.
+
+I've had this queued for some time, with help from Jonathan, and am hap=
+py
+about it in general, but after taking another look at it, noticed one
+minor thing.
+
+> diff --git a/sha1_name.c b/sha1_name.c
+> index 484081d..791608d 100644
+> --- a/sha1_name.c
+> +++ b/sha1_name.c
+> @@ -1060,25 +1060,35 @@ int get_sha1_with_context_1(const char *name,=
+ unsigned char *sha1,
+>  	if (!ret)
+>  		return ret;
+>  	/* sha1:path --> object name of path in ent sha1
+> -	 * :path -> object name of path in index
+> +	 * :path -> object name of absolute path in index
+> +	 * :./path -> object name of path relative to cwd in index
+>  	 * :[0-3]:path -> object name of path in index at stage
+>  	 * :/foo -> recent commit matching foo
+>  	 */
+>  	if (name[0] =3D=3D ':') {
+>  		int stage =3D 0;
+>  		struct cache_entry *ce;
+> +		char *new_path =3D NULL;
+>  		int pos;
+>  		if (namelen > 2 && name[1] =3D=3D '/')
+>  			return get_sha1_oneline(name + 2, sha1);
+>  		if (namelen < 3 ||
+>  		    name[2] !=3D ':' ||
+> -		    name[1] < '0' || '3' < name[1])
+> +		    name[1] < '0' || '3' < name[1]) {
+>  			cp =3D name + 1;
+> +			if (startup_info && cp[0] =3D=3D '.' &&
+> +			    (cp[1] =3D=3D '/' || (cp[1] =3D=3D '.' && cp[2] =3D=3D '/')))=
+ {
+> +				new_path =3D prefix_path(startup_info->prefix,
+> +						       strlen(startup_info->prefix),
+> +						       cp);
+> +				cp =3D new_path;
+> +			}
+> +		}
+
+This deals with ":$foo" (path $foo in the index), which is a shorthand =
+for
+":0:$foo" (the path $foo at stage #0 in the index).  However...
+
+>  		else {
+>  			stage =3D name[1] - '0';
+>  			cp =3D name + 3;
+
+=2E.. this side does not do anything about it, so:
+
+	$ cd Documentation
+        ... working for a while ...
+        $ git merge another_branch
+        ... oops, got conflicts at ../Makefile
+	$ git show :2:../Makefile
+
+won't work.
+
+Besides, it is a bad idea to make ":../Makefile" work while leaving
+its longhand ":0:../Makefile" not.
+
+I think it is just the matter of moving "if (startup-info)..." logic
+outside the "is the :$path lacking an explicit stage number" block and
+having it after that if/else, no?
