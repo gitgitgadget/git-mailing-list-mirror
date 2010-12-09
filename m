@@ -1,86 +1,154 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH 14/14] wt-status.c: Initialise variable to suppress msvc warning
-Date: Thu, 9 Dec 2010 20:46:02 +0100
-Message-ID: <AANLkTi=SzDhoQnLeKUvWe7A6r-7MT-DTLuDGLprqid9X@mail.gmail.com>
-References: <4CFA92A2.4030801@ramsay1.demon.co.uk> <20101204205206.GB3170@burratino>
- <4D011D30.4070405@ramsay1.demon.co.uk> <7vmxoeg3wp.fsf@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Push to all repositories
+Date: Thu, 9 Dec 2010 13:52:04 -0600
+Message-ID: <20101209195204.GB6884@burratino>
+References: <1291829983410-5816069.post@n2.nabble.com>
+ <20101208180049.GC5687@burratino>
+ <1291849156593-5817177.post@n2.nabble.com>
+ <1291898174244-5818757.post@n2.nabble.com>
+ <AANLkTik9CxVD9A-2QEyD_tZiyYoCOitfViWucGCudzh-@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Sebastian Schuberth <sschuberth@gmail.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 09 20:46:30 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Kevin Sheedy <kevinsheedy@gmail.com>, git@vger.kernel.org,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 09 20:52:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQmRh-0002n9-GY
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 20:46:29 +0100
+	id 1PQmXU-0005rd-4K
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 20:52:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754390Ab0LITqY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Dec 2010 14:46:24 -0500
-Received: from mail-fx0-f43.google.com ([209.85.161.43]:33978 "EHLO
-	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752936Ab0LITqY (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Dec 2010 14:46:24 -0500
-Received: by fxm18 with SMTP id 18so2840328fxm.2
-        for <git@vger.kernel.org>; Thu, 09 Dec 2010 11:46:22 -0800 (PST)
+	id S1756501Ab0LITwX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Dec 2010 14:52:23 -0500
+Received: from mail-wy0-f194.google.com ([74.125.82.194]:57090 "EHLO
+	mail-wy0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756049Ab0LITwW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Dec 2010 14:52:22 -0500
+Received: by wyf23 with SMTP id 23so953778wyf.1
+        for <git@vger.kernel.org>; Thu, 09 Dec 2010 11:52:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type;
-        bh=A02zivJjtmkK93zHn5k3FVWFXpSDE822MtiNIf4X5oE=;
-        b=B4CQzs0+gXug9M98VnUccPpDAb494Iq0pkRVdRweF4arUa2w/rV86DlDoZEmnbni0+
-         HhXF8p/c6vY4VW+7/KQ3nZemGMuV2EhNbqueKCNXjw/ca6U47us/q6a8UP2eF8L8Ekyo
-         7Hb3hKoZEEZRfycaLXIBBlXTjPhk947CbiDuU=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=h5gTPG7ns+HuKukjAdPQEwUfTJxLEKZbRl3Oomltn6s=;
+        b=x9LXksw4c7ZvQNjTBXcymdb19T9kzE198g9sd9wEoKhwlPcm8eCtRzium/m5G547L4
+         9pkwtHc/6S5cgwfZxPFdhpQvtN1eW+TJIy3vf5yqoX4F4Fz+UAxVwG8yEsZE78Nhtofj
+         irMkA8A54o8aZ+nmSlYXLEVOenesFwCUm9E+g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        b=URSLqVhnnjbMSNETMXXViUxXjz+jFz0VrXGpXK5B+b2cBd7zYHmU6FDWK2aTLAHgcm
-         YnT+1KLsgTkh49V0ExxMcWF66MH+YIK7AKXIc5IP5Tr4cyJoCFKnO5ivFW2oneUT+iQH
-         J1dHSGqyN9G0t1m0R5EQ3gL8PPg315PZP7fvM=
-Received: by 10.223.83.11 with SMTP id d11mr10404571fal.37.1291923982529; Thu,
- 09 Dec 2010 11:46:22 -0800 (PST)
-Received: by 10.223.95.202 with HTTP; Thu, 9 Dec 2010 11:46:02 -0800 (PST)
-In-Reply-To: <7vmxoeg3wp.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Snpa4l+V9vLRmo/qicbOfrhC5oDGOGmKm2gBVlSkmzXiezu1thHQuoC92dw+hRbmIO
+         IVXsvN8TSQYhGFAr2V2XOSOa3zicFaSjI2bLxJ/KBpyXcunHUYfeZqLtCI82aSRgUKDu
+         iTZTf7aT/yyOyQFpQigHSLtLlxZtVfUVlG8gw=
+Received: by 10.227.68.201 with SMTP id w9mr11180187wbi.59.1291924339885;
+        Thu, 09 Dec 2010 11:52:19 -0800 (PST)
+Received: from burratino (adsl-69-209-58-175.dsl.chcgil.ameritech.net [69.209.58.175])
+        by mx.google.com with ESMTPS id w41sm1075860weq.8.2010.12.09.11.52.17
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 09 Dec 2010 11:52:18 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTik9CxVD9A-2QEyD_tZiyYoCOitfViWucGCudzh-@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163307>
 
-On Thu, Dec 9, 2010 at 8:08 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
->
->> Junio, could you please drop patches 5-14 from the series; the first four patches
->> are the important ones and I'd rather they didn't get held up. Thanks!
->
-> Have these four patches been Acked by interested parties?
->
-> I think I saw 1/N and 2/N acked by Erik and 4/N acked by SSchuberth and
-> J6t, but any words on 3/N?
->
-> Not that I deeply care nor have environment to test changes to [3/N], but
-> I am wondering if these need conditional definition to futureproof (e.g.
-> what happens when the header you are using the definition _I64_MIN from,
-> or some other headers, started defining these constats?).
+Martin von Zweigbergk wrote:
 
-I'm not sure if I follow this entirely. _I64_MIN is defined by
-limits.h on Windows, and limits.h has a header-guard (or "#pragma
-once" as Microsoft-code tends to prefer).
+> However, rather than trying to make Git behave just like ClearCase
+> dynamic views (there are many other things to consider than automatic
+> updates), I think you would be better off if you actually use
+> ClearCase dynamic views instead.
 
-Oh, right. You mean if someone else starts defining INTMAX_MAX etc? If
-someone includes an stdint/inttypes-implementation while including
-git-compat-util.h, we're going to have a boat-load of similar issues
-anyway. I think guarding them is something that's better left to when
-we encounter the problem (if ever).
+Yes.  Or a network filesystem + unionfs.  Or a wiki.
 
-All in all, patch 1 though 4 looks good to me. And thanks to Ramsay
-for cleaning up my mess :)
+The part I did not mention is why git does not work this way out of
+the box.  It has something to do with the nature of projects it has
+been used on traditionally (computer programs that occasionally undergo
+global changes in API).
+
+Consider a project in a patches+tarballs workflow.  It begins like
+this:
+
+ 1. Acquire a tarball with the version you want to base your work on.
+ 2. Untar.
+ 3. Copy the result to save the current state.
+ 4. Test it.
+ 5. Fix a bug or add a feature.
+ 6. Make a patch with "diff -pruN"
+ 7. Return to step 3.
+    ...
+ 8. Looks good; email out the patches to get some feedback.
+
+Now another person wants to test the patches; so she tries:
+
+ 1. Acquire a tarball with the version you want to test against.
+ 2. Untar.
+ 3. Apply patches with "patch -p1".
+
+Wait a second --- the patches don't apply!  Or worse, they
+apply but the result is broken.  Okay:
+
+ 4. Complain to the patch author.
+
+Finally the patch author has more work to do:
+
+ 9. Acquire a newer tarball, and use either "patch --reject-file"
+    or rcs "merge" to reconcile the differences.  Email out the
+    result.
+
+The result is a sequence of snapshots that have been _tested_ to work
+correctly.  Now compare the svn workflow I briefly used at work:
+
+ 1. svn update
+ 2. hack hack hack
+ 3. svn update
+ 4. hack hack hack
+ 5. svn update
+ 6. hack hack hack
+ 7. send out a patch for feedback
+
+Now another person wants to test the patch.  So she tries:
+
+ 1. svn update
+ 2. Apply patch with "patch -p1".
+
+The result applies okay and works great.  So:
+
+ 8. svn update
+ 9. ... test ...
+ 10. svn commit
+
+Unfortunately, the version committed (1) does not reflect the
+development history and (2) is not even tested, if changes
+happened in trunk between step 9 and step 10.
+
+That is, letting projects briefly diverge from upstream
+
+ - avoids unnecessary interruptions to work;
+
+ - allows the development history to be published, even when that was
+   "first write some code, then tweak it to match the new API";
+
+ - increases the likelihood that each commited revision actually
+   works, making later mining for the code that introduced a feature
+   or bug ("git bisect") much easier.
+
+Of course in the opposite direction is
+
+ - changes to workflow can be hard for a team to adjust to
+
+(i.e., "don't fix what isn't broken").
+
+Sorry, that ended up more longwinded than I hoped.  Still,
+hope that helps.
+
+Regards,
+Jonathan
