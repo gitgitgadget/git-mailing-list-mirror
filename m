@@ -1,97 +1,116 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 05/18] gitweb: Regression fix concerning binary output of files
-Date: Thu, 09 Dec 2010 15:33:55 -0800 (PST)
-Message-ID: <m339q634jx.fsf@localhost.localdomain>
+Subject: Re: [PATCH 07/18] gitweb: Revert back to $cache_enable vs. $caching_enabled
+Date: Thu, 09 Dec 2010 15:38:01 -0800 (PST)
+Message-ID: <m3y67y1psd.fsf@localhost.localdomain>
 References: <1291931844-28454-1-git-send-email-warthog9@eaglescrag.net>
-	<1291931844-28454-6-git-send-email-warthog9@eaglescrag.net>
+	<1291931844-28454-8-git-send-email-warthog9@eaglescrag.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+Cc: git@vger.kernel.org
 To: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Fri Dec 10 00:34:02 2010
+X-From: git-owner@vger.kernel.org Fri Dec 10 00:38:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQpzu-0004MA-AW
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 00:34:02 +0100
+	id 1PQq41-00061z-S3
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 00:38:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755800Ab0LIXd5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Dec 2010 18:33:57 -0500
-Received: from mail-bw0-f45.google.com ([209.85.214.45]:54840 "EHLO
-	mail-bw0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754881Ab0LIXd5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Dec 2010 18:33:57 -0500
-Received: by bwz16 with SMTP id 16so3349641bwz.4
-        for <git@vger.kernel.org>; Thu, 09 Dec 2010 15:33:55 -0800 (PST)
+	id S1757190Ab0LIXiH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Dec 2010 18:38:07 -0500
+Received: from mail-fx0-f43.google.com ([209.85.161.43]:36146 "EHLO
+	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756490Ab0LIXiE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Dec 2010 18:38:04 -0500
+Received: by fxm18 with SMTP id 18so3097776fxm.2
+        for <git@vger.kernel.org>; Thu, 09 Dec 2010 15:38:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:received
          :x-authentication-warning:to:cc:subject:references:from:date
          :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=/NWPJ/zg6Gyt8chwv+45MqhH//D0AUBLhHxFgPfzFm4=;
-        b=U+QdaZ7JxVJnXWLHcSJrHw0qbZNZUe6d5BuPuKgiAOO5x/NRdGamK9NQGZn/rkUKYT
-         BXNkESMBen2zY5SAOCt8zKYlNDU0GqVijgvVvtEp01tq1O+9LxfPN9eVtTeaFilj7lwu
-         Xuz5IWpaa6R0Srd+QCz4Q1wj8ltrpQBqdtNhY=
+        bh=6ul7u3xHHiNU6fk+NnOnctp543YHcduYdx9SINtothA=;
+        b=bH3aOwje5T0SxYDMymxeCgRlB7tRX/lzE1EREnKpR5rSdtjFBCUjH6ld/3w1rNieZi
+         M7VTCFZi5YIX7zeoVHZOjfbhlIy/LaR/L7fW4npLTWC4MSLnOljEIlIrgWJYu6no6TC7
+         iqqzyThUouFVq75a9CqlVRpNiR3sjMhifZZi4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=x-authentication-warning:to:cc:subject:references:from:date
          :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=CO1ytxh+Dw0WUBmPZ0PNXHreSW0t+1VZXj9Q1wLVemyXQPanXqP9i28ZNspWHxIERO
-         NvL+sQXsDINhH6NhKe2xhnzDGdoPEKWrFMLn9GaiBpnHw1zP9+7krbGmPeKr/kSzL/nR
-         SFuE2b8UmK0eQHTBCkLgenlBKP37s0SkEq3d0=
-Received: by 10.204.72.130 with SMTP id m2mr96896bkj.15.1291937635814;
-        Thu, 09 Dec 2010 15:33:55 -0800 (PST)
+        b=Owu3drDZcvuyRDplicspl2TGbpR6JMlmMCKl3+qU+xjGVq18kzNNQWQ4Nk2T5c5VzO
+         A8GW4LTol9s34bU09K3kGqSnA/+5hAJzphifAy9WLkjMN3LeFj+Bn3ec9P9vSitQngtl
+         f85NnbQ3qPyRsA0e36oT+y5/yk4lf0a+6HjSo=
+Received: by 10.223.79.72 with SMTP id o8mr59161fak.83.1291937881830;
+        Thu, 09 Dec 2010 15:38:01 -0800 (PST)
 Received: from localhost.localdomain (abvv86.neoplus.adsl.tpnet.pl [83.8.219.86])
-        by mx.google.com with ESMTPS id b17sm1237947bku.20.2010.12.09.15.33.53
+        by mx.google.com with ESMTPS id r24sm738038fax.3.2010.12.09.15.38.00
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 09 Dec 2010 15:33:55 -0800 (PST)
+        Thu, 09 Dec 2010 15:38:01 -0800 (PST)
 Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oB9NXNhv019741;
-	Fri, 10 Dec 2010 00:33:34 +0100
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oB9NbYQ6019800;
+	Fri, 10 Dec 2010 00:37:45 +0100
 Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id oB9NX6bC019733;
-	Fri, 10 Dec 2010 00:33:06 +0100
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id oB9NbMZJ019796;
+	Fri, 10 Dec 2010 00:37:22 +0100
 X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1291931844-28454-6-git-send-email-warthog9@eaglescrag.net>
+In-Reply-To: <1291931844-28454-8-git-send-email-warthog9@eaglescrag.net>
 User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163358>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163359>
 
 "John 'Warthog9' Hawley" <warthog9@eaglescrag.net> writes:
 
-> This solves the regression introduced with v7.2 of the gitweb-caching code,
-> fix proposed by Jakub in his e-mail.
+> Simple enough, $cache_enable (along with all caching variables) are
+> already in production in multiple places and doing a small semantic
+> change without backwards compatibility is pointless breakage.
+
+Formally, there is no backward compatibility with any released code.
+Using out-of-tree patches is on one's own risk.
+
+But even discarding that, I'd rather use the same solution as in
+
+  [PATCHv6/RFC 22/24] gitweb: Support legacy options used by kernel.org caching engine
+  http://thread.gmane.org/gmane.comp.version-control.git/163052/focus=163058
+  http://repo.or.cz/w/git/jnareb-git.git/commitdiff/27ec67ad90ecd56ac3d05f6a9ea49b6faabf7d0a
+
+i.e.
+
+  our $cache_enable;
+
+  [...]
+
+  # somewhere just before call to cache_fetch()
+  $caching_enabled = !!$cache_enable if defined $cache_enable;
+
 > 
-> Signed-off-by: John 'Warthog9' Hawley <warthog9@eaglescrag.net>
-> ---
->  gitweb/gitweb.perl |    4 ++--
->  1 files changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 3c3ff08..f2ef3da 100755
+> This reverts back to the previous variable to enable / disable caching
+
+[...]
 > --- a/gitweb/gitweb.perl
 > +++ b/gitweb/gitweb.perl
-> @@ -5664,7 +5664,7 @@ sub git_blob_plain {
->  	if ($caching_enabled) {
->  		open BINOUT, '>', $fullhashbinpath or die_error(500, "Could not open bin dump file");
->  	}else{
-> -		open BINOUT, '>', \$fullhashbinpath or die_error(500, "Could not open bin dump file");
-> +		open BINOUT, '>&', \$fullhashbinpath or die_error(500, "Could not open bin dump file");
+> @@ -258,7 +258,7 @@ our $maxload = 300;
+>  # that the cache directory be periodically completely deleted, and this is safe to perform.
+>  # Suggested mechanism
+>  # mv $cacheidr $cachedir.flush;mkdir $cachedir;rm -rf $cachedir.flush
+> -our $caching_enabled = 0;
+> +our $cache_enable = 0;
+>  
+>  # Used to set the minimum cache timeout for the dynamic caching algorithm.  Basically
+>  # if we calculate the cache to be under this number of seconds we set the cache timeout
+> @@ -1138,7 +1138,7 @@ sub dispatch {
+>  	    !$project) {
+>  		die_error(400, "Project needed");
 >  	}
->  	binmode BINOUT, ':raw';
->  	print BINOUT <$fd>;
+> -	if ($caching_enabled && is_cacheable($action)) {
+> +	if ($cache_enable && is_cacheable($action)) {
+>  		cache_fetch($action);
+>  	} else {
+>  		$actions{$action}->();
 
-I'd rather you rebase on top of v7.4, where this issue was fixed in
-different way... well, at least in easier to undertstand way (in the
-solution used above one must know that if caching is disabled,
-$fullhashbinpath is *STDOUT - and has nothing to do with any _path_).
-
-This probably should be squashed, if using v7.4 is not chosen.
 -- 
 Jakub Narebski
 Poland
