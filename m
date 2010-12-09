@@ -1,62 +1,77 @@
-From: Eric Wong <normalperson@yhbt.net>
-Subject: Re: Intermittent failures in t9119
-Date: Thu, 9 Dec 2010 17:55:03 +0000
-Message-ID: <20101209175503.GA16478@dcvr.yhbt.net>
-References: <7vmxoml1p7.fsf@alter.siamese.dyndns.org> <7vy684t0mt.fsf@alter.siamese.dyndns.org> <20101206191055.GA9597@dcvr.yhbt.net> <7vd3pesb99.fsf@alter.siamese.dyndns.org>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: file names
+Date: Thu, 9 Dec 2010 16:00:19 -0200
+Message-ID: <AANLkTin=H5HMKhXAyPwZu+jJinRxAhiirhWSSUCWNhWY@mail.gmail.com>
+References: <AANLkTikeAFj68Rr35gcf4dxXXHU+au9wA7wd+-WB3BSS@mail.gmail.com>
+	<7v39q6hm14.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "David D. Kilzer" <ddkilzer@kilzer.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 09 18:55:12 2010
+X-From: git-owner@vger.kernel.org Thu Dec 09 19:02:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQki0-0004ej-CU
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 18:55:12 +0100
+	id 1PQkou-0008Gc-Gp
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 19:02:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755653Ab0LIRzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Dec 2010 12:55:05 -0500
-Received: from dcvr.yhbt.net ([64.71.152.64]:48281 "EHLO dcvr.yhbt.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753944Ab0LIRzE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Dec 2010 12:55:04 -0500
-Received: from localhost (unknown [127.0.2.5])
-	by dcvr.yhbt.net (Postfix) with ESMTP id C4B9E1F8CF;
-	Thu,  9 Dec 2010 17:55:03 +0000 (UTC)
-Content-Disposition: inline
-In-Reply-To: <7vd3pesb99.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.18 (2008-05-17)
+	id S1756283Ab0LISCQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Dec 2010 13:02:16 -0500
+Received: from mail-bw0-f45.google.com ([209.85.214.45]:51043 "EHLO
+	mail-bw0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755814Ab0LISCP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 9 Dec 2010 13:02:15 -0500
+Received: by bwz16 with SMTP id 16so2964222bwz.4
+        for <git@vger.kernel.org>; Thu, 09 Dec 2010 10:00:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=5J/HkDf8NFxdJoPO3vrS5fddchg2aK8V2Tm8Elw554c=;
+        b=cgBfcBcQ/TuJ+sQnkbn/FdmBLSTW0h4fs7h5CQYi6KkT9glavodoCigUGf1i3g09QF
+         l4hPTzkoQsFAhtiSVjSfsnFyp3lov+pYXHPmab46jJ9fHHxGNUN0h+hWuSAMxXtFeh6n
+         NI7pBw9OjEmlGsw2RDSw5qNAitO76XnhLrboI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=jNJDPMkNyErNGQ3yWPLIvUu72qmtD6w3TnM4glA2iXABe0mVaizzwYdX9/TgNy2jTD
+         SG51uqKXlx9xgGCvfXUeqem0dTyT+ct7EAWatY/gybn+pdbgQ754TpaEMJlVWNLQt7cF
+         6rAKQulq/wk3c2HOUmkhNZjqramTxzXfYLcP8=
+Received: by 10.204.76.137 with SMTP id c9mr3707901bkk.40.1291917619263; Thu,
+ 09 Dec 2010 10:00:19 -0800 (PST)
+Received: by 10.204.58.71 with HTTP; Thu, 9 Dec 2010 10:00:19 -0800 (PST)
+In-Reply-To: <7v39q6hm14.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163299>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163300>
 
-Junio C Hamano <gitster@pobox.com> wrote:
-> Eric Wong <normalperson@yhbt.net> writes:
-> > Junio C Hamano <gitster@pobox.com> wrote:
-> >>  (2) Nobody uses the value from "Text Last Updated" field in practice, so
-> >>      that bug has been unnoticed so far;
-> >> 
-> >>  (3) And it is not worth fixing it ;-)
-> >> 
-> >> For now, I would suggest fixing the failing test to ignore the "Text Last
-> >> Updated" field while comparing, and if somebody is inclined to, we would
-> >> update the code to match what "svn info" does.
-> >
-> > Agreed on both points.  I consider "git svn log" and "git svn info" to
-> > be reasonable approximations of svn behavior, not exact replicas.
-> > Exactly matching would be extremely difficult given variations between
-> > different svn versions, and also svn requiring network access while
-> > git svn does not.
-> 
-> Ok, here is a minimum patch to do that.
+On Thu, Dec 9, 2010 at 3:51 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> Thiago Farina <tfransosi@gmail.com> writes:
+>
+>> So it seems from this data, there is a preference for naming files
+>> using dash over underline.
+>
+> Yes.
+>
+>> So the question is, should the files using underline be converted to
+>> use dash instead?
+>
+> If this were before v1.0.0, it might have made some sense, but not at=
+ this
+> moment. =C2=A0So the answer to "should?" (or "could?") is a firm "no"=
+, which is
+> always different from the answer to "wouldn't it have been nicer if t=
+hey
+> were named differently?"
+>
+Right.
 
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
-
-Thanks, Acked-by: Eric Wong <normalperson@yhbt.net>
-
--- 
-Eric Wong
+What about documenting it? Is it worth, but only on version 1.8.0?
