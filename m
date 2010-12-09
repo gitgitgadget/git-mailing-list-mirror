@@ -1,7 +1,7 @@
 From: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
-Subject: [PATCH 13/18] gitweb: Add commented url & url hash to page footer
-Date: Thu,  9 Dec 2010 13:57:19 -0800
-Message-ID: <1291931844-28454-14-git-send-email-warthog9@eaglescrag.net>
+Subject: [PATCH 10/18] gitweb: Adding isBinaryAction() and isFeedAction() to determine the action type
+Date: Thu,  9 Dec 2010 13:57:16 -0800
+Message-ID: <1291931844-28454-11-git-send-email-warthog9@eaglescrag.net>
 References: <1291931844-28454-1-git-send-email-warthog9@eaglescrag.net>
 To: git@vger.kernel.org
 X-From: git-owner@vger.kernel.org Thu Dec 09 22:56:45 2010
@@ -10,92 +10,173 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQoTi-0007Gf-UG
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 22:56:43 +0100
+	id 1PQoTe-0007Gf-ML
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 22:56:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932138Ab0LIV41 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Dec 2010 16:56:27 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:51865 "EHLO
+	id S1757461Ab0LIVz7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Dec 2010 16:55:59 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:51858 "EHLO
 	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757223Ab0LIV4D (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Dec 2010 16:56:03 -0500
+	with ESMTP id S1757196Ab0LIVz4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Dec 2010 16:55:56 -0500
 Received: from voot-cruiser.middle.earth (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
 	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id oB9LtePx027765
+	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id oB9LtePu027765
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO)
-	for <git@vger.kernel.org>; Thu, 9 Dec 2010 13:56:01 -0800
+	for <git@vger.kernel.org>; Thu, 9 Dec 2010 13:55:54 -0800
 X-Virus-Status: Clean
 X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
 X-Mailer: git-send-email 1.7.2.3
 In-Reply-To: <1291931844-28454-1-git-send-email-warthog9@eaglescrag.net>
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Thu, 09 Dec 2010 13:56:02 -0800 (PST)
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Thu, 09 Dec 2010 13:55:55 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163343>
 
-This is mostly a debugging tool, but it adds a small bit of information
-to the footer:
+This is fairly self explanitory, these are here just to centralize the checking
+for these types of actions, as special things need to be done with regards to
+them inside the caching engine.
 
-<!--
-	Full URL: |http://localhost/gitweb-caching/gitweb.cgi?p=/project.git;a=summary|
-	URL Hash: |7a31cfb8a43f5643679eec88aa9d7981|
--->
+isBinaryAction() returns true if the action deals with creating binary files
+(this needing :raw output)
 
-The first bit tells you what the url that generated the page actually was, the second is
-the hash used to store the file with the first two characters being used as the directory:
-
-<cachedir>/7a/31cfb8a43f5643679eec88aa9d7981
-
-Also useful for greping through the existing cache and finding files with unique paths that
-you may want to explicitly flush.
+isFeedAction() returns true if the action deals with a news feed of some sort,
+basically used to bypass the 'Generating...' message should it be a news reader
+as those will explode badly on that page.
 
 Signed-off-by: John 'Warthog9' Hawley <warthog9@eaglescrag.net>
 ---
- gitweb/gitweb.perl  |    7 +++++++
- gitweb/lib/cache.pl |    4 ++--
- 2 files changed, 9 insertions(+), 2 deletions(-)
+ gitweb/lib/cache.pl |   69 ++++++++++++++++++++++++++-------------------------
+ 1 files changed, 35 insertions(+), 34 deletions(-)
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index e8c028b..7f8292e 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -303,6 +303,9 @@ our $fullhashpath = *STDOUT;
- our $fullhashbinpath = *STDOUT;
- our $fullhashbinpathfinal = *STDOUT;
- 
-+our $full_url;
-+our $urlhash;
-+
- # configuration for 'highlight' (http://www.andre-simon.de/)
- # match by basename
- our %highlight_basename = (
-@@ -3663,6 +3666,10 @@ sub git_footer_html {
- 
- 	print "<div class=\"page_footer\">\n";
- 	print "<div class=\"cachetime\">Cache Last Updated: ". gmtime( time ) ." GMT</div>\n";
-+	print	"<!--\n".
-+		"	Full URL: |$full_url|\n".
-+		"	URL Hash: |$urlhash|\n".
-+		"-->\n" if ($cache_enable);
- 	if (defined $project) {
- 		my $descr = git_get_project_description($project);
- 		if (defined $descr) {
 diff --git a/gitweb/lib/cache.pl b/gitweb/lib/cache.pl
-index fafc028..63dbe9e 100644
+index a8ee99e..d55b572 100644
 --- a/gitweb/lib/cache.pl
 +++ b/gitweb/lib/cache.pl
-@@ -30,8 +30,8 @@ sub cache_fetch {
- 		print "Cache directory created successfully\n";
+@@ -88,6 +88,34 @@ sub cache_fetch {
+ 	#$actions{$action}->();
+ }
+ 
++sub isBinaryAction {
++	my ($action) = @_;
++
++	if(
++		$action eq "snapshot"
++		||
++		$action eq "blob_plain"
++	){
++		return 1;	# True
++	}
++
++	return 0;		# False
++}
++
++sub isFeedAction {
++	if(
++		$action eq "atom"
++		||
++		$action eq "rss"
++		||
++		$action eq "opml"
++	){
++		return 1;	# True
++	}
++
++	return 0;		# False
++}
++
+ sub cacheUpdate {
+ 	my ($action,$areForked) = @_;
+ 	my $lockingStatus;
+@@ -115,11 +143,7 @@ sub cacheUpdate {
+ 		}
  	}
  
--	our $full_url = "$my_url?". $ENV{'QUERY_STRING'};
--	our $urlhash = md5_hex($full_url);
-+	$full_url = "$my_url?". $ENV{'QUERY_STRING'};
-+	$urlhash = md5_hex($full_url);
- 	our $fullhashdir = "$cachedir/". substr( $urlhash, 0, 2) ."/";
+-	if(
+-		$action eq "snapshot"
+-		||
+-		$action eq "blob_plain"
+-	){
++	if( isBinaryAction($action) ){
+ 		my $openstat = open(cacheFileBinWT, '>>:utf8', "$fullhashbinpath");
+ 		my $lockStatBin = flock(cacheFileBinWT,LOCK_EX|LOCK_NB);
+ 	}
+@@ -146,11 +170,7 @@ sub cacheUpdate {
+ 		}
+ 	}
  
- 	eval { mkpath( $fullhashdir, 0, 0777 ) };
+-	if(
+-		$action eq "snapshot"
+-		||
+-		$action eq "blob_plain"
+-	){
++	if( isBinaryAction($action) ){
+ 		my $openstat = open(cacheFileBinFINAL, '>:utf8', "$fullhashbinpathfinal");
+ 		$lockStatBIN = flock(cacheFileBinFINAL,LOCK_EX);
+ 
+@@ -168,11 +188,7 @@ sub cacheUpdate {
+ 	$|++;
+ 	print cacheFile "$output";
+ 	$|--;
+-	if(
+-		$action eq "snapshot"
+-		||
+-		$action eq "blob_plain"
+-	){
++	if( isBinaryAction($action) ){
+ 		move("$fullhashbinpath", "$fullhashbinpathfinal") or die "Binary Cache file could not be updated: $!";
+ 
+ 		flock(cacheFileBinFINAL,LOCK_UN);
+@@ -219,14 +235,10 @@ sub cacheWaitForUpdate {
+ 	}
+ 
+ 	if(
+-		$action eq "atom"
+-		||
+-		$action eq "rss"
+-		||
+-		$action eq "opml"
++		isFeedAction($action)
+ 		||
+ 		! $cacheGenStatus
+-	){
++	  ){
+ 		do {
+ 			sleep 2 if $x > 0;
+ 			open(cacheFile, '<:utf8', "$fullhashpath");
+@@ -310,17 +322,10 @@ sub cacheDisplay {
+ 		cacheWaitForUpdate($action);
+ 	}
+ 
+-	if(
+-		(
+-			$action eq "snapshot"
+-			||
+-			$action eq "blob_plain"
+-		)
+-	){
++	if( isBinaryAction($action) ){
+ 		my $openstat = open(cacheFileBin, '<', "$fullhashbinpathfinal");
+ 		$lockStatBIN = flock(cacheFileBin,LOCK_SH|LOCK_NB);
+ 		if (! $lockStatBIN ){
+-			system ("echo 'cacheDisplay - bailing due to binary lock failure' >> /tmp/gitweb.log");
+ 			close(cacheFile);
+ 			close(cacheFileBin);
+ 			cacheWaitForUpdate($action);
+@@ -332,11 +337,7 @@ sub cacheDisplay {
+ 	while( <cacheFile> ){
+ 		print $_;
+ 	}
+-	if(
+-		$action eq "snapshot"
+-		||
+-		$action eq "blob_plain"
+-	){
++	if( isBinaryAction($action) ){
+ 		binmode STDOUT, ':raw';
+ 		print <cacheFileBin>;
+ 		binmode STDOUT, ':utf8'; # as set at the beginning of gitweb.cgi
 -- 
 1.7.2.3
