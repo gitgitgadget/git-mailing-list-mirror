@@ -1,76 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/3] config: add git_config_from_sha1() to read from a
- blob
-Date: Thu, 9 Dec 2010 11:02:28 -0600
-Message-ID: <20101209170228.GC5974@burratino>
-References: <1291907388-9068-1-git-send-email-pclouds@gmail.com>
- <1291907388-9068-3-git-send-email-pclouds@gmail.com>
- <AANLkTi=qt-uwXdUquRAv_1VpMUQuUR+aNMuxSHdpMhXd@mail.gmail.com>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: file names
+Date: Thu, 9 Dec 2010 15:05:33 -0200
+Message-ID: <AANLkTikeAFj68Rr35gcf4dxXXHU+au9wA7wd+-WB3BSS@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 09 18:02:58 2010
+Content-Type: text/plain; charset=UTF-8
+To: Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 09 18:05:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQjtK-0006Wg-4C
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 18:02:50 +0100
+	id 1PQjwK-0000HK-Of
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 18:05:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754602Ab0LIRCp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Dec 2010 12:02:45 -0500
-Received: from mail-qy0-f194.google.com ([209.85.216.194]:47004 "EHLO
-	mail-qy0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753944Ab0LIRCo convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Dec 2010 12:02:44 -0500
-Received: by qyk4 with SMTP id 4so581022qyk.1
-        for <git@vger.kernel.org>; Thu, 09 Dec 2010 09:02:43 -0800 (PST)
+	id S1755210Ab0LIRFg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Dec 2010 12:05:36 -0500
+Received: from mail-bw0-f45.google.com ([209.85.214.45]:59181 "EHLO
+	mail-bw0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755108Ab0LIRFe (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Dec 2010 12:05:34 -0500
+Received: by bwz16 with SMTP id 16so2894752bwz.4
+        for <git@vger.kernel.org>; Thu, 09 Dec 2010 09:05:33 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=W4ZASr5QNwO53FxI0EnhOHGsvN6luIQXit5P4YFs7wU=;
-        b=eHS9wEWXyENZ0ylLFxmsDEX0kLJ79A6uIslmq+sw/+KL70Rnma+DXFDt3IgdtXUkFz
-         9ekAoy8zrwJDLwxRqUWCK+LRutiwPnrCbJhi+5CcTPWXuR7YhrXK2Lz9Q5CwKulOMNoZ
-         ihhiI8gveA49U2GMkmMVi9g1B3XZufSXHFZLA=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=FckSNcJ03a3L/HUbZV8grHCuFavS8ZziDboqt8sZdL8=;
+        b=wxwHH55UT4Sd6LtjkvT1+egE+yutZRbl441EToWgFc9guYPVkfhEvfaiS27H5OPhyC
+         mxOcBBfzePDvz8MDDvq2R8mpePOzc+jHFba8P3nN+CqSbXFdA09ZW9RaMnXRfNs3Jdsb
+         9i5rGqw0ld0pzd/U2V9Kb0lGvPYvBzaJnZYt4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=H+tlDNMuPyp3mYJdvElm+iw+OQZcuO4bdIrAFEclJlMvkxYCss8H1E67U+XmzDMCOI
-         Oxo6XSUig8CgaMMkOqVr1bwKwCqV8MAFzPEAQ666ge3ENvVEWiyHmdisWYIq34XK3MMU
-         9hmtiMzOSByVSinfH50YocJvwpPO8N60EkvSU=
-Received: by 10.224.19.199 with SMTP id c7mr8511510qab.140.1291914163467;
-        Thu, 09 Dec 2010 09:02:43 -0800 (PST)
-Received: from burratino (adsl-69-209-58-175.dsl.chcgil.ameritech.net [69.209.58.175])
-        by mx.google.com with ESMTPS id y17sm1297369qci.33.2010.12.09.09.02.41
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 09 Dec 2010 09:02:42 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=qt-uwXdUquRAv_1VpMUQuUR+aNMuxSHdpMhXd@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=ppPeKD3XrdukYgeZwMZvFd2AEQoadJsdJtCCc8ZWkID4PFF1ryNUpSC7FxverVcgBJ
+         QtP/dL7bL4Pi9r7PQLdq2AeVHLpTXfPjm8qKrZJPbTZm4GgFZIQXXIpTrv6eN+LMXEmM
+         f7pYNVUTRpZhRJPGzgRarvUgfjwG1YOgba94M=
+Received: by 10.204.52.75 with SMTP id h11mr3625024bkg.67.1291914333515; Thu,
+ 09 Dec 2010 09:05:33 -0800 (PST)
+Received: by 10.204.58.71 with HTTP; Thu, 9 Dec 2010 09:05:33 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163294>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163295>
 
-Thiago Farina wrote:
-> 2010/12/9 Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.co=
-m>:
+Hi, I was was looking into the file names and noticed that they are
+not consistent.
 
->> +static int git_config_from_sha1(config_fn_t fn, const char *sha1_na=
-me, void *data)
->> +{
->
-> Is worth documenting the return value of this function and what it
-> does? It returns 0 on success otherwise returns -1.
+Some files are named like:
 
-If that is the return value, then no.  It is the usual in git (and
-other C programs that follow libc conventions).
+foo-bar.[c/h]
+
+Others are:
+
+foo_bar.[c/h]
+
+On top of the git directory:
+
+# With dash
+$ lc *.c | grep - | wc -l
+72
+
+$ lc *.h | grep - | wc -l
+25
+
+# With underline
+$ ls *.c | grep _ | wc -l
+5
+
+$ ls *.h | grep _ | wc -l
+1
+
+So it seems from this data, there is a preference for naming files
+using dash over underline.
+
+So the question is, should the files using underline be converted to
+use dash instead? And should this be documented somewhere? Maybe in
+CodingGuidelines?
+
+Thanks in advance.
