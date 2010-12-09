@@ -1,146 +1,112 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 3/3] config: add core.sharedconfig
-Date: Thu,  9 Dec 2010 22:09:48 +0700
-Message-ID: <1291907388-9068-4-git-send-email-pclouds@gmail.com>
-References: <1291907388-9068-1-git-send-email-pclouds@gmail.com>
+From: "Kevin P. Fleming" <kpfleming@digium.com>
+Subject: Re: [PATCH] Corrected return values in prep_for_email;
+Date: Thu, 09 Dec 2010 09:19:36 -0600
+Organization: Digium, Inc.
+Message-ID: <4D00F388.5090806@digium.com>
+References: <002501cb962c$5fa3aa40$1eeafec0$@me.uk> <7v1v5tqswl.fsf@alter.siamese.dyndns.org> <4CFE8E97.4020508@digium.com> <004201cb97a4$6127cc60$23776520$@me.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 09 16:12:43 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: 'Junio C Hamano' <gitster@pobox.com>, git@vger.kernel.org
+To: Alan Raison <alan@theraisons.me.uk>
+X-From: git-owner@vger.kernel.org Thu Dec 09 16:19:45 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQiAf-0007U2-Hb
-	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 16:12:37 +0100
+	id 1PQiHZ-00037n-3W
+	for gcvg-git-2@lo.gmane.org; Thu, 09 Dec 2010 16:19:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754533Ab0LIPLh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 9 Dec 2010 10:11:37 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:59582 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754466Ab0LIPLf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Dec 2010 10:11:35 -0500
-Received: by gyb11 with SMTP id 11so1413285gyb.19
-        for <git@vger.kernel.org>; Thu, 09 Dec 2010 07:11:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=rEA3xlIYSCoewTfZNT5380OmOZDMIfBnRPmgwYkrMwI=;
-        b=LErSvOuyqITRzMx71LV1R2i4Qr58DX2QFfQT4YXW+DPSSy4ka5uZyOCuDuLvTRcBD3
-         1iYlZpXOnzV4l9lnr+1kJWx8i51PePEwJp02gFm30mNYEuTyXqsNQegIL8vF+Y3znoLC
-         T9dFJPsD2yqKF5ptyaF7RkC4DfgjEkjY9Aoqc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=ODcoH24GJWGNecVblB1jAG3/bRjW7ErNwoWbHK+Hx7xQX0Bq/MlVupav+X4KgpKIEF
-         9tTdgQVLR24Djjy5AJ8tlTw7fELiKklapWu8YUyOmmM8YylKpyRAo7r1d6Am3xnClXkf
-         gFo7eNTW1elnZn2ZKH5Hw1TNTarMvCoWGkvn0=
-Received: by 10.151.109.4 with SMTP id l4mr6607506ybm.293.1291907494487;
-        Thu, 09 Dec 2010 07:11:34 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.222.178])
-        by mx.google.com with ESMTPS id u31sm761983yba.9.2010.12.09.07.11.29
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 09 Dec 2010 07:11:33 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Thu, 09 Dec 2010 22:10:35 +0700
-X-Mailer: git-send-email 1.7.3.3.476.g893a9
-In-Reply-To: <1291907388-9068-1-git-send-email-pclouds@gmail.com>
+	id S1755509Ab0LIPTn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Dec 2010 10:19:43 -0500
+Received: from mail.digium.com ([216.207.245.2]:54488 "EHLO mail.digium.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752922Ab0LIPTm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Dec 2010 10:19:42 -0500
+Received: from zimbra.digium.internal ([10.24.55.203] helo=zimbra.hsv.digium.com)
+	by mail.digium.com with esmtp (Exim 4.69)
+	(envelope-from <kpfleming@digium.com>)
+	id 1PQiHQ-0006xb-WD; Thu, 09 Dec 2010 09:19:37 -0600
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by zimbra.hsv.digium.com (Postfix) with ESMTP id E5FACD8194;
+	Thu,  9 Dec 2010 09:19:36 -0600 (CST)
+Received: from zimbra.hsv.digium.com ([127.0.0.1])
+	by localhost (zimbra.hsv.digium.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id ODFLBiAlrdAC; Thu,  9 Dec 2010 09:19:36 -0600 (CST)
+Received: from [10.24.250.46] (unknown [10.24.250.46])
+	by zimbra.hsv.digium.com (Postfix) with ESMTPSA id 1401BD8024;
+	Thu,  9 Dec 2010 09:19:36 -0600 (CST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <004201cb97a4$6127cc60$23776520$@me.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163289>
 
-core.sharedconfig can take anything that resolves to a blob.
-$GIT_DIR/config will override the shared config. Nested shared
-config is not allowed.
+On 12/09/2010 07:24 AM, Alan Raison wrote:
+>  From ebe98d1c682f268b39a7eaf3ef529accbf0ac61c Mon Sep 17 00:00:00 2001
+> From: Alan Raison<alan@theraisons.me.uk>
+> Date: Mon, 6 Dec 2010 15:49:21 +0000
+> Subject: [PATCH] Corrected return values in prep_for_email;
+>
+> Function was returning 0 for failure and 1 for success which was breaking
+> the logic in the main loop.
+>
+> Corrected to return 0 for success, 1 for failure.  Function now also returns
+> in all cases, rather than exiting.
 
-No protection is provided. It's up to the project to maintain good
-config. The config could be in a separate branch that only a few
-people are allowed to push, for example. To be safest, just put SHA-1
-there.
+Your commit message will need a Signed-Off-By line, but...
 
-git-fsck and git-prune should learn about this key and protect it from
-being pruned.
+Acked-By: Kevin P. Fleming <kpfleming@digium.com>
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Hopefully nobody sets core.sharedconfig =3D :path/to/config or similar
+> ---
+>   contrib/hooks/post-receive-email |    8 ++++----
+>   1 files changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/contrib/hooks/post-receive-email
+> b/contrib/hooks/post-receive-email
+> index 85724bf..f99ea95 100755
+> --- a/contrib/hooks/post-receive-email
+> +++ b/contrib/hooks/post-receive-email
+> @@ -144,13 +144,13 @@ prep_for_email()
+>   			short_refname=${refname##refs/remotes/}
+>   			echo>&2 "*** Push-update of tracking branch,
+> $refname"
+>   			echo>&2 "***  - no email generated."
+> -			exit 0
+> +			return 1
+>   			;;
+>   		*)
+>   			# Anything else (is there anything else?)
+>   			echo>&2 "*** Unknown type of update to $refname
+> ($rev_type)"
+>   			echo>&2 "***  - no email generated"
+> -			return 0
+> +			return 1
+>   			;;
+>   	esac
+>
+> @@ -166,10 +166,10 @@ prep_for_email()
+>   		esac
+>   		echo>&2 "*** $config_name is not set so no email will be
+> sent"
+>   		echo>&2 "*** for $refname update $oldrev->$newrev"
+> -		return 0
+> +		return 1
+>   	fi
+>
+> -	return 1
+> +	return 0
+>   }
+>
+>   #
 
- And I should not open $GIT_DIR/config twice. Well, it does not hurt
- much.
 
- cache.h       |    1 +
- config.c      |   14 ++++++++++++++
- environment.c |    1 +
- 3 files changed, 16 insertions(+), 0 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index e83bc2d..e91ce35 100644
---- a/cache.h
-+++ b/cache.h
-@@ -559,6 +559,7 @@ extern int read_replace_refs;
- extern int fsync_object_files;
- extern int core_preload_index;
- extern int core_apply_sparse_checkout;
-+extern const char *core_shared_config;
-=20
- enum safe_crlf {
- 	SAFE_CRLF_FALSE =3D 0,
-diff --git a/config.c b/config.c
-index e7a9ff4..735b3f4 100644
---- a/config.c
-+++ b/config.c
-@@ -883,6 +883,14 @@ int git_config_from_parameters(config_fn_t fn, voi=
-d *data)
- 	return 0;
- }
-=20
-+static int get_shared_config(const char *var, const char *value, void =
-*dummy)
-+{
-+	if (!strcmp(var, "core.sharedconfig"))
-+		return git_config_string(&core_shared_config, var, value);
-+
-+	return 0;
-+}
-+
- int git_config(config_fn_t fn, void *data)
- {
- 	int ret =3D 0, found =3D 0;
-@@ -910,6 +918,12 @@ int git_config(config_fn_t fn, void *data)
-=20
- 	repo_config =3D git_pathdup("config");
- 	if (!access(repo_config, R_OK)) {
-+		git_config_from_file(get_shared_config, repo_config, NULL);
-+		if (core_shared_config) {
-+			ret +=3D git_config_from_sha1(fn, core_shared_config, data);
-+			found +=3D 1;
-+		}
-+
- 		ret +=3D git_config_from_file(fn, repo_config, data);
- 		found +=3D 1;
- 	}
-diff --git a/environment.c b/environment.c
-index 913b058..8bfb548 100644
---- a/environment.c
-+++ b/environment.c
-@@ -55,6 +55,7 @@ enum object_creation_mode object_creation_mode =3D OB=
-JECT_CREATION_MODE;
- char *notes_ref_name;
- int grafts_replace_parents =3D 1;
- int core_apply_sparse_checkout;
-+const char *core_shared_config;
- struct startup_info *startup_info;
-=20
- /* Parallel index stat data preload? */
---=20
-1.7.3.3.476.g893a9
+-- 
+Kevin P. Fleming
+Digium, Inc. | Director of Software Technologies
+445 Jan Davis Drive NW - Huntsville, AL 35806 - USA
+skype: kpfleming | jabber: kfleming@digium.com
+Check us out at www.digium.com & www.asterisk.org
