@@ -1,110 +1,99 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: "J.H." <warthog9@eaglescrag.net>
 Subject: Re: [RFC] Implementing gitweb output caching - issues to solve
-Date: Thu, 9 Dec 2010 22:11:44 -0600
-Message-ID: <20101210041144.GA28166@burratino>
-References: <201011041721.53371.jnareb@gmail.com>
- <4D00316F.9000305@eaglescrag.net>
- <201012092330.06688.jnareb@gmail.com>
- <20101209225211.GA20426@burratino>
- <88CF82F1-0363-47B4-8C6F-AE4A2DA1714B@wundersolutions.com>
+Date: Thu, 09 Dec 2010 20:46:55 -0800
+Message-ID: <4D01B0BF.1010609@eaglescrag.net>
+References: <201011041721.53371.jnareb@gmail.com> <4D00316F.9000305@eaglescrag.net> <201012092330.06688.jnareb@gmail.com> <20101209225211.GA20426@burratino> <88CF82F1-0363-47B4-8C6F-AE4A2DA1714B@wundersolutions.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	"J.H." <warthog9@eaglescrag.net>, git@vger.kernel.org,
-	John 'Warthog9' Hawley <warthog9@kernel.org>,
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
 	Junio C Hamano <gitster@pobox.com>,
 	Petr Baudis <pasky@ucw.cz>, admin@repo.or.cz
 To: Olaf Alders <olaf@wundersolutions.com>
-X-From: git-owner@vger.kernel.org Fri Dec 10 05:12:12 2010
+X-From: git-owner@vger.kernel.org Fri Dec 10 05:45:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQuL5-0001TJ-GK
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 05:12:11 +0100
+	id 1PQurM-0003Vz-0d
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 05:45:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755662Ab0LJEMF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Dec 2010 23:12:05 -0500
-Received: from mail-gw0-f66.google.com ([74.125.83.66]:37033 "EHLO
-	mail-gw0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754882Ab0LJEME (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Dec 2010 23:12:04 -0500
-Received: by gwj18 with SMTP id 18so1068084gwj.1
-        for <git@vger.kernel.org>; Thu, 09 Dec 2010 20:12:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=eY+jI5+JySSGLi4BBHtYQdTXy+sxHFQBDv+9u0IZ/WI=;
-        b=sXCQOIwPszfUDONFjj845I8mqbviwpAyZbYgnXx0vCD2CWbvZ7O2JqTep7wHaOYmjy
-         eGox4JJsa9AF8KYYpqRGSNcR0ksWO1EC1nsMiXOKyaf+S3rLsiLaXF0SngjUHSVhO0xv
-         YjeYLXd4yIjuc4/MBNwhaKAQfTHjnVQY3Lt+E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=QdLCFgxg6R7HOdnz+4UWqA6BrxlfKCdNArjNtGzLHzg22wJ5waD8FnvUZ2OnZOkVcO
-         fxdpAglS5wqI3IhF2qBPRuYQ0/7yRMdDCna38cGrlAeyEyfiEjuP0X4oG0syQVutXiHs
-         ucrqeat4A8yCaThSi3qiESqIAFfPRB8uVUeOM=
-Received: by 10.151.7.18 with SMTP id k18mr603266ybi.348.1291954322798;
-        Thu, 09 Dec 2010 20:12:02 -0800 (PST)
-Received: from burratino (adsl-69-209-58-175.dsl.chcgil.ameritech.net [69.209.58.175])
-        by mx.google.com with ESMTPS id u10sm156940yba.1.2010.12.09.20.12.00
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 09 Dec 2010 20:12:01 -0800 (PST)
-Content-Disposition: inline
+	id S1756114Ab0LJEp0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Dec 2010 23:45:26 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:37039 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756109Ab0LJEpZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Dec 2010 23:45:25 -0500
+Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id oBA4j81t031876
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Thu, 9 Dec 2010 20:45:09 -0800
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
 In-Reply-To: <88CF82F1-0363-47B4-8C6F-AE4A2DA1714B@wundersolutions.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Enigmail-Version: 1.0.1
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Thu, 09 Dec 2010 20:45:10 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163388>
 
-Olaf Alders wrote:
-> On 2010-12-09, at 5:52 PM, Jonathan Nieder wrote:
+>> Interesting.  http://www.user-agents.org/ seems to suggest that many
+>> robots do use Mozilla (though I don't think it's worth bending over
+>> backwards to help them see the page correctly).
+
+If a robot reports itself and we don't know about it, I'm fine with
+giving it the 'Generating...' page as opposed to what it's expecting.
+The number of robots and things of that nature that won't handle the
+meta refresh are fewer than the number of people who will be clicking
+with eyeballs on a screen.
 
 >> HTTP::BrowserDetect uses a blacklist as far as I can tell.  Maybe in
 >> the long term it would be nice to add a whitelist ->human() method.
 >>
 >> Cc-ing Olaf Alders for ideas.
->
-> Thanks for including me in this.  :)  I'm certainly open to patching
-> the module, but I'm not 100% clear on how  you would want to
-> implement this.  How is ->is_human different from !->is_robot?  To
-> clarify, I should say that from the snippet above, I'm not 100%
-> clear on what the problem is which needs to be solved.
+> 
+> Thanks for including me in this.  :)  I'm certainly open to patching the module, but I'm not 100% clear on how  you would want to implement this.  How is ->is_human different from !->is_robot?  To clarify, I should say that from the snippet above, I'm not 100% clear on what the problem is which needs to be solved.
 
-Context (sorry I did not include this in the first place):
+At this point I don't really see an issue with HTTP::BrowserDetect's
+robot() function, and I agree with human = !->is_robot.
 
-The caching code (in development) for git's web interface uses a page
-that says "Generating..." for cache misses, with an http refresh
-redirecting to the generated content.  The big downside is that if
-done naively this breaks wget, curl, and similar user agents that are
-not patient enough to grab the actual content instead of the redirect
-page.
+One thing I would like to see is the ability to do some sort of an add
+to the list of things to check for.  As you are probably aware there are
+more agents that exist than what you have setup, I'm moving forward and
+handling it with the following:
 
-The first solution tried was to explicitly special case wget and curl.
-But in this case it is better to be more inclusive[2]; when in doubt,
-leave out the nice "Generating..." page and just serve the actual
-content slowly just in case.
+sub is_dumb_client {
+        my($user_agent) = lc $ENV{'HTTP_USER_AGENT'};
 
-In other words, the idea was that user agents fall into three
-categories:
+        my $browser_detect = HTTP::BrowserDetect->new($user_agent);
 
- A. definitely will not replace content with target of HTTP refresh
- B. definitely will replace content with target of HTTP refresh
- C. unknown
+        return 1 if ( $browser_detect->robot() );
 
-and maybe ->is_robot could return true for A and ->is_human return
-true for B (leaving C as !->is_human && !->is_robot).  In this case,
-we should show the "Generating..." page only in the ->is_human (B)
-case.
+        foreach my $adc ( @additional_dumb_clients ) {
+                return 1 if ( index( $user_agent, lc $adc ) != -1 );
+        }
 
-That said, I know almost nothing on this subject, so it is likely
-this analysis misses something.  J.H. or Jakub can likely say more.
+        return 0;
+}
 
-Thanks,
-Jonathan
+which could be simplified if there was just some way to do
+
+        my($user_agent) = lc $ENV{'HTTP_USER_AGENT'};
+
+        my $browser_detect = HTTP::BrowserDetect->new($user_agent);
+
+        $browser_detect->add_robots( @array );
+
+        return 1 if ( $browser_detect->robot() );
+
+Not sure that particularly generalizes, and honestly it's only 4 lines
+of code to do add additional checks.
+
+- John 'Warthog9' Hawley
