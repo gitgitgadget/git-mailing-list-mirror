@@ -1,85 +1,79 @@
-From: Olaf Alders <olaf@wundersolutions.com>
-Subject: Re: [RFC] Implementing gitweb output caching - issues to solve
-Date: Thu, 9 Dec 2010 22:17:51 -0500
-Message-ID: <88CF82F1-0363-47B4-8C6F-AE4A2DA1714B@wundersolutions.com>
-References: <201011041721.53371.jnareb@gmail.com> <4D00316F.9000305@eaglescrag.net> <201012092330.06688.jnareb@gmail.com> <20101209225211.GA20426@burratino>
-Mime-Version: 1.0 (Apple Message framework v1082)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	"J.H." <warthog9@eaglescrag.net>, git@vger.kernel.org,
-	John 'Warthog9' Hawley <warthog9@kernel.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	Petr Baudis <pasky@ucw.cz>, admin@repo.or.cz
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 10 04:25:14 2010
+From: "J.H." <warthog9@eaglescrag.net>
+Subject: Re: [PATCH 10/18] gitweb: Adding isBinaryAction() and isFeedAction()
+ to determine the action type
+Date: Thu, 09 Dec 2010 19:39:47 -0800
+Message-ID: <4D01A103.3090900@eaglescrag.net>
+References: <1291931844-28454-1-git-send-email-warthog9@eaglescrag.net>	<1291931844-28454-11-git-send-email-warthog9@eaglescrag.net> <m3lj3y1ogb.fsf@localhost.localdomain>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 10 04:38:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQtbc-0004qe-E5
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 04:25:12 +0100
+	id 1PQtoA-0008T8-N6
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 04:38:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754043Ab0LJDYf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Dec 2010 22:24:35 -0500
-Received: from mail.urwebhost.com ([64.37.82.104]:59270 "HELO
-	mail.urwebhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1753864Ab0LJDYe convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 9 Dec 2010 22:24:34 -0500
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Dec 2010 22:24:34 EST
-Received: (qmail 10195 invoked by uid 523); 10 Dec 2010 03:17:52 -0000
-Received: from localhost (HELO ?10.0.1.2?) (127.0.0.1)
-  by mail.wundersolutions.com with SMTP; 10 Dec 2010 03:17:52 -0000
-In-Reply-To: <20101209225211.GA20426@burratino>
-X-Mailer: Apple Mail (2.1082)
+	id S1754777Ab0LJDiF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Dec 2010 22:38:05 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:36352 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754389Ab0LJDiE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 9 Dec 2010 22:38:04 -0500
+Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id oBA3c0LG026271
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Thu, 9 Dec 2010 19:38:00 -0800
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
+In-Reply-To: <m3lj3y1ogb.fsf@localhost.localdomain>
+X-Enigmail-Version: 1.0.1
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Thu, 09 Dec 2010 19:38:01 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163385>
 
-
-On 2010-12-09, at 5:52 PM, Jonathan Nieder wrote:
-
-> Jakub Narebski wrote:
+>> This is fairly self explanitory, these are here just to centralize the checking
+>> for these types of actions, as special things need to be done with regards to
+>> them inside the caching engine.
+>>
+>> isBinaryAction() returns true if the action deals with creating binary files
+>> (this needing :raw output)
 > 
->> In my rewrite
->> 
->>  [PATCHv6 17/24] gitweb: Show appropriate "Generating..." page when regenerating cache
->>  http://thread.gmane.org/gmane.comp.version-control.git/163052/focus=163040
->>  http://repo.or.cz/w/git/jnareb-git.git/commitdiff/48679f7985ccda16dc54fda97790841bab4a0ba2#patch1
->> 
->> (see the browser_is_robot() subroutine:
->> 
->>  http://repo.or.cz/w/git/jnareb-git.git/blob/48679f7985ccda16dc54fda97790841bab4a0ba2:/gitweb/gitweb.perl#l870
->> 
->> I use HTTP::BrowserDetect package if available and it's ->robot() method.
->> 
->> The fallback is to use *whitelist*, assuming that it would be better to
->> not show "Generating..." page rather than download the wrong thing.
->> I also guess that most (all?) web browsers use "Mozilla compatibile"
->> somewhere in their User-Agent string, thus matching 'Mozilla'.
+> Why do you need special case binary / :raw output?  It is not really
+> necessary if it is done in right way, as shown in my rewrite.
+
+Because that's not how my caching engine does it, and the reason for
+that is I am mimicking how the rest of gitweb does it.
+
+I attempted at one point to do as you were suggesting, and it became too
+cumbersome.  I eventually broke out the 'binary' packages into a special
+case (thus mimicking how gitweb is already doing things), which also
+gives me the advantage of being able to checksum the resulting binary
+out of band, as well as being able to more trivially calculate the file
+size being sent.
+
+>> isFeedAction() returns true if the action deals with a news feed of some sort,
+>> basically used to bypass the 'Generating...' message should it be a news reader
+>> as those will explode badly on that page.
 > 
-> Interesting.  http://www.user-agents.org/ seems to suggest that many
-> robots do use Mozilla (though I don't think it's worth bending over
-> backwards to help them see the page correctly).
-> 
-> HTTP::BrowserDetect uses a blacklist as far as I can tell.  Maybe in
-> the long term it would be nice to add a whitelist ->human() method.
-> 
-> Cc-ing Olaf Alders for ideas.
+> Why blacklisting 'feed', instead of whitelisting HTML-output?
 
-Thanks for including me in this.  :)  I'm certainly open to patching the module, but I'm not 100% clear on how  you would want to implement this.  How is ->is_human different from !->is_robot?  To clarify, I should say that from the snippet above, I'm not 100% clear on what the problem is which needs to be solved.
+There are a limited number of feed types and their ilk (standard xml
+formatted feed and atom), there are lots of html-output like things.
+Easier to default and have things work, generally, than to have things
+not work the way you would expect.
 
-Olaf
+> BTW., please don't use mixedCase names, but underline_separated.
 
---
-Olaf Alders
-olaf@wundersolutions.com
+fixed in v9
 
-http://www.wundersolutions.com
-http://twitter.com/wundercounter
-
-866 503 2204 (Toll free - North America)
-416 944 8306 (direct)
+- John 'Warthog9' Hawley
