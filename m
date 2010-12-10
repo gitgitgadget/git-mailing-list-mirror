@@ -1,113 +1,210 @@
 From: "J.H." <warthog9@eaglescrag.net>
-Subject: Re: [PATCH 15/18] gitweb: Add show_warning() to display an immediate
- warning, with refresh
-Date: Thu, 09 Dec 2010 23:38:42 -0800
-Message-ID: <4D01D902.1030102@eaglescrag.net>
-References: <1291931844-28454-1-git-send-email-warthog9@eaglescrag.net>	<1291931844-28454-16-git-send-email-warthog9@eaglescrag.net> <m3zksezbkm.fsf@localhost.localdomain>
+Subject: Re: [PATCH 17/18] gitweb: Prepare for cached error pages & better
+ error page handling
+Date: Fri, 10 Dec 2010 00:33:16 -0800
+Message-ID: <4D01E5CC.6010301@eaglescrag.net>
+References: <1291931844-28454-1-git-send-email-warthog9@eaglescrag.net>	<1291931844-28454-18-git-send-email-warthog9@eaglescrag.net> <m3r5dqz9c5.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 10 08:37:58 2010
+X-From: git-owner@vger.kernel.org Fri Dec 10 09:31:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQxYE-0005Z9-1o
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 08:37:58 +0100
+	id 1PQyO9-0007BU-51
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 09:31:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752918Ab0LJHg5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Dec 2010 02:36:57 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:50843 "EHLO
+	id S1754513Ab0LJIbb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Dec 2010 03:31:31 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:59902 "EHLO
 	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750966Ab0LJHg4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Dec 2010 02:36:56 -0500
+	with ESMTP id S1751442Ab0LJIbb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Dec 2010 03:31:31 -0500
 Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
 	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id oBA7asXV013532
+	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id oBA8VSfY018819
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Thu, 9 Dec 2010 23:36:54 -0800
+	Fri, 10 Dec 2010 00:31:28 -0800
 X-Virus-Status: Clean
 X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
-In-Reply-To: <m3zksezbkm.fsf@localhost.localdomain>
+In-Reply-To: <m3r5dqz9c5.fsf@localhost.localdomain>
 X-Enigmail-Version: 1.0.1
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Thu, 09 Dec 2010 23:36:55 -0800 (PST)
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Fri, 10 Dec 2010 00:31:29 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163392>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163393>
 
-On 12/09/2010 05:01 PM, Jakub Narebski wrote:
-> "John 'Warthog9' Hawley" <warthog9@eaglescrag.net> writes:
+> There is no problem with capturing output of die_error, nor there is a
+> problem with caching error pages (perhaps transiently in memory).
 > 
->> die_error() is an immediate and abrupt action.  show_warning() more or less
->> functions identically, except that the page generated doesn't use the
->> gitweb header or footer (in case they are broken) and has an auto-refresh
->> (10 seconds) built into it.
+> The problem is that subroutines calling die_error assum that it would
+> exit ending subroutine that is responsible for generating current
+> action; see "goto DONE_GITWEB" which should be "goto DONE_REQUEST",
+> and which was "exit 0" some time ago at the end of die_error().
 > 
-> Why not use gitweb header/footer?  If they are broken, it should be
-> caught in git development.  If we don't se them, the show_warning()
-> output would look out of place.
+> With caching error pages you want die_error to exit $actions{$action}->(),
+> but not exit cache_fetch().  How do you intend to do it?
 
-The only other 'transient' style page, the 'Generating...' page doesn't
-use it, and I felt that since this was also transient, and only (likely)
-to be seen once it wasn't worth the header & footer.
+Well there's one bug in how that function ends in looking at it again,
+basically the return case shouldn't happen, and that function should
+end, like your suggesting in the first part of your question (with
+respect to DONE_GITWEB)
 
-That said I've added it back in, in v9.
+In the second part, your not thinking with the fork() going (though in
+thinking sans the fork this might not work right).
 
->> +sub show_warning {
->> +	$| = 1;
+It's the background process that will call die_error in such a way that
+die_error_cache will get invoked.  die_error_cache will write the .err
+file out, and the whole thing should just exit.
+
+Though now that I say that there's an obvious bug in the case where
+forking didn't work at all, in that case you would get a blank page as
+the connection would just be closed.  If you refreshed (say hitting F5)
+you'd get the error at that point.
+
+Need to fix that non-forked problem though.
+
+>> This adds two functions:
+>>
+>> die_error_cache() - this gets back called from die_error() so
+>> that the error message generated can be cached.
+> 
+> *How* die_error_cache() gets called back from die_error()?  I don't
+> see any changes to die_error(), or actually any calling sites for
+> die_error_cache() in the patch below.
+>  
+>> cacheDisplayErr() - this is a simplified version of cacheDisplay()
+>> that does an initial check, if the error page exists - display it
+>> and exit.  If not, return.
+> 
+> Errr... isn't it removed in _preceding_ patch?  WTF???
+
+in breaking up the series it got included in the wrong spot, and
+apparently removed and re-added correctly, should be fixed in v9
+
+>> +sub die_error_cache {
+>> +	my ($output) = @_;
+>> +
+>> +	open(my $cacheFileErr, '>:utf8', "$fullhashpath.err");
+>> +	my $lockStatus = flock($cacheFileErr,LOCK_EX|LOCK_NB);
+> 
+> Why do you need to lock here?  A comment would be nice.
+
+At any point when a write happens there's the potential for multiple
+simultaneous writes.  Locking becomes obvious, when your trying to
+prevent multiple processes from writing to the same thing at the same
+time...
+
+>> +
+>> +	if (! $lockStatus ){
+>> +		if ( $areForked ){
+> 
+> Grrrr...
+> 
+> But if it is here to stay, a comment if you please.
+> 
+>> +			exit(0);
+>> +		}else{
+>> +			return;
+>> +		}
+>> +	}
+
+The exit(0) or return have been removed in favor of DONE_GITWEB, as
+we've already errored if we are broken here we should just die.
+
+>> +
+>> +	# Actually dump the output to the proper file handler
+>> +	local $/ = undef;
+>> +	$|++;
+> 
+> Why not
 > 
 >   +	local $| = 1;
 > 
-> $| is global variable, and otherwise you would turn autoflush for all
-> code, which would matter e.g. for FastCGI.
 
-Since the execution exits immediately after, wouldn't FastCGI reset at
-that point, since execution of that thread has stopped?  Or does FastCGI
-retain everything as is across subsequent executions of a process?
+Done.
 
->> +<meta http-equiv="refresh" content="10"/>
 > 
-> Why 10 seconds?
-
-Long enough to see the error, but not too long to be a nuisance.  Mainly
-just there to warn the admin that it did something automatic they may
-not have been expecting.
-
->> +</head>
->> +<body>
->> +$warning
->> +</body>
->> +</html>
->> +EOF
->> +	exit(0);
+>> +	print $cacheFileErr "$output";
+>> +	$|--;
+>> +
+>> +	flock($cacheFileErr,LOCK_UN);
+>> +	close($cacheFileErr);
 > 
-> "exit(0)" and not "goto DONE_GITWEB", or "goto DONE_REQUEST"?
+> Closing file will unlock it.
 
-DONE_REQUEST doesn't actually exist as a label, the exit was used
-partially for my lack of love for goto's, but mostly out of not
-realizing what that was calling back to (mainly for the excitement of
-things like PSGI and their ilk)
+Doesn't really hurt to be explicit though.
 
-I will change that that, but considering there are other locations where
-I do explicit exit's and those are actually inherent to the way the
-caching engine currently works, I might need to go take a look at what's
-going on with respect to multi-threaded items inside of PSGI and their
-like.  It's possible the caching engine doesn't actually work on those...
+>> +
+>> +	if ( $areForked ){
+>> +		exit(0);
+>> +	}else{
+>> +		return;
+> 
+> So die_error_cache would not actually work like "die" here and like
+> die_error(), isn't it?
 
+that was ejected, it was a bug.  DONE_GITWEB is more correct, though I
+might need to add a hook to display the error message in the case that
+the process didn't fork.
+
+>> +	}
 >> +}
 >> +
->>  sub isBinaryAction {
+>>  
+>>  sub cacheWaitForUpdate {
 >>  	my ($action) = @_;
+>> @@ -380,6 +410,28 @@ EOF
+>>  	return;
+>>  }
+>>  
+>> +sub cacheDisplayErr {
+>> +
+>> +	return if ( ! -e "$fullhashpath.err" );
+>> +
+>> +	open($cacheFileErr, '<:utf8', "$fullhashpath.err");
+>> +	$lockStatus = flock($cacheFileErr,LOCK_SH|LOCK_NB);
+>> +
+>> +	if (! $lockStatus ){
+>> +		show_warning(
+>> +				"<p>".
+>> +				"<strong>*** Warning ***:</strong> Locking error when trying to lock error cache page, file $fullhashpath.err<br/>/\n".
 > 
-> Didn't you ran gitweb tests?
+> esc_path
+> 
+>> +				"This is about as screwed up as it gets folks - see your systems administrator for more help with this.".
+>> +				"<p>"
+>> +				);
+>> +	}
+>> +
+>> +	while( <$cacheFileErr> ){
+>> +		print $_;
+>> +	}
+> 
+> Why not 'print <$cacheFileErr>' (list context), like in insert_file()
+> subroutine?
 
-I did, they passed for me - for whatever reason my cache dir wasn't
-cleaned up, and stayed resident once it was created.
+I've had buffer problems with 'print <$cacheFileErr>' in some cases.
+This is small enough it shouldn't happen, but I've gotten into the habit
+of doing it this way.  I can change it if you like.
+
+> 
+>> +	exit(0);
+>> +}
+> 
+> Callsites?
+> 
+> Note: I have't read next commit yet.
+
+Next patch.
+
+If you'd rather I can squash 17 & 18 into a single commit.
 
 - John 'Warthog9' Hawley
