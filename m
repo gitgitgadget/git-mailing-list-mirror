@@ -1,86 +1,169 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 0/2] [RFD] Using gitrevisions :/search style with other
- operators
-Date: Fri, 10 Dec 2010 16:30:17 -0500
-Message-ID: <20101210213017.GA14256@sigill.intra.peff.net>
-References: <1291820319-12455-1-git-send-email-pclouds@gmail.com>
- <201012082051.09730.jnareb@gmail.com>
- <AANLkTimU6Bhx-2XsZ45_7BmT9fo9MpK8TJWB3zZ=j-i7@mail.gmail.com>
- <201012090254.24999.jnareb@gmail.com>
- <20101209015926.GA31119@burratino>
- <7vsjy7h3db.fsf@alter.siamese.dyndns.org>
- <AANLkTimg4Cy83gjzgC3fwg+t=B57b6gzOE98p-=2AR+K@mail.gmail.com>
- <20101210190332.GA6210@burratino>
- <66D6F30D-4707-4057-BB46-57B2DF01F479@sb.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: What's cooking in git.git (Dec 2010, #01; Sat, 4)
+Date: Fri, 10 Dec 2010 13:59:50 -0800
+Message-ID: <7v4oalcmqx.fsf@alter.siamese.dyndns.org>
+References: <7v62v8ufyl.fsf@alter.siamese.dyndns.org>
+ <20101206082948.1403cc5a@chalon.bertin.fr>
+ <buopqtfmi85.fsf@dhlpc061.dev.necel.com>
+ <20101206092122.21c19011@chalon.bertin.fr>
+ <AANLkTimPC3-x1XFJ+t9uiFFXV6fg812ugF5vz9p=4GWB@mail.gmail.com>
+ <20101206094806.10ae1ff2@chalon.bertin.fr>
+ <AANLkTinJu0KzXZ2Rjbs2+XH7T=Gq5MOajxo51DHtqoGZ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Yann Dirson <dirson@bertin.fr>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Fri Dec 10 22:30:29 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Yann Dirson <dirson@bertin.fr>, git list <git@vger.kernel.org>
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Dec 10 23:00:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PRAXs-0005LA-OZ
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 22:30:29 +0100
+	id 1PRB0d-0002RS-Dr
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 23:00:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753448Ab0LJVaX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Dec 2010 16:30:23 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:37464 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751432Ab0LJVaW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Dec 2010 16:30:22 -0500
-Received: (qmail 23516 invoked by uid 111); 10 Dec 2010 21:30:19 -0000
-Received: from 129-79-255-141.dhcp-bl.indiana.edu (HELO sigill.intra.peff.net) (129.79.255.141)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 10 Dec 2010 21:30:19 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 10 Dec 2010 16:30:17 -0500
-Content-Disposition: inline
-In-Reply-To: <66D6F30D-4707-4057-BB46-57B2DF01F479@sb.org>
+	id S1756158Ab0LJWAE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Dec 2010 17:00:04 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35244 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756034Ab0LJWAD (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Dec 2010 17:00:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 702583035;
+	Fri, 10 Dec 2010 17:00:26 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sGb7NYTivkctCfhRAxz90vyPLQ8=; b=tikhRw
+	St3W9tFnCyrW36Vp0ggLHl/C4YZY7qAKH3zln57MEer0BNVwssZpzDvK4UT47JAq
+	7LHwPCjaZ7LxFyv5RAXC6bRkS5jUsDHnwlTkMh8zsk8SBQ2eb8cZFwvkIMrYybNl
+	nSvqp4pG9SIvnEbOKA3RN1y8pme/m/xAUdyKo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=oeXAvLDue3c/IMoi6tJ74Q8K35HvACDm
+	tPYt2gJ/KuO0RaQAVVNSuwNLT4Qi/urYVQTkTTgSBqTcMRo3P0Rqp6Wa9a5CrH+g
+	JmQbA9qV/wB+lnQoLjnAJ/+gw6fCMO6N/oFxtI24oODlq/K+O8utekZZj7tXMTwe
+	1X2YZ3CT5CE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3D2B03034;
+	Fri, 10 Dec 2010 17:00:23 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BEFAF3030; Fri, 10 Dec 2010
+ 17:00:18 -0500 (EST)
+In-Reply-To: <AANLkTinJu0KzXZ2Rjbs2+XH7T=Gq5MOajxo51DHtqoGZ@mail.gmail.com>
+ (Miles Bader's message of "Mon\, 6 Dec 2010 18\:13\:06 +0900")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E317D5C8-04A8-11E0-9098-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163442>
 
-On Fri, Dec 10, 2010 at 01:21:15PM -0800, Kevin Ballard wrote:
+Miles Bader <miles@gnu.org> writes:
 
-> On Dec 10, 2010, at 11:03 AM, Jonathan Nieder wrote:
-> 
-> > - What is the intended use for this family of modifiers?  I sort
-> >   of understand ^{:i/... } for people that forget what case they
-> >   have used, but why the :nth and others?
-> 
-> In my particular case, I was glancing through the logs, and I wanted to grab
-> the second branch that someone else had made that was merged into pu. I would
-> have loved to be able to run something like
-> 
->   git merge origin/pu^{:nth(2)/nd/}
-> 
-> While we're speaking of modifiers, could we use one that says "only search
-> the first parent hierarchy", e.g. something equivalent to git log's --first-parent
-> flag?
+> Maybe if you renamed every option simultaneously, there would be
+> confusion, but seriously, it's only one option.  It's not going to be
+> a problem.
 
-As neat as this modifier syntax is getting, are we perhaps just
-recreating the wheel?
+Well, let's avoid all of that trouble before it is too late, by putting
+this on top of what is in 'next' and ship 1.7.4 with it.
 
-How about:
+Between "find" and "detect", I do not have much preference either way.  It
+may sound more active to "find" them, but if told to "detect" them, git
+goes ahead and actively changes its internal behaviour in order to do so,
+which amounts to an active "find"ing anyway, so...
 
-  git merge `git rev-list -2 --grep=nd/ origin/pu | tail -1`
+-- >8 --
+From: Yann Dirson <ydirson@altern.org>
+Date: Wed, 10 Nov 2010 21:27:12 +0100
+Subject: [PATCH] diff: use "find" instead of "detect" as prefix for long forms of -M and -C
 
-for the nth one, and:
+It is more consistent with existing --find-copies-harder; luckily "detect"
+variant has not appeared in any officially released version of git.
 
-  git merge `git rev-list --first-parent -1 --grep=nd/ origin/pu`
+Signed-off-by: Yann Dirson <ydirson@altern.org>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ Documentation/diff-options.txt |    5 ++---
+ diff.c                         |   18 +++++++++---------
+ 2 files changed, 11 insertions(+), 12 deletions(-)
 
-for a first parent search (I will leave combining them as an exercise to
-the reader).
-
-It's not that I'm opposed to a handy ref-specifying syntax. I just
-wonder if it is really worth building in all of these obscure scenarios.
-
--Peff
+diff --git a/Documentation/diff-options.txt b/Documentation/diff-options.txt
+index 7246e10..c93124b 100644
+--- a/Documentation/diff-options.txt
++++ b/Documentation/diff-options.txt
+@@ -230,7 +230,7 @@ eligible for being picked up as a possible source of a rename to
+ another file.
+ 
+ -M[<n>]::
+---detect-renames[=<n>]::
++--find-renames[=<n>]::
+ ifndef::git-log[]
+ 	Detect renames.
+ endif::git-log[]
+@@ -246,12 +246,11 @@ endif::git-log[]
+ 	hasn't changed.
+ 
+ -C[<n>]::
+---detect-copies[=<n>]::
++--find-copies[=<n>]::
+ 	Detect copies as well as renames.  See also `--find-copies-harder`.
+ 	If `n` is specified, it has the same meaning as for `-M<n>`.
+ 
+ --find-copies-harder::
+---detect-copies-harder::
+ 	For performance reasons, by default, `-C` option finds copies only
+ 	if the original file of the copy was modified in the same
+ 	changeset.  This flag makes the command
+diff --git a/diff.c b/diff.c
+index dee0bd8..b5ef1ec 100644
+--- a/diff.c
++++ b/diff.c
+@@ -3150,14 +3150,14 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		if ((options->break_opt = diff_scoreopt_parse(arg)) == -1)
+ 			return -1;
+ 	}
+-	else if (!prefixcmp(arg, "-M") || !prefixcmp(arg, "--detect-renames=") ||
+-		 !strcmp(arg, "--detect-renames")) {
++	else if (!prefixcmp(arg, "-M") || !prefixcmp(arg, "--find-renames=") ||
++		 !strcmp(arg, "--find-renames")) {
+ 		if ((options->rename_score = diff_scoreopt_parse(arg)) == -1)
+ 			return -1;
+ 		options->detect_rename = DIFF_DETECT_RENAME;
+ 	}
+-	else if (!prefixcmp(arg, "-C") || !prefixcmp(arg, "--detect-copies=") ||
+-		 !strcmp(arg, "--detect-copies")) {
++	else if (!prefixcmp(arg, "-C") || !prefixcmp(arg, "--find-copies=") ||
++		 !strcmp(arg, "--find-copies")) {
+ 		if (options->detect_rename == DIFF_DETECT_COPY)
+ 			DIFF_OPT_SET(options, FIND_COPIES_HARDER);
+ 		if ((options->rename_score = diff_scoreopt_parse(arg)) == -1)
+@@ -3194,7 +3194,7 @@ int diff_opt_parse(struct diff_options *options, const char **av, int ac)
+ 		DIFF_OPT_SET(options, TEXT);
+ 	else if (!strcmp(arg, "-R"))
+ 		DIFF_OPT_SET(options, REVERSE_DIFF);
+-	else if (!strcmp(arg, "--find-copies-harder") || !strcmp(arg, "--detect-copies-harder"))
++	else if (!strcmp(arg, "--find-copies-harder"))
+ 		DIFF_OPT_SET(options, FIND_COPIES_HARDER);
+ 	else if (!strcmp(arg, "--follow"))
+ 		DIFF_OPT_SET(options, FOLLOW_RENAMES);
+@@ -3380,12 +3380,12 @@ static int diff_scoreopt_parse(const char *opt)
+ 			opt += strlen("break-rewrites");
+ 			if (*opt == 0 || *opt++ == '=')
+ 				cmd = 'B';
+-		} else if (!prefixcmp(opt, "detect-copies")) {
+-			opt += strlen("detect-copies");
++		} else if (!prefixcmp(opt, "find-copies")) {
++			opt += strlen("find-copies");
+ 			if (*opt == 0 || *opt++ == '=')
+ 				cmd = 'C';
+-		} else if (!prefixcmp(opt, "detect-renames")) {
+-			opt += strlen("detect-renames");
++		} else if (!prefixcmp(opt, "find-renames")) {
++			opt += strlen("find-renames");
+ 			if (*opt == 0 || *opt++ == '=')
+ 				cmd = 'M';
+ 		}
+-- 
+1.7.3.3.710.g2d012
