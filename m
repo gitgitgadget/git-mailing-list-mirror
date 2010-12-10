@@ -1,76 +1,99 @@
 From: "J.H." <warthog9@eaglescrag.net>
-Subject: Re: [PATCH 12/18] gitweb: Change file handles (in caching) to lexical
- variables as opposed to globs
-Date: Thu, 09 Dec 2010 21:56:51 -0800
-Message-ID: <4D01C123.9050806@eaglescrag.net>
-References: <1291931844-28454-1-git-send-email-warthog9@eaglescrag.net> <1291931844-28454-13-git-send-email-warthog9@eaglescrag.net> <m3d3pa1o0j.fsf@localhost.localdomain> <7vwrnieac8.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 13/18] gitweb: Add commented url & url hash to page footer
+Date: Thu, 09 Dec 2010 22:10:05 -0800
+Message-ID: <4D01C43D.6070803@eaglescrag.net>
+References: <1291931844-28454-1-git-send-email-warthog9@eaglescrag.net>	<1291931844-28454-14-git-send-email-warthog9@eaglescrag.net> <m38vzy1nkl.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 10 06:55:27 2010
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 10 07:08:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQvx0-0006l1-HJ
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 06:55:26 +0100
+	id 1PQw9b-00025o-1q
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 07:08:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751212Ab0LJFzK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Dec 2010 00:55:10 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:36155 "EHLO
+	id S1751143Ab0LJGIV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Dec 2010 01:08:21 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:42609 "EHLO
 	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751016Ab0LJFzJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Dec 2010 00:55:09 -0500
+	with ESMTP id S1750895Ab0LJGIV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Dec 2010 01:08:21 -0500
 Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
 	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id oBA5t3Fh005148
+	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id oBA68Ibx006370
 	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Thu, 9 Dec 2010 21:55:04 -0800
+	Thu, 9 Dec 2010 22:08:18 -0800
 X-Virus-Status: Clean
 X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
-In-Reply-To: <7vwrnieac8.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <m38vzy1nkl.fsf@localhost.localdomain>
 X-Enigmail-Version: 1.0.1
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Thu, 09 Dec 2010 21:55:04 -0800 (PST)
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Thu, 09 Dec 2010 22:08:19 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163389>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163390>
 
-On 12/09/2010 04:32 PM, Junio C Hamano wrote:
-> Jakub Narebski <jnareb@gmail.com> writes:
+>> <!--
+>> 	Full URL: |http://localhost/gitweb-caching/gitweb.cgi?p=/project.git;a=summary|
+>> 	URL Hash: |7a31cfb8a43f5643679eec88aa9d7981|
+>> -->
 > 
->>> +# Global declarations
->>> +our $cacheFile;
->>> +our $cacheFileBG;
->>> +our $cacheFileBinWT;
->>> +our $cacheFileBin;
+> Nice idea.  It helps with debugging and doesn't introduce information
+> leakage.
+
+That was the plan, and I've already got a scenario where it would be useful.
+
+>> The first bit tells you what the url that generated the page actually was, the second is
+>> the hash used to store the file with the first two characters being used as the directory:
 >>
->> You are trading globs for global (well, package) variables.  They are
->> not lexical filehandles... though I'm not sure if it would be possible
->> without restructuring code; note that if variable holding filehandle
->> falls out of scope, then file would be automatically closed.
+>> <cachedir>/7a/31cfb8a43f5643679eec88aa9d7981
 > 
-> Hmm. why is it a bad idea, when you need to access these from practically
-> everywhere, to use global variables to begin with?  To a certain degree,
-> it sounds like an unnecessary burden without much gain to me.
+> Isn't it
+> 
+>   <cachedir>/7a/7a31cfb8a43f5643679eec88aa9d7981
+> 
+> in your series?
 
-This was why I used globs in the first place.
+Nope
 
-To answer Jakub's question first: yes, some of those are holding locks
-open while things are happening.  Since there's locks open, through a
-lot of functions, it's
+	our $fullhashdir = "$cachedir/". substr( $urlhash, 0, 2) ."/";
 
-Generally speaking I'm pretty good about opening and closing the files
-when it's needed.  I *THINK* they can be made local variables, as I
-don't think anything is kept open (within the caching engine) across
-functions.
+and then a couple of lines later:
 
-I've made a couple of changes, I'm going to have to test them, this
-might be fixed in v9.
+	$fullhashpath = "$fullhashdir/". substr( $urlhash, 2 );
+
+right at the top of cache_fetch()
+
+>> Also useful for greping through the existing cache and finding files with unique paths that
+>> you may want to explicitly flush.
+> 
+> Though probably better 'cache_admin' page would be ultimately best
+> solution, see proof of concept in
+
+The biggest problem with the cache admin page you've got there, is that
+gitweb itself doesn't have a framework for user administration,
+privileges, etc.  Limiting it to the local machine is also useless,
+there are very few people who are going to have access, from 127.0.0.1
+to their web server, and this also breaks anything even remotely
+resembling virtual hosts.
+
+The fact that it's unusable from virtual hosts makes this pretty much DOA.
+
+Like I've said in the past, we need to at least look at web frameworks
+for gitweb, and if we want to provide things like the admin page than we
+need to consider that we are going to need user management.  That, in
+particular, starts drifting towards needing a database to store things
+in and I for one am *NOT* in favor of that.
+
+I like the idea of a framework helping deal with things like page
+layout, separating data access from content, etc.  I do not like the
+idea of gitweb having a full blown setup with a database and all behind it.
 
 - John 'Warthog9' Hawley
