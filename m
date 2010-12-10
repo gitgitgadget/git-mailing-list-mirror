@@ -1,103 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Dec 2010, #01; Sat, 4)
-Date: Fri, 10 Dec 2010 11:55:56 -0800
-Message-ID: <7vk4jhcshf.fsf@alter.siamese.dyndns.org>
-References: <7voc90wx36.fsf@alter.siamese.dyndns.org>
- <20101205073938.GB15233@sigill.intra.peff.net>
- <7v8w04vvvr.fsf@alter.siamese.dyndns.org>
- <20101209172708.GA1817@sigill.intra.peff.net>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: git-cvsimport with cvsps output in commit msg breaks imports
+Date: Fri, 10 Dec 2010 20:58:27 +0100
+Message-ID: <m2ei9p8knw.fsf@igel.home>
+References: <20101209220347.GA3180@shuttle.home>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Aleksi Aalto <aga@iki.fi>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Dec 10 20:56:17 2010
+Cc: git@vger.kernel.org, cvsps@dm.cobite.com, smurf@smurf.noris.de
+To: Thomas Adam <thomas@xteddy.org>
+X-From: git-owner@vger.kernel.org Fri Dec 10 20:58:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PR94i-0000p0-Bz
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 20:56:16 +0100
+	id 1PR96y-0001wF-W4
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 20:58:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756902Ab0LJT4K (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Dec 2010 14:56:10 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41116 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756818Ab0LJT4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Dec 2010 14:56:09 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 34BC83F8B;
-	Fri, 10 Dec 2010 14:56:33 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Qj6hB/oZ8/Shpvqot4xiAbNfeO4=; b=JAqMu4
-	8lDqrKBMfM+slWq4qnf2sPGs2QSHHM/EFAis7MCqJrnEknrUKfsV1SaFq64rau97
-	uY5/8zYkou0/c+mbr9FAfp7AQWLU0KOtga3wwMbJpk4FPdy11UHDrnFDcgDeilZs
-	AHEY5JKtcU6vhYXLoXxJaeiU/FmjwYlY7F/iM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HgoMMBlq9nTbILlXlbjVrNAWRc1NKAPy
-	Vuu7ZYYZjxlkjeTQywQjmphhpp7xva0dnb+a9Z37xIQKyL22NCv2rHGvWR/a6q2Z
-	/wX8WldLpLC0Xowj9OycHYVYRKm9sZcLISGRFJLZBL7ZNG9DZnMM/kUElEDalSQf
-	BVJagpAazCM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EEBED3F8A;
-	Fri, 10 Dec 2010 14:56:29 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8BE3C3F68; Fri, 10 Dec 2010
- 14:56:24 -0500 (EST)
-In-Reply-To: <20101209172708.GA1817@sigill.intra.peff.net> (Jeff King's
- message of "Thu\, 9 Dec 2010 12\:27\:08 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9483B154-0497-11E0-8724-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1754814Ab0LJT6b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Dec 2010 14:58:31 -0500
+Received: from mail-out.m-online.net ([212.18.0.10]:36196 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752114Ab0LJT6a (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Dec 2010 14:58:30 -0500
+Received: from frontend1.mail.m-online.net (frontend1.mail.intern.m-online.net [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id B0842188B5A0;
+	Fri, 10 Dec 2010 20:58:28 +0100 (CET)
+Received: from igel.home (ppp-88-217-110-181.dynamic.mnet-online.de [88.217.110.181])
+	by mail.mnet-online.de (Postfix) with ESMTP id 676C11C0024E;
+	Fri, 10 Dec 2010 20:58:28 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id 25A90CA2A0; Fri, 10 Dec 2010 20:58:28 +0100 (CET)
+X-Yow: There's a little picture of ED MCMAHON doing BAD THINGS to JOAN RIVERS
+ in a $200,000 MALIBU BEACH HOUSE!!
+In-Reply-To: <20101209220347.GA3180@shuttle.home> (Thomas Adam's message of
+	"Thu, 9 Dec 2010 22:03:49 +0000")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.90 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163438>
 
-Jeff King <peff@peff.net> writes:
+Thomas Adam <thomas@xteddy.org> writes:
 
-> Subject: [PATCH] default color.status.branch to "same as header"
+> More specifically, the commit which I think introduced the problem, and all
+> subsequent commits thereafter is here:
 >
-> This gives it the same behavior as we had prior to 1d28232
-> (status: show branchname with a configurable color).
+> https://github.com/ThomasAdam/tmux/commit/f0220a10b01a764e0dc52ea1b2407f58600a30eb
 >
-> To do this we need the concept of a "NIL" color, which is
-> provided by color.[ch]. The implementation is very simple;
-> in particular, there are no precautions taken against code
-> accidentally printing the NIL. This should be fine in
-> practice because:
->
->   1. You can't input a NIL color in the config, so it must
->      come from the in-code defaults. Which means it is up
->      the client code to handle the NILs it defines.
->
->   2. If we do ever print a NIL, it will be obvious what the
->      problem is, and the bug can be fixed.
->
-> Signed-off-by: Jeff King <peff@peff.net>
-> ---
-> I resisted the urge to make a generic "same as $X" token, which would
-> allow users to do something like:
->
->   [color "status"]
->     branch = from:color.status.header
->
-> if they really wanted. But that would be a lot more code, and I'm not
-> sure it would be all that useful (it would be if people did stuff like
-> theming git colors like they do window managers, but I don't think we
-> are at quite that level).
+> Note that from this commit onwards, the commit *message* has a bunch of
+> cvsps output in it.  I can only surmise that this somehow causes problems
+> for cvsimport.
 
-Also if you go that route you would need to worry about dependencies,
-which would not be worth it.
+The cvsps output is ambigous.  If the commit log includes text that
+resembles the patchset format generated by cvsps then git-cvsimport can
+easily get confused.
 
-> This is simple, solves the current regression, and provides an easy
-> blueprint for handling the case in the future.
+Andreas.
 
-As I said, I don't care deeply, but you obviously cared enough to produce
-a patch that is pretty simple and straightforward.  Let's take it.
-
-Thanks.
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
