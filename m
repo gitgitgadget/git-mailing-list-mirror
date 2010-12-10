@@ -1,88 +1,61 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/6] Introduce sorted-array binary-search function.
-Date: Fri, 10 Dec 2010 14:29:09 -0800
-Message-ID: <7vwrnhb6tm.fsf@alter.siamese.dyndns.org>
+Subject: Re: [PATCH 2/6] Convert diffcore-rename's rename_dst to the new
+ sorted-array API.
+Date: Fri, 10 Dec 2010 14:32:20 -0800
+Message-ID: <7vsjy5b6ob.fsf@alter.siamese.dyndns.org>
 References: <1291848695-24601-1-git-send-email-ydirson@altern.org>
- <1291848695-24601-2-git-send-email-ydirson@altern.org>
+ <1291848695-24601-3-git-send-email-ydirson@altern.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Yann Dirson <ydirson@altern.org>
-X-From: git-owner@vger.kernel.org Fri Dec 10 23:29:28 2010
+X-From: git-owner@vger.kernel.org Fri Dec 10 23:32:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PRBSv-0007NS-0M
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 23:29:25 +0100
+	id 1PRBVx-0000Cn-H5
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 23:32:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754332Ab0LJW3T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Dec 2010 17:29:19 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36908 "EHLO
+	id S1752189Ab0LJWc3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Dec 2010 17:32:29 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39988 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753683Ab0LJW3S (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Dec 2010 17:29:18 -0500
+	with ESMTP id S1751377Ab0LJWc2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Dec 2010 17:32:28 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5703033BB;
-	Fri, 10 Dec 2010 17:29:42 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5928D3419;
+	Fri, 10 Dec 2010 17:32:52 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ulCPcdqcBCfQ5kUYxWmZXI7t9l4=; b=dUaWSK
-	zel4T4/2WSZGq4vakuy97nAD/oDbfbl4KYK7ASBcKfkzoFctj6hG1An+qVA3jnU1
-	6DFmdxTyi63zph3+U1LxspcpA0MTAwjpPRmf3qN94G6pz6qDs/sqmHdKlPSzZAuO
-	UHyWQrxDaSeXU8VWjzXygx3rzBUXZaKU6pdn8=
+	:content-type; s=sasl; bh=TnHMmXXEE/gWhmgV6km9Z2OEz60=; b=yY7ILw
+	s0SywGnsxex8bhfR1gWqvJcB7Ern9BzUBsLwt3u06MeuqnAB/1QRytXOcPK3CLuB
+	NWkTtSy5Ny8AgzM4C6F6cbi6yDB7ZA8FtpG88LU6LsyIsxZ3r3oiTDdD9CjZQXSe
+	KD6fXySdnR+3VmjWyxSBZcxe6icNXT3/FZMvM=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=t0vzWMC+wcgppQqCf6ZEN4ce44YDpWAe
-	zKK8ChwXcFAksLyoPJ/chFX3FmPXOxQ/54lwdXjlfcQlagyFhNFihH2U30RQsvzE
-	WV4sEoiZ14fofVxbtjm43AbIDdJYEbcGVzxyh9KtxJmCbLJWj0VR2jLxIUYtICFN
-	km7lxxzzqUY=
+	:content-type; q=dns; s=sasl; b=rrqar5u/ty7Bnh+jlW+eZI+TxepNEujo
+	+hnkFD/bIdnIDAqYaZR341X2EBLKI7mrhLjxBaSUffQ/p1caJRBoPNdUeciNMtwC
+	I8OS+V811XKIPzK7eCNfoUiOFuwdAWcPff/fMq/o06p51NiTh/xo0S4fsk/4D5dx
+	FqbSXeMDKRg=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 33AE333B9;
-	Fri, 10 Dec 2010 17:29:40 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 365693418;
+	Fri, 10 Dec 2010 17:32:50 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 48E9D33B8; Fri, 10 Dec 2010
- 17:29:37 -0500 (EST)
-In-Reply-To: <1291848695-24601-2-git-send-email-ydirson@altern.org> (Yann
- Dirson's message of "Wed\,  8 Dec 2010 23\:51\:30 +0100")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5C0CB3415; Fri, 10 Dec 2010
+ 17:32:47 -0500 (EST)
+In-Reply-To: <1291848695-24601-3-git-send-email-ydirson@altern.org> (Yann
+ Dirson's message of "Wed\,  8 Dec 2010 23\:51\:31 +0100")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FA52A822-04AC-11E0-8225-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 6B941070-04AD-11E0-B71F-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163443>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163444>
 
-Yann Dirson <ydirson@altern.org> writes:
-
-> +Suffix meanings are as follows:
-> +
-> +`check`::
-> +...
-> +* those defining the generic algorithms
-
-Yuck.
-
-All of these feel way overengineered and at the same time too rigid and
-brittle.
-
-I have a suspicion that the "convenience" macros that generate many
-functions and definitions are the main culprit.  For example, why do all
-the functions generated by a "convenience" macro must share the same
-MAYBESTATIC?  "binsearch" takes a comparison function pointer, and always
-picks the midpoint, but what is the performance implication if we wanted
-to use sorted-array.h to rewrite say sha1-lookup.c?  How can an API user
-who wants to use declare_sorted_array_insert_checkbook() easily figure out
-what other macros fromt this family can be used without getting the same
-thing generated twice?  If somebody wanted to have a sorted array in a
-struct, it may be tempting to use declare_sorted_array() with an empty
-MAYBESTATIC inside struct's field declaration (even when the struct itself
-is static---which leaves a queasy feeling, but that is a separate issue),
-and the _current_ macro definition of declare_sorted_array() may allow
-such a usage work perfectly fine, but how can such an API user be rest
-assured it won't break in later revisions of these macros?
-
-In addition, these macros in this patch are almost unreadable, but that
-probably is mostly a fault of C's macro, not yours.
+Separating "locate with 'please optionally create'" into "locate" and
+"register" looks like the right thing to do to make the callers easier to
+read.
