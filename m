@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 07/10] vcs-svn: split off function to make 'ls' requests
-Date: Fri, 10 Dec 2010 04:27:16 -0600
-Message-ID: <20101210102716.GG26331@burratino>
+Subject: [PATCH 08/10] vcs-svn: prepare to eliminate repo_tree structure
+Date: Fri, 10 Dec 2010 04:28:06 -0600
+Message-ID: <20101210102806.GH26331@burratino>
 References: <20101210102007.GA26298@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -11,45 +11,45 @@ Cc: David Barr <david.barr@cordelta.com>,
 	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
 	Tomas Carnecky <tom@dbservice.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 10 11:27:40 2010
+X-From: git-owner@vger.kernel.org Fri Dec 10 11:28:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PR0CR-0004a5-Jb
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 11:27:39 +0100
+	id 1PR0DN-0004z4-Ta
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 11:28:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753168Ab0LJK1e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Dec 2010 05:27:34 -0500
-Received: from mail-gw0-f42.google.com ([74.125.83.42]:57340 "EHLO
-	mail-gw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751698Ab0LJK1e (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Dec 2010 05:27:34 -0500
-Received: by gwb20 with SMTP id 20so2886991gwb.1
-        for <git@vger.kernel.org>; Fri, 10 Dec 2010 02:27:33 -0800 (PST)
+	id S1754308Ab0LJK2Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Dec 2010 05:28:25 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:43164 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753196Ab0LJK2Y (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Dec 2010 05:28:24 -0500
+Received: by yxt3 with SMTP id 3so1934191yxt.19
+        for <git@vger.kernel.org>; Fri, 10 Dec 2010 02:28:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=a/wgDIDH7OGm9mnbHWuOfwtnrx7N3+6W/LSTuis7PD8=;
-        b=MT0kvoArXJ+51hizCVVCYHykx50CQiW8eKZ7muhR0Vt0+C8Z4SnGD2jUCNuGl42QU1
-         UulssYc+u6ojtc92hfTj1zQSmH13othorxeOh2X3YBGhATCX/SfmCjDQgFZhEwWSRTk0
-         lZ1+UsqVRLjYSM8xXmJ74oCD0VdmXQ3fCgXrI=
+        bh=e1jtUFwtcfzrbPLwwvlEEa8MnuZyp9+KFy7H1ukT1dQ=;
+        b=Tqckx6QCqf6Aw6LAqAP7htKg0uo+FxHVXQ8RSII4jM1rW5IfalSQFcv2H4mINLFPQ1
+         J1ccvcZj+R2oiG4xmMFGsEiUxgEqrmjoZ3u2xSZF0JxVyK7lSDyKNJj46UwuFPmXICk3
+         NbBWWuGL5n6pClZapYFR4vWHXGZGWkqOw2K8w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=ZPBX/Iu1AyoU5DjlswDrH7VkIAU9bna2O6q3yYszTrEQKpmGJvgx9ZlSlWH3/YlddZ
-         R2+w5e8QfMN+iblrlrSYHViNBgayAQESAVNsBxi93KlnV3AbvoErpKzMJ9HPMKDhDEFJ
-         17RYaN8RQjnOKyiT9phT2Xx997k8Z5UwuoiOw=
-Received: by 10.90.81.4 with SMTP id e4mr925990agb.103.1291976853272;
-        Fri, 10 Dec 2010 02:27:33 -0800 (PST)
-Received: from burratino (adsl-69-209-58-175.dsl.chcgil.ameritech.net [69.209.58.175])
-        by mx.google.com with ESMTPS id d15sm3153808ana.35.2010.12.10.02.27.31
+        b=VWPtDIOWFNqLPkLUpZDfTyNlYjfysOPQ/6INsBJyg2Q9nx8/aFGWT+kSKwyO9FpCMA
+         ItqweEszEKWk6pdsjZ6kJCedeolFD5eERWgoe0LGcdrSf6bddSIIpiEQhPlwufc8QQl8
+         VMIs94LYXzAFgHHbTQcD0Mi9SuMc8RZrPtODs=
+Received: by 10.90.70.2 with SMTP id s2mr872388aga.184.1291976903469;
+        Fri, 10 Dec 2010 02:28:23 -0800 (PST)
+Received: from burratino (adsl-69-209-58-175.dsl.chcgil.sbcglobal.net [69.209.58.175])
+        by mx.google.com with ESMTPS id 37sm3158988anr.4.2010.12.10.02.28.21
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 10 Dec 2010 02:27:32 -0800 (PST)
+        Fri, 10 Dec 2010 02:28:22 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20101210102007.GA26298@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -57,48 +57,105 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163403>
+
+Currently svn-fe processes each commit in two stages: first decide
+on the correct content for all paths and export the relevant blobs,
+then export a commit with the result.
+
+But we can keep less state and simplify svn-fe a great deal by
+doing exporting the commit in one stage: use 'inline' blobs for
+each path and remember nothing.  This way, the repo_tree structure
+could be eliminated, and we would get support for incremental
+imports 'for free'.
+
+Reorganize handle_node() along these lines.  This is just a code
+cleanup; the functional change to repo_tree will come later.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-ls_from_rev will survive; cat_from_rev will not.
+ vcs-svn/svndump.c |   32 +++++++++++++++++++++++---------
+ 1 files changed, 23 insertions(+), 9 deletions(-)
 
- vcs-svn/fast_export.c |   16 ++++++++++------
- 1 files changed, 10 insertions(+), 6 deletions(-)
-
-diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
-index cca9810..6a4a689 100644
---- a/vcs-svn/fast_export.c
-+++ b/vcs-svn/fast_export.c
-@@ -80,6 +80,15 @@ void fast_export_commit(uint32_t revision, uint32_t author, char *log,
- 	printf("progress Imported commit %"PRIu32".\n\n", revision);
- }
+diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
+index da968fa..649a468 100644
+--- a/vcs-svn/svndump.c
++++ b/vcs-svn/svndump.c
+@@ -201,11 +201,12 @@ static void handle_node(void)
+ 	uint32_t mark = 0, old_mode, old_mark;
+ 	const uint32_t type = node_ctx.type;
+ 	const int have_props = node_ctx.propLength != LENGTH_UNKNOWN;
++	const int have_text = node_ctx.textLength != LENGTH_UNKNOWN;
  
-+static void ls_from_rev(uint32_t rev, const uint32_t *path)
-+{
-+	/* ls :5 "path/to/old/file" */
-+	printf("ls :%"PRIu32" \"", rev);
-+	pool_print_seq(REPO_MAX_PATH_DEPTH, path, '/', stdout);
-+	printf("\"\n");
-+	fflush(stdout);
-+}
+-	if (node_ctx.textLength != LENGTH_UNKNOWN)
++	if (have_text)
+ 		mark = next_blob_mark();
+ 	if (node_ctx.action == NODEACT_DELETE) {
+-		if (mark || have_props || node_ctx.srcRev)
++		if (have_text || have_props || node_ctx.srcRev)
+ 			die("invalid dump: deletion node has "
+ 				"copyfrom info, text, or properties");
+ 		return repo_delete(node_ctx.dst);
+@@ -219,8 +220,13 @@ static void handle_node(void)
+ 		if (node_ctx.action == NODEACT_ADD)
+ 			node_ctx.action = NODEACT_CHANGE;
+ 	}
+-	if (mark && type == REPO_MODE_DIR)
++	if (have_text && type == REPO_MODE_DIR)
+ 		die("invalid dump: directories cannot have text attached");
 +
- static int ends_with(const char *s, size_t len, const char *suffix)
- {
- 	const size_t suffixlen = strlen(suffix);
-@@ -150,12 +159,7 @@ static off_t cat_from_rev(uint32_t rev, const uint32_t *path)
- 	off_t length = length;
- 	struct strbuf blob_name = STRBUF_INIT;
- 
--	/* ls :5 "path/to/old/file" */
--	printf("ls :%"PRIu32" \"", rev);
--	pool_print_seq(REPO_MAX_PATH_DEPTH, path, '/', stdout);
--	printf("\"\n");
--	fflush(stdout);
--
-+	ls_from_rev(rev, path);
- 	response = get_response_line();
- 	if (parse_ls_response_line(response, &blob_name))
- 		die("invalid ls response: %s", response);
++	/*
++	 * Find old content (old_mark) and decide on the new content (mark)
++	 * and mode (node_ctx.type).
++	 */
+ 	if (node_ctx.action == NODEACT_CHANGE && !~*node_ctx.dst) {
+ 		if (type != REPO_MODE_DIR)
+ 			die("invalid dump: root of tree is not a regular file");
+@@ -228,7 +234,9 @@ static void handle_node(void)
+ 	} else if (node_ctx.action == NODEACT_CHANGE) {
+ 		uint32_t mode;
+ 		old_mark = repo_read_path(node_ctx.dst);
+-		mode = repo_modify_path(node_ctx.dst, 0, mark);
++		if (!have_text)
++			mark = old_mark;
++		mode = repo_modify_path(node_ctx.dst, 0, 0);
+ 		if (!mode)
+ 			die("invalid dump: path to be modified is missing");
+ 		if (mode == REPO_MODE_DIR && type != REPO_MODE_DIR)
+@@ -237,23 +245,29 @@ static void handle_node(void)
+ 			die("invalid dump: cannot modify a file into a directory");
+ 		node_ctx.type = mode;
+ 	} else if (node_ctx.action == NODEACT_ADD) {
+-		if (!mark && type != REPO_MODE_DIR)
++		if (!have_text && type != REPO_MODE_DIR)
+ 			die("invalid dump: adds node without text");
+-		repo_add(node_ctx.dst, type, mark);
+ 		old_mark = 0;
+ 	} else {
+ 		die("invalid dump: Node-path block lacks Node-action");
+ 	}
++
++	/*
++	 * Adjust mode to reflect properties.
++	 */
+ 	old_mode = node_ctx.type;
+ 	if (have_props) {
+ 		if (!node_ctx.prop_delta)
+ 			node_ctx.type = type;
+ 		if (node_ctx.propLength)
+ 			read_props();
+-		if (node_ctx.type != old_mode)
+-			repo_modify_path(node_ctx.dst, node_ctx.type, mark);
+ 	}
+-	if (!mark)
++
++	/*
++	 * Save the result.
++	 */
++	repo_add(node_ctx.dst, node_ctx.type, mark);
++	if (!have_text)
+ 		return;
+ 	if (!node_ctx.text_delta) {
+ 		fast_export_blob(node_ctx.type, mark, node_ctx.textLength, &input);
 -- 
 1.7.2.4
