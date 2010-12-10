@@ -1,195 +1,101 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 16/18] gitweb: When changing output (STDOUT) change STDERR as well
-Date: Thu, 09 Dec 2010 17:36:02 -0800 (PST)
-Message-ID: <m3vd32z9yk.fsf@localhost.localdomain>
-References: <1291931844-28454-1-git-send-email-warthog9@eaglescrag.net>
-	<1291931844-28454-17-git-send-email-warthog9@eaglescrag.net>
+From: Neal Kreitzinger <neal@rsss.com>
+Subject: RE: Tonight's pushout
+Date: Fri, 10 Dec 2010 01:25:16 +0000
+Message-ID: <E54235A96EB484418EBD9509F37176D210049AEE@htmail10.hightouchinc.com>
+References: <7v8w01m27t.fsf@alter.siamese.dyndns.org>
+ <idotn7$9o7$1@dough.gmane.org> <20101209200143.GC6884@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: "John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Fri Dec 10 02:36:16 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 10 02:47:35 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PQruB-0003AT-FH
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 02:36:15 +0100
+	id 1PQs58-0007Ma-9L
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 02:47:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757780Ab0LJBgG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 9 Dec 2010 20:36:06 -0500
-Received: from mail-fx0-f43.google.com ([209.85.161.43]:51807 "EHLO
-	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757648Ab0LJBgE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 9 Dec 2010 20:36:04 -0500
-Received: by fxm18 with SMTP id 18so3185852fxm.2
-        for <git@vger.kernel.org>; Thu, 09 Dec 2010 17:36:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=/P/iApvCCsPT2fQaf+8/hjz4QTZfjtpYZReFAiOHWlI=;
-        b=dI9AqiO6K48kGtmC8OB3uBET28f1AT53sA9Hs6fPsUcl3+NA2bONpKDntVoL7imcep
-         q0AEFjABtCE0loI0H/XCxnd/C2bDSiAQ7YVDs0LW0HjL+z4slXKtWYmaPayGmt3AhF8q
-         /JSyp0LN06lt8Eryfga42T5MQNuyZFwXaGS3c=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=jZTCn0cyRcr+bQW7wOpfM7gTNtdda07BB8i/utmddWSOYtzRDD8lO7wJk/u2PI+zov
-         xKHUBkWryKmEa7fDjkmMOXz2HcaaL8e+3+VxbNSmtT6jX+vx8ECsX2DfPxbOnEJULvLO
-         DzqEa3lhuc9nbYA4ce6aYlkPgxZcCHZQgFbZk=
-Received: by 10.223.125.207 with SMTP id z15mr184666far.42.1291944962940;
-        Thu, 09 Dec 2010 17:36:02 -0800 (PST)
-Received: from localhost.localdomain (abvv86.neoplus.adsl.tpnet.pl [83.8.219.86])
-        by mx.google.com with ESMTPS id n3sm751457fax.7.2010.12.09.17.36.01
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 09 Dec 2010 17:36:02 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oBA1ZVgC021370;
-	Fri, 10 Dec 2010 02:35:42 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id oBA1ZFQF021365;
-	Fri, 10 Dec 2010 02:35:15 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1291931844-28454-17-git-send-email-warthog9@eaglescrag.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1757721Ab0LJBqb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 9 Dec 2010 20:46:31 -0500
+Received: from mail.hightouchinc.com ([64.66.99.145]:27753 "EHLO
+	htnospam.hightouchinc.com" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1757433Ab0LJBqa convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>); Thu, 9 Dec 2010 20:46:30 -0500
+X-Greylist: delayed 1263 seconds by postgrey-1.27 at vger.kernel.org; Thu, 09 Dec 2010 20:46:30 EST
+Received: from htnospam.hightouchinc.com (127.0.0.1) by htnospam.hightouchinc.com (MlfMTA v3.2r9) id h0637c0171s4 for <git@vger.kernel.org>; Thu, 9 Dec 2010 19:25:19 -0600 (envelope-from <neal@rsss.com>)
+Received: from htmail10.hightouchinc.com ([172.19.10.53])
+	by htnospam.hightouchinc.com (SonicWALL 7.2.4.3925)
+	with ESMTP; Thu, 09 Dec 2010 19:25:19 -0600
+Received: from htmail10.hightouchinc.com ([fe80::cdfc:24b4:b881:8bf1]) by
+ htmail10.hightouchinc.com ([::1]) with mapi id 14.01.0180.002; Thu, 9 Dec
+ 2010 19:25:18 -0600
+Thread-Topic: Tonight's pushout
+Thread-Index: AQHLl9vygcsnZdbOkUq8boopHnixdpOY2zeQ
+In-Reply-To: <20101209200143.GC6884@burratino>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [172.25.2.210]
+X-Mlf-Version: 7.2.4.3925
+X-Mlf-UniqueId: o201012100125190053071
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163377>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163378>
 
-"John 'Warthog9' Hawley" <warthog9@eaglescrag.net> writes:
+Jonathan,
 
-> This sets up a trap for STDERR as well as STDOUT.  This should
-> prevent any transient error messages from git itself percolating
-> up to gitweb and outputting errant information before the HTTP
-> header has been sent.
+Thanks for pointing that out.  I tried to preserve the cclist per your observation.  My newsreader is outlook express and my mail client is outlook.  As a result, I can only preserve the entire cc list on actual emails in my inbox.  So in this case Junio was preserved in the cclist because I was able to reply-to-all in outlook (not outlook express).  (But I took him out manually because I don't want to annoy him.)  If I reply to a message on the newsgroup that was not explicitly emailed to me, then only the newsgroup is cc'd and any extra-newsgroup cc list is lost.  I can see the sender's original cc list in outlook express in a header box at the top of the message preview pane, but I can't copy it (not even with hilite-copy).  So in those cases I can only reply to the sender and the newsg
+ roup, not to the extra-newsgroup cc list.  Outlook only allows:
 
-Hmm... anuthing that happens after 'use CGI::Carp;' is parsed should
-have STDERR redirected to web server logs, see CGI::Carp manpage
+"reply to newsgroup and not anyone else, not even the sender" (aka Reply-Group), 
+"reply only to the sender" (aka Reply),
+"reply to the sender and cc the newsgroup only" (aka Reply-All)
 
-    [...]
- 
-       use CGI::Carp
+There is no option to "reply to sender and preserve the sender's entire original cc list".
 
-    And the standard warn(), die (), croak(), confess() and carp() calls will
-    automagically be replaced with functions that write out nicely time-stamped
-    messages to the HTTP server error log.
+Maybe I need a better newsreader.  I like how outlook express keeps the threads grouped together by the parent thread so I can expand the thread or collapse it.  I don't like that can't preserve the extra-newgroup cclist.  I appreciate your help as this is my first newsgroup I've ever posted to, and I apologize for any bad-newsgroup-etiquette due to my ignorance.
 
-    [...]
+v/r,
+Neal
 
-    REDIRECTING ERROR MESSAGES
+-----Original Message-----
+From: Jonathan Nieder [mailto:jrnieder@gmail.com] 
+Sent: Thursday, December 09, 2010 2:02 PM
+To: Neal Kreitzinger
+Cc: git@vger.kernel.org; Junio C Hamano
+Subject: Re: Tonight's pushout
 
-       By default, error messages are sent to STDERR.  Most HTTPD servers direct
-       STDERR to the server's error log.
+Neal Kreitzinger wrote:
 
-    [...]
+> "prerelease freeze" is not in the git-workflows manpage.  I'm interested in 
+> how you-all do this because I use the git-workflows mangpage to help me 
+> figure out my workflows.  Can someone explain?
 
-Especially the second part.
+See http://en.wikipedia.org/wiki/Freeze_(software_engineering)
 
+In git's incarnation of it, presumably the idea is that new features
+do not get merged to 'master' (while they still would be merged to
+'pu' and perhaps 'next').
 
-Could you give us example which causes described misbehaviour?
+See also <http://sites.google.com/site/maintnotes/> for some direct
+discussion of the branches used by git.git.
 
-I have nothing against this patch: if you have to have it, then you
-have to have it.  I oly try to understand what might be core cause
-behind the issue that this patch is to solve...
+Hope that helps,
+Jonathan [1]
 
-> Signed-off-by: John 'Warthog9' Hawley <warthog9@eaglescrag.net>
-> ---
->  gitweb/gitweb.perl  |   22 +++++++++++++++++++++-
->  gitweb/lib/cache.pl |   22 ----------------------
->  2 files changed, 21 insertions(+), 23 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 7f8292e..d39982a 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -1214,6 +1214,10 @@ sub evaluate_argv {
->  sub change_output {
->  	our $output;
->  
-> +	#
-> +	# STDOUT
-> +	#
-> +
->  	# Trap the 'proper' STDOUT to STDOUT_REAL for things like error messages and such
->  	open(STDOUT_REAL,">&STDOUT") or die "Unable to capture STDOUT $!\n";
->  	print STDOUT_REAL "";
-> @@ -1223,12 +1227,28 @@ sub change_output {
->  
->  	# Trap STDOUT to the $output variable, which is what I was using in the original
->  	# patch anyway.
-> -	open(STDOUT,">", \$output) || die "Unable to open STDOUT: $!"; #open STDOUT handle to use $var
-> +	open(STDOUT,">", \$output) || die "Unable to open STDOUT: $!"; #open STDOUT handle to use $output
-> +
-> +	#
-> +	# STDERR
-> +	#
-> +
-> +	# Trap the 'proper' STDOUT to STDOUT_REAL for things like error messages and such
-> +	open(STDERR_REAL,">&STDERR") or die "Unable to capture STDERR $!\n";
-> +	print STDERR_REAL "";
+[1] Unrelated note: please try to preserve the cc list in replies
+(i.e., "reply-to-all-by-mail" rather than "followup").
 
-'print STDERR_REAL "";' nicely solves the spurious warning problem.
-Nice.
-
-> +
-> +	# Close STDOUT, so that it isn't being used anymore.
-> +	close STDERR;
-> +
-> +	# Trap STDOUT to the $output variable, which is what I was using in the original
-> +	# patch anyway.
-> +	open(STDERR,">", \$output_err) || die "Unable to open STDERR: $!"; #open STDERR handle to use $output_err
-
-Err... where $output_err is defined?
-
->  }
->  
->  sub reset_output {
->  	# This basically takes STDOUT_REAL and puts it back as STDOUT
->  	open(STDOUT,">&STDOUT_REAL");
-> +	open(STDERR,">&STDERR_REAL");
->  }
->  
->  sub run {
-> diff --git a/gitweb/lib/cache.pl b/gitweb/lib/cache.pl
-> index 28e4240..a8c902d 100644
-> --- a/gitweb/lib/cache.pl
-> +++ b/gitweb/lib/cache.pl
-> @@ -380,28 +380,6 @@ EOF
->  	return;
->  }
->  
-> -sub cacheDisplayErr {
-> -
-> -	return if ( ! -e "$fullhashpath.err" );
-> -
-> -	open($cacheFileErr, '<:utf8', "$fullhashpath.err");
-> -	$lockStatus = flock($cacheFileErr,LOCK_SH|LOCK_NB);
-> -
-> -	if (! $lockStatus ){
-> -		show_warning(
-> -				"<p>".
-> -				"<strong>*** Warning ***:</strong> Locking error when trying to lock error cache page, file $fullhashpath.err<br/>/\n".
-> -				"This is about as screwed up as it gets folks - see your systems administrator for more help with this.".
-> -				"<p>"
-> -				);
-> -	}
-> -
-> -	while( <$cacheFileErr> ){
-> -		print $_;
-> -	}
-> -	exit(0);
-> -}
-
-Errr... in which patch it was added?
-
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+"This message may contain confidential and/or privileged 
+information. If you are not the addressee or authorized to 
+receive this for the addressee, you must not use, copy, 
+disclose, or take any action based on this message or any 
+information herein. If you have received this message in error, 
+please advise the sender immediately by reply e-mail and delete 
+this message. Thank you for your cooperation."
