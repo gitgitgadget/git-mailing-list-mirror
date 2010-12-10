@@ -1,152 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] transport-helper: avoid dependency on thread-utils.h
-Date: Fri, 10 Dec 2010 10:21:48 -0800
-Message-ID: <7vhbeleber.fsf@alter.siamese.dyndns.org>
-References: <20101210114839.GA5771@burratino>
+From: =?UTF-8?B?UMOpdGVyIEFuZHLDoXMgRmVsdsOpZ2k=?= <petschy@gmail.com>
+Subject: Oops, I screwed it up
+Date: Fri, 10 Dec 2010 19:31:23 +0100
+Message-ID: <AANLkTi=eFmCjdBYHx9Jy=Q7993GghuV1dp12E4Aj7pkZ@mail.gmail.com>
+References: <AANLkTinyZ-dqV5=yaucLZTj14hdxS61v=VT-j82SqN7r@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 10 19:22:13 2010
+Content-Type: text/plain; charset=UTF-8
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 10 19:31:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PR7ba-0001VK-Lq
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 19:22:07 +0100
+	id 1PR7kf-0006VA-M5
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 19:31:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751133Ab0LJSV7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Dec 2010 13:21:59 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36755 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750790Ab0LJSV7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Dec 2010 13:21:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D3E8432FB;
-	Fri, 10 Dec 2010 13:22:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pmXa7okYrcjlFUVd5kfamRzxxfU=; b=Ai2FA+
-	J5kmha8XE5gfW4UinKGV7zmVQhPDQ2bsJnsAQZs4SYJGFjcvK/cZT24q3VvkHgmJ
-	GcZ+9yFiHX4XcUudxSaDRkMJE1iZDwUF4MCjrmKxDopMmLwvmD6ajTNZp37MtAba
-	NDOkrnT4jz+p7BOB6CSbjHnsDNBvU06vUePlo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=wz8Q9Osuj+ZTdrCHV6dQQWISuPsQ+rca
-	wrju/N327s3LHtAb+SnxgnfOuRyoVnexV7LFQBwAUmQkDTQ4PFxnmMnfEYSP0SnL
-	0JVk7QeJ9llH3+XWvWJbcSNlk5Uoqlai2Xj8fWWlbtoDCYT9I3pz7RZpjXcmJl2h
-	Mq7gSriHPZE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A419C32F6;
-	Fri, 10 Dec 2010 13:22:19 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4402132F3; Fri, 10 Dec 2010
- 13:22:15 -0500 (EST)
-In-Reply-To: <20101210114839.GA5771@burratino> (Jonathan Nieder's message of
- "Fri\, 10 Dec 2010 05\:48\:39 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6CAC20B0-048A-11E0-A0BA-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1753421Ab0LJSbZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Dec 2010 13:31:25 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:34719 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752342Ab0LJSbY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Dec 2010 13:31:24 -0500
+Received: by ywl5 with SMTP id 5so2263307ywl.19
+        for <git@vger.kernel.org>; Fri, 10 Dec 2010 10:31:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:content-type;
+        bh=w8q3xu+trh5rQx8SaLRNilGEJicTQ3/gC/qCtocAVbI=;
+        b=JwKPM1vF+Am6EKFi2nVZ+ssM+cJqB1WWIsmS21iJjYrfTamRcqlYVT2tRhsrgBQsqR
+         Sb4BO/I+1Ai5bN9dYFhAr5S68goI340GloPfdLg+tAvMtnj9ePkGgBVgcu41Mivh1oTe
+         +1IBPe37KhsO8CdJoYazBsVcImb9dSTMe2KL0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        b=VzWrEt3oqoFIKs3nGRqmxXJavgbL84a9xvfKrAP9TcDfVy+6Jobgq8JKcdwuN4pJ8/
+         2jlTxX3VqoaTU0aNDRXakWHY4g2z28LMDMTAeWS5h+stkwdXGZw4fR7OIafvHoZQ3xDS
+         pXOCZLvkplSJXma6jp8+HVPf0LH42ttRW6Stg=
+Received: by 10.42.174.134 with SMTP id v6mr824179icz.226.1292005883442; Fri,
+ 10 Dec 2010 10:31:23 -0800 (PST)
+Received: by 10.42.230.195 with HTTP; Fri, 10 Dec 2010 10:31:23 -0800 (PST)
+In-Reply-To: <AANLkTinyZ-dqV5=yaucLZTj14hdxS61v=VT-j82SqN7r@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163425>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Dear All,
 
-> Since the transport-helper does not use recursive mutexes or ask the
-> number of cores, it does not require any declarations from the
-> thread-utils lib.  Removing the unnecessary #include avoids false
-> positives from "make CHECK_HEADER_DEPENDENCIES=1".
+I did some rebasing which ended in an unexpected result.
 
-Sorry, I was slow and took me some time to realize what is going on.
+This is what I did precisely:
+- added 3 files to the index, then committed (#1)
+- realized that a file was left out (not yet tracked), so added + committed it
+- stashed the local changes
+- used rebase -i to meld the last commit into the previous one (fixup)
+- stash pop
+- added more files to the index, committed (#2)
+- made some minor changes to a file committed in #1, added, committed
+- decided to meld into #1
+- there were 3 more locally changed files
+- stashed them
+- rebase -i, moved the last item one line up, set to fixup, so that it
+melds into #1
+- stash pop: surprise! the stash was empty
 
-Isn't it more like "Makefile does not say transport-helper.o depends on
-thread-utils.h, but transport-helper.c does include it"?  IOW, it not a
-false positive; perhaps a real but an unnecessary positive.
+git log --stat showed that the 3 stashed files got melded into commit #1, too.
 
-> The #include directive in question was added in 7851b1e60
-> (remote-fd/ext: finishing touches after code review, 2010-11-17),
-> at the same times as the necessary #include for <pthread.h>.
+I didn't expect this. Is this the normal operation?
 
-I think the whole four-line block was cut & paste from other places that
-use the threading, namely grep.c and pack-objects.c.
+I was able to undo the effects by rebase -i, edit (as in the git
+rebase manpage under SPLITTING COMMITS), committing again w/o the 3
+files I didn't need, saving them to a temp dir, revert them via
+checkout, rebase --continue, then move the files from temp to have
+them locally changed again. This is where I would have been if stash
+pop succeeded.
 
-I wonder if it is better to do something like this instead.  This way, we
-can later add more things that threaded part of the system would need to
-thread-utils.h inside "ifndef NO_PTHREADS" and they will automatically get
-included by all the threaders.
+The files in commit #1, #2, and the last 3 locally changed ones where disjunct.
 
+I don't know how those 3 locally changed, stashed files ended up in
+the commit. I checked my command line history, I wasn't adding them.
 
- builtin/grep.c         |    4 ----
- builtin/pack-objects.c |    4 ----
- thread-utils.h         |    4 ++++
- transport-helper.c     |    4 ----
- 4 files changed, 4 insertions(+), 12 deletions(-)
+Unfortunately, I wasn't able to reproduce the phenomenon on a test
+repo, by 3 files:
+- commit a, b, c
+- change a, commit
+- change b, commit
+- change a, commit
+- change c
+- stash c
+- rebase -i to meld the two a's, making b the last commit
+- stash pop : it worked
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index adb5424..fdf7131 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -17,11 +17,7 @@
- #include "grep.h"
- #include "quote.h"
- #include "dir.h"
--
--#ifndef NO_PTHREADS
--#include <pthread.h>
- #include "thread-utils.h"
--#endif
- 
- static char const * const grep_usage[] = {
- 	"git grep [options] [-e] <pattern> [<rev>...] [[--] <path>...]",
-diff --git a/builtin/pack-objects.c b/builtin/pack-objects.c
-index f027b3a..b0503b2 100644
---- a/builtin/pack-objects.c
-+++ b/builtin/pack-objects.c
-@@ -16,11 +16,7 @@
- #include "list-objects.h"
- #include "progress.h"
- #include "refs.h"
--
--#ifndef NO_PTHREADS
--#include <pthread.h>
- #include "thread-utils.h"
--#endif
- 
- static const char pack_usage[] =
-   "git pack-objects [ -q | --progress | --all-progress ]\n"
-diff --git a/thread-utils.h b/thread-utils.h
-index 1727a03..6fb98c3 100644
---- a/thread-utils.h
-+++ b/thread-utils.h
-@@ -1,7 +1,11 @@
- #ifndef THREAD_COMPAT_H
- #define THREAD_COMPAT_H
- 
-+#ifndef NO_PTHREADS
-+#include <pthread.h>
-+
- extern int online_cpus(void);
- extern int init_recursive_mutex(pthread_mutex_t*);
- 
-+#endif
- #endif /* THREAD_COMPAT_H */
-diff --git a/transport-helper.c b/transport-helper.c
-index 3a50856..4e4754c 100644
---- a/transport-helper.c
-+++ b/transport-helper.c
-@@ -8,11 +8,7 @@
- #include "quote.h"
- #include "remote.h"
- #include "string-list.h"
--
--#ifndef NO_PTHREADS
--#include <pthread.h>
- #include "thread-utils.h"
--#endif
- 
- static int debug;
- 
+Any ideas?
+
+I'm using git version 1.7.2.3 under Debian Squeeze AMD64.
+
+Please CC me, I'm not on the list. Thanks.
+
+Regards, Peter
