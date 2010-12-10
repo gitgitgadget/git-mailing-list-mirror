@@ -1,8 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [RFC/PATCH 00/10] vcs-svn: prepare for (implement?) incremental
- import
-Date: Fri, 10 Dec 2010 04:20:07 -0600
-Message-ID: <20101210102007.GA26298@burratino>
+Subject: [PATCH 01/10] vcs-svn: use higher mark numbers for blobs
+Date: Fri, 10 Dec 2010 04:21:35 -0600
+Message-ID: <20101210102135.GA26331@burratino>
+References: <20101210102007.GA26298@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: David Barr <david.barr@cordelta.com>,
@@ -11,119 +11,79 @@ Cc: David Barr <david.barr@cordelta.com>,
 	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
 	Tomas Carnecky <tom@dbservice.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 10 11:20:41 2010
+X-From: git-owner@vger.kernel.org Fri Dec 10 11:22:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PR05f-0001am-NG
-	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 11:20:40 +0100
+	id 1PR06y-0002BB-O1
+	for gcvg-git-2@lo.gmane.org; Fri, 10 Dec 2010 11:22:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753596Ab0LJKUc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Dec 2010 05:20:32 -0500
-Received: from mail-gw0-f42.google.com ([74.125.83.42]:45689 "EHLO
+	id S1754508Ab0LJKVz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Dec 2010 05:21:55 -0500
+Received: from mail-gw0-f42.google.com ([74.125.83.42]:39632 "EHLO
 	mail-gw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751428Ab0LJKUb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Dec 2010 05:20:31 -0500
-Received: by gwb20 with SMTP id 20so2882897gwb.1
-        for <git@vger.kernel.org>; Fri, 10 Dec 2010 02:20:30 -0800 (PST)
+	with ESMTP id S1753530Ab0LJKVy (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Dec 2010 05:21:54 -0500
+Received: by gwb20 with SMTP id 20so2883764gwb.1
+        for <git@vger.kernel.org>; Fri, 10 Dec 2010 02:21:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:mime-version:content-type:content-disposition:user-agent;
-        bh=7MohS5yyudbMw5ypOUuEQPrg+vLda/2pLuQOyrSruJI=;
-        b=qTFnMm2CTgdflevlCArj4zltKsjp6MdXBWztvGuOO7bCczDO/5HvqtGHbvMQk+mMmS
-         +NJ929yV/xYIomK7vxbxG8q84RifdzXu5f/K/TGuDPxBui5A5DUjSxgJOoM18ppdkcM8
-         d+m5oml10rxObqONnNYNrkTNdU0lkN2Y7ktGA=
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=ZumsJTtqjK/BXAfdT5GeLinXTnr4TNEnbY52UVHrO8s=;
+        b=NxapDM5e6PP1p4pEiu+cWc0dNrV86NOy5GFm8hMrZGhTFNm5pYvqJL8XFEdxWuAIrX
+         9rtj3eMkeLNv1ZQ28WJZq/sbh9Gx+yGN2uHJeXTCOmHfgIzZ1wByNWO+901dtjgpv0SQ
+         J05kXL5kaSyte/iN1mzWxRuKg6R3ek7lR5NAs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:mime-version:content-type
-         :content-disposition:user-agent;
-        b=NU5ZLGB2xbSZ6rg+r783D+k1IwWvmMZl13ousU3+6d/nN5w6vNOaT4zmVos9jVdvL3
-         ZoDH5m18X1DAx8FL+lr8/y7kgnCg8H6Vj8lEJCGRJvbII9iqUftbL2Us+fpCFozSmI5o
-         hdMZuUpxZijQV2fkR+kYJX9j6DkTS5QT3MHho=
-Received: by 10.151.47.3 with SMTP id z3mr1111557ybj.131.1291976428560;
-        Fri, 10 Dec 2010 02:20:28 -0800 (PST)
-Received: from burratino (adsl-69-209-58-175.dsl.chcgil.sbcglobal.net [69.209.58.175])
-        by mx.google.com with ESMTPS id p1sm1364598ybn.5.2010.12.10.02.20.26
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=AMLnInmloLcEwjC1FYJoOg1i5jCG9dXItWEx409aQKLTuiIFVGuudKQgdsatJRkdf2
+         LnIP7SJRVRDKaKBjIVeH5MNrdVEq99hWFhvy6vCuN8qVzd8QxT3ARtak6NGK2uh2nvPW
+         7I2YROu8Xk4kLFFVAn7pxt3dfuyb1+FzG9RXw=
+Received: by 10.42.220.136 with SMTP id hy8mr323038icb.380.1291976513262;
+        Fri, 10 Dec 2010 02:21:53 -0800 (PST)
+Received: from burratino (adsl-69-209-58-175.dsl.chcgil.ameritech.net [69.209.58.175])
+        by mx.google.com with ESMTPS id gy41sm2499692ibb.11.2010.12.10.02.21.51
         (version=SSLv3 cipher=RC4-MD5);
-        Fri, 10 Dec 2010 02:20:27 -0800 (PST)
+        Fri, 10 Dec 2010 02:21:52 -0800 (PST)
 Content-Disposition: inline
+In-Reply-To: <20101210102007.GA26298@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163395>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163396>
 
-Hi,
+Prepare to use mark :5 for the commit corresponding to r5 (and so on).
 
-Using David's "ls" command we can eliminate the in-memory repo_tree
-and rely on the target repository for information about old revs.
-This means all state that needs to persist between svn-fe runs is
-either in the target repo or in the marks file, so in theory this
-should allow incremental imports already (I haven't tried it).
+1 billion seems sufficiently high for blob marks to avoid conflicting
+with rev marks, while still leaving room for 3 billion blobs.  Such
+high mark numbers cause trouble with ancient fast-import versions, but
+this topic cannot support git fast-import versions before 1.7.4 (which
+introduces the cat-blob command) anyway.
 
-Caveats:
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ vcs-svn/repo_tree.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Not split up as nicely as it ought to be.  In particular, the last
-patch should be split up at least into one patch to modify git
-fast-import, another for the vcs-svn lib.  Perhaps it could be split
-finer than that.
-
-There is a potential deadlock, marked with NEEDSWORK.
-
-Error checking is not so great.  Error states tend to result in
-deadlock rather than a nicer error.
-
-In particular, we have no way to distinguish between a missing
-(nonsense) path and an empty directory.
-
-There's a little blind alley in the first few patches --- cat_mark and
-the function to apply deltas to an old rev do not survive to the end
-of the series.  I kept that because (1) I am lazy and (2) it serves as
-a quick intro to use of the "ls" command.
-
-Probably there are all sorts of bugs and unclear code.  I haven't
-tested beyond running the test suite.
-
-You can find the series alone at
-
-	git://repo.or.cz/git/jrn.git refs/topics/db/vcs-svn-incremental
-
-and merged with other topics at
-
-	git://repo.or.cz/git/jrn.git vcs-svn-pu
-
-Requires the db/text-delta and db/fast-import-blob-access topics,
-available from the same place.
-
-Any thoughts would be welcome.
-
-Jonathan Nieder (10):
-  vcs-svn: use higher mark numbers for blobs
-  vcs-svn: save marks for imported commits
-  vcs-svn: introduce cat_mark function to retrieve a marked blob
-  vcs-svn: make apply_delta caller retrieve preimage
-  vcs-svn: split off function to export result from delta application
-  vcs-svn: do not rely on marks for old blobs
-  vcs-svn: split off function to make 'ls' requests
-  vcs-svn: prepare to eliminate repo_tree structure
-  vcs-svn: simplifications for repo_modify_path et al
-  vcs-svn: eliminate repo_tree structure
-
- cache.h               |    2 +
- fast-import.c         |   42 +++++--
- t/t9010-svn-fe.sh     |   55 +++++----
- vcs-svn/fast_export.c |  168 +++++++++++++++++++------
- vcs-svn/fast_export.h |   22 +++-
- vcs-svn/repo_tree.c   |  333 ++++---------------------------------------------
- vcs-svn/repo_tree.h   |    6 +-
- vcs-svn/string_pool.c |    2 +-
- vcs-svn/string_pool.h |    2 +-
- vcs-svn/svndump.c     |   89 +++++++++----
- 10 files changed, 301 insertions(+), 420 deletions(-)
-
+diff --git a/vcs-svn/repo_tree.c b/vcs-svn/repo_tree.c
+index eb55636..a4d8340 100644
+--- a/vcs-svn/repo_tree.c
++++ b/vcs-svn/repo_tree.c
+@@ -298,7 +298,7 @@ void repo_commit(uint32_t revision, uint32_t author, char *log, uint32_t uuid,
+ static void mark_init(void)
+ {
+ 	uint32_t i;
+-	mark = 0;
++	mark = 1024 * 1024 * 1024;
+ 	for (i = 0; i < dent_pool.size; i++)
+ 		if (!repo_dirent_is_dir(dent_pointer(i)) &&
+ 		    dent_pointer(i)->content_offset > mark)
 -- 
 1.7.2.4
