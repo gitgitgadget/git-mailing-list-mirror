@@ -1,80 +1,73 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC/PATCH] cherry-pick/revert: add support for
- -X/--strategy-option
-Date: Fri, 10 Dec 2010 20:35:37 -0600
-Message-ID: <20101211023537.GA12161@burratino>
-References: <20101211005144.GA6634@burratino>
- <7vvd319h50.fsf@alter.siamese.dyndns.org>
+From: Xin Wang <dram.wang@gmail.com>
+Subject: git calls SSH_ASKPASS even if DISPLAY is not set
+Date: Sat, 11 Dec 2010 11:24:28 +0800
+Message-ID: <AANLkTinES5dqt+JAMOrp7gAYJ4UgK9ipfEN9ag5qSCLp@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Justin Frankel <justin@cockos.com>,
-	Bert Wesarg <bert.wesarg@googlemail.com>,
-	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	Kevin Ballard <kevin@sb.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 11 03:36:17 2010
+Content-Type: text/plain; charset=windows-1252
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 11 04:33:03 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PRFJo-0002eC-Pj
-	for gcvg-git-2@lo.gmane.org; Sat, 11 Dec 2010 03:36:17 +0100
+	id 1PRGCg-0000er-Ip
+	for gcvg-git-2@lo.gmane.org; Sat, 11 Dec 2010 04:32:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752637Ab0LKCf7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Dec 2010 21:35:59 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:43394 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752118Ab0LKCf6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Dec 2010 21:35:58 -0500
-Received: by ywl5 with SMTP id 5so2438839ywl.19
-        for <git@vger.kernel.org>; Fri, 10 Dec 2010 18:35:58 -0800 (PST)
+	id S1754226Ab0LKDYa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 10 Dec 2010 22:24:30 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:42887 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753199Ab0LKDYa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 10 Dec 2010 22:24:30 -0500
+Received: by wyb28 with SMTP id 28so4117324wyb.19
+        for <git@vger.kernel.org>; Fri, 10 Dec 2010 19:24:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=p68Kbe/UkxuXfhbXxQ8pQiGWh7xhlCTcbp0IEz/lGLQ=;
-        b=aLN2qsUVJE/KpF6a1h1U6cVW1janfYajEYnTvV2IX98C5xCm6MBakn4GoLCCz7/PAZ
-         UyhfP9MC0oUMLpRaLeCHhqTWItZDcOem3+mmpzKE43z2CiJEQ5z6iirip3wW4utl+e92
-         wFcTOveEB/srCdaZ5lEblzpLwNBiNN3ZWfdTc=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type:content-transfer-encoding;
+        bh=Rwzk9JoDgn2n2ErG7Enc/RoIPTw1IJ4UIkrQ/kBq44A=;
+        b=Aqj9g78jRG/xQ7+Pu/GP2PnnhUctCZc7EhieTPAG1NDutdz3415efFVftqjsTgGs6l
+         aAJy2AvAF8r9Lz0Ul8W01TJtKKLM433qATmCOeW0Cp0XcjlRuhafwA+nlcc4gpwEWVUU
+         D13WxN4x3wIi+5JSA1w6FNe1MgxZGQC/NYFK8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Ox0HpIVdqUlpge7NUK041gP1OGkyF/iB4+n6oqaW5txrdi4o056t5UwDDpbdTONTnt
-         p6gE5wsAwTG4Bk3rmXaYBteitqlGZn6RhZI2X/Mxb4+jXI2Srjtf3hqauKIDFfFh8p3A
-         tlcUJymjxEjwrM3bSuWKO3UPZrAvHp/5diLrk=
-Received: by 10.236.103.133 with SMTP id f5mr3450789yhg.14.1292034958178;
-        Fri, 10 Dec 2010 18:35:58 -0800 (PST)
-Received: from burratino (adsl-69-209-58-175.dsl.chcgil.sbcglobal.net [69.209.58.175])
-        by mx.google.com with ESMTPS id q8sm2337146yhg.1.2010.12.10.18.35.56
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 10 Dec 2010 18:35:57 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vvd319h50.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=VtCxYOGaUghbJZnivq/d/LRvOrQPtCV16laPCJhcgq4CwuqyI01uRPo+RAwde+U9my
+         AO/UdZ0hNGwF7FZ6xz1Ncht6ersWskxrlD4URuyJmJpgexhRJbTSeFwBAMdKqSA0YwBu
+         3QWVmB1S/O1UR6hR7GJKVLHOFEGaj2oYATD0Q=
+Received: by 10.216.178.137 with SMTP id f9mr1930902wem.81.1292037868741; Fri,
+ 10 Dec 2010 19:24:28 -0800 (PST)
+Received: by 10.216.180.129 with HTTP; Fri, 10 Dec 2010 19:24:28 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163458>
 
-Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+Hi all,
 
->> 	$ git revert -Xrenormalize old-problematic-commit
-[...]
-> I guess this can also take "ignore whitespace", which might be a better
-> option for this particular use case?
+I'm using git 1.7.3.2 in Fedora 14. In Fedora, SSH_ASKPASS will set to
+be /usr/libexec/openssh/gnome-ssh-askpass in
+/etc/profile.d/gnome-ssh-askpass.sh, so this environment is set by
+login shell, and it will still be set even when X11 is not inuse.
 
-Suppose in olden days you checked in files with \r\n line endings and
-now you have switched to \n (attribute "crlf" or "text"), and in
-between there was a day in which the line endings were switched.
+According to ssh's manpage: "If ssh does not have a terminal
+associated with it but DISPLAY and SSH_ASKPASS are set, it will
+execute the program specified by SSH_ASKPASS and open an X11 window to
+read the passphrase." But git will call SSH_ASKPASS even if there is a
+terminal associated with it and DISPLAY is not set, then following
+warning is displayed and git failed to go through.
 
-Now you notice that old-problematic-commit is broken.  If that commit
-removed lines (which had \r\n line endings), then even with
--Xignore-space-at-eol, "git revert" will add them back verbatim.  By
-contrast, "git revert -Xrenormalize" would add them back in such a way
-as to follow the current line ending style.
+$ git fetch
+
+(gnome-ssh-askpass:1487): Gtk-WARNING **: cannot open display:
+
+I think it=91s better if git could implement behavior conforming to ssh=
+=2E
+
+
+Thanks,
+Xin Wang
