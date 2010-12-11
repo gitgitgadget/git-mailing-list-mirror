@@ -1,88 +1,337 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 11/18] gitweb: add isDumbClient() check
-Date: Sat, 11 Dec 2010 01:15:15 +0100
-Message-ID: <201012110115.16225.jnareb@gmail.com>
-References: <1291931844-28454-1-git-send-email-warthog9@eaglescrag.net> <4D01A5F3.8030108@eaglescrag.net> <7vzksd9nq2.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [RFC/PATCH] cherry-pick/revert: add support for -X/--strategy-option
+Date: Fri, 10 Dec 2010 18:51:44 -0600
+Message-ID: <20101211005144.GA6634@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: "J.H." <warthog9@eaglescrag.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Dec 11 01:15:48 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Justin Frankel <justin@cockos.com>,
+	Bert Wesarg <bert.wesarg@googlemail.com>,
+	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+	Kevin Ballard <kevin@sb.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Dec 11 01:52:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PRD7s-0000Lr-8l
-	for gcvg-git-2@lo.gmane.org; Sat, 11 Dec 2010 01:15:48 +0100
+	id 1PRDh7-0005Pz-LJ
+	for gcvg-git-2@lo.gmane.org; Sat, 11 Dec 2010 01:52:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757326Ab0LKAP0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 10 Dec 2010 19:15:26 -0500
-Received: from mail-fx0-f43.google.com ([209.85.161.43]:59792 "EHLO
-	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756378Ab0LKAPY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 10 Dec 2010 19:15:24 -0500
-Received: by mail-fx0-f43.google.com with SMTP id 18so4387083fxm.2
-        for <git@vger.kernel.org>; Fri, 10 Dec 2010 16:15:23 -0800 (PST)
+	id S1757360Ab0LKAwI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 10 Dec 2010 19:52:08 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:57028 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756539Ab0LKAwG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 10 Dec 2010 19:52:06 -0500
+Received: by ywl5 with SMTP id 5so2414535ywl.19
+        for <git@vger.kernel.org>; Fri, 10 Dec 2010 16:52:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=KpjJIxIvYY3ROJx/TI20Auyw3Q5ge1o/W5RaCBfFDyM=;
-        b=ulKeqgmmGRcw1rrPNSZSH0AOMkEV60Y0SdQS4V0PX4XQu5VzJ3oqmlHPvhrg/kgvg0
-         MdZDcjqQiitw1VQtCvUEV8PGlpDw3oviXhXEKYveSp2zbeZa+yzcwxdIFZEn6ukoIOXR
-         FaLQOt13ccroPYZ/hTPnKmF5smazdhSHQUyOw=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:mime-version:content-type:content-disposition:user-agent;
+        bh=2yWdTyTRHOpoX/aDSunqzozfYOioxWOAAmbcXLeAnY8=;
+        b=vqQHoU+oLs/hG6faexG1jZNwZJEP4ja2EGm9IubA5u0fl5By8VjbK2CXOfV9t5uBh4
+         Xf3C4gsz4F0vQRWbaV+i3+oeXEgKAgd5zsZpKUaUumoJtxdwVEJlRR1QbqAmf0uR5J4u
+         MZCiOoaWzwoy4hIszzVCikl5I29bXBKeRjGFE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=XFXPPeWogG/1y8ThhaI0p/68j2bIHPenwtNh2vOQZ3Di5kPssO0HF+1tPMO9eieHN9
-         HlzBvGR2eIHwwa9ZUFSsvw3yVWLH2JLznBvas0NrmtiRWgxjIF/uUpEvthV5S4VzWSHg
-         tXn4M3TnISqk+zf+oa0Ei9uyKMG/sf1+AXeSo=
-Received: by 10.223.83.206 with SMTP id g14mr1542936fal.129.1292026523489;
-        Fri, 10 Dec 2010 16:15:23 -0800 (PST)
-Received: from [192.168.1.13] (abvg16.neoplus.adsl.tpnet.pl [83.8.204.16])
-        by mx.google.com with ESMTPS id n26sm1076352fam.13.2010.12.10.16.15.21
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 10 Dec 2010 16:15:22 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vzksd9nq2.fsf@alter.siamese.dyndns.org>
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=wBGkg6x0mkjljoppE8OBvVJ5KutCNBqXU7vwbEIN3OLqqnXYp5MwLhuYLRybhGRiO0
+         9gXz2MPe5DP+r0RqP+JosZYK5XpfOHdndgDUtTvexTNei1wA8DKcnHxmJxl/WzNORJzV
+         jeJU4LS+86Hjigw8d2b74EWRGu3PXv9ixXL9A=
+Received: by 10.150.97.1 with SMTP id u1mr2476787ybb.74.1292028725814;
+        Fri, 10 Dec 2010 16:52:05 -0800 (PST)
+Received: from burratino (adsl-69-209-58-175.dsl.chcgil.ameritech.net [69.209.58.175])
+        by mx.google.com with ESMTPS id v4sm788340ybe.5.2010.12.10.16.52.02
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 10 Dec 2010 16:52:04 -0800 (PST)
 Content-Disposition: inline
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163453>
 
-Junio C Hamano wrote:
-> "J.H." <warthog9@eaglescrag.net> writes:
-> 
-> > My initial look indicated that perl-http-browserdetect wasn't available
-> > for RHEL / CentOS 5 - it is however available in EPEL.
-> >
-> > However there are a couple of things to note about User Agents at all:
-> > 	- They lie... a lot
-> > 	- Robots lie even more
-> >
-> > Blacklisting is still the better option, by a lot.  I'll re-work this
-> > some in v9, as I'm fine with the added dependency.
-> 
-> Thanks, both.  I sense that we finally are going to get a single version
-> of gitweb that can be used at larger sites ;-)
+For example, this would allow cherry-picking or reverting patches from
+a piece of history with a different end-of-line style, like so:
 
-I wouldn't be so optimistic.  While we borrow features and ideas from
-each other, the difference still remains that J.H. patches are bit hacky
-but are tested, while my rewrite is IMHO cleaner but untested (well, 
-untested on real life load).
+	$ git revert -Xrenormalize old-problematic-commit
 
-Anyway the main issue that was discovered by PATCHv6 by me, and v8 by J.H.
-is that die_error sucks... well, at least if background caching is enabled.
+Currently that is possible with manual use of merge-recursive but the
+cherry-pick/revert porcelain does not expose the functionality.
 
-Anyway, J.H. plans v9, I plan shortened rewrite.
+While at it, document the existing support for --strategy.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Thoughts?
+
+ Documentation/git-cherry-pick.txt  |   32 ++++++++++++++++++++++++++++++++
+ Documentation/git-revert.txt       |   10 ++++++++++
+ builtin/merge.c                    |    6 ++++--
+ builtin/revert.c                   |   29 ++++++++++++++++++++++-------
+ contrib/examples/git-revert.sh     |   13 ++++++++++++-
+ merge-recursive.h                  |    4 +++-
+ t/t3032-merge-recursive-options.sh |   14 ++++++++++++++
+ 7 files changed, 97 insertions(+), 11 deletions(-)
+
+diff --git a/Documentation/git-cherry-pick.txt b/Documentation/git-cherry-pick.txt
+index 7300870..749d68a 100644
+--- a/Documentation/git-cherry-pick.txt
++++ b/Documentation/git-cherry-pick.txt
+@@ -79,6 +79,16 @@ effect to your index in a row.
+ 	cherry-pick'ed commit, then a fast forward to this commit will
+ 	be performed.
+ 
++--strategy=<strategy>::
++	Use the given merge strategy.  Should only be used once.
++	See the MERGE STRATEGIES section in linkgit:git-merge[1]
++	for details.
++
++-X<option>::
++--strategy-option=<option>::
++	Pass the merge strategy-specific option through to the
++	merge strategy.  See linkgit:git-merge[1] for details.
++
+ EXAMPLES
+ --------
+ git cherry-pick master::
+@@ -120,6 +130,28 @@ git rev-list --reverse master \-- README | git cherry-pick -n --stdin::
+ 	so the result can be inspected and made into a single new
+ 	commit if suitable.
+ 
++The following sequence attempts to backport a patch, bails out because
++the code the patch applies to has changed too much, and then tries
++again, this time exercising more care about matching up context lines.
++
++------------
++$ git cherry-pick topic^             <1>
++$ git diff                           <2>
++$ git reset --merge ORIG_HEAD        <3>
++$ git cherry-pick -Xpatience topic^  <4>
++------------
++<1> apply the change that would be shown by `git show topic^`.
++In this example, the patch does not apply cleanly, so
++information about the conflict is written to the index and
++working tree and no new commit results.
++<2> summarize changes to be reconciled
++<3> cancel the cherry-pick.  In other words, return to the
++pre-cherry-pick state, preserving any local modifications you had in
++the working tree.
++<4> try to apply the change introduced by `topic^` again,
++spending extra time to avoid mistakes based on incorrectly matching
++context lines.
++
+ Author
+ ------
+ Written by Junio C Hamano <gitster@pobox.com>
+diff --git a/Documentation/git-revert.txt b/Documentation/git-revert.txt
+index 752fc88..45be851 100644
+--- a/Documentation/git-revert.txt
++++ b/Documentation/git-revert.txt
+@@ -80,6 +80,16 @@ effect to your index in a row.
+ --signoff::
+ 	Add Signed-off-by line at the end of the commit message.
+ 
++--strategy=<strategy>::
++	Use the given merge strategy.  Should only be used once.
++	See the MERGE STRATEGIES section in linkgit:git-merge[1]
++	for details.
++
++-X<option>::
++--strategy-option=<option>::
++	Pass the merge strategy-specific option through to the
++	merge strategy.  See linkgit:git-merge[1] for details.
++
+ EXAMPLES
+ --------
+ git revert HEAD~3::
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 3921cd3..c57d06e 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -582,7 +582,8 @@ static void write_tree_trivial(unsigned char *sha1)
+ 		die("git write-tree failed to write a tree");
+ }
+ 
+-int try_merge_command(const char *strategy, struct commit_list *common,
++int try_merge_command(const char *strategy, size_t xopts_nr,
++		      const char **xopts, struct commit_list *common,
+ 		      const char *head_arg, struct commit_list *remotes)
+ {
+ 	const char **args;
+@@ -680,7 +681,8 @@ static int try_merge_strategy(const char *strategy, struct commit_list *common,
+ 		rollback_lock_file(lock);
+ 		return clean ? 0 : 1;
+ 	} else {
+-		return try_merge_command(strategy, common, head_arg, remoteheads);
++		return try_merge_command(strategy, xopts_nr, xopts,
++						common, head_arg, remoteheads);
+ 	}
+ }
+ 
+diff --git a/builtin/revert.c b/builtin/revert.c
+index bb6e9e8..dc1b702 100644
+--- a/builtin/revert.c
++++ b/builtin/revert.c
+@@ -44,7 +44,11 @@ static const char **commit_argv;
+ static int allow_rerere_auto;
+ 
+ static const char *me;
++
++/* Merge strategy. */
+ static const char *strategy;
++static const char **xopts;
++static size_t xopts_nr, xopts_alloc;
+ 
+ #define GIT_REFLOG_ACTION "GIT_REFLOG_ACTION"
+ 
+@@ -55,6 +59,17 @@ static const char * const *revert_or_cherry_pick_usage(void)
+ 	return action == REVERT ? revert_usage : cherry_pick_usage;
+ }
+ 
++static int option_parse_x(const struct option *opt,
++			  const char *arg, int unset)
++{
++	if (unset)
++		return 0;
++
++	ALLOC_GROW(xopts, xopts_nr + 1, xopts_alloc);
++	xopts[xopts_nr++] = xstrdup(arg);
++	return 0;
++}
++
+ static void parse_args(int argc, const char **argv)
+ {
+ 	const char * const * usage_str = revert_or_cherry_pick_usage();
+@@ -67,6 +82,8 @@ static void parse_args(int argc, const char **argv)
+ 		OPT_INTEGER('m', "mainline", &mainline, "parent number"),
+ 		OPT_RERERE_AUTOUPDATE(&allow_rerere_auto),
+ 		OPT_STRING(0, "strategy", &strategy, "strategy", "merge strategy"),
++		OPT_CALLBACK('X', "strategy-option", &xopts, "option",
++			"option for merge strategy", option_parse_x),
+ 		OPT_END(),
+ 		OPT_END(),
+ 		OPT_END(),
+@@ -311,18 +328,13 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 	struct merge_options o;
+ 	struct tree *result, *next_tree, *base_tree, *head_tree;
+ 	int clean, index_fd;
++	const char **xopt;
+ 	static struct lock_file index_lock;
+ 
+ 	index_fd = hold_locked_index(&index_lock, 1);
+ 
+ 	read_cache();
+ 
+-	/*
+-	 * NEEDSWORK: cherry-picking between branches with
+-	 * different end-of-line normalization is a pain;
+-	 * plumb in an option to set o.renormalize?
+-	 * (or better: arbitrary -X options)
+-	 */
+ 	init_merge_options(&o);
+ 	o.ancestor = base ? base_label : "(empty tree)";
+ 	o.branch1 = "HEAD";
+@@ -332,6 +344,9 @@ static int do_recursive_merge(struct commit *base, struct commit *next,
+ 	next_tree = next ? next->tree : empty_tree();
+ 	base_tree = base ? base->tree : empty_tree();
+ 
++	for (xopt = xopts; xopt != xopts + xopts_nr; xopt++)
++		parse_merge_opt(&o, *xopt);
++
+ 	clean = merge_trees(&o,
+ 			    head_tree,
+ 			    next_tree, base_tree, &result);
+@@ -503,7 +518,7 @@ static int do_pick_commit(void)
+ 
+ 		commit_list_insert(base, &common);
+ 		commit_list_insert(next, &remotes);
+-		res = try_merge_command(strategy, common,
++		res = try_merge_command(strategy, xopts_nr, xopts, common,
+ 					sha1_to_hex(head), remotes);
+ 		free_commit_list(common);
+ 		free_commit_list(remotes);
+diff --git a/contrib/examples/git-revert.sh b/contrib/examples/git-revert.sh
+index 60a05a8..6bf155c 100755
+--- a/contrib/examples/git-revert.sh
++++ b/contrib/examples/git-revert.sh
+@@ -26,6 +26,7 @@ require_work_tree
+ cd_to_toplevel
+ 
+ no_commit=
++xopt=
+ while case "$#" in 0) break ;; esac
+ do
+ 	case "$1" in
+@@ -44,6 +45,16 @@ do
+ 	-x|--i-really-want-to-expose-my-private-commit-object-name)
+ 		replay=
+ 		;;
++	-X?*)
++		xopt="$xopt$(git rev-parse --sq-quote "--${1#-X}")"
++		;;
++	--strategy-option=*)
++		xopt="$xopt$(git rev-parse --sq-quote "--${1#--strategy-option=}")"
++		;;
++	-X|--strategy-option)
++		shift
++		xopt="$xopt$(git rev-parse --sq-quote "--$1")"
++		;;
+ 	-*)
+ 		usage
+ 		;;
+@@ -159,7 +170,7 @@ export GITHEAD_$head GITHEAD_$next
+ # and $prev on top of us (when reverting), or the change between
+ # $prev and $commit on top of us (when cherry-picking or replaying).
+ 
+-git-merge-recursive $base -- $head $next &&
++eval "git merge-recursive $xopt $base -- $head $next" &&
+ result=$(git-write-tree 2>/dev/null) || {
+ 	mv -f .msg "$GIT_DIR/MERGE_MSG"
+ 	{
+diff --git a/merge-recursive.h b/merge-recursive.h
+index c8135b0..981ed6a 100644
+--- a/merge-recursive.h
++++ b/merge-recursive.h
+@@ -57,6 +57,8 @@ struct tree *write_tree_from_memory(struct merge_options *o);
+ int parse_merge_opt(struct merge_options *out, const char *s);
+ 
+ /* builtin/merge.c */
+-int try_merge_command(const char *strategy, struct commit_list *common, const char *head_arg, struct commit_list *remotes);
++int try_merge_command(const char *strategy, size_t xopts_nr,
++		const char **xopts, struct commit_list *common,
++		const char *head_arg, struct commit_list *remotes);
+ 
+ #endif
+diff --git a/t/t3032-merge-recursive-options.sh b/t/t3032-merge-recursive-options.sh
+index 2293797..796f616 100755
+--- a/t/t3032-merge-recursive-options.sh
++++ b/t/t3032-merge-recursive-options.sh
+@@ -107,6 +107,20 @@ test_expect_success '--ignore-space-change makes merge succeed' '
+ 	git merge-recursive --ignore-space-change HEAD^ -- HEAD remote
+ '
+ 
++test_expect_success 'naive cherry-pick fails' '
++	git read-tree --reset -u HEAD &&
++	test_must_fail git cherry-pick --no-commit remote &&
++	git read-tree --reset -u HEAD &&
++	test_must_fail git cherry-pick remote &&
++	test_must_fail git update-index --refresh &&
++	grep "<<<<<<" text.txt
++'
++
++test_expect_success '-Xignore-space-change makes cherry-pick succeed' '
++	git read-tree --reset -u HEAD &&
++	git cherry-pick --no-commit -Xignore-space-change remote
++'
++
+ test_expect_success '--ignore-space-change: our w/s-only change wins' '
+ 	q_to_cr <<-\EOF >expected &&
+ 	    justice and holiness and is the nurse of his age and theQ
 -- 
-Jakub Narebski
-Poland
+1.7.2.4
