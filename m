@@ -1,138 +1,124 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH db/vcs-svn-incremental] vcs-svn: avoid git-isms in
- fast-import stream
-Date: Sat, 11 Dec 2010 17:00:33 -0600
-Message-ID: <20101211230033.GB18822@burratino>
+From: David Michael Barr <david.barr@cordelta.com>
+Subject: [PATCH 12/10] vcs-svn: quote paths correctly for ls command
+Date: Sun, 12 Dec 2010 10:04:39 +1100
+Message-ID: <DD24C01C-19FD-424B-B602-E9BB1A930805@cordelta.com>
 References: <20101210102007.GA26298@burratino>
- <C59168D0-B409-4A83-B96C-8CCD42D0B62F@cordelta.com>
- <20101211184654.GA17464@burratino>
-Mime-Version: 1.0
+Mime-Version: 1.0 (Apple Message framework v1082)
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
 Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>,
 	Tomas Carnecky <tom@dbservice.com>
-To: David Michael Barr <david.barr@cordelta.com>
-X-From: git-owner@vger.kernel.org Sun Dec 12 00:07:25 2010
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 12 00:07:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PRYXE-0004Tz-Hg
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Dec 2010 00:07:24 +0100
+	id 1PRYXF-0004Tz-1v
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Dec 2010 00:07:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752022Ab0LKXAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 11 Dec 2010 18:00:41 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:51931 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751909Ab0LKXAk (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 11 Dec 2010 18:00:40 -0500
-Received: by gyb11 with SMTP id 11so2427090gyb.19
-        for <git@vger.kernel.org>; Sat, 11 Dec 2010 15:00:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=pu5ENjNRVEsYP9UdcmWdmU3BlMFSzlTjLWBx1+EnqSI=;
-        b=iqKETN4R9R8TvWIz44vpAn7XCcTbTnXLUTF1Fl30ZfnS3pKpOmCbx+Ts6W9TuTeG5x
-         nK/CfhbV3GgMOZIqHZM18LN1L7N6UsDE2qhQB9zxDQUolJEOryXPAwJt95WWo5h/VP9s
-         ep6qec254Xgp28UW4+OTKOC6U3RQ7pzhQc1js=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=KWQvcvjFdmsTSxCbgTzZa8QjNqWNPSpkojJpgPJRj6OFoSiW7m//mB5xA0l1QzcnCK
-         KPLviCo0bvlj8/9ZM3GtIzwhXC8pyqoaDz2CZS2tGGrW06w4Js752GmQ+R66DkpWifjX
-         b4x8/w7wzY4ERR2YoVVwV7mjEkjRNvhLg143w=
-Received: by 10.236.95.173 with SMTP id p33mr5307942yhf.44.1292108439642;
-        Sat, 11 Dec 2010 15:00:39 -0800 (PST)
-Received: from burratino (adsl-69-209-48-248.dsl.chcgil.sbcglobal.net [69.209.48.248])
-        by mx.google.com with ESMTPS id k52sm2904973yhg.39.2010.12.11.15.00.37
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 11 Dec 2010 15:00:38 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20101211184654.GA17464@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752113Ab0LKXEp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 11 Dec 2010 18:04:45 -0500
+Received: from ironport1-mx.cbr1.mail-filtering.com.au ([203.88.115.241]:56625
+	"EHLO ironport1-mx.cbr1.mail-filtering.com.au" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751909Ab0LKXEo convert rfc822-to-8bit
+	(ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 11 Dec 2010 18:04:44 -0500
+X-IronPort-Anti-Spam-Filtered: true
+X-IronPort-Anti-Spam-Result: Av0EALeRA03LWHsF/2dsb2JhbACkBgh4txyIToVKBA
+X-IronPort-AV: E=Sophos;i="4.59,330,1288530000"; 
+   d="scan'208";a="302583505"
+Received: from node2.alpha.aussiehq.net.au ([203.88.123.5])
+  by ironport1-mta.cbr1.mail-filtering.com.au with ESMTP; 12 Dec 2010 10:04:42 +1100
+Received: (qmail 9281 invoked from network); 12 Dec 2010 10:04:41 +1100
+Received: from d110-33-95-167.mit3.act.optusnet.com.au (HELO ?192.168.1.1?) (110.33.95.167)
+  by 203.88.123.185 with SMTP; 12 Dec 2010 10:04:41 +1100
+In-Reply-To: <20101210102007.GA26298@burratino>
+X-Mailer: Apple Mail (2.1082)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163462>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163463>
 
-Jonathan Nieder wrote:
+From: David Barr <david.barr@cordelta.com>
+Date: Sun, 12 Dec 2010 03:59:31 +1100
+Subject: [PATCH] vcs-svn: quote paths correctly for ls command
 
-> I am not totally happy with the result, since it adds another
-> git-specific detail to svn-fe (the first was hardcoding the
-> empty blob sha1 instead of using
-> 
-> 	blob
-> 	mark :0
-> 	data 0
-> 
-> ).
+This bug was found while importing rev 601865 of ASF.
 
-Maybe this would help?
-
--- 8< --
-Subject: vcs-svn: avoid git-isms in fast-import stream
-
-Current svn-fe is not likely to work without change with other
-fast-import backends, but don't let that stop us from trying:
-
- - instead of suppressing copies of empty trees, let the backend
-   decide what to do with them;
-
- - use a mark instead of hard-coding git's name for the empty blob.
-
-However, we do not include commands in the stream for new empty
-directories, since no syntax is documented for that yet.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: David Barr <david.barr@cordelta.com>
 ---
- vcs-svn/fast_export.c |    8 +-------
- vcs-svn/svndump.c     |    2 +-
- 2 files changed, 2 insertions(+), 8 deletions(-)
+ vcs-svn/fast_export.c |    4 ++--
+ vcs-svn/string_pool.c |   11 +++++++++++
+ vcs-svn/string_pool.h |    1 +
+ 3 files changed, 14 insertions(+), 2 deletions(-)
 
 diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
-index 75d674e..85166a6 100644
+index c798f6d..d2397d8 100644
 --- a/vcs-svn/fast_export.c
 +++ b/vcs-svn/fast_export.c
-@@ -40,12 +40,6 @@ void fast_export_delete(uint32_t depth, const uint32_t *path)
- void fast_export_modify(uint32_t depth, const uint32_t *path, uint32_t mode,
- 			const char *dataref)
+@@ -100,7 +100,7 @@ static void ls_from_rev(uint32_t rev, const uint32_t *path)
  {
--	/* Git does not track empty directories. */
--	if (S_ISDIR(mode) && !strcmp(dataref, EMPTY_TREE_SHA1_HEX)) {
--		fast_export_delete(depth, path);
--		return;
--	}
--
- 	/* Mode must be 100644, 100755, 120000, or 160000. */
- 	printf("M %06"PRIo32" %s ", mode, dataref);
- 	pool_print_seq(depth, path, '/', stdout);
-@@ -255,7 +249,7 @@ void fast_export_data(uint32_t mode, uint32_t len, struct line_buffer *input)
+ 	/* ls :5 "path/to/old/file" */
+ 	printf("ls :%"PRIu32" \"", rev);
+-	pool_print_seq(REPO_MAX_PATH_DEPTH, path, '/', stdout);
++	pool_print_seq_q(REPO_MAX_PATH_DEPTH, path, '/', stdout);
+ 	printf("\"\n");
+ 	fflush(stdout);
+ }
+@@ -149,7 +149,7 @@ void fast_export_ls(const uint32_t *path,
+ 				uint32_t *mode, struct strbuf *dataref)
+ {
+ 	printf("ls \"");
+-	pool_print_seq(REPO_MAX_PATH_DEPTH, path, '/', stdout);
++	pool_print_seq_q(REPO_MAX_PATH_DEPTH, path, '/', stdout);
+ 	printf("\"\n");
+ 	fflush(stdout);
+ 	parse_ls_response(get_response_line(), mode, dataref);
+diff --git a/vcs-svn/string_pool.c b/vcs-svn/string_pool.c
+index c08abac..a03f5a4 100644
+--- a/vcs-svn/string_pool.c
++++ b/vcs-svn/string_pool.c
+@@ -4,6 +4,8 @@
+  */
  
- void fast_export_empty_blob(void)
- {
--	printf("blob\ndata 0\n\n");
-+	printf("blob\nmark :0\ndata 0\n\n");
+ #include "git-compat-util.h"
++#include "strbuf.h"
++#include "quote.h"
+ #include "trp.h"
+ #include "obj_pool.h"
+ #include "string_pool.h"
+@@ -75,6 +77,15 @@ void pool_print_seq(uint32_t len, const uint32_t *seq, char delim, FILE *stream)
+ 	}
  }
  
- void fast_export_delta(const uint32_t *path, uint32_t mode, uint32_t old_mode,
-diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
-index 68a8435..e28e762 100644
---- a/vcs-svn/svndump.c
-+++ b/vcs-svn/svndump.c
-@@ -244,7 +244,7 @@ static void handle_node(void)
- 		if (type == REPO_MODE_DIR)
- 			old_data = NULL;
- 		else if (have_text)
--			old_data = EMPTY_BLOB_SHA1_HEX;
-+			old_data = ":0";
- 		else
- 			die("invalid dump: adds node without text");
- 	} else {
++void pool_print_seq_q(uint32_t len, const uint32_t *seq, char delim, FILE *stream)
++{
++	uint32_t i;
++	for (i = 0; i < len && ~seq[i]; i++) {
++		quote_c_style(pool_fetch(seq[i]), NULL, stream, 1);
++		if (i < len - 1 && ~seq[i + 1])
++			fputc(delim, stream);
++	}
++}
+ uint32_t pool_tok_seq(uint32_t sz, uint32_t *seq, const char *delim, char *str)
+ {
+ 	char *context = NULL;
+diff --git a/vcs-svn/string_pool.h b/vcs-svn/string_pool.h
+index 3720cf8..96e501d 100644
+--- a/vcs-svn/string_pool.h
++++ b/vcs-svn/string_pool.h
+@@ -5,6 +5,7 @@ uint32_t pool_intern(const char *key);
+ const char *pool_fetch(uint32_t entry);
+ uint32_t pool_tok_r(char *str, const char *delim, char **saveptr);
+ void pool_print_seq(uint32_t len, const uint32_t *seq, char delim, FILE *stream);
++void pool_print_seq_q(uint32_t len, const uint32_t *seq, char delim, FILE *stream);
+ uint32_t pool_tok_seq(uint32_t sz, uint32_t *seq, const char *delim, char *str);
+ void pool_reset(void);
+ 
 -- 
-1.7.2.4
+1.7.3.2.846.gf4b062
