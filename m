@@ -1,89 +1,147 @@
-From: "J.H." <warthog9@eaglescrag.net>
-Subject: Re: [PATCH 16/18] gitweb: When changing output (STDOUT) change STDERR
- as well
-Date: Sat, 11 Dec 2010 21:25:42 -0800
-Message-ID: <4D045CD6.9060806@eaglescrag.net>
-References: <1291931844-28454-1-git-send-email-warthog9@eaglescrag.net>	<1291931844-28454-17-git-send-email-warthog9@eaglescrag.net> <m3vd32z9yk.fsf@localhost.localdomain>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: fast-import tweaks for remote helpers (Re: Status of the svn remote
+ helper project (Dec 2010, #1))
+Date: Sun, 12 Dec 2010 00:14:37 -0600
+Message-ID: <20101212061437.GA17185@burratino>
+References: <20101107112129.GA30042@burratino>
+ <20101121063149.GA15449@burratino>
+ <20101205113717.GH4332@burratino>
+ <4CFFCDCD.9060602@dbservice.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 12 06:24:11 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	David Barr <david.barr@cordelta.com>,
+	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>
+To: Tomas Carnecky <tom@dbservice.com>
+X-From: git-owner@vger.kernel.org Sun Dec 12 07:14:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PRePq-0005J7-AV
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Dec 2010 06:24:10 +0100
+	id 1PRfCy-0000QS-D2
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Dec 2010 07:14:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751190Ab0LLFXx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Dec 2010 00:23:53 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:52898 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750744Ab0LLFXw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Dec 2010 00:23:52 -0500
-Received: from voot-cruiser.eaglescrag.net (adsl-70-231-245-44.dsl.snfc21.sbcglobal.net [70.231.245.44])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id oBC5Nn87018491
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Sat, 11 Dec 2010 21:23:50 -0800
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
-In-Reply-To: <m3vd32z9yk.fsf@localhost.localdomain>
-X-Enigmail-Version: 1.0.1
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Sat, 11 Dec 2010 21:23:50 -0800 (PST)
+	id S1750906Ab0LLGOt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Dec 2010 01:14:49 -0500
+Received: from mail-gw0-f42.google.com ([74.125.83.42]:42580 "EHLO
+	mail-gw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750874Ab0LLGOt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Dec 2010 01:14:49 -0500
+Received: by gwb20 with SMTP id 20so4226743gwb.1
+        for <git@vger.kernel.org>; Sat, 11 Dec 2010 22:14:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=QHoKYVGj4RPulLKELsg+9dKi662qxCk9zQ29YkZZpd0=;
+        b=i+uOthBMGH/IRL7dnyVe5cza1KW/KZ1PxshrDVKAk2l9j/GtbU+obd1RHS4fZDsGjt
+         mWptrZL6q3QJMLtzPwkfp/pRuLEHuUUgggnfkvMGIcWGz0YvUCAwjiN1OJUvoVpo+U/w
+         EH+SMzA6UEm1zX2SxJiCEZUFuKhTCrgPU9hnY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=iafls2j/nvMtkdcdMcjlL4gfvPcJcJP+2N7sLinMO+aEvS00NyJ8yjBfR5KRIDyq+f
+         kI7jMi8i3aTnEgmvn4er33mK3tG+jbH0LjQ70g5OMM5h25fFqbgFEpt4HkZ3DgvHBk3R
+         50PRyEBeZXSDx8Hq6cCV0ULbFB2WnO86ACHqk=
+Received: by 10.151.6.15 with SMTP id j15mr3909754ybi.391.1292134488071;
+        Sat, 11 Dec 2010 22:14:48 -0800 (PST)
+Received: from burratino ([69.209.48.248])
+        by mx.google.com with ESMTPS id k1sm985284ybj.0.2010.12.11.22.14.46
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 11 Dec 2010 22:14:47 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4CFFCDCD.9060602@dbservice.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163471>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163472>
 
-> Hmm... anuthing that happens after 'use CGI::Carp;' is parsed should
-> have STDERR redirected to web server logs, see CGI::Carp manpage
-> 
->     [...]
->  
->        use CGI::Carp
-> 
->     And the standard warn(), die (), croak(), confess() and carp() calls will
->     automagically be replaced with functions that write out nicely time-stamped
->     messages to the HTTP server error log.
-> 
->     [...]
-> 
->     REDIRECTING ERROR MESSAGES
-> 
->        By default, error messages are sent to STDERR.  Most HTTPD servers direct
->        STDERR to the server's error log.
-> 
->     [...]
-> 
-> Especially the second part.
+Tomas Carnecky wrote:
 
-That was not what I was seeing, so either something I was doing was
-horking how CGI::Carp works, or their claim that "most HTTPD server
-direct STDERR to the server's error log" is false.
+> I simplified the code and the requirements on fast-import are much
+> lighter now. All I need is a way to tell fast-import to stop writing
+> refs and after each commit write its sha1 to stdout.
 
-> Could you give us example which causes described misbehaviour?
+That's good to hear.  What should be the syntax for asking fast-import
+not to write to a ref?  Something like this?
 
-While I was working on the trapping of the error pages I started getting
-500 errors when going to a non-existent sha1.  Running the command from
-the cli revealed that a message from a git command was making it out to
-the console.  Redirecting STDERR masked the error from git, and stopped
-premature data being sent out before the headers were sent.
+	commit
+	mark :1
+	committer c o mitter <committer@example.com> now
+	data <<END
+	...
 
-> I have nothing against this patch: if you have to have it, then you
-> have to have it.  I oly try to understand what might be core cause
-> behind the issue that this patch is to solve...
+Writing the sha1 as each commit is written: how early does the
+frontend need access to the sha1?  Would a facility to report marks
+back to the frontend at the end of the stream take care of it?
 
-I've re-tried this, if you remove this patch and attempt to visit a
-non-exist sha1, *boom*
+Based on [1] I guess the main need is some way for fast-import to
+tell the transport machinery what refs the transport machinery
+should update (or at least ought to report as updated).  A hackish
+way might be to make the remote helper send "progress" commands
+with that information.
 
-I can only speculate that CGI::Carp only redirects the output inside of
-perl, and does not handle the case when called programs (like git) write
-more directly to STDERR.
+> It's possible to
+> to modify fast-import.c with a small patch to make it behave like
+> that. However, I haven't followed the svn remote helper that much
+> lately so I don't know whether one of the other patches already
+> modifies fast-import in this way.
 
-- John 'Warthog9' Hawley
+No, the patches have mostly been adding commands that send information
+back to the frontend.
+
+ cat-blob (<dataref> | <mark>):
+	Sends back an old blob along with its length (in
+	cat-file --batch format).  svn-fe uses this to acquire
+	the preimage when applying deltas.
+
+ ls <quoted-path>:
+	Sends back information about the current state of a path
+	in the commit being prepared (as a single line in ls-tree
+	format).  svn-fe uses this to move around files and to find
+	a <dataref> to use with cat-blob when applying deltas.
+
+ ls (<dataref> | <mark>) <path>:
+	Sends back information about a path in a previous revision
+	(tag, commit, or tree), in ls-tree format.
+
+ M 040000 (<dataref> | <mark>) <path>:
+	Like "M 100644 <dataref> <path>", replaces an entry in the
+	active commit with content of the frontend's choice.  This
+	gets used to copy in old directories.
+
+> From the beginning my code was meant to be just an example how the
+> interaction between git and the svn remote helper could look like.
+
+It makes a nice demo, too. :)
+
+> For example I save the svn rev <-> sha1 mapping in notes, which is
+> appears to work well. I'll take a look if I'll be able to use the
+> svn-fe in my script.
+
+svn-fe needs a fast mapping svn rev -> sha1; it currently uses a marks
+file for that.  (In the back of my mind, I have the idea of using a
+file that allows O(1) access, perhaps of the form
+
+	<commit name for rev 1> NL
+	<commit name for rev 2> NL
+	...
+
+but as Ram has noted, keeping the whole table in memory is pretty
+cheap already.)  A remote helper needs a fast mapping sha1 -> svn rev,
+and imho notes are ideal for that[2].
+
+The way I imagine it, the authoritative mapping is in notes and the
+reverse mapping (e.g. in a marks file) is rebuilt when needed.
+
+[1] remote-helper branch at git://github.com/wereHamster/git.git
+[2] Why?  When a project switches from one svn server to another,
+revision numbers tend to change, so revision numbers are not permanent
+enough to belong in the commit message imho.  (If only git-notes had
+existed when git svn was written...)
