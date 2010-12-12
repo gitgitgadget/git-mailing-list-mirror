@@ -1,82 +1,111 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: fast-import tweaks for remote helpers (Re: Status of the svn
- remote helper project (Dec 2010, #1))
-Date: Sun, 12 Dec 2010 22:53:41 +1300
-Message-ID: <4D049BA5.1060509@vilain.net>
-References: <20101107112129.GA30042@burratino> <20101121063149.GA15449@burratino> <20101205113717.GH4332@burratino> <4CFFCDCD.9060602@dbservice.com> <20101212061437.GA17185@burratino>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 1/2] get_sha1_oneline: allow to input commit_list
+Date: Sun, 12 Dec 2010 17:56:58 +0700
+Message-ID: <1292151419-30678-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Tomas Carnecky <tom@dbservice.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	David Barr <david.barr@cordelta.com>,
-	Sam Vilain <sam@vilain.net>, Stephen Bash <bash@genarts.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 12 11:04:56 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Kevin Ballard <kevin@sb.org>, Yann Dirson <dirson@bertin.fr>,
+	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
+	Jonathan Niedier <jrnieder@gmail.com>,
+	Thiago Farina <tfransosi@gmail.com>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 12 11:58:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PRinV-0008On-3i
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Dec 2010 11:04:53 +0100
+	id 1PRjdK-0008IZ-BF
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Dec 2010 11:58:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751904Ab0LLKBd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Dec 2010 05:01:33 -0500
-Received: from watts.utsl.gen.nz ([202.78.240.73]:53950 "EHLO mail.utsl.gen.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751796Ab0LLKBc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Dec 2010 05:01:32 -0500
-X-Greylist: delayed 465 seconds by postgrey-1.27 at vger.kernel.org; Sun, 12 Dec 2010 05:01:32 EST
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 3F96621C0B5; Sun, 12 Dec 2010 22:53:46 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on
-	mail.musashi.utsl.gen.nz
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.3 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [192.168.1.7] (unknown [60.234.254.246])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 2D5F421C0B3;
-	Sun, 12 Dec 2010 22:53:41 +1300 (NZDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
-In-Reply-To: <20101212061437.GA17185@burratino>
+	id S1752631Ab0LLK56 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 12 Dec 2010 05:57:58 -0500
+Received: from mail-px0-f179.google.com ([209.85.212.179]:62183 "EHLO
+	mail-px0-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752624Ab0LLK55 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Dec 2010 05:57:57 -0500
+Received: by pxi20 with SMTP id 20so1413609pxi.10
+        for <git@vger.kernel.org>; Sun, 12 Dec 2010 02:57:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=2gVJMNvqRalHY2+sgPvqzU1n6DqYtYL8sHthwSPTZWg=;
+        b=blgypiq8xKYxR7SeEQ2tshHtgwmsZhDMHACp1YCMi+2tDYCKdCugfUbaKq83jgJX4o
+         maCBcB7G7ADyt2XBpCwR80rFYwKvnmFX+n3v03okU8GTR4bwaLUQnuDO8Br+Ehvw/9zk
+         QvSCwwCyQPNrqVT/j0CuNHw8GLEjrmTGPkp0I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=pczLc1t0EjeVjfDBkCKzjghdBJsihxoeChBGu75s2CIK3wE3ZvHaLmrlf5CCKPyHyN
+         K3ya3rpmB5d/7GRovL27TQMWMKXqyQOeW0s4KzdYdGe5BgjjT1zyeSnSwVSvs+kVJqKI
+         ZzBwe4UPWk7KL1m8Zl1/rRhrLMuc9rmZlBrd0=
+Received: by 10.142.50.7 with SMTP id x7mr2123628wfx.300.1292151476722;
+        Sun, 12 Dec 2010 02:57:56 -0800 (PST)
+Received: from pclouds@gmail.com ([115.73.222.178])
+        by mx.google.com with ESMTPS id f5sm7141715wfg.14.2010.12.12.02.57.51
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 12 Dec 2010 02:57:54 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 12 Dec 2010 17:57:01 +0700
+X-Mailer: git-send-email 1.7.3.3.476.g893a9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163476>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163477>
 
-On 12/12/10 19:14, Jonathan Nieder wrote:
-> That's good to hear. What should be the syntax for asking fast-import
-> not to write to a ref?  Something like this?
->
-> 	commit
-> 	mark :1
-> 	committer c o mitter<committer@example.com>  now
-> 	data<<END
-> 	...
->
-> Writing the sha1 as each commit is written: how early does the
-> frontend need access to the sha1?  Would a facility to report marks
-> back to the frontend at the end of the stream take care of it?
 
-What happened to --report-fd ?
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ sha1_name.c |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
 
-> (In the back of my mind, I have the idea of using a
-> file that allows O(1) access, perhaps of the form
->
-> 	<commit name for rev 1>  NL
-> 	<commit name for rev 2>  NL
-> 	...
-
-This doesn't scale to many branches; git-svn started with that and had 
-to use a b-tree in the end.  Eg, consider a repository with 10,000 
-branches and 600,000 revisions.
-
-Thanks for continuing this work, it is most interesting to follow.
-
-Cheers,
-Sam
+diff --git a/sha1_name.c b/sha1_name.c
+index 2c3a5fb..c298285 100644
+--- a/sha1_name.c
++++ b/sha1_name.c
+@@ -690,7 +690,9 @@ static int handle_one_ref(const char *path,
+ 	return 0;
+ }
+=20
+-static int get_sha1_oneline(const char *prefix, unsigned char *sha1)
++static int get_sha1_oneline(const char *prefix,
++			    unsigned char *sha1,
++			    struct commit_list *original_list)
+ {
+ 	struct commit_list *list =3D NULL, *backup =3D NULL, *l;
+ 	int retval =3D -1;
+@@ -706,7 +708,12 @@ static int get_sha1_oneline(const char *prefix, un=
+signed char *sha1)
+ 	if (regcomp(&regex, prefix, REG_EXTENDED))
+ 		die("Invalid search pattern: %s", prefix);
+=20
+-	for_each_ref(handle_one_ref, &list);
++	for (l =3D original_list; l; l =3D l->next) {
++		commit_list_insert(l->item, &list);
++		l->item->object.flags |=3D ONELINE_SEEN;
++	}
++	if (!list)
++		for_each_ref(handle_one_ref, &list);
+ 	for (l =3D list; l; l =3D l->next)
+ 		commit_list_insert(l->item, &backup);
+ 	while (list) {
+@@ -1090,7 +1097,7 @@ int get_sha1_with_context_1(const char *name, uns=
+igned char *sha1,
+ 		int pos;
+ 		if (namelen > 2 && name[1] =3D=3D '/')
+ 			/* don't need mode for commit */
+-			return get_sha1_oneline(name + 2, sha1);
++			return get_sha1_oneline(name + 2, sha1, NULL);
+ 		if (namelen < 3 ||
+ 		    name[2] !=3D ':' ||
+ 		    name[1] < '0' || '3' < name[1])
+--=20
+1.7.3.3.476.g893a9
