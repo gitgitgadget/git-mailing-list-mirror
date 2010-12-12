@@ -1,88 +1,149 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: Push to all repositories
-Date: Sun, 12 Dec 2010 16:09:30 +0100
-Message-ID: <20101212150929.GA23298@nibiru.local>
-References: <1291829983410-5816069.post@n2.nabble.com>
-Reply-To: weigelt@metux.de
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 16/18] gitweb: When changing output (STDOUT) change STDERR as well
+Date: Sun, 12 Dec 2010 16:17:04 +0100
+Message-ID: <201012121617.04997.jnareb@gmail.com>
+References: <1291931844-28454-1-git-send-email-warthog9@eaglescrag.net> <m3vd32z9yk.fsf@localhost.localdomain> <4D045CD6.9060806@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 12 16:14:59 2010
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: "J.H." <warthog9@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Sun Dec 12 16:17:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PRndZ-0000UQ-RY
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Dec 2010 16:14:58 +0100
+	id 1PRngR-0001fp-U8
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Dec 2010 16:17:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752642Ab0LLPOw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Dec 2010 10:14:52 -0500
-Received: from caprica.metux.de ([82.165.128.25]:37485 "EHLO
-	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1751812Ab0LLPOw (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Dec 2010 10:14:52 -0500
-Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
-	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id oBCFA1C9029779
-	for <git@vger.kernel.org>; Sun, 12 Dec 2010 16:10:02 +0100
-Received: (from uucp@localhost)
-	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id oBCF9ANi029727
-	for git@vger.kernel.org; Sun, 12 Dec 2010 16:09:10 +0100
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id oBCF9U83031664
-	for git@vger.kernel.org; Sun, 12 Dec 2010 16:09:30 +0100
-Mail-Followup-To: git@vger.kernel.org
+	id S1753239Ab0LLPRS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Dec 2010 10:17:18 -0500
+Received: from mail-bw0-f45.google.com ([209.85.214.45]:56359 "EHLO
+	mail-bw0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753146Ab0LLPRO (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Dec 2010 10:17:14 -0500
+Received: by bwz16 with SMTP id 16so5773960bwz.4
+        for <git@vger.kernel.org>; Sun, 12 Dec 2010 07:17:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=PKh1+lmJ+bxMQZR5iPkiC5IjWdXpXrylzZi8MQh/fPQ=;
+        b=BJoPxVYyzi/x30AD9ypDDKR8ecwf2GHVN6vulyvhb++awXA+VqG900sGonknz+61Sf
+         0nyfDGo+FSDzHRef43Cmw/53QAdPOAb1kBfdyg8fEQ/Xm/TJmOHJSLVX0xpTr35YLrU5
+         6hZKXl/Z7aD2U2WrYpCrSdMXwxXn/kzORJTK8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=b3no7qTw4M095DVqXMkiek8fVvs2rpoe/eLbz/Qsho3kUtIoy7Pl9hOkZOaAs0YCA/
+         zrjTJ2WurYAjzMsYwgMaWNz2x/JojwpkPXk3j27toSdW/BlVpZALGjhJUInK/9hBZ1lU
+         dVq4zsSbBovWFhvCmmG2My6B4XeMf1cLfNbnA=
+Received: by 10.204.85.90 with SMTP id n26mr809432bkl.164.1292167030519;
+        Sun, 12 Dec 2010 07:17:10 -0800 (PST)
+Received: from [192.168.1.13] (abve32.neoplus.adsl.tpnet.pl [83.8.202.32])
+        by mx.google.com with ESMTPS id v1sm2569356bkt.17.2010.12.12.07.17.07
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 12 Dec 2010 07:17:08 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4D045CD6.9060806@eaglescrag.net>
 Content-Disposition: inline
-In-Reply-To: <1291829983410-5816069.post@n2.nabble.com>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163482>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163483>
 
-* Kevin Sheedy <kevinsheedy@gmail.com> wrote:
+On Sun, 12 Dec 2010, J.H. wrote:
 
-Hi,
+> > Hmm... anuthing that happens after 'use CGI::Carp;' is parsed should
+> > have STDERR redirected to web server logs, see CGI::Carp manpage
+> > 
+> >     [...]
+> >  
+> >        use CGI::Carp
+> > 
+> >     And the standard warn(), die (), croak(), confess() and carp() calls will
+> >     automagically be replaced with functions that write out nicely time-stamped
+> >     messages to the HTTP server error log.
+> > 
+> >     [...]
+> > 
+> >     REDIRECTING ERROR MESSAGES
+> > 
+> >        By default, error messages are sent to STDERR.  Most HTTPD servers direct
+> >        STDERR to the server's error log.
+> > 
+> >     [...]
+> > 
+> > Especially the second part.
+> 
+> That was not what I was seeing, so either something I was doing was
+> horking how CGI::Carp works, or their claim that "most HTTPD server
+> direct STDERR to the server's error log" is false.
+> 
+> > Could you give us example which causes described misbehaviour?
+> 
+> While I was working on the trapping of the error pages I started getting
+> 500 errors when going to a non-existent sha1.  Running the command from
+> the cli revealed that a message from a git command was making it out to
+> the console.  Redirecting STDERR masked the error from git, and stopped
+> premature data being sent out before the headers were sent.
 
-> Clearcase has a great solution to this, "dynamic views". Whenever I check in
-> some code, the whole team magically get's my changes straight away.
-> Normally, they don't even notice, they're just forced to stay in sync. This
-> drastically reduces the number of 'code conflicts' where people make changes
-> to 'stale' files. This enforces the practise of "catching errors early". It
-> also keeps developers "honest" as they have to keep the quality of their
-> checkins high lest they get shouted at by the rest of the team.
-
-Are you sure you *really* want this ? 
-I'd strongly advise against that.
-
-Better have some central branch (maybe on a dedicated remote)
-where everybody can push to, and the others fork off from there
-and frequently rebase or merge if they like.
+Generally if something worked, and stopped working, don't you think
+that you should concentrate on fixing your code, and not papering
+over the issue?
 
 
-My preferred workflow is to have per-issue branches (eg. per bug,
-per feature, etc), which frequently get rebased to the mainline
-and are only pushed upwards if they're finished (IOW: only one
-person is actively working on an small issue at a time, others
-may just read but dont write). Once some issue branch seems to
-be ready, it gets rebased to latest master and cleaned up, others
-might do some reviews and if it passed all tests (and only then!)
-it gets pushed upwards.
+The fact that "Running the command from the cli revealed that a message
+from a git command was making it out to the console." doesn't mean
+anything, because when running gitweb from commandline both stdout
+and stderr are redirected to terminal, by default.  So you should
+worry only if there is premature data being sent to standard output,
+with standard error redirected to /dev/null (2>/dev/null).
 
+What CGI::Carp does is (re)define 'die' and 'warn' to support
+fatalsToBrowser and warningsToBrowser, and to add timestamp and other
+auxiliary information: in the end 'die' calls 'CORE::die', and 'warn'
+calls 'CORE::warn' - both of which write to STDERR.  This means that
+warnings from git commands sent to standard error do not get timestamp
+appended.  Note that standard output from git commands run by gitweb
+is always captured.
+ 
+> > I have nothing against this patch: if you have to have it, then you
+> > have to have it.  I oly try to understand what might be core cause
+> > behind the issue that this patch is to solve...
+> 
+> I've re-tried this, if you remove this patch and attempt to visit a
+> non-exist sha1, *boom*
+> 
+> I can only speculate that CGI::Carp only redirects the output inside of
+> perl, and does not handle the case when called programs (like git) write
+> more directly to STDERR.
 
-cu
+CGI::Carp doesn't redirect output: it adds timestamp and prints it to
+STDERR (unless one use 'carpout') to the result of 'die' and 'warn' calls.
+
+*Without your series* when I visit non-existing sha1, or non-existing
+file I get correctly 404 error from gitweb.  So you have borked something.
+
+The CGI standard (http://tools.ietf.org/html/rfc3875) doesn't talk about
+'standard error' stream at all; on the other hand it talks only about
+'standard input' and 'standard output'.  I have checked with simple CGI
+script in Perl, that neither using die or warn (both before any HTTP 
+headers are send), neither with plain CGI or with mod_perl 
+(ModPerl::Registry), with CGI::Carp I never get the error you see.
+Without CGI::Carp I get '500 Internal Server Error' instead of nicer
+one formatted by CGI::Carp, but I don't get it even without CGI::Carp
+with 'warn' and printing to STDERR directly.
+
+The standard error stream either gets discarded (mod_cgid), or is
+written to /var/log/httpd/error_log (mod_perl).
+
 -- 
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
-
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+Jakub Narebski
+Poland
