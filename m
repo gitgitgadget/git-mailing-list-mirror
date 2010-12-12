@@ -1,163 +1,110 @@
-From: lists@haller-berlin.de
-Subject: [PATCH v2/RFC] gitk: Add "First parent" checkbox
-Date: Sun, 12 Dec 2010 21:08:05 +0100
-Message-ID: <1292184485-39351-1-git-send-email-lists@haller-berlin.de>
-References: <20101212042732.GA7296@brick.ozlabs.ibm.com>
-Cc: Stefan Haller <lists@haller-berlin.de>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Sun Dec 12 21:12:00 2010
+From: Brian Gernhardt <brian@gernhardtsoftware.com>
+Subject: SIGPIPE in t9300-fast-import
+Date: Sun, 12 Dec 2010 15:49:03 -0500
+Message-ID: <0BB1933F-1C3D-4C24-9C91-263121BF55FB@gernhardtsoftware.com>
+Mime-Version: 1.0 (Apple Message framework v1082)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+Cc: David Barr <david.barr@cordelta.com>
+To: "git@vger.kernel.org List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Dec 12 21:54:09 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PRsH2-00089Q-0P
-	for gcvg-git-2@lo.gmane.org; Sun, 12 Dec 2010 21:12:00 +0100
+	id 1PRsvp-0000Jr-2K
+	for gcvg-git-2@lo.gmane.org; Sun, 12 Dec 2010 21:54:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754000Ab0LLUId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Dec 2010 15:08:33 -0500
-Received: from mail.ableton.net ([62.96.12.117]:57486 "EHLO mail.ableton.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753976Ab0LLUIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 12 Dec 2010 15:08:32 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=haller-berlin.de; s=mail_2009081900;
-	h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From; bh=cJC5/ZYr0b+46CEeuoa+/d9adsamfRbL8t9IvmeIsaU=;
-	b=UsxGn1gGj8rcP5da77RvHzmYwIDRK/uZTk5URpo0nT/SuEemxEpnUxdmefQQhd7AwzSjgYdLrI4EGw4Rjm2ngzVOnbxJUCsza83mG98fhXEdou9tsjwafUM/S9u1sxQmSUsydQc784xmomhylx+PIMnKvEqqpqx55Uo1qGG1nuA=;
-Received: from dslb-088-074-017-003.pools.arcor-ip.net ([88.74.17.3] helo=localhost.localdomain)
-	by mail.ableton.net with esmtpa (Exim 4.72)
-	(envelope-from <lists@haller-berlin.de>)
-	id 1PRsDd-00032j-GK; Sun, 12 Dec 2010 21:08:29 +0100
-X-Mailer: git-send-email 1.7.3.2.442.g97e50
-In-Reply-To: <20101212042732.GA7296@brick.ozlabs.ibm.com>
+	id S1754034Ab0LLUtI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Dec 2010 15:49:08 -0500
+Received: from vs072.rosehosting.com ([216.114.78.72]:51437 "EHLO
+	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754013Ab0LLUtH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 12 Dec 2010 15:49:07 -0500
+Received: by silverinsanity.com (Postfix, from userid 5001)
+	id 9905B1FFC43C; Sun, 12 Dec 2010 20:48:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.5 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+Received: from [10.10.10.10] (cpe-74-65-60-43.rochester.res.rr.com [74.65.60.43])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by silverinsanity.com (Postfix) with ESMTPSA id 2ADA31FFC057;
+	Sun, 12 Dec 2010 20:48:58 +0000 (UTC)
+X-Mailer: Apple Mail (2.1082)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163490>
 
-From: Stefan Haller <lists@haller-berlin.de>
+The new cat-blob test (9300.114) is failing for me on OS X, and has been since it's introduction in "85c6239 fast-import: let importers retrieve blobs":
 
-Sometimes it's desirable to see what changes were introduced by a
-merge commit, rather than how conflicts were resolved. This adds
-a checkbox which, when turned on, makes gitk show the equivalent
-of "git show --first-parent <commit>" for merge commits.
+---- 8< ----
 
-Signed-off-by: Stefan Haller <stefan@haller-berlin.de>
----
-Paul Mackerras <paulus@samba.org> wrote:
+ok 113 - setup: have pipes?
 
-> I just applied Thomas Rast's patch, so you'll need to rebase. 
+expecting success: 
+	expect_id=$(git hash-object big) &&
+	expect_len=$(wc -c <big) &&
+	echo $expect_id blob $expect_len >expect.response &&
 
-OK, here's a new patch, rebased onto current master (but otherwise
-unchanged for now).
+	rm -f blobs &&
+	cat >frontend <<-\FRONTEND_END &&
+	#!/bin/sh
+	cat <<EOF &&
+	feature cat-blob
+	blob
+	mark :1
+	data <<BLOB
+	EOF
+	cat big
+	cat <<EOF
+	BLOB
+	cat-blob :1
+	EOF
 
-> Also you're right that we're running out of space; perhaps we need to make
-> the pane header two rows high.
+	read blob_id type size <&3 &&
+	echo "$blob_id $type $size" >response &&
+	dd of=blob bs=$size count=1 <&3 &&
+	read newline <&3 &&
 
-The suggestion was to make it two rows high only if it doesn't fit on
-one row (i.e. dynamically "line-wrap"), and I like the idea.  Unfortunately
-that's beyond my Tk skills; anybody willing to help?
+	cat <<EOF &&
+	commit refs/heads/copied
+	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+	data <<COMMIT
+	copy big file as file3
+	COMMIT
+	M 644 inline file3
+	data <<BLOB
+	EOF
+	cat blob &&
+	cat <<EOF
+	BLOB
+	EOF
+	FRONTEND_END
 
-> Finally, "First parent" doesn't really convey to me immediately what it
-> does -- I have to think about it, so it will probably confuse new users.
-> I don't know what would be better, though.
+	mkfifo blobs &&
+	(
+		export GIT_COMMITTER_NAME GIT_COMMITTER_EMAIL GIT_COMMITTER_DATE &&
+		sh frontend 3<blobs |
+		git fast-import --cat-blob-fd=3 3>blobs
+	) &&
+	git show copied:file3 >actual &&
+	test_cmp expect.response response &&
+	test_cmp big actual
 
-What I like about it is that it's consistent with the command-line
-client, "git show --first-parent".  But I don't insist on it if anybody
-has a better suggestion.
+0+1 records in
+0+1 records out
+8139 bytes transferred in 0.000062 secs (131297847 bytes/sec)
+error: git-fast-import died of signal 13
+not ok - 114 R: copy using cat-file
+---- 8< ----
 
- gitk |   25 ++++++++++++++++++++++---
- 1 files changed, 22 insertions(+), 3 deletions(-)
+I don't have the tuits right now to dig into this, but "trash directory.t9300-fast-input" has a good response (`cmp expect.response response` is true), but has no refs/heads/copied.  I can run help provide diagnostics, if anyone needs more data.
 
-diff --git a/gitk b/gitk
-index e82c6bf..7201ba0 100755
---- a/gitk
-+++ b/gitk
-@@ -2269,6 +2269,10 @@ proc makewindow {} {
- 	pack .bleft.mid.worddiff -side left -padx 5
-     }
- 
-+    ${NS}::checkbutton .bleft.mid.firstparent -text [mc "First parent"] \
-+	-command changefirstparent -variable firstparent
-+    pack .bleft.mid.firstparent -side left -padx 5
-+
-     set ctext .bleft.bottom.ctext
-     text $ctext -background $bgcolor -foreground $fgcolor \
- 	-state disabled -font textfont \
-@@ -6897,6 +6901,7 @@ proc selectline {l isnew {desired_loc {}}} {
-     global cmitmode showneartags allcommits
-     global targetrow targetid lastscrollrows
-     global autoselect jump_to_here
-+    global firstparent
- 
-     catch {unset pending_select}
-     $canv delete hover
-@@ -7038,7 +7043,7 @@ proc selectline {l isnew {desired_loc {}}} {
-     init_flist [mc "Comments"]
-     if {$cmitmode eq "tree"} {
- 	gettree $id
--    } elseif {[llength $olds] <= 1} {
-+    } elseif {[llength $olds] <= 1 || $firstparent} {
- 	startdiff $id
-     } else {
- 	mergediff $id
-@@ -7442,7 +7447,7 @@ proc diffcmd {ids flags} {
- proc gettreediffs {ids} {
-     global treediff treepending
- 
--    if {[catch {set gdtf [open [diffcmd $ids {--no-commit-id}] r]}]} return
-+    if {[catch {set gdtf [open [diffcmd $ids {--no-commit-id -m --first-parent}] r]}]} return
- 
-     set treepending $ids
-     set treediff {}
-@@ -7534,12 +7539,20 @@ proc changeworddiff {name ix op} {
-     reselectline
- }
- 
-+proc changefirstparent {} {
-+    global treediffs
-+    catch {unset treediffs}
-+
-+    reselectline
-+}
-+
- proc getblobdiffs {ids} {
-     global blobdifffd diffids env
-     global diffinhdr treediffs
-     global diffcontext
-     global ignorespace
-     global worddiff
-+    global firstparent
-     global limitdiffs vfilelimit curview
-     global diffencoding targetline diffnparents
-     global git_version currdiffsubmod
-@@ -7552,13 +7565,18 @@ proc getblobdiffs {ids} {
-     if {[package vcompare $git_version "1.6.6"] >= 0} {
- 	set submodule "--submodule"
-     }
--    set cmd [diffcmd $ids "-p $textconv $submodule  -C --cc --no-commit-id -U$diffcontext"]
-+    set cmd [diffcmd $ids "-p $textconv $submodule  -C --no-commit-id -U$diffcontext"]
-     if {$ignorespace} {
- 	append cmd " -w"
-     }
-     if {$worddiff ne [mc "Line diff"]} {
- 	append cmd " --word-diff=porcelain"
-     }
-+    if {$firstparent} {
-+	append cmd " -m --first-parent"
-+    } else {
-+	append cmd " --cc"
-+    }
-     if {$limitdiffs && $vfilelimit($curview) ne {}} {
- 	set cmd [concat $cmd -- $vfilelimit($curview)]
-     }
-@@ -11453,6 +11471,7 @@ set diffcolors {red "#00a000" blue}
- set diffcontext 3
- set ignorespace 0
- set worddiff ""
-+set firstparent 0
- set markbgcolor "#e0e0ff"
- 
- set circlecolors {white blue gray blue blue}
--- 
-1.7.3.2.442.g97e50
+~~ Brian
+
+PS:  Isn't t9300 getting a little crazily long?  Is there a good way to split it up by feature or something? It runs quickly, but finding were something is failing is getting a little difficult.
