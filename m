@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 02/19] diff-no-index: use diff_tree_setup_paths()
-Date: Mon, 13 Dec 2010 16:46:39 +0700
-Message-ID: <1292233616-27692-3-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 03/19] pathspec: cache string length when initializing pathspec
+Date: Mon, 13 Dec 2010 16:46:40 +0700
+Message-ID: <1292233616-27692-4-git-send-email-pclouds@gmail.com>
 References: <1292233616-27692-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -11,93 +11,116 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 13 10:48:24 2010
+X-From: git-owner@vger.kernel.org Mon Dec 13 10:48:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PS516-0004Xi-FL
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 10:48:24 +0100
+	id 1PS516-0004Xi-W6
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 10:48:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751719Ab0LMJsJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Dec 2010 04:48:09 -0500
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:40068 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751671Ab0LMJsH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Dec 2010 04:48:07 -0500
-Received: by pva4 with SMTP id 4so1079505pva.19
-        for <git@vger.kernel.org>; Mon, 13 Dec 2010 01:48:06 -0800 (PST)
+	id S1751786Ab0LMJsO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Dec 2010 04:48:14 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:41933 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751722Ab0LMJsM (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Dec 2010 04:48:12 -0500
+Received: by pwj3 with SMTP id 3so1096117pwj.19
+        for <git@vger.kernel.org>; Mon, 13 Dec 2010 01:48:12 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=pWI5dX4Bnq4BVtCwvAivThOkqtbSABWJxKOtKavbE4Y=;
-        b=IfUz/t6oKdSKugOAg/3syBMQJuB5ZBfSoujyiVML59XF4h61NESNo5sCvA1XKX3iy/
-         1pjBKU/8jR7JcfwB45FKRqYBaM+a37HvDPP4z3ogy/z/SFUie8XDrN9SLZTQ2KPlpWzK
-         csiCV7473qkiEYRQUx4ARu82i99n2Mrq9S5b8=
+        bh=9S1A/KYFhD1DPQMhpxC6QJ5S1UmxUBviNUolAO/3plc=;
+        b=hrmVKw5Oopb4pxMD37dE1EVvYP7SQw0h+0MaCp6uMfWWROS3wZ3MGiYybOUsDC7FYg
+         G+8idM0ks2P/Xa6gE6OPZ07jOOCLXQ5/IHRfwpzNbbLaCEe9e33Uw1acoj/qi9JUGBdd
+         Kx8l/RtKppnnUKEuIelcoUIlFI+11TpRULgmA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=F2UZZo+bVTsyf5NpT6Kyx5j82rYXGUbFOg1KFNaOaNZAOUM4UIeMa19LZAyEnCGjff
-         vGuMxzCNQsCJNCJAYCYxN0SmjPpUnilaWJ1HCMB77Hhvuwh6OMIZ/2Qtp0OPoJQA9hn/
-         d9dx/GJ9KOCV+hzO8ky+nnXPvsDYEuQW8ggSs=
-Received: by 10.142.211.19 with SMTP id j19mr3052944wfg.61.1292233685021;
-        Mon, 13 Dec 2010 01:48:05 -0800 (PST)
+        b=AtMQ2f0QRKlDB0HDEqCOUFTBINAHC/ljTViN1j01tYKupefA4powIff9O4P8H9Tyqq
+         CX1MGlKFyNNbgwRaETxGhXpDoXErtUjtjcb9ctqHNkc0p+MS3z2qCRJt9LyQN05GWf7E
+         IMb3Ygq6pfPRr1EacdWc5M2BkN69WomfBg3VM=
+Received: by 10.142.139.17 with SMTP id m17mr3049460wfd.41.1292233692551;
+        Mon, 13 Dec 2010 01:48:12 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.222.178])
-        by mx.google.com with ESMTPS id e14sm8675570wfg.20.2010.12.13.01.48.00
+        by mx.google.com with ESMTPS id w22sm8674487wfd.19.2010.12.13.01.48.08
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 13 Dec 2010 01:48:03 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 13 Dec 2010 16:47:11 +0700
+        Mon, 13 Dec 2010 01:48:11 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 13 Dec 2010 16:47:19 +0700
 X-Mailer: git-send-email 1.7.3.3.476.g10a82
 In-Reply-To: <1292233616-27692-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163532>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163533>
 
-diff_options.{paths,nr_paths} will be removed later. Do not
-modify them directly.
+This field will be used when tree_entry_interesting() is converted to
+use struct pathspec. Currently it uses pathlens[] in struct
+diff_options to avoid calculating string over and over again.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- diff-no-index.c |    9 +++++----
- 1 files changed, 5 insertions(+), 4 deletions(-)
+ cache.h |    3 +++
+ dir.c   |   13 ++++++++++++-
+ 2 files changed, 15 insertions(+), 1 deletions(-)
 
-diff --git a/diff-no-index.c b/diff-no-index.c
-index ce9e783..e48ab92 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -231,8 +231,9 @@ void diff_no_index(struct rev_info *revs,
+diff --git a/cache.h b/cache.h
+index 3330769..36819b6 100644
+--- a/cache.h
++++ b/cache.h
+@@ -496,6 +496,9 @@ extern int ie_modified(const struct index_state *, =
+struct cache_entry *, struct
+ struct pathspec {
+ 	const char **raw; /* get_pathspec() result, not freed by free_pathspe=
+c() */
+ 	int nr;
++	struct pathspec_item {
++		int len;
++	} *items;
+ };
 =20
- 	if (prefix) {
- 		int len =3D strlen(prefix);
-+		const char *paths[3];
-+		memset(paths, 0, sizeof(paths));
+ extern int init_pathspec(struct pathspec *, const char **);
+diff --git a/dir.c b/dir.c
+index 205adc4..646c79f 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1074,6 +1074,7 @@ int remove_path(const char *name)
+ int init_pathspec(struct pathspec *pathspec, const char **paths)
+ {
+ 	const char **p =3D paths;
++	int i;
 =20
--		revs->diffopt.paths =3D xcalloc(2, sizeof(char *));
- 		for (i =3D 0; i < 2; i++) {
- 			const char *p =3D argv[argc - 2 + i];
- 			/*
-@@ -242,12 +243,12 @@ void diff_no_index(struct rev_info *revs,
- 			p =3D (strcmp(p, "-")
- 			     ? xstrdup(prefix_filename(prefix, len, p))
- 			     : p);
--			revs->diffopt.paths[i] =3D p;
-+			paths[i] =3D p;
- 		}
-+		diff_tree_setup_paths(paths, &revs->diffopt);
- 	}
- 	else
--		revs->diffopt.paths =3D argv + argc - 2;
--	revs->diffopt.nr_paths =3D 2;
-+		diff_tree_setup_paths(argv + argc - 2, &revs->diffopt);
- 	revs->diffopt.skip_stat_unmatch =3D 1;
- 	if (!revs->diffopt.output_format)
- 		revs->diffopt.output_format =3D DIFF_FORMAT_PATCH;
+ 	memset(pathspec, 0, sizeof(*pathspec));
+ 	if (!p)
+@@ -1082,10 +1083,20 @@ int init_pathspec(struct pathspec *pathspec, co=
+nst char **paths)
+ 		p++;
+ 	pathspec->raw =3D paths;
+ 	pathspec->nr =3D p - paths;
++	if (!pathspec->nr)
++		return 0;
++
++	pathspec->items =3D xmalloc(sizeof(struct pathspec_item)*pathspec->nr=
+);
++	for (i =3D 0; i < pathspec->nr; i++) {
++		struct pathspec_item *item =3D pathspec->items+i;
++
++		item->len =3D strlen(paths[i]);
++	}
+ 	return 0;
+ }
+=20
+ void free_pathspec(struct pathspec *pathspec)
+ {
+-	; /* do nothing */
++	free(pathspec->items);
++	pathspec->items =3D NULL;
+ }
 --=20
 1.7.3.3.476.g10a82
