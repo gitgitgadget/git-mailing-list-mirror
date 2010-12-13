@@ -1,7 +1,7 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Yaroslav Halchenko <debian@onerussian.com>
 Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 13 Dec 2010 14:15:40 -0800
-Message-ID: <7vlj3txqsz.fsf@alter.siamese.dyndns.org>
+Date: Mon, 13 Dec 2010 16:46:28 -0500
+Message-ID: <20101213214628.GA13447@onerussian.com>
 References: <7vr69r8sqk.fsf@gitster.siamese.dyndns.org>
  <7vlk01hqzz.fsf@gitster.siamese.dyndns.org>
  <20080718175040.6117@nanako3.lavabit.com>
@@ -10,76 +10,103 @@ References: <7vr69r8sqk.fsf@gitster.siamese.dyndns.org>
  <7vtzen7bul.fsf@gitster.siamese.dyndns.org>
  <loom.20101213T194818-377@post.gmane.org>
  <7vbp4pz9hf.fsf@alter.siamese.dyndns.org>
- <20101213214628.GA13447@onerussian.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="29v4wwwYFo25Y52C"
 Cc: git@vger.kernel.org
-To: Yaroslav Halchenko <debian@onerussian.com>
-X-From: git-owner@vger.kernel.org Mon Dec 13 23:16:06 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 13 23:22:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSGgU-0003yS-CJ
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 23:15:54 +0100
+	id 1PSGmS-0006ms-B6
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 23:22:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757121Ab0LMWPt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Dec 2010 17:15:49 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58067 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751614Ab0LMWPs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Dec 2010 17:15:48 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C3DB23440;
-	Mon, 13 Dec 2010 17:16:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=y3jw+LWKRb4QLlp5mGMI/CHLdoY=; b=diz3cQ
-	DsCHYJlGflqiG8d8xacWv6XMorfn4OXJXPCxwZeTnQVno5PZttf6NF4yA6vreJs7
-	DRobSQHpC6CchXL6KYYoJVqSeoTd1uD9qYZgb/Vrj9LSKG/DxwKF4wbAflby2vVD
-	uPsOqc2Vp0Wl8F5UR5ZwlN6CJ2osY4j0Cebj0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Y45LiuctyhciAcQ7k29s1UYn5sTgL1Gn
-	9LIhi6h2EW+pbB8v+8S6mCEDi7JVA5iOc8Ts45ZhZ0okp6Ldg2WMMphX1TEyNB2k
-	kN6TZ52ZkP/sz33djjTEuX1Q11vEu06fFgnHWFR9XwhzoWe3bWwa48PYEKcmDbkv
-	l3yKVyoHaSc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A2A3C343F;
-	Mon, 13 Dec 2010 17:16:10 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B16D5343E; Mon, 13 Dec 2010
- 17:16:07 -0500 (EST)
-In-Reply-To: <20101213214628.GA13447@onerussian.com> (Yaroslav Halchenko's
- message of "Mon\, 13 Dec 2010 16\:46\:28 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9708E2A2-0706-11E0-BF2F-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1758190Ab0LMWV6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Dec 2010 17:21:58 -0500
+Received: from washoe.dartmouth.edu ([129.170.30.229]:60213 "EHLO
+	smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754875Ab0LMWV5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Dec 2010 17:21:57 -0500
+X-Greylist: delayed 2126 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Dec 2010 17:21:57 EST
+Received: from smtp.onerussian.com ([192.168.100.6] helo=washoe.onerussian.com)
+	by smtp.onerussian.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <yoh@onerussian.com>)
+	id 1PSGE0-0003CR-VJ; Mon, 13 Dec 2010 16:46:29 -0500
+Received: from yoh by washoe.onerussian.com with local (Exim 4.69)
+	(envelope-from <yoh@onerussian.com>)
+	id 1PSGE0-0003CO-Ih; Mon, 13 Dec 2010 16:46:28 -0500
+Content-Disposition: inline
+In-Reply-To: <7vbp4pz9hf.fsf@alter.siamese.dyndns.org>
+X-URL: http://www.onerussian.com
+X-Image-Url: http://www.onerussian.com/img/yoh.png
+X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
+X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: 192.168.100.6
+X-SA-Exim-Rcpt-To: gitster@pobox.com, git@vger.kernel.org
+X-SA-Exim-Mail-From: yoh@onerussian.com
+X-SA-Exim-Scanned: No (on smtp.onerussian.com); SAEximRunCond expanded to false
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163600>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163601>
 
-Yaroslav Halchenko <debian@onerussian.com> writes:
 
-> On Mon, 13 Dec 2010, Junio C Hamano wrote:
->> would make sense only if used with --no-commit.
->
->> But for such a use case, "git read-tree -m -u 0.2" would work just as
->> well, and discussion ended there ;-)
->
-> hm -- read-tree sounded like yet another unknown to me feature of GIT I
-> was trying desperately to discover ;)  unfortunately it doesn't produce a merge
-> for me
+--29v4wwwYFo25Y52C
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Didn't I already say it makes sense only with --no-commit?  IOW to shape
-the tree.
 
-And in your use case I do not think you would even want to have a merge.
-Even if you run "git rm" to remove non-free stuff from the merge result,
-if you merged the history of 0.2 that contains non-free stuff you are not
-allowed to distribute (forbidden either by upstream or self-imposed dfsg,
-the reason does not matter), people who gets the merge commit can follow
-its second parent to grab the non-free stuff, no?
+On Mon, 13 Dec 2010, Junio C Hamano wrote:
+> would make sense only if used with --no-commit.
+
+> But for such a use case, "git read-tree -m -u 0.2" would work just as
+> well, and discussion ended there ;-)
+
+hm -- read-tree sounded like yet another unknown to me feature of GIT I
+was trying desperately to discover ;)  unfortunately it doesn't produce a m=
+erge
+for me :-/ -- just a simple commit with the state taken from the other tree:
+
+$> git read-tree -m -u origin/master                =20
+cached/staged changes: 179 changes =20
+
+$> git commit -m 'blunt merge for -s theirs: -m -u origin/master '
+[maint/0.5 b246251] blunt merge for -s theirs: -m -u origin/master
+ 175 files changed, 9589 insertions(+), 4914 deletions(-)
+ create mode 100644 doc/pics/ex_curvefitting_bold.svg
+ create mode 100644 doc/pics/ex_curvefitting_searchlight.svg
+ ...
+$> git show HEAD^2                                               =20
+fatal: ambiguous argument 'HEAD^2': unknown revision or path not in the wor=
+king tree.
+
+I am using git (Debian amd64): 1:1.7.2.3-2.1 (so it is 1.7.2.3)
+
+--=20
+Yaroslav O. Halchenko
+Postdoctoral Fellow,   Department of Psychological and Brain Sciences
+Dartmouth College, 419 Moore Hall, Hinman Box 6207, Hanover, NH 03755
+Phone: +1 (603) 646-9834                       Fax: +1 (603) 646-1419
+WWW:   http://www.linkedin.com/in/yarik       =20
+
+--29v4wwwYFo25Y52C
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAk0GlDQACgkQjRFFY3XAJMjBTgCfVe1hNvbkhXb+jFKOIh5fUCGw
+QjQAn3rS78dN5tEHYoKtQNZhzztwyVAF
+=9oIb
+-----END PGP SIGNATURE-----
+
+--29v4wwwYFo25Y52C--
