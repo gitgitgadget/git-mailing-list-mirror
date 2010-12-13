@@ -1,140 +1,118 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/3] get_sha1_oneline: do not leak or double free
-Date: Sun, 12 Dec 2010 22:31:18 -0800
-Message-ID: <7voc8q5gll.fsf@alter.siamese.dyndns.org>
-References: <1292209275-17451-1-git-send-email-pclouds@gmail.com>
- <7v1v5m6w26.fsf@alter.siamese.dyndns.org>
- <7vvd2y5h63.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH jn/fast-import-blob-access] t9300: avoid short reads from dd
+Date: Mon, 13 Dec 2010 00:31:51 -0600
+Message-ID: <20101213063151.GB20812@burratino>
+References: <0BB1933F-1C3D-4C24-9C91-263121BF55FB@gernhardtsoftware.com>
+ <20101212214909.GA19709@burratino>
+ <2F4185D2-5846-45CB-BC92-6BC07AE5CEC8@gernhardtsoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>,
-	Kevin Ballard <kevin@sb.org>, Yann Dirson <dirson@bertin.fr>,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	Thiago Farina <tfransosi@gmail.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 13 07:31:47 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: "git@vger.kernel.org List" <git@vger.kernel.org>,
+	David Barr <david.barr@cordelta.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Brian Gernhardt <brian@gernhardtsoftware.com>
+X-From: git-owner@vger.kernel.org Mon Dec 13 07:32:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PS1wo-0000b5-Ud
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 07:31:47 +0100
+	id 1PS1x6-0000fV-3E
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 07:32:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752069Ab0LMGbl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Dec 2010 01:31:41 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:48048 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751162Ab0LMGbk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Dec 2010 01:31:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EFB0020C9;
-	Mon, 13 Dec 2010 01:32:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=Wfry6qIRipiK
-	a9gUsf2WwbKG2Gk=; b=tzrT/kUcXOD4UhxjgzdEE4CejCpK5i7AC+MmqkKM+flZ
-	zLwThDByDbQnWoh4l/6jl2bwoyicLUjapdiLYLolD9wTVuB8rDwnwsFHZW66bgRl
-	6BYIgP5uSH0NPlmzzDyZn4FZ7GMWMAg8u70WM5XHSFcij8oMsMZZ5i5KxmMZAMM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=TyXagn
-	EDOt07kWQhDslJx1vFDgc/ccvMuSdfF1vTHPvHo1KkoOUP6esOBmtoje+NV3bD3p
-	T+x43wZDa8uFKH5PEAFpYXRgzHMAbM9ETot8G/ixZ0su+YIFyw68ZZShBEkY7nyY
-	umHOjvGXkWZQYAqBQq5LYrDOeJUw1/XqlpKcQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 41F7820C8;
-	Mon, 13 Dec 2010 01:31:56 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C52B620C7; Mon, 13 Dec 2010
- 01:31:45 -0500 (EST)
-In-Reply-To: <7vvd2y5h63.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sun\, 12 Dec 2010 22\:19\:00 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AE62746A-0682-11E0-A95B-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1752111Ab0LMGb6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Dec 2010 01:31:58 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:61875 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751162Ab0LMGb6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Dec 2010 01:31:58 -0500
+Received: by yxt3 with SMTP id 3so3096262yxt.19
+        for <git@vger.kernel.org>; Sun, 12 Dec 2010 22:31:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=rCdETTrLqM9IWk89N3FQaiOCpo4KBTxeNB0wI/3uJVo=;
+        b=h1wOmhE2odJxh7NRBnOZzJjHYUJOqsQfqN8dmc8r+/EBAI90zkwAYMDr+aZWyiBEAc
+         lNf02VSF0rZrcbWMvHk1BfwTv5r1BqZZk7Fk813JEy8OL+gsXI7YykEyI7spgIIpa5xP
+         GfYwuvwRSsB37rC2fJ0/5pQr1M1zGgEEpYVrc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=GimcZ0oVUfN0kC/hoD6eGZOodwlj1gBrgs/inQhiCzrGyXmu80rQhygGVhItY3SQLE
+         +85ZBXJrSiD6vcztuhf/26j60qAXJH/2CTakmHSINWMuJF3TARB7+AEqDOfqKnUAUinp
+         QposnkAqjRr8JYhnMX9WjQHDixtAW9RehwtjM=
+Received: by 10.91.153.10 with SMTP id f10mr4429168ago.172.1292221917240;
+        Sun, 12 Dec 2010 22:31:57 -0800 (PST)
+Received: from burratino (adsl-69-209-48-248.dsl.chcgil.sbcglobal.net [69.209.48.248])
+        by mx.google.com with ESMTPS id 2sm7002222anw.18.2010.12.12.22.31.55
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 12 Dec 2010 22:31:56 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <2F4185D2-5846-45CB-BC92-6BC07AE5CEC8@gernhardtsoftware.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163518>
 
-=2E.. and this is how your [2/3] would look on top of that.
+dd is a thin wrapper around read(2).  As open group Issue 7 explains:
 
-I didn't change the scratchpad bit assignment in this commit, as that i=
-s a
-logically separate change and I didn't look at all the codepaths that c=
-an
-call into this function to make sure they never use TMP_MARK themselves=
-=2E
+	It shall read the input one block at a time, using the specified
+	input block size; it shall then process the block of data
+	actually returned, which could be smaller than the requested
+	block size.
 
-They shouldn't, but it is easier to revert the change if there were.
+Any short read --- for example from a pipe whose capacity cannot fill
+a block --- results in that block being truncated.  As a result, the
+first cat-blob test (9300.114) fails on Mac OS X, where the pipe
+capacity is around 8 KiB.
 
--- >8 --
-=46rom: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail.com>
-Date: Mon, 13 Dec 2010 10:01:14 +0700
-Subject: [PATCH 2/3] get_sha1_oneline: make callers prepare the commit =
-list to traverse
+Fix the test by using a block size of 1.  Each read will block until
+the next byte of input is available.
 
-This gives callers more control, i.e. which ref will be searched from.
-They must prepare the list ordered by committer date.
+It would be even nicer to use head -c which expresses the intention
+more clearly.  Alas, IRIX "head" does not support the -c option.
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Reported-by: Brian Gernhardt <brian@gernhardtsoftware.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- sha1_name.c |   19 +++++++++++--------
- 1 files changed, 11 insertions(+), 8 deletions(-)
+ t/t9300-fast-import.sh |    6 +++---
+ 1 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/sha1_name.c b/sha1_name.c
-index 2cc7a42..aefae1f 100644
---- a/sha1_name.c
-+++ b/sha1_name.c
-@@ -686,13 +686,13 @@ static int handle_one_ref(const char *path,
- 	if (object->type !=3D OBJ_COMMIT)
- 		return 0;
- 	insert_by_date((struct commit *)object, list);
--	object->flags |=3D ONELINE_SEEN;
- 	return 0;
- }
-=20
--static int get_sha1_oneline(const char *prefix, unsigned char *sha1)
-+static int get_sha1_oneline(const char *prefix, unsigned char *sha1,
-+			    struct commit_list *list)
- {
--	struct commit_list *list =3D NULL, *backup =3D NULL, *l;
-+	struct commit_list *backup =3D NULL, *l;
- 	int found =3D 0;
- 	regex_t regex;
-=20
-@@ -705,9 +705,10 @@ static int get_sha1_oneline(const char *prefix, un=
-signed char *sha1)
- 	if (regcomp(&regex, prefix, REG_EXTENDED))
- 		die("Invalid search pattern: %s", prefix);
-=20
--	for_each_ref(handle_one_ref, &list);
--	for (l =3D list; l; l =3D l->next)
-+	for (l =3D list; l; l =3D l->next) {
-+		l->item->object.flags |=3D ONELINE_SEEN;
- 		commit_list_insert(l->item, &backup);
-+	}
- 	while (list) {
- 		char *p, *to_free =3D NULL;
- 		struct commit *commit;
-@@ -1090,9 +1091,11 @@ int get_sha1_with_context_1(const char *name, un=
-signed char *sha1,
- 		int stage =3D 0;
- 		struct cache_entry *ce;
- 		int pos;
--		if (namelen > 2 && name[1] =3D=3D '/')
--			/* don't need mode for commit */
--			return get_sha1_oneline(name + 2, sha1);
-+		if (namelen > 2 && name[1] =3D=3D '/') {
-+			struct commit_list *list =3D NULL;
-+			for_each_ref(handle_one_ref, &list);
-+			return get_sha1_oneline(name + 2, sha1, list);
-+		}
- 		if (namelen < 3 ||
- 		    name[2] !=3D ':' ||
- 		    name[1] < '0' || '3' < name[1])
+diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
+index 055ddc6..ed28d3c 100755
+--- a/t/t9300-fast-import.sh
++++ b/t/t9300-fast-import.sh
+@@ -1794,7 +1794,7 @@ test_expect_success PIPE 'R: copy using cat-file' '
+ 
+ 	read blob_id type size <&3 &&
+ 	echo "$blob_id $type $size" >response &&
+-	dd of=blob bs=$size count=1 <&3 &&
++	dd of=blob bs=1 count=$size <&3 &&
+ 	read newline <&3 &&
+ 
+ 	cat <<EOF &&
+@@ -1845,7 +1845,7 @@ test_expect_success PIPE 'R: print blob mid-commit' '
+ 		EOF
+ 
+ 		read blob_id type size <&3 &&
+-		dd of=actual bs=$size count=1 <&3 &&
++		dd of=actual bs=1 count=$size <&3 &&
+ 		read newline <&3 &&
+ 
+ 		echo
+@@ -1880,7 +1880,7 @@ test_expect_success PIPE 'R: print staged blob within commit' '
+ 		echo "cat-blob $to_get" &&
+ 
+ 		read blob_id type size <&3 &&
+-		dd of=actual bs=$size count=1 <&3 &&
++		dd of=actual bs=1 count=$size <&3 &&
+ 		read newline <&3 &&
+ 
+ 		echo deleteall
+-- 
+1.7.2.4
