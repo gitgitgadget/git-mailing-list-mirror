@@ -1,69 +1,79 @@
-From: Stephen Bash <bash@genarts.com>
-Subject: Re: Git SVN non-standard branch/tag/trunk layout
-Date: Mon, 13 Dec 2010 16:23:02 -0500 (EST)
-Message-ID: <19945570.186298.1292275382811.JavaMail.root@mail.hq.genarts.com>
-References: <002301cb9b09$e4eb2de0$aec189a0$@optusnet.com.au>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Please pull gitk.git master branch
+Date: Mon, 13 Dec 2010 13:45:14 -0800
+Message-ID: <7vy67txs7p.fsf@alter.siamese.dyndns.org>
+References: <20101212063135.GA7677@brick.ozlabs.ibm.com>
+ <7vwrne8tow.fsf@alter.siamese.dyndns.org>
+ <7v7hfe74ea.fsf@alter.siamese.dyndns.org>
+ <7vbp4q5ddo.fsf@alter.siamese.dyndns.org>
+ <20101213210317.GA10027@brick.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Albert Krawczyk <pro-logic@optusnet.com.au>
-X-From: git-owner@vger.kernel.org Mon Dec 13 22:23:40 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Alexandre Erwin Ittner <alexandre@ittner.com.br>,
+	git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Mon Dec 13 22:45:33 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSFrq-0003Zw-I4
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 22:23:34 +0100
+	id 1PSGD6-00068k-5b
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 22:45:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757116Ab0LMVXM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Dec 2010 16:23:12 -0500
-Received: from hq.genarts.com ([173.9.65.1]:37566 "HELO mail.hq.genarts.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1757026Ab0LMVXK (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Dec 2010 16:23:10 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by mail.hq.genarts.com (Postfix) with ESMTP id F132D1E2631D;
-	Mon, 13 Dec 2010 16:23:08 -0500 (EST)
-X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
-Received: from mail.hq.genarts.com ([127.0.0.1])
-	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id JjurVlobNpx3; Mon, 13 Dec 2010 16:23:02 -0500 (EST)
-Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
-	by mail.hq.genarts.com (Postfix) with ESMTP id E2D571E26314;
-	Mon, 13 Dec 2010 16:23:02 -0500 (EST)
-In-Reply-To: <002301cb9b09$e4eb2de0$aec189a0$@optusnet.com.au>
-X-Mailer: Zimbra 6.0.7_GA_2473.UBUNTU8 (ZimbraWebClient - SAF3 (Mac)/6.0.7_GA_2473.UBUNTU8)
+	id S1756143Ab0LMVp1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Dec 2010 16:45:27 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40007 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752170Ab0LMVp0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Dec 2010 16:45:26 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 49C812FBD;
+	Mon, 13 Dec 2010 16:45:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6+pPI+UjsxAy7VxXF3CMtoeE774=; b=AV+aGF
+	Q9pfOL4oGGAjaCwEP6V4Dgdrm+Bc8u7vfPDubKvb4J23N5cx78y0XQ4/slVWSOL/
+	gF24nYAJ8JAPBwLCBKytaPTCI6tV5iX446WE2qrtGkWcnWzZWlfnLf+wQVTyO/pn
+	F1uF7Q2fSLTHCats6FmMbz+O751/xIXQmlwQc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Nr0m92GRjzu5FbCY4TmH9V6KWf+PtX2D
+	qrBlSQFH/Z+zUDf+5cP2Zo3zbg1c/IR9W4O5YXb9urhCl8IR9EHr9gMs7QLYfX+a
+	nnk1ca1rf4amkxOBbK94vvXeeVVw3hEbbVnd/tF/vJhUsJESfqUbBUEwi1NMa5Tg
+	AJB1MgTggus=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0858E2FBC;
+	Mon, 13 Dec 2010 16:45:46 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9D9E92FBB; Mon, 13 Dec 2010
+ 16:45:41 -0500 (EST)
+In-Reply-To: <20101213210317.GA10027@brick.ozlabs.ibm.com> (Paul Mackerras's
+ message of "Tue\, 14 Dec 2010 08\:03\:17 +1100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 57784258-0702-11E0-95E3-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163596>
 
------ Original Message -----
-> From: "Albert Krawczyk" <pro-logic@optusnet.com.au>
-> To: "Stephen Bash" <bash@genarts.com>
-> Cc: git@vger.kernel.org
-> Sent: Monday, December 13, 2010 4:08:28 PM
-> Subject: RE: Git SVN non-standard branch/tag/trunk layout
->
-> >Project 2 is an interesting one because it looks like the trunk is at
-> >the same level as branches/tags. If that's the case, the 'branches'
-> >line above will work (it will treat >the trunk like any other branch
-> >-- a very Git-like approach). Also note that those projects that
-> >didn't have a 'trunk' directory in SVN I added a 'trunk' on the Git
-> >side to keep things consistent -- this is completely optional.
-> >
-> >Once you get comfortable with the rules governing the config lines,
-> >you can pretty much untangle any SVN layout.
-> 
-> Thanks a lot! I thought this is what I had to do, and had through
-> trial and (a lot of) error got to be very close. As far as I can see
-> the only 'downside' of this approach is that you can't have the 'root'
-> of the SVN repo checked out, you can only have the root of each
-> project checked out, as they are all on their own ref.
+Paul Mackerras <paulus@samba.org> writes:
 
-I hadn't thought about it until now, but you could probably specify fetch=/:refs/remotes/svnroot to have a ref that is the root of the SVN repository...  Might be worth a shot...
+> Sorry about the glitch.  The renaming seems like the best idea, since
+> all the other .po files have lowercase names.
 
-Stephen
+Usually people spell language in lower and region in upper, e.g. ja_JP, so
+to eyes trained in i18n renaming doesn't look very nice.  I just wanted to
+know that Tcl folks do not care about that ;-)
+
+> If I apply this patch in my repo, is that going to cause problems in
+> yours?  Or, since the commit that adds this file is the head commit, I
+> could just rewind it and reapply with the lowercase name.  Do you see
+> problems with that?
+
+Either way is fine by me, as the merge I pushed out last night is only on
+'pu' that is advertised as unstable.
+
+Thanks.
