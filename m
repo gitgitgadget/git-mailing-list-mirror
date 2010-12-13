@@ -1,57 +1,67 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2010, #04; Mon, 13)
-Date: Mon, 13 Dec 2010 12:47:30 +0100
-Message-ID: <AANLkTikGneq+zeN5Z5XrUseX4Arevft67U7pV+h+5Tr+@mail.gmail.com>
-References: <7v7hfe5awz.fsf@alter.siamese.dyndns.org>
+From: "psantosl@codicesoftware.com" <psantosl@codicesoftware.com>
+Subject: [ANNOUNCE] GitJungle is out!
+Date: Mon, 13 Dec 2010 12:12:13 +0100
+Message-ID: <4D05FF8D.7080306@codicesoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 13 12:47:38 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 13 13:24:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PS6sT-0004Tj-Fr
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 12:47:37 +0100
+	id 1PS7S2-0002Xw-4Y
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 13:24:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754669Ab0LMLrc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Dec 2010 06:47:32 -0500
-Received: from mail-fx0-f43.google.com ([209.85.161.43]:35790 "EHLO
-	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751762Ab0LMLrb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Dec 2010 06:47:31 -0500
-Received: by fxm18 with SMTP id 18so6132096fxm.2
-        for <git@vger.kernel.org>; Mon, 13 Dec 2010 03:47:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=J6FSdcLKGOn8dVxJTDNmIlnBZm/r+7DNd9/lWWlSD14=;
-        b=pjK0c5l5+wVMx14f48hLBe31thdFQScSfNovfEZIy5iOlyW2AWw6CgE0myDnY7kw2K
-         fhbKb9UZuYzp7xZzHC8PAKUXs7vFyUEBFVFo3ZDpGGEcTlm6pkGgNhWwULtalvl4Tkzv
-         6HvY321ltTNIHvUozX1qiC7z6Wb/KXJq+Wlu0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=QGTl7wmJHmrT0WMplYIxWhiaMCh3oaSf+ZaglI6lETGdNh7yi5zcuZ0Vwg4LoVeV61
-         4rF4JsbpIbIVeudabg/FGABILvBwTVpdQCcp8Lb1aGQun/G6fdui27lzvY7PZ0qgftN2
-         FW0XLXpee2wJs66sAwnZfIOZTXZz/KO4kp6yY=
-Received: by 10.223.95.197 with SMTP id e5mr761642fan.104.1292240850065; Mon,
- 13 Dec 2010 03:47:30 -0800 (PST)
-Received: by 10.223.86.204 with HTTP; Mon, 13 Dec 2010 03:47:30 -0800 (PST)
-In-Reply-To: <7v7hfe5awz.fsf@alter.siamese.dyndns.org>
+	id S1754672Ab0LMMYT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Dec 2010 07:24:19 -0500
+Received: from berith.lunarbreeze.com ([216.97.239.175]:50586 "EHLO
+	berith.lunarbreeze.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753573Ab0LMMYS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Dec 2010 07:24:18 -0500
+X-Greylist: delayed 4323 seconds by postgrey-1.27 at vger.kernel.org; Mon, 13 Dec 2010 07:24:18 EST
+Received: from 102.red-83-33-14.dynamicip.rima-tde.net ([83.33.14.102] helo=[192.168.2.33])
+	by berith.lunarbreeze.com with esmtpa (Exim 4.69)
+	(envelope-from <psantosl@codicesoftware.com>)
+	id 1PS6KE-0003yS-05
+	for git@vger.kernel.org; Mon, 13 Dec 2010 03:12:14 -0800
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.12) Gecko/20101027 Lightning/1.0b2 Thunderbird/3.1.6
+X-Enigmail-Version: 1.1.1
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - berith.lunarbreeze.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - codicesoftware.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163554>
 
-On Mon, Dec 13, 2010 at 09:34, Junio C Hamano <gitster@pobox.com> wrote:
+Hi all,
 
-> Needs a bit more minor work to get the basic code structure right.
+We've just released GitJungle
+(http://www.plasticscm.com/labs/gitjungle.aspx), a git branch explorer
+based on the same codebase we use in our version control product,
+plastic scm.
 
-And I'm still not sure (see earlier replies to "What's Cooking" posts)
-what needs to be done to make it better.
+We wanted to call it something like GitForest (you know, so many
+branches and trees :P) but the name was already reserved...
+
+GitJungle is a beta and works on Linux, Mac and Windows and basically
+we'd love to get feedback. The drawing approach we use is a little bit
+different from what other git tools are using: we draw horizontally
+instead of vertically, we think it is a better way but, you know, it is
+probably a matter of preference.
+
+I'd really like if you could give it a try and of course any feedback
+(including tough critics) will be more than welcome.
+
+Thanks,
+
+pablo
