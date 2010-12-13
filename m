@@ -1,126 +1,48 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 03/19] pathspec: cache string length when initializing pathspec
-Date: Mon, 13 Dec 2010 16:46:40 +0700
-Message-ID: <1292233616-27692-4-git-send-email-pclouds@gmail.com>
-References: <1292233616-27692-1-git-send-email-pclouds@gmail.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH] git_getpass: fix ssh-askpass behaviour
+Date: Mon, 13 Dec 2010 10:48:17 +0100
+Message-ID: <4D05EBE1.1020602@viscovery.net>
+References: <AANLkTinES5dqt+JAMOrp7gAYJ4UgK9ipfEN9ag5qSCLp@mail.gmail.com> <1292157174-4033-2-git-send-email-alexander@sulfrian.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 13 10:48:26 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Alexander Sulfrian <alexander@sulfrian.net>
+X-From: git-owner@vger.kernel.org Mon Dec 13 10:48:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PS516-0004Xi-W6
+	id 1PS517-0004Xi-GB
 	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 10:48:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751786Ab0LMJsO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Dec 2010 04:48:14 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:41933 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751722Ab0LMJsM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Dec 2010 04:48:12 -0500
-Received: by pwj3 with SMTP id 3so1096117pwj.19
-        for <git@vger.kernel.org>; Mon, 13 Dec 2010 01:48:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:in-reply-to:references:mime-version
-         :content-type:content-transfer-encoding;
-        bh=9S1A/KYFhD1DPQMhpxC6QJ5S1UmxUBviNUolAO/3plc=;
-        b=hrmVKw5Oopb4pxMD37dE1EVvYP7SQw0h+0MaCp6uMfWWROS3wZ3MGiYybOUsDC7FYg
-         G+8idM0ks2P/Xa6gE6OPZ07jOOCLXQ5/IHRfwpzNbbLaCEe9e33Uw1acoj/qi9JUGBdd
-         Kx8l/RtKppnnUKEuIelcoUIlFI+11TpRULgmA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=AtMQ2f0QRKlDB0HDEqCOUFTBINAHC/ljTViN1j01tYKupefA4powIff9O4P8H9Tyqq
-         CX1MGlKFyNNbgwRaETxGhXpDoXErtUjtjcb9ctqHNkc0p+MS3z2qCRJt9LyQN05GWf7E
-         IMb3Ygq6pfPRr1EacdWc5M2BkN69WomfBg3VM=
-Received: by 10.142.139.17 with SMTP id m17mr3049460wfd.41.1292233692551;
-        Mon, 13 Dec 2010 01:48:12 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.222.178])
-        by mx.google.com with ESMTPS id w22sm8674487wfd.19.2010.12.13.01.48.08
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 13 Dec 2010 01:48:11 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 13 Dec 2010 16:47:19 +0700
-X-Mailer: git-send-email 1.7.3.3.476.g10a82
-In-Reply-To: <1292233616-27692-1-git-send-email-pclouds@gmail.com>
+	id S1751965Ab0LMJsX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Dec 2010 04:48:23 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:61780 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751819Ab0LMJsW (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Dec 2010 04:48:22 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1PS510-0000D0-9v; Mon, 13 Dec 2010 10:48:18 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 0F32A1660F;
+	Mon, 13 Dec 2010 10:48:18 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <1292157174-4033-2-git-send-email-alexander@sulfrian.net>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163534>
 
-This field will be used when tree_entry_interesting() is converted to
-use struct pathspec. Currently it uses pathlens[] in struct
-diff_options to avoid calculating string over and over again.
+Am 12/12/2010 13:32, schrieb Alexander Sulfrian:
+> call ssh-askpass only if the display environment variable is also set
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- cache.h |    3 +++
- dir.c   |   13 ++++++++++++-
- 2 files changed, 15 insertions(+), 1 deletions(-)
+Not good: On Windows, we want to call out to SSH_ASKPASS even if DISPLAY
+is not set (it almost never is).
 
-diff --git a/cache.h b/cache.h
-index 3330769..36819b6 100644
---- a/cache.h
-+++ b/cache.h
-@@ -496,6 +496,9 @@ extern int ie_modified(const struct index_state *, =
-struct cache_entry *, struct
- struct pathspec {
- 	const char **raw; /* get_pathspec() result, not freed by free_pathspe=
-c() */
- 	int nr;
-+	struct pathspec_item {
-+		int len;
-+	} *items;
- };
-=20
- extern int init_pathspec(struct pathspec *, const char **);
-diff --git a/dir.c b/dir.c
-index 205adc4..646c79f 100644
---- a/dir.c
-+++ b/dir.c
-@@ -1074,6 +1074,7 @@ int remove_path(const char *name)
- int init_pathspec(struct pathspec *pathspec, const char **paths)
- {
- 	const char **p =3D paths;
-+	int i;
-=20
- 	memset(pathspec, 0, sizeof(*pathspec));
- 	if (!p)
-@@ -1082,10 +1083,20 @@ int init_pathspec(struct pathspec *pathspec, co=
-nst char **paths)
- 		p++;
- 	pathspec->raw =3D paths;
- 	pathspec->nr =3D p - paths;
-+	if (!pathspec->nr)
-+		return 0;
-+
-+	pathspec->items =3D xmalloc(sizeof(struct pathspec_item)*pathspec->nr=
-);
-+	for (i =3D 0; i < pathspec->nr; i++) {
-+		struct pathspec_item *item =3D pathspec->items+i;
-+
-+		item->len =3D strlen(paths[i]);
-+	}
- 	return 0;
- }
-=20
- void free_pathspec(struct pathspec *pathspec)
- {
--	; /* do nothing */
-+	free(pathspec->items);
-+	pathspec->items =3D NULL;
- }
---=20
-1.7.3.3.476.g10a82
+-- Hannes
