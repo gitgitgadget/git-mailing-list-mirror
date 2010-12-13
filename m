@@ -1,75 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Mon, 13 Dec 2010 12:46:52 -0800
-Message-ID: <7vbp4pz9hf.fsf@alter.siamese.dyndns.org>
-References: <7vr69r8sqk.fsf@gitster.siamese.dyndns.org>
- <7vlk01hqzz.fsf@gitster.siamese.dyndns.org>
- <20080718175040.6117@nanako3.lavabit.com>
- <20080718182010.6117@nanako3.lavabit.com>
- <20080718094404.GB32184@machine.or.cz>
- <7vtzen7bul.fsf@gitster.siamese.dyndns.org>
- <loom.20101213T194818-377@post.gmane.org>
+From: Paul Mackerras <paulus@samba.org>
+Subject: Re: Please pull gitk.git master branch
+Date: Tue, 14 Dec 2010 08:03:17 +1100
+Message-ID: <20101213210317.GA10027@brick.ozlabs.ibm.com>
+References: <20101212063135.GA7677@brick.ozlabs.ibm.com>
+ <7vwrne8tow.fsf@alter.siamese.dyndns.org>
+ <7v7hfe74ea.fsf@alter.siamese.dyndns.org>
+ <7vbp4q5ddo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Yaroslav Halchenko <debian@onerussian.com>
-X-From: git-owner@vger.kernel.org Mon Dec 13 21:47:09 2010
+Cc: Alexandre Erwin Ittner <alexandre@ittner.com.br>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 13 22:03:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSFIa-0005iO-Bp
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 21:47:08 +0100
+	id 1PSFYT-0001bf-O9
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 22:03:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755433Ab0LMUrC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Dec 2010 15:47:02 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44318 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754859Ab0LMUrB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Dec 2010 15:47:01 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 812FA27BC;
-	Mon, 13 Dec 2010 15:47:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=a41qJ04rknYdbO8vtRjpN5tt9cY=; b=mT09Bi
-	jyp32gMljz1fhhLBWEd9rxltmV57w+l7BgjT1w67pYgsQE4fvUvt3kZHV36JdRBq
-	jFyyZ04QMTpEt5d5OZaXcf+hv5btcjZEbmRK9BJaNCZVJY5YZpdjpEe5bm/M5OFL
-	6O/AqoGBF2M+RuTUuibNq0LFk2A8hmlPmElNo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=HvWLl4fqshx9xJuDD45txE2BGSNfJ0KT
-	dZvEkdrd3b1K9KQGqd2oFXRB9auVO+mZ9I44/QWe7vevPHvzXrNBvky2NY55pVaL
-	cNA8S7YLKNri9zoQ38xHJcVS16xvx8pqUpuYdBZdCpquJmCkh/T3+9535dSBuKds
-	wxJ4chgp/X4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5D9C127B9;
-	Mon, 13 Dec 2010 15:47:22 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 7DE7F27B5; Mon, 13 Dec 2010
- 15:47:19 -0500 (EST)
-In-Reply-To: <loom.20101213T194818-377@post.gmane.org> (Yaroslav Halchenko's
- message of "Mon\, 13 Dec 2010 19\:09\:04 +0000 \(UTC\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 2F21C3C2-06FA-11E0-973F-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1756221Ab0LMVD2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Dec 2010 16:03:28 -0500
+Received: from ozlabs.org ([203.10.76.45]:55700 "EHLO ozlabs.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755855Ab0LMVD2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Dec 2010 16:03:28 -0500
+Received: by ozlabs.org (Postfix, from userid 1003)
+	id 40E661007D2; Tue, 14 Dec 2010 08:03:27 +1100 (EST)
+Content-Disposition: inline
+In-Reply-To: <7vbp4q5ddo.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163592>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163593>
 
-Yaroslav Halchenko <debian@onerussian.com> writes:
+On Sun, Dec 12, 2010 at 11:40:51PM -0800, Junio C Hamano wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+> 
+> -- >8 --
+> From: Junio C Hamano <gitster@pobox.com>
+> Date: Sun, 12 Dec 2010 23:27:21 -0800
+> Subject: [PATCH] Rename po/pt_BR.po to po/pt_br.po
+> 
+> The "msgfmt --tcl pt_BR.po" (at least on my box, GNU gettext 0.17) command
+> generates pt_BR.msg, i.e. the country part gets downcased.  The resulting
+> runtime (i.e. Tcl i18n) happily reads from pt_br.msg when run with the
+> runtime locale set with LANG=pt_BR and/or LC_ALL=pt_BR so it seems to be
+> the expected behaviour.
+> 
+> However, we seem to expect that the resulting file to be named pt_BR.msg,
+> and try to generate and install it.
+> 
+> Currently our Makefile uses $(wildcard po/*.po) to grab the source PO
+> files, expects them to produce $(subst .po,.msg,$(ALL_POFILES)), and its
+> dependency rule is set to use "%.msg : %.po" pattern, all of which need
+> to be adjusted with downcasing from po to msg files; the poor-man's msgfmt
+> script also needs to learn the same downcasing.
+> 
+> Compared to that, renaming the input file to use lowercase countryname
+> throughout the toolchain seems to be a lot cleaner solution to this
+> glitch.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  po/{pt_BR.po => pt_br.po} |    0
+>  1 files changed, 0 insertions(+), 0 deletions(-)
+>  rename po/{pt_BR.po => pt_br.po} (100%)
+> 
+> diff --git a/po/pt_BR.po b/po/pt_br.po
+> similarity index 100%
+> rename from po/pt_BR.po
+> rename to po/pt_br.po
 
-> git checkout dfsg
-> git merge --no-commit -s theirs 0.2
-> # after all I do not, and must not have my modifications
-> git rm -rf non-free-1 ... # probably would be scripted
-> git commit
+Sorry about the glitch.  The renaming seems like the best idea, since
+all the other .po files have lowercase names.  I was hoping to hear
+Alexandre Erwin Ittner's opinion, though.
 
-The other day I was talking with Shawn Pearce and said that "-s theirs"
-would make sense only if used with --no-commit.
+If I apply this patch in my repo, is that going to cause problems in
+yours?  Or, since the commit that adds this file is the head commit, I
+could just rewind it and reapply with the lowercase name.  Do you see
+problems with that?
 
-But for such a use case, "git read-tree -m -u 0.2" would work just as
-well, and discussion ended there ;-)
+Paul.
