@@ -1,111 +1,251 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 07/19] glossary: define pathspec
-Date: Mon, 13 Dec 2010 16:46:44 +0700
-Message-ID: <1292233616-27692-8-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 09/19] tree-diff.c: reserve space in "base" for pathname concatenation
+Date: Mon, 13 Dec 2010 16:46:46 +0700
+Message-ID: <1292233616-27692-10-git-send-email-pclouds@gmail.com>
 References: <1292233616-27692-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
 	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 13 10:49:02 2010
+X-From: git-owner@vger.kernel.org Mon Dec 13 10:49:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PS51g-0004rO-MP
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 10:49:01 +0100
+	id 1PS52M-0005A4-N4
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 10:49:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752109Ab0LMJst convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Dec 2010 04:48:49 -0500
-Received: from mail-iw0-f170.google.com ([209.85.214.170]:37332 "EHLO
-	mail-iw0-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751819Ab0LMJss (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Dec 2010 04:48:48 -0500
-Received: by iwn6 with SMTP id 6so8884031iwn.1
-        for <git@vger.kernel.org>; Mon, 13 Dec 2010 01:48:48 -0800 (PST)
+	id S1752685Ab0LMJtI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Dec 2010 04:49:08 -0500
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:50229 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752557Ab0LMJtD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Dec 2010 04:49:03 -0500
+Received: by pva4 with SMTP id 4so1079600pva.19
+        for <git@vger.kernel.org>; Mon, 13 Dec 2010 01:49:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=D1VgooDBmaAwvI5I1anHVbsWhk9GdwZpTHBi0T71DmY=;
-        b=sg4ipU38Dn31l9C2RsWugZmOiaDNhaQ2xtTeRGbjpP5rn+JMXxXh+LsdWIkc4xo05o
-         ij79ELow1xDsKmstd4NfIJbBGJEP4AG556RYawhmOK3JM0oDzbQHn91lFmfNHVmcrH+r
-         w9xlsIwG7pqnKFpel9JqmaqzzzjlksVpAUISA=
+        bh=nCNDffC68N4+L2ftkcJAbuNdUnBhNTlybXjLtwlqVhg=;
+        b=sy+u/TEWPhJyOnb/maZ1i5nFS8jL2eqxBB8J+IVbtob3sprr4w4VAMICyRubOfklL8
+         RCyDKD0YJD6cBZq5dbzEC1qptwFIfcaRXDp96lYt3RNnLHiFktWTDOkx+pdTYdtaHipq
+         uY9YQ7pUMUvMSPswWHcdrYu/upIZQdIReiLS4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=MxS8AMEE3+0yTdK5JXWiF4xvKUnARP9Z+U459X/Z+HolCFE/KKpEgbs8icpkPfvLXk
-         XcAiL6mv04OU7hR1Ch3za318iL9kgbbiJzMgdgm9Mb0CEzOheVFOKpLFTCvmVMRWdtx7
-         BwtmhNo0tm9AdogrFbORY9BWRAFR2FJ4/S8Is=
-Received: by 10.231.173.67 with SMTP id o3mr1635160ibz.29.1292233728342;
-        Mon, 13 Dec 2010 01:48:48 -0800 (PST)
+        b=Dl/eRfy8IsV8mpy/AKVXxVqm0kXrIYdyxNq8Cd5+YZ2hJzdkP+8GNY5dU7Ir2iTEyR
+         R0odCwKRmy55QqHqgjInFrVeYVrkdRyxxaR9dysoGIPMrwvl5bEJgP9e9l3wdqSFya5N
+         +a7cqJqGWGj0vz4zka9uXrqE9NmaENYM101Cs=
+Received: by 10.142.12.2 with SMTP id 2mr3039410wfl.241.1292233742468;
+        Mon, 13 Dec 2010 01:49:02 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.222.178])
-        by mx.google.com with ESMTPS id z4sm6050775ibg.1.2010.12.13.01.48.44
+        by mx.google.com with ESMTPS id v19sm8676779wfh.12.2010.12.13.01.48.58
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 13 Dec 2010 01:48:47 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 13 Dec 2010 16:47:54 +0700
+        Mon, 13 Dec 2010 01:49:01 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 13 Dec 2010 16:48:09 +0700
 X-Mailer: git-send-email 1.7.3.3.476.g10a82
 In-Reply-To: <1292233616-27692-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163539>
 
-=46rom: Jonathan Nieder <jrnieder@gmail.com>
+This patch make sure that "base" parameter is writable. The callees
+are free to modify it as long as base remains the same before
+entering and after leaving the callee.
 
+This avoids quite a bit of malloc and memcpy().
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- Documentation/glossary-content.txt |   23 +++++++++++++++++++++++
- 1 files changed, 23 insertions(+), 0 deletions(-)
+ tree-diff.c |   87 +++++++++++++++++++++++++++------------------------=
+-------
+ 1 files changed, 41 insertions(+), 46 deletions(-)
 
-diff --git a/Documentation/glossary-content.txt b/Documentation/glossar=
-y-content.txt
-index 1f029f8..4ed2a28 100644
---- a/Documentation/glossary-content.txt
-+++ b/Documentation/glossary-content.txt
-@@ -273,6 +273,29 @@ This commit is referred to as a "merge commit", or=
- sometimes just a
- 	<<def_pack,pack>>, to assist in efficiently accessing the contents of=
- a
- 	pack.
+diff --git a/tree-diff.c b/tree-diff.c
+index 50d7e6d..a870f6c 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -6,34 +6,17 @@
+ #include "diffcore.h"
+ #include "tree.h"
 =20
-+[[def_pathspec]]pathspec::
-+       Pattern used to specify paths.
-++
-+Pathspecs are used on the command line of "git ls-files", "git
-+ls-tree", "git grep", "git checkout", and many other commands to
-+limit the scope of operations to some subset of the tree or
-+worktree.  See the documentation of each command for whether
-+paths are relative to the current directory or toplevel.  The
-+pathspec syntax is as follows:
+-static char *malloc_base(const char *base, int baselen, const char *pa=
+th, int pathlen)
+-{
+-	char *newbase =3D xmalloc(baselen + pathlen + 2);
+-	memcpy(newbase, base, baselen);
+-	memcpy(newbase + baselen, path, pathlen);
+-	memcpy(newbase + baselen + pathlen, "/", 2);
+-	return newbase;
+-}
++static void show_entry(struct diff_options *opt, const char *prefix,
++		       struct tree_desc *desc, char *base, int baselen);
+=20
+-static char *malloc_fullname(const char *base, int baselen, const char=
+ *path, int pathlen)
+-{
+-	char *fullname =3D xmalloc(baselen + pathlen + 1);
+-	memcpy(fullname, base, baselen);
+-	memcpy(fullname + baselen, path, pathlen);
+-	fullname[baselen + pathlen] =3D 0;
+-	return fullname;
+-}
+-
+-static void show_entry(struct diff_options *opt, const char *prefix, s=
+truct tree_desc *desc,
+-		       const char *base, int baselen);
+-
+-static int compare_tree_entry(struct tree_desc *t1, struct tree_desc *=
+t2, const char *base, int baselen, struct diff_options *opt)
++static int compare_tree_entry(struct tree_desc *t1, struct tree_desc *=
+t2,
++			      char *base, int baselen,
++			      struct diff_options *opt)
+ {
+ 	unsigned mode1, mode2;
+ 	const char *path1, *path2;
+ 	const unsigned char *sha1, *sha2;
+ 	int cmp, pathlen1, pathlen2;
+-	char *fullname;
+=20
+ 	sha1 =3D tree_entry_extract(t1, &path1, &mode1);
+ 	sha2 =3D tree_entry_extract(t2, &path2, &mode2);
+@@ -64,26 +47,31 @@ static int compare_tree_entry(struct tree_desc *t1,=
+ struct tree_desc *t2, const
+=20
+ 	if (DIFF_OPT_TST(opt, RECURSIVE) && S_ISDIR(mode1)) {
+ 		int retval;
+-		char *newbase =3D malloc_base(base, baselen, path1, pathlen1);
 +
-+* any path matches itself
-+* the pathspec up to the last slash represents a
-+  directory prefix.  The scope of that pathspec is
-+  limited to that subtree.
-+* the rest of the pathspec is a pattern for the remainder
-+  of the pathname.  Paths relative to the directory
-+  prefix will be matched against that pattern using fnmatch(3);
-+  in particular, '*' and '?' _can_ match directory separators.
-++
-+For example, Documentation/*.jpg will match all .jpg files
-+in the Documentation subtree,
-+including Documentation/chapter_1/figure_1.jpg.
++		memcpy(base + baselen, path1, pathlen1);
++		memcpy(base + baselen + pathlen1, "/", 2);
 +
- [[def_parent]]parent::
- 	A <<def_commit_object,commit object>> contains a (possibly empty) lis=
-t
- 	of the logical predecessor(s) in the line of development, i.e. its
+ 		if (DIFF_OPT_TST(opt, TREE_IN_RECURSIVE)) {
+-			newbase[baselen + pathlen1] =3D 0;
++			base[baselen + pathlen1] =3D 0;
+ 			opt->change(opt, mode1, mode2,
+-				    sha1, sha2, newbase, 0, 0);
+-			newbase[baselen + pathlen1] =3D '/';
++				    sha1, sha2, base, 0, 0);
++			base[baselen + pathlen1] =3D '/';
+ 		}
+-		retval =3D diff_tree_sha1(sha1, sha2, newbase, opt);
+-		free(newbase);
++		retval =3D diff_tree_sha1(sha1, sha2, base, opt);
++		base[baselen] =3D 0;
+ 		return retval;
+ 	}
+=20
+-	fullname =3D malloc_fullname(base, baselen, path1, pathlen1);
+-	opt->change(opt, mode1, mode2, sha1, sha2, fullname, 0, 0);
+-	free(fullname);
++	memcpy(base + baselen, path1, pathlen1);
++	base[baselen + pathlen1] =3D 0;
++	opt->change(opt, mode1, mode2, sha1, sha2, base, 0, 0);
++	base[baselen] =3D 0;
+ 	return 0;
+ }
+=20
+ /* A whole sub-tree went away or appeared */
+-static void show_tree(struct diff_options *opt, const char *prefix, st=
+ruct tree_desc *desc, const char *base, int baselen)
++static void show_tree(struct diff_options *opt, const char *prefix,
++		      struct tree_desc *desc, char *base, int baselen)
+ {
+ 	int all_interesting =3D 0;
+ 	while (desc->size) {
+@@ -105,8 +93,8 @@ static void show_tree(struct diff_options *opt, cons=
+t char *prefix, struct tree_
+ }
+=20
+ /* A file entry went away or appeared */
+-static void show_entry(struct diff_options *opt, const char *prefix, s=
+truct tree_desc *desc,
+-		       const char *base, int baselen)
++static void show_entry(struct diff_options *opt, const char *prefix,
++		       struct tree_desc *desc, char *base, int baselen)
+ {
+ 	unsigned mode;
+ 	const char *path;
+@@ -115,34 +103,38 @@ static void show_entry(struct diff_options *opt, =
+const char *prefix, struct tree
+=20
+ 	if (DIFF_OPT_TST(opt, RECURSIVE) && S_ISDIR(mode)) {
+ 		enum object_type type;
+-		char *newbase =3D malloc_base(base, baselen, path, pathlen);
+ 		struct tree_desc inner;
+ 		void *tree;
+ 		unsigned long size;
+=20
++		memcpy(base + baselen, path, pathlen);
++		memcpy(base + baselen + pathlen, "/", 2);
++
+ 		tree =3D read_sha1_file(sha1, &type, &size);
+ 		if (!tree || type !=3D OBJ_TREE)
+ 			die("corrupt tree sha %s", sha1_to_hex(sha1));
+=20
+ 		if (DIFF_OPT_TST(opt, TREE_IN_RECURSIVE)) {
+-			newbase[baselen + pathlen] =3D 0;
+-			opt->add_remove(opt, *prefix, mode, sha1, newbase, 0);
+-			newbase[baselen + pathlen] =3D '/';
++			base[baselen + pathlen] =3D 0;
++			opt->add_remove(opt, *prefix, mode, sha1, base, 0);
++			base[baselen + pathlen] =3D '/';
+ 		}
+=20
+ 		init_tree_desc(&inner, tree, size);
+-		show_tree(opt, prefix, &inner, newbase, baselen + 1 + pathlen);
++		show_tree(opt, prefix, &inner, base, baselen + 1 + pathlen);
+=20
++		base[baselen] =3D 0;
+ 		free(tree);
+-		free(newbase);
+ 	} else {
+-		char *fullname =3D malloc_fullname(base, baselen, path, pathlen);
+-		opt->add_remove(opt, prefix[0], mode, sha1, fullname, 0);
+-		free(fullname);
++		memcpy(base + baselen, path, pathlen);
++		base[baselen + pathlen] =3D 0;
++		opt->add_remove(opt, prefix[0], mode, sha1, base, 0);
++		base[baselen] =3D 0;
+ 	}
+ }
+=20
+-static void skip_uninteresting(struct tree_desc *t, const char *base, =
+int baselen, struct diff_options *opt)
++static void skip_uninteresting(struct tree_desc *t, char *base,
++			       int baselen, struct diff_options *opt)
+ {
+ 	int all_interesting =3D 0;
+ 	while (t->size) {
+@@ -166,10 +158,13 @@ static void skip_uninteresting(struct tree_desc *=
+t, const char *base, int basele
+ 	}
+ }
+=20
+-int diff_tree(struct tree_desc *t1, struct tree_desc *t2, const char *=
+base, struct diff_options *opt)
++int diff_tree(struct tree_desc *t1, struct tree_desc *t2,
++	      const char *base_, struct diff_options *opt)
+ {
+-	int baselen =3D strlen(base);
++	char base[PATH_MAX];
++	int baselen =3D strlen(base_);
+=20
++	memcpy(base, base_, baselen+1);
+ 	for (;;) {
+ 		if (DIFF_OPT_TST(opt, QUICK) &&
+ 		    DIFF_OPT_TST(opt, HAS_CHANGES))
 --=20
 1.7.3.3.476.g10a82
