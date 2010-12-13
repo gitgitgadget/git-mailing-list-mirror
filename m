@@ -1,54 +1,70 @@
-From: Phillip Susi <psusi@cfl.rr.com>
-Subject: Re: Splitting a repository but sharing the common parts of the object
- database
-Date: Mon, 13 Dec 2010 18:17:31 -0500
-Message-ID: <4D06A98B.1060408@cfl.rr.com>
-References: <4D066873.4020208@cfl.rr.com> <20101213192053.GA30315@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Splitting a repository but sharing the common parts of the
+ object database
+Date: Mon, 13 Dec 2010 17:25:08 -0600
+Message-ID: <20101213232508.GB32103@burratino>
+References: <4D066873.4020208@cfl.rr.com>
+ <20101213192053.GA30315@burratino>
+ <4D06A98B.1060408@cfl.rr.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 14 00:18:41 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Stephen Bash <bash@genarts.com>
+To: Phillip Susi <psusi@cfl.rr.com>
+X-From: git-owner@vger.kernel.org Tue Dec 14 00:25:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSHfE-0008ED-Gq
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 00:18:40 +0100
+	id 1PSHlk-0003Uu-NM
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 00:25:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755583Ab0LMXSf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Dec 2010 18:18:35 -0500
-Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:54910 "EHLO
-	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755059Ab0LMXSe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Dec 2010 18:18:34 -0500
-X-Authority-Analysis: v=1.1 cv=uESSSoDEku2quKX/oFXS2Smn5+55LTFcWFr5T5T8nFs= c=1 sm=0 a=an7owiFu8v0A:10 a=8nJEP1OIZ-IA:10 a=znT3HYeYn0u1vGJIbmIclg==:17 a=-AnQz9JOAAAA:8 a=if_YyohPF_xpXwSyScsA:9 a=M99rn7SpJl7-N8im0z5AWUTmBRUA:4 a=wPNLvfGTeEIA:10 a=znT3HYeYn0u1vGJIbmIclg==:117
-X-Cloudmark-Score: 0
-X-Originating-IP: 184.91.185.153
-Received: from [184.91.185.153] ([184.91.185.153:47334] helo=[192.168.1.2])
-	by cdptpa-oedge01.mail.rr.com (envelope-from <psusi@cfl.rr.com>)
-	(ecelerity 2.2.3.46 r()) with ESMTP
-	id 95/29-07087-C89A60D4; Mon, 13 Dec 2010 23:17:32 +0000
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
-In-Reply-To: <20101213192053.GA30315@burratino>
+	id S1756371Ab0LMXZS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Dec 2010 18:25:18 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:59841 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752566Ab0LMXZR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Dec 2010 18:25:17 -0500
+Received: by qyj19 with SMTP id 19so4074145qyj.19
+        for <git@vger.kernel.org>; Mon, 13 Dec 2010 15:25:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=TVcUec2yiHXrx52cPYYajOPSPIL8VK+JE+iXNanNBag=;
+        b=vB5Orst43M+vmaQ0R1x7KNvx13yC4IDoASd7gGIqfIyqLTQZifkAFHtRmmnqoZUx+p
+         oq291EvdLp4rJ4tbnICzlBBg7gUAiPrqlQAqULFwfTgjXS9SsGn5UhPYA76dV3QHJ1GR
+         iSG1+Qpw0wgkdI79jWYUmjG5+8m169qD0nzXk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=EirmqOecJZwL6L9kSWSkN7cGkSUS3f1qtqRxXw7n4rNwcrSzVfdblJMvYQWJem6Pgi
+         tXHOssuzJivk4pgprMbOC2kj3PLbKZIwK7/UQLnTs/5FhcIA8AM72mWJ9smMTsyrEBTr
+         f0rh2AZJNSp9NN9JQ83ulTUMgIbL77WcT0HMc=
+Received: by 10.224.73.137 with SMTP id q9mr4619728qaj.53.1292282716306;
+        Mon, 13 Dec 2010 15:25:16 -0800 (PST)
+Received: from burratino (adsl-69-209-48-248.dsl.chcgil.ameritech.net [69.209.48.248])
+        by mx.google.com with ESMTPS id t17sm4364431qcp.26.2010.12.13.15.25.14
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 13 Dec 2010 15:25:15 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4D06A98B.1060408@cfl.rr.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163604>
 
-On 12/13/2010 02:20 PM, Jonathan Nieder wrote:
-> You might be interested in girocco's fork support.  See
-> http://repo.or.cz/w/girocco.git/blob/HEAD:/jobd/gc.sh for starters.
->
-> (Yes, the short answer is "-l" but showing where I got that answer
-> from seems a little easier. :))
+Phillip Susi wrote:
 
-Yes, -l looks like exactly what I need.  Now I don't suppose there is a 
-way to make it sticky so I don't have to remember to use it when 
-repacking every time?  :)
+> Yes, -l looks like exactly what I need.  Now I don't suppose there
+> is a way to make it sticky so I don't have to remember to use it
+> when repacking every time?  :)
 
-I checked the man page for git-config and it doesn't show an option that 
-sounds like it.
+Maybe
+
+	[alias "repackfork"]
+		repack -a -d -f -l ...whatever other options are wanted...
