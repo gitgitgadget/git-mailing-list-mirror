@@ -1,58 +1,64 @@
-From: "Albert Krawczyk" <pro-logic@optusnet.com.au>
-Subject: RE: Git SVN non-standard branch/tag/trunk layout
-Date: Mon, 13 Dec 2010 11:55:30 +1100
-Message-ID: <000401cb9a60$71bcd610$55368230$@optusnet.com.au>
-References: <006c01cb9a44$8407d2f0$8c1778d0$@optusnet.com.au> <m2fwu2ecy8.fsf@igel.home>
+From: "J.H." <warthog9@eaglescrag.net>
+Subject: Re: [RFC PATCH 0/2] gitweb: die_error (error handling) improvements
+Date: Sun, 12 Dec 2010 18:17:12 -0800
+Message-ID: <4D058228.7040905@eaglescrag.net>
+References: <20101213004259.9475.87376.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain;
-	charset="us-ascii"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Mon Dec 13 01:55:41 2010
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 13 03:15:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PRwhY-00016u-FM
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 01:55:40 +0100
+	id 1PRxwk-0005OI-Gs
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 03:15:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755836Ab0LMAzf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 12 Dec 2010 19:55:35 -0500
-Received: from mail07.syd.optusnet.com.au ([211.29.132.188]:59523 "EHLO
-	mail07.syd.optusnet.com.au" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754474Ab0LMAze (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 12 Dec 2010 19:55:34 -0500
-Received: from AlbertDesktop (60-241-64-178.static.tpgi.com.au [60.241.64.178])
-	(authenticated sender pro-logic)
-	by mail07.syd.optusnet.com.au (8.13.1/8.13.1) with ESMTP id oBD0tUuc022963
-	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=NO)
-	for <git@vger.kernel.org>; Mon, 13 Dec 2010 11:55:31 +1100
-In-Reply-To: <m2fwu2ecy8.fsf@igel.home>
-X-Mailer: Microsoft Outlook 14.0
-Thread-Index: AQKXf1+Kehm9tMDR4WHIUg3/PY72PAGpipQmkfh1vDA=
-Content-Language: en-au
+	id S1756556Ab0LMCPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 12 Dec 2010 21:15:20 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:40576 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756187Ab0LMCPT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 12 Dec 2010 21:15:19 -0500
+Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id oBD2FGho028587
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Sun, 12 Dec 2010 18:15:17 -0800
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
+In-Reply-To: <20101213004259.9475.87376.stgit@localhost.localdomain>
+X-Enigmail-Version: 1.0.1
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Sun, 12 Dec 2010 18:15:17 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163503>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163504>
 
-Andreas Schwab [mailto:schwab@linux-m68k.org]
-
-> If they are multiple projects then you'll probably be better off 
-> importing each project into its own git repository.
+On 12/12/2010 04:46 PM, Jakub Narebski wrote:
+> The following two patch series changes improve error / exception
+> handling in gitweb, preparing the way for gitweb output caching, but
+> useful even without it.
 > 
-> Andreas.
+> I'm sending this patch series early to gather feedback on possible
+> ways of improving error / exception handling in gitweb.
 
-Yes, this is probably the 'better' way of dealing with it, and it works
-fine. I was however wondering if there was a way to track the root of the
-SVN directory with the structure I supplied earlier while maintaining a
-'nice' structure in Git without having /trunk/, /branch/, /tag/
-subdirectories appearing directly in the repository as standard folders. My
-(extremely limited) understanding is that I would need to edit the config
-file, specifically the fetch, branches and tags section of svn-remote. But I
-am unsure of how this modified section would look like. 
+Personally, instead of another band-aid over this problem, and adding
+(or further legitimizing) goto statements inside gitweb I'd much *MUCH*
+rather we actually put in the work to actually clean this up.
 
-Albert
+This is the direction I'm heading in, which I mentioned in an earlier
+e-mail.
+
+There are a *LOT* of disadvantages to the eval mechanism in perl.  It's
+the standard but gitweb is getting more and more complex, and eval is
+simplistic.  Couple that with the complexity and uncertainty that things
+like goto add to the code, I would *MUCH* rather not see this series go
+in, as I think it is the wrong approach to fixing this.
+
+- John 'Warthog9' Hawley
