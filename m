@@ -1,56 +1,53 @@
-From: Sergio <sergio.callegari@gmail.com>
-Subject: Git silently ignores --date when data is not in the correct format
-Date: Mon, 13 Dec 2010 15:20:07 +0000 (UTC)
-Message-ID: <loom.20101213T161633-993@post.gmane.org>
+From: Markus Elfring <Markus.Elfring@web.de>
+Subject: Re: APIs for automatic patch generation
+Date: Mon, 13 Dec 2010 17:00:30 +0100
+Message-ID: <4D06431E.5020906@web.de>
+References: <4B803AB8.30304@web.de> <4B840AA2.3010604@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 13 16:20:52 2010
+To: git@vger.kernel.org, libgit2@librelist.com
+X-From: git-owner@vger.kernel.org Mon Dec 13 17:00:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSACp-0007yo-GQ
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 16:20:51 +0100
+	id 1PSApd-0002Uv-P6
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 17:00:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754120Ab0LMPUe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Dec 2010 10:20:34 -0500
-Received: from lo.gmane.org ([80.91.229.12]:57857 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754111Ab0LMPUb (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Dec 2010 10:20:31 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PSACN-0007jQ-CC
-	for git@vger.kernel.org; Mon, 13 Dec 2010 16:20:30 +0100
-Received: from i2-ve060.ingce.unibo.it ([137.204.107.60])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 13 Dec 2010 16:20:18 +0100
-Received: from sergio.callegari by i2-ve060.ingce.unibo.it with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Mon, 13 Dec 2010 16:20:18 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 137.204.107.60 (Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101206 Ubuntu/10.10 (maverick) Firefox/3.6.13)
+	id S1757230Ab0LMQAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Dec 2010 11:00:49 -0500
+Received: from fmmailgate03.web.de ([217.72.192.234]:36244 "EHLO
+	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750917Ab0LMQAs (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Dec 2010 11:00:48 -0500
+Received: from smtp02.web.de  ( [172.20.0.184])
+	by fmmailgate03.web.de (Postfix) with ESMTP id 457FC17D811FC;
+	Mon, 13 Dec 2010 17:00:47 +0100 (CET)
+Received: from [78.49.108.39] (helo=[192.168.1.46])
+	by smtp02.web.de with asmtp (WEB.DE 4.110 #24)
+	id 1PSApT-0004a5-00; Mon, 13 Dec 2010 17:00:47 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.13) Gecko/20101206 SUSE/3.1.7 Thunderbird/3.1.7
+In-Reply-To: <4B840AA2.3010604@web.de>
+X-Sender: Markus.Elfring@web.de
+X-Provags-ID: V01U2FsdGVkX189JH7QgAlkxMAZcSPyRmbcsNeX3YzM4V3rF/Pg
+	ws2X9VE1rYaERAhYnxgSaC+4z3OjNSWfpga4nq4+9FDbcx8C8T
+	vn/WX2IObhmP0uHrQU2A==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163557>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163558>
 
-Hi,
+> The commands "git diff" and "git format-patch" contain functionality that I
+> would like to reuse for my little application in a C++ class library.
 
-on 1.7.3.3, I have noticed that git --commit silently ignores the 
---date=<date> switch if <date> is not in the current format.
+Which functions exist in the recently published C API 
+(http://libgit2.github.com/) that can provide the following data?
+* a line like "index 8d16832..358c98b 100644"
+* range specifications for difference hunks
+* mail construction
 
-for instance
-
-git --commit --amend --date="10.11.2010" creates a commit with the current
-date and time, because the --date argument misses the time.
-
-possibly, it would be better to stop with an error message.
+Regards,
+Markus
