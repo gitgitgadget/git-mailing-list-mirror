@@ -1,68 +1,91 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH/RFC] t800?-blame.sh: retitle uniquely
-Date: Mon, 13 Dec 2010 17:12:29 +0100
-Message-ID: <52f777e518583955f78b71e96b3c8ff53d25b608.1292256498.git.git@drmicha.warpmail.net>
-References: <4D05F1EA.9000403@viscovery.net>
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>
+From: "Neal Kreitzinger" <neal@rsss.com>
+Subject: Re: developing a modified Linux-style workflow
+Date: Mon, 13 Dec 2010 10:15:16 -0600
+Message-ID: <ie5grt$au2$1@dough.gmane.org>
+References: <7EAE16CF-A9A8-47A6-9294-3646CCDB0E9C@at.or.at>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 13 17:15:05 2010
+X-From: git-owner@vger.kernel.org Mon Dec 13 17:16:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSB3I-0001r7-19
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 17:15:04 +0100
+	id 1PSB4T-0002WE-7d
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 17:16:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757743Ab0LMQO6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Dec 2010 11:14:58 -0500
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:33539 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757595Ab0LMQO5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Dec 2010 11:14:57 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 399B49E8;
-	Mon, 13 Dec 2010 11:14:57 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Mon, 13 Dec 2010 11:14:57 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=riv9psh0WmlDgGl5cezNuE14rIo=; b=nPc3lu+59+J5RRelObUuX2gepyWen8A54Za+4EUKlxkGYCEpqeJ3oB8F1aQhnnq3ecmg6oOAU4R4vlcy/OOzFTMc0unnjdqPrKZrwxbu9I/hkjtNNE9Ui9Vqedtzy1tt4OgV+7pcuJ07VZ93lDF0jVKFzqxpfFxMFg8lQRrCmWI=
-X-Sasl-enc: axuL6nxPkFD/YmQUGigZ5u3F90vZ2LqzzfTMklbr7V9l 1292256896
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 986734409A9;
-	Mon, 13 Dec 2010 11:14:56 -0500 (EST)
-X-Mailer: git-send-email 1.7.3.3.738.g018bc
-In-Reply-To: <4D05F1EA.9000403@viscovery.net>
+	id S1757835Ab0LMQQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Dec 2010 11:16:12 -0500
+Received: from lo.gmane.org ([80.91.229.12]:56566 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1757576Ab0LMQQL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Dec 2010 11:16:11 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PSB4K-0002Sy-T9
+	for git@vger.kernel.org; Mon, 13 Dec 2010 17:16:08 +0100
+Received: from 67.63.162.200 ([67.63.162.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 13 Dec 2010 17:16:08 +0100
+Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 13 Dec 2010 17:16:08 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 67.63.162.200
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-RFC2646: Format=Flowed; Response
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163561>
 
-Currently we have three test files matching t800?-blame.sh.
+"Hans-Christoph Steiner" <hans@at.or.at> wrote in message 
+news:7EAE16CF-A9A8-47A6-9294-3646CCDB0E9C@at.or.at...
+>
+> Hey all,
+>
+> (and my second post on this list...)
+>
+> I've gotten pretty good at git, and its helping me already with  managing 
+> the very odd workflows I have with the software I work a lot  on called Pd 
+> (http://puredata.info).  My role in Pd development is  like a Linux 
+> lieutenant.
+>
+> I also the main dev for an app called Pd-extended, which is based on  Pd. 
+> Now I'm stuck trying to figure out how to use git to match my  current 
+> workflow for Pd-extended, which is a kind of long-lived  branch, almost 
+> like a friendly fork.  So its kind of close to the  Linux workflow with me 
+> as a lieutenant, but not quite.
+>
+> What makes it tricky is that I make releases directly from my repo  that 
+> are widely used.  So my repo is both lieutenant and dictator at  the same 
+> time.  So that's where I am stumped.  I want to be able to  rebase and 
+> push to a public repo, but that would be stupid.  So there  has got to be 
+> another way.
+>
+> .hc
+>
+I don't think pushing to a public repo is stupid.  You could create a bare 
+repo with a Pd branch and Pd-extended branch that contain the production 
+versions of Pd and Pd-extended.  The main reason our shop chose git is 
+because it allows us to easily have multiple concurrent versions of 
+production by having a branch for each of our custom versions.  These 
+versions eventually get merged together into a major release, but in the 
+meantime they are longlived branches representing the productional 
+customized system for each major customer.
 
-Rename the latter two to make it easier to spot where additions would
-go.
+*If* you end up merging Pd and Pd-extended at some point, then you could 
+have another branch for that, e.g. master or Pd-master or whatever.  BTW, 
+you do not have to use master as the representative of your final merged 
+work so don't think that is the way you HAVE to do it.  It's just the 
+default, and a common practice for systems with a single version of 
+production.  Master can become vestigial or secondary, if you choose to 
+create a new branch called Pd-master, etc. to represent your eventual merges 
+of Pd and Pd-extended.
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-On a related note to J6t's patch, how's the stance on unique titles?
-Unique numbers are important for partial test runs, of course,
-but unique titles help finding you way through the test.
-There are more than the blame.sh ones.
 
- t/{t8003-blame.sh => t8003-blame-corner-cases.sh}  |    0
- ...8004-blame.sh => t8004-blame-with-conflicts.sh} |    0
- 2 files changed, 0 insertions(+), 0 deletions(-)
- rename t/{t8003-blame.sh => t8003-blame-corner-cases.sh} (100%)
- rename t/{t8004-blame.sh => t8004-blame-with-conflicts.sh} (100%)
-
-diff --git a/t/t8003-blame.sh b/t/t8003-blame-corner-cases.sh
-similarity index 100%
-rename from t/t8003-blame.sh
-rename to t/t8003-blame-corner-cases.sh
-diff --git a/t/t8004-blame.sh b/t/t8004-blame-with-conflicts.sh
-similarity index 100%
-rename from t/t8004-blame.sh
-rename to t/t8004-blame-with-conflicts.sh
--- 
-1.7.3.3.738.g018bc
+v/r,
+Neal 
