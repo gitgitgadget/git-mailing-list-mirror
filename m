@@ -1,71 +1,70 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: What's cooking in git.git (Dec 2010, #04; Mon, 13)
-Date: Mon, 13 Dec 2010 09:42:44 +0100
-Message-ID: <AANLkTikuahTgKb84bX18m62XHN4Rskkg8_D7fxTsg7RR@mail.gmail.com>
-References: <7v7hfe5awz.fsf@alter.siamese.dyndns.org>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: Please pull gitk.git master branch
+Date: Mon, 13 Dec 2010 10:25:32 +0100
+Message-ID: <4D05E68C.70306@op5.se>
+References: <20101212063135.GA7677@brick.ozlabs.ibm.com> <7vwrne8tow.fsf@alter.siamese.dyndns.org> <7v7hfe74ea.fsf@alter.siamese.dyndns.org> <7vbp4q5ddo.fsf@alter.siamese.dyndns.org> <AANLkTinPqDbvdG9r4UFcKq9BJSw4by4_hJdEN+0oUaJZ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 13 09:43:14 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Paul Mackerras <paulus@samba.org>,
+	Alexandre Erwin Ittner <alexandre@ittner.com.br>,
+	git@vger.kernel.org
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 13 10:25:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PS401-0005SU-72
-	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 09:43:13 +0100
+	id 1PS4f8-0004Yr-Bh
+	for gcvg-git-2@lo.gmane.org; Mon, 13 Dec 2010 10:25:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755018Ab0LMInH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Dec 2010 03:43:07 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:42934 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754604Ab0LMInF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Dec 2010 03:43:05 -0500
-Received: by yxt3 with SMTP id 3so3131991yxt.19
-        for <git@vger.kernel.org>; Mon, 13 Dec 2010 00:43:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=1DTNNAZ/57vDONFxkheflB/OHV4u1u9EI1UzMF7BFsM=;
-        b=YmdL0dO8YGW+qPfzPKX4QZ6QHxDLc3lGBmA/U6xFek39GTVBDKeBGQ9Ra8+oHdtm5P
-         Zzk2z0UxG3ci2Yh7m/n1cowJnm8Lh3oIFMWmcmK1NYMIDaHJhTPk+JBxD2X8NjM19Ww8
-         JMH1usXHtj2Ieb74EuYv/DPEPZZONz3TBd2+M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=q5rC2edCIjhY73T4PwQtaKFgDU5c3SV3hdGcT5WRZJ2Na2BGnbxR0Qbpe+i4u8EHTC
-         8nTdhjHsJy3bfh8E0sDrHYX9M9EoyU9HbAxjzZP25Ug5j0dUTxrv0ayDqF57n8OiflH9
-         qpOTztXnUWocG445NBQa+uNbpTNxkdBaZHtZg=
-Received: by 10.150.178.15 with SMTP id a15mr5398476ybf.382.1292229785152;
- Mon, 13 Dec 2010 00:43:05 -0800 (PST)
-Received: by 10.151.150.17 with HTTP; Mon, 13 Dec 2010 00:42:44 -0800 (PST)
-In-Reply-To: <7v7hfe5awz.fsf@alter.siamese.dyndns.org>
+	id S1751899Ab0LMJZg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 13 Dec 2010 04:25:36 -0500
+Received: from mail-ew0-f45.google.com ([209.85.215.45]:44662 "EHLO
+	mail-ew0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751129Ab0LMJZg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Dec 2010 04:25:36 -0500
+Received: by ewy10 with SMTP id 10so3754545ewy.4
+        for <git@vger.kernel.org>; Mon, 13 Dec 2010 01:25:34 -0800 (PST)
+Received: by 10.213.7.8 with SMTP id b8mr1175004ebb.44.1292232334697;
+        Mon, 13 Dec 2010 01:25:34 -0800 (PST)
+Received: from [192.168.1.186] (sth-vpn1.op5.com [193.201.96.49])
+        by mx.google.com with ESMTPS id w20sm4964269eeh.12.2010.12.13.01.25.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 13 Dec 2010 01:25:33 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Thunderbird/3.1.6 ThunderGit/0.1a
+In-Reply-To: <AANLkTinPqDbvdG9r4UFcKq9BJSw4by4_hJdEN+0oUaJZ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163526>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163527>
 
-Heya,
+On 12/13/2010 09:36 AM, Sverre Rabbelier wrote:
+> Heya,
+> 
+> On Mon, Dec 13, 2010 at 08:40, Junio C Hamano<gitster@pobox.com>  wrote:
+>>> My _preferred_ outcome is to see that naming the input "po/pt_br.po" and
+>>> using the output "po/pt_br.msg" is the BCP, but I'd like somebody to find
+>>> out what the accepted practice would be in the Tcl land first.
+>>
+>> I still don't know what the BCP is in the Tcl community (didn't have time
+>> to check, dealing with other topics), but I'll tentatively apply this on
+>> top of queue Alexandre's patch and merge the result in 'pu'.
+> 
+> Pardon my ignorance, what is BCP? None of the definitions I could find
+> seemed likely.
+> 
 
-On Mon, Dec 13, 2010 at 09:34, Junio C Hamano <gitster@pobox.com> wrote:
-> * ab/i18n (2010-10-07) 161 commits
-
-[snip]
-
-> It is getting ridiculously painful to keep re-resolving the conflicts with
-> other topics in flight, even with the help with rerere.
->
-> Needs a bit more minor work to get the basic code structure right.
-
-Can we perhaps get this into such a shape that it can be merged to
-next as the first order of business after the next release?
+Best Coding Practice.
 
 -- 
-Cheers,
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
 
-Sverre Rabbelier
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
