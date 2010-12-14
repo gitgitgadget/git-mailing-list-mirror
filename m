@@ -1,61 +1,65 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH 0/14] misc test-suite patches
-Date: Tue, 14 Dec 2010 18:17:37 +0000
-Message-ID: <4D07B4C1.2050007@ramsay1.demon.co.uk>
+Subject: [PATCH 02/14] t9142: Move call to start_httpd into the setup test
+Date: Tue, 14 Dec 2010 18:20:38 +0000
+Message-ID: <4D07B576.6020700@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
+Cc: GIT Mailing-list <git@vger.kernel.org>, normalperson@yhbt.net
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 14 19:45:28 2010
+X-From: git-owner@vger.kernel.org Tue Dec 14 19:45:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSZsM-0004cc-Af
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 19:45:26 +0100
+	id 1PSZse-0004kc-A2
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 19:45:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757121Ab0LNSpV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Dec 2010 13:45:21 -0500
-Received: from lon1-post-1.mail.demon.net ([195.173.77.148]:52451 "EHLO
-	lon1-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753550Ab0LNSpT (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Dec 2010 13:45:19 -0500
+	id S1757418Ab0LNSp2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Dec 2010 13:45:28 -0500
+Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:37969 "EHLO
+	lon1-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754493Ab0LNSp2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Dec 2010 13:45:28 -0500
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-1.mail.demon.net with esmtp (Exim 4.69)
-	id 1PSZsD-0006gw-Yl; Tue, 14 Dec 2010 18:45:18 +0000
+	by lon1-post-2.mail.demon.net with esmtp (Exim 4.69)
+	id 1PSZsM-0001jQ-bu; Tue, 14 Dec 2010 18:45:27 +0000
 User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163662>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163663>
 
-Hi Junio,
 
-I've had many of these test-suite related patches lying around for
-a while, so I'm passing these along now in the hope I can remove
-some old branches...
+In addition to being more consistent with the other calls to
+start_httpd in tests t9115-*.sh, t9118-*.sh and t9120-*.sh, this
+has the added benefit of making the test less noisy. (start_httpd
+writes "SVN_HTTPD_PORT is not defined!" on stderr.)
 
-[PATCH 01/14] t3600-rm.sh: Don't pass a non-existent prereq to test #15
-[PATCH 02/14] t9142: Move call to start_httpd into the setup test
-[PATCH 03/14] lib-git-svn.sh: Avoid setting web server variables unnecessarily
-[PATCH 04/14] lib-git-svn.sh: Add check for missing mod_dav_svn module
-[PATCH 05/14] lib-git-svn.sh: Add check for mis-configured web server variables
-[PATCH 06/14] t9501-*.sh: Fix a test failure on Cygwin
-[PATCH 07/14] t7800-difftool.sh: Fix a test failure on Cygwin
-[PATCH 08/14] help.c: Fix detection of custom merge strategy on cygwin
-[PATCH 09/14] t1301-*.sh: Fix the 'forced modes' test on cygwin
-[PATCH 10/14] t6038-*.sh: Pass the -b (--binary) option to sed on cygwin
-[PATCH 11/14] t3032-*.sh: Pass the -b (--binary) option to sed on cygwin
-[PATCH 12/14] t3032-*.sh: Do not strip CR from line-endings while grepping on MinGW
-[PATCH 13/14] t4135-*.sh: Skip the "backslash" tests on cygwin
-[PATCH 14/14] t{3032,6038}-*.sh: Allow SED_BIN_OPT to override the -b sed option
+Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+---
+ t/t9142-git-svn-shallow-clone.sh |    5 ++---
+ 1 files changed, 2 insertions(+), 3 deletions(-)
 
-These patches don't really have too much in common, well 2-5 and 10-12 are
-somewhat related, other than fixing tests! (These were mostly done on Linux
-and Cygwin but, since I also test on MinGW, one or two are just for MinGW)
-
-ATB,
-Ramsay Jones
+diff --git a/t/t9142-git-svn-shallow-clone.sh b/t/t9142-git-svn-shallow-clone.sh
+index 1236acc..e21ee5f 100755
+--- a/t/t9142-git-svn-shallow-clone.sh
++++ b/t/t9142-git-svn-shallow-clone.sh
+@@ -17,11 +17,10 @@ test_expect_success 'setup test repository' '
+ 		> foo &&
+ 		svn_cmd add foo &&
+ 		svn_cmd commit -m "add foo"
+-	)
++	) &&
++	start_httpd
+ '
+ 
+-start_httpd
+-
+ test_expect_success 'clone trunk with "-r HEAD"' '
+ 	git svn clone -r HEAD "$svnrepo/trunk" g &&
+ 	( cd g && git rev-parse --symbolic --verify HEAD )
+-- 
+1.7.3
