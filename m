@@ -1,57 +1,54 @@
 From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 14 Dec 2010 08:23:12 +0100
-Message-ID: <4D071B60.2040906@viscovery.net>
-References: <7vr69r8sqk.fsf@gitster.siamese.dyndns.org> <7vlk01hqzz.fsf@gitster.siamese.dyndns.org> <20080718175040.6117@nanako3.lavabit.com> <20080718182010.6117@nanako3.lavabit.com> <20080718094404.GB32184@machine.or.cz> <7vtzen7bul.fsf@gitster.siamese.dyndns.org> <loom.20101213T194818-377@post.gmane.org> <7vbp4pz9hf.fsf@alter.siamese.dyndns.org> <20101213214628.GA13447@onerussian.com>
+Subject: Re: [PATCH 09/19] tree-diff.c: reserve space in "base" for pathname
+ concatenation
+Date: Tue, 14 Dec 2010 08:32:58 +0100
+Message-ID: <4D071DAA.3070400@viscovery.net>
+References: <1292233616-27692-1-git-send-email-pclouds@gmail.com> <1292233616-27692-10-git-send-email-pclouds@gmail.com> <7vlj3t35ol.fsf@alter.siamese.dyndns.org> <AANLkTi=5QgkBd434=Z7MCA_ZNZCXVyXJYh_fd1A+B2ue@mail.gmail.com> <7vvd2wvs0m.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Yaroslav Halchenko <debian@onerussian.com>
-X-From: git-owner@vger.kernel.org Tue Dec 14 08:23:27 2010
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 14 08:33:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSPEM-000352-Nb
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 08:23:27 +0100
+	id 1PSPNi-00066k-T1
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 08:33:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755253Ab0LNHXS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Dec 2010 02:23:18 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:55821 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1754989Ab0LNHXS (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Dec 2010 02:23:18 -0500
+	id S1755949Ab0LNHdA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Dec 2010 02:33:00 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:65336 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755822Ab0LNHc7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Dec 2010 02:32:59 -0500
 Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
 	(envelope-from <j.sixt@viscovery.net>)
-	id 1PSPE9-0001lU-36; Tue, 14 Dec 2010 08:23:13 +0100
+	id 1PSPNa-0005N3-OW; Tue, 14 Dec 2010 08:32:58 +0100
 Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id CD4191660F;
-	Tue, 14 Dec 2010 08:23:12 +0100 (CET)
+	by theia.linz.viscovery (Postfix) with ESMTP id 7C80C1660F;
+	Tue, 14 Dec 2010 08:32:58 +0100 (CET)
 User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
-In-Reply-To: <20101213214628.GA13447@onerussian.com>
+In-Reply-To: <7vvd2wvs0m.fsf@alter.siamese.dyndns.org>
 X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163631>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163632>
 
-Am 12/13/2010 22:46, schrieb Yaroslav Halchenko:
-> On Mon, 13 Dec 2010, Junio C Hamano wrote:
->> But for such a use case, "git read-tree -m -u 0.2" would work just as
->> well, and discussion ended there ;-)
+Am 12/14/2010 6:32, schrieb Junio C Hamano:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 > 
-> hm -- read-tree sounded like yet another unknown to me feature of GIT I
-> was trying desperately to discover ;)  unfortunately it doesn't produce a merge
-> for me :-/ -- just a simple commit with the state taken from the other tree:
+>> All paths should not exceed PATH_MAX, right?
+> 
+> Your PATH_MAX may be a lot shorter than the PATH_MAX on the system I
+> created my trees on that you are reading.
 
-How about:
-
-  git merge --no-commit -s ours 0.2
-  git read-tree -m -u 0.2
-  git commit -m "Reset to 0.2"
+And that is not just gray theory: On Windows, PATH_MAX is whopping 260
+characters!
 
 -- Hannes
