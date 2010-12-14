@@ -1,74 +1,84 @@
-From: Gavin Guo <tuffkidtt@gmail.com>
-Subject: Re: duplicate commits after git rebase -i HEAD~10
-Date: Wed, 15 Dec 2010 00:07:31 +0800
-Message-ID: <AANLkTimSAjHOc42LOwkbFxqGEKrR0sOTcZB_mA2Ttj09@mail.gmail.com>
-References: <AANLkTi=W9MyCuOuk49AtCxR7nTa5xkddY_2HkhOvQip-@mail.gmail.com>
-	<20101203153435.GA6069@sigill.intra.peff.net>
+From: "psantosl@codicesoftware.com" <psantosl@codicesoftware.com>
+Subject: Re: [ANNOUNCE] GitJungle is out!
+Date: Tue, 14 Dec 2010 17:42:28 +0100
+Message-ID: <4D079E74.10408@codicesoftware.com>
+References: <4D05FF8D.7080306@codicesoftware.com> <4D079155.4020102@alum.mit.edu>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mathieu Malaterre <mathieu.malaterre@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 14 17:08:08 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	=?ISO-8859-1?Q?David_Su=E1rez?= <dsuarezv@codicesoftware.com>
+To: Michael Haggerty <mhagger@alum.mit.edu>
+X-From: git-owner@vger.kernel.org Tue Dec 14 17:42:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSXQ2-0000kz-4a
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 17:08:02 +0100
+	id 1PSXxV-0003tZ-AM
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 17:42:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759427Ab0LNQHm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Dec 2010 11:07:42 -0500
-Received: from mail-bw0-f45.google.com ([209.85.214.45]:60134 "EHLO
-	mail-bw0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759409Ab0LNQHl convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Dec 2010 11:07:41 -0500
-Received: by bwz16 with SMTP id 16so966969bwz.4
-        for <git@vger.kernel.org>; Tue, 14 Dec 2010 08:07:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=LjUEp9qx6JuD36RdAIG/PW4Ljp3sqs4TqDUzHzDGaDI=;
-        b=TMgbm/DSgWxEPoXEbeuvTfqPuROBrhM/uLrq9wBUr1PcwcRpWYQFjpiiFLN5ivow9q
-         cJP7vXfTwJxU7C2dOyvBJ6jfyvsjtOlqNI+2tFnqnSfjhJfHw3Zy9vNY7XnwYhQEgA/e
-         Fyu8/TE6hopTjjHme4SvmAk3OobMZmKdX0nx0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Daq8X2YOn7H9JJrMGhx4G4mf2T85+wLWeY0tOdDncJlkFWz5rtw6TXB1z0KgaeR0HO
-         Dd6rj8e5bLVK7Oq9cLIzMGOe0ga4il9malVSmHewixpZ3KCxh1MzSdJnJOlMSSs/FYLv
-         ZKSnsIlEHn8WnaNr2s834PVZdiKYppjXx3zWE=
-Received: by 10.204.52.138 with SMTP id i10mr125017bkg.23.1292342851279; Tue,
- 14 Dec 2010 08:07:31 -0800 (PST)
-Received: by 10.204.70.79 with HTTP; Tue, 14 Dec 2010 08:07:31 -0800 (PST)
-In-Reply-To: <20101203153435.GA6069@sigill.intra.peff.net>
+	id S1759532Ab0LNQmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Dec 2010 11:42:32 -0500
+Received: from berith.lunarbreeze.com ([216.97.239.175]:54065 "EHLO
+	berith.lunarbreeze.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759560Ab0LNQmb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Dec 2010 11:42:31 -0500
+Received: from 102.red-83-33-14.dynamicip.rima-tde.net ([83.33.14.102] helo=[192.168.2.33])
+	by berith.lunarbreeze.com with esmtpa (Exim 4.69)
+	(envelope-from <psantosl@codicesoftware.com>)
+	id 1PSXxN-0006Jm-7Z; Tue, 14 Dec 2010 08:42:29 -0800
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.12) Gecko/20101027 Lightning/1.0b2 Thunderbird/3.1.6
+In-Reply-To: <4D079155.4020102@alum.mit.edu>
+X-Enigmail-Version: 1.1.1
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - berith.lunarbreeze.com
+X-AntiAbuse: Original Domain - vger.kernel.org
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - codicesoftware.com
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163657>
 
-The first one:
+Hi Michael,
 
-> =A0git checkout master
-> =A0git reset --hard HEAD^
-> =A0git merge your-branch
+The commits are walked from the heads, starting on master. Once a commit
+is assigned to a branch, it stays there. So the diagram would have a
+different aspect if the heads were walked in a different order.
 
-The second:
+David (in CC) is the one to ask for details, he's still struggling to
+get a better render than what we have right now.
 
-> =A0git checkout tmp-branch M^
-> =A0git merge your-branch
-> =A0git rebase --onto tmp-branch M master
-> =A0git branch -d tmp-branch
+Thanks,
 
-I don't exactly know what the difference between the two methods to
-solve the duplicate problem. Why if there is already a built under
-master need to use the second solution? It seems the same to me to
-solve the problem.
+pablo
 
-Gavin Guo
+
+On 12/14/2010 16:46, Michael Haggerty wrote:
+> On 12/13/2010 12:12 PM, psantosl@codicesoftware.com wrote:
+>> We've just released GitJungle
+>> [...] The drawing approach we use is a little bit
+>> different from what other git tools are using: we draw horizontally
+>> instead of vertically, we think it is a better way but, you know, it is
+>> probably a matter of preference.
+> 
+> Given that git doesn't permanently record the branch that a commit was
+> first made on, how do you decide on what row to draw a commit?  E.g., if
+> I have two branches A and B that share a common ancestor
+> 
+>       o-o  <- A
+>      /
+> o-o-o
+>      \
+>       o-o  <- B
+> 
+> how do you decide whether to draw the ancestor on the row for A vs. the
+> row for B?
+> 
+> Michael
+> 
