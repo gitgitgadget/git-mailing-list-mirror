@@ -1,65 +1,66 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 14/19] Convert ce_path_match() use to match_pathspec()
-Date: Tue, 14 Dec 2010 22:14:55 +0700
-Message-ID: <AANLkTikPKEPX48S=j7SU+T+6XkP1qKFgotvw42af3jRY@mail.gmail.com>
-References: <1292233616-27692-1-git-send-email-pclouds@gmail.com>
- <1292233616-27692-15-git-send-email-pclouds@gmail.com> <7vsjy1zcyg.fsf@alter.siamese.dyndns.org>
+From: Michael Haggerty <mhagger@alum.mit.edu>
+Subject: Re: [ANNOUNCE] GitJungle is out!
+Date: Tue, 14 Dec 2010 16:46:29 +0100
+Message-ID: <4D079155.4020102@alum.mit.edu>
+References: <4D05FF8D.7080306@codicesoftware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 14 16:15:32 2010
+To: "psantosl@codicesoftware.com" <psantosl@codicesoftware.com>
+X-From: git-owner@vger.kernel.org Tue Dec 14 16:46:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSWbD-0005Mx-Lr
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 16:15:32 +0100
+	id 1PSX5O-0005iA-18
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 16:46:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759346Ab0LNPP2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Dec 2010 10:15:28 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:54634 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755545Ab0LNPP1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Dec 2010 10:15:27 -0500
-Received: by wyb28 with SMTP id 28so560602wyb.19
-        for <git@vger.kernel.org>; Tue, 14 Dec 2010 07:15:25 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ofZ/Qhk0+o0tgGSV/QUpG5XfVEm8E1cDI/dmRrvQfs8=;
-        b=RzSS2ZmZsUxzdej2/VuD6hrsxG5u0Sidy1yyFchc/xkW/K2M9O/NCVtwGZItiIB3UZ
-         NHPclNrdbzVWV4cTRh4ugpgzFB2Gh4y/47szwE8tu+CgCJBt2NfUvXU0TiTmWdIs/FGi
-         PMG6Lagscexxe33LK/rGacm2FRor0JyNYZdKc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=KawnSyuWaV/qobntOLSrQ1QHce1Dh6eQIpkr0qp0UEr+ZKliax+6xACY4KZO/9cwJX
-         CuG9EnsVrN25I8CohBEgme2ntV3wxdLnjPhxrWN5la2GjbehMdBPWSe6l4wtW/+1oQeF
-         PtyWVXRQ/kQrf26EAbCjI0nI91u9UM/rKhkj4=
-Received: by 10.216.169.71 with SMTP id m49mr6155065wel.4.1292339725911; Tue,
- 14 Dec 2010 07:15:25 -0800 (PST)
-Received: by 10.216.158.83 with HTTP; Tue, 14 Dec 2010 07:14:55 -0800 (PST)
-In-Reply-To: <7vsjy1zcyg.fsf@alter.siamese.dyndns.org>
+	id S1757638Ab0LNPqg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Dec 2010 10:46:36 -0500
+Received: from einhorn.in-berlin.de ([192.109.42.8]:42751 "EHLO
+	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757597Ab0LNPqf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Dec 2010 10:46:35 -0500
+X-Envelope-From: mhagger@alum.mit.edu
+Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
+	(authenticated bits=0)
+	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id oBEFkTRT028478
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 14 Dec 2010 16:46:30 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.13) Gecko/20101208 Lightning/1.0b2 Thunderbird/3.1.7
+In-Reply-To: <4D05FF8D.7080306@codicesoftware.com>
+X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163653>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163654>
 
-2010/12/14 Junio C Hamano <gitster@pobox.com>:
-> I imagine that eventually ce_path_match() will also take "struct path=
-spec *"
-> not "const char **" when the series is completed, yes? =C2=A0Or there=
- is no
-> real need for that?
+On 12/13/2010 12:12 PM, psantosl@codicesoftware.com wrote:
+> We've just released GitJungle
+> [...] The drawing approach we use is a little bit
+> different from what other git tools are using: we draw horizontally
+> instead of vertically, we think it is a better way but, you know, it is
+> probably a matter of preference.
 
-But I do have the patches to convert ce_path_match to struct
-pathspec*. Hmm.. I did. Need to look into reflogs..
---=20
-Duy
+Given that git doesn't permanently record the branch that a commit was
+first made on, how do you decide on what row to draw a commit?  E.g., if
+I have two branches A and B that share a common ancestor
+
+      o-o  <- A
+     /
+o-o-o
+     \
+      o-o  <- B
+
+how do you decide whether to draw the ancestor on the row for A vs. the
+row for B?
+
+Michael
+
+-- 
+Michael Haggerty
+mhagger@alum.mit.edu
+http://softwareswirl.blogspot.com/
