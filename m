@@ -1,81 +1,74 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Corruption in the repository
-Date: Tue, 14 Dec 2010 13:19:01 -0600
-Message-ID: <20101214191901.GA7257@burratino>
-References: <1292255990.25237.27642.camel@korcula.inria.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 11/14] t3032-*.sh: Pass the -b (--binary) option to sed
+ on cygwin
+Date: Tue, 14 Dec 2010 11:24:20 -0800
+Message-ID: <7vtyigtaxn.fsf@alter.siamese.dyndns.org>
+References: <4D07B8B5.2030409@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Simon Gareste <simon.gareste@scilab.org>,
-	Bruno JOFRET <bruno.jofret@scilab.org>,
-	Christian Couder <christian.couder@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: Sylvestre Ledru <sylvestre.ledru@scilab.org>
-X-From: git-owner@vger.kernel.org Tue Dec 14 20:19:22 2010
+Cc: GIT Mailing-list <git@vger.kernel.org>, sunshine@sunshineco.com
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue Dec 14 20:24:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSaPB-0005Z2-Cr
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 20:19:21 +0100
+	id 1PSaUK-00088T-DP
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 20:24:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758723Ab0LNTTR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Dec 2010 14:19:17 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:36168 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757825Ab0LNTTQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Dec 2010 14:19:16 -0500
-Received: by vws16 with SMTP id 16so446279vws.19
-        for <git@vger.kernel.org>; Tue, 14 Dec 2010 11:19:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=b+POYXvOc3Wq7w67wI+kGbXyOF2pIM6jmS5eJfbFGMY=;
-        b=SdHFx1peUZDNImGAR0zzAl4CX2oYUOHMbsHPh7oNvokm8orB3bf8FUT2vvepz2/T+g
-         1VTpek3YC9tTMRlkKAu5PyUZCE16rB4B25a3I63mDl23CMxbBpvPOORzzIM8cHZnD0ZT
-         RpH/FIt44fP/SAP1bA6eahB9dmtRKLGoqHY7Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=YxsXKUB5gwfQZ4BR1lGvSKE7mw79m0w/gBr3ph9EcKkD8IQMoCYw9Y7JjLYpfemAFd
-         i8yuPpv0fMGeyBDnWdDHLM+mwbw0LPu6613vqMKqIlL0NPumPB9Nr0op80lrVo8A1hlC
-         BIKmIdt39aEZYY01FLjTVBPRTV3//8TodxWZg=
-Received: by 10.220.201.10 with SMTP id ey10mr1661188vcb.126.1292354355545;
-        Tue, 14 Dec 2010 11:19:15 -0800 (PST)
-Received: from burratino (adsl-69-209-48-248.dsl.chcgil.sbcglobal.net [69.209.48.248])
-        by mx.google.com with ESMTPS id p8sm91818vcr.42.2010.12.14.11.19.12
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 14 Dec 2010 11:19:13 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1292255990.25237.27642.camel@korcula.inria.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1759512Ab0LNTYd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Dec 2010 14:24:33 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40259 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759294Ab0LNTYc (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Dec 2010 14:24:32 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DBEC02E25;
+	Tue, 14 Dec 2010 14:24:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=41rZdGenKFY9rd0/OY6rDJJ6Z8o=; b=xbuCfB
+	LKyWyD1DQp7C+CT8mZJmlqeJLn0H31ikcaeGkeKcF8sm9/6ZtXH5LFk7yPmLxDH5
+	qaPLtDVy4J+0DVtyhsHrVbycO4cWXQiIYqPmpo2T1Lra3rJFLdNm+5hQdaw4K1lo
+	G63vDEqa6ScMdqnELhHeEmM1sR4EhiDY1ekt0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=npiEfm7kfu8caUJ4k/LIHWOoZTBP3412
+	pua67BcIL4dZ3X2DP09WR1VOKcqDG4AIW4dGQcY9MlheF/GGxiN9+iVzpJNdgpQz
+	WUO1MXVsM6HBBt4uaUw4KP6ntaMPJftPvZlKbyAnwB6swkL8DezGPdGjTyp5sXNv
+	/whUwmKSVx4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A98762E22;
+	Tue, 14 Dec 2010 14:24:51 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 940362E1F; Tue, 14 Dec 2010
+ 14:24:47 -0500 (EST)
+In-Reply-To: <4D07B8B5.2030409@ramsay1.demon.co.uk> (Ramsay Jones's message
+ of "Tue\, 14 Dec 2010 18\:34\:29 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D2B36686-07B7-11E0-B230-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163679>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163680>
 
-Sylvestre Ledru wrote:
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
-> error: refs/changes/98/398/1 does not point to a valid object!
-> error: refs/changes/98/398/2 does not point to a valid object!
-> fatal: object cff52c24fba28408e7d021a8f35a717bef31521d is corrupted
-> fatal: The remote end hung up unexpectedly
+> The test using the conflict_hunks helper function (test 9) fails
+> on cygwin, since sed (by default) throws away the CR from CRLF
+> line endings. This behaviour is undesirable, since the validation
+> code expects the CRLF line-ending to be present. In order to fix
+> the problem we pass the -b (--binary) option to sed, using the
+> SED_OPTIONS variable. We use the SED_STRIPS_CR prerequisite in the
+> conditional initialisation of SED_OPTIONS.
+>
+> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+> ---
+>
+> Note that this test does not fail on MinGW, but I don't
+> really know why, given commit ca02ad3... ahem ;-)
 
-Ah, should have thought of this sooner.  There doesn't seem to be
-corruption involved after all.
-
-> Does anyone know how to repair this error ?
-
-Use git from the "master" branch to consolidate pack files:
-
-	~/src/git/bin-wrappers/git repack -a -d
-
-Details are in f2e872aa5 (Work around EMFILE when there are too many
-pack files, 2010-11-01), which will likely be part of git 1.7.4.
-Thanks for reporting and sorry for the trouble.
-
-Jonathan
+Ahem, indeed.  Why?
