@@ -1,33 +1,33 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 6/8] log -L: add --graph prefix before output
-Date: Tue, 14 Dec 2010 03:03:29 +0100
-Message-ID: <2bb97e8f1eb50542a2722d4800b68c048c9cfdd9.1292291624.git.trast@student.ethz.ch>
+Subject: [PATCH 3/8] Export rewrite_parents() for 'log -L'
+Date: Tue, 14 Dec 2010 03:03:26 +0100
+Message-ID: <fb904e7dc0298c3efa8bb8cd25f62b5e83f59918.1292291624.git.trast@student.ethz.ch>
 References: <cover.1292291624.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Bo Yang <struggleyb.nku@gmail.com>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 14 03:03:45 2010
+X-From: git-owner@vger.kernel.org Tue Dec 14 03:03:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSKEy-0008LJ-CQ
+	id 1PSKEx-0008LJ-SK
 	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 03:03:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759048Ab0LNCDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 13 Dec 2010 21:03:39 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:52107 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1759040Ab0LNCDi (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1759041Ab0LNCDi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 13 Dec 2010 21:03:38 -0500
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 14 Dec
- 2010 03:03:30 +0100
+Received: from edge20.ethz.ch ([82.130.99.26]:54357 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1758902Ab0LNCDg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Dec 2010 21:03:36 -0500
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 14 Dec
+ 2010 03:03:29 +0100
 Received: from localhost.localdomain (217.162.250.31) by CAS20.d.ethz.ch
  (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 14 Dec
- 2010 03:03:32 +0100
+ 2010 03:03:31 +0100
 X-Mailer: git-send-email 1.7.3.3.797.g7a32f
 In-Reply-To: <cover.1292291624.git.trast@student.ethz.ch>
 X-Originating-IP: [217.162.250.31]
@@ -35,172 +35,87 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163614>
 
 From: Bo Yang <struggleyb.nku@gmail.com>
 
-Makes the line level log output look good when used
-with the '--graph' option.
+The function rewrite_one is used to rewrite a single
+parent of the current commit, and is used by rewrite_parents
+to rewrite all the parents.
+
+Decouple the dependence between them by making rewrite_one
+a callback function that is passed to rewrite_parents. Then
+export rewrite_parents for reuse by the line history browser.
+
+We will use this function in line.c.
 
 Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- line.c |   66 ++++++++++++++++++++++++++++++++++++++++++++++-----------------
- 1 files changed, 48 insertions(+), 18 deletions(-)
+ revision.c |   13 ++++---------
+ revision.h |   10 ++++++++++
+ 2 files changed, 14 insertions(+), 9 deletions(-)
 
-diff --git a/line.c b/line.c
-index e766607..0b297e4 100644
---- a/line.c
-+++ b/line.c
-@@ -1242,6 +1242,13 @@ static void flush_lines(struct diff_options *opt, const char **ptr, const char *
- 	const char *p = *ptr;
- 	struct strbuf buf = STRBUF_INIT;
- 	const char *reset;
-+	char *line_prefix = "";
-+	struct strbuf *msgbuf;
-+
-+	if (opt && opt->output_prefix) {
-+		msgbuf = opt->output_prefix(opt, opt->output_prefix_data);
-+		line_prefix = msgbuf->buf;
-+	}
+diff --git a/revision.c b/revision.c
+index ded8812..6465c45 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1912,12 +1912,6 @@ int prepare_revision_walk(struct rev_info *revs)
+ 	return 0;
+ }
  
- 	if (*color)
- 		reset = diff_get_color_opt(opt, DIFF_RESET);
-@@ -1264,7 +1271,7 @@ static void flush_lines(struct diff_options *opt, const char **ptr, const char *
- 
- 	while (*ptr < end && *lno <= elno) {
- 		if (**ptr == '\n') {
--			fprintf(opt->file, "%s", buf.buf);
-+			fprintf(opt->file, "%s%s", line_prefix, buf.buf);
- 			if (*ptr - p)
- 				fwrite(p, *ptr - p, 1, opt->file);
- 			fprintf(opt->file, "%s\n", reset);
-@@ -1274,7 +1281,7 @@ static void flush_lines(struct diff_options *opt, const char **ptr, const char *
- 		(*ptr)++;
+-enum rewrite_result {
+-	rewrite_one_ok,
+-	rewrite_one_noparents,
+-	rewrite_one_error
+-};
+-
+ static enum rewrite_result rewrite_one(struct rev_info *revs, struct commit **pp)
+ {
+ 	struct commit_list *cache = NULL;
+@@ -1939,12 +1933,13 @@ static enum rewrite_result rewrite_one(struct rev_info *revs, struct commit **pp
  	}
- 	if (*lno <= elno) {
--		fprintf(opt->file, "%s", buf.buf);
-+		fprintf(opt->file, "%s%s", line_prefix, buf.buf);
- 		if (*ptr - p)
- 			fwrite(p, *ptr - p, 1, opt->file);
- 		fprintf(opt->file, "%s\n", reset);
-@@ -1316,8 +1323,15 @@ static void diff_flush_chunks(struct diff_options *opt, struct line_chunk *chunk
- 	struct diff_line_range *range = chunk->range;
- 	const char *set = diff_get_color_opt(opt, DIFF_FRAGINFO);
- 	const char *reset = diff_get_color_opt(opt, DIFF_RESET);
-+	char *line_prefix = "";
-+	struct strbuf *msgbuf;
- 	int i;
+ }
  
-+	if (opt && opt->output_prefix) {
-+		msgbuf = opt->output_prefix(opt, opt->output_prefix_data);
-+		line_prefix = msgbuf->buf;
-+	}
-+
- 	for (i = 0; i < range->nr; i++) {
- 		struct line_range *r = range->ranges + i;
- 		long lenp = r->pend - r->pstart + 1, pstart = r->pstart;
-@@ -1325,8 +1339,8 @@ static void diff_flush_chunks(struct diff_options *opt, struct line_chunk *chunk
- 		if (pstart == 0)
- 			lenp = 0;
- 
--		fprintf(opt->file, "%s@@ -%ld,%ld +%ld,%ld @@%s\n",
--			set, pstart, lenp, r->start, len, reset);
-+		fprintf(opt->file, "%s%s@@ -%ld,%ld +%ld,%ld @@%s\n",
-+			line_prefix, set, pstart, lenp, r->start, len, reset);
- 
- 		diff_flush_range(opt, chunk, r);
+-static int rewrite_parents(struct rev_info *revs, struct commit *commit)
++int rewrite_parents(struct rev_info *revs, struct commit *commit,
++	rewrite_parent_fn_t rewrite_parent)
+ {
+ 	struct commit_list **pp = &commit->parents;
+ 	while (*pp) {
+ 		struct commit_list *parent = *pp;
+-		switch (rewrite_one(revs, &parent->item)) {
++		switch (rewrite_parent(revs, &parent->item)) {
+ 		case rewrite_one_ok:
+ 			break;
+ 		case rewrite_one_noparents:
+@@ -2012,7 +2007,7 @@ enum commit_action simplify_commit(struct rev_info *revs, struct commit *commit)
+ 	if (action == commit_show &&
+ 	    !revs->show_all &&
+ 	    revs->prune && revs->dense && want_ancestry(revs)) {
+-		if (rewrite_parents(revs, commit) < 0)
++		if (rewrite_parents(revs, commit, rewrite_one) < 0)
+ 			return commit_error;
  	}
-@@ -1345,6 +1359,13 @@ static void diff_flush_filepair(struct rev_info *rev, struct diff_line_range *ra
- 	const char *reset = diff_get_color_opt(opt, DIFF_RESET);
- 	struct line_chunk chunk;
- 	int must_show_header;
-+	char *line_prefix = "";
-+	struct strbuf *msgbuf;
+ 	return action;
+diff --git a/revision.h b/revision.h
+index 05659c6..8897368 100644
+--- a/revision.h
++++ b/revision.h
+@@ -193,4 +193,14 @@ enum commit_action {
+ extern enum commit_action get_commit_action(struct rev_info *revs, struct commit *commit);
+ extern enum commit_action simplify_commit(struct rev_info *revs, struct commit *commit);
+ 
++enum rewrite_result {
++	rewrite_one_ok,
++	rewrite_one_noparents,
++	rewrite_one_error
++};
 +
-+	if (opt && opt->output_prefix) {
-+		msgbuf = opt->output_prefix(opt, opt->output_prefix_data);
-+		line_prefix = msgbuf->buf;
-+	}
- 
- 	/*
- 	 * the ranges that touch no different file, in this case
-@@ -1378,21 +1399,26 @@ static void diff_flush_filepair(struct rev_info *rev, struct diff_line_range *ra
- 	b_two = quote_two(b_prefix, name_b + (*name_b == '/'));
- 	lbl[0] = DIFF_FILE_VALID(one) ? a_one : "/dev/null";
- 	lbl[1] = DIFF_FILE_VALID(two) ? b_two : "/dev/null";
--	strbuf_addf(&header, "%sdiff --git %s %s%s\n", set, a_one, b_two, reset);
-+	strbuf_addf(&header, "%s%sdiff --git %s %s%s\n", line_prefix,
-+			set, a_one, b_two, reset);
- 	if (lbl[0][0] == '/') {
--		strbuf_addf(&header, "%snew file mode %06o%s\n", set, two->mode, reset);
-+		strbuf_addf(&header, "%s%snew file mode %06o%s\n",
-+			line_prefix, set, two->mode, reset);
- 	} else if (lbl[1][0] == '/') {
--		strbuf_addf(&header, "%sdeleted file mode %06o%s\n", set, one->mode, reset);
-+		strbuf_addf(&header, "%s%sdeleted file mode %06o%s\n",
-+			line_prefix, set, one->mode, reset);
- 	} else if (one->mode != two->mode) {
--			strbuf_addf(&header, "%sold mode %06o%s\n", set, one->mode, reset);
--			strbuf_addf(&header, "%snew mode %06o%s\n", set, two->mode, reset);
-+			strbuf_addf(&header, "%s%sold mode %06o%s\n",
-+				line_prefix, set, one->mode, reset);
-+			strbuf_addf(&header, "%s%snew mode %06o%s\n",
-+				line_prefix, set, two->mode, reset);
- 	}
- 
- 	fprintf(opt->file, "%s%s", header.buf, meta.buf);
- 	strbuf_release(&meta);
- 	strbuf_release(&header);
--	fprintf(opt->file, "%s--- %s%s\n", set, lbl[0], reset);
--	fprintf(opt->file, "%s+++ %s%s\n", set, lbl[1], reset);
-+	fprintf(opt->file, "%s%s--- %s%s\n", line_prefix, set, lbl[0], reset);
-+	fprintf(opt->file, "%s%s+++ %s%s\n", line_prefix, set, lbl[1], reset);
- 	free((void *)a_one);
- 	free((void *)b_two);
- 
-@@ -1446,12 +1472,13 @@ static void flush_nontrivial_merge(struct rev_info *rev,
- 				meta, range->spec->path, reset);
- 			for (; i < range->nr; i++) {
- 				struct line_range *r = range->ranges + i;
--				fprintf(opt->file, "%s@@ %ld,%ld @@%s\n", frag, r->start,
-+				fprintf(opt->file, "%s%s@@ %ld,%ld @@%s\n",
-+					line_prefix, frag, r->start,
- 					r->end - r->start + 1, reset);
- 				flush_lines(opt, &ptr, end, r->start, r->end,
- 					&lno, new, ' ');
- 			}
--			fprintf(opt->file, "\n");
-+			fprintf(opt->file, "%s\n", line_prefix);
- 		}
- 		range = range->next;
- 	}
-@@ -1464,6 +1491,8 @@ static void line_log_flush(struct rev_info *rev, struct commit *c)
- 							&c->object);
- 	struct log_info log;
- 	struct diff_options *opt = &rev->diffopt;
-+	char *line_prefix = "";
-+	struct strbuf *msgbuf;
- 
- 	if (!range || !(c->object.flags & NONTRIVIAL_MERGE ||
- 			c->object.flags & NEED_PRINT))
-@@ -1476,11 +1505,12 @@ static void line_log_flush(struct rev_info *rev, struct commit *c)
- 	rev->loginfo = &log;
- 	show_log(rev);
- 	rev->loginfo = NULL;
--	/*
--	 * Add a new line after each commit message, of course we should
--	 * add --graph alignment later when the patches comes to master.
--	 */
--	fprintf(rev->diffopt.file, "\n");
++typedef enum rewrite_result (*rewrite_parent_fn_t)(struct rev_info *revs, struct commit **pp);
 +
-+	if (opt && opt->output_prefix) {
-+		msgbuf = opt->output_prefix(opt, opt->output_prefix_data);
-+		line_prefix = msgbuf->buf;
-+	}
-+	fprintf(rev->diffopt.file, "%s\n", line_prefix);
- 
- 	if (c->object.flags & NONTRIVIAL_MERGE)
- 		flush_nontrivial_merge(rev, nontrivial);
++extern int rewrite_parents(struct rev_info *revs, struct commit *commit,
++	rewrite_parent_fn_t rewrite_parent);
+ #endif
 -- 
 1.7.3.3.811.g76615
