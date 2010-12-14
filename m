@@ -1,83 +1,79 @@
-From: Yaroslav Halchenko <debian@onerussian.com>
-Subject: Re: What's cooking in git.git (topics)
-Date: Tue, 14 Dec 2010 09:21:55 -0500
-Message-ID: <20101214142155.GM13447@onerussian.com>
-References: <7vr69r8sqk.fsf@gitster.siamese.dyndns.org>
- <7vlk01hqzz.fsf@gitster.siamese.dyndns.org>
- <20080718175040.6117@nanako3.lavabit.com>
- <20080718182010.6117@nanako3.lavabit.com>
- <20080718094404.GB32184@machine.or.cz>
- <7vtzen7bul.fsf@gitster.siamese.dyndns.org>
- <loom.20101213T194818-377@post.gmane.org>
- <7vbp4pz9hf.fsf@alter.siamese.dyndns.org>
- <20101213214628.GA13447@onerussian.com>
- <4D071B60.2040906@viscovery.net>
+From: Edward Rudd <urkle@outoforder.cc>
+Subject: Re: [git-svn] always prompted for passphrase with subversion 1.6
+Date: Tue, 14 Dec 2010 09:33:44 -0500
+Message-ID: <4D078048.3040602@outoforder.cc>
+References: <4A95D58C.1070409@hp.com> <20090905064649.GD22272@dcvr.yhbt.net> <4AA84F46.6010706@hp.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Tue Dec 14 15:22:11 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Eric Wong <normalperson@yhbt.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 14 15:35:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSVla-0002Ex-P5
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 15:22:11 +0100
+	id 1PSVyJ-0000Zj-Fv
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 15:35:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753219Ab0LNOWE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Dec 2010 09:22:04 -0500
-Received: from washoe.dartmouth.edu ([129.170.30.229]:54253 "EHLO
-	smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752106Ab0LNOWD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Dec 2010 09:22:03 -0500
-Received: from smtp.onerussian.com ([192.168.100.6] helo=washoe.onerussian.com)
-	by smtp.onerussian.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <yoh@onerussian.com>)
-	id 1PSVlL-0004ax-R0; Tue, 14 Dec 2010 09:21:55 -0500
-Received: from yoh by washoe.onerussian.com with local (Exim 4.69)
-	(envelope-from <yoh@onerussian.com>)
-	id 1PSVlL-0004au-L2; Tue, 14 Dec 2010 09:21:55 -0500
-Content-Disposition: inline
-In-Reply-To: <4D071B60.2040906@viscovery.net>
-X-URL: http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: 192.168.100.6
-X-SA-Exim-Rcpt-To: j.sixt@viscovery.net, gitster@pobox.com, git@vger.kernel.org
-X-SA-Exim-Mail-From: yoh@onerussian.com
-X-SA-Exim-Scanned: No (on smtp.onerussian.com); SAEximRunCond expanded to false
+	id S1754829Ab0LNOfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Dec 2010 09:35:12 -0500
+Received: from lo.gmane.org ([80.91.229.12]:54157 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752280Ab0LNOfL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Dec 2010 09:35:11 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PSVy4-0000S7-P7
+	for git@vger.kernel.org; Tue, 14 Dec 2010 15:35:04 +0100
+Received: from adsl-75-46-74-191.dsl.ipltin.sbcglobal.net ([75.46.74.191])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 14 Dec 2010 15:35:04 +0100
+Received: from urkle by adsl-75-46-74-191.dsl.ipltin.sbcglobal.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 14 Dec 2010 15:35:04 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: adsl-75-46-74-191.dsl.ipltin.sbcglobal.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
+In-Reply-To: <4AA84F46.6010706@hp.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163648>
 
+On 09/09/2009 08:58 PM, Tim Potter wrote:
+> It's probably just a matter of adding another entry to the
+> _auth_providers() function in git-svn.  My thought was that there might
+> be a new auth provider in the Subversion 1.6 client library for GNOME
+> Keyring support that could be used for this.
+> 
+> I'll have a search through and see what I can find.
 
-On Tue, 14 Dec 2010, Johannes Sixt wrote:
-> > hm -- read-tree sounded like yet another unknown to me feature of GIT I
-> > was trying desperately to discover ;)  unfortunately it doesn't produce a merge
-> > for me :-/ -- just a simple commit with the state taken from the other tree:
-> How about:
->   git merge --no-commit -s ours 0.2
->   git read-tree -m -u 0.2
->   git commit -m "Reset to 0.2"
+I've been tracking subversion bug # 3612
+(http://subversion.tigris.org/issues/show_bug.cfg?id=3612 )  which is on
+this issue of perl binding not supporting platform specific providers.
 
-Thank you Johannes for chewing it up to ease the digestion by my
-brainless stomach -- works just fine ;)
+A patch was added into subversion 1.6.15 that finally adds bindings for
+perl to access this functionality via a call to
+SVN::Core::auth_get_platform_specific_client_providers and adding it's
+contents to the array returned by _auth_providers..
 
-I guess this could be the alias for my needs:
+The "test" modification I did to git-svn is as follows.
 
-    mtheirs = !sh -c 'git merge -s ours --no-commit $1 && git read-tree -m -u "$1"' -
+sub _auth_providers () {
+  (
+    SVN::Core::auth_get_platform_specific_client_providers(undef,undef),
+    [
+      SVN::Client::get_simple_provider(),
+      .... the rest of the static provider ...
+    ]
+  )
+}
 
-but since it might be a generic pattern for the use case(s) I have
-stated I still see no objective reason why simple '-s theirs' should not
-be there.
-
--- 
-=------------------------------------------------------------------=
-Keep in touch                                     www.onerussian.com
-Yaroslav Halchenko                 www.ohloh.net/accounts/yarikoptic
+I'm honestly not sure if it should be at the beginning or end, and this
+also needs some run-time checking to determine if the user has at least
+SVN 1.6.15 installed
