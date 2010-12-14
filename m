@@ -1,74 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Dec 2010, #04; Mon, 13)
-Date: Mon, 13 Dec 2010 18:20:44 -0800
-Message-ID: <7vzks9umbn.fsf@alter.siamese.dyndns.org>
-References: <7v7hfe5awz.fsf@alter.siamese.dyndns.org>
- <AANLkTikGneq+zeN5Z5XrUseX4Arevft67U7pV+h+5Tr+@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 09/19] tree-diff.c: reserve space in "base" for pathname concatenation
+Date: Tue, 14 Dec 2010 12:00:11 +0700
+Message-ID: <AANLkTi=5QgkBd434=Z7MCA_ZNZCXVyXJYh_fd1A+B2ue@mail.gmail.com>
+References: <1292233616-27692-1-git-send-email-pclouds@gmail.com>
+ <1292233616-27692-10-git-send-email-pclouds@gmail.com> <7vlj3t35ol.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 14 03:21:02 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 14 06:00:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSKVe-0005iO-NE
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 03:20:59 +0100
+	id 1PSN0K-0003sY-4A
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 06:00:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759117Ab0LNCUy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 13 Dec 2010 21:20:54 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64059 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759112Ab0LNCUx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 13 Dec 2010 21:20:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CE51132F4;
-	Mon, 13 Dec 2010 21:21:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=7yqWpj/xWftttyuOzFNcWjF7g
-	eE=; b=QGopQRJmq2hEIO//WFM2Ui8CWKTX69js1NIeamTMKE2EodamA36nIyXnN
-	aqKHTwFbdQK4SQeRKadH4loel5YsQWfiNZanX3YSVSWghlQeF029f/lRPCnRVB3a
-	a3rB6nz6KZ57j1T2wOojxLpqtCK1rLEWnm0hBoTEjSdGLKwGVk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=Nx97G3s71KGI0fsWKms
-	NZV6d5ZiwEjrnQNntz7IOgSyZXuHwnThpsBnHo6JLI7D59cmjm7+z7l4oWov33It
-	jw4qGHzRSaRcbdNFwAHVHBQc0vkd6YQVSzV2cFogeVuJkQyIppHS+ztejKbcMceP
-	Wx7SXq8SPzEx0mP56nHdEVwg=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9C42C32F3;
-	Mon, 13 Dec 2010 21:21:14 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B6FB732F2; Mon, 13 Dec 2010
- 21:21:11 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D34951EE-0728-11E0-84B0-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1750803Ab0LNFAn convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Dec 2010 00:00:43 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:56549 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750712Ab0LNFAm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Dec 2010 00:00:42 -0500
+Received: by wyb28 with SMTP id 28so175025wyb.19
+        for <git@vger.kernel.org>; Mon, 13 Dec 2010 21:00:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=S20b1rhpUioLkWPyi92ZKCfECs//l9BTatQMFLiuhrU=;
+        b=B8oWr7g0rAIyw4ky4vUu7Ov1Uv8Ajqeg4C3SvjTb1GcNHCcLnQOhdhFp6AnbwAvqZW
+         L16A/nsbXE/crjvZyeoe4JoRodc2GkKN9YRq+x5/tZ6tGEapULodTP6DsVg1cncobxrE
+         mM4/PW/jhRE42fAqbQJRW5R4RP1Q6OKTL19mg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Z4eeLOSPBNVu6mFQydTWFX+q5trhBK5eNKoU3dpifdTVHj/a1FZM7wR2TliAi5uZqX
+         MEheIf/zsosVOx3A8eXOXGa2cc/JBOXtzGXJueI2DBYD5qln0oPLNHONfPWustga82DO
+         8cBcgjWBHJ4qDcBA0KNoJEX39+c1uq9gUTjFQ=
+Received: by 10.216.59.143 with SMTP id s15mr2703390wec.49.1292302841109; Mon,
+ 13 Dec 2010 21:00:41 -0800 (PST)
+Received: by 10.216.158.83 with HTTP; Mon, 13 Dec 2010 21:00:11 -0800 (PST)
+In-Reply-To: <7vlj3t35ol.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163622>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163624>
 
-=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
-
-> On Mon, Dec 13, 2010 at 09:34, Junio C Hamano <gitster@pobox.com> wro=
-te:
+2010/12/14 Junio C Hamano <gitster@pobox.com>:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
+rites:
 >
->> Needs a bit more minor work to get the basic code structure right.
+>> This patch make sure that "base" parameter is writable. The callees
+>> are free to modify it as long as base remains the same before
+>> entering and after leaving the callee.
+>>
+>> This avoids quite a bit of malloc and memcpy().
+>>
+>> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gm=
+ail.com>
+>> ---
 >
-> And I'm still not sure (see earlier replies to "What's Cooking" posts=
-)
-> what needs to be done to make it better.
+> I like what I see in this patch in general, but there is nothing that
+> guarantees that you are "reserving" enough space. =C2=A0Doesn't the b=
+uffer
+> overflow with deep enough trees?
 
-One open question was why you do not want to move 'LIB_OBJS +=3D gettex=
-t.o'
-away from the LIB_OBJS section down to the configuration evaluation
-section, i.e., why gettext.o would be different from block-sha1/sha1.o.
-
-(sorry for a delayed and short response --- have been firefighting
-elsewhere).
+All paths should not exceed PATH_MAX, right? That's my assumption. If
+it's wrong, then, well.. we need another way.
+--=20
+Duy
