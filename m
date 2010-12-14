@@ -1,53 +1,72 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH 13/14] t4135-*.sh: Skip the "backslash" tests on cygwin
-Date: Tue, 14 Dec 2010 21:49:33 +0100
-Message-ID: <201012142149.33725.j6t@kdbg.org>
-References: <4D07B977.9010502@ramsay1.demon.co.uk>
-Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	"GIT Mailing-list" <git@vger.kernel.org>, jrnieder@gmail.com
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Dec 14 21:49:42 2010
+From: Jerzy Kozera <jerzy.kozera@gmail.com>
+Subject: [PATCH] git-p4: Fix 'p4 opened' in git-p4 for names with spaces
+Date: Tue, 14 Dec 2010 20:56:05 +0000
+Message-ID: <1292360165-26771-2-git-send-email-jerzy.kozera@gmail.com>
+References: <1292360165-26771-1-git-send-email-jerzy.kozera@gmail.com>
+Cc: Jerzy Kozera <jerzy.kozera@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 14 21:56:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSbob-0003NQ-9n
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 21:49:41 +0100
+	id 1PSbuz-0006f7-5l
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 21:56:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759945Ab0LNUtg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Dec 2010 15:49:36 -0500
-Received: from bsmtp2.bon.at ([213.33.87.16]:62082 "EHLO bsmtp.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1758360Ab0LNUtf (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Dec 2010 15:49:35 -0500
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 4CD202C400D;
-	Tue, 14 Dec 2010 21:49:34 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id CB0A619F5F9;
-	Tue, 14 Dec 2010 21:49:33 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <4D07B977.9010502@ramsay1.demon.co.uk>
-Content-Disposition: inline
+	id S1760034Ab0LNU4N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Dec 2010 15:56:13 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:37085 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1759636Ab0LNU4L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Dec 2010 15:56:11 -0500
+Received: by wwa36 with SMTP id 36so921038wwa.1
+        for <git@vger.kernel.org>; Tue, 14 Dec 2010 12:56:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=1/MHBWwUzXQ/d49NX113enBsUc/SkNIxhpc72eI4nwc=;
+        b=miFr3eObwwL9bLurmNovvk33TILxW/OnnUEYQn0slgeiJmrSNKqAaI1jv1aBjaohpf
+         VDqKaNedlksXIo3EgZy7g0YhpR2UtzQQTcJxxpX4ICcr8cv/KMC0LJQm4zsh2vApkMLu
+         CacN16KEz9wUa6mHpVK5SL4Uc2fq5GdZ5f5Aw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=hd3Ng+vyIsA/GWdy51WTOAmrLlarurJfqsRRjITfwR4tfMCGq3VNv07dzw0kH0W5Rw
+         gUbG6/8dJoMZ092JPW0igoT5E1U0KwS+pxDCGIGdGYfwGn/ijAsGIeU8CXhg4uLVItZx
+         FEKtjLDjZC5zBH/f1o5Q1a/t5Uz8avvNxNTHw=
+Received: by 10.216.30.67 with SMTP id j45mr5180289wea.99.1292360170548;
+        Tue, 14 Dec 2010 12:56:10 -0800 (PST)
+Received: from localhost.localdomain (188-223-231-164.zone14.bethere.co.uk [188.223.231.164])
+        by mx.google.com with ESMTPS id b30sm376246wen.1.2010.12.14.12.56.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 14 Dec 2010 12:56:09 -0800 (PST)
+X-Mailer: git-send-email 1.7.1
+In-Reply-To: <1292360165-26771-1-git-send-email-jerzy.kozera@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163687>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163688>
 
-On Dienstag, 14. Dezember 2010, Ramsay Jones wrote:
-> Note t3700-*.sh has a test protected by BSLASHSPEC which
-> previously passed on cygwin and will now be (unnecessarily)
-> skipped. This test needs to be skipped on MinGW, given how
-> it is written; if you remove the single quotes around the
-> filename, however, it will pass even on MinGW.
+Signed-off-by: Jerzy Kozera <jerzy.kozera@gmail.com>
+---
+ contrib/fast-import/git-p4 |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-That is suspicious. It would mean that git add does not do file globbing 
-anymore. Should it or should it not do file globbing?
-
--- Hannes
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 04ce7e3..a5297e7 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -144,7 +144,7 @@ def setP4ExecBit(file, mode):
+ def getP4OpenedType(file):
+     # Returns the perforce file type for the given file.
+ 
+-    result = p4_read_pipe("opened %s" % file)
++    result = p4_read_pipe("opened \"%s\"" % file)
+     match = re.match(".*\((.+)\)\r?$", result)
+     if match:
+         return match.group(1)
+-- 
+1.6.5.2
