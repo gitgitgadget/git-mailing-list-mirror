@@ -1,100 +1,172 @@
-From: "Neal Kreitzinger" <neal@rsss.com>
-Subject: Re: Revert-style merge/Working tree-only checkout?
-Date: Tue, 14 Dec 2010 08:36:20 -0600
-Message-ID: <ie7veg$ks5$1@dough.gmane.org>
-References: <AANLkTi=ioX25aqXg-yWDA0oXBTATkFe+J25g-dB7-psS@mail.gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 14 15:37:27 2010
+From: Sylvestre Ledru <sylvestre.ledru@scilab.org>
+Subject: Re: Corruption in the repository
+Date: Tue, 14 Dec 2010 15:37:36 +0100
+Message-ID: <1292337456.25237.29023.camel@korcula.inria.fr>
+References: <1292255990.25237.27642.camel@korcula.inria.fr>
+	 <AANLkTimD6+CHofhbKvBPjHpcNUNusHOCHSQe+-J1ZA4F@mail.gmail.com>
+	 <1292258845.25237.27680.camel@korcula.inria.fr>
+	 <AANLkTimgLhQMUGmC=W5wpcAvb07faw4HOzPgWXpFA4u1@mail.gmail.com>
+	 <1292263868.25237.27772.camel@korcula.inria.fr>
+	 <AANLkTikP3CTNX_S=fAWTBVbt0OwQMLr+mq8f72OFd0j6@mail.gmail.com>
+	 <1292320068.25237.28773.camel@korcula.inria.fr>
+	 <AANLkTinoD2qn7ZqMtGbSjJgkVUNE--fOsrSKzqTLCLpP@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org, Simon Gareste <simon.gareste@scilab.org>,
+	Bruno JOFRET <bruno.jofret@scilab.org>
+X-From: git-owner@vger.kernel.org Tue Dec 14 15:37:47 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSW0M-0001qm-Is
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 15:37:26 +0100
+	id 1PSW0f-00020b-QV
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 15:37:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755501Ab0LNOhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Dec 2010 09:37:21 -0500
-Received: from lo.gmane.org ([80.91.229.12]:44200 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754849Ab0LNOhU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Dec 2010 09:37:20 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PSW0F-0001nj-6E
-	for git@vger.kernel.org; Tue, 14 Dec 2010 15:37:19 +0100
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 14 Dec 2010 15:37:19 +0100
-Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 14 Dec 2010 15:37:19 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-RFC2646: Format=Flowed; Original
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
+	id S1755867Ab0LNOhj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Dec 2010 09:37:39 -0500
+Received: from santostefano.inria.fr ([193.51.192.151]:60305 "HELO
+	santostefano.inria.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1755711Ab0LNOhi (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Dec 2010 09:37:38 -0500
+Received: (qmail 26020 invoked by uid 1001); 14 Dec 2010 15:37:37 +0100
+Received: from korcula.inria.fr by santostefano (envelope-from <sylvestre.ledru@scilab.org>, uid 92) with qmail-scanner-2.02st 
+ (clamdscan: 0.90.1/7197. spamassassin: 3.1.7-deb. perlscan: 2.02st.  
+ Clear:RC:1(193.51.192.130):. 
+ Processed in 0.024069 secs); 14 Dec 2010 14:37:37 -0000
+Received: from korcula.inria.fr (HELO ?193.51.192.130?) (193.51.192.130)
+  by santostefano.inria.fr with SMTP; 14 Dec 2010 15:37:37 +0100
+In-Reply-To: <AANLkTinoD2qn7ZqMtGbSjJgkVUNE--fOsrSKzqTLCLpP@mail.gmail.com>
+X-Mailer: Evolution 2.30.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163650>
 
+Le mardi 14 d=C3=A9cembre 2010 =C3=A0 12:59 +0100, Christian Couder a =C3=
+=A9crit :
+> On Tue, Dec 14, 2010 at 10:47 AM, Sylvestre Ledru
+> <sylvestre.ledru@scilab.org> wrote:
+> > Le mardi 14 d=C3=A9cembre 2010 =C3=A0 10:29 +0100, Christian Couder=
+ a =C3=A9crit :
+> >> On Mon, Dec 13, 2010 at 7:11 PM, Sylvestre Ledru
+> >> <sylvestre.ledru@scilab.org> wrote:
+> >> > Le lundi 13 d=C3=A9cembre 2010 =C3=A0 18:02 +0100, Christian Cou=
+der a =C3=A9crit :
+> >> >> On Mon, Dec 13, 2010 at 5:47 PM, Sylvestre Ledru
+> >> >> <sylvestre.ledru@scilab.org> wrote:
+> >> >> >
+> >> >> > Le lundi 13 d=C3=A9cembre 2010 =C3=A0 17:34 +0100, Christian =
+Couder a =C3=A9crit :
+> >> >> >> Hi,
+> >> >> >>
+> >> >> >> On Mon, Dec 13, 2010 at 4:59 PM, Sylvestre Ledru
+> >> >> >> <sylvestre.ledru@scilab.org> wrote:
+> >> >> >> > Hello guys,
+> >> >> >> >
+> >> >> >> > I have a small problem with a git repository and I haven't=
+ find a way to
+> >> >> >> > fix my problem.
+> >> >> >> > I am using git with gerrit [1] as frontend (even if I don'=
+t think it is
+> >> >> >> > related here).
+> >> >> >> > For an unknown reason, the repository just became corrupte=
+d.
+> >> >> >> >
+> >> >> >> > When I try to clone the repository straight with the file =
+system, the
+> >> >> >> > following error is displayed:
+> >> >> >> > error: refs/changes/98/398/1 does not point to a valid obj=
+ect!
+> >> >> >> > error: refs/changes/98/398/2 does not point to a valid obj=
+ect!
+> >> >> >> > fatal: object cff52c24fba28408e7d021a8f35a717bef31521d is =
+corrupted
+> >> >> >> > fatal: The remote end hung up unexpectedly
+> >> >> >> >
+> >> >> >> > git-prune & git-fsck both fail.
+> >> >> >> >
+> >> >> >> > Does anyone know how to repair this error ?
+> >> >> >>
+> >> >> >> Did you try what the FAQ suggests:
+> >> >> >>
+> >> >> >> https://git.wiki.kernel.org/index.php/GitFaq#How_to_fix_a_br=
+oken_repository.3F
+> >> >> > Yes. It shows an other error and it doesn't match the error d=
+escribed on
+> >> >> > this URL [1].
+> >> >> >
+> >> >> > I get the following:
+> >> >> > error: refs/tags/5.3.0-beta-4 does not point to a valid objec=
+t!
+> >> >> > fatal: object 555a7c359b2e589ec10822d9b56cdfeee0105fe0 is cor=
+rupted
+> >> >>
+> >> >> The FAQ says that you should try to replace any broken and/or m=
+issing
+> >> >> objects, so you should try to do that with object
+> >> >> 555a7c359b2e589ec10822d9b56cdfeee0105fe0 (as described in the F=
+AQ)
+> >> >> even if the error message is not exactly the same.
+> >> > Well, after clean the error about the tags, it does not provide =
+any
+> >> > interesting feedbacks like in the FAQ.
+> >> >
+> >> > Just some information [1] about some dangling commits (probably =
+commit
+> >> > under review in gerrit). Nothing valuable and the problem still =
+occurs
+> >> > on the client side.
+> >>
+> >> So you say that "git fsck --full" gives only dangling commits on t=
+he
+> >> server, and you still get messages like "fatal: object XXXXX is
+> >> corrupted" on the client when you try to clone with gerrit?
+> > Not exactly, when I try to clone it through gerrit, it is working:
+> > git clone ssh://sylvestre.ledru@git.scilab.org:29418/scilab
+> > A bare clone works also.
+> >
+> > It is failing when I am using git-daemon (git clone
+> > git://git.scilab.org/scilab) or a straight clone (git
+> > clone /home/git/repositories/repo.git).
+>=20
+> This is very strange, are you sure you cannot use the resulting repo
+> when it "fails"?
+> What happens when you run "git fsck --full" on the resulting repos?
+>=20
+> > Both with the same error:
+> > error: refs/changes/98/398/1 does not point to a valid object!
+> > error: refs/changes/98/398/2 does not point to a valid object!
+>=20
+> Did you try to see which objects these refs are pointing to, and if
+> they are on the server?
+In fact, we have some progress on the issue.=20
+It looks like, at some point, two tags have been badly created [1].
 
-"Yuriy Romanenko" <groman@gmail.com> wrote in message 
-news:AANLkTi=ioX25aqXg-yWDA0oXBTATkFe+J25g-dB7-psS@mail.gmail.com...
-> Hello,
->
-> I am somewhat new to Git and I keep running into having to accomplish
-> a certain task and reading through the documentation I can't seem to
-> find any way of doing this easily.
->
-> The problem is when branches diverge and I want to sync a branch to
-> another branch with full overwrite, but maintain history and maintain
-> separate branches.
->
-> For example, say there is a branch "master" and I create a branch "b1"
-> from master at some point. After this, there are 5 commits
-> (C1,C2,C3,C4,C5) to master and
-> 17 commits to b1 (let's call them cb1, cb2, cb3, ..., cb17). Say I
-> want to create an 18-th commit to "b1" that makes it identical to the
-> C5 (current) state of master. Essentially a single commit wipe of
-> changes cb1 -> cb17 as well as application of C1->C5. So far I have
-> found one way of accomplishing this, but it is difficult, error prone,
-> slow and I just plain don't like it. I feel like there should be an
-> easier way.
->
-> What I currently do:
->
-> $ rm -rf *
-> $ git checkout -f master
-> $ tar -cvzf /tmp/master.tar.gz *
-> $ git checkout b1
-> $ rm -rf *
-> $ tar -xvzf /tmp/master.tar.gz
-> $ git add
-> $ git commit -a
-> $ git merge master
->
->
-> I've considered doing something like the following
->
-> $ git checkout b1
-> $ git revert b1~17..b1
-> $ git merge master
->
-> but it also seems wrong, and requires me to count the submits by hand,
-> which seems silly --> I'm not actually reverting anything. I don't
-> know if this would even work.
->
->
-> Any suggestions on how to accomplish this easier? Some sort of a
-> force-checkout that affects working tree only but not the index?
->
-Have you looked at the vendor branch methodology in the git-rm manpage?   It 
-may give you some ideas you're interested in.
+Here is what Bruno did to fix the issue:
+1 - Add valid references
+I put some valid commit id in refs/changes/98/398/{1,2}
 
-v/r,
-Neal 
+2 - Find out what the corrupted object was for
+$> git cat-file -t cff52c24fba28408e7d021a8f35a717bef31521d
+tag
+$> cat refs/tags/5.3.0-beta-4
+cff52c24fba28408e7d021a8f35a717bef31521d
+$> git tag -d 5.3.0-beta-4
+
+3 - Server complains :
+fatal: git upload-pack: unable to fork git-pack-objects
+$> git gc (on the server)
+Solved this problem.
+
+Hope this helps for others,
+Sylvestre
+
+[1] Looks at my mail archive, the guy who created the tag did it this
+way:
+[$SHELL] cd /home/git/repositories/scilab.git
+[$SHELL] git tag -d 5.3.0-beta-4
+[$SHELL] git tag -m "Scilab 5.3.0 Beta 4 Version" 5.3.0-beta-4=20
+96b0b8e6d621a7ea7c88d63e10d57908689632ed
