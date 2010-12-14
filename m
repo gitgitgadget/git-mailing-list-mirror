@@ -1,59 +1,57 @@
-From: Jerzy Kozera <jerzy.kozera@gmail.com>
-Subject: [PATCH] git-p4: Fix 'p4 opened' in git-p4 for names with spaces
-Date: Tue, 14 Dec 2010 20:56:04 +0000
-Message-ID: <1292360165-26771-1-git-send-email-jerzy.kozera@gmail.com>
-Cc: Jerzy Kozera <jerzy.kozera@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 14 21:56:18 2010
+From: Dun Peal <dunpealer@gmail.com>
+Subject: Can `add --patch` display the diff in my difftool instead of just
+ printing it on the command line?
+Date: Tue, 14 Dec 2010 15:17:09 -0600
+Message-ID: <AANLkTi=_VyUAL+qjWLEcThX-zC5n0v0WB-W7hTSZn0ae@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+To: Git ML <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Dec 14 22:17:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSbuy-0006f7-JS
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 21:56:16 +0100
+	id 1PScFK-0001F4-O2
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 22:17:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760007Ab0LNU4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Dec 2010 15:56:11 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:44480 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759636Ab0LNU4J (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Dec 2010 15:56:09 -0500
-Received: by wyb28 with SMTP id 28so870437wyb.19
-        for <git@vger.kernel.org>; Tue, 14 Dec 2010 12:56:08 -0800 (PST)
+	id S1760122Ab0LNVRL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Dec 2010 16:17:11 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:52690 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756097Ab0LNVRJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Dec 2010 16:17:09 -0500
+Received: by qwa26 with SMTP id 26so1220554qwa.19
+        for <git@vger.kernel.org>; Tue, 14 Dec 2010 13:17:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=GZWqDRbfGs282WJUPT55Qgf78goPfEzLyYnhVX+gDPw=;
-        b=w8ZmodbO590AC8J1MTsogBgwWQZaQFIhknd+XPgePGLdiq0P6oZtbfaKH5rFy1lE3k
-         FRemSG5YHXR5U9wHJWe07huu6dB2TZ04sXzfDqJtdvAgSVciJhX587w69LhReN8qpTq8
-         dUtG6mmgrEUimGSIV0ra65seTAzfgxWnadCi0=
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=vmNQ6ZL+38clDU9SgOM3+GylVEkw4+H39syjC9i4hFY=;
+        b=YnK5RvGoufTXV0fJZ7YNrR+hrgddvWw4+azbtxqK5gn0ThtdRmQrhpODU9PU2JYoLr
+         qh0QBdRowyY2wx2jgDPPH+lVu+YlKmbIH3x3WjZLs4VJY44C54Dpk1Own7nmD/VGY9Tj
+         jXZ/QUlBfOUrB/Yefy6veWbbnAQ2UX22+KfP8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=CjaE+FgwSZmBDeiPTlwhLZ6FKiWy8Yfw5lFUBHFhnuv7JCmFh23ppDaXrh9XBOBcKo
-         +Un48DXdEPXtLZnZl139c5+7nkq8ULT0b+nxmLPmS57lbFiDcn/XDE3xBskSk0iMgh1J
-         K8iwZFbBSmjvSt4pEp7NaidRb0eTd41Y9zatM=
-Received: by 10.216.171.68 with SMTP id q46mr5159781wel.98.1292360168505;
-        Tue, 14 Dec 2010 12:56:08 -0800 (PST)
-Received: from localhost.localdomain (188-223-231-164.zone14.bethere.co.uk [188.223.231.164])
-        by mx.google.com with ESMTPS id b30sm376246wen.1.2010.12.14.12.56.06
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 14 Dec 2010 12:56:07 -0800 (PST)
-X-Mailer: git-send-email 1.7.1
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=g6h4Qoor+SCQaKselm0og2GH5n7NOA9hswESN8vRsefkxUaZlzyemFS2CyhND92k5K
+         ZJjbQHvqxcK+Vaxcv+n3+8P3BhvvBjdij7dfK78vLLYW6mCLyjVUtysPLKIXQr/m0f9X
+         pThkIg2VkVWUrS3N5ryLaS5THoGfZI1NbNvwE=
+Received: by 10.224.11.144 with SMTP id t16mr5727170qat.99.1292361429133; Tue,
+ 14 Dec 2010 13:17:09 -0800 (PST)
+Received: by 10.220.191.66 with HTTP; Tue, 14 Dec 2010 13:17:09 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163690>
 
-There is problem with git-p4 when trying to submit changes to file containing spaces in name - submit fails with "Command failed: p4 opened [name with spaces here]"
+Hi.
 
-It's caused by not quoting name for p4 opened, and the patch attached fixes it.
+I'd like to display the diff of each modified working copy file, and
+have the option of staging (or reversing) each patch after it is
+displayed. This is exactly the same thing `add --patch` does, except I
+want the diff to be displayed in my difftool (happens to be vimdiff)
+rather than just being printed.
 
-Jerzy Kozera (1):
-  Fix 'p4 opened' in git-p4 for names with spaces
-
- contrib/fast-import/git-p4 |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+Thanks, D.
