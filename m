@@ -1,30 +1,30 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH 8/8] log -L: implement move/copy detection (-M/-C)
-Date: Tue, 14 Dec 2010 03:03:31 +0100
-Message-ID: <7ed837b843dfcf56a3e92dbebf309ddb389f1d69.1292291624.git.trast@student.ethz.ch>
+Subject: [PATCH 7/8] log -L: add --full-line-diff option
+Date: Tue, 14 Dec 2010 03:03:30 +0100
+Message-ID: <85560a0a59acfea783a47b9450a3b4b095766a3c.1292291624.git.trast@student.ethz.ch>
 References: <cover.1292291624.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
 Cc: Bo Yang <struggleyb.nku@gmail.com>
 To: <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Dec 14 03:04:20 2010
+X-From: git-owner@vger.kernel.org Tue Dec 14 03:04:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSKFX-0008W1-3G
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 03:04:19 +0100
+	id 1PSKFY-0008W1-3T
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 03:04:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759058Ab0LNCDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1759056Ab0LNCDn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Mon, 13 Dec 2010 21:03:43 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:54357 "EHLO edge20.ethz.ch"
+Received: from edge10.ethz.ch ([82.130.75.186]:52107 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1758902Ab0LNCDi (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 13 Dec 2010 21:03:38 -0500
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 14 Dec
- 2010 03:03:31 +0100
+	id S1759043Ab0LNCDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 13 Dec 2010 21:03:39 -0500
+Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 14 Dec
+ 2010 03:03:30 +0100
 Received: from localhost.localdomain (217.162.250.31) by CAS20.d.ethz.ch
  (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 14 Dec
  2010 03:03:33 +0100
@@ -35,1142 +35,161 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163616>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163617>
 
 From: Bo Yang <struggleyb.nku@gmail.com>
 
-The basic idea is:
-
-* Keep a list of "candidate snippets".  Start out empty.
-
-* Go through all candidates (determined by the level of detection
-  chosen) and diff them against the target file.
-
-  - For each common part in the diff, put it in the "candidate
-    snippets" if it's "worth it".  (Notably there is no point in
-    adding a snippet that is fully contained in another.)
-
-* Score the snippets.  Lines with alphanumeric characters count more.
-
-* Filter out snippets with low score.  Where there are overlaps,
-  favour higher scores.
+Always print the interesting ranges even if the current
+commit does not change any line of it.
 
 Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- line.c                          |  556 ++++++++++++++++++++++++++++++++++++++-
- t/t4303-log-line-move-detect.sh |  238 +++++++++++++++++
- t/t4304-log-line-copy-detect.sh |  220 +++++++++++++++
- 3 files changed, 1001 insertions(+), 13 deletions(-)
- create mode 100755 t/t4303-log-line-move-detect.sh
- create mode 100755 t/t4304-log-line-copy-detect.sh
+ Documentation/git-log.txt |    4 ++++
+ builtin/log.c             |    8 +++++++-
+ line.c                    |   22 ++++++++++++++++------
+ revision.c                |    2 ++
+ revision.h                |    3 ++-
+ 5 files changed, 31 insertions(+), 8 deletions(-)
 
+diff --git a/Documentation/git-log.txt b/Documentation/git-log.txt
+index 7fcf6e7..f5769bf 100644
+--- a/Documentation/git-log.txt
++++ b/Documentation/git-log.txt
+@@ -79,6 +79,10 @@ include::line-range-format.txt[]
+ You can specify this option more than once.
+ 
+ 
++--full-line-diff::
++	Always print the interesting range even if the current commit
++	does not change any line of the range.
++
+ [\--] <path>...::
+ 	Show only commits that affect any of the specified paths. To
+ 	prevent confusion with options and branch names, paths may need
+diff --git a/builtin/log.c b/builtin/log.c
+index 342d4de..fa57306 100644
+--- a/builtin/log.c
++++ b/builtin/log.c
+@@ -99,6 +99,7 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ {
+ 	int i;
+ 	int decoration_given = 0;
++	static int full_line_diff;
+ 	struct userformat_want w;
+ 	static struct line_opt_callback_data line_cb = {0};
+ 
+@@ -106,6 +107,9 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 		OPT_CALLBACK('L', NULL, &line_cb, "n,m:file",
+ 			     "Process line range n,m in file, counting from 1",
+ 			     log_line_range_callback),
++		OPT_BOOLEAN(0, "full-line-diff", &full_line_diff,
++			    "Always print the interesting range even if the \
++			    current commit does not change any line of it"),
+ 		OPT_END()
+ 	};
+ 
+@@ -188,8 +192,10 @@ static void cmd_log_init(int argc, const char **argv, const char *prefix,
+ 	}
+ 
+ 	/* Test whether line level history is asked for */
+-	if (rev->line_level_traverse)
++	if (rev->line_level_traverse) {
+ 		line_log_init(rev, line_cb.ranges);
++		rev->full_line_diff = full_line_diff;
++	}
+ 
+ 	setup_pager();
+ }
 diff --git a/line.c b/line.c
-index 3feca02..34788b2 100644
+index 0b297e4..3feca02 100644
 --- a/line.c
 +++ b/line.c
-@@ -17,6 +17,7 @@ struct print_range {
- 	int start, end;		/* Line range of post-image */
- 	int pstart, pend;	/* Line range of pre-image */
- 	int line_added : 1;	/* whether this range is added */
-+	int copied : 1;
- };
+@@ -1370,10 +1370,18 @@ static void diff_flush_filepair(struct rev_info *rev, struct diff_line_range *ra
+ 	/*
+ 	 * the ranges that touch no different file, in this case
+ 	 * the line number will not change, and of course we have
+-	 * no sensible rang->pair since there is no diff run.
++	 * no sensible range->pair since there is no diff run.
+ 	 */
+-	if (!one)
++	if (!one) {
++		if (rev->full_line_diff) {
++			chunk.two = two->data;
++			chunk.two_end = (const char *)two->data + two->size;
++			chunk.ltwo = 1;
++			chunk.range = range;
++			diff_flush_chunks(&rev->diffopt, &chunk);
++		}
+ 		return;
++	}
  
- struct print_pair {
-@@ -30,6 +31,7 @@ struct line_range {
- 	long pstart, pend;	/* The corresponding range of parent commit */
- 	struct print_pair pair;
- 			/* The changed lines inside this range */
-+	int copy_score;
- 	unsigned int diff:1;
- };
+ 	if (range->status == DIFF_STATUS_DELETED)
+ 		die("We are following an nonexistent file, interesting!");
+@@ -1495,7 +1503,8 @@ static void line_log_flush(struct rev_info *rev, struct commit *c)
+ 	struct strbuf *msgbuf;
  
-@@ -66,6 +68,7 @@ static inline void print_range_init(struct print_range *r)
- 	r->start = r->end = 0;
- 	r->pstart = r->pend = 0;
- 	r->line_added = 0;
-+	r->copied = 0;
- }
+ 	if (!range || !(c->object.flags & NONTRIVIAL_MERGE ||
+-			c->object.flags & NEED_PRINT))
++			c->object.flags & NEED_PRINT ||
++			rev->full_line_diff))
+ 		return;
  
- static inline void print_pair_init(struct print_pair *p)
-@@ -104,6 +107,7 @@ static inline void line_range_clear(struct line_range *r)
- 	r->start = r->end = 0;
- 	r->pstart = r->pend = 0;
- 	print_pair_clear(&r->pair);
-+	r->copy_score = 0;
- 	r->diff = 0;
- }
- 
-@@ -594,7 +598,7 @@ static void add_line_range(struct rev_info *revs, struct commit *commit,
- 	ret = lookup_decoration(&revs->line_range, &commit->object);
- 	if (ret && r)
- 		diff_line_range_merge(ret, r);
--	else
-+	else if (r != NULL)
- 		add_decoration(&revs->line_range, &commit->object, r);
- 
- 	if (r)
-@@ -620,6 +624,16 @@ static void clear_commit_line_range(struct rev_info *revs, struct commit *commit
- 	return ret;
- }
- 
-+struct diff_line_range *delete_line_range(struct rev_info *revs, struct commit *commit)
-+{
-+	struct diff_line_range *ret = NULL;
-+
-+	ret = lookup_decoration(&revs->line_range, &commit->object);
-+	add_decoration(&revs->line_range, &commit->object, NULL);
-+
-+	return ret;
-+}
-+
- void line_log_init(struct rev_info *rev, struct diff_line_range *r)
- {
- 	struct commit *commit = NULL;
-@@ -647,6 +661,515 @@ struct take_range_cb_data {
- 		 * commit and its parent */
- };
- 
-+struct map {
-+	long start, end;
-+	long pstart, pend;
-+	struct diff_filespec *spec;
-+	int score;
-+};
-+
-+struct mac_cb_data {
-+	long plno, tlno;
-+	int nr;
-+	int alloc;
-+	struct map *maps;
-+	struct diff_filespec *spec;
-+};
-+
-+struct mac_state {
-+	int nr;
-+	int alloc;
-+	struct map *maps;
-+};
-+
-+static void mac_state_init(struct mac_state *state)
-+{
-+	state->nr = state->alloc = 0;
-+	state->maps = NULL;
-+}
-+
-+static void mac_cb(void *data, long same, long p_next, long t_next)
-+{
-+	struct mac_cb_data *d = data;
-+	long p_start = d->plno + 1, t_start = d->tlno + 1;
-+	long p_end = p_start + same - t_start, t_end = same;
-+
-+	if (t_end >= t_start) {
-+		ALLOC_GROW(d->maps, (d->nr + 1), d->alloc);
-+		d->maps[d->nr].start = t_start;
-+		d->maps[d->nr].end = t_end;
-+		d->maps[d->nr].pstart = p_start;
-+		d->maps[d->nr].pend = p_end;
-+		d->maps[d->nr].spec = d->spec;
-+		d->nr++;
-+	}
-+
-+	d->plno = p_next;
-+	d->tlno = t_next;
-+}
-+
-+static void mac_state_insert(struct mac_state *state, long s_start, long s_end,
-+		long start, long end, struct diff_filespec *spec)
-+{
-+	int i = 0;
-+	struct map *maps;
-+
-+	for (; i < state->nr; i++) {
-+		if (state->maps[i].start > end)
-+			break;
-+	}
-+
-+	state->nr++;
-+	ALLOC_GROW(state->maps, state->nr, state->alloc);
-+	maps = state->maps;
-+	memmove(maps + i + 1, maps + i, (state->nr - i - 1) * sizeof(*maps));
-+	maps[i].start = s_start;
-+	maps[i].end = s_end;
-+	maps[i].pstart = start;
-+	maps[i].pend = end;
-+	maps[i].spec = spec;
-+	spec->count++;
-+}
-+
-+static void mac_state_remove(struct mac_state *state, long s_start, long s_end,
-+		long start, long end)
-+{
-+	int i = 0;
-+	struct map *maps = state->maps;
-+
-+	while (i < state->nr) {
-+		if (maps[i].start < start && maps[i].end > start) {
-+			maps[i].end = s_start - 1;
-+			maps[i].pend -= start - s_start;
-+		}
-+		if (maps[i].start < end && maps[i].end > end) {
-+			maps[i].start = s_end + 1;
-+			maps[i].pstart += end - s_end;
-+		}
-+		if (maps[i].start >=start && maps[i].end <= end) {
-+			memmove(maps + i, maps + i + 1, (state->nr - i - 1) * sizeof(*maps));
-+			state->nr--;
-+			i--;
-+		}
-+
-+		i++;
-+	}
-+}
-+
-+/*
-+ * Generally, the 'struct line_range's pstart/pend is used to store
-+ * the pre-image of current range. But here, we use it to store the
-+ * line range of the 'artificial' memory file.
-+ */
-+static struct mac_state *merge_mac(struct mac_cb_data *data,
-+		struct mac_state *state, long lines)
-+{
-+	struct map *maps = data->maps;
-+	int i = 0;
-+
-+	assert(state);
-+
-+	while (i < data->nr) {
-+		int j = 0;
-+		long start = maps[i].start;
-+		long end = maps[i].end;
-+		int should_insert = 0;
-+		long should_start = start;
-+		long should_end = end;
-+		long may_start = start, may_end = end;
-+		long start_range_len = 0, end_range_len = 0;
-+
-+		/* first round: finds whether this range should be inserted */
-+		if (!state->nr)
-+			should_insert = 1;
-+		while (state && j < state->nr) {
-+			if (state->maps[j].end <= start) {
-+				if (j+1 == state->nr)
-+					should_insert = 1;
-+				j++;
-+				continue;
-+			}
-+			if (state->maps[j].start > end)
-+				should_insert = 1;
-+			else {
-+				if (state->maps[j].start <= start) {
-+					if (state->maps[j].end >= end)
-+						should_insert = 0;
-+					else {
-+						should_insert = 1;
-+						may_start = state->maps[j].end + 1;
-+						start_range_len = state->maps[j].end -
-+							state->maps[j].start + 1;
-+					}
-+				} else {
-+					if (state->maps[j].end > end) {
-+						should_insert = 1;
-+						may_end = state->maps[j].start - 1;
-+						end_range_len = state->maps[j].end -
-+							state->maps[j].start + 1;
-+					} else
-+						should_insert = 1;
-+				}
-+			}
-+
-+			j++;
-+		}
-+
-+		/* second round: insert the new range and adjust the current one */
-+		if (should_insert) {
-+			/* We always keep the longest range in prior */
-+			if (start_range_len > end_range_len) {
-+				if (start_range_len > should_end - should_start + 1)
-+					should_start = may_start;
-+				if (end_range_len > should_end - should_start + 1)
-+					should_end = may_end;
-+			} else {
-+				if (end_range_len > should_end - should_start + 1)
-+					should_end = may_end;
-+				if (start_range_len > should_end - should_start + 1)
-+					should_start = may_start;
-+			}
-+
-+			mac_state_remove(state, should_start, should_end,
-+					maps[i].start, maps[i].end);
-+
-+			start = maps[i].pstart + should_start - maps[i].start;
-+			end = maps[i].pend - (maps[i].end - should_end);
-+			mac_state_insert(state, should_start, should_end, start, end, data->spec);
-+		}
-+
-+		i++;
-+	}
-+
-+	return state;
-+}
-+
-+static struct mac_state *find_mac_in_file(mmfile_t *file_p, mmfile_t *file_t,
-+		long lines, unsigned char *scores, struct diff_filespec *spec,
-+		struct mac_state *state)
-+{
-+	xpparam_t xpp;
-+	xdemitconf_t xecfg;
-+	struct mac_cb_data cb = {0, 0, 0, 0, NULL, spec};
-+
-+	memset(&xpp, 0, sizeof(xpp));
-+	memset(&xecfg, 0, sizeof(xecfg));
-+	xecfg.ctxlen = xecfg.interhunkctxlen = 0;
-+
-+	xdi_diff_hunks(file_p, file_t, mac_cb, &cb, &xpp, &xecfg);
-+
-+	if (cb.tlno < lines) {
-+		ALLOC_GROW(cb.maps, (cb.nr + 1), cb.alloc);
-+		cb.maps[cb.nr].start = cb.tlno + 1;
-+		cb.maps[cb.nr].end = lines;
-+		cb.maps[cb.nr].pstart = cb.plno + 1;
-+		cb.maps[cb.nr].pend = cb.plno + lines - cb.tlno;
-+		cb.maps[cb.nr].spec = spec;
-+		cb.nr++;
-+	}
-+
-+	if (cb.nr)
-+		state = merge_mac(&cb, state, lines);
-+	free(cb.maps);
-+
-+	return state;
-+}
-+
-+#define LINE_SCORE 6
-+#define TRIVIAL_SCORE 2
-+static void setup_mac_file(struct diff_filespec *spec, mmfile_t *lines,
-+		unsigned char *scores, long start, long end)
-+{
-+	int i = 0;
-+	int line = 1;
-+	int size = 0;
-+	char *data = spec->data;
-+
-+	memset(scores, TRIVIAL_SCORE, end - start + 1);
-+	while (i < spec->size) {
-+		int index = line - start;
-+		if (line < start) {
-+			if (data[i] == '\n')
-+				line++;
-+			i++;
-+			continue;
-+		}
-+		if (line > end)
-+			break;
-+		if (size == 0)
-+			lines->ptr = data + i;
-+		size++;
-+		if (scores[index] == TRIVIAL_SCORE && data[i] <= 'z' && data[i] >= 'a')
-+			scores[index] = LINE_SCORE;
-+		if (scores[index] == TRIVIAL_SCORE && data[i] <= 'Z' && data[i] >= 'A')
-+			scores[index] = LINE_SCORE;
-+		if (scores[index] == TRIVIAL_SCORE && data[i] <= '9' && data[i] >= '0')
-+			scores[index] = LINE_SCORE;
-+		if (data[i] == '\n')
-+			line++;
-+
-+		i++;
-+	}
-+
-+	lines->size = size;
-+}
-+
-+static void mac_state_cal_score(long lines, unsigned char *scores, struct mac_state *state)
-+{
-+	struct map *maps = state->maps;
-+	int i = 0;
-+
-+	while (i < state->nr) {
-+		int score = 0;
-+		int j = maps[i].start;
-+		while (j <= maps[i].end) {
-+			assert(j <= lines);
-+			score += scores[j - 1];
-+			j++;
-+		}
-+
-+		maps[i].score = score;
-+		i++;
-+	}
-+}
-+
-+#define MIN_GAP 3
-+#define RANGE_MIN_SCORE 20
-+static struct diff_line_range *mac_combine_remove(struct diff_line_range *range)
-+{
-+	struct diff_line_range *r = range, *prev = range, *ret = range;
-+
-+	// Firstly to combine adjacent-enough range
-+	while (r) {
-+		int i = 0;
-+		struct line_range *rs = r->ranges;
-+		for (; i < r->nr; i++) {
-+			if (i + 1 < r->nr &&
-+				(rs[i + 1].end - rs[i].start < MIN_GAP)) {
-+				rs[i].end = rs[i + 1].end;
-+				rs[i].copy_score += rs[i + 1].copy_score;
-+				memmove(rs + i + 1, rs + i + 2, (r->nr - i - 1) * sizeof(*rs));
-+				r->nr--;
-+				i--;
-+			}
-+		}
-+		r = r->next;
-+	}
-+
-+	// then delete the trivial ones
-+	r = range;
-+	while (r) {
-+		int i = 0;
-+		struct line_range *rs = r->ranges;
-+		for (; i < r->nr; i++) {
-+			if (rs[i].copy_score < RANGE_MIN_SCORE) {
-+				memmove(rs + i, rs + i + 1, (r->nr - i) * sizeof(*rs));
-+				r->nr--;
-+				i--;
-+			}
-+		}
-+		r = r->next;
-+	}
-+
-+	// then delete the empty diff_line_range
-+	r = range;
-+	while (r) {
-+		struct diff_line_range *next = r->next;
-+		if (!r->nr) {
-+			diff_line_range_clear(r);
-+			free(r);
-+			if (ret == r) {
-+				ret = next;
-+				prev = next;
-+			}
-+		} else if (prev != r) {
-+				prev->next = r;
-+				prev = r;
-+		}
-+
-+		r = next;
-+	}
-+
-+	return ret;
-+}
-+
-+static struct diff_line_range *mac_state_to_line_range(struct mac_state *state)
-+{
-+	struct diff_line_range *ret = NULL;
-+	struct diff_line_range *prev = NULL;
-+	struct map *maps = state->maps;
-+	int i = 0;
-+	struct line_range *rg = NULL;
-+
-+	while (i < state->nr) {
-+		struct diff_line_range *r = ret;
-+		while (r) {
-+			if (r->spec == maps[i].spec) {
-+				rg = diff_line_range_insert(r, NULL, maps[i].pstart,
-+						maps[i].pend);
-+				rg->copy_score += maps[i].score;
-+				break;
-+			}
-+			r = r->next;
-+		}
-+
-+		if (!r) {
-+			r = xmalloc(sizeof(*r));
-+			diff_line_range_init(r);
-+			r->spec = maps[i].spec;
-+			rg = diff_line_range_insert(r, NULL, maps[i].pstart, maps[i].pend);
-+			rg->copy_score += maps[i].score;
-+
-+			if (!ret) {
-+				ret = r;
-+				prev = r;
-+			} else {
-+				prev->next = r;
-+				prev = r;
-+			}
-+		}
-+
-+		i++;
-+	}
-+
-+	return mac_combine_remove(ret);
-+}
-+
-+struct mac_state *find_mac_in_one_file(struct commit *p,
-+		char *path, mmfile_t *file_t, long lines,
-+		unsigned char *scores)
-+{
-+	struct diff_filespec *spec = alloc_filespec(path);
-+	unsigned char sha1[20];
-+	unsigned mode;
-+	mmfile_t file_p;
-+	struct mac_state *ret = xmalloc(sizeof(*ret));
-+
-+	mac_state_init(ret);
-+	if (get_tree_entry(p->object.sha1, path, sha1, &mode))
-+		return NULL;
-+	fill_filespec(spec, sha1, mode);
-+	diff_populate_filespec(spec, 0);
-+	file_p.ptr = spec->data;
-+	file_p.size = spec->size;
-+
-+	ret = find_mac_in_file(&file_p, file_t, lines, scores, spec, ret);
-+	mac_state_cal_score(lines, scores, ret);
-+
-+	return ret;
-+}
-+
-+struct mac_state *find_mac_in_all_file(struct rev_info *rev, struct commit *c,
-+		struct commit *p, mmfile_t *file_t, long lines,
-+		unsigned char *scores)
-+{
-+	struct diff_options diff_opts;
-+	const char *paths[1];
-+	int j = 0;
-+	struct mac_state *state = xmalloc(sizeof(*state));
-+
-+	mac_state_init(state);
-+	/* ok, we can start to do the move/copy detect now */
-+	diff_setup(&diff_opts);
-+	DIFF_OPT_SET(&diff_opts, RECURSIVE);
-+	diff_opts.output_format = DIFF_FORMAT_NO_OUTPUT;
-+	paths[0] = NULL;
-+	diff_tree_setup_paths(paths, &diff_opts);
-+	if (diff_setup_done(&diff_opts) < 0)
-+		die("diff-setup in line.c");
-+	if (DIFF_OPT_TST(&rev->diffopt, FIND_COPIES_HARDER))
-+		DIFF_OPT_SET(&diff_opts, FIND_COPIES_HARDER);
-+
-+	diff_tree_sha1(p->tree->object.sha1, c->tree->object.sha1,
-+			"", &diff_opts);
-+	for (j = 0; j < diff_queued_diff.nr; j++) {
-+		struct diff_filepair *p = diff_queued_diff.queue[j];
-+		mmfile_t file_p;
-+
-+		if (!DIFF_FILE_VALID(p->one))
-+			continue;
-+		if (S_ISGITLINK(p->one->mode))
-+			continue;
-+		diff_populate_filespec(p->one, 0);
-+		file_p.ptr = p->one->data;
-+		file_p.size = p->one->size;
-+
-+		p->one->count++;
-+		state = find_mac_in_file(&file_p, file_t, lines, scores, p->one, state);
-+	}
-+
-+	diff_flush(&diff_opts);
-+	diff_tree_release_paths(&diff_opts);
-+
-+	mac_state_cal_score(lines, scores, state);
-+
-+	return state;
-+}
-+
-+static void find_mac_for_range(struct rev_info *rev,
-+		struct commit *c, struct commit *p,
-+		struct diff_line_range *r, struct print_range *pr)
-+{
-+	unsigned char *scores;
-+	struct mac_state *state;
-+	mmfile_t lines = {NULL, 0};
-+	struct diff_line_range *copied = NULL;
-+
-+	/* Do not search for source of ranges shorter than 3 lines */
-+	if (pr->line_added && (pr->end - pr->start) < 3)
-+		return;
-+
-+	scores = xmalloc(pr->end - pr->start + 1);
-+	setup_mac_file(r->spec, &lines, scores, pr->start, pr->end);
-+
-+	if (rev->diffopt.detect_rename == DIFF_DETECT_RENAME)
-+		state = find_mac_in_one_file(p, r->spec->path, &lines,
-+					     pr->end - pr->start + 1, scores);
-+	else
-+		state = find_mac_in_all_file(rev, c, p, &lines,
-+					     pr->end - pr->start + 1, scores);
-+
-+	copied = mac_state_to_line_range(state);
-+	if (copied) {
-+		add_line_range(rev, p, copied);
-+		pr->copied = 1;
-+	}
-+	free(scores);
-+}
-+
-+/*
-+ * Find the code move/copy, here we reuse the '-M/-C' options in diff options.
-+ * -M means that finds the code in the same file;
-+ * -C means that finds the code in all the files in parent commit.
-+ */
-+static void find_mac(struct rev_info *rev, struct commit *c)
-+{
-+	struct diff_line_range *r = lookup_line_range(rev, c);
-+	struct diff_line_range *prange = NULL;
-+	struct commit *p = NULL;
-+
-+	if (c->parents == NULL)
-+		return;
-+
-+	assert(c->parents->next == NULL);
-+	p = c->parents->item;
-+	parse_commit(p);
-+
-+	while (r) {
-+		int n;
-+		for (n = 0; n < r->nr; n++) {
-+			struct print_pair *pair = &r->ranges[n].pair;
-+			int i;
-+			for (i = 0; i < pair->nr; i++)
-+				find_mac_for_range(rev, c, p, r, &pair->ranges[i]);
-+		}
-+
-+		r = r->next;
-+	}
-+
-+	add_line_range(rev, p, prange);
-+}
-+
- #define SCALE_FACTOR 4
- /*
-  * [p_start, p_end] represents the pre-image of current diff hunk,
-@@ -942,7 +1465,7 @@ static int assign_range_to_parent(struct rev_info *rev, struct commit *commit,
- 	void *tree1 = NULL, *tree2 = NULL;
- 	struct tree_desc desc1, desc2;
- 	struct diff_queue_struct *queue;
--	struct take_range_cb_data cb_data = {NULL, cur_range, 0, 0};
-+	struct take_range_cb_data cb_data = {NULL, cur_range, 0, 0, 0};
- 	xpparam_t xpp;
- 	xdemitconf_t xecfg;
- 	int i, diff = 0;
-@@ -1083,15 +1606,6 @@ static int assign_range_to_parent(struct rev_info *rev, struct commit *commit,
- 		assert(parent);
- 		assert(final_range->spec);
- 		add_line_range(rev, parent, final_range);
--	} else {
--		/*
--		 * If there is no new ranges assigned to the parent,
--		 * we should mark it as a 'root' commit.
--		 */
--		if (commit->parents && !commit->parents->next) {
--			free(commit->parents);
--			commit->parents = NULL;
--		}
+ 	if (rev->graph)
+@@ -1516,7 +1525,7 @@ static void line_log_flush(struct rev_info *rev, struct commit *c)
+ 		flush_nontrivial_merge(rev, nontrivial);
+ 	else {
+ 		while (range) {
+-			if (range->diff)
++			if (range->diff || (range->nr && rev->full_line_diff))
+ 				diff_flush_filepair(rev, range);
+ 			range = range->next;
+ 		}
+@@ -1573,7 +1582,7 @@ int line_log_walk(struct rev_info *rev)
+ 	/* Clear the flags */
+ 	while (list) {
+ 		list->item->object.flags &= ~(RANGE_UPDATE | NONTRIVIAL_MERGE |
+-						NEED_PRINT | EVIL_MERGE);
++				NEED_PRINT | EVIL_MERGE);
+ 		list = list->next;
  	}
  
- 	/* and the ranges of current commit is updated */
-@@ -1120,6 +1634,18 @@ static void diff_update_parent_range(struct rev_info *rev,
- 	}
+@@ -1593,7 +1602,8 @@ int line_log_walk(struct rev_info *rev)
+ 		}
  
- 	assign_range_to_parent(rev, commit, c, r, &rev->diffopt, 1);
-+
-+	if (rev->diffopt.detect_rename > 0)
-+		find_mac(rev, commit);
-+
-+	/*
-+	 * If there is no new ranges assigned to the parent,
-+	 * we should mark it as a 'root' commit.
-+	 */
-+	if (c != NULL && lookup_line_range(rev, c) == NULL) {
-+		free(commit->parents);
-+		commit->parents = NULL;
-+	}
- }
+ 		if (commit->object.flags & NEED_PRINT ||
+-		    commit->object.flags & NONTRIVIAL_MERGE)
++		    commit->object.flags & NONTRIVIAL_MERGE ||
++		    rev->full_line_diff)
+ 			line_log_flush(rev, commit);
  
- struct commit_state {
-@@ -1306,8 +1832,12 @@ static void diff_flush_range(struct diff_options *opt, struct line_chunk *chunk,
- 		if (!pr->line_added)
- 			flush_lines(opt, &chunk->one, chunk->one_end,
- 				pr->pstart, pr->pend, &chunk->lone, old, '-');
--		flush_lines(opt, &chunk->two, chunk->two_end,
--			pr->start, pr->end, &chunk->ltwo, new, '+');
-+		if (pr->copied)
-+			flush_lines(opt, &chunk->two, chunk->two_end,
-+				pr->start, pr->end, &chunk->ltwo, new, ' ');
-+		else
-+			flush_lines(opt, &chunk->two, chunk->two_end,
-+				pr->start, pr->end, &chunk->ltwo, new, '+');
+ 		clear_commit_line_range(rev, commit);
+diff --git a/revision.c b/revision.c
+index fbebf2f..85a60d0 100644
+--- a/revision.c
++++ b/revision.c
+@@ -1912,6 +1912,8 @@ int prepare_revision_walk(struct rev_info *revs)
+ 			return -1;
+ 	if (revs->topo_order)
+ 		sort_in_topological_order(&revs->commits, revs->lifo);
++	if (revs->full_line_diff)
++		revs->dense = 0;
+ 	if (revs->simplify_merges)
+ 		simplify_merges(revs);
+ 	if (revs->children.name)
+diff --git a/revision.h b/revision.h
+index 6100904..29babf3 100644
+--- a/revision.h
++++ b/revision.h
+@@ -73,7 +73,8 @@ struct rev_info {
+ 			bisect:1,
+ 			ancestry_path:1,
+ 			first_parent_only:1,
+-			line_level_traverse:1;
++			line_level_traverse:1,
++			full_line_diff:1;
  
- 		cur = pr->end + 1;
- 	}
-diff --git a/t/t4303-log-line-move-detect.sh b/t/t4303-log-line-move-detect.sh
-new file mode 100755
-index 0000000..d0dda19
---- /dev/null
-+++ b/t/t4303-log-line-move-detect.sh
-@@ -0,0 +1,238 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2010 Bo Yang
-+#
-+
-+test_description='Test git log -L with code movement'
-+
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/diff-lib.sh
-+
-+cat >path0 <<\EOF
-+void func()
-+{
-+	int a = 0;
-+	int b = 1;
-+	int c;
-+	c = a + b;
-+}
-+
-+void output()
-+{
-+	printf("hello world");
-+}
-+EOF
-+
-+test_expect_success 'add path0 and commit.' '
-+	git add path0 &&
-+	git commit -m "Base commit"
-+'
-+
-+cat >path0 <<\EOF
-+void func()
-+{
-+	int a = 0;
-+	int b = 1;
-+	int c;
-+	c = a + b;
-+}
-+
-+void output()
-+{
-+	int d = 3;
-+	int e = 5;
-+	printf("hello world");
-+	printf("bye!");
-+}
-+EOF
-+
-+test_expect_success 'Change the some lines of path0.' '
-+	git add path0 &&
-+	git commit -m "Change some lines of path0"
-+'
-+
-+cat >path0 <<\EOF
-+void func()
-+{
-+	int a = 0;
-+	int b = 1;
-+	int c;
-+	c = a + b;
-+}
-+
-+void output()
-+{
-+	int d = 3;
-+	int e = 5;
-+	printf("hello world");
-+	printf("bye!");
-+}
-+
-+void comb()
-+{
-+	int a = 0;
-+	int b = 1;
-+	int c;
-+	c = a + b;
-+	int d = 3;
-+	int e = 5;
-+	printf("hello world");
-+	printf("bye!");
-+}
-+EOF
-+
-+test_expect_success 'Move two functions into one' '
-+	git add path0 &&
-+	git commit -m "Move two functions into one"
-+'
-+
-+cat >path0 <<\EOF
-+void comb()
-+{
-+	int a = 0;
-+	int b = 1;
-+	int c;
-+	c = a + b;
-+	printf("hello world");
-+	printf("bye!");
-+}
-+EOF
-+
-+test_expect_success 'Final change of path0.' '
-+	git add path0 &&
-+	git commit -m "Final change of path0"
-+'
-+
-+cat >expected-no-M <<\EOF
-+* Final change of path0
-+| 
-+| diff --git a/path0 b/path0
-+| index 495f978..b744a93 100644
-+| --- a/path0
-+| +++ b/path0
-+| @@ -17,11 +1,9 @@
-+|  void comb()
-+|  {
-+|  	int a = 0;
-+|  	int b = 1;
-+|  	int c;
-+|  	c = a + b;
-+| -	int d = 3;
-+| -	int e = 5;
-+|  	printf("hello world");
-+|  	printf("bye!");
-+|  }
-+|  
-+* Move two functions into one
-+  
-+  diff --git a/path0 b/path0
-+  index cd42622..495f978 100644
-+  --- a/path0
-+  +++ b/path0
-+  @@ -0,0 +17,11 @@
-+  +void comb()
-+  +{
-+  +	int a = 0;
-+  +	int b = 1;
-+  +	int c;
-+  +	c = a + b;
-+  +	int d = 3;
-+  +	int e = 5;
-+  +	printf("hello world");
-+  +	printf("bye!");
-+  +}
-+EOF
-+
-+cat >expected-M <<\EOF
-+* Final change of path0
-+| 
-+| diff --git a/path0 b/path0
-+| index 495f978..b744a93 100644
-+| --- a/path0
-+| +++ b/path0
-+| @@ -17,11 +1,9 @@
-+|  void comb()
-+|  {
-+|  	int a = 0;
-+|  	int b = 1;
-+|  	int c;
-+|  	c = a + b;
-+| -	int d = 3;
-+| -	int e = 5;
-+|  	printf("hello world");
-+|  	printf("bye!");
-+|  }
-+|  
-+* Move two functions into one
-+| 
-+| diff --git a/path0 b/path0
-+| index cd42622..495f978 100644
-+| --- a/path0
-+| +++ b/path0
-+| @@ -0,0 +17,11 @@
-+|  void comb()
-+|  {
-+|  	int a = 0;
-+|  	int b = 1;
-+|  	int c;
-+|  	c = a + b;
-+|  	int d = 3;
-+|  	int e = 5;
-+|  	printf("hello world");
-+|  	printf("bye!");
-+|  }
-+|  
-+* Change some lines of path0
-+| 
-+| diff --git a/path0 b/path0
-+| index f5e09df..cd42622 100644
-+| --- a/path0
-+| +++ b/path0
-+| @@ -2,5 +2,5 @@
-+|  {
-+|  	int a = 0;
-+|  	int b = 1;
-+|  	int c;
-+|  	c = a + b;
-+| @@ -11,2 +11,5 @@
-+| +	int d = 3;
-+| +	int e = 5;
-+|  	printf("hello world");
-+| +	printf("bye!");
-+|  }
-+|  
-+* Base commit
-+  
-+  diff --git a/path0 b/path0
-+  new file mode 100644
-+  index 0000000..f5e09df
-+  --- /dev/null
-+  +++ b/path0
-+  @@ -0,0 +2,5 @@
-+  +{
-+  +	int a = 0;
-+  +	int b = 1;
-+  +	int c;
-+  +	c = a + b;
-+  @@ -0,0 +11,2 @@
-+  +	printf("hello world");
-+  +}
-+EOF
-+
-+test_expect_success 'Show the line level log of path0' '
-+	git log --pretty=format:%s%n%b --graph -L /comb/,/^}/:path0 > current-no-M
-+'
-+
-+test_expect_success 'validate the path0 output.' '
-+	test_cmp current-no-M expected-no-M
-+'
-+
-+test_expect_success 'Show the line level log of path0 with -M' '
-+	git log --pretty=format:%s%n%b --graph -M -L /comb/,/^}/:path0 > current-M
-+'
-+
-+test_expect_success 'validate the path1 output.' '
-+	test_cmp current-M expected-M
-+'
-+
-+test_done
-diff --git a/t/t4304-log-line-copy-detect.sh b/t/t4304-log-line-copy-detect.sh
-new file mode 100755
-index 0000000..a4a5177
---- /dev/null
-+++ b/t/t4304-log-line-copy-detect.sh
-@@ -0,0 +1,220 @@
-+#!/bin/sh
-+#
-+# Copyright (c) 2010 Bo Yang
-+#
-+
-+test_description='Test git log -L with -C'
-+
-+. ./test-lib.sh
-+. "$TEST_DIRECTORY"/diff-lib.sh
-+
-+cat >path0 <<\EOF
-+void func()
-+{
-+	int a = 0;
-+	int b = 1;
-+	int c;
-+	c = a + b;
-+}
-+EOF
-+
-+cat >path1 <<\EOF
-+void output()
-+{
-+	printf("hello world");
-+}
-+EOF
-+
-+test_expect_success 'add path0/path1 and commit.' '
-+	git add path0 path1 &&
-+	git commit -m "Base commit"
-+'
-+
-+cat >path1 <<\EOF
-+void output()
-+{
-+	int d = 3;
-+	int e = 5;
-+	printf("hello world");
-+	printf("bye!");
-+}
-+EOF
-+
-+test_expect_success 'Change the some lines of path1.' '
-+	git add path1 &&
-+	git commit -m "Change some lines of path1"
-+'
-+
-+cat >path2 <<\EOF
-+void comb()
-+{
-+	int a = 0;
-+	int b = 1;
-+	int c;
-+	c = a + b;
-+	int d = 3;
-+	int e = 5;
-+	printf("hello world");
-+	printf("bye!");
-+}
-+EOF
-+
-+test_expect_success 'Move two functions into one in path2' '
-+	git add path2 &&
-+	git rm path0 path1 &&
-+	git commit -m "Move two functions into path2"
-+'
-+
-+cat >path2 <<\EOF
-+void comb()
-+{
-+	int a = 0;
-+	int b = 1;
-+	int c;
-+	c = a + b;
-+	printf("hello world");
-+	printf("bye!");
-+}
-+EOF
-+
-+test_expect_success 'Final change of path2.' '
-+	git add path2 &&
-+	git commit -m "Final change of path2"
-+'
-+
-+sed 's/#$//' >expected-no-C <<\EOF
-+* Final change of path2
-+| 
-+| diff --git a/path2 b/path2
-+| index ca6a800..b744a93 100644
-+| --- a/path2
-+| +++ b/path2
-+| @@ -1,11 +1,9 @@
-+|  void comb()
-+|  {
-+|  	int a = 0;
-+|  	int b = 1;
-+|  	int c;
-+|  	c = a + b;
-+| -	int d = 3;
-+| -	int e = 5;
-+|  	printf("hello world");
-+|  	printf("bye!");
-+|  }
-+|  #
-+* Move two functions into path2
-+  #
-+  diff --git a/path2 b/path2
-+  new file mode 100644
-+  index 0000000..ca6a800
-+  --- /dev/null
-+  +++ b/path2
-+  @@ -0,0 +1,11 @@
-+  +void comb()
-+  +{
-+  +	int a = 0;
-+  +	int b = 1;
-+  +	int c;
-+  +	c = a + b;
-+  +	int d = 3;
-+  +	int e = 5;
-+  +	printf("hello world");
-+  +	printf("bye!");
-+  +}
-+EOF
-+
-+sed 's/#$//' >expected-C <<\EOF
-+* Final change of path2
-+| #
-+| diff --git a/path2 b/path2
-+| index ca6a800..b744a93 100644
-+| --- a/path2
-+| +++ b/path2
-+| @@ -1,11 +1,9 @@
-+|  void comb()
-+|  {
-+|  	int a = 0;
-+|  	int b = 1;
-+|  	int c;
-+|  	c = a + b;
-+| -	int d = 3;
-+| -	int e = 5;
-+|  	printf("hello world");
-+|  	printf("bye!");
-+|  }
-+|  #
-+* Move two functions into path2
-+| #
-+| diff --git a/path2 b/path2
-+| new file mode 100644
-+| index 0000000..ca6a800
-+| --- /dev/null
-+| +++ b/path2
-+| @@ -0,0 +1,11 @@
-+|  void comb()
-+|  {
-+|  	int a = 0;
-+|  	int b = 1;
-+|  	int c;
-+|  	c = a + b;
-+|  	int d = 3;
-+|  	int e = 5;
-+|  	printf("hello world");
-+|  	printf("bye!");
-+|  }
-+|  #
-+* Change some lines of path1
-+| #
-+| diff --git a/path1 b/path1
-+| index 52be2a5..bf3a80f 100644
-+| --- a/path1
-+| +++ b/path1
-+| @@ -2,3 +2,6 @@
-+|  {
-+| +	int d = 3;
-+| +	int e = 5;
-+|  	printf("hello world");
-+| +	printf("bye!");
-+|  }
-+|  #
-+* Base commit
-+  #
-+  diff --git a/path1 b/path1
-+  new file mode 100644
-+  index 0000000..52be2a5
-+  --- /dev/null
-+  +++ b/path1
-+  @@ -0,0 +2,3 @@
-+  +{
-+  +	printf("hello world");
-+  +}
-+  diff --git a/path0 b/path0
-+  new file mode 100644
-+  index 0000000..fb33939
-+  --- /dev/null
-+  +++ b/path0
-+  @@ -0,0 +2,5 @@
-+  +{
-+  +	int a = 0;
-+  +	int b = 1;
-+  +	int c;
-+  +	c = a + b;
-+EOF
-+
-+test_expect_success 'Show the line level log of path2' '
-+	git log --pretty=format:%s%n%b --graph -L /comb/,/^}/:path2 > current-no-C
-+'
-+
-+test_expect_success 'validate the path2 output.' '
-+	test_cmp current-no-C expected-no-C
-+'
-+
-+test_expect_success 'Show the line level log of path2 with -C' '
-+	git log --pretty=format:%s%n%b --graph -C -L /comb/,/^}/:path2 > current-C
-+'
-+
-+test_expect_success 'validate the path2 output.' '
-+	test_cmp current-C expected-C
-+'
-+
-+test_done
+ 	/* Diff flags */
+ 	unsigned int	diff:1,
 -- 
 1.7.3.3.811.g76615
