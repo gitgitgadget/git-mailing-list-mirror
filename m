@@ -1,7 +1,7 @@
 From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH v6.1 2/8] Export three functions from diff.c
-Date: Tue, 14 Dec 2010 23:54:09 +0100
-Message-ID: <26d2cee09e764a97adabb33c16f9a56da901a61d.1292366984.git.trast@student.ethz.ch>
+Subject: [PATCH v6.1 1/8] Refactor parse_loc
+Date: Tue, 14 Dec 2010 23:54:08 +0100
+Message-ID: <d02cc233962cf4f1430025d2f61bd11602a64427.1292366984.git.trast@student.ethz.ch>
 References: <cover.1292366984.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain
@@ -14,17 +14,17 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSdlu-0003SV-5e
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 23:55:02 +0100
+	id 1PSdls-0003SV-65
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 23:55:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932445Ab0LNWyh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Dec 2010 17:54:37 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:10668 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755127Ab0LNWyS (ORCPT <rfc822;git@vger.kernel.org>);
+	id S1755410Ab0LNWyS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Tue, 14 Dec 2010 17:54:18 -0500
-Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 14 Dec
+Received: from edge10.ethz.ch ([82.130.75.186]:8640 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751369Ab0LNWyR (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Dec 2010 17:54:17 -0500
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 14 Dec
  2010 23:54:10 +0100
 Received: from localhost.localdomain (84.74.105.24) by cas10.d.ethz.ch
  (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 14 Dec
@@ -36,84 +36,355 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163711>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163712>
 
 From: Bo Yang <struggleyb.nku@gmail.com>
 
-Use fill_metainfo to fill the line level diff meta data,
-emit_line to print out a line and quote_two to quote
-paths.
+We want to use the same style of -L n,m argument for 'git log -L' as
+for git-blame.  Refactor the argument parsing of the range arguments
+from builtin/blame.c to the (new) file that will hold the 'git log -L'
+logic.
+
+To accommodate different data structures in blame and log -L, the file
+contents are abstracted away; parse_range_arg takes a callback that it
+uses to get the contents of a line of the (notional) file.
+
+The new test is for a case that made me pause during debugging: the
+'blame -L with invalid end' test was the only one that noticed an
+outright failure to parse the end *at all*.  So make a more explicit
+test for that.
 
 Signed-off-by: Bo Yang <struggleyb.nku@gmail.com>
 Signed-off-by: Thomas Rast <trast@student.ethz.ch>
 ---
- diff.c |    6 +++---
- diff.h |   17 +++++++++++++++++
- 2 files changed, 20 insertions(+), 3 deletions(-)
+ Makefile                      |    2 +
+ builtin/blame.c               |   99 +++-----------------------------------
+ line.c                        |  106 +++++++++++++++++++++++++++++++++++++++++
+ line.h                        |   23 +++++++++
+ t/t8003-blame-corner-cases.sh |    6 ++
+ 5 files changed, 145 insertions(+), 91 deletions(-)
+ create mode 100644 line.c
+ create mode 100644 line.h
 
-diff --git a/diff.c b/diff.c
-index 0a43869..a16ce69 100644
---- a/diff.c
-+++ b/diff.c
-@@ -151,7 +151,7 @@ int git_diff_basic_config(const char *var, const char *value, void *cb)
- 	return git_color_default_config(var, value, cb);
+diff --git a/Makefile b/Makefile
+index 57d9c65..b015c61 100644
+--- a/Makefile
++++ b/Makefile
+@@ -519,6 +519,7 @@ LIB_H += grep.h
+ LIB_H += hash.h
+ LIB_H += help.h
+ LIB_H += levenshtein.h
++LIB_H += line.h
+ LIB_H += list-objects.h
+ LIB_H += ll-merge.h
+ LIB_H += log-tree.h
+@@ -606,6 +607,7 @@ LIB_OBJS += help.o
+ LIB_OBJS += hex.o
+ LIB_OBJS += ident.o
+ LIB_OBJS += levenshtein.o
++LIB_OBJS += line.o
+ LIB_OBJS += list-objects.o
+ LIB_OBJS += ll-merge.o
+ LIB_OBJS += lockfile.o
+diff --git a/builtin/blame.c b/builtin/blame.c
+index aa30ec5..5eeddcb 100644
+--- a/builtin/blame.c
++++ b/builtin/blame.c
+@@ -21,6 +21,7 @@
+ #include "parse-options.h"
+ #include "utf8.h"
+ #include "userdiff.h"
++#include "line.h"
+ 
+ static char blame_usage[] = "git blame [options] [rev-opts] [rev] [--] file";
+ 
+@@ -551,11 +552,16 @@ static void dup_entry(struct blame_entry *dst, struct blame_entry *src)
+ 	dst->score = 0;
  }
  
--static char *quote_two(const char *one, const char *two)
-+char *quote_two(const char *one, const char *two)
+-static const char *nth_line(struct scoreboard *sb, int lno)
++static const char *nth_line(struct scoreboard *sb, long lno)
  {
- 	int need_one = quote_c_style(one, NULL, NULL, 1);
- 	int need_two = quote_c_style(two, NULL, NULL, 1);
-@@ -332,7 +332,7 @@ static void emit_line_0(struct diff_options *o, const char *set, const char *res
- 		fputc('\n', file);
+ 	return sb->final_buf + sb->lineno[lno];
  }
  
--static void emit_line(struct diff_options *o, const char *set, const char *reset,
-+void emit_line(struct diff_options *o, const char *set, const char *reset,
- 		      const char *line, int len)
++static const char *nth_line_cb(void *data, long lno)
++{
++	return nth_line((struct scoreboard *)data, lno);
++}
++
+ /*
+  * It is known that lines between tlno to same came from parent, and e
+  * has an overlap with that range.  it also is known that parent's
+@@ -1925,83 +1931,6 @@ static unsigned parse_score(const char *arg)
+ }
+ 
+ /*
+- * Parsing of (comma separated) one item in the -L option
+- */
+-static const char *parse_loc(const char *spec,
+-			     struct scoreboard *sb, long lno,
+-			     long begin, long *ret)
+-{
+-	char *term;
+-	const char *line;
+-	long num;
+-	int reg_error;
+-	regex_t regexp;
+-	regmatch_t match[1];
+-
+-	/* Allow "-L <something>,+20" to mean starting at <something>
+-	 * for 20 lines, or "-L <something>,-5" for 5 lines ending at
+-	 * <something>.
+-	 */
+-	if (1 < begin && (spec[0] == '+' || spec[0] == '-')) {
+-		num = strtol(spec + 1, &term, 10);
+-		if (term != spec + 1) {
+-			if (spec[0] == '-')
+-				num = 0 - num;
+-			if (0 < num)
+-				*ret = begin + num - 2;
+-			else if (!num)
+-				*ret = begin;
+-			else
+-				*ret = begin + num;
+-			return term;
+-		}
+-		return spec;
+-	}
+-	num = strtol(spec, &term, 10);
+-	if (term != spec) {
+-		*ret = num;
+-		return term;
+-	}
+-	if (spec[0] != '/')
+-		return spec;
+-
+-	/* it could be a regexp of form /.../ */
+-	for (term = (char *) spec + 1; *term && *term != '/'; term++) {
+-		if (*term == '\\')
+-			term++;
+-	}
+-	if (*term != '/')
+-		return spec;
+-
+-	/* try [spec+1 .. term-1] as regexp */
+-	*term = 0;
+-	begin--; /* input is in human terms */
+-	line = nth_line(sb, begin);
+-
+-	if (!(reg_error = regcomp(&regexp, spec + 1, REG_NEWLINE)) &&
+-	    !(reg_error = regexec(&regexp, line, 1, match, 0))) {
+-		const char *cp = line + match[0].rm_so;
+-		const char *nline;
+-
+-		while (begin++ < lno) {
+-			nline = nth_line(sb, begin);
+-			if (line <= cp && cp < nline)
+-				break;
+-			line = nline;
+-		}
+-		*ret = begin;
+-		regfree(&regexp);
+-		*term++ = '/';
+-		return term;
+-	}
+-	else {
+-		char errbuf[1024];
+-		regerror(reg_error, &regexp, errbuf, 1024);
+-		die("-L parameter '%s': %s", spec + 1, errbuf);
+-	}
+-}
+-
+-/*
+  * Parsing of -L option
+  */
+ static void prepare_blame_range(struct scoreboard *sb,
+@@ -2009,15 +1938,7 @@ static void prepare_blame_range(struct scoreboard *sb,
+ 				long lno,
+ 				long *bottom, long *top)
  {
- 	emit_line_0(o, set, reset, line[0], line+1, len-1);
-@@ -2583,7 +2583,7 @@ static int similarity_index(struct diff_filepair *p)
- 	return p->score * 100 / MAX_SCORE;
+-	const char *term;
+-
+-	term = parse_loc(bottomtop, sb, lno, 1, bottom);
+-	if (*term == ',') {
+-		term = parse_loc(term + 1, sb, lno, *bottom + 1, top);
+-		if (*term)
+-			usage(blame_usage);
+-	}
+-	if (*term)
++	if (parse_range_arg(bottomtop, nth_line_cb, sb, lno, bottom, top))
+ 		usage(blame_usage);
  }
  
--static void fill_metainfo(struct strbuf *msg,
-+void fill_metainfo(struct strbuf *msg,
- 			  const char *name,
- 			  const char *other,
- 			  struct diff_filespec *one,
-diff --git a/diff.h b/diff.h
-index 0083d92..165f368 100644
---- a/diff.h
-+++ b/diff.h
-@@ -12,6 +12,7 @@ struct diff_queue_struct;
- struct strbuf;
- struct diff_filespec;
- struct userdiff_driver;
-+struct diff_filepair;
- 
- typedef void (*change_fn_t)(struct diff_options *options,
- 		 unsigned old_mode, unsigned new_mode,
-@@ -317,4 +318,20 @@ extern struct userdiff_driver *get_textconv(struct diff_filespec *one);
- 
- extern int parse_rename_score(const char **cp_p);
- 
-+/* some output functions line.c need */
-+extern void fill_metainfo(struct strbuf *msg,
-+			  const char *name,
-+			  const char *other,
-+			  struct diff_filespec *one,
-+			  struct diff_filespec *two,
-+			  struct diff_options *o,
-+			  struct diff_filepair *p,
-+			  int *must_show_header,
-+			  int use_color);
+@@ -2504,10 +2425,6 @@ int cmd_blame(int argc, const char **argv, const char *prefix)
+ 	bottom = top = 0;
+ 	if (bottomtop)
+ 		prepare_blame_range(&sb, bottomtop, lno, &bottom, &top);
+-	if (bottom && top && top < bottom) {
+-		long tmp;
+-		tmp = top; top = bottom; bottom = tmp;
+-	}
+ 	if (bottom < 1)
+ 		bottom = 1;
+ 	if (top < 1)
+diff --git a/line.c b/line.c
+new file mode 100644
+index 0000000..778cd7b
+--- /dev/null
++++ b/line.c
+@@ -0,0 +1,106 @@
++#include "git-compat-util.h"
++#include "line.h"
 +
-+extern void emit_line(struct diff_options *o, const char *set, const char *reset,
-+		      const char *line, int len);
++/*
++ * Parse one item in the -L option
++ */
++const char *parse_loc(const char *spec, nth_line_fn_t nth_line,
++		void *data, long lines, long begin, long *ret)
++{
++	char *term;
++	const char *line;
++	long num;
++	int reg_error;
++	regex_t regexp;
++	regmatch_t match[1];
 +
-+extern char *quote_two(const char *one, const char *two);
++	/* Catch the '$' matcher, now it is used to match the last
++	 * line of the file. */
++	if (spec[0] == '$') {
++		*ret = lines;
++		return spec + 1;
++	}
 +
- #endif /* DIFF_H */
++	/* Allow "-L <something>,+20" to mean starting at <something>
++	 * for 20 lines, or "-L <something>,-5" for 5 lines ending at
++	 * <something>.
++	 */
++	if (begin != -1 && (spec[0] == '+' || spec[0] == '-')) {
++		num = strtol(spec + 1, &term, 10);
++		if (term != spec + 1) {
++			if (spec[0] == '-')
++				num = 0 - num;
++			if (0 < num)
++				*ret = begin + num - 2;
++			else if (!num)
++				*ret = begin;
++			else
++				*ret = begin + num;
++			return term;
++		}
++		return spec;
++	}
++	num = strtol(spec, &term, 10);
++	if (term != spec) {
++		*ret = num;
++		return term;
++	}
++	if (spec[0] != '/')
++		return spec;
++
++	/* it could be a regexp of form /.../ */
++	for (term = (char *) spec + 1; *term && *term != '/'; term++) {
++		if (*term == '\\')
++			term++;
++	}
++	if (*term != '/')
++		return spec;
++
++	/* try [spec+1 .. term-1] as regexp */
++	*term = 0;
++	if (begin == -1)
++		begin = 1;
++	begin--; /* input is in human terms */
++	line = nth_line(data, begin);
++
++	if (!(reg_error = regcomp(&regexp, spec + 1, REG_NEWLINE)) &&
++	    !(reg_error = regexec(&regexp, line, 1, match, 0))) {
++		const char *cp = line + match[0].rm_so;
++		const char *nline;
++
++		while (begin++ < lines) {
++			nline = nth_line(data, begin);
++			if (line <= cp && cp < nline)
++				break;
++			line = nline;
++		}
++		*ret = begin;
++		regfree(&regexp);
++		*term++ = '/';
++		return term;
++	} else {
++		char errbuf[1024];
++		regerror(reg_error, &regexp, errbuf, 1024);
++		die("-L parameter '%s': %s", spec + 1, errbuf);
++	}
++}
++
++int parse_range_arg(const char *arg, nth_line_fn_t nth_line_cb,
++		void *cb_data, long lines, long *begin, long *end)
++{
++	arg = parse_loc(arg, nth_line_cb, cb_data, lines, -1, begin);
++
++	if (*arg == ',') {
++		arg = parse_loc(arg+1, nth_line_cb, cb_data, lines, *begin+1, end);
++		if (*begin > *end) {
++			long tmp = *begin;
++			*begin = *end;
++			*end = tmp;
++		}
++	}
++
++	if (*arg)
++		return -1;
++
++	return 0;
++}
+diff --git a/line.h b/line.h
+new file mode 100644
+index 0000000..5878c94
+--- /dev/null
++++ b/line.h
+@@ -0,0 +1,23 @@
++#ifndef LINE_H
++#define LINE_H
++
++/*
++ * Parse one item in an -L begin,end option w.r.t. the notional file
++ * object 'cb_data' consisting of 'lines' lines.
++ *
++ * The 'nth_line_cb' callback is used to determine the start of the
++ * line 'lno' inside the 'cb_data'.  The caller is expected to already
++ * have a suitable map at hand to make this a constant-time lookup.
++ *
++ * Returns 0 in case of success and -1 if there was an error.  The
++ * caller should print a usage message in the latter case.
++ */
++
++typedef const char *(*nth_line_fn_t)(void *data, long lno);
++
++extern int parse_range_arg(const char *arg,
++			   nth_line_fn_t nth_line_cb,
++			   void *cb_data, long lines,
++			   long *begin, long *end);
++
++#endif /* LINE_H */
+diff --git a/t/t8003-blame-corner-cases.sh b/t/t8003-blame-corner-cases.sh
+index 230143c..51d313e 100755
+--- a/t/t8003-blame-corner-cases.sh
++++ b/t/t8003-blame-corner-cases.sh
+@@ -175,6 +175,12 @@ test_expect_success 'blame -L with invalid end' '
+ 	grep "has only 2 lines" errors
+ '
+ 
++test_expect_success 'blame -L parses end' '
++	git blame -L1,1 tres >out &&
++	cat out &&
++	test $(wc -l < out) -eq 1
++'
++
+ test_expect_success 'indent of line numbers, nine lines' '
+ 	git blame nine_lines >actual &&
+ 	test $(grep -c "  " actual) = 0
 -- 
 1.7.3.3.807.g6ee1f
