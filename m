@@ -1,172 +1,163 @@
-From: Sylvestre Ledru <sylvestre.ledru@scilab.org>
-Subject: Re: Corruption in the repository
-Date: Tue, 14 Dec 2010 15:37:36 +0100
-Message-ID: <1292337456.25237.29023.camel@korcula.inria.fr>
-References: <1292255990.25237.27642.camel@korcula.inria.fr>
-	 <AANLkTimD6+CHofhbKvBPjHpcNUNusHOCHSQe+-J1ZA4F@mail.gmail.com>
-	 <1292258845.25237.27680.camel@korcula.inria.fr>
-	 <AANLkTimgLhQMUGmC=W5wpcAvb07faw4HOzPgWXpFA4u1@mail.gmail.com>
-	 <1292263868.25237.27772.camel@korcula.inria.fr>
-	 <AANLkTikP3CTNX_S=fAWTBVbt0OwQMLr+mq8f72OFd0j6@mail.gmail.com>
-	 <1292320068.25237.28773.camel@korcula.inria.fr>
-	 <AANLkTinoD2qn7ZqMtGbSjJgkVUNE--fOsrSKzqTLCLpP@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 11/19] tree_entry_interesting: support depth limit
+Date: Tue, 14 Dec 2010 21:44:48 +0700
+Message-ID: <AANLkTikkU1h3vYDGpf4h8-9-sSWeYqtnZh1ZfB3NU3Db@mail.gmail.com>
+References: <1292233616-27692-1-git-send-email-pclouds@gmail.com>
+ <1292233616-27692-12-git-send-email-pclouds@gmail.com> <7vwrnd1r2s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org, Simon Gareste <simon.gareste@scilab.org>,
-	Bruno JOFRET <bruno.jofret@scilab.org>
-X-From: git-owner@vger.kernel.org Tue Dec 14 15:37:47 2010
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 14 15:45:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSW0f-00020b-QV
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 15:37:46 +0100
+	id 1PSW85-0005lY-BS
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 15:45:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755867Ab0LNOhj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Dec 2010 09:37:39 -0500
-Received: from santostefano.inria.fr ([193.51.192.151]:60305 "HELO
-	santostefano.inria.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1755711Ab0LNOhi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Dec 2010 09:37:38 -0500
-Received: (qmail 26020 invoked by uid 1001); 14 Dec 2010 15:37:37 +0100
-Received: from korcula.inria.fr by santostefano (envelope-from <sylvestre.ledru@scilab.org>, uid 92) with qmail-scanner-2.02st 
- (clamdscan: 0.90.1/7197. spamassassin: 3.1.7-deb. perlscan: 2.02st.  
- Clear:RC:1(193.51.192.130):. 
- Processed in 0.024069 secs); 14 Dec 2010 14:37:37 -0000
-Received: from korcula.inria.fr (HELO ?193.51.192.130?) (193.51.192.130)
-  by santostefano.inria.fr with SMTP; 14 Dec 2010 15:37:37 +0100
-In-Reply-To: <AANLkTinoD2qn7ZqMtGbSjJgkVUNE--fOsrSKzqTLCLpP@mail.gmail.com>
-X-Mailer: Evolution 2.30.3 
+	id S1756832Ab0LNOpU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Dec 2010 09:45:20 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:54471 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756678Ab0LNOpT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Dec 2010 09:45:19 -0500
+Received: by wyb28 with SMTP id 28so534212wyb.19
+        for <git@vger.kernel.org>; Tue, 14 Dec 2010 06:45:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=236Ek4nX52xZBYVmxWCTG1EMPjXaQs361QrbPH07Mv4=;
+        b=TvNx85696MG4U0Z+CxszmjGPO/wMkcz5N2Xul3rQjr73z45za+REJMTSE0+7bWEnkm
+         D5XhyBXQdOQXq19g013vc5RmaS/BRjDQ1olSGA2KCqn9wMhEdZeJEkh9gEsAQpr4gdN0
+         SG5sthGTuW3ncwaa5oMG2hV/rdldT3FAqnphI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=BwnAp2Fjk0HubyBo1GlUm2FIhK2ExGRGwK19ygumDIXeLjzvn23TN2J8fG3TdqH1Kj
+         QkdSJuR17rOaoDL3Wfrg04aAWENlXPeSuEvKpLcUFc1C9RZ/7G5Y5Xwm49ti90CDaXKb
+         +ySymujQcuUwPxwOcDHvBTO4bSWFebgW2BI6Y=
+Received: by 10.216.30.144 with SMTP id k16mr4869025wea.19.1292337918140; Tue,
+ 14 Dec 2010 06:45:18 -0800 (PST)
+Received: by 10.216.158.83 with HTTP; Tue, 14 Dec 2010 06:44:48 -0800 (PST)
+In-Reply-To: <7vwrnd1r2s.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163650>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163651>
 
-Le mardi 14 d=C3=A9cembre 2010 =C3=A0 12:59 +0100, Christian Couder a =C3=
-=A9crit :
-> On Tue, Dec 14, 2010 at 10:47 AM, Sylvestre Ledru
-> <sylvestre.ledru@scilab.org> wrote:
-> > Le mardi 14 d=C3=A9cembre 2010 =C3=A0 10:29 +0100, Christian Couder=
- a =C3=A9crit :
-> >> On Mon, Dec 13, 2010 at 7:11 PM, Sylvestre Ledru
-> >> <sylvestre.ledru@scilab.org> wrote:
-> >> > Le lundi 13 d=C3=A9cembre 2010 =C3=A0 18:02 +0100, Christian Cou=
-der a =C3=A9crit :
-> >> >> On Mon, Dec 13, 2010 at 5:47 PM, Sylvestre Ledru
-> >> >> <sylvestre.ledru@scilab.org> wrote:
-> >> >> >
-> >> >> > Le lundi 13 d=C3=A9cembre 2010 =C3=A0 17:34 +0100, Christian =
-Couder a =C3=A9crit :
-> >> >> >> Hi,
-> >> >> >>
-> >> >> >> On Mon, Dec 13, 2010 at 4:59 PM, Sylvestre Ledru
-> >> >> >> <sylvestre.ledru@scilab.org> wrote:
-> >> >> >> > Hello guys,
-> >> >> >> >
-> >> >> >> > I have a small problem with a git repository and I haven't=
- find a way to
-> >> >> >> > fix my problem.
-> >> >> >> > I am using git with gerrit [1] as frontend (even if I don'=
-t think it is
-> >> >> >> > related here).
-> >> >> >> > For an unknown reason, the repository just became corrupte=
-d.
-> >> >> >> >
-> >> >> >> > When I try to clone the repository straight with the file =
-system, the
-> >> >> >> > following error is displayed:
-> >> >> >> > error: refs/changes/98/398/1 does not point to a valid obj=
-ect!
-> >> >> >> > error: refs/changes/98/398/2 does not point to a valid obj=
-ect!
-> >> >> >> > fatal: object cff52c24fba28408e7d021a8f35a717bef31521d is =
-corrupted
-> >> >> >> > fatal: The remote end hung up unexpectedly
-> >> >> >> >
-> >> >> >> > git-prune & git-fsck both fail.
-> >> >> >> >
-> >> >> >> > Does anyone know how to repair this error ?
-> >> >> >>
-> >> >> >> Did you try what the FAQ suggests:
-> >> >> >>
-> >> >> >> https://git.wiki.kernel.org/index.php/GitFaq#How_to_fix_a_br=
-oken_repository.3F
-> >> >> > Yes. It shows an other error and it doesn't match the error d=
-escribed on
-> >> >> > this URL [1].
-> >> >> >
-> >> >> > I get the following:
-> >> >> > error: refs/tags/5.3.0-beta-4 does not point to a valid objec=
-t!
-> >> >> > fatal: object 555a7c359b2e589ec10822d9b56cdfeee0105fe0 is cor=
-rupted
-> >> >>
-> >> >> The FAQ says that you should try to replace any broken and/or m=
-issing
-> >> >> objects, so you should try to do that with object
-> >> >> 555a7c359b2e589ec10822d9b56cdfeee0105fe0 (as described in the F=
-AQ)
-> >> >> even if the error message is not exactly the same.
-> >> > Well, after clean the error about the tags, it does not provide =
-any
-> >> > interesting feedbacks like in the FAQ.
-> >> >
-> >> > Just some information [1] about some dangling commits (probably =
-commit
-> >> > under review in gerrit). Nothing valuable and the problem still =
-occurs
-> >> > on the client side.
-> >>
-> >> So you say that "git fsck --full" gives only dangling commits on t=
-he
-> >> server, and you still get messages like "fatal: object XXXXX is
-> >> corrupted" on the client when you try to clone with gerrit?
-> > Not exactly, when I try to clone it through gerrit, it is working:
-> > git clone ssh://sylvestre.ledru@git.scilab.org:29418/scilab
-> > A bare clone works also.
-> >
-> > It is failing when I am using git-daemon (git clone
-> > git://git.scilab.org/scilab) or a straight clone (git
-> > clone /home/git/repositories/repo.git).
->=20
-> This is very strange, are you sure you cannot use the resulting repo
-> when it "fails"?
-> What happens when you run "git fsck --full" on the resulting repos?
->=20
-> > Both with the same error:
-> > error: refs/changes/98/398/1 does not point to a valid object!
-> > error: refs/changes/98/398/2 does not point to a valid object!
->=20
-> Did you try to see which objects these refs are pointing to, and if
-> they are on the server?
-In fact, we have some progress on the issue.=20
-It looks like, at some point, two tags have been badly created [1].
+2010/12/14 Junio C Hamano <gitster@pobox.com>:
+>> +int within_depth(const char *name, int namelen,
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 int depth, int max_depth)
+>> +{
+>> + =C2=A0 =C2=A0 const char *cp =3D name, *cpe =3D name + namelen;
+>> +
+>> + =C2=A0 =C2=A0 while (cp < cpe) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (*cp++ !=3D '/')
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 continue;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 depth++;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (depth > max_depth)
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 return 0;
+>> + =C2=A0 =C2=A0 }
+>> + =C2=A0 =C2=A0 return 1;
+>> +}
+>
+> Makes me almost suspect that it may make more sense to keep track of =
+the
+> "depth" in a similar way as "base" and "baselen" as "traversal state"=
+ on
+> the side of the caller so that you do not have to scan the string for
+> slashes over and over again. =C2=A0But given the codeflow, doing so m=
+ight make
+> the result look too ugly, so I won't recommend that without thinking,
+> though.
 
-Here is what Bruno did to fix the issue:
-1 - Add valid references
-I put some valid commit id in refs/changes/98/398/{1,2}
+Moreover, this function is also used by match_pathspec_depth().
 
-2 - Find out what the corrupted object was for
-$> git cat-file -t cff52c24fba28408e7d021a8f35a717bef31521d
-tag
-$> cat refs/tags/5.3.0-beta-4
-cff52c24fba28408e7d021a8f35a717bef31521d
-$> git tag -d 5.3.0-beta-4
+>> - =C2=A0 =C2=A0 if (!ps || !ps->nr)
+>> + =C2=A0 =C2=A0 if (!ps)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 1;
+>>
+>> + =C2=A0 =C2=A0 if (!ps->nr) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!ps->recursive || ps=
+->max_depth =3D=3D -1)
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 return 1;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return !!within_depth(ba=
+se, baselen,
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 !!S_ISDIR(entry->m=
+ode),
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ps->max_depth);
+>> + =C2=A0 =C2=A0 }
+>
+> This gives different behaviour to between callers that give you NULL =
+as
+> pathspec and callers that give you a pathspec with zero elements. =C2=
+=A0Is this
+> intended? =C2=A0What is the use case (iow, what does an end user give=
+ from the
+> command line to experience this difference)?
 
-3 - Server complains :
-fatal: git upload-pack: unable to fork git-pack-objects
-$> git gc (on the server)
-Solved this problem.
+Old pathspec type's legacy. When pathspec is of "const char **", it
+can be NULL. When struct pathspec is used, I don't think we need to
+support NULL pathspec. Will remove that "if (!ps)" clause.
 
-Hope this helps for others,
-Sylvestre
+>> @@ -571,7 +580,13 @@ int tree_entry_interesting(const struct name_en=
+try *entry,
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 if (!match_dir_prefix(base, baselen, match, matchlen))
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* Just a random prefix match */
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;
+>> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 return 2;
+>> +
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 if (!ps->recursive || ps->max_depth =3D=3D -1)
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return 2;
+>> +
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 return !!within_depth(base+matchlen+1, baselen-matchlen-1,
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 !!S_ISDIR(entry->mode),
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 ps->max_depth);
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }
+>
+> If two pathspecs that overlap with each other (e.g. "Documentation/" =
+and
+> "Documentation/technical") are given, and if the shorter one comes be=
+fore
+> the longer one in ps[], wouldn't this give you an unexpected result? =
+=C2=A0When
+> inspecting "Documentation/technical/api/foo.txt" with depth limit of =
+2, if
+> you didn't have "Documentation/" pathspec, you count "api/foo.txt"
+> relative to "Documentation/technical", declare that the path is withi=
+n
+> limit, and show it. =C2=A0But if you have "Documentation/" in ps[], y=
+ou look at
+> it, decide "technical/api/foo.txt" is too deep and return false witho=
+ut
+> even looking at "Documentation/technical" that may appear later in ps=
+[],
+> no?
 
-[1] Looks at my mail archive, the guy who created the tag did it this
-way:
-[$SHELL] cd /home/git/repositories/scilab.git
-[$SHELL] git tag -d 5.3.0-beta-4
-[$SHELL] git tag -m "Scilab 5.3.0 Beta 4 Version" 5.3.0-beta-4=20
-96b0b8e6d621a7ea7c88d63e10d57908689632ed
+Right. Hmm.. grep's pathspec_matches() probably has this problem too.
+--=20
+Duy
