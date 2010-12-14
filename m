@@ -1,86 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1/8] Refactor parse_loc
-Date: Tue, 14 Dec 2010 15:20:20 -0800
-Message-ID: <7vr5dkq6vf.fsf@alter.siamese.dyndns.org>
-References: <cover.1292291624.git.trast@student.ethz.ch>
- <ff9def9ac3f207b9f9be9c59ec3a313c9b3d4d84.1292291624.git.trast@student.ethz.ch> <7v8vzsrmhk.fsf@alter.siamese.dyndns.org> <201012150006.12462.trast@student.ethz.ch>
+From: Eric Sunshine <sunshine@sunshineco.com>
+Subject: Re: [PATCH 11/14] t3032-*.sh: Pass the -b (--binary) option to sed
+ on cygwin
+Date: Tue, 14 Dec 2010 18:32:33 -0500
+Message-ID: <4D07FE91.2090003@sunshineco.com>
+References: <4D07B8B5.2030409@ramsay1.demon.co.uk> <7vtyigtaxn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>,
-	Bo Yang <struggleyb.nku@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Dec 15 00:20:39 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 15 00:32:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSeAg-00087m-6E
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 00:20:38 +0100
+	id 1PSeMQ-0005SA-RQ
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 00:32:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1760222Ab0LNXUd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Dec 2010 18:20:33 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52038 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1760172Ab0LNXUc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Dec 2010 18:20:32 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 54EEF2EA5;
-	Tue, 14 Dec 2010 18:20:58 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=INKDvVvkUE7vSDC+h5KLWjMvQgQ=; b=A75obo
-	E/ivIqkxP2FZvVCCfHXQOBqq16TOmhzHCyT7ITOP0TVP0vDhXRKXk7j4OR7W7F1v
-	gdzTzw0jKmv7sK9oyNEOz6LK1AHH0lC7WzWQ0xgmPOvp8wnR1Iu+S5ifv1jUTLXq
-	0/Q/hyXWRtaxKlEmdTp2kdGmJ7SwycuLwoPCU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Gu8KNCEaVCyU2B3igbKXFWY+3u4h3UA+
-	oRpWa7KkxeL/llI9ynEPEuOJQb5fwPDdMhT+9KcJnEbhMECBh4ee87CflybqCckc
-	8RQ7985j/axiJ4Zn66fLQowL5c+DnEAnTmonaDLGsu8GePAlTJ3hcDqCXpN2W4zA
-	/r+28NH/kAg=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1C8CC2E9E;
-	Tue, 14 Dec 2010 18:20:55 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8D4C02E9C; Tue, 14 Dec 2010
- 18:20:49 -0500 (EST)
-In-Reply-To: <201012150006.12462.trast@student.ethz.ch> (Thomas Rast's
- message of "Wed\, 15 Dec 2010 00\:06\:12 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CCC20C70-07D8-11E0-9457-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1754982Ab0LNXcl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Dec 2010 18:32:41 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:50697 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753573Ab0LNXck (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Dec 2010 18:32:40 -0500
+Received: by qwa26 with SMTP id 26so1339539qwa.19
+        for <git@vger.kernel.org>; Tue, 14 Dec 2010 15:32:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:message-id:date:from
+         :user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=l4ASG6D8N6kvNLIdg2MhfoKrtlnipQU6qDklLlkTzFw=;
+        b=lhyMT0qygOi+8LWRiH5afXeN2T/YVRYxrgvDdUZg9Ab/mUlS++DJXe6fggSAwV3/sP
+         QoU0zVIgUQzAop4ZhGlk3n2lZXz0GiAe10/quFFG13tDEIAXgH5inBhtEtOahHXUjOtE
+         QyR3lrXBS7mN6MY+8EVIKtzS8DetQNBomkfuY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=sender:message-id:date:from:user-agent:mime-version:to:cc:subject
+         :references:in-reply-to:content-type:content-transfer-encoding;
+        b=x1AWRIpjpoVSVH3ZdJcroW107wkxHNNr9smVhcBJGI11AtPfcla6WxynRvxOl1Pjgz
+         lm6pnfzgN4jqMUgylzPMmO+xAKUIazQcay7Ec+ZD3WP9Na6XJkELmatIU+A2hyGs+rAZ
+         HPa+PFp6q1W6EEiUtT8kAvHw6bWBHlfNLcs6c=
+Received: by 10.224.67.146 with SMTP id r18mr5744770qai.91.1292369559429;
+        Tue, 14 Dec 2010 15:32:39 -0800 (PST)
+Received: from [192.168.1.2] (user-12l2cil.cable.mindspring.com [69.81.50.85])
+        by mx.google.com with ESMTPS id k15sm309489qcu.35.2010.12.14.15.32.37
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 14 Dec 2010 15:32:38 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <7vtyigtaxn.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163719>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163720>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+On 12/14/2010 2:24 PM, Junio C Hamano wrote:
+> Ramsay Jones<ramsay@ramsay1.demon.co.uk>  writes:
+>> The test using the conflict_hunks helper function (test 9) fails
+>> on cygwin, since sed (by default) throws away the CR from CRLF
+>> line endings. This behaviour is undesirable, since the validation
+>> code expects the CRLF line-ending to be present. In order to fix
+>> the problem we pass the -b (--binary) option to sed, using the
+>> SED_OPTIONS variable. We use the SED_STRIPS_CR prerequisite in the
+>> conditional initialisation of SED_OPTIONS.
+>>
+>> Signed-off-by: Ramsay Jones<ramsay@ramsay1.demon.co.uk>
+>> ---
+>>
+>> Note that this test does not fail on MinGW, but I don't
+>> really know why, given commit ca02ad3... ahem ;-)
+>
+> Ahem, indeed.  Why?
 
-> Junio C Hamano wrote:
->> Thomas Rast <trast@student.ethz.ch> writes:
->> > +test_expect_success 'blame -L parses end' '
->> > +	git blame -L1,1 tres >out &&
->> > +	cat out &&
->> > +	test $(wc -l < out) -eq 1
->> > +'
->> 
->> What does this test exactly?  "end"?
->
-> That's the test I was referring to in the commit message:
->
->   The new test is for a case that made me pause during debugging: the
->   'blame -L with invalid end' test was the only one that noticed an
->   outright failure to parse the end *at all*.  So make a more explicit
->   test for that.
->
-> So I guess a more thorough test title would be
->
->   blame -L parses <end> part of its argument
->
-> IOW, the test verifies that -L1,1 is not parsed the same as -L1, which
-> would result in *two* lines of output.
+t3032 does indeed fail on MinGW, and was fixed in the msysgit port by 
+[1], but was subsequently "lost" when msysgit was rebased onto 
+junio/next [2] which did not have that test. Consequently, the fix never 
+made it into the mainline git source.
 
-Oh the comment definitely was misleading.  It made me think that "-L1,1" was
-a typo of "-L1,$" which was the new feature in the patch.
+[1]: 
+http://groups.google.com/group/msysgit/browse_thread/thread/587d32ee034b0cbe/dca93dc6ad755012#dca93dc6ad755012
+[2]: 
+http://groups.google.com/group/msysgit/browse_thread/thread/d522ec5c13a3af0b/718eaedffc042fb5#718eaedffc042fb5
+
+-- ES
