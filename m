@@ -1,84 +1,69 @@
-From: "psantosl@codicesoftware.com" <psantosl@codicesoftware.com>
-Subject: Re: [ANNOUNCE] GitJungle is out!
-Date: Tue, 14 Dec 2010 17:42:28 +0100
-Message-ID: <4D079E74.10408@codicesoftware.com>
-References: <4D05FF8D.7080306@codicesoftware.com> <4D079155.4020102@alum.mit.edu>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Please pull gitk.git master branch
+Date: Tue, 14 Dec 2010 09:09:47 -0800
+Message-ID: <7voc8ouvqc.fsf@alter.siamese.dyndns.org>
+References: <20101212063135.GA7677@brick.ozlabs.ibm.com>
+ <7vwrne8tow.fsf@alter.siamese.dyndns.org>
+ <7v7hfe74ea.fsf@alter.siamese.dyndns.org>
+ <7vbp4q5ddo.fsf@alter.siamese.dyndns.org>
+ <20101213210317.GA10027@brick.ozlabs.ibm.com>
+ <7vy67txs7p.fsf@alter.siamese.dyndns.org>
+ <20101214090707.GA11890@brick.ozlabs.ibm.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	=?ISO-8859-1?Q?David_Su=E1rez?= <dsuarezv@codicesoftware.com>
-To: Michael Haggerty <mhagger@alum.mit.edu>
-X-From: git-owner@vger.kernel.org Tue Dec 14 17:42:38 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Alexandre Erwin Ittner <alexandre@ittner.com.br>,
+	git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Tue Dec 14 18:10:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSXxV-0003tZ-AM
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 17:42:37 +0100
+	id 1PSYOA-0003Ds-PN
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 18:10:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759532Ab0LNQmc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Dec 2010 11:42:32 -0500
-Received: from berith.lunarbreeze.com ([216.97.239.175]:54065 "EHLO
-	berith.lunarbreeze.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1759560Ab0LNQmb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Dec 2010 11:42:31 -0500
-Received: from 102.red-83-33-14.dynamicip.rima-tde.net ([83.33.14.102] helo=[192.168.2.33])
-	by berith.lunarbreeze.com with esmtpa (Exim 4.69)
-	(envelope-from <psantosl@codicesoftware.com>)
-	id 1PSXxN-0006Jm-7Z; Tue, 14 Dec 2010 08:42:29 -0800
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; en-US; rv:1.9.2.12) Gecko/20101027 Lightning/1.0b2 Thunderbird/3.1.6
-In-Reply-To: <4D079155.4020102@alum.mit.edu>
-X-Enigmail-Version: 1.1.1
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - berith.lunarbreeze.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - codicesoftware.com
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
+	id S1757533Ab0LNRKA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Dec 2010 12:10:00 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64771 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755501Ab0LNRJ7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Dec 2010 12:09:59 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3517A3CA6;
+	Tue, 14 Dec 2010 12:10:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eZPxsu/iUxAxQIvl6sU4FwPYth4=; b=xjYums
+	adDo69tQB10NduXvd/owhgolIccuuv5BK5G5lN1rFzq/xm3m1E7PX1bSYpBGKIRY
+	KIqmbCyNq5cJnxA7vwWrHl8KrfYVH38hUkOhSTNSRMgZTtUhBDhYN+NeoXd2cmYI
+	LUMt+J7UXI807tVBnGmdDmSU2OJACr34Y9PII=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TZJ9ZYhHUn6069lFtDm1UZNsvqZww1ge
+	+kD9Uo03upkkOBnlprdGtaZaFLqmU77TmXB+ck3HRPOSfqWmrmjBcrPUNaoq7uhp
+	+BoA9wb7slrQC5nDm92uKlVWalni/Dg0sXmAHbGuO9oCBZOeoBL9cr4ImUzuST3V
+	X1mk9MuIAmw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 042AA3CA3;
+	Tue, 14 Dec 2010 12:10:19 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D82883CA2; Tue, 14 Dec 2010
+ 12:10:15 -0500 (EST)
+In-Reply-To: <20101214090707.GA11890@brick.ozlabs.ibm.com> (Paul Mackerras's
+ message of "Tue\, 14 Dec 2010 20\:07\:07 +1100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 079BE048-07A5-11E0-B9A0-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163657>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163658>
 
-Hi Michael,
+Paul Mackerras <paulus@samba.org> writes:
 
-The commits are walked from the heads, starting on master. Once a commit
-is assigned to a branch, it stays there. So the diagram would have a
-different aspect if the heads were walked in a different order.
+> OK, I re-did the top commit using the lowercase name.  Please do a
+> git pull -f to get the new version of that commit.
 
-David (in CC) is the one to ask for details, he's still struggling to
-get a better render than what we have right now.
-
-Thanks,
-
-pablo
-
-
-On 12/14/2010 16:46, Michael Haggerty wrote:
-> On 12/13/2010 12:12 PM, psantosl@codicesoftware.com wrote:
->> We've just released GitJungle
->> [...] The drawing approach we use is a little bit
->> different from what other git tools are using: we draw horizontally
->> instead of vertically, we think it is a better way but, you know, it is
->> probably a matter of preference.
-> 
-> Given that git doesn't permanently record the branch that a commit was
-> first made on, how do you decide on what row to draw a commit?  E.g., if
-> I have two branches A and B that share a common ancestor
-> 
->       o-o  <- A
->      /
-> o-o-o
->      \
->       o-o  <- B
-> 
-> how do you decide whether to draw the ancestor on the row for A vs. the
-> row for B?
-> 
-> Michael
-> 
+Thanks.  Will do.
