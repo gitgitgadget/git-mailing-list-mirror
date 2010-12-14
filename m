@@ -1,79 +1,100 @@
-From: Edward Rudd <urkle@outoforder.cc>
-Subject: Re: [git-svn] always prompted for passphrase with subversion 1.6
-Date: Tue, 14 Dec 2010 09:33:44 -0500
-Message-ID: <4D078048.3040602@outoforder.cc>
-References: <4A95D58C.1070409@hp.com> <20090905064649.GD22272@dcvr.yhbt.net> <4AA84F46.6010706@hp.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Eric Wong <normalperson@yhbt.net>
+From: "Neal Kreitzinger" <neal@rsss.com>
+Subject: Re: Revert-style merge/Working tree-only checkout?
+Date: Tue, 14 Dec 2010 08:36:20 -0600
+Message-ID: <ie7veg$ks5$1@dough.gmane.org>
+References: <AANLkTi=ioX25aqXg-yWDA0oXBTATkFe+J25g-dB7-psS@mail.gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 14 15:35:21 2010
+X-From: git-owner@vger.kernel.org Tue Dec 14 15:37:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSVyJ-0000Zj-Fv
-	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 15:35:19 +0100
+	id 1PSW0M-0001qm-Is
+	for gcvg-git-2@lo.gmane.org; Tue, 14 Dec 2010 15:37:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754829Ab0LNOfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Dec 2010 09:35:12 -0500
-Received: from lo.gmane.org ([80.91.229.12]:54157 "EHLO lo.gmane.org"
+	id S1755501Ab0LNOhV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Dec 2010 09:37:21 -0500
+Received: from lo.gmane.org ([80.91.229.12]:44200 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752280Ab0LNOfL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Dec 2010 09:35:11 -0500
+	id S1754849Ab0LNOhU (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Dec 2010 09:37:20 -0500
 Received: from list by lo.gmane.org with local (Exim 4.69)
 	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PSVy4-0000S7-P7
-	for git@vger.kernel.org; Tue, 14 Dec 2010 15:35:04 +0100
-Received: from adsl-75-46-74-191.dsl.ipltin.sbcglobal.net ([75.46.74.191])
+	id 1PSW0F-0001nj-6E
+	for git@vger.kernel.org; Tue, 14 Dec 2010 15:37:19 +0100
+Received: from 67.63.162.200 ([67.63.162.200])
         by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 14 Dec 2010 15:35:04 +0100
-Received: from urkle by adsl-75-46-74-191.dsl.ipltin.sbcglobal.net with local (Gmexim 0.1 (Debian))
+        for <git@vger.kernel.org>; Tue, 14 Dec 2010 15:37:19 +0100
+Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
         id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 14 Dec 2010 15:35:04 +0100
+        for <git@vger.kernel.org>; Tue, 14 Dec 2010 15:37:19 +0100
 X-Injected-Via-Gmane: http://gmane.org/
 X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: adsl-75-46-74-191.dsl.ipltin.sbcglobal.net
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101103 Fedora/1.0-0.33.b2pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.6
-In-Reply-To: <4AA84F46.6010706@hp.com>
+X-Gmane-NNTP-Posting-Host: 67.63.162.200
+X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
+X-RFC2646: Format=Flowed; Original
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163648>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163649>
 
-On 09/09/2009 08:58 PM, Tim Potter wrote:
-> It's probably just a matter of adding another entry to the
-> _auth_providers() function in git-svn.  My thought was that there might
-> be a new auth provider in the Subversion 1.6 client library for GNOME
-> Keyring support that could be used for this.
-> 
-> I'll have a search through and see what I can find.
 
-I've been tracking subversion bug # 3612
-(http://subversion.tigris.org/issues/show_bug.cfg?id=3612 )  which is on
-this issue of perl binding not supporting platform specific providers.
+"Yuriy Romanenko" <groman@gmail.com> wrote in message 
+news:AANLkTi=ioX25aqXg-yWDA0oXBTATkFe+J25g-dB7-psS@mail.gmail.com...
+> Hello,
+>
+> I am somewhat new to Git and I keep running into having to accomplish
+> a certain task and reading through the documentation I can't seem to
+> find any way of doing this easily.
+>
+> The problem is when branches diverge and I want to sync a branch to
+> another branch with full overwrite, but maintain history and maintain
+> separate branches.
+>
+> For example, say there is a branch "master" and I create a branch "b1"
+> from master at some point. After this, there are 5 commits
+> (C1,C2,C3,C4,C5) to master and
+> 17 commits to b1 (let's call them cb1, cb2, cb3, ..., cb17). Say I
+> want to create an 18-th commit to "b1" that makes it identical to the
+> C5 (current) state of master. Essentially a single commit wipe of
+> changes cb1 -> cb17 as well as application of C1->C5. So far I have
+> found one way of accomplishing this, but it is difficult, error prone,
+> slow and I just plain don't like it. I feel like there should be an
+> easier way.
+>
+> What I currently do:
+>
+> $ rm -rf *
+> $ git checkout -f master
+> $ tar -cvzf /tmp/master.tar.gz *
+> $ git checkout b1
+> $ rm -rf *
+> $ tar -xvzf /tmp/master.tar.gz
+> $ git add
+> $ git commit -a
+> $ git merge master
+>
+>
+> I've considered doing something like the following
+>
+> $ git checkout b1
+> $ git revert b1~17..b1
+> $ git merge master
+>
+> but it also seems wrong, and requires me to count the submits by hand,
+> which seems silly --> I'm not actually reverting anything. I don't
+> know if this would even work.
+>
+>
+> Any suggestions on how to accomplish this easier? Some sort of a
+> force-checkout that affects working tree only but not the index?
+>
+Have you looked at the vendor branch methodology in the git-rm manpage?   It 
+may give you some ideas you're interested in.
 
-A patch was added into subversion 1.6.15 that finally adds bindings for
-perl to access this functionality via a call to
-SVN::Core::auth_get_platform_specific_client_providers and adding it's
-contents to the array returned by _auth_providers..
-
-The "test" modification I did to git-svn is as follows.
-
-sub _auth_providers () {
-  (
-    SVN::Core::auth_get_platform_specific_client_providers(undef,undef),
-    [
-      SVN::Client::get_simple_provider(),
-      .... the rest of the static provider ...
-    ]
-  )
-}
-
-I'm honestly not sure if it should be at the beginning or end, and this
-also needs some run-time checking to determine if the user has at least
-SVN 1.6.15 installed
+v/r,
+Neal 
