@@ -1,76 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v6.1 4/8] Implement line-history search (git log -L)
-Date: Tue, 14 Dec 2010 16:20:48 -0800
-Message-ID: <7vfwtzrin3.fsf@alter.siamese.dyndns.org>
-References: <cover.1292366984.git.trast@student.ethz.ch>
- <426fca7313fc9466efa036b7b86947f23548fc26.1292366984.git.trast@student.ethz.ch>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH v3 5/5] mingw_rmdir: set errno=ENOTEMPTY when
+ appropriate
+Date: Wed, 15 Dec 2010 01:21:00 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1012150114010.1461@bonsai2>
+References: <20101214220604.GA4084@sandbox> <20101214222830.GF4084@sandbox> <AANLkTi=12WqYn5GJpqPYqKE_2L51Em7Ek5szTZYryHd9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, Bo Yang <struggleyb.nku@gmail.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Dec 15 01:21:08 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Heiko Voigt <hvoigt@hvoigt.net>, Johannes Sixt <j6t@kdbg.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	msysgit@googlegroups.com, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 15 01:21:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSf7D-0004FC-Nm
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 01:21:08 +0100
+	id 1PSf7R-0004Nz-Er
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 01:21:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756466Ab0LOAVB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Dec 2010 19:21:01 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46652 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754956Ab0LOAVA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Dec 2010 19:21:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 541B5362C;
-	Tue, 14 Dec 2010 19:21:24 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=AZBe+fjNfcqREo3dFZjuYUJS3Oc=; b=CFuNJm
-	XyvMHDCFqew1/XviH+8QcMbhdzkWDNfenF86jvbK+aU7lwQf36ZnOog1LqNq3duf
-	yJm+zrUqpxdlk84dXou7kjn6BDXGsAd7iXYS/RCdY0Vd/U/HGBC84U8lqqbCBIZ6
-	hzcyCIKVfSR7N5+QfyG9S/7fZ8CqA/HyGauak=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=deHE1jjUa6MMnIybk23A8Ldkfhs7wZoZ
-	ff4vOzFNGefzoKlKvrg1A6YeujjjohCpNXBT7cDEtPmIMLmZBj6PJy0WQPm1U6WN
-	0P8/3ZID+AHHocA1NY7KPKx03+Ls9TWEEaEsWYLyvZK6uBhKWQHbFlddQp/5yYML
-	OKNeffht6Ow=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1D355362B;
-	Tue, 14 Dec 2010 19:21:21 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 00C96362A; Tue, 14 Dec 2010
- 19:21:16 -0500 (EST)
-In-Reply-To: <426fca7313fc9466efa036b7b86947f23548fc26.1292366984.git.trast@student.ethz.ch> (Thomas Rast's message of "Tue\, 14 Dec 2010 23\:54\:11 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3E07063A-07E1-11E0-9476-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1757472Ab0LOAVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Dec 2010 19:21:11 -0500
+Received: from mailout-de.gmx.net ([213.165.64.22]:53638 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1755127Ab0LOAVJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Dec 2010 19:21:09 -0500
+Received: (qmail invoked by alias); 15 Dec 2010 00:21:08 -0000
+Received: from pD9EB205C.dip0.t-ipconnect.de (EHLO noname) [217.235.32.92]
+  by mail.gmx.net (mp020) with SMTP; 15 Dec 2010 01:21:08 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18mMcpiY2Em4YO7tAFS25RsHTNC0DgyeSgIj+q2Xk
+	aYNPKQeuuOZKfX
+X-X-Sender: gene099@bonsai2
+In-Reply-To: <AANLkTi=12WqYn5GJpqPYqKE_2L51Em7Ek5szTZYryHd9@mail.gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163724>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163725>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Hi,
 
-> +void line_log_init(struct rev_info *rev, struct diff_line_range *r)
-> +{
-> +	struct commit *commit = NULL;
-> +	struct diff_options *opt = &rev->diffopt;
-> +
-> +	commit = (struct commit *)verify_commit(rev);
-> +	parse_lines(commit, r);
-> +
-> +	add_line_range(rev, commit, r);
-> +	/*
-> +	 * Note we support -M/-C to detect file rename
-> +	 */
-> +	opt->nr_paths = 0;
-> +	diff_tree_release_paths(opt);
-> +}
+On Tue, 14 Dec 2010, Erik Faye-Lund wrote:
 
-Note that opt->nr_paths may be going away soon (cf. nd/struct-pathspec
-topic).  Do you need this assignment here?
+> On Tue, Dec 14, 2010 at 11:28 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
+> >
+> > On Windows, EACCES overrules ENOTEMPTY when calling rmdir(). But if the
+> > directory is busy, we only want to retry deleting the directory if it
+> > is empty, so test specifically for that case and set ENOTEMPTY rather
+> > than EACCES.
+> >
+> 
+> Hmm... According to MSDN, rmdir(*) should already handle ENOTEMPTY. 
+> Isn't the problem rather the structure of that loop? Shouldn't it be 
+> sufficient to do something like this (note: untested, but the concept 
+> should work, no)?
+
+This is how the patch looks in current 4msysgit.git's devel branch:
+
+-- snip --
+ #undef rmdir
+ int mingw_rmdir(const char *pathname)
+ {
+-    int ret, tries = 0;
++       int ret, tries = 0;
+ 
+        while ((ret = rmdir(pathname)) == -1 && tries < ARRAY_SIZE(delay)) 
+{
+                if (errno != EACCES)
+                        break;
++               if (!is_dir_empty(pathname)) {
++                       errno = ENOTEMPTY;
++                       break;
++               }
+                /*
+                 * We assume that some other process had the source or
+                 * destination file open at the wrong moment and retry.
+-- snap --
+
+Of course, with so much water running down the Elbe between me writing 
+that patch and me answering you, I cannot really say whether rmdir() 
+set errno to ENOTEMPTY.
+
+But as the patch looked the same when I wrote it originally (you can see 
+it in the history, since I introduced rebasing merges prior to making this 
+patch) I would assume that in my tests, errno was set to EACCESS rather 
+than ENOTEMPTY.
+
+However, since I am distrusted on the Git mailing list it would be good if 
+you tried your version and verified whether what I say is true.
+
+Thanks,
+Dscho
