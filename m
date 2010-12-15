@@ -1,64 +1,75 @@
-From: Chunlin Zhang <zhangchunlin@gmail.com>
-Subject: When I merge, a binary file conflict,how can I select between 2 versions?
-Date: Wed, 15 Dec 2010 08:00:08 +0000 (UTC)
-Message-ID: <loom.20101215T084919-573@post.gmane.org>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: Re: TopGit release?
+Date: Wed, 15 Dec 2010 09:01:48 +0100
+Message-ID: <20101215080148.GA28971@pengutronix.de>
+References: <87ei9k42v5.fsf@write-only.cryp.to>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 15 09:00:29 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, martin f krafft <madduck@madduck.net>,
+	Bert Wesarg <bert.wesarg@googlemail.com>,
+	Per Cederqvist <ceder@lysator.liu.se>,
+	Olaf Dabrunz <odabrunz@gmx.net>,
+	Thomas Moschny <thomas.moschny@gmx.de>
+To: Peter Simons <simons@cryp.to>
+X-From: git-owner@vger.kernel.org Wed Dec 15 09:01:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSmHj-00011P-6z
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 09:00:27 +0100
+	id 1PSmJA-0001UO-EF
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 09:01:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753606Ab0LOIAV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Dec 2010 03:00:21 -0500
-Received: from lo.gmane.org ([80.91.229.12]:43475 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753232Ab0LOIAU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Dec 2010 03:00:20 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PSmHc-0000zt-1F
-	for git@vger.kernel.org; Wed, 15 Dec 2010 09:00:20 +0100
-Received: from 119.233.251.15 ([119.233.251.15])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 15 Dec 2010 09:00:20 +0100
-Received: from zhangchunlin by 119.233.251.15 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 15 Dec 2010 09:00:20 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 119.233.251.15 (Mozilla/5.0 (X11; U; Linux i686; zh-CN; rv:1.9.2.12) Gecko/20101027 Ubuntu/10.04 (lucid) Firefox/3.6.12)
+	id S1753942Ab0LOIBv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Dec 2010 03:01:51 -0500
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:45923 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753798Ab0LOIBv (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Dec 2010 03:01:51 -0500
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1PSmJ4-0006F9-6X; Wed, 15 Dec 2010 09:01:50 +0100
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1PSmJ2-0000CQ-Sk; Wed, 15 Dec 2010 09:01:48 +0100
+Content-Disposition: inline
+In-Reply-To: <87ei9k42v5.fsf@write-only.cryp.to>
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163741>
 
-The only way now I know is to replace the file with the version file I want in
-working copy,and then git add and git commit.I think it is inconvenient.
+Hello,
 
-When I use "git mergetool",it output:
-'''
-Merging the files: binary_example.png
+On Tue, Dec 14, 2010 at 07:37:50PM +0100, Peter Simons wrote:
+> I was wondering whether there's a chance that we'll have a new releas=
+e
+> of TopGit in the foreseeable future? Version 0.8 seems to be quite ol=
+d
+> by now, but still there's no observable progress in getting a new
+> version tagged. Is this project still alive?
+There are a few patches pending, but I currently don't find the time to
+go through and apply them[1].  Moreover I hardly use topgit anymore. =20
+So if someone with interest in topgit wants to step forward to help thi=
+s
+would be very appreciated.
 
-Normal merge conflict for 'binary_example.png':
-  {local}: modified
-  {remote}: modified
-Hit return to start merge resolution tool (meld): 
-'''
+Best regards
+Uwe
 
-Then I think if there is some command to select local or remote version file to
-add more easier,because it is obviously git keep 2 version file.
-
-Does anyone know it?
-
-Thanks!
+[1] http://thread.gmane.org/gmane.comp.version-control.git/159433
+    hint to Bert: this series doesn't apply to master
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
+    |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
