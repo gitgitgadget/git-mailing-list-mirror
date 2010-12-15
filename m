@@ -1,97 +1,94 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH v3 3/8] mingw: make failures to unlink or move raise a question
-Date: Wed, 15 Dec 2010 10:09:28 +0100
-Message-ID: <AANLkTi=vkkHmzmmGshn6v5E0e5mVkt0PMCkdhk=Mvn4u@mail.gmail.com>
-References: <20101214220604.GA4084@sandbox> <20101214222122.GD4084@sandbox>
- <AANLkTi=cHb2kV2MaYu72nXVOksO7O9HhJLEo-fU0sV5N@mail.gmail.com>
- <alpine.DEB.1.00.1012150109340.1461@bonsai2> <7v1v5jrb1f.fsf@alter.siamese.dyndns.org>
-Reply-To: kusmabite@gmail.com
+From: Matthijs Kooijman <matthijs@stdin.nl>
+Subject: Re: html userdiff is not showing all my changes
+Date: Wed, 15 Dec 2010 10:12:50 +0100
+Message-ID: <20101215091250.GO3069@login.drsnuggles.stderr.nl>
+References: <561247.22837.qm@web110707.mail.gq1.yahoo.com> <4D08850D.3010402@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Heiko Voigt <hvoigt@hvoigt.net>, Johannes Sixt <j6t@kdbg.org>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	msysgit@googlegroups.com, git@vger.kernel.org,
-	Albert Dvornik <dvornik+git@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 15 10:09:59 2010
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="qxmd2aOE9n9J83EO"
+Cc: Scott Johnson <scottj75074@yahoo.com>, git@vger.kernel.org,
+	trast@student.ethz.ch
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Wed Dec 15 10:13:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSnN1-0003kd-Cy
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 10:09:59 +0100
+	id 1PSnQ3-0005Gh-61
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 10:13:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751756Ab0LOJJx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Dec 2010 04:09:53 -0500
-Received: from mail-fx0-f43.google.com ([209.85.161.43]:50913 "EHLO
-	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751237Ab0LOJJv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Dec 2010 04:09:51 -0500
-Received: by fxm18 with SMTP id 18so1768725fxm.2
-        for <git@vger.kernel.org>; Wed, 15 Dec 2010 01:09:50 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=zSD6cwSQqgosN/HmNvvAUDVVYjUR1Uor1kvb1rcxFsY=;
-        b=X+h7xjmaAV7K7MjMqnKn/8BsZ1CcPtqIdOqNWZIuz2x5nczgz0N9eZFemSHDvESwTM
-         ChPiSJu1z4twCbfQWyyYRsgOUNYCi92qwotIEaVAIBPpPJnuET0KYnZElRzsklwWBNPa
-         CiJf3K6lunlCdH5Ggd1tK5cv4rDJ8B3+k0wSc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=DnuDnv2Pfi9kKP/EtpoiuwyHeG7NAs8gsImD5jBtBK6fGWw6BF1hNmQaWF+lr2PS7/
-         SCzO2Ti9+pSm+d8UM/LJWiGTuAol8w99HgLh59X2w/I2Vf8nrW7Ghq0ybnDw/UNVjtlw
-         teCGqD3WBuVVUAMiJP/g8LfPSc/rdaeq4CQtc=
-Received: by 10.223.73.199 with SMTP id r7mr7201859faj.76.1292404189999; Wed,
- 15 Dec 2010 01:09:49 -0800 (PST)
-Received: by 10.223.96.71 with HTTP; Wed, 15 Dec 2010 01:09:28 -0800 (PST)
-In-Reply-To: <7v1v5jrb1f.fsf@alter.siamese.dyndns.org>
+	id S1751871Ab0LOJNA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Dec 2010 04:13:00 -0500
+Received: from drsnuggles.stderr.nl ([94.142.244.14]:53234 "EHLO
+	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751789Ab0LOJM6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Dec 2010 04:12:58 -0500
+Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
+	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
+	(envelope-from <matthijs@stdin.nl>)
+	id 1PSnPm-0000u6-8O; Wed, 15 Dec 2010 10:12:50 +0100
+Received: (nullmailer pid 3473 invoked by uid 1000);
+	Wed, 15 Dec 2010 09:12:50 -0000
+Mail-Followup-To: Michael J Gruber <git@drmicha.warpmail.net>,
+	Scott Johnson <scottj75074@yahoo.com>, git@vger.kernel.org,
+	trast@student.ethz.ch
+Content-Disposition: inline
+In-Reply-To: <4D08850D.3010402@drmicha.warpmail.net>
+X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
+X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
+User-Agent: Mutt/1.5.18 (2008-05-17)
+X-Spam-Score: -2.6 (--)
+X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
+	pts  rule name              description
+	---- ---------------------- -------------------------------------------
+	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
+	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163747>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163748>
 
-On Wed, Dec 15, 2010 at 4:05 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
->
->>> > @@ -129,6 +130,78 @@ static inline int is_file_in_use_error(DWORD=
- errcode)
->>> > =A0 =A0 =A0 =A0return 0;
->>> > =A0}
->>> >
->>> > +static int read_yes_no_answer()
->>>
->>> Perhaps "static int read_yes_no_answer(void)" for portability?
->>
->> LOL. This file is called compat/mingw.c... :-)
->
-> I had the same reaction. =A0Maybe MinGW will get a different compiler
-> someday ;-)
->
 
-We already have; compat/msvc.c includes compat/mingw.c. mingw.c is
-called mingw.c because it was the first native windows port, not
-because it will always be compiled with MinGW. So this file is REALLY
-more about the OS than the compiler.
+--qxmd2aOE9n9J83EO
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-I don't think MSVC has a problem with this declaration either, but
-wouldn't it be nicer if we had Windows-code that was as portable as
-possible across compilers? I've also been playing around with the idea
-of using LLVM's clang for Git on Windows, because it's support for
-cross compiling between 32bit and 64bit is a bit less nasty than
-MinGW's. This might never come happen, and I don't know if clang
-supports this or not. And then there's Intel's ICC that some times
-outperforms GCC. I don't think it would hurt fixing it in case people
-will port - one less trip-wire in the code.
+Hi Michael,
 
-But I of course only suggest this because this is new code. It's easy
-to change it to be slightly more portable (and more consistent with
-the rest of the code base), so why not?
+> If a wordRegex can make parts of diff disappear than there is problem
+> deeper in the diff machinery.
+It can do exactly that. The word regex determines what is a word, but
+everything else is counted as "whitespace". The word diff view shows
+only differences in words, not in whitespace (which is intentional,
+since whitespace changes in things like LaTeX or HTML are not
+interesting). Note that it doesn't show whitespace _differences_, but it
+does show the whitespace itself (taken from the "new" version of the
+file).
+
+
+So, if the word regex somehow doesn't match the second line at all (or
+at least not the differen part), the differences could get ignored.
+
+> Can you trim this down to a minimal example?
+That would be useful in any case.
+
+Gr.
+
+Matthijs
+
+--qxmd2aOE9n9J83EO
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+iEYEARECAAYFAk0IhpIACgkQz0nQ5oovr7xuhQCfTjmMjNrk5Gz2hIVfadxRjU1k
+Ox8AoLZk3EjFTa/IDfDQImUw0/i7JLo+
+=jNhz
+-----END PGP SIGNATURE-----
+
+--qxmd2aOE9n9J83EO--
