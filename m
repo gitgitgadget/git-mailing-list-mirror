@@ -1,197 +1,76 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 3/8] mingw: make failures to unlink or move raise a
- question
-Date: Wed, 15 Dec 2010 01:11:03 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1012150109340.1461@bonsai2>
-References: <20101214220604.GA4084@sandbox> <20101214222122.GD4084@sandbox> <AANLkTi=cHb2kV2MaYu72nXVOksO7O9HhJLEo-fU0sV5N@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v6.1 4/8] Implement line-history search (git log -L)
+Date: Tue, 14 Dec 2010 16:20:48 -0800
+Message-ID: <7vfwtzrin3.fsf@alter.siamese.dyndns.org>
+References: <cover.1292366984.git.trast@student.ethz.ch>
+ <426fca7313fc9466efa036b7b86947f23548fc26.1292366984.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: MULTIPART/MIXED; BOUNDARY="8323329-1337496104-1292371864=:1461"
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, Johannes Sixt <j6t@kdbg.org>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	msysgit@googlegroups.com, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Albert Dvornik <dvornik+git@gmail.com>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 15 01:11:16 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, Bo Yang <struggleyb.nku@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Dec 15 01:21:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSexf-00088P-3N
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 01:11:15 +0100
+	id 1PSf7D-0004FC-Nm
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 01:21:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754956Ab0LOALJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Dec 2010 19:11:09 -0500
-Received: from mailout-de.gmx.net ([213.165.64.22]:36525 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1752542Ab0LOALH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Dec 2010 19:11:07 -0500
-Received: (qmail invoked by alias); 15 Dec 2010 00:11:04 -0000
-Received: from pD9EB205C.dip0.t-ipconnect.de (EHLO noname) [217.235.32.92]
-  by mail.gmx.net (mp032) with SMTP; 15 Dec 2010 01:11:04 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX199oLtkVyZ9uDGMAPRrp83bacUkBPvrCFreVMt/CD
-	wWYYQf99NORGjc
-X-X-Sender: gene099@bonsai2
-In-Reply-To: <AANLkTi=cHb2kV2MaYu72nXVOksO7O9HhJLEo-fU0sV5N@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1756466Ab0LOAVB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Dec 2010 19:21:01 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46652 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754956Ab0LOAVA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 14 Dec 2010 19:21:00 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 541B5362C;
+	Tue, 14 Dec 2010 19:21:24 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=AZBe+fjNfcqREo3dFZjuYUJS3Oc=; b=CFuNJm
+	XyvMHDCFqew1/XviH+8QcMbhdzkWDNfenF86jvbK+aU7lwQf36ZnOog1LqNq3duf
+	yJm+zrUqpxdlk84dXou7kjn6BDXGsAd7iXYS/RCdY0Vd/U/HGBC84U8lqqbCBIZ6
+	hzcyCIKVfSR7N5+QfyG9S/7fZ8CqA/HyGauak=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=deHE1jjUa6MMnIybk23A8Ldkfhs7wZoZ
+	ff4vOzFNGefzoKlKvrg1A6YeujjjohCpNXBT7cDEtPmIMLmZBj6PJy0WQPm1U6WN
+	0P8/3ZID+AHHocA1NY7KPKx03+Ls9TWEEaEsWYLyvZK6uBhKWQHbFlddQp/5yYML
+	OKNeffht6Ow=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1D355362B;
+	Tue, 14 Dec 2010 19:21:21 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 00C96362A; Tue, 14 Dec 2010
+ 19:21:16 -0500 (EST)
+In-Reply-To: <426fca7313fc9466efa036b7b86947f23548fc26.1292366984.git.trast@student.ethz.ch> (Thomas Rast's message of "Tue\, 14 Dec 2010 23\:54\:11 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3E07063A-07E1-11E0-9476-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163723>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163724>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+Thomas Rast <trast@student.ethz.ch> writes:
 
---8323329-1337496104-1292371864=:1461
-Content-Type: TEXT/PLAIN; charset=ISO-8859-1
-Content-Transfer-Encoding: 8BIT
+> +void line_log_init(struct rev_info *rev, struct diff_line_range *r)
+> +{
+> +	struct commit *commit = NULL;
+> +	struct diff_options *opt = &rev->diffopt;
+> +
+> +	commit = (struct commit *)verify_commit(rev);
+> +	parse_lines(commit, r);
+> +
+> +	add_line_range(rev, commit, r);
+> +	/*
+> +	 * Note we support -M/-C to detect file rename
+> +	 */
+> +	opt->nr_paths = 0;
+> +	diff_tree_release_paths(opt);
+> +}
 
-Hi,
-
-On Tue, 14 Dec 2010, Erik Faye-Lund wrote:
-
-> On Tue, Dec 14, 2010 at 11:21 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> > On Windows in case a program is accessing a file unlink or
-> > move operations may fail. To give the user a chance to correct
-> > this we simply wait until the user asks us to retry or fail.
-> >
-> > This is useful because of the following use case which seem
-> > to happen rarely but when it does it is a mess:
-> >
-> > After making some changes the user realizes that he was on the
-> > incorrect branch. When trying to change the branch some file
-> > is still in use by some other process and git stops in the
-> > middle of changing branches. Now the user has lots of files
-> > with changes mixed with his own. This is especially confusing
-> > on repositories that contain lots of files.
-> >
-> > Although the recent implementation of automatic retry makes
-> > this scenario much more unlikely lets provide a fallback as
-> > a last resort.
-> >
-> > Thanks to Albert Dvornik for disabling the question if users can't see it.
-> >
-> > If the stdout of the command is connected to a terminal but the stderr
-> > has been redirected, the odds are good that the user can't see any
-> > question we print out to stderr.  This will result in a "mysterious
-> > hang" while the app is waiting for user input.
-> >
-> > It seems better to be conservative, and avoid asking for input
-> > whenever the stderr is not a terminal, just like we do for stdin.
-> >
-> > Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
-> > Signed-off-by: Albert Dvornik <dvornik+git@gmail.com>
-> > Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
-> > ---
-> > I have added the sign-off from the squashed commit of Albert and
-> > Johannes. I hope its ok this way.
-
-I'm fine with it.
-
-> >  compat/mingw.c |   82 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-> >  1 files changed, 82 insertions(+), 0 deletions(-)
-> >
-> > diff --git a/compat/mingw.c b/compat/mingw.c
-> > index 52183a7..ac9fb4a 100644
-> > --- a/compat/mingw.c
-> > +++ b/compat/mingw.c
-> > @@ -2,6 +2,7 @@
-> >  #include "win32.h"
-> >  #include <conio.h>
-> >  #include "../strbuf.h"
-> > +#include "../run-command.h"
-> >
-> >  static const int delay[] = { 0, 1, 10, 20, 40 };
-> >
-> > @@ -129,6 +130,78 @@ static inline int is_file_in_use_error(DWORD errcode)
-> >        return 0;
-> >  }
-> >
-> > +static int read_yes_no_answer()
-> 
-> Perhaps "static int read_yes_no_answer(void)" for portability?
-
-LOL. This file is called compat/mingw.c... :-)
-
-But I have no objection to stay with the convention of the rest of Git. 
-Nobody needs to convince me that consistency is good.
-
-> > +{
-> > +       char answer[1024];
-> > +
-> > +       if (fgets(answer, sizeof(answer), stdin)) {
-> > +               size_t answer_len = strlen(answer);
-> > +               int got_full_line = 0, c;
-> > +
-> > +               /* remove the newline */
-> > +               if (answer_len >= 2 && answer[answer_len-2] == '\r') {
-> > +                       answer[answer_len-2] = '\0';
-> > +                       got_full_line = 1;
-> > +               }
-> > +               else if (answer_len >= 1 && answer[answer_len-1] == '\n') {
-> > +                       answer[answer_len-1] = '\0';
-> > +                       got_full_line = 1;
-> > +               }
-> > +               /* flush the buffer in case we did not get the full line */
-> > +               if (!got_full_line)
-> > +                       while((c = getchar()) != EOF && c != '\n');
-> > +       } else
-> > +               /* we could not read, return the
-> > +                * default answer which is no */
-> > +               return 0;
-> > +
-> > +       if (answer[0] == 'y' && strlen(answer) == 1)
-> > +               return 1;
-> > +       if (!strncasecmp(answer, "yes", sizeof(answer)))
-> > +               return 1;
-> > +       if (answer[0] == 'n' && strlen(answer) == 1)
-> > +               return 0;
-> > +       if (!strncasecmp(answer, "no", sizeof(answer)))
-> > +               return 0;
-> 
-> Since you're doing case insensitive checks for "yes" and "no", perhaps
-> it'd make sense to allow upper case 'Y' and 'N' also? Something like:
-> 
-> -       if (answer[0] == 'n' && strlen(answer) == 1)
-> +       if (tolower(answer[0]) == 'n' && strlen(answer) == 1)
-> 
-> hm?
-
-Makes sense to me.
-
-> > +static int ask_user_yes_no(const char *format, ...)
-> > +{
-> > +       char question[4096];
-> > +       const char *retry_hook[] = { NULL, NULL, NULL };
-> > +       va_list args;
-> > +
-> > +       if ((retry_hook[0] = getenv("GIT_ASK_YESNO"))) {
-> > +
-> > +               va_start(args, format);
-> > +               vsnprintf(question, sizeof(question), format, args);
-> > +               va_end(args);
-> > +
-> > +               retry_hook[1] = question;
-> > +               return !run_command_v_opt(retry_hook, 0);
-> > +       }
-> > +
-> > +       if (!isatty(_fileno(stdin)) || !isatty(_fileno(stderr)))
-> > +               return 0;
-> 
-> I'm wondering, doesn't this make the semantics a bit wrong? The
-> function is called "ask_user_yes_no", but it might end up not asking
-> after all. Perhaps it should be called something that reflects this?
-> "maybe_ask_yes_no", "ask_yes_no_if_tty", "should_retry"? I don't have
-> a non-ugly suggestion, but I suspect something like that might leave
-> other people less puzzled when reading the code.
-
-I like ask_yes_no_if_tty.
-
-Ciao,
-Dscho
-
---8323329-1337496104-1292371864=:1461--
+Note that opt->nr_paths may be going away soon (cf. nd/struct-pathspec
+topic).  Do you need this assignment here?
