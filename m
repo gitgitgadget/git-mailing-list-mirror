@@ -1,115 +1,111 @@
-From: Scott Johnson <scottj75074@yahoo.com>
-Subject: html userdiff is not showing all my changes
-Date: Tue, 14 Dec 2010 19:47:12 -0800 (PST)
-Message-ID: <561247.22837.qm@web110707.mail.gq1.yahoo.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v5.1 0/3] Make git-completion Bash 4 compatible
+Date: Wed, 15 Dec 2010 00:24:03 -0600
+Message-ID: <20101215062403.GA20492@burratino>
+References: <1291236582-28603-1-git-send-email-peter@avirtualhome.com>
+ <20101202091624.GB1771@burratino>
+ <20101202091613.6ac8f816@MonteCarlo.grandprix.int>
+ <20101202210207.GA4994@burratino>
+ <20101207160747.GD1867@neumann>
+ <20101207194923.GD22587@burratino>
+ <7v1v5tpa7b.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org, trast@student.ethz.ch
-X-From: git-owner@vger.kernel.org Wed Dec 15 04:47:23 2010
+Cc: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>,
+	Peter van der Does <peter@avirtualhome.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org,
+	Marc Branchaud <marcnarc@xiplink.com>,
+	Brian Gernhardt <brian@gernhardtsoftware.com>,
+	Kevin Ballard <kevin@sb.org>,
+	Mathias Lafeldt <misfire@debugon.org>,
+	Stephen Boyd <bebarino@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 15 07:24:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSiKn-00016Q-1N
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 04:47:21 +0100
+	id 1PSkml-0004Do-Ib
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 07:24:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759328Ab0LODrP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Dec 2010 22:47:15 -0500
-Received: from nm4.bullet.mail.ne1.yahoo.com ([98.138.90.67]:30737 "HELO
-	nm4.bullet.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753198Ab0LODrO (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Dec 2010 22:47:14 -0500
-Received: from [98.138.90.54] by nm4.bullet.mail.ne1.yahoo.com with NNFMP; 15 Dec 2010 03:47:13 -0000
-Received: from [98.138.89.165] by tm7.bullet.mail.ne1.yahoo.com with NNFMP; 15 Dec 2010 03:47:13 -0000
-Received: from [127.0.0.1] by omp1021.mail.ne1.yahoo.com with NNFMP; 15 Dec 2010 03:47:13 -0000
-X-Yahoo-Newman-Property: ymail-3
-X-Yahoo-Newman-Id: 271553.44557.bm@omp1021.mail.ne1.yahoo.com
-Received: (qmail 22844 invoked by uid 60001); 15 Dec 2010 03:47:12 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1292384832; bh=//6/vudR7mrH/1F1F4K2caMeHHdNK3Hrk2A/1ICRJAs=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type; b=Uws2vPm4qoJy50Gy+7j1KS65l8gQC88ZfLtu8l0xfSbZ5GPCjmQ6MxYx2EIR5cWrVcV4Ce32ub3pTxGSOAVR4Qwy5vczxKI5HnfQsh7uM7GzpygZcbuNb+SiX3/KY3QwMzJRHnx3xIbUJ0Bt+34PlrfrFn4KZwJaWZTERehNc8g=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type;
-  b=SySZcaxmzAmobzO+W8ZJYrd7NMyrpZNTJVvrCeGQ8uaWceY0iEXhI0TrWGZasdjtnftif8vGYOHoCurVFsaUyfEjvFsM17Fo7kWPYOPq4NnLiOB8gRsXwFv+f1GPHuQpN60+0MA617VLLdKdBLz43s54TUVxd27bqz5IfzBNBFY=;
-X-YMail-OSG: 2njUMl0VM1mK_iEi0kD._PB59e4iLeuaFaJe3uSCDejH5at
- o44v2J_Un0sUcplJyi71bbPyUVGrfqpuZCL1jW565FzsE6qgcNFYRAEtAGd8
- X0X6ndRQaP8azOD.Ljcsjf2iXcalqzr1YV4Q0LSnCCcplfHASw9K_CH9507w
- kBAXbzx14dH3EjyNvqCFtsFD.7aRfqqi3miEC7BDZVVht0ckXN5AA10ldCZs
- 9WdZThwc1.7CUIGmylW9DfP8qpA5N.bWC8lBY9U9iitgcEJJnolgtWjO48o7
- g6lX2S90kV1CsWKlJCa_UhkxqJtLbdxJNNz4u9WziEoSfbQbUKRkXz5tU89A
- ge.rkgFWyaYW6QodN_E4Zw0PkK8zTPdlcCekx.bVG6CkrcTpgGFG4BNxZvLp
- RC4mkj_G_GpE-
-Received: from [99.189.91.206] by web110707.mail.gq1.yahoo.com via HTTP; Tue, 14 Dec 2010 19:47:12 PST
-X-Mailer: YahooMailRC/553 YahooMailWebService/0.8.107.285259
+	id S1752380Ab0LOGYU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Dec 2010 01:24:20 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:45689 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752061Ab0LOGYT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Dec 2010 01:24:19 -0500
+Received: by yxt3 with SMTP id 3so854256yxt.19
+        for <git@vger.kernel.org>; Tue, 14 Dec 2010 22:24:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=eZm3pCMjTP6TBTpDj180F1mT7NKvxG4VzkkFIl0vA1Q=;
+        b=SasFSwws4zbnz0SPYNAPLQ5Ny3/Vox41oxThND2Ub/CeLnmtfZtfEzl5Gi+c5NyKQ1
+         1uvOtUU8lRziwg/IdfscgYz9DLzNt4vUf08eobqsVwlLr1Sk2bj3Rkubsk94BaYhBU8a
+         XZG06iHu1QpIOAI423Gsst0JwodoWdc6SmTkg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=RjcnlQEL/JVDt60F6byDUjgnG7RPV//HyzTH5CZLL/TiQ8ZPxcRVuxXo5iJoJ1RlkD
+         PZd6/7Lb743x+6EsVI53IbcCjamrtOMGo2ZqLZkq26JxojDv8YyPZ7KOetlpLzfJj/iK
+         4BUZw+RRP9rzk5m1TR7VYXN750RHkZnEbWTB4=
+Received: by 10.151.142.4 with SMTP id u4mr9485728ybn.65.1292394258640;
+        Tue, 14 Dec 2010 22:24:18 -0800 (PST)
+Received: from burratino (adsl-69-209-48-248.dsl.chcgil.ameritech.net [69.209.48.248])
+        by mx.google.com with ESMTPS id u31sm637363yba.21.2010.12.14.22.24.15
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 14 Dec 2010 22:24:16 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7v1v5tpa7b.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163732>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163733>
 
-I am attempting to do a word diff of an html source file. Part of the removed 
-html is disappearing from the diff when I enable the fancy html word diff.
+Junio C Hamano wrote:
+>>> On Thu, Dec 02, 2010 at 03:02:07PM -0600, Jonathan Nieder wrote:
 
-Here's the output from basic `git diff`:
-diff --git a/adv_layout_source.html b/adv_layout_source.html
-index 18a81dd..c4ed609 100644
---- a/adv_layout_source.html
-+++ b/adv_layout_source.html
-@@ -42,8 +42,8 @@
-       <ul>
-         <li class="ydn-patterns"><em></em><a href="#">ydn-patterns</a></li>
-         <li class="ydn-mail"><em></em><a href="#">ydn-mail</a></li>
--        <li class="yws-maps"><em></em><a href="#">yws-maps</a></li>
--        <li class="ydn-delicious"><em></em><a href="#">ydn-delicious</a></li>
-+        <li><em></em><a href="#">yws-maps</a></li>
-+        <li><em></em><a href="#">ydn-delicious</a></li>
-         <li class="yws-flickr"><em></em><a href="#">yws-flickr</a></li>
-         <li class="yws-events"><em></em><a href="#">yws-events</a></li>
-       </ul>
+>>>> Add a minimal implementation of _get_comp_words_by_ref,
+>>>> the routine used to work around bash 4.0's COMP_WORDS semantics.
+>>>>
+>>>> Based on bash-completion 2.x (commit bf763033, 2010-10-26) but
+>>>> tweaked for simplicity and to allow zsh to at least parse the
+>>>> code.
+[...]
+> Sorry, but whose repository does that object live in?
 
+Agh, sorry for the mess.  Please fetch
 
-Here's the default `git diff --word-diff`:
-diff --git a/adv_layout_source.html b/adv_layout_source.html
-index 18a81dd..c4ed609 100644
---- a/adv_layout_source.html
-+++ b/adv_layout_source.html
-@@ -42,8 +42,8 @@
-      <ul>
-        <li class="ydn-patterns"><em></em><a href="#">ydn-patterns</a></li>
-        <li class="ydn-mail"><em></em><a href="#">ydn-mail</a></li>
-        [-<li class="yws-maps"><em></em><a-]{+<li><em></em><a+} 
-href="#">yws-maps</a></li>
-        [-<li class="ydn-delicious"><em></em><a-]{+<li><em></em><a+} 
-href="#">ydn-delicious</a></li>
-        <li class="yws-flickr"><em></em><a href="#">yws-flickr</a></li>
-        <li class="yws-events"><em></em><a href="#">yws-events</a></li>
-      </ul>
+  git://repo.or.cz/git/jrn.git pd/bash-4-completion 
 
-Which is correct, but less than ideal because it highlights much more than the 
-actual changes.
+to receive the following history:
 
-So I create a .gitattributes file with one line:
-*.html diff=html
+  o [maint-1.7.2] --- A --- B --- M [FETCH_HEAD]
+                                 /
+                                o [master (early part)]
 
-And rerun `git diff --word-diff`:
-diff --git a/adv_layout_source.html b/adv_layout_source.html
-index 18a81dd..c4ed609 100644
---- a/adv_layout_source.html
-+++ b/adv_layout_source.html
-@@ -42,8 +42,8 @@
-      <ul>
-        <li class="ydn-patterns"><em></em><a href="#">ydn-patterns</a></li>
-        <li class="ydn-mail"><em></em><a href="#">ydn-mail</a></li>
-        <li[-class="yws-maps"-]><em></em><a href="#">yws-maps</a></li>
-        <li><em></em><a href="#">ydn-delicious</a></li>
-        <li class="yws-flickr"><em></em><a href="#">yws-flickr</a></li>
-        <li class="yws-events"><em></em><a href="#">yws-events</a></li>
-      </ul>
+[A] bash: get --pretty=m<tab> completion to work with bash v4
+(by Peter)
 
-Yikes! What happened to the second line of changes? The removed code is not 
-displayed at all.
+[B] bash: simple reimplementation of _get_comp_words_by_ref
+(discussed above)
 
-This is running git 1.7.3.3.
+[M] Merge branch 'master' (early part) into pd/bash-4-completion
+(zsh compatibility)
 
-I suspect the problem is in the html patterns in userdiff.c, but I don't 
-understand the word-diff-regex well enough to fix it.
+[master (early part)] completion: fix zsh check under bash with 'set -u'
+(2010-10-28 11:45:00 -0700).
+
+A and B are the patches sent previously in this thread, rebased on an
+older code base to avoid the zsh support.  A combined diff for the
+merge 'M' will follow.  Thoughts, suggestions, acks, test reports
+would be welcome.
+
+Thanks for your patience.
+Jonathan
