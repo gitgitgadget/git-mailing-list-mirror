@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 03/21] Convert struct diff_options to use struct pathspec
-Date: Wed, 15 Dec 2010 22:02:38 +0700
-Message-ID: <1292425376-14550-4-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 05/21] Move tree_entry_interesting() to tree-walk.c and export it
+Date: Wed, 15 Dec 2010 22:02:40 +0700
+Message-ID: <1292425376-14550-6-git-send-email-pclouds@gmail.com>
 References: <1292425376-14550-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,291 +10,321 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 15 16:04:22 2010
+X-From: git-owner@vger.kernel.org Wed Dec 15 16:04:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSsty-0000Kl-7T
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 16:04:22 +0100
+	id 1PSsuO-0000YW-IZ
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 16:04:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754694Ab0LOPER convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Dec 2010 10:04:17 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:54659 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754366Ab0LOPEQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Dec 2010 10:04:16 -0500
-Received: by mail-yx0-f174.google.com with SMTP id 3so1083931yxt.19
-        for <git@vger.kernel.org>; Wed, 15 Dec 2010 07:04:15 -0800 (PST)
+	id S1754766Ab0LOPEk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Dec 2010 10:04:40 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:53691 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754736Ab0LOPEc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Dec 2010 10:04:32 -0500
+Received: by ywl5 with SMTP id 5so1082697ywl.19
+        for <git@vger.kernel.org>; Wed, 15 Dec 2010 07:04:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=YlIWAsZvgj1FettbPaMH05W6xabb651cpg3AWb2tWzQ=;
-        b=PTqTRDMwts7CGmSKL8DoWM3dEST68suzlfHyojwLyWPiIBas17yGiiqLeMTtiYHiqV
-         TACfLVlXcWNWpjAzhY+M8Ft5WGNErUK7EK+/q62wh/GhImF+ShFx24Eu2zJM1DJS7Wpo
-         8S72t+qT4+gpfJc7hrm5WIKMF1X31khMEpzkU=
+        bh=NFEw2D5EDoLf80ZNgIl00Jw9PKfT+S7vduOrabbmFYU=;
+        b=uxVnFPwnyahLN8QF85Xy6iwx3uo8aEWMcGEO/O1wXuLeCJT0RzZIAqYtXOCGHxr7bQ
+         5UDWoqQMDmsQ3PmbDKzlUdUZYceKLyZLcakfpx4MbhgsrvQv1ui9X/9Af0x1rjB6Y/bm
+         8Ig4OcAS24+Avr3VEqlCjeWmPnHZrMOIBlpaY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=OxuRKuFYWh7kRTYa8jth3CgsVZvDR5APhMiceotOBzX+8daA9S0aP9B+X6d0MWohs0
-         gCutgIeSN9OFQH1o5JkhdOK+GF2Wo3vzIP+Llm+6fFiAqDMHOEpiiC8kdc8Wwb55Oikh
-         n66BLjqUZg013T9E49VQ3HPpEm8CN4dmp6yj8=
-Received: by 10.42.167.131 with SMTP id s3mr6027666icy.305.1292425455512;
-        Wed, 15 Dec 2010 07:04:15 -0800 (PST)
+        b=SA9ZCWURIzoGFfHL0LY3esLkA/exu9iH2I7blhHtKpt80ucKNph1iGtMQOhWO1E1cb
+         zk+zDGcDnHQbaxU3OVC/yk4ateYAzQWzV+4PDjlGt3OncjbKGuv46fJhPADf/tU1agiO
+         otMaM93iA4KstgC9H5qB8b218Kndp+O0quxt8=
+Received: by 10.236.110.12 with SMTP id t12mr14729574yhg.6.1292425471625;
+        Wed, 15 Dec 2010 07:04:31 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.209.213])
-        by mx.google.com with ESMTPS id y3sm848992icw.11.2010.12.15.07.04.11
+        by mx.google.com with ESMTPS id j28sm751010yha.44.2010.12.15.07.04.27
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 15 Dec 2010 07:04:14 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 15 Dec 2010 22:03:22 +0700
+        Wed, 15 Dec 2010 07:04:30 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 15 Dec 2010 22:03:38 +0700
 X-Mailer: git-send-email 1.7.3.3.476.g10a82
 In-Reply-To: <1292425376-14550-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163759>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163760>
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/diff-files.c |    2 +-
- builtin/diff.c       |    4 ++--
- builtin/log.c        |    2 +-
- diff-lib.c           |    2 +-
- diff-no-index.c      |    4 ++--
- diff.h               |    4 +---
- revision.c           |    6 +-----
- tree-diff.c          |   48 +++++++++++++-----------------------------=
+ tree-diff.c |  110 ---------------------------------------------------=
 ------
- 8 files changed, 22 insertions(+), 50 deletions(-)
+ tree-walk.c |  112 +++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ tree-walk.h |    2 +
+ 3 files changed, 114 insertions(+), 110 deletions(-)
 
-diff --git a/builtin/diff-files.c b/builtin/diff-files.c
-index 951c7c8..46085f8 100644
---- a/builtin/diff-files.c
-+++ b/builtin/diff-files.c
-@@ -61,7 +61,7 @@ int cmd_diff_files(int argc, const char **argv, const=
- char *prefix)
- 	    (rev.diffopt.output_format & DIFF_FORMAT_PATCH))
- 		rev.combine_merges =3D rev.dense_combined_merges =3D 1;
-=20
--	if (read_cache_preload(rev.diffopt.paths) < 0) {
-+	if (read_cache_preload(rev.diffopt.pathspec.raw) < 0) {
- 		perror("read_cache_preload");
- 		return -1;
- 	}
-diff --git a/builtin/diff.c b/builtin/diff.c
-index a43d326..76c42d8 100644
---- a/builtin/diff.c
-+++ b/builtin/diff.c
-@@ -135,7 +135,7 @@ static int builtin_diff_index(struct rev_info *revs=
-,
- 	    revs->max_count !=3D -1 || revs->min_age !=3D -1 ||
- 	    revs->max_age !=3D -1)
- 		usage(builtin_diff_usage);
--	if (read_cache_preload(revs->diffopt.paths) < 0) {
-+	if (read_cache_preload(revs->diffopt.pathspec.raw) < 0) {
- 		perror("read_cache_preload");
- 		return -1;
- 	}
-@@ -237,7 +237,7 @@ static int builtin_diff_files(struct rev_info *revs=
-, int argc, const char **argv
- 		revs->combine_merges =3D revs->dense_combined_merges =3D 1;
-=20
- 	setup_work_tree();
--	if (read_cache_preload(revs->diffopt.paths) < 0) {
-+	if (read_cache_preload(revs->diffopt.pathspec.raw) < 0) {
- 		perror("read_cache_preload");
- 		return -1;
- 	}
-diff --git a/builtin/log.c b/builtin/log.c
-index eaa1ee0..92779a5 100644
---- a/builtin/log.c
-+++ b/builtin/log.c
-@@ -89,7 +89,7 @@ static void cmd_log_init(int argc, const char **argv,=
- const char *prefix,
- 		rev->always_show_header =3D 0;
- 	if (DIFF_OPT_TST(&rev->diffopt, FOLLOW_RENAMES)) {
- 		rev->always_show_header =3D 0;
--		if (rev->diffopt.nr_paths !=3D 1)
-+		if (rev->diffopt.pathspec.nr !=3D 1)
- 			usage("git logs can only follow renames on one pathname at a time")=
-;
- 	}
- 	for (i =3D 1; i < argc; i++) {
-diff --git a/diff-lib.c b/diff-lib.c
-index 392ce2b..3b809f2 100644
---- a/diff-lib.c
-+++ b/diff-lib.c
-@@ -501,7 +501,7 @@ int do_diff_cache(const unsigned char *tree_sha1, s=
-truct diff_options *opt)
- 	active_nr =3D dst - active_cache;
-=20
- 	init_revisions(&revs, NULL);
--	revs.prune_data =3D opt->paths;
-+	revs.prune_data =3D opt->pathspec.raw;
- 	tree =3D parse_tree_indirect(tree_sha1);
- 	if (!tree)
- 		die("bad tree object %s", sha1_to_hex(tree_sha1));
-diff --git a/diff-no-index.c b/diff-no-index.c
-index e48ab92..3a36144 100644
---- a/diff-no-index.c
-+++ b/diff-no-index.c
-@@ -260,8 +260,8 @@ void diff_no_index(struct rev_info *revs,
- 	if (diff_setup_done(&revs->diffopt) < 0)
- 		die("diff_setup_done failed");
-=20
--	if (queue_diff(&revs->diffopt, revs->diffopt.paths[0],
--		       revs->diffopt.paths[1]))
-+	if (queue_diff(&revs->diffopt, revs->diffopt.pathspec.raw[0],
-+		       revs->diffopt.pathspec.raw[1]))
- 		exit(1);
- 	diff_set_mnemonic_prefix(&revs->diffopt, "1/", "2/");
- 	diffcore_std(&revs->diffopt);
-diff --git a/diff.h b/diff.h
-index bf2f44d..6497b71 100644
---- a/diff.h
-+++ b/diff.h
-@@ -133,9 +133,7 @@ struct diff_options {
- 	FILE *file;
- 	int close_file;
-=20
--	int nr_paths;
--	const char **paths;
--	int *pathlens;
-+	struct pathspec pathspec;
- 	change_fn_t change;
- 	add_remove_fn_t add_remove;
- 	diff_format_fn_t format_callback;
-diff --git a/revision.c b/revision.c
-index b1c1890..b2a5867 100644
---- a/revision.c
-+++ b/revision.c
-@@ -553,11 +553,7 @@ static void cherry_pick_list(struct commit_list *l=
-ist, struct rev_info *revs)
-=20
- 	left_first =3D left_count < right_count;
- 	init_patch_ids(&ids);
--	if (revs->diffopt.nr_paths) {
--		ids.diffopts.nr_paths =3D revs->diffopt.nr_paths;
--		ids.diffopts.paths =3D revs->diffopt.paths;
--		ids.diffopts.pathlens =3D revs->diffopt.pathlens;
--	}
-+	ids.diffopts.pathspec =3D revs->diffopt.pathspec;
-=20
- 	/* Compute patch-ids for one side */
- 	for (p =3D list; p; p =3D p->next) {
 diff --git a/tree-diff.c b/tree-diff.c
-index cd659c6..7a4cc4b 100644
+index 57e8909..28a69dc 100644
 --- a/tree-diff.c
 +++ b/tree-diff.c
-@@ -100,16 +100,17 @@ static int tree_entry_interesting(struct tree_des=
-c *desc, const char *base, int
- 	int pathlen;
- 	int never_interesting =3D -1;
-=20
--	if (!opt->nr_paths)
-+	if (!opt->pathspec.nr)
- 		return 1;
-=20
- 	sha1 =3D tree_entry_extract(desc, &path, &mode);
-=20
- 	pathlen =3D tree_entry_len(path, sha1);
-=20
--	for (i =3D 0; i < opt->nr_paths; i++) {
--		const char *match =3D opt->paths[i];
--		int matchlen =3D opt->pathlens[i];
-+	for (i =3D 0; i < opt->pathspec.nr; i++) {
-+		const struct pathspec_item *item =3D opt->pathspec.items+i;
-+		const char *match =3D item->match;
-+		int matchlen =3D item->len;
- 		int m =3D -1; /* signals that we haven't called strncmp() */
-=20
- 		if (baselen >=3D matchlen) {
-@@ -289,7 +290,7 @@ int diff_tree(struct tree_desc *t1, struct tree_des=
-c *t2, const char *base, stru
- 		if (DIFF_OPT_TST(opt, QUICK) &&
- 		    DIFF_OPT_TST(opt, HAS_CHANGES))
- 			break;
--		if (opt->nr_paths) {
-+		if (opt->pathspec.nr) {
- 			skip_uninteresting(t1, base, baselen, opt);
- 			skip_uninteresting(t2, base, baselen, opt);
- 		}
-@@ -348,7 +349,7 @@ static void try_to_follow_renames(struct tree_desc =
-*t1, struct tree_desc *t2, co
- 	DIFF_OPT_SET(&diff_opts, RECURSIVE);
- 	DIFF_OPT_SET(&diff_opts, FIND_COPIES_HARDER);
- 	diff_opts.output_format =3D DIFF_FORMAT_NO_OUTPUT;
--	diff_opts.single_follow =3D opt->paths[0];
-+	diff_opts.single_follow =3D opt->pathspec.raw[0];
- 	diff_opts.break_opt =3D opt->break_opt;
- 	paths[0] =3D NULL;
- 	diff_tree_setup_paths(paths, &diff_opts);
-@@ -368,15 +369,16 @@ static void try_to_follow_renames(struct tree_des=
-c *t1, struct tree_desc *t2, co
- 		 * diff_queued_diff, we will also use that as the path in
- 		 * the future!
- 		 */
--		if ((p->status =3D=3D 'R' || p->status =3D=3D 'C') && !strcmp(p->two=
-->path, opt->paths[0])) {
-+		if ((p->status =3D=3D 'R' || p->status =3D=3D 'C') &&
-+		    !strcmp(p->two->path, opt->pathspec.raw[0])) {
- 			/* Switch the file-pairs around */
- 			q->queue[i] =3D choice;
- 			choice =3D p;
-=20
- 			/* Update the path we use from now on.. */
- 			diff_tree_release_paths(opt);
--			opt->paths[0] =3D xstrdup(p->one->path);
--			diff_tree_setup_paths(opt->paths, opt);
-+			opt->pathspec.raw[0] =3D xstrdup(p->one->path);
-+			diff_tree_setup_paths(opt->pathspec.raw, opt);
-=20
- 			/*
- 			 * The caller expects us to return a set of vanilla
-@@ -451,36 +453,12 @@ int diff_root_tree_sha1(const unsigned char *new,=
- const char *base, struct diff_
- 	return retval;
+@@ -82,116 +82,6 @@ static int compare_tree_entry(struct tree_desc *t1,=
+ struct tree_desc *t2, const
+ 	return 0;
  }
 =20
--static int count_paths(const char **paths)
+-/*
+- * Is a tree entry interesting given the pathspec we have?
+- *
+- * Return:
+- *  - 2 for "yes, and all subsequent entries will be"
+- *  - 1 for yes
+- *  - zero for no
+- *  - negative for "no, and no subsequent entries will be either"
+- */
+-static int tree_entry_interesting(const struct name_entry *entry, cons=
+t char *base, int baselen, const struct pathspec *ps)
 -{
--	int i =3D 0;
--	while (*paths++)
--		i++;
--	return i;
+-	int i;
+-	int pathlen;
+-	int never_interesting =3D -1;
+-
+-	if (!ps || !ps->nr)
+-		return 1;
+-
+-	pathlen =3D tree_entry_len(entry->path, entry->sha1);
+-
+-	for (i =3D 0; i < ps->nr; i++) {
+-		const struct pathspec_item *item =3D ps->items+i;
+-		const char *match =3D item->match;
+-		int matchlen =3D item->len;
+-		int m =3D -1; /* signals that we haven't called strncmp() */
+-
+-		if (baselen >=3D matchlen) {
+-			/* If it doesn't match, move along... */
+-			if (strncmp(base, match, matchlen))
+-				continue;
+-
+-			/*
+-			 * If the base is a subdirectory of a path which
+-			 * was specified, all of them are interesting.
+-			 */
+-			if (!matchlen ||
+-			    base[matchlen] =3D=3D '/' ||
+-			    match[matchlen - 1] =3D=3D '/')
+-				return 2;
+-
+-			/* Just a random prefix match */
+-			continue;
+-		}
+-
+-		/* Does the base match? */
+-		if (strncmp(base, match, baselen))
+-			continue;
+-
+-		match +=3D baselen;
+-		matchlen -=3D baselen;
+-
+-		if (never_interesting) {
+-			/*
+-			 * We have not seen any match that sorts later
+-			 * than the current path.
+-			 */
+-
+-			/*
+-			 * Does match sort strictly earlier than path
+-			 * with their common parts?
+-			 */
+-			m =3D strncmp(match, entry->path,
+-				    (matchlen < pathlen) ? matchlen : pathlen);
+-			if (m < 0)
+-				continue;
+-
+-			/*
+-			 * If we come here even once, that means there is at
+-			 * least one pathspec that would sort equal to or
+-			 * later than the path we are currently looking at.
+-			 * In other words, if we have never reached this point
+-			 * after iterating all pathspecs, it means all
+-			 * pathspecs are either outside of base, or inside the
+-			 * base but sorts strictly earlier than the current
+-			 * one.  In either case, they will never match the
+-			 * subsequent entries.  In such a case, we initialized
+-			 * the variable to -1 and that is what will be
+-			 * returned, allowing the caller to terminate early.
+-			 */
+-			never_interesting =3D 0;
+-		}
+-
+-		if (pathlen > matchlen)
+-			continue;
+-
+-		if (matchlen > pathlen) {
+-			if (match[pathlen] !=3D '/')
+-				continue;
+-			if (!S_ISDIR(entry->mode))
+-				continue;
+-		}
+-
+-		if (m =3D=3D -1)
+-			/*
+-			 * we cheated and did not do strncmp(), so we do
+-			 * that here.
+-			 */
+-			m =3D strncmp(match, entry->path, pathlen);
+-
+-		/*
+-		 * If common part matched earlier then it is a hit,
+-		 * because we rejected the case where path is not a
+-		 * leading directory and is shorter than match.
+-		 */
+-		if (!m)
+-			return 1;
+-	}
+-	return never_interesting; /* No matches */
 -}
 -
- void diff_tree_release_paths(struct diff_options *opt)
+ /* A whole sub-tree went away or appeared */
+ static void show_tree(struct diff_options *opt, const char *prefix, st=
+ruct tree_desc *desc, const char *base, int baselen)
  {
--	free(opt->pathlens);
-+	free_pathspec(&opt->pathspec);
+diff --git a/tree-walk.c b/tree-walk.c
+index a9bbf4e..a2e2a99 100644
+--- a/tree-walk.c
++++ b/tree-walk.c
+@@ -455,3 +455,115 @@ int get_tree_entry(const unsigned char *tree_sha1=
+, const char *name, unsigned ch
+ 	free(tree);
+ 	return retval;
+ }
++
++/*
++ * Is a tree entry interesting given the pathspec we have?
++ *
++ * Return:
++ *  - 2 for "yes, and all subsequent entries will be"
++ *  - 1 for yes
++ *  - zero for no
++ *  - negative for "no, and no subsequent entries will be either"
++ */
++int tree_entry_interesting(const struct name_entry *entry,
++			   const char *base, int baselen,
++			   const struct pathspec *ps)
++{
++	int i;
++	int pathlen;
++	int never_interesting =3D -1;
++
++	if (!ps || !ps->nr)
++		return 1;
++
++	pathlen =3D tree_entry_len(entry->path, entry->sha1);
++
++	for (i =3D 0; i < ps->nr; i++) {
++		const struct pathspec_item *item =3D ps->items+i;
++		const char *match =3D item->match;
++		int matchlen =3D item->len;
++		int m =3D -1; /* signals that we haven't called strncmp() */
++
++		if (baselen >=3D matchlen) {
++			/* If it doesn't match, move along... */
++			if (strncmp(base, match, matchlen))
++				continue;
++
++			/*
++			 * If the base is a subdirectory of a path which
++			 * was specified, all of them are interesting.
++			 */
++			if (!matchlen ||
++			    base[matchlen] =3D=3D '/' ||
++			    match[matchlen - 1] =3D=3D '/')
++				return 2;
++
++			/* Just a random prefix match */
++			continue;
++		}
++
++		/* Does the base match? */
++		if (strncmp(base, match, baselen))
++			continue;
++
++		match +=3D baselen;
++		matchlen -=3D baselen;
++
++		if (never_interesting) {
++			/*
++			 * We have not seen any match that sorts later
++			 * than the current path.
++			 */
++
++			/*
++			 * Does match sort strictly earlier than path
++			 * with their common parts?
++			 */
++			m =3D strncmp(match, entry->path,
++				    (matchlen < pathlen) ? matchlen : pathlen);
++			if (m < 0)
++				continue;
++
++			/*
++			 * If we come here even once, that means there is at
++			 * least one pathspec that would sort equal to or
++			 * later than the path we are currently looking at.
++			 * In other words, if we have never reached this point
++			 * after iterating all pathspecs, it means all
++			 * pathspecs are either outside of base, or inside the
++			 * base but sorts strictly earlier than the current
++			 * one.  In either case, they will never match the
++			 * subsequent entries.  In such a case, we initialized
++			 * the variable to -1 and that is what will be
++			 * returned, allowing the caller to terminate early.
++			 */
++			never_interesting =3D 0;
++		}
++
++		if (pathlen > matchlen)
++			continue;
++
++		if (matchlen > pathlen) {
++			if (match[pathlen] !=3D '/')
++				continue;
++			if (!S_ISDIR(entry->mode))
++				continue;
++		}
++
++		if (m =3D=3D -1)
++			/*
++			 * we cheated and did not do strncmp(), so we do
++			 * that here.
++			 */
++			m =3D strncmp(match, entry->path, pathlen);
++
++		/*
++		 * If common part matched earlier then it is a hit,
++		 * because we rejected the case where path is not a
++		 * leading directory and is shorter than match.
++		 */
++		if (!m)
++			return 1;
++	}
++	return never_interesting; /* No matches */
++}
+diff --git a/tree-walk.h b/tree-walk.h
+index 7e3e0b5..c12f0a2 100644
+--- a/tree-walk.h
++++ b/tree-walk.h
+@@ -60,4 +60,6 @@ static inline int traverse_path_len(const struct trav=
+erse_info *info, const stru
+ 	return info->pathlen + tree_entry_len(n->path, n->sha1);
  }
 =20
- void diff_tree_setup_paths(const char **p, struct diff_options *opt)
- {
--	opt->nr_paths =3D 0;
--	opt->pathlens =3D NULL;
--	opt->paths =3D NULL;
--
--	if (p) {
--		int i;
--
--		opt->paths =3D p;
--		opt->nr_paths =3D count_paths(p);
--		if (opt->nr_paths =3D=3D 0) {
--			opt->pathlens =3D NULL;
--			return;
--		}
--		opt->pathlens =3D xmalloc(opt->nr_paths * sizeof(int));
--		for (i=3D0; i < opt->nr_paths; i++)
--			opt->pathlens[i] =3D strlen(p[i]);
--	}
-+	init_pathspec(&opt->pathspec, p);
- }
++extern int tree_entry_interesting(const struct name_entry *, const cha=
+r *, int, const struct pathspec *ps);
++
+ #endif
 --=20
 1.7.3.3.476.g10a82
