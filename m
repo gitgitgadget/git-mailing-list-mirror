@@ -1,119 +1,97 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: html userdiff is not showing all my changes
-Date: Wed, 15 Dec 2010 10:06:21 +0100
-Message-ID: <4D08850D.3010402@drmicha.warpmail.net>
-References: <561247.22837.qm@web110707.mail.gq1.yahoo.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH v3 3/8] mingw: make failures to unlink or move raise a question
+Date: Wed, 15 Dec 2010 10:09:28 +0100
+Message-ID: <AANLkTi=vkkHmzmmGshn6v5E0e5mVkt0PMCkdhk=Mvn4u@mail.gmail.com>
+References: <20101214220604.GA4084@sandbox> <20101214222122.GD4084@sandbox>
+ <AANLkTi=cHb2kV2MaYu72nXVOksO7O9HhJLEo-fU0sV5N@mail.gmail.com>
+ <alpine.DEB.1.00.1012150109340.1461@bonsai2> <7v1v5jrb1f.fsf@alter.siamese.dyndns.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, trast@student.ethz.ch
-To: Scott Johnson <scottj75074@yahoo.com>
-X-From: git-owner@vger.kernel.org Wed Dec 15 10:08:55 2010
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Heiko Voigt <hvoigt@hvoigt.net>, Johannes Sixt <j6t@kdbg.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	msysgit@googlegroups.com, git@vger.kernel.org,
+	Albert Dvornik <dvornik+git@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 15 10:09:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSnLz-0003Bz-AN
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 10:08:55 +0100
+	id 1PSnN1-0003kd-Cy
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 10:09:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751728Ab0LOJIt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Dec 2010 04:08:49 -0500
-Received: from out3.smtp.messagingengine.com ([66.111.4.27]:39831 "EHLO
-	out3.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751720Ab0LOJIs (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Dec 2010 04:08:48 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 8B862FEF;
-	Wed, 15 Dec 2010 04:08:47 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Wed, 15 Dec 2010 04:08:47 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=VpkE+Qsdts6hefc3VtguvM5khqo=; b=mD2gZZyGHaC5B0QXVSNi3ZJaXmD45U9tgGC5E3mGD/j4ctUQ6EiG7Hb2YQUQunNJm90uShU4l0BXQVf2g8RaYp4gKl/JuNWRw605INXG0ltZ7Scx9zsQMy0L0PgJ4XOH1YtsLnui1LdcuCQFe/p0ZBsLnsdZya+SEiaJisZrh+8=
-X-Sasl-enc: 8hsP3YsXsj+cJwarKWu9gzKToJK9oOqftEyTx+D0gvT0 1292404127
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id DF665407A51;
-	Wed, 15 Dec 2010 04:08:46 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <561247.22837.qm@web110707.mail.gq1.yahoo.com>
+	id S1751756Ab0LOJJx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Dec 2010 04:09:53 -0500
+Received: from mail-fx0-f43.google.com ([209.85.161.43]:50913 "EHLO
+	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751237Ab0LOJJv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Dec 2010 04:09:51 -0500
+Received: by fxm18 with SMTP id 18so1768725fxm.2
+        for <git@vger.kernel.org>; Wed, 15 Dec 2010 01:09:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=zSD6cwSQqgosN/HmNvvAUDVVYjUR1Uor1kvb1rcxFsY=;
+        b=X+h7xjmaAV7K7MjMqnKn/8BsZ1CcPtqIdOqNWZIuz2x5nczgz0N9eZFemSHDvESwTM
+         ChPiSJu1z4twCbfQWyyYRsgOUNYCi92qwotIEaVAIBPpPJnuET0KYnZElRzsklwWBNPa
+         CiJf3K6lunlCdH5Ggd1tK5cv4rDJ8B3+k0wSc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=DnuDnv2Pfi9kKP/EtpoiuwyHeG7NAs8gsImD5jBtBK6fGWw6BF1hNmQaWF+lr2PS7/
+         SCzO2Ti9+pSm+d8UM/LJWiGTuAol8w99HgLh59X2w/I2Vf8nrW7Ghq0ybnDw/UNVjtlw
+         teCGqD3WBuVVUAMiJP/g8LfPSc/rdaeq4CQtc=
+Received: by 10.223.73.199 with SMTP id r7mr7201859faj.76.1292404189999; Wed,
+ 15 Dec 2010 01:09:49 -0800 (PST)
+Received: by 10.223.96.71 with HTTP; Wed, 15 Dec 2010 01:09:28 -0800 (PST)
+In-Reply-To: <7v1v5jrb1f.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163747>
 
-Scott Johnson venit, vidit, dixit 15.12.2010 04:47:
-> I am attempting to do a word diff of an html source file. Part of the removed 
-> html is disappearing from the diff when I enable the fancy html word diff.
-> 
-> Here's the output from basic `git diff`:
-> diff --git a/adv_layout_source.html b/adv_layout_source.html
-> index 18a81dd..c4ed609 100644
-> --- a/adv_layout_source.html
-> +++ b/adv_layout_source.html
-> @@ -42,8 +42,8 @@
->        <ul>
->          <li class="ydn-patterns"><em></em><a href="#">ydn-patterns</a></li>
->          <li class="ydn-mail"><em></em><a href="#">ydn-mail</a></li>
-> -        <li class="yws-maps"><em></em><a href="#">yws-maps</a></li>
-> -        <li class="ydn-delicious"><em></em><a href="#">ydn-delicious</a></li>
-> +        <li><em></em><a href="#">yws-maps</a></li>
-> +        <li><em></em><a href="#">ydn-delicious</a></li>
->          <li class="yws-flickr"><em></em><a href="#">yws-flickr</a></li>
->          <li class="yws-events"><em></em><a href="#">yws-events</a></li>
->        </ul>
-> 
-> 
-> Here's the default `git diff --word-diff`:
-> diff --git a/adv_layout_source.html b/adv_layout_source.html
-> index 18a81dd..c4ed609 100644
-> --- a/adv_layout_source.html
-> +++ b/adv_layout_source.html
-> @@ -42,8 +42,8 @@
->       <ul>
->         <li class="ydn-patterns"><em></em><a href="#">ydn-patterns</a></li>
->         <li class="ydn-mail"><em></em><a href="#">ydn-mail</a></li>
->         [-<li class="yws-maps"><em></em><a-]{+<li><em></em><a+} 
-> href="#">yws-maps</a></li>
->         [-<li class="ydn-delicious"><em></em><a-]{+<li><em></em><a+} 
-> href="#">ydn-delicious</a></li>
->         <li class="yws-flickr"><em></em><a href="#">yws-flickr</a></li>
->         <li class="yws-events"><em></em><a href="#">yws-events</a></li>
->       </ul>
-> 
-> Which is correct, but less than ideal because it highlights much more than the 
-> actual changes.
-> 
-> So I create a .gitattributes file with one line:
-> *.html diff=html
-> 
-> And rerun `git diff --word-diff`:
-> diff --git a/adv_layout_source.html b/adv_layout_source.html
-> index 18a81dd..c4ed609 100644
-> --- a/adv_layout_source.html
-> +++ b/adv_layout_source.html
-> @@ -42,8 +42,8 @@
->       <ul>
->         <li class="ydn-patterns"><em></em><a href="#">ydn-patterns</a></li>
->         <li class="ydn-mail"><em></em><a href="#">ydn-mail</a></li>
->         <li[-class="yws-maps"-]><em></em><a href="#">yws-maps</a></li>
->         <li><em></em><a href="#">ydn-delicious</a></li>
->         <li class="yws-flickr"><em></em><a href="#">yws-flickr</a></li>
->         <li class="yws-events"><em></em><a href="#">yws-events</a></li>
->       </ul>
-> 
-> Yikes! What happened to the second line of changes? The removed code is not 
-> displayed at all.
-> 
-> This is running git 1.7.3.3.
-> 
-> I suspect the problem is in the html patterns in userdiff.c, but I don't 
-> understand the word-diff-regex well enough to fix it.
+On Wed, Dec 15, 2010 at 4:05 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+>
+>>> > @@ -129,6 +130,78 @@ static inline int is_file_in_use_error(DWORD=
+ errcode)
+>>> > =A0 =A0 =A0 =A0return 0;
+>>> > =A0}
+>>> >
+>>> > +static int read_yes_no_answer()
+>>>
+>>> Perhaps "static int read_yes_no_answer(void)" for portability?
+>>
+>> LOL. This file is called compat/mingw.c... :-)
+>
+> I had the same reaction. =A0Maybe MinGW will get a different compiler
+> someday ;-)
+>
 
-The wordRegex should really only control what comprises a word, i.e. the
-granularity of --word-diff. (Where do we insert additional line-breaks
-before running ordinary diff?)
+We already have; compat/msvc.c includes compat/mingw.c. mingw.c is
+called mingw.c because it was the first native windows port, not
+because it will always be compiled with MinGW. So this file is REALLY
+more about the OS than the compiler.
 
-If a wordRegex can make parts of diff disappear than there is problem
-deeper in the diff machinery. Can you trim this down to a minimal example?
+I don't think MSVC has a problem with this declaration either, but
+wouldn't it be nicer if we had Windows-code that was as portable as
+possible across compilers? I've also been playing around with the idea
+of using LLVM's clang for Git on Windows, because it's support for
+cross compiling between 32bit and 64bit is a bit less nasty than
+MinGW's. This might never come happen, and I don't know if clang
+supports this or not. And then there's Intel's ICC that some times
+outperforms GCC. I don't think it would hurt fixing it in case people
+will port - one less trip-wire in the code.
 
-Michael
+But I of course only suggest this because this is new code. It's easy
+to change it to be slightly more portable (and more consistent with
+the rest of the code base), so why not?
