@@ -1,87 +1,82 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: TopGit release?
-Date: Wed, 15 Dec 2010 17:48:39 +0100
-Message-ID: <AANLkTinfDgvmodzrW7eMW-iizxpvb+gvBgSsH9B3LOdu@mail.gmail.com>
-References: <87ei9k42v5.fsf@write-only.cryp.to>
-	<20101215080148.GA28971@pengutronix.de>
-	<AANLkTi=E2H8n8jZPQ0Rz5gxaQTeLtJXeCFFZv08dip0E@mail.gmail.com>
-	<20101215153226.GF28971@pengutronix.de>
+From: Adam Monsen <haircut@gmail.com>
+Subject: disallowing non-trivial merges on integration branches
+Date: Wed, 15 Dec 2010 18:27:16 +0000 (UTC)
+Message-ID: <loom.20101215T185931-347@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Simons <simons@cryp.to>, git@vger.kernel.org,
-	martin f krafft <madduck@madduck.net>,
-	Per Cederqvist <ceder@lysator.liu.se>,
-	Olaf Dabrunz <odabrunz@gmx.net>,
-	Thomas Moschny <thomas.moschny@gmx.de>
-To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Wed Dec 15 17:49:00 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 15 19:27:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSuXD-0004aa-SO
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 17:49:00 +0100
+	id 1PSw4l-0004LB-Mz
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 19:27:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752695Ab0LOQsp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Dec 2010 11:48:45 -0500
-Received: from mail-gx0-f180.google.com ([209.85.161.180]:64714 "EHLO
-	mail-gx0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752391Ab0LOQsm convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Dec 2010 11:48:42 -0500
-Received: by gxk19 with SMTP id 19so1421178gxk.11
-        for <git@vger.kernel.org>; Wed, 15 Dec 2010 08:48:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Hm91sPYoIrEmKFLBN0PePnjAIcGPhUB5RONGm64gF/4=;
-        b=G9Hz1G+DqxJVJLybuZLZ67CxKs60XsxaQTQd3ovVC3evX9+Xwd5IaAiKs+4XCYbQ/E
-         wj+rjiXCH/heP17IhbLxgPGwB2gicU30/voWO3oNg6EbntExTJwhiHZUfb9FiVEXk+7J
-         rkZLSEjZUsWVo5erueKG+Cq+qj8Ct0HYOkg8M=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Skldh7b8js6CvIMJDSQ6StRyFQAB/VB0KqHi0Fwris6GumjhO6P0hJTPjLO4RkGLC5
-         f31c4pNJiAv9HjkDyo+SyH3UewLsRb/881hDzo0gKkmNLpKPFz1IRIYtRiP9WIdT/nJM
-         76yn/lxAzurQh+atrbrlWsJl0FWRtYL5keBAQ=
-Received: by 10.42.177.195 with SMTP id bj3mr6187450icb.90.1292431719512; Wed,
- 15 Dec 2010 08:48:39 -0800 (PST)
-Received: by 10.42.167.74 with HTTP; Wed, 15 Dec 2010 08:48:39 -0800 (PST)
-In-Reply-To: <20101215153226.GF28971@pengutronix.de>
+	id S1754535Ab0LOS1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Dec 2010 13:27:38 -0500
+Received: from lo.gmane.org ([80.91.229.12]:47962 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754087Ab0LOS1h (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Dec 2010 13:27:37 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PSw4a-0004ES-7O
+	for git@vger.kernel.org; Wed, 15 Dec 2010 19:27:32 +0100
+Received: from c-67-183-136-182.hsd1.wa.comcast.net ([67.183.136.182])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 15 Dec 2010 19:27:32 +0100
+Received: from haircut by c-67-183-136-182.hsd1.wa.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 15 Dec 2010 19:27:32 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 67.183.136.182 (Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.55 Safari/534.3)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163787>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163788>
 
-Hi,
+Does anyone have or want to help with a hook script to prevent trivial merges?
 
-2010/12/15 Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>:
-> Hi Bert,
->
-> On Wed, Dec 15, 2010 at 03:54:28PM +0100, Bert Wesarg wrote:
->> 2010/12/15 Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>:
->> > [1] http://thread.gmane.org/gmane.comp.version-control.git/159433
->> > =C2=A0 =C2=A0hint to Bert: this series doesn't apply to master
->>
->> I know, you applied a patch, which was rendered obsolete with this
->> patch series. you commited on Nov 02, and I send the series Oct 20.
-> If you tell me the commit you based your series on I can use the same
-> and merge the result into master.
+Here's some context:
 
-8b0f1f9d215d767488542a7853320d1789838d92
+I'm using the phrase "trivial merge" to refer to a merge without conflicts, 
+like, when two distinct files are edited.
 
-But I just refreshed my repo.or.cz fork (topgit/bertw), where I pushed
-a rebased series (I've done this some time ago already)
+In the Mifos project, the "head" repo at sf.net--for all intents and purposes--
+is the authoritative place to find Mifos source code. At my request, many of the 
+devs pushing to "head" have started using rebase more often than merge when 
+their local copy of a branch diverges from the corresponding remote[1] (for 
+example, I commit to my "master", but must fetch then merge or rebase before 
+pushing to origin/master). Liberal use of rebase has really cleaned up our 
+version history graph... it's much easier to see what was pushed and when, and 
+the progression of patches. Trivial merges just don't add anything helpful to 
+the commit history graph, IMHO. Non-trivial merges are of course still allowed. 
+Rebasing commits extant in the "head" repo at sf.net is disallowed.
 
-git://repo.or.cz/topgit/bertw.git index-wt
+I've been working on a hook script[2] to disallow trivial merges to further 
+enforce our policy. Well, really I'm just working on the test suite[3], another 
+guy (also named Adam, coincidentally) is working on the hook script.
 
-Bert
->
-> Best regards
-> Uwe
+A blocking bug with the hook script (might be a design flaw) is that it prevents 
+non-trivial merges.
+
+Wanna help fix it?
+
+I don't understand the hook script... is it doing something that makes sense?
+
+This was my first time writing a test harness in Bash script. Kinda fun, 
+actually. Git certainly lends well to scripting, and it feels intentional. Good 
+stuff.
+
+References (links) from the above email:
+1. http://article.gmane.org/gmane.comp.finance.mifos.devel/9597
+2. http://stackoverflow.com/questions/4138285
+3. https://gist.github.com/737842
