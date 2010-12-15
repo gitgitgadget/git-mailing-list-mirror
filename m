@@ -1,81 +1,115 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 3/3] get_sha1: support ref^{/regex} syntax
-Date: Wed, 15 Dec 2010 10:12:59 +0700
-Message-ID: <AANLkTimy5MVkxDzXqzA8T4DHJmzsSAvwqVVzRvWw5KA0@mail.gmail.com>
-References: <1292209275-17451-1-git-send-email-pclouds@gmail.com>
- <1292209275-17451-3-git-send-email-pclouds@gmail.com> <7vaak7rh9k.fsf@alter.siamese.dyndns.org>
- <AANLkTikgXAg9+0TXzpFH7LT1yD2sV5Dp=025GbudnY5S@mail.gmail.com> <7v62uvrbfk.fsf@alter.siamese.dyndns.org>
+From: Scott Johnson <scottj75074@yahoo.com>
+Subject: html userdiff is not showing all my changes
+Date: Tue, 14 Dec 2010 19:47:12 -0800 (PST)
+Message-ID: <561247.22837.qm@web110707.mail.gq1.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>,
-	Kevin Ballard <kevin@sb.org>, Yann Dirson <dirson@bertin.fr>,
-	Jeff King <peff@peff.net>, Jakub Narebski <jnareb@gmail.com>,
-	Thiago Farina <tfransosi@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 15 04:13:38 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org, trast@student.ethz.ch
+X-From: git-owner@vger.kernel.org Wed Dec 15 04:47:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSho8-0007CC-Hq
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 04:13:36 +0100
+	id 1PSiKn-00016Q-1N
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 04:47:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1759255Ab0LODNb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Dec 2010 22:13:31 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:45921 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754331Ab0LODNa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 14 Dec 2010 22:13:30 -0500
-Received: by wyb28 with SMTP id 28so1090767wyb.19
-        for <git@vger.kernel.org>; Tue, 14 Dec 2010 19:13:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=9g6+iL+XRPgq+9nOmZlRmmObnvWIcbwPgIHMGCzrxc4=;
-        b=Hsx2GX5oxGk7VbRnWI5T8jFwo3s+maf65T6J/wCU+7PZjZjw7bL9bA0+fX/iFovyXt
-         3EA7m1kviig/W+FR9w3YecMIdM+Q4WQyWGn3UwhSZgJZsxusCl2rAI7UjxwjjEZ+tRjY
-         4cI6UoDtoU0qhQggpA/DLh/0sU0ENXdwixOd8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=YGkcpq1M+C8Lq2Kpm28RQIUgYLEk7T3yc14vdagRO29E1ybJhiUN37CCtuWVBlewoG
-         uMmhYMsOyFC1+QxEXOK748ZWMeoI8R5E3XkW1+uvmd4W6LQfHLNVJdhn63gX+IV0Lgns
-         K48Bc6Uk595usYihSZ05ZbtvUz0OQZ39qG8xE=
-Received: by 10.216.59.143 with SMTP id s15mr74454wec.49.1292382809729; Tue,
- 14 Dec 2010 19:13:29 -0800 (PST)
-Received: by 10.216.158.83 with HTTP; Tue, 14 Dec 2010 19:12:59 -0800 (PST)
-In-Reply-To: <7v62uvrbfk.fsf@alter.siamese.dyndns.org>
+	id S1759328Ab0LODrP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 14 Dec 2010 22:47:15 -0500
+Received: from nm4.bullet.mail.ne1.yahoo.com ([98.138.90.67]:30737 "HELO
+	nm4.bullet.mail.ne1.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753198Ab0LODrO (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Dec 2010 22:47:14 -0500
+Received: from [98.138.90.54] by nm4.bullet.mail.ne1.yahoo.com with NNFMP; 15 Dec 2010 03:47:13 -0000
+Received: from [98.138.89.165] by tm7.bullet.mail.ne1.yahoo.com with NNFMP; 15 Dec 2010 03:47:13 -0000
+Received: from [127.0.0.1] by omp1021.mail.ne1.yahoo.com with NNFMP; 15 Dec 2010 03:47:13 -0000
+X-Yahoo-Newman-Property: ymail-3
+X-Yahoo-Newman-Id: 271553.44557.bm@omp1021.mail.ne1.yahoo.com
+Received: (qmail 22844 invoked by uid 60001); 15 Dec 2010 03:47:12 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1292384832; bh=//6/vudR7mrH/1F1F4K2caMeHHdNK3Hrk2A/1ICRJAs=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type; b=Uws2vPm4qoJy50Gy+7j1KS65l8gQC88ZfLtu8l0xfSbZ5GPCjmQ6MxYx2EIR5cWrVcV4Ce32ub3pTxGSOAVR4Qwy5vczxKI5HnfQsh7uM7GzpygZcbuNb+SiX3/KY3QwMzJRHnx3xIbUJ0Bt+34PlrfrFn4KZwJaWZTERehNc8g=
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
+  s=s1024; d=yahoo.com;
+  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:MIME-Version:Content-Type;
+  b=SySZcaxmzAmobzO+W8ZJYrd7NMyrpZNTJVvrCeGQ8uaWceY0iEXhI0TrWGZasdjtnftif8vGYOHoCurVFsaUyfEjvFsM17Fo7kWPYOPq4NnLiOB8gRsXwFv+f1GPHuQpN60+0MA617VLLdKdBLz43s54TUVxd27bqz5IfzBNBFY=;
+X-YMail-OSG: 2njUMl0VM1mK_iEi0kD._PB59e4iLeuaFaJe3uSCDejH5at
+ o44v2J_Un0sUcplJyi71bbPyUVGrfqpuZCL1jW565FzsE6qgcNFYRAEtAGd8
+ X0X6ndRQaP8azOD.Ljcsjf2iXcalqzr1YV4Q0LSnCCcplfHASw9K_CH9507w
+ kBAXbzx14dH3EjyNvqCFtsFD.7aRfqqi3miEC7BDZVVht0ckXN5AA10ldCZs
+ 9WdZThwc1.7CUIGmylW9DfP8qpA5N.bWC8lBY9U9iitgcEJJnolgtWjO48o7
+ g6lX2S90kV1CsWKlJCa_UhkxqJtLbdxJNNz4u9WziEoSfbQbUKRkXz5tU89A
+ ge.rkgFWyaYW6QodN_E4Zw0PkK8zTPdlcCekx.bVG6CkrcTpgGFG4BNxZvLp
+ RC4mkj_G_GpE-
+Received: from [99.189.91.206] by web110707.mail.gq1.yahoo.com via HTTP; Tue, 14 Dec 2010 19:47:12 PST
+X-Mailer: YahooMailRC/553 YahooMailWebService/0.8.107.285259
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163731>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163732>
 
-On Wed, Dec 15, 2010 at 9:56 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->
->> Perhaps we should just reject this case. No sane body would ever use=
- it.
->
-> I'd have to say that dismissing before even trying is not a very
-> disciplined attitude.
->
-> Shouldn't an empty regexp simply match everything? =C2=A0Even on FBSD=
-8,
->
-> =C2=A0 =C2=A0$ grep '' /etc/passwd
->
-> seems to show everything. =C2=A0How hard would it be to do this in th=
-e codepath
-> we are discussing?
+I am attempting to do a word diff of an html source file. Part of the removed 
+html is disappearing from the diff when I enable the fancy html word diff.
 
-To make '' match everything is easy. I'll cook up something when I get =
-home.
---=20
-Duy
+Here's the output from basic `git diff`:
+diff --git a/adv_layout_source.html b/adv_layout_source.html
+index 18a81dd..c4ed609 100644
+--- a/adv_layout_source.html
++++ b/adv_layout_source.html
+@@ -42,8 +42,8 @@
+       <ul>
+         <li class="ydn-patterns"><em></em><a href="#">ydn-patterns</a></li>
+         <li class="ydn-mail"><em></em><a href="#">ydn-mail</a></li>
+-        <li class="yws-maps"><em></em><a href="#">yws-maps</a></li>
+-        <li class="ydn-delicious"><em></em><a href="#">ydn-delicious</a></li>
++        <li><em></em><a href="#">yws-maps</a></li>
++        <li><em></em><a href="#">ydn-delicious</a></li>
+         <li class="yws-flickr"><em></em><a href="#">yws-flickr</a></li>
+         <li class="yws-events"><em></em><a href="#">yws-events</a></li>
+       </ul>
+
+
+Here's the default `git diff --word-diff`:
+diff --git a/adv_layout_source.html b/adv_layout_source.html
+index 18a81dd..c4ed609 100644
+--- a/adv_layout_source.html
++++ b/adv_layout_source.html
+@@ -42,8 +42,8 @@
+      <ul>
+        <li class="ydn-patterns"><em></em><a href="#">ydn-patterns</a></li>
+        <li class="ydn-mail"><em></em><a href="#">ydn-mail</a></li>
+        [-<li class="yws-maps"><em></em><a-]{+<li><em></em><a+} 
+href="#">yws-maps</a></li>
+        [-<li class="ydn-delicious"><em></em><a-]{+<li><em></em><a+} 
+href="#">ydn-delicious</a></li>
+        <li class="yws-flickr"><em></em><a href="#">yws-flickr</a></li>
+        <li class="yws-events"><em></em><a href="#">yws-events</a></li>
+      </ul>
+
+Which is correct, but less than ideal because it highlights much more than the 
+actual changes.
+
+So I create a .gitattributes file with one line:
+*.html diff=html
+
+And rerun `git diff --word-diff`:
+diff --git a/adv_layout_source.html b/adv_layout_source.html
+index 18a81dd..c4ed609 100644
+--- a/adv_layout_source.html
++++ b/adv_layout_source.html
+@@ -42,8 +42,8 @@
+      <ul>
+        <li class="ydn-patterns"><em></em><a href="#">ydn-patterns</a></li>
+        <li class="ydn-mail"><em></em><a href="#">ydn-mail</a></li>
+        <li[-class="yws-maps"-]><em></em><a href="#">yws-maps</a></li>
+        <li><em></em><a href="#">ydn-delicious</a></li>
+        <li class="yws-flickr"><em></em><a href="#">yws-flickr</a></li>
+        <li class="yws-events"><em></em><a href="#">yws-events</a></li>
+      </ul>
+
+Yikes! What happened to the second line of changes? The removed code is not 
+displayed at all.
+
+This is running git 1.7.3.3.
+
+I suspect the problem is in the html patterns in userdiff.c, but I don't 
+understand the word-diff-regex well enough to fix it.
