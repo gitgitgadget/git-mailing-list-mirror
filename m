@@ -1,102 +1,113 @@
-From: "Vallon, Justin" <Justin.Vallon@deshaw.com>
-Subject: RE: disallowing non-trivial merges on integration branches
-Date: Wed, 15 Dec 2010 17:04:26 -0500
-Message-ID: <982E526FA742C94E9AC26DA766FD07090A337E@NYCMBX3.winmail.deshaw.com>
-References: <loom.20101215T185931-347@post.gmane.org>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: git-archive and core.eol
+Date: Wed, 15 Dec 2010 23:32:51 +0100
+Message-ID: <AANLkTi=kfE88F7dY5F_xtbEuh9DyUcN+ymeXqLMWztGQ@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "'Adam Monsen'" <haircut@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Dec 15 23:24:29 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: eyvind.bernhardsen@gmail.com
+To: Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>
+X-From: git-owner@vger.kernel.org Wed Dec 15 23:33:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSzlr-00044N-Af
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 23:24:27 +0100
+	id 1PSzuR-0008Iw-4B
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 23:33:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751805Ab0LOWYW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Dec 2010 17:24:22 -0500
-Received: from master.nyc.deshaw.com ([149.77.10.1]:51951 "EHLO
-	master.nyc.deshaw.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751681Ab0LOWYU convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Dec 2010 17:24:20 -0500
-X-Greylist: delayed 1072 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Dec 2010 17:24:20 EST
-Received: from winmail.deshaw.com ([149.77.228.32])
- by master.nyc.deshaw.com (8.13.8+Sun/8.13.7/2.0.kim.desco.357) with ESMTP id oBFM6QVX011267
- for <git@vger.kernel.org>; Wed, 15 Dec 2010 17:06:26 -0500 (EST)
-Received: from NYCMBX3.winmail.deshaw.com ([149.77.72.43]) by
- maildrcas1.winmail.deshaw.com ([149.77.228.32]) with mapi; Wed, 15 Dec 2010
- 17:06:26 -0500
-Thread-Topic: disallowing non-trivial merges on integration branches
-Thread-Index: AcuchcRFrSRm+dsnSsiHQjvWI0n/IAAG2osA
-In-Reply-To: <loom.20101215T185931-347@post.gmane.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1751946Ab0LOWdO convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Dec 2010 17:33:14 -0500
+Received: from mail-fx0-f43.google.com ([209.85.161.43]:53681 "EHLO
+	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751691Ab0LOWdN convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 15 Dec 2010 17:33:13 -0500
+Received: by fxm18 with SMTP id 18so2643169fxm.2
+        for <git@vger.kernel.org>; Wed, 15 Dec 2010 14:33:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:reply-to:from
+         :date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Yq6vkbiwBMYX9SsZlBJ4UDy5LT4fTWbX09Xj/8A0/QY=;
+        b=NnBkneKWIKDrBgzH6TOb5D3ORFsaOpPJ/F0NhIziKxQTsxhGpAiEh+LGGnoIDe7WQO
+         GJgd7gzpWLUF/H5tJzPX+RsjPi6LIbEXTwl0kIUfLYIoaMf3U6XixYErEn3NBbPsPIxp
+         Bb1NkivkjXu4UQHViKJge/mTB7TSwkrR0OzWg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:from:date:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        b=TLEQqQNP2dNSPGJjfiMHXWYDxy9Rbry4XTj7CJgicwTCe/HWdqv+j7jVuQuXOdPDrP
+         /djKXFCbgdc5FbT45HKSru4qfYFaU7QuINVJGxLStktwrZ6tNrzOLe/9ln4FhK8v5yhM
+         K5UoFrgbo2AeoX/uQYCENMpcwDUymY1wHzPGA=
+Received: by 10.223.81.70 with SMTP id w6mr8231442fak.18.1292452392194; Wed,
+ 15 Dec 2010 14:33:12 -0800 (PST)
+Received: by 10.223.96.71 with HTTP; Wed, 15 Dec 2010 14:32:51 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163794>
 
-My two cents:
+I recently tried the following on Windows:
 
-* Rebase is evil (grab your pitchforks!).
+$ git init
+Initialized empty Git repository in c:/Users/kusma/test/.git/
+$ echo "foo
+bar" > test.txt
+$ git -c core.autocrlf=3Dtrue add test.txt
+warning: LF will be replaced by CRLF in test.txt.
+The file will have its original line endings in your working directory.
+$ git commit -m.
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+ create mode 100644 test.txt
+$ git -c core.autocrlf=3Dtrue -c core.eol=3Dlf archive --format=3Dtar H=
+EAD > test.tar
+$ tar xvf test.tar
+$ od -c test.txt
+0000000   f   o   o  \r  \n   b   a   r  \r  \n
+0000012
 
-* One thing that I have found is that if you fetch/merge --no-ff in the authoritative repo, then you actually end up with a better graph.  Why?  If you allow fast-forward to the contributor, then in the case of a trivial merge on the contributor branch, the contributor will have merged master *into* the contributor branch, making the contributor the left-parent, and the master the right-parent.  If you 'merge --no-ff', then you insure that in the merge on master, the left-parent is master, and the right-parent is your contributor.  Then, you should be able to follow left-parents to trace your mainline.  Not sure if that would help your gitk graph.
+Just to be sure, I checked this:
 
-* It sounds like you have a problem following the merges.  Maybe the grapher needs to be enhanced?
+$ git show HEAD:test.txt | od -c
+0000000   f   o   o  \n   b   a   r  \n
+0000010
 
--- 
--Justin
+Yep, the file has LF in the repo, as expected... the warning from
+git-add is a bit confusing, but OK.
 
+Hmm, so git-archive writes CRLF even if I said I wanted LF. But then I
+tried this on Linux:
 
------Original Message-----
-From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On Behalf Of Adam Monsen
-Sent: Wednesday, December 15, 2010 1:27 PM
-To: git@vger.kernel.org
-Subject: disallowing non-trivial merges on integration branches
+$ git init
+Initialized empty Git repository in /home/kusma/src/test/.git/
+$ echo "foo
+bar" > test.txt
+$ git add test.txt
+$ git commit -m.
+[master (root-commit) c6f195e] .
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+ create mode 100644 test.txt
+$ git -c core.autocrlf=3Dtrue -c core.eol=3Dcrlf archive --format=3Dtar=
+ HEAD
+> test.tar
+$ tar xvf test.tar
+test.txt
+$=A0od -c test.txt
+0000000   f   o   o  \r  \n   b   a   r  \r  \n
+0000012
 
-Does anyone have or want to help with a hook script to prevent trivial merges?
+This leaves me a bit puzzled. On Linux, I can override the default
+new-line style CRLF for git-archive, but I can't override it to LF on
+Windows?
 
-Here's some context:
+I expected it to work because sha1_file_to_archive calls
+convert_to_working_tree. I've tried stepping through the code, but I
+don't quite understand where it goes wrong. Or even how the code is
+supposed to work :P
 
-I'm using the phrase "trivial merge" to refer to a merge without conflicts, 
-like, when two distinct files are edited.
-
-In the Mifos project, the "head" repo at sf.net--for all intents and purposes--
-is the authoritative place to find Mifos source code. At my request, many of the 
-devs pushing to "head" have started using rebase more often than merge when 
-their local copy of a branch diverges from the corresponding remote[1] (for 
-example, I commit to my "master", but must fetch then merge or rebase before 
-pushing to origin/master). Liberal use of rebase has really cleaned up our 
-version history graph... it's much easier to see what was pushed and when, and 
-the progression of patches. Trivial merges just don't add anything helpful to 
-the commit history graph, IMHO. Non-trivial merges are of course still allowed. 
-Rebasing commits extant in the "head" repo at sf.net is disallowed.
-
-I've been working on a hook script[2] to disallow trivial merges to further 
-enforce our policy. Well, really I'm just working on the test suite[3], another 
-guy (also named Adam, coincidentally) is working on the hook script.
-
-A blocking bug with the hook script (might be a design flaw) is that it prevents 
-non-trivial merges.
-
-Wanna help fix it?
-
-I don't understand the hook script... is it doing something that makes sense?
-
-This was my first time writing a test harness in Bash script. Kinda fun, 
-actually. Git certainly lends well to scripting, and it feels intentional. Good 
-stuff.
-
-References (links) from the above email:
-1. http://article.gmane.org/gmane.comp.finance.mifos.devel/9597
-2. http://stackoverflow.com/questions/4138285
-3. https://gist.github.com/737842
-
+Does anyone have any clue what's going on? I'm running with the
+current master, git version 1.7.3.3.585.g74f6e.
