@@ -1,134 +1,109 @@
-From: Scott Johnson <scottj75074@yahoo.com>
-Subject: Re: [PATCH 0/4] --word-regex sanity checking and such
-Date: Wed, 15 Dec 2010 12:48:50 -0800 (PST)
-Message-ID: <254678.14296.qm@web110704.mail.gq1.yahoo.com>
-References: <561247.22837.qm@web110707.mail.gq1.yahoo.com> <cover.1292424926.git.trast@student.ethz.ch> <913156.57703.qm@web110711.mail.gq1.yahoo.com> <201012152051.15159.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH/RFC] ident: die on bogus date format
+Date: Wed, 15 Dec 2010 13:53:36 -0800
+Message-ID: <7vei9ipusf.fsf@alter.siamese.dyndns.org>
+References: <loom.20101213T161633-993@post.gmane.org>
+ <20101213170225.GA16033@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>,
-	Matthijs Kooijman <matthijs@stdin.nl>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Dec 15 21:49:20 2010
+Cc: Sergio <sergio.callegari@gmail.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Dec 15 22:54:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSyHj-0003WQ-EQ
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 21:49:15 +0100
+	id 1PSzIP-0004Kz-7O
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 22:54:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755237Ab0LOUsx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Dec 2010 15:48:53 -0500
-Received: from nm26-vm1.bullet.mail.sp2.yahoo.com ([98.139.91.231]:26782 "HELO
-	nm26-vm1.bullet.mail.sp2.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1752749Ab0LOUsv (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Dec 2010 15:48:51 -0500
-Received: from [98.139.91.63] by nm26.bullet.mail.sp2.yahoo.com with NNFMP; 15 Dec 2010 20:48:50 -0000
-Received: from [98.139.91.35] by tm3.bullet.mail.sp2.yahoo.com with NNFMP; 15 Dec 2010 20:48:50 -0000
-Received: from [127.0.0.1] by omp1035.mail.sp2.yahoo.com with NNFMP; 15 Dec 2010 20:48:50 -0000
-X-Yahoo-Newman-Property: ymail-5
-X-Yahoo-Newman-Id: 581805.67425.bm@omp1035.mail.sp2.yahoo.com
-Received: (qmail 14547 invoked by uid 60001); 15 Dec 2010 20:48:50 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1292446130; bh=UsX37XHyFpEHPwW25zSl23sp0UTZxsD8Mr3oopxwqOQ=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:References:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type; b=Ldjk7SSPySDgN9N98sEZPFTnqkLnOyZcvvNuGJJSnuHQXGODnbfKHQYBoSJds6X/5aDpMPCJtnDWmcOsPvZ2Rpaua0ZUScyF5s2XltKM8MPq4ZGodaaf9mYX0P2eaZjFGzWXWyOXOrRlMpzX6mYmme8YANI6UEZAoIxnJZ7bRzo=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=yahoo.com;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:References:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type;
-  b=HnNZafx0VkEUzi3Sg1auwKUOnwZdebI3OJiXD8LmnpjcUxhPhgsdCgEmkACCFQzPyFwM4lDLZE38O17Qmp4ahoZCjpCNncSsfhjsNA7spiDV+b7kvQbP9cdajYVeTBO+5Q5wS9QR9AFxMC6oN0O4FTqium4HHd0LVnHE57p58nc=;
-X-YMail-OSG: 6WIkLKgVM1nRRiFMX7431FH.7Bn59XTTgpdLqOetV_SxrDg
- zwj2L4w.W8OD6Dqb21ZA3iscaRI6dm1l228tfNKeOKS7ChFU0kbsnwnPy7Cx
- Jklzn..ptK4snUv6I2sanclQPOsLK2fc2UAdCPu3cs4Enfkp5JGY7Vz_Ctwv
- toA2EwreDb4XtB9MQ7AMjDuagJsIcTnJzGjPCj6avGbpMIWtIm_udeWVojGP
- u_tuSvCBQrIlDTuLbv4K3BEnCUYV9DKHEyxmYc8KXBhwJbIzRp9SpTtlawD.
- x4PtcsJedYv8Z7ktVlmv4UWFjQiZo6wl6M3aS21a1sjM35Uhw8zeutt1Fzoc
- 2o8I51mYzyXEi7nM3CAdPAXrX43rp32qib66kxo2fHojZ59rbbfacOpgrBRa
- 2LYSYVgLLCJw2qm6rGg--
-Received: from [99.189.91.206] by web110704.mail.gq1.yahoo.com via HTTP; Wed, 15 Dec 2010 12:48:50 PST
-X-Mailer: YahooMailRC/553 YahooMailWebService/0.8.107.285259
-In-Reply-To: <201012152051.15159.trast@student.ethz.ch>
+	id S1753272Ab0LOVxy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Dec 2010 16:53:54 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61480 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752541Ab0LOVxx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Dec 2010 16:53:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3B80D29C9;
+	Wed, 15 Dec 2010 16:54:13 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=GK3c+Cn9Q9e6bWI7Da21/evLG+o=; b=WlyxFX
+	aB/bVtjmUdtEOZjs0ObCJhWdV5G6IiilrTiqFBLhcDtxypvOIcCrWzMP6hxGscMG
+	OnAJPMgxBPiWOk7junc39gAuNj9AcDNNjRCmEaAQTkYuPvhogS1iD3q3ll7b+ztH
+	Bl+1iF2kLNdfC1VFCrZuUBMt+qeUuP0cd+Zqs=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=qoThRHpA2+Y0aTiaodG/Dmcov/Ckg72c
+	CFy5xYYT0XL5qiobV61fxvs0jVkr445dC9LYcCysRVgDC0oPS/hIQA+fmuJ2SCs6
+	c1v2ZpHCRniigbDOnE+YjKaQaGusZS4acF/oNUi8dUaeqqK6NGOn0/u9wfUYZSx4
+	oGgp475DrmM=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BD73129C6;
+	Wed, 15 Dec 2010 16:54:09 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4F7AA29C3; Wed, 15 Dec 2010
+ 16:54:05 -0500 (EST)
+In-Reply-To: <20101213170225.GA16033@sigill.intra.peff.net> (Jeff King's
+ message of "Mon\, 13 Dec 2010 12\:02\:25 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D88A2A70-0895-11E0-8CA6-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163791>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163792>
 
-Turns out to be system-dependent. I built v1.7.3.3 from source on three 
-different boxes and only one of them is broken.
+Jeff King <peff@peff.net> writes:
 
+> There are two down-sides to this approach:
+>
+>   1. Technically this breaks somebody doing something like
+>      "git commit --date=now", which happened to work because
+>      bogus data is the same as "now". Though we do
+>      explicitly handle the empty string, so anybody passing
+>      an empty variable through the environment will still
+>      work.
 
-The /etc/redhat-release shows:
+These days I think the bogodate parser knows what "now" is, but you can
+change the example to use "ahora" instead of "now" and your argument does
+not change.  But if you force user to change something in order to work
+with a new version of git, it is a regression, no matter how small that
+change is.
 
-Broken:
-Fedora Core release 6 (Zod)
+Having said that, I don't think --date=ahora is something we need to worry
+about within the context of "git commit", as the regression feels purely
+technical (the author-date defaults to the current time anyway, so there
+is no reason to give --date=ahora to the command, even though giving an
+explicit date via the flag may have some uses).  On the other hand, as
+fmt_ident() is fairly low-level, there might be other callers to which it
+made sense to give "now" to them, and we wouldn't know without looking.
 
-Correct:
-Red Hat Enterprise Linux WS release 4 (Nahant Update 6)
-Fedora release 9 (Sulphur)
+>      If the error is too much, perhaps it can be downgraded
+>      to a warning?
 
-So I guess that means the problem is in some library that has most likely been 
-fixed since Fedora 6.
+I think dying is actually Ok for this caller, as we already pass
+IDENT_ERROR_ON_NO_NAME to fmt_ident() expecting it to die for us upon a
+bad input.  Even though I suspect that we do not need to be conditional on
+this (the only reason ON_NO_NAME exists is because reflogs may record your
+name when you switch branches, and if you are only sightseeing it doesn't
+matter if your name is "johndoe@(null)"), using IDENT_ERROR_ON_NO_DATE may
+be safer perhaps?
 
+>   2. The error checking happens _after_ the commit message
+>      is written, which can be annoying to the user. We can
+>      put explicit checks closer to the beginning of
+>      git-commit, but that feels a little hack-ish; suddenly
+>      git-commit has to care about how fmt_ident works. Maybe
+>      we could simply call fmt_ident earlier?
 
-
------ Original Message ----
-From: Thomas Rast <trast@student.ethz.ch>
-To: Scott Johnson <scottj75074@yahoo.com>
-Cc: Michael J Gruber <git@drmicha.warpmail.net>; Matthijs Kooijman 
-<matthijs@stdin.nl>; git@vger.kernel.org
-Sent: Wed, December 15, 2010 11:51:14 AM
-Subject: Re: [PATCH 0/4] --word-regex sanity checking and such
-
-Scott Johnson wrote:
-> I've attached a pre and post with the complete file that is showing this 
-> problem. I hope you'll be able to reproduce the issue with this.
-
-I can't reproduce.  I did this:
-
-  $ ls -l
-  total 16
-  -rw-r--r-- 1 thomas users 2128 2010-12-15 20:42 post.html
-  -rw-r--r-- 1 thomas users 2354 2010-12-15 20:42 pre.html
-  $ echo '*.html diff=html'  >.gitattributes
-  $ git diff --no-index pre.html post.html
-  diff --git 1/pre.html 2/post.html
-[...]
-  -        <li class="ydn-patterns"><em></em><a href="#">ydn-patterns</a></li>
-  -        <li class="ydn-mail"><em></em><a href="#">ydn-mail</a></li>
-  -        <li class="yws-maps"><em></em><a href="#">yws-maps</a></li>
-  -        <li class="ydn-delicious"><em></em><a href="#">ydn-delicious</a></li>
-  -        <li class="yws-flickr"><em></em><a href="#">yws-flickr</a></li>
-  -        <li class="yws-events"><em></em><a href="#">yws-events</a></li>
-  +        <li><em></em><a href="#">ydn-patterns</a></li>
-  +        <li><em></em><a href="#">ydn-mail</a></li>
-  +        <li><em></em><a href="#">yws-maps</a></li>
-  +        <li><em></em><a href="#">ydn-delicious</a></li>
-  +        <li><em></em><a href="#">yws-flickr</a></li>
-  +        <li><em></em><a href="#">yws-events</a></li>
-         </ul>
-       </div><!-- wrap -->
-     </div><!-- folder_list -->
-  $ git diff --word-diff --no-index pre.html post.html
-  diff --git 1/pre.html 2/post.html
-[...]
-          <li[-class="ydn-patterns"-]><em></em><a href="#">ydn-patterns</a></li>
-          <li[-class="ydn-mail"-]><em></em><a href="#">ydn-mail</a></li>
-          <li[-class="yws-maps"-]><em></em><a href="#">yws-maps</a></li>
-          <li[-class="ydn-delicious"-]><em></em><a 
-href="#">ydn-delicious</a></li>
-          <li[-class="yws-flickr"-]><em></em><a href="#">yws-flickr</a></li>
-          <li[-class="yws-events"-]><em></em><a href="#">yws-events</a></li>
-        </ul>
-      </div><!-- wrap -->
-    </div><!-- folder_list -->
-
-That's running bleeding-edge git, like I always do, but the userdiff
-stuff hasn't changed in ages.
-
-What does
-
-  git config diff.html.wordregex
-
-say on your system?
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+After determine_author_info() returns to prepare_to_commit(), we have a
+call to git_committer_info() only to discard the outcome from.  I think
+this call was an earlier attempt to catch "You do not exist" and related
+low-level errors, and the codepath feels the right place to catch more
+recent errors like the one under discussion.  Instead of passing 0, how
+about passing IDENT_ERROR_ON_NO_NAME and IDENT_ERROR_ON_NO_DATE there,
+store and return its output from the prepare_to_commit(), and then give
+that string to commit_tree() later in cmd_commit().  We can do this by
+adding a new parameter (strbuf) to prepare_to_commit(), I think.
