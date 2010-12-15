@@ -1,95 +1,135 @@
-From: Bert Wesarg <bert.wesarg@googlemail.com>
-Subject: Re: TopGit release?
-Date: Wed, 15 Dec 2010 15:54:28 +0100
-Message-ID: <AANLkTi=E2H8n8jZPQ0Rz5gxaQTeLtJXeCFFZv08dip0E@mail.gmail.com>
-References: <87ei9k42v5.fsf@write-only.cryp.to>
-	<20101215080148.GA28971@pengutronix.de>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 00/21] nd/struct-pathspec v2
+Date: Wed, 15 Dec 2010 22:02:35 +0700
+Message-ID: <1292425376-14550-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Peter Simons <simons@cryp.to>, git@vger.kernel.org,
-	martin f krafft <madduck@madduck.net>,
-	Per Cederqvist <ceder@lysator.liu.se>,
-	Olaf Dabrunz <odabrunz@gmx.net>,
-	Thomas Moschny <thomas.moschny@gmx.de>
-To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Wed Dec 15 16:02:51 2010
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 15 16:03:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSssV-0007on-0P
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 16:02:51 +0100
+	id 1PSstZ-0008VW-MV
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 16:03:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754653Ab0LOPCq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Dec 2010 10:02:46 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:33488 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754545Ab0LOPCp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 15 Dec 2010 10:02:45 -0500
-Received: by gyb11 with SMTP id 11so1068171gyb.19
-        for <git@vger.kernel.org>; Wed, 15 Dec 2010 07:02:44 -0800 (PST)
+	id S1754608Ab0LOPDx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Dec 2010 10:03:53 -0500
+Received: from mail-gw0-f42.google.com ([74.125.83.42]:43085 "EHLO
+	mail-gw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754366Ab0LOPDw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Dec 2010 10:03:52 -0500
+Received: by gwb20 with SMTP id 20so1537127gwb.1
+        for <git@vger.kernel.org>; Wed, 15 Dec 2010 07:03:51 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:mime-version:content-type
          :content-transfer-encoding;
-        bh=ryEgMX2PTRn7mwWHOMyhEde+s75m/3kGZiKptKYjt40=;
-        b=lZEm5bE6VRryBhnoKSCrak6uo9YRBJq8qSb420DBYmDR1BqRL77Y/h93FxQT/RaU0D
-         /PNoA03r7nY6Fhaq7+c/XE5yucKqOJZMQMi4zy+BoOOkVwMsfTi5ZOqq6UrRjUaizFVw
-         D22e68C33Bte2CAKJ6GLPDDgiWV/NPWuqQorg=
+        bh=0G7+TFHsrc4SsQn5HERdQ12+IeMfjVKk6zVcjgqA+YI=;
+        b=R9sc5R2SsIrUngTcxzN8ZXfiZCHz3yB5BFj9bPMAXHciazOq0sp4oWEFs7AWho3gLm
+         qh5cTrW6Nfl1Ju2RfkM6IwtEdG33vFiANXxr7AfiqkmvxRSeuD9BmIM+sO2KaucA/on4
+         qwmXULqFHckpOU2SXRmG6k0kCI7aVHsQpj/Wc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=VXBc6UBYV+lb0FknpgpD1NPvPNygHJ48zpGDEokfV4QkU0ZuKS/vsflxgF9Hhg3/p2
-         pHEMWRC2Zz16I3KMWzZsCq3jagE/mTNEyaeX4T2qD9QCzWVNUvM5N8AClMamzvEzsjs8
-         noCo9iUiauysQy56aW9s5uytVqlyxUuxWpxb4=
-Received: by 10.42.171.138 with SMTP id j10mr1812909icz.492.1292424868202;
- Wed, 15 Dec 2010 06:54:28 -0800 (PST)
-Received: by 10.42.167.74 with HTTP; Wed, 15 Dec 2010 06:54:28 -0800 (PST)
-In-Reply-To: <20101215080148.GA28971@pengutronix.de>
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=EHpCKhhxU8Uj2Xv4K+wpaW3bImBc+hfMs9fOYV62v1BIh959vHqAAFdd4Xs7TEWfDz
+         /fcn651wDzdC7CEwFy5ZquXS3FW3dVIq6qlD0SEdq8QcXGLnPvOqpKWckRnBED7PejXZ
+         FHHUEUFunZcKzizCzTVPR4SSxvnN1PRj78eF0=
+Received: by 10.42.171.201 with SMTP id k9mr5954792icz.212.1292425431384;
+        Wed, 15 Dec 2010 07:03:51 -0800 (PST)
+Received: from pclouds@gmail.com ([115.73.209.213])
+        by mx.google.com with ESMTPS id he5sm842984icb.22.2010.12.15.07.03.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 15 Dec 2010 07:03:50 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 15 Dec 2010 22:02:58 +0700
+X-Mailer: git-send-email 1.7.3.3.476.g10a82
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163756>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163757>
 
-2010/12/15 Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>:
-> Hello,
->
-> On Tue, Dec 14, 2010 at 07:37:50PM +0100, Peter Simons wrote:
->> I was wondering whether there's a chance that we'll have a new relea=
-se
->> of TopGit in the foreseeable future? Version 0.8 seems to be quite o=
-ld
->> by now, but still there's no observable progress in getting a new
->> version tagged. Is this project still alive?
-> There are a few patches pending, but I currently don't find the time =
-to
-> go through and apply them[1]. =C2=A0Moreover I hardly use topgit anym=
-ore.
-> So if someone with interest in topgit wants to step forward to help t=
-his
-> would be very appreciated.
->
-> Best regards
-> Uwe
->
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/159433
-> =C2=A0 =C2=A0hint to Bert: this series doesn't apply to master
+Changes from previous version [1]
 
-I know, you applied a patch, which was rendered obsolete with this
-patch series. you commited on Nov 02, and I send the series Oct 20.
+ - fixes depth limit and overlapping pathspecs, by checking deepest
+   pathspecs first. struct pathspec is now sorted (raw[] untouched)
 
-Bert
+ - match_pathspec_depth depends on new match_pathspec_item() (a
+   clone of match_one(), but takes advantage of struct pathspec)
 
-> --
-> Pengutronix e.K. =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | Uwe Kleine-K=C3=B6nig =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|
-> Industrial Linux Solutions =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 | http://www.pengutronix.de/ =C2=A0|
->
+ - ce_path_match uses struct pathspec
+
+ - strbuf is used instead of fixed length "base" buffer. This
+   introduces the weird strbuf_offset() function.
+
+ - never_interesting is disabled if any wildcards is present
+
+ - struct pathspec * =3D=3D NULL is unacceptable, callers must pass
+   non-NULL.
+
+ - a bit more tests
+
+[1] http://mid.gmane.org/1292233616-27692-1-git-send-email-pclouds@gmai=
+l.com
+
+Jonathan Nieder (1):
+  glossary: define pathspec
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (20):
+  Add struct pathspec
+  diff-no-index: use diff_tree_setup_paths()
+  Convert struct diff_options to use struct pathspec
+  tree_entry_interesting(): remove dependency on struct diff_options
+  Move tree_entry_interesting() to tree-walk.c and export it
+  diff-tree: convert base+baselen to writable strbuf
+  tree_entry_interesting(): refactor into separate smaller functions
+  tree_entry_interesting(): support depth limit
+  tree_entry_interesting(): fix depth limit with overlapping pathspecs
+  tree_entry_interesting(): support wildcard matching
+  tree_entry_interesting(): optimize wildcard matching when base is mat=
+ched
+  pathspec: add match_pathspec_depth()
+  Convert ce_path_match() to use struct pathspec
+  Convert ce_path_match() to use match_pathspec_depth()
+  grep: convert to use struct pathspec
+  grep: use match_pathspec_depth() for cache/worktree grepping
+  strbuf: allow "buf" to point to the middle of the allocated buffer
+  grep: use writable strbuf from caller for grep_tree()
+  grep: drop pathspec_matches() in favor of tree_entry_interesting()
+  t7810: overlapping pathspecs and depth limit
+
+ Documentation/glossary-content.txt |   23 +++
+ builtin/diff-files.c               |    2 +-
+ builtin/diff.c                     |    4 +-
+ builtin/grep.c                     |  197 +++++++-------------------
+ builtin/log.c                      |    2 +-
+ builtin/update-index.c             |    8 +-
+ cache.h                            |   17 ++-
+ diff-lib.c                         |   12 ++-
+ diff-no-index.c                    |   13 +-
+ diff.h                             |    4 +-
+ dir.c                              |  151 ++++++++++++++++++++
+ dir.h                              |    4 +
+ preload-index.c                    |    5 +-
+ read-cache.c                       |   25 +---
+ revision.c                         |   11 +-
+ strbuf.c                           |   36 ++++--
+ strbuf.h                           |   10 +-
+ t/t4010-diff-pathspec.sh           |   32 ++++
+ t/t7810-grep.sh                    |   18 +++
+ tree-diff.c                        |  277 +++++++++-------------------=
+--------
+ tree-walk.c                        |  180 +++++++++++++++++++++++
+ tree-walk.h                        |    2 +
+ wt-status.c                        |    5 +-
+ 23 files changed, 615 insertions(+), 423 deletions(-)
+
+--=20
+1.7.3.3.476.g10a82
