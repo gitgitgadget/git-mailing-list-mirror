@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 19/21] grep: use writable strbuf from caller in grep_tree()
-Date: Wed, 15 Dec 2010 22:02:54 +0700
-Message-ID: <1292425376-14550-20-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 04/21] tree_entry_interesting(): remove dependency on struct diff_options
+Date: Wed, 15 Dec 2010 22:02:39 +0700
+Message-ID: <1292425376-14550-5-git-send-email-pclouds@gmail.com>
 References: <1292425376-14550-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,166 +10,163 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 15 16:06:42 2010
+X-From: git-owner@vger.kernel.org Wed Dec 15 16:09:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSsw7-0001Yr-OY
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 16:06:36 +0100
+	id 1PSszG-0003Ou-OU
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 16:09:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754752Ab0LOPGU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Dec 2010 10:06:20 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:50981 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753826Ab0LOPGT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Dec 2010 10:06:19 -0500
-Received: by iyi12 with SMTP id 12so937916iyi.19
-        for <git@vger.kernel.org>; Wed, 15 Dec 2010 07:06:18 -0800 (PST)
+	id S1754880Ab0LOPJk convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Dec 2010 10:09:40 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:63241 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753181Ab0LOPJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Dec 2010 10:09:39 -0500
+Received: by yxt3 with SMTP id 3so1089047yxt.19
+        for <git@vger.kernel.org>; Wed, 15 Dec 2010 07:09:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=lxKuw6gT/NG0YhxdAyd/F4W1CXQBsClrBdUlfrQrKz4=;
-        b=RZ9QbFNt0ZZcItGDdgVMyXYw7nXCSIlD5q0VG8eYO/pRZjAFbFqx9ehJIC5z9Hf7hv
-         o1sh4wy6x/MnDEnp8fcLhunr0Dw9k4ZZAEvaeXdx4V0IpYBP33VG5Yyi2br7ysC6Upzr
-         DR05MAPbzWftkFlO39GlgS0uRTvOO/ikU4ofA=
+        bh=U5kQu3MiKqq+f+TlaQ6CRO3tq2/dxO/PQP20Zscqevg=;
+        b=Xgbjnbx28LpmRacObufE61dXMw5wAafsT5B0BkHjQFXvIw8Vtw9MlFKcpcq+jcD8Cl
+         vw+wGKLz2F5MMqB57CVz0lWVnDp0BuP0lTvqUaGMBRP/sPg8golSJ5Ox54t7cOxozz4k
+         jE1HegNWGsM06WhhINg2BsV2sY/0NrpCcv+Vg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=IbwUeUjr12+mst020x/OLPLBUnutaztT3i2oYR7cIR8t9YzjgP01SZz6l/IDWzDSSa
-         6MdJwlB5pGTwO4Vt76N3L/gbgn+lDPrfI0dITNnO7fmO2YTsL16wdFdEz9x5eetFzqBX
-         P8IA01fRdcWh+wBG3gz8acdY9bNfGOEXYLGg4=
-Received: by 10.231.36.69 with SMTP id s5mr4768541ibd.167.1292425578773;
-        Wed, 15 Dec 2010 07:06:18 -0800 (PST)
+        b=rB9zSvH9dzsD3LW0PVJLzUYzxgCdGwngfDOYSdfmene8PTFgji7xrOyuXSVc0VVXHI
+         74sIxuW1ioMhA/0bmIjmz/OBvjfJxoludQ2uVeXkh8cSHYZI1CLqYEUsX6nd391WuvVO
+         pvHE5ZYtjoMJZIbjY1F6KTAECXUShuXJ7/dVM=
+Received: by 10.42.224.129 with SMTP id io1mr5905614icb.433.1292425463238;
+        Wed, 15 Dec 2010 07:04:23 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.209.213])
-        by mx.google.com with ESMTPS id i16sm1044985ibl.6.2010.12.15.07.06.15
+        by mx.google.com with ESMTPS id 8sm1044222iba.4.2010.12.15.07.04.19
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 15 Dec 2010 07:06:18 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 15 Dec 2010 22:05:26 +0700
+        Wed, 15 Dec 2010 07:04:22 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 15 Dec 2010 22:03:30 +0700
 X-Mailer: git-send-email 1.7.3.3.476.g10a82
 In-Reply-To: <1292425376-14550-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163775>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163776>
 
+This function can be potentially used in more places than just
+tree-diff.c. "struct diff_options" does not make much sense outside
+diff_tree_sha1().
+
+While removing the use of diff_options, it also removes
+tree_entry_extract() call, which means S_ISDIR() uses the entry->mode
+directly, without being filtered by canon_mode() (called internally
+inside tree_entry_extract).
+
+The only use of the mode information in this function is to check the
+type of the entry by giving it to S_ISDIR() macro, and the result does
+not change with or without canon_mode(), so it is ok to bypass
+tree_entry_extract().
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- builtin/grep.c |   52 +++++++++++++++++++++++++-----------------------=
-----
- 1 files changed, 25 insertions(+), 27 deletions(-)
+ tree-diff.c |   26 ++++++++++----------------
+ 1 files changed, 10 insertions(+), 16 deletions(-)
 
-diff --git a/builtin/grep.c b/builtin/grep.c
-index fbc7d02..5ecbbf8 100644
---- a/builtin/grep.c
-+++ b/builtin/grep.c
-@@ -623,43 +623,29 @@ static int grep_cache(struct grep_opt *opt, const=
- struct pathspec *pathspec, int
- }
-=20
- static int grep_tree(struct grep_opt *opt, const struct pathspec *path=
-spec,
--		     struct tree_desc *tree,
--		     const char *tree_name, const char *base)
-+		     struct tree_desc *tree, struct strbuf *base, int tn_len)
+diff --git a/tree-diff.c b/tree-diff.c
+index 7a4cc4b..57e8909 100644
+--- a/tree-diff.c
++++ b/tree-diff.c
+@@ -91,24 +91,19 @@ static int compare_tree_entry(struct tree_desc *t1,=
+ struct tree_desc *t2, const
+  *  - zero for no
+  *  - negative for "no, and no subsequent entries will be either"
+  */
+-static int tree_entry_interesting(struct tree_desc *desc, const char *=
+base, int baselen, struct diff_options *opt)
++static int tree_entry_interesting(const struct name_entry *entry, cons=
+t char *base, int baselen, const struct pathspec *ps)
  {
--	int len;
- 	int hit =3D 0;
- 	struct name_entry entry;
--	char *down;
--	int tn_len =3D strlen(tree_name);
--	struct strbuf pathbuf;
--
--	strbuf_init(&pathbuf, PATH_MAX + tn_len);
--
--	if (tn_len) {
--		strbuf_add(&pathbuf, tree_name, tn_len);
--		strbuf_addch(&pathbuf, ':');
--		tn_len =3D pathbuf.len;
--	}
--	strbuf_addstr(&pathbuf, base);
--	len =3D pathbuf.len;
-+	int old_baselen =3D base->len;
+-	const char *path;
+-	const unsigned char *sha1;
+-	unsigned mode;
+ 	int i;
+ 	int pathlen;
+ 	int never_interesting =3D -1;
 =20
- 	while (tree_entry(tree, &entry)) {
- 		int te_len =3D tree_entry_len(entry.path, entry.sha1);
--		pathbuf.len =3D len;
--		strbuf_add(&pathbuf, entry.path, te_len);
-+
-+		strbuf_add(base, entry.path, te_len);
+-	if (!opt->pathspec.nr)
++	if (!ps || !ps->nr)
+ 		return 1;
 =20
- 		if (S_ISDIR(entry.mode))
- 			/* Match "abc/" against pathspec to
- 			 * decide if we want to descend into "abc"
- 			 * directory.
+-	sha1 =3D tree_entry_extract(desc, &path, &mode);
+-
+-	pathlen =3D tree_entry_len(path, sha1);
++	pathlen =3D tree_entry_len(entry->path, entry->sha1);
+=20
+-	for (i =3D 0; i < opt->pathspec.nr; i++) {
+-		const struct pathspec_item *item =3D opt->pathspec.items+i;
++	for (i =3D 0; i < ps->nr; i++) {
++		const struct pathspec_item *item =3D ps->items+i;
+ 		const char *match =3D item->match;
+ 		int matchlen =3D item->len;
+ 		int m =3D -1; /* signals that we haven't called strncmp() */
+@@ -148,7 +143,7 @@ static int tree_entry_interesting(struct tree_desc =
+*desc, const char *base, int
+ 			 * Does match sort strictly earlier than path
+ 			 * with their common parts?
  			 */
--			strbuf_addch(&pathbuf, '/');
-+			strbuf_addch(base, '/');
-=20
--		down =3D pathbuf.buf + tn_len;
--		if (!pathspec_matches(pathspec->raw, down, opt->max_depth))
-+		if (!pathspec_matches(pathspec->raw, base->buf, opt->max_depth))
- 			;
--		else if (S_ISREG(entry.mode))
--			hit |=3D grep_sha1(opt, entry.sha1, pathbuf.buf, tn_len);
-+		else if (S_ISREG(entry.mode)) {
-+			hit |=3D grep_sha1(opt, entry.sha1, base->buf - tn_len, tn_len);
-+		}
- 		else if (S_ISDIR(entry.mode)) {
- 			enum object_type type;
- 			struct tree_desc sub;
-@@ -671,13 +657,14 @@ static int grep_tree(struct grep_opt *opt, const =
-struct pathspec *pathspec,
- 				die("unable to read tree (%s)",
- 				    sha1_to_hex(entry.sha1));
- 			init_tree_desc(&sub, data, size);
--			hit |=3D grep_tree(opt, pathspec, &sub, tree_name, down);
-+			hit |=3D grep_tree(opt, pathspec, &sub, base, tn_len);
- 			free(data);
+-			m =3D strncmp(match, path,
++			m =3D strncmp(match, entry->path,
+ 				    (matchlen < pathlen) ? matchlen : pathlen);
+ 			if (m < 0)
+ 				continue;
+@@ -175,7 +170,7 @@ static int tree_entry_interesting(struct tree_desc =
+*desc, const char *base, int
+ 		if (matchlen > pathlen) {
+ 			if (match[pathlen] !=3D '/')
+ 				continue;
+-			if (!S_ISDIR(mode))
++			if (!S_ISDIR(entry->mode))
+ 				continue;
  		}
-+		strbuf_setlen(base, old_baselen);
-+
- 		if (hit && opt->status_only)
- 			break;
- 	}
--	strbuf_release(&pathbuf);
- 	return hit;
- }
 =20
-@@ -690,13 +677,24 @@ static int grep_object(struct grep_opt *opt, cons=
-t struct pathspec *pathspec,
- 		struct tree_desc tree;
- 		void *data;
- 		unsigned long size;
--		int hit;
-+		struct strbuf base;
-+		int hit, len;
-+
- 		data =3D read_object_with_reference(obj->sha1, tree_type,
- 						  &size, NULL);
- 		if (!data)
- 			die("unable to read tree (%s)", sha1_to_hex(obj->sha1));
-+
-+		len =3D name ? strlen(name) : 0;
-+		strbuf_init(&base, PATH_MAX + len + 1);
-+		if (len) {
-+			strbuf_add(&base, name, len);
-+			strbuf_addch(&base, ':');
-+			strbuf_offset(&base, base.len);
-+		}
- 		init_tree_desc(&tree, data, size);
--		hit =3D grep_tree(opt, pathspec, &tree, name, "");
-+		hit =3D grep_tree(opt, pathspec, &tree, &base, base.neglen);
-+		strbuf_release(&base);
- 		free(data);
- 		return hit;
- 	}
+@@ -184,7 +179,7 @@ static int tree_entry_interesting(struct tree_desc =
+*desc, const char *base, int
+ 			 * we cheated and did not do strncmp(), so we do
+ 			 * that here.
+ 			 */
+-			m =3D strncmp(match, path, pathlen);
++			m =3D strncmp(match, entry->path, pathlen);
+=20
+ 		/*
+ 		 * If common part matched earlier then it is a hit,
+@@ -207,8 +202,7 @@ static void show_tree(struct diff_options *opt, con=
+st char *prefix, struct tree_
+ 		if (all_interesting)
+ 			show =3D 1;
+ 		else {
+-			show =3D tree_entry_interesting(desc, base, baselen,
+-						      opt);
++			show =3D tree_entry_interesting(&desc->entry, base, baselen, &opt->=
+pathspec);
+ 			if (show =3D=3D 2)
+ 				all_interesting =3D 1;
+ 		}
+@@ -267,7 +261,7 @@ static void skip_uninteresting(struct tree_desc *t,=
+ const char *base, int basele
+ 		if (all_interesting)
+ 			show =3D 1;
+ 		else {
+-			show =3D tree_entry_interesting(t, base, baselen, opt);
++			show =3D tree_entry_interesting(&t->entry, base, baselen, &opt->pat=
+hspec);
+ 			if (show =3D=3D 2)
+ 				all_interesting =3D 1;
+ 		}
 --=20
 1.7.3.3.476.g10a82
