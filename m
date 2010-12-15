@@ -1,135 +1,146 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 00/21] nd/struct-pathspec v2
-Date: Wed, 15 Dec 2010 22:02:35 +0700
-Message-ID: <1292425376-14550-1-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 01/21] Add struct pathspec
+Date: Wed, 15 Dec 2010 22:02:36 +0700
+Message-ID: <1292425376-14550-2-git-send-email-pclouds@gmail.com>
+References: <1292425376-14550-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 15 16:03:58 2010
+X-From: git-owner@vger.kernel.org Wed Dec 15 16:04:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSstZ-0008VW-MV
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 16:03:58 +0100
+	id 1PSstm-0000Cq-BS
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 16:04:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754608Ab0LOPDx convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Dec 2010 10:03:53 -0500
-Received: from mail-gw0-f42.google.com ([74.125.83.42]:43085 "EHLO
-	mail-gw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754366Ab0LOPDw (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Dec 2010 10:03:52 -0500
-Received: by gwb20 with SMTP id 20so1537127gwb.1
-        for <git@vger.kernel.org>; Wed, 15 Dec 2010 07:03:51 -0800 (PST)
+	id S1754672Ab0LOPEB convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Dec 2010 10:04:01 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:54659 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754366Ab0LOPEA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Dec 2010 10:04:00 -0500
+Received: by yxt3 with SMTP id 3so1083931yxt.19
+        for <git@vger.kernel.org>; Wed, 15 Dec 2010 07:03:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=0G7+TFHsrc4SsQn5HERdQ12+IeMfjVKk6zVcjgqA+YI=;
-        b=R9sc5R2SsIrUngTcxzN8ZXfiZCHz3yB5BFj9bPMAXHciazOq0sp4oWEFs7AWho3gLm
-         qh5cTrW6Nfl1Ju2RfkM6IwtEdG33vFiANXxr7AfiqkmvxRSeuD9BmIM+sO2KaucA/on4
-         qwmXULqFHckpOU2SXRmG6k0kCI7aVHsQpj/Wc=
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=UH/v706cNe7dbIO0/cpcTlJH2JjFMoGALz8vQV99PMs=;
+        b=cb7xcRniAKcD51FYb1o5tyk7ySoqGUi5iJmBdX1uXfDTTd5Bd32mmbAvaDxVb8ONo5
+         flKxJF6Rd9AVYFhQJtVoRn1Ze/hUGl8OtPf2+Nfmy+vN9TCvztE+tmS7bX0c9+dAzAi0
+         4rNLqQJsn9EDBp2fLOoUfzPdNg9pqObtGYEwI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=EHpCKhhxU8Uj2Xv4K+wpaW3bImBc+hfMs9fOYV62v1BIh959vHqAAFdd4Xs7TEWfDz
-         /fcn651wDzdC7CEwFy5ZquXS3FW3dVIq6qlD0SEdq8QcXGLnPvOqpKWckRnBED7PejXZ
-         FHHUEUFunZcKzizCzTVPR4SSxvnN1PRj78eF0=
-Received: by 10.42.171.201 with SMTP id k9mr5954792icz.212.1292425431384;
-        Wed, 15 Dec 2010 07:03:51 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=kTV+0VE382c+DgFoW9ydxKw7QtiwuceK85Z42qQcpVr88tVQ+5DTG7We0rXjTM538u
+         qROrO+DnMYiaoZwyPlhQ+1mfyke1T+q2uRdBghAL0nYcxsf0gfBeI9Ts6sy7BJOxD84J
+         s8SwyC/S9tRcghcuHFpWRj7xfqOr6npjrmI1Y=
+Received: by 10.42.240.133 with SMTP id la5mr5919224icb.327.1292425439154;
+        Wed, 15 Dec 2010 07:03:59 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.209.213])
-        by mx.google.com with ESMTPS id he5sm842984icb.22.2010.12.15.07.03.47
+        by mx.google.com with ESMTPS id f7sm846838icq.17.2010.12.15.07.03.55
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 15 Dec 2010 07:03:50 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 15 Dec 2010 22:02:58 +0700
+        Wed, 15 Dec 2010 07:03:58 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 15 Dec 2010 22:03:06 +0700
 X-Mailer: git-send-email 1.7.3.3.476.g10a82
+In-Reply-To: <1292425376-14550-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163758>
 
-Changes from previous version [1]
+The old pathspec structure remains as pathspec.raw[]. New things are
+stored in pathspec.items[]. There's no guarantee that the pathspec
+order in raw[] is exactly as in items[].
 
- - fixes depth limit and overlapping pathspecs, by checking deepest
-   pathspecs first. struct pathspec is now sorted (raw[] untouched)
+raw[] is external (source) data and is untouched by pathspec
+manipulation functions. It eases migration from old const char ** to
+this new struct.
 
- - match_pathspec_depth depends on new match_pathspec_item() (a
-   clone of match_one(), but takes advantage of struct pathspec)
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ cache.h |   11 +++++++++++
+ dir.c   |   31 +++++++++++++++++++++++++++++++
+ 2 files changed, 42 insertions(+), 0 deletions(-)
 
- - ce_path_match uses struct pathspec
-
- - strbuf is used instead of fixed length "base" buffer. This
-   introduces the weird strbuf_offset() function.
-
- - never_interesting is disabled if any wildcards is present
-
- - struct pathspec * =3D=3D NULL is unacceptable, callers must pass
-   non-NULL.
-
- - a bit more tests
-
-[1] http://mid.gmane.org/1292233616-27692-1-git-send-email-pclouds@gmai=
-l.com
-
-Jonathan Nieder (1):
-  glossary: define pathspec
-
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (20):
-  Add struct pathspec
-  diff-no-index: use diff_tree_setup_paths()
-  Convert struct diff_options to use struct pathspec
-  tree_entry_interesting(): remove dependency on struct diff_options
-  Move tree_entry_interesting() to tree-walk.c and export it
-  diff-tree: convert base+baselen to writable strbuf
-  tree_entry_interesting(): refactor into separate smaller functions
-  tree_entry_interesting(): support depth limit
-  tree_entry_interesting(): fix depth limit with overlapping pathspecs
-  tree_entry_interesting(): support wildcard matching
-  tree_entry_interesting(): optimize wildcard matching when base is mat=
-ched
-  pathspec: add match_pathspec_depth()
-  Convert ce_path_match() to use struct pathspec
-  Convert ce_path_match() to use match_pathspec_depth()
-  grep: convert to use struct pathspec
-  grep: use match_pathspec_depth() for cache/worktree grepping
-  strbuf: allow "buf" to point to the middle of the allocated buffer
-  grep: use writable strbuf from caller for grep_tree()
-  grep: drop pathspec_matches() in favor of tree_entry_interesting()
-  t7810: overlapping pathspecs and depth limit
-
- Documentation/glossary-content.txt |   23 +++
- builtin/diff-files.c               |    2 +-
- builtin/diff.c                     |    4 +-
- builtin/grep.c                     |  197 +++++++-------------------
- builtin/log.c                      |    2 +-
- builtin/update-index.c             |    8 +-
- cache.h                            |   17 ++-
- diff-lib.c                         |   12 ++-
- diff-no-index.c                    |   13 +-
- diff.h                             |    4 +-
- dir.c                              |  151 ++++++++++++++++++++
- dir.h                              |    4 +
- preload-index.c                    |    5 +-
- read-cache.c                       |   25 +---
- revision.c                         |   11 +-
- strbuf.c                           |   36 ++++--
- strbuf.h                           |   10 +-
- t/t4010-diff-pathspec.sh           |   32 ++++
- t/t7810-grep.sh                    |   18 +++
- tree-diff.c                        |  277 +++++++++-------------------=
---------
- tree-walk.c                        |  180 +++++++++++++++++++++++
- tree-walk.h                        |    2 +
- wt-status.c                        |    5 +-
- 23 files changed, 615 insertions(+), 423 deletions(-)
-
+diff --git a/cache.h b/cache.h
+index 2ef2fa3..9eeecc2 100644
+--- a/cache.h
++++ b/cache.h
+@@ -493,6 +493,17 @@ extern int index_name_is_other(const struct index_=
+state *, const char *, int);
+ extern int ie_match_stat(const struct index_state *, struct cache_entr=
+y *, struct stat *, unsigned int);
+ extern int ie_modified(const struct index_state *, struct cache_entry =
+*, struct stat *, unsigned int);
+=20
++struct pathspec {
++	const char **raw; /* get_pathspec() result, not freed by free_pathspe=
+c() */
++	int nr;
++	struct pathspec_item {
++		const char *match;
++		int len;
++	} *items;
++};
++
++extern int init_pathspec(struct pathspec *, const char **);
++extern void free_pathspec(struct pathspec *);
+ extern int ce_path_match(const struct cache_entry *ce, const char **pa=
+thspec);
+ extern int index_fd(unsigned char *sha1, int fd, struct stat *st, int =
+write_object, enum object_type type, const char *path);
+ extern int index_path(unsigned char *sha1, const char *path, struct st=
+at *st, int write_object);
+diff --git a/dir.c b/dir.c
+index 133f472..a88f2ef 100644
+--- a/dir.c
++++ b/dir.c
+@@ -1071,3 +1071,34 @@ int remove_path(const char *name)
+ 	return 0;
+ }
+=20
++int init_pathspec(struct pathspec *pathspec, const char **paths)
++{
++	const char **p =3D paths;
++	int i;
++
++	memset(pathspec, 0, sizeof(*pathspec));
++	if (!p)
++		return 0;
++	while (*p)
++		p++;
++	pathspec->raw =3D paths;
++	pathspec->nr =3D p - paths;
++	if (!pathspec->nr)
++		return 0;
++
++	pathspec->items =3D xmalloc(sizeof(struct pathspec_item)*pathspec->nr=
+);
++	for (i =3D 0; i < pathspec->nr; i++) {
++		struct pathspec_item *item =3D pathspec->items+i;
++		const char *path =3D paths[i];
++
++		item->match =3D path;
++		item->len =3D strlen(path);
++	}
++	return 0;
++}
++
++void free_pathspec(struct pathspec *pathspec)
++{
++	free(pathspec->items);
++	pathspec->items =3D NULL;
++}
 --=20
 1.7.3.3.476.g10a82
