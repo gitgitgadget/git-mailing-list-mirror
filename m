@@ -1,98 +1,78 @@
-From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
-Subject: Re: [PATCH v3 5/5] mingw_rmdir: set errno=ENOTEMPTY when
- appropriate
-Date: Wed, 15 Dec 2010 01:21:00 +0100 (CET)
-Message-ID: <alpine.DEB.1.00.1012150114010.1461@bonsai2>
-References: <20101214220604.GA4084@sandbox> <20101214222830.GF4084@sandbox> <AANLkTi=12WqYn5GJpqPYqKE_2L51Em7Ek5szTZYryHd9@mail.gmail.com>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH] branch: do not attempt to track HEAD implicitly
+Date: Tue, 14 Dec 2010 19:50:44 -0500
+Message-ID: <AANLkTi=PPx-pLEeR4gLw0KzV_=ZnuqqH_CGc6L7RzU7M@mail.gmail.com>
+References: <6ee1f0174b757e25ab873d2d037545ac7db698ee.1292351886.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Heiko Voigt <hvoigt@hvoigt.net>, Johannes Sixt <j6t@kdbg.org>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	msysgit@googlegroups.com, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 15 01:21:22 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Dec 15 01:50:55 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSf7R-0004Nz-Er
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 01:21:21 +0100
+	id 1PSfZz-0008A0-No
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 01:50:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757472Ab0LOAVL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 14 Dec 2010 19:21:11 -0500
-Received: from mailout-de.gmx.net ([213.165.64.22]:53638 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1755127Ab0LOAVJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 14 Dec 2010 19:21:09 -0500
-Received: (qmail invoked by alias); 15 Dec 2010 00:21:08 -0000
-Received: from pD9EB205C.dip0.t-ipconnect.de (EHLO noname) [217.235.32.92]
-  by mail.gmx.net (mp020) with SMTP; 15 Dec 2010 01:21:08 +0100
-X-Authenticated: #1490710
-X-Provags-ID: V01U2FsdGVkX18mMcpiY2Em4YO7tAFS25RsHTNC0DgyeSgIj+q2Xk
-	aYNPKQeuuOZKfX
-X-X-Sender: gene099@bonsai2
-In-Reply-To: <AANLkTi=12WqYn5GJpqPYqKE_2L51Em7Ek5szTZYryHd9@mail.gmail.com>
-User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
-X-Y-GMX-Trusted: 0
+	id S1760298Ab0LOAuq convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 14 Dec 2010 19:50:46 -0500
+Received: from mail-ew0-f45.google.com ([209.85.215.45]:55971 "EHLO
+	mail-ew0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1760269Ab0LOAup convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 14 Dec 2010 19:50:45 -0500
+Received: by ewy10 with SMTP id 10so837210ewy.4
+        for <git@vger.kernel.org>; Tue, 14 Dec 2010 16:50:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=aroFZnV27leMGyZxilwF0y+DFjXHhtEKRw2oVt4x2wY=;
+        b=tslAdH9sVfs5UbWcvVpJntpqB0T31QEFNcOpJB4nXmjM1YLKeGQfBuOcaMe5O9+hgp
+         d6vSNt6a3dsTPjZsBfFIQgrmNH5J6iKbyzOA/FOSEf8P8mC6B5vadUkdId9zs8nGMwzr
+         Lq3Tu1jOT7yFtCk7P0E/pe3V8/qd/Xd7GAYJY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=qNjsDVr/Rnjvpe6M+yFJoJ7/vbjK16X5TFtKSB9NXAoGjni7lWtKR0jnZDqWRT7HhB
+         +zov4/skdzinii5r5AbxCHJOkxtaXCybF3opzzLvC9Xp2jbpjZ0mcPqxwyRBBYIWR296
+         wC+H+GV4AtlimsHtiTpm0vLgqbrms05oJlqF0=
+Received: by 10.14.11.226 with SMTP id 74mr1002232eex.5.1292374244477; Tue, 14
+ Dec 2010 16:50:44 -0800 (PST)
+Received: by 10.14.124.197 with HTTP; Tue, 14 Dec 2010 16:50:44 -0800 (PST)
+In-Reply-To: <6ee1f0174b757e25ab873d2d037545ac7db698ee.1292351886.git.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163726>
 
-Hi,
+On Tue, Dec 14, 2010 at 1:38 PM, Thomas Rast <trast@student.ethz.ch> wr=
+ote:
+> With branch.autosetupmerge=3Dalways, 'HEAD' becomes a valid target fo=
+r
+> branch tracking. =C2=A0This is a bit silly, and in fact the code alre=
+ady
+> guards against it when attempting it explicitly:
+>
+> =C2=A0$ git checkout HEAD^0
+> =C2=A0$ g branch -t foo
 
-On Tue, 14 Dec 2010, Erik Faye-Lund wrote:
+missing the "it" in "git"
 
-> On Tue, Dec 14, 2010 at 11:28 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
-> >
-> > On Windows, EACCES overrules ENOTEMPTY when calling rmdir(). But if the
-> > directory is busy, we only want to retry deleting the directory if it
-> > is empty, so test specifically for that case and set ENOTEMPTY rather
-> > than EACCES.
-> >
-> 
-> Hmm... According to MSDN, rmdir(*) should already handle ENOTEMPTY. 
-> Isn't the problem rather the structure of that loop? Shouldn't it be 
-> sufficient to do something like this (note: untested, but the concept 
-> should work, no)?
+> =C2=A0fatal: Cannot setup tracking information; starting point is not=
+ a branch.
+>
+> Silently drop the HEAD candidate in the implicit (i.e. without -t
+> flag) case, so that the branch starts out without an upstream.
 
-This is how the patch looks in current 4msysgit.git's devel branch:
+Thanks. This has been on my todo list for a while.
 
--- snip --
- #undef rmdir
- int mingw_rmdir(const char *pathname)
- {
--    int ret, tries = 0;
-+       int ret, tries = 0;
- 
-        while ((ret = rmdir(pathname)) == -1 && tries < ARRAY_SIZE(delay)) 
-{
-                if (errno != EACCES)
-                        break;
-+               if (!is_dir_empty(pathname)) {
-+                       errno = ENOTEMPTY;
-+                       break;
-+               }
-                /*
-                 * We assume that some other process had the source or
-                 * destination file open at the wrong moment and retry.
--- snap --
+Should it only check for HEAD? How about ORIG_HEAD and FETCH_HEAD?
+Simply anything outside of refs/ maybe? Would that make sense?
 
-Of course, with so much water running down the Elbe between me writing 
-that patch and me answering you, I cannot really say whether rmdir() 
-set errno to ENOTEMPTY.
-
-But as the patch looked the same when I wrote it originally (you can see 
-it in the history, since I introduced rebasing merges prior to making this 
-patch) I would assume that in my tests, errno was set to EACCESS rather 
-than ENOTEMPTY.
-
-However, since I am distrusted on the Git mailing list it would be good if 
-you tried your version and verified whether what I say is true.
-
-Thanks,
-Dscho
+/Martin
