@@ -1,82 +1,95 @@
-From: Adam Monsen <haircut@gmail.com>
-Subject: disallowing non-trivial merges on integration branches
-Date: Wed, 15 Dec 2010 18:27:16 +0000 (UTC)
-Message-ID: <loom.20101215T185931-347@post.gmane.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 0/4] --word-regex sanity checking and such
+Date: Wed, 15 Dec 2010 20:51:14 +0100
+Message-ID: <201012152051.15159.trast@student.ethz.ch>
+References: <561247.22837.qm@web110707.mail.gq1.yahoo.com> <cover.1292424926.git.trast@student.ethz.ch> <913156.57703.qm@web110711.mail.gq1.yahoo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 15 19:27:48 2010
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Matthijs Kooijman <matthijs@stdin.nl>, <git@vger.kernel.org>
+To: Scott Johnson <scottj75074@yahoo.com>
+X-From: git-owner@vger.kernel.org Wed Dec 15 20:51:23 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSw4l-0004LB-Mz
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 19:27:44 +0100
+	id 1PSxNi-00071r-Mq
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 20:51:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754535Ab0LOS1i (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 15 Dec 2010 13:27:38 -0500
-Received: from lo.gmane.org ([80.91.229.12]:47962 "EHLO lo.gmane.org"
+	id S1755189Ab0LOTvR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Dec 2010 14:51:17 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:38149 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754087Ab0LOS1h (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Dec 2010 13:27:37 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PSw4a-0004ES-7O
-	for git@vger.kernel.org; Wed, 15 Dec 2010 19:27:32 +0100
-Received: from c-67-183-136-182.hsd1.wa.comcast.net ([67.183.136.182])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 15 Dec 2010 19:27:32 +0100
-Received: from haircut by c-67-183-136-182.hsd1.wa.comcast.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 15 Dec 2010 19:27:32 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 67.183.136.182 (Mozilla/5.0 (X11; U; Linux x86_64; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.55 Safari/534.3)
+	id S1754693Ab0LOTvQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Dec 2010 14:51:16 -0500
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 15 Dec
+ 2010 20:51:07 +0100
+Received: from pctrast.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 15 Dec
+ 2010 20:51:15 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-rc5-16-desktop; KDE/4.5.3; x86_64; ; )
+In-Reply-To: <913156.57703.qm@web110711.mail.gq1.yahoo.com>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163788>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163789>
 
-Does anyone have or want to help with a hook script to prevent trivial merges?
+Scott Johnson wrote:
+> I've attached a pre and post with the complete file that is showing this 
+> problem. I hope you'll be able to reproduce the issue with this.
 
-Here's some context:
+I can't reproduce.  I did this:
 
-I'm using the phrase "trivial merge" to refer to a merge without conflicts, 
-like, when two distinct files are edited.
+  $ ls -l
+  total 16
+  -rw-r--r-- 1 thomas users 2128 2010-12-15 20:42 post.html
+  -rw-r--r-- 1 thomas users 2354 2010-12-15 20:42 pre.html
+  $ echo '*.html diff=html'  >.gitattributes
+  $ git diff --no-index pre.html post.html
+  diff --git 1/pre.html 2/post.html
+[...]
+  -        <li class="ydn-patterns"><em></em><a href="#">ydn-patterns</a></li>
+  -        <li class="ydn-mail"><em></em><a href="#">ydn-mail</a></li>
+  -        <li class="yws-maps"><em></em><a href="#">yws-maps</a></li>
+  -        <li class="ydn-delicious"><em></em><a href="#">ydn-delicious</a></li>
+  -        <li class="yws-flickr"><em></em><a href="#">yws-flickr</a></li>
+  -        <li class="yws-events"><em></em><a href="#">yws-events</a></li>
+  +        <li><em></em><a href="#">ydn-patterns</a></li>
+  +        <li><em></em><a href="#">ydn-mail</a></li>
+  +        <li><em></em><a href="#">yws-maps</a></li>
+  +        <li><em></em><a href="#">ydn-delicious</a></li>
+  +        <li><em></em><a href="#">yws-flickr</a></li>
+  +        <li><em></em><a href="#">yws-events</a></li>
+         </ul>
+       </div><!-- wrap -->
+     </div><!-- folder_list -->
+  $ git diff --word-diff --no-index pre.html post.html
+  diff --git 1/pre.html 2/post.html
+[...]
+          <li[-class="ydn-patterns"-]><em></em><a href="#">ydn-patterns</a></li>
+          <li[-class="ydn-mail"-]><em></em><a href="#">ydn-mail</a></li>
+          <li[-class="yws-maps"-]><em></em><a href="#">yws-maps</a></li>
+          <li[-class="ydn-delicious"-]><em></em><a href="#">ydn-delicious</a></li>
+          <li[-class="yws-flickr"-]><em></em><a href="#">yws-flickr</a></li>
+          <li[-class="yws-events"-]><em></em><a href="#">yws-events</a></li>
+        </ul>
+      </div><!-- wrap -->
+    </div><!-- folder_list -->
 
-In the Mifos project, the "head" repo at sf.net--for all intents and purposes--
-is the authoritative place to find Mifos source code. At my request, many of the 
-devs pushing to "head" have started using rebase more often than merge when 
-their local copy of a branch diverges from the corresponding remote[1] (for 
-example, I commit to my "master", but must fetch then merge or rebase before 
-pushing to origin/master). Liberal use of rebase has really cleaned up our 
-version history graph... it's much easier to see what was pushed and when, and 
-the progression of patches. Trivial merges just don't add anything helpful to 
-the commit history graph, IMHO. Non-trivial merges are of course still allowed. 
-Rebasing commits extant in the "head" repo at sf.net is disallowed.
+That's running bleeding-edge git, like I always do, but the userdiff
+stuff hasn't changed in ages.
 
-I've been working on a hook script[2] to disallow trivial merges to further 
-enforce our policy. Well, really I'm just working on the test suite[3], another 
-guy (also named Adam, coincidentally) is working on the hook script.
+What does
 
-A blocking bug with the hook script (might be a design flaw) is that it prevents 
-non-trivial merges.
+  git config diff.html.wordregex
 
-Wanna help fix it?
+say on your system?
 
-I don't understand the hook script... is it doing something that makes sense?
-
-This was my first time writing a test harness in Bash script. Kinda fun, 
-actually. Git certainly lends well to scripting, and it feels intentional. Good 
-stuff.
-
-References (links) from the above email:
-1. http://article.gmane.org/gmane.comp.finance.mifos.devel/9597
-2. http://stackoverflow.com/questions/4138285
-3. https://gist.github.com/737842
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
