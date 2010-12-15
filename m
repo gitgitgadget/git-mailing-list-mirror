@@ -1,75 +1,80 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: TopGit release?
-Date: Wed, 15 Dec 2010 09:01:48 +0100
-Message-ID: <20101215080148.GA28971@pengutronix.de>
-References: <87ei9k42v5.fsf@write-only.cryp.to>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [PATCH 11/14] t3032-*.sh: Pass the -b (--binary) option to sed
+ on cygwin
+Date: Wed, 15 Dec 2010 09:22:31 +0100
+Message-ID: <4D087AC7.2090705@viscovery.net>
+References: <4D07B8B5.2030409@ramsay1.demon.co.uk> <7vtyigtaxn.fsf@alter.siamese.dyndns.org> <4D07FE91.2090003@sunshineco.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, martin f krafft <madduck@madduck.net>,
-	Bert Wesarg <bert.wesarg@googlemail.com>,
-	Per Cederqvist <ceder@lysator.liu.se>,
-	Olaf Dabrunz <odabrunz@gmx.net>,
-	Thomas Moschny <thomas.moschny@gmx.de>
-To: Peter Simons <simons@cryp.to>
-X-From: git-owner@vger.kernel.org Wed Dec 15 09:01:58 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Wed Dec 15 09:22:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PSmJA-0001UO-EF
-	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 09:01:56 +0100
+	id 1PSmdI-0000c8-63
+	for gcvg-git-2@lo.gmane.org; Wed, 15 Dec 2010 09:22:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753942Ab0LOIBv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Dec 2010 03:01:51 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:45923 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753798Ab0LOIBv (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Dec 2010 03:01:51 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1PSmJ4-0006F9-6X; Wed, 15 Dec 2010 09:01:50 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1PSmJ2-0000CQ-Sk; Wed, 15 Dec 2010 09:01:48 +0100
-Content-Disposition: inline
-In-Reply-To: <87ei9k42v5.fsf@write-only.cryp.to>
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1753917Ab0LOIWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Dec 2010 03:22:38 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:54874 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752943Ab0LOIWi (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Dec 2010 03:22:38 -0500
+Received: from [81.10.228.254] (helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1PSmd6-0007mg-25; Wed, 15 Dec 2010 09:22:32 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id C7D081660F;
+	Wed, 15 Dec 2010 09:22:31 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <4D07FE91.2090003@sunshineco.com>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163742>
 
-Hello,
+Am 12/15/2010 0:32, schrieb Eric Sunshine:
+> On 12/14/2010 2:24 PM, Junio C Hamano wrote:
+>> Ramsay Jones<ramsay@ramsay1.demon.co.uk>  writes:
+>>> The test using the conflict_hunks helper function (test 9) fails
+>>> on cygwin, since sed (by default) throws away the CR from CRLF
+>>> line endings. This behaviour is undesirable, since the validation
+>>> code expects the CRLF line-ending to be present. In order to fix
+>>> the problem we pass the -b (--binary) option to sed, using the
+>>> SED_OPTIONS variable. We use the SED_STRIPS_CR prerequisite in the
+>>> conditional initialisation of SED_OPTIONS.
+>>>
+>>> Signed-off-by: Ramsay Jones<ramsay@ramsay1.demon.co.uk>
+>>> ---
+>>>
+>>> Note that this test does not fail on MinGW, but I don't
+>>> really know why, given commit ca02ad3... ahem ;-)
+>>
+>> Ahem, indeed.  Why?
+> 
+> t3032 does indeed fail on MinGW, and was fixed in the msysgit port by [1],
+> but was subsequently "lost" when msysgit was rebased onto junio/next [2]
+> which did not have that test. Consequently, the fix never made it into the
+> mainline git source.
 
-On Tue, Dec 14, 2010 at 07:37:50PM +0100, Peter Simons wrote:
-> I was wondering whether there's a chance that we'll have a new releas=
-e
-> of TopGit in the foreseeable future? Version 0.8 seems to be quite ol=
-d
-> by now, but still there's no observable progress in getting a new
-> version tagged. Is this project still alive?
-There are a few patches pending, but I currently don't find the time to
-go through and apply them[1].  Moreover I hardly use topgit anymore. =20
-So if someone with interest in topgit wants to step forward to help thi=
-s
-would be very appreciated.
+Sorry, but on MinGW, I only need the GREP_OPTIONS part of that fix, but
+not the SED_OPTIONS. It's also mysterious for me.
 
-Best regards
-Uwe
+OTOH, the fix in ca02ad3 that applies to t6038, does not work for me as is
+because my sed does not understand -b; it needs --nocr. Maybe it is the
+sed version that makes the difference?
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/159433
-    hint to Bert: this series doesn't apply to master
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+D:\Src\mingw-git\t>sed --version
+GNU sed version 3.02
+...
+
+-- Hannes
