@@ -1,85 +1,76 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH] trace.c: mark file-local function static
-Date: Thu, 16 Dec 2010 21:43:50 -0200
-Message-ID: <AANLkTimBtpOx_GBzC=g4V6jW2aiF7Hg8uALWt2NQFFZG@mail.gmail.com>
-References: <AANLkTinxJdASW6mQVU50grA2mUz6gt+gUND30VRK=BCN@mail.gmail.com>
+From: Leo <sdl.web@gmail.com>
+Subject: Re: why the html and man versions of git-diff are different?
+Date: Thu, 16 Dec 2010 23:52:44 +0000
+Message-ID: <m1fwtxwa0j.fsf@cam.ac.uk>
+References: <m139px2y26.fsf@cam.ac.uk>
+	<20101216215506.GB10480@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: "Vasyl'" <vvavrychuk@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Dec 17 00:49:35 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 17 00:53:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTNZn-0003iL-9Y
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 00:49:35 +0100
+	id 1PTNdG-00061p-FL
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 00:53:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753143Ab0LPXta convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Dec 2010 18:49:30 -0500
-Received: from mail-bw0-f42.google.com ([209.85.214.42]:58718 "EHLO
-	mail-bw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752223Ab0LPXt3 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Dec 2010 18:49:29 -0500
-X-Greylist: delayed 337 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 Dec 2010 18:49:28 EST
-Received: by bwz13 with SMTP id 13so303443bwz.1
-        for <git@vger.kernel.org>; Thu, 16 Dec 2010 15:49:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=b8emJK/uKdhps1Gda28ToNKJlTEXqeP1WxgYyFFpqTA=;
-        b=dtRfN8in9Oa1hEYi8+9ryLpUoQBWiH+wRX6cZljSMyhgnF/amXo8FORpVKs0+x+Ubm
-         TWnPsNOmjWE6MUNuGQj1J174YoynBRScHupw0D142sSOWER5so+ekR8R33RKysqziwUv
-         EU9kZiKIFkiCHv/yz1XlBjETsq2z6Cd01qssw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=VVx0lqmxlikgCmtBKWkfEEJ6rUa3hWiO6UYmR4VgkecKI5Yas1vM5W0sRgp4IdyJxl
-         nOaMbxIjrUe0ie/J/VEjVI63Aupgep5CeQGcUKq87qczAxIirX+1Jg1dAYKPO/k1RUcE
-         f6BDUOp8BFp9004dMYfLff999YwvzYYxf3zy8=
-Received: by 10.204.59.76 with SMTP id k12mr71916bkh.70.1292543030243; Thu, 16
- Dec 2010 15:43:50 -0800 (PST)
-Received: by 10.204.141.82 with HTTP; Thu, 16 Dec 2010 15:43:50 -0800 (PST)
-In-Reply-To: <AANLkTinxJdASW6mQVU50grA2mUz6gt+gUND30VRK=BCN@mail.gmail.com>
+	id S1752790Ab0LPXxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Dec 2010 18:53:05 -0500
+Received: from lo.gmane.org ([80.91.229.12]:41702 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751219Ab0LPXxE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Dec 2010 18:53:04 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PTNd8-0005we-Cm
+	for git@vger.kernel.org; Fri, 17 Dec 2010 00:53:02 +0100
+Received: from cpc1-cmbg13-0-0-cust596.5-4.cable.virginmedia.com ([86.9.122.85])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 17 Dec 2010 00:53:02 +0100
+Received: from sdl.web by cpc1-cmbg13-0-0-cust596.5-4.cable.virginmedia.com with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 17 Dec 2010 00:53:02 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: cpc1-cmbg13-0-0-cust596.5-4.cable.virginmedia.com
+Face: iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAAGFBMVEUzRVhbQj4eZqO6SjnT
+ eWpxnMetm5b6/PmidmqrAAAAAWJLR0QAiAUdSAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1F
+ B9cBBwMLBfKABCMAAAFoSURBVCjPtZI9a8MwEIaFoc7aYDdelQMna0Em3tsSr0XUeE2Q6a22a+v+
+ fk8fSSBkbDUI6dHpfe9OEvRgiD+ApqKPJgJeB6iUUXWESjUe/ig38AJrhqqvaU2nTIXbNvOQ40fe
+ qdry4kyGoVWsfCQalXpHnJGM01wjWdYbMlXNFdsZDO69m9aqNqxEJqTEgbM5OF7wlEfIoll1Ked4
+ LbM5X2EdILLokEdmI8z7g5cKED0cuTC930TYhy7ZDekkXVGw/L60TguJePPxcJF48lpsSUWEA/Ju
+ jGFNgJOXc4Hz7TmAdBeu5Ve4AEjOi2/2jfd3cAJZ+IbNrvdjgBZY01b+HTuG3cLws6BJZqVOj/pp
+ T0OqVwx3rFq+QmJwx3loK5JSLEhDIt62+mtC2C+SrAUxEbV6C6v2BRbd6pILBKFpepKZJHgGgrKF
+ sptSUUoczpwg2pQ7ZH1tgs0ou/917mzz6Cs2//C978cv5l07L02orIEAAAAASUVORK5CYII=
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.91 (Mac OS X 10.6.5)
+Cancel-Lock: sha1:eKcblD1Olgb94q12lYmIuaPmg1A=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163842>
 
-On Thu, Dec 16, 2010 at 8:38 PM, Vasyl' <vvavrychuk@gmail.com> wrote:
-> Signed-off-by: Vasyl' Vavrychuk <vvavrychuk@gmail.com>
-> ---
-> =C2=A0trace.c | =C2=A0 =C2=A02 +-
-> =C2=A01 files changed, 1 insertions(+), 1 deletions(-)
+On 2010-12-16 21:55 +0000, Jeff King wrote:
+> On Thu, Dec 16, 2010 at 09:43:45PM +0000, Leo wrote:
 >
-> diff --git a/trace.c b/trace.c
-> index 1e560cb..62586fa 100644
-> --- a/trace.c
-> +++ b/trace.c
-> @@ -25,7 +25,7 @@
-> =C2=A0#include "cache.h"
-> =C2=A0#include "quote.h"
+>> I compared the html version of git-diff found in
+>> http://www.kernel.org/pub/software/scm/git/docs/git-diff.html and the
+>> man version from
+>> http://kernel.org/pub/software/scm/git/git-manpages-1.7.3.4.tar.bz2
+>> 
+>> The man version says gitrevisions(1), which is incorrect since it is in
+>> man7.
 >
-> -void do_nothing(size_t unused)
-> +static void do_nothing(size_t unused)
-> =C2=A0{
-> =C2=A0}
+> Because it was fixed recently, and the html documention on kernel.org
+> uses the "master" branch, whereas that commit did not make it into the
+> maintenance release 1.7.3.4. It will be fixed in the manpages for
+> git-1.7.4.
 >
-If it means something, this looks sane to me.
+> -Peff
 
-Acked-by: Thiago Farina <tfransosi@gmail.com>
+Sorry my bad it was fixed in 1.7.3.4.
 
-> --
-> 1.7.1
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+Leo
