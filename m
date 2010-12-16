@@ -1,71 +1,68 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 08/14] help.c: Fix detection of custom merge strategy
- on cygwin
-Date: Thu, 16 Dec 2010 21:12:37 +0000
-Message-ID: <4D0A80C5.4020003@ramsay1.demon.co.uk>
-References: <4D07B786.2060602@ramsay1.demon.co.uk> <201012142138.37679.j6t@kdbg.org>
+From: "Vasyl'" <vvavrychuk@gmail.com>
+Subject: [PATCH] trace.c: mark file-local function static
+Date: Fri, 17 Dec 2010 00:38:42 +0200
+Message-ID: <AANLkTinxJdASW6mQVU50grA2mUz6gt+gUND30VRK=BCN@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>, jrnieder@gmail.com,
-	vmiklos@frugalware.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Thu Dec 16 23:41:59 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 16 23:46:18 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTMWL-0000lG-KL
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Dec 2010 23:41:57 +0100
+	id 1PTMaV-00044M-Mc
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Dec 2010 23:46:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752071Ab0LPWlp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Dec 2010 17:41:45 -0500
-Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:65277 "EHLO
-	anchor-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751608Ab0LPWlo (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Dec 2010 17:41:44 -0500
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1PTMW6-00048E-p1; Thu, 16 Dec 2010 22:41:43 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <201012142138.37679.j6t@kdbg.org>
+	id S1752282Ab0LPWqL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Dec 2010 17:46:11 -0500
+Received: from mail-bw0-f42.google.com ([209.85.214.42]:51043 "EHLO
+	mail-bw0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752109Ab0LPWqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Dec 2010 17:46:08 -0500
+X-Greylist: delayed 444 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 Dec 2010 17:46:07 EST
+Received: by bwz13 with SMTP id 13so246014bwz.1
+        for <git@vger.kernel.org>; Thu, 16 Dec 2010 14:46:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=9ydHvRDfqTJT4RexDavErfAj0gEXGkD4p3MqFnavWgs=;
+        b=d2K0jQyharEZPucVA+k/SNE4yFwz7tKIA8gk4wnbqZUFOH8KXz/Da8ClZy4HaAwYGc
+         BHa0HJE27UO9NEqv7Mf0tCjEl+O9+WSzCJvYPursAb5eFSS3bgJaElo7GgSwQ25p0jwR
+         LFlReLeilsOsaUexGcvtfO2ESFnoQvB4GJrQ4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=iQY9tJz/5Rw2BrC2jFnrfU8hWqkxZ/0G4S309m0W8ePCPo5JTHgZPCS8EdenTOClkm
+         oS/oOVdxEpDk0W/Gteo0t1U7w/3IAaDnWnTJ6qhO+G08oqwx45eOfYh8U8WpooQet2Iv
+         bP8KvQp5TAVFwH4PKXO1fx3Ujk4H21bA2WKnY=
+Received: by 10.204.14.3 with SMTP id e3mr4700bka.202.1292539122435; Thu, 16
+ Dec 2010 14:38:42 -0800 (PST)
+Received: by 10.204.113.3 with HTTP; Thu, 16 Dec 2010 14:38:42 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163836>
 
-Johannes Sixt wrote:
-> On Dienstag, 14. Dezember 2010, Ramsay Jones wrote:
->> @@ -126,7 +126,10 @@ static int is_executable(const char *name)
->>  	    !S_ISREG(st.st_mode))
->>  		return 0;
->>
->> -#ifdef WIN32
->> +#if defined(WIN32) || defined(__CYGWIN__)
->> +#if defined(__CYGWIN__)
->> +if ((st.st_mode & S_IXUSR) == 0)
->> +#endif
->>  {	/* cannot trust the executable bit, peek into the file instead */
->>  	char buf[3] = { 0 };
->>  	int n;
-> 
-> Do you gain a lot by this extra condition? Wouldn't
-> 
-> -#ifdef WIN32
-> +#if defined(WIN32) || defined(__CYGWIN__)
-> 
-> be sufficient?
+Signed-off-by: Vasyl' Vavrychuk <vvavrychuk@gmail.com>
+---
+ trace.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Yes, that would be sufficient. No, I probably don't gain a great deal
-(but I have *not* timed it), since the number of files that are tested
-by is_executable() is fairly low anyway since they are already filtered
-by a filename prefix (eg. git-merge-).
+diff --git a/trace.c b/trace.c
+index 1e560cb..62586fa 100644
+--- a/trace.c
++++ b/trace.c
+@@ -25,7 +25,7 @@
+ #include "cache.h"
+ #include "quote.h"
 
-However, if the executable bit is set, then executing the WIN32 code
-block is wasted effort (we already know the answer), so why bother?
+-void do_nothing(size_t unused)
++static void do_nothing(size_t unused)
+ {
+ }
 
-ATB,
-Ramsay Jones
+-- 
+1.7.1
