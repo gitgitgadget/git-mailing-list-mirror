@@ -1,122 +1,142 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 3/3] gitweb: remove test when closing file descriptor
-Date: Thu, 16 Dec 2010 14:30:05 -0800 (PST)
-Message-ID: <m3pqu4lx6n.fsf@localhost.localdomain>
+From: Sylvain Rabot <sylvain@abstraction.fr>
+Subject: Re: [PATCH 1/3] gitweb: add extensions to highlight feature
+Date: Thu, 16 Dec 2010 23:33:24 +0100
+Message-ID: <1292538804.2511.4.camel@kheops>
 References: <1292535801-7421-1-git-send-email-sylvain@abstraction.fr>
-	<1292535801-7421-4-git-send-email-sylvain@abstraction.fr>
+	 <1292535801-7421-2-git-send-email-sylvain@abstraction.fr>
+	 <m3y68slxj9.fsf@localhost.localdomain>
+Reply-To: sylvain@abstraction.fr
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Sylvain Rabot <sylvain@abstraction.fr>
-X-From: git-owner@vger.kernel.org Thu Dec 16 23:30:16 2010
+Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-EBxeWphdl7k9A8YXSZQa"
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 16 23:33:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTML1-0000gx-2x
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Dec 2010 23:30:15 +0100
+	id 1PTMOD-0003DC-IP
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Dec 2010 23:33:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751379Ab0LPWaJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Dec 2010 17:30:09 -0500
-Received: from mail-fx0-f43.google.com ([209.85.161.43]:42668 "EHLO
-	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751031Ab0LPWaI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Dec 2010 17:30:08 -0500
-Received: by fxm18 with SMTP id 18so63986fxm.2
-        for <git@vger.kernel.org>; Thu, 16 Dec 2010 14:30:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=fHK3Ku9UXC/VZg9WyoNlIpcT/h8bsefZvyRoQ915ls0=;
-        b=sE9k3fChgMK2YXZkBznd9PIMzjnotvIClZPKfHKdLaLZPi5DW5Vf5BBEmFhZgfqua+
-         1C9A2hJh0/CsqIkptZZ8BZHNEpjtRpLJ4GbXO6zgp11uH2ZypYBQ+KINGWO9aVYa2tH8
-         L1x2ADMyZwYvfNcbCOr3BqfpdhX4xQZbXUj4g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=lH4aPViRekuLtwnZevu54BCDKdLf2mkh9BqiuJIZBwKjeDH58q2s0HfaPX+OidAluc
-         Tof5Hl3Y1z3v2qKJwq644rsLIUiicK5DtGAjS2WpStxUVT6qtuU/HRcAg4bSMrsXpxwl
-         3+9FrVfTVQREqUJmEm0QCNhBmkVcJrXy9n3rk=
-Received: by 10.223.103.8 with SMTP id i8mr366504fao.47.1292538606600;
-        Thu, 16 Dec 2010 14:30:06 -0800 (PST)
-Received: from localhost.localdomain (abvg92.neoplus.adsl.tpnet.pl [83.8.204.92])
-        by mx.google.com with ESMTPS id 5sm216203fak.47.2010.12.16.14.30.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 16 Dec 2010 14:30:05 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oAGMTWxY015935;
-	Tue, 16 Nov 2010 23:29:35 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id oAGMTK44015931;
-	Tue, 16 Nov 2010 23:29:20 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1292535801-7421-4-git-send-email-sylvain@abstraction.fr>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1751256Ab0LPWd2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Dec 2010 17:33:28 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:58095 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751119Ab0LPWd1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Dec 2010 17:33:27 -0500
+Received: by wwa36 with SMTP id 36so60266wwa.1
+        for <git@vger.kernel.org>; Thu, 16 Dec 2010 14:33:26 -0800 (PST)
+Received: by 10.216.164.141 with SMTP id c13mr201955wel.113.1292538806740;
+        Thu, 16 Dec 2010 14:33:26 -0800 (PST)
+Received: from [192.168.0.7] (85-168-197-251.rev.numericable.fr [85.168.197.251])
+        by mx.google.com with ESMTPS id f52sm326706wes.11.2010.12.16.14.33.25
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 16 Dec 2010 14:33:25 -0800 (PST)
+In-Reply-To: <m3y68slxj9.fsf@localhost.localdomain>
+X-Mailer: Evolution 2.30.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163826>
 
-Sylvain Rabot <sylvain@abstraction.fr> writes:
 
-> it happens that closing file descriptor fails whereas
-> the blob is perfectly readable.
-> 
-> Signed-off-by: Sylvain Rabot <sylvain@abstraction.fr>
-> ---
->  gitweb/gitweb.perl |    3 +--
->  1 files changed, 1 insertions(+), 2 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index 9398475..9a885b1 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -3450,8 +3450,7 @@ sub run_highlighter {
->  	my ($fd, $highlight, $syntax) = @_;
->  	return $fd unless ($highlight && defined $syntax);
->  
-> -	close $fd
-> -		or die_error(404, "Reading blob failed");
-> +	close $fd;
+--=-EBxeWphdl7k9A8YXSZQa
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Actually what I think happens is the following.  "close $fh" cannot
-usually fail, unless (`perldoc -f close`):
+On Thu, 2010-12-16 at 14:22 -0800, Jakub Narebski wrote:
+> Sylvain Rabot <sylvain@abstraction.fr> writes:
+>=20
+> > added: sql, php5, phps, bash, zsh, mk
+> >=20
+>=20
+> There is one issue with this patch (see below), but otherwise I like
+> it.
+>=20
+> > Signed-off-by: Sylvain Rabot <sylvain@abstraction.fr>
+> > ---
+> >  gitweb/gitweb.perl |    7 ++++---
+> >  1 files changed, 4 insertions(+), 3 deletions(-)
+> >=20
+> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> > index d521c93..db18d06 100755
+> > --- a/gitweb/gitweb.perl
+> > +++ b/gitweb/gitweb.perl
+> > @@ -250,13 +250,14 @@ our %highlight_ext =3D (
+> >  	# main extensions, defining name of syntax;
+> >  	# see files in /usr/share/highlight/langDefs/ directory
+> >  	map { $_ =3D> $_ }
+> > -		qw(py c cpp rb java css php sh pl js tex bib xml awk bat ini spec tc=
+l),
+> > +		qw(py c cpp rb java css php pl js tex bib xml awk bat ini spec tcl s=
+ql),
+>=20
+> Why did you remove 'sh' =3D> 'sh' mapping?  Shouldn't it be
+>=20
+>   -		qw(py c cpp rb java css php sh pl js tex bib xml awk bat ini spec tc=
+l),
+>   +		qw(py c cpp rb java css php sh pl js tex bib xml awk bat ini spec tc=
+l sql),
+>=20
 
-   If the file handle came from a piped open, "close" will additionally
-   return false if one of the other system calls involved fails, or if the
-   program exits with non-zero status.  (If the only problem was that the
-   program exited non-zero, $! will be set to 0.)  Closing a pipe also waits
-   for the process executing on the pipe to complete, in case you want to
-   look at the output of the pipe afterwards, and implicitly puts the exit
-   status value of that command into $?.
+I removed it on purpose but should have not, I was thinking
+the mapping made below would be enough but no, you're right.
 
-   Prematurely closing the read end of a pipe (i.e. before the process writ-
-   ing to it at the other end has closed it) will result in a SIGPIPE being
-   delivered to the writer.  If the other end can't handle that, be sure to
-   read all the data before closing the pipe.
+> >  	# alternate extensions, see /etc/highlight/filetypes.conf
+> >  	'h' =3D> 'c',
+> > +	map { $_ =3D> 'sh'  } qw(bash zsh),
+>=20
+> Good idea.
 
-In this place we close read end of pipe after at most reading a few
-bytes (what -T test does), so what might happen is that writer got
-SIGPIPE and "failed".  But we are not interested in this, so we can
-safely ignore return from 'close'.
+Does ksh, csh can be highlighted as sh too ?
 
-I think that some from above explanation should make it to commit
-message.
+>=20
+> >  	map { $_ =3D> 'cpp' } qw(cxx c++ cc),
+> > -	map { $_ =3D> 'php' } qw(php3 php4),
+> > +	map { $_ =3D> 'php' } qw(php3 php4 php5 phps),
+>=20
+> Good idea.
+>=20
+> >  	map { $_ =3D> 'pl'  } qw(perl pm), # perhaps also 'cgi'
+> > -	'mak' =3D> 'make',
+> > +	map { $_ =3D> 'make'} qw(mak mk),
+>=20
+> Good idea.
+>=20
+> Sidenote: git itself uses *.mak extension.  Is *.mk popular?
 
->  	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
->  	          quote_command($highlight_bin).
->  	          " --xhtml --fragment --syntax $syntax |"
+Don't know but mk is mapped to Makefiles in the gtksourceview lib so I
+added it here.
 
-P.S. A better solution would be to redirect opened $fd to highlighter,
-instead of closing and reopening a pipe... but I'm not sure how it
-could be implemented.
+>=20
+> >  	map { $_ =3D> 'xml' } qw(xhtml html htm),
+> >  );
+> > =20
+> > --=20
+> > 1.7.3.2
+> >=20
+>=20
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+
+--=20
+Sylvain Rabot <sylvain@abstraction.fr>
+
+--=-EBxeWphdl7k9A8YXSZQa
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
+
+iQEcBAABAgAGBQJNCpOuAAoJECLlHVUnhaoWWCoIAJOjW01sovEiwrU0pq6HYeet
+fuJqhRmOMinnaH9wG/3xF5jFnfrDeUjsJE/x8uy2BmTs/svVVtNV9W5+/KZjuVyz
+2nqmunUqrGVsHIu4dNthp3Uhyf+y8tL3VzQZ8kQU+iQSiSAuJDr28c4quguubsj1
+GLwFGScddjzKpTk/6eUldQfN4SmjWMLtWy078YQQ/e1dgvbF53KTZEp3Dpa9/PUL
+vbHm76T7ud6x2jCtoMCVcRHmxJL48SEhzNhGVUUB7MGxfPimSCEvCoISQ3NlTrqW
+sEvTRmHsoA7soKmJtsu5wxBWaegA2piia8urvPyx3kANb2iFCftW7xQjXJ18Q6s=
+=j5k/
+-----END PGP SIGNATURE-----
+
+--=-EBxeWphdl7k9A8YXSZQa--
