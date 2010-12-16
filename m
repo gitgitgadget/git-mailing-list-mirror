@@ -1,60 +1,61 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] Fix typo in git-gc document.
-Date: Thu, 16 Dec 2010 09:38:10 +0100
-Message-ID: <vpqei9i15al.fsf@bauges.imag.fr>
-References: <4D09BCE1.9030209@gmail.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: [PATCH] completion: add missing configuration variables
+Date: Thu, 16 Dec 2010 13:42:35 +0100
+Message-ID: <20101216124235.GA32636@neumann>
+References: <1292395613-12859-1-git-send-email-martin.von.zweigbergk@gmail.com>
+	<20101215130046.GB25647@sigill.intra.peff.net>
+	<alpine.DEB.1.10.1012151931030.25560@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jiang Xin <worldhello.net@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 16 09:38:32 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 16 13:42:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PT9M7-0008RV-Gf
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Dec 2010 09:38:31 +0100
+	id 1PTDAU-0007os-Tq
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Dec 2010 13:42:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752100Ab0LPIi0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Dec 2010 03:38:26 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:52362 "EHLO shiva.imag.fr"
+	id S1753230Ab0LPMmj convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Dec 2010 07:42:39 -0500
+Received: from judith.fzi.de ([141.21.4.44]:56695 "EHLO judith.fzi.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751499Ab0LPIi0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Dec 2010 03:38:26 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id oBG8cAPL013903
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 16 Dec 2010 09:38:10 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PT9Lm-0003Gc-Qm; Thu, 16 Dec 2010 09:38:10 +0100
-In-Reply-To: <4D09BCE1.9030209@gmail.com> (Jiang Xin's message of "Thu\, 16 Dec 2010 15\:16\:49 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 16 Dec 2010 09:38:10 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: oBG8cAPL013903
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1293093494.49325@SX+IDCIBrRY6LvOVQ0pQmg
+	id S1750896Ab0LPMmj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Dec 2010 07:42:39 -0500
+Received: from exchange.fzi.de ([141.21.7.5]) by judith.fzi.de with Microsoft SMTPSVC(6.0.3790.4675);
+	 Thu, 16 Dec 2010 13:42:36 +0100
+Received: from localhost6.localdomain6 ([141.21.7.126]) by exchange.fzi.de over TLS secured channel with Microsoft SMTPSVC(6.0.3790.4675);
+	 Thu, 16 Dec 2010 13:42:35 +0100
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.10.1012151931030.25560@debian>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-OriginalArrivalTime: 16 Dec 2010 12:42:35.0897 (UTC) FILETIME=[B73C8E90:01CB9D1E]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163805>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163806>
 
-Jiang Xin <worldhello.net@gmail.com> writes:
+Hi,
 
-> The variable gc.packrefs for git-gc can be set to true, false and
-> "notbare", not "nobare".
 
-Right, gc.c says:
+On Wed, Dec 15, 2010 at 08:44:45PM +0100, Martin von Zweigbergk wrote:
+> On Wed, 15 Dec 2010, Jeff King wrote:
+> > As an aside, I would think "--unset" should actually choose from th=
+e set
+> > of configured variables for completion (i.e., "git config --list | =
+cut
+> > -d=3D -f1"). But that would obviously be a separate patch.
+>=20
+> Good point. I'll put it on my todo.
 
-	if (!strcmp(var, "gc.packrefs")) {
-		if (value && !strcmp(value, "notbare"))
+It already works that way since 0065236 (bash completion: complete
+variable names for "git config" with options, 2009-05-08).
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+
+Best,
+G=E1bor
