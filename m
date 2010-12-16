@@ -1,128 +1,77 @@
-From: Seshu Parvataneni <parvata@rocketmail.com>
-Subject: Re: [solved] how to create a diff in old file new file format (for code reviews)
-Date: Wed, 15 Dec 2010 19:33:50 -0800 (PST)
-Message-ID: <415120.5940.qm@web34306.mail.mud.yahoo.com>
-References: <4D073619.2010103@drmicha.warpmail.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] completion: add missing configuration variables
+Date: Wed, 15 Dec 2010 23:23:04 -0500
+Message-ID: <20101216042304.GA886@sigill.intra.peff.net>
+References: <1292395613-12859-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <20101215130046.GB25647@sigill.intra.peff.net>
+ <alpine.DEB.1.10.1012151931030.25560@debian>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Thu Dec 16 04:40:40 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 16 05:23:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PT4hs-0005yg-En
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Dec 2010 04:40:40 +0100
+	id 1PT5Ng-0000dj-UX
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Dec 2010 05:23:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756012Ab0LPDke convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 15 Dec 2010 22:40:34 -0500
-Received: from web34306.mail.mud.yahoo.com ([66.163.178.138]:22302 "HELO
-	web34306.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1755968Ab0LPDkd convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 15 Dec 2010 22:40:33 -0500
-X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Wed, 15 Dec 2010 22:40:33 EST
-Received: (qmail 11887 invoked by uid 60001); 16 Dec 2010 03:33:51 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=rocketmail.com; s=s1024; t=1292470431; bh=vX7ljhFahJma5141/kg3tNGpZE9Ui33rSr1n+8/281E=; h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding; b=4qiLoM6Kz3Ccc87QmFymzfgMgmlv0RiM04JkfVIqet6NHpTFhP5+dCe6ATknjviA/MMbe0ONNRjUyETmC+Rv5p9oshARDhn19Yl5oILprdpLLF+3AxAVAwggOawpJ4rYvDjqs3idVeXSrnFp2KNEWlUrIP4vVHBXw8NYIufxROk=
-DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws;
-  s=s1024; d=rocketmail.com;
-  h=Message-ID:X-YMail-OSG:Received:X-Mailer:Date:From:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type:Content-Transfer-Encoding;
-  b=pqmTeYEk2taYAiES8hRmWRBSo9GibxjVeI8UfWkMXee9RX1HxRnpmQgOCBzdp6EvDcFIey09Ml9PUoGmIGsxMnDeZDuBR+yVjFQTT62Ywxfta7VGQsxn19WmWBu96S7eOlB1ONWjZTHt+qp+kLvxK63H57/VdXV+ptI7xRRP9GU=;
-X-YMail-OSG: I0RgNvgVM1lpuN0YWC6Z4mwWMuj69CZ8aHZTZEicUCHBjjE
- Tce9RJX38GuQ87M2t.8_SGs97ttvZqt1VxwAkpm3TeEgZ7gEAoB7eIhEWg1n
- sz5RsUQ_TK4MOmC3hXpa5XTaiAjq0COKjgV3oJIqJT32CuSaCKzp9WIXKYBt
- H.TlQjzh9DUpYgyT7D53VOXLI833UVe7W5cUeDcaPhJDLOz8mCd0Tm6JIkOz
- z1j6P96e2V4bzgtDykt645l08XWhGT.9e.SoiMNPN9CJ5Ch2lm9J9mOw8D6R
- 1ppAjnpH2MCucrgCgYki6FJ0DwwQaqyddtP1_jMsm2sdXJBOAj0orFsFAWs7
- u9zh6.ZJriBN1lAZIxH8UmKYpHujhq.1zJI9xzaLXHVA_7699ofwk1ld4lkn
- I4pNcScqGTMWmy.MSXA--
-Received: from [207.6.159.130] by web34306.mail.mud.yahoo.com via HTTP; Wed, 15 Dec 2010 19:33:50 PST
-X-Mailer: YahooMailClassic/11.4.9 YahooMailWebService/0.8.107.285259
-In-Reply-To: <4D073619.2010103@drmicha.warpmail.net>
+	id S1751257Ab0LPEXK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 15 Dec 2010 23:23:10 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:38117 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751022Ab0LPEXI (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 15 Dec 2010 23:23:08 -0500
+Received: (qmail 29494 invoked by uid 111); 16 Dec 2010 04:23:06 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 16 Dec 2010 04:23:06 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 15 Dec 2010 23:23:04 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.DEB.1.10.1012151931030.25560@debian>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163800>
 
-Hi Michael,
+On Wed, Dec 15, 2010 at 08:44:45PM +0100, Martin von Zweigbergk wrote:
 
-Thanks very much for the reply. Your example with the difftool worked. =
-This was what I was looking for.
+> > One note:
+> > 
+> > >  		color.diff
+> > >  		color.diff.commit
+> > >  		color.diff.frag
+> > > +		color.diff.func
+> > >  		color.diff.meta
+> > >  		color.diff.new
+> > >  		color.diff.old
+> > >  		color.diff.plain
+> > >  		color.diff.whitespace
+> > 
+> > We have color.diff.branch coming soon (I think it is in 'next' now).
+> 
+> Strictly speaking, that note is for Junio to think of when he merges,
+> right? But adding it early is pretty harmless and if that relieves him
+> of some work, I would be happy to add it in the next submission of
+> this patch. Is that better?
+> 
+> Thinking a bit more, maybe what you are suggesting is that I base the
+> next revision of this patch on the branch that adds that variable?
 
+The "correct" thing to do from a topic branch standpoint is to submit
+this patch without it as its own topic, submit a patch with just
+color.diff.branch on top of the other topic, and then the merge
+resolution will include both sets.
 
+In this case, it might be OK to just start shipping color.diff.branch in
+the completion list. It doesn't hurt anything to have the extra
+completion before the feature is in, and the feature seems very likely
+to make it in soon.
 
---- On Tue, 12/14/10, Michael J Gruber <git@drmicha.warpmail.net> wrote=
-:
+But I'll let Junio decide how meticulous about history he wants to be.
+:)
 
-> From: Michael J Gruber <git@drmicha.warpmail.net>
-> Subject: Re: how to create a diff in old file new file format (for co=
-de reviews)
-> To: "aerosmith" <parvata@rocketmail.com>
-> Cc: git@vger.kernel.org
-> Date: Tuesday, December 14, 2010, 1:17 AM
-> aerosmith venit, vidit, dixit
-> 14.12.2010 01:07:
-> >=20
-> > Hi,
-> >=20
-> > I am trying to create a diff such that the original
-> file (entire file) is
-> > saved something like file1.h.old and the new modified
-> file as file1.h.new. I
-> > have read the various options for git-diff* tools but
-> could not find one
-> > such utility. All I get is the removals and additions
-> as a diff. Does anyone
-> > know how to create one with the help the available git
-> utils? The only
-> > method that I can think of is to do everything
-> manually. Any help w.r.t.
-> > this is really appreciated. Thanks in advance.
->=20
-> You could script around this e.g. with an external
-> diff-helper. The
-> easiest way is to reuse difftool. For example,
->=20
-> git difftool -y -x echo <revexpression>
->=20
-> will give you pairs of names of temporary files for
-> old/new, where
-> <revexpression> is what you would give to "git diff"
-> to specify what to
-> diff.
->=20
-> With the patch I'm sending in a minute, the helper you
-> specify with "-x"
-> can also access the basename easily, so that you could use
-> "-x oldnew"
-> with a script "oldnew" containing
->=20
-> #!/bin/sh
-> cp "$1" "$BASE".old
-> cp "$2" "$BASE".new
->=20
-> Even without the patch, you could use
->=20
-> git difftool -y -x 'cp "$LOCAL" "$BASE".old; cp "$REMOTE"
-> "$BASE.new";
-> #' <revexpression>
->=20
-> (all on one line) directly. But this requires insider
-> knowledge and may
-> break some day.
->=20
-> Cheers,
-> Michael
-> --
-> To unsubscribe from this list: send the line "unsubscribe
-> git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at=A0 http://vger.kernel.org/majordomo-info.html
->=20
-
-
-     =20
+-Peff
