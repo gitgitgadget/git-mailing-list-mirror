@@ -1,101 +1,86 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 11/14] t3032-*.sh: Pass the -b (--binary) option to sed
- on cygwin
-Date: Thu, 16 Dec 2010 21:19:12 +0000
-Message-ID: <4D0A8250.5090403@ramsay1.demon.co.uk>
-References: <4D07B8B5.2030409@ramsay1.demon.co.uk> <7vtyigtaxn.fsf@alter.siamese.dyndns.org> <4D07FE91.2090003@sunshineco.com> <4D087AC7.2090705@viscovery.net> <4D088AB6.5090501@sunshineco.com>
+Subject: Re: [PATCH 13/14] t4135-*.sh: Skip the "backslash" tests on cygwin
+Date: Thu, 16 Dec 2010 22:38:16 +0000
+Message-ID: <4D0A94D8.6090206@ramsay1.demon.co.uk>
+References: <4D07B977.9010502@ramsay1.demon.co.uk> <201012142149.33725.j6t@kdbg.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Pat Thoyts <patthoyts@gmail.com>
-To: Eric Sunshine <sunshine@sunshineco.com>
-X-From: git-owner@vger.kernel.org Thu Dec 16 23:41:58 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>, jrnieder@gmail.com
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Thu Dec 16 23:41:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTMWM-0000lG-4a
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Dec 2010 23:41:58 +0100
+	id 1PTMWM-0000lG-Kw
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Dec 2010 23:41:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752100Ab0LPWls (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Dec 2010 17:41:48 -0500
-Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:65292 "EHLO
-	anchor-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751608Ab0LPWlr (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Dec 2010 17:41:47 -0500
+	id S1752171Ab0LPWlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Dec 2010 17:41:53 -0500
+Received: from anchor-post-1.mail.demon.net ([195.173.77.132]:54279 "EHLO
+	anchor-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751736Ab0LPWlw (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Dec 2010 17:41:52 -0500
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by anchor-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1PTMWA-00048d-nx; Thu, 16 Dec 2010 22:41:47 +0000
+	by anchor-post-1.mail.demon.net with esmtp (Exim 4.69)
+	id 1PTMWE-0003aC-in; Thu, 16 Dec 2010 22:41:51 +0000
 User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <4D088AB6.5090501@sunshineco.com>
+In-Reply-To: <201012142149.33725.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163833>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163834>
 
-Eric Sunshine wrote:
-> On 12/15/2010 3:22 AM, Johannes Sixt wrote:
->> Am 12/15/2010 0:32, schrieb Eric Sunshine:
->>> On 12/14/2010 2:24 PM, Junio C Hamano wrote:
->>>> Ramsay Jones<ramsay@ramsay1.demon.co.uk>   writes:
->>>>> The test using the conflict_hunks helper function (test 9) fails
->>>>> on cygwin, since sed (by default) throws away the CR from CRLF
->>>>> line endings. This behaviour is undesirable, since the validation
->>>>> code expects the CRLF line-ending to be present. In order to fix
->>>>> the problem we pass the -b (--binary) option to sed, using the
->>>>> SED_OPTIONS variable. We use the SED_STRIPS_CR prerequisite in the
->>>>> conditional initialisation of SED_OPTIONS.
->>>>>
->>>>> Signed-off-by: Ramsay Jones<ramsay@ramsay1.demon.co.uk>
->>>>> ---
->>>>>
->>>>> Note that this test does not fail on MinGW, but I don't
->>>>> really know why, given commit ca02ad3... ahem ;-)
->>>> Ahem, indeed.  Why?
->>> t3032 does indeed fail on MinGW, and was fixed in the msysgit port by [1],
->>> but was subsequently "lost" when msysgit was rebased onto junio/next [2]
->>> which did not have that test. Consequently, the fix never made it into the
->>> mainline git source.
->> Sorry, but on MinGW, I only need the GREP_OPTIONS part of that fix, but
->> not the SED_OPTIONS. It's also mysterious for me.
->>
->> OTOH, the fix in ca02ad3 that applies to t6038, does not work for me as is
->> because my sed does not understand -b; it needs --nocr. Maybe it is the
->> sed version that makes the difference?
->>
->> D:\Src\mingw-git\t>sed --version
->> GNU sed version 3.02
+Johannes Sixt wrote:
+> On Dienstag, 14. Dezember 2010, Ramsay Jones wrote:
+>> Note t3700-*.sh has a test protected by BSLASHSPEC which
+>> previously passed on cygwin and will now be (unnecessarily)
+>> skipped. This test needs to be skipped on MinGW, given how
+>> it is written; if you remove the single quotes around the
+>> filename, however, it will pass even on MinGW.
 > 
-> Failure of t3032 was reported by Pat Thoyts [1] when preparing for the 
-> v1.7.3 release. The problem was diagnosed and patched via [2] under the 
-> standard msysgit netinstall [3] environment. From commit message [2], 
-> GREP_OPTIONS and SED_OPTIONS were applied to resolve distinct cases of 
-> line-terminator "corruption" (t3032.4-t3032.8 and t3032.9, respectively) 
-> within that environment at the time the patch was prepared.
-> 
-> Your tool versions may indeed not be compatible with those of the 
-> netinstall environment [3]:
-> 
-> $ sed --version
-> GNU sed version 4.2.1
-> 
-> Unfortunately, the old --nocr is not recognized by modern GNU sed:
-> 
-> $ sed --nocr
-> sed: unrecognized option `--nocr'
+> That is suspicious. It would mean that git add does not do file globbing 
+> anymore. Should it or should it not do file globbing?
 
-Yes. Like Johannes, I have sed version 3.02 on MinGW, but on cygwin
-I have sed version 4.1.5. See patch #14, where I introduce the
-SED_BIN_OPT variable to allow me to run the tests with SED_OPTIONS
-set to -c instead of -b.
+Hmm, something like "git add 'a.[ch]'" works just fine. The problems
+occur when you back-quote the metachars like "git add 'a.\[ch\]'".
 
-[I thought I was unusual in having such an old sed version, but
-apparently not... ;-) ]
+The test is skipped on MinGW, because of BSLASHSPEC. The test is now
+skipped on cygwin, after this patch, even though it passes on cygwin.
+BSLASHSPEC is, apparently, used for both a '\' in a filename and for
+a "\-quoting". (Perhaps it should be split into two prerequisites)
+
+The difference in behaviour between cygwin and MinGW (& msvc) is easy
+to trace, thus:
+
+cmd_add()
+    =>validate_pathspec() builtin/add.c:435
+        =>get_pathspec() builtin/add.c:216
+            =>prefix_path() setup.c:147
+                =>normalize_path_copy() setup.c:18
+                    =>is_dir_sep()
+
+on cygwin is_dir_sep() is defined thus:
+
+    git-compat-util.h:208:#define is_dir_sep(c) ((c) == '/')
+
+where on MinGW it is defined thus:
+
+    compat/mingw.h:291:#define is_dir_sep(c) ((c) == '/' || (c) == '\\')
+
+So, on entry to git-add the pathspec (in argv[1]) is
+    fo\[ou\]bar
+On return from validate_pathspec(), on cygwin it is *still*
+    fo\[ou\]bar
+but on MinGW (and msvc), it is now
+    fo/[ou/]bar
+
+and everything follows from there. (So for example, on cygwin, match_one()
+matches fo\[ou\]bar with fo[ou]bar, but not with foobar.)
 
 ATB,
 Ramsay Jones
