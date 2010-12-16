@@ -1,83 +1,123 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: How to unpack recent objects?
-Date: Thu, 16 Dec 2010 18:12:52 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1012161743530.10437@xanadu.home>
-References: <4D0A77A7.9080702@cfl.rr.com>
- <alpine.LFD.2.00.1012161616170.10437@xanadu.home> <4D0A8D83.9080705@cfl.rr.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 10/21] tree_entry_interesting(): fix depth limit with
+ overlapping pathspecs
+Date: Thu, 16 Dec 2010 15:31:39 -0800
+Message-ID: <7vmxo5l2g4.fsf@alter.siamese.dyndns.org>
+References: <1292425376-14550-1-git-send-email-pclouds@gmail.com>
+ <1292425376-14550-11-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Phillip Susi <psusi@cfl.rr.com>
-X-From: git-owner@vger.kernel.org Fri Dec 17 00:13:00 2010
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 17 00:31:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTN0M-0005Zn-Ca
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 00:12:58 +0100
+	id 1PTNIh-0000u0-2X
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 00:31:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752322Ab0LPXMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Dec 2010 18:12:53 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:23305 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752264Ab0LPXMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Dec 2010 18:12:53 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MR-MRZ22.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0LDJ0059PN5G3N60@VL-MR-MRZ22.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 16 Dec 2010 18:12:52 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <4D0A8D83.9080705@cfl.rr.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1753200Ab0LPXbt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Dec 2010 18:31:49 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33920 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752885Ab0LPXbs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Dec 2010 18:31:48 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A796433EA;
+	Thu, 16 Dec 2010 18:32:12 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=oP3d54Y2DJfB
+	495cE/cIyuamv5Y=; b=JGMM/Q167pfn8i+ijRKKiQZhJTsxlwEij4U/pwAWhcMJ
+	WjYEJ5n3YtL2EfJpeE8wYvi/PHhZOEtHPyZHY8vVpjR2BlLmv2MhFoNizmlg2WPY
+	Vy0/oe+bFThuigHVphZ3cjJV2Fq9uD6wxy/Zw3R+FFbT0zPjLZlpS0I//mdN6rg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=JHaE/r
+	SnW34NvAzybiwtrSzf0fUmMVfl1X9cHovUBeKBB8KF/RgynnW1aTmmEkvqvEAIX9
+	ADiChVqeOKrkbC64LPnRlE5NZtU4KmG+JAW4/PgNX9je6LbT9ICUXo6yKAWX38WF
+	0gRAo7B5/keUOEoVmH1Z5Um36vMdIedrOvkMM=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7EC0E33E7;
+	Thu, 16 Dec 2010 18:32:10 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6C2F333E2; Thu, 16 Dec 2010
+ 18:32:07 -0500 (EST)
+In-Reply-To: <1292425376-14550-11-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Wed\, 15 Dec
+ 2010 22\:02\:45 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B428BBB0-096C-11E0-9661-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163840>
 
-On Thu, 16 Dec 2010, Phillip Susi wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> On 12/16/2010 4:19 PM, Nicolas Pitre wrote:
-> > What makes you think that unpacking them will actually make the access 
-> > to them faster?  Instead, you should consider _repacking_ them, 
-> > ultimately using the --aggressive parameter with the gc command, if you 
-> > want faster accesses.
-> 
-> Because decompressing and undeltifying the objects in the pack file
-> takes a fair amount of cpu time.  It seems a waste to do this for the
-> same set of objects repeatedly rather than just keeping them loose.
+> Suppose we have two pathspecs 'a' and 'a/b' (both are dirs) and depth
+> limit 1. In current code, pathspecs are checked in input order. When
+> 'a/b' is checked against pathspec 'a', it fails depth limit and
+> therefore is excluded, although it should match 'a/b' pathspec.
+>
+> This patch reorders all pathspecs alphabetically, then teaches
+> tree_entry_interesting() to check against the deepest pathspec first,
+> so depth limit of a shallower pathspec won't affect a deeper one.
 
-Well, here are a couple implementation details you might not know about:
+I am quite happy to see where this new round of this series is going so
+far.  I however doubt this patch is a right approach for the problem yo=
+u
+are solving, especially because your longer-term (i.e. toward the rest =
+of
+the series to patch 21) plan is to allow wildcards [*1*].
 
-1) Loose objects are compressed too.  So you gain nothing on that front 
-   by keeping objects loose.
+One thing I am not clear is what it means to limit the recursion level
+when you have wildcards.
 
-2) Delta ordering is so that recent objects, i.e. those belonging to 
-   most recent commits, are not delta compressed but rather used as base 
-   objects for "older" objects to delta against.  So in practice, the 
-   cost of undeltifying objects is pushed towards objects that you're 
-   most unlikely to access frequently.
+One possible definition of interaction between limit and wildcard may b=
+e
+to count the number of slashes in the part of the path that matches the
+wildcarded part of the pathspec, add the number of path components
+appended due to the leading directory match, and then subtract the numb=
+er
+of literal slashes in the wildcarded part of the pattern from the above=
+,
+and declare that a match is found if the difference is less than the
+limit.
 
-3) Object placement within the pack is also optimized so that 
-   objects belonging to recent commits are close together, and walking 
-   them creates a linear IO access pattern which is much faster than 
-   accessing random individual files as loose objects are.
+E.g. a pathspec element "a/*/x" would match "a/b/c/x", "a/b/c/d/e/x",
+"a/b/x/y" and "a/b/x/y/z" without limit, and with the limit of 1:
 
-4) Packed objects take considerably less space than loose ones which 
-   makes for much better usage of the file system cache in the operating 
-   system.  This largely outweights the cost of undeltifying objects.
+    a/b/c/x        matches ('*' expands to "b/c")
+    a/b/c/d/e/x    no ('*' has to expand to "c/d/e" and needs 2 levels)
+    a/b/x/y        matches ('*' expands to "b" costing zero, "/y" needs=
+ 1)
+    a/b/x/y/z      does not match
 
-5) Git also keeps a cache of most frequently referenced objects when 
-   replaying delta chains so deep deltas don't bring exponential costs.
+Another definition could be to count _only_ the part that is appended b=
+y
+recursion (i.e. we do not count how many slashes has to match '*' in th=
+e
+above examples), and as the option is called --depth, it might make mor=
+e
+sense.
 
-And, in some cases, Git does even pick up the content of an object by 
-using its checked out form in the working directory directly instead of 
-locating and decompressing the object data.
+In either case, I am not sure if "if it matches the longest pathspec, w=
+e
+have the answer without looking at shorter ones" would be a good rule t=
+o
+use.
 
-So you shouldn't have to worry on that front.  Git is not the fastest 
-SCM out there just by luck.
 
+[Footnote]
 
-Nicolas
+*1* In addition, perhaps you may later want to introduce some "negative=
+"
+match operators to pathspecs; while I am not particularly fond of that
+direction at this moment, I would like to leave the door open for that
+possibility, in case it turns out to be a good thing to have.
