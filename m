@@ -1,100 +1,101 @@
 From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH 08/14] help.c: Fix detection of custom merge strategy
+Subject: Re: [PATCH 11/14] t3032-*.sh: Pass the -b (--binary) option to sed
  on cygwin
-Date: Thu, 16 Dec 2010 21:03:03 +0000
-Message-ID: <4D0A7E87.3020203@ramsay1.demon.co.uk>
-References: <4D07B786.2060602@ramsay1.demon.co.uk> <AANLkTimt3w9GVCXa_n1_HXivyRmnRyUhhdSArrHOT6fs@mail.gmail.com>
+Date: Thu, 16 Dec 2010 21:19:12 +0000
+Message-ID: <4D0A8250.5090403@ramsay1.demon.co.uk>
+References: <4D07B8B5.2030409@ramsay1.demon.co.uk> <7vtyigtaxn.fsf@alter.siamese.dyndns.org> <4D07FE91.2090003@sunshineco.com> <4D087AC7.2090705@viscovery.net> <4D088AB6.5090501@sunshineco.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>, j6t@kdbg.org,
-	jrnieder@gmail.com, vmiklos@frugalware.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Thu Dec 16 23:41:47 2010
+Cc: Johannes Sixt <j.sixt@viscovery.net>,
+	Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Pat Thoyts <patthoyts@gmail.com>
+To: Eric Sunshine <sunshine@sunshineco.com>
+X-From: git-owner@vger.kernel.org Thu Dec 16 23:41:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTMWA-0000cx-8K
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Dec 2010 23:41:46 +0100
+	id 1PTMWM-0000lG-4a
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Dec 2010 23:41:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752059Ab0LPWll (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Dec 2010 17:41:41 -0500
-Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:65267 "EHLO
+	id S1752100Ab0LPWls (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Dec 2010 17:41:48 -0500
+Received: from anchor-post-3.mail.demon.net ([195.173.77.134]:65292 "EHLO
 	anchor-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751608Ab0LPWlk (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Dec 2010 17:41:40 -0500
+	by vger.kernel.org with ESMTP id S1751608Ab0LPWlr (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Dec 2010 17:41:47 -0500
 Received: from ramsay1.demon.co.uk ([193.237.126.196])
 	by anchor-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1PTMW3-00044J-oS; Thu, 16 Dec 2010 22:41:40 +0000
+	id 1PTMWA-00048d-nx; Thu, 16 Dec 2010 22:41:47 +0000
 User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <AANLkTimt3w9GVCXa_n1_HXivyRmnRyUhhdSArrHOT6fs@mail.gmail.com>
+In-Reply-To: <4D088AB6.5090501@sunshineco.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163833>
 
-Erik Faye-Lund wrote:
->> diff --git a/help.c b/help.c
->> index 7f4928e..eabadc9 100644
->> --- a/help.c
->> +++ b/help.c
->> @@ -126,7 +126,10 @@ static int is_executable(const char *name)
->>            !S_ISREG(st.st_mode))
->>                return 0;
+Eric Sunshine wrote:
+> On 12/15/2010 3:22 AM, Johannes Sixt wrote:
+>> Am 12/15/2010 0:32, schrieb Eric Sunshine:
+>>> On 12/14/2010 2:24 PM, Junio C Hamano wrote:
+>>>> Ramsay Jones<ramsay@ramsay1.demon.co.uk>   writes:
+>>>>> The test using the conflict_hunks helper function (test 9) fails
+>>>>> on cygwin, since sed (by default) throws away the CR from CRLF
+>>>>> line endings. This behaviour is undesirable, since the validation
+>>>>> code expects the CRLF line-ending to be present. In order to fix
+>>>>> the problem we pass the -b (--binary) option to sed, using the
+>>>>> SED_OPTIONS variable. We use the SED_STRIPS_CR prerequisite in the
+>>>>> conditional initialisation of SED_OPTIONS.
+>>>>>
+>>>>> Signed-off-by: Ramsay Jones<ramsay@ramsay1.demon.co.uk>
+>>>>> ---
+>>>>>
+>>>>> Note that this test does not fail on MinGW, but I don't
+>>>>> really know why, given commit ca02ad3... ahem ;-)
+>>>> Ahem, indeed.  Why?
+>>> t3032 does indeed fail on MinGW, and was fixed in the msysgit port by [1],
+>>> but was subsequently "lost" when msysgit was rebased onto junio/next [2]
+>>> which did not have that test. Consequently, the fix never made it into the
+>>> mainline git source.
+>> Sorry, but on MinGW, I only need the GREP_OPTIONS part of that fix, but
+>> not the SED_OPTIONS. It's also mysterious for me.
 >>
->> -#ifdef WIN32
->> +#if defined(WIN32) || defined(__CYGWIN__)
->> +#if defined(__CYGWIN__)
->> +if ((st.st_mode & S_IXUSR) == 0)
->> +#endif
+>> OTOH, the fix in ca02ad3 that applies to t6038, does not work for me as is
+>> because my sed does not understand -b; it needs --nocr. Maybe it is the
+>> sed version that makes the difference?
+>>
+>> D:\Src\mingw-git\t>sed --version
+>> GNU sed version 3.02
 > 
-> Perhaps the first check should simply be changed to check for _WIN32
-> instead of WIN32? IIRC _WIN32 is set on Cygwin, but I could be
-> mistaken...
+> Failure of t3032 was reported by Pat Thoyts [1] when preparing for the 
+> v1.7.3 release. The problem was diagnosed and patched via [2] under the 
+> standard msysgit netinstall [3] environment. From commit message [2], 
+> GREP_OPTIONS and SED_OPTIONS were applied to resolve distinct cases of 
+> line-terminator "corruption" (t3032.4-t3032.8 and t3032.9, respectively) 
+> within that environment at the time the patch was prepared.
+> 
+> Your tool versions may indeed not be compatible with those of the 
+> netinstall environment [3]:
+> 
+> $ sed --version
+> GNU sed version 4.2.1
+> 
+> Unfortunately, the old --nocr is not recognized by modern GNU sed:
+> 
+> $ sed --nocr
+> sed: unrecognized option `--nocr'
 
-No, neither WIN32 or _WIN32 will be defined here (and they should not be).
-It's actually quite tricky, particularly when #including <windows.h>, viz:
+Yes. Like Johannes, I have sed version 3.02 on MinGW, but on cygwin
+I have sed version 4.1.5. See patch #14, where I introduce the
+SED_BIN_OPT variable to allow me to run the tests with SED_OPTIONS
+set to -c instead of -b.
 
-    $ cat -n test.c
-     1	#include <stdio.h>
-     2	
-     3	#ifdef IW
-     4	# include <windows.h>
-     5	#endif
-     6	
-     7	int main(int argc, char *argv[])
-     8	{
-     9	#ifdef WIN32
-    10		printf("WIN32 ");
-    11	#endif
-    12	#ifdef _WIN32
-    13		printf("_WIN32 ");
-    14	#endif
-    15	#ifdef __CYGWIN__
-    16		printf("__CYGWIN__ ");
-    17	#endif
-    18	#ifdef __MINGW32__
-    19		printf("__MINGW32__ ");
-    20	#endif
-    21		printf("\n");
-    22		return 0;
-    23	}
-
-    $ gcc -o test test.c
-    $ ./test
-    __CYGWIN__ 
-
-    $ gcc -o test -DIW test.c
-    $ ./test
-    WIN32 _WIN32 __CYGWIN__ 
-
-    $ gcc -o test -mno-cygwin test.c
-    $ ./test
-    WIN32 _WIN32 __MINGW32__ 
+[I thought I was unusual in having such an old sed version, but
+apparently not... ;-) ]
 
 ATB,
 Ramsay Jones
