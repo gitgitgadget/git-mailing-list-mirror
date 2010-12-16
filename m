@@ -1,53 +1,51 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: why the html and man versions of git-diff are different?
-Date: Thu, 16 Dec 2010 16:55:06 -0500
-Message-ID: <20101216215506.GB10480@sigill.intra.peff.net>
-References: <m139px2y26.fsf@cam.ac.uk>
+From: Phillip Susi <psusi@cfl.rr.com>
+Subject: Re: How to unpack recent objects?
+Date: Thu, 16 Dec 2010 17:06:59 -0500
+Message-ID: <4D0A8D83.9080705@cfl.rr.com>
+References: <4D0A77A7.9080702@cfl.rr.com> <alpine.LFD.2.00.1012161616170.10437@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Leo <sdl.web@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 16 22:55:17 2010
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Thu Dec 16 23:05:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTLn9-0003w6-JH
-	for gcvg-git-2@lo.gmane.org; Thu, 16 Dec 2010 22:55:15 +0100
+	id 1PTLxU-0000nt-7W
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Dec 2010 23:05:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753238Ab0LPVzJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Dec 2010 16:55:09 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:50680 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750874Ab0LPVzI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Dec 2010 16:55:08 -0500
-Received: (qmail 2664 invoked by uid 111); 16 Dec 2010 21:55:07 -0000
-Received: from 129-79-255-221.dhcp-bl.indiana.edu (HELO sigill.intra.peff.net) (129.79.255.221)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 16 Dec 2010 21:55:07 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 16 Dec 2010 16:55:06 -0500
-Content-Disposition: inline
-In-Reply-To: <m139px2y26.fsf@cam.ac.uk>
+	id S1756776Ab0LPWFs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Dec 2010 17:05:48 -0500
+Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:62433 "EHLO
+	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755201Ab0LPWFr (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Dec 2010 17:05:47 -0500
+Authentication-Results: cdptpa-omtalb.mail.rr.com smtp.user=psusi@cfl.rr.com; auth=pass (PLAIN)
+X-Authority-Analysis: v=1.1 cv=uESSSoDEku2quKX/oFXS2Smn5+55LTFcWFr5T5T8nFs= c=1 sm=0 a=Tegedtfkc20A:10 a=8nJEP1OIZ-IA:10 a=pg4Dpxby4z7sZisWVyJ9NA==:17 a=l6hnJiYQ2ZinPb6tiKEA:9 a=iVf76xgksS5H-kO1yLF3h1YeD2YA:4 a=wPNLvfGTeEIA:10 a=pg4Dpxby4z7sZisWVyJ9NA==:117
+X-Cloudmark-Score: 0
+X-Originating-IP: 72.242.190.170
+Received: from [72.242.190.170] ([72.242.190.170:1529] helo=[10.1.1.235])
+	by cdptpa-oedge01.mail.rr.com (envelope-from <psusi@cfl.rr.com>)
+	(ecelerity 2.2.3.46 r()) with ESMTPA
+	id DF/A2-07087-93D8A0D4; Thu, 16 Dec 2010 22:05:46 +0000
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <alpine.LFD.2.00.1012161616170.10437@xanadu.home>
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163820>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163821>
 
-On Thu, Dec 16, 2010 at 09:43:45PM +0000, Leo wrote:
+On 12/16/2010 4:19 PM, Nicolas Pitre wrote:
+> What makes you think that unpacking them will actually make the access 
+> to them faster?  Instead, you should consider _repacking_ them, 
+> ultimately using the --aggressive parameter with the gc command, if you 
+> want faster accesses.
 
-> I compared the html version of git-diff found in
-> http://www.kernel.org/pub/software/scm/git/docs/git-diff.html and the
-> man version from
-> http://kernel.org/pub/software/scm/git/git-manpages-1.7.3.4.tar.bz2
-> 
-> The man version says gitrevisions(1), which is incorrect since it is in
-> man7.
-
-Because it was fixed recently, and the html documention on kernel.org
-uses the "master" branch, whereas that commit did not make it into the
-maintenance release 1.7.3.4. It will be fixed in the manpages for
-git-1.7.4.
-
--Peff
+Because decompressing and undeltifying the objects in the pack file
+takes a fair amount of cpu time.  It seems a waste to do this for the
+same set of objects repeatedly rather than just keeping them loose.
