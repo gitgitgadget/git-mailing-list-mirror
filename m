@@ -1,127 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.3.4, 1.6.6.3 and others
-Date: Wed, 15 Dec 2010 22:02:35 -0800
-Message-ID: <7v8vzqntl0.fsf@alter.siamese.dyndns.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: [PATCH v2 resend] bash completion: add basic support for git-reflog
+Date: Thu, 16 Dec 2010 14:56:08 +0800
+Message-ID: <20101216145608.000004df@unknown>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Thu Dec 16 07:03:10 2010
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Junio C Hamano" <gitster@pobox.com>,
+	SZEDER =?UTF-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: "Git Mailing List" <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Thu Dec 16 07:56:34 2010
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1PT6vl-0006Pt-Qy
-	for glk-linux-kernel-3@lo.gmane.org; Thu, 16 Dec 2010 07:03:10 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1PT7lQ-0000gz-CK
+	for gcvg-git-2@lo.gmane.org; Thu, 16 Dec 2010 07:56:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752723Ab0LPGCz (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Thu, 16 Dec 2010 01:02:55 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37891 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751887Ab0LPGCr (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Thu, 16 Dec 2010 01:02:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 114A13ECF;
-	Thu, 16 Dec 2010 01:03:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=bGS7
-	emxiy2ehQGG0KvSBNX/j+3Y=; b=IQCPOUiz/NjbcXEZSOHWun+1f8Iw1wUK/GUS
-	WhB/kD4Ggnj04JRPTE/iklo2Ct26UBCXAZqqxMkS0rsyPFIV7FTxwNF7k7CTcpDv
-	/18VGs99B6dgGikAMYkK7C92Yj3/Z6NtTOgfBc7+qQKD0jBsXs1hkw+GHx4BPaxT
-	0WxcOuE=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=eoJ
-	iK+AWCzR0oBUcrlJoIweCE9En1gp0qHnS4qw/aEdKF8jeaVt371pzoD2F+qwCKvM
-	52bvL5YFay0gnrp1i2ffmrMXF0jkrd2AEmWkbLxQkSdU2/J4BqjNxc1uIGkMQwi3
-	nSOtPQoSE7PPrFCOiAXiFcLiWQOpJEBEni4cll6w=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D48853ECE;
-	Thu, 16 Dec 2010 01:03:07 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6453C3ECD; Thu, 16 Dec 2010
- 01:03:03 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 27699A1A-08DA-11E0-8124-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1752815Ab0LPG41 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Dec 2010 01:56:27 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:34781 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752616Ab0LPG40 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Dec 2010 01:56:26 -0500
+Received: by iwn9 with SMTP id 9so2959543iwn.19
+        for <git@vger.kernel.org>; Wed, 15 Dec 2010 22:56:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:x-mailer:mime-version:content-type
+         :content-transfer-encoding;
+        bh=RQ/g2X670OrX9obddvxJWiIs1H34UAEuabghkL1dkI8=;
+        b=isGXbY+ue/v4pENcC1z47nyjABHbaKl3zeJ2XhbkmSBiO82JnwTqwrPXbdqlliG9aX
+         4Vcm2VSwyAlsJvQpq3ngkWYhMGrXi7cYvrGugPrwKSa4cZl5q15GnW85q1peyPa0q4nA
+         saLAVVENLqhA4am/tHmj4fYRiv8uR2vIGoO+s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=dVF75dADKQnOJycxmSrgF7IYXipDhwbkvk2izfN2QzONyGcPQnQLhuP1aL4uBG0V6Q
+         LyqtB+KN1+T1fHpUNQno4M2gVtDgXNL4Ba6JVDJlDrmfsaACpa/UPuXAjBqE1y4KaFqV
+         BEMLyk69VPlsvk8pTeB8NRoL8eA9ltEMrP0gk=
+Received: by 10.42.176.1 with SMTP id bc1mr6950952icb.47.1292482585718;
+        Wed, 15 Dec 2010 22:56:25 -0800 (PST)
+Received: from unknown (cm8.zeta153.maxonline.com.sg [116.87.153.8])
+        by mx.google.com with ESMTPS id z4sm1644000ibg.13.2010.12.15.22.56.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 15 Dec 2010 22:56:24 -0800 (PST)
+X-Mailer: Claws Mail 3.7.4cvs1 (GTK+ 2.16.0; i586-pc-mingw32msvc)
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163801>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163802>
 
-The latest maintenance release Git 1.7.3.4 is available at the
-usual places:
+"Promote" the reflog command out of plumbing, so that we now run
+completion for it. After all, it's listed under porcelain (ancillary),
+and we do run completion for those commands.
 
-  http://www.kernel.org/pub/software/scm/git/
+Add basic completion for the three subcommands - show, expire, delete.
+Try completing refs for these too.
 
-  git-1.7.3.4.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.7.3.4.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.7.3.4.tar.{gz,bz2}		(preformatted docs)
+Helped-by: SZEDER G=C3=A1bor <szeder@ira.uka.de>
+Signed-off-by: Tay Ray Chuan <rctay89@gmail.com>
+---
 
-The RPM binary packages for a few architectures are found in:
+resend note:
+This didn't seem to have been picked up. FYI, Johnathan
+made a comment, but it was non-blocking, so I didn't change anything.
 
-  RPMS/$arch/git-*-1.7.3.4-1.fc13.$arch.rpm	(RPM)
+Changed from v1:=20
+ - picked up G=C3=A1bor's suggestion on using __git_find_on_cmdline()
+   to correctly handle situations where subcommands are used with dashe=
+d
+   options.
+ - don't "hide" reflog anymore - run completion for it too.
 
-Among many fixes since v1.7.3.3, it contains a fix to a recently
-discovered XSS vulnerability in Gitweb (CVE 2010-3906).  A backport
-to an earlier maintenance track 1.6.6.3 is available (replace 1.7.3.4 with
-1.6.6.3 above).
+G=C3=A1bor: hmm, it really seems that reflog is treated as plumbing - n=
+o completion
+is done for it. Even get-tar-commit-id (I've never used this before) is=
+ treated
+better than reflog. Shall do something about it!
 
-The Gitweb fix has also been backported to maintenance tracks of other
-earlier releases (1.7.2.5, 1.7.1.4, 1.7.0.9, 1.6.5.9, and 1.6.4.5) and are
-available from the main repository and shortly will be available from its
-mirrors:
+ contrib/completion/git-completion.bash |   13 ++++++++++++-
+ 1 files changed, 12 insertions(+), 1 deletions(-)
 
-  git://git.kernel.org/pub/scm/git/git.git/
-  git://repo.or.cz/alt-git.git/
-  git://git-core.git.sourceforge.net/gitroot/git-core/git-core/
-  git://github.com/git/git.git/
-
-----------------------------------------------------------------
-
-Git v1.7.3.4 Release Notes
-==========================
-
-Fixes since v1.7.3.3
---------------------
-
- * Smart HTTP transport used to incorrectly retry redirected POST
-   request with GET request.
-
- * "git apply" did not correctly handle patches that only change modes
-   if told to apply while stripping leading paths with -p option.
-
- * "git apply" can deal with patches with timezone formatted with a
-   colon between the hours and minutes part (e.g. "-08:00" instead of
-   "-0800").
-
- * "git checkout" removed an untracked file "foo" from the working
-   tree when switching to a branch that contains a tracked path
-   "foo/bar".  Prevent this, just like the case where the conflicting
-   path were "foo" (c752e7f..7980872d).
-
- * "git cherry-pick" or "git revert" refused to work when a path that
-   would be modified by the operation was stat-dirty without a real
-   difference in the contents of the file.
-
- * "git diff --check" reported an incorrect line number for added
-   blank lines at the end of file.
-
- * "git imap-send" failed to build under NO_OPENSSL.
-
- * Setting log.decorate configuration variable to "0" or "1" to mean
-   "false" or "true" did not work.
-
- * "git push" over dumb HTTP protocol did not work against WebDAV
-   servers that did not terminate a collection name with a slash.
-
- * "git tag -v" did not work with GPG signatures in rfc1991 mode.
-
- * The post-receive-email sample hook was accidentally broken in 1.7.3.3
-   update.
-
- * "gitweb" can sometimes be tricked into parrotting a filename argument
-   given in a request without properly quoting.
-
-Other minor fixes and documentation updates are also included.
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index f710469..6732b1d 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -735,7 +735,6 @@ __git_list_porcelain_commands ()
+ 		quiltimport)      : import;;
+ 		read-tree)        : plumbing;;
+ 		receive-pack)     : plumbing;;
+-		reflog)           : plumbing;;
+ 		remote-*)         : transport;;
+ 		repo-config)      : deprecated;;
+ 		rerere)           : plumbing;;
+@@ -1632,6 +1631,18 @@ _git_rebase ()
+ 	__gitcomp "$(__git_refs)"
+ }
+=20
++_git_reflog ()
++{
++	local subcommands=3D"show delete expire"
++	local subcommand=3D"$(__git_find_on_cmdline "$subcommands")"
++
++	if [ -z "$subcommand" ]; then
++		__gitcomp "$subcommands"
++	else
++		__gitcomp "$(__git_refs)"
++	fi
++}
++
+ __git_send_email_confirm_options=3D"always never auto cc compose"
+ __git_send_email_suppresscc_options=3D"author self cc bodycc sob cccmd=
+ body all"
+=20
+--=20
+1.7.3.2.493.g2b058
