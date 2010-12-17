@@ -1,111 +1,77 @@
-From: Ken Brownfield <krb@irridia.com>
-Subject: Performance issue exposed by git-filter-branch
-Date: Thu, 16 Dec 2010 17:07:15 -0800
-Message-ID: <41C1B4AC-8427-4D62-BEB6-689A4BE4EE5B@irridia.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Performance issue exposed by git-filter-branch
+Date: Thu, 16 Dec 2010 19:45:39 -0600
+Message-ID: <20101217014539.GA6775@burratino>
+References: <41C1B4AC-8427-4D62-BEB6-689A4BE4EE5B@irridia.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 17 02:17:30 2010
+Cc: git@vger.kernel.org, David Barr <david.barr@cordelta.com>
+To: Ken Brownfield <krb@irridia.com>
+X-From: git-owner@vger.kernel.org Fri Dec 17 02:46:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTOwr-0006az-9p
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 02:17:29 +0100
+	id 1PTPOY-00061D-TG
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 02:46:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751250Ab0LQBRY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Dec 2010 20:17:24 -0500
-Received: from endymion.irridia.com ([184.105.192.220]:42660 "EHLO
-	endymion.irridia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751213Ab0LQBRX convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Dec 2010 20:17:23 -0500
-X-Greylist: delayed 608 seconds by postgrey-1.27 at vger.kernel.org; Thu, 16 Dec 2010 20:17:23 EST
-Received: from shrike2.sfo.corp.google.com (unknown [72.14.229.84])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by endymion.irridia.com (Postfix) with ESMTPSA id AAFA914561C
-	for <git@vger.kernel.org>; Thu, 16 Dec 2010 17:07:15 -0800 (PST)
-X-Mailer: Apple Mail (2.1081)
+	id S1752066Ab0LQBqB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Dec 2010 20:46:01 -0500
+Received: from mail-gx0-f180.google.com ([209.85.161.180]:42753 "EHLO
+	mail-gx0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751998Ab0LQBqA (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Dec 2010 20:46:00 -0500
+Received: by gxk19 with SMTP id 19so104465gxk.11
+        for <git@vger.kernel.org>; Thu, 16 Dec 2010 17:45:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=AjRcdJ+2xqhrbTeEMkmj3RMaUMvA/QpthD5O2mft7Fs=;
+        b=mdze0vtPiXH9fLbJ2/LisngkyTsQ48iJbnriNqvmObozg/TkDdNUW7KOGgovv9W/Eb
+         w5obG9vsbnomWIZi8PUHOF8qdfLd9RmUOAffsiYDypYSqSwI6dvAkni548ZrYVyAPfsx
+         ba/R/nkzDy2R9Qx46QK6bOA8i9AYY6H1OOsBw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=vQji1DfzQM5YuCA2Z5mR8/ECsJZoBdI8o82Il75UstyESCpwTTls+34GtzQJE6GvK/
+         qjhf+y2Dp2g5WZYqeJet9n5GP40lCjkZO6RItYdNqywkAN4MisY9hSSCNG9OdkogBUsp
+         Kg6w/vXgaoiAB4dRjewmJp0tbRPbKYXYurNsc=
+Received: by 10.150.50.18 with SMTP id x18mr1884226ybx.350.1292550358009;
+        Thu, 16 Dec 2010 17:45:58 -0800 (PST)
+Received: from burratino (adsl-69-209-48-248.dsl.chcgil.ameritech.net [69.209.48.248])
+        by mx.google.com with ESMTPS id r31sm491487yhc.24.2010.12.16.17.45.56
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 16 Dec 2010 17:45:57 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <41C1B4AC-8427-4D62-BEB6-689A4BE4EE5B@irridia.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163848>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163849>
 
-I have a large git repository (1,757,784 objects, 209,282 commits) from which I have been planning to filter large tree portions (~36,000 of ~132,000 files).  When I first ran git-filter-branch on this repository about a year ago:
+Hi Ken,
 
-git filter-branch --index-filter 'git rm -r --cached --ignore-unmatch -- bigdirtree stuff/a stuff/b stuff/c stuff/dir/{a,b,c}' --prune-empty --tag-name-filter cat -- --all
+Ken Brownfield wrote:
 
-The process took around 25 hours for the repository when it was at ~101k commits.  This wasn't ideal, but could be completed over a weekend maintenance.  There are 50 daily active committers to this repository, so the window has to be short.
+> Is there a way to apply the optimizations mentioned in that old
+> thread to the code paths used by git-filter-branch (mainly git-read
+> and git-rm, seemingly), or is there another way to investigate and
+> improve the performance of the filter?
 
-However, we didn't have time to implement this newly filtered repo (it involves everyone recloning, etc) until now.
+Which old thread?
 
-Now that the same repository has grown, this same filter-branch process now takes 6.5 *days* at 100% CPU on the same machine (2x4 Xeon, x86_64) on git-1.7.3.2.  There's no I/O, memory, or other resource contention.
+You might be able to get faster results using the approach of [1]
+(using "git cat-file --batch-check" to collect the trees you want
+and "git fast-import" to paste them together), which avoids unpacking
+trees when not needed.
 
-I tend to doubt there are any multi-processing opportunities with this process, so at this point git-filter-branch is no longer feasible.
+Hope that helps,
+Jonathan
 
-This is an oprofile sample (all samples >1%) at roughly one day into the 6.5 day Rewrite process:
-
-[...]
-11594     1.0208  git                      git                      add_index_entry
-11616     1.0228  vmlinux-debug-2.6.24-28-server vmlinux-debug-2.6.24-28-server find_lock_page
-12624     1.1115  git                      git                      decode_tree_entry
-13065     1.1504  git                      git                      refresh_index
-13757     1.2113  git                      git                      match_pathspec
-14041     1.2363  git                      git                      read_packed_refs
-18309     1.6121  vmlinux-debug-2.6.24-28-server vmlinux-debug-2.6.24-28-server unmap_vmas
-20014     1.7622  libc-2.7.so              libc-2.7.so              _int_malloc
-24248     2.1350  git                      git                      find_cache_pos
-24560     2.1625  git                      git                      find_pack_entry_one
-29042     2.5571  vmlinux-debug-2.6.24-28-server vmlinux-debug-2.6.24-28-server debug
-31202     2.7473  libz.so.1.2.3.3          libz.so.1.2.3.3          inflate
-34941     3.0765  git                      git                      df_name_compare
-36749     3.2357  libz.so.1.2.3.3          libz.so.1.2.3.3          inflate_fast
-41704     3.6720  git                      git                      index_name_pos
-46908     4.1302  vmlinux-debug-2.6.24-28-server vmlinux-debug-2.6.24-28-server clear_page
-92554     8.1493  libc-2.7.so              libc-2.7.so              memcpy
-127439   11.2208  libcrypto.so.0.9.8       libcrypto.so.0.9.8       sha1_block_data_order
-188373   16.5860  git                      git                      cache_name_compare
-
-cache_name_compare (and the presumed follow-ons of memcpy/sha/malloc/etc) is the major consumer.
-
-Sampling the filter only 2k commits into the Rewrite stage shows:
-
-[...]
-12058     1.0135  vmlinux-debug-2.6.24-28-server vmlinux-debug-2.6.24-28-server do_path_lookup
-13532     1.1374  vmlinux-debug-2.6.24-28-server vmlinux-debug-2.6.24-28-server copy_user_generic_string
-13934     1.1712  vmlinux-debug-2.6.24-28-server vmlinux-debug-2.6.24-28-server clear_page
-16565     1.3924  git                      git                      cache_name_compare
-16948     1.4246  libc-2.7.so              libc-2.7.so              memcpy
-16969     1.4263  vmlinux-debug-2.6.24-28-server vmlinux-debug-2.6.24-28-server system_call
-19189     1.6129  vmlinux-debug-2.6.24-28-server vmlinux-debug-2.6.24-28-server debug
-22697     1.9078  git                      git                      add_ref
-31112     2.6151  ext3                     ext3                     (no symbols)
-33925     2.8516  git                      git                      sort_ref_list
-34026     2.8600  vmlinux-debug-2.6.24-28-server vmlinux-debug-2.6.24-28-server _atomic_dec_and_lock
-39304     3.3037  git                      git                      read_packed_refs
-43920     3.6917  vmlinux-debug-2.6.24-28-server vmlinux-debug-2.6.24-28-server __link_path_walk
-58504     4.9175  libc-2.7.so              libc-2.7.so              strcmp
-79957     6.7208  vmlinux-debug-2.6.24-28-server vmlinux-debug-2.6.24-28-server __d_lookup
-168696   14.1797  git                      git                      prepare_packed_git_one
-
-The process is still pretty slow (1-2 commits per second) but cache_name_compare is in the background.
-
-Is there a way to apply the optimizations mentioned in that old thread to the code paths used by git-filter-branch (mainly git-read and git-rm, seemingly), or is there another way to investigate and improve the performance of the filter?
-
-Outside of this specific issue, it might be worth taking a look at the overall performance of git-filter-branch: bash loops iterating over core executables probably isn't ideal, but there are lower-hanging fruits.  Running the filter in a single process may allow some better caching and reduce duplication of work (maybe parallelization?), but I'm just guessing.
-
-Our tree is quite large, but the O(n^2) nature of this process is pretty crippling for the larger repositories that are bound to be in the wild.  And while filter-branch isn't an everyday thing, when I /do/ need to use it, I won't be able to wait a week. :-)
-
-I'd appreciate any feedback or suggestions anyone might have!
-
-Thanks,
-Ken
-
-PS: On an unrelated note, I would recommend that the following code in git-filter-branch:
-
-277:rev_args=$(git rev-parse --revs-only "$@")
-
-be changed to write out to a temporary file, then piped into the "git rev-list" at line 289 with "--stdin".  For larger trees, the use of $rev_args on the "git rev-list" command-line exceeds the size of some shells' command-line buffers (from direct experience).
+[1] http://repo.or.cz/w/git/barrbrain/github.git/commitdiff/db-svn-filter-root
