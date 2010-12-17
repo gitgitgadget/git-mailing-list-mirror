@@ -1,83 +1,70 @@
-From: Justin Pitts <justinpitts@gmail.com>
-Subject: unable to resume git svn fetch
-Date: Fri, 17 Dec 2010 09:28:15 -0500
-Message-ID: <62DF67FC-1C4E-4E65-9B19-B485CDF5EEF6@gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1082)
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 14/21] Convert ce_path_match() to use struct pathspec
+Date: Fri, 17 Dec 2010 07:09:52 -0800
+Message-ID: <7vfwtwjv0f.fsf@alter.siamese.dyndns.org>
+References: <1292425376-14550-1-git-send-email-pclouds@gmail.com>
+ <1292425376-14550-15-git-send-email-pclouds@gmail.com>
+ <7v39pxl10y.fsf@alter.siamese.dyndns.org>
+ <AANLkTikKCU==mS5_TdqHstETj=CQ_deHMCJ4xW0r+Sck@mail.gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 17 15:28:27 2010
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 17 16:10:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTbII-00083j-7U
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 15:28:26 +0100
+	id 1PTbwm-0001cR-HK
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 16:10:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755046Ab0LQO2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Dec 2010 09:28:20 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:58730 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754905Ab0LQO2T convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 17 Dec 2010 09:28:19 -0500
-Received: by qwa26 with SMTP id 26so739759qwa.19
-        for <git@vger.kernel.org>; Fri, 17 Dec 2010 06:28:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:content-type
-         :content-transfer-encoding:subject:date:message-id:to:mime-version
-         :x-mailer;
-        bh=yNpdd+vpdykOU7vmg0HrsDC3jqWuFn7s16FJZuZYhkA=;
-        b=TxbwjcOBSNuUbZkQxWk0NT0gyiB0jc7pw6MZsySVKameO9L3anoIu9TpjW1tHaTtRM
-         7ePfLeTmlJbkrIUcHQ3kEWXRle66sLW0EmL9AmQiRd4OdFFXRteNj87WluBPIW9RwCPx
-         ckye/8LraimHawY4Qn/sQ9dnSXcZaBudGQLzs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:content-type:content-transfer-encoding:subject:date:message-id
-         :to:mime-version:x-mailer;
-        b=LhIfMmIsD0Yy7mhAyZGhexUzq9AvxvXwe7jyweHEzOwWwOHStWFOeOpc5URJl9gVOj
-         e/3vicc/P44Y8gi+9zugU6Xhn4Ai2c07ArSfl9YaO409j0iTGDsVAkeuQFrx8JmmG8JC
-         OwIrT9jRIBxG0VUXyCnkzjUkY49esnMWPCFjA=
-Received: by 10.224.54.65 with SMTP id p1mr866315qag.241.1292596098114;
-        Fri, 17 Dec 2010 06:28:18 -0800 (PST)
-Received: from h164.cmh.bplglobal.net (rrcs-74-219-149-162.central.biz.rr.com [74.219.149.162])
-        by mx.google.com with ESMTPS id g32sm179487qck.10.2010.12.17.06.28.16
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 17 Dec 2010 06:28:17 -0800 (PST)
-X-Mailer: Apple Mail (2.1082)
+	id S1755242Ab0LQPKB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Dec 2010 10:10:01 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51580 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755237Ab0LQPKA (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Dec 2010 10:10:00 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9E07E2A87;
+	Fri, 17 Dec 2010 10:10:25 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=W83KQx+zJHI++wVd+Ejna9XIVLc=; b=r2Jh22
+	9VEGcVWfw+uUdpTnXkZzEn5BBX+GJjAnPuSb2o7jXhWzFFOaZgSDnarBb9zuhDsp
+	dRLc59pqxcWY2z5qPvTdLJvknegQo/23pXNxIGrhYqi2Sq2EncPhz29+R5K9i4rq
+	RcGQadesnF29SATQx23I4/akNMXGZ/9gSBAWM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nJfPz68Dm03pHDNWtlOf8szemVnYuKC9
+	HySlTS/stKqLIRhnwp9QPW8dArm/sfjtwCMKJI0mCUDRBeQ/WCft9e5mGgfu3U9y
+	99YncwUo7K0KRi9TWKIt0JLR1sKyVZqLl+6RivN87RnWxg+/umQNMXmYNbpaA+yb
+	e/Mykw2sm08=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7893A2A83;
+	Fri, 17 Dec 2010 10:10:23 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 99F3C2A82; Fri, 17 Dec 2010
+ 10:10:20 -0500 (EST)
+In-Reply-To: <AANLkTikKCU==mS5_TdqHstETj=CQ_deHMCJ4xW0r+Sck@mail.gmail.com>
+ (Nguyen Thai Ngoc Duy's message of "Fri\, 17 Dec 2010 16\:59\:52 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: C563001A-09EF-11E0-AC2F-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163882>
 
-Hello,
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-I am trying to import a SVN repo that I will be tracking for the foreseeable future.
-The clone command was
-git svn clone -T trunk -t tags -t release_tags -b branches -b private/branches $REPO
+>> I wonder if it makes more sense to change the type of revs->prune_data
+>> from an array of pointers to strings to a pointer to struct pathspec.
+>> Is there a downside?
+>
+> Converting a pointer to another pointer means mis typecasting can
+> happen and the compiler won't help catching them.
 
-The fetch has been interrupted several times. Up until now I have had no problem resuming with git svn fetch.
-
-Now, fetch fails on r9007 with 
-	Incomplete data: Delta source ended unexpectedly at /opt/local/libexec/git-core/git-svn line 5117
-
-I see some messages on the BUG mailing list regarding this error, but I get somewhat lost in the details of the repair and trying to understand how I might apply them to my scenario. Also, 
-
-git svn log
-and
-git svn reset -r9006
-fail with
-	fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
-
-More detail from my shell session is at https://gist.github.com/79e08fe7551875f8bce9
-
-This is git v1.7.3.3 on OSX v1.6.5 via MacPorts. I see that 1.7.3.4 is out, though not in MacPorts yet and nothing in the 
-release notes lead me to believe it would be useful, though I am certainly willing to do a source install if it is.
-
-It was suggested in #git that I ought to limit the amount of history I am importing. I think that's a cop-out, but I'll listen to a reasoned argument why that opinion is wrong.
-
-Thanks in advance,
-
-Justin
+You can rename the field at the same time, and the compiler will catch
+anything you forgot to touch, no?
