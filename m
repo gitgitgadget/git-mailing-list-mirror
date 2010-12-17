@@ -1,71 +1,83 @@
-From: "Bradley M. Kuhn" <bkuhn@sfconservancy.org>
-Subject: Flattr for Git donations (was Re: [ANNOUNCE] Git in the SFC)
-Date: Fri, 17 Dec 2010 08:09:42 -0500
-Organization: Software Freedom Conservancy
-Message-ID: <874oac8s15.fsf_-_@ebb.org>
-References: <20101217002034.GA18648@sigill.intra.peff.net>
-	<AANLkTikB5eMLh0fZBBOjwAaAwxPnC-3hap28RCXNXa0y@mail.gmail.com>
-Mime-Version: 1.0
+From: Justin Pitts <justinpitts@gmail.com>
+Subject: unable to resume git svn fetch
+Date: Fri, 17 Dec 2010 09:28:15 -0500
+Message-ID: <62DF67FC-1C4E-4E65-9B19-B485CDF5EEF6@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1082)
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	git@sfconservancy.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Fri Dec 17 14:37:36 2010
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 17 15:28:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTaV6-0005e5-1o
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 14:37:36 +0100
+	id 1PTbII-00083j-7U
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 15:28:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754722Ab0LQNhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Dec 2010 08:37:31 -0500
-Received: from catholic.ebb.org ([67.207.139.67]:37983 "EHLO catholic.ebb.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754425Ab0LQNhb (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Dec 2010 08:37:31 -0500
-X-Greylist: delayed 566 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Dec 2010 08:37:31 EST
-Received: from localhost (unknown [206.217.92.186])
-	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by catholic.ebb.org (Postfix) with ESMTPSA id 22D204B32A;
-	Fri, 17 Dec 2010 08:28:04 -0500 (EST)
-In-Reply-To: <AANLkTikB5eMLh0fZBBOjwAaAwxPnC-3hap28RCXNXa0y@mail.gmail.com>
-	(Erik Faye-Lund's message of "Fri, 17 Dec 2010 02:02:09 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+	id S1755046Ab0LQO2U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Dec 2010 09:28:20 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:58730 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754905Ab0LQO2T convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Dec 2010 09:28:19 -0500
+Received: by qwa26 with SMTP id 26so739759qwa.19
+        for <git@vger.kernel.org>; Fri, 17 Dec 2010 06:28:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:content-type
+         :content-transfer-encoding:subject:date:message-id:to:mime-version
+         :x-mailer;
+        bh=yNpdd+vpdykOU7vmg0HrsDC3jqWuFn7s16FJZuZYhkA=;
+        b=TxbwjcOBSNuUbZkQxWk0NT0gyiB0jc7pw6MZsySVKameO9L3anoIu9TpjW1tHaTtRM
+         7ePfLeTmlJbkrIUcHQ3kEWXRle66sLW0EmL9AmQiRd4OdFFXRteNj87WluBPIW9RwCPx
+         ckye/8LraimHawY4Qn/sQ9dnSXcZaBudGQLzs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:content-type:content-transfer-encoding:subject:date:message-id
+         :to:mime-version:x-mailer;
+        b=LhIfMmIsD0Yy7mhAyZGhexUzq9AvxvXwe7jyweHEzOwWwOHStWFOeOpc5URJl9gVOj
+         e/3vicc/P44Y8gi+9zugU6Xhn4Ai2c07ArSfl9YaO409j0iTGDsVAkeuQFrx8JmmG8JC
+         OwIrT9jRIBxG0VUXyCnkzjUkY49esnMWPCFjA=
+Received: by 10.224.54.65 with SMTP id p1mr866315qag.241.1292596098114;
+        Fri, 17 Dec 2010 06:28:18 -0800 (PST)
+Received: from h164.cmh.bplglobal.net (rrcs-74-219-149-162.central.biz.rr.com [74.219.149.162])
+        by mx.google.com with ESMTPS id g32sm179487qck.10.2010.12.17.06.28.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 17 Dec 2010 06:28:17 -0800 (PST)
+X-Mailer: Apple Mail (2.1082)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163880>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163881>
 
-Erik Faye-Lund wrote at 20:02 (EST) on Thursday:
+Hello,
 
-> I see there's donation-buttons for google checkout and paypal. Would
-> it be possible to donate through flattr also?
+I am trying to import a SVN repo that I will be tracking for the foreseeable future.
+The clone command was
+git svn clone -T trunk -t tags -t release_tags -b branches -b private/branches $REPO
 
-Yes, I've been looking into flattr in the last two weeks.  I'm trying to
-figure out a way for flattr to allow a "master account" so that each of
-Conservancy's member projects can have its own and the funds all come to
-Conservancy, properly routed for each project.
+The fetch has been interrupted several times. Up until now I have had no problem resuming with git svn fetch.
 
-If Flattr doesn't support that 'master account' idea, what I'll do is
-make a separate flattr account for each of Conservancy's member
-projects.  Hopefully, that can be done yet have all the banking
-information be the same.
+Now, fetch fails on r9007 with 
+	Incomplete data: Delta source ended unexpectedly at /opt/local/libexec/git-core/git-svn line 5117
 
-I'll experiment more with this over the weekend and into early next
-week.  I'll report to the Conservancy Git Committee (which is currently
-Jeff, Junio, and Shawn) on what I discover and how we can make it work.
+I see some messages on the BUG mailing list regarding this error, but I get somewhat lost in the details of the repair and trying to understand how I might apply them to my scenario. Also, 
 
-Anyway, I'll find a way to do it, one way or the other.  Flattr has
-become a very popular way to donate to FLOSS projects and Conservancy
-therefore needs to support it.
+git svn log
+and
+git svn reset -r9006
+fail with
+	fatal: ambiguous argument 'HEAD': unknown revision or path not in the working tree.
 
-BTW, to reiterate what Jeff mentioned in his post, if anyone ever has any
-questions about Git's membership in Conservancy, just email
-<git@sfconservancy.org>.  That alias reaches both me and the Conservancy
-Git Committee simultaneously.
--- 
-Bradley M. Kuhn, Executive Director, Software Freedom Conservancy
+More detail from my shell session is at https://gist.github.com/79e08fe7551875f8bce9
+
+This is git v1.7.3.3 on OSX v1.6.5 via MacPorts. I see that 1.7.3.4 is out, though not in MacPorts yet and nothing in the 
+release notes lead me to believe it would be useful, though I am certainly willing to do a source install if it is.
+
+It was suggested in #git that I ought to limit the amount of history I am importing. I think that's a cop-out, but I'll listen to a reasoned argument why that opinion is wrong.
+
+Thanks in advance,
+
+Justin
