@@ -1,50 +1,85 @@
-From: Intland <info@intland.com>
-Subject: EGit for Mylyn 0.9.3: EGit integrated with the Mylyn task framework
-Date: Fri, 17 Dec 2010 11:40:10 +0100
-Message-ID: <4D0B3E0A.5030801@intland.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/3] gitweb: add extensions to highlight feature
+Date: Fri, 17 Dec 2010 12:17:23 +0100
+Message-ID: <201012171217.24350.jnareb@gmail.com>
+References: <1292535801-7421-1-git-send-email-sylvain@abstraction.fr> <m3y68slxj9.fsf@localhost.localdomain> <1292538804.2511.4.camel@kheops>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="iso-8859-2"
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 17 11:50:13 2010
+Cc: git@vger.kernel.org
+To: Sylvain Rabot <sylvain@abstraction.fr>
+X-From: git-owner@vger.kernel.org Fri Dec 17 12:17:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTXt7-0001n9-1C
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 11:50:13 +0100
+	id 1PTYJj-0007JB-T4
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 12:17:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752370Ab0LQKuF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Dec 2010 05:50:05 -0500
-Received: from mail00d.mail.t-online.hu ([84.2.42.5]:21791 "EHLO
-	mail00d.mail.t-online.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751721Ab0LQKuE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Dec 2010 05:50:04 -0500
-X-Greylist: delayed 591 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Dec 2010 05:50:04 EST
-Received: from [192.168.1.67] (dsl51B6134D.pool.t-online.hu [81.182.19.77])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail00d.mail.t-online.hu (Postfix) with ESMTPSA id 5FC5D75877E
-	for <git@vger.kernel.org>; Fri, 17 Dec 2010 11:40:11 +0100 (CET)
-User-Agent: Thunderbird 2.0.0.24 (X11/20101027)
+	id S1753225Ab0LQLRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Dec 2010 06:17:38 -0500
+Received: from mail-fx0-f43.google.com ([209.85.161.43]:59576 "EHLO
+	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753201Ab0LQLRh (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Dec 2010 06:17:37 -0500
+Received: by fxm18 with SMTP id 18so523466fxm.2
+        for <git@vger.kernel.org>; Fri, 17 Dec 2010 03:17:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=51nOGJshUY+EyQqUwvLZOnaLiic0H4m8P2Ay9egW1iE=;
+        b=C/kr7lkQ2Y8PhDDaP/v86au4bEdeAkSObqp5lCpxcTQtYfkwRwKTGX1V7gCmoeK2ht
+         S6mAbgwWNVXD9RwdmJ4cC7pLRLH+geiSRTvxskPxnrS33PXgktRC4AN9xgiWTxEfLfLA
+         zDI41R/BOh8dFYf4U9sUOho6DYKUo1erDeXJI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=Gk9CZF/cg5yCgKBNn25SX0wMVA497usZEQmoEvliLD9u0MFxMXMATUGmKicSoT6Zca
+         7dhDPidXYsRlHFs/soRDliQyGEUvpBfrZUFqrJhuWLIjVnivwvnDcPmqgKZU24I8JqWY
+         70zqUob6mgu+0MkmlzXINcDDhLAUrDUZufkBY=
+Received: by 10.223.86.65 with SMTP id r1mr967635fal.24.1292584656323;
+        Fri, 17 Dec 2010 03:17:36 -0800 (PST)
+Received: from [192.168.1.13] (aeho46.neoplus.adsl.tpnet.pl [79.186.196.46])
+        by mx.google.com with ESMTPS id y14sm49156fak.42.2010.12.17.03.17.33
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 17 Dec 2010 03:17:34 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <1292538804.2511.4.camel@kheops>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163871>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163872>
 
-Hi all,
+On Thu, 16 Dec 2010, Sylvain Rabot wrote:
+> On Thu, 2010-12-16 at 14:22 -0800, Jakub Narebski wrote:
+> > Sylvain Rabot <sylvain@abstraction.fr> writes:
 
-EGit for Mylyn is a custom fork of the original EGit project, to integrate EGit (the Git plugin for Eclipse) with Mylyn 
-(the task-focused framework).
-Intland Software has created this fork to *enable associating Git changes with Mylyn tasks, and tracking these 
-associations*. However, it was primarily developed to satisfy Intland's own needs, the binaries and the source code is 
-freely available for downloading and cloning.
+> > >  	# alternate extensions, see /etc/highlight/filetypes.conf
+> > >  	'h' => 'c',
+> > > +	map { $_ => 'sh'  } qw(bash zsh),
+> > 
+> > Good idea.
+> 
+> Does ksh, csh can be highlighted as sh too ?
 
-Highlights in this fork:
-* "Open Corresponding Task" feature
-* Commit messages are initialized with the IDs of the active Mylyn tasks
-* EGit tightly integrated with the codeBeamer issue trackers
+My /etc/highlight/filetypes.conf does include only
 
-More details, download info, etc.: http://blogs.intland.com/main/entry/20101216
+  $ext(sh)=bash
+
+All of bash, zsh and ksh are POSIX shell (sh) compatibile, so sh syntax
+(which is according to my /usr/share/highlight/langDefs/sh.lang file
+"Bash script language definition file" ;-)) should work.  csh IIRC isn't.
+So therefore I am not sure if csh can be highlighted correctly using sh
+syntax.
+
+-- 
+Jakub Narebski
+Poland
