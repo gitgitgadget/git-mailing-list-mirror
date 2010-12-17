@@ -1,73 +1,65 @@
 From: Ken Brownfield <krb@irridia.com>
 Subject: Re: Performance issue exposed by git-filter-branch
-Date: Thu, 16 Dec 2010 18:31:52 -0800
-Message-ID: <1FBB24BF-6517-4906-99D5-A5DDBEA14D6D@irridia.com>
-References: <41C1B4AC-8427-4D62-BEB6-689A4BE4EE5B@irridia.com> <20101217014539.GA6775@burratino>
+Date: Thu, 16 Dec 2010 18:36:36 -0800
+Message-ID: <9A686258-A504-4CBB-9993-048B45B5EE6A@irridia.com>
+References: <41C1B4AC-8427-4D62-BEB6-689A4BE4EE5B@irridia.com> <201012170254.13005.trast@student.ethz.ch>
 Mime-Version: 1.0 (Apple Message framework v1081)
 Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 8BIT
-Cc: David Barr <david.barr@cordelta.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 17 03:32:00 2010
+X-From: git-owner@vger.kernel.org Fri Dec 17 03:36:51 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTQ6x-0005sC-2w
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 03:31:59 +0100
+	id 1PTQBe-0008QN-Ue
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 03:36:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752069Ab0LQCby (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Dec 2010 21:31:54 -0500
-Received: from endymion.irridia.com ([184.105.192.220]:30966 "EHLO
+	id S1752074Ab0LQCgh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Dec 2010 21:36:37 -0500
+Received: from endymion.irridia.com ([184.105.192.220]:16801 "EHLO
 	endymion.irridia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751345Ab0LQCbx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 16 Dec 2010 21:31:53 -0500
+	with ESMTP id S1750943Ab0LQCgh convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Dec 2010 21:36:37 -0500
 Received: from shrike2.sfo.corp.google.com (unknown [72.14.229.84])
 	(using TLSv1 with cipher AES128-SHA (128/128 bits))
 	(No client certificate requested)
-	by endymion.irridia.com (Postfix) with ESMTPSA id 2069A14561D;
-	Thu, 16 Dec 2010 18:31:53 -0800 (PST)
-In-Reply-To: <20101217014539.GA6775@burratino>
+	by endymion.irridia.com (Postfix) with ESMTPSA id 3D16614561D
+	for <git@vger.kernel.org>; Thu, 16 Dec 2010 18:36:37 -0800 (PST)
+In-Reply-To: <201012170254.13005.trast@student.ethz.ch>
 X-Mailer: Apple Mail (2.1081)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163853>
 
-The thread titled "git and larger trees, not so fast?".  Some of the history is lost, but here's the earliest post I can find:
+I had considered this approach (and the one mentioned by Jonathan) but there are no git tools to actually perform the filter I wanted on the export in this form.  I could (and will) parse fast-export and make an attempt a filtering files/directories... my concern is that I won't do it right, and will introduce subtle corruption.  But if there's no existing tool, I'll take a crack at it. :-)
 
-http://lists-archives.org/git/627040-git-and-larger-trees-not-so-fast.html
-
-On GMANE:
-http://article.gmane.org/gmane.comp.version-control.git/55460/match=git+larger+trees+not+so+fast
-
-But I can't figure out how to show the whole thread.
-
-Sorry, that paragraph of my email disappeared. :-(
+Thanks for your suggestions so far,
 
 Ken
 
-On Dec 16, 2010, at 5:45 PM, Jonathan Nieder wrote:
+PS: This was my exact first thought, since I was previously used to performing "svnadmin dump/svndumpfilter/svnadmin load" on this repository when it was in SVN.
 
-> Hi Ken,
-> 
+On Dec 16, 2010, at 5:54 PM, Thomas Rast wrote:
+
 > Ken Brownfield wrote:
+>> git filter-branch --index-filter 'git rm -r --cached --ignore-unmatch -- bigdirtree stuff/a stuff/b stuff/c stuff/dir/{a,b,c}' --prune-empty --tag-name-filter cat -- --all
+> [...]
+>> Now that the same repository has grown, this same filter-branch
+>> process now takes 6.5 *days* at 100% CPU on the same machine (2x4
+>> Xeon, x86_64) on git-1.7.3.2.  There's no I/O, memory, or other
+>> resource contention.
 > 
->> Is there a way to apply the optimizations mentioned in that old
->> thread to the code paths used by git-filter-branch (mainly git-read
->> and git-rm, seemingly), or is there another way to investigate and
->> improve the performance of the filter?
+> If all you do is an index-filter for deletion, I think it should be
+> rather easy to achieve good results by filtering the fast-export
+> stream to remove these files, and then piping that back to
+> fast-import.
 > 
-> Which old thread?
+> (It's just that AFAIK nobody has written that code yet.)
 > 
-> You might be able to get faster results using the approach of [1]
-> (using "git cat-file --batch-check" to collect the trees you want
-> and "git fast-import" to paste them together), which avoids unpacking
-> trees when not needed.
-> 
-> Hope that helps,
-> Jonathan
-> 
-> [1] http://repo.or.cz/w/git/barrbrain/github.git/commitdiff/db-svn-filter-root
+> -- 
+> Thomas Rast
+> trast@{inf,student}.ethz.ch
