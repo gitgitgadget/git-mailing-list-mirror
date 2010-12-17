@@ -1,180 +1,71 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] Make rev-list --objects work together with pathspecs
-Date: Fri, 17 Dec 2010 20:26:47 +0700
-Message-ID: <1292592407-26645-1-git-send-email-pclouds@gmail.com>
+From: "Bradley M. Kuhn" <bkuhn@sfconservancy.org>
+Subject: Flattr for Git donations (was Re: [ANNOUNCE] Git in the SFC)
+Date: Fri, 17 Dec 2010 08:09:42 -0500
+Organization: Software Freedom Conservancy
+Message-ID: <874oac8s15.fsf_-_@ebb.org>
+References: <20101217002034.GA18648@sigill.intra.peff.net>
+	<AANLkTikB5eMLh0fZBBOjwAaAwxPnC-3hap28RCXNXa0y@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Elijah Newren <newren@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 17 14:27:59 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	git@sfconservancy.org
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Fri Dec 17 14:37:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTaLm-0000Rb-6x
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 14:27:58 +0100
+	id 1PTaV6-0005e5-1o
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 14:37:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754722Ab0LQN1x convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Dec 2010 08:27:53 -0500
-Received: from mail-pz0-f52.google.com ([209.85.210.52]:39681 "EHLO
-	mail-pz0-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754626Ab0LQN1w (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Dec 2010 08:27:52 -0500
-Received: by pzk36 with SMTP id 36so137783pzk.11
-        for <git@vger.kernel.org>; Fri, 17 Dec 2010 05:27:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:from:to:cc:subject
-         :date:message-id:x-mailer:mime-version:content-type
-         :content-transfer-encoding;
-        bh=8fi4LxPJvn5Q7CdglEitH2fJzxw5dI/MHw1NoZoqUIQ=;
-        b=ptgv99bSP1qhhYGlRs/z62S56yvYPolu4zwD2K7k3skGX0tOBDwFn9TLRtB7eN9M9N
-         ZZ4pWOpwO42VsTun23yFOqpD0ga21Tbt6OLhltUeyYtLlABF4Mxb8Y3dXH0rqIOw8Sob
-         GZ+aKxxiMZqCEWSQjVm+xfUERpQnDq1myYw4E=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=pBCSMaPKXMT1sZlNewmccMBaLwsK3JYbJLy8rjLJ/Ihd/POEof/y8h3ZRj3r3A0u3d
-         SGdNkV6ovdoSjzc019f11JSPYZRQRmiBCFbBfe1PVpN/49Ddc0sF0CE0A1SsZLwSBvs7
-         mQFOaFuRht1HrtE2eG92h1FcI9SaPCXYADumU=
-Received: by 10.143.43.11 with SMTP id v11mr35783wfj.135.1292592470852;
-        Fri, 17 Dec 2010 05:27:50 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.209.213])
-        by mx.google.com with ESMTPS id f5sm384036wfg.14.2010.12.17.05.27.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 17 Dec 2010 05:27:48 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 17 Dec 2010 20:26:48 +0700
-X-Mailer: git-send-email 1.7.3.3.476.g10a82
+	id S1754722Ab0LQNhb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 17 Dec 2010 08:37:31 -0500
+Received: from catholic.ebb.org ([67.207.139.67]:37983 "EHLO catholic.ebb.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754425Ab0LQNhb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Dec 2010 08:37:31 -0500
+X-Greylist: delayed 566 seconds by postgrey-1.27 at vger.kernel.org; Fri, 17 Dec 2010 08:37:31 EST
+Received: from localhost (unknown [206.217.92.186])
+	(using TLSv1 with cipher DHE-RSA-AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by catholic.ebb.org (Postfix) with ESMTPSA id 22D204B32A;
+	Fri, 17 Dec 2010 08:28:04 -0500 (EST)
+In-Reply-To: <AANLkTikB5eMLh0fZBBOjwAaAwxPnC-3hap28RCXNXa0y@mail.gmail.com>
+	(Erik Faye-Lund's message of "Fri, 17 Dec 2010 02:02:09 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163879>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163880>
 
-=46rom: Elijah Newren <newren@gmail.com>
+Erik Faye-Lund wrote at 20:02 (EST) on Thursday:
 
-When traversing commits, the selection of commits would heed the list o=
-f
-pathspecs passed, but subsequent walking of the trees of those commits
-would not.  This resulted in 'rev-list --objects HEAD -- <paths>'
-displaying objects at unwanted paths.
+> I see there's donation-buttons for google checkout and paypal. Would
+> it be possible to donate through flattr also?
 
-Have process_tree() call tree_entry_interesting() to determine which pa=
-ths
-are interesting and should be walked.
+Yes, I've been looking into flattr in the last two weeks.  I'm trying to
+figure out a way for flattr to allow a "master account" so that each of
+Conservancy's member projects can have its own and the funds all come to
+Conservancy, properly routed for each project.
 
-Naturally, this change can provide a large speedup when paths are speci=
-fied
-together with --objects, since many tree entries are now correctly igno=
-red.
-Interestingly, though, this change also gives me a small (~1%) but
-repeatable speedup even when no paths are specified with --objects.
+If Flattr doesn't support that 'master account' idea, what I'll do is
+make a separate flattr account for each of Conservancy's member
+projects.  Hopefully, that can be done yet have all the banking
+information be the same.
 
-Signed-off-by: Elijah Newren <newren@gmail.com>
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- Replacement for 1/2 of en/object-list-with-pathspec, on top of
- nd/struct-pathspec v2 and followup patches.
+I'll experiment more with this over the weekend and into early next
+week.  I'll report to the Conservancy Git Committee (which is currently
+Jeff, Junio, and Shawn) on what I discover and how we can make it work.
 
- Note that I dropped path_name() changes.
+Anyway, I'll find a way to do it, one way or the other.  Flattr has
+become a very popular way to donate to FLOSS projects and Conservancy
+therefore needs to support it.
 
- list-objects.c |   30 ++++++++++++++++++++++++++++--
- 1 files changed, 28 insertions(+), 2 deletions(-)
-
-diff --git a/list-objects.c b/list-objects.c
-index 8953548..61f6cc9 100644
---- a/list-objects.c
-+++ b/list-objects.c
-@@ -61,12 +61,15 @@ static void process_tree(struct rev_info *revs,
- 			 struct tree *tree,
- 			 show_object_fn show,
- 			 struct name_path *path,
-+			 struct strbuf *base,
- 			 const char *name)
- {
- 	struct object *obj =3D &tree->object;
- 	struct tree_desc desc;
- 	struct name_entry entry;
- 	struct name_path me;
-+	int all_interesting =3D (revs->diffopt.pathspec.nr =3D=3D 0);
-+	int baselen =3D base->len;
-=20
- 	if (!revs->tree_objects)
- 		return;
-@@ -82,13 +85,32 @@ static void process_tree(struct rev_info *revs,
- 	me.elem =3D name;
- 	me.elem_len =3D strlen(name);
-=20
-+	if (!all_interesting) {
-+		strbuf_addstr(base, name);
-+		if (base->len)
-+			strbuf_addch(base, '/');
-+	}
-+
- 	init_tree_desc(&desc, tree->buffer, tree->size);
-=20
- 	while (tree_entry(&desc, &entry)) {
-+		if (!all_interesting) {
-+			int showit =3D tree_entry_interesting(&entry,
-+							    base, 0,
-+							    &revs->diffopt.pathspec);
-+
-+			if (showit < 0)
-+				break;
-+			else if (!showit)
-+				continue;
-+			else if (showit =3D=3D 2)
-+				all_interesting =3D 1;
-+		}
-+
- 		if (S_ISDIR(entry.mode))
- 			process_tree(revs,
- 				     lookup_tree(entry.sha1),
--				     show, &me, entry.path);
-+				     show, &me, base, entry.path);
- 		else if (S_ISGITLINK(entry.mode))
- 			process_gitlink(revs, entry.sha1,
- 					show, &me, entry.path);
-@@ -97,6 +119,7 @@ static void process_tree(struct rev_info *revs,
- 				     lookup_blob(entry.sha1),
- 				     show, &me, entry.path);
- 	}
-+	strbuf_setlen(base, baselen);
- 	free(tree->buffer);
- 	tree->buffer =3D NULL;
- }
-@@ -146,7 +169,9 @@ void traverse_commit_list(struct rev_info *revs,
- {
- 	int i;
- 	struct commit *commit;
-+	struct strbuf base;
-=20
-+	strbuf_init(&base, PATH_MAX);
- 	while ((commit =3D get_revision(revs)) !=3D NULL) {
- 		add_pending_tree(revs, commit->tree);
- 		show_commit(commit, data);
-@@ -164,7 +189,7 @@ void traverse_commit_list(struct rev_info *revs,
- 		}
- 		if (obj->type =3D=3D OBJ_TREE) {
- 			process_tree(revs, (struct tree *)obj, show_object,
--				     NULL, name);
-+				     NULL, &base, name);
- 			continue;
- 		}
- 		if (obj->type =3D=3D OBJ_BLOB) {
-@@ -181,4 +206,5 @@ void traverse_commit_list(struct rev_info *revs,
- 		revs->pending.alloc =3D 0;
- 		revs->pending.objects =3D NULL;
- 	}
-+	strbuf_release(&base);
- }
---=20
-1.7.3.3.476.g10a82
+BTW, to reiterate what Jeff mentioned in his post, if anyone ever has any
+questions about Git's membership in Conservancy, just email
+<git@sfconservancy.org>.  That alias reaches both me and the Conservancy
+Git Committee simultaneously.
+-- 
+Bradley M. Kuhn, Executive Director, Software Freedom Conservancy
