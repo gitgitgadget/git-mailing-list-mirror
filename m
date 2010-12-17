@@ -1,85 +1,112 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 1/3] gitweb: add extensions to highlight feature
-Date: Fri, 17 Dec 2010 12:17:23 +0100
-Message-ID: <201012171217.24350.jnareb@gmail.com>
-References: <1292535801-7421-1-git-send-email-sylvain@abstraction.fr> <m3y68slxj9.fsf@localhost.localdomain> <1292538804.2511.4.camel@kheops>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: conflict resolution of pd/bash-4-completion [Re: What's cooking in
+	git.git (Dec 2010, #05; Thu, 16)]
+Date: Fri, 17 Dec 2010 12:18:56 +0100
+Message-ID: <20101217111856.GA9304@neumann>
+References: <7vk4j8kfwy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-2"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Sylvain Rabot <sylvain@abstraction.fr>
-X-From: git-owner@vger.kernel.org Fri Dec 17 12:17:44 2010
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 17 12:19:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTYJj-0007JB-T4
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 12:17:44 +0100
+	id 1PTYLK-0008GB-Gq
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 12:19:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753225Ab0LQLRi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Dec 2010 06:17:38 -0500
-Received: from mail-fx0-f43.google.com ([209.85.161.43]:59576 "EHLO
-	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753201Ab0LQLRh (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Dec 2010 06:17:37 -0500
-Received: by fxm18 with SMTP id 18so523466fxm.2
-        for <git@vger.kernel.org>; Fri, 17 Dec 2010 03:17:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=51nOGJshUY+EyQqUwvLZOnaLiic0H4m8P2Ay9egW1iE=;
-        b=C/kr7lkQ2Y8PhDDaP/v86au4bEdeAkSObqp5lCpxcTQtYfkwRwKTGX1V7gCmoeK2ht
-         S6mAbgwWNVXD9RwdmJ4cC7pLRLH+geiSRTvxskPxnrS33PXgktRC4AN9xgiWTxEfLfLA
-         zDI41R/BOh8dFYf4U9sUOho6DYKUo1erDeXJI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=Gk9CZF/cg5yCgKBNn25SX0wMVA497usZEQmoEvliLD9u0MFxMXMATUGmKicSoT6Zca
-         7dhDPidXYsRlHFs/soRDliQyGEUvpBfrZUFqrJhuWLIjVnivwvnDcPmqgKZU24I8JqWY
-         70zqUob6mgu+0MkmlzXINcDDhLAUrDUZufkBY=
-Received: by 10.223.86.65 with SMTP id r1mr967635fal.24.1292584656323;
-        Fri, 17 Dec 2010 03:17:36 -0800 (PST)
-Received: from [192.168.1.13] (aeho46.neoplus.adsl.tpnet.pl [79.186.196.46])
-        by mx.google.com with ESMTPS id y14sm49156fak.42.2010.12.17.03.17.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 17 Dec 2010 03:17:34 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <1292538804.2511.4.camel@kheops>
+	id S1753227Ab0LQLTS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Dec 2010 06:19:18 -0500
+Received: from moutng.kundenserver.de ([212.227.126.187]:49303 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751177Ab0LQLTR (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Dec 2010 06:19:17 -0500
+Received: from localhost6.localdomain6 (p5B130B15.dip0.t-ipconnect.de [91.19.11.21])
+	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
+	id 0Lz0Xw-1QXfZx1XIO-014DDj; Fri, 17 Dec 2010 12:18:57 +0100
 Content-Disposition: inline
+In-Reply-To: <7vk4j8kfwy.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:9EJxsH89M1kOp1BUoLSYGyZcB7ZG/S7XRqESYM/b6x/
+ qxj62E+iSiXhZTkYKEUilbchrt7XcPRgXmdEg/riL6696yx/m7
+ s9cyZCjMhfcEeOxGg6zWQdEnY/SzCt0hqyUHp12/HpnYR1Dwia
+ B75kiLNh16XDrUfoEoNDqUhZNYP6Cu2tcSKZ47ERWMQPIT+7um
+ LC+wxBVd5v2zTWSA1TfuQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163873>
 
-On Thu, 16 Dec 2010, Sylvain Rabot wrote:
-> On Thu, 2010-12-16 at 14:22 -0800, Jakub Narebski wrote:
-> > Sylvain Rabot <sylvain@abstraction.fr> writes:
+Hi,
 
-> > >  	# alternate extensions, see /etc/highlight/filetypes.conf
-> > >  	'h' => 'c',
-> > > +	map { $_ => 'sh'  } qw(bash zsh),
-> > 
-> > Good idea.
-> 
-> Does ksh, csh can be highlighted as sh too ?
 
-My /etc/highlight/filetypes.conf does include only
+On Thu, Dec 16, 2010 at 11:38:21PM -0800, Junio C Hamano wrote:
+> * pd/bash-4-completion (2010-12-15) 3 commits
+>  - Merge branch 'master' (early part) into pd/bash-4-completion
+>  - bash: simple reimplementation of _get_comp_words_by_ref
+>  - bash: get --pretty=3Dm<tab> completion to work with bash v4
+>=20
+> Updated by Jonathan; this still has some conflicts around "notes"
+> completion I tried to resolve near the tip of 'pu'.
 
-  $ext(sh)=bash
+The resolution of that conflict is not quite correct.  I'm not sure
+how I should send a proper conflict resolution...  but I'll try
+anyway.
 
-All of bash, zsh and ksh are POSIX shell (sh) compatibile, so sh syntax
-(which is according to my /usr/share/highlight/langDefs/sh.lang file
-"Bash script language definition file" ;-)) should work.  csh IIRC isn't.
-So therefore I am not sure if csh can be highlighted correctly using sh
-syntax.
+So the patch below applies to today's pu (i.e. db92f24) and fixes the
+current merge conflict resolution in the completion function for 'git
+notes'.
 
--- 
-Jakub Narebski
-Poland
+I also have a few comments to the patches in this topic, but it's
+quite hard to find the time to think them through and sum them up
+properly in this pre-Xmas frenzy...
+
+
+Best,
+G=E1bor
+
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
+n/git-completion.bash
+index bd5b322..e0c40c3 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1707,20 +1707,15 @@ _git_notes ()
+ {
+ 	local subcommands=3D'add append copy edit list prune remove show'
+ 	local subcommand=3D"$(__git_find_on_cmdline "$subcommands")"
+-	local words cword
+-	_get_comp_words_by_ref -n =3D: words cword
+-	local cur=3D${words[cword-1]}
+-	if [ -z "$subcommand" ]; then
+-		__gitcomp "$subcommands"
+-		return
+-	fi
++	local cur words cword
++	_get_comp_words_by_ref -n =3D: cur words cword
+=20
+ 	case "$subcommand,$cur" in
+ 	,--*)
+ 		__gitcomp '--ref'
+ 		;;
+ 	,*)
+-		case "${COMP_WORDS[COMP_CWORD-1]}" in
++		case "${words[cword-1]}" in
+ 		--ref)
+ 			__gitcomp "$(__git_refs)"
+ 			;;
+@@ -1748,7 +1743,7 @@ _git_notes ()
+ 	prune,*)
+ 		;;
+ 	*)
+-		case "${COMP_WORDS[COMP_CWORD-1]}" in
++		case "${words[cword-1]}" in
+ 		-m|-F)
+ 			;;
+ 		*)
+--=20
+1.7.3.4.547.g524288
