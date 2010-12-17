@@ -1,112 +1,264 @@
-From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-Subject: conflict resolution of pd/bash-4-completion [Re: What's cooking in
-	git.git (Dec 2010, #05; Thu, 16)]
-Date: Fri, 17 Dec 2010 12:18:56 +0100
-Message-ID: <20101217111856.GA9304@neumann>
-References: <7vk4j8kfwy.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 14/21] struct rev_info: convert prune_data to struct pathspec
+Date: Fri, 17 Dec 2010 19:43:06 +0700
+Message-ID: <1292589787-9525-1-git-send-email-pclouds@gmail.com>
+References: <AANLkTikKCU==mS5_TdqHstETj=CQ_deHMCJ4xW0r+Sck@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 17 12:19:22 2010
+Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 17 13:44:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTYLK-0008GB-Gq
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 12:19:22 +0100
+	id 1PTZfW-0001wP-V0
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 13:44:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753227Ab0LQLTS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Dec 2010 06:19:18 -0500
-Received: from moutng.kundenserver.de ([212.227.126.187]:49303 "EHLO
-	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751177Ab0LQLTR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Dec 2010 06:19:17 -0500
-Received: from localhost6.localdomain6 (p5B130B15.dip0.t-ipconnect.de [91.19.11.21])
-	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
-	id 0Lz0Xw-1QXfZx1XIO-014DDj; Fri, 17 Dec 2010 12:18:57 +0100
-Content-Disposition: inline
-In-Reply-To: <7vk4j8kfwy.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Provags-ID: V02:K0:9EJxsH89M1kOp1BUoLSYGyZcB7ZG/S7XRqESYM/b6x/
- qxj62E+iSiXhZTkYKEUilbchrt7XcPRgXmdEg/riL6696yx/m7
- s9cyZCjMhfcEeOxGg6zWQdEnY/SzCt0hqyUHp12/HpnYR1Dwia
- B75kiLNh16XDrUfoEoNDqUhZNYP6Cu2tcSKZ47ERWMQPIT+7um
- LC+wxBVd5v2zTWSA1TfuQ==
+	id S1754071Ab0LQMoK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Dec 2010 07:44:10 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:52448 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753118Ab0LQMoI (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 17 Dec 2010 07:44:08 -0500
+Received: by iyi12 with SMTP id 12so402464iyi.19
+        for <git@vger.kernel.org>; Fri, 17 Dec 2010 04:44:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=HkcI5YW69g6XyiVvPRh74d2YIREibsxTw+M/E4bijaY=;
+        b=OfBRvE3VaITPxyGrEu7NHlkBaTmqHzr1WKUmwR8S281Iba7iVuD0iHm14RAHxJ/y0c
+         MRyQTOZEJt0hA5prL36uSo9IcuBN1pMp18P5QSmuLyeLvS0wr02fdKzESWlsfSaPGMdw
+         V5n+tmm1LcRVMJ2ddgEWV7P3DnXbBa9fwUfy0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=GPXMJ3bBNQ+b+mSV1rI3rMfa0lCtFWLt381MyTWsYEYRAlysCR3NDon+jee5nsxoAy
+         f/SGbwDhDQzAShaE4/p2zpXSzbg7uuy64Ec9oSNsrcX+gwDKD2JqPnpb+t2cDayvq0OH
+         evvWwYis5awC6S1zo5VGNuG2+wE/sPo2f2XHM=
+Received: by 10.42.228.133 with SMTP id je5mr791365icb.333.1292589846630;
+        Fri, 17 Dec 2010 04:44:06 -0800 (PST)
+Received: from pclouds@gmail.com ([115.73.209.213])
+        by mx.google.com with ESMTPS id u5sm954221ics.18.2010.12.17.04.44.00
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 17 Dec 2010 04:44:05 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 17 Dec 2010 19:43:09 +0700
+X-Mailer: git-send-email 1.7.3.3.476.g10a82
+In-Reply-To: <AANLkTikKCU==mS5_TdqHstETj=CQ_deHMCJ4xW0r+Sck@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163873>
-
-Hi,
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163874>
 
 
-On Thu, Dec 16, 2010 at 11:38:21PM -0800, Junio C Hamano wrote:
-> * pd/bash-4-completion (2010-12-15) 3 commits
->  - Merge branch 'master' (early part) into pd/bash-4-completion
->  - bash: simple reimplementation of _get_comp_words_by_ref
->  - bash: get --pretty=3Dm<tab> completion to work with bash v4
->=20
-> Updated by Jonathan; this still has some conflicts around "notes"
-> completion I tried to resolve near the tip of 'pu'.
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ New patch. rev_info->pathspec is now struct pathspec.
 
-The resolution of that conflict is not quite correct.  I'm not sure
-how I should send a proper conflict resolution...  but I'll try
-anyway.
+ builtin/add.c         |    2 +-
+ builtin/diff.c        |   12 ++++--------
+ builtin/fast-export.c |    2 +-
+ diff-lib.c            |    6 +++---
+ revision.c            |   15 ++++++++-------
+ revision.h            |    2 +-
+ wt-status.c           |    4 ++--
+ 7 files changed, 20 insertions(+), 23 deletions(-)
 
-So the patch below applies to today's pu (i.e. db92f24) and fixes the
-current merge conflict resolution in the completion function for 'git
-notes'.
-
-I also have a few comments to the patches in this topic, but it's
-quite hard to find the time to think them through and sum them up
-properly in this pre-Xmas frenzy...
-
-
-Best,
-G=E1bor
-
-
-diff --git a/contrib/completion/git-completion.bash b/contrib/completio=
-n/git-completion.bash
-index bd5b322..e0c40c3 100755
---- a/contrib/completion/git-completion.bash
-+++ b/contrib/completion/git-completion.bash
-@@ -1707,20 +1707,15 @@ _git_notes ()
- {
- 	local subcommands=3D'add append copy edit list prune remove show'
- 	local subcommand=3D"$(__git_find_on_cmdline "$subcommands")"
--	local words cword
--	_get_comp_words_by_ref -n =3D: words cword
--	local cur=3D${words[cword-1]}
--	if [ -z "$subcommand" ]; then
--		__gitcomp "$subcommands"
--		return
--	fi
-+	local cur words cword
-+	_get_comp_words_by_ref -n =3D: cur words cword
+diff --git a/builtin/add.c b/builtin/add.c
+index 56a4e0a..3fc79a5 100644
+--- a/builtin/add.c
++++ b/builtin/add.c
+@@ -86,7 +86,7 @@ int add_files_to_cache(const char *prefix, const char=
+ **pathspec, int flags)
+ 	struct rev_info rev;
+ 	init_revisions(&rev, prefix);
+ 	setup_revisions(0, NULL, &rev, NULL);
+-	rev.prune_data =3D pathspec;
++	init_pathspec(&rev.prune_data, pathspec);
+ 	rev.diffopt.output_format =3D DIFF_FORMAT_CALLBACK;
+ 	rev.diffopt.format_callback =3D update_callback;
+ 	data.flags =3D flags;
+diff --git a/builtin/diff.c b/builtin/diff.c
+index 76c42d8..4ebb1b6 100644
+--- a/builtin/diff.c
++++ b/builtin/diff.c
+@@ -371,14 +371,10 @@ int cmd_diff(int argc, const char **argv, const c=
+har *prefix)
+ 		}
+ 		die("unhandled object '%s' given.", name);
+ 	}
+-	if (rev.prune_data) {
+-		const char **pathspec =3D rev.prune_data;
+-		while (*pathspec) {
+-			if (!path)
+-				path =3D *pathspec;
+-			paths++;
+-			pathspec++;
+-		}
++	if (rev.prune_data.nr) {
++		if (!path)
++			path =3D rev.prune_data.items[0].match;
++		paths +=3D rev.prune_data.nr;
+ 	}
 =20
- 	case "$subcommand,$cur" in
- 	,--*)
- 		__gitcomp '--ref'
- 		;;
- 	,*)
--		case "${COMP_WORDS[COMP_CWORD-1]}" in
-+		case "${words[cword-1]}" in
- 		--ref)
- 			__gitcomp "$(__git_refs)"
- 			;;
-@@ -1748,7 +1743,7 @@ _git_notes ()
- 	prune,*)
- 		;;
- 	*)
--		case "${COMP_WORDS[COMP_CWORD-1]}" in
-+		case "${words[cword-1]}" in
- 		-m|-F)
- 			;;
- 		*)
+ 	/*
+diff --git a/builtin/fast-export.c b/builtin/fast-export.c
+index c8fd46b..ba57457 100644
+--- a/builtin/fast-export.c
++++ b/builtin/fast-export.c
+@@ -651,7 +651,7 @@ int cmd_fast_export(int argc, const char **argv, co=
+nst char *prefix)
+ 	if (import_filename)
+ 		import_marks(import_filename);
+=20
+-	if (import_filename && revs.prune_data)
++	if (import_filename && revs.prune_data.nr)
+ 		full_tree =3D 1;
+=20
+ 	get_tags_and_duplicates(&revs.pending, &extra_refs);
+diff --git a/diff-lib.c b/diff-lib.c
+index 3b809f2..2251f3d 100644
+--- a/diff-lib.c
++++ b/diff-lib.c
+@@ -106,7 +106,7 @@ int run_diff_files(struct rev_info *revs, unsigned =
+int option)
+ 			DIFF_OPT_TST(&revs->diffopt, HAS_CHANGES))
+ 			break;
+=20
+-		if (!ce_path_match(ce, revs->prune_data))
++		if (!ce_path_match(ce, revs->prune_data.raw))
+ 			continue;
+=20
+ 		if (ce_stage(ce)) {
+@@ -427,7 +427,7 @@ static int oneway_diff(struct cache_entry **src, st=
+ruct unpack_trees_options *o)
+ 	if (tree =3D=3D o->df_conflict_entry)
+ 		tree =3D NULL;
+=20
+-	if (ce_path_match(idx ? idx : tree, revs->prune_data))
++	if (ce_path_match(idx ? idx : tree, revs->prune_data.raw))
+ 		do_oneway_diff(o, idx, tree);
+=20
+ 	return 0;
+@@ -501,7 +501,7 @@ int do_diff_cache(const unsigned char *tree_sha1, s=
+truct diff_options *opt)
+ 	active_nr =3D dst - active_cache;
+=20
+ 	init_revisions(&revs, NULL);
+-	revs.prune_data =3D opt->pathspec.raw;
++	init_pathspec(&revs.prune_data, opt->pathspec.raw);
+ 	tree =3D parse_tree_indirect(tree_sha1);
+ 	if (!tree)
+ 		die("bad tree object %s", sha1_to_hex(tree_sha1));
+diff --git a/revision.c b/revision.c
+index b2a5867..515e2dd 100644
+--- a/revision.c
++++ b/revision.c
+@@ -323,7 +323,7 @@ static int rev_compare_tree(struct rev_info *revs, =
+struct commit *parent, struct
+ 		 * tagged commit by specifying both --simplify-by-decoration
+ 		 * and pathspec.
+ 		 */
+-		if (!revs->prune_data)
++		if (!revs->prune_data.nr)
+ 			return REV_TREE_SAME;
+ 	}
+=20
+@@ -969,7 +969,7 @@ static void prepare_show_merge(struct rev_info *rev=
+s)
+ 		struct cache_entry *ce =3D active_cache[i];
+ 		if (!ce_stage(ce))
+ 			continue;
+-		if (ce_path_match(ce, revs->prune_data)) {
++		if (ce_path_match(ce, revs->prune_data.raw)) {
+ 			prune_num++;
+ 			prune =3D xrealloc(prune, sizeof(*prune) * prune_num);
+ 			prune[prune_num-2] =3D ce->name;
+@@ -979,7 +979,8 @@ static void prepare_show_merge(struct rev_info *rev=
+s)
+ 		       ce_same_name(ce, active_cache[i+1]))
+ 			i++;
+ 	}
+-	revs->prune_data =3D prune;
++	free_pathspec(&revs->prune_data);
++	init_pathspec(&revs->prune_data, prune);
+ 	revs->limited =3D 1;
+ }
+=20
+@@ -1616,7 +1617,7 @@ int setup_revisions(int argc, const char **argv, =
+struct rev_info *revs, struct s
+ 	}
+=20
+ 	if (prune_data)
+-		revs->prune_data =3D get_pathspec(revs->prefix, prune_data);
++		init_pathspec(&revs->prune_data, get_pathspec(revs->prefix, prune_da=
+ta));
+=20
+ 	if (revs->def =3D=3D NULL)
+ 		revs->def =3D opt ? opt->def : NULL;
+@@ -1647,13 +1648,13 @@ int setup_revisions(int argc, const char **argv=
+, struct rev_info *revs, struct s
+ 	if (revs->topo_order)
+ 		revs->limited =3D 1;
+=20
+-	if (revs->prune_data) {
+-		diff_tree_setup_paths(revs->prune_data, &revs->pruning);
++	if (revs->prune_data.nr) {
++		diff_tree_setup_paths(revs->prune_data.raw, &revs->pruning);
+ 		/* Can't prune commits with rename following: the paths change.. */
+ 		if (!DIFF_OPT_TST(&revs->diffopt, FOLLOW_RENAMES))
+ 			revs->prune =3D 1;
+ 		if (!revs->full_diff)
+-			diff_tree_setup_paths(revs->prune_data, &revs->diffopt);
++			diff_tree_setup_paths(revs->prune_data.raw, &revs->diffopt);
+ 	}
+ 	if (revs->combine_merges)
+ 		revs->ignore_merges =3D 0;
+diff --git a/revision.h b/revision.h
+index 05659c6..82509dd 100644
+--- a/revision.h
++++ b/revision.h
+@@ -34,7 +34,7 @@ struct rev_info {
+ 	/* Basic information */
+ 	const char *prefix;
+ 	const char *def;
+-	void *prune_data;
++	struct pathspec prune_data;
+ 	unsigned int early_output;
+=20
+ 	/* Traversal flags */
+diff --git a/wt-status.c b/wt-status.c
+index 54b6b03..5c6b118 100644
+--- a/wt-status.c
++++ b/wt-status.c
+@@ -319,7 +319,7 @@ static void wt_status_collect_changes_worktree(stru=
+ct wt_status *s)
+     }
+ 	rev.diffopt.format_callback =3D wt_status_collect_changed_cb;
+ 	rev.diffopt.format_callback_data =3D s;
+-	rev.prune_data =3D s->pathspec;
++	init_pathspec(&rev.prune_data, s->pathspec);
+ 	run_diff_files(&rev, 0);
+ }
+=20
+@@ -344,7 +344,7 @@ static void wt_status_collect_changes_index(struct =
+wt_status *s)
+ 	rev.diffopt.detect_rename =3D 1;
+ 	rev.diffopt.rename_limit =3D 200;
+ 	rev.diffopt.break_opt =3D 0;
+-	rev.prune_data =3D s->pathspec;
++	init_pathspec(&rev.prune_data, s->pathspec);
+ 	run_diff_index(&rev, 1);
+ }
+=20
 --=20
-1.7.3.4.547.g524288
+1.7.3.3.476.g10a82
