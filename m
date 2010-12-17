@@ -1,95 +1,98 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: Performance issue exposed by git-filter-branch
-Date: Thu, 16 Dec 2010 18:51:32 -0800 (PST)
-Message-ID: <m3lj4sll39.fsf@localhost.localdomain>
+Date: Thu, 16 Dec 2010 21:08:55 -0600
+Message-ID: <20101217030855.GB7003@burratino>
 References: <41C1B4AC-8427-4D62-BEB6-689A4BE4EE5B@irridia.com>
-	<201012170254.13005.trast@student.ethz.ch>
-	<9A686258-A504-4CBB-9993-048B45B5EE6A@irridia.com>
+ <201012170254.13005.trast@student.ethz.ch>
+ <9A686258-A504-4CBB-9993-048B45B5EE6A@irridia.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
+Cc: git@vger.kernel.org, David Barr <david.barr@cordelta.com>,
+	Elijah Newren <newren@gmail.com>, skimo@kotnet.org,
+	Eric Raymond <esr@snark.thyrsus.com>
 To: Ken Brownfield <krb@irridia.com>
-X-From: git-owner@vger.kernel.org Fri Dec 17 03:57:34 2010
+X-From: git-owner@vger.kernel.org Fri Dec 17 04:09:20 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTQVh-0001M6-LG
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 03:57:33 +0100
+	id 1PTQh5-0006hH-76
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 04:09:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752293Ab0LQC52 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Dec 2010 21:57:28 -0500
-Received: from mail-bw0-f45.google.com ([209.85.214.45]:65450 "EHLO
-	mail-bw0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752259Ab0LQC52 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Dec 2010 21:57:28 -0500
-Received: by bwz16 with SMTP id 16so569474bwz.4
-        for <git@vger.kernel.org>; Thu, 16 Dec 2010 18:57:26 -0800 (PST)
+	id S1751198Ab0LQDJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 16 Dec 2010 22:09:14 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:63744 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750869Ab0LQDJO (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 16 Dec 2010 22:09:14 -0500
+Received: by yxt3 with SMTP id 3so107532yxt.19
+        for <git@vger.kernel.org>; Thu, 16 Dec 2010 19:09:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=lntNsk2qtJkTQ69JpIVbt4GBtg12vvAlaHDzFQD7qRA=;
-        b=EtIjVbf+AAApo/NtcTMDhqleFiQbBzAsW9N38WBl14a5TbCvU+VzT8ibb2mtS9ViHD
-         RIDPeNZDIsEw7LWE3EPEPdpW8H+2Fh7TCgcAV8IBs9I6IT3FYTPL+u8/+CoSez6oKQzr
-         7SlTSGy4sw2+cuOX8cNamhxS+Q42+HYDIdbz8=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=6HtVJNOE6tuZhi55RoA24PPqGsxCDSefLm34/1hhu9A=;
+        b=jcUHldv+bm4Ln5HtsoB7qctSXYuFI5WblG0Pavcr4VHiHxZF9pjXcx0dGXWcBvBV6c
+         nPtlkrB8vNORtbHZIkQg7whTRVtFJHcdDQ1GIjQbg83ShzEUUJqPjF6MYCvZlpWamtpS
+         hF0xz5ugQta12LptAk9aKbj1b7VLPUQxz2zXs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=ooFoyGj/pB/Zzddka0v6goAXBW+jz5aSzGxj7foRdd2s1wqXeUKXz+z/SazxMYEKeB
-         ltHdXg5t/33MEEaDcfaiKPe805dctvOCfjv2TYz3kZHq5sR1je7TbslJeO7fp6pfvyCz
-         /1QOjQTip6xZ2yZJVnCxp09g+03w8trxgWeWw=
-Received: by 10.204.98.201 with SMTP id r9mr189242bkn.37.1292554293925;
-        Thu, 16 Dec 2010 18:51:33 -0800 (PST)
-Received: from localhost.localdomain (aeho46.neoplus.adsl.tpnet.pl [79.186.196.46])
-        by mx.google.com with ESMTPS id q18sm1541809bka.3.2010.12.16.18.51.31
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 16 Dec 2010 18:51:32 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oAH2oqYc018831;
-	Wed, 17 Nov 2010 03:51:02 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id oAH2oYqW018826;
-	Wed, 17 Nov 2010 03:50:34 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=AoJv9xxrbtRUVzVoU4YqPyLyFYUcoBaVAUQ9a5oPl9dRTjQX0YkDkEMUtB/MDsCR8A
+         Kb78o7xYS30eC59QTCegUPkUCfd9ZrlExMRY+2nhr7qMuR4RQJZSXEr/ujsRFGeZPRtD
+         SlU0RP9rCdpFM+GK8LmhMXaPWPb6MaHsDBqmQ=
+Received: by 10.100.120.18 with SMTP id s18mr263838anc.268.1292555352900;
+        Thu, 16 Dec 2010 19:09:12 -0800 (PST)
+Received: from burratino (adsl-69-209-48-248.dsl.chcgil.sbcglobal.net [69.209.48.248])
+        by mx.google.com with ESMTPS id p9sm3645885anf.27.2010.12.16.19.09.10
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 16 Dec 2010 19:09:11 -0800 (PST)
+Content-Disposition: inline
 In-Reply-To: <9A686258-A504-4CBB-9993-048B45B5EE6A@irridia.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163854>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163855>
 
-Please do not toppost.
-
-Ken Brownfield <krb@irridia.com> writes:
+Ken Brownfield wrote:
 
 > I had considered this approach (and the one mentioned by Jonathan)
 > but there are no git tools to actually perform the filter I wanted
-> on the export in this form.  I could (and will) parse fast-export
-> and make an attempt a filtering files/directories... my concern is
-> that I won't do it right, and will introduce subtle corruption.  But
-> if there's no existing tool, I'll take a crack at it. :-)
+> on the export in this form.
 
-You can try ESR's reposurgeon:
+Keep in mind that the two suggestions were subtly different from one
+another.
 
-  http://www.catb.org/~esr/reposurgeon/
+For the "filter fast-import stream" technique, apparently there is a
+tool called reposurgeon[1] to do that.  git_fast_filter[2] has the
+same purpose, too, if I remember correctly.
 
-It's limitation is that it loads structure of DAG of revisions (but
-not blobs i.e. contents of file) to memory.  IIRC.  It is not
-streaming, but "DOM" based, otherwise some commands would not work.
+For the unpack-trees avoidance technique, true, the only example I
+know if is the one I mentioned[3].  The idea would be to sort the
+commits you want in topological order and replay them, for each one
+going like so:
 
+	M 040000 <old tree id> ""
+	D bad/directory/one
+	D bad/directory/two
 
-By the way, git-filter-branch documentation recomments to use
-index-filter with git-update-index instead of tree-filter with git-rm,
-and if tree-filter is needed, to use some fast filesystem, e.g. RAM
-one.
+using fast-import from git.git master.  (Older versions of fast-import
+do not properly handle replacing the root directory, so if that sort
+of compatibility is important, you'd have to use a directory listing
+and fill in all the _good_ directories instead.)
 
-But probably you know all that.
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+I'd be glad to look at any work in this direction.  Something like it
+would be useful for postprocessing when importing from svn repos.
+
+Thanks,
+Jonathan
+
+[1] http://esr.ibiblio.org/?p=2718
+[2] http://thread.gmane.org/gmane.comp.version-control.git/116028
+and links therein
+[3] http://thread.gmane.org/gmane.comp.version-control.git/158375
