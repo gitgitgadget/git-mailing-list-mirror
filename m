@@ -1,76 +1,96 @@
-From: Leo <sdl.web@gmail.com>
-Subject: Re: why the html and man versions of git-diff are different?
-Date: Thu, 16 Dec 2010 23:52:44 +0000
-Message-ID: <m1fwtxwa0j.fsf@cam.ac.uk>
-References: <m139px2y26.fsf@cam.ac.uk>
-	<20101216215506.GB10480@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 14/21] Convert ce_path_match() to use struct pathspec
+Date: Thu, 16 Dec 2010 16:02:21 -0800
+Message-ID: <7v39pxl10y.fsf@alter.siamese.dyndns.org>
+References: <1292425376-14550-1-git-send-email-pclouds@gmail.com>
+ <1292425376-14550-15-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 17 00:53:11 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Dec 17 01:02:36 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTNdG-00061p-FL
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 00:53:10 +0100
+	id 1PTNmN-0003XT-Jq
+	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 01:02:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752790Ab0LPXxF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 16 Dec 2010 18:53:05 -0500
-Received: from lo.gmane.org ([80.91.229.12]:41702 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751219Ab0LPXxE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 16 Dec 2010 18:53:04 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PTNd8-0005we-Cm
-	for git@vger.kernel.org; Fri, 17 Dec 2010 00:53:02 +0100
-Received: from cpc1-cmbg13-0-0-cust596.5-4.cable.virginmedia.com ([86.9.122.85])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 17 Dec 2010 00:53:02 +0100
-Received: from sdl.web by cpc1-cmbg13-0-0-cust596.5-4.cable.virginmedia.com with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Fri, 17 Dec 2010 00:53:02 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: cpc1-cmbg13-0-0-cust596.5-4.cable.virginmedia.com
-Face: iVBORw0KGgoAAAANSUhEUgAAACgAAAAoBAMAAAB+0KVeAAAAGFBMVEUzRVhbQj4eZqO6SjnT
- eWpxnMetm5b6/PmidmqrAAAAAWJLR0QAiAUdSAAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1F
- B9cBBwMLBfKABCMAAAFoSURBVCjPtZI9a8MwEIaFoc7aYDdelQMna0Em3tsSr0XUeE2Q6a22a+v+
- fk8fSSBkbDUI6dHpfe9OEvRgiD+ApqKPJgJeB6iUUXWESjUe/ig38AJrhqqvaU2nTIXbNvOQ40fe
- qdry4kyGoVWsfCQalXpHnJGM01wjWdYbMlXNFdsZDO69m9aqNqxEJqTEgbM5OF7wlEfIoll1Ked4
- LbM5X2EdILLokEdmI8z7g5cKED0cuTC930TYhy7ZDekkXVGw/L60TguJePPxcJF48lpsSUWEA/Ju
- jGFNgJOXc4Hz7TmAdBeu5Ve4AEjOi2/2jfd3cAJZ+IbNrvdjgBZY01b+HTuG3cLws6BJZqVOj/pp
- T0OqVwx3rFq+QmJwx3loK5JSLEhDIt62+mtC2C+SrAUxEbV6C6v2BRbd6pILBKFpepKZJHgGgrKF
- sptSUUoczpwg2pQ7ZH1tgs0ou/917mzz6Cs2//C978cv5l07L02orIEAAAAASUVORK5CYII=
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.91 (Mac OS X 10.6.5)
-Cancel-Lock: sha1:eKcblD1Olgb94q12lYmIuaPmg1A=
+	id S1753567Ab0LQACa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 16 Dec 2010 19:02:30 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37989 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753485Ab0LQACa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 16 Dec 2010 19:02:30 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DAB8E37C4;
+	Thu, 16 Dec 2010 19:02:54 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=RsDpNeyJqgn2
+	BzBKU+74eUcJYyU=; b=pswsR88WX1W66y39kM7yfA1D+mn9RUn+6S98VkRRaKE6
+	3Pd4wmk6KayZJKfiaoC49gOoYS4NknJV4zw+pjReowVskA3rVbuL2UolmMyUPyS5
+	Vtof7+iCGK6rzfdATJd8AoVT476mDjBcoGS0cyiyevLKL/pouNT5jfOmMWaodO4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=cymSiA
+	OBaUpWhQ5wPRmJcj46JUyMGzXyXsxGlPSyUxfKV7qOWLZGuzh0iS+5AV4ZG7xqhA
+	KU0ctrZjw3N/jr0eq+rJKoZhjnpGVuqeuVOTsMx+rpK3wIkM8Dpjrp6Vx+Lxfxkd
+	JnVmA+StXfBhygjPlC6JOWUOUjXsHxthlBZao=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B9A4B37C2;
+	Thu, 16 Dec 2010 19:02:52 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C631137C1; Thu, 16 Dec 2010
+ 19:02:49 -0500 (EST)
+In-Reply-To: <1292425376-14550-15-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Wed\, 15 Dec
+ 2010 22\:02\:49 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: FE3875E8-0970-11E0-96D9-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163843>
 
-On 2010-12-16 21:55 +0000, Jeff King wrote:
-> On Thu, Dec 16, 2010 at 09:43:45PM +0000, Leo wrote:
->
->> I compared the html version of git-diff found in
->> http://www.kernel.org/pub/software/scm/git/docs/git-diff.html and the
->> man version from
->> http://kernel.org/pub/software/scm/git/git-manpages-1.7.3.4.tar.bz2
->> 
->> The man version says gitrevisions(1), which is incorrect since it is in
->> man7.
->
-> Because it was fixed recently, and the html documention on kernel.org
-> uses the "master" branch, whereas that commit did not make it into the
-> maintenance release 1.7.3.4. It will be fixed in the manpages for
-> git-1.7.4.
->
-> -Peff
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-Sorry my bad it was fixed in 1.7.3.4.
+> diff --git a/diff-lib.c b/diff-lib.c
+> index 3b809f2..63db7f4 100644
+> --- a/diff-lib.c
+> +++ b/diff-lib.c
+> @@ -89,9 +89,11 @@ int run_diff_files(struct rev_info *revs, unsigned=
+ int option)
+>  	int silent_on_removed =3D option & DIFF_SILENT_ON_REMOVED;
+>  	unsigned ce_option =3D ((option & DIFF_RACY_IS_MODIFIED)
+>  			      ? CE_MATCH_RACY_IS_DIRTY : 0);
+> +	struct pathspec pathspec;
+> =20
+>  	diff_set_mnemonic_prefix(&revs->diffopt, "i/", "w/");
+> =20
+> +	init_pathspec(&pathspec, revs->prune_data);
 
-Leo
+I wonder if it makes more sense to change the type of revs->prune_data
+from an array of pointers to strings to a pointer to struct pathspec.
+Is there a downside?
+
+> diff --git a/preload-index.c b/preload-index.c
+> index e3d0bda..49cb08d 100644
+> --- a/preload-index.c
+> +++ b/preload-index.c
+> @@ -35,7 +35,9 @@ static void *preload_thread(void *_data)
+>  	struct index_state *index =3D p->index;
+>  	struct cache_entry **cep =3D index->cache + p->offset;
+>  	struct cache_def cache;
+> +	struct pathspec pathspec;
+> =20
+> +	init_pathspec(&pathspec, p->pathspec);
+
+Likewise; would it make the API cleaner to make read_cache_preload() an=
+d
+read_index_preload() take "const struct pathspec *" instead of the
+traditional "const char **"?
