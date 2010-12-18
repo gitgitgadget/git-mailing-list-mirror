@@ -1,122 +1,165 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Improved error messages when temporary file creation
- fails
-Date: Sat, 18 Dec 2010 14:05:16 -0600
-Message-ID: <20101218200516.GA10031@burratino>
-References: <20101207181633.GF25767@bzzt.net>
- <20101218165514.GT25767@bzzt.net>
+From: "J.H." <warthog9@eaglescrag.net>
+Subject: Re: [PATCH] gitweb: Include links to feeds in HTML header only for
+ '200	OK' response
+Date: Sat, 18 Dec 2010 12:10:17 -0800
+Message-ID: <4D0D1529.6030806@eaglescrag.net>
+References: <20101218195848.16201.67691.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Arnout Engelen <arnouten@bzzt.net>
-X-From: git-owner@vger.kernel.org Sat Dec 18 21:06:30 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 18 21:08:17 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PU32x-0006Ja-Qq
-	for gcvg-git-2@lo.gmane.org; Sat, 18 Dec 2010 21:06:28 +0100
+	id 1PU34h-0007Ae-Hz
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Dec 2010 21:08:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932155Ab0LRUGT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Dec 2010 15:06:19 -0500
-Received: from mail-gx0-f180.google.com ([209.85.161.180]:39833 "EHLO
-	mail-gx0-f180.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932160Ab0LRUGS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Dec 2010 15:06:18 -0500
-Received: by gxk19 with SMTP id 19so1015653gxk.11
-        for <git@vger.kernel.org>; Sat, 18 Dec 2010 12:06:17 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=Y+xta8Fx0l5KGhZWyoafNF8rcpX9xVImn9mAeCF5in0=;
-        b=LW4wrNzNXlIxFCdvzEvcU/2p5YHgZK0bR3a5G0VXw2/05DpSaZ8LMagdV+jZPBqEdf
-         V8qrpp1TQWOp+/CDekoTzvXmg3PDO9rFLDREusFMJOLUquCuVpaHDOG1jMSy3SenNmGH
-         r7HE5IxzsSAAhw+P7Sinqkv9R6aOuD6Ea6h7w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=cCEqh5C1aTBg5yT1s8cc7W4ZzXWl7rvyAY9YcH8fq+KQ5IPtwvmHhFAD3eHQ1vc2MF
-         OyKumgCTF+JRutW1u66hAQ37e2knJVkBfYw7BkXQUpc6+dKIdy3k8Pi58egeyppBakuE
-         p55EKWrKdKKW4q4fF67EgF/AAKPENbQQDKd0g=
-Received: by 10.151.142.4 with SMTP id u4mr4635726ybn.65.1292702776381;
-        Sat, 18 Dec 2010 12:06:16 -0800 (PST)
-Received: from burratino (c-76-126-174-171.hsd1.ca.comcast.net [76.126.174.171])
-        by mx.google.com with ESMTPS id y21sm1034275yhc.10.2010.12.18.12.06.13
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 18 Dec 2010 12:06:14 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20101218165514.GT25767@bzzt.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932158Ab0LRUIK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Dec 2010 15:08:10 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:50397 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932135Ab0LRUIJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Dec 2010 15:08:09 -0500
+Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id oBIK82lN024002
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Sat, 18 Dec 2010 12:08:02 -0800
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
+In-Reply-To: <20101218195848.16201.67691.stgit@localhost.localdomain>
+X-Enigmail-Version: 1.0.1
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Sat, 18 Dec 2010 12:08:03 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163927>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163928>
 
-Hi again,
+I've no objection, you can add a sign-off from me.
 
-Arnout Engelen wrote:
+- John
 
-> Updated version of the patch
-
-Almost there.  Some remaining nits from my pov:
-
-> , taking into account the feedback from this 
-> thread.
-[...]
-
-This text above the "---" becomes part of the log message when a patch
-is committed to git.git, so it is best to make it self-contained.  The
-usual advice is "describe the current behavior, why the proposed
-behavior is better, and then how the proposed behavior is achieved."
-
-> --- /dev/null
-> +++ b/test-mktemp.c
-> @@ -0,0 +1,15 @@
-> +/*
-> + * test-mktemp.c: code to exercise the creation of temporary files
-> + */
-> +#include <string.h>
-> +#include "git-compat-util.h"
-
-git-compat-util.h takes care of portably including system headers in
-the right order.  (For example, #include-ing <string.h> before
-setting _POSIX_SOURCE will cause some symbols not to be defined in
-_other_ headers on some operating systems, iirc.)  I'd suggest
-removing the redundant #include <string.h>.
-
-See Documentation/CodingGuidelines.
-
-> +int main(int argc, char *argv[])
-> +{
-> +	if (argc != 2)
-> +		usage("Expected 1 parameter defining the temporary file template");
-> +
-> +	xmkstemp(strdup(argv[1]));
-
-Why not xstrdup(), which diagnoses allocation failures?
-
-> --- a/wrapper.c
-> +++ b/wrapper.c
-> @@ -196,10 +196,22 @@ FILE *xfdopen(int fd, const char *mode)
->  int xmkstemp(char *template)
->  {
->  	int fd;
-> +	char origtemplate[PATH_MAX];
-> +	strlcpy(origtemplate, template, sizeof(origtemplate));
+On 12/18/2010 12:02 PM, Jakub Narebski wrote:
+> To do that, generating "<link />"s to feeds were refactored into
+> print_feed_meta() subroutine, to keep nesting (indent) level in
+> git_header_html() low.  This has also the advantage of making code
+> more clear.
+> 
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> ---
+>  gitweb/gitweb.perl |   89 +++++++++++++++++++++++++++-------------------------
+>  1 files changed, 47 insertions(+), 42 deletions(-)
+> 
+> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> index d521c93..d965cda 100755
+> --- a/gitweb/gitweb.perl
+> +++ b/gitweb/gitweb.perl
+> @@ -3479,6 +3479,51 @@ sub get_page_title {
+>  	return $title;
+>  }
 >  
->  	fd = mkstemp(template);
-> -	if (fd < 0)
-> -		die_errno("Unable to create temporary file");
-> +	if (fd < 0) {
-> +		int saved_errno = errno;
-> +		const char * nonrelative_template;
-
-It would be more usual not to include a space between the '*' and
-'nonrelative_template'.
-
-Thanks for your perseverance.
+> +sub print_feed_meta {
+> +	if (defined $project) {
+> +		my %href_params = get_feed_info();
+> +		if (!exists $href_params{'-title'}) {
+> +			$href_params{'-title'} = 'log';
+> +		}
+> +
+> +		foreach my $format qw(RSS Atom) {
+> +			my $type = lc($format);
+> +			my %link_attr = (
+> +				'-rel' => 'alternate',
+> +				'-title' => esc_attr("$project - $href_params{'-title'} - $format feed"),
+> +				'-type' => "application/$type+xml"
+> +			);
+> +
+> +			$href_params{'action'} = $type;
+> +			$link_attr{'-href'} = href(%href_params);
+> +			print "<link ".
+> +			      "rel=\"$link_attr{'-rel'}\" ".
+> +			      "title=\"$link_attr{'-title'}\" ".
+> +			      "href=\"$link_attr{'-href'}\" ".
+> +			      "type=\"$link_attr{'-type'}\" ".
+> +			      "/>\n";
+> +
+> +			$href_params{'extra_options'} = '--no-merges';
+> +			$link_attr{'-href'} = href(%href_params);
+> +			$link_attr{'-title'} .= ' (no merges)';
+> +			print "<link ".
+> +			      "rel=\"$link_attr{'-rel'}\" ".
+> +			      "title=\"$link_attr{'-title'}\" ".
+> +			      "href=\"$link_attr{'-href'}\" ".
+> +			      "type=\"$link_attr{'-type'}\" ".
+> +			      "/>\n";
+> +		}
+> +
+> +	} else {
+> +		printf('<link rel="alternate" title="%s projects list" '.
+> +		       'href="%s" type="text/plain; charset=utf-8" />'."\n",
+> +		       esc_attr($site_name), href(project=>undef, action=>"project_index"));
+> +		printf('<link rel="alternate" title="%s projects feeds" '.
+> +		       'href="%s" type="text/x-opml" />'."\n",
+> +		       esc_attr($site_name), href(project=>undef, action=>"opml"));
+> +	}
+> +}
+> +
+>  sub git_header_html {
+>  	my $status = shift || "200 OK";
+>  	my $expires = shift;
+> @@ -3528,48 +3573,8 @@ EOF
+>  			print '<link rel="stylesheet" type="text/css" href="'.esc_url($stylesheet).'"/>'."\n";
+>  		}
+>  	}
+> -	if (defined $project) {
+> -		my %href_params = get_feed_info();
+> -		if (!exists $href_params{'-title'}) {
+> -			$href_params{'-title'} = 'log';
+> -		}
+> -
+> -		foreach my $format qw(RSS Atom) {
+> -			my $type = lc($format);
+> -			my %link_attr = (
+> -				'-rel' => 'alternate',
+> -				'-title' => esc_attr("$project - $href_params{'-title'} - $format feed"),
+> -				'-type' => "application/$type+xml"
+> -			);
+> -
+> -			$href_params{'action'} = $type;
+> -			$link_attr{'-href'} = href(%href_params);
+> -			print "<link ".
+> -			      "rel=\"$link_attr{'-rel'}\" ".
+> -			      "title=\"$link_attr{'-title'}\" ".
+> -			      "href=\"$link_attr{'-href'}\" ".
+> -			      "type=\"$link_attr{'-type'}\" ".
+> -			      "/>\n";
+> -
+> -			$href_params{'extra_options'} = '--no-merges';
+> -			$link_attr{'-href'} = href(%href_params);
+> -			$link_attr{'-title'} .= ' (no merges)';
+> -			print "<link ".
+> -			      "rel=\"$link_attr{'-rel'}\" ".
+> -			      "title=\"$link_attr{'-title'}\" ".
+> -			      "href=\"$link_attr{'-href'}\" ".
+> -			      "type=\"$link_attr{'-type'}\" ".
+> -			      "/>\n";
+> -		}
+> -
+> -	} else {
+> -		printf('<link rel="alternate" title="%s projects list" '.
+> -		       'href="%s" type="text/plain; charset=utf-8" />'."\n",
+> -		       esc_attr($site_name), href(project=>undef, action=>"project_index"));
+> -		printf('<link rel="alternate" title="%s projects feeds" '.
+> -		       'href="%s" type="text/x-opml" />'."\n",
+> -		       esc_attr($site_name), href(project=>undef, action=>"opml"));
+> -	}
+> +	print_feed_meta()
+> +		if ($status eq '200 OK');
+>  	if (defined $favicon) {
+>  		print qq(<link rel="shortcut icon" href=").esc_url($favicon).qq(" type="image/png" />\n);
+>  	}
