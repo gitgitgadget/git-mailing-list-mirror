@@ -1,165 +1,68 @@
-From: "J.H." <warthog9@eaglescrag.net>
-Subject: Re: [PATCH] gitweb: Include links to feeds in HTML header only for
- '200	OK' response
-Date: Sat, 18 Dec 2010 12:10:17 -0800
-Message-ID: <4D0D1529.6030806@eaglescrag.net>
-References: <20101218195848.16201.67691.stgit@localhost.localdomain>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCHv2 0/8] docs: use metavariables consistently
+Date: Sat, 18 Dec 2010 12:27:25 -0800
+Message-ID: <7vhbeahln6.fsf@alter.siamese.dyndns.org>
+References: <1292650725-21149-1-git-send-email-lodatom@gmail.com>
+ <20101218084908.GE6187@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 18 21:08:17 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Mark Lodato <lodatom@gmail.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Dec 18 21:27:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PU34h-0007Ae-Hz
-	for gcvg-git-2@lo.gmane.org; Sat, 18 Dec 2010 21:08:15 +0100
+	id 1PU3NY-0001Ee-TE
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Dec 2010 21:27:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932158Ab0LRUIK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Dec 2010 15:08:10 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:50397 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932135Ab0LRUIJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Dec 2010 15:08:09 -0500
-Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id oBIK82lN024002
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Sat, 18 Dec 2010 12:08:02 -0800
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
-In-Reply-To: <20101218195848.16201.67691.stgit@localhost.localdomain>
-X-Enigmail-Version: 1.0.1
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Sat, 18 Dec 2010 12:08:03 -0800 (PST)
+	id S932175Ab0LRU1h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Dec 2010 15:27:37 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64490 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932108Ab0LRU1g (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Dec 2010 15:27:36 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D9BC22CA2;
+	Sat, 18 Dec 2010 15:28:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=i1oXDnV292H7S6hXu/0FhqoWl6c=; b=WfByTa
+	mWS3fTiGp45tSZa54BF9dShdZMKHLWR5uvzUqPDiqgfmYLKNqYyhx7WMW27MewII
+	GAi6hn1GwO5gzINq7CGG6jB/rhVOf6weaVPG6DErfGDamSYOmIN/cYHldU8fLoKV
+	Y6QsSQWzwmfTIHQ2byLOuvvbMunOab+5pfJ9o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=adECGwIAssttpOEfHV0ebMR2aKz2BX5D
+	shtWPtr5t6Qz6jy6vpWpTPQhfGU7ssICkje9x+IIVl6MaKO74vBgorIVBArc3UcP
+	8q3mAYto+Nn+Gg4FhHteIavpCrrM7rfStffJCDmP0mflzdHR8d9dF8PG+8xcIxvB
+	hkpdu4j4npo=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A5A8C2CA1;
+	Sat, 18 Dec 2010 15:27:59 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6063A2CA0; Sat, 18 Dec 2010
+ 15:27:55 -0500 (EST)
+In-Reply-To: <20101218084908.GE6187@burratino> (Jonathan Nieder's message of
+ "Sat\, 18 Dec 2010 02\:49\:08 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 4E2B358E-0AE5-11E0-8420-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163929>
 
-I've no objection, you can add a sign-off from me.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-- John
+> Ah, missed this before.  It is not clear to me why this difference ---
+> is it just to be conservative about changing behavior?
 
-On 12/18/2010 12:02 PM, Jakub Narebski wrote:
-> To do that, generating "<link />"s to feeds were refactored into
-> print_feed_meta() subroutine, to keep nesting (indent) level in
-> git_header_html() low.  This has also the advantage of making code
-> more clear.
-> 
-> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
-> ---
->  gitweb/gitweb.perl |   89 +++++++++++++++++++++++++++-------------------------
->  1 files changed, 47 insertions(+), 42 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index d521c93..d965cda 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -3479,6 +3479,51 @@ sub get_page_title {
->  	return $title;
->  }
->  
-> +sub print_feed_meta {
-> +	if (defined $project) {
-> +		my %href_params = get_feed_info();
-> +		if (!exists $href_params{'-title'}) {
-> +			$href_params{'-title'} = 'log';
-> +		}
-> +
-> +		foreach my $format qw(RSS Atom) {
-> +			my $type = lc($format);
-> +			my %link_attr = (
-> +				'-rel' => 'alternate',
-> +				'-title' => esc_attr("$project - $href_params{'-title'} - $format feed"),
-> +				'-type' => "application/$type+xml"
-> +			);
-> +
-> +			$href_params{'action'} = $type;
-> +			$link_attr{'-href'} = href(%href_params);
-> +			print "<link ".
-> +			      "rel=\"$link_attr{'-rel'}\" ".
-> +			      "title=\"$link_attr{'-title'}\" ".
-> +			      "href=\"$link_attr{'-href'}\" ".
-> +			      "type=\"$link_attr{'-type'}\" ".
-> +			      "/>\n";
-> +
-> +			$href_params{'extra_options'} = '--no-merges';
-> +			$link_attr{'-href'} = href(%href_params);
-> +			$link_attr{'-title'} .= ' (no merges)';
-> +			print "<link ".
-> +			      "rel=\"$link_attr{'-rel'}\" ".
-> +			      "title=\"$link_attr{'-title'}\" ".
-> +			      "href=\"$link_attr{'-href'}\" ".
-> +			      "type=\"$link_attr{'-type'}\" ".
-> +			      "/>\n";
-> +		}
-> +
-> +	} else {
-> +		printf('<link rel="alternate" title="%s projects list" '.
-> +		       'href="%s" type="text/plain; charset=utf-8" />'."\n",
-> +		       esc_attr($site_name), href(project=>undef, action=>"project_index"));
-> +		printf('<link rel="alternate" title="%s projects feeds" '.
-> +		       'href="%s" type="text/x-opml" />'."\n",
-> +		       esc_attr($site_name), href(project=>undef, action=>"opml"));
-> +	}
-> +}
-> +
->  sub git_header_html {
->  	my $status = shift || "200 OK";
->  	my $expires = shift;
-> @@ -3528,48 +3573,8 @@ EOF
->  			print '<link rel="stylesheet" type="text/css" href="'.esc_url($stylesheet).'"/>'."\n";
->  		}
->  	}
-> -	if (defined $project) {
-> -		my %href_params = get_feed_info();
-> -		if (!exists $href_params{'-title'}) {
-> -			$href_params{'-title'} = 'log';
-> -		}
-> -
-> -		foreach my $format qw(RSS Atom) {
-> -			my $type = lc($format);
-> -			my %link_attr = (
-> -				'-rel' => 'alternate',
-> -				'-title' => esc_attr("$project - $href_params{'-title'} - $format feed"),
-> -				'-type' => "application/$type+xml"
-> -			);
-> -
-> -			$href_params{'action'} = $type;
-> -			$link_attr{'-href'} = href(%href_params);
-> -			print "<link ".
-> -			      "rel=\"$link_attr{'-rel'}\" ".
-> -			      "title=\"$link_attr{'-title'}\" ".
-> -			      "href=\"$link_attr{'-href'}\" ".
-> -			      "type=\"$link_attr{'-type'}\" ".
-> -			      "/>\n";
-> -
-> -			$href_params{'extra_options'} = '--no-merges';
-> -			$link_attr{'-href'} = href(%href_params);
-> -			$link_attr{'-title'} .= ' (no merges)';
-> -			print "<link ".
-> -			      "rel=\"$link_attr{'-rel'}\" ".
-> -			      "title=\"$link_attr{'-title'}\" ".
-> -			      "href=\"$link_attr{'-href'}\" ".
-> -			      "type=\"$link_attr{'-type'}\" ".
-> -			      "/>\n";
-> -		}
-> -
-> -	} else {
-> -		printf('<link rel="alternate" title="%s projects list" '.
-> -		       'href="%s" type="text/plain; charset=utf-8" />'."\n",
-> -		       esc_attr($site_name), href(project=>undef, action=>"project_index"));
-> -		printf('<link rel="alternate" title="%s projects feeds" '.
-> -		       'href="%s" type="text/x-opml" />'."\n",
-> -		       esc_attr($site_name), href(project=>undef, action=>"opml"));
-> -	}
-> +	print_feed_meta()
-> +		if ($status eq '200 OK');
->  	if (defined $favicon) {
->  		print qq(<link rel="shortcut icon" href=").esc_url($favicon).qq(" type="image/png" />\n);
->  	}
+Yes.  It is clear from the context you mean its tree if you feed a commit
+to commit-tree, but the original intent of not dereferncing was to avoid
+mistakes by scripts and people, so you need to make a convincing argument
+that not derefencing does not help avoiding mistakes, and prove that
+nobody's script is relying on the current behaviour for type-checking
+purposes.
