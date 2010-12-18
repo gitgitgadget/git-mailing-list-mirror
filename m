@@ -1,75 +1,90 @@
-From: Mark Lodato <lodatom@gmail.com>
-Subject: Re: [PATCHv2 0/8] docs: use metavariables consistently
-Date: Sat, 18 Dec 2010 11:45:11 -0500
-Message-ID: <AANLkTi=vj=9-JO9QCb52qJin3Ezoi7WO_uoZaoX=ZEfY@mail.gmail.com>
-References: <1292650725-21149-1-git-send-email-lodatom@gmail.com> <20101218084908.GE6187@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/8] docs: use <sha1> to mean unabbreviated ID
+Date: Sat, 18 Dec 2010 10:50:45 -0800
+Message-ID: <7voc8ihq4a.fsf@alter.siamese.dyndns.org>
+References: <1292650725-21149-1-git-send-email-lodatom@gmail.com>
+ <1292650725-21149-4-git-send-email-lodatom@gmail.com>
+ <20101218074718.GA6187@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+Content-Type: text/plain; charset=us-ascii
+Cc: Mark Lodato <lodatom@gmail.com>, git@vger.kernel.org
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 18 17:45:39 2010
+X-From: git-owner@vger.kernel.org Sat Dec 18 19:56:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTzud-0001vN-CK
-	for gcvg-git-2@lo.gmane.org; Sat, 18 Dec 2010 17:45:39 +0100
+	id 1PU1xS-0005fl-QQ
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Dec 2010 19:56:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756633Ab0LRQpd convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Dec 2010 11:45:33 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:41653 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754621Ab0LRQpd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Dec 2010 11:45:33 -0500
-Received: by iwn9 with SMTP id 9so1781582iwn.19
-        for <git@vger.kernel.org>; Sat, 18 Dec 2010 08:45:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=GIG6NkmmV8qXiKrMT/6/fmsCqFUF1osAPLJbSn65cMc=;
-        b=U5YYKJlUnQJ8ggd38MijwEBiFUMrjtz1taf4WNl8NOD+xExtgpN3jqa5LY/5tksmG0
-         N7Jmkb237vD984yJARjKZb35/SYFT3K2+Zn3qUHNIBpZIxrpYnmljsdsTRzdUAdIExs7
-         YkY28J+LHS+qxDfb1wUa7YS4fiI35OaiKwFi8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Zzqg60nbi1HtypgcaDWY5zFYrNo9wZLvv33hI6au0vzdkEgc6aBT9ONqtVZf30i4lf
-         M5FK74kI/z39sqQwmR+6oqa6mOBrMuz2VkK4V+mr1sUYGWwc66w0knpQph7lJhl0X9Xj
-         +90BdyPloEOWqOy11We4+JGHlSjDHVfUaCyL8=
-Received: by 10.42.224.2 with SMTP id im2mr717627icb.53.1292690731770; Sat, 18
- Dec 2010 08:45:31 -0800 (PST)
-Received: by 10.42.167.201 with HTTP; Sat, 18 Dec 2010 08:45:11 -0800 (PST)
-In-Reply-To: <20101218084908.GE6187@burratino>
+	id S1757148Ab0LRSu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Dec 2010 13:50:58 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50040 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757057Ab0LRSu5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Dec 2010 13:50:57 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C2526238C;
+	Sat, 18 Dec 2010 13:51:23 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=wRemD1II8nnHwPnwUNoxxfUNvQY=; b=u3+lVB
+	3gi/SoVUTS5l5nzvcXiQuFAt2tFNaqPU33DdSnwoQmft21ti8RAiuWXMUTgnGiwi
+	jPS986iCATtGHKTg8hQsdtqsyG4y9Kb7a0UXgCt/dynSj4pE6j9bbi1Kv2nD8djx
+	D9Fvf7Q/OO0vpbUFIYqtffGF9XhXk9zJlda2o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=lYPZ55yRSIBHZZBBr1BWRZslEQlWpgyf
+	sSwg2KCK6EeiJT7BEzgWu4wBKcECl4uEtCl+SJSpcCyWVUIdju8rBJftPTKF3kLu
+	Oj4y90cjio2PqVX/dWlWk4ylu2pN5Myjp/Gr9bRhytACaBbD6YgogkIY3lDGTgI4
+	TpJ3lkPjXAI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 944402389;
+	Sat, 18 Dec 2010 13:51:20 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 653FB2385; Sat, 18 Dec 2010
+ 13:51:16 -0500 (EST)
+In-Reply-To: <20101218074718.GA6187@burratino> (Jonathan Nieder's message of
+ "Sat\, 18 Dec 2010 01\:47\:18 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CDA5C9A4-0AD7-11E0-8FE9-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163923>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163924>
 
-On Sat, Dec 18, 2010 at 3:49 AM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
+
 > Mark Lodato wrote:
->> This is a rework of my earlier patch set from March [1], with the fo=
-llowing
->> differences:
->>
->> - Drop the patch to commit-tree that makes it accept a tree-ish.
 >
-> Ah, missed this before. =C2=A0It is not clear to me why this differen=
-ce ---
-> is it just to be conservative about changing behavior?
+>> There are some places that literally require a full, 40-character SHA-1
+>> ID, rather than a generic revision specifier.
+>
+> One name I have seen for these is "object IDs", as in git get-tar-commit-id
+> (to avoid putting too much emphasis on precisely how the identifiers are
+> chosen).
 
-Exactly.  Junio replied to my original email saying he did not think
-this patch was unsafe, so if you think the patch is a good idea, I'll
-re-send it.
+Yes, I think I also saw "a full object name" (cf. diff --full-index) and
+evan "object name" (cf. git-pack-objects(1)).  These are all deliberate
+efforts to stay away from spelling SHA-1 explicitly, and I think it makes
+sense to do so here.  "40-digit object ID" is a mouthful, though.
 
->> [1] http://kerneltrap.org/mailarchive/git/2010/3/13/25484
-> http://thread.gmane.org/gmane.comp.version-control.git/142078
+As to what this series tries to do, I think it is generally a good idea to
+start allowing documents to say <tree> when a reader can plug either a
+commit or a tree, rather than <tree-ish>, only because all Porcelains
+automatically dereference object names to needed types these days.
 
-As an aside, how do you actually find threads on gmane?  I can't find
-anything on Google.
+But such a change needs to mark places that _must_ take the name of an
+object of the specific type somehow.  It is Ok to say ls-tree takes a
+tree, but then we must say you should feed commit-tree nothing but a tree.
+
+It is a separate issue to allow plumbings to automatically dereference
+when both of the following two conditions hold: (1) the intent is clear
+from the context; (2) nobody sane would have been relying on the side
+effect of the current typechecking.
+
+Letting commit-tree to unwrap a tree-ish to a tree would be a good example
+that clearly satisfies (1)---I am not sure about the other one.
