@@ -1,59 +1,132 @@
-From: david@lang.hm
-Subject: Re: how to recover a repository
-Date: Fri, 17 Dec 2010 14:30:37 -0800 (PST)
-Message-ID: <alpine.DEB.2.00.1012171430270.18272@asgard.lang.hm>
-References: <alpine.DEB.2.00.1012162024020.22269@asgard.lang.hm> <20101217044530.GA8590@burratino> <alpine.DEB.2.00.1012171218450.18272@asgard.lang.hm> <20101217212201.GC11511@sigill.intra.peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 10/21] tree_entry_interesting(): fix depth limit with
+ overlapping pathspecs
+Date: Sat, 18 Dec 2010 10:37:28 +0700
+Message-ID: <AANLkTik+DaUrh99qs4T-Pm_+3Oq499L_NtP6Xcht1wfH@mail.gmail.com>
+References: <1292425376-14550-1-git-send-email-pclouds@gmail.com>
+ <1292425376-14550-11-git-send-email-pclouds@gmail.com> <7vmxo5l2g4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Dec 17 23:30:52 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Dec 18 04:41:06 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PTip8-0001lU-1M
-	for gcvg-git-2@lo.gmane.org; Fri, 17 Dec 2010 23:30:50 +0100
+	id 1PTnfK-0003Hj-Du
+	for gcvg-git-2@lo.gmane.org; Sat, 18 Dec 2010 04:41:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756133Ab0LQWap (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 17 Dec 2010 17:30:45 -0500
-Received: from mail.lang.hm ([64.81.33.126]:60841 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755796Ab0LQWao (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 17 Dec 2010 17:30:44 -0500
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id oBHMUbHJ032728;
-	Fri, 17 Dec 2010 14:30:37 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <20101217212201.GC11511@sigill.intra.peff.net>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1755789Ab0LRDiA convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 17 Dec 2010 22:38:00 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:56081 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753561Ab0LRDh7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 17 Dec 2010 22:37:59 -0500
+Received: by wyb28 with SMTP id 28so1300635wyb.19
+        for <git@vger.kernel.org>; Fri, 17 Dec 2010 19:37:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GJxoxyRB2ro0KXANjBB7gR3E+1ViqATskyIlXI0oxiA=;
+        b=gaC+5cr4yGeiKVagnZNXeQk4QYBzrJaoc/SVfddPGhJcxdtX8YLQq+gjdWO7lHxR7z
+         RhKxoTTizoEhJNL/nLzKbp+7WHZOe5p4JYTlx3nPnblIq0yExtKibeRWXqlGyjpKvQpK
+         JVVhMXnum/ZoL96tvyNGsTFP1zjdwNO5LwocE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=bNGbopy57xkLdJiigs/QediH5KrAgfgxOfDYZ3Zkq+0CCHTqKJDgpnRnsEHgSyE4fl
+         CRhDcjL1iBOux4CfDpkGrfPuNlbTtNr8CXBjfAdb+mOEi26N7RcVXbYN+th2SyAxJCB/
+         l+6zREgHftLly26Kgiuev9s5a228eMV2HD8qs=
+Received: by 10.216.162.70 with SMTP id x48mr4801523wek.4.1292643478461; Fri,
+ 17 Dec 2010 19:37:58 -0800 (PST)
+Received: by 10.216.158.83 with HTTP; Fri, 17 Dec 2010 19:37:28 -0800 (PST)
+In-Reply-To: <7vmxo5l2g4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163896>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163897>
 
-thanks, that appears to have worked.
+2010/12/17 Junio C Hamano <gitster@pobox.com>:
+> One possible definition of interaction between limit and wildcard may=
+ be
+> to count the number of slashes in the part of the path that matches t=
+he
+> wildcarded part of the pathspec, add the number of path components
+> appended due to the leading directory match, and then subtract the nu=
+mber
+> of literal slashes in the wildcarded part of the pattern from the abo=
+ve,
+> and declare that a match is found if the difference is less than the
+> limit.
+>
+> E.g. a pathspec element "a/*/x" would match "a/b/c/x", "a/b/c/d/e/x",
+> "a/b/x/y" and "a/b/x/y/z" without limit, and with the limit of 1:
+>
+> =C2=A0 =C2=A0a/b/c/x =C2=A0 =C2=A0 =C2=A0 =C2=A0matches ('*' expands =
+to "b/c")
+> =C2=A0 =C2=A0a/b/c/d/e/x =C2=A0 =C2=A0no ('*' has to expand to "c/d/e=
+" and needs 2 levels)
+> =C2=A0 =C2=A0a/b/x/y =C2=A0 =C2=A0 =C2=A0 =C2=A0matches ('*' expands =
+to "b" costing zero, "/y" needs 1)
+> =C2=A0 =C2=A0a/b/x/y/z =C2=A0 =C2=A0 =C2=A0does not match
+>
+> Another definition could be to count _only_ the part that is appended=
+ by
+> recursion (i.e. we do not count how many slashes has to match '*' in =
+the
+> above examples), and as the option is called --depth, it might make m=
+ore
+> sense.
 
-David Lang
+So with the above example, "a/" won't be counted. Depth limit of 0 or
+1 will result in no matches. Depth limit of 2 will result in a/b/c/x
+and a/b/x/y, correct?
 
-On Fri, 17 Dec 2010, Jeff King wrote:
+I prefer this definition to the former. It sounds simpler to
+understand and use, also less computation. But I can implement both
+:-) We can mark what matching strategy we would use in struct
+pathspec.  Hmm.. I'm not much help in figuring out which one makes
+more sense.
 
-> Date: Fri, 17 Dec 2010 16:22:02 -0500
-> From: Jeff King <peff@peff.net>
-> To: david@lang.hm
-> Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-> Subject: Re: how to recover a repository
-> 
-> On Fri, Dec 17, 2010 at 12:20:56PM -0800, david@lang.hm wrote:
->
->>> 3. git update-ref HEAD refs/heads/(branch you were on)
->>
->> I was on the default branch but if I do 'git update-ref HEAD
->> refs/heads/master' I get an error 'not a valid SHA1'
->
-> That should be "git symbolic-ref HEAD refs/heads/master".
->
-> -Peff
->
+Another thing, I don't know if anybody would need it. Should we
+support depth limit per pathspec, so "a/*/x" can have depth limit of
+2, but "*.c" has depth limit of 1..For one thing, his may help keeping
+current's git-grep depth limit behavior if depth limit can also be
+applied to wildcard pathspecs by setting depth limit for wildcard
+pathspecs to -1. Exposing depth limit per pathspec to users is another
+matter.
+
+> In either case, I am not sure if "if it matches the longest pathspec,=
+ we
+> have the answer without looking at shorter ones" would be a good rule=
+ to
+> use.
+
+As long as the rule of matching is "if any of these pathspecs is
+matched, we have a match", then pathspec order should not matter
+(without depth limit). Matching decision of one pathspec does not
+affect the others. Depth limit is the first one breaking the last
+sentence. And because pathspec order does not matter before depth
+limit introduction, it should not cause any regression when depth
+limit requires pathspecs in certain order. That's how I thought when I
+decided to sort pathspecs.
+
+Wildcard pathspecs are handled in a completely different path (even
+with depth limit in either way you described). Overlapping is no issue
+to wildcard pathspecs, we always need full pathspec to call fnmatch()
+(unless you implied some early cut optmization that I don't see).
+Therefore pathspec order is no issue.
+
+Even when I introduce negative pathspec, it would be actually negative
+prefix and go the same route as current depth limit impl (it also has
+the same overlapping pathspec issue). Negative wildcard pathspecs
+would blow my mind.
+--=20
+Duy
