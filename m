@@ -1,72 +1,72 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] builtin/rm.c: Use ALLOC_GROW instead of alloc_nr and xrealloc.
-Date: Sun, 19 Dec 2010 10:02:39 +0700
-Message-ID: <AANLkTim4GE0mnCBqz6QubpL6g9Bz5U-jHoOw=_MR5-1j@mail.gmail.com>
-References: <ffd7b63f3ef5e409775a0d730691efdaf4e41592.1292291262.git.tfransosi@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/2] fill_textconv(): Don't get/put cache if sha1 is not
+ valid
+Date: Sat, 18 Dec 2010 19:23:29 -0800
+Message-ID: <7vk4j6fnta.fsf@alter.siamese.dyndns.org>
+References: <b714f1939ef4fc73cb5f55c1d7784a08a34d3c3d.1292681111.git.kirr@landau.phys.spbu.ru> <14308c2dd50037246e319649944d308b9f32fc39.1292681111.git.kirr@landau.phys.spbu.ru> <20101218161337.GB18643@sigill.intra.peff.net> <20101218205514.GA21249@landau.phys.spbu.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 19 04:07:43 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
+	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
+	<clement.poulain@ensimag.imag.fr>,
+	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
+To: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+X-From: git-owner@vger.kernel.org Sun Dec 19 04:23:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PU9cc-0003ZB-Mo
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Dec 2010 04:07:43 +0100
+	id 1PU9sH-0002VS-6I
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Dec 2010 04:23:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751225Ab0LSDDN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Dec 2010 22:03:13 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:55280 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750814Ab0LSDDM convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Dec 2010 22:03:12 -0500
-Received: by wwa36 with SMTP id 36so1917034wwa.1
-        for <git@vger.kernel.org>; Sat, 18 Dec 2010 19:03:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=rqv79MnpwGY05A0d9AMqy1ywKmSLzDeTxZ2m8wSVHZM=;
-        b=xeqmepz390Dm32tCOZDB1rQRdvC21xg7hfaQsVhBH1icXWP5jHLhis/7cbde0FkzKx
-         cQC6XGwDxzGPGioHPdTX6rOM/NNKavX9wf1Hy4sPnpDkjqVQgitxNMveHphFGXRdpoyd
-         2ltUEB5z3dJO9g7yYIVV0BHtL6uz5w+i9ZKow=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=TwXPDcSnwV4jFFz0kK0pgpHUwmIKVyBP4QRn2aX8Dn+lUd2rMo55KR083ctXrhQg8a
-         37uvyVjUDoq/PzZdemKFFAR6FnklQ1Gj+XeYoE2L/PQqX0Bxzc/69rY6BJvAYiRoZlzw
-         1ldpVExQxd1fXOYzg4NxA95uYTq9nKeGU9Ixk=
-Received: by 10.216.30.144 with SMTP id k16mr5923914wea.19.1292727789829; Sat,
- 18 Dec 2010 19:03:09 -0800 (PST)
-Received: by 10.216.158.83 with HTTP; Sat, 18 Dec 2010 19:02:39 -0800 (PST)
-In-Reply-To: <ffd7b63f3ef5e409775a0d730691efdaf4e41592.1292291262.git.tfransosi@gmail.com>
+	id S1754973Ab0LSDXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Dec 2010 22:23:48 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63666 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750814Ab0LSDXr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Dec 2010 22:23:47 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3BF6A2D2A;
+	Sat, 18 Dec 2010 22:24:14 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=+5M3Ic3Pgh+e97SsXraBIx6RUe0=; b=Q+SnqJ
+	ou+ig3l3M4zdjk7qow8GkyMvImg9Z8FWqHZ2L7BufM08CEX99RNZr3/NILgJvhti
+	KiioAVxdJp9+09AxtfKmLJITZ7GIcNHq6YFav6ZKuLqZZnfwXXPkuYUEVUIE/qfF
+	2su3g9jTH9UgvDEkNmj2MMQbYQMjO8zB5+Di0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Ee/WATWsj8L7joj89vXUNffNXb3H9Jpu
+	KVvWmw0I20XgBjf8zu6qyoQws8Wm2oIntrSgEDiwZLtTef6jMaL7gYrZHUI/lUxc
+	hUzvxzHJZbWir8FsPITfeW5t/QAugmSMO6K8amUBl99z5yMBG0doOl+OVPNyMN/l
+	F6eUtcWiTmg=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CB0D62D28;
+	Sat, 18 Dec 2010 22:24:07 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 225CD2D27; Sat, 18 Dec 2010
+ 22:23:59 -0500 (EST)
+In-Reply-To: <20101218205514.GA21249@landau.phys.spbu.ru> (Kirill Smelkov's
+ message of "Sat\, 18 Dec 2010 23\:55\:15 +0300")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 70596628-0B1F-11E0-A025-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163950>
 
-On Tue, Dec 14, 2010 at 8:48 AM, Thiago Farina <tfransosi@gmail.com> wr=
-ote:
-> =C2=A0static void add_list(const char *name)
-> =C2=A0{
-> - =C2=A0 =C2=A0 =C2=A0 if (list.nr >=3D list.alloc) {
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 list.alloc =3D all=
-oc_nr(list.alloc);
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 list.name =3D xrea=
-lloc(list.name, list.alloc * sizeof(const char *));
-> - =C2=A0 =C2=A0 =C2=A0 }
-> + =C2=A0 =C2=A0 =C2=A0 ALLOC_GROW(list.name, list.nr + 1, list.alloc)=
-;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0list.name[list.nr++] =3D name;
-> =C2=A0}
+Kirill Smelkov <kirr@landau.phys.spbu.ru> writes:
 
-add_list() is only used at one place, why not remove it and put the
-code back in cmd_rm()?
---=20
-Duy
+> Thanks for your ACK and for the explanation.
+>
+> My last patches to git were blame related so semi-intuitively I knew
+> that invalid sha1 are coming from files in worktree. Your description
+> makes things much more clear and I'd put it into patch log as well.
+> What is the best practice for this? For me to re-roll, or for Junio to
+> merge texts?
+
+Re-rolling to explain changes in your own words is preferred; thanks.
