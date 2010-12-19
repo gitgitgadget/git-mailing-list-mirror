@@ -1,81 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Commiting automatically (2)
-Date: Sun, 19 Dec 2010 12:36:19 -0600
-Message-ID: <20101219183619.GB11955@burratino>
+Date: Sun, 19 Dec 2010 11:32:32 -0800
+Message-ID: <7vaak1ftin.fsf@alter.siamese.dyndns.org>
 References: <loom.20101219T090500-396@post.gmane.org>
- <20101219150850.GC12136@foodlogiq3-xp-d620.thebe.ath.cx>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Maaartin <grajcar1@seznam.cz>, git@vger.kernel.org
-To: Taylor Hedberg <tmhedberg@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 19 19:36:59 2010
+Cc: git@vger.kernel.org
+To: Maaartin <grajcar1@seznam.cz>
+X-From: git-owner@vger.kernel.org Sun Dec 19 20:32:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PUO7u-0000xf-MN
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Dec 2010 19:36:59 +0100
+	id 1PUOzw-00068J-RN
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Dec 2010 20:32:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932413Ab0LSSgf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Dec 2010 13:36:35 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:49455 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932242Ab0LSSgc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Dec 2010 13:36:32 -0500
-Received: by yxt3 with SMTP id 3so1020532yxt.19
-        for <git@vger.kernel.org>; Sun, 19 Dec 2010 10:36:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=sEbgzK9+F0eknxc7heQlzx8CqoP5zSpRdGqz+QMpoIs=;
-        b=bh7lBdH10rDa7QO3Nhji90brQfTwT8g41T3/NuoGcpZ5PeinEYxNOFKXx4T29nY4VW
-         oWQIzwhO/Hs4vGmSSiaYdkQWRBsfZEbkn/ESZSSeztTxfp1fHKM5RkRszaA7phta3VHv
-         S1Qzf72P1Wj+m9dEZpvfFB2X3v7WfzUvzXM6Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=VFTW8zaS26Ye/gBYwY/pnWW9tB00kt0RGjBEVkDRHseuhi5GdHEVGSAOeYWmnXVUIW
-         vpVcEmiZITwcK/VQ9Br8FP0qiNthnV7vfGSiRAVd9qdxK9lquFK5vN0hYrq7nxi1Q03c
-         kZEGjW2qmHoeYEZxU2UUUvykAqCfEYzb+AZUI=
-Received: by 10.150.190.4 with SMTP id n4mr5363154ybf.386.1292783791084;
-        Sun, 19 Dec 2010 10:36:31 -0800 (PST)
-Received: from burratino (c-76-126-174-171.hsd1.ca.comcast.net [76.126.174.171])
-        by mx.google.com with ESMTPS id v8sm3729015ybe.13.2010.12.19.10.36.28
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 19 Dec 2010 10:36:29 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20101219150850.GC12136@foodlogiq3-xp-d620.thebe.ath.cx>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S932449Ab0LSTcn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Dec 2010 14:32:43 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61716 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932424Ab0LSTcn (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Dec 2010 14:32:43 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1192B31AF;
+	Sun, 19 Dec 2010 14:33:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=eKK1BOKF7hzFyzCbDZfvtzWpbkY=; b=RTC3Eg
+	mihVTOqAXsqDtcRMWWkYciAWWG7alpu+JHgYUQxcocdbp9bhb4GuUlu6hlNh5lGR
+	PKhHFOTQrIZLJknEX5gh897iX4VUSHd2om/byRXKWkxtfgvROvg9q8wv4YLNDljQ
+	ru2uAfXLRieTe83OfyRQqcJYmBqawNJhB10kA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Af7TYWv0YgvVg8uMuFQUdbagZeaxdoar
+	RHhmMo5VZP0ULFwRDlAxmd1WDPk5J1nxp9Jerq8gYUfSsuxrEa/1ySDthoy1Pnka
+	/n+Zbw0d8QtkRF9rp00JYZH99qoSLzjRpt6mORRJ7IcEgWpReirBz7y8wIkV4Aug
+	2hb4VnRjTao=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E370731AD;
+	Sun, 19 Dec 2010 14:33:07 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 09DB131AC; Sun, 19 Dec 2010
+ 14:33:04 -0500 (EST)
+In-Reply-To: <loom.20101219T090500-396@post.gmane.org> (Maaartin's message of
+ "Sun\, 19 Dec 2010 08\:29\:50 +0000 \(UTC\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: CE8CE620-0BA6-11E0-B246-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163966>
 
-Taylor Hedberg wrote:
-> On Sun, Dec 19, 2010 at 08:29:50AM +0000, Maaartin wrote:
+Maaartin <grajcar1@seznam.cz> writes:
 
->> There's one more problem. My script doesn't recognize deleted files, since
->> git add -A
->> does nothing to them. I'm quite sure I saw a solution to this, but can't find 
->> it now...
+> However, when I use my git-autocom script, those files get marked as deleted. 
+> This is quite strange, especially because of them still existing. I'd strongly 
+> prefer git-autocom to behave just like git commit (i.e., tracking the files).
 >
-> I believe "git add -u" will do the same thing as "git add -A", plus
-> handle deleted files.
+> The relevant part of my script follows:
+>
+> export GIT_INDEX_FILE=.git/autocom.tmp
+> git add -A &&
 
-Hmm, the "git add" manual suggests it is the other way around:
+If you really want "just like commit", then it would be more like "make a
+commit object out of the current index, and put that somewhere outside the
+current branch", and will not involve any "git add", no?
 
- -A, --all
-	Like -u, but match <filepattern> against files in the working
-	tree in addition to the index. That means that it will find new
-	files as well as staging modified content and removing files
-	that are no longer in the working tree.
+A useful goal would be "as if I said 'git add -u && git commit' from the
+current state" (alternatively, you could say s/-u/-A/).
 
-So I would expect "git add -A" to do the same thing as "git add -u",
-plus handling added files.
+If this autocom.tmp starts out empty, "add" will of course honor what you
+wrote in .gitignore hence would not add ignored files.  You may have '*.o'
+in the ignore mechanism to exclude usual build products.  Until you
+somehow tell git that you care about a vendor-supplied binary blob file
+"binblob1.o" even though it has a name for usual ignored ones, you don't
+want to get it tracked, and once you have done so with "git add -f", you
+do want to get it tracked from that point.  But your script cannot be
+clever enough to selectively say "add -f" for such a file.
 
-Maaartin, could you give an example showing where add -A goes wrong?
+The "from the current state" part of the sentence of your goal (clarified
+by the second paragraph above) fundamentally means you need to start from
+your real index, so "cp -p .git/index $TMP_INDEX" is both appropriate and
+inevitable for your script.
