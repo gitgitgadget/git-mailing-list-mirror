@@ -1,72 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] fill_textconv(): Don't get/put cache if sha1 is not
- valid
-Date: Sat, 18 Dec 2010 19:23:29 -0800
-Message-ID: <7vk4j6fnta.fsf@alter.siamese.dyndns.org>
-References: <b714f1939ef4fc73cb5f55c1d7784a08a34d3c3d.1292681111.git.kirr@landau.phys.spbu.ru> <14308c2dd50037246e319649944d308b9f32fc39.1292681111.git.kirr@landau.phys.spbu.ru> <20101218161337.GB18643@sigill.intra.peff.net> <20101218205514.GA21249@landau.phys.spbu.ru>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH] handle arbitrary ints in git_config_maybe_bool
+Date: Sat, 18 Dec 2010 22:36:41 -0500
+Message-ID: <20101219033640.GA6889@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
-	<clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-To: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-X-From: git-owner@vger.kernel.org Sun Dec 19 04:23:53 2010
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 19 04:36:52 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PU9sH-0002VS-6I
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Dec 2010 04:23:53 +0100
+	id 1PUA4o-0008QY-U2
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Dec 2010 04:36:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754973Ab0LSDXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 18 Dec 2010 22:23:48 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63666 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750814Ab0LSDXr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 18 Dec 2010 22:23:47 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3BF6A2D2A;
-	Sat, 18 Dec 2010 22:24:14 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+5M3Ic3Pgh+e97SsXraBIx6RUe0=; b=Q+SnqJ
-	ou+ig3l3M4zdjk7qow8GkyMvImg9Z8FWqHZ2L7BufM08CEX99RNZr3/NILgJvhti
-	KiioAVxdJp9+09AxtfKmLJITZ7GIcNHq6YFav6ZKuLqZZnfwXXPkuYUEVUIE/qfF
-	2su3g9jTH9UgvDEkNmj2MMQbYQMjO8zB5+Di0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Ee/WATWsj8L7joj89vXUNffNXb3H9Jpu
-	KVvWmw0I20XgBjf8zu6qyoQws8Wm2oIntrSgEDiwZLtTef6jMaL7gYrZHUI/lUxc
-	hUzvxzHJZbWir8FsPITfeW5t/QAugmSMO6K8amUBl99z5yMBG0doOl+OVPNyMN/l
-	F6eUtcWiTmg=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CB0D62D28;
-	Sat, 18 Dec 2010 22:24:07 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 225CD2D27; Sat, 18 Dec 2010
- 22:23:59 -0500 (EST)
-In-Reply-To: <20101218205514.GA21249@landau.phys.spbu.ru> (Kirill Smelkov's
- message of "Sat\, 18 Dec 2010 23\:55\:15 +0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 70596628-0B1F-11E0-A025-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1756442Ab0LSDgp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Dec 2010 22:36:45 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:58249 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752652Ab0LSDgo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Dec 2010 22:36:44 -0500
+Received: (qmail 18398 invoked by uid 111); 19 Dec 2010 03:36:43 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 19 Dec 2010 03:36:43 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 18 Dec 2010 22:36:41 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163950>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163951>
 
-Kirill Smelkov <kirr@landau.phys.spbu.ru> writes:
+This function recently gained the ability to recognize the
+documented "0" and "1" values as false/true. However, unlike
+regular git_config_bool, it did not treat arbitrary numbers
+as true. While this is undocumented and probably ridiculous
+for somebody to rely on, it is safer to behave exactly as
+git_config_bool would. Because git_config_maybe_bool can be
+used to retrofit new non-bool values onto existing bool
+options, not behaving in exactly the same way is technically
+a regression.
 
-> Thanks for your ACK and for the explanation.
->
-> My last patches to git were blame related so semi-intuitively I knew
-> that invalid sha1 are coming from files in worktree. Your description
-> makes things much more clear and I'd put it into patch log as well.
-> What is the best practice for this? For me to re-roll, or for Junio to
-> merge texts?
+Signed-off-by: Jeff King <peff@peff.net>
+---
+This was posted earlier as part of the command-specific pager topic; you
+ended up splitting part of that out into jk/maint-decorate-01-bool. This
+should logically go on top of that (b2be2f6).
 
-Re-rolling to explain changes in your own words is preferred; thanks.
+It probably doesn't make a difference in the real world, but I think it
+is safer (as described above), and the code is a little cleaner. I
+should have just done it this way in the first place.
+
+ config.c |    8 +++-----
+ 1 files changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/config.c b/config.c
+index 32c0b2c..d73b090 100644
+--- a/config.c
++++ b/config.c
+@@ -429,13 +429,11 @@ static int git_config_maybe_bool_text(const char *name, const char *value)
+ 
+ int git_config_maybe_bool(const char *name, const char *value)
+ {
+-	int v = git_config_maybe_bool_text(name, value);
++	long v = git_config_maybe_bool_text(name, value);
+ 	if (0 <= v)
+ 		return v;
+-	if (!strcmp(value, "0"))
+-		return 0;
+-	if (!strcmp(value, "1"))
+-		return 1;
++	if (git_parse_long(value, &v))
++		return !!v;
+ 	return -1;
+ }
+ 
+-- 
+1.7.3.4.761.g98ad5
