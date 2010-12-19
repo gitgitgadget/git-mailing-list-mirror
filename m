@@ -1,71 +1,67 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: subdirectory-filter does not delete files before the directory came into existence?
-Date: Sun, 19 Dec 2010 23:51:48 +0100
-Message-ID: <201012192351.49279.trast@student.ethz.ch>
-References: <1292365295.6666.22.camel@ct> <201012190323.59829.trast@student.ethz.ch> <1292751289.21229.26.camel@ct>
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+Subject: Re: Basic Git Questions
+Date: Mon, 20 Dec 2010 02:08:39 +0300
+Message-ID: <20101219230839.GM3264@localhost.localdomain>
+References: <AANLkTiki2e4-YD0P9kb7g-WbLTPhAXQ22R2jCAXVtjN1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Jan Wielemaker <J.Wielemaker@cs.vu.nl>
-X-From: git-owner@vger.kernel.org Sun Dec 19 23:52:10 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Parag Kalra <paragkalra@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 20 00:09:37 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PUS6r-0001fi-R7
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Dec 2010 23:52:10 +0100
+	id 1PUSNl-0002DT-4k
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Dec 2010 00:09:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757218Ab0LSWvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Dec 2010 17:51:52 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:46676 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756148Ab0LSWvv (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Dec 2010 17:51:51 -0500
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Sun, 19 Dec
- 2010 23:51:47 +0100
-Received: from pctrast.inf.ethz.ch (84.74.105.24) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.218.12; Sun, 19 Dec
- 2010 23:51:50 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-rc5-desktop; KDE/4.5.3; x86_64; ; )
-In-Reply-To: <1292751289.21229.26.camel@ct>
-X-Originating-IP: [84.74.105.24]
+	id S932528Ab0LSXIo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Dec 2010 18:08:44 -0500
+Received: from mailhub.007spb.ru ([84.204.203.130]:46098 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932511Ab0LSXIo (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Dec 2010 18:08:44 -0500
+Received: from proxysrv.domain007.com ([10.8.0.42])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id oBJN8eN7004514;
+	Mon, 20 Dec 2010 02:08:41 +0300
+Received: by proxysrv.domain007.com (Postfix, from userid 1000)
+	id D7B91B2003B; Mon, 20 Dec 2010 02:08:39 +0300 (MSK)
+Content-Disposition: inline
+In-Reply-To: <AANLkTiki2e4-YD0P9kb7g-WbLTPhAXQ22R2jCAXVtjN1@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Scanned-By: MIMEDefang 2.51 (www.roaringpenguin.com/mimedefang) on 192.168.2.20
+X-Antivirus: Dr.Web (R) for Mail Servers on proxysrv host
+X-Antivirus-Code: 100000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163972>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163973>
 
-Jan Wielemaker wrote:
-> On Sun, 2010-12-19 at 03:23 +0100, Thomas Rast wrote:
-> > Jan Wielemaker wrote:
-> > >   * get all tags, use comm and delete the tags not in the `contained'
-> > >   set above.
-[...]
-> >   http://article.gmane.org/gmane.comp.version-control.git/91708
-[...]
-> Funny.  That was me having problems with filtering out directories
-> as well :-)  I thought your patch was added using the --prune-empty
-> flag.  I guess you can comment on that.  I can confirm that I've got
-> nice and clean filtering using
+On Sun, Dec 19, 2010 at 02:32:41PM -0800, Parag Kalra wrote:
 
-No, those two are rather different.  --prune-empty drops commits that
-became "no-ops" in the sense that their tree is the same as their
-(only) parent's.  In the case of --subdirectory-filter, --prune-empty
-is most likely[*] redundant since the former already enables history
-simplification limited to that directory.
+> 1. I generally add the files in my working directory using "git add
+> .". But sometimes you want to add all the files except 1 or 2 file. I=
+s
+> there a shortcut way we can tell git to add all the files but exclude
+> a particular file.
+Use `git add .` to add all the files and then `git rm --cached` those
+one or two you don't need to be committed. See the git-rm manual for
+details.
 
-As you can see from "TOY PATCH", my patch wasn't really meant for
-application anyway.  I'm now wondering what the ramifications would
-be.  filter-branch only attempts to change refs that you told it to
-(listed positively on the command line), so maybe deleting anything
-that was not rewritten is a sensible option (not default, mind you).
-
-
-[*] Read: I think it is redundant, I'm just too lazy to double-check.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+> 2. Also sometime when the code is=A0committed, I realize that I have
+> forgot to change or add a file. Is there a way we can we commit a fil=
+e
+> to existing commit number with git log showing only the old git commi=
+t
+> number and not creating a new one for the last commit.
+`git commit --amend` does exactly that -- amends the last commit
+(pointed by the HEAD ref).
+If you need to modify a commit older than the last one, you have to
+rebase a part of the branch starting with that commit and then edit
+(amend) that commit during the rebasing process. This might have
+certain caveats though, so refer to git-rebase manual.
+More on rebasing can be found in various pieces of documentation and
+books listed at http://git-scm.com/documentation
