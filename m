@@ -1,65 +1,93 @@
-From: Taylor Hedberg <tmhedberg@gmail.com>
-Subject: Re: Commiting automatically (2)
-Date: Sun, 19 Dec 2010 10:08:51 -0500
-Message-ID: <20101219150850.GC12136@foodlogiq3-xp-d620.thebe.ath.cx>
-References: <loom.20101219T090500-396@post.gmane.org>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Maaartin <grajcar1@seznam.cz>
-X-From: git-owner@vger.kernel.org Sun Dec 19 16:15:32 2010
+From: maximilian attems <max@stro.at>
+Subject: [PATCH] am: Allow passing exclude and include args to apply
+Date: Sun, 19 Dec 2010 17:17:41 +0100
+Message-ID: <1292775461-26762-1-git-send-email-max@stro.at>
+Cc: Junio C Hamano <gitster@pobox.com>, klibc@zytor.com,
+	maximilian attems <max@stro.at>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Dec 19 17:17:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PUKyx-0004gF-GJ
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Dec 2010 16:15:31 +0100
+	id 1PULxM-0007xa-Cn
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Dec 2010 17:17:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932256Ab0LSPIy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Dec 2010 10:08:54 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:51237 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932176Ab0LSPIx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Dec 2010 10:08:53 -0500
-Received: by qyj19 with SMTP id 19so3171778qyj.19
-        for <git@vger.kernel.org>; Sun, 19 Dec 2010 07:08:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=+axG1nK1Zqf1BeBPbjqAJUgt0LgPnh8wfNr9rFFHG5s=;
-        b=ma+I24WwglYv3546ALKg63wWnl4t9dp+q3xuqldJO7DbtqmqRxN+FH6z1SNnFVb+BE
-         4lPYfmoSGb6lAX3nKti4ZUWnk9aOalY11L84uunSSYxx3HP63k8lJLxKJ2omRz8Mr4+z
-         HXRPI8iqFApCRnm5v/zc4em5+fod3yFr4hqBw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=l4fOaNJbOZY8Jj87va7zfolUDPTLfO2vgjgp572ePFr5SSJ6RUgbDQhW7mn+Yd7xxA
-         /fTJLWZfn3unOKkbU/XI8vX7wAdSOMLREoUhpxfZ73nKf2zZUCtjRT3vElj91AA7zbjS
-         NLK4e6kNIEpoho6SqbtescN/+FmnT+ZqhlOmE=
-Received: by 10.229.250.9 with SMTP id mm9mr2832520qcb.264.1292771332493;
-        Sun, 19 Dec 2010 07:08:52 -0800 (PST)
-Received: from foodlogiq3-xp-d620.thebe.ath.cx (cpe-075-182-067-204.nc.res.rr.com [75.182.67.204])
-        by mx.google.com with ESMTPS id m14sm1561336qcu.32.2010.12.19.07.08.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 19 Dec 2010 07:08:51 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <loom.20101219T090500-396@post.gmane.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752869Ab0LSQRv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Dec 2010 11:17:51 -0500
+Received: from vostochny.stro.at ([78.47.22.85]:33509 "EHLO vostochny.stro.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752390Ab0LSQRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Dec 2010 11:17:50 -0500
+Received: from stro.at (178.112.199.118.wireless.dyn.drei.com [178.112.199.118])
+	by vostochny.stro.at (Postfix) with ESMTPA id 2052AC05C;
+	Sun, 19 Dec 2010 16:17:49 +0000 (UTC)
+Received: by stro.at (Postfix, from userid 1000)
+	id 01569204A7; Sun, 19 Dec 2010 17:17:47 +0100 (CET)
+X-Mailer: git-send-email 1.7.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163958>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163959>
 
-On Sun, Dec 19, 2010 at 08:29:50AM +0000, Maaartin wrote:
-> There's one more problem. My script doesn't recognize deleted files, since
-> git add -A
-> does nothing to them. I'm quite sure I saw a solution to this, but can't find 
-> it now...
+When porting patches from dash git to klibc git,
+where dash has a different directory structure those
+switches are handy:
+Exported with format-patch on dash side and used am
+as import for klibc side.
 
-I believe "git add -u" will do the same thing as "git add -A", plus
-handle deleted files.
+Signed-off-by: maximilian attems <max@stro.at>
+---
+ Documentation/git-am.txt |    5 ++++-
+ git-am.sh                |    4 +++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/git-am.txt b/Documentation/git-am.txt
+index 51297d0..4c65dba 100644
+--- a/Documentation/git-am.txt
++++ b/Documentation/git-am.txt
+@@ -13,7 +13,8 @@ SYNOPSIS
+ 	 [--3way] [--interactive] [--committer-date-is-author-date]
+ 	 [--ignore-date] [--ignore-space-change | --ignore-whitespace]
+ 	 [--whitespace=<option>] [-C<n>] [-p<n>] [--directory=<dir>]
+-	 [--reject] [-q | --quiet] [--scissors | --no-scissors]
++	 [--exclude=PATH] [--include=PATH] [--reject] [-q | --quiet]
++	 [--scissors | --no-scissors]
+ 	 [(<mbox> | <Maildir>)...]
+ 'git am' (--continue | --skip | --abort)
+ 
+@@ -87,6 +88,8 @@ default.   You can use `--no-utf8` to override this.
+ -C<n>::
+ -p<n>::
+ --directory=<dir>::
++--exclude=<path-pattern>::
++--include=<path-pattern>::
+ --reject::
+ 	These flags are passed to the 'git apply' (see linkgit:git-apply[1])
+ 	program that applies
+diff --git a/git-am.sh b/git-am.sh
+index df09b42..174f6a2 100755
+--- a/git-am.sh
++++ b/git-am.sh
+@@ -22,6 +22,8 @@ whitespace=     pass it through git-apply
+ ignore-space-change pass it through git-apply
+ ignore-whitespace pass it through git-apply
+ directory=      pass it through git-apply
++exclude=        pass it through git-apply
++include=        pass it through git-apply
+ C=              pass it through git-apply
+ p=              pass it through git-apply
+ patch-format=   format the patch(es) are in
+@@ -340,7 +342,7 @@ do
+ 		;;
+ 	--resolvemsg)
+ 		shift; resolvemsg=$1 ;;
+-	--whitespace|--directory)
++	--whitespace|--directory|--exclude|--include)
+ 		git_apply_opt="$git_apply_opt $(sq "$1=$2")"; shift ;;
+ 	-C|-p)
+ 		git_apply_opt="$git_apply_opt $(sq "$1$2")"; shift ;;
+-- 
+1.7.2.3
