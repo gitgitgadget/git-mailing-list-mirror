@@ -1,81 +1,81 @@
-From: Thiago Farina <tfransosi@gmail.com>
-Subject: Re: [PATCH] builtin/rm.c: Use ALLOC_GROW instead of alloc_nr and xrealloc.
-Date: Sat, 18 Dec 2010 21:03:05 -0200
-Message-ID: <AANLkTimLy0uE980GFfaVJt19XuhZDO2OLRbEgs=oyY=2@mail.gmail.com>
-References: <ffd7b63f3ef5e409775a0d730691efdaf4e41592.1292291262.git.tfransosi@gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH v2 2/4] diff.c: implement a sanity check for word regexes
+Date: Sun, 19 Dec 2010 02:59:44 +0100
+Message-ID: <201012190259.45301.trast@student.ethz.ch>
+References: <cover.1292688058.git.trast@student.ethz.ch> <ee3026bd997fc6d8508b8e5617e572f99c8bf3d6.1292688058.git.trast@student.ethz.ch> <7vvd2qg5jj.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 19 00:03:16 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Scott Johnson <scottj75074@yahoo.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Matthijs Kooijman <matthijs@stdin.nl>, <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Dec 19 02:59:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PU5o4-0002GM-E6
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Dec 2010 00:03:16 +0100
+	id 1PU8Yy-0001Fb-Fj
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Dec 2010 02:59:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757195Ab0LRXDK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 18 Dec 2010 18:03:10 -0500
-Received: from mail-bw0-f45.google.com ([209.85.214.45]:39453 "EHLO
-	mail-bw0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757188Ab0LRXDJ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 18 Dec 2010 18:03:09 -0500
-Received: by bwz16 with SMTP id 16so2202443bwz.4
-        for <git@vger.kernel.org>; Sat, 18 Dec 2010 15:03:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=uJj0U6Z8Kcr4bRDi+wKvdcMf1I7EKla3LlzODtLgNZ4=;
-        b=F8DFV0OLR3MUzPkiL+Bf6mwvaIt/kHnOc2Vp5uHJ63vvUtEUdDnYD2qQOv5WaDUmZ3
-         clgbafRXn3Mfkc+8POmhGDT1C3IfJoQr/VwiChIHE8UCwotJdnYt1HtR5571R0HyTDk3
-         +Vm5xrcHEgpxMqTTQxMCWdiqldvKzRjeo7/+w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=D/+MZAddDD0JD8B2XFWmEeU5Kqtx9YxsFjJD4HpnUhXVNSfzeiFfKAsdmWJggQlYPa
-         Uu0JjB8Cu092A1V5Aeg5wXqqB26GFOXf7f+IKGSr4Wb5nvANJIU+9NX8TBEhIVf87wAx
-         Lhi0vGXPdmbyoRoqGoGRf5Kcv5h8h1sBkf+O8=
-Received: by 10.204.59.76 with SMTP id k12mr2071330bkh.70.1292713386009; Sat,
- 18 Dec 2010 15:03:06 -0800 (PST)
-Received: by 10.204.141.82 with HTTP; Sat, 18 Dec 2010 15:03:05 -0800 (PST)
-In-Reply-To: <ffd7b63f3ef5e409775a0d730691efdaf4e41592.1292291262.git.tfransosi@gmail.com>
+	id S932235Ab0LSB7r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 18 Dec 2010 20:59:47 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:8716 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S932191Ab0LSB7q (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 18 Dec 2010 20:59:46 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Sun, 19 Dec
+ 2010 02:59:39 +0100
+Received: from pctrast.inf.ethz.ch (217.162.250.31) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.218.12; Sun, 19 Dec
+ 2010 02:59:45 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-rc5-desktop; KDE/4.5.3; x86_64; ; )
+In-Reply-To: <7vvd2qg5jj.fsf@alter.siamese.dyndns.org>
+X-Originating-IP: [217.162.250.31]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163946>
 
-On Mon, Dec 13, 2010 at 11:48 PM, Thiago Farina <tfransosi@gmail.com> w=
-rote:
-> Signed-off-by: Thiago Farina <tfransosi@gmail.com>
-> ---
-> =C2=A0builtin/rm.c | =C2=A0 =C2=A05 +----
-> =C2=A01 files changed, 1 insertions(+), 4 deletions(-)
->
-> diff --git a/builtin/rm.c b/builtin/rm.c
-> index c7b7bb3..faeedfc 100644
-> --- a/builtin/rm.c
-> +++ b/builtin/rm.c
-> @@ -22,10 +22,7 @@ static struct {
->
-> =C2=A0static void add_list(const char *name)
-> =C2=A0{
-> - =C2=A0 =C2=A0 =C2=A0 if (list.nr >=3D list.alloc) {
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 list.alloc =3D all=
-oc_nr(list.alloc);
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 list.name =3D xrea=
-lloc(list.name, list.alloc * sizeof(const char *));
-> - =C2=A0 =C2=A0 =C2=A0 }
-> + =C2=A0 =C2=A0 =C2=A0 ALLOC_GROW(list.name, list.nr + 1, list.alloc)=
-;
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0list.name[list.nr++] =3D name;
-> =C2=A0}
->
+Junio C Hamano wrote:
+> Thomas Rast <trast@student.ethz.ch> writes:
+> 
+> > * The word regex matches anything that is !isspace().
+> >
+> > * The word regex does not match '\n'.  (This case is not very harmful,
+> >   but we used to silently cut off at the '\n' which may go against
+> >   user expectations.)
+> 
+> How expensive to run this check twice, every time word_regex finds a
+> match?
 
-+Jonathan, he might Ack this.
+It runs the first bullet point for every non-match, and the second
+bullet point for every match.  So it looks at every input character
+exactly once.
+
+> As this is about making sure that we got a sane regex from the user (or a
+> builtin pattern), I wonder if we can make it not depend on the payload we
+> are matching the regex against.  Then before using a word_regex that we
+> have not checked, we check if that regex is sane, mark it checked, and do
+> not have to do the check over and over again.
+
+Algorithmically it should be easy once you have the finite state
+automaton corresponding to the regex: just verify that for every
+possible non-terminal state, there is a transition for every
+!isspace() character to a state other than "fail to match" or "match
+the empty string".
+
+In the implementation, it might be doable if we switch to compat/regex
+on all platforms, since we then have ready access to all internal
+structures regcomp() creates, including the DFA.
+
+I'll think about at least using compat/regex for a static check of all
+*builtin* patterns, which would be superior to the brute force
+approach in 4/4.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
