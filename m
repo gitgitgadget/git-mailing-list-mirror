@@ -1,64 +1,71 @@
-From: Parag Kalra <paragkalra@gmail.com>
-Subject: Basic Git Questions
-Date: Sun, 19 Dec 2010 14:32:41 -0800
-Message-ID: <AANLkTiki2e4-YD0P9kb7g-WbLTPhAXQ22R2jCAXVtjN1@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: subdirectory-filter does not delete files before the directory came into existence?
+Date: Sun, 19 Dec 2010 23:51:48 +0100
+Message-ID: <201012192351.49279.trast@student.ethz.ch>
+References: <1292365295.6666.22.camel@ct> <201012190323.59829.trast@student.ethz.ch> <1292751289.21229.26.camel@ct>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Dec 19 23:33:12 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Jan Wielemaker <J.Wielemaker@cs.vu.nl>
+X-From: git-owner@vger.kernel.org Sun Dec 19 23:52:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PURoV-0000CM-Bh
-	for gcvg-git-2@lo.gmane.org; Sun, 19 Dec 2010 23:33:11 +0100
+	id 1PUS6r-0001fi-R7
+	for gcvg-git-2@lo.gmane.org; Sun, 19 Dec 2010 23:52:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932403Ab0LSWdF convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 19 Dec 2010 17:33:05 -0500
-Received: from mail-fx0-f43.google.com ([209.85.161.43]:44416 "EHLO
-	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932260Ab0LSWdE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 19 Dec 2010 17:33:04 -0500
-Received: by fxm18 with SMTP id 18so2456627fxm.2
-        for <git@vger.kernel.org>; Sun, 19 Dec 2010 14:33:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:from:date
-         :message-id:subject:to:content-type:content-transfer-encoding;
-        bh=L0t9odXkRdD4kWQFrJ3CEWtWVfL5YYjGSGqzNV51fuY=;
-        b=Uhw+KaRRSu/Oam8kPQvqQvnPIkjXDDwIVMpmiVctBXZSgrpr3Ne54iR7FERSBz476s
-         qvpusQiysuO3evNh6hYD49jM6Qw6TgsURe8MSFmFvJ2uh5dZhDWH2H71JPtgfF4zE3df
-         Q5aZF2t4vqw/jg9AhlFW2I3XSow1es+KKO4mM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=CXJ7hfbX9gS4UUhJD9h1I7EvJAdG3on+KRZlMGZnNbdwVi0u7/kXmT2iedbbC2DvTq
-         qp0E5aNsqCfhnvG6Nf28UxjHjCyup2OZyBdbLOjDDXFdoG1zzSYcVUr8hMyrQ6GPdwjV
-         lhFdIldFaZQdeSq0ZVCF2pjqMIUjzOUYCEPbQ=
-Received: by 10.223.98.204 with SMTP id r12mr3946218fan.102.1292797982208;
- Sun, 19 Dec 2010 14:33:02 -0800 (PST)
-Received: by 10.223.102.139 with HTTP; Sun, 19 Dec 2010 14:32:41 -0800 (PST)
+	id S1757218Ab0LSWvw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Dec 2010 17:51:52 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:46676 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756148Ab0LSWvv (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Dec 2010 17:51:51 -0500
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Sun, 19 Dec
+ 2010 23:51:47 +0100
+Received: from pctrast.inf.ethz.ch (84.74.105.24) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.218.12; Sun, 19 Dec
+ 2010 23:51:50 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-rc5-desktop; KDE/4.5.3; x86_64; ; )
+In-Reply-To: <1292751289.21229.26.camel@ct>
+X-Originating-IP: [84.74.105.24]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163972>
 
-Hi,
+Jan Wielemaker wrote:
+> On Sun, 2010-12-19 at 03:23 +0100, Thomas Rast wrote:
+> > Jan Wielemaker wrote:
+> > >   * get all tags, use comm and delete the tags not in the `contained'
+> > >   set above.
+[...]
+> >   http://article.gmane.org/gmane.comp.version-control.git/91708
+[...]
+> Funny.  That was me having problems with filtering out directories
+> as well :-)  I thought your patch was added using the --prune-empty
+> flag.  I guess you can comment on that.  I can confirm that I've got
+> nice and clean filtering using
 
-1. I generally add the files in my working directory using "git add
-=2E". But sometimes you want to add all the files except 1 or 2 file. I=
-s
-there a shortcut way we can tell git to add all the files but exclude
-a particular file.
+No, those two are rather different.  --prune-empty drops commits that
+became "no-ops" in the sense that their tree is the same as their
+(only) parent's.  In the case of --subdirectory-filter, --prune-empty
+is most likely[*] redundant since the former already enables history
+simplification limited to that directory.
 
-2. Also sometime when the code is=C2=A0committed, I realize that I have
-forgot to change or add a file. Is there a way we can we commit a file
-to existing commit number with git log showing only the old git commit
-number and not creating a new one for the last commit.
+As you can see from "TOY PATCH", my patch wasn't really meant for
+application anyway.  I'm now wondering what the ramifications would
+be.  filter-branch only attempts to change refs that you told it to
+(listed positively on the command line), so maybe deleting anything
+that was not rewritten is a sensible option (not default, mind you).
 
-Cheers,
-Parag
+
+[*] Read: I think it is redundant, I'm just too lazy to double-check.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
