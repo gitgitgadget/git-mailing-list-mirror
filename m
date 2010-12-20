@@ -1,73 +1,64 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH 2/2] fill_textconv(): Don't get/put cache if sha1 is not
- valid
-Date: Sun, 19 Dec 2010 23:46:56 -0500
-Message-ID: <20101220044655.GB5942@sigill.intra.peff.net>
-References: <b714f1939ef4fc73cb5f55c1d7784a08a34d3c3d.1292681111.git.kirr@landau.phys.spbu.ru>
- <14308c2dd50037246e319649944d308b9f32fc39.1292681111.git.kirr@landau.phys.spbu.ru>
- <20101218161337.GB18643@sigill.intra.peff.net>
- <20101218205514.GA21249@landau.phys.spbu.ru>
- <7vk4j6fnta.fsf@alter.siamese.dyndns.org>
- <20101219121059.GA10985@landau.phys.spbu.ru>
- <7vd3oxdv3h.fsf@alter.siamese.dyndns.org>
+From: Maaartin <grajcar1@seznam.cz>
+Subject: Re: Commiting automatically (2)
+Date: Mon, 20 Dec 2010 05:12:57 +0000 (UTC)
+Message-ID: <loom.20101220T060758-200@post.gmane.org>
+References: <loom.20101219T090500-396@post.gmane.org> <20101219150850.GC12136@foodlogiq3-xp-d620.thebe.ath.cx> <20101219183619.GB11955@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Kirill Smelkov <kirr@landau.phys.spbu.ru>, git@vger.kernel.org,
-	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
-	Cl??ment Poulain <clement.poulain@ensimag.imag.fr>,
-	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 20 05:47:05 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 20 06:13:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PUXeL-0002TX-84
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Dec 2010 05:47:05 +0100
+	id 1PUY3n-0004sG-Uk
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Dec 2010 06:13:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753021Ab0LTEq7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Dec 2010 23:46:59 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:35392 "EHLO peff.net"
+	id S1752602Ab0LTFNK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Dec 2010 00:13:10 -0500
+Received: from lo.gmane.org ([80.91.229.12]:60033 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752963Ab0LTEq7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Dec 2010 23:46:59 -0500
-Received: (qmail 25089 invoked by uid 111); 20 Dec 2010 04:46:58 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 20 Dec 2010 04:46:58 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 19 Dec 2010 23:46:56 -0500
-Content-Disposition: inline
-In-Reply-To: <7vd3oxdv3h.fsf@alter.siamese.dyndns.org>
+	id S1751572Ab0LTFNJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Dec 2010 00:13:09 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PUY3Y-0004lY-58
+	for git@vger.kernel.org; Mon, 20 Dec 2010 06:13:08 +0100
+Received: from 188-120-198-113.luckynet.cz ([188-120-198-113.luckynet.cz])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 20 Dec 2010 06:13:08 +0100
+Received: from grajcar1 by 188-120-198-113.luckynet.cz with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 20 Dec 2010 06:13:08 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 188.120.198.113 (Opera/9.80 (Windows NT 5.2; U; en) Presto/2.6.30 Version/10.63)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163982>
 
-On Sun, Dec 19, 2010 at 06:41:22PM -0800, Junio C Hamano wrote:
-
-> > I'm not that familiar with git internals involved, so here is updated
-> > patch with added paragraph about "df->sha1_valid=0 means files from
-> > worktree with unknown sha1", and appropriate excerpt from Jeff's post.
-> > That's the most reasonable I could come up with.
-> [...]
-> Here is how I would describe it.
+Jonathan Nieder <jrnieder <at> gmail.com> writes:
+> Hmm, the "git add" manual suggests it is the other way around:
 > 
-> commit 87bb04bb760659dd33d7a173333329cd900620a9
-> Author: Kirill Smelkov <kirr@landau.phys.spbu.ru>
-> Date:   Sat Dec 18 17:54:12 2010 +0300
+>  -A, --all
+> 	Like -u, but match <filepattern> against files in the working
+> 	tree in addition to the index. That means that it will find new
+> 	files as well as staging modified content and removing files
+> 	that are no longer in the working tree.
 > 
->     fill_textconv(): Don't get/put cache if sha1 is not valid
->     
->     When blaming files in the working tree, the filespec is marked with
->     !sha1_valid, as we have not given the contents an object name yet.  The
->     function to cache textconv results (keyed on the object name), however,
->     didn't check this condition, and ended up on storing the cached result
->     under a random object name.
->     
->     Signed-off-by: Kirill Smelkov <kirr@landau.phys.spbu.ru>
+> So I would expect "git add -A" to do the same thing as "git add -u",
+> plus handling added files.
+> 
+> Maaartin, could you give an example showing where add -A goes wrong?
 
-FWIW, I think that is a good description.
-
--Peff
+I can't, since I was wrong. These commits have two parents (I'm not sure if this 
+is a good idea), and that's why I saw no changes in the log. Actually, "git add -
+A" does everything I need, and with "/bin/cp .git/index $GIT_INDEX_FILE" 
+everything seems to work. Sorry for the noise.
