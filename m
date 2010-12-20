@@ -1,185 +1,312 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/3] gitweb: decorate a bit more remotes
-Date: Mon, 20 Dec 2010 14:02:03 -0600
-Message-ID: <20101220200203.GA24163@burratino>
-References: <1292871681-4818-1-git-send-email-sylvain@abstraction.fr>
- <1292871681-4818-3-git-send-email-sylvain@abstraction.fr>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
-	John 'Warthog9' Hawley <warthog9@kernel.org>
-To: Sylvain Rabot <sylvain@abstraction.fr>
-X-From: git-owner@vger.kernel.org Mon Dec 20 21:02:26 2010
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: [PATCH v2] completion: add missing configuration variables
+Date: Mon, 20 Dec 2010 16:18:25 +0100
+Message-ID: <1292858305-7679-1-git-send-email-martin.von.zweigbergk@gmail.com>
+References: <1292395613-12859-1-git-send-email-martin.von.zweigbergk@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 20 22:18:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PUlwA-0002Df-8D
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Dec 2010 21:02:26 +0100
+	id 1PUn7d-0003sn-SL
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Dec 2010 22:18:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933112Ab0LTUCV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Dec 2010 15:02:21 -0500
-Received: from mail-fx0-f43.google.com ([209.85.161.43]:51450 "EHLO
-	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933104Ab0LTUCU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Dec 2010 15:02:20 -0500
-Received: by fxm18 with SMTP id 18so3489836fxm.2
-        for <git@vger.kernel.org>; Mon, 20 Dec 2010 12:02:19 -0800 (PST)
+	id S933241Ab0LTVSQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Dec 2010 16:18:16 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:33999 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S933219Ab0LTVSP (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Dec 2010 16:18:15 -0500
+Received: by qyj19 with SMTP id 19so4494756qyj.19
+        for <git@vger.kernel.org>; Mon, 20 Dec 2010 13:18:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=Etl1F5ZJbrkvC4Plm200Iw90sGDu2KJ7ga41Ewqw8Fk=;
-        b=ijOpzGWQtrxcgkSj8qP1J8ppu+2OQFqs55eLQukblww+d3hl/ixGC/78J7ASyHpMgF
-         2yLel1wIhp1ywtNgwwbwI2kofledh0IgEWIYAjBwlAb3D/yosmy52t6XX3HDUw7ANpmh
-         DgYchOEmLV4aO/PIn5+PwMRCsQAkO6wyHGF0Y=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer:in-reply-to:references;
+        bh=2ECzDbPNeutbxKmQKOiNSZ5/ROeNOd+OJInIIe9gGAM=;
+        b=Wj4/Wx/muCU0XziTffG1RocVf7XPJYd9DwA5mZqjSerrhvT3ApP26MlMFjn/yLj6R1
+         CBYq87VTeIPub+a+Trj44OhZ2NCoQTkuI1iLc6K9vL6NElrSEUM4S8V3BVtemPlzliX1
+         7ETdMQ310P3EcGbLbfZ6kEQvHXixO6l8M9D6w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=jwJq9LmSskvteunlIduhzLn1PmHxOr2xqLT6fzbPPQHSDt+GKY5VVND80rGjafyLkx
-         5KISMhicb1ZOMJioE556tm3Gxi/QxsaNFsDemjauD0rgALwrsDdV4qerYsYDTaMHULl0
-         0hOkkdg5X7rblrVwdMphkvl5w9vtp2HCuVLtg=
-Received: by 10.223.86.194 with SMTP id t2mr590117fal.40.1292875338898;
-        Mon, 20 Dec 2010 12:02:18 -0800 (PST)
-Received: from burratino (c-76-126-174-171.hsd1.ca.comcast.net [76.126.174.171])
-        by mx.google.com with ESMTPS id n1sm1083203fam.40.2010.12.20.12.02.15
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 20 Dec 2010 12:02:17 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1292871681-4818-3-git-send-email-sylvain@abstraction.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=EFp7ZW9OMXkXaPZqv4urOIZfE327BrxXwo0xB6njcUSiXB7KXkpubjwJviK+IDlR6l
+         9Qanq9sBkmhRSXm6jQyTrcA1mc4jHq2qUd5Ma4CaZ2c20RBPdHaKqTyoH05nYIEcDFRJ
+         nOwwd3ZeDXIjpcoO2/f3ckqB1kw4B+mwUH1e8=
+Received: by 10.229.225.199 with SMTP id it7mr4334145qcb.7.1292879894562;
+        Mon, 20 Dec 2010 13:18:14 -0800 (PST)
+Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id s10sm956810qco.11.2010.12.20.13.18.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 20 Dec 2010 13:18:13 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.864.gbbb96
+In-Reply-To: <1292395613-12859-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164010>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164011>
 
-Sylvain Rabot wrote:
+Quite a few configuration variables have been added since 226b343
+(completion: add missing configuration variables to _git_config(),
+2009-05-03). Add these variables to the Bash completion script.
 
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -5127,13 +5127,13 @@ sub git_remote_block {
->  
->  	if (defined $fetch) {
->  		if ($fetch eq $push) {
-> -			$urls_table .= format_repo_url("URL", $fetch);
-> +			$urls_table .= format_repo_url("<span class=\"bold\">URL:</span>", $fetch);
->  		} else {
-> -			$urls_table .= format_repo_url("Fetch URL", $fetch);
-> -			$urls_table .= format_repo_url("Push URL", $push) if defined $push;
-> +			$urls_table .= format_repo_url("<span class=\"bold\">Fetch URL:</span>", $fetch);
-> +			$urls_table .= format_repo_url("<span class=\"bold\">Push URL:</span>", $push) if defined $push;
+Also remove the obsolete 'add.ignore-errors' and
+'color.grep.external', as well as 'diff.renameLimit.', which never
+existed and rename the misspelled 'sendemail.aliasesfiletype'.
 
-This makes the formatting of the remote URLs table inconsistent with
-the other projects_list table (namely the
-
-	description	...
-	homepage URL	...
-	repository URL	...
-	owner	...
-	last change	...
-
-table on a repository's summary page).  Is that the right thing
-to do?
-
-If so, maybe something like the following would make sense.
-
--- 8< --
-From: Sylvain Rabot <sylvain@abstraction.fr>
-Date: Mon, 20 Dec 2010 20:01:20 +0100
-Subject: gitweb: decorate a bit more remotes
-
-Put the text "URL" introducing a remote's url in bold and follow it
-with a colon.  This makes the url list easier to visually scan.
-
-Signed-off-by: Sylvain Rabot <sylvain@abstraction.fr>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 ---
-The justification above is totally made up; I have not checked to
-see whether it makes the table easier or harder to read.  Also:
-untested.
+Changes since previous version:
 
-Maybe the $url part should be esc_url($url)?
+Removed 'add.ignore-errors' and 'color.grep.external'.
 
- gitweb/gitweb.perl       |   16 ++++++++++------
- gitweb/static/gitweb.css |   13 +++++++++++++
- 2 files changed, 23 insertions(+), 6 deletions(-)
+Added 'fetch.recurseSubmodules', which has entered master since last
+round.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index d521c93..b870b56 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3862,7 +3862,11 @@ sub git_print_header_div {
- 
- sub format_repo_url {
- 	my ($name, $url) = @_;
--	return "<tr class=\"metadata_url\"><td>$name</td><td>$url</td></tr>\n";
-+	my $row = "<tr class=\"metadata_url\">";
-+	$row .= ($name eq "" ? "<td></td>" : "<td class=\"metadata_tag\">$name</td>");
-+	$row .= "<td>$url</td>";
-+	$row .= "</tr>\n";
-+	return $row;
- }
- 
- # Group output by placing it in a DIV element and adding a header.
-@@ -5122,7 +5126,7 @@ sub git_remote_block {
- 	my $fetch = $rdata->{'fetch'};
- 	my $push = $rdata->{'push'};
- 
--	my $urls_table = "<table class=\"projects_list\">\n" ;
-+	my $urls_table = "<table class=\"remote_urls\">\n" ;
- 
- 	if (defined $fetch) {
- 		if ($fetch eq $push) {
-@@ -5368,10 +5372,10 @@ sub git_summary {
- 
- 	print "<div class=\"title\">&nbsp;</div>\n";
- 	print "<table class=\"projects_list\">\n" .
--	      "<tr id=\"metadata_desc\"><td>description</td><td>" . esc_html($descr) . "</td></tr>\n" .
--	      "<tr id=\"metadata_owner\"><td>owner</td><td>" . esc_html($owner) . "</td></tr>\n";
-+	      "<tr id=\"metadata_desc\"><td class=\"metadata_tag\">description</td><td>" . esc_html($descr) . "</td></tr>\n" .
-+	      "<tr id=\"metadata_owner\"><td class=\"metadata_tag\">owner</td><td>" . esc_html($owner) . "</td></tr>\n";
- 	if (defined $cd{'rfc2822'}) {
--		print "<tr id=\"metadata_lchange\"><td>last change</td><td>$cd{'rfc2822'}</td></tr>\n";
-+		print "<tr id=\"metadata_lchange\"><td class=\"metadata_tag\">last change</td><td>$cd{'rfc2822'}</td></tr>\n";
- 	}
- 
- 	# use per project git URL list in $projectroot/$project/cloneurl
-@@ -5390,7 +5394,7 @@ sub git_summary {
- 	if ($show_ctags) {
- 		my $ctags = git_get_project_ctags($project);
- 		my $cloud = git_populate_project_tagcloud($ctags);
--		print "<tr id=\"metadata_ctags\"><td>Content tags:<br />";
-+		print "<tr id=\"metadata_ctags\"><td class=\"metadata_tag\">Content tags:<br />";
- 		print "</td>\n<td>" unless %$ctags;
- 		print "<form action=\"$show_ctags\" method=\"post\"><input type=\"hidden\" name=\"p\" value=\"$project\" />Add: <input type=\"text\" name=\"t\" size=\"8\" /></form>";
- 		print "</td>\n<td>" if %$ctags;
-diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
-index 79d7eeb..feb09e5 100644
---- a/gitweb/static/gitweb.css
-+++ b/gitweb/static/gitweb.css
-@@ -579,6 +579,19 @@ div.remote {
- 	display: inline-block;
- }
- 
-+/*
-+ * <b>URL:</b>	http://www.example.com/
-+ * <b>Fetch URL:</b>	http://www.example.com/
-+ * <b>Push URL:</b>	http://www.example.com/
-+ */
-+table.remote_urls tr.metadata_url td.metadata_tag:after {
-+	content: ":"
-+}
-+
-+table.remote_urls tr.metadata_url td.metadata_tag {
-+	font-weight: bold;
-+}
-+
- /* Style definition generated by highlight 2.4.5, http://www.andre-simon.de/ */
- 
- /* Highlighting theme definition: */
+(Still based on master.)
+
+ contrib/completion/git-completion.bash |   70 ++++++++++++++++++++++++++++++--
+ 1 files changed, 66 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 604fa79..25c4314 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1864,30 +1864,50 @@ _git_config ()
+ 		;;
+ 	esac
+ 	__gitcomp "
+-		add.ignore-errors
++		add.ignoreErrors
++		advice.commitBeforeMerge
++		advice.detachedHead
++		advice.implicitIdentity
++		advice.pushNonFastForward
++		advice.resolveConflict
++		advice.statusHints
+ 		alias.
++		am.keepcr
+ 		apply.ignorewhitespace
+ 		apply.whitespace
+ 		branch.autosetupmerge
+ 		branch.autosetuprebase
++		browser.
+ 		clean.requireForce
+ 		color.branch
+ 		color.branch.current
+ 		color.branch.local
+ 		color.branch.plain
+ 		color.branch.remote
++		color.decorate.HEAD
++		color.decorate.branch
++		color.decorate.remoteBranch
++		color.decorate.stash
++		color.decorate.tag
+ 		color.diff
+ 		color.diff.commit
+ 		color.diff.frag
++		color.diff.func
+ 		color.diff.meta
+ 		color.diff.new
+ 		color.diff.old
+ 		color.diff.plain
+ 		color.diff.whitespace
+ 		color.grep
+-		color.grep.external
++		color.grep.context
++		color.grep.filename
++		color.grep.function
++		color.grep.linenumber
+ 		color.grep.match
++		color.grep.selected
++		color.grep.separator
+ 		color.interactive
++		color.interactive.error
+ 		color.interactive.header
+ 		color.interactive.help
+ 		color.interactive.prompt
+@@ -1901,21 +1921,29 @@ _git_config ()
+ 		color.status.untracked
+ 		color.status.updated
+ 		color.ui
++		commit.status
+ 		commit.template
++		core.abbrevguard
++		core.askpass
++		core.attributesfile
+ 		core.autocrlf
+ 		core.bare
++		core.bigFileThreshold
+ 		core.compression
+ 		core.createObject
+ 		core.deltaBaseCacheLimit
+ 		core.editor
++		core.eol
+ 		core.excludesfile
+ 		core.fileMode
+ 		core.fsyncobjectfiles
+ 		core.gitProxy
+ 		core.ignoreCygwinFSTricks
+ 		core.ignoreStat
++		core.ignorecase
+ 		core.logAllRefUpdates
+ 		core.loosecompression
++		core.notesRef
+ 		core.packedGitLimit
+ 		core.packedGitWindowSize
+ 		core.pager
+@@ -1925,6 +1953,7 @@ _git_config ()
+ 		core.repositoryFormatVersion
+ 		core.safecrlf
+ 		core.sharedRepository
++		core.sparseCheckout
+ 		core.symlinks
+ 		core.trustctime
+ 		core.warnAmbiguousRefs
+@@ -1932,15 +1961,17 @@ _git_config ()
+ 		core.worktree
+ 		diff.autorefreshindex
+ 		diff.external
++		diff.ignoreSubmodules
+ 		diff.mnemonicprefix
++		diff.noprefix
+ 		diff.renameLimit
+-		diff.renameLimit.
+ 		diff.renames
+ 		diff.suppressBlankEmpty
+ 		diff.tool
+ 		diff.wordRegex
+ 		difftool.
+ 		difftool.prompt
++		fetch.recurseSubmodules
+ 		fetch.unpackLimit
+ 		format.attach
+ 		format.cc
+@@ -1952,6 +1983,8 @@ _git_config ()
+ 		format.subjectprefix
+ 		format.suffix
+ 		format.thread
++		format.to
++		gc.
+ 		gc.aggressiveWindow
+ 		gc.auto
+ 		gc.autopacklimit
+@@ -1989,15 +2022,20 @@ _git_config ()
+ 		http.lowSpeedLimit
+ 		http.lowSpeedTime
+ 		http.maxRequests
++		http.minSessions
+ 		http.noEPSV
++		http.postBuffer
+ 		http.proxy
+ 		http.sslCAInfo
+ 		http.sslCAPath
+ 		http.sslCert
++		http.sslCertPasswordProtected
+ 		http.sslKey
+ 		http.sslVerify
++		http.useragent
+ 		i18n.commitEncoding
+ 		i18n.logOutputEncoding
++		imap.authMethod
+ 		imap.folder
+ 		imap.host
+ 		imap.pass
+@@ -2006,6 +2044,7 @@ _git_config ()
+ 		imap.sslverify
+ 		imap.tunnel
+ 		imap.user
++		init.templatedir
+ 		instaweb.browser
+ 		instaweb.httpd
+ 		instaweb.local
+@@ -2013,19 +2052,29 @@ _git_config ()
+ 		instaweb.port
+ 		interactive.singlekey
+ 		log.date
++		log.decorate
+ 		log.showroot
+ 		mailmap.file
+ 		man.
+ 		man.viewer
++		merge.
+ 		merge.conflictstyle
+ 		merge.log
+ 		merge.renameLimit
++		merge.renormalize
+ 		merge.stat
+ 		merge.tool
+ 		merge.verbosity
+ 		mergetool.
+ 		mergetool.keepBackup
++		mergetool.keepTemporaries
+ 		mergetool.prompt
++		notes.displayRef
++		notes.rewrite.
++		notes.rewrite.amend
++		notes.rewrite.rebase
++		notes.rewriteMode
++		notes.rewriteRef
+ 		pack.compression
+ 		pack.deltaCacheLimit
+ 		pack.deltaCacheSize
+@@ -2036,31 +2085,42 @@ _git_config ()
+ 		pack.window
+ 		pack.windowMemory
+ 		pager.
++		pretty.
+ 		pull.octopus
+ 		pull.twohead
+ 		push.default
++		rebase.autosquash
+ 		rebase.stat
++		receive.autogc
+ 		receive.denyCurrentBranch
++		receive.denyDeleteCurrent
+ 		receive.denyDeletes
+ 		receive.denyNonFastForwards
+ 		receive.fsckObjects
+ 		receive.unpackLimit
++		receive.updateserverinfo
++		remotes.
+ 		repack.usedeltabaseoffset
+ 		rerere.autoupdate
+ 		rerere.enabled
++		sendemail.
+ 		sendemail.aliasesfile
+-		sendemail.aliasesfiletype
++		sendemail.aliasfiletype
+ 		sendemail.bcc
+ 		sendemail.cc
+ 		sendemail.cccmd
+ 		sendemail.chainreplyto
+ 		sendemail.confirm
+ 		sendemail.envelopesender
++		sendemail.from
++		sendemail.identity
+ 		sendemail.multiedit
+ 		sendemail.signedoffbycc
++		sendemail.smtpdomain
+ 		sendemail.smtpencryption
+ 		sendemail.smtppass
+ 		sendemail.smtpserver
++		sendemail.smtpserveroption
+ 		sendemail.smtpserverport
+ 		sendemail.smtpuser
+ 		sendemail.suppresscc
+@@ -2071,6 +2131,8 @@ _git_config ()
+ 		showbranch.default
+ 		status.relativePaths
+ 		status.showUntrackedFiles
++		status.submodulesummary
++		submodule.
+ 		tar.umask
+ 		transfer.unpackLimit
+ 		url.
 -- 
-1.7.2.3.554.gc9b5c.dirty
+1.7.3.2.864.gbbb96
