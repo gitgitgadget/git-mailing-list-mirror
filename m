@@ -1,228 +1,94 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH v2] convert filter: supply path to external driver
-Date: Mon, 20 Dec 2010 08:09:11 -0800
-Message-ID: <20101220160911.GA32136@honk.padd.com>
-References: <20101218223822.GA18902@arf.padd.com>
- <20101219212925.GA7393@arf.padd.com>
- <7vzks1e84p.fsf@alter.siamese.dyndns.org>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: [PATCH] trace.c: mark file-local function static
+Date: Mon, 20 Dec 2010 11:53:09 -0500
+Message-ID: <1292863989.19322.27.camel@drew-northup.unet.maine.edu>
+References: <AANLkTinxJdASW6mQVU50grA2mUz6gt+gUND30VRK=BCN@mail.gmail.com>
+	 <AANLkTimBtpOx_GBzC=g4V6jW2aiF7Hg8uALWt2NQFFZG@mail.gmail.com>
+	 <1292846433.19322.1.camel@drew-northup.unet.maine.edu>
+	 <AANLkTimkxJHvTAvra+B-0bAQopd8s21ZrFCPG_ALbZZ9@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Johannes Sixt <j.sixt@viscovery.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Dec 20 17:09:21 2010
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: "Vasyl'" <vvavrychuk@gmail.com>, git@vger.kernel.org
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Dec 20 17:53:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PUiIZ-0005g0-7h
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Dec 2010 17:09:19 +0100
+	id 1PUizW-0003a6-EB
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Dec 2010 17:53:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932571Ab0LTQJN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Dec 2010 11:09:13 -0500
-Received: from honk.padd.com ([74.3.171.149]:34073 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757900Ab0LTQJM (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Dec 2010 11:09:12 -0500
-Received: by honk.padd.com (Postfix, from userid 7770)
-	id 436C427EE; Mon, 20 Dec 2010 08:09:11 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vzks1e84p.fsf@alter.siamese.dyndns.org>
+	id S932856Ab0LTQxh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Dec 2010 11:53:37 -0500
+Received: from beryl.its.maine.edu ([130.111.32.94]:38955 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932292Ab0LTQxg (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Dec 2010 11:53:36 -0500
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id oBKGrD4i015040
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 20 Dec 2010 11:53:13 -0500
+In-Reply-To: <AANLkTimkxJHvTAvra+B-0bAQopd8s21ZrFCPG_ALbZZ9@mail.gmail.com>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: beryl.its.maine.edu 1003; Body=3 Fuz1=3
+	Fuz2=3
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: oBKGrD4i015040
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1293468795.03254@Hi0VEYFB2a/GOI0RaxPIJg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163998>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163999>
 
-Filtering to support keyword expansion may need the name of
-the file being filtered.  In particular, to support p4 keywords
-like
 
-    $File: //depot/product/dir/script.sh $
+On Mon, 2010-12-20 at 13:17 -0200, Thiago Farina wrote:
+> On Mon, Dec 20, 2010 at 10:00 AM, Drew Northup <drew.northup@maine.edu> wrote:
+> >
+> > On Thu, 2010-12-16 at 21:43 -0200, Thiago Farina wrote:
+> >> On Thu, Dec 16, 2010 at 8:38 PM, Vasyl' <vvavrychuk@gmail.com> wrote:
+> >> > Signed-off-by: Vasyl' Vavrychuk <vvavrychuk@gmail.com>
+> >> > ---
+> >> >  trace.c |    2 +-
+> >> >  1 files changed, 1 insertions(+), 1 deletions(-)
+> >> >
+> >> > diff --git a/trace.c b/trace.c
+> >> > index 1e560cb..62586fa 100644
+> >> > --- a/trace.c
+> >> > +++ b/trace.c
+> >> > @@ -25,7 +25,7 @@
+> >> >  #include "cache.h"
+> >> >  #include "quote.h"
+> >> >
+> >> > -void do_nothing(size_t unused)
+> >> > +static void do_nothing(size_t unused)
+> >> >  {
+> >> >  }
+> >> >
+> >> If it means something, this looks sane to me.
+> >>
+> >> Acked-by: Thiago Farina <tfransosi@gmail.com>
+> >
+> > It may be sane, but why should we trust that it is without a commit
+> > message?
+> 
+> Why such trivial thing needs further explanation?
 
-the smudge filter needs to know the name of the file it is
-smudging.
+Because even trivial fixes may break non-trivial things. 
+In addition, without justification we'd just as soon have somebody come
+back with another patch six months down the road that changes it back to
+the original code. Now that wouldn't make a whole lot of sense, now
+would it?
+Alas the best way to avoid such a situation is to explain why a change
+was made to begin with.
 
-Add a "%s" conversion specifier to the gitattribute for filter.
-It will be expanded with the path name to the file when invoking
-the external filter command.  The path name is quoted and
-special characters are escaped to prevent the shell from splitting
-incorrectly.
-
-Signed-off-by: Pete Wyckoff <pw@padd.com>
----
-gitster@pobox.com wrote on Sun, 19 Dec 2010 13:59 -0800:
-> This is not backward compatible for people who wanted to use '%' literal
-> on their filter command line for whatever reason, so please do not
-> advertise as such.  A fair argument you could make is "Even though this is
-> not strictly backward compatible, it is very unlikely that people passed a
-> literal % to their filter command line, and the benefit of being able to
-> give the pathname information would outweigh the downside of not being
-> compatible", and people can agree or disagree.
-
-I overlooked that, but agree it is unlikely anyone was using % in
-filter definitions.  Putting the path in an environment variable
-is the other option I considered.
-
-> I am personally moderately negative about $any expansion$ (I don't use it
-> myself, and I don't think sane people use it either).  As far as I can
-> tell, this should has no impact on the correctness and very little impact
-> on the performance for people who do not use $any expansion$, so I am Ok
-> with the patch.
-
-Keyword expansion is indeed nasty.  My only motivation is to
-support working with an upstream that relies on it.
-
-This version of the patch handles quoting of shell
-meta-characters, as pointed out by Hannes.  I decided to invoke
-sq_quote_buf directly on the path before expanding %s, rather
-than writing a dict entry to understand %'s.  There is no
-requirement for users to use single-quotes around %s in their
-config files, this way, either.
-
-Also added a test case to make sure %s and quoting works as
-advertised.
-
-		-- Pete
-
- Documentation/gitattributes.txt |   12 ++++++++++
- convert.c                       |   22 +++++++++++++++++-
- t/t0021-conversion.sh           |   47 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 80 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 564586b..9ac2138 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -317,6 +317,18 @@ command is "cat").
- 	smudge = cat
- ------------------------
- 
-+If your filter needs the path of the file it is working on,
-+you can use the "%s" conversion specification.  It will be
-+replaced with the relative path to the file.  This is important
-+for keyword substitution that depends on the name of the
-+file.  Like this:
-+
-+------------------------
-+[filter "p4"]
-+	clean = git-p4-filter --clean %s
-+	smudge = git-p4-filter --smudge %s
-+------------------------
-+
- 
- Interaction between checkin/checkout attributes
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-diff --git a/convert.c b/convert.c
-index e41a31e..1ef83a0 100644
---- a/convert.c
-+++ b/convert.c
-@@ -317,6 +317,7 @@ struct filter_params {
- 	const char *src;
- 	unsigned long size;
- 	const char *cmd;
-+	const char *path;
- };
- 
- static int filter_buffer(int in, int out, void *data)
-@@ -329,7 +330,23 @@ static int filter_buffer(int in, int out, void *data)
- 	int write_err, status;
- 	const char *argv[] = { NULL, NULL };
- 
--	argv[0] = params->cmd;
-+	/* replace optional %s with path */
-+	struct strbuf cmd = STRBUF_INIT;
-+	struct strbuf path = STRBUF_INIT;
-+	struct strbuf_expand_dict_entry dict[] = {
-+	    "s", NULL,
-+	    NULL, NULL,
-+	};
-+
-+	/* quote the path to preserve spaces, etc. */
-+	sq_quote_buf(&path, params->path);
-+	dict[0].value = path.buf;
-+
-+	/* expand all %s with the quoted path */
-+	strbuf_expand(&cmd, params->cmd, strbuf_expand_dict_cb, &dict);
-+	strbuf_release(&path);
-+
-+	argv[0] = cmd.buf;
- 
- 	memset(&child_process, 0, sizeof(child_process));
- 	child_process.argv = argv;
-@@ -349,6 +366,8 @@ static int filter_buffer(int in, int out, void *data)
- 	status = finish_command(&child_process);
- 	if (status)
- 		error("external filter %s failed %d", params->cmd, status);
-+
-+	strbuf_release(&cmd);
- 	return (write_err || status);
- }
- 
-@@ -376,6 +395,7 @@ static int apply_filter(const char *path, const char *src, size_t len,
- 	params.src = src;
- 	params.size = len;
- 	params.cmd = cmd;
-+	params.path = path;
- 
- 	fflush(NULL);
- 	if (start_async(&async))
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 828e35b..c5c394d 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -93,4 +93,51 @@ test_expect_success expanded_in_repo '
- 	cmp expanded-keywords expected-output
- '
- 
-+cat <<EOF >argc.sh
-+#!$SHELL_PATH
-+echo argc: \$# "\$@"
-+echo argc running >&2
-+EOF
-+chmod +x argc.sh
-+
-+#
-+# The use of %s in a filter definition is expanded to the path to
-+# the filename being smudged or cleaned.  It must be shell escaped.
-+#
-+test_expect_success 'shell-escaped filenames' '
-+    norm=name-no-magic &&
-+    spec=$(echo name:sgl\"dbl\ spc!bang | tr : \\047) &&
-+    echo some test text > test
-+    cat test > $norm &&
-+    cat test > "$spec" &&
-+    git add $norm &&
-+    git add "$spec" &&
-+    git commit -m "add files" &&
-+
-+    echo "name* filter=argc" > .gitattributes &&
-+
-+    # delete the files and check them out again, using the smudge filter
-+    git config filter.argc.smudge "./argc.sh %s" &&
-+    rm $norm "$spec" &&
-+    git checkout -- $norm "$spec" &&
-+
-+    # make sure argc.sh counted the right number of args
-+    echo "argc: 1 $norm" > res &&
-+    cmp res $norm &&
-+    echo "argc: 1 $spec" > res &&
-+    cmp res "$spec" &&
-+
-+    # %s with other args
-+    git config filter.argc.smudge "./argc.sh %s --myword" &&
-+    rm $norm "$spec" &&
-+    git checkout -- $norm "$spec" &&
-+
-+    # make sure argc.sh counted the right number of args
-+    echo "argc: 2 $norm --myword" > res &&
-+    cmp res $norm &&
-+    echo "argc: 2 $spec --myword" > res &&
-+    cmp res "$spec" &&
-+    :
-+'
-+
- test_done
 -- 
-1.7.2.3
+-Drew Northup N1XIM
+   AKA RvnPhnx on OPN
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
