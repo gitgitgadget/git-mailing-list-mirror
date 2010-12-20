@@ -1,70 +1,58 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] convert filter: supply path to external driver
-Date: Mon, 20 Dec 2010 00:52:24 -0800
-Message-ID: <7vy67kddx3.fsf@alter.siamese.dyndns.org>
-References: <20101218223822.GA18902@arf.padd.com>
- <20101219212925.GA7393@arf.padd.com> <4D0F0DFB.20502@viscovery.net>
+From: Geoffrey De Smet <ge0ffrey.spam@gmail.com>
+Subject: [wish] git svn create-ignore should support resuming just like git
+ svn fetch does
+Date: Mon, 20 Dec 2010 10:01:26 +0100
+Message-ID: <ien616$f0i$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pete Wyckoff <pw@padd.com>, git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Dec 20 09:52:42 2010
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 20 10:05:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PUbU2-00079Y-Cd
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Dec 2010 09:52:42 +0100
+	id 1PUbgA-0004br-Qh
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Dec 2010 10:05:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754427Ab0LTIwf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Dec 2010 03:52:35 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44671 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754322Ab0LTIwe (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Dec 2010 03:52:34 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9C6F424C3;
-	Mon, 20 Dec 2010 03:53:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=QVP0/KBWk7B8+P98dpfy9n9lZsU=; b=kOkQIH
-	fn0/cjkPBlMB90XDfC2FO48BwfSE0LagVIMITCJSzOyS4y8mXi2S9bohAKGlHgAy
-	cPnA31oVmPKXDED36U1pgyVKaY0UkM9ZrqV9Tqo1dday/EtviDj8Bga6Vb58Sxts
-	9uIOAkEi0QdjcO+kwrebIooOrSS2AzHBD0On0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=e213DKr9W/NDzuBOdrvw7AVRws1aSlFg
-	Fd0aNr6uleymC1SOn1IBG9fcNvtKdgZ8zvBLqvdYZX3Ar1/fyEUe8odo5hOkmwSj
-	Zr4J5V7Viurw399TgDnp1Dg6s147F6c6Gcqsxa+PrHQknmdQtAneU4CMKkKK76Ne
-	GMHm6H2luSc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 53DA224BE;
-	Mon, 20 Dec 2010 03:52:58 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 22C9924BD; Mon, 20 Dec 2010
- 03:52:53 -0500 (EST)
-In-Reply-To: <4D0F0DFB.20502@viscovery.net> (Johannes Sixt's message of
- "Mon\, 20 Dec 2010 09\:04\:11 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 8B0CB220-0C16-11E0-AB89-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1754620Ab0LTJFH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Dec 2010 04:05:07 -0500
+Received: from lo.gmane.org ([80.91.229.12]:56417 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754427Ab0LTJFF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Dec 2010 04:05:05 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PUbfz-0004WL-DZ
+	for git@vger.kernel.org; Mon, 20 Dec 2010 10:05:03 +0100
+Received: from 91.182.180.144 ([91.182.180.144])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 20 Dec 2010 10:05:03 +0100
+Received: from ge0ffrey.spam by 91.182.180.144 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Mon, 20 Dec 2010 10:05:03 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 91.182.180.144
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163990>
 
-Johannes Sixt <j.sixt@viscovery.net> writes:
+Hi,
 
-> What happens if there are any shell special characters in the path name
-> (or spaces, for that matter). Does this shell-escape the substituted path
-> name anywhere in the call chain?
+git svn create-ignore doesn't support resuming.
+Our OSS project is really big and my connection fails every few 1000 files.
+As a result, it's impossible to complete the git svn create-ignore 
+command and we had to manually recreate them (and guess where they are).
 
-Good eyes.  Thanks.
+More info here:
+http://stackoverflow.com/questions/4484643/migration-from-svn-go-git-how-do-i-create-gitignore-files-for-a-big-repository
 
-You would need something like %'s (that is "'" modifier applied to 's'
-placeholder in strbuf_expand() to cause the expansion sq'ed), and then the
-caller must write something like
-
-	clean = git-p4-filter --clean '%s'
+-- 
+With kind regards,
+Geoffrey De Smet
