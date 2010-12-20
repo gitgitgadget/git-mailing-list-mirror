@@ -1,67 +1,103 @@
-From: Guy Rouillier <guyr@burntmail.com>
-Subject: cvsimport still not working with cvsnt
-Date: Sun, 19 Dec 2010 23:05:00 -0500
-Message-ID: <4D0ED5EC.9020402@burntmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH 2/2] fill_textconv(): Don't get/put cache if sha1 is not
+ valid
+Date: Sun, 19 Dec 2010 23:42:15 -0500
+Message-ID: <20101220044214.GA5942@sigill.intra.peff.net>
+References: <b714f1939ef4fc73cb5f55c1d7784a08a34d3c3d.1292681111.git.kirr@landau.phys.spbu.ru>
+ <14308c2dd50037246e319649944d308b9f32fc39.1292681111.git.kirr@landau.phys.spbu.ru>
+ <20101218161337.GB18643@sigill.intra.peff.net>
+ <7vr5dddvrk.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Dec 20 05:27:41 2010
+Content-Type: text/plain; charset=utf-8
+Cc: Kirill Smelkov <kirr@landau.phys.spbu.ru>, git@vger.kernel.org,
+	Axel Bonnet <axel.bonnet@ensimag.imag.fr>,
+	=?utf-8?Q?Cl=C3=A9ment?= Poulain 
+	<clement.poulain@ensimag.imag.fr>,
+	Diane Gasselin <diane.gasselin@ensimag.imag.fr>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Dec 20 05:42:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PUXLY-0001ZU-6d
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Dec 2010 05:27:40 +0100
+	id 1PUXa8-0000iS-1p
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Dec 2010 05:42:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752386Ab0LTE1f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 19 Dec 2010 23:27:35 -0500
-Received: from mx02.burntmail.com ([70.87.63.122]:48023 "EHLO
-	mx02.burntmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752155Ab0LTE1e (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 19 Dec 2010 23:27:34 -0500
-X-Greylist: delayed 1352 seconds by postgrey-1.27 at vger.kernel.org; Sun, 19 Dec 2010 23:27:34 EST
-Received: from [173.79.59.45] (helo=[192.168.1.60])
-	by mx02.burntmail.com with esmtpa (Exim 4.63)
-	(envelope-from <guyr@burntmail.com>)
-	id 1PUWze-00018m-O5
-	for git@vger.kernel.org; Sun, 19 Dec 2010 22:05:02 -0600
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
+	id S1752945Ab0LTEmj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 19 Dec 2010 23:42:39 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:59100 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752703Ab0LTEmi (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 19 Dec 2010 23:42:38 -0500
+Received: (qmail 25061 invoked by uid 111); 20 Dec 2010 04:42:25 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 20 Dec 2010 04:42:25 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 19 Dec 2010 23:42:15 -0500
+Content-Disposition: inline
+In-Reply-To: <7vr5dddvrk.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163979>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/163980>
 
-I'm going to try sending this blind, as the mailing list has sent me the 
-promised authorization key after 24 hrs.
+On Sun, Dec 19, 2010 at 06:26:55PM -0800, Junio C Hamano wrote:
 
-I'm brand new to git.  We'll be moving over from CVS, so I imported a 
-small part of our CVS repository to start learning git.  We use the 
-CVSNT server, and git-cvsimport was failing with "I HATE YOU".  I 
-finally found the problems, both of which were reported in 2008 here:
+> Jeff King <peff@peff.net> writes:
+> 
+> > PS It is a little disturbing that in fill_textconv, we handle
+> > case (1), !DIFF_FILE_VALID for the non-textconv case, but not so for the
+> > textconv case. I think we are OK, as get_textconv will never load a
+> > textconv driver for a !DIFF_FILE_VALID filespec, so we always follow the
+> > non-textconv codepath in that case. But I am tempted to do this just to
+> > be more defensive:
+> 
+> FILE_VALID() is about "does that side have a blob there, or is this
+> create/delete diff?", so the caller should be handling this properly as
+> you said, but your fill_textconv() already prepares for the case where the
+> caller for some reason calls this function with "no blob on this side" and
+> returns an empty string (see the precontext of your patch).
+> 
+> I think it is fine to be defensive to prepare for such a case, but then
+> dying like this patch does is inconsistent.  Perhaps we should move the
+> new check higher and remove the *outbuf = "" while at it?
 
-http://kerneltrap.org/mailarchive/git/2008/3/13/1157364
+I'm not sure returning the empty string for a textconv is the right
+solution. I am inclined to say that trying to textconv a
+!DIFF_FILE_VALID is simply an error. More on that in a second.
 
-However, these changes do not appear in the version 1.7.2.2 that Gentoo 
-supplies.  I checked the 1.7.3-rc2 source and the changes are not in 
-there either.
+If we were to do anything else, I would think it would be to feed "" to
+the textconv filter, in case it wanted to do something magical for the
+create/delete case. For example, imagine a textconv filter which turned
+a string of bytes like "foo" into a length plus set of converted bytes,
+like "3: FOO". You would want the /dev/null case to turn into "0: ".
 
-I do see one possible issue with the supplied modifications.  At work, 
-we upgraded from CVS to CVSNT.  So, my home directory has both .cvspass 
-(from the original CVS) and .cvs/cvspass (after the conversion to 
-CVSNT.)  Sloppy housekeeping on my part, I admit, but probably not 
-uncommon.  The supplied patch would pick up the original CVS file and 
-would fail.  (BTW, this is true only of the git-cvsimport.perl script 
-itself; cvsps must shell out to the installed CVS client (in my case, 
-cvsnt), because when I invoked that manually, it worked.)
+Now, this is obviously a ridiculous toy case. I have no idea if anyone
+would want to do something like that. So far most people have been happy
+with /dev/null never being textconv'd, and always looking like the empty
+string. Moreover, even if somebody did want this behavior, 99% of the
+other filters _wouldn't_ want the behavior. Because programs like
+odt2txt or exiftool that people _do_ use for textconv filters do not
+want to be fed /dev/null; they will signal an error.
 
-So, I would advise checking to see if both files exist, and if so exit 
-with an error.  Unless cvsimport wants to get real fancy and shell out 
-to the installed cvs client to try to figure out what is installed, 
-there is no way to tell which cvspass file is actively being used.  I 
-don't recommend trying to figure this out, as the user's intent is unclear.
+So that is my "if we wanted it to do something useful, this is what it
+would do" case, and I don't see any real-world evidence that anybody
+wants that. Now on to being defensive.
 
--- 
-Guy Rouillier
+What we are defending against is a caller marking something as
+to-be-textconv'd, even though it is !DIFF_FILE_VALID. But what did the
+caller want? One sensible behavior is what I described above. Or maybe
+they did just want the empty string. Or more likely, it is simply a bug
+in the diff code. Since we haven't defined the semantics, I would much
+rather loudly scream "BUG!" than paper over it by returning what we
+guess they would have wanted (which may generate subtly wrong results).
+And then we can think about that use case and decide what the semantics,
+if any, should be.
+
+So I stand by my thought that it should die(). But I don't think there
+_are_ any such bugs currently, so it probably doesn't matter much either
+way. I can live with "return 0", or even just leaving it alone.
+
+-Peff
