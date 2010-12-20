@@ -1,77 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: 'show' pretty %B without a diff
-Date: Mon, 20 Dec 2010 10:05:16 -0800
-Message-ID: <7v4oa8cobn.fsf@alter.siamese.dyndns.org>
-References: <20101220073842.GC10354@external.screwed.box>
- <7vmxo0ddbm.fsf@alter.siamese.dyndns.org>
- <20101220111214.GD10354@external.screwed.box>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Dangerous "git am --abort" behavior
+Date: Mon, 20 Dec 2010 10:31:05 -0800
+Message-ID: <AANLkTinP4SArMkjvTXOEG=tf=8EcEdP9fPAB7F=iitSc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Peter Vereshagin <peter@vereshagin.org>
-X-From: git-owner@vger.kernel.org Mon Dec 20 19:05:30 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Dec 20 19:31:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PUk6z-00063O-PM
-	for gcvg-git-2@lo.gmane.org; Mon, 20 Dec 2010 19:05:30 +0100
+	id 1PUkWD-0002Ln-M1
+	for gcvg-git-2@lo.gmane.org; Mon, 20 Dec 2010 19:31:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757555Ab0LTSFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Dec 2010 13:05:24 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61802 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752745Ab0LTSFY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Dec 2010 13:05:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 24DDF2141;
-	Mon, 20 Dec 2010 13:05:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=nZCF9h1fPsus4wV++PmLcaKFKLo=; b=EgsEIq
-	GTIbMJ9RnRmSeZZ6Evwh6c2GFwanpgW4bqUexsLRpjP+O3uCZm/pQedlpbvEY9/x
-	zH7/oGHWzXnRK+PerM8JTPV9E1q9x+wlvMxvfWsYJeBvUXwJBq13tX9gSxdc2VJY
-	oUCpmZzwi+RBuOfjUJGF3ZUQtOx3Uw1YE03As=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=RbRxTD8fv1XP2S2EAasJrvTpcO/nS5fZ
-	5fZ29p/9pnHLsyXw6WQqI5w1/QjixNCWaWDz2aJbTVWgW5bALdc8A0vlqS4/MClF
-	Ivfgc72eG8siSvhASu3306hQu2nBVfBNdt9+tRx3XJAdIx7NN8tOpFUS17Ek3phu
-	xSu9AmAhwlI=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EFF402139;
-	Mon, 20 Dec 2010 13:05:49 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 136DE2138; Mon, 20 Dec 2010
- 13:05:46 -0500 (EST)
-In-Reply-To: <20101220111214.GD10354@external.screwed.box> (Peter
- Vereshagin's message of "Mon\, 20 Dec 2010 14\:12\:15 +0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C6E6B032-0C63-11E0-90C4-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S933015Ab0LTSb3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Dec 2010 13:31:29 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:38050 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932742Ab0LTSb2 (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Dec 2010 13:31:28 -0500
+Received: from mail-iy0-f174.google.com (mail-iy0-f174.google.com [209.85.210.174])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id oBKIVRBX023074
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Mon, 20 Dec 2010 10:31:27 -0800
+Received: by iyi12 with SMTP id 12so2437783iyi.19
+        for <git@vger.kernel.org>; Mon, 20 Dec 2010 10:31:25 -0800 (PST)
+Received: by 10.231.36.195 with SMTP id u3mr4421356ibd.41.1292869885482; Mon,
+ 20 Dec 2010 10:31:25 -0800 (PST)
+Received: by 10.231.31.72 with HTTP; Mon, 20 Dec 2010 10:31:05 -0800 (PST)
+X-Spam-Status: No, hits=-2.981 required=5 tests=AWL,BAYES_00
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164002>
 
-Peter Vereshagin <peter@vereshagin.org> writes:
+I just noticed this, and I wonder if it has bitten me before without
+me noticing: "git am --abort" can be really dangerous.
 
-> JCH> Especially if you are doing a script, you probably should be using
-> JCH> "cat-file commit" anyway, no?
->
-> cat-file doesn't seem to support formatting option?
+What happened today was that I had been doing a pull or two, and then
+applied an emailed patch with "git am" as usual. But as sometimes
+happens, I actually had a previous "git am" that had failed - in fact,
+it was the same patch that I applied today that had had an earlier
+version that no longer applied.
 
-That is exactly why I suggested "cat-file", as you are scripting.  We
-reserve the right to change the human-visible formatting output from
-Porcelain commands like "show" any time to make it "prettier" (we may
-start coloring strings that look like object names in the commit log
-message in "git show" output, for example), while giving scripts more
-stable output through the plumbing commands like "cat-file" so that they
-can parse and process without having to worry about the output format
-changing under them.
+So I just did "git am --abort" to get rid of the old stale 'am' state,
+but that actually also ended up aborting my "git pull". Oops.
 
-If your script is _not_ parsing the git command output, but is just
-blindly spewing it out to the invoking user, it is Ok to use "show",
-though.  Check "-s" option to the "show" command in that case.
+Happily, I noticed, and did a "git reset --hard @{1}" to get things
+back, but at no point did "git am" warn about the implicit "reset" it
+did, that threw away non-am state.
+
+I suspect I've avoided this in the past because my normal approach to
+getting rid of stale am state tends to be just the manual "rm -rf
+.git/rebase-apply", but it's also possible that I've simply not
+noticed before.
+
+Maybe "git am" should actually save the last commit ID that it did,
+and only do the "reset" if the current HEAD matches the rebase-apply
+state and warns if it doesn't? Or maybe we could just introduce a new
+"git am --clean" that just flushes any old pending state (ie does that
+"clean_abort" thing, which is basically just the "rm -rf" I've done by
+hand). Or both?
+
+Comments?
+
+                     Linus
