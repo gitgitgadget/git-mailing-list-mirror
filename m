@@ -1,66 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] t3419-*.sh: Fix arithmetic expansion syntax error
-Date: Tue, 21 Dec 2010 12:24:39 -0800
-Message-ID: <7vei9a98mw.fsf@alter.siamese.dyndns.org>
-References: <4D10F707.1000206@ramsay1.demon.co.uk>
+From: Martin Langhoff <martin.langhoff@gmail.com>
+Subject: Re: 'show' pretty %B without a diff
+Date: Tue, 21 Dec 2010 15:27:52 -0500
+Message-ID: <AANLkTi=BJ0NdKrANuXKObNQJbchqdSUhpnttsdU_NnQe@mail.gmail.com>
+References: <20101220073842.GC10354@external.screwed.box> <7vmxo0ddbm.fsf@alter.siamese.dyndns.org>
+ <20101220111214.GD10354@external.screwed.box> <7v4oa8cobn.fsf@alter.siamese.dyndns.org>
+ <20101221104641.GA8600@external.screwed.box> <m38vzjl1yr.fsf@localhost.localdomain>
+ <20101221180459.GA25812@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT Mailing-list <git@vger.kernel.org>, drizzd@aon.at
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Dec 21 21:24:58 2010
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Peter Vereshagin <peter@vereshagin.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 21 21:28:21 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PV8lS-0006w5-Vp
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 21:24:55 +0100
+	id 1PV8ol-0000Rz-DQ
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 21:28:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751846Ab0LUUYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Dec 2010 15:24:50 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49677 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751223Ab0LUUYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Dec 2010 15:24:49 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AF8542F21;
-	Tue, 21 Dec 2010 15:25:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=dEGmcC0uUv5mr4IHY9pC2Eqs11s=; b=bPRcvM
-	Q6MLUSjncqPaf1a30sE86ugSKU4hzDrI6zSxi/bGUFoMxybW7zGPN444rA+NR0x2
-	ni3dUpbdIpwMlb+1KNGoUrMpYlfdOqQi1aas69ci4pNJVS9V2gID9CJ14ZHn7Wa6
-	RAkqx5Oakc768apDU+OxSupDT5bhcZa1IsUiA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PQvlLhYLgCNoprmGpS2c/IoAoldnZylZ
-	LpqMP8wcb1Znv9bHfYE5jDl16B+6vBd8x+GU25wCtP2/lywgDGSH67u76aocqHpc
-	3CaWTTWZaKJ/11ib8fb2qOM35AtE4aTTG7I2pvdfoMsQ6oxVlcS1ZFcOfdc34db1
-	Ld/mfgMmM74=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7A99A2F1F;
-	Tue, 21 Dec 2010 15:25:13 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5E9002F1E; Tue, 21 Dec 2010
- 15:25:09 -0500 (EST)
-In-Reply-To: <4D10F707.1000206@ramsay1.demon.co.uk> (Ramsay Jones's message
- of "Tue\, 21 Dec 2010 18\:50\:47 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6A5C4D6C-0D40-11E0-A556-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1752970Ab0LUU2O convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Dec 2010 15:28:14 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:46890 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751006Ab0LUU2N convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Dec 2010 15:28:13 -0500
+Received: by qwa26 with SMTP id 26so4394387qwa.19
+        for <git@vger.kernel.org>; Tue, 21 Dec 2010 12:28:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ysVUnRf4VIj09a00RIK4T72qFI+Y0zlJ8tOqvrg5aNY=;
+        b=EXH7ZG7uf1o2ySQCqqpWFq7qpBQD46D/kBhjxnqHY2aTi1ajK6/4DoshkBFhDAS0U9
+         1fCf2tvST0OjthPna5UdhXXTCOLdvFuj6ZU2XQ8TZjydHQ9VGsWUmxNp/axBFiP7dS4K
+         V3KEvBqY6k1/wKmq2P0IDTnHdB4FtSe6XJZyQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=HQ2sO3S1mq//WCJ8PIZgY/+Q78OuVg1e+20oFPDCEoBpiXymFRWWVsdpvc+2wKYSfg
+         8VtNo4zosT49DHI1TK7+MdVf50NqQwTQWdAwhusSuxXMZb3H58pFS/R1y+Ia0SqtKbnN
+         wBTSCAiH/qryQoCevJlox9rij0HLLEvv5bdA0=
+Received: by 10.224.67.208 with SMTP id s16mr3092166qai.322.1292963292881;
+ Tue, 21 Dec 2010 12:28:12 -0800 (PST)
+Received: by 10.220.203.2 with HTTP; Tue, 21 Dec 2010 12:27:52 -0800 (PST)
+In-Reply-To: <20101221180459.GA25812@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164052>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164053>
 
-Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
+On Tue, Dec 21, 2010 at 1:04 PM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Maybe it would be worth adding a plumbing example under the EXAMPLES
+> for each porcelain?
 
-> Note that this test is unique in having an '#!/bin/bash' line (rather
-> than '#!/bin/sh'),...
+Since porcelain went to C, one thing I often do is checkout really old
+versions of git to see exactly what the shell version of a particular
+command did .
 
-Thanks for spotting, and that is idiotic for us to have such a script.
-We should fix the shebang line as well.
+That way, I get a much better understanding of how a certain action is
+done at the plumbing level; complement that with the documentation for
+reference, and I'm 99% done.
 
-A quick git-grep shows that this is the only instance of this problem
-(outside contrib/completion/git-completion.bash, that is).
+Maybe that helps someone .
+
+cheers,
+
+
+
+m
+--=20
+=A0martin.langhoff@gmail.com
+=A0martin@laptop.org -- School Server Architect
+=A0- ask interesting questions
+=A0- don't get distracted with shiny stuff=A0 - working code first
+=A0- http://wiki.laptop.org/go/User:Martinlanghoff
