@@ -1,86 +1,119 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] gitweb: Include links to feeds in HTML header only for '200 OK' response
-Date: Tue, 21 Dec 2010 00:59:09 +0100
-Message-ID: <201012210059.10829.jnareb@gmail.com>
-References: <20101218195848.16201.67691.stgit@localhost.localdomain> <201012182248.40731.jnareb@gmail.com> <4D0D2D52.9000108@eaglescrag.net>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: [PATCH] trace.c: mark file-local function static
+Date: Mon, 20 Dec 2010 22:28:41 -0200
+Message-ID: <AANLkTin2QuMF93RqrRcScxvkzhU4OFJ9Nt42tV+FOjxS@mail.gmail.com>
+References: <AANLkTinxJdASW6mQVU50grA2mUz6gt+gUND30VRK=BCN@mail.gmail.com>
+	<AANLkTimBtpOx_GBzC=g4V6jW2aiF7Hg8uALWt2NQFFZG@mail.gmail.com>
+	<1292846433.19322.1.camel@drew-northup.unet.maine.edu>
+	<AANLkTimkxJHvTAvra+B-0bAQopd8s21ZrFCPG_ALbZZ9@mail.gmail.com>
+	<1292863989.19322.27.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="utf-8"
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: "J.H." <warthog9@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Tue Dec 21 00:59:28 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Vasyl'" <vvavrychuk@gmail.com>, git@vger.kernel.org
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Tue Dec 21 01:29:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PUpdT-0001Vo-DH
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 00:59:23 +0100
+	id 1PUq6H-0003zi-Ft
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 01:29:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932689Ab0LTX7S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Dec 2010 18:59:18 -0500
-Received: from mail-fx0-f43.google.com ([209.85.161.43]:35011 "EHLO
-	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751275Ab0LTX7R convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Dec 2010 18:59:17 -0500
-Received: by fxm18 with SMTP id 18so3720787fxm.2
-        for <git@vger.kernel.org>; Mon, 20 Dec 2010 15:59:15 -0800 (PST)
+	id S933382Ab0LUA3C convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 20 Dec 2010 19:29:02 -0500
+Received: from mail-bw0-f45.google.com ([209.85.214.45]:38384 "EHLO
+	mail-bw0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757569Ab0LUA3B convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 20 Dec 2010 19:29:01 -0500
+Received: by bwz16 with SMTP id 16so3964824bwz.4
+        for <git@vger.kernel.org>; Mon, 20 Dec 2010 16:28:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=1RYka1oqyTaIFm/5I8ttgPIHfpNU/m9NVQfxNOhGfTI=;
-        b=pQYhOgGpYLkyPxO48ZHCe7guqQCDgd/xDaytFPEXHWuOHcPIcPRre1++QYjNjgibh6
-         D0zFO/hYb47ZlS+ofyir74T5jlyo/sr5YvYiBYNcIRIJXNrOUiaApvDcKubv33X+LTtL
-         wIKa3WxwmSQLw+PsSNswCRqaWKZz/3ZMc49CE=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=2Rdj9X818NDhy6fH5bJai3VdaEWkcoFqi6KfMtodjmA=;
+        b=FGvtqIr+08HDr6pJkzCGYemAxybzmjqctrKd0TQWILS8yqkd1VZM7SordeiKhFZO8d
+         mIAkTOVQ92A2t3sPVWpD+qXdJ1SfeYplXNfVx7CRLf8qjRwiod/OPlGtozO8WRk8PQnn
+         eUG1SKKd8wm8lRCPN1m6D2rh8SPYvgCig0Hr8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=NVNxaF3ggzxqgXmFdZsO0r5MoajU1ypSjSaRst5sE1XNmWoiMLJ5WhHTTouT6/Nyzo
-         wugATsTocFDRK7F5NCY/XalYIk2ZzyJzD/0hK6w6C9POtvjehQaFyoxpeFIOXsx8vgXZ
-         Qtq2sZzyocfShUNywSAf6PACly0hyFD5I7mgE=
-Received: by 10.223.79.72 with SMTP id o8mr5326180fak.97.1292889555693;
-        Mon, 20 Dec 2010 15:59:15 -0800 (PST)
-Received: from [192.168.1.13] (aehn132.neoplus.adsl.tpnet.pl [79.186.195.132])
-        by mx.google.com with ESMTPS id a6sm818998fak.1.2010.12.20.15.59.12
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 20 Dec 2010 15:59:13 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4D0D2D52.9000108@eaglescrag.net>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=qAZLqkFiEBH2Kxp8dlro2CPfxZLogaUrWH+euBxZheQ932CngWaUh0HPAIgszlwcVb
+         HQukCu0Lqde4E5/bBaGptdlUbxrUOI2ioi4rUp8xVo9XIx/EEDERfl5gfk36YjJYnQOg
+         2wSW0HvBbtvmCPkkzswoxzKqtTeMMiTumCu7Q=
+Received: by 10.204.64.139 with SMTP id e11mr4164645bki.97.1292891321957; Mon,
+ 20 Dec 2010 16:28:41 -0800 (PST)
+Received: by 10.204.141.82 with HTTP; Mon, 20 Dec 2010 16:28:41 -0800 (PST)
+In-Reply-To: <1292863989.19322.27.camel@drew-northup.unet.maine.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164018>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164019>
 
-On Sat, 18 Dec 2010, J.H. wrote:
-> On 12/18/2010 01:48 PM, Jakub Narebski wrote:
->> J.H. wrote:
->> 
->>> I've no objection, you can add a sign-off from me.
->> 
->> Errr... sign-off or ack?  Signed-off-by is about provenance of code...
-> 
-> Considering this has already been running on kernel.org - sign-off.
-> 
-> http://git.kernel.org/?p=git/warthog9/gitweb.git;a=commit;h=41d9c63ad27a8d3c95bf8bb1ec5876483d39fbd6
+On Mon, Dec 20, 2010 at 2:53 PM, Drew Northup <drew.northup@maine.edu> =
+wrote:
+>
+> On Mon, 2010-12-20 at 13:17 -0200, Thiago Farina wrote:
+>> On Mon, Dec 20, 2010 at 10:00 AM, Drew Northup <drew.northup@maine.e=
+du> wrote:
+>> >
+>> > On Thu, 2010-12-16 at 21:43 -0200, Thiago Farina wrote:
+>> >> On Thu, Dec 16, 2010 at 8:38 PM, Vasyl' <vvavrychuk@gmail.com> wr=
+ote:
+>> >> > Signed-off-by: Vasyl' Vavrychuk <vvavrychuk@gmail.com>
+>> >> > ---
+>> >> > =C2=A0trace.c | =C2=A0 =C2=A02 +-
+>> >> > =C2=A01 files changed, 1 insertions(+), 1 deletions(-)
+>> >> >
+>> >> > diff --git a/trace.c b/trace.c
+>> >> > index 1e560cb..62586fa 100644
+>> >> > --- a/trace.c
+>> >> > +++ b/trace.c
+>> >> > @@ -25,7 +25,7 @@
+>> >> > =C2=A0#include "cache.h"
+>> >> > =C2=A0#include "quote.h"
+>> >> >
+>> >> > -void do_nothing(size_t unused)
+>> >> > +static void do_nothing(size_t unused)
+>> >> > =C2=A0{
+>> >> > =C2=A0}
+>> >> >
+>> >> If it means something, this looks sane to me.
+>> >>
+>> >> Acked-by: Thiago Farina <tfransosi@gmail.com>
+>> >
+>> > It may be sane, but why should we trust that it is without a commi=
+t
+>> > message?
+>>
+>> Why such trivial thing needs further explanation?
+>
+> Because even trivial fixes may break non-trivial things.
+> In addition, without justification we'd just as soon have somebody co=
+me
+> back with another patch six months down the road that changes it back=
+ to
+> the original code. Now that wouldn't make a whole lot of sense, now
+> would it?
 
->From Documentation/SubmittingPatches:
+I don't think so, it's making the function private, because the
+function is used only in that file and as such if you see a function
+marked as static you know that and doesn't need further explanation in
+my pov (but it seems you don't think like that).
 
-  The sign-off is a simple line at the end of the explanation for
-  the patch, which certifies that you wrote it or otherwise have
-  the right to pass it on as a open-source patch.
+> Alas the best way to avoid such a situation is to explain why a chang=
+e
+> was made to begin with.
+>
 
-So sign-off is about code provenance.  As I don't think that code goes
-into official git/git.git repository managed by Junio via your
-git/warthog9/gitweb.git repository, I don't quite see why it is *sign-off*
-from you, and not ack (Acked-by:).
+So, you are welcome to contribute and suggest such description for
+this trivial (that may break non-trivial things) patch. So we can
+please you and others in the future.
 
--- 
-Jakub Narebski
-Poland
+
+Thanks.
