@@ -1,60 +1,54 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] completion: add missing configuration variables
-Date: Mon, 20 Dec 2010 17:22:03 -0800
-Message-ID: <7v1v5bc43o.fsf@alter.siamese.dyndns.org>
-References: <1292395613-12859-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <1292858305-7679-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <20101220212018.GA18503@sigill.intra.peff.net>
+From: Adam Kellas <Adam.Kellas@gmail.com>
+Subject: Re: Basic Git Questions
+Date: Mon, 20 Dec 2010 21:59:38 -0500
+Message-ID: <iep54u$tqp$1@dough.gmane.org>
+References: <20101220192152.4509.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Dec 21 02:22:20 2010
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Dec 21 04:00:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PUqvk-0003Uh-AQ
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 02:22:20 +0100
+	id 1PUsSS-0007Od-3b
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 04:00:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933367Ab0LUBWP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Dec 2010 20:22:15 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57024 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932864Ab0LUBWO (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 20 Dec 2010 20:22:14 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 15B563B71;
-	Mon, 20 Dec 2010 20:22:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=PixDhTwPshb+iXWNzLsI2PO95z8=; b=A5th0D
-	s6YsCLc/mLatzsTKqM+sG6J516LFzw2/hynl3i6PytQcfKqC4kFYShc+lwY07HcZ
-	BbayeKWp9MoDM6dxXKS5KmX1SbyFQAhBxm4NBLNQOH+L4R/8MGf+VA7qekJ0PO2A
-	FEwPT9dgpEtggm0aZGf06D1hdsE/k8ObU3YBY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Zd5KGRGzuX7aiLCoMxFZ9quTEjgbhB7W
-	xKeevvzxsU9YE9P2ZtzvYb2wRYEmG9WZtwl3qsQ1CEabTP4r8/QUu1gFc4jCLn7v
-	I3axcp6xI75X/qZHjwuIcAP//EoIBXrKP8vI2KMgUXoo5VM7DDEfUT8CMFXrayFD
-	HSuogCo1DmA=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D815E3B6F;
-	Mon, 20 Dec 2010 20:22:37 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C200C3B6E; Mon, 20 Dec 2010
- 20:22:33 -0500 (EST)
-In-Reply-To: <20101220212018.GA18503@sigill.intra.peff.net> (Jeff King's
- message of "Mon\, 20 Dec 2010 16\:20\:18 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CC079BF2-0CA0-11E0-8FFA-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S933497Ab0LUC6x (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 20 Dec 2010 21:58:53 -0500
+Received: from lo.gmane.org ([80.91.229.12]:37995 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S933446Ab0LUC6w (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 20 Dec 2010 21:58:52 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PUsR7-0006sf-GV
+	for git@vger.kernel.org; Tue, 21 Dec 2010 03:58:49 +0100
+Received: from c-76-24-28-236.hsd1.ma.comcast.net ([76.24.28.236])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 21 Dec 2010 03:58:49 +0100
+Received: from Adam.Kellas by c-76-24-28-236.hsd1.ma.comcast.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 21 Dec 2010 03:58:49 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: c-76-24-28-236.hsd1.ma.comcast.net
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <20101220192152.4509.qmail@science.horizon.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164024>
 
-Will queue with the Ack from peff; thanks, both.
+On 12/20/2010 2:21 PM, George Spelvin wrote:
+> 1) .gitignore.  If the files are such that you never want git to pay
+>     attention to them, you can add them to the .gitignore file.
+
+My own preferred pattern is to flip the default: I put a '*' in 
+.gitignore and use "add -f" when I want files tracked.
+
+AK
