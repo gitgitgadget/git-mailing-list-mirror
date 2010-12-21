@@ -1,74 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] trace.c: mark file-local function static
-Date: Tue, 21 Dec 2010 09:50:56 -0800
-Message-ID: <7v4oa79fr3.fsf@alter.siamese.dyndns.org>
-References: <AANLkTinxJdASW6mQVU50grA2mUz6gt+gUND30VRK=BCN@mail.gmail.com>
- <AANLkTimBtpOx_GBzC=g4V6jW2aiF7Hg8uALWt2NQFFZG@mail.gmail.com>
- <1292846433.19322.1.camel@drew-northup.unet.maine.edu>
- <AANLkTimkxJHvTAvra+B-0bAQopd8s21ZrFCPG_ALbZZ9@mail.gmail.com>
- <1292863989.19322.27.camel@drew-northup.unet.maine.edu>
- <AANLkTinL6RytF=x7a8URoxGQoLHhx0ip7gRNMp+nRaNB@mail.gmail.com>
- <7vbp4f9gzh.fsf@alter.siamese.dyndns.org>
- <AANLkTikvV1chYnSJUMGGoHTFv8EaXuK5B7Vo71jVyTRy@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: 'show' pretty %B without a diff
+Date: Tue, 21 Dec 2010 12:04:59 -0600
+Message-ID: <20101221180459.GA25812@burratino>
+References: <20101220073842.GC10354@external.screwed.box>
+ <7vmxo0ddbm.fsf@alter.siamese.dyndns.org>
+ <20101220111214.GD10354@external.screwed.box>
+ <7v4oa8cobn.fsf@alter.siamese.dyndns.org>
+ <20101221104641.GA8600@external.screwed.box>
+ <m38vzjl1yr.fsf@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>,
-	Drew Northup <drew.northup@maine.edu>,
-	"Vasyl'" <vvavrychuk@gmail.com>, git@vger.kernel.org
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 21 18:51:22 2010
+Cc: Peter Vereshagin <peter@vereshagin.org>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 21 19:05:34 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PV6Mq-0000cs-M5
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 18:51:21 +0100
+	id 1PV6aZ-0000O4-J6
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 19:05:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751736Ab0LURvP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Dec 2010 12:51:15 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61723 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751013Ab0LURvP (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Dec 2010 12:51:15 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 609283B02;
-	Tue, 21 Dec 2010 12:51:42 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=7SSq6cbkTxGXXdiFIosS5TZRm3k=; b=Kz6g+S
-	yN0Dp5+sINiDqY3yv6fBClYIU00/+5Salyb29w23kx8ch5Fnvj2zMfsL8VnZeI/S
-	xJ6r9pW1Nw8oeavrmNIkOa6lMFesyZMuazAE7bBOcQ30g04J4NX3hGnv5CPiLdC9
-	DyshHI1bkobpx/tMBX91EnYxG7fvv+q+D2D1w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=w1zuBwKTJuQ6BRq0fDsclBNIG676hO64
-	XlYZa1XgDFWV5c/biUugwL9PTB2o8OrmxN95iF0U4EAdcFu1kmeuoh6pX56Af+x/
-	WMPRso/etxrGn1OBvZhkPOpK9d38dQAz6b2lbzLV1w0uWNuYfVXW9P7VfdN95Yxc
-	OJawStj6wVE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D230C3AFD;
-	Tue, 21 Dec 2010 12:51:35 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AA5353AEB; Tue, 21 Dec 2010
- 12:51:26 -0500 (EST)
-In-Reply-To: <AANLkTikvV1chYnSJUMGGoHTFv8EaXuK5B7Vo71jVyTRy@mail.gmail.com>
- (Thiago Farina's message of "Tue\, 21 Dec 2010 15\:40\:56 -0200")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F4368374-0D2A-11E0-AC5D-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1751843Ab0LUSF0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Dec 2010 13:05:26 -0500
+Received: from mail-fx0-f43.google.com ([209.85.161.43]:35362 "EHLO
+	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751760Ab0LUSFZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Dec 2010 13:05:25 -0500
+Received: by fxm18 with SMTP id 18so4622504fxm.2
+        for <git@vger.kernel.org>; Tue, 21 Dec 2010 10:05:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=xBqP0vB7rbXzAlhwO3qmnWkpbd5kWWg37KeAkJoinSI=;
+        b=oM2BB8e97ikRodpkKx58tRz1NpQbB90jIx0B67b8wH38nVMxMU4faFcU+UMLwlpiwv
+         DDs4wPzHJnm4ZNBwC5IVWO831VHiiGXIUy8Pp12u9CoMOBbpP+r6Eg+TaIcJj/Nu45Rs
+         7+lreBe0s2ssd9NsXSb7LEjsIj2j5Z3ZRozuY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=OZnfPTbdpLDFJ5UZyc+BwuUR0VwNjcS83Y8LQ9yQ23sFxoONjyFpS8VqqNh/pzxHjJ
+         Vs106Nr6OGqW0WOjVUePThY9oWwwZ8k3JD92qI7+GXj3NgYhqiQRqilSwAINBC5n0a+I
+         V/rCWYFj1GZdZinM4XgGysv1iK5rPuZ3KR2iM=
+Received: by 10.223.75.194 with SMTP id z2mr404698faj.38.1292954724547;
+        Tue, 21 Dec 2010 10:05:24 -0800 (PST)
+Received: from burratino (c-76-126-174-171.hsd1.ca.comcast.net [76.126.174.171])
+        by mx.google.com with ESMTPS id n26sm1423154fam.13.2010.12.21.10.05.20
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 21 Dec 2010 10:05:22 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <m38vzjl1yr.fsf@localhost.localdomain>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164042>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164043>
 
-Thiago Farina <tfransosi@gmail.com> writes:
+Jakub Narebski wrote:
 
-> Maybe I'm missing something, or I'm confused (or I do not understand
-> what I'm reading), but how you are assign routine to do_nothing if you
-> have removed do_nothing above?
+> I guess that `-s' should be present also in git-show manpage.
 
-Apply the patch and read the first twenty lines of resulting wrapper.c
+It is mentioned in the examples section since v1.7.3.3~42.  That
+manpage needs a rework in general, though.
+
+> There is also `git log -1` (or `git log -1 --no-walk` for paranoid).
+
+Or even "git diff-tree -s --pretty=%B <commit>" if that is the intent.
+
+As much as a person might dislike plumbing, plumbing is git's current
+stable API.  Maybe the libgit2 project will come up with something
+better[1].  Until then, I am happy to have some commands that avoid
+user-friendliness niceties (like implied "HEAD") that would create
+pitfalls when scripting.
+
+Maybe it would be worth adding a plumbing example under the EXAMPLES
+for each porcelain?  I can see that having to learn a second set of
+commands might make life hard (like scripting in the bourne shell
+when one is a csh user).
+
+[1] I am pessimistic since that project has not made itself very
+visible for feedback from the git list or submitted changes back to
+git.  It would be great to be surprised.
