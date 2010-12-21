@@ -1,132 +1,97 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [PATCH] trace.c: mark file-local function static
-Date: Tue, 21 Dec 2010 07:29:41 -0500
-Message-ID: <1292934581.26698.14.camel@drew-northup.unet.maine.edu>
-References: <AANLkTinxJdASW6mQVU50grA2mUz6gt+gUND30VRK=BCN@mail.gmail.com>
-	 <AANLkTimBtpOx_GBzC=g4V6jW2aiF7Hg8uALWt2NQFFZG@mail.gmail.com>
-	 <1292846433.19322.1.camel@drew-northup.unet.maine.edu>
-	 <AANLkTimkxJHvTAvra+B-0bAQopd8s21ZrFCPG_ALbZZ9@mail.gmail.com>
-	 <1292863989.19322.27.camel@drew-northup.unet.maine.edu>
-	 <AANLkTin2QuMF93RqrRcScxvkzhU4OFJ9Nt42tV+FOjxS@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: 'show' pretty %B without a diff
+Date: Tue, 21 Dec 2010 04:56:30 -0800 (PST)
+Message-ID: <m38vzjl1yr.fsf@localhost.localdomain>
+References: <20101220073842.GC10354@external.screwed.box>
+	<7vmxo0ddbm.fsf@alter.siamese.dyndns.org>
+	<20101220111214.GD10354@external.screwed.box>
+	<7v4oa8cobn.fsf@alter.siamese.dyndns.org>
+	<20101221104641.GA8600@external.screwed.box>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: "Vasyl'" <vvavrychuk@gmail.com>, git@vger.kernel.org
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 21 13:30:38 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Peter Vereshagin <peter@vereshagin.org>
+X-From: git-owner@vger.kernel.org Tue Dec 21 13:56:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PV1MS-0008Ql-1U
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 13:30:36 +0100
+	id 1PV1lf-0002cX-NQ
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 13:56:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751045Ab0LUMaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Dec 2010 07:30:30 -0500
-Received: from basalt.its.maine.edu ([130.111.32.66]:35979 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750776Ab0LUMaa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Dec 2010 07:30:30 -0500
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id oBLCTijW030014
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 21 Dec 2010 07:29:49 -0500
-In-Reply-To: <AANLkTin2QuMF93RqrRcScxvkzhU4OFJ9Nt42tV+FOjxS@mail.gmail.com>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=3
-	Fuz1=3 Fuz2=3
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: oBLCTijW030014
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1293539406.70666@oxdxqqgoEZm4deZ7c0byWw
+	id S1750942Ab0LUM4e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Dec 2010 07:56:34 -0500
+Received: from mail-fx0-f43.google.com ([209.85.161.43]:48880 "EHLO
+	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750816Ab0LUM4d (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Dec 2010 07:56:33 -0500
+Received: by fxm18 with SMTP id 18so4266550fxm.2
+        for <git@vger.kernel.org>; Tue, 21 Dec 2010 04:56:32 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=qm45hBQrVuW2uSj6noMuAnG5ceLPwUI/yGfSq8dR5Ws=;
+        b=CC7iZdC1ryiQDEBkgpFLPOm1XnH7VbiV1RQsYskPvBZn/FsU20TlAqXdBMSs1cifr1
+         48fVkDRO9eC6OLB+FIm9WOrXRZZfBUtihuRguEvSFVZG7GyuGlRSJToQ62aFyJagzMR0
+         r3jVCTPCEBZwcNgjzH5/PxP2ksG/nv19qKlNk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=GHP2YVI8akHRtVzqwif/9d5zfAzi4fzBAxnsSawn7Wl9GqfTb0Xt1RMBwPd/3Pqmmb
+         rAamXsxTkmVjEJUU+7cmpNFgYp3j/TTFofJFaqI68DrC7gwwe7V5Nfi1dGFZDnf09BXZ
+         wXqSQlwmqwzygE3u3hjlWmhcJ1SpFWlqPmb1s=
+Received: by 10.223.96.202 with SMTP id i10mr5230530fan.50.1292936192371;
+        Tue, 21 Dec 2010 04:56:32 -0800 (PST)
+Received: from localhost.localdomain (aehn132.neoplus.adsl.tpnet.pl [79.186.195.132])
+        by mx.google.com with ESMTPS id y3sm1304431fai.14.2010.12.21.04.56.25
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 21 Dec 2010 04:56:30 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oBLCttcj018949;
+	Tue, 21 Dec 2010 13:56:03 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id oBLCtfcq018939;
+	Tue, 21 Dec 2010 13:55:41 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <20101221104641.GA8600@external.screwed.box>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164029>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164030>
 
+Peter Vereshagin <peter@vereshagin.org> writes:
+> 2010/12/20 10:05:16 -0800 Junio C Hamano <gitster@pobox.com> => To Peter Vereshagin :
 
-On Mon, 2010-12-20 at 22:28 -0200, Thiago Farina wrote:
-> On Mon, Dec 20, 2010 at 2:53 PM, Drew Northup <drew.northup@maine.edu> wrote:
-> >
-> > On Mon, 2010-12-20 at 13:17 -0200, Thiago Farina wrote:
-> >> On Mon, Dec 20, 2010 at 10:00 AM, Drew Northup <drew.northup@maine.edu> wrote:
-> >> >
-> >> > On Thu, 2010-12-16 at 21:43 -0200, Thiago Farina wrote:
-> >> >> On Thu, Dec 16, 2010 at 8:38 PM, Vasyl' <vvavrychuk@gmail.com> wrote:
-> >> >> > Signed-off-by: Vasyl' Vavrychuk <vvavrychuk@gmail.com>
-> >> >> > ---
-> >> >> >  trace.c |    2 +-
-> >> >> >  1 files changed, 1 insertions(+), 1 deletions(-)
-> >> >> >
-> >> >> > diff --git a/trace.c b/trace.c
-> >> >> > index 1e560cb..62586fa 100644
-> >> >> > --- a/trace.c
-> >> >> > +++ b/trace.c
-> >> >> > @@ -25,7 +25,7 @@
-> >> >> >  #include "cache.h"
-> >> >> >  #include "quote.h"
-> >> >> >
-> >> >> > -void do_nothing(size_t unused)
-> >> >> > +static void do_nothing(size_t unused)
-> >> >> >  {
-> >> >> >  }
-> >> >> >
-> >> >> If it means something, this looks sane to me.
-> >> >>
-> >> >> Acked-by: Thiago Farina <tfransosi@gmail.com>
-> >> >
-> >> > It may be sane, but why should we trust that it is without a commit
-> >> > message?
-> >>
-> >> Why such trivial thing needs further explanation?
-> >
-> > Because even trivial fixes may break non-trivial things.
-> > In addition, without justification we'd just as soon have somebody come
-> > back with another patch six months down the road that changes it back to
-> > the original code. Now that wouldn't make a whole lot of sense, now
-> > would it?
+> JCH> If your script is _not_ parsing the git command output, but is just
+> JCH> blindly spewing it out to the invoking user, it is Ok to use "show",
+> JCH> though.  Check "-s" option to the "show" command in that case.
 > 
-> I don't think so, it's making the function private, because the
-> function is used only in that file and as such if you see a function
-> marked as static you know that and doesn't need further explanation in
-> my pov (but it seems you don't think like that).
+> "show" command doesn't seem to have "-s" switch. Skip it up though ;-)
 
-All the patch above does is tell the compiler to enforce compilation of
-that function as static. That is most definitely not the same thing as
-making it private. (I think we can agree that it is being used as if it
-were being enforced as private at some meta-level, but the compiler
-isn't going to enforce it for us...) While I think the code change is
-fairly clear, as I said earlier: without a commit message we don't have
-a good reason for not making it non-static again later on, flip-flopping
-ad-infinitum.
+Hmmm... true, unfortunately it is described in hidden corner: when
+git-show is used to display commits, it accepts diff family
+options... including `-s' described in git-diff-tree manpage:
 
-Commit messages for isolated changes such as this build up a story, if
-you will, providing future contributors with insight as to why the group
-made a change when it did--even when the change is minor (in fact often
-most importantly when the change is minor)--by putting it in context.
+  -s::
+        By default, 'git diff-tree --stdin' shows differences,
+        either in machine-readable form (without '-p') or in patch
+        form (with '-p').  This output can be suppressed.  It is
+        only useful with '-v' flag.
 
-> > Alas the best way to avoid such a situation is to explain why a change
-> > was made to begin with.
-> >
-> 
-> So, you are welcome to contribute and suggest such description for
-> this trivial (that may break non-trivial things) patch. So we can
-> please you and others in the future.
+  -v::
+        This flag causes 'git diff-tree --stdin' to also show
+        the commit message before the differences.
 
-As I am complaining that I don't know what the submitter was thinking
-that sounds particularly odd to me. How I am supposed to describe for
-the group what the commit's author was thinking in a commit message that
-I would like to see added to a patch when in fact the whole problem is
-that I don't know specifically what he was thinking? "Changed function
-to static for no known reason whatsoever" isn't much of a commit
-message.
+I guess that `-s' should be present also in git-show manpage.
 
+There is also `git log -1` (or `git log -1 --no-walk` for paranoid).
 -- 
--Drew Northup N1XIM
-   AKA RvnPhnx on OPN
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+Jakub Narebski
+Poland
+ShadeHawk on #git
