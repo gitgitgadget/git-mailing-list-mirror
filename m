@@ -1,88 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: 'show' pretty %B without a diff
-Date: Tue, 21 Dec 2010 12:40:37 -0800 (PST)
-Message-ID: <m3zkrykghj.fsf@localhost.localdomain>
-References: <20101220073842.GC10354@external.screwed.box>
-	<7vmxo0ddbm.fsf@alter.siamese.dyndns.org>
-	<20101220111214.GD10354@external.screwed.box>
-	<7v4oa8cobn.fsf@alter.siamese.dyndns.org>
-	<20101221104641.GA8600@external.screwed.box>
-	<m38vzjl1yr.fsf@localhost.localdomain>
-	<20101221180459.GA25812@burratino>
-	<AANLkTi=BJ0NdKrANuXKObNQJbchqdSUhpnttsdU_NnQe@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: t0050-filesystem.sh unicode tests borked on dash shell
+Date: Tue, 21 Dec 2010 12:43:16 -0800
+Message-ID: <7v8vzi97rv.fsf@alter.siamese.dyndns.org>
+References: <4D1105B5.5070703@ramsay1.demon.co.uk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Peter Vereshagin <peter@vereshagin.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 21 21:40:49 2010
+Cc: prohaska@zib.de, GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Tue Dec 21 21:43:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PV90q-0007o4-1T
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 21:40:48 +0100
+	id 1PV93Y-0000sP-Q7
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 21:43:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752858Ab0LUUkl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Dec 2010 15:40:41 -0500
-Received: from mail-fx0-f43.google.com ([209.85.161.43]:36936 "EHLO
-	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751280Ab0LUUkk (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Dec 2010 15:40:40 -0500
-Received: by fxm18 with SMTP id 18so4816843fxm.2
-        for <git@vger.kernel.org>; Tue, 21 Dec 2010 12:40:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=t9zQHsmAZ/HZVjuDk9TlnsNc5CEJZolXTAha4niJ6wU=;
-        b=UoXVZUOlNtL8EluJZtlatDq3fjMiEaasqTPLDkDQDCZ6mMPv4JGUBfapDcO8reZQ95
-         0GPomuMh26J48yPfeskAsPp4m48R2D5ZNOtIAN4QOm7Lcx3ruM3J9kacuvnnzvbzJLIJ
-         /YHxeJsPYBbPn7fLYfdGKPjm3YEHTK1N5GDeA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=EDh30o607YEkIhIFJWTLNcZ9wJDUQ43+ms9mwRU1Y4HVSV2QF131M4JLHuRTVJrINm
-         U7cZSbiuWCVWEH5j94wtlHi8JcgLp/Y7YxnNaYCiaeZ3IHGpx5lMNoVPlWYuJGSEpuxW
-         ePoZxmlIIeNadj1V8Irwvg8w9xhdDAN5BEFeA=
-Received: by 10.223.89.136 with SMTP id e8mr6543905fam.5.1292964039599;
-        Tue, 21 Dec 2010 12:40:39 -0800 (PST)
-Received: from localhost.localdomain (abvp39.neoplus.adsl.tpnet.pl [83.8.213.39])
-        by mx.google.com with ESMTPS id a25sm1473778fak.44.2010.12.21.12.40.34
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 21 Dec 2010 12:40:37 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oBLKdxPQ022253;
-	Tue, 21 Dec 2010 21:40:01 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id oBLKdcpS022247;
-	Tue, 21 Dec 2010 21:39:38 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <AANLkTi=BJ0NdKrANuXKObNQJbchqdSUhpnttsdU_NnQe@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752471Ab0LUUnc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Dec 2010 15:43:32 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42892 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751799Ab0LUUnb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Dec 2010 15:43:31 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 643CB3182;
+	Tue, 21 Dec 2010 15:43:58 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=WkLRg4iyKH72hgKMIk2srXaNHdQ=; b=QExitX
+	VOEY6EYJ8zWj0s0w7aTNpbPQDXF4+dl9coN+4KWcp0vxUNdKXiK490TBoITJD2ID
+	qnMbps7j/XIPhB4tSQCQ/ELvIeO9RzV7OpV3VpKgIjhy1vSoypC+WgRB9CsbQAEm
+	ZY6oUCFKfXZnQI/zbzDKwOqjfxA6+UgF9IYB8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=cstMTsCFCxgNArS/19tOg9PXryFpxtO6
+	GsGpwvfXtWQkQD5HmioUADRrqBU3hjLnT5tjcAukEcUcOXLO8fGBk5rDxAkDVkis
+	0f0/9wEK/Uzy9Fy2Nn/zv4FRY7LL2zO49jcakSouuY+3WUB+pebPrDP9SOQB2LB4
+	y9eU6ij5akc=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2BF7D3181;
+	Tue, 21 Dec 2010 15:43:55 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1AF5F3180; Tue, 21 Dec 2010
+ 15:43:45 -0500 (EST)
+In-Reply-To: <4D1105B5.5070703@ramsay1.demon.co.uk> (Ramsay Jones's message
+ of "Tue\, 21 Dec 2010 19\:53\:25 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 06EE2DCE-0D43-11E0-B74F-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164058>
 
-Martin Langhoff <martin.langhoff@gmail.com> writes:
+Ramsay Jones <ramsay@ramsay1.demon.co.uk> writes:
 
-> On Tue, Dec 21, 2010 at 1:04 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> > Maybe it would be worth adding a plumbing example under the EXAMPLES
-> > for each porcelain?
-> 
-> Since porcelain went to C, one thing I often do is checkout really old
-> versions of git to see exactly what the shell version of a particular
-> command did .
+>     $ ls trash\ directory.t0050-filesystem/unicode/
+>     \x61\xcc\x88
 
-You can always browse 'contrib/examples/' instead.
+The built-in printf in dash seems to lack understanding of '\xXX'.
+It is tempting to patch it by using /usr/bin/printf but it is unclear how
+portable it would be.
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+ t/t0050-filesystem.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/t/t0050-filesystem.sh b/t/t0050-filesystem.sh
+index 41df6bc..8ad102b 100755
+--- a/t/t0050-filesystem.sh
++++ b/t/t0050-filesystem.sh
+@@ -4,8 +4,8 @@ test_description='Various filesystem issues'
+ 
+ . ./test-lib.sh
+ 
+-auml=`printf '\xc3\xa4'`
+-aumlcdiar=`printf '\x61\xcc\x88'`
++auml=$(/usr/bin/printf '\xc3\xa4')
++aumlcdiar=$(/usr/bin/printf '\x61\xcc\x88')
+ 
+ case_insensitive=
+ unibad=
