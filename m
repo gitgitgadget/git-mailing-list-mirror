@@ -1,60 +1,69 @@
-From: Ken Brownfield <krb@irridia.com>
-Subject: Re: Performance issue exposed by git-filter-branch
-Date: Mon, 20 Dec 2010 20:59:27 -0800
-Message-ID: <5ED25D1E-3028-43B7-9EA7-8E94773EA3E1@irridia.com>
-References: <41C1B4AC-8427-4D62-BEB6-689A4BE4EE5B@irridia.com> <AANLkTi=eWaaGKGpUptdkVg5iEMiZK5FQ9URjUTgd+LxB@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1081)
+From: Maaartin <grajcar1@seznam.cz>
+Subject: Re: Commiting automatically (2)
+Date: Tue, 21 Dec 2010 08:36:30 +0000 (UTC)
+Message-ID: <loom.20101221T092948-59@post.gmane.org>
+References: <loom.20101219T090500-396@post.gmane.org> <7vaak1ftin.fsf@alter.siamese.dyndns.org> <loom.20101220T062209-24@post.gmane.org> <20101220073312.GA23482@nibiru.local>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
+Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 21 05:59:37 2010
+X-From: git-owner@vger.kernel.org Tue Dec 21 09:36:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PUuK0-0006nr-Us
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 05:59:37 +0100
+	id 1PUxiD-000399-Ad
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 09:36:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S933580Ab0LUE72 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 20 Dec 2010 23:59:28 -0500
-Received: from endymion.irridia.com ([184.105.192.220]:44962 "EHLO
-	endymion.irridia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S933593Ab0LUE72 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 20 Dec 2010 23:59:28 -0500
-Received: from shrike2.sfo.corp.google.com (unknown [72.14.229.84])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by endymion.irridia.com (Postfix) with ESMTPSA id 0D1F714566E
-	for <git@vger.kernel.org>; Mon, 20 Dec 2010 20:59:28 -0800 (PST)
-In-Reply-To: <AANLkTi=eWaaGKGpUptdkVg5iEMiZK5FQ9URjUTgd+LxB@mail.gmail.com>
-X-Mailer: Apple Mail (2.1081)
+	id S1758060Ab0LUIgo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Dec 2010 03:36:44 -0500
+Received: from lo.gmane.org ([80.91.229.12]:55912 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754099Ab0LUIgo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Dec 2010 03:36:44 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PUxi6-00037S-Vs
+	for git@vger.kernel.org; Tue, 21 Dec 2010 09:36:43 +0100
+Received: from 188-120-198-113.luckynet.cz ([188-120-198-113.luckynet.cz])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 21 Dec 2010 09:36:42 +0100
+Received: from grajcar1 by 188-120-198-113.luckynet.cz with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 21 Dec 2010 09:36:42 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 188.120.198.113 (Opera/9.80 (Windows NT 5.2; U; en) Presto/2.6.30 Version/10.63)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164026>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164027>
 
-Filename lengths: min 4 avg 50 median 51 max 178
-Directory depths: min 1 avg 5 median 6 max 13
+Enrico Weigelt <weigelt <at> metux.de> writes:
 
-Pretty standard Python naming/hierarchy, really.
-
-Thanks!
-Ken
-
-On Dec 17, 2010, at 5:01 AM, Nguyen Thai Ngoc Duy wrote:
-
-> On Fri, Dec 17, 2010 at 8:07 AM, Ken Brownfield <krb@irridia.com> wrote:
->> cache_name_compare (and the presumed follow-ons of memcpy/sha/malloc/etc) is the major consumer.
+> * Maaartin <grajcar1 <at> seznam.cz> wrote:
 > 
-> Other people have given you alternative approaches. I'm just wondering
-> if we can improve something here. cache_name_compare() is essentially
-> memcmp() on two full paths. A tree-based index might help. How long
-> are your file names on average? Are your trees deep?
-> -- 
-> Duy
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at  http://vger.kernel.org/majordomo-info.html
+> > Yes, I wonder why it wasn't already implemented. I do something like
+> > make all; git snapshot; send_the_executable_to_the_customer
+> > which is IMHO needed quite often.
+> 
+> Perhaps it's wise to just use a separate repository on the same 
+> repository. Maybe make it more convenient using some little
+> shell functions. I'm also using that for backup purposes, where
+> the repo lies outside the to-be-backed-up tree.
+
+I considered using a separate repository, too, but having "all in one" feels 
+somehow better. It allows me to push everything to a single remote repo and 
+compare the snapshots to ordinal commits, etc.
+
+I let the snapshot point to the current head, which is where I get a problem now:
+git show-ref HEAD
+returns nothing,
+git show-ref --head
+returns HEAD and all branches and tags. Isn't it a bug? How can I get the HEAD 
+reference? I'm using git version 1.7.2.3 on cygwin.
