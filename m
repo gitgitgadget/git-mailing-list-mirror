@@ -1,81 +1,217 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: t0050-filesystem.sh unicode tests borked on dash shell
-Date: Tue, 21 Dec 2010 21:29:38 +0100
-Message-ID: <201012212129.39141.trast@student.ethz.ch>
-References: <4D1105B5.5070703@ramsay1.demon.co.uk>
+From: Pete Wyckoff <pw@padd.com>
+Subject: [PATCH v4] convert filter: supply path to external driver
+Date: Tue, 21 Dec 2010 12:33:22 -0800
+Message-ID: <20101221203322.GA13868@honk.padd.com>
+References: <20101218223822.GA18902@arf.padd.com>
+ <20101219212925.GA7393@arf.padd.com>
+ <7vzks1e84p.fsf@alter.siamese.dyndns.org>
+ <20101220160911.GA32136@honk.padd.com>
+ <7v8vzkcol8.fsf@alter.siamese.dyndns.org>
+ <20101221134403.GA10401@honk.padd.com>
+ <20101221181924.GB25812@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <prohaska@zib.de>, Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Tue Dec 21 21:29:50 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 21 21:33:31 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PV8qC-0001KK-8m
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 21:29:48 +0100
+	id 1PV8tm-0003VQ-OP
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 21:33:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752914Ab0LUU3n (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Dec 2010 15:29:43 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:31939 "EHLO edge10.ethz.ch"
+	id S1752858Ab0LUUdX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Dec 2010 15:33:23 -0500
+Received: from honk.padd.com ([74.3.171.149]:57141 "EHLO honk.padd.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751434Ab0LUU3m (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Dec 2010 15:29:42 -0500
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 21 Dec
- 2010 21:29:34 +0100
-Received: from pctrast.inf.ethz.ch (213.55.131.181) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 21 Dec
- 2010 21:29:40 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-rc5-desktop; KDE/4.5.3; x86_64; ; )
-In-Reply-To: <4D1105B5.5070703@ramsay1.demon.co.uk>
-X-Originating-IP: [213.55.131.181]
+	id S1751799Ab0LUUdX (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Dec 2010 15:33:23 -0500
+Received: by honk.padd.com (Postfix, from userid 7770)
+	id 3AFF5385; Tue, 21 Dec 2010 12:33:22 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20101221181924.GB25812@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164056>
 
-Ramsay Jones wrote:
->     $ ls trash\ directory.t0050-filesystem/unicode/
->     \x61\xcc\x88
+Filtering to support keyword expansion may need the name of
+the file being filtered.  In particular, to support p4 keywords
+like
 
-The printf at the top evidently does not interpolate \xAA sequences.
-Since my 'man 1p printf' POSIX manpage only mandates \AAA octal
-sequences, maybe we should use that instead.  Can you verify that the
-patch below works for you?
+    $File: //depot/product/dir/script.sh $
 
-Judging from
+the smudge filter needs to know the name of the file it is
+smudging.
 
-  git grep '\\x[0-9a-f][0-9a-f]' t
+Add a "%f" conversion specifier to the gitattribute for filter.
+It will be expanded with the path name to the file when invoking
+the external filter command.  The path name is quoted and
+special characters are escaped to prevent the shell from splitting
+incorrectly.
 
-this is the only instance of this problem, the rest are in Perl code.
+Signed-off-by: Pete Wyckoff <pw@padd.com>
+---
+jrnieder@gmail.com wrote on Tue, 21 Dec 2010 12:19 -0600:
+> [detailed review]
 
---- 8< ---
-Subject: t0050: replace \xAA by \AAA in printf
+Thanks for the nitpicks.  I put the argc.sh and chmod +x into a
+setup test.  Tried to put some more in there, and to break up the
+test in two, but did not want to duplicate the complex
+calculation of "norm" and "spec" variables.  So ended up with the
+small setup, and just one big test still.
 
-POSIX does not mandate the hex escape sequences, and thus dash's
-built-in printf does not expand them.  Use octal escapes instead.
+I couldn't quite bring myself to delete the nice spaces in
+redirections like "> test".  Rest of the usage in t/ seems
+to be about 1/3 for space, 2/3 against.
 
-diff --git c/t/t0050-filesystem.sh i/t/t0050-filesystem.sh
-index 057c97c..87bf1ff 100755
---- c/t/t0050-filesystem.sh
-+++ i/t/t0050-filesystem.sh
-@@ -4,8 +4,8 @@ test_description='Various filesystem issues'
+Got the test_cmp, tabs and missing &&, too, thanks for finding
+those.
+
+		-- Pete
+
+ Documentation/gitattributes.txt |   12 +++++++++
+ convert.c                       |   22 +++++++++++++++++-
+ t/t0021-conversion.sh           |   48 +++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 81 insertions(+), 1 deletions(-)
+
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 564586b..1afcf01 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -317,6 +317,18 @@ command is "cat").
+ 	smudge = cat
+ ------------------------
  
- . ./test-lib.sh
++If your filter needs the path of the file it is working on,
++you can use the "%f" conversion specification.  It will be
++replaced with the relative path to the file.  This is important
++for keyword substitution that depends on the name of the
++file.  Like this:
++
++------------------------
++[filter "p4"]
++	clean = git-p4-filter --clean %f
++	smudge = git-p4-filter --smudge %f
++------------------------
++
  
--auml=`printf '\xc3\xa4'`
--aumlcdiar=`printf '\x61\xcc\x88'`
-+auml=`printf '\303\244'`
-+aumlcdiar=`printf '\141\314\210'`
+ Interaction between checkin/checkout attributes
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+diff --git a/convert.c b/convert.c
+index e41a31e..8f020bc 100644
+--- a/convert.c
++++ b/convert.c
+@@ -317,6 +317,7 @@ struct filter_params {
+ 	const char *src;
+ 	unsigned long size;
+ 	const char *cmd;
++	const char *path;
+ };
  
- case_insensitive=
- unibad=
-
+ static int filter_buffer(int in, int out, void *data)
+@@ -329,7 +330,23 @@ static int filter_buffer(int in, int out, void *data)
+ 	int write_err, status;
+ 	const char *argv[] = { NULL, NULL };
+ 
+-	argv[0] = params->cmd;
++	/* apply % substitution to cmd */
++	struct strbuf cmd = STRBUF_INIT;
++	struct strbuf path = STRBUF_INIT;
++	struct strbuf_expand_dict_entry dict[] = {
++	    "f", NULL,
++	    NULL, NULL,
++	};
++
++	/* quote the path to preserve spaces, etc. */
++	sq_quote_buf(&path, params->path);
++	dict[0].value = path.buf;
++
++	/* expand all %f with the quoted path */
++	strbuf_expand(&cmd, params->cmd, strbuf_expand_dict_cb, &dict);
++	strbuf_release(&path);
++
++	argv[0] = cmd.buf;
+ 
+ 	memset(&child_process, 0, sizeof(child_process));
+ 	child_process.argv = argv;
+@@ -349,6 +366,8 @@ static int filter_buffer(int in, int out, void *data)
+ 	status = finish_command(&child_process);
+ 	if (status)
+ 		error("external filter %s failed %d", params->cmd, status);
++
++	strbuf_release(&cmd);
+ 	return (write_err || status);
+ }
+ 
+@@ -376,6 +395,7 @@ static int apply_filter(const char *path, const char *src, size_t len,
+ 	params.src = src;
+ 	params.size = len;
+ 	params.cmd = cmd;
++	params.path = path;
+ 
+ 	fflush(NULL);
+ 	if (start_async(&async))
+diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
+index 828e35b..69c22a6 100755
+--- a/t/t0021-conversion.sh
++++ b/t/t0021-conversion.sh
+@@ -93,4 +93,52 @@ test_expect_success expanded_in_repo '
+ 	cmp expanded-keywords expected-output
+ '
+ 
++test_expect_success 'filter shell-escaped filenames setup' '
++	cat >argc.sh <<-EOF &&
++	#!$SHELL_PATH
++	echo argc: \$# "\$@"
++	EOF
++	chmod +x argc.sh
++'
++
++# The use of %f in a filter definition is expanded to the path to
++# the filename being smudged or cleaned.  It must be shell escaped.
++# First, set up some interesting file names and pet them in
++# .gitattributes.
++test_expect_success 'filter shell-escaped filenames test' '
++	norm=name-no-magic &&
++	spec=$(echo name:sgl\"dbl\ spc!bang | tr : \\047) &&
++	echo some test text > test &&
++	cat test > $norm &&
++	cat test > "$spec" &&
++	git add $norm &&
++	git add "$spec" &&
++	git commit -q -m "add files" &&
++	echo "name* filter=argc" > .gitattributes &&
++
++	# delete the files and check them out again, using a smudge filter
++	# that will count the args and echo the command-line back to us
++	git config filter.argc.smudge "./argc.sh %f" &&
++	rm $norm "$spec" &&
++	git checkout -- $norm "$spec" &&
++
++	# make sure argc.sh counted the right number of args
++	echo "argc: 1 $norm" > res &&
++	test_cmp res $norm &&
++	echo "argc: 1 $spec" > res &&
++	test_cmp res "$spec" &&
++
++	# do the same thing, but with more args in the filter expression
++	git config filter.argc.smudge "./argc.sh %f --myword" &&
++	rm $norm "$spec" &&
++	git checkout -- $norm "$spec" &&
++
++	# make sure argc.sh counted the right number of args
++	echo "argc: 2 $norm --myword" > res &&
++	test_cmp res $norm &&
++	echo "argc: 2 $spec --myword" > res &&
++	test_cmp res "$spec" &&
++	:
++'
++
+ test_done
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+1.7.2.3
