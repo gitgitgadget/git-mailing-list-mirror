@@ -1,69 +1,82 @@
-From: Maaartin <grajcar1@seznam.cz>
-Subject: Re: Commiting automatically (2)
-Date: Tue, 21 Dec 2010 08:36:30 +0000 (UTC)
-Message-ID: <loom.20101221T092948-59@post.gmane.org>
-References: <loom.20101219T090500-396@post.gmane.org> <7vaak1ftin.fsf@alter.siamese.dyndns.org> <loom.20101220T062209-24@post.gmane.org> <20101220073312.GA23482@nibiru.local>
+From: Peter Vereshagin <peter@vereshagin.org>
+Subject: Re: 'show' pretty %B without a diff
+Date: Tue, 21 Dec 2010 14:04:47 +0300
+Organization: '
+Message-ID: <20101221104641.GA8600@external.screwed.box>
+References: <20101220073842.GC10354@external.screwed.box>
+ <7vmxo0ddbm.fsf@alter.siamese.dyndns.org>
+ <20101220111214.GD10354@external.screwed.box>
+ <7v4oa8cobn.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 21 09:36:49 2010
+Content-Type: text/plain; charset=koi8-r
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Dec 21 12:05:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PUxiD-000399-Ad
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 09:36:49 +0100
+	id 1PV01f-00047L-O1
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 12:05:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758060Ab0LUIgo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Dec 2010 03:36:44 -0500
-Received: from lo.gmane.org ([80.91.229.12]:55912 "EHLO lo.gmane.org"
+	id S1750908Ab0LULE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Dec 2010 06:04:57 -0500
+Received: from ns1.skyriver.ru ([89.108.118.221]:57176 "EHLO mx1.skyriver.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754099Ab0LUIgo (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Dec 2010 03:36:44 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PUxi6-00037S-Vs
-	for git@vger.kernel.org; Tue, 21 Dec 2010 09:36:43 +0100
-Received: from 188-120-198-113.luckynet.cz ([188-120-198-113.luckynet.cz])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 21 Dec 2010 09:36:42 +0100
-Received: from grajcar1 by 188-120-198-113.luckynet.cz with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 21 Dec 2010 09:36:42 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 188.120.198.113 (Opera/9.80 (Windows NT 5.2; U; en) Presto/2.6.30 Version/10.63)
+	id S1750783Ab0LULE4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Dec 2010 06:04:56 -0500
+Received: from localhost (p57AB671A.dip.t-dialin.net [87.171.103.26])
+	by mx1.skyriver.ru (Postfix) with ESMTPSA id F0AD65A8C;
+	Tue, 21 Dec 2010 13:46:54 +0300 (MSK)
+Content-Disposition: inline
+In-Reply-To: <7v4oa8cobn.fsf@alter.siamese.dyndns.org>
+X-Face: 8T>{1owI$Byj]]a;^G]kRf*dkq>E-3':F>4ODP[#X4s"dr?^b&2G@'3lukno]A1wvJ_L(~u
+ 6>I2ra/<,j1%@C[LN=>p#_}RIV+#:KTszp-X$bQOj,K
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164027>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164028>
 
-Enrico Weigelt <weigelt <at> metux.de> writes:
+You know St. Peter won't call my name, Junio!
+2010/12/20 10:05:16 -0800 Junio C Hamano <gitster@pobox.com> => To Peter Vereshagin :
 
-> * Maaartin <grajcar1 <at> seznam.cz> wrote:
-> 
-> > Yes, I wonder why it wasn't already implemented. I do something like
-> > make all; git snapshot; send_the_executable_to_the_customer
-> > which is IMHO needed quite often.
-> 
-> Perhaps it's wise to just use a separate repository on the same 
-> repository. Maybe make it more convenient using some little
-> shell functions. I'm also using that for backup purposes, where
-> the repo lies outside the to-be-backed-up tree.
+JCH> > JCH> Especially if you are doing a script, you probably should be using
+JCH> > JCH> "cat-file commit" anyway, no?
+JCH> >
+JCH> > cat-file doesn't seem to support formatting option?
+JCH> 
+JCH> That is exactly why I suggested "cat-file", as you are scripting.  We
+JCH> reserve the right to change the human-visible formatting output from
+JCH> Porcelain commands like "show" any time to make it "prettier" (we may
+JCH> start coloring strings that look like object names in the commit log
+JCH> message in "git show" output, for example), while giving scripts more
+JCH> stable output through the plumbing commands like "cat-file" so that they
+JCH> can parse and process without having to worry about the output format
+JCH> changing under them.
 
-I considered using a separate repository, too, but having "all in one" feels 
-somehow better. It allows me to push everything to a single remote repo and 
-compare the snapshots to ordinal commits, etc.
+IMHO there is a difference between coloring the output and digging the data
+from the storage, the what is the %B is about for me.
+In a context of a script I believe every scriptwriter should expect a function
+like get_comment_raw( $commitId ) than to worry about command output stability.
+This is just where I believe the Git.pm will get closer to. One day.
+No matter if such a function should look more like this: $gitObject->newById(
+$commitId )->showDetails( '%B' ); . The I/O operations for this I believe
+should be the storage files opening and reading, thus the piping from commands
+like 'cat-file' is only the temporary solution.
+Isn't it?
+For the applications such an API approach is just more expectable than
+porcelain versus plumbing commands. Although this requires care about features
+like the particular (e.g., Perl) bindings, it is a must for the applications
+efficiency which is a sense for a modern web at least.
 
-I let the snapshot point to the current head, which is where I get a problem now:
-git show-ref HEAD
-returns nothing,
-git show-ref --head
-returns HEAD and all branches and tags. Isn't it a bug? How can I get the HEAD 
-reference? I'm using git version 1.7.2.3 on cygwin.
+JCH> If your script is _not_ parsing the git command output, but is just
+JCH> blindly spewing it out to the invoking user, it is Ok to use "show",
+JCH> though.  Check "-s" option to the "show" command in that case.
+
+"show" command doesn't seem to have "-s" switch. Skip it up though ;-)
+
+73! Peter pgp: A0E26627 (4A42 6841 2871 5EA7 52AB  12F8 0CE1 4AAC A0E2 6627)
+--
+http://vereshagin.org
