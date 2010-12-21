@@ -1,82 +1,132 @@
-From: Peter Vereshagin <peter@vereshagin.org>
-Subject: Re: 'show' pretty %B without a diff
-Date: Tue, 21 Dec 2010 14:04:47 +0300
-Organization: '
-Message-ID: <20101221104641.GA8600@external.screwed.box>
-References: <20101220073842.GC10354@external.screwed.box>
- <7vmxo0ddbm.fsf@alter.siamese.dyndns.org>
- <20101220111214.GD10354@external.screwed.box>
- <7v4oa8cobn.fsf@alter.siamese.dyndns.org>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: [PATCH] trace.c: mark file-local function static
+Date: Tue, 21 Dec 2010 07:29:41 -0500
+Message-ID: <1292934581.26698.14.camel@drew-northup.unet.maine.edu>
+References: <AANLkTinxJdASW6mQVU50grA2mUz6gt+gUND30VRK=BCN@mail.gmail.com>
+	 <AANLkTimBtpOx_GBzC=g4V6jW2aiF7Hg8uALWt2NQFFZG@mail.gmail.com>
+	 <1292846433.19322.1.camel@drew-northup.unet.maine.edu>
+	 <AANLkTimkxJHvTAvra+B-0bAQopd8s21ZrFCPG_ALbZZ9@mail.gmail.com>
+	 <1292863989.19322.27.camel@drew-northup.unet.maine.edu>
+	 <AANLkTin2QuMF93RqrRcScxvkzhU4OFJ9Nt42tV+FOjxS@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=koi8-r
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 21 12:05:04 2010
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: "Vasyl'" <vvavrychuk@gmail.com>, git@vger.kernel.org
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 21 13:30:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PV01f-00047L-O1
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 12:05:04 +0100
+	id 1PV1MS-0008Ql-1U
+	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 13:30:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750908Ab0LULE5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Dec 2010 06:04:57 -0500
-Received: from ns1.skyriver.ru ([89.108.118.221]:57176 "EHLO mx1.skyriver.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750783Ab0LULE4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Dec 2010 06:04:56 -0500
-Received: from localhost (p57AB671A.dip.t-dialin.net [87.171.103.26])
-	by mx1.skyriver.ru (Postfix) with ESMTPSA id F0AD65A8C;
-	Tue, 21 Dec 2010 13:46:54 +0300 (MSK)
-Content-Disposition: inline
-In-Reply-To: <7v4oa8cobn.fsf@alter.siamese.dyndns.org>
-X-Face: 8T>{1owI$Byj]]a;^G]kRf*dkq>E-3':F>4ODP[#X4s"dr?^b&2G@'3lukno]A1wvJ_L(~u
- 6>I2ra/<,j1%@C[LN=>p#_}RIV+#:KTszp-X$bQOj,K
+	id S1751045Ab0LUMaa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Dec 2010 07:30:30 -0500
+Received: from basalt.its.maine.edu ([130.111.32.66]:35979 "EHLO
+	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750776Ab0LUMaa (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Dec 2010 07:30:30 -0500
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id oBLCTijW030014
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 21 Dec 2010 07:29:49 -0500
+In-Reply-To: <AANLkTin2QuMF93RqrRcScxvkzhU4OFJ9Nt42tV+FOjxS@mail.gmail.com>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=3
+	Fuz1=3 Fuz2=3
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: oBLCTijW030014
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1293539406.70666@oxdxqqgoEZm4deZ7c0byWw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164028>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164029>
 
-You know St. Peter won't call my name, Junio!
-2010/12/20 10:05:16 -0800 Junio C Hamano <gitster@pobox.com> => To Peter Vereshagin :
 
-JCH> > JCH> Especially if you are doing a script, you probably should be using
-JCH> > JCH> "cat-file commit" anyway, no?
-JCH> >
-JCH> > cat-file doesn't seem to support formatting option?
-JCH> 
-JCH> That is exactly why I suggested "cat-file", as you are scripting.  We
-JCH> reserve the right to change the human-visible formatting output from
-JCH> Porcelain commands like "show" any time to make it "prettier" (we may
-JCH> start coloring strings that look like object names in the commit log
-JCH> message in "git show" output, for example), while giving scripts more
-JCH> stable output through the plumbing commands like "cat-file" so that they
-JCH> can parse and process without having to worry about the output format
-JCH> changing under them.
+On Mon, 2010-12-20 at 22:28 -0200, Thiago Farina wrote:
+> On Mon, Dec 20, 2010 at 2:53 PM, Drew Northup <drew.northup@maine.edu> wrote:
+> >
+> > On Mon, 2010-12-20 at 13:17 -0200, Thiago Farina wrote:
+> >> On Mon, Dec 20, 2010 at 10:00 AM, Drew Northup <drew.northup@maine.edu> wrote:
+> >> >
+> >> > On Thu, 2010-12-16 at 21:43 -0200, Thiago Farina wrote:
+> >> >> On Thu, Dec 16, 2010 at 8:38 PM, Vasyl' <vvavrychuk@gmail.com> wrote:
+> >> >> > Signed-off-by: Vasyl' Vavrychuk <vvavrychuk@gmail.com>
+> >> >> > ---
+> >> >> >  trace.c |    2 +-
+> >> >> >  1 files changed, 1 insertions(+), 1 deletions(-)
+> >> >> >
+> >> >> > diff --git a/trace.c b/trace.c
+> >> >> > index 1e560cb..62586fa 100644
+> >> >> > --- a/trace.c
+> >> >> > +++ b/trace.c
+> >> >> > @@ -25,7 +25,7 @@
+> >> >> >  #include "cache.h"
+> >> >> >  #include "quote.h"
+> >> >> >
+> >> >> > -void do_nothing(size_t unused)
+> >> >> > +static void do_nothing(size_t unused)
+> >> >> >  {
+> >> >> >  }
+> >> >> >
+> >> >> If it means something, this looks sane to me.
+> >> >>
+> >> >> Acked-by: Thiago Farina <tfransosi@gmail.com>
+> >> >
+> >> > It may be sane, but why should we trust that it is without a commit
+> >> > message?
+> >>
+> >> Why such trivial thing needs further explanation?
+> >
+> > Because even trivial fixes may break non-trivial things.
+> > In addition, without justification we'd just as soon have somebody come
+> > back with another patch six months down the road that changes it back to
+> > the original code. Now that wouldn't make a whole lot of sense, now
+> > would it?
+> 
+> I don't think so, it's making the function private, because the
+> function is used only in that file and as such if you see a function
+> marked as static you know that and doesn't need further explanation in
+> my pov (but it seems you don't think like that).
 
-IMHO there is a difference between coloring the output and digging the data
-from the storage, the what is the %B is about for me.
-In a context of a script I believe every scriptwriter should expect a function
-like get_comment_raw( $commitId ) than to worry about command output stability.
-This is just where I believe the Git.pm will get closer to. One day.
-No matter if such a function should look more like this: $gitObject->newById(
-$commitId )->showDetails( '%B' ); . The I/O operations for this I believe
-should be the storage files opening and reading, thus the piping from commands
-like 'cat-file' is only the temporary solution.
-Isn't it?
-For the applications such an API approach is just more expectable than
-porcelain versus plumbing commands. Although this requires care about features
-like the particular (e.g., Perl) bindings, it is a must for the applications
-efficiency which is a sense for a modern web at least.
+All the patch above does is tell the compiler to enforce compilation of
+that function as static. That is most definitely not the same thing as
+making it private. (I think we can agree that it is being used as if it
+were being enforced as private at some meta-level, but the compiler
+isn't going to enforce it for us...) While I think the code change is
+fairly clear, as I said earlier: without a commit message we don't have
+a good reason for not making it non-static again later on, flip-flopping
+ad-infinitum.
 
-JCH> If your script is _not_ parsing the git command output, but is just
-JCH> blindly spewing it out to the invoking user, it is Ok to use "show",
-JCH> though.  Check "-s" option to the "show" command in that case.
+Commit messages for isolated changes such as this build up a story, if
+you will, providing future contributors with insight as to why the group
+made a change when it did--even when the change is minor (in fact often
+most importantly when the change is minor)--by putting it in context.
 
-"show" command doesn't seem to have "-s" switch. Skip it up though ;-)
+> > Alas the best way to avoid such a situation is to explain why a change
+> > was made to begin with.
+> >
+> 
+> So, you are welcome to contribute and suggest such description for
+> this trivial (that may break non-trivial things) patch. So we can
+> please you and others in the future.
 
-73! Peter pgp: A0E26627 (4A42 6841 2871 5EA7 52AB  12F8 0CE1 4AAC A0E2 6627)
---
-http://vereshagin.org
+As I am complaining that I don't know what the submitter was thinking
+that sounds particularly odd to me. How I am supposed to describe for
+the group what the commit's author was thinking in a commit message that
+I would like to see added to a patch when in fact the whole problem is
+that I don't know specifically what he was thinking? "Changed function
+to static for no known reason whatsoever" isn't much of a commit
+message.
+
+-- 
+-Drew Northup N1XIM
+   AKA RvnPhnx on OPN
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
