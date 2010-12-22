@@ -1,75 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Expected behaviour of 'git log -S' when searching in a
- merged/deleted file?
-Date: Wed, 22 Dec 2010 10:17:57 -0800
-Message-ID: <7vzkrx4qp6.fsf@alter.siamese.dyndns.org>
-References: <AANLkTimXk6ei6EAQfvTTfnMzdBqYHkNoaxkEab+atnHd@mail.gmail.com>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] t3419-*.sh: Fix arithmetic expansion syntax error
+Date: Wed, 22 Dec 2010 19:42:42 +0100
+Message-ID: <20101222184242.GA6088@localhost>
+References: <4D10F707.1000206@ramsay1.demon.co.uk>
+Reply-To: Clemens Buchacher <drizzd@aon.at>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Jonathan del Strother <jdelstrother@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 22 19:18:13 2010
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Wed Dec 22 19:41:38 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PVTGP-0002PS-7J
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 19:18:13 +0100
+	id 1PVTd0-0007pA-Oy
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 19:41:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752845Ab0LVSSH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Dec 2010 13:18:07 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35858 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752328Ab0LVSSG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Dec 2010 13:18:06 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D9BA13917;
-	Wed, 22 Dec 2010 13:18:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=xweTDCckh8s/uU2zleDXitndkLE=; b=Q9yqs/
-	Tjjbx1CIcGTyGKmm7/AhGIj5on4G7pZwkD/mnb1p4/8gFzHop/NZVNGwnwSB1uwo
-	3/dMxsqOphVZhv2NzsmBGD7O9bQruWjR2VRLRWMLauw/RzHNF9c/T07wXDURLUXV
-	jb+fz7lN1w0hSl19dZxDvrI3vqzyK28Tcx2Yg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TS8/jOcg3wtzTltikGFfOw2vJXmQAdt0
-	c6rQyRCLGsDPkIkcjFZEhuVM5gkgwME9iP9EfPzfmV4QIU4j19dyKRiUQHkp/dmw
-	t1rCynKEiHvCdurUsnFMpYftP+BSnP4cP84WZCumkaUFGlvaG0KiUsdsJwy8TvxX
-	gQt+IOrapd4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4F52A3911;
-	Wed, 22 Dec 2010 13:18:32 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6F65F3910; Wed, 22 Dec 2010
- 13:18:29 -0500 (EST)
-In-Reply-To: <AANLkTimXk6ei6EAQfvTTfnMzdBqYHkNoaxkEab+atnHd@mail.gmail.com>
- (Jonathan del Strother's message of "Wed\, 22 Dec 2010 13\:37\:19 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E21E7796-0DF7-11E0-8E92-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1753717Ab0LVSl2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Dec 2010 13:41:28 -0500
+Received: from mail-fx0-f66.google.com ([209.85.161.66]:61245 "EHLO
+	mail-fx0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753491Ab0LVSl1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Dec 2010 13:41:27 -0500
+Received: by fxm14 with SMTP id 14so1495157fxm.1
+        for <git@vger.kernel.org>; Wed, 22 Dec 2010 10:41:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:received:received:sender:received:date:from:to
+         :cc:subject:message-id:reply-to:references:mime-version:content-type
+         :content-disposition:in-reply-to:user-agent;
+        bh=qCr/Pbs/Rsje4AAVE/TmPyZZRls0tP6z7QCI0xcP1Rs=;
+        b=ZFw20nHbAILZquEIPhSTn4plka05Oq5dvpBdCBdNrknqSeS7j83VYaOuia+1RfGjYD
+         vMnLualAiCEx0Ph3mg3OTSNoebTOGEdIls5ylaiNV94X6Ef6Bweja7tMCFizsxu6XqzO
+         eUt8HLWnPNkDDmlfUpqfUZn2sGdUMeNRpJbZ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:reply-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=EsqXxMxkIWGJrQaWblNXz5nfznqckX3NWC9LTpHYhrcXpySzaJzIPrR3Cdx4TS8hUc
+         boLu14/RLDrbeLIjnbQfGDgQf4oM+YwfACoJq/Bh/KRiOsnMxE7/VZ/a9stf8XD6zAUR
+         DejT5XUNfQq89wr3sRykpB4s8tcZ75MUOrIHk=
+Received: by 10.223.102.67 with SMTP id f3mr6378093fao.125.1293043286121;
+        Wed, 22 Dec 2010 10:41:26 -0800 (PST)
+Received: from darc.lan (p5B22D75E.dip.t-dialin.net [91.34.215.94])
+        by mx.google.com with ESMTPS id 17sm1796920far.43.2010.12.22.10.41.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 22 Dec 2010 10:41:25 -0800 (PST)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1PVTe6-0001bH-LS; Wed, 22 Dec 2010 19:42:42 +0100
+Content-Disposition: inline
+In-Reply-To: <4D10F707.1000206@ramsay1.demon.co.uk>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164093>
 
-Jonathan del Strother <jdelstrother@gmail.com> writes:
+On Tue, Dec 21, 2010 at 06:50:47PM +0000, Ramsay Jones wrote:
+> 
+> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
 
-> I was trying to find a particular string in my project this morning.
-> 'git grep mystring' suggested that the string didn't exist in my repo,
-> but 'git log -Smystring' turned up a single commit that had added it.
-> It took me a long time to figure out that in the past, a branch had
-> added that string to foo.c, but a second branch deleted foo.c, and the
-> two branches were later merged (deleting foo.c and ignoring mystring).
+Thanks.
 
-This is a typical case of the history simplification in action, isn't it?
+> Note that this test is unique in having an '#!/bin/bash' line (rather
+> than '#!/bin/sh'), which was (indirectly) responsible for me not
+> noticing this failure for a while. I don't see anything that would
+> require bash, so I suspect this is not intensional.
 
-"log" will give you one possible and simplest explanation of how the
-project came into the current shape.  Because side branches with changes
-that were discarded before merging it to the history that lead to the
-commit you run "log" from do not contribute anything to the end result,
-"log" will not traverse the entire side branch when it sees the merge.
+Indeed. I actually removed all bashisms from the script, but then
+apparently forgot to get rid of #!/bin/bash as well.
 
-Try your "log" with --full-history, perhaps?
+Clemens
