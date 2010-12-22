@@ -1,68 +1,86 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: What's cooking in git.git (Dec 2010, #06; Tue, 21)
-Date: Wed, 22 Dec 2010 12:39:29 +0100
-Message-ID: <4D11E371.4000006@op5.se>
-References: <7vlj3i5zz9.fsf@alter.siamese.dyndns.org> <AANLkTin_u9FiZf-hbnhY0Dp+LifctxH8wKDL=yRrSpm+@mail.gmail.com>
+From: Alexey Zakhlestin <indeyets@gmail.com>
+Subject: Re: "git pull" doesn't respect --work-tree parameter
+Date: Wed, 22 Dec 2010 14:40:26 +0300
+Message-ID: <AANLkTinGPJRQCOVz5JeqL4xnUG9V=5fkJhz6C5Mi1A3o@mail.gmail.com>
+References: <AANLkTi=UtZuPQcTNnwS_fXgzRn4MHAUGS8zyTMqX9E2J@mail.gmail.com>
+	<AANLkTik9s0cLc_P=NWvpO=DhytOkLNASEM7sjzoscHo3@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Thiago Farina <tfransosi@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 22 12:39:44 2010
+Content-Type: text/plain; charset=UTF-8
+Cc: git <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 22 12:40:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PVN2k-0003lb-0J
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 12:39:42 +0100
+	id 1PVN3Y-000487-84
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 12:40:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751656Ab0LVLje (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Dec 2010 06:39:34 -0500
-Received: from mail-ey0-f171.google.com ([209.85.215.171]:53561 "EHLO
-	mail-ey0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751427Ab0LVLjd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Dec 2010 06:39:33 -0500
-Received: by eyg5 with SMTP id 5so2577004eyg.2
-        for <git@vger.kernel.org>; Wed, 22 Dec 2010 03:39:32 -0800 (PST)
-Received: by 10.213.22.209 with SMTP id o17mr5748599ebb.41.1293017971760;
-        Wed, 22 Dec 2010 03:39:31 -0800 (PST)
-Received: from [192.168.1.178] (sth-vpn1.op5.com [193.201.96.49])
-        by mx.google.com with ESMTPS id t5sm4623444eeh.14.2010.12.22.03.39.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 22 Dec 2010 03:39:30 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Thunderbird/3.1.7 ThunderGit/0.1a
-In-Reply-To: <AANLkTin_u9FiZf-hbnhY0Dp+LifctxH8wKDL=yRrSpm+@mail.gmail.com>
+	id S1751985Ab0LVLk1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Dec 2010 06:40:27 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:49663 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751863Ab0LVLk1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Dec 2010 06:40:27 -0500
+Received: by iwn9 with SMTP id 9so5139290iwn.19
+        for <git@vger.kernel.org>; Wed, 22 Dec 2010 03:40:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=QHTnQ9qmO8QemB5j59/s6dTGFzQ1Z1RJAgLh9XSYsRM=;
+        b=CNq2Uny/TGMnp3SiXqkadD1WjJ5x5r1YlCnGrCeydDxqaCzIgdT96tt+rn+XHm4VgZ
+         0Cl1xczZ5r/7xUt7aDAyhvm2LnpXObf3JKw48Or7Fz2q2awnncoqTsYmMbGepB07j7EP
+         VVTulA6N8MTyURO+JbVxKDSjKVJXJead8A48Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=Pm0DG0sYMdvcByb97CSzJQpWiJbFk23Dfd05UXjSDJ4a11sb84ejeD7WXcaDLQRRKV
+         CdCHAJn32GoXOvrnGr2yOUx6EqxcEAzg5k/O9FBdEF3meJGeulstU4PiW/JM0F/EoP6I
+         +0lghF29KJiSmkQCvhEiAcp+nNU8jJb4sijIY=
+Received: by 10.231.199.196 with SMTP id et4mr6621897ibb.71.1293018026187;
+ Wed, 22 Dec 2010 03:40:26 -0800 (PST)
+Received: by 10.231.11.133 with HTTP; Wed, 22 Dec 2010 03:40:26 -0800 (PST)
+In-Reply-To: <AANLkTik9s0cLc_P=NWvpO=DhytOkLNASEM7sjzoscHo3@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164079>
 
-On 12/22/2010 12:05 PM, Thiago Farina wrote:
-> 
-> [1] Hope I will learn what this means and avoid it, something like,
-> unnecessary, stupid, really trivial, etc...
+On Wed, Dec 22, 2010 at 2:20 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> On Tue, Dec 21, 2010 at 11:04 PM, Alexey Zakhlestin <indeyets@gmail.com> wrote:
+>> I am trying to use the following command:
+>>
+>> git '--git-dir=/path/to/repository/.git' '--work-tree=/path/to/repository' pull
+>>
+>> and get this error:
+>> "git-pull cannot be used without a working tree"
+>
+> It works fine for me. What's the result of
+>
+> git '--git-dir=/path/to/repository/.git'
+> '--work-tree=/path/to/repository' --git-dir
 
-churn:
-Work for little or no benefit.
-A patch that adds little or no value to the codebase by itself.
+No directory given for --git-dir.
 
-A patch that fixes a problem that isn't there in the real world but
-could be there if some system somewhere followed some obscure standard
-to the very letter is a typical example of code-churn.
+> git '--git-dir=/path/to/repository/.git'
+> '--work-tree=/path/to/repository' --is-inside-work-tree
 
-A patch that introduces an poorly thought-out feature that nobody uses
-is another common example, as is modifying code to accommodate adding
-undefined features later. If the code-modifying is promptly followed
-by a patch to introduce a new feature that relies on the new behaviour,
-it's not considered churn since the new feature is already defined.
+Unknown option: --is-inside-work-tree
+
+> git '--git-dir=/path/to/repository/.git'
+> '--work-tree=/path/to/repository' --show-toplevel
+
+Unknown option: --show-toplevel
+
+
+> Also what version of git are you using?
+
+1.7.3.4
 
 -- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
-
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+Alexey Zakhlestin, http://twitter.com/jimi_dini
+http://www.milkfarmsoft.com/
