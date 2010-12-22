@@ -1,77 +1,75 @@
-From: Scott Kyle <scott@appden.com>
-Subject: Re: [PATCH] completion: Add PS1 configuration for submodules
-Date: Tue, 21 Dec 2010 14:56:22 -0800
-Message-ID: <AANLkTimCjRq=rJ5FA7QRCyp=7B8q5R7AtuVPiTimwVR8@mail.gmail.com>
-References: <1291677763-55385-1-git-send-email-scott@appden.com>
- <AANLkTin8JstkjEWaCGZuqpEXZnLMyudFm24K7Y3iCgX6@mail.gmail.com>
- <0E479F18-B26A-4216-A71E-C65EAB41A74A@sb.org> <4CFEA249.907@web.de>
- <AANLkTinnH4pFaEf=e4YE64f7cwLRx2R_2o_-=JGua30b@mail.gmail.com>
- <20101207212949.GA25162@burratino> <AANLkTinjzvCDjCFrvujdFPRZKo2vK_9_8j3ybLNAfFmE@mail.gmail.com>
- <20101212063848.GB17185@burratino> <4D06621F.6010101@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, Kevin Ballard <kevin@sb.org>,
-	=?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Tue Dec 21 23:56:51 2010
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: [PATCH] attr.c: Use ALLOC_GROW instead of alloc_nr and xrealloc.
+Date: Tue, 21 Dec 2010 22:35:50 -0200
+Message-ID: <3c6870c390110bd1bf5c5f59a99928afc86cf188.1292978127.git.tfransosi@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 22 01:36:12 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PVB8U-00045C-2c
-	for gcvg-git-2@lo.gmane.org; Tue, 21 Dec 2010 23:56:50 +0100
+	id 1PVCgd-0002G3-3a
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 01:36:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753533Ab0LUW4p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Dec 2010 17:56:45 -0500
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:53214 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753307Ab0LUW4o convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 21 Dec 2010 17:56:44 -0500
-Received: by wwi17 with SMTP id 17so4495766wwi.1
-        for <git@vger.kernel.org>; Tue, 21 Dec 2010 14:56:43 -0800 (PST)
-Received: by 10.216.11.8 with SMTP id 8mr798450wew.0.1292972203183; Tue, 21
- Dec 2010 14:56:43 -0800 (PST)
-Received: by 10.216.244.137 with HTTP; Tue, 21 Dec 2010 14:56:22 -0800 (PST)
-In-Reply-To: <4D06621F.6010101@web.de>
-X-Google-Sender-Auth: CPW-cBBoGZAzrpqv6ZWPGxWuCyw
+	id S1753908Ab0LVAgF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 21 Dec 2010 19:36:05 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:58924 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752865Ab0LVAgE (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 21 Dec 2010 19:36:04 -0500
+Received: by yxt3 with SMTP id 3so2000328yxt.19
+        for <git@vger.kernel.org>; Tue, 21 Dec 2010 16:36:03 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :message-id:x-mailer;
+        bh=C4ikidOWPM1/pRgVjsVorj3yJTRgVJNDfdzVqESSXW0=;
+        b=kaR5/Y6gB+42Lndx4SonZX7FkiEfHsMcqRIHV9gIQNxC1KxKe7GemGZSiojTE3FGef
+         iKBIvutsYuwP7Fp7Ucr5Xbg9MjnR+CspCC1KMVrEcxfaPuMelt/xzIDsiw9N49Kh0bEW
+         OGwmwEkd9XFotZujuiuPt0zKhyro130/dqrUI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:message-id:x-mailer;
+        b=QDOBWRJc+nEdiumhyxQemWN3c6xlcjCVVv/1tIFobRho7vIpEnLbTrIkrC+we5J+KH
+         vxs4QXDenhIaYlEWDaDIhZUNLtFXjerhzuUlGUvEBQDE9GbkJ++Iw/sLPf/xf71+CMWS
+         0ffT6e01Z8K1pEyofKHUofuNLkZOLMccbQHLg=
+Received: by 10.90.70.2 with SMTP id s2mr7770172aga.184.1292978163521;
+        Tue, 21 Dec 2010 16:36:03 -0800 (PST)
+Received: from localhost ([186.205.6.151])
+        by mx.google.com with ESMTPS id b27sm10361455ana.8.2010.12.21.16.36.01
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 21 Dec 2010 16:36:02 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.343.g7d43d
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164062>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164063>
 
-On Mon, Dec 13, 2010 at 10:12 AM, Jens Lehmann <Jens.Lehmann@web.de> wr=
-ote:
-> Am 12.12.2010 07:38, schrieb Jonathan Nieder:
->> Scott Kyle wrote:
->>> On Tue, Dec 7, 2010 at 1:29 PM, Jonathan Nieder <jrnieder@gmail.com=
-> wrote:
->>>> Scott Kyle wrote:
->>
->>>>> If I set the "submodule.<name>.ignore" then diffing around inside=
- my
->>>>> history will not show the changes to that particular submodule.
->>>>
->>>> Even if you set it to "dirty"?
->>>
->>> Setting it to "dirty" is far less disruptive, you're right, but tha=
-t
->>> wouldn't do me much good since my submodules are often on different
->>> branches while developing.
->>
->> Ah, I see now. =A0How about something like this? =A0Untested, just a
->> vague sketch to show the idea.
->
-> Me thinks your proposal of a new "worktree" option makes sense. Let's
-> hear what Scott says ...
->
+Signed-off-by: Thiago Farina <tfransosi@gmail.com>
+---
+ attr.c |    8 ++------
+ 1 files changed, 2 insertions(+), 6 deletions(-)
 
-I mostly really like how 'worktree' can let me focus in on only the
-submodules I care about.  The drawback is that git status would no
-longer list my true status.  I know that may sound hypocritical, but I
-intended for this patch to only affect my PS1.  At the same time, I
-would like to see the 'worktree' patch taken, regardless of whether
-you guys find mine useful.
+diff --git a/attr.c b/attr.c
+index 6aff695..fdc0515 100644
+--- a/attr.c
++++ b/attr.c
+@@ -305,12 +305,8 @@ static void handle_attr_line(struct attr_stack *res,
+ 	a = parse_attr_line(line, src, lineno, macro_ok);
+ 	if (!a)
+ 		return;
+-	if (res->alloc <= res->num_matches) {
+-		res->alloc = alloc_nr(res->num_matches);
+-		res->attrs = xrealloc(res->attrs,
+-				      sizeof(struct match_attr *) *
+-				      res->alloc);
+-	}
++
++	ALLOC_GROW(res->attrs, res->num_matches + 1, res->alloc);
+ 	res->attrs[res->num_matches++] = a;
+ }
+ 
+-- 
+1.7.3.2.343.g7d43d
