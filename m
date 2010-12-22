@@ -1,94 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v5] convert filter: supply path to external driver
-Date: Wed, 22 Dec 2010 15:22:35 -0800
-Message-ID: <7vmxnx4clg.fsf@alter.siamese.dyndns.org>
-References: <20101218223822.GA18902@arf.padd.com>
- <20101219212925.GA7393@arf.padd.com>
- <7vzks1e84p.fsf@alter.siamese.dyndns.org>
- <20101220160911.GA32136@honk.padd.com>
- <7v8vzkcol8.fsf@alter.siamese.dyndns.org>
- <20101221134403.GA10401@honk.padd.com> <20101221181924.GB25812@burratino>
- <20101221203322.GA13868@honk.padd.com>
- <7vzkry7rb4.fsf@alter.siamese.dyndns.org>
- <20101222144013.GA22089@honk.padd.com>
- <7v4oa565lc.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC PATCH v7 0/9] gitweb: Output caching,
+	with eval/die based error handling
+Date: Thu, 23 Dec 2010 00:54:32 +0100
+Message-ID: <20101222234843.7998.87068.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Thu Dec 23 00:23:29 2010
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: "J.H." <warthog9@eaglescrag.net>,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 23 00:55:24 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PVY1o-0007Zn-RT
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Dec 2010 00:23:29 +0100
+	id 1PVYWg-0006mw-Ha
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Dec 2010 00:55:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752422Ab0LVXWv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Dec 2010 18:22:51 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40572 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751850Ab0LVXWu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Dec 2010 18:22:50 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0FDDB2FD8;
-	Wed, 22 Dec 2010 18:23:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=pe5PBMpYKMB5CqflITkgJBY0a9Y=; b=rPPQ8f
-	nfyZPHMRiACxmcsQpaigpIW9n6ONK1JaSlpGYT3kUBR+IUUHrTvbMnn1SfSf/vhf
-	l20CrM7linXDdqXqsQNx5qVWe/iKAmAGeX0ikBOJGztbIXl7ouUjBO0Iu6kYdsR2
-	nmaRsdlqhiI/acQ+Qkll0AcyNHjlCXT6ITglA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=As5zAsYXXVNUej1sD6XQbvVm730J2Tl+
-	v7+HL8HhoS7SUZuVAWYSjK2vm8cGyqtJ6bQICbUzsAel6iriLYafOQZNre1LzdYn
-	nVlHODrEKvx1K+07tfsICU0NHss5KQP4WHs+fQU6EfPzVBgdEtNCVddjet9+8TJs
-	pNiYuIYjmjc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AFA162FD3;
-	Wed, 22 Dec 2010 18:23:13 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3A3622FCD; Wed, 22 Dec 2010
- 18:23:06 -0500 (EST)
-In-Reply-To: <7v4oa565lc.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Wed\, 22 Dec 2010 10\:10\:55 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 72ADBFD6-0E22-11E0-8559-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1752838Ab0LVXzP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Dec 2010 18:55:15 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:52803 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752452Ab0LVXzO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Dec 2010 18:55:14 -0500
+Received: by fxm20 with SMTP id 20so6638578fxm.19
+        for <git@vger.kernel.org>; Wed, 22 Dec 2010 15:55:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:subject:to:cc
+         :date:message-id:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=UBtZiFoI0jP6fUmD3VriIuWWdEBuW0aHH1RhxrAY2eU=;
+        b=A4ypoN2v9r5Eup8oWWhKuKP4tbYod/fC5rVGzv3mSQ6vuT9QAT9GEq5aETrI0HtXv6
+         NH7KLBG2pkpzGSbWa5l6DSDP2ddrlWjQVAKLB21l5trdnbxYRqZvIhWqX/LI/9xZlXKZ
+         7Ed4IVsNOOvJkBzkPCIXC+QoRXpKXAMo222Ow=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:subject:to:cc:date:message-id:user-agent:mime-version
+         :content-type:content-transfer-encoding;
+        b=QWiUZR/3CQOR1MaqmQK87crbl5f62KObv3mBjbMDGyV2LdwzkZVQTI1iQjvVNgmcq1
+         dT7jzAc1uXdpvyiaOy8sPEHX9BZ1bNgIQR2L8BrWWrA/3eCDGniOPkpMISnXtn+d5XRM
+         syukj5S+3wAArn1fYpHxuWyUn6j6Y5V5J9lpw=
+Received: by 10.223.70.193 with SMTP id e1mr6693688faj.91.1293062111863;
+        Wed, 22 Dec 2010 15:55:11 -0800 (PST)
+Received: from localhost.localdomain (abvw91.neoplus.adsl.tpnet.pl [83.8.220.91])
+        by mx.google.com with ESMTPS id k6sm1855288faa.30.2010.12.22.15.55.09
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 22 Dec 2010 15:55:10 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oBMNsW5q008074;
+	Thu, 23 Dec 2010 00:54:43 +0100
+User-Agent: StGIT/0.14.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164100>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164101>
 
-Here is another, just FYI.
+This is preliminary (proof of concept) version of shortened series
+intended as replacement (rewrite) of "Gitweb caching v8" series from
+John 'Warthog9' Hawley (J.H.).
 
--- >8 --
-Subject: [PATCH] t0021: avoid getting filter killed with SIGPIPE
+This series shows how one can manage exception handling using
+die_error like die, even in the presence of output caching.  The
+output caching engine has an option that allows to turn off (default)
+or on caching of error pages.
 
-The fake filter did not read from the standard input at all,
-which caused the calling side to die with SIGPIPE, depending
-on the timing.
+This series is unfinished; it does not include adaptive cache
+lifetime, nor support for other caching engines than the one provided
+(like Cache::Cache or CHI), nor does it support background cache
+generation or progress info indicator.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+This is just intended as proof of concept.
+
 ---
- t/t0021-conversion.sh |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+Jakub Narebski (9):
+      gitweb: Add optional output caching
+      gitweb/lib - Cache captured output (using compute_fh)
+      gitweb/lib - Very simple file based cache
+      gitweb/lib - Simple output capture by redirecting STDOUT to file
+      t/test-lib.sh: Export also GIT_BUILD_DIR in test_external
+      gitweb: Prepare for splitting gitweb
+      gitweb: Introduce %actions_info, gathering information about actions
+      gitweb: use eval + die for error (exception) handling
+      gitweb: Go to DONE_REQUEST rather than DONE_GITWEB in die_error
 
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index aacfd00..9078b84 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -100,6 +100,7 @@ test_expect_success expanded_in_repo '
- test_expect_success 'filter shell-escaped filenames' '
- 	cat >argc.sh <<-EOF &&
- 	#!$SHELL_PATH
-+	cat >/dev/null
- 	echo argc: \$# "\$@"
- 	EOF
- 	normal=name-no-magic &&
+ gitweb/Makefile                                |   22 +
+ gitweb/README                                  |   46 ++
+ gitweb/gitweb.perl                             |  280 +++++++++++++--
+ gitweb/lib/GitwebCache/CacheOutput.pm          |   84 ++++
+ gitweb/lib/GitwebCache/Capture/ToFile.pm       |  109 ++++++
+ gitweb/lib/GitwebCache/FileCacheWithLocking.pm |  452 ++++++++++++++++++++++++
+ t/gitweb-lib.sh                                |   11 +
+ t/t9500-gitweb-standalone-no-errors.sh         |   20 +
+ t/t9501-gitweb-standalone-http-status.sh       |   13 +
+ t/t9502-gitweb-standalone-parse-output.sh      |   33 ++
+ t/t9510-gitweb-capture-interface.sh            |   34 ++
+ t/t9510/test_capture_interface.pl              |  132 +++++++
+ t/t9511-gitweb-caching-interface.sh            |   34 ++
+ t/t9511/test_cache_interface.pl                |  381 ++++++++++++++++++++
+ t/t9512-gitweb-cache-output-interface.sh       |   34 ++
+ t/t9512/test_cache_output.pl                   |  162 +++++++++
+ t/test-lib.sh                                  |    4 
+ 17 files changed, 1806 insertions(+), 45 deletions(-)
+ create mode 100644 gitweb/lib/GitwebCache/CacheOutput.pm
+ create mode 100644 gitweb/lib/GitwebCache/Capture/ToFile.pm
+ create mode 100644 gitweb/lib/GitwebCache/FileCacheWithLocking.pm
+ create mode 100755 t/t9510-gitweb-capture-interface.sh
+ create mode 100755 t/t9510/test_capture_interface.pl
+ create mode 100755 t/t9511-gitweb-caching-interface.sh
+ create mode 100755 t/t9511/test_cache_interface.pl
+ create mode 100755 t/t9512-gitweb-cache-output-interface.sh
+ create mode 100755 t/t9512/test_cache_output.pl
+
 -- 
-1.7.3.4.811.g38bda
+Jakub Narebski
+ShadeHawk on #git
+Poland
