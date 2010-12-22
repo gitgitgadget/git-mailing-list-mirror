@@ -1,66 +1,72 @@
-From: Peter Krefting <peter@softwolves.pp.se>
-Subject: Re: Dangerous "git am --abort" behavior
-Date: Wed, 22 Dec 2010 10:49:19 +0100 (CET)
-Organization: /universe/earth/europe/norway/oslo
-Message-ID: <alpine.DEB.2.00.1012221046100.24315@ds9.cixit.se>
-References: <AANLkTinP4SArMkjvTXOEG=tf=8EcEdP9fPAB7F=iitSc@mail.gmail.com>
+From: Thiago Farina <tfransosi@gmail.com>
+Subject: Re: What's cooking in git.git (Dec 2010, #06; Tue, 21)
+Date: Wed, 22 Dec 2010 09:05:23 -0200
+Message-ID: <AANLkTin_u9FiZf-hbnhY0Dp+LifctxH8wKDL=yRrSpm+@mail.gmail.com>
+References: <7vlj3i5zz9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Linus Torvalds <torvalds@linux-foundation.org>
-X-From: git-owner@vger.kernel.org Wed Dec 22 11:00:50 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 22 12:05:30 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PVLV3-0007bi-0m
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 11:00:49 +0100
+	id 1PVMVe-0004Pj-CH
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 12:05:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752411Ab0LVKAk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Dec 2010 05:00:40 -0500
-Received: from upper-gw.cixit.se ([92.43.32.133]:38884 "EHLO mail.cixit.se"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751992Ab0LVKAh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Dec 2010 05:00:37 -0500
-X-Greylist: delayed 634 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Dec 2010 05:00:36 EST
-Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
-	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id oBM9nKif030539
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 22 Dec 2010 10:49:20 +0100
-Received: from localhost (peter@localhost)
-	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id oBM9nJ0r030536;
-	Wed, 22 Dec 2010 10:49:20 +0100
-X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
-In-Reply-To: <AANLkTinP4SArMkjvTXOEG=tf=8EcEdP9fPAB7F=iitSc@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-Accept: text/plain
-X-Warning: Junk / bulk email will be reported
-X-Rating: This message is not to be eaten by humans
-X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Wed, 22 Dec 2010 10:49:20 +0100 (CET)
+	id S1751658Ab0LVLFZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Dec 2010 06:05:25 -0500
+Received: from mail-bw0-f45.google.com ([209.85.214.45]:65489 "EHLO
+	mail-bw0-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751490Ab0LVLFZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Dec 2010 06:05:25 -0500
+Received: by bwz16 with SMTP id 16so5579126bwz.4
+        for <git@vger.kernel.org>; Wed, 22 Dec 2010 03:05:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=xlri51ztOXVXTQLVLNWnoa4b9Q7huM3+qe+UHhpV5cM=;
+        b=xBXQ2+r45S+D9xexDLWpAOg+93Zm6wtaCIJwwtGTFoPaMPiCuKzls0YxevTIEjlS8P
+         CiIKOE8xI2KbxXku1fG1qKLi5EXyG9EgqDGOrAfKPJpLfuiec7RuV+SPk5uA1CBmDTfL
+         OoxA2hr+q9QWD6/NvKsAeN5DpW3EqKIEr3nsk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=V2IMw1bD1OF+rUW/+mmGe9BJk5L9x7+HKZ8xEgd5OzTKwrU3bMnkWkmcGcC7a9T09t
+         o+Csp8AtBRLeDSDF4AaUKH55cVAK+ahLCE9IGR1b2xfASLEfxGMtyf0QjR6/6yymZyW1
+         one6jh0Mk2MRRQQ8bqWsAAALS+kjgBgX0jyzQ=
+Received: by 10.204.55.129 with SMTP id u1mr1584144bkg.43.1293015923777; Wed,
+ 22 Dec 2010 03:05:23 -0800 (PST)
+Received: by 10.204.141.82 with HTTP; Wed, 22 Dec 2010 03:05:23 -0800 (PST)
+In-Reply-To: <7vlj3i5zz9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164075>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164076>
 
-Linus Torvalds:
+On Tue, Dec 21, 2010 at 11:59 PM, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+> * tf/commit-list-prefix (2010-11-26) 1 commit
+> =C2=A0(merged to 'next' on 2010-12-21 at 16e1351)
+> =C2=A0+ commit: Add commit_list prefix in two function names.
+>
+> This churn
+Since you said that, can could you drop this patch? I don't mind if
+you discard this patch since you consider it a CHURN[1].
 
-> I just noticed this, and I wonder if it has bitten me before without
-> me noticing: "git am --abort" can be really dangerous.
+> already introduced an unnecessary conflict.
+Which conflict? If you say, I could try to fix it.
 
-Indeed, I have been bitten by that several times, having worked heavily on 
-applying patches at $dayjob for a while now. I have taken to habit to always 
-do the same "rm -rf .git/rebase-apply" that you mention before doing anything 
-involving am or rebase...
+>=C2=A0It is not by itself a biggie, but these things tend to add up.
 
-> Or maybe we could just introduce a new "git am --clean" that just flushes 
-> any old pending state (ie does that "clean_abort" thing, which is 
-> basically just the "rm -rf" I've done by hand).
+How *these things* add a conflict? This is a new thing to me really.
 
-That would be very helpful, as manually doing a "rm -rf" inside the .git 
-directory does make me nervous each time I do it...
-
--- 
-\\// Peter - http://www.softwolves.pp.se/
+[1] Hope I will learn what this means and avoid it, something like,
+unnecessary, stupid, really trivial, etc...
