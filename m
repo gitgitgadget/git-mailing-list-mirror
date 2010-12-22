@@ -1,82 +1,89 @@
-From: Leonid Podolny <leonidp.lists@gmail.com>
-Subject: Re: Rebasing multiple branches
-Date: Wed, 22 Dec 2010 16:54:46 +0200
-Message-ID: <4D121136.6050906@gmail.com>
-References: <4D10AE5B.2080700@gmail.com> <4D10B44D.5090309@viscovery.net> <20101222143654.GA4829@nibiru.local>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 44/47] Remove all logic from get_git_work_tree()
+Date: Wed, 22 Dec 2010 07:17:46 -0800
+Message-ID: <7vd3ot6dlx.fsf@alter.siamese.dyndns.org>
+References: <1290785563-15339-1-git-send-email-pclouds@gmail.com>
+ <1290785563-15339-45-git-send-email-pclouds@gmail.com>
+ <7vpqsu6059.fsf@alter.siamese.dyndns.org>
+ <AANLkTikOOaKSf333UzawEgAf_=t-WBrWLu7tmiOrqO8V@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: weigelt@metux.de
-X-From: git-owner@vger.kernel.org Wed Dec 22 15:54:58 2010
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 22 16:18:02 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PVQ5f-0000R7-QB
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 15:54:56 +0100
+	id 1PVQS0-0005zO-KM
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 16:18:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753365Ab0LVOyv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Dec 2010 09:54:51 -0500
-Received: from mail-fx0-f43.google.com ([209.85.161.43]:58255 "EHLO
-	mail-fx0-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752403Ab0LVOyu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Dec 2010 09:54:50 -0500
-Received: by fxm18 with SMTP id 18so5704037fxm.2
-        for <git@vger.kernel.org>; Wed, 22 Dec 2010 06:54:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=1EVK1p/b9CoiGY+LDdz8UUmxgqGb75YZF/ZQl3yDevo=;
-        b=S0hYJy9OoZgSbJT7wB+Iwm+3bFq8TaIdg0WX5sCAmqVCf0F0JD7iht3EwFEN3vrzfA
-         D0XqPQW/oL7KNC+wD/IHYYdzqD3rCQizaZPIba7Z2eMDGRfNO1GIZCoze76PWncOx1lz
-         g9Q6wuC3ew3fpsErLFEPYIXe/c9dDHrgyIhB0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=fWqvPywOh6rOX6nfwtHktagx0R4yKe5F/KaxXdLfbQnhicNl8FSOKTtChDdj7MBVLd
-         LOE5XruY2bQTYj7aDMR/xAReb9CoQNy18Sj74B3WgpqqPxtDOnT265028ugdWGvGFu+i
-         Pxj0N4YsAp1G1d+j42iyZ/ZzoyN5EZ5bmgxp8=
-Received: by 10.223.86.16 with SMTP id q16mr7548659fal.58.1293029689239;
-        Wed, 22 Dec 2010 06:54:49 -0800 (PST)
-Received: from [10.20.20.19] (80.179.223.9.cable.012.net.il [80.179.223.9])
-        by mx.google.com with ESMTPS id 5sm1724114fak.23.2010.12.22.06.54.47
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 22 Dec 2010 06:54:48 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Thunderbird/3.1.7
-In-Reply-To: <20101222143654.GA4829@nibiru.local>
+	id S1753352Ab0LVPR4 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Dec 2010 10:17:56 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40001 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752865Ab0LVPRz convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Dec 2010 10:17:55 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 997C72213;
+	Wed, 22 Dec 2010 10:18:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=yZHo02kFAYl9
+	dxI7SBDyqIA9GHA=; b=p5gZt7e68Z3kiTcU31Rp2BaKU8UXwRHRe6fw0FDyCTUp
+	9+J55L4GGcWNUaw69cXWibwZsVvEeyNDLusggmIDH1KGp11yytc4LHVOf8ZCeQZ9
+	Y3xZ+xLZLHdGyd8WHhHhr4lZZ+tVqDvdnN/t3q/hELRUQJulrbXPMYhQ0PDHrAM=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=kXQhUg
+	T6eKJqGUFbCSyg11odC4jdSeWK2JPGgoWvTmfwVMU/XzuY+JYehRMX9nHZ+SgtMC
+	S+Umf3NojYrDIsPPIVwSkch0LCC6BCAnpbnm5THl4tTMGBBX8LAAMJFy28K0PqzZ
+	dR0uZUAehZk60BnLNljV/MsW9OsoXRYw2Ka4Y=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 779C22211;
+	Wed, 22 Dec 2010 10:18:19 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8E0FD220D; Wed, 22 Dec 2010
+ 10:18:16 -0500 (EST)
+In-Reply-To: <AANLkTikOOaKSf333UzawEgAf_=t-WBrWLu7tmiOrqO8V@mail.gmail.com>
+ (Nguyen Thai Ngoc Duy's message of "Wed\, 22 Dec 2010 14\:22\:30 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: B52A1D4E-0DDE-11E0-B099-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164089>
 
-On 12/22/2010 04:36 PM, Enrico Weigelt wrote:
-> Why not this way ?
->
-> git checkout D
-> git rebase -p -i D~3 --onto C'
->
-> (C' is the merged branch of A' and B').
->
->
-> So:
->
-> git checkout branch_A -b rebasing_A
-> git rebase master			# rebase old A to master
-> git checkout branch_B -b rebasing_B
-> git rebase master			# rebase old B to master
-> git checkout -b rebased_merge
-> git merge rebasing_A			# we're on B', merge in A'
-> git checkout branch_C
-> git rebase -p -i C --onto rebased_merge # set D~3..D ontop of it
->
->
-> cu
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-Ah, nice. I didn't notice the -p option. However, the man page advises 
-against using -p and -i together.
+> 2010/12/22 Junio C Hamano <gitster@pobox.com>:
+>>> =C2=A0const char *get_git_work_tree(void)
+>>> =C2=A0{
+>>> - =C2=A0 =C2=A0 if (startup_info && !startup_info->setup_explicit) =
+{
+>>> -...
+>>> - =C2=A0 =C2=A0 }
+>>> =C2=A0 =C2=A0 =C2=A0 return work_tree;
+>>> =C2=A0}
+>>
+>> Would it be a bug in the new set-up code if this function gets calle=
+d and
+>> work_tree is still NULL?
+>>
+>> There are quite a few callers that call get_git_work_tree() and expe=
+ct
+>> that it will always return a non NULL pointer. =C2=A0Perhaps we woul=
+d want an
+>> assertion here?
+>>
+>
+> While the assertion sounds good, it does not work well. The old
+> function can return NULL in bare repos. is_bare_repository() and
+> is_inside_work_tree() expect NULL from get_git_work_tree() sometimes.
+
+Ok, don't bother changing anything in that case---it won't help us much=
+=2E
