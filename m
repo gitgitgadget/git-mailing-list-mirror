@@ -1,205 +1,97 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: [PATCH v5] convert filter: supply path to external driver
-Date: Wed, 22 Dec 2010 06:40:13 -0800
-Message-ID: <20101222144013.GA22089@honk.padd.com>
-References: <20101218223822.GA18902@arf.padd.com>
- <20101219212925.GA7393@arf.padd.com>
- <7vzks1e84p.fsf@alter.siamese.dyndns.org>
- <20101220160911.GA32136@honk.padd.com>
- <7v8vzkcol8.fsf@alter.siamese.dyndns.org>
- <20101221134403.GA10401@honk.padd.com>
- <20101221181924.GB25812@burratino>
- <20101221203322.GA13868@honk.padd.com>
- <7vzkry7rb4.fsf@alter.siamese.dyndns.org>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: Rebasing multiple branches
+Date: Wed, 22 Dec 2010 15:36:55 +0100
+Message-ID: <20101222143654.GA4829@nibiru.local>
+References: <4D10AE5B.2080700@gmail.com> <4D10B44D.5090309@viscovery.net>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Johannes Sixt <j.sixt@viscovery.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 22 15:40:24 2010
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 22 15:41:42 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PVPrb-0008By-Ea
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 15:40:23 +0100
+	id 1PVPsr-0000ij-TZ
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 15:41:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752722Ab0LVOkP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Dec 2010 09:40:15 -0500
-Received: from honk.padd.com ([74.3.171.149]:60944 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753010Ab0LVOkO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Dec 2010 09:40:14 -0500
-Received: by honk.padd.com (Postfix, from userid 7770)
-	id 52A9B2144; Wed, 22 Dec 2010 06:40:13 -0800 (PST)
+	id S1753230Ab0LVOlh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Dec 2010 09:41:37 -0500
+Received: from caprica.metux.de ([82.165.128.25]:41436 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752750Ab0LVOlg (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 22 Dec 2010 09:41:36 -0500
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id oBMEb16Y029382
+	for <git@vger.kernel.org>; Wed, 22 Dec 2010 15:37:03 +0100
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id oBMEavFX029359
+	for git@vger.kernel.org; Wed, 22 Dec 2010 15:36:57 +0100
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id oBMEatch013285
+	for git@vger.kernel.org; Wed, 22 Dec 2010 15:36:55 +0100
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <7vzkry7rb4.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <4D10B44D.5090309@viscovery.net>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164086>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164087>
 
-Filtering to support keyword expansion may need the name of
-the file being filtered.  In particular, to support p4 keywords
-like
+* Johannes Sixt <j.sixt@viscovery.net> wrote:
+> Am 12/21/2010 14:40, schrieb Leonid Podolny:
+> >         B--o--o--o--o--o--o  <--branch A
+> >        /                   \
+> > o--o--A--o--E  <--master    C--o--o--o--D  <--branch C
+> >        \                   /
+> >         C--o--o--o--o--o--o  <--branch B
+> > 
+> > I would like to rebase all three branches A, B and C onto commit E,...
+> 
+> git rebase master A
+> git rebase master B
+> git merge A
+> git rebase -i HEAD C
+> 
+> The last rebase I propose as interactive so that you can remove those
+> commits before D~3 that you have already rebased, because they are likely
+> to conflict unnecessarily, and you would --skip them anyway.
 
-    $File: //depot/product/dir/script.sh $
+Why not this way ?
 
-the smudge filter needs to know the name of the file it is
-smudging.
+git checkout D
+git rebase -p -i D~3 --onto C'
 
-Allow "%f" in the custom filter command line specified in the
-configuration.  This will be substituted by the filename
-inside a single-quote pair to be passed to the shell.
+(C' is the merged branch of A' and B').
 
-Signed-off-by: Pete Wyckoff <pw@padd.com>
----
 
-gitster@pobox.com wrote on Tue, 21 Dec 2010 13:24 -0800:
-> [detailed review]
+So:
 
-Changes from v4:
-- Updated commit message, docs per Junio mods
-- Removed space after shell redirection ">"
-- Simplified test case per Junio recommendations
+git checkout branch_A -b rebasing_A
+git rebase master			# rebase old A to master
+git checkout branch_B -b rebasing_B
+git rebase master			# rebase old B to master
+git checkout -b rebased_merge
+git merge rebasing_A			# we're on B', merge in A'
+git checkout branch_C
+git rebase -p -i C --onto rebased_merge # set D~3..D ontop of it
 
-Hopefully this is the last round of review and it is
-safe to stage now.  Thanks,
 
-		-- Pete
-
- Documentation/gitattributes.txt |   10 +++++++++
- convert.c                       |   22 +++++++++++++++++++-
- t/t0021-conversion.sh           |   42 +++++++++++++++++++++++++++++++++++++++
- 3 files changed, 73 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 564586b..8c2fdd1 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -317,6 +317,16 @@ command is "cat").
- 	smudge = cat
- ------------------------
- 
-+Sequence "%f" on the filter command line is replaced with the name of
-+the file the filter is working on.  A filter might use this in keyword
-+substitution.  For example:
-+
-+------------------------
-+[filter "p4"]
-+	clean = git-p4-filter --clean %f
-+	smudge = git-p4-filter --smudge %f
-+------------------------
-+
- 
- Interaction between checkin/checkout attributes
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-diff --git a/convert.c b/convert.c
-index e41a31e..8f020bc 100644
---- a/convert.c
-+++ b/convert.c
-@@ -317,6 +317,7 @@ struct filter_params {
- 	const char *src;
- 	unsigned long size;
- 	const char *cmd;
-+	const char *path;
- };
- 
- static int filter_buffer(int in, int out, void *data)
-@@ -329,7 +330,23 @@ static int filter_buffer(int in, int out, void *data)
- 	int write_err, status;
- 	const char *argv[] = { NULL, NULL };
- 
--	argv[0] = params->cmd;
-+	/* apply % substitution to cmd */
-+	struct strbuf cmd = STRBUF_INIT;
-+	struct strbuf path = STRBUF_INIT;
-+	struct strbuf_expand_dict_entry dict[] = {
-+	    "f", NULL,
-+	    NULL, NULL,
-+	};
-+
-+	/* quote the path to preserve spaces, etc. */
-+	sq_quote_buf(&path, params->path);
-+	dict[0].value = path.buf;
-+
-+	/* expand all %f with the quoted path */
-+	strbuf_expand(&cmd, params->cmd, strbuf_expand_dict_cb, &dict);
-+	strbuf_release(&path);
-+
-+	argv[0] = cmd.buf;
- 
- 	memset(&child_process, 0, sizeof(child_process));
- 	child_process.argv = argv;
-@@ -349,6 +366,8 @@ static int filter_buffer(int in, int out, void *data)
- 	status = finish_command(&child_process);
- 	if (status)
- 		error("external filter %s failed %d", params->cmd, status);
-+
-+	strbuf_release(&cmd);
- 	return (write_err || status);
- }
- 
-@@ -376,6 +395,7 @@ static int apply_filter(const char *path, const char *src, size_t len,
- 	params.src = src;
- 	params.size = len;
- 	params.cmd = cmd;
-+	params.path = path;
- 
- 	fflush(NULL);
- 	if (start_async(&async))
-diff --git a/t/t0021-conversion.sh b/t/t0021-conversion.sh
-index 828e35b..aacfd00 100755
---- a/t/t0021-conversion.sh
-+++ b/t/t0021-conversion.sh
-@@ -93,4 +93,46 @@ test_expect_success expanded_in_repo '
- 	cmp expanded-keywords expected-output
- '
- 
-+# The use of %f in a filter definition is expanded to the path to
-+# the filename being smudged or cleaned.  It must be shell escaped.
-+# First, set up some interesting file names and pet them in
-+# .gitattributes.
-+test_expect_success 'filter shell-escaped filenames' '
-+	cat >argc.sh <<-EOF &&
-+	#!$SHELL_PATH
-+	echo argc: \$# "\$@"
-+	EOF
-+	normal=name-no-magic &&
-+	special="name  with '\''sq'\'' and \$x" &&
-+	echo some test text >"$normal" &&
-+	echo some test text >"$special" &&
-+	git add "$normal" "$special" &&
-+	git commit -q -m "add files" &&
-+	echo "name* filter=argc" >.gitattributes &&
-+
-+	# delete the files and check them out again, using a smudge filter
-+	# that will count the args and echo the command-line back to us
-+	git config filter.argc.smudge "sh ./argc.sh %f" &&
-+	rm "$normal" "$special" &&
-+	git checkout -- "$normal" "$special" &&
-+
-+	# make sure argc.sh counted the right number of args
-+	echo "argc: 1 $normal" >expect &&
-+	test_cmp expect "$normal" &&
-+	echo "argc: 1 $special" >expect &&
-+	test_cmp expect "$special" &&
-+
-+	# do the same thing, but with more args in the filter expression
-+	git config filter.argc.smudge "sh ./argc.sh %f --my-extra-arg" &&
-+	rm "$normal" "$special" &&
-+	git checkout -- "$normal" "$special" &&
-+
-+	# make sure argc.sh counted the right number of args
-+	echo "argc: 2 $normal --my-extra-arg" >expect &&
-+	test_cmp expect "$normal" &&
-+	echo "argc: 2 $special --my-extra-arg" >expect &&
-+	test_cmp expect "$special" &&
-+	:
-+'
-+
- test_done
+cu
 -- 
-1.7.2.3
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
