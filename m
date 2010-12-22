@@ -1,84 +1,66 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 44/47] Remove all logic from get_git_work_tree()
-Date: Wed, 22 Dec 2010 14:22:30 +0700
-Message-ID: <AANLkTikOOaKSf333UzawEgAf_=t-WBrWLu7tmiOrqO8V@mail.gmail.com>
-References: <1290785563-15339-1-git-send-email-pclouds@gmail.com>
- <1290785563-15339-45-git-send-email-pclouds@gmail.com> <7vpqsu6059.fsf@alter.siamese.dyndns.org>
+From: Peter Krefting <peter@softwolves.pp.se>
+Subject: Re: Dangerous "git am --abort" behavior
+Date: Wed, 22 Dec 2010 10:49:19 +0100 (CET)
+Organization: /universe/earth/europe/norway/oslo
+Message-ID: <alpine.DEB.2.00.1012221046100.24315@ds9.cixit.se>
+References: <AANLkTinP4SArMkjvTXOEG=tf=8EcEdP9fPAB7F=iitSc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 22 08:23:14 2010
+Content-Type: TEXT/PLAIN; format=flowed; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Linus Torvalds <torvalds@linux-foundation.org>
+X-From: git-owner@vger.kernel.org Wed Dec 22 11:00:50 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PVJ2Y-0006Qz-Ap
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 08:23:14 +0100
+	id 1PVLV3-0007bi-0m
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 11:00:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752007Ab0LVHXE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 22 Dec 2010 02:23:04 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:51568 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751868Ab0LVHXC convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 22 Dec 2010 02:23:02 -0500
-Received: by wwa36 with SMTP id 36so4985252wwa.1
-        for <git@vger.kernel.org>; Tue, 21 Dec 2010 23:23:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=+lgplXbwNySZGnSVkHb2hXyM+jr9dUf6sJKZmYyCkq4=;
-        b=nhrL6jcRIz9Sa2EqGsLCTvGqaQSLoGOetXDEdIk54367dEZjXsohvBrNsi3cHq92Lj
-         X6SZ4GFFflRyZGdx+tKCqaRPxKsoHgR5lQvqgG3aB9zY4pjtVse+ETr7hb0bVsGH/OZI
-         Rvswy2ZjQZK4rX+2qwbL2+vX6xwrr189IG53I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=qyOCOR/ltFbJ0HQWc30ujeq73mNjITT/JdFOYRHzZriw1ml8jiCwz4B5dosE0qInLD
-         6l6+bYHTczCgOT7+5MtUlcaBSQqa7ZpJtqJb8WhDsUSxBfTE9WO+vpcdQp55FEWSa5nA
-         5x3RPNILKWvIj4wli2cx7rPchoIn2wly5TlO4=
-Received: by 10.216.30.144 with SMTP id k16mr530466wea.19.1293002580907; Tue,
- 21 Dec 2010 23:23:00 -0800 (PST)
-Received: by 10.216.158.83 with HTTP; Tue, 21 Dec 2010 23:22:30 -0800 (PST)
-In-Reply-To: <7vpqsu6059.fsf@alter.siamese.dyndns.org>
+	id S1752411Ab0LVKAk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Dec 2010 05:00:40 -0500
+Received: from upper-gw.cixit.se ([92.43.32.133]:38884 "EHLO mail.cixit.se"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1751992Ab0LVKAh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Dec 2010 05:00:37 -0500
+X-Greylist: delayed 634 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Dec 2010 05:00:36 EST
+Received: from ds9.cixit.se (peter@localhost [127.0.0.1])
+	by mail.cixit.se (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id oBM9nKif030539
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 22 Dec 2010 10:49:20 +0100
+Received: from localhost (peter@localhost)
+	by ds9.cixit.se (8.14.3/8.14.3/Submit) with ESMTP id oBM9nJ0r030536;
+	Wed, 22 Dec 2010 10:49:20 +0100
+X-Authentication-Warning: ds9.cixit.se: peter owned process doing -bs
+In-Reply-To: <AANLkTinP4SArMkjvTXOEG=tf=8EcEdP9fPAB7F=iitSc@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+Accept: text/plain
+X-Warning: Junk / bulk email will be reported
+X-Rating: This message is not to be eaten by humans
+X-Greylist: Sender is SPF-compliant, not delayed by milter-greylist-3.0 (mail.cixit.se [127.0.0.1]); Wed, 22 Dec 2010 10:49:20 +0100 (CET)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164075>
 
-2010/12/22 Junio C Hamano <gitster@pobox.com>:
->> =C2=A0const char *get_git_work_tree(void)
->> =C2=A0{
->> - =C2=A0 =C2=A0 if (startup_info && !startup_info->setup_explicit) {
->> -...
->> - =C2=A0 =C2=A0 }
->> =C2=A0 =C2=A0 =C2=A0 return work_tree;
->> =C2=A0}
->
-> Would it be a bug in the new set-up code if this function gets called=
- and
-> work_tree is still NULL?
->
-> There are quite a few callers that call get_git_work_tree() and expec=
-t
-> that it will always return a non NULL pointer. =C2=A0Perhaps we would=
- want an
-> assertion here?
->
+Linus Torvalds:
 
-While the assertion sounds good, it does not work well. The old
-function can return NULL in bare repos. is_bare_repository() and
-is_inside_work_tree() expect NULL from get_git_work_tree() sometimes.
+> I just noticed this, and I wonder if it has bitten me before without
+> me noticing: "git am --abort" can be really dangerous.
 
-I'll see if I can move is_inside_work_tree() over environment.c (so
-that both callers can access work_tree var directly) and have a clean
-"make test". It does not look feasible though because of the static
-variable inside_work_tree in setup.c.
---=20
-Duy
+Indeed, I have been bitten by that several times, having worked heavily on 
+applying patches at $dayjob for a while now. I have taken to habit to always 
+do the same "rm -rf .git/rebase-apply" that you mention before doing anything 
+involving am or rebase...
+
+> Or maybe we could just introduce a new "git am --clean" that just flushes 
+> any old pending state (ie does that "clean_abort" thing, which is 
+> basically just the "rm -rf" I've done by hand).
+
+That would be very helpful, as manually doing a "rm -rf" inside the .git 
+directory does make me nervous each time I do it...
+
+-- 
+\\// Peter - http://www.softwolves.pp.se/
