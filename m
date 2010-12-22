@@ -1,77 +1,101 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH 13/14] t4135-*.sh: Skip the "backslash" tests on cygwin
-Date: Wed, 22 Dec 2010 08:44:32 +0700
-Message-ID: <AANLkTi=-7ihdW_cMiAqnyjbUE_d35OFrSSnQQw4mi64G@mail.gmail.com>
-References: <4D07B977.9010502@ramsay1.demon.co.uk> <201012142149.33725.j6t@kdbg.org>
- <4D0A94D8.6090206@ramsay1.demon.co.uk> <201012172254.31242.j6t@kdbg.org> <4D1100A3.2010309@ramsay1.demon.co.uk>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 36/47] rev-parse: prints --git-dir relative to user's cwd
+Date: Tue, 21 Dec 2010 17:56:12 -0800
+Message-ID: <7vvd2m605f.fsf@alter.siamese.dyndns.org>
+References: <1290785563-15339-1-git-send-email-pclouds@gmail.com>
+ <1290785563-15339-37-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j6t@kdbg.org>, Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>, jrnieder@gmail.com
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Wed Dec 22 02:45:13 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 22 02:56:27 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PVDlQ-00079A-OR
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 02:45:13 +0100
+	id 1PVDwJ-0002YO-5e
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 02:56:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751364Ab0LVBpF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 21 Dec 2010 20:45:05 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:58696 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751081Ab0LVBpD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 21 Dec 2010 20:45:03 -0500
-Received: by wwa36 with SMTP id 36so4799675wwa.1
-        for <git@vger.kernel.org>; Tue, 21 Dec 2010 17:45:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=bZFcMEvKe6IPacH8iR4z9GnXuDAKIDHdKV1e8nbglKU=;
-        b=pp8uUQyuncWYzUbsbMneP01WYmsWW9Biz+2SKeoAiXAAvbix25kCh+Uh31zf7Bs3M7
-         gdDBQcXWQ1lGBVD0B+TFGk9SEJRGGisGiLcbA6hv4RaOppd12S4NfZaTB1G6tJfpaWHW
-         FyNrolPoYEk6ukM9rIQroB/j+FbbloeG7Omk4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=CA32Bi2nbuGvZvhWlZ0ADFNjGAHzNRrhGaSHPmp4ncW1Um1/dA+g4mU2K2jlIGg9hA
-         90JGHGi2RFwvmUZFjj7kmS1i/ZwVuT4cDKxGlWlz+KROBgUceiZ7qqGw0RBxUhVxWYGd
-         0TX0bPc5jQoxAy6CY9F/Enbe58aEDml+4DNz4=
-Received: by 10.216.142.101 with SMTP id h79mr7019590wej.49.1292982302376;
- Tue, 21 Dec 2010 17:45:02 -0800 (PST)
-Received: by 10.216.158.83 with HTTP; Tue, 21 Dec 2010 17:44:32 -0800 (PST)
-In-Reply-To: <4D1100A3.2010309@ramsay1.demon.co.uk>
+	id S1751656Ab0LVB4W convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 21 Dec 2010 20:56:22 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54083 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751230Ab0LVB4V convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 21 Dec 2010 20:56:21 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D41673927;
+	Tue, 21 Dec 2010 20:56:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=7dLOiqkF2mBpW+XNWTnZxEG8N
+	T0=; b=W2L042J/jvqgYecHgCw/WP7j+4HNFJcKmxs6MNzP7m5bd50io9fxUfJob
+	uU1Jb1QjwT2UeRv43NCvBarQn4yZrkB793tyHUYMOjfVW4pvfOQV5/F1LDJB4OMi
+	fu0zaG+cgNVsm50US6CdN0i2el4cPq2+UGhywzfi1YiF8gpiFI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=X4wzQ3O6dkNJ2moif2K
+	uUWjkn8Ntvm9OUsfi1lGRQc0VAK9ptPqANaqA019FXiK6u9/RjwQOtig10A8vZSF
+	MBycC71uoFFecLVeB4IOi4da6azGZBA1hfPQxKHMOxQR5UZOUYm6ZycvQMUoYGlC
+	EQ0S1ZNaCT1prfPSEvCxmuII=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B06D93924;
+	Tue, 21 Dec 2010 20:56:47 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A05FF3922; Tue, 21 Dec 2010
+ 20:56:44 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: BC3D4680-0D6E-11E0-BD32-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164068>
 
-On Wed, Dec 22, 2010 at 2:31 AM, Ramsay Jones
-<ramsay@ramsay1.demon.co.uk> wrote:
-> The problem boils down to the call to strncmp_icase() suppressing the call to
-> fnmatch() when the pattern contains glob chars, but the (remaining) string is
-> equal to the name; thus returning an exact match (MATCHED_EXACTLY) rather than
-> calling fnmatch (and returning either no-match or MATCHED_FNMATCH).
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-I think that's expected behavior. Wildcard pathspecs are fixed
-pathspecs will additional wildcard matching support and can match both
-ways. See 186d604 (glossary: define pathspec)
+> git_dir variable in environment.c is relative to git's cwd, not user'=
+s
+> cwd. Convert the relative path (actualy by making it absolute path)
+> before printing out.
+>
+> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
+il.com>
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> ---
+>  builtin/rev-parse.c |    6 +++++-
+>  1 files changed, 5 insertions(+), 1 deletions(-)
+>
+> diff --git a/builtin/rev-parse.c b/builtin/rev-parse.c
+> index a5a1c86..65c287b 100644
+> --- a/builtin/rev-parse.c
+> +++ b/builtin/rev-parse.c
+> @@ -647,7 +647,11 @@ int cmd_rev_parse(int argc, const char **argv, c=
+onst char *prefix)
+>  				static char cwd[PATH_MAX];
+>  				int len;
+>  				if (gitdir) {
+> -					puts(gitdir);
+> +					if (is_absolute_path(gitdir) || !prefix) {
+> +						puts(gitdir);
+> +						continue;
+> +					}
+> +					puts(make_absolute_path(gitdir));
+>  					continue;
+>  				}
+>  				if (!prefix) {
 
-> [BTW, I started looking at the history of this function and I think this
-> problem has been there for a long time!]
+I do not quite understand this change.  I can obtain GIT_DIR in a relat=
+ive
+form without this patch already:
 
-Not only in this function. pathspec_matches() in builtin/grep.c
-behaves the same (I think).
+    $ cd t/
+    $ git --git-dir=3D../.git rev-parse --git-dir HEAD
+    ../.git
+    c7511731675da8b50c0d5243aa04a98c8a5ee316
 
-> Hmm, I think this is all being rewritten, at the moment (in branch
-> nd/struct-pathspec) isn't it?
-
-Yes. Thanks for pulling me in. I didn't know recent match_one() has
-case-insensitive support.
--- 
-Duy
+Could we please have a new test case to demonstrate what is broken with=
+out
+this patch?
