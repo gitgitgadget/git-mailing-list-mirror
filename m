@@ -1,73 +1,68 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: "git pull" doesn't respect --work-tree parameter
-Date: Wed, 22 Dec 2010 18:20:23 +0700
-Message-ID: <AANLkTik9s0cLc_P=NWvpO=DhytOkLNASEM7sjzoscHo3@mail.gmail.com>
-References: <AANLkTi=UtZuPQcTNnwS_fXgzRn4MHAUGS8zyTMqX9E2J@mail.gmail.com>
+From: Andreas Ericsson <ae@op5.se>
+Subject: Re: What's cooking in git.git (Dec 2010, #06; Tue, 21)
+Date: Wed, 22 Dec 2010 12:39:29 +0100
+Message-ID: <4D11E371.4000006@op5.se>
+References: <7vlj3i5zz9.fsf@alter.siamese.dyndns.org> <AANLkTin_u9FiZf-hbnhY0Dp+LifctxH8wKDL=yRrSpm+@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git <git@vger.kernel.org>
-To: Alexey Zakhlestin <indeyets@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Dec 22 12:21:00 2010
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thiago Farina <tfransosi@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 22 12:39:44 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PVMke-0003Py-5k
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 12:21:00 +0100
+	id 1PVN2k-0003lb-0J
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 12:39:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751670Ab0LVLUz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Dec 2010 06:20:55 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:51321 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751335Ab0LVLUz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Dec 2010 06:20:55 -0500
-Received: by wyb28 with SMTP id 28so4910167wyb.19
-        for <git@vger.kernel.org>; Wed, 22 Dec 2010 03:20:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type;
-        bh=c+ZvyySZzf4yK3sn4DPLaU1SNGToz89dgVcUpvIwRBs=;
-        b=U6NUAWw5MzXd0sg+JYPHcEWixgjXDDJN0WffCQ/gB6zXnTNq8hftR8xl2N2FwOcQMD
-         Q4RFaJBbbWO3JZFz2VjUUEQn+GB4xZmuwj78f/haLmFyuRbV6vpumkNevKMrtLPojdLl
-         jRXMQHETX4J25kJehsezMazg70YLjnoRe9aKs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=u9nT5zk8iyRmuPkSjv/XAPAEowTR3yjVdVNT0XNQYKrD6D1IrKgMfqK/oMC4KsiUCB
-         ScVGlriFYNjoNa0aXBJnezF85v8cKp+/SCRA6VIXaP0WU3Ykgw4f0Dtwq2wDDcWBRADI
-         8ic9XzC4bfgvDoi5FWmb2FSaCUgUXPxi5TO3g=
-Received: by 10.216.177.9 with SMTP id c9mr7660158wem.34.1293016853755; Wed,
- 22 Dec 2010 03:20:53 -0800 (PST)
-Received: by 10.216.158.83 with HTTP; Wed, 22 Dec 2010 03:20:23 -0800 (PST)
-In-Reply-To: <AANLkTi=UtZuPQcTNnwS_fXgzRn4MHAUGS8zyTMqX9E2J@mail.gmail.com>
+	id S1751656Ab0LVLje (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Dec 2010 06:39:34 -0500
+Received: from mail-ey0-f171.google.com ([209.85.215.171]:53561 "EHLO
+	mail-ey0-f171.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751427Ab0LVLjd (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Dec 2010 06:39:33 -0500
+Received: by eyg5 with SMTP id 5so2577004eyg.2
+        for <git@vger.kernel.org>; Wed, 22 Dec 2010 03:39:32 -0800 (PST)
+Received: by 10.213.22.209 with SMTP id o17mr5748599ebb.41.1293017971760;
+        Wed, 22 Dec 2010 03:39:31 -0800 (PST)
+Received: from [192.168.1.178] (sth-vpn1.op5.com [193.201.96.49])
+        by mx.google.com with ESMTPS id t5sm4623444eeh.14.2010.12.22.03.39.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 22 Dec 2010 03:39:30 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Thunderbird/3.1.7 ThunderGit/0.1a
+In-Reply-To: <AANLkTin_u9FiZf-hbnhY0Dp+LifctxH8wKDL=yRrSpm+@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164078>
 
-On Tue, Dec 21, 2010 at 11:04 PM, Alexey Zakhlestin <indeyets@gmail.com> wrote:
-> I am trying to use the following command:
->
-> git '--git-dir=/path/to/repository/.git' '--work-tree=/path/to/repository' pull
->
-> and get this error:
-> "git-pull cannot be used without a working tree"
+On 12/22/2010 12:05 PM, Thiago Farina wrote:
+> 
+> [1] Hope I will learn what this means and avoid it, something like,
+> unnecessary, stupid, really trivial, etc...
 
-It works fine for me. What's the result of
+churn:
+Work for little or no benefit.
+A patch that adds little or no value to the codebase by itself.
 
-git '--git-dir=/path/to/repository/.git'
-'--work-tree=/path/to/repository' --git-dir
-git '--git-dir=/path/to/repository/.git'
-'--work-tree=/path/to/repository' --is-inside-work-tree
-git '--git-dir=/path/to/repository/.git'
-'--work-tree=/path/to/repository' --show-toplevel
+A patch that fixes a problem that isn't there in the real world but
+could be there if some system somewhere followed some obscure standard
+to the very letter is a typical example of code-churn.
 
-?
+A patch that introduces an poorly thought-out feature that nobody uses
+is another common example, as is modifying code to accommodate adding
+undefined features later. If the code-modifying is promptly followed
+by a patch to introduce a new feature that relies on the new behaviour,
+it's not considered churn since the new feature is already defined.
 
-Also what version of git are you using?
 -- 
-Duy
+Andreas Ericsson                   andreas.ericsson@op5.se
+OP5 AB                             www.op5.se
+Tel: +46 8-230225                  Fax: +46 8-230231
+
+Considering the successes of the wars on alcohol, poverty, drugs and
+terror, I think we should give some serious thought to declaring war
+on peace.
