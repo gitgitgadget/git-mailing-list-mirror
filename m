@@ -1,66 +1,83 @@
-From: Brian Gernhardt <benji@silverinsanity.com>
-Subject: Re: StandardInput Not Continuing Process
-Date: Thu, 23 Dec 2010 12:18:15 -0500
-Message-ID: <345E4AAA-63E3-4949-8486-A636793DDBC8@silverinsanity.com>
-References: <AANLkTikBdOLjzJxikXCwTs52RByfNZzKamK+F-JhY0mQ@mail.gmail.com> <AANLkTikvrDWYT8h_MCESd9sg4_8ykSOq3XFEsoNsYDuZ@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1082)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Chase Brammer <cbrammer@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 23 18:27:16 2010
+From: Jonathan del Strother <jdelstrother@gmail.com>
+Subject: Re: Expected behaviour of 'git log -S' when searching in a
+ merged/deleted file?
+Date: Thu, 23 Dec 2010 17:27:39 +0000
+Message-ID: <AANLkTinS6i0K4MMdr_E94ig-V3oMFZ+L7N=mqn0S3Y7T@mail.gmail.com>
+References: <AANLkTimXk6ei6EAQfvTTfnMzdBqYHkNoaxkEab+atnHd@mail.gmail.com>
+ <7vzkrx4qp6.fsf@alter.siamese.dyndns.org> <AANLkTim4z3XvpjnEERuXgTE6CtA7D-dnBxSUgO3mE-FM@mail.gmail.com>
+ <7vwrn0328p.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 23 18:28:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PVowd-0006Ht-Bj
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Dec 2010 18:27:15 +0100
+	id 1PVoxR-0006qt-L3
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Dec 2010 18:28:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753387Ab0LWR1I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Dec 2010 12:27:08 -0500
-Received: from vs072.rosehosting.com ([216.114.78.72]:40529 "EHLO
-	silverinsanity.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753281Ab0LWR1H convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Dec 2010 12:27:07 -0500
-X-Greylist: delayed 528 seconds by postgrey-1.27 at vger.kernel.org; Thu, 23 Dec 2010 12:27:06 EST
-Received: by silverinsanity.com (Postfix, from userid 5001)
-	id C78821FFC12F; Thu, 23 Dec 2010 17:18:13 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on silverinsanity.com
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.2 required=3.5 tests=ALL_TRUSTED,AWL,BAYES_00
-	autolearn=ham version=3.2.5
-Received: from [10.10.10.10] (cpe-74-65-60-43.rochester.res.rr.com [74.65.60.43])
-	(using TLSv1 with cipher AES128-SHA (128/128 bits))
-	(No client certificate requested)
-	by silverinsanity.com (Postfix) with ESMTPSA id DA3C51FFC056;
-	Thu, 23 Dec 2010 17:18:12 +0000 (UTC)
-In-Reply-To: <AANLkTikvrDWYT8h_MCESd9sg4_8ykSOq3XFEsoNsYDuZ@mail.gmail.com>
-X-Mailer: Apple Mail (2.1082)
+	id S1753281Ab0LWR2A convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Dec 2010 12:28:00 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:38559 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752862Ab0LWR17 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 23 Dec 2010 12:27:59 -0500
+Received: by qwa26 with SMTP id 26so6440420qwa.19
+        for <git@vger.kernel.org>; Thu, 23 Dec 2010 09:27:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=wXXo87xZCa5iAh83RpCSkQFGXbDw2oBmLT0dFTJn6N0=;
+        b=mrrkSjiJnEQJr/kPM/dh3oSXWQWT/TDjybNmtPw0F4VVhPvWUTtbrjbeMxNCa3xvpX
+         ZenDaLyeI1qliEKo0iDSVhoNB3V3XhZvhu7BqdtqtIvA6Kv1imDk9evgcTp9A2bR7JBf
+         HRgG+eI8qPhmbp1UusgpawwyE6ohM8JhaP6sE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=SuyLNiERwQDsBaEc8y1Dpf/xHwS3m8PTx6Os/l81tczz+9MNRfhoD9W1X0ZqK+93i3
+         NzJyPx+PBDn1JD2B5tdmswjbnrksVnxyB3PSAoGPIcttKNS94yW1G8nhWDzNfmpJe5e0
+         B9iEhpIBOfETSrfKSHNdcsFZyupxKlABHPXZ4=
+Received: by 10.229.217.212 with SMTP id hn20mr6947688qcb.225.1293125279154;
+ Thu, 23 Dec 2010 09:27:59 -0800 (PST)
+Received: by 10.229.86.201 with HTTP; Thu, 23 Dec 2010 09:27:39 -0800 (PST)
+In-Reply-To: <7vwrn0328p.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164134>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164135>
 
+On 23 December 2010 16:03, Junio C Hamano <gitster@pobox.com> wrote:
+> Jonathan del Strother <jdelstrother@gmail.com> writes:
+>
+>> .... =C2=A0If 'needle' was added
+>> and removed within the duration of a single branch, I could understa=
+nd
+>> "git log -S" never finding 'needle' due to history simplication, but=
+ I
+>> don't understand how simplification applies here.
+>
+> Ahh, sorry, I misunderstood the scenario. =C2=A0Just like you do not =
+see a
+> patch output from "log -p", the diff machinery (including -S and its =
+newer
+> cousin -G) does not kick in by default for merge commits (this is a b=
+it of
+> white lie as "log -p" defaults to "combine diff", i.e. be silent on a=
+ny
+> uninteresting merge that takes its results literally from either pare=
+nt).
+>
+> Please try it with "-m" (not "--full-history"). =C2=A0We _might_ want=
+ to change
+> this behaviour for -S/-G but it needs a bit more thought.
+>
 
-OnOn Wed, Dec 8, 2010 at 10:25 AM, Chase Brammer <cbrammer@gmail.com> wrote:
-> 
-> I am try to directly interact with Git by using only stdin, stdout,
-> and stderr.  So
-> not going through a terminal at all, but calling Git directly.   I am
-> having an issue
-> with being able to continue a process that requires input.
-> 
-> For example, doing a clone from a HTTPS server may require a username/password.
-> I writing the password as utf, and also tried just UTF byes (ie no
-> prepended 16-bit int)
-> but am unable to get the process to continue and start the clone process.
-> 
-> Is there some signal, or trick to getting the process to continue?  I
-> thought that sending a
-> "\n" would work, but that doesn't seem to be working either.
-
-Depending on what language you're using and your pipe settings, you might need to issue an fflush(git_stdin).
-
-~~ Brian
+Yep, '-m' produces the expected (or at least, *my* expected) results.
