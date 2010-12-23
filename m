@@ -1,52 +1,74 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: What's cooking in git.git (Dec 2010, #06; Tue, 21)
-Date: Thu, 23 Dec 2010 16:52:18 +0100
-Message-ID: <20101223155217.GA2496@sandbox>
-References: <7vlj3i5zz9.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Expected behaviour of 'git log -S' when searching in a
+ merged/deleted file?
+Date: Thu, 23 Dec 2010 08:03:50 -0800
+Message-ID: <7vwrn0328p.fsf@alter.siamese.dyndns.org>
+References: <AANLkTimXk6ei6EAQfvTTfnMzdBqYHkNoaxkEab+atnHd@mail.gmail.com>
+ <7vzkrx4qp6.fsf@alter.siamese.dyndns.org>
+ <AANLkTim4z3XvpjnEERuXgTE6CtA7D-dnBxSUgO3mE-FM@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 23 16:52:26 2010
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Jonathan del Strother <jdelstrother@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 23 17:04:10 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PVnSr-0007MF-L3
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Dec 2010 16:52:25 +0100
+	id 1PVneC-0006DX-U3
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Dec 2010 17:04:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752367Ab0LWPwU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Dec 2010 10:52:20 -0500
-Received: from darksea.de ([83.133.111.250]:53099 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752119Ab0LWPwU (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Dec 2010 10:52:20 -0500
-Received: (qmail 18438 invoked from network); 23 Dec 2010 16:52:18 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 23 Dec 2010 16:52:18 +0100
-Content-Disposition: inline
-In-Reply-To: <7vlj3i5zz9.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753361Ab0LWQED (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Dec 2010 11:04:03 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52951 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753053Ab0LWQEB (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Dec 2010 11:04:01 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 02D79296F;
+	Thu, 23 Dec 2010 11:04:28 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=djRpreQJGD0Dp0QUh09MR2oDT00=; b=F/i1I9
+	hFsyckk+wWy94T+F9td381A4InXDefQyPsFmiGPpufWsuZXzjuIHA7llXCnNfp4q
+	JKSW5Kj43E/bSF/6J6QyOeGqvwrY17bIzJPopg3O4CaZwGpJFI3PUwqFT/k9F8IG
+	e8GaUmauO7mo4InvH9+n/Yy3nQfglykaeaHGk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=eVeWglNS5ipj24VGtYuLIReZ6r2+Kslw
+	vEindubVzppHcP0SVzWv6sD/XLA1WtNDP9g1benABLpP/nvu+Ve4gsxdo0KNHL23
+	8kHqUo6DIUP67oxhPUh/appDglT9lUiH91cuHzfZWFy8GtP/gjxL3u4Xz4VsY27l
+	9oYw4a1csBs=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C64FA296E;
+	Thu, 23 Dec 2010 11:04:25 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B8C56296D; Thu, 23 Dec 2010
+ 11:04:22 -0500 (EST)
+In-Reply-To: <AANLkTim4z3XvpjnEERuXgTE6CtA7D-dnBxSUgO3mE-FM@mail.gmail.com>
+ (Jonathan del Strother's message of "Thu\, 23 Dec 2010 09\:47\:57 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 5061C4FE-0EAE-11E0-8DBB-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164125>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164126>
 
-Hi,
+Jonathan del Strother <jdelstrother@gmail.com> writes:
 
-On Tue, Dec 21, 2010 at 05:59:54PM -0800, Junio C Hamano wrote:
-> * hv/mingw-fs-funnies (2010-12-14) 5 commits
->  - mingw_rmdir: set errno=ENOTEMPTY when appropriate
->  - mingw: add fallback for rmdir in case directory is in use
->  - mingw: make failures to unlink or move raise a question
->  - mingw: work around irregular failures of unlink on windows
->  - mingw: move unlink wrapper to mingw.c
-> 
-> Can somebody remind me what the status of this series is?
+> ....  If 'needle' was added
+> and removed within the duration of a single branch, I could understand
+> "git log -S" never finding 'needle' due to history simplication, but I
+> don't understand how simplification applies here.
 
-Still dicussing and preparing a new series. I hope I will get to answer
-and send the new series soon.
+Ahh, sorry, I misunderstood the scenario.  Just like you do not see a
+patch output from "log -p", the diff machinery (including -S and its newer
+cousin -G) does not kick in by default for merge commits (this is a bit of
+white lie as "log -p" defaults to "combine diff", i.e. be silent on any
+uninteresting merge that takes its results literally from either parent).
 
-Cheers Heiko
+Please try it with "-m" (not "--full-history").  We _might_ want to change
+this behaviour for -S/-G but it needs a bit more thought.
