@@ -1,57 +1,49 @@
-From: strk <strk@keybit.net>
-Subject: git-svn author file and svn2cl compatibility
-Date: Wed, 22 Dec 2010 19:41:10 +0100
-Message-ID: <20101222184110.GA53847@keybit.net>
+From: <peter@vereshagin.org>
+Subject: Re: 'show' pretty %B without a diff
+Date: Thu, 23 Dec 2010 21:33:53 +2700
+Message-ID: <6e984da6ce5898867d25012ee4250ca9@mx1.skyriver.ru>
+References: <20101220073842.GC10354@external.screwed.box>
+ <7vmxo0ddbm.fsf@alter.siamese.dyndns.org>
+ <20101220111214.GD10354@external.screwed.box>
+ <7v4oa8cobn.fsf@alter.siamese.dyndns.org>
+ <20101221104641.GA8600@external.screwed.box>
+ <m38vzjl1yr.fsf@localhost.localdomain> <20101221180459.GA25812@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 22 19:50:03 2010
+Content-Type: text/plain;
+ charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 22 19:52:01 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PVTlA-0004Uq-Vv
-	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 19:50:01 +0100
+	id 1PVTn6-0005jq-9M
+	for gcvg-git-2@lo.gmane.org; Wed, 22 Dec 2010 19:52:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753815Ab0LVSt4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 22 Dec 2010 13:49:56 -0500
-Received: from host147-8-static.59-217-b.business.telecomitalia.it ([217.59.8.147]:4413
-	"EHLO freek.keybit.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753527Ab0LVStz (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 22 Dec 2010 13:49:55 -0500
-X-Greylist: delayed 520 seconds by postgrey-1.27 at vger.kernel.org; Wed, 22 Dec 2010 13:49:54 EST
-Received: (from strk@localhost)
-	by freek.keybit.net (8.11.1/8.11.1) id oBMIfAk59989;
-	Wed, 22 Dec 2010 19:41:10 +0100 (CET)
-	(envelope-from strk@keybit.net)
-Content-Disposition: inline
+	id S1751842Ab0LVSvz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 22 Dec 2010 13:51:55 -0500
+Received: from ns1.skyriver.ru ([89.108.118.221]:49798 "EHLO mx1.skyriver.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751489Ab0LVSvy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 22 Dec 2010 13:51:54 -0500
+Received: from vereshagin.org (unknown [89.108.119.221])
+	by mx1.skyriver.ru (Postfix) with ESMTPSA id E37C65A90;
+	Wed, 22 Dec 2010 21:33:53 +0300 (MSK)
+In-Reply-To: <20101221180459.GA25812@burratino>
+X-Sender: peter@vereshagin.org
+User-Agent: RoundCube Webmail/0.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164095>
 
-The svn2cl tool [1] supports an author file to use for
-generating the ChangeLog.
+On Tue, 21 Dec 2010 12:04:59 -0600, Jonathan Nieder
+<jrnieder@gmail.com> wrote:
+> Or even "git diff-tree -s --pretty=%B <commit>" if that is the intent.
 
-[1] http://arthurdejong.org/svn2cl/
-
-Format of the file is:
- nick1:Name <email>
- nick2:Name 2 <email2>
-
-It would be nice if git-svn could support the same format
-in addition to the one using ``='' instead of ``:''.
-
-That way you might have the authors file already available
-in projects that made use of svn2cl.
-
-Does it make sense ?
-
-Please include me in reply as I'm not subscribed.
-
---strk; 
-
-  ()   Free GIS & Flash consultant/developer
-  /\   http://strk.keybit.net/services.html
+Exactly the what I asked for. Thanks!
