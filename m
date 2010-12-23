@@ -1,70 +1,95 @@
-From: Tomas Carnecky <tom@dbservice.com>
-Subject: Re: Using overlay filesystem for "other" files idea
-Date: Thu, 23 Dec 2010 06:27:49 +0100
-Message-ID: <4D12DDD5.4050103@dbservice.com>
-References: <AANLkTi=f2MXoWE_Dx_thWb3VXGu-V-9cJAC8F_RzGAg=@mail.gmail.com>
+From: strk <strk@keybit.net>
+Subject: Re: git-svn author file and svn2cl compatibility
+Date: Thu, 23 Dec 2010 09:11:20 +0100
+Message-ID: <20101223081120.GA60001@keybit.net>
+References: <20101222184110.GA53847@keybit.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Evgeniy Ivanov <lolkaantimat@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 23 06:30:06 2010
+Content-Type: multipart/mixed; boundary="cWoXeonUoKmBZSoM"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 23 09:11:32 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PVdkY-0004vO-IB
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Dec 2010 06:30:02 +0100
+	id 1PVgGo-0001El-To
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Dec 2010 09:11:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751193Ab0LWF1y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Dec 2010 00:27:54 -0500
-Received: from office.neopsis.com ([78.46.209.98]:55306 "EHLO
-	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751098Ab0LWF1y (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Dec 2010 00:27:54 -0500
-X-Spam-Status: No, hits=0.0 required=5.0
-	tests=AWL: 0.058,BAYES_00: -1.665,TOTAL_SCORE: -1.607,autolearn=ham
-X-Spam-Level: 
-Received: from calvin.local ([62.65.141.13])
-	(authenticated user tom@dbservice.com)
-	by office.neopsis.com
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
-	Thu, 23 Dec 2010 06:27:50 +0100
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
-In-Reply-To: <AANLkTi=f2MXoWE_Dx_thWb3VXGu-V-9cJAC8F_RzGAg=@mail.gmail.com>
+	id S1751842Ab0LWILY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Dec 2010 03:11:24 -0500
+Received: from host147-8-static.59-217-b.business.telecomitalia.it ([217.59.8.147]:2612
+	"EHLO freek.keybit.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751577Ab0LWILY (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Dec 2010 03:11:24 -0500
+Received: (from strk@localhost)
+	by freek.keybit.net (8.11.1/8.11.1) id oBN8BKx68793;
+	Thu, 23 Dec 2010 09:11:20 +0100 (CET)
+	(envelope-from strk@keybit.net)
+Content-Disposition: inline
+In-Reply-To: <20101222184110.GA53847@keybit.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164120>
-
-  On 12/23/10 12:02 AM, Evgeniy Ivanov wrote:
-> Hello,
->
-> I got following idea.
->
-> If different branches seriously differ and you switch branches, then
-> it's more likely you will loose most part of build files (e.g. when
-> run build).
-Use ccache.
-> Also in projects that may have some bugs in build system (e.g. buggy
-> makefiles) there is a chance you will not get clean build environment.
-> E.g. somebody forgot to add include file as dependency in Makefile ---
-> oops, you're in trouble.
-Fix your Makefiles. Or run git clean, see below.
-> Even without bugs in build system, some temp files are overwritten
-> each time you run build for a custom branch.
->
-> I think using overlays for other files can help much to solve this
-> issue. You can have git repository in regular directory (like now) and
-> overlay fs mounted over this repository (for each branch its own
-> overlay).
-> Another benefit is clearing source tree after build.
-
-git clean -dfx.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164121>
 
 
-Or use two different working trees. See contrib/workdir/git-new-workdir.
+--cWoXeonUoKmBZSoM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-tom
+I attach a patch implementing the added support.
+
+--strk;
+
+On Wed, Dec 22, 2010 at 07:41:10PM +0100, strk wrote:
+> The svn2cl tool [1] supports an author file to use for
+> generating the ChangeLog.
+> 
+> [1] http://arthurdejong.org/svn2cl/
+> 
+> Format of the file is:
+>  nick1:Name <email>
+>  nick2:Name 2 <email2>
+> 
+> It would be nice if git-svn could support the same format
+> in addition to the one using ``='' instead of ``:''.
+> 
+> That way you might have the authors file already available
+> in projects that made use of svn2cl.
+> 
+> Does it make sense ?
+> 
+> Please include me in reply as I'm not subscribed.
+
+--cWoXeonUoKmBZSoM
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="0001-Also-accept-svn2cl-format-for-authors-file.patch"
+
+>From 0e6d6f3415b6d206e9cd8001ed4ce994e4150c39 Mon Sep 17 00:00:00 2001
+From: Sandro Santilli <strk@keybit.net>
+Date: Thu, 23 Dec 2010 09:07:10 +0100
+Subject: [PATCH] Also accept svn2cl format for authors file
+
+---
+ git-svn.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-svn.perl b/git-svn.perl
+index 177dd25..6fd0f7f 100755
+--- a/git-svn.perl
++++ b/git-svn.perl
+@@ -1424,7 +1424,7 @@ sub load_authors {
+ 	my $log = $cmd eq 'log';
+ 	while (<$authors>) {
+ 		chomp;
+-		next unless /^(.+?|\(no author\))\s*=\s*(.+?)\s*<(.+)>\s*$/;
++		next unless /^(.+?|\(no author\))\s*[=:]\s*(.+?)\s*<(.+)>\s*$/;
+ 		my ($user, $name, $email) = ($1, $2, $3);
+ 		if ($log) {
+ 			$Git::SVN::Log::rusers{"$name <$email>"} = $user;
+-- 
+1.7.0.4
+
+
+--cWoXeonUoKmBZSoM--
