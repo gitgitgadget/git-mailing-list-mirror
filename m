@@ -1,104 +1,43 @@
-From: Evgeniy Ivanov <lolkaantimat@gmail.com>
-Subject: Re: Using overlay filesystem for "other" files idea
-Date: Thu, 23 Dec 2010 12:53:01 +0300
-Message-ID: <AANLkTi=fW+spgi7YYSxEReMk4ZveEt2=Mb_1majKi6GJ@mail.gmail.com>
-References: <AANLkTi=f2MXoWE_Dx_thWb3VXGu-V-9cJAC8F_RzGAg=@mail.gmail.com>
-	<4D12DDD5.4050103@dbservice.com>
+From: Brandon Casey <casey@nrlssc.navy.mil>
+Subject: Re: [PATCH 1/3] Makefile: add NO_FNMATCH_CASEFOLD to IRIX sections
+Date: Thu, 23 Dec 2010 09:33:38 -0600
+Message-ID: <zy7kxYe02EOMfCsGsVyjMzgieNRubObUixqwhn2X3w5mEIOhOfAbzQ@cipher.nrlssc.navy.mil>
+References: <jpN7nm-rtl4sNXi5qt9pXMafcDOI0AxF95o77x_r5JQwZeaH94BApUuIwonUaYfzmYTgqeFNpSm6S7VFnIZVag@cipher.nrlssc.navy.mil> <7v1v593zqm.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Tomas Carnecky <tom@dbservice.com>
-X-From: git-owner@vger.kernel.org Thu Dec 23 10:53:09 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Brandon Casey <drafnel@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 23 16:34:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PVhrA-0000M9-Jy
-	for gcvg-git-2@lo.gmane.org; Thu, 23 Dec 2010 10:53:08 +0100
+	id 1PVnBl-0004jy-2f
+	for gcvg-git-2@lo.gmane.org; Thu, 23 Dec 2010 16:34:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752286Ab0LWJxD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Dec 2010 04:53:03 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:56565 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752103Ab0LWJxB convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 23 Dec 2010 04:53:01 -0500
-Received: by iyi12 with SMTP id 12so4834357iyi.19
-        for <git@vger.kernel.org>; Thu, 23 Dec 2010 01:53:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=FFfWSzW4s2VxnF7+mD8Imcv0e8n6hii0bcgLng2YRU0=;
-        b=HUZa2xsS4jok5QcNUkBpPKrIsWvAi91/5jgFMoZuX9yneUl6CGaC8POMFORqHNBiJu
-         afyJ90TfUZ9NZYBe44GS+12I722h2Y8/+jtTTRnOGRIrKS0rS6ZvHInam+VEiOPVyibT
-         YS7bjP34PfXjEj30YVsBYcxiw0PPVy9jg3dIE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=LeBt+s7PTZBh4h5nzVk4NdDIolSmN8aKU/k5y02YmitjvmPmezjKLT0+bPBFA7jb7d
-         uMInbPqsUoGmvUOrW6FBUTXiMPIN2WqPCXymYzzEo4Pf9l9o4DNSaVeVvOg7gQDCISzV
-         03JeH2iPzL7XskUsiMWpWNxPvbpi9RmiCAglc=
-Received: by 10.231.36.65 with SMTP id s1mr8015510ibd.4.1293097981074; Thu, 23
- Dec 2010 01:53:01 -0800 (PST)
-Received: by 10.231.62.20 with HTTP; Thu, 23 Dec 2010 01:53:01 -0800 (PST)
-In-Reply-To: <4D12DDD5.4050103@dbservice.com>
+	id S1752958Ab0LWPej (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 23 Dec 2010 10:34:39 -0500
+Received: from mail1.nrlssc.navy.mil ([128.160.35.1]:48575 "EHLO
+	mail.nrlssc.navy.mil" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751710Ab0LWPei (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Dec 2010 10:34:38 -0500
+Received: by mail.nrlssc.navy.mil id oBNFXcw8004646; Thu, 23 Dec 2010 09:33:38 -0600
+In-Reply-To: <7v1v593zqm.fsf@alter.siamese.dyndns.org>
+X-OriginalArrivalTime: 23 Dec 2010 15:33:38.0632 (UTC) FILETIME=[C531E480:01CBA2B6]
+X-Virus-Scanned: clamav-milter 0.95.3 at mail1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164123>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164124>
 
-Thank you Tom, that's what I wanted.
+On 12/22/2010 10:00 PM, Junio C Hamano wrote:
+> Thanks; I am unsure about the third one, though (see a separate message).
 
-On Thu, Dec 23, 2010 at 8:27 AM, Tomas Carnecky <tom@dbservice.com> wro=
-te:
-> =A0On 12/23/10 12:02 AM, Evgeniy Ivanov wrote:
->>
->> Hello,
->>
->> I got following idea.
->>
->> If different branches seriously differ and you switch branches, then
->> it's more likely you will loose most part of build files (e.g. when
->> run build).
->
-> Use ccache.
->>
->> Also in projects that may have some bugs in build system (e.g. buggy
->> makefiles) there is a chance you will not get clean build environmen=
-t.
->> E.g. somebody forgot to add include file as dependency in Makefile -=
---
->> oops, you're in trouble.
->
-> Fix your Makefiles. Or run git clean, see below.
->>
->> Even without bugs in build system, some temp files are overwritten
->> each time you run build for a custom branch.
->>
->> I think using overlays for other files can help much to solve this
->> issue. You can have git repository in regular directory (like now) a=
-nd
->> overlay fs mounted over this repository (for each branch its own
->> overlay).
->> Another benefit is clearing source tree after build.
->
-> git clean -dfx.
->
->
-> Or use two different working trees. See contrib/workdir/git-new-workd=
-ir.
->
-> tom
->
->
->
+I haven't received a separate message about the 3rd patch.
+Not sure if you sent it out yet, but fyi.
 
-
-
---=20
-Evgeniy Ivanov
+-Brandon
