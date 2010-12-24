@@ -1,97 +1,67 @@
-From: Joshua Jensen <jjensen@workspacewhiz.com>
-Subject: Re: What's cooking in git.git (Dec 2010, #06; Tue, 21)
-Date: Thu, 23 Dec 2010 16:35:57 -0700
-Message-ID: <4D13DCDD.3050300@workspacewhiz.com>
-References: <7vlj3i5zz9.fsf@alter.siamese.dyndns.org> <AANLkTinH0h5euL=_wMpGirVEEYgoA9hXGhKGja9oPa2j@mail.gmail.com> <7vfwto2ytb.fsf@alter.siamese.dyndns.org>
+From: "Steven E. Harris" <seh@panix.com>
+Subject: Re: Dangerous "git am --abort" behavior
+Date: Thu, 23 Dec 2010 19:24:49 -0500
+Organization: SEH Labs
+Message-ID: <m2pqss586m.fsf@Spindle.sehlabs.com>
+References: <AANLkTinP4SArMkjvTXOEG=tf=8EcEdP9fPAB7F=iitSc@mail.gmail.com>
+	<loom.20101220T203122-271@post.gmane.org>
+	<1292881979.23145.5.camel@drew-northup.unet.maine.edu>
+	<AANLkTikUn+Mco3YeJ7Rj=xZrr1H5xr1Z0=cknf1MdCqC@mail.gmail.com>
+	<m2tyi45ell.fsf@Spindle.sehlabs.com>
+	<7vtyi415oo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 24 00:40:01 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Dec 24 01:25:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PVulM-0005nQ-LB
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Dec 2010 00:40:00 +0100
+	id 1PVvT6-0006Od-MR
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Dec 2010 01:25:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752013Ab0LWXf6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 23 Dec 2010 18:35:58 -0500
-Received: from hsmail.qwknetllc.com ([208.71.137.138]:60364 "EHLO
-	hsmail.qwknetllc.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751882Ab0LWXf6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 23 Dec 2010 18:35:58 -0500
-Received: (qmail 26393 invoked by uid 399); 23 Dec 2010 16:35:57 -0700
-Received: from unknown (HELO ?192.168.1.100?) (jjensen@workspacewhiz.com@76.27.116.215)
-  by hsmail.qwknetllc.com with ESMTPAM; 23 Dec 2010 16:35:57 -0700
-X-Originating-IP: 76.27.116.215
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <7vfwto2ytb.fsf@alter.siamese.dyndns.org>
+	id S1752428Ab0LXAZE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 23 Dec 2010 19:25:04 -0500
+Received: from lo.gmane.org ([80.91.229.12]:33420 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751619Ab0LXAZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 23 Dec 2010 19:25:03 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PVvSv-0006Ga-JV
+	for git@vger.kernel.org; Fri, 24 Dec 2010 01:25:01 +0100
+Received: from 75-144-0-121-busname-pa.hfc.comcastbusiness.net ([75.144.0.121])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 24 Dec 2010 01:25:01 +0100
+Received: from seh by 75-144-0-121-busname-pa.hfc.comcastbusiness.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 24 Dec 2010 01:25:01 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 75-144-0-121-busname-pa.hfc.comcastbusiness.net
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.50 (darwin)
+Cancel-Lock: sha1:qJCkUsWCOUEqW2tvYGPYEFX70r8=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164141>
 
------ Original Message -----
-From: Junio C Hamano
-Date: 12/23/2010 10:17 AM
-> Nguyen Thai Ngoc Duy<pclouds@gmail.com>  writes:
->
->> On Wed, Dec 22, 2010 at 8:59 AM, Junio C Hamano<gitster@pobox.com>  wrote:
->> With jj/icase-directory merged to master, match_pathspec() and
->> match_pathspec_depth() now diverse again.
->>
->> When I wrote match_pathspec_depth(), I assumed that match_pathspec()
->> would not change much and I would have more time for converting the
->> rest of git to use match_*_depth(). Looks like I need to add case
->> insensitive matching to struct pathspec and friends then remove
->> match_pathspec() in this series too. At least if somebody changes
->> match_pathspec() again, it would cause a conflict so I can catch it.
-> While this topic is something I have long wanted to see, I have started
-> feeling that this needs to cook a bit longer than be in the next release.
-> So perhaps the best course of action might be to rebase the series once
-> after the 1.7.4 feature freeze, cook it in 'next' for a while and make it
-> part of the release after that.  I think at that point we may probably
-> want to have other changes that are not strictly backward compatible but
-> their incompatibilities do not matter in practice (e.g. cquoting pathspecs
-> in the attributes file comes to mind, but I am sure there will be other
-> changes that people wanted to have but we held them off due to worries on
-> compatibility).
->
-> What do you think?
-Certainly, you know what's best overall for Git.
+Junio C Hamano <gitster@pobox.com> writes:
 
-Having said that, I have had 100 people using the jj/icase-directory 
-series on Windows daily for 4 months now without issue.  Prior to that, 
-a majority of the series had been used for a full year by a dozen 
-people.  In any case, the improvement on non-case sensitive file systems 
-is the difference between night and day, and the series has helped 
-prevent a number of messes that occurred without it (git add readme.txt 
-and git add Readme.txt, for example... ugh...).
+> There is this gem in the completion script:
 
-More than Windows, this series also affects Mac OS X in a positive 
-manner, though the case sensitivity problems can be considered worse.  
-When you change directories at the command line, the command line 
-retains the case you used to change directory, and then Git uses that 
-case as the relative path into the repository.  Ugh... this is different 
-than on Windows where the file system's directory case is retained at 
-the Command Prompt as you change directories.  (Cygwin actually appears 
-to have the problem, too, but MinGW, what msysGit is built upon, does not.)
+Thanks. I use zsh, and didn't want to force zsh to load the bash
+completion scripts. After fumbling around first with the "vcs_info"
+facility from zshcontrib, which worked acceptably, I found the
+"zsh-git-prompt" project=C2=B9, integrated that, and am now amazed.
 
-The Mac OS X issue listed above is not a reason not to publish the 
-series, though, as the fixes necessary to make that work are in 
-completely different areas in Git than the current jj/icase-directory 
-series.
 
-Finally, I'm sitting on a bunch of other case sensitivity refinements, 
-but I'd like to get one series published before evolving this more.  I'd 
-like to get the other ones out there for discussion, but they build on 
-the current series.
+=46ootnotes:=20
+=C2=B9 https://github.com/olivierverdier/zsh-git-prompt
 
-In reference to above, where is match_pathspec_depth()?  I can only find 
-match_pathspec().
-
-Josh
+--=20
+Steven E. Harris
