@@ -1,121 +1,280 @@
-From: =?windows-1251?B?wOvl6vHl6SDK8OXn7uI=?= <zapped@mail.ru>
-Subject: Bug reports & patches: git-svn, git-completion, git diff hunk headers for Pascal
-Date: Fri, 24 Dec 2010 15:46:26 +0300
-Message-ID: <6110634424.20101224154626@mail.ru>
-Reply-To: =?windows-1251?B?wOvl6vHl6SDK8OXn7uI=?= <zapped@mail.ru>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH 1/5] alias: add functions to do param substitution and alias running
+Date: Fri, 24 Dec 2010 21:07:45 +0700
+Message-ID: <1293199669-19016-2-git-send-email-pclouds@gmail.com>
+References: <1293199669-19016-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="----------437225415D421EF"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: kevin@sb.org,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 24 13:51:52 2010
+X-From: git-owner@vger.kernel.org Fri Dec 24 15:09:28 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PW77g-0000pX-3r
-	for gcvg-git-2@lo.gmane.org; Fri, 24 Dec 2010 13:51:52 +0100
+	id 1PW8Kk-0006tf-3R
+	for gcvg-git-2@lo.gmane.org; Fri, 24 Dec 2010 15:09:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752293Ab0LXMvo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 24 Dec 2010 07:51:44 -0500
-Received: from fallback3.mail.ru ([94.100.176.58]:60189 "EHLO
-	fallback3.mail.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752180Ab0LXMvn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 24 Dec 2010 07:51:43 -0500
-X-Greylist: delayed 301 seconds by postgrey-1.27 at vger.kernel.org; Fri, 24 Dec 2010 07:51:42 EST
-Received: from smtp6.mail.ru (smtp6.mail.ru [94.100.176.48])
-	by fallback3.mail.ru (mPOP.Fallback_MX) with ESMTP id 5BE294A0368A
-	for <git@vger.kernel.org>; Fri, 24 Dec 2010 15:47:01 +0300 (MSK)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
-	h=Content-Type:MIME-Version:Subject:To:Message-ID:Reply-To:From:Date; bh=PIa08eYBZxxpD3D3t9T/X0pWuD7sWQbdM4PveBAWZGI=;
-	b=u2esQDsnvX2cT3tDn4zwef+MjfHSKjeb3FSkGoeWSFu8HAO1bIS7tFXqL2Ipzfe4wELD7/f63n7XT6MoZYX75PWHEfq/OAVDe9LlwsrvxUD+zAfTDGR7OSe+MGGp/DnE;
-Received: from [83.237.54.31] (port=22946 helo=ppp83-237-54-31.pppoe.mtu-net.ru)
-	by smtp6.mail.ru with asmtp 
-	id 1PW72R-0002BT-00
-	for git@vger.kernel.org; Fri, 24 Dec 2010 15:46:27 +0300
-X-Mailer: The Bat! (v3.99.3) Professional
-X-Priority: 3 (Normal)
-X-Mras: Ok
+	id S1752685Ab0LXOJR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 24 Dec 2010 09:09:17 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:48182 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752331Ab0LXOJQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 24 Dec 2010 09:09:16 -0500
+Received: by pwj3 with SMTP id 3so610264pwj.19
+        for <git@vger.kernel.org>; Fri, 24 Dec 2010 06:09:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:from:to:cc:subject
+         :date:message-id:x-mailer:in-reply-to:references:mime-version
+         :content-type:content-transfer-encoding;
+        bh=oUleGjA+edboXxzKSn8LRrofDhgsTYXO4vEgz0kvrDI=;
+        b=SSfYdLOr3OsTKjx5e5tcDXSWLbPG8nRgVXMgc+XZCBrhM7wfaJCE3EGpZlS4aKgwW6
+         AMXnAW92+kHIJCJYtQAOhTPKAPgooQfY3EwAwZ3m1fB/RUALleNfWRI4d2WlSV/EbEYu
+         jM/kQzHQ6EP4h6TIL3FJU35NT8GoVI1y/phqQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
+         :mime-version:content-type:content-transfer-encoding;
+        b=WaOSx2fHq1c5Oo6KZZKe2iDKFJh9NJ6Z9amlaFtYyZiiKga2Veu0lrYOVuil8f1j9B
+         aomFytECi91YTLlUf765WCzicuoBNLvhEgtx1WDnI1kU5DYpOXTBPZEsbh6pFAppT3VS
+         yZKTHoos6JliuPbRzM5gHw1klbIWdgHoyahPs=
+Received: by 10.142.115.6 with SMTP id n6mr7440423wfc.169.1293199755866;
+        Fri, 24 Dec 2010 06:09:15 -0800 (PST)
+Received: from pclouds@gmail.com ([115.73.248.124])
+        by mx.google.com with ESMTPS id f5sm12365228wfg.14.2010.12.24.06.09.12
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 24 Dec 2010 06:09:14 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Fri, 24 Dec 2010 21:07:58 +0700
+X-Mailer: git-send-email 1.7.3.3.476.g10a82
+In-Reply-To: <1293199669-19016-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164153>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164154>
 
-------------437225415D421EF
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+These functions help substitute %foo% in an alias command to real
+values, then run the alias and return the first line from stdout.
 
-Hello!
-I've found some bugs in Git:
-1. git-svn:
-  git svn set-tree/dcommit do not respect svn.pathnameencoding config variable
-  although git svn fetch does
-  here is the my patch - see attach git-svn.patch
-2. git-completion
-  when GIT_PS1_SHOWDIRTYSTATE is set diff.ignoreSubmodules config
-  variable is not respected
-  here is the my patch - see attach git-completion.bash.patch
-3. CLASS procedures/functions are not detected (just
-procedures/functions do) in hunk headers
-for git diff for Pascal files
-  here is the my patch - see attach userdiff.c.patch
+The normal use case is:
 
-P.S. All patches is against Git v1.7.3.4
-  
+    /* extract all %xxx% from cmd to params */
+    extract_alias_params(cmd, params);
+    param =3D lookup_alias_param(params, "%foo%");
+    if (param)
+        param->value =3D "value for %foo%";
+    param =3D lookup_alias_param(params, "%bar%");
+    if (param)
+        param->value =3D "value for %bar%";
+    /* substitute %foo% and %bar% */
+    expand_alias_params(cmd, params);
+    free_alias_params(params);
+    if (!get_alias_oneline(alias, cmd, output))
+        /* do something with output->buf here */
 
-mailto:zapped@mail.ru
-------------437225415D421EF
-Content-Type: application/octet-stream;
- name="userdiff.c.patch"
-Content-transfer-encoding: base64
-Content-Disposition: attachment;
- filename="userdiff.c.patch"
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ alias.c |  139 +++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+++++++++
+ cache.h |   11 +++++
+ 2 files changed, 150 insertions(+), 0 deletions(-)
 
-ZGlmZiAtLWdpdCBhL3VzZXJkaWZmLmMgYi91c2VyZGlmZi5jCmluZGV4IGY5ZTA1YjUuLjI1
-OWEzODIgMTAwNjQ0Ci0tLSBhL3VzZXJkaWZmLmMKKysrIGIvdXNlcmRpZmYuYwpAQCAtNTIs
-NyArNTIsNyBAQCBQQVRURVJOUygib2JqYyIsCiAJICJ8Wy0rKi88PiUmXnw9IV09fC0tfFxc
-K1xcK3w8PD0/fD4+PT98JiZ8XFx8XFx8fDo6fC0+IgogCSAifFteWzpzcGFjZTpdXXxbXHg4
-MC1ceGZmXSsiKSwKIFBBVFRFUk5TKCJwYXNjYWwiLAotCSAiXigocHJvY2VkdXJlfGZ1bmN0
-aW9ufGNvbnN0cnVjdG9yfGRlc3RydWN0b3J8aW50ZXJmYWNlfCIKKwkgIl4oKChjbGFzc1sg
-XHRdKyk/KHByb2NlZHVyZXxmdW5jdGlvbil8Y29uc3RydWN0b3J8ZGVzdHJ1Y3RvcnxpbnRl
-cmZhY2V8IgogCQkiaW1wbGVtZW50YXRpb258aW5pdGlhbGl6YXRpb258ZmluYWxpemF0aW9u
-KVsgXHRdKi4qKSQiCiAJICJcbiIKIAkgIl4oLio9WyBcdF0qKGNsYXNzfHJlY29yZCkuKikk
-IiwK
-------------437225415D421EF
-Content-Type: application/octet-stream;
- name="git-svn.patch"
-Content-transfer-encoding: base64
-Content-Disposition: attachment;
- filename="git-svn.patch"
-
-ZGlmZiAtLWdpdCBhL2dpdC1zdm4ucGVybCBiL2dpdC1zdm4ucGVybAppbmRleCA3NTdkZTgy
-Li4zOTliZjRjIDEwMDc1NQotLS0gYS9naXQtc3ZuLnBlcmwKKysrIGIvZ2l0LXN2bi5wZXJs
-CkBAIC00NDUxLDYgKzQ0NTEsNyBAQCBzdWIgbmV3IHsKIAkkc2VsZi0+e3BhdGhfcHJlZml4
-fSA9IGxlbmd0aCAkc2VsZi0+e3N2bl9wYXRofSA/CiAJICAgICAgICAgICAgICAgICAgICAg
-ICAiJHNlbGYtPntzdm5fcGF0aH0vIiA6ICcnOwogCSRzZWxmLT57Y29uZmlnfSA9ICRvcHRz
-LT57Y29uZmlnfTsKKwkkc2VsZi0+e3BhdGhuYW1lZW5jb2Rpbmd9ID0gR2l0Ojpjb25maWco
-J3N2bi5wYXRobmFtZWVuY29kaW5nJyk7CiAJcmV0dXJuICRzZWxmOwogfQogCg==
-------------437225415D421EF
-Content-Type: application/octet-stream;
- name="git-completion.bash.patch"
-Content-transfer-encoding: base64
-Content-Disposition: attachment;
- filename="git-completion.bash.patch"
-
-ZGlmZiAtLWdpdCBhL2NvbnRyaWIvY29tcGxldGlvbi9naXQtY29tcGxldGlvbi5iYXNoIGIv
-Y29udHJpYi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9uLmJhc2gKaW5kZXggZDMwMzdmYy4u
-NTBmYzM4NSAxMDA3NTUKLS0tIGEvY29udHJpYi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9u
-LmJhc2gKKysrIGIvY29udHJpYi9jb21wbGV0aW9uL2dpdC1jb21wbGV0aW9uLmJhc2gKQEAg
-LTI4MCw3ICsyODAsOCBAQCBfX2dpdF9wczEgKCkKIAkJZWxpZiBbICJ0cnVlIiA9ICIkKGdp
-dCByZXYtcGFyc2UgLS1pcy1pbnNpZGUtd29yay10cmVlIDI+L2Rldi9udWxsKSIgXTsgdGhl
-bgogCQkJaWYgWyAtbiAiJHtHSVRfUFMxX1NIT1dESVJUWVNUQVRFLX0iIF07IHRoZW4KIAkJ
-CQlpZiBbICIkKGdpdCBjb25maWcgLS1ib29sIGJhc2guc2hvd0RpcnR5U3RhdGUpIiAhPSAi
-ZmFsc2UiIF07IHRoZW4KLQkJCQkJZ2l0IGRpZmYgLS1uby1leHQtZGlmZiAtLXF1aWV0IC0t
-ZXhpdC1jb2RlIHx8IHc9IioiCisJCQkJCWlzPSQoZ2l0IGNvbmZpZyBkaWZmLmlnbm9yZVN1
-Ym1vZHVsZXMpCisJCQkJCWdpdCBkaWZmIC0tbm8tZXh0LWRpZmYgLS1xdWlldCAtLWV4aXQt
-Y29kZSAtLWlnbm9yZS1zdWJtb2R1bGVzPSRpcyB8fCB3PSIqIgogCQkJCQlpZiBnaXQgcmV2
-LXBhcnNlIC0tcXVpZXQgLS12ZXJpZnkgSEVBRCA+L2Rldi9udWxsOyB0aGVuCiAJCQkJCQln
-aXQgZGlmZi1pbmRleCAtLWNhY2hlZCAtLXF1aWV0IEhFQUQgLS0gfHwgaT0iKyIKIAkJCQkJ
-ZWxzZQo=
-------------437225415D421EF--
+diff --git a/alias.c b/alias.c
+index eb9f08b..6626bb0 100644
+--- a/alias.c
++++ b/alias.c
+@@ -1,4 +1,5 @@
+ #include "cache.h"
++#include "run-command.h"
+=20
+ static const char *alias_key;
+ static char *alias_val;
+@@ -85,3 +86,141 @@ int split_cmdline(char *cmdline, const char ***argv=
+)
+ const char *split_cmdline_strerror(int split_cmdline_errno) {
+ 	return split_cmdline_errors[-split_cmdline_errno-1];
+ }
++
++int extract_alias_params(const char *cmd, struct alias_param **params)
++{
++	const char *s =3D cmd;
++	int nr_param =3D 0;
++
++	*params =3D NULL;
++	while (s && (s =3D strchr(s, '%')) !=3D NULL) {
++		int len =3D strcspn(s+1, "% ")+2;
++		if (len < 2 || s[len-1] !=3D '%')
++			return error("malformed parameter at %s", s);
++		nr_param++;
++		*params =3D xrealloc(*params, sizeof(struct alias_param)*nr_param);
++		(*params)[nr_param-1].param =3D xstrndup(s, len);
++		(*params)[nr_param-1].pos =3D s - cmd;
++		(*params)[nr_param-1].value =3D NULL;
++		s +=3D len;
++	}
++
++	nr_param++;
++	*params =3D xrealloc(*params, sizeof(struct alias_param)*nr_param);
++	(*params)[nr_param-1].param =3D NULL;
++	(*params)[nr_param-1].value =3D NULL;
++	return 0;
++}
++
++struct alias_param *lookup_alias_param(struct alias_param *params, con=
+st char *param)
++{
++	int i;
++	for (i =3D 0; params[i].param; i++)
++		if (!strcmp(params[i].param, param))
++			return params+i;
++	return NULL;
++}
++
++int expand_alias_params(struct strbuf *cmd, const struct alias_param *=
+params)
++{
++	int i, offset =3D 0;
++
++	/* TODO: quote for '!' commands */
++	for (i =3D 0; params[i].param; i++) {
++		if (!params[i].value)
++			return error("param %s not substituted", params[i].param);
++		strbuf_splice(cmd,
++			      params[i].pos + offset, strlen(params[i].param),
++			      params[i].value, strlen(params[i].value));
++		offset +=3D strlen(params[i].value) - strlen(params[i].param);
++	}
++
++	return 0;
++}
++
++void free_alias_params(struct alias_param *params)
++{
++	int i;
++	for (i =3D 0; params[i].param; i++) {
++		free(params[i].param);
++		free(params[i].value);
++	}
++	free(params);
++}
++
++static void *wait_and_finish(void *arg)
++{
++	struct child_process *cp =3D arg;
++	char buf[1024];
++	while (xread(cp->out, buf, 1024) > 0)
++		;
++	close(cp->out);
++	finish_command(cp);
++	free(cp->argv);
++	free(cp);
++	return (void *) (intptr_t) 0;
++}
++
++static int start_support_alias(const char *alias, char *cmd, struct ch=
+ild_process **cpp)
++{
++	struct child_process *cp;
++	const char **argv;
++	int count;
++
++	cp =3D xmalloc(sizeof(struct child_process));
++	memset(cp, 0, sizeof(struct child_process));
++	cp->in =3D 0;
++	cp->out =3D -1;
++
++	if (cmd[0] =3D=3D '!') {
++		argv =3D xmalloc(sizeof(*argv)*4);
++		argv[0] =3D "/bin/sh";
++		argv[1] =3D "-c";
++		argv[2] =3D cmd+1;
++		argv[3] =3D NULL;
++	}
++	else {
++		count =3D split_cmdline(cmd, &argv);
++		if (count < 0) {
++			free(cp);
++			return error("Bad alias %s: %s", cmd, split_cmdline_strerror(count)=
+);
++		}
++		cp->git_cmd =3D 1;
++	}
++
++	cp->argv =3D argv;
++	if (start_command(cp)) {
++		error("Failed to run %s", cmd);
++		free(cp);
++		free(argv);
++		return -1;
++	}
++	*cpp =3D cp;
++	return 0;
++}
++
++int get_alias_oneline(const char *alias, char *cmd, struct strbuf *ref=
+)
++{
++	struct child_process *cp;
++	FILE *fp;
++	int ret;
++
++	ret =3D start_support_alias(alias, cmd, &cp);
++	if (ret)
++		return ret;
++
++	fp =3D fdopen(cp->out, "r");
++	ret =3D strbuf_getline(ref, fp, '\n');
++	if (!ret) {
++		/* let it finish, if there's error, users should know */
++#ifdef NO_PTHREADS
++		wait_and_finish(cp);
++#else
++		pthread_t thread;
++		pthread_create(&thread, NULL, wait_and_finish, cp);
++#endif
++		return 0;
++	}
++	wait_and_finish(cp);
++	return -1;
++}
+diff --git a/cache.h b/cache.h
+index e83bc2d..20a37ff 100644
+--- a/cache.h
++++ b/cache.h
+@@ -1113,10 +1113,21 @@ extern int ws_blank_line(const char *line, int =
+len, unsigned ws_rule);
+ int report_path_error(const char *ps_matched, const char **pathspec, i=
+nt prefix_offset);
+ void overlay_tree_on_cache(const char *tree_name, const char *prefix);
+=20
++struct alias_param {
++	char *param;
++	int pos;
++	char *value;
++};
++
+ char *alias_lookup(const char *alias);
+ int split_cmdline(char *cmdline, const char ***argv);
+ /* Takes a negative value returned by split_cmdline */
+ const char *split_cmdline_strerror(int cmdline_errno);
++int extract_alias_params(const char *cmd, struct alias_param **params)=
+;
++struct alias_param *lookup_alias_param(struct alias_param *params, con=
+st char *param);
++int expand_alias_params(struct strbuf *cmd, const struct alias_param *=
+params);
++void free_alias_params(struct alias_param *params);
++int get_alias_oneline(const char *alias, char *cmd, struct strbuf *res=
+ult);
+=20
+ /* git.c */
+ struct startup_info {
+--=20
+1.7.3.3.476.g10a82
