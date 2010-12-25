@@ -1,8 +1,8 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC PATCH v7 1/9] gitweb: Go to DONE_REQUEST rather than DONE_GITWEB in die_error
-Date: Sat, 25 Dec 2010 23:14:21 +0100
-Message-ID: <201012252314.22541.jnareb@gmail.com>
-References: <20101222234843.7998.87068.stgit@localhost.localdomain> <20101222235459.7998.43333.stgit@localhost.localdomain> <20101223015540.GA14585@burratino>
+Subject: Re: [RFC PATCH v7 2/9] gitweb: use eval + die for error (exception) handling
+Date: Sun, 26 Dec 2010 00:17:55 +0100
+Message-ID: <201012260017.56306.jnareb@gmail.com>
+References: <20101222234843.7998.87068.stgit@localhost.localdomain> <20101222235525.7998.99816.stgit@localhost.localdomain> <20101223020801.GB14585@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="iso-8859-1"
@@ -10,153 +10,155 @@ Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org, "J.H." <warthog9@eaglescrag.net>,
 	John 'Warthog9' Hawley <warthog9@kernel.org>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 25 23:14:55 2010
+X-From: git-owner@vger.kernel.org Sun Dec 26 00:18:25 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PWcO6-0002vt-KK
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Dec 2010 23:14:55 +0100
+	id 1PWdNZ-0002KZ-7j
+	for gcvg-git-2@lo.gmane.org; Sun, 26 Dec 2010 00:18:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751695Ab0LYWOh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Dec 2010 17:14:37 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:51935 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751049Ab0LYWOh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Dec 2010 17:14:37 -0500
-Received: by fxm20 with SMTP id 20so8466824fxm.19
-        for <git@vger.kernel.org>; Sat, 25 Dec 2010 14:14:35 -0800 (PST)
+	id S1751107Ab0LYXSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Dec 2010 18:18:08 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:51433 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751023Ab0LYXSH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Dec 2010 18:18:07 -0500
+Received: by bwz15 with SMTP id 15so8873199bwz.19
+        for <git@vger.kernel.org>; Sat, 25 Dec 2010 15:18:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=/RjnBCKmCVVC1EPXkc//8DA9ZjnUyRo9brbv8X9FpVY=;
-        b=Kl2U3GeL/JHyy3LIQJHixTKlWFmZzfhdz1dTKY6/Kmpr5P5aMvOH93LlbYKEqBX/Ot
-         KzileJBLsCSnywh4682RL9xp8JZ6GbXL21oAjYBxujEEFZDfyBEFBLuEgvtkAw/CDjDW
-         vjBoVOMCFFfUs7vuf9rGLniWkCejmab9nqAQs=
+        bh=4CWitWXwi/ouSO60QYbg9OR/TMMvv23oviDb2H1ZL9Y=;
+        b=oOv9xG2Nth5T9QKoZh3ZIBY4hz+2GNnjwELfqHo6cxtnsQi1ht8KDB7n6Dx8VuzOcJ
+         MAGuUXVr/iiF3lMgM2XWsG5bMPHauFawTxsGJqUQn7TNlde692rOzMpUdfs3mYp6Bsn6
+         sthA1St2mPGuh1goEqycLz9W6uqzQFOJBMwZ0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=BC5sFHCrlWpanYn7Ay9ZR1VGZo8TCCg0yUOXX7EQZOsXPTDeuImOvmwFxWJuXs+yqZ
-         lBEfcagbMv8rDa3OLNyGKhm0HDnUbkKJJ8URO+/dyvkV7E/bXvR4J79soz+gdEQIBGqK
-         UJ/mDh6aK1iaTChPEFLYj5a92zuAoVe6bmOjo=
-Received: by 10.223.83.197 with SMTP id g5mr11596217fal.52.1293315275655;
-        Sat, 25 Dec 2010 14:14:35 -0800 (PST)
+        b=jSenHOrhxxFy34IEHdCrguQaAqWQ+8BH7GpAuBA+tZ5Oa+woREmMiIjYofYLizlZTb
+         kisw1S6zCz/OqnkaomcwgwpQ/8FgU3BZ+PMzHjNYQGMNWA4nD/4uFlYrQJSFEWvGo05n
+         Bn7ffuu62yDyebym9jr7QAq4ReQLG7VFmGtQM=
+Received: by 10.204.82.84 with SMTP id a20mr9299606bkl.154.1293319084966;
+        Sat, 25 Dec 2010 15:18:04 -0800 (PST)
 Received: from [192.168.1.13] (abwd176.neoplus.adsl.tpnet.pl [83.8.227.176])
-        by mx.google.com with ESMTPS id n2sm2615520fam.4.2010.12.25.14.14.32
+        by mx.google.com with ESMTPS id x38sm5569871bkj.1.2010.12.25.15.18.02
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 25 Dec 2010 14:14:33 -0800 (PST)
+        Sat, 25 Dec 2010 15:18:03 -0800 (PST)
 User-Agent: KMail/1.9.3
-In-Reply-To: <20101223015540.GA14585@burratino>
+In-Reply-To: <20101223020801.GB14585@burratino>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164182>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164183>
 
 On Thu, 23 Dec 2010, Jonathan Nieder wrote:
 > Jakub Narebski wrote:
 > 
-> > End the request after die_error finishes, rather than exiting gitweb
-> > instance
-> [...]
+> > Gitweb assumes here that exceptions thrown by Perl would be simple
+> > strings; die_error() throws hash reference (if not for minimal
+> > external dependencies, it would be probable object of Class::Exception
+> > or Throwable class thrown).
+> 
+> Hmm, why not throw an object of new type Gitweb::Exception?
+
+First, 'gitweb: Prepare for splitting gitweb' commit is only later in
+series... ;-) but that of course is not a serious issue.
+
+Second, more important is that I'd rather gitweb doesn't go "reinvent
+the wheel" route.  I'd rather (re)use Exception::Class (like e.g. 
+SVN::Web does it) if we go the OO exception handling route.
+
+But if we are going to use Exception::Class, then we can also use
+Try::Tiny, I think.
+
 > > --- a/gitweb/gitweb.perl
 > > +++ b/gitweb/gitweb.perl
-> > @@ -1169,6 +1169,7 @@ sub run {
+> > @@ -1045,21 +1045,6 @@ sub configure_gitweb_features {
+> >  	}
+> >  }
 > >  
-> >  		run_request();
-> >  
-> > +	DONE_REQUEST:
-> >  		$post_dispatch_hook->()
-> >  			if $post_dispatch_hook;
-> >  		$first_request = 0;
-> > @@ -3767,7 +3768,7 @@ EOF
+> > -# custom error handler: 'die <message>' is Internal Server Error
+> > -sub handle_errors_html {
+> > -	my $msg = shift; # it is already HTML escaped
+> > -
+> > -	# to avoid infinite loop where error occurs in die_error,
+> > -	# change handler to default handler, disabling handle_errors_html
+> > -	set_message("Error occured when inside die_error:\n$msg");
+> > -
+> > -	# you cannot jump out of die_error when called as error handler;
+> > -	# the subroutine set via CGI::Carp::set_message is called _after_
+> > -	# HTTP headers are already written, so it cannot write them itself
+> > -	die_error(undef, undef, $msg, -error_handler => 1, -no_http_header => 1);
+> > -}
+> > -set_message(\&handle_errors_html);
+> > -
 > 
-> [side note: the "@@ EOF" line above would say "@@ sub die_error {" if
-> userdiff.c had perl support and gitattributes used it.]
+> Hoorah!
 
-Hmmm, I thought that git has Perl-specific diff driver (xfuncname), but
-I see that it doesn't.  The default funcname works quite well for Perl
-code... with exception of here-documents (or rather their ending).
+Yeah, that is very nice.
 
-BTW. do you know how such perl support should look like?
+> >  # dispatch
+> >  sub dispatch {
+> >  	if (!defined $action) {
+> > @@ -1167,7 +1152,11 @@ sub run {
+> >  		$pre_dispatch_hook->()
+> >  			if $pre_dispatch_hook;
+> >  
+> > -		run_request();
+> > +		eval { run_request() };
+> > +		if (defined $@ && !ref($@)) {
 
+Ooops, it should be 'if ($@ ...)', not 'if (defined $@ ...)'.
+
+> > +			# some Perl error, but not one thrown by die_error
+> > +			die_error(undef, undef, $@, -error_handler => 1);
+> > +		}
+> 
+> The !ref($@) seems overzealous, which is why I am wondering if it
+> would be possible to use bless() for a finer-grained check.
+
+You meant Scalar::Util::blessed here, isn't it? Fortunately Scalar::Util
+is core Perl module.
+
+By 'overzealous' do you mean here possibility of catching what we 
+shouldn't, i.e. non-gitweb error (not thrown by die_error)?  We can
+narrow it to "ref($@) eq 'HASH'", but I don't think it would be ever
+necessary: Perl throws string exceptions.
+
+> >  
+> >  	DONE_REQUEST:
+> >  		$post_dispatch_hook->()
+> > @@ -3768,7 +3757,8 @@ EOF
 > >  	print "</div>\n";
 > >  
 > >  	git_footer_html();
-> > -	goto DONE_GITWEB
-> > +	goto DONE_REQUEST
+> > -	goto DONE_REQUEST
+> > +
+> > +	die {'status' => $status, 'error' => $error}
 > >  		unless ($opts{'-error_handler'});
 > 
-> This seems to remove the last user of the DONE_GITWEB label.  Why not
-> delete the label, too?
+> Is the DONE_REQUEST label still needed?
 
-Well, actually this patch is in this series only for the label ;-)
+No it isn't.
 
-Anyway, I can simply drop this patch, and have next one in series
-(adding exception-based error handling, making die_error work like
-'die') delete DONE_GITWEB label...
+> Thanks, I am happy to see the semantics becoming less thorny.
 
-> When die_error is called by CGI::Carp (via handle_errors_html), it
-> does not rearm the error handler afaict.  Previously that did not
-> matter because die_error kills gitweb; now should it be set up
-> again?
+Now I should check if this doesn't affect gitweb performance too badly.
+IIRC I have chosen 'goto DONE_GITWEB' because I didn't know about 
+ModPerl::Registry redefining 'exit' (why it was done), and because of
+some microbenchmark showing that it performs better than die/eval (why
+this specific solution)...
 
-Thanks, I missed this (but after examining it turns out to be a 
-non-issue).  That will teach me to leave code outside of run() 
-subroutine; one of reasons behind creating c2394fe (gitweb: Put all 
-per-connection code in run() subroutine, 2010-05-07) was to clarify 
-code flow.
-
-A note: using set_message inside handle_errors_html was necessary 
-because if there was a fatal error in die_error, then 
-handle_errors_html would be called recursively - this was fixed in 
-CGI.pm 3.45, but we cannot rely on this; we cannot rely on having new 
-enough version of CGI::Carp that supports set_die_handler either.
-
-But actually handle_errors_html gets called only from fatalsToBrowser,
-which in turn gets called from CGI::Carp::die... which ends calling
-CODE::die (aka realdie), which ends CGI process anyway.
-
-That is why die_error ends with
-
-	goto DONE_GITWEB
-		unless ($opts{'-error_handler'});
-
-i.e. it doesn't goto DONE_GITWEB nor DONE_REQUEST if called from
-handle_errors_html anyway.
-
-> die_error gets called when server load is too high; I wonder whether
-> it is right to go back for another request in that case.
-
-If client (web browser) are requesting connection, we have to tell it
-something anyway.  Note that each request might serve different client.
-But when the die_error(503, "The load average on the server is too 
-high") doesn't generate load by itself, all should be all right.
-
-> 
-> A broken per-request (or other) configuration could potentially leave
-> a gitweb process in a broken state, and until now the state would be
-> reset on the first error.  I wonder if escape valve would be needed
-> --- e.g., does the CGI harness take care of starting a new gitweb
-> process after every couple hundred requests or so?
-
-'die $@ if $@' would call CORE::die, which means it would end gitweb
-process.
-
-For CGI server it doesn't matter anyway, as for each request the process
-is respawned anyway (together with respawning Perl interpreter), and I
-think that ModPerl::Registry and FastCGI servers monitor process that it
-is to serve requests, and respawn it if/when it dies.
- 
-> Aside from those (minor) worries, this patch seems like a good idea.
- 
-Thanks a lot for your comments.
+But I think that the performance hit would be negligible in practice;
+making gitweb more maintainable is I think worth the cost.
 
 -- 
 Jakub Narebski
