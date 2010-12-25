@@ -1,159 +1,102 @@
-From: Michel Briand <michelbriand@free.fr>
-Subject: Re: FIX/COMMENT: git remote manual page
-Date: Sat, 25 Dec 2010 12:41:04 +0100
-Message-ID: <20101225124104.06a4f83c@eana.kheb.homelinux.org>
-References: <20101222021546.4b24c4e9@eana.kheb.homelinux.org>
-	<AANLkTim_pHYEZ+7-Rm5N4Ycw2MTHD8AhvZrZqNhttkck@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: [PATCH 3/3] Fixes bug: GIT_PS1_SHOWDIRTYSTATE is no not respect
+ diff.ignoreSubmodules config variable
+Date: Sat, 25 Dec 2010 13:33:14 +0100
+Message-ID: <4D15E48A.9050805@web.de>
+References: <1293240049-7744-1-git-send-email-zapped@mail.ru> <1293240049-7744-3-git-send-email-zapped@mail.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Dec 25 12:46:44 2010
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Zapped <zapped@mail.ru>
+X-From: git-owner@vger.kernel.org Sat Dec 25 13:34:43 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PWSaA-0005sB-TY
-	for gcvg-git-2@lo.gmane.org; Sat, 25 Dec 2010 12:46:43 +0100
+	id 1PWTKc-0007ZE-Hi
+	for gcvg-git-2@lo.gmane.org; Sat, 25 Dec 2010 13:34:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751260Ab0LYLlN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 25 Dec 2010 06:41:13 -0500
-Received: from smtp2-g21.free.fr ([212.27.42.2]:37542 "EHLO smtp2-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750915Ab0LYLlN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 25 Dec 2010 06:41:13 -0500
-Received: from eana.kheb.homelinux.org (unknown [82.234.51.186])
-	by smtp2-g21.free.fr (Postfix) with ESMTP id F3D614B00F8;
-	Sat, 25 Dec 2010 12:41:05 +0100 (CET)
-In-Reply-To: <AANLkTim_pHYEZ+7-Rm5N4Ycw2MTHD8AhvZrZqNhttkck@mail.gmail.com>
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
+	id S1751479Ab0LYMeh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 25 Dec 2010 07:34:37 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:57897 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751248Ab0LYMeh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 25 Dec 2010 07:34:37 -0500
+Received: from smtp07.web.de  ( [172.20.5.215])
+	by fmmailgate01.web.de (Postfix) with ESMTP id D31ED183D6F35;
+	Sat, 25 Dec 2010 13:33:16 +0100 (CET)
+Received: from [93.246.60.252] (helo=[192.168.178.53])
+	by smtp07.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1PWTJE-0005bd-00; Sat, 25 Dec 2010 13:33:16 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <1293240049-7744-3-git-send-email-zapped@mail.ru>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX189uqym1eAtRU2D/VbcsVWgGndAgXC79J4EuHAD
+	2N13xZ7I5QPuS+bis6y/P9PxZA1IFdWn+kV/lZexRokzR7CgOf
+	ZsJo4tVUU5EOD4vMxPRA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164171>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164172>
 
+Am 25.12.2010 02:20, schrieb Zapped:
+> Signed-off-by: Zapped <zapped@mail.ru>
+> ---
+>  contrib/completion/git-completion.bash |    3 ++-
+>  1 files changed, 2 insertions(+), 1 deletions(-)
+> 
+> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+> index d3037fc..50fc385 100755
+> --- a/contrib/completion/git-completion.bash
+> +++ b/contrib/completion/git-completion.bash
+> @@ -280,7 +280,8 @@ __git_ps1 ()
+>  		elif [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
+>  			if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ]; then
+>  				if [ "$(git config --bool bash.showDirtyState)" != "false" ]; then
+> -					git diff --no-ext-diff --quiet --exit-code || w="*"
+> +					is=$(git config diff.ignoreSubmodules)
+> +					git diff --no-ext-diff --quiet --exit-code --ignore-submodules=$is || w="*"
+>  					if git rev-parse --quiet --verify HEAD >/dev/null; then
+>  						git diff-index --cached --quiet HEAD -- || i="+"
+>  					else
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> - Sat, 25 Dec 2010 17:48:58
-+0700
+Thanks for resubmitting this as an inline patch for review (although
+it would have been easier for me if the commit message would have
+described the problem you tried to fix a bit more in detail ;-).
 
->On Wed, Dec 22, 2010 at 8:15 AM, Michel Briand <michelbriand@free.fr> =
-wrote:
->> Hello,
->>
->> I tried the example given at the bottom if the manual page of git
->> remote.
->>
->> =B7 =A0 Imitate git clone but track only selected branches
->>
->> $ mkdir project.git
->> $ cd project.git
->> $ git init
->> $ git remote add -f -t master -m master origin git://example.com/git=
-=2Egit/
->> $ git merge origin
->>
->> It works like it is written.
->>
->> But it seems this does not work with my special setup:
->> - I use GIT_DIR and GIT_WORK_TREE to specify another location for my
->> =A0repository, and to work from another directory,
->> - I name my remote with a custom name (not origin).
->
->So you set GIT_DIR and GIT_WORK_TREE before running "git remote add"?
->
+After testing this patch it looks like it has a few issues:
 
-Yes.
+1) it will break any per-submodule configuration done via
+   the 'submodule.<name>.ignore' setting in .git/config or
+   .gitmodules, as using the --ignore-submodules option
+   overrides those while only setting 'diff.ignoreSubmodules'
+   should not do that.
 
->> It fails at the last command :
->>
->> =A0 =A0fatal: <my name> - not something we can merge
->
->It fails to see "<my name>" points to a commit. Maybe it fails to read
->remote information from config..
->
+2) If diff.ignoreSubmodules is unset it leads to an error
+   every time the prompt is displayed:
+   'fatal: bad --ignore-submodules argument:'
 
-Huh, I don't know.
+3) And for me it didn't change the behavior at all:
 
->> But if I try the command :
->>
->> =A0 =A0git merge <my name>/master
->>
->> the error message is different :
->>
->> =A0 =A0fatal: This operation must be run in a work tree
->> =A0 =A0fatal: read-tree failed
->>
->> I cd to the work tree and issue the same last command.
->> Then it works.
->
->What git version are use using? I did
->
->GIT_DIR=3Dgit/.git GIT_WORK_TREE=3Dgit git/git merge origin # or a spe=
-cific branch
->
->and it worked fine here (recent master). That message means work-tree
->settings are not propagated to git-read-tree (run by git-merge).
+   - The '*' in the prompt vanishes as I set diff.ignoreSubmodules
+     as expected with or without your patch.
+     Am I missing something here?
 
-Hi,
+   - The real problem here is that the '+' never goes away even
+     when 'diff.ignoreSubmodules' is set to 'all'. This is due
+     to the fact that 'diff.ignoreSubmodules' is only honored by
+     "git diff", but not by "git diff-index".
 
-I'm running Debian squeeze. Git is version 1.7.2.3.
+So the real issue here seems to be the "git diff-index" call, which
+doesn't honor the 'diff.ignoreSubmodules' setting. In commit 37aea37
+Dscho (CCed) introduced this configuration setting while explicitly
+stating that it only affects porcelain. As the other config options
+always influence porcelain and plumbing, it looks like we would want
+to have this option honored by plumbing too, no?
 
-Here is the complete command sequence I used:
-
-~/tmp/git $ mkdir toto toto_wk
-~/tmp/git $ GIT_DIR=3Dtoto GIT_WORK_TREE=3Dtoto_wk git init
-Initialized empty Git repository in xxxxxxxxxxxxxxxx/tmp/git/toto/
-~/tmp/git $ GIT_DIR=3Dtoto GIT_WORK_TREE=3Dtoto_wk git remote add -f -t=
- master -m master TOTO xxxxxx/shlib=20
-Updating TOTO
-remote: Counting objects: 36, done.
-remote: Compressing objects: 100% (32/32), done.
-remote: Total 36 (delta 9), reused 0 (delta 0)
-Unpacking objects: 100% (36/36), done.
-=46rom xxxxxxxxxxxxxxxxx/shlib
- * [new branch]      master     -> TOTO/master
-=46rom xxxxxxxxxxxxxxxxx/shlib
- * [new tag]         1.0        -> 1.0
- * [new tag]         1.0.1      -> 1.0.1
-~/tmp/git $ GIT_DIR=3Dtoto GIT_WORK_TREE=3Dtoto_wk git merge TOTO
-fatal: This operation must be run in a work tree
-fatal: read-tree failed
-~/tmp/git $ ls toto_wk/
-<NOTHING>
-
-I re-issue the latest command :
-
-~/tmp/git $ GIT_DIR=3Dtoto GIT_WORK_TREE=3Dtoto_wk git merge TOTO
-Already up-to-date.
-
-Strange isn't it ?
-
-But directory is still empty
-~/tmp/git $ ls toto_wk/
-<NOTHING>
-
-Trying to recover :
-
-~/tmp/git $ GIT_DIR=3Dtoto GIT_WORK_TREE=3Dtoto_wk git reset --hard
-
-The directory is correct (in sync with my master branch).
-
-If I do :
-
-=2E..git init
-=2E..git remote add...
-cd toto_wk
-GIT_DIR=3D../toto GIT_WORK_TREE=3D. git merge TOTO
-
-It works !
-
-Adding /master after remote name doesn't make any difference. Please
-forget this idea.
-
-The problem seems to reside in the work tree parameter (. or not).
-
-Cheers,
-Michel
+So are there any reasons for the plumbing diff commands not to honor
+the diff.ignoreSubmodules setting?
