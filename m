@@ -1,165 +1,146 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC PATCH v7 2/9] gitweb: use eval + die for error (exception) handling
-Date: Sun, 26 Dec 2010 00:17:55 +0100
-Message-ID: <201012260017.56306.jnareb@gmail.com>
-References: <20101222234843.7998.87068.stgit@localhost.localdomain> <20101222235525.7998.99816.stgit@localhost.localdomain> <20101223020801.GB14585@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [RFC/PATCH] diff: funcname and word patterns for perl
+Date: Sun, 26 Dec 2010 03:07:31 -0600
+Message-ID: <20101226090731.GA21588@burratino>
+References: <20101222234843.7998.87068.stgit@localhost.localdomain>
+ <20101222235459.7998.43333.stgit@localhost.localdomain>
+ <20101223015540.GA14585@burratino>
+ <201012252314.22541.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, "J.H." <warthog9@eaglescrag.net>,
-	John 'Warthog9' Hawley <warthog9@kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 26 00:18:25 2010
+	John 'Warthog9' Hawley <warthog9@kernel.org>,
+	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 26 10:08:00 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PWdNZ-0002KZ-7j
-	for gcvg-git-2@lo.gmane.org; Sun, 26 Dec 2010 00:18:25 +0100
+	id 1PWma7-0008QF-Sk
+	for gcvg-git-2@lo.gmane.org; Sun, 26 Dec 2010 10:08:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751107Ab0LYXSI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 25 Dec 2010 18:18:08 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:51433 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751023Ab0LYXSH (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 25 Dec 2010 18:18:07 -0500
-Received: by bwz15 with SMTP id 15so8873199bwz.19
-        for <git@vger.kernel.org>; Sat, 25 Dec 2010 15:18:05 -0800 (PST)
+	id S1751668Ab0LZJHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Dec 2010 04:07:53 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:52482 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751536Ab0LZJHu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Dec 2010 04:07:50 -0500
+Received: by iyi12 with SMTP id 12so6726991iyi.19
+        for <git@vger.kernel.org>; Sun, 26 Dec 2010 01:07:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=4CWitWXwi/ouSO60QYbg9OR/TMMvv23oviDb2H1ZL9Y=;
-        b=oOv9xG2Nth5T9QKoZh3ZIBY4hz+2GNnjwELfqHo6cxtnsQi1ht8KDB7n6Dx8VuzOcJ
-         MAGuUXVr/iiF3lMgM2XWsG5bMPHauFawTxsGJqUQn7TNlde692rOzMpUdfs3mYp6Bsn6
-         sthA1St2mPGuh1goEqycLz9W6uqzQFOJBMwZ0=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=1n1LVcN9EX8wqbHwxg4jYkvqE36QdGhAdD+FEPYUPwo=;
+        b=URXv6+5xaF3eJYu9xPCVsLKx5XZ7cgpqZr8Bq0FR+BHGo8ZIsklGC+FnQIVMH+7c/N
+         aJw5N3X8EpC5ID3V6uah+A4YlPLq4N3UGqRzPamMavOO+aOkFvHg24htVLCbTP95UXnK
+         fxBvrbwECEs/8AFcRDYsfTiXNWG7DZJqMZ1dI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=jSenHOrhxxFy34IEHdCrguQaAqWQ+8BH7GpAuBA+tZ5Oa+woREmMiIjYofYLizlZTb
-         kisw1S6zCz/OqnkaomcwgwpQ/8FgU3BZ+PMzHjNYQGMNWA4nD/4uFlYrQJSFEWvGo05n
-         Bn7ffuu62yDyebym9jr7QAq4ReQLG7VFmGtQM=
-Received: by 10.204.82.84 with SMTP id a20mr9299606bkl.154.1293319084966;
-        Sat, 25 Dec 2010 15:18:04 -0800 (PST)
-Received: from [192.168.1.13] (abwd176.neoplus.adsl.tpnet.pl [83.8.227.176])
-        by mx.google.com with ESMTPS id x38sm5569871bkj.1.2010.12.25.15.18.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 25 Dec 2010 15:18:03 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20101223020801.GB14585@burratino>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=P8FMplUaDBxZ7M6P4SJ3Q5dVhgWCxc2MqjTnEG5GLc548fMEWC0FEsPk15mQE+rB5M
+         bg37jV/c5Qc7kZW/444oiJDwRR9lYE0nijMeS1WiPYZZikkfszDaXSMe8XecLG6FmtIJ
+         cPYx89n/2m0fY1QrVOTUk6npUBT8jL8XDi3KQ=
+Received: by 10.42.219.4 with SMTP id hs4mr11252638icb.418.1293354470276;
+        Sun, 26 Dec 2010 01:07:50 -0800 (PST)
+Received: from burratino (c-76-126-174-171.hsd1.ca.comcast.net [76.126.174.171])
+        by mx.google.com with ESMTPS id u5sm9578446ics.18.2010.12.26.01.07.46
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 26 Dec 2010 01:07:48 -0800 (PST)
 Content-Disposition: inline
+In-Reply-To: <201012252314.22541.jnareb@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164183>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164184>
 
-On Thu, 23 Dec 2010, Jonathan Nieder wrote:
-> Jakub Narebski wrote:
-> 
-> > Gitweb assumes here that exceptions thrown by Perl would be simple
-> > strings; die_error() throws hash reference (if not for minimal
-> > external dependencies, it would be probable object of Class::Exception
-> > or Throwable class thrown).
-> 
-> Hmm, why not throw an object of new type Gitweb::Exception?
+The default function name discovery already works quite well for Perl
+code... with the exception of here-documents (or rather their ending).
 
-First, 'gitweb: Prepare for splitting gitweb' commit is only later in
-series... ;-) but that of course is not a serious issue.
+ sub foo {
+	print <<END
+ here-document
+ END
+	return 1;
+ }
 
-Second, more important is that I'd rather gitweb doesn't go "reinvent
-the wheel" route.  I'd rather (re)use Exception::Class (like e.g. 
-SVN::Web does it) if we go the OO exception handling route.
+The default funcname pattern treats the unindented END line as a
+function declaration and puts it in the @@ line of diff and "grep
+--show-function" output.
 
-But if we are going to use Exception::Class, then we can also use
-Try::Tiny, I think.
+With a little knowledge of perl syntax, we can do better.  You can
+try it out by adding "*.perl diff=perl" to the gitattributes file.
 
-> > --- a/gitweb/gitweb.perl
-> > +++ b/gitweb/gitweb.perl
-> > @@ -1045,21 +1045,6 @@ sub configure_gitweb_features {
-> >  	}
-> >  }
-> >  
-> > -# custom error handler: 'die <message>' is Internal Server Error
-> > -sub handle_errors_html {
-> > -	my $msg = shift; # it is already HTML escaped
-> > -
-> > -	# to avoid infinite loop where error occurs in die_error,
-> > -	# change handler to default handler, disabling handle_errors_html
-> > -	set_message("Error occured when inside die_error:\n$msg");
-> > -
-> > -	# you cannot jump out of die_error when called as error handler;
-> > -	# the subroutine set via CGI::Carp::set_message is called _after_
-> > -	# HTTP headers are already written, so it cannot write them itself
-> > -	die_error(undef, undef, $msg, -error_handler => 1, -no_http_header => 1);
-> > -}
-> > -set_message(\&handle_errors_html);
-> > -
-> 
-> Hoorah!
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Jakub Narebski wrote:
 
-Yeah, that is very nice.
+> BTW. do you know how such perl support should look like?
 
-> >  # dispatch
-> >  sub dispatch {
-> >  	if (!defined $action) {
-> > @@ -1167,7 +1152,11 @@ sub run {
-> >  		$pre_dispatch_hook->()
-> >  			if $pre_dispatch_hook;
-> >  
-> > -		run_request();
-> > +		eval { run_request() };
-> > +		if (defined $@ && !ref($@)) {
+Maybe something like this?
 
-Ooops, it should be 'if ($@ ...)', not 'if (defined $@ ...)'.
+ Documentation/gitattributes.txt |    2 ++
+ t/t4018-diff-funcname.sh        |    2 +-
+ userdiff.c                      |   15 +++++++++++++++
+ 3 files changed, 18 insertions(+), 1 deletions(-)
 
-> > +			# some Perl error, but not one thrown by die_error
-> > +			die_error(undef, undef, $@, -error_handler => 1);
-> > +		}
-> 
-> The !ref($@) seems overzealous, which is why I am wondering if it
-> would be possible to use bless() for a finer-grained check.
-
-You meant Scalar::Util::blessed here, isn't it? Fortunately Scalar::Util
-is core Perl module.
-
-By 'overzealous' do you mean here possibility of catching what we 
-shouldn't, i.e. non-gitweb error (not thrown by die_error)?  We can
-narrow it to "ref($@) eq 'HASH'", but I don't think it would be ever
-necessary: Perl throws string exceptions.
-
-> >  
-> >  	DONE_REQUEST:
-> >  		$post_dispatch_hook->()
-> > @@ -3768,7 +3757,8 @@ EOF
-> >  	print "</div>\n";
-> >  
-> >  	git_footer_html();
-> > -	goto DONE_REQUEST
-> > +
-> > +	die {'status' => $status, 'error' => $error}
-> >  		unless ($opts{'-error_handler'});
-> 
-> Is the DONE_REQUEST label still needed?
-
-No it isn't.
-
-> Thanks, I am happy to see the semantics becoming less thorny.
-
-Now I should check if this doesn't affect gitweb performance too badly.
-IIRC I have chosen 'goto DONE_GITWEB' because I didn't know about 
-ModPerl::Registry redefining 'exit' (why it was done), and because of
-some microbenchmark showing that it performs better than die/eval (why
-this specific solution)...
-
-But I think that the performance hit would be negligible in practice;
-making gitweb more maintainable is I think worth the cost.
-
+diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
+index 5a7f936..e59b878 100644
+--- a/Documentation/gitattributes.txt
++++ b/Documentation/gitattributes.txt
+@@ -494,6 +494,8 @@ patterns are available:
+ 
+ - `pascal` suitable for source code in the Pascal/Delphi language.
+ 
++- `perl` suitable for source code in the Perl language.
++
+ - `php` suitable for source code in the PHP language.
+ 
+ - `python` suitable for source code in the Python language.
+diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
+index 0a61b57..3646930 100755
+--- a/t/t4018-diff-funcname.sh
++++ b/t/t4018-diff-funcname.sh
+@@ -32,7 +32,7 @@ EOF
+ 
+ sed 's/beer\\/beer,\\/' < Beer.java > Beer-correct.java
+ 
+-builtin_patterns="bibtex cpp csharp fortran html java objc pascal php python ruby tex"
++builtin_patterns="bibtex cpp csharp fortran html java objc pascal perl php python ruby tex"
+ for p in $builtin_patterns
+ do
+ 	test_expect_success "builtin $p pattern compiles" '
+diff --git a/userdiff.c b/userdiff.c
+index 2d54536..fc2afe3 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -61,6 +61,21 @@ PATTERNS("pascal",
+ 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+"
+ 	 "|<>|<=|>=|:=|\\.\\."
+ 	 "|[^[:space:]]|[\x80-\xff]+"),
++PATTERNS("perl",
++	 "^[ \t]*package .*;\n"
++	 "^[ \t]*sub .* \\{",
++	 /* -- */
++	 "[[:alpha:]_'][[:alnum:]_']*"
++	 "|0[xb]?[0-9a-fA-F_]*"
++	 /* taking care not to interpret 3..5 as (3.)(.5) */
++	 "|[0-9a-fA-F_]+(\\.[0-9a-fA-F_]+)?([eE][-+]?[0-9_]+)?"
++	 "|=>|-[rwxoRWXOezsfdlpSugkbctTBMAC>]|~~|::"
++	 "|&&=|\\|\\|=|//=|\\*\\*="
++	 "|&&|\\|\\||//|\\+\\+|--|\\*\\*|\\.\\.\\.?"
++	 "|[-+*/%.^&<>=!|]="
++	 "|=~|!~"
++	 "|<<|<>|<=>|>>"
++	 "|[^[:space:]]"),
+ PATTERNS("php",
+ 	 "^[\t ]*(((public|protected|private|static)[\t ]+)*function.*)$\n"
+ 	 "^[\t ]*(class.*)$",
 -- 
-Jakub Narebski
-Poland
+1.7.2.3.554.gc9b5c.dirty
