@@ -1,7 +1,8 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [RFC/PATCH] diff: funcname and word patterns for perl
-Date: Sun, 26 Dec 2010 03:07:31 -0600
-Message-ID: <20101226090731.GA21588@burratino>
+Subject: Re: [RFC PATCH v7 1/9] gitweb: Go to DONE_REQUEST rather than
+ DONE_GITWEB in die_error
+Date: Sun, 26 Dec 2010 03:50:54 -0600
+Message-ID: <20101226095054.GB21588@burratino>
 References: <20101222234843.7998.87068.stgit@localhost.localdomain>
  <20101222235459.7998.43333.stgit@localhost.localdomain>
  <20101223015540.GA14585@burratino>
@@ -9,48 +10,47 @@ References: <20101222234843.7998.87068.stgit@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, "J.H." <warthog9@eaglescrag.net>,
-	John 'Warthog9' Hawley <warthog9@kernel.org>,
-	Thomas Rast <trast@student.ethz.ch>, Jeff King <peff@peff.net>
+	John 'Warthog9' Hawley <warthog9@kernel.org>
 To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Dec 26 10:08:00 2010
+X-From: git-owner@vger.kernel.org Sun Dec 26 10:59:53 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PWma7-0008QF-Sk
-	for gcvg-git-2@lo.gmane.org; Sun, 26 Dec 2010 10:08:00 +0100
+	id 1PWnOK-0000lc-Qe
+	for gcvg-git-2@lo.gmane.org; Sun, 26 Dec 2010 10:59:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751668Ab0LZJHx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Dec 2010 04:07:53 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:52482 "EHLO
+	id S1751692Ab0LZJvM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Dec 2010 04:51:12 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:55866 "EHLO
 	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751536Ab0LZJHu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Dec 2010 04:07:50 -0500
-Received: by iyi12 with SMTP id 12so6726991iyi.19
-        for <git@vger.kernel.org>; Sun, 26 Dec 2010 01:07:50 -0800 (PST)
+	with ESMTP id S1751515Ab0LZJvK (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Dec 2010 04:51:10 -0500
+Received: by iyi12 with SMTP id 12so6740956iyi.19
+        for <git@vger.kernel.org>; Sun, 26 Dec 2010 01:51:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=1n1LVcN9EX8wqbHwxg4jYkvqE36QdGhAdD+FEPYUPwo=;
-        b=URXv6+5xaF3eJYu9xPCVsLKx5XZ7cgpqZr8Bq0FR+BHGo8ZIsklGC+FnQIVMH+7c/N
-         aJw5N3X8EpC5ID3V6uah+A4YlPLq4N3UGqRzPamMavOO+aOkFvHg24htVLCbTP95UXnK
-         fxBvrbwECEs/8AFcRDYsfTiXNWG7DZJqMZ1dI=
+        bh=cYMu+aKC+oPnUDBOG1ox/bn/5T83S4rQYaBPiarYXwY=;
+        b=NVKIl6rp/ldDeac+J/RWJjxSUeqfPZQLUqA7MrFRYeObkZBUVaGIsecmKUn5Y40pjr
+         /4DyJ7MmBDAv9+7C45I+SSZfaMhmLkkltObdxmL3VE6UOLcpi9o5d0iETB9eaDPSrl7o
+         uX703+0fp7ludPqQ+5fK+d6txiWkNeY1oxwfU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=P8FMplUaDBxZ7M6P4SJ3Q5dVhgWCxc2MqjTnEG5GLc548fMEWC0FEsPk15mQE+rB5M
-         bg37jV/c5Qc7kZW/444oiJDwRR9lYE0nijMeS1WiPYZZikkfszDaXSMe8XecLG6FmtIJ
-         cPYx89n/2m0fY1QrVOTUk6npUBT8jL8XDi3KQ=
-Received: by 10.42.219.4 with SMTP id hs4mr11252638icb.418.1293354470276;
-        Sun, 26 Dec 2010 01:07:50 -0800 (PST)
+        b=YfEv5zGBbA8Twigp7kSiZUAO3TWtmmvZZvGY9u3Xva1edc5/lEdsOQxrMktdXu2l0J
+         co9VMu/8pIVEk+Yk8LDASo9rSrPXCmh5MOz5VE2cwRSHStY2HTdocQkrRD09BSZF+f7+
+         /zjEpdDMvkxhh9bnSIcKyUUK+NXLcYpEtDB8A=
+Received: by 10.42.171.70 with SMTP id i6mr11145865icz.319.1293357069686;
+        Sun, 26 Dec 2010 01:51:09 -0800 (PST)
 Received: from burratino (c-76-126-174-171.hsd1.ca.comcast.net [76.126.174.171])
-        by mx.google.com with ESMTPS id u5sm9578446ics.18.2010.12.26.01.07.46
+        by mx.google.com with ESMTPS id 8sm9831500iba.4.2010.12.26.01.51.07
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 26 Dec 2010 01:07:48 -0800 (PST)
+        Sun, 26 Dec 2010 01:51:08 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <201012252314.22541.jnareb@gmail.com>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -58,89 +58,88 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164184>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164185>
 
-The default function name discovery already works quite well for Perl
-code... with the exception of here-documents (or rather their ending).
-
- sub foo {
-	print <<END
- here-document
- END
-	return 1;
- }
-
-The default funcname pattern treats the unindented END line as a
-function declaration and puts it in the @@ line of diff and "grep
---show-function" output.
-
-With a little knowledge of perl syntax, we can do better.  You can
-try it out by adding "*.perl diff=perl" to the gitattributes file.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
 Jakub Narebski wrote:
+> On Thu, 23 Dec 2010, Jonathan Nieder wrote:
 
-> BTW. do you know how such perl support should look like?
+>> This seems to remove the last user of the DONE_GITWEB label.  Why not
+>> delete the label, too?
+>
+> Well, actually this patch is in this series only for the label ;-)
+>
+> Anyway, I can simply drop this patch, and have next one in series
+> (adding exception-based error handling, making die_error work like
+> 'die') delete DONE_GITWEB label...
 
-Maybe something like this?
+I like the current order (first the brief patch to change the
+semantics, then the more ambitious change to an eval {} based error
+handling implementation), but it doesn't matter so much.
 
- Documentation/gitattributes.txt |    2 ++
- t/t4018-diff-funcname.sh        |    2 +-
- userdiff.c                      |   15 +++++++++++++++
- 3 files changed, 18 insertions(+), 1 deletions(-)
+>> die_error gets called when server load is too high; I wonder whether
+>> it is right to go back for another request in that case.
+>
+> If client (web browser) are requesting connection, we have to tell it
+> something anyway.
 
-diff --git a/Documentation/gitattributes.txt b/Documentation/gitattributes.txt
-index 5a7f936..e59b878 100644
---- a/Documentation/gitattributes.txt
-+++ b/Documentation/gitattributes.txt
-@@ -494,6 +494,8 @@ patterns are available:
- 
- - `pascal` suitable for source code in the Pascal/Delphi language.
- 
-+- `perl` suitable for source code in the Perl language.
-+
- - `php` suitable for source code in the PHP language.
- 
- - `python` suitable for source code in the Python language.
-diff --git a/t/t4018-diff-funcname.sh b/t/t4018-diff-funcname.sh
-index 0a61b57..3646930 100755
---- a/t/t4018-diff-funcname.sh
-+++ b/t/t4018-diff-funcname.sh
-@@ -32,7 +32,7 @@ EOF
- 
- sed 's/beer\\/beer,\\/' < Beer.java > Beer-correct.java
- 
--builtin_patterns="bibtex cpp csharp fortran html java objc pascal php python ruby tex"
-+builtin_patterns="bibtex cpp csharp fortran html java objc pascal perl php python ruby tex"
- for p in $builtin_patterns
- do
- 	test_expect_success "builtin $p pattern compiles" '
-diff --git a/userdiff.c b/userdiff.c
-index 2d54536..fc2afe3 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -61,6 +61,21 @@ PATTERNS("pascal",
- 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+"
- 	 "|<>|<=|>=|:=|\\.\\."
- 	 "|[^[:space:]]|[\x80-\xff]+"),
-+PATTERNS("perl",
-+	 "^[ \t]*package .*;\n"
-+	 "^[ \t]*sub .* \\{",
-+	 /* -- */
-+	 "[[:alpha:]_'][[:alnum:]_']*"
-+	 "|0[xb]?[0-9a-fA-F_]*"
-+	 /* taking care not to interpret 3..5 as (3.)(.5) */
-+	 "|[0-9a-fA-F_]+(\\.[0-9a-fA-F_]+)?([eE][-+]?[0-9_]+)?"
-+	 "|=>|-[rwxoRWXOezsfdlpSugkbctTBMAC>]|~~|::"
-+	 "|&&=|\\|\\|=|//=|\\*\\*="
-+	 "|&&|\\|\\||//|\\+\\+|--|\\*\\*|\\.\\.\\.?"
-+	 "|[-+*/%.^&<>=!|]="
-+	 "|=~|!~"
-+	 "|<<|<>|<=>|>>"
-+	 "|[^[:space:]]"),
- PATTERNS("php",
- 	 "^[\t ]*(((public|protected|private|static)[\t ]+)*function.*)$\n"
- 	 "^[\t ]*(class.*)$",
--- 
-1.7.2.3.554.gc9b5c.dirty
+Right, I should have thought a few seconds more.  Respawning
+gitweb.perl would generate _more_ load[1].
+
+>> A broken per-request (or other) configuration could potentially leave
+>> a gitweb process in a broken state,
+[...]
+> 'die $@ if $@' would call CORE::die, which means it would end gitweb
+> process.
+
+This is referring to a later patch?
+
+> For CGI server it doesn't matter anyway, as for each request the process
+> is respawned anyway (together with respawning Perl interpreter), and I
+> think that ModPerl::Registry and FastCGI servers monitor process that it
+> is to serve requests, and respawn it if/when it dies.
+
+Sorry, that was unclear of me.  I meant that buggy configuration could
+leave a gitweb process in buggy but alive state and frequent failing
+requests might be a way to notice that.  Contrived example (just to
+illustrate what I mean):
+
+	our $version .= ".custom";
+	if (length $version >= 1000) {	# untested, buggy code goes here.
+		@diff_opts = ("--nonsense");
+	}
+
+I think I was not right to worry about this, either.  It is better to
+make such unusual and buggy configurations as noticeable as possible
+so they can be fixed.
+
+[...]
+> But actually handle_errors_html gets called only from fatalsToBrowser,
+> which in turn gets called from CGI::Carp::die... which ends calling
+> CODE::die (aka realdie), which ends CGI process anyway.
+>
+> That is why die_error ends with
+> 
+>	goto DONE_GITWEB
+>		unless ($opts{'-error_handler'});
+> 
+> i.e. it doesn't goto DONE_GITWEB nor DONE_REQUEST if called from
+> handle_errors_html anyway.
+[...]
+> Thanks a lot for your comments.
+
+Thanks for a thorough explanation.  For what it's worth, with or
+without removal of the DONE_GITWEB: label,
+
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+[1] I can imagine scenarios in which exiting gitweb would help
+alleviate the load, involving:
+
+ - large memory footprint for each gitweb process forcing the system
+   into swapping (e.g., from a memory leak), or
+ - FastCGI-like server noticing the load and choosing to decrease the
+   number of gitweb instances.
+
+In the usual case, presumably gitweb memory footprint is small and
+FastCGI-like servers limit the number of gitweb instances to a modest
+fixed number.
