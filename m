@@ -1,249 +1,124 @@
-From: Conrad Irwin <conrad.irwin@gmail.com>
-Subject: Re: [PATCH] Add support for -p/--patch to git-commit
-Date: Sun, 26 Dec 2010 17:56:09 +0000
-Message-ID: <E1PWvWg-000293-WA@scarlatti.dunvegan.biz>
-References: <E1PWsuV-0000FH-90@scarlatti.dunvegan.biz>
-	<vpqr5d4cx9e.fsf@bauges.imag.fr>
-Cc: git@vger.kernel.org
-To: Matthieu.Moy@grenoble-inp.fr
-X-From: git-owner@vger.kernel.org Sun Dec 26 19:44:05 2010
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 3/3] Fixes bug: GIT_PS1_SHOWDIRTYSTATE is no not respect
+ diff.ignoreSubmodules config variable
+Date: Sun, 26 Dec 2010 11:14:50 -0800
+Message-ID: <7vd3ooz6qd.fsf@alter.siamese.dyndns.org>
+References: <1293240049-7744-1-git-send-email-zapped@mail.ru>
+ <1293240049-7744-3-git-send-email-zapped@mail.ru> <4D15E48A.9050805@web.de>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Zapped <zapped@mail.ru>, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Sun Dec 26 20:15:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PWvZc-0001lg-T3
-	for gcvg-git-2@lo.gmane.org; Sun, 26 Dec 2010 19:44:05 +0100
+	id 1PWw3l-000233-2A
+	for gcvg-git-2@lo.gmane.org; Sun, 26 Dec 2010 20:15:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752458Ab0LZSnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Dec 2010 13:43:15 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:43067 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752331Ab0LZSnO (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Dec 2010 13:43:14 -0500
-Received: by wwa36 with SMTP id 36so8531011wwa.1
-        for <git@vger.kernel.org>; Sun, 26 Dec 2010 10:43:12 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:message-id
-         :in-reply-to:references:from:date:subject:to:cc;
-        bh=IQgBZQiVSbCz6XyL4CIVRv1YC7t5zrsohCLr1BNFl3g=;
-        b=HtvH639yxYKwBJ+Rqjb+uc0l6KrRehE74N3V0B1RpywEEkv8kTE8PJc0ZnyRih+dOI
-         vhaM2nMqlk49nFlDyXt7AGE5Ro9yZ/ttitGkJegtLl8AyQXCL1oT+JNh3PtAckVXpT4e
-         7XhwqR4SU3mXlg534C2kZibV4pYFlU7eem83k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:in-reply-to:references:from:date:subject:to:cc;
-        b=dW+aaLbCYnDzjsuABNuhhL1iMECg7iraV2nYb/glv1OU1wg49Ts8KUXgny4Rc1JjCw
-         fFj4nxRXnf8zT/34Jx3KEQqTiYPQZI1kJfSiQbHeVpsAQ7EP/e5AiCHDwQZdmhD3LI4N
-         cEcZlFgdXU6A1+JM45hhLn+s43E1ieuQUIvtk=
-Received: by 10.227.132.209 with SMTP id c17mr6941488wbt.135.1293388992703;
-        Sun, 26 Dec 2010 10:43:12 -0800 (PST)
-Received: from scarlatti.dunvegan.biz (host86-159-223-152.range86-159.btcentralplus.com [86.159.223.152])
-        by mx.google.com with ESMTPS id 11sm7829360wbj.19.2010.12.26.10.43.11
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 26 Dec 2010 10:43:12 -0800 (PST)
-Received: from root by scarlatti.dunvegan.biz with local (Exim 4.72)
-	(envelope-from <0e7c5991d55765b8b41917159da681585be2b722@scarlatti.dunvegan.biz>)
-	id 1PWvWg-000293-WA; Sun, 26 Dec 2010 18:41:03 +0000
-In-Reply-To: <vpqr5d4cx9e.fsf@bauges.imag.fr>
+	id S1752540Ab0LZTPF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Dec 2010 14:15:05 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38005 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752393Ab0LZTPE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Dec 2010 14:15:04 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7094C27D9;
+	Sun, 26 Dec 2010 14:15:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=U4uXPN46jmCV5c/xDFKNuFtuqpY=; b=xajoP6
+	Pg79jD6SxpyvSw3bsdV4V8RrZBApWdCGdEEfxbluExyt4/D8+ZUlqhOkG0ZT/QkG
+	gVJW5SA+EXMOb3DhtLGNmkn6rJQ257+5E373zEGrCHumcWPMrlFCk5rLXZgrjiQc
+	vinn5jnH0R9TurBFjNO7EgVjijgAimPeX2Pa0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Y9chqtPrZZ/rxNQ99t/KIyUE7z+OPGCG
+	ivfYQ6IQjOnMuWKwqodnwuTVnq1eEr1jy5cohZG+oLl4KQ0s7Q2IZPPL5iOQWc2W
+	zP1/h8e73NOfXI1aios+MOueImqGI30hDjxHwTcAybbeNUV16jhJ17WbO1C4FkHr
+	5OC0v4vw7yA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2D03627D8;
+	Sun, 26 Dec 2010 14:15:28 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A8F3F27D3; Sun, 26 Dec 2010
+ 14:15:22 -0500 (EST)
+In-Reply-To: <4D15E48A.9050805@web.de> (Jens Lehmann's message of "Sat\, 25
+ Dec 2010 13\:33\:14 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 7FC84EDE-1124-11E0-8B48-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164195>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164196>
 
-This works in the same was as git commit --interactive, and is
-equivalent to running git add -p before git commit.
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-Signed-off-by: Conrad Irwin <conrad.irwin@gmail.com>
----
+> So are there any reasons for the plumbing diff commands not to honor
+> the diff.ignoreSubmodules setting?
 
-On 26 December 2010 16:30, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> wrote:
->
-> At least one mistake:
->
-> To: unlisted-recipients:; (no To-header on input)
->
-> (I guess you've Bcc-ed the Git list, please don't do that)
+There are two kinds of users of the plumbing.
 
-Sorry, failed to use sendmail. (having read dire warnings about sending
-patches with gmail), second time lucky...
+One class of plumbing users is scripts that is about automation and
+mechanization that want to control what they do precisely (think cron
+jobs) without getting affected by the user preference stored in the
+repository configuration.  This class could either:
 
-> > While this patch works as advertised, I wonder if it would be nicer to
-> > change the behaviour of git commit --interactive and git commit -p to
-> > act on a temporary copy of the index rather than mutating the existing
-> > index. I've no idea how to go about that yet, but is it something that
-> > should be changed?
->
-> I don't think so. After a commit, I usually expect the index to be
-> clean, ready to start preparing the next commit (except if I
-> explicitely asked the opposite), which implies that the index used for
-> commit (-i|-p) is the same as the usual one.
+ (1) state what they want explicitly from the command line; or
+ (2) rely on built-in defaults not changing underneath them.
 
-The reason I suggested this is so that if you abort the commit (by
-leaving the commit message empty), the index would be unchanged; at the
-moment if you abort the commit the git-add is remembered. Certainly any
-changes committed would be removed from the index. It also would allow
-for git commit -p --only instead of having it always work like --include
-(which might even be better default behaviour). (It's also worth noting
-that git commit -i is --include, not --interactive)
+The behaviour of diff recursively inspecting submodule dirtiness has an
+unfortunate history, in that the behaviour changed over time, and in each
+step when we made a change, we thought we were making an unquestionable
+improvement.  Originally we only said "submodule HEAD is different from
+what we have in the index/superproject HEAD".  Later we added different
+kind of dirtiness like untracked files or modified contents in submodules,
+decided perhaps mistakenly that majority of users do want to see them as
+dirtiness and made that the default and allowed them to be ignored by an
+explicit request.  At that point, in order not to break existing scripts
+(mostly of the "mechanization" class, written back when there was no such
+extra dirtyness hence with no "explicit refusal" route available to them
+without rewriting), hence "no configuration should affect plumbing
+randomly" policy.
 
->
-> If I read correctly, this forbids "git commit --interactive --patch",
-> while "git add --interactive --patch" is allowed, and equivalent to
-> "--patch" alone.
+On the other hand, you may write user facing Porcelain in scripts and run
+plumbing from there.  This class of plumbing users could either:
 
-Well spotted :). Relatedly, git-commit currently forbids --interactive
-with paths, which should also be changed (though in a different commit I
-assume); I did not copy that limitation to --patch.
+ (1) inspect the config itself, interpret the customization and pass
+     an explicit command line flag; or
 
-I've updated this patch, thank you very much for the feedback.
+ (2) allow the plumbing honor the end user configuration stored in the
+     repository or user configuration files.
 
-Conrad
+It is argurably more convenient for these users if the plumbing blindly
+honored the configurations, as it would have allowed the latter
+implementation.  That way, we can be more lazy when writing our scripts,
+and ignore having to worry about new kinds of customization added to
+underlying git after a script is written---but new kinds of customization
+may break your script's expectation of what will and what will not be made
+customizable, and you would end up giving an explicit "do not use that
+feature" in some cases, so the being able to be lazy is not necessarily
+always a win.
 
+Things may have been a bit different if the original feature change to
+inspect submodules deeper, command line flags to control that behaviour
+and configuration to default the flags came at the same time, but
+unfortunately they happend over time.  I think we have been slowly getting
+better at this, but in the case of this particular feature, the original
+introduction of --ignore-submodules was in May 2008, deeper submodule
+inspection and the richer --ignore-submodules=<kind> option came much
+later in June 2010, and the configuration was invented later in August
+2010, which would mean that allowing the plumbing to honor configuration
+would have broken scripts written in the 2 years and 3 months period.
 
- Documentation/git-commit.txt |   24 ++++++++++++++++--------
- builtin/add.c                |    6 +++---
- builtin/commit.c             |   11 ++++++-----
- commit.h                     |    2 +-
- 4 files changed, 26 insertions(+), 17 deletions(-)
+And no, this does not call for a blanket "do / do not honor configuration"
+option to plumbing commands.  A more selective "do / do not honor these
+configuration variables" option might be an option, though.
 
-diff --git a/Documentation/git-commit.txt b/Documentation/git-commit.txt
-index b586c0f..6e7ab5a 100644
---- a/Documentation/git-commit.txt
-+++ b/Documentation/git-commit.txt
-@@ -8,11 +8,12 @@ git-commit - Record changes to the repository
- SYNOPSIS
- --------
- [verse]
--'git commit' [-a | --interactive] [-s] [-v] [-u<mode>] [--amend] [--dry-run]
--	   [(-c | -C | --fixup | --squash) <commit>] [-F <file> | -m <msg>]
--	   [--reset-author] [--allow-empty] [--allow-empty-message] [--no-verify]
--	   [-e] [--author=<author>] [--date=<date>] [--cleanup=<mode>]
--	   [--status | --no-status] [-i | -o] [--] [<file>...]
-+'git commit' [-a | --interactive | --patch] [-s] [-v] [-u<mode>] [--amend]
-+	   [--dry-run] [(-c | -C | --fixup | --squash) <commit>]
-+	   [-F <file> | -m <msg>] [--reset-author] [--allow-empty]
-+	   [--allow-empty-message] [--no-verify] [-e] [--author=<author>]
-+	   [--date=<date>] [--cleanup=<mode>] [--status | --no-status]
-+	   [-i | -o] [--] [<file>...]
- 
- DESCRIPTION
- -----------
-@@ -39,9 +40,10 @@ The content to be added can be specified in several ways:
-    that have been removed from the working tree, and then perform the
-    actual commit;
- 
--5. by using the --interactive switch with the 'commit' command to decide one
--   by one which files should be part of the commit, before finalizing the
--   operation.  Currently, this is done by invoking 'git add --interactive'.
-+5. by using the --interactive or --patch switches with the 'commit' command
-+   to decide one by one which files or hunks should be part of the commit,
-+   before finalizing the operation.  Currently, this is done by invoking
-+   'git add --interactive' or 'git add --patch'.
- 
- The `--dry-run` option can be used to obtain a
- summary of what is included by any of the above for the next
-@@ -59,6 +61,12 @@ OPTIONS
- 	been modified and deleted, but new files you have not
- 	told git about are not affected.
- 
-+-p::
-+--patch::
-+	Use the interactive patch selection interface to chose
-+	which changes to commit. See linkgit:git-add[1] for
-+	details.
-+
- -C <commit>::
- --reuse-message=<commit>::
- 	Take an existing commit object, and reuse the log message
-diff --git a/builtin/add.c b/builtin/add.c
-index 12b964e..3d074b3 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -242,7 +242,7 @@ int run_add_interactive(const char *revision, const char *patch_mode,
- 	return status;
- }
- 
--int interactive_add(int argc, const char **argv, const char *prefix)
-+int interactive_add(int argc, const char **argv, const char *prefix, int patch)
- {
- 	const char **pathspec = NULL;
- 
-@@ -253,7 +253,7 @@ int interactive_add(int argc, const char **argv, const char *prefix)
- 	}
- 
- 	return run_add_interactive(NULL,
--				   patch_interactive ? "--patch" : NULL,
-+				   patch ? "--patch" : NULL,
- 				   pathspec);
- }
- 
-@@ -378,7 +378,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
- 	if (patch_interactive)
- 		add_interactive = 1;
- 	if (add_interactive)
--		exit(interactive_add(argc - 1, argv + 1, prefix));
-+		exit(interactive_add(argc - 1, argv + 1, prefix, patch_interactive));
- 
- 	if (edit_interactive)
- 		return(edit_patch(argc, argv, prefix));
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 22ba54f..454308e 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -70,7 +70,7 @@ static const char *logfile, *force_author;
- static const char *template_file;
- static char *edit_message, *use_message;
- static char *fixup_message, *squash_message;
--static int all, edit_flag, also, interactive, only, amend, signoff;
-+static int all, edit_flag, also, interactive, patch_interactive, only, amend, signoff;
- static int quiet, verbose, no_verify, allow_empty, dry_run, renew_authorship;
- static int no_post_rewrite, allow_empty_message;
- static char *untracked_files_arg, *force_date, *ignore_submodule_arg;
-@@ -138,6 +138,7 @@ static struct option builtin_commit_options[] = {
- 	OPT_BOOLEAN('a', "all", &all, "commit all changed files"),
- 	OPT_BOOLEAN('i', "include", &also, "add specified files to index for commit"),
- 	OPT_BOOLEAN(0, "interactive", &interactive, "interactively add files"),
-+	OPT_BOOLEAN('p', "patch", &patch_interactive, "interactively add changes"),
- 	OPT_BOOLEAN('o', "only", &only, "commit only specified files"),
- 	OPT_BOOLEAN('n', "no-verify", &no_verify, "bypass pre-commit hook"),
- 	OPT_BOOLEAN(0, "dry-run", &dry_run, "show what would be committed"),
-@@ -296,8 +297,8 @@ static char *prepare_index(int argc, const char **argv, const char *prefix, int
- 
- 	if (is_status)
- 		refresh_flags |= REFRESH_UNMERGED;
--	if (interactive) {
--		if (interactive_add(argc, argv, prefix) != 0)
-+	if (interactive || patch_interactive) {
-+		if (interactive_add(argc, argv, prefix, patch_interactive) != 0)
- 			die("interactive add failed");
- 		if (read_cache_preload(NULL) < 0)
- 			die("index file corrupt");
-@@ -969,8 +970,8 @@ static int parse_and_validate_options(int argc, const char *argv[],
- 			use_message_buffer = xstrdup(commit->buffer);
- 	}
- 
--	if (!!also + !!only + !!all + !!interactive > 1)
--		die("Only one of --include/--only/--all/--interactive can be used.");
-+	if (!!also + !!only + !!all + !!(interactive || patch_interactive) > 1)
-+		die("Only one of --include/--only/--all/--interactive/--patch can be used.");
- 	if (argc == 0 && (also || (only && !amend)))
- 		die("No paths with --include/--only does not make sense.");
- 	if (argc == 0 && only && amend)
-diff --git a/commit.h b/commit.h
-index eb6c5af..951c22e 100644
---- a/commit.h
-+++ b/commit.h
-@@ -160,7 +160,7 @@ extern struct commit_list *get_shallow_commits(struct object_array *heads,
- int is_descendant_of(struct commit *, struct commit_list *);
- int in_merge_bases(struct commit *, struct commit **, int);
- 
--extern int interactive_add(int argc, const char **argv, const char *prefix);
-+extern int interactive_add(int argc, const char **argv, const char *prefix, int patch);
- extern int run_add_interactive(const char *revision, const char *patch_mode,
- 			       const char **pathspec);
- 
--- 
-1.7.3.4.627.g3cfc9
+By the way, could we please have a real sign-off, not with a one with a
+pseudonym, given to the series?
