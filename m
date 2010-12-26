@@ -1,133 +1,169 @@
-From: =?utf-8?B?0JDQu9C10LrRgdC10Lkg0JrRgNC10LfQvtCy?= <zapped@mail.ru>
-Subject: Re[2]: [PATCH 3/3] Fixes bug: GIT_PS1_SHOWDIRTYSTATE is no not respect diff.ignoreSubmodules config variable
-Date: Mon, 27 Dec 2010 01:25:57 +0300
-Message-ID: <1824011293.20101227012557@mail.ru>
-References: <1293240049-7744-1-git-send-email-zapped@mail.ru> <1293240049-7744-3-git-send-email-zapped@mail.ru> <4D15E48A.9050805@web.de>
-Reply-To: =?utf-8?B?0JDQu9C10LrRgdC10Lkg0JrRgNC10LfQvtCy?= <zapped@mail.ru>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC PATCH v7 1/9] gitweb: Go to DONE_REQUEST rather than DONE_GITWEB in die_error
+Date: Sun, 26 Dec 2010 23:25:50 +0100
+Message-ID: <201012262325.51585.jnareb@gmail.com>
+References: <20101222234843.7998.87068.stgit@localhost.localdomain> <201012252314.22541.jnareb@gmail.com> <20101226095054.GB21588@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Dec 26 23:26:08 2010
+Cc: git@vger.kernel.org, "J.H." <warthog9@eaglescrag.net>,
+	John 'Warthog9' Hawley <warthog9@kernel.org>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Dec 26 23:26:19 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PWz2V-00058B-Gg
-	for gcvg-git-2@lo.gmane.org; Sun, 26 Dec 2010 23:26:07 +0100
+	id 1PWz2g-0005Ce-NX
+	for gcvg-git-2@lo.gmane.org; Sun, 26 Dec 2010 23:26:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752925Ab0LZW0A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 26 Dec 2010 17:26:00 -0500
-Received: from smtp4.mail.ru ([94.100.176.44]:43558 "EHLO smtp4.mail.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752900Ab0LZW0A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Dec 2010 17:26:00 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
-	h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Subject:CC:To:Message-ID:Reply-To:From:Date; bh=1ssgBg6QFzTqho+fR3+/NMYYnis9fi3hvm7omCjKb10=;
-	b=DgZGBgYZdBaz1b1Nw4HcwlaJGu+pypY4oTg/Hd2nTInYy8+Bz0w3vu1kCFUyhUEno4+UDpduPa/sMDqA+m4bno0UZ8RZCtqP7XGrFpvgvAvV3Fls0791rDJKVqRSfNEe;
-Received: from [91.76.208.161] (port=63530 helo=ppp91-76-208-161.pppoe.mtu-net.ru)
-	by smtp4.mail.ru with asmtp 
-	id 1PWz2M-0000fW-00; Mon, 27 Dec 2010 01:25:58 +0300
-X-Mailer: The Bat! (v3.99.3) Professional
-X-Priority: 3 (Normal)
-In-Reply-To: <4D15E48A.9050805@web.de>
-X-Mras: Ok
+	id S1752972Ab0LZW0G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 26 Dec 2010 17:26:06 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:58786 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752930Ab0LZW0E (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Dec 2010 17:26:04 -0500
+Received: by fxm20 with SMTP id 20so8806572fxm.19
+        for <git@vger.kernel.org>; Sun, 26 Dec 2010 14:26:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=owAC/vjQAYpbkgiaRQD/B7bOgdehpw5qFYfaVGM6t3c=;
+        b=Tedk93ndL8z+pau14fPPUm/gOvhZxXTsBdD5vBUKVUPbDz04ga0RZbWBCpbP2DL2HC
+         65ImIxN61Zsjd2reeg5fyvnrDMMf7u7XvAx9HjPI4VsiP0Tg/7liZWo2xJAdVSf1IPE4
+         0O8y4rAqlSmZi1zMiXFMIJUKd0Lvr+AUP/ueU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=nXz9HtwtgVOSxrSbQZmK2SfCEvMyxZ5gecnSGFIJZOfQYwBJUN7W23p4bpr84J7/5Z
+         dLki/zs2yqUYXJH2KIVpMa8yrwwlORBUJiGnA6yvz0lofCd5PvhYmpstCqrbPKVe81nM
+         G63KzVD8KAVOhSNeuv4SW5V/N4FN5TlDJuY0Q=
+Received: by 10.223.79.68 with SMTP id o4mr1253236fak.0.1293402362896;
+        Sun, 26 Dec 2010 14:26:02 -0800 (PST)
+Received: from [192.168.1.13] (abwr69.neoplus.adsl.tpnet.pl [83.8.241.69])
+        by mx.google.com with ESMTPS id e6sm2843143fav.32.2010.12.26.14.25.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 26 Dec 2010 14:26:00 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20101226095054.GB21588@burratino>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164200>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164201>
 
-Hello!
+On Sun, 26 Dec 2010, Jonathan Nieder wrote:
+> Jakub Narebski wrote:
+>> On Thu, 23 Dec 2010, Jonathan Nieder wrote:
+ 
+>>> die_error gets called when server load is too high; I wonder whether
+>>> it is right to go back for another request in that case.
+>>
+>> If client (web browser) are requesting connection, we have to tell it
+>> something anyway.
+> 
+> Right, I should have thought a few seconds more.  Respawning
+> gitweb.perl would generate _more_ load[1].
 
-I`m sorry, but I`m newbie in making and distributing of public patches.
-So, don't beat me much ))
+> [1] I can imagine scenarios in which exiting gitweb would help
+> alleviate the load, involving:
+> 
+>  - large memory footprint for each gitweb process forcing the system
+>    into swapping (e.g., from a memory leak), or
+>  - FastCGI-like server noticing the load and choosing to decrease the
+>    number of gitweb instances.
+> 
+> In the usual case, presumably gitweb memory footprint is small and
+> FastCGI-like servers limit the number of gitweb instances to a modest
+> fixed number.
 
-JL> it would have been easier for me if the commit message would have
-JL> described the problem you tried to fix a bit more in detail ;-).
-My problem was in the following.
-I use Git on Windows XP under Cygwin. So its perfomance is slower than
-on *nix, I guess.
-My project has 40 submodules (external libs) and some of them could
-have untracked files (for some reasons). So when I run any command in Bash
-after its execution Bash "thought" for 2-3 seconds. That was annoying.
-I do not remember the version of Git I used at that moment but I
-remember it was an update from 1.6.x to early 1.7.x. So I decided to roll back
-to 1.6.x ))
-Then there was some updates of Git. But after updating the problem
-still happened.
-When I tried to discover the reason of such a behaviour I found that
-Git got status for all submodules including untracked content and so
-marked them with *
-Then I read manual and found diff.ignoreSubmodules and tried to set up for each
-submodule in a .gitmodules but nothing changed (as it seemed to me at
-that time).
-So I've found the easiest way to solve my problem - this patch )
-Maybe after this patch there was some changes in Git solved this
-problem but I did not investigate it, sorry.
+I assume that CGI / FastCGI / mod_perl (+ ModPerl::Registry) web server
+would know how to regulate number of workers according to the server
+load.
+ 
+>>> A broken per-request (or other) configuration could potentially leave
+>>> a gitweb process in a broken state,
+> [...]
+>> 'die $@ if $@' would call CORE::die, which means it would end gitweb
+>> process.
+> 
+> This is referring to a later patch?
 
-JL> 2) If diff.ignoreSubmodules is unset it leads to an error
-JL>    every time the prompt is displayed:
-JL>    'fatal: bad --ignore-submodules argument:'
-Yeah, you're right
+I'm sorry I haven't made myself clear.
 
-JL> Am 25.12.2010 02:20, schrieb Zapped:
->> Signed-off-by: Zapped <zapped@mail.ru>
->> ---
->>  contrib/completion/git-completion.bash |    3 ++-
->>  1 files changed, 2 insertions(+), 1 deletions(-)
+What I meant here is that gitweb includes the following code
+
+	if (-e $GITWEB_CONFIG) {
+		do $GITWEB_CONFIG;
+		die $@ if $@;
+	}
+
+which means that CGI::Carp::die is called, which might call 
+handle_errors_html, and which ends in CORE::die, which ends gitweb
+process.  So if there is no way for broken configuration to leave
+gitweb in a rboken state _at this point in series_.
+
+Thank you for thinking about this, because it could cause problems
+(could because I have not checked if it does or if it doesn't) in the
+following patch, when gitweb uses eval / die for error handling.
+Then it might happen when $per_request_config is false or CODE that
+instead of trying to reread broken config on subsequent requests, we
+will run with broken config.  It depends if "die"-ing in 
+evaluate_gitweb_config would prevent setting $first_request to false.
+I'd have to check that.
+
+>> For CGI server it doesn't matter anyway, as for each request the process
+>> is respawned anyway (together with respawning Perl interpreter), and I
+>> think that ModPerl::Registry and FastCGI servers monitor process that it
+>> is to serve requests, and respawn it if/when it dies.
+> 
+> Sorry, that was unclear of me.  I meant that buggy configuration could
+> leave a gitweb process in buggy but alive state and frequent failing
+> requests might be a way to notice that.  Contrived example (just to
+> illustrate what I mean):
+> 
+> 	our $version .= ".custom";
+> 	if (length $version>= 1000) {	# untested, buggy code goes here.
+> 		@diff_opts = ("--nonsense");
+> 	}
+> 
+> I think I was not right to worry about this, either.  It is better to
+> make such unusual and buggy configurations as noticeable as possible
+> so they can be fixed.
+
+See above.
+
+> [...]
+>> But actually handle_errors_html gets called only from fatalsToBrowser,
+>> which in turn gets called from CGI::Carp::die... which ends calling
+>> CODE::die (aka realdie), which ends CGI process anyway.
+>>
+>> That is why die_error ends with
 >> 
->> diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
->> index d3037fc..50fc385 100755
->> --- a/contrib/completion/git-completion.bash
->> +++ b/contrib/completion/git-completion.bash
->> @@ -280,7 +280,8 @@ __git_ps1 ()
->>               elif [ "true" = "$(git rev-parse --is-inside-work-tree 2>/dev/null)" ]; then
->>                       if [ -n "${GIT_PS1_SHOWDIRTYSTATE-}" ]; then
->>                               if [ "$(git config --bool bash.showDirtyState)" != "false" ]; then
->> -                                     git diff --no-ext-diff --quiet --exit-code || w="*"
->> +                                     is=$(git config diff.ignoreSubmodules)
->> +                                     git diff --no-ext-diff --quiet --exit-code --ignore-submodules=$is || w="*"
->>                                       if git rev-parse --quiet --verify HEAD >/dev/null; then
->>                                               git diff-index --cached --quiet HEAD -- || i="+"
->>                                       else
+>>	goto DONE_GITWEB
+>>		unless ($opts{'-error_handler'});
+>> 
+>> i.e. it doesn't goto DONE_GITWEB nor DONE_REQUEST if called from
+>> handle_errors_html anyway.
+> [...]
+>> Thanks a lot for your comments.
 
-JL> Thanks for resubmitting this as an inline patch for review (although
-JL> it would have been easier for me if the commit message would have
-JL> described the problem you tried to fix a bit more in detail ;-).
+Which should make it in either commit message, or comments, I guess.
+ 
+> Thanks for a thorough explanation.  For what it's worth, with or
+> without removal of the DONE_GITWEB: label,
+> 
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-JL> After testing this patch it looks like it has a few issues:
+Thanks.
 
-JL> 1) it will break any per-submodule configuration done via
-JL>    the 'submodule.<name>.ignore' setting in .git/config or
-JL>    .gitmodules, as using the --ignore-submodules option
-JL>    overrides those while only setting 'diff.ignoreSubmodules'
-JL>    should not do that.
-
-JL> 2) If diff.ignoreSubmodules is unset it leads to an error
-JL>    every time the prompt is displayed:
-JL>    'fatal: bad --ignore-submodules argument:'
-
-JL> 3) And for me it didn't change the behavior at all:
-
-JL>    - The '*' in the prompt vanishes as I set diff.ignoreSubmodules
-JL>      as expected with or without your patch.
-JL>      Am I missing something here?
-
-JL>    - The real problem here is that the '+' never goes away even
-JL>      when 'diff.ignoreSubmodules' is set to 'all'. This is due
-JL>      to the fact that 'diff.ignoreSubmodules' is only honored by
-JL>      "git diff", but not by "git diff-index".
-
-JL> So the real issue here seems to be the "git diff-index" call, which
-JL> doesn't honor the 'diff.ignoreSubmodules' setting. In commit 37aea37
-JL> Dscho (CCed) introduced this configuration setting while explicitly
-JL> stating that it only affects porcelain. As the other config options
-JL> always influence porcelain and plumbing, it looks like we would want
-JL> to have this option honored by plumbing too, no?
-
-JL> So are there any reasons for the plumbing diff commands not to honor
-JL> the diff.ignoreSubmodules setting?
+-- 
+Jakub Narebski
+Poland
