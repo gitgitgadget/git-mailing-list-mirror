@@ -1,10 +1,9 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH] setup_explicit_git_dir: adjust relative $GIT_WORK_TREE after moving cwd
-Date: Sun, 26 Dec 2010 18:46:54 +0700
-Message-ID: <1293364014-8463-2-git-send-email-pclouds@gmail.com>
+Subject: [PATCH] setup_work_tree: adjust relative $GIT_WORK_TREE after moving cwd
+Date: Sun, 26 Dec 2010 18:46:53 +0700
+Message-ID: <1293364014-8463-1-git-send-email-pclouds@gmail.com>
 References: <1293285457-11915-2-git-send-email-pclouds@gmail.com>
- <1293364014-8463-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
@@ -17,111 +16,172 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PWp5J-00084m-6h
+	id 1PWp5I-00084m-HK
 	for gcvg-git-2@lo.gmane.org; Sun, 26 Dec 2010 12:48:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752068Ab0LZLsT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Dec 2010 06:48:19 -0500
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:50738 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751996Ab0LZLsS (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 26 Dec 2010 06:48:18 -0500
-Received: by pva4 with SMTP id 4so1512854pva.19
-        for <git@vger.kernel.org>; Sun, 26 Dec 2010 03:48:17 -0800 (PST)
+	id S1752035Ab0LZLsP convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 26 Dec 2010 06:48:15 -0500
+Received: from mail-px0-f174.google.com ([209.85.212.174]:60058 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751996Ab0LZLsN (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 26 Dec 2010 06:48:13 -0500
+Received: by pxi15 with SMTP id 15so1526099pxi.19
+        for <git@vger.kernel.org>; Sun, 26 Dec 2010 03:48:13 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:received:from:to:cc:subject
          :date:message-id:x-mailer:in-reply-to:references:mime-version
          :content-type:content-transfer-encoding;
-        bh=lkK0yksY3WoCeiefVbvQMMmgBayE9T1BGIw2TXzh7UE=;
-        b=owB3EMnSyU4czTBAKRB4jVAn8O0xyqkt3KI28ubnwCHe1Pbrr2lTSNtt60iTIF9b9D
-         WTsokynFtCkqHJLb5/05V51YhSR2YTCIuLbT++qZ0fyA9QTuz3ZZeccAM1u6B9Hm3XU9
-         TeS6VoC7anJmybKmTccEZ7sE3nC+lYgZqP5QE=
+        bh=b0ZMR6HTRNlG+d5xtZ+/bZg04dvxVLRNE4LIM9P3YiU=;
+        b=UuPsCp/Ww9GKDuAU4ryAXklc2uqbuGn2+SkKtrtNT97Rh/uyOPIPeBdggf0pEJqMRP
+         0A7O07MA1EBmpkyXCdVE98SK5loncuz3fIjgn19J8wyz3ExlwuZd0+w7nmMJnCTzz8kq
+         hUirgA0Zb4lfIFjXqjVtTuUZQ8mghX3l4BdbA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=FWQYSyrXTE/zrxhLd90xYeJgj58MZ56SGAchYAreHVK5gEicbPLlIXkF9ox4dE0LW5
-         4aOSO1knxMEgiAubAz0MXLlhha864UA+xhuhW3fChpFQ5iBDN7/aS1Cr4wQIv1DKQEFc
-         i4jzvi9sY1lcojHOprIRAG2yh7Vf1eUu6Yrow=
-Received: by 10.142.225.21 with SMTP id x21mr4196981wfg.403.1293364097574;
-        Sun, 26 Dec 2010 03:48:17 -0800 (PST)
+        b=kNS9J2Dvm9Fuxq7Az7dUTD9i6lf75oR0lXmcAmMm5ONVgq0rGKFSnppVmoLRH2YVHi
+         3lSwPcCdw+3nDorYmDbrAkRjPq67OohvNkbvD7BBtTU4zCreIu4324G9YtBDRyvjbPPk
+         hAE1oy92W9Cwr1us35tTpAFCFcvNPAt3pgJAc=
+Received: by 10.142.49.10 with SMTP id w10mr9072613wfw.185.1293364091489;
+        Sun, 26 Dec 2010 03:48:11 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.248.124])
-        by mx.google.com with ESMTPS id x35sm15821642wfd.13.2010.12.26.03.48.14
+        by mx.google.com with ESMTPS id e14sm15822084wfg.20.2010.12.26.03.48.07
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 26 Dec 2010 03:48:16 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 26 Dec 2010 18:47:02 +0700
+        Sun, 26 Dec 2010 03:48:10 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sun, 26 Dec 2010 18:46:55 +0700
 X-Mailer: git-send-email 1.7.3.4.878.g439c7
-In-Reply-To: <1293364014-8463-1-git-send-email-pclouds@gmail.com>
+In-Reply-To: <1293285457-11915-2-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164190>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164191>
 
-setup_explicit_git_dir() can move cwd. If $GIT_WORK_TREE is relative
-to original cwd, then the subsequent git processes will take wrong
-worktree.
+When setup_work_tree() is called, it moves cwd to $GIT_WORK_TREE and
+makes internal copy of $GIT_WORK_TREE absolute. The environt variable,
+if set by user, remains unchanged. If the variable is relative, it is
+no longer correct because its base dir has changed.
 
 Instead of making $GIT_WORK_TREE absolute too, we just say "." and let
 subsequent git processes handle it.
 
+Reported-by: Michel Briand <michelbriand@free.fr>
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- This one is on top of nd/setup. If nd/setup does not make it in the
- next release, I can still make similar patch for master, but I don't
- think this happens in real life, therefore not really urgent to fix.
+ This one is better, on top of master because the next one is on top
+ of nd/setup.
 
- There are only few cases where git spawns more git processes.
- For those that do that, setup_work_tree() is likely called by git.c
- already, which is what the first patch is for.
+ And I forgot to tell why I did not put the fault in real life [1]
+ into tests: I don't like git-merge spawning another process just for
+ resetting worktree. Sooner or later it should be replaced to use
+ unpack_trees() directly. When that happens, the test would become
+ invalid.
 
- setup.c             |    7 +++++++
- t/t1501-worktree.sh |   12 ++++++++++++
- 2 files changed, 19 insertions(+), 0 deletions(-)
+ [1] http://thread.gmane.org/gmane.comp.version-control.git/164066/focu=
+s=3D164171
 
+ .gitignore          |    1 +
+ Makefile            |    1 +
+ setup.c             |    8 ++++++++
+ t/t1501-worktree.sh |   11 +++++++++++
+ test-subprocess.c   |   21 +++++++++++++++++++++
+ 5 files changed, 42 insertions(+), 0 deletions(-)
+ create mode 100644 test-subprocess.c
+
+diff --git a/.gitignore b/.gitignore
+index 87b833c..3dd6ef7 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -177,6 +177,7 @@
+ /test-sha1
+ /test-sigchain
+ /test-string-pool
++/test-subprocess
+ /test-svn-fe
+ /test-treap
+ /common-cmds.h
+diff --git a/Makefile b/Makefile
+index 57d9c65..bdf86a3 100644
+--- a/Makefile
++++ b/Makefile
+@@ -431,6 +431,7 @@ TEST_PROGRAMS_NEED_X +=3D test-run-command
+ TEST_PROGRAMS_NEED_X +=3D test-sha1
+ TEST_PROGRAMS_NEED_X +=3D test-sigchain
+ TEST_PROGRAMS_NEED_X +=3D test-string-pool
++TEST_PROGRAMS_NEED_X +=3D test-subprocess
+ TEST_PROGRAMS_NEED_X +=3D test-svn-fe
+ TEST_PROGRAMS_NEED_X +=3D test-treap
+ TEST_PROGRAMS_NEED_X +=3D test-index-version
 diff --git a/setup.c b/setup.c
-index 3d73269..10b8f16 100644
+index 91887a4..3833569 100644
 --- a/setup.c
 +++ b/setup.c
-@@ -392,6 +392,13 @@ static const char *setup_explicit_git_dir(const ch=
-ar *gitdirenv,
- 		set_git_dir(make_absolute_path(gitdirenv));
- 		if (chdir(worktree))
- 			die_errno("Could not chdir to '%s'", worktree);
-+		/*
-+		 * Make sure subsequent git processes find correct worktree
-+		 * if $GIT_WORK_TREE is set relative
-+		 */
-+		if (work_tree_env)
-+			setenv(GIT_WORK_TREE_ENVIRONMENT, ".", 1);
+@@ -239,6 +239,14 @@ void setup_work_tree(void)
+ 		git_dir =3D make_absolute_path(git_dir);
+ 	if (!work_tree || chdir(work_tree))
+ 		die("This operation must be run in a work tree");
 +
- 		cwd[len++] =3D '/';
- 		cwd[len] =3D '\0';
- 		free(gitfile);
++	/*
++	 * Make sure subsequent git processes find correct worktree
++	 * if $GIT_WORK_TREE is set relative
++	 */
++	if (getenv(GIT_WORK_TREE_ENVIRONMENT))
++		setenv(GIT_WORK_TREE_ENVIRONMENT, ".", 1);
++
+ 	set_git_dir(make_relative_path(git_dir, work_tree));
+ 	initialized =3D 1;
+ }
 diff --git a/t/t1501-worktree.sh b/t/t1501-worktree.sh
-index 1f3b50d..fa35c3e 100755
+index 2c8f01f..1f3b50d 100755
 --- a/t/t1501-worktree.sh
 +++ b/t/t1501-worktree.sh
-@@ -351,4 +351,16 @@ test_expect_success 'relative $GIT_WORK_TREE and g=
-it subprocesses' '
- 	)
+@@ -340,4 +340,15 @@ test_expect_success 'make_relative_path handles do=
+uble slashes in GIT_DIR' '
+ 	git --git-dir=3D"$(pwd)//repo.git" --work-tree=3D"$(pwd)" add dummy_f=
+ile
  '
 =20
-+test_expect_success 'relative $GIT_WORK_TREE and git subprocesses (2)'=
- '
++test_expect_success 'relative $GIT_WORK_TREE and git subprocesses' '
 +	(
-+	cd repo.git/work/sub &&
-+	GIT_DIR=3D../.. &&
-+	GIT_WORK_TREE=3D.. &&
++	GIT_DIR=3Drepo.git &&
++	GIT_WORK_TREE=3Drepo.git/work &&
 +	export GIT_DIR GIT_WORK_TREE &&
-+	test-subprocess rev-parse --show-toplevel >actual &&
-+	echo "$TRASH_DIRECTORY/repo.git/work" >expected &&
++	test-subprocess --setup-work-tree rev-parse --show-toplevel >actual &=
+&
++	echo "`pwd`/repo.git/work" >expected &&
 +	test_cmp expected actual
 +	)
 +'
 +
  test_done
+diff --git a/test-subprocess.c b/test-subprocess.c
+new file mode 100644
+index 0000000..667d3e5
+--- /dev/null
++++ b/test-subprocess.c
+@@ -0,0 +1,21 @@
++#include "cache.h"
++#include "run-command.h"
++
++int main(int argc, char **argv)
++{
++	const char *prefix;
++	struct child_process cp;
++	int nogit =3D 0;
++
++	prefix =3D setup_git_directory_gently(&nogit);
++	if (nogit)
++		die("No git repo found");
++	if (!strcmp(argv[1], "--setup-work-tree")) {
++		setup_work_tree();
++		argv++;
++	}
++	memset(&cp, 0, sizeof(cp));
++	cp.git_cmd =3D 1;
++	cp.argv =3D (const char **)argv+1;
++	return run_command(&cp);
++}
 --=20
 1.7.3.4.878.g439c7
