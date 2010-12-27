@@ -1,88 +1,68 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [RFC/PATCH] cherry-pick/revert: add support for
- -X/--strategy-option
-Date: Mon, 27 Dec 2010 16:38:43 +0100 (CET)
-Message-ID: <alpine.DEB.1.10.1012271630560.788@debian>
-References: <20101211005144.GA6634@burratino> <20101227212515.GA32352@burratino>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 3/3] Fixes bug: GIT_PS1_SHOWDIRTYSTATE is no not respect
+ diff.ignoreSubmodules config variable
+Date: Mon, 27 Dec 2010 23:06:38 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1012272256560.1794@bonsai2>
+References: <1293240049-7744-1-git-send-email-zapped@mail.ru> <1293240049-7744-3-git-send-email-zapped@mail.ru> <4D15E48A.9050805@web.de> <7vd3ooz6qd.fsf@alter.siamese.dyndns.org> <4D187511.3090104@web.de>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Justin Frankel <justin@cockos.com>,
-	Bert Wesarg <bert.wesarg@googlemail.com>,
-	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
-	Kevin Ballard <kevin@sb.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 27 22:38:03 2010
+Cc: Junio C Hamano <gitster@pobox.com>, Zapped <zapped@mail.ru>,
+	git@vger.kernel.org
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Dec 27 23:09:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PXKlW-00065y-6p
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Dec 2010 22:38:02 +0100
+	id 1PXLGH-0008Ly-5n
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Dec 2010 23:09:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751975Ab0L0Vh4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Dec 2010 16:37:56 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:64586 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751543Ab0L0Vh4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Dec 2010 16:37:56 -0500
-Received: by qwa26 with SMTP id 26so8828144qwa.19
-        for <git@vger.kernel.org>; Mon, 27 Dec 2010 13:37:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:x-x-sender:to:cc
-         :subject:in-reply-to:message-id:references:user-agent:mime-version
-         :content-type;
-        bh=VbzYiT2cH0SI4A68/7Dndcycr20JTFO+Qp5djxWey2U=;
-        b=uwvTSNz1IrYt9opLKKyVW6qH/OV6428SHn4Bj3ajwqb9RqyhFOButFZn46ZM1J1ZpK
-         xkFmTUSFqAtf0TBmYx4EG7vwc92uEEqPJMhcpohIRhWmgCTQDoheTlft005zpx2lujBE
-         u+xjANkk0xFrATPNBg3gFGBhsDVH9xuS1nVUo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=dBvZXkpekYBjv5YoWdRO+5aD/ed6Vxbi0vJg7ewUT1AX9A4mA7YDjspe+j9CCrynxk
-         VmEV3OFxD7AtvCma1S+smZEw3vkjl7g5WjVMFlJMTHXMIFT2+BeZo/rwDWE+ol4ZIv4P
-         tXIQFWzasUEBxsde1FiyYPtdmBe1SC3+cdrj4=
-Received: by 10.229.241.196 with SMTP id lf4mr11032439qcb.284.1293485875382;
-        Mon, 27 Dec 2010 13:37:55 -0800 (PST)
-Received: from [192.168.1.105] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id e29sm7217797qck.39.2010.12.27.13.37.53
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 27 Dec 2010 13:37:54 -0800 (PST)
-X-X-Sender: martin@debian
-In-Reply-To: <20101227212515.GA32352@burratino>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1752070Ab0L0WGm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Dec 2010 17:06:42 -0500
+Received: from mailout-de.gmx.net ([213.165.64.23]:46964 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1750846Ab0L0WGl (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Dec 2010 17:06:41 -0500
+Received: (qmail invoked by alias); 27 Dec 2010 22:06:40 -0000
+Received: from ppp-93-104-144-209.dynamic.mnet-online.de (EHLO noname) [93.104.144.209]
+  by mail.gmx.net (mp035) with SMTP; 27 Dec 2010 23:06:40 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX18nlq1Yj0InXqZpO+GdtOFTyvWYX6VHHoFdZCqZSt
+	pDCXkvJe2hZszk
+X-X-Sender: gene099@bonsai2
+In-Reply-To: <4D187511.3090104@web.de>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164225>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164226>
 
-On Mon, 27 Dec 2010, Jonathan Nieder wrote:
+Hi Jens,
 
-> Jonathan Nieder wrote:
-> 
-> > For example, this would allow cherry-picking or reverting patches from
-> > a piece of history with a different end-of-line style, like so:
-> > 
-> > 	$ git revert -Xrenormalize old-problematic-commit
-> > 
-> > Currently that is possible with manual use of merge-recursive but the
-> > cherry-pick/revert porcelain does not expose the functionality.
-> > 
-> > While at it, document the existing support for --strategy.
-> > 
-> > Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-> > ---
-> > Thoughts?
-> 
-> Ping?  I use this with -Xpatience fairly often.  Am I the only one who
-> has wanted such a thing?
+On Mon, 27 Dec 2010, Jens Lehmann wrote:
 
-FWIW, I have wanted it for the end-of-line scenario you describe
-above.
+> [...]
+>
+> And it looks like the PS1 problem that started this discussion is a
+> valid example for mixed usage of porcelain and plumbing commands.
 
-/Martin
+The distinction between porcelain and plumbing commands is not as 
+clear-cut as some people would like it to be (just call "git grep 'git 
+log'" in a git.git checkout). IMHO the reason is that a distinction 
+between porcelain and plumbing makes sense in the world of sanitary 
+engineering, but not necessarily in the world of software (a distinction 
+between assembler vs source code, or GUI vs library makes sense, but not 
+between "programs to be called by humans" and "programs to be called by 
+other programs").
+
+Note: I do not think that the "plumbing" concept was not well-intended, 
+but I doubt that the concept holds up in the face of reality.
+
+I fear, though, that we cannot simply abolish the notion "plumbing vs 
+porcelain" from git.git...
+
+Ciao,
+Dscho
