@@ -1,80 +1,81 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: cherry-pick / pre-commit hook?
-Date: Mon, 27 Dec 2010 12:58:35 -0800
-Message-ID: <7vipyfx79g.fsf@alter.siamese.dyndns.org>
-References: <m2wrnktcl2.wl%dave@boostpro.com>
- <20101208175324.GB5687@burratino> <m2oc8wt0xc.wl%dave@boostpro.com>
- <20101208220514.GA8865@burratino> <m2d3oo9cwr.wl%dave@boostpro.com>
- <20101227093729.GB1201@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCH] cherry-pick/revert: add support for
+ -X/--strategy-option
+Date: Mon, 27 Dec 2010 15:25:15 -0600
+Message-ID: <20101227212515.GA32352@burratino>
+References: <20101211005144.GA6634@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Dave Abrahams <dave@boostpro.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Dec 27 21:58:53 2010
+Cc: Christian Couder <chriscool@tuxfamily.org>,
+	Justin Frankel <justin@cockos.com>,
+	Bert Wesarg <bert.wesarg@googlemail.com>,
+	Eyvind Bernhardsen <eyvind.bernhardsen@gmail.com>,
+	Kevin Ballard <kevin@sb.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 27 22:25:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PXK9d-0000tu-1r
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Dec 2010 21:58:53 +0100
+	id 1PXKZn-0001yF-LC
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Dec 2010 22:25:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751503Ab0L0U6r (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Dec 2010 15:58:47 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55273 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750873Ab0L0U6q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Dec 2010 15:58:46 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4C3F42431;
-	Mon, 27 Dec 2010 15:59:17 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0R7g7WPMmJvrlWibPATxn4m9lH0=; b=H9rcGu
-	sG8ouqjxwBNjaI8V8TFFPUkBgMdKjpsKwDsvbAYRpFHPbRhRS8t3XWrOqiScZ/D+
-	CyEyHO5yXgtjNTFyAb+3D2QGLP6uBO0yM8IR3wfk32qQxp54XVX/6WmLqQYxLqYa
-	ukNCe1gtvu+KCL0FAsd3almjWbYeIF7UxtEy8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=oY7VZWHLU1LoWZMa2OiuhRIkb4wCFCe6
-	BgMoQG7RoH4bGcNwI7QKQ0okWTslUPPleuyLAfaI91Vox5FRtw0LBrA1YxibbnyU
-	8QxakOwfSDHa7OOfuQfFnXwSjhq+4HlbYnDX3H+pSUSa72ocp6tgtQauOLwkcpIK
-	XvU9NAKcnH0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 16EF02430;
-	Mon, 27 Dec 2010 15:59:14 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0163A242E; Mon, 27 Dec 2010
- 15:59:09 -0500 (EST)
-In-Reply-To: <20101227093729.GB1201@burratino> (Jonathan Nieder's message of
- "Mon\, 27 Dec 2010 03\:37\:29 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 291BB0C0-11FC-11E0-A89F-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1751605Ab0L0VZl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Dec 2010 16:25:41 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:48423 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750951Ab0L0VZk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Dec 2010 16:25:40 -0500
+Received: by qyk12 with SMTP id 12so9805086qyk.19
+        for <git@vger.kernel.org>; Mon, 27 Dec 2010 13:25:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=j62cxLWDSvA/+fLuXeESqpKZRIVXqeq9N6VE6XhdQEA=;
+        b=dPt7QBNLugbqLA8Aawaf6nPetUT1nrhGNfpdMYVpkXj/rEdk334t/3CpE+HrTSIWKb
+         BW4ITiaZN1qdf32wlBu0OJEI3T7kbAIGQbgNMjoNqedOx8OQZZab3nEi8+dCLrkemW91
+         odYH5dwEs0DMQk/BPukfaU1+vAq1JXEOpxoME=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=cB9MSh9aZldOWFPbmSLgL12Nclxce1PTlanFj/tSFbAMqvYEuP1Jz6ExBerPAL2R/2
+         4gyOMp+j6teObvzPo3WcOdQ9WMyDyjEWwKsc7T1So/XfcStFUOFUE6B8PIkpXkvr6pxq
+         9CvA4Hp1J9984rLu1ZypUqm3oXuzVTCW+SQag=
+Received: by 10.224.53.193 with SMTP id n1mr12025475qag.270.1293485139918;
+        Mon, 27 Dec 2010 13:25:39 -0800 (PST)
+Received: from burratino (c-76-126-174-171.hsd1.ca.comcast.net [76.126.174.171])
+        by mx.google.com with ESMTPS id g28sm7209826qck.1.2010.12.27.13.25.35
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 27 Dec 2010 13:25:37 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20101211005144.GA6634@burratino>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164223>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Jonathan Nieder wrote:
 
-> Dave Abrahams wrote:
->
->> if you're going to have a "pre-commit hook" concept,
->> but not run that hook for some kinds of commits, then that fact needs
->> to be documented.
->
-> True, and thanks for a reminder.  Suggested wording?
->
-> The current githooks(5) says
->
->  pre-commit
-> 	This hook is invoked by git commit, and can be bypassed with
-> 	--no-verify option.
->
-> and leaves the question of whether it is invoked by git cherry-pick
-> unanswered.
+> For example, this would allow cherry-picking or reverting patches from
+> a piece of history with a different end-of-line style, like so:
+> 
+> 	$ git revert -Xrenormalize old-problematic-commit
+> 
+> Currently that is possible with manual use of merge-recursive but the
+> cherry-pick/revert porcelain does not expose the functionality.
+> 
+> While at it, document the existing support for --strategy.
+> 
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> ---
+> Thoughts?
 
-Huh?  Isn't it very clear that "git commit" calls it and "git status" or
-anything that is not "git commit" doesn't?
+Ping?  I use this with -Xpatience fairly often.  Am I the only one who
+has wanted such a thing?
