@@ -1,77 +1,64 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: cherry-pick / pre-commit hook?
-Date: Mon, 27 Dec 2010 03:37:29 -0600
-Message-ID: <20101227093729.GB1201@burratino>
-References: <m2wrnktcl2.wl%dave@boostpro.com>
- <20101208175324.GB5687@burratino>
- <m2oc8wt0xc.wl%dave@boostpro.com>
- <20101208220514.GA8865@burratino>
- <m2d3oo9cwr.wl%dave@boostpro.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dave Abrahams <dave@boostpro.com>
-X-From: git-owner@vger.kernel.org Mon Dec 27 10:38:09 2010
+From: Carlo Marcelo Arenas Belon <carenas@sajinet.com.pe>
+Subject: [PATCH] setup: translate symlinks in filename when using absolute paths
+Date: Mon, 27 Dec 2010 02:54:37 -0800
+Message-ID: <1293447277-30598-1-git-send-email-carenas@sajinet.com.pe>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Dec 27 11:54:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PX9Wr-0005MN-1b
-	for gcvg-git-2@lo.gmane.org; Mon, 27 Dec 2010 10:38:09 +0100
+	id 1PXAj0-0002aI-Na
+	for gcvg-git-2@lo.gmane.org; Mon, 27 Dec 2010 11:54:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753378Ab0L0Jhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 27 Dec 2010 04:37:50 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:56205 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753043Ab0L0Jhs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 27 Dec 2010 04:37:48 -0500
-Received: by gwj20 with SMTP id 20so4431467gwj.19
-        for <git@vger.kernel.org>; Mon, 27 Dec 2010 01:37:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=dTykYaqsSjfsHIn/lMQuZ6lfZ8A3yh6UuEMdLbTjv6w=;
-        b=cmWswuYcNHNvUptk/MWUoIorRYhQaIae2Gx+0DtF9m2XIBdsbMGVNPT08Y2DKqiy7i
-         y3RB7BmiEQOjRWb75J4DsDbyZ3sf8YBxhHD2D7zuKiSrYUpnXJuejU+uYKPsw4ufO5pR
-         JNFIl59q2TXtPAGDFEMaehDddk/39+7vFyGP8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=GEicVlS2/qMqSul3eZHqu3duHRBUjwZprU/1ZBBPkj1McwBeS+g/arPSS91hi68HwH
-         JOKQWwd6PvhW8VXbBr0zvuE3QeBDYFxiwg/iIiLjD1bJLrcTDqew0DfekU8cfdpwqkh4
-         G6T9KGSUhSPRRfwZ9LJzA9aNr/ghmrDI6M8S0=
-Received: by 10.236.105.226 with SMTP id k62mr6041341yhg.53.1293442667757;
-        Mon, 27 Dec 2010 01:37:47 -0800 (PST)
-Received: from burratino (c-76-126-174-171.hsd1.ca.comcast.net [76.126.174.171])
-        by mx.google.com with ESMTPS id z1sm2839643yhc.8.2010.12.27.01.37.45
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 27 Dec 2010 01:37:46 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <m2d3oo9cwr.wl%dave@boostpro.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753508Ab0L0Kyl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 27 Dec 2010 05:54:41 -0500
+Received: from sajino.sajinet.com.pe ([76.74.239.193]:49768 "EHLO
+	sajino.sajinet.com.pe" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753502Ab0L0Kyk (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 27 Dec 2010 05:54:40 -0500
+Received: by sajino.sajinet.com.pe (Postfix, from userid 65534)
+	id 58E66A580F7; Mon, 27 Dec 2010 10:54:38 +0000 (UTC)
+Received: from dell.sajinet.com.pe (dsl081-071-036.sfo1.dsl.speakeasy.net [64.81.71.36])
+	by sajino.sajinet.com.pe (Postfix) with ESMTP id 0CBBAA580A8
+	for <git@vger.kernel.org>; Mon, 27 Dec 2010 10:54:37 +0000 (UTC)
+X-Mailer: git-send-email 1.7.3.4.626.g73e7b.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164217>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164218>
 
-Dave Abrahams wrote:
+otherwise, comparison to validate against work tree will fail when
+the path includes a symlink and the name passed is not canonical.
 
-> if you're going to have a "pre-commit hook" concept,
-> but not run that hook for some kinds of commits, then that fact needs
-> to be documented.
+Signed-off-by: Carlo Marcelo Arenas Belon <carenas@sajinet.com.pe>
+---
+ setup.c |   11 +++++++----
+ 1 files changed, 7 insertions(+), 4 deletions(-)
 
-True, and thanks for a reminder.  Suggested wording?
-
-The current githooks(5) says
-
- pre-commit
-	This hook is invoked by git commit, and can be bypassed with
-	--no-verify option.
-
-and leaves the question of whether it is invoked by git cherry-pick
-unanswered.
+diff --git a/setup.c b/setup.c
+index 91887a4..e7c0d4d 100644
+--- a/setup.c
++++ b/setup.c
+@@ -7,10 +7,13 @@ static int inside_work_tree = -1;
+ char *prefix_path(const char *prefix, int len, const char *path)
+ {
+ 	const char *orig = path;
+-	char *sanitized = xmalloc(len + strlen(path) + 1);
+-	if (is_absolute_path(orig))
+-		strcpy(sanitized, path);
+-	else {
++	char *sanitized;
++	if (is_absolute_path(orig)) {
++		const char *temp = make_absolute_path(path);
++		sanitized = xmalloc(len + strlen(temp) + 1);
++		strcpy(sanitized, temp);
++	} else {
++		sanitized = xmalloc(len + strlen(path) + 1);
+ 		if (len)
+ 			memcpy(sanitized, prefix, len);
+ 		strcpy(sanitized + len, path);
+-- 
+1.7.3.4.626.g73e7b.dirty
