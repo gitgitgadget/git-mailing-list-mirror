@@ -1,57 +1,64 @@
-From: Tomas Carnecky <tom@dbservice.com>
-Subject: Re: Unable to delete remote branch with a strange name
-Date: Tue, 28 Dec 2010 18:59:29 +0100
-Message-ID: <4D1A2581.9050305@dbservice.com>
-References: <loom.20101228T080344-503@post.gmane.org> <m2hbdy9top.fsf@whitebox.home> <loom.20101228T170808-756@post.gmane.org>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 16/31] rebase -i: support --stat
+Date: Tue, 28 Dec 2010 18:59:46 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1012281858300.1794@bonsai2>
+References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com> <1293528648-21873-17-git-send-email-martin.von.zweigbergk@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jingzhao Ou <jingzhao.ou@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 28 18:59:39 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 28 18:59:57 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PXdpj-0008Sx-A4
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 18:59:39 +0100
+	id 1PXdq0-00007M-Js
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 18:59:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754375Ab0L1R7e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Dec 2010 12:59:34 -0500
-Received: from office.neopsis.com ([78.46.209.98]:43641 "EHLO
-	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753404Ab0L1R7e (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Dec 2010 12:59:34 -0500
-X-Spam-Status: No, hits=0.0 required=5.0
-	tests=AWL: 0.066,BAYES_00: -1.665,TOTAL_SCORE: -1.599,autolearn=ham
-X-Spam-Level: 
-Received: from calvin.local ([62.65.141.13])
-	(authenticated user tom@dbservice.com)
-	by office.neopsis.com
-	(using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
-	Tue, 28 Dec 2010 18:59:29 +0100
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
-In-Reply-To: <loom.20101228T170808-756@post.gmane.org>
+	id S1754489Ab0L1R7v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Dec 2010 12:59:51 -0500
+Received: from mailout-de.gmx.net ([213.165.64.23]:35409 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1754305Ab0L1R7v (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Dec 2010 12:59:51 -0500
+Received: (qmail invoked by alias); 28 Dec 2010 17:59:47 -0000
+Received: from ppp-88-217-111-31.dynamic.mnet-online.de (EHLO noname) [88.217.111.31]
+  by mail.gmx.net (mp045) with SMTP; 28 Dec 2010 18:59:47 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX1/f1mxkzqzfNkJNtZFXrprhhna4qsepJ5SkRiLM2o
+	BphcWoaCV9I4DQ
+X-X-Sender: gene099@bonsai2
+In-Reply-To: <1293528648-21873-17-git-send-email-martin.von.zweigbergk@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164280>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164281>
 
-  On 12/28/10 5:10 PM, Jingzhao Ou wrote:
-> Yes, using the absolute path works like a champ!
->
-> git push origin :refs/heads/remotes/origin/dev/main
+Hi,
 
-Do not use the term 'path' in this context. The fact that a ref looks 
-like a path, and can be stored on the filesystem under the same 
-directory structure is just an implementation detail. Note the *can*, 
-because in the case of packed refs (see man git-pack-refs) the term 
-'path' is not even remotely accurate.
+On Tue, 28 Dec 2010, Martin von Zweigbergk wrote:
 
-We use the term 'fully qualified ref' (see the similarity with 'fully 
-qualified domain name') if we want to stress out that the full name of 
-the ref is used (refs/heads/foo) instead of an abbreviation (foo).
+> diff --git a/git-rebase.sh b/git-rebase.sh
+> index 229e8d2..0fc580a 100755
 
-tom
+Hmpf... After a rebasing merge to junio/next:
+
+-- snip --
+[...]
+Applying: rebase -i: support --stat
+fatal: sha1 information is lacking or useless (git-rebase.sh).
+Repository lacks necessary blobs to fall back on 3-way merge.
+Cannot fall back to three-way merge.
+[...]
+-- snap --
+
+Is this supposed to apply on top of junio/master, junio/next, junio/maint?
+
+Ciao,
+Dscho
