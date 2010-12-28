@@ -1,126 +1,89 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] setup: translate symlinks in filename when using
- absolute paths
-Date: Tue, 28 Dec 2010 11:47:07 -0800
-Message-ID: <7vr5d1wuh0.fsf@alter.siamese.dyndns.org>
-References: <1293447277-30598-1-git-send-email-carenas@sajinet.com.pe>
+Subject: Re: [PATCH v2] Fix false positives in t3404 due to SHELL=/bin/false
+Date: Tue, 28 Dec 2010 11:58:08 -0800
+Message-ID: <7vmxnpwtyn.fsf@alter.siamese.dyndns.org>
+References: <robbat2-20101227T024837-537032076Z@orbis-terrarum.net>
+ <7vsjxjyce6.fsf@alter.siamese.dyndns.org>
+ <20101227080343.GA15026@orbis-terrarum.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	=?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-To: Carlo Marcelo Arenas Belon <carenas@sajinet.com.pe>
-X-From: git-owner@vger.kernel.org Tue Dec 28 20:47:24 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Robin H. Johnson" <robbat2@gentoo.org>
+X-From: git-owner@vger.kernel.org Tue Dec 28 20:58:22 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PXfVz-0004Nw-4N
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 20:47:23 +0100
+	id 1PXfgb-0000us-Rn
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 20:58:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751390Ab0L1TrS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 28 Dec 2010 14:47:18 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56351 "EHLO
+	id S1751749Ab0L1T6Q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Dec 2010 14:58:16 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64608 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751033Ab0L1TrS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 28 Dec 2010 14:47:18 -0500
+	with ESMTP id S1751618Ab0L1T6Q (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Dec 2010 14:58:16 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0493B282C;
-	Tue, 28 Dec 2010 14:47:48 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8076E2938;
+	Tue, 28 Dec 2010 14:58:46 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=+8D+aPdhGawF
-	WIF5TORGQX3tq9U=; b=UKmjiX3iJ04ZRM/zJADfJdG/I/ju5qkAVm3JkLRDPY44
-	wyM6ceyjg94CqiOrhp9n5BOLspit+6cM81yneXK/Gw39djHQp2NqspXXdgDLTIwV
-	OvgLYa3g/KqavsqPZhSalf96yDaaBpZ14HNsCVR73ghrSgt4JFj0mbd8oXFuJoA=
+	:content-type; s=sasl; bh=rVh9n6TNbjDGvOcLxBnSd2gjdtI=; b=iI6yZS
+	KHbgBx3s0W+siV30S8e6jZ5VKT6U8SKVfgXVxR+4zv/CtI8EE9hT9V9JhqTx2rX5
+	Gi2qu48lAdC8o7mT+q31O3W9gbudpbz1Gm72tP+qnHDH8Ws7CfvDGd0h8+fb+Iau
+	NOutz+iObUMFUub3ada7mEmDLXgr0J/thERmE=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=JhQYSC
-	LvxgpLLqCR79eZN3p/7gqEc5s9Uy5hiJkzRL3DANDjUeWvLxyS/pdA0O0pIGr0Db
-	LGZYDtz98KEfq4qEYIHC9YrEB/U3APaPZ9ZrFuumHYPcR2LEMs2iLpbPda9kmKDr
-	HauBpyB8/etbUBoqh9zUs21pFT6MDC1O/HGSw=
+	:content-type; q=dns; s=sasl; b=lyaAIeBDQgF9QCDUZo4Mrpuf9i9WoSp9
+	OyAeBiTcatiOjftOlvdMVjBwjy02q4XbRQnlzjOhALqWSpM2BnhEvQDWAZuAX29Z
+	Fyah2eUGDcLv7g8/HAgJwADR00SvDM75R7rIePP+llRu6xG1zimt+ORW82/p/Vbc
+	awjwy0SBNE8=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C11FA282B;
-	Tue, 28 Dec 2010 14:47:44 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5CEAB2937;
+	Tue, 28 Dec 2010 14:58:44 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6D653282A; Tue, 28 Dec 2010
- 14:47:40 -0500 (EST)
-In-Reply-To: <1293447277-30598-1-git-send-email-carenas@sajinet.com.pe>
- (Carlo Marcelo Arenas Belon's message of "Mon\, 27 Dec 2010 02\:54\:37
- -0800")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5931B2936; Tue, 28 Dec 2010
+ 14:58:41 -0500 (EST)
+In-Reply-To: <20101227080343.GA15026@orbis-terrarum.net> (Robin H. Johnson's
+ message of "Mon\, 27 Dec 2010 08\:03\:43 +0000")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 56EA436C-12BB-11E0-B93C-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: E00FA6AE-12BC-11E0-AAC5-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164287>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164288>
 
-Carlo Marcelo Arenas Belon <carenas@sajinet.com.pe> writes:
+"Robin H. Johnson" <robbat2@gentoo.org> writes:
 
-> otherwise, comparison to validate against work tree will fail when
-> the path includes a symlink and the name passed is not canonical.
->
-> Signed-off-by: Carlo Marcelo Arenas Belon <carenas@sajinet.com.pe>
-
-I take that "path" and "name passed" refer to the same thing (i.e. "pat=
-h"
-parameter) in the above.
-
-I think you are trying to handle the case where:
-
- - you give "/home/carenas/one" from the command line;
- - $PWD is "/home/carenas"; and
- - "/home/carenas" is a symlink to "/net/host/home/carenas"
-
-and the scan-from-the-beginning-of-string check done between
-"/home/carenas/one" and the return value of get_git_work_tree() which
-presumably is "/net/host/home/carenas" disagrees.  I wonder if a more
-correct solution might be to help get_git_work_tree() to match the noti=
-on
-of where the repository and its worktree are to the idea of where the u=
-ser
-thinks they are, i.e. not "/net/host/home/carenas" but "/home/carenas",=
- a
-bit better?
-
-That would involve tweaking make_absolute_path() I guess?
-
-Note that your patch is the right thing to do either case, i.e. with or
-without such a change to make_absolute_path(), as the function is used =
-to
-set up the return value from get_git_work_tree().  Anything we compare
-with it should have passed make_absolute_path() at least once.
-
-Nguy=E1=BB=85n?
+> If the user's shell in NSS passwd is /bin/false (eg as found during Gentoo's
+> package building), the git-rebase exec tests will fail, because they call
+> $SHELL around the command, and in the existing testcase, $SHELL was not being
+> cleared sufficently.
 
 > ---
->  setup.c |   11 +++++++----
->  1 files changed, 7 insertions(+), 4 deletions(-)
+>  t/t3404-rebase-interactive.sh |    3 ++-
+>  1 files changed, 2 insertions(+), 1 deletions(-)
 >
-> diff --git a/setup.c b/setup.c
-> index 91887a4..e7c0d4d 100644
-> --- a/setup.c
-> +++ b/setup.c
-> @@ -7,10 +7,13 @@ static int inside_work_tree =3D -1;
->  char *prefix_path(const char *prefix, int len, const char *path)
->  {
->  	const char *orig =3D path;
-> -	char *sanitized =3D xmalloc(len + strlen(path) + 1);
-> -	if (is_absolute_path(orig))
-> -		strcpy(sanitized, path);
-> -	else {
-> +	char *sanitized;
-> +	if (is_absolute_path(orig)) {
-> +		const char *temp =3D make_absolute_path(path);
-> +		sanitized =3D xmalloc(len + strlen(temp) + 1);
-> +		strcpy(sanitized, temp);
-> +	} else {
-> +		sanitized =3D xmalloc(len + strlen(path) + 1);
->  		if (len)
->  			memcpy(sanitized, prefix, len);
->  		strcpy(sanitized + len, path);
-> --=20
-> 1.7.3.4.626.g73e7b.dirty
+> diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
+> index d3a3bd2..7d8147b 100755
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -71,8 +71,9 @@ test_expect_success 'setup' '
+>  # "exec" commands are ran with the user shell by default, but this may
+>  # be non-POSIX. For example, if SHELL=zsh then ">file" doesn't work
+>  # to create a file. Unseting SHELL avoids such non-portable behavior
+> -# in tests.
+> +# in tests. It must be exported for it to take effect where needed.
+>  SHELL=
+> +export SHELL
+
+Thanks; will queue this version to 'maint'.
+
+I have this nagging suspicion that we may want to revisit this to assign
+$SHELL_PATH to it before exporting, and that this might be better done in
+t/test-lib.sh at the beginning.  Note that unlike my earlier "your v1
+might be less portable than desired", these two points are only
+speculations and RFCs.
