@@ -1,7 +1,7 @@
 From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH 23/31] rebase: factor out sub command handling
-Date: Tue, 28 Dec 2010 10:30:40 +0100
-Message-ID: <1293528648-21873-24-git-send-email-martin.von.zweigbergk@gmail.com>
+Subject: [PATCH 17/31] rebase: remove $branch as synonym for $orig_head
+Date: Tue, 28 Dec 2010 10:30:34 +0100
+Message-ID: <1293528648-21873-18-git-send-email-martin.von.zweigbergk@gmail.com>
 References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -9,175 +9,120 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 28 16:34:01 2010
+X-From: git-owner@vger.kernel.org Tue Dec 28 16:34:04 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PXbYn-0005Wr-62
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 16:34:01 +0100
+	id 1PXbYp-0005Wr-8G
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 16:34:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753920Ab0L1PdI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Dec 2010 10:33:08 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:56716 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753909Ab0L1PdD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Dec 2010 10:33:03 -0500
-Received: by mail-qw0-f46.google.com with SMTP id 26so9391760qwa.19
-        for <git@vger.kernel.org>; Tue, 28 Dec 2010 07:33:03 -0800 (PST)
+	id S1753966Ab0L1PdO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Dec 2010 10:33:14 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:48315 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753073Ab0L1Pcx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Dec 2010 10:32:53 -0500
+Received: by mail-qy0-f181.google.com with SMTP id 12so10443701qyk.19
+        for <git@vger.kernel.org>; Tue, 28 Dec 2010 07:32:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=GO8ZAo4EhTYVW3wrLhliIXzlfgBF4clJJU9k5pfCeMs=;
-        b=eQ+LDW0oaWAKbIWNhmlWl320T6aAZR4YMssAFbRZ9W+CrIfJYozLprLDN3XFCK6gMj
-         Jsiu1ybCBWJVWVorROEmzZB48Ax7FGmNo7yEIrz8skKdnKOFmyEAxP+fXQjaBTu0Hdm5
-         Cv6u+Z40lZANHJmevKo+K87XoStvkFLzNPyW0=
+        bh=P72e2ytPxDQ6op5aLUjNJ5pJdKfDYIU9PVrY0xf0R+8=;
+        b=RYPSI+x+MzAsrebkoCJ/rV0bO23iDvboBHm92lf+dER750TpnJUFle3JsJoHkLXVTU
+         Ta6ZJypnPF3hE7dVibAcLZ3EUI9+vWIGtI0fBZRQXuBfPgEN4lLNDPSYZfjT2EZAxXDe
+         NrSBqOHfXp9UNddIbtLeqUo+IXHbYwN+COJ0M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=bRDkx6iADEtRfdXryxtwf6BHDky0PoGa/6oxKlai6qtvWcsafeFYmMXap8zi03DkZf
-         hmc1ItbCGlDfnWfcKAHrHc/gRP49S2ZAldkkmKAqkHGeJqfQJIciuqktjfoWJIK064qi
-         83dCAA4rqz3AX1fckv/FYoHOxSUD5eZu/T1Zg=
-Received: by 10.224.37.20 with SMTP id v20mr12891901qad.216.1293550383373;
-        Tue, 28 Dec 2010 07:33:03 -0800 (PST)
+        b=QoHw5seAU7FEhSuRmzUPodVf6+xnQyDgs9xAG/79EAcp+oaRLUGygEhm0NmVv3+EKg
+         FpQunXC5u9F6JEybzUKpo+cQ6fvcftuUMBTB5y1lBDJSTwae8cXqflgnJOwsWQKxCoZG
+         NkAljZaig5ZXiveHtTg+/tpHoHUs2abiolRZg=
+Received: by 10.229.83.198 with SMTP id g6mr12290104qcl.157.1293550372847;
+        Tue, 28 Dec 2010 07:32:52 -0800 (PST)
 Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id s10sm6222962qco.35.2010.12.28.07.33.01
+        by mx.google.com with ESMTPS id s10sm6222962qco.35.2010.12.28.07.32.51
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 28 Dec 2010 07:33:02 -0800 (PST)
+        Tue, 28 Dec 2010 07:32:52 -0800 (PST)
 X-Mailer: git-send-email 1.7.3.2.864.gbbb96
 In-Reply-To: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164256>
 
-Factor out the common parts of the handling of the sub commands
-'--continue', '--skip' and '--abort'. The '--abort' handling can
-handled completely in git-rebase.sh.
-
-After this refactoring, the calls to git-rebase--am.sh,
-git-rebase--merge.sh and git-rebase--interactive.sh will be better
-aligned. There will only be one call to interactive rebase that will
-shortcut the very last part of git-rebase.sh.
+The variables $branch and $orig_head were used as synonyms. To avoid
+confusion, remove $branch. The name 'orig_head' seems more suitable,
+since that is the name used when the variable is persisted.
 
 Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 ---
- git-rebase--interactive.sh |   34 +++-------------------------------
- git-rebase.sh              |   17 +++++++++++++++--
- 2 files changed, 18 insertions(+), 33 deletions(-)
+ git-rebase.sh |   19 +++++++++----------
+ 1 files changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index acd0258..1079994 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -509,9 +509,7 @@ do_next () {
- 	test -s "$TODO" && return
- 
- 	comment_for_reflog finish &&
--	head_name=$(cat "$state_dir"/head-name) &&
--	orig_head=$(cat "$state_dir"/head) &&
--	SHORTONTO=$(git rev-parse --short $(cat "$state_dir"/onto)) &&
-+	SHORTONTO=$(git rev-parse --short $onto) &&
- 	NEWHEAD=$(git rev-parse HEAD) &&
- 	case $head_name in
- 	refs/*)
-@@ -521,7 +519,7 @@ do_next () {
- 		;;
- 	esac && {
- 		test ! -f "$state_dir"/verbose ||
--			git diff-tree --stat $(cat "$state_dir"/head)..HEAD
-+			git diff-tree --stat $orig_head..HEAD
- 	} &&
- 	{
- 		test -s "$REWRITTEN_LIST" &&
-@@ -655,14 +653,6 @@ rearrange_squash () {
- case "$action" in
- continue)
- 	get_saved_options
--	comment_for_reflog continue
--
--	# Sanity check
--	git rev-parse --verify HEAD >/dev/null ||
--		die "Cannot read HEAD"
--	git update-index --ignore-submodules --refresh &&
--		git diff-files --quiet --ignore-submodules ||
--		die "Working tree is dirty"
- 
- 	# do we have anything to commit?
- 	if git diff-index --cached --quiet --ignore-submodules HEAD --
-@@ -693,30 +683,12 @@ first and then run 'git rebase --continue' again."
- 	require_clean_work_tree "rebase"
- 	do_rest
- 	;;
--abort)
--	get_saved_options
--	comment_for_reflog abort
--
--	git rerere clear
--
--	head_name=$(cat "$state_dir"/head-name)
--	orig_head=$(cat "$state_dir"/head)
--	case $head_name in
--	refs/*)
--		git symbolic-ref HEAD $head_name
--		;;
--	esac &&
--	output git reset --hard $orig_head &&
--	rm -rf "$state_dir"
--	exit
--	;;
- skip)
- 	get_saved_options
--	comment_for_reflog skip
- 
- 	git rerere clear
- 
--	output git reset --hard && do_rest
-+	do_rest
- 	;;
- esac
- 
 diff --git a/git-rebase.sh b/git-rebase.sh
-index 0322f27..7e2e978 100755
+index 0fc580a..eae2f7a 100755
 --- a/git-rebase.sh
 +++ b/git-rebase.sh
-@@ -70,7 +70,12 @@ test "$(git config --bool rebase.autosquash)" = "true" && autosquash=t
- read_basic_state () {
- 	head_name=$(cat "$state_dir"/head-name) &&
- 	onto=$(cat "$state_dir"/onto) &&
--	orig_head=$(cat "$state_dir"/orig-head) &&
-+	if test "$type" = interactive
-+	then
-+		orig_head=$(cat "$state_dir"/head)
-+	else
-+		orig_head=$(cat "$state_dir"/orig-head)
-+	fi &&
- 	GIT_QUIET=$(cat "$state_dir"/quiet)
- }
+@@ -487,10 +487,10 @@ case "$#" in
+ 	switch_to="$1"
  
-@@ -267,11 +272,19 @@ test $# -gt 2 && usage
- if test -n "$action"
+ 	if git show-ref --verify --quiet -- "refs/heads/$1" &&
+-	   branch=$(git rev-parse -q --verify "refs/heads/$1")
++	   orig_head=$(git rev-parse -q --verify "refs/heads/$1")
+ 	then
+ 		head_name="refs/heads/$1"
+-	elif branch=$(git rev-parse -q --verify "$1")
++	elif orig_head=$(git rev-parse -q --verify "$1")
+ 	then
+ 		head_name="detached HEAD"
+ 	else
+@@ -507,24 +507,23 @@ case "$#" in
+ 		head_name="detached HEAD"
+ 		branch_name=HEAD ;# detached
+ 	fi
+-	branch=$(git rev-parse --verify "${branch_name}^0") || exit
++	orig_head=$(git rev-parse --verify "${branch_name}^0") || exit
+ 	;;
+ esac
+-orig_head=$branch
+ 
+ require_clean_work_tree "rebase" "Please commit or stash them."
+ 
+-# Now we are rebasing commits $upstream..$branch (or with --root,
+-# everything leading up to $branch) on top of $onto
++# Now we are rebasing commits $upstream..$orig_head (or with --root,
++# everything leading up to $orig_head) on top of $onto
+ 
+ # Check if we are already based on $onto with linear history,
+ # but this should be done only when upstream and onto are the same
+ # and if this is not an interactive rebase.
+-mb=$(git merge-base "$onto" "$branch")
++mb=$(git merge-base "$onto" "$orig_head")
+ if test "$type" != interactive && test "$upstream" = "$onto" &&
+ 	test "$mb" = "$onto" &&
+ 	# linear history?
+-	! (git rev-list --parents "$onto".."$branch" | sane_grep " .* ") > /dev/null
++	! (git rev-list --parents "$onto".."$orig_head" | sane_grep " .* ") > /dev/null
  then
- 	test -z "$in_progress" && die "No rebase in progress?"
--	test "$type" = interactive && run_specific_rebase
-+	# Only interactive rebase uses detailed reflog messages
-+	if test "$type" = interactive && test "$GIT_REFLOG_ACTION" = rebase
-+	then
-+		GIT_REFLOG_ACTION="rebase -i ($action)"
-+		export GIT_REFLOG_ACTION
-+	fi
- fi
+ 	if test -z "$force_rebase"
+ 	then
+@@ -555,11 +554,11 @@ test "$type" = interactive && run_interactive_rebase
+ # Detach HEAD and reset the tree
+ say "First, rewinding head to replay your work on top of it..."
+ git checkout -q "$onto^0" || die "could not detach HEAD"
+-git update-ref ORIG_HEAD $branch
++git update-ref ORIG_HEAD $orig_head
  
- case "$action" in
- continue)
-+	# Sanity check
-+	git rev-parse --verify HEAD >/dev/null ||
-+		die "Cannot read HEAD"
- 	git update-index --ignore-submodules --refresh &&
- 	git diff-files --quiet --ignore-submodules || {
- 		echo "You must edit all merge conflicts and then"
+ # If the $onto is a proper descendant of the tip of the branch, then
+ # we just fast-forwarded.
+-if test "$mb" = "$branch"
++if test "$mb" = "$orig_head"
+ then
+ 	say "Fast-forwarded $branch_name to $onto_name."
+ 	move_to_original_branch
 -- 
 1.7.3.2.864.gbbb96
