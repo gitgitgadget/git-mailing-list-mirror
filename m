@@ -1,111 +1,97 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: cherry-pick / pre-commit hook?
-Date: Tue, 28 Dec 2010 10:16:54 -0800
-Message-ID: <7vy679wynd.fsf@alter.siamese.dyndns.org>
-References: <m2wrnktcl2.wl%dave@boostpro.com>
- <20101208175324.GB5687@burratino> <m2oc8wt0xc.wl%dave@boostpro.com>
- <20101208220514.GA8865@burratino> <m2d3oo9cwr.wl%dave@boostpro.com>
- <20101227093729.GB1201@burratino>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH 16/31] rebase -i: support --stat
+Date: Tue, 28 Dec 2010 14:24:52 +0100 (CET)
+Message-ID: <alpine.DEB.1.10.1012281407360.788@debian>
+References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com> <1293528648-21873-17-git-send-email-martin.von.zweigbergk@gmail.com> <alpine.DEB.1.00.1012281858300.1794@bonsai2>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Dave Abrahams <dave@boostpro.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Dec 28 19:17:15 2010
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Tue Dec 28 20:24:13 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PXe6k-0007Jw-MS
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 19:17:15 +0100
+	id 1PXf9X-0003T7-N4
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 20:24:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752498Ab0L1SRI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Dec 2010 13:17:08 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64636 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751387Ab0L1SRH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Dec 2010 13:17:07 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5E6143CA6;
-	Tue, 28 Dec 2010 13:17:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=q0w1LUge8yZOJjW30quXJG/YWxc=; b=QRwpf4
-	SKWbeRHtOUtihXUg34ffJ5HUTtVG9ThM7Ar9kO73l1juCVtIWAnKNP5HKJwV1Sih
-	kjeitFW4g95kO4EbqElLoShIrwB8mfrW8YY0e9ePO842QQvwN6R3RZHzUqC7E/zJ
-	rhS1h7ow5tkissTN12ym8bNTLhcCG91BQGDwo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=aTQ57fzUDgwaOHcCaebR2kceh9DTpOG8
-	Wm/80zRAt7W2a/BCHG5gOO+H2WfpSSpAWcbzuQ5yaFaHmC83LR0Wz95MXNSy8h6W
-	wCCZcOIlA2TKXfFLnvF9DLxG5g4M4cEt/DP2dmg+zNb4skQlBcXCdK9aB/c5Ne6T
-	hWfmKdfv6JQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 12E093CA0;
-	Tue, 28 Dec 2010 13:17:32 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B45F03C9B; Tue, 28 Dec 2010
- 13:17:27 -0500 (EST)
-In-Reply-To: <20101227093729.GB1201@burratino> (Jonathan Nieder's message of
- "Mon\, 27 Dec 2010 03\:37\:29 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: BCB014B8-12AE-11E0-A990-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
+	id S1751508Ab0L1TYD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Dec 2010 14:24:03 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:44735 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751125Ab0L1TYB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Dec 2010 14:24:01 -0500
+Received: by qwa26 with SMTP id 26so9592848qwa.19
+        for <git@vger.kernel.org>; Tue, 28 Dec 2010 11:24:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:x-x-sender:to:cc
+         :subject:in-reply-to:message-id:references:user-agent:mime-version
+         :content-type;
+        bh=K7zRWUSdY3cIb6cIgDByp1Dkal2DwCs2PHcgNrXjqCU=;
+        b=uF6dyJ9/U6wy34kbUS4Xc9rWTcFLh1kHU88KAgHf56Hbd4ImmGd4VqWx6Ni7rA7lI/
+         u9OOyNtYsQRR9PmKDYMpJa2mW6vC72Q8F8CTPQxdAjL+uri/Gr2SLc8riV2liNwO84Fw
+         Hoq92BgPJuQXbWLuFHyFhQvXGyv+n3F5MsL6M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        b=Bjg1LQUSXsT+bmtwdjxVx8PikKePkHghTImioO29O0Qpud2ejCgZAzEMegjIxCXL+W
+         J/NPbcMHdAkt/RXlSVbspyS9x6hgL8CR4CnkmVHRcmX1cGlhLHGrcSGv4zkft3dKp1K+
+         MQDTGt+xQtUHZSvqILaF+Ct5Ev5YSTOMovcTQ=
+Received: by 10.224.11.9 with SMTP id r9mr13119092qar.85.1293564240994;
+        Tue, 28 Dec 2010 11:24:00 -0800 (PST)
+Received: from [192.168.1.105] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id g28sm7843569qck.37.2010.12.28.11.23.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 28 Dec 2010 11:24:00 -0800 (PST)
+X-X-Sender: martin@debian
+In-Reply-To: <alpine.DEB.1.00.1012281858300.1794@bonsai2>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164284>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164285>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Tue, 28 Dec 2010, Johannes Schindelin wrote:
 
-> Dave Abrahams wrote:
->
->> if you're going to have a "pre-commit hook" concept,
->> but not run that hook for some kinds of commits, then that fact needs
->> to be documented.
->
-> True, and thanks for a reminder.  Suggested wording?
->
-> The current githooks(5) says
->
->  pre-commit
-> 	This hook is invoked by git commit, and can be bypassed with
-> 	--no-verify option.
->
-> and leaves the question of whether it is invoked by git cherry-pick
-> unanswered.
+> Hi,
+> 
+> On Tue, 28 Dec 2010, Martin von Zweigbergk wrote:
+> 
+> > diff --git a/git-rebase.sh b/git-rebase.sh
+> > index 229e8d2..0fc580a 100755
+> 
+> Hmpf... After a rebasing merge to junio/next:
+> 
+> -- snip --
+> [...]
+> Applying: rebase -i: support --stat
+> fatal: sha1 information is lacking or useless (git-rebase.sh).
+> Repository lacks necessary blobs to fall back on 3-way merge.
+> Cannot fall back to three-way merge.
+> [...]
+> -- snap --
+> 
+> Is this supposed to apply on top of junio/master, junio/next, junio/maint?
 
-Yeah, but do we want to answer it in this section, or in git-cherry-pick's
-manual page?
+It is supposed to apply on top of junio/master. I tried exporting the
+recevied emails using Alpine. This is the first time I do this, but I
+managed to export them to one big file. I then applied it using 'git
+am' onto a new branch created from junio/master and it was
+successful. I'm very surprised that patch 16 failed for you if the
+first 15 patches applied correctly.
 
-After all "pre-commit" was _not_ about "before doing anything that creates
-a commit", but was about "before git-commit creates a commit".  Changing
-that definition is fine as long as we have a good way to explain it to the
-users and more importantly a simple rule that the users can understand,
-and that rule _could_ be "anything that creates a new commit".
+I'm not sure what to use the hashes in the beginning of your mail for,
+but I have verified that they match the hashes of git-rebase.sh before
+and after patch 16 (in both my original branch and in the temporary
+branch where I ran 'git am' on my own emails).
 
-In reality "anything that creates a new commit" cannot be that simple
-rule, however.  For example, "git pull" does attempt to create a new merge
-commit, but failing it because the work done by the other person you are
-pulling from does not conform _your_ standard defined by your hook is not
-a sane default.
 
-I think the basic direction could be (I haven't thought things through,
-just a strawman):
-
- - Allow --verify/--no-verify to all commands that possibly create a new
-   commit, and run pre-commit hook where an updated index is about to be
-   made into a commit (for some commands this may not be very easy);
-
- - The guideline of picking the default would probably look like this:
-
-   (1) for existing commands, keep the current behaviour;
-
-   (2) for a new command, --verify should be the default if the command is
-       primarily about letting the user do what s/he would/could/should
-       have done as "git commit" in the first place (e.g. cherry-picking
-       one's own commit from a separate branch or rebasing one's own
-       unpublished branch on top of updated upstream), and --no-verify
-       otherwise (i.e. taking other's work and using it in a context
-       different from the original).
+Regards,
+Martin
