@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 3/4] vcs-svn: make buffer_copy_bytes return length read
-Date: Tue, 28 Dec 2010 04:49:36 -0600
-Message-ID: <20101228104936.GC13360@burratino>
+Subject: [PATCH 4/4] vcs-svn: improve reporting of input errors
+Date: Tue, 28 Dec 2010 04:54:10 -0600
+Message-ID: <20101228105410.GD13360@burratino>
 References: <20101228104503.GA5422@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -9,45 +9,45 @@ Cc: David Barr <david.barr@cordelta.com>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 28 11:50:50 2010
+X-From: git-owner@vger.kernel.org Tue Dec 28 11:54:40 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PXX8e-0002vF-0A
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 11:50:44 +0100
+	id 1PXXCR-0004gQ-Nb
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 11:54:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753318Ab0L1KuD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Dec 2010 05:50:03 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:61648 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753192Ab0L1Kt7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Dec 2010 05:49:59 -0500
-Received: by gyb11 with SMTP id 11so3729329gyb.19
-        for <git@vger.kernel.org>; Tue, 28 Dec 2010 02:49:58 -0800 (PST)
+	id S1753143Ab0L1Kyf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Dec 2010 05:54:35 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:55473 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753119Ab0L1Kye (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Dec 2010 05:54:34 -0500
+Received: by ywl5 with SMTP id 5so3829189ywl.19
+        for <git@vger.kernel.org>; Tue, 28 Dec 2010 02:54:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=my2/h+aooJCwYYBFwcoTlENy9bEpK5JqOZ73l62cbH0=;
-        b=RZU9hm3beyXGcZgq7YE8NC1vQhX6qirVxWoVGpd9hRnSPIKq4PPM5YjF9iO6heAY78
-         PJ5q+QCf6M6OQX0LI4ULgieJgPYbEWMdrFw1pcFgIl1K3p7SLwMyIqsSQ4g8R3bH14w7
-         9NRgf0CgmU8teiTGmaqKMV3R73/k+xunLuFLE=
+        bh=dNWULkVnco9hrJjjWjM49lXGWh09uCGfrXlz+iW+40s=;
+        b=x095DMF0A7QIWTydAW6KakSlYE+J3fFY/mORtSIixh50N/qXou+dGQ1qduiQEE3Vc9
+         kCTxZ/cyF7jKSr1BY5dusHSt3oTPJOVUAKIf8g6eSKxalyHGjpWpHQOtcYUD5TmuyGuF
+         +qdC0u43GbssClS7YiSGgaQrFd7cLTw89DajA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=udkjlAWYfnyob+9SHQ19FuKg08vPXM/6EuzlIpSPcI+kX/30oLiIK1mlM5FXZTQ10U
-         nix2d9PcDJAhbjTV+yxfjRsBCikPkch88hh6yOfZAf4XgU9a/ex+W8zW4Bjiw+jy78Fn
-         ju2P518UGsWvsAn9TII1WfX3kUY9Sf/Aa0rSY=
-Received: by 10.236.105.240 with SMTP id k76mr11120413yhg.96.1293533398482;
-        Tue, 28 Dec 2010 02:49:58 -0800 (PST)
+        b=b2roCevK7i6Q5fudzusur9GRn4aNm7BxzuY8TUBOng3UnwofHYGSmBS8yY1ZFW3s70
+         IYs3TlXxaYiLac5SJhRGu/N2F7z1HMMqVjmiH6kNAPGss3oD7kQVUS4S4Knf9Py18eQk
+         2xtXtItGNvVSR5zitp5DQKBZH3kYYNObafsrY=
+Received: by 10.150.50.16 with SMTP id x16mr17899955ybx.308.1293533672356;
+        Tue, 28 Dec 2010 02:54:32 -0800 (PST)
 Received: from burratino (c-76-126-174-171.hsd1.ca.comcast.net [76.126.174.171])
-        by mx.google.com with ESMTPS id z23sm3413727yhc.24.2010.12.28.02.49.56
+        by mx.google.com with ESMTPS id u3sm12537727yba.16.2010.12.28.02.54.30
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 28 Dec 2010 02:49:57 -0800 (PST)
+        Tue, 28 Dec 2010 02:54:31 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20101228104503.GA5422@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -55,71 +55,171 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164237>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164238>
 
-Currently buffer_copy_bytes does not report to its caller whether
-it encountered an early end of file.
-
-Add a return value representing the number of bytes read (but not
-the number of bytes copied).  This way all three unusual conditions
-can be distinguished: input error with buffer_ferror, output error
-with ferror(outfile), input error or early end of input by checking
-the return value.
+Catch input errors and exit early enough to print a reasonable
+diagnosis based on errno.
 
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-Intuitive?
+Patches 1 and 2 first appeared in the svndiff0 series[1] (and that
+is the application I have in mind in sending them now).
 
- vcs-svn/line_buffer.c |   18 +++++++++---------
- vcs-svn/line_buffer.h |    3 ++-
- 2 files changed, 11 insertions(+), 10 deletions(-)
+This patch #4 is just a demo.  Untested, I'm afraid.  I would be
+very interested in ideas for automatically testing it --- how to
+easily stimulate error paths?
 
-diff --git a/vcs-svn/line_buffer.c b/vcs-svn/line_buffer.c
-index 58e076f..36f177c 100644
---- a/vcs-svn/line_buffer.c
-+++ b/vcs-svn/line_buffer.c
-@@ -71,19 +71,19 @@ char *buffer_read_string(uint32_t len)
- 	return ferror(infile) ? NULL : s;
+Good night,
+Jonathan
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/158731
+
+ vcs-svn/fast_export.c |   13 ++++++++++-
+ vcs-svn/svndump.c     |   53 ++++++++++++++++++++++++++++++++++++++----------
+ 2 files changed, 53 insertions(+), 13 deletions(-)
+
+diff --git a/vcs-svn/fast_export.c b/vcs-svn/fast_export.c
+index 256a052..dc0ae4e 100644
+--- a/vcs-svn/fast_export.c
++++ b/vcs-svn/fast_export.c
+@@ -62,14 +62,23 @@ void fast_export_commit(uint32_t revision, uint32_t author, char *log,
+ 	printf("progress Imported commit %d.\n\n", revision);
  }
  
--void buffer_copy_bytes(uint32_t len)
-+uint32_t buffer_copy_bytes(uint32_t nbytes)
++static void die_short_read(void)
++{
++	if (buffer_ferror())
++		die_errno("error reading dump file");
++	die("invalid dump: unexpected end of file");
++}
++
+ void fast_export_blob(uint32_t mode, uint32_t mark, uint32_t len)
  {
--	uint32_t in;
--	while (len > 0 && !feof(infile) && !ferror(infile)) {
--		in = len < COPY_BUFFER_LEN ? len : COPY_BUFFER_LEN;
-+	uint32_t done = 0;
-+	while (done < nbytes && !feof(infile) && !ferror(infile)) {
-+		uint32_t len = nbytes - done;
-+		uint32_t in = len < COPY_BUFFER_LEN ? len : COPY_BUFFER_LEN;
- 		in = fread(byte_buffer, 1, in, infile);
--		len -= in;
-+		done += in;
- 		fwrite(byte_buffer, 1, in, stdout);
--		if (ferror(stdout)) {
--			buffer_skip_bytes(len);
--			return;
--		}
-+		if (ferror(stdout))
-+			return done + buffer_skip_bytes(nbytes - done);
+ 	if (mode == REPO_MODE_LNK) {
+ 		/* svn symlink blobs start with "link " */
+-		buffer_skip_bytes(5);
+ 		len -= 5;
++		if (buffer_skip_bytes(5) != 5)
++			die_short_read();
  	}
-+	return done;
+ 	printf("blob\nmark :%d\ndata %d\n", mark, len);
+-	buffer_copy_bytes(len);
++	if (buffer_copy_bytes(len) != len)
++		die_short_read();
+ 	fputc('\n', stdout);
+ }
+diff --git a/vcs-svn/svndump.c b/vcs-svn/svndump.c
+index 630eeb5..09bcebd 100644
+--- a/vcs-svn/svndump.c
++++ b/vcs-svn/svndump.c
+@@ -107,20 +107,37 @@ static void init_keys(void)
+ 	keys.content_length = pool_intern("Content-length");
  }
  
- uint32_t buffer_skip_bytes(uint32_t nbytes)
-diff --git a/vcs-svn/line_buffer.h b/vcs-svn/line_buffer.h
-index b9dd929..7766636 100644
---- a/vcs-svn/line_buffer.h
-+++ b/vcs-svn/line_buffer.h
-@@ -6,7 +6,8 @@ int buffer_deinit(void);
- int buffer_ferror(void);
- char *buffer_read_line(void);
- char *buffer_read_string(uint32_t len);
--void buffer_copy_bytes(uint32_t len);
-+/* Returns number of bytes read (not necessarily written). */
-+uint32_t buffer_copy_bytes(uint32_t len);
- uint32_t buffer_skip_bytes(uint32_t len);
- void buffer_reset(void);
++static void die_short_read(void)
++{
++	if (buffer_ferror())
++		die_errno("error reading dump file");
++	die("invalid dump: unexpected end of file");
++}
++
+ static void read_props(void)
+ {
+ 	uint32_t len;
+ 	uint32_t key = ~0;
+ 	char *val = NULL;
+-	char *t;
+-	while ((t = buffer_read_line()) && strcmp(t, "PROPS-END")) {
++	for (;;) {
++		char *t = buffer_read_line();
++		if (!t)
++			die_short_read();
++		if (!strcmp(t, "PROPS-END"))
++			return;
+ 		if (!strncmp(t, "K ", 2)) {
+ 			len = atoi(&t[2]);
+-			key = pool_intern(buffer_read_string(len));
+-			buffer_read_line();
++			t = buffer_read_line();
++			if (!t)
++				die_short_read();
++			if (strlen(t) != len)
++				die("invalid dump: incorrect key length");
++			key = pool_intern(t);
+ 		} else if (!strncmp(t, "V ", 2)) {
+ 			len = atoi(&t[2]);
+ 			val = buffer_read_string(len);
++			if (!t)
++				die_short_read();
+ 			if (key == keys.svn_log) {
+ 				/* Value length excludes terminating nul. */
+ 				rev_ctx.log = log_copy(len + 1, val);
+@@ -135,7 +152,11 @@ static void read_props(void)
+ 				node_ctx.type = REPO_MODE_LNK;
+ 			}
+ 			key = ~0;
+-			buffer_read_line();
++			t = buffer_read_line();
++			if (!t)
++				die_short_read();
++			if (*t)
++				die("invalid dump: incorrect value length");
+ 		}
+ 	}
+ }
+@@ -176,10 +197,12 @@ static void handle_node(void)
+ 	if (node_ctx.propLength == LENGTH_UNKNOWN && node_ctx.srcMode)
+ 		node_ctx.type = node_ctx.srcMode;
  
+-	if (node_ctx.mark)
++	if (node_ctx.mark) {
+ 		fast_export_blob(node_ctx.type, node_ctx.mark, node_ctx.textLength);
+-	else if (node_ctx.textLength != LENGTH_UNKNOWN)
+-		buffer_skip_bytes(node_ctx.textLength);
++	} else if (node_ctx.textLength != LENGTH_UNKNOWN) {
++		if (buffer_skip_bytes(node_ctx.textLength) != node_ctx.textLength)
++			die_short_read();
++	}
+ }
+ 
+ static void handle_revision(void)
+@@ -250,7 +273,11 @@ void svndump_read(const char *url)
+ 			node_ctx.propLength = atoi(val);
+ 		} else if (key == keys.content_length) {
+ 			len = atoi(val);
+-			buffer_read_line();
++			t = buffer_read_line();
++			if (!t)
++				die_short_read();
++			if (*t)
++				die("invalid dump: expected blank line after content length header");
+ 			if (active_ctx == REV_CTX) {
+ 				read_props();
+ 			} else if (active_ctx == NODE_CTX) {
+@@ -258,10 +285,13 @@ void svndump_read(const char *url)
+ 				active_ctx = REV_CTX;
+ 			} else {
+ 				fprintf(stderr, "Unexpected content length header: %d\n", len);
+-				buffer_skip_bytes(len);
++				if (buffer_skip_bytes(len) != len)
++					die_short_read();
+ 			}
+ 		}
+ 	}
++	if (buffer_ferror())
++		die_short_read();
+ 	if (active_ctx == NODE_CTX)
+ 		handle_node();
+ 	if (active_ctx != DUMP_CTX)
+@@ -270,7 +300,8 @@ void svndump_read(const char *url)
+ 
+ void svndump_init(const char *filename)
+ {
+-	buffer_init(filename);
++	if (buffer_init(filename))
++		die_errno("cannot open dump file: %s", filename);
+ 	repo_init();
+ 	reset_dump_ctx(~0);
+ 	reset_rev_ctx(0);
 -- 
 1.7.2.3.554.gc9b5c.dirty
