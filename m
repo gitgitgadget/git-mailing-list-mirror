@@ -1,7 +1,7 @@
 From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH 24/31] rebase: extract code for writing basic state
-Date: Tue, 28 Dec 2010 10:30:41 +0100
-Message-ID: <1293528648-21873-25-git-send-email-martin.von.zweigbergk@gmail.com>
+Subject: [PATCH 27/31] rebase -m: remember allow_rerere_autoupdate option
+Date: Tue, 28 Dec 2010 10:30:44 +0100
+Message-ID: <1293528648-21873-28-git-send-email-martin.von.zweigbergk@gmail.com>
 References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -9,154 +9,119 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 28 16:34:13 2010
+X-From: git-owner@vger.kernel.org Tue Dec 28 16:34:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PXbYt-0005Wr-Hg
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 16:34:07 +0100
+	id 1PXbYs-0005Wr-Fx
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 16:34:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754034Ab0L1Pdk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Dec 2010 10:33:40 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:43383 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751733Ab0L1PdF (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Dec 2010 10:33:05 -0500
-Received: by mail-qy0-f174.google.com with SMTP id 19so11285887qyj.19
-        for <git@vger.kernel.org>; Tue, 28 Dec 2010 07:33:04 -0800 (PST)
+	id S1754020Ab0L1Pdf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Dec 2010 10:33:35 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:48315 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753929Ab0L1PdK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Dec 2010 10:33:10 -0500
+Received: by mail-qy0-f181.google.com with SMTP id 12so10443701qyk.19
+        for <git@vger.kernel.org>; Tue, 28 Dec 2010 07:33:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=n5ta/TRNgpDZIxkUBfoREAO6pxhk58bkHvVGqIEEP/g=;
-        b=l8isqSd//Xauat0n7ZMqBtCAOE0LKryRnWUAtUHNkEFnHxOQpHv++/a4ngC2vNSA6b
-         3RnFVOY+31IBZfincq5hgM3Q2S9DXw6G4ri+mdEqxpwZ/YVbD5RE0Do7+0mo8wxewtXG
-         W5455MDshXfaWtctXkQDDKLq6/AWi7fDbugv0=
+        bh=kxhwY986oa5iWxlvL/BP7yCIr8fGAPGqmB+wgtShw14=;
+        b=vHe8zSHx6Ztm+UHms3O+9bxTyr5VS2FIcnSn7+z7W31GBzmaCXComglkJWQpfXoVR9
+         ExeuSxrmMU2CE3crDbJS5RwFBUEKh0nzUJbFBklnkVgmJBpKTgYHCT417WOB3uXNCc/3
+         Uo4JkWEDLCWEnj/arrNfzvyZmCZ7ADNM02ihs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=rNwmdj8hM+iRHbhsELSrIZH7EJRNxFQ4rhj2cJidFAHZAs/cIsTTRFQ/mExbTKeveO
-         BrjMDETKG1FGDEqnCtixuN0VZEVfsrRAXdCu4fDT5BUvRV9/RP/eQ2wbz25QKS4TgoRg
-         ArXpxLmESj6XBevr5+xD1L+HrLCMFoS9Ph35U=
-Received: by 10.224.3.21 with SMTP id 21mr12834698qal.366.1293550384886;
-        Tue, 28 Dec 2010 07:33:04 -0800 (PST)
+        b=Nfl7b12EEXlhMG/SBlIGCGnZSNaV8IlsQG/X36BU2OOeW3OD7D3+uiwZLottnTJuLM
+         /muIqFYWCeA8SGtclrNVOPuDxoruWlk89VLVYz/r3CIf7HiFkVP+Eei2dh4v2l8xE+fS
+         f1u4bOG8Hnit+xzIpIx4R97DSGF0ldg3cWlnU=
+Received: by 10.229.213.211 with SMTP id gx19mr12005559qcb.172.1293550389994;
+        Tue, 28 Dec 2010 07:33:09 -0800 (PST)
 Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id s10sm6222962qco.35.2010.12.28.07.33.03
+        by mx.google.com with ESMTPS id s10sm6222962qco.35.2010.12.28.07.33.08
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 28 Dec 2010 07:33:04 -0800 (PST)
+        Tue, 28 Dec 2010 07:33:09 -0800 (PST)
 X-Mailer: git-send-email 1.7.3.2.864.gbbb96
 In-Reply-To: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164263>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164264>
 
-Extrace the code for writing the state to rebase-apply/ or
-rebase-merge/ when a rebase is initiated. This will make it easier to
-later make both interactive and non-interactive rebase remember the
-options used.
-
-Note that non-interactive rebase stores the sha1 of the original head
-in a file called orig-head, while interactive rebase stores it in a
-file called head.
+If '--[no-]allow_rerere_autoupdate' is passed when 'git rebase -m' is
+called and a merge conflict occurs, the flag will be forgotten for the
+rest of the rebase process. Make rebase remember it by saving the
+value.
 
 Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 ---
- git-rebase--am.sh          |    6 +-----
- git-rebase--interactive.sh |    5 +----
- git-rebase--merge.sh       |    5 +----
- git-rebase.sh              |   16 ++++++++++++++--
- 4 files changed, 17 insertions(+), 15 deletions(-)
 
-diff --git a/git-rebase--am.sh b/git-rebase--am.sh
-index 9316761..5acfa00 100644
---- a/git-rebase--am.sh
-+++ b/git-rebase--am.sh
-@@ -26,9 +26,5 @@ git format-patch -k --stdout --full-index --ignore-if-in-upstream \
- git am $git_am_opt --rebasing --resolvemsg="$RESOLVEMSG" &&
- move_to_original_branch
- ret=$?
--test 0 != $ret -a -d "$state_dir" &&
--	echo $head_name > "$state_dir/head-name" &&
--	echo $onto > "$state_dir/onto" &&
--	echo $orig_head > "$state_dir/orig-head" &&
--	echo "$GIT_QUIET" > "$state_dir/quiet"
-+test 0 != $ret -a -d "$state_dir" && write_basic_state
- exit $ret
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 1079994..a33b246 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -707,16 +707,13 @@ orig_head=$(git rev-parse --verify HEAD) || die "No HEAD?"
- mkdir "$state_dir" || die "Could not create temporary $state_dir"
- 
- : > "$state_dir"/interactive || die "Could not mark as interactive"
--echo "$head_name" > "$state_dir"/head-name
--
--echo $orig_head > "$state_dir"/head
-+write_basic_state
- case "$rebase_root" in
- '')
- 	rm -f "$state_dir"/rebase-root ;;
- *)
- 	: >"$state_dir"/rebase-root ;;
- esac
--echo $onto > "$state_dir"/onto
- test -z "$strategy" || echo "$strategy" > "$state_dir"/strategy
- test t = "$verbose" && : > "$state_dir"/verbose
- if test t = "$preserve_merges"
-diff --git a/git-rebase--merge.sh b/git-rebase--merge.sh
-index 8cfdcf1..705d2f5 100644
---- a/git-rebase--merge.sh
-+++ b/git-rebase--merge.sh
-@@ -127,10 +127,7 @@ esac
- 
- mkdir -p "$state_dir"
- echo "$onto_name" > "$state_dir/onto_name"
--echo "$head_name" > "$state_dir/head-name"
--echo "$onto" > "$state_dir/onto"
--echo "$orig_head" > "$state_dir/orig-head"
--echo "$GIT_QUIET" > "$state_dir/quiet"
-+write_basic_state
- 
- msgnum=0
- for cmt in `git rev-list --reverse --no-merges "$revisions"`
+allow_rerere_autoupdate is only used by git-rebase--merge. Still ok to
+write and read it here?
+
+Should allow_rerere_autoupdate also be added to git_am_opt?
+
+ git-rebase.sh              |    4 ++++
+ t/t3418-rebase-continue.sh |   21 +++++++++++++++++++++
+ 2 files changed, 25 insertions(+), 0 deletions(-)
+
 diff --git a/git-rebase.sh b/git-rebase.sh
-index 7e2e978..95c0d05 100755
+index d192038..05b4fe1 100755
 --- a/git-rebase.sh
 +++ b/git-rebase.sh
-@@ -79,6 +79,18 @@ read_basic_state () {
- 	GIT_QUIET=$(cat "$state_dir"/quiet)
+@@ -81,6 +81,8 @@ read_basic_state () {
+ 	test -f "$state_dir"/strategy && strategy="$(cat "$state_dir"/strategy)"
+ 	test -f "$state_dir"/strategy_opts &&
+ 		strategy_opts="$(cat "$state_dir"/strategy_opts)"
++	test -f "$state_dir"/allow_rerere_autoupdate &&
++		allow_rerere_autoupdate="$(cat "$state_dir"/allow_rerere_autoupdate)"
  }
  
-+write_basic_state () {
-+	echo "$head_name" > "$state_dir"/head-name &&
-+	echo "$onto" > "$state_dir"/onto &&
-+	if test "$type" = interactive
-+	then
-+		echo "$orig_head" > "$state_dir"/head
-+	else
-+		echo "$orig_head" > "$state_dir"/orig-head
-+	fi &&
-+	echo "$GIT_QUIET" > "$state_dir"/quiet
-+}
-+
+ write_basic_state () {
+@@ -97,6 +99,8 @@ write_basic_state () {
+ 	test -n "$strategy" && echo "$strategy" > "$state_dir"/strategy
+ 	test -n "$strategy_opts" && echo "$strategy_opts" > \
+ 		"$state_dir"/strategy_opts
++	test -n "$allow_rerere_autoupdate" && echo "$allow_rerere_autoupdate" > \
++		"$state_dir"/allow_rerere_autoupdate
+ }
+ 
  output () {
- 	case "$verbose" in
- 	'')
-@@ -113,8 +125,8 @@ run_specific_rebase () {
- 	export onto autosquash strategy strategy_opts verbose rebase_root \
- 	force_rebase action preserve_merges upstream switch_to head_name \
- 	state_dir orig_head onto_name GIT_QUIET revisions RESOLVEMSG \
--	allow_rerere_autoupdate git_am_opt
--	export -f move_to_original_branch output
-+	allow_rerere_autoupdate git_am_opt type
-+	export -f move_to_original_branch output write_basic_state
- 	exec git-rebase--$type
- }
+diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+index 5469546..1e855cd 100755
+--- a/t/t3418-rebase-continue.sh
++++ b/t/t3418-rebase-continue.sh
+@@ -74,4 +74,25 @@ test_expect_success 'rebase --continue remembers merge strategy and options' '
+ 	test -f funny.was.run
+ '
  
++test_expect_success 'rebase --continue remembers --rerere-autoupdate' '
++	rm -fr .git/rebase-* &&
++	git reset --hard commit-new-file-F3-on-topic-branch &&
++	git checkout master
++	test_commit "commit-new-file-F3" F3 3 &&
++	git config rerere.enabled true &&
++	test_must_fail git rebase -m master topic &&
++	echo "Resolved" >F2 &&
++	git add F2 &&
++	test_must_fail git rebase --continue &&
++	echo "Resolved" >F3 &&
++	git add F3 &&
++	git rebase --continue &&
++	git reset --hard topic@{1} &&
++	test_must_fail git rebase -m --rerere-autoupdate master &&
++	test "$(cat F2)" = "Resolved" &&
++	test_must_fail git rebase --continue &&
++	test "$(cat F3)" = "Resolved" &&
++	git rebase --continue
++'
++
+ test_done
 -- 
 1.7.3.2.864.gbbb96
