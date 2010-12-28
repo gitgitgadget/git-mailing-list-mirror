@@ -1,66 +1,57 @@
-From: Bruce Momjian <bruce@momjian.us>
-Subject: Re: "git show" does not use diff.external like "git diff"
- does
-Date: Tue, 28 Dec 2010 12:54:42 -0500 (EST)
-Message-ID: <201012281754.oBSHsgU18495@momjian.us>
-References: <7v39phyec2.fsf@alter.siamese.dyndns.org>
+From: Tomas Carnecky <tom@dbservice.com>
+Subject: Re: Unable to delete remote branch with a strange name
+Date: Tue, 28 Dec 2010 18:59:29 +0100
+Message-ID: <4D1A2581.9050305@dbservice.com>
+References: <loom.20101228T080344-503@post.gmane.org> <m2hbdy9top.fsf@whitebox.home> <loom.20101228T170808-756@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Dec 28 18:55:23 2010
+To: Jingzhao Ou <jingzhao.ou@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Dec 28 18:59:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PXdlY-0006n4-FH
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 18:55:20 +0100
+	id 1PXdpj-0008Sx-A4
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 18:59:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754374Ab0L1RzD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Dec 2010 12:55:03 -0500
-Received: from momjian.us ([70.90.9.53]:61415 "EHLO momjian.us"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754119Ab0L1RzD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Dec 2010 12:55:03 -0500
-Received: (from bruce@localhost)
-	by momjian.us (8.11.6/8.11.6) id oBSHsgU18495;
-	Tue, 28 Dec 2010 12:54:42 -0500 (EST)
-In-Reply-To: <7v39phyec2.fsf@alter.siamese.dyndns.org>
-X-Mailer: ELM [version 2.4ME+ PL124 (25)]
+	id S1754375Ab0L1R7e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Dec 2010 12:59:34 -0500
+Received: from office.neopsis.com ([78.46.209.98]:43641 "EHLO
+	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753404Ab0L1R7e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Dec 2010 12:59:34 -0500
+X-Spam-Status: No, hits=0.0 required=5.0
+	tests=AWL: 0.066,BAYES_00: -1.665,TOTAL_SCORE: -1.599,autolearn=ham
+X-Spam-Level: 
+Received: from calvin.local ([62.65.141.13])
+	(authenticated user tom@dbservice.com)
+	by office.neopsis.com
+	(using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
+	Tue, 28 Dec 2010 18:59:29 +0100
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
+In-Reply-To: <loom.20101228T170808-756@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164280>
 
-Junio C Hamano wrote:
-> Bruce Momjian <bruce@momjian.us> writes:
-> 
-> > I have diff.external configured properly, and it is used by "git diff",
-> > but "git show" does not call the script and only returns unified diffs.
-> >
-> > Is there a way to make "git show" use an external diff script?
-> 
-> "git show --ext-diff"?
-> 
-> We end the Description section of the manual with "This manual page
-> describes only the most frequently used options." without explicitly
-> saying "Options from the underlying this and that commands can be given as
-> well", which is rather suboptimal.
-> 
-> The only existing hint there is one sentence before, "The command takes
-> options applicable to the git diff-tree command...", but the reader needs
-> to be both careful and vaguely familiar with the way the git command set
-> is structured to take advantage of that hint.
+  On 12/28/10 5:10 PM, Jingzhao Ou wrote:
+> Yes, using the absolute path works like a champ!
+>
+> git push origin :refs/heads/remotes/origin/dev/main
 
-Yes, someone on IRC eventually suggested --ext-diff, and it does work. 
-I was hoping for something that caused 'show' to always use --ext-diff,
-like git diff does.  A git alias was the only suggested workaround.
+Do not use the term 'path' in this context. The fact that a ref looks 
+like a path, and can be stored on the filesystem under the same 
+directory structure is just an implementation detail. Note the *can*, 
+because in the case of packed refs (see man git-pack-refs) the term 
+'path' is not even remotely accurate.
 
--- 
-  Bruce Momjian  <bruce@momjian.us>        http://momjian.us
-  EnterpriseDB                             http://enterprisedb.com
+We use the term 'fully qualified ref' (see the similarity with 'fully 
+qualified domain name') if we want to stress out that the full name of 
+the ref is used (refs/heads/foo) instead of an abbreviation (foo).
 
-  + It's impossible for everything to be true. +
+tom
