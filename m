@@ -1,7 +1,7 @@
 From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH 02/31] rebase: refactor reading of state
-Date: Tue, 28 Dec 2010 10:30:19 +0100
-Message-ID: <1293528648-21873-3-git-send-email-martin.von.zweigbergk@gmail.com>
+Subject: [PATCH 13/31] rebase: factor out reference parsing
+Date: Tue, 28 Dec 2010 10:30:30 +0100
+Message-ID: <1293528648-21873-14-git-send-email-martin.von.zweigbergk@gmail.com>
 References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -9,189 +9,201 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 28 16:34:10 2010
+X-From: git-owner@vger.kernel.org Tue Dec 28 16:34:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PXbYv-0005Wr-MJ
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 16:34:10 +0100
+	id 1PXbYv-0005Wr-5Y
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 16:34:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752639Ab0L1Pc1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Dec 2010 10:32:27 -0500
+	id S1754047Ab0L1Pdt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Dec 2010 10:33:49 -0500
 Received: from mail-qy0-f174.google.com ([209.85.216.174]:43383 "EHLO
 	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752179Ab0L1PcZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Dec 2010 10:32:25 -0500
+	with ESMTP id S1753696Ab0L1Pcq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Dec 2010 10:32:46 -0500
 Received: by mail-qy0-f174.google.com with SMTP id 19so11285887qyj.19
-        for <git@vger.kernel.org>; Tue, 28 Dec 2010 07:32:25 -0800 (PST)
+        for <git@vger.kernel.org>; Tue, 28 Dec 2010 07:32:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=aOcstNnxjqimx4yXM0MJ8cuRGx+kLVOKBzlIsSA1fqE=;
-        b=hFEQr9TSG8eFpWpToDCyH9I50vwukLUCAnRhkM4YQT/BVq771toVhHghg+1v0tbLbv
-         wY3AMaMGxkTWJE99HqShbpaYxPc3A8k7mwZkMqZ+dJ14g6tUasAS3ly1zYy+ICQZAlZh
-         c7VkwUMellW93bP3rHiw7DxRb8BXYo7O9hm9k=
+        bh=FvidmNy8o9uoAq2Xw8Tu9H3/Ly6gnVM238ymlq8GhYw=;
+        b=aeacPd9FmtSMDa/EiYMRKfu3LNaurByHrTCazE1hap1KT0HqMsd+I9A0gq85ceBYNc
+         J1Zfg5O6tBNHQpvFn0Roh1Ib3NmvF/fRHLG+dgN2FBHRtHEUdolQrTaO2oZxd5DjRBFF
+         lPqvxYN0K0zEtgAR80THGsrkQZYusQq+4h5gA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=Xdal+XyTXHE5yqeJbB0CThY54EbNK2XdMUAuXY4O5RNuPXlmyggFQXx4S4dOqq0w+S
-         925P17aFoq0C7JY31yoN+JK+SLkn1DK5QCYFFyIDnZIODCP1xmYuuAw3RuIz8B1+Mbqr
-         PsusmvMz6o0cEBPDL4C0zZcL65NqT2SS5vACc=
-Received: by 10.229.236.203 with SMTP id kl11mr11451416qcb.131.1293550344908;
-        Tue, 28 Dec 2010 07:32:24 -0800 (PST)
+        b=b5ldLtKZj9wpsXBivCFl7Eq64CH+rZwD6dtOGqRDyrD0IykmbTXNlC2rGoqAFcczNw
+         pDUnMW2Da/gySjfN+NJ0Zb1T04Qh51gQM4XmJfRDKaZrnfkxaORuxgmA/5euCY7kA81P
+         5pO/we8AP/HR2suYkQr2zL3kTwKjfGNgw+cKk=
+Received: by 10.224.19.142 with SMTP id a14mr12986647qab.194.1293550365924;
+        Tue, 28 Dec 2010 07:32:45 -0800 (PST)
 Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id s10sm6222962qco.35.2010.12.28.07.32.23
+        by mx.google.com with ESMTPS id s10sm6222962qco.35.2010.12.28.07.32.44
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 28 Dec 2010 07:32:24 -0800 (PST)
+        Tue, 28 Dec 2010 07:32:45 -0800 (PST)
 X-Mailer: git-send-email 1.7.3.2.864.gbbb96
 In-Reply-To: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164262>
 
-The code reading the state saved in $merge_dir or $rebase_dir is
-currently spread out in many places, making it harder to read and to
-introduce additional state. Extract this code into one method that reads
-the state.
+Remove the parsing and validation of references (onto, upstream, branch)
+from git-rebase--interactive.sh and rely on the information exported from
+git-rebase.sh.
+
+By using the parsing of the --onto parameter in git-rebase.sh, this
+improves the error message when the parameter is invalid.
 
 Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 ---
- git-rebase.sh |   53 +++++++++++++++++++++++------------------------------
- 1 files changed, 23 insertions(+), 30 deletions(-)
 
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 79f8008..bf144dc 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -57,6 +57,22 @@ rebase_root=
- force_rebase=
- allow_rerere_autoupdate=
- 
-+read_state () {
-+	if test -d "$merge_dir"
-+	then
-+		state_dir="$merge_dir"
-+		prev_head=$(cat "$merge_dir"/prev_head) &&
-+		end=$(cat "$merge_dir"/end) &&
-+		msgnum=$(cat "$merge_dir"/msgnum)
-+	else
-+		state_dir="$apply_dir"
-+	fi &&
-+	head_name=$(cat "$state_dir"/head-name) &&
-+	onto=$(cat "$state_dir"/onto) &&
-+	orig_head=$(cat "$state_dir"/orig-head) &&
-+	GIT_QUIET=$(cat "$state_dir"/quiet)
-+}
-+
- continue_merge () {
- 	test -n "$prev_head" || die "prev_head must be defined"
- 	test -d "$merge_dir" || die "$merge_dir directory does not exist"
-@@ -138,10 +154,6 @@ call_merge () {
+Should the check for set GIT_COMMITTER_IDENT be done for
+non-interactive rebase as well or does it only make sense for
+interactive rebase?
+
+ git-rebase--interactive.sh |   48 +++----------------------------------------
+ git-rebase.sh              |   12 ++++++----
+ 2 files changed, 11 insertions(+), 49 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 5a8f582..c055fc4 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -682,25 +682,6 @@ rearrange_squash () {
+ 	rm -f "$1.sq" "$1.rearranged"
  }
  
- move_to_original_branch () {
--	test -z "$head_name" &&
--		head_name="$(cat "$merge_dir"/head-name)" &&
--		onto="$(cat "$merge_dir"/onto)" &&
--		orig_head="$(cat "$merge_dir"/orig-head)"
- 	case "$head_name" in
- 	refs/*)
- 		message="rebase finished: $head_name onto $onto"
-@@ -220,13 +232,9 @@ do
- 			echo "mark them as resolved using git add"
- 			exit 1
- 		}
-+		read_state
- 		if test -d "$merge_dir"
- 		then
--			prev_head=$(cat "$merge_dir/prev_head")
--			end=$(cat "$merge_dir/end")
--			msgnum=$(cat "$merge_dir/msgnum")
--			onto=$(cat "$merge_dir/onto")
--			GIT_QUIET=$(cat "$merge_dir/quiet")
- 			continue_merge
- 			while test "$msgnum" -le "$end"
- 			do
-@@ -236,10 +244,6 @@ do
- 			finish_rb_merge
- 			exit
- 		fi
--		head_name=$(cat "$apply_dir"/head-name) &&
--		onto=$(cat "$apply_dir"/onto) &&
--		orig_head=$(cat "$apply_dir"/orig-head) &&
--		GIT_QUIET=$(cat "$apply_dir"/quiet)
- 		git am --resolved --3way --resolvemsg="$RESOLVEMSG" &&
- 		move_to_original_branch
- 		exit
-@@ -249,15 +253,11 @@ do
- 			die "No rebase in progress?"
- 
- 		git reset --hard HEAD || exit $?
-+		read_state
- 		if test -d "$merge_dir"
- 		then
- 			git rerere clear
--			prev_head=$(cat "$merge_dir/prev_head")
--			end=$(cat "$merge_dir/end")
--			msgnum=$(cat "$merge_dir/msgnum")
- 			msgnum=$(($msgnum + 1))
--			onto=$(cat "$merge_dir/onto")
--			GIT_QUIET=$(cat "$merge_dir/quiet")
- 			while test "$msgnum" -le "$end"
- 			do
- 				call_merge "$msgnum"
-@@ -266,10 +266,6 @@ do
- 			finish_rb_merge
- 			exit
- 		fi
--		head_name=$(cat "$apply_dir"/head-name) &&
--		onto=$(cat "$apply_dir"/onto) &&
--		orig_head=$(cat "$apply_dir"/orig-head) &&
--		GIT_QUIET=$(cat "$apply_dir"/quiet)
- 		git am -3 --skip --resolvemsg="$RESOLVEMSG" &&
- 		move_to_original_branch
- 		exit
-@@ -279,18 +275,15 @@ do
- 			die "No rebase in progress?"
- 
- 		git rerere clear
+-LF='
+-'
+-parse_onto () {
+-	case "$1" in
+-	*...*)
+-		if	left=${1%...*} right=${1#*...} &&
+-			onto=$(git merge-base --all ${left:-HEAD} ${right:-HEAD})
+-		then
+-			case "$onto" in
+-			?*"$LF"?* | '')
+-				exit 1 ;;
+-			esac
+-			echo "$onto"
+-			exit 0
+-		fi
+-	esac
+-	git rev-parse --verify "$1^0"
+-}
 -
--		test -d "$merge_dir" || merge_dir="$apply_dir"
+ case "$action" in
+ continue)
+ 	get_saved_options
+@@ -769,47 +750,26 @@ skip)
+ 	;;
+ esac
+ 
+-if test -n "$onto"
+-then
+-	onto=$(parse_onto "$onto") || die "Does not point to a valid commit: $1"
+-fi
 -
--		head_name="$(cat "$merge_dir"/head-name)" &&
-+		read_state
- 		case "$head_name" in
- 		refs/*)
- 			git symbolic-ref HEAD $head_name ||
- 			die "Could not move back to $head_name"
- 			;;
- 		esac
--		git reset --hard $(cat "$merge_dir/orig-head")
--		rm -r "$merge_dir"
-+		git reset --hard $orig_head
-+		rm -r "$state_dir"
- 		exit
- 		;;
- 	--onto)
-@@ -573,12 +566,12 @@ fi
- # this is rename-aware if the recursive (default) strategy is used
+-test -z "$rebase_root" -a $# -ge 1 -a $# -le 2 ||
+-test ! -z "$rebase_root" -a $# -le 1 || usage
+-
+ git var GIT_COMMITTER_IDENT >/dev/null ||
+ 	die "You need to set your committer info first"
  
- mkdir -p "$merge_dir"
--echo "$onto" > "$merge_dir/onto"
- echo "$onto_name" > "$merge_dir/onto_name"
- prev_head=$orig_head
- echo "$prev_head" > "$merge_dir/prev_head"
--echo "$orig_head" > "$merge_dir/orig-head"
- echo "$head_name" > "$merge_dir/head-name"
-+echo "$onto" > "$merge_dir/onto"
-+echo "$orig_head" > "$merge_dir/orig-head"
- echo "$GIT_QUIET" > "$merge_dir/quiet"
+-if test -z "$rebase_root"
+-then
+-	upstream_arg="$1"
+-	upstream=$(git rev-parse --verify "$1") || die "Invalid base"
+-	test -z "$onto" && onto=$upstream
+-	shift
+-else
+-	upstream=
+-	upstream_arg=--root
+-	test -z "$onto" &&
+-		die "You must specify --onto when using --root"
+-fi
+ require_clean_work_tree "rebase" "Please commit or stash them."
  
- msgnum=0
+ run_pre_rebase_hook "$upstream_arg" "$@"
+ 
+ comment_for_reflog start
+ 
+-if test ! -z "$1"
++if test ! -z "$switch_to"
+ then
+-	output git checkout "$1" ||
+-		die "Could not checkout $1"
++	output git checkout "$switch_to" ||
++		die "Could not checkout $switch_to"
+ fi
+ 
+ HEAD=$(git rev-parse --verify HEAD) || die "No HEAD?"
+ mkdir "$DOTEST" || die "Could not create temporary $DOTEST"
+ 
+ : > "$DOTEST"/interactive || die "Could not mark as interactive"
+-git symbolic-ref HEAD > "$DOTEST"/head-name 2> /dev/null ||
+-	echo "detached HEAD" > "$DOTEST"/head-name
++echo "$head_name" > "$DOTEST"/head-name
+ 
+ echo $HEAD > "$DOTEST"/head
+ case "$rebase_root" in
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 26e4218..d8c7c8d 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -185,7 +185,8 @@ run_interactive_rebase () {
+ 		export GIT_EDITOR
+ 	fi
+ 	export onto autosquash strategy strategy_opts verbose rebase_root \
+-	force_rebase action preserve_merges OK_TO_SKIP_PRE_REBASE
++	force_rebase action preserve_merges OK_TO_SKIP_PRE_REBASE upstream \
++	upstream_arg switch_to head_name
+ 	exec git-rebase--interactive "$@"
+ }
+ 
+@@ -433,8 +434,6 @@ else
+ 	state_dir="$apply_dir"
+ fi
+ 
+-test "$type" = interactive && run_interactive_rebase "$@"
+-
+ if test -z "$rebase_root"
+ then
+ 	# The upstream head must be given.  Make sure it is valid.
+@@ -445,7 +444,7 @@ then
+ 	unset root_flag
+ 	upstream_arg="$upstream_name"
+ else
+-	test -z "$onto" && die "--root must be used with --onto"
++	test -z "$onto" && die "You must specify --onto when using --root"
+ 	unset upstream_name
+ 	unset upstream
+ 	root_flag="--root"
+@@ -472,7 +471,8 @@ case "$onto_name" in
+ 	fi
+ 	;;
+ *)
+-	onto=$(git rev-parse --verify "${onto_name}^0") || exit
++	onto=$(git rev-parse --verify "${onto_name}^0") ||
++	die "Does not point to a valid commit: $1"
+ 	;;
+ esac
+ 
+@@ -513,6 +513,8 @@ case "$#" in
+ esac
+ orig_head=$branch
+ 
++test "$type" = interactive && run_interactive_rebase "$@"
++
+ require_clean_work_tree "rebase" "Please commit or stash them."
+ 
+ # Now we are rebasing commits $upstream..$branch (or with --root,
 -- 
 1.7.3.2.864.gbbb96
