@@ -1,7 +1,7 @@
 From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH 10/31] rebase: factor out command line option processing
-Date: Tue, 28 Dec 2010 10:30:27 +0100
-Message-ID: <1293528648-21873-11-git-send-email-martin.von.zweigbergk@gmail.com>
+Subject: [PATCH 15/31] rebase: factor out call to pre-rebase hook
+Date: Tue, 28 Dec 2010 10:30:32 +0100
+Message-ID: <1293528648-21873-16-git-send-email-martin.von.zweigbergk@gmail.com>
 References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
 	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
@@ -9,442 +9,137 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Christian Couder <chriscool@tuxfamily.org>,
 	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Dec 28 16:33:57 2010
+X-From: git-owner@vger.kernel.org Tue Dec 28 16:33:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PXbYj-0005Wr-CT
-	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 16:33:57 +0100
+	id 1PXbYk-0005Wr-DL
+	for gcvg-git-2@lo.gmane.org; Tue, 28 Dec 2010 16:33:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753888Ab0L1Pct (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1753724Ab0L1Pcx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Dec 2010 10:32:53 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:48315 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753762Ab0L1Pct (ORCPT <rfc822;git@vger.kernel.org>);
 	Tue, 28 Dec 2010 10:32:49 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:43383 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753762Ab0L1Pcl (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Dec 2010 10:32:41 -0500
-Received: by mail-qy0-f174.google.com with SMTP id 19so11285887qyj.19
-        for <git@vger.kernel.org>; Tue, 28 Dec 2010 07:32:41 -0800 (PST)
+Received: by mail-qy0-f181.google.com with SMTP id 12so10443701qyk.19
+        for <git@vger.kernel.org>; Tue, 28 Dec 2010 07:32:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:cc:subject:date
          :message-id:x-mailer:in-reply-to:references;
-        bh=xciP1dL/BBDOObZ272zCzL5lqXY7ORiw0qL3bjEMUKc=;
-        b=nD87nS6feftx/zWUJVKoN795NCUdDqCvZlB3q7Ox06990Gz7brerpLlOfULb8xOXo/
-         v8esGIZpN24Fg1uygTDgLYf9QolfzwwJKqfWevoxDfNjrWKfMIdC0IwsE9iXLKHwLfFr
-         5oJiI/abkv1+xwBr1ndfgGXZnZ37/eNeyNwLc=
+        bh=MXvs30qhZQEpdppxfJw2ICQumBN7rjp9lh/OxIJP5j4=;
+        b=kRXM0GDoEOMuRzuhmz0OmYxyp+PM//DPeIsOtix/0TVk3xNKCGVqTXqRtvq4hB5sP6
+         r8LA0Gz67hcxvyhY7ppRtCesaNXf8x0PiY4sE5r6FAeKUzYuYHSUPlo6cL4/sas924fJ
+         GK02odrUUei+dH/ZaCIomfoXWkEfM2jkoq/PM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=dpkKJHVh37X+FEFUZWiTJuZm87LnOYP9qy5+k+pfIEY6gN4uWQ5dtL9tNG/69JUDSM
-         ZpX0dtQHbm7OOUdHdbOsJkCZn+Vug1E1duaJEJkbLrxMdLDXxqWTUYjsVRSS+dqcHLIG
-         r/lUyn7Cjmeu/Hue9QlUEBDmr2ozPm/TJ4LuQ=
-Received: by 10.229.181.9 with SMTP id bw9mr11962959qcb.143.1293550360821;
-        Tue, 28 Dec 2010 07:32:40 -0800 (PST)
+        b=JvMPEZ56ZaeSnGjfXUaJIHqByviXXQWu3cG1ps9YtLj+JcMpQ+J16YazGUoAaKVHU2
+         XYtRtHYs8PuLqY2pCt9BdbGV/5PA2S2HbXtCsTkE5z1RbFLwa+wPqZ9A3gLKafk92Hlo
+         oWWjR6LFv7GW9z62IKPl+C26t4ejK+LTl2mno=
+Received: by 10.229.79.135 with SMTP id p7mr12133564qck.154.1293550369548;
+        Tue, 28 Dec 2010 07:32:49 -0800 (PST)
 Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id s10sm6222962qco.35.2010.12.28.07.32.38
+        by mx.google.com with ESMTPS id s10sm6222962qco.35.2010.12.28.07.32.47
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 28 Dec 2010 07:32:40 -0800 (PST)
+        Tue, 28 Dec 2010 07:32:48 -0800 (PST)
 X-Mailer: git-send-email 1.7.3.2.864.gbbb96
 In-Reply-To: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164248>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164249>
 
-Factor out the command line processing in git-rebase--interactive.sh
-to git-rebase.sh. Store the options in variables in git-rebase.sh and
-export them before calling git-rebase--interactive.sh.
+Remove the call to the pre-rebase hook from
+git-rebase--interactive.sh and rely on the call in
+git-rebase.sh.
 
 Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 ---
-
-Since this removes the command line processing from
-git-rebase--interactive.sh, it completely changes its command line
-interface. Since it is not listed as even a plumbing command, I hope
-this is fine.
-
- git-rebase--interactive.sh |  224 ++++++++++++--------------------------------
- git-rebase.sh              |   60 ++++++++----
- 2 files changed, 102 insertions(+), 182 deletions(-)
+ git-rebase--interactive.sh |   14 --------------
+ git-rebase.sh              |   15 ++++++++-------
+ 2 files changed, 8 insertions(+), 21 deletions(-)
 
 diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index 1af739a..4d3dc63 100755
+index edde1e5..0beeb8b 100755
 --- a/git-rebase--interactive.sh
 +++ b/git-rebase--interactive.sh
-@@ -10,31 +10,7 @@
- # The original idea comes from Eric W. Biederman, in
- # http://article.gmane.org/gmane.comp.version-control.git/22407
- 
--OPTIONS_KEEPDASHDASH=
--OPTIONS_SPEC="\
--git-rebase [-i] [options] [--] <upstream> [<branch>]
--git-rebase [-i] (--continue | --abort | --skip)
----
-- Available options are
--v,verbose          display a diffstat of what changed upstream
--onto=              rebase onto given branch instead of upstream
--p,preserve-merges  try to recreate merges instead of ignoring them
--s,strategy=        use the given merge strategy
--no-ff              cherry-pick all commits, even if unchanged
--m,merge            always used (no-op)
--i,interactive      always used (no-op)
-- Actions:
--continue           continue rebasing process
--abort              abort rebasing process and restore original branch
--skip               skip current patch and continue rebasing process
--no-verify          override pre-rebase hook from stopping the operation
--verify             allow pre-rebase hook to run
--root               rebase all reachable commmits up to the root(s)
--autosquash         move commits that begin with squash!/fixup! under -i
--"
--
- . git-sh-setup
--require_work_tree
- 
- DOTEST="$GIT_DIR/rebase-merge"
- 
-@@ -105,16 +81,6 @@ AMEND="$DOTEST"/amend
- REWRITTEN_LIST="$DOTEST"/rewritten-list
- REWRITTEN_PENDING="$DOTEST"/rewritten-pending
- 
--preserve_merges=
--strategy=
--onto=
--verbose=
--OK_TO_SKIP_PRE_REBASE=
--rebase_root=
--autosquash=
--test "$(git config --bool rebase.autosquash)" = "true" && autosquash=t
--force_rebase=
--
- GIT_CHERRY_PICK_HELP="\
- hint: after resolving the conflicts, mark the corrected paths
- hint: with 'git add <paths>' and run 'git rebase --continue'"
-@@ -648,15 +614,6 @@ skip_unnecessary_picks () {
- 	die "Could not skip unnecessary pick commands"
+@@ -109,18 +109,6 @@ commit_message () {
+ 	git cat-file commit "$1" | sed "1,/^$/d"
  }
  
--# check if no other options are set
--is_standalone () {
--	test $# -eq 2 -a "$2" = '--' &&
--	test -z "$onto" &&
--	test -z "$preserve_merges" &&
--	test -z "$strategy" &&
--	test -z "$verbose"
+-run_pre_rebase_hook () {
+-	if test -z "$OK_TO_SKIP_PRE_REBASE" &&
+-	   test -x "$GIT_DIR/hooks/pre-rebase"
+-	then
+-		"$GIT_DIR/hooks/pre-rebase" ${1+"$@"} || {
+-			echo >&2 "The pre-rebase hook refused to rebase."
+-			exit 1
+-		}
+-	fi
 -}
 -
- get_saved_options () {
- 	test -d "$REWRITTEN" && preserve_merges=t
- 	test -f "$DOTEST"/strategy && strategy="$(cat "$DOTEST"/strategy)"
-@@ -744,134 +701,77 @@ parse_onto () {
- 	git rev-parse --verify "$1^0"
- }
- 
--while test $# != 0
--do
--	case "$1" in
--	--no-verify)
--		OK_TO_SKIP_PRE_REBASE=yes
--		;;
--	--verify)
--		OK_TO_SKIP_PRE_REBASE=
--		;;
--	--continue)
--		is_standalone "$@" || usage
--		get_saved_options
--		comment_for_reflog continue
 -
--		test -d "$DOTEST" || die "No interactive rebase running"
+ ORIG_REFLOG_ACTION="$GIT_REFLOG_ACTION"
+ 
+ comment_for_reflog () {
+@@ -753,8 +741,6 @@ esac
+ git var GIT_COMMITTER_IDENT >/dev/null ||
+ 	die "You need to set your committer info first"
+ 
+-run_pre_rebase_hook "$upstream_arg" "$@"
 -
--		# Sanity check
--		git rev-parse --verify HEAD >/dev/null ||
--			die "Cannot read HEAD"
--		git update-index --ignore-submodules --refresh &&
--			git diff-files --quiet --ignore-submodules ||
--			die "Working tree is dirty"
--
--		# do we have anything to commit?
--		if git diff-index --cached --quiet --ignore-submodules HEAD --
-+case "$action" in
-+continue)
-+	get_saved_options
-+	comment_for_reflog continue
-+
-+	test -d "$DOTEST" || die "No interactive rebase running"
-+
-+	# Sanity check
-+	git rev-parse --verify HEAD >/dev/null ||
-+		die "Cannot read HEAD"
-+	git update-index --ignore-submodules --refresh &&
-+		git diff-files --quiet --ignore-submodules ||
-+		die "Working tree is dirty"
-+
-+	# do we have anything to commit?
-+	if git diff-index --cached --quiet --ignore-submodules HEAD --
-+	then
-+		: Nothing to commit -- skip this
-+	else
-+		. "$AUTHOR_SCRIPT" ||
-+			die "Cannot find the author identity"
-+		amend=
-+		if test -f "$AMEND"
- 		then
--			: Nothing to commit -- skip this
--		else
--			. "$AUTHOR_SCRIPT" ||
--				die "Cannot find the author identity"
--			amend=
--			if test -f "$AMEND"
--			then
--				amend=$(git rev-parse --verify HEAD)
--				test "$amend" = $(cat "$AMEND") ||
--				die "\
-+			amend=$(git rev-parse --verify HEAD)
-+			test "$amend" = $(cat "$AMEND") ||
-+			die "\
- You have uncommitted changes in your working tree. Please, commit them
- first and then run 'git rebase --continue' again."
--				git reset --soft HEAD^ ||
--				die "Cannot rewind the HEAD"
--			fi
--			do_with_author git commit --no-verify -F "$MSG" -e || {
--				test -n "$amend" && git reset --soft $amend
--				die "Could not commit staged changes."
--			}
-+			git reset --soft HEAD^ ||
-+			die "Cannot rewind the HEAD"
- 		fi
-+		do_with_author git commit --no-verify -F "$MSG" -e || {
-+			test -n "$amend" && git reset --soft $amend
-+			die "Could not commit staged changes."
-+		}
-+	fi
+ comment_for_reflog start
  
--		record_in_rewritten "$(cat "$DOTEST"/stopped-sha)"
-+	record_in_rewritten "$(cat "$DOTEST"/stopped-sha)"
- 
--		require_clean_work_tree "rebase"
--		do_rest
--		;;
--	--abort)
--		is_standalone "$@" || usage
--		get_saved_options
--		comment_for_reflog abort
--
--		git rerere clear
--		test -d "$DOTEST" || die "No interactive rebase running"
--
--		HEADNAME=$(cat "$DOTEST"/head-name)
--		HEAD=$(cat "$DOTEST"/head)
--		case $HEADNAME in
--		refs/*)
--			git symbolic-ref HEAD $HEADNAME
--			;;
--		esac &&
--		output git reset --hard $HEAD &&
--		rm -rf "$DOTEST"
--		exit
--		;;
--	--skip)
--		is_standalone "$@" || usage
--		get_saved_options
--		comment_for_reflog skip
-+	require_clean_work_tree "rebase"
-+	do_rest
-+	;;
-+abort)
-+	get_saved_options
-+	comment_for_reflog abort
- 
--		git rerere clear
--		test -d "$DOTEST" || die "No interactive rebase running"
-+	git rerere clear
-+	test -d "$DOTEST" || die "No interactive rebase running"
- 
--		output git reset --hard && do_rest
--		;;
--	-s)
--		case "$#,$1" in
--		*,*=*)
--			strategy=$(expr "z$1" : 'z-[^=]*=\(.*\)') ;;
--		1,*)
--			usage ;;
--		*)
--			strategy="$2"
--			shift ;;
--		esac
--		;;
--	-m)
--		# we use merge anyway
--		;;
--	-v)
--		verbose=t
--		;;
--	-p)
--		preserve_merges=t
--		;;
--	-i)
--		# yeah, we know
--		;;
--	--no-ff)
--		force_rebase=t
--		;;
--	--root)
--		rebase_root=t
--		;;
--	--autosquash)
--		autosquash=t
--		;;
--	--no-autosquash)
--		autosquash=
--		;;
--	--onto)
--		test 2 -le "$#" || usage
--		onto="$2"
--		shift
--		;;
--	--)
--		shift
--		break
-+	HEADNAME=$(cat "$DOTEST"/head-name)
-+	HEAD=$(cat "$DOTEST"/head)
-+	case $HEADNAME in
-+	refs/*)
-+		git symbolic-ref HEAD $HEADNAME
- 		;;
--	esac
--	shift
--done
-+	esac &&
-+	output git reset --hard $HEAD &&
-+	rm -rf "$DOTEST"
-+	exit
-+	;;
-+skip)
-+	get_saved_options
-+	comment_for_reflog skip
-+
-+	git rerere clear
-+	test -d "$DOTEST" || die "No interactive rebase running"
-+
-+	output git reset --hard && do_rest
-+	;;
-+esac
- 
- if test -n "$onto"
- then
+ if test ! -z "$switch_to"
 diff --git a/git-rebase.sh b/git-rebase.sh
-index 21366ba..e646b8f 100755
+index e1e5263..229e8d2 100755
 --- a/git-rebase.sh
 +++ b/git-rebase.sh
-@@ -64,6 +64,9 @@ type=
- state_dir=
- # One of {'', continue, skip, abort}, as parsed from command line
- action=
-+preserve_merges=
-+autosquash=
-+test "$(git config --bool rebase.autosquash)" = "true" && autosquash=t
- 
- read_state () {
- 	if test "$type" = merge
-@@ -176,27 +179,14 @@ finish_rb_merge () {
- 	say All done.
- }
- 
--is_interactive () {
--	while test $# != 0
--	do
--		case "$1" in
--			-i|--interactive)
--				interactive_rebase=explicit
--				break
--			;;
--			-p|--preserve-merges)
--				interactive_rebase=implied
--			;;
--		esac
--		shift
--	done
--
-+run_interactive_rebase () {
- 	if [ "$interactive_rebase" = implied ]; then
- 		GIT_EDITOR=:
+@@ -185,9 +185,8 @@ run_interactive_rebase () {
  		export GIT_EDITOR
  	fi
--
--	test -n "$interactive_rebase" || test -f "$merge_dir"/interactive
-+	export onto autosquash strategy strategy_opts verbose rebase_root \
-+	force_rebase action preserve_merges OK_TO_SKIP_PRE_REBASE
-+	exec git-rebase--interactive "$@"
+ 	export onto autosquash strategy strategy_opts verbose rebase_root \
+-	force_rebase action preserve_merges OK_TO_SKIP_PRE_REBASE upstream \
+-	upstream_arg switch_to head_name
+-	exec git-rebase--interactive "$@"
++	force_rebase action preserve_merges upstream switch_to head_name
++	exec git-rebase--interactive
  }
  
  run_pre_rebase_hook () {
-@@ -211,8 +201,6 @@ run_pre_rebase_hook () {
- test -f "$apply_dir"/applying &&
- 	die 'It looks like git-am is in progress. Cannot rebase.'
+@@ -515,15 +514,15 @@ orig_head=$branch
  
--is_interactive "$@" && exec git-rebase--interactive "$@"
--
- if test -d "$apply_dir"
- then
- 	type=am
-@@ -249,6 +237,19 @@ do
- 		onto="$2"
- 		shift
- 		;;
-+	-i|--interactive)
-+		interactive_rebase=explicit
-+		;;
-+	-p|--preserve-merges)
-+		preserve_merges=t
-+		test -z "$interactive_rebase" && interactive_rebase=implied
-+		;;
-+	--autosquash)
-+		autosquash=t
-+		;;
-+	--no-autosquash)
-+		autosquash=
-+		;;
- 	-M|-m|--m|--me|--mer|--merg|--merge)
- 		do_merge=t
- 		;;
-@@ -339,7 +340,11 @@ do
- done
- test $# -gt 2 && usage
- 
--test -n "$action" && test -z "$in_progress" && die "No rebase in progress?"
-+if test -n "$action"
-+then
-+	test -z "$in_progress" && die "No rebase in progress?"
-+	test "$type" = interactive && run_interactive_rebase
-+fi
- 
- case "$action" in
- continue)
-@@ -415,6 +420,21 @@ fi
- 
- test $# -eq 0 && test -z "$rebase_root" && usage
- 
-+if test -n "$interactive_rebase"
-+then
-+	type=interactive
-+	state_dir="$merge_dir"
-+elif test -n "$do_merge"
-+then
-+	type=merge
-+	state_dir="$merge_dir"
-+else
-+	type=am
-+	state_dir="$apply_dir"
-+fi
-+
-+test "$type" = interactive && run_interactive_rebase "$@"
-+
  require_clean_work_tree "rebase" "Please commit or stash them."
  
- if test -z "$rebase_root"
+-test "$type" = interactive && run_interactive_rebase "$@"
+-
+ # Now we are rebasing commits $upstream..$branch (or with --root,
+ # everything leading up to $branch) on top of $onto
+ 
+ # Check if we are already based on $onto with linear history,
+-# but this should be done only when upstream and onto are the same.
++# but this should be done only when upstream and onto are the same
++# and if this is not an interactive rebase.
+ mb=$(git merge-base "$onto" "$branch")
+-if test "$upstream" = "$onto" && test "$mb" = "$onto" &&
++if test "$type" != interactive && test "$upstream" = "$onto" &&
++	test "$mb" = "$onto" &&
+ 	# linear history?
+ 	! (git rev-list --parents "$onto".."$branch" | sane_grep " .* ") > /dev/null
+ then
+@@ -541,6 +540,8 @@ fi
+ # If a hook exists, give it a chance to interrupt
+ run_pre_rebase_hook "$upstream_arg" "$@"
+ 
++test "$type" = interactive && run_interactive_rebase
++
+ # Detach HEAD and reset the tree
+ say "First, rewinding head to replay your work on top of it..."
+ git checkout -q "$onto^0" || die "could not detach HEAD"
 -- 
 1.7.3.2.864.gbbb96
