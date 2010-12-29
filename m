@@ -1,62 +1,77 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: [minor BUG] cherry-pick -x doesn't work if a conflict occurs
-Date: Wed, 29 Dec 2010 15:16:38 +0100
-Message-ID: <20101229141638.GA14865@pengutronix.de>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] unpack_trees(): skip trees that are the same in all input
+Date: Wed, 29 Dec 2010 21:43:09 +0700
+Message-ID: <AANLkTinm=k_84Nh4YakbkdNNLO4-yeVxGF+p_rR5TFB=@mail.gmail.com>
+References: <7vr5d94fs4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 29 15:16:50 2010
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Dec 29 15:43:48 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PXwpZ-0004Ww-6q
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Dec 2010 15:16:45 +0100
+	id 1PXxFj-0007I1-LK
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Dec 2010 15:43:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752832Ab0L2OQk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Dec 2010 09:16:40 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:42321 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752526Ab0L2OQk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Dec 2010 09:16:40 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.71)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1PXwpT-0004YO-4G
-	for git@vger.kernel.org; Wed, 29 Dec 2010 15:16:39 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1PXwpT-000484-0J
-	for git@vger.kernel.org; Wed, 29 Dec 2010 15:16:39 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1752841Ab0L2Onm convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Dec 2010 09:43:42 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:47466 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752664Ab0L2Onl convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Dec 2010 09:43:41 -0500
+Received: by wwa36 with SMTP id 36so10743163wwa.1
+        for <git@vger.kernel.org>; Wed, 29 Dec 2010 06:43:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=6wfODEt1QnuDgKQXtkz3INpZOZfjVTd38jkFht4Bd3E=;
+        b=aZK3GFPUmjGYhmc6fW7Hr1MUCp5bGabtjt6ySSXVECGgCnS5FkBndLP2eJEuPvvJUg
+         nWOnOlgPF7d9FvCaDsWxv19hS5zbi3iw+jI7tk3AiUQB7qkIpa+NntMrNBfQbln5zHnX
+         UIJ3jmCKaXvJ/WYA1LEPQe5FHLmIDuWR+uz/8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=SYAIEC7YFV7sBhGTp2OOE+ptqzzls+CSTGBIbPA+ahRgzkyNRpcMcxHlkd1cmju49L
+         9IU3moNfvTAqzXgt1lvr7Zo3NvpCQsQUyqVsszWQBukN/mhj5UWhINuZoEO2I73zvtR9
+         5457QK18mzBE2Y50X9xyBxZcETQXpfQ12hwPQ=
+Received: by 10.216.24.134 with SMTP id x6mr18978501wex.34.1293633820722; Wed,
+ 29 Dec 2010 06:43:40 -0800 (PST)
+Received: by 10.216.63.14 with HTTP; Wed, 29 Dec 2010 06:43:09 -0800 (PST)
+In-Reply-To: <7vr5d94fs4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164313>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164314>
 
-Hello,
+On Thu, Dec 23, 2010 at 5:13 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> @@ -447,6 +451,11 @@ static int traverse_trees_recursive(int n, unsig=
+ned long dirmask,
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct traverse_info newinfo;
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0struct name_entry *p;
+>
+> + =C2=A0 =C2=A0 =C2=A0 if (!df_conflicts) {
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 int status =3D fas=
+t_forward_merge(n, dirmask, names, info);
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (status)
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 return status;
+> + =C2=A0 =C2=A0 =C2=A0 }
 
-when hitting a conflict cherry-pick suggests using
+Also skip the optimization when sparse checkout is active
+(info->data->skip_sparse_checkout =3D=3D 0). People may need to just
+update skip-worktree bits and add/remove worktree files along the
+line.
 
-	git commit -c $sha1
-
-but the resulting (suggested) commit log doesn't have the extra
-reference requested by -x.
-
-Best regards
-Uwe
-
+Or you could make another step ahead and make fast_forward_merge aware
+of sparse checkout too ;-)
 --=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+Duy
