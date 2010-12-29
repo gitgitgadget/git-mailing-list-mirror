@@ -1,63 +1,71 @@
-From: "Robin H. Johnson" <robbat2@gentoo.org>
-Subject: [PATCH] t9001: Fix test prerequisites
-Date: Wed, 29 Dec 2010 21:02:31 +0000
-Message-ID: <1293656551-5463-1-git-send-email-robbat2@gentoo.org>
-Cc: "Robin H. Johnson" <robbat2@gentoo.org>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Dec 29 22:02:41 2010
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [PATCH 18/31] rebase: extract merge code to new source file
+Date: Wed, 29 Dec 2010 22:31:32 +0100
+Message-ID: <201012292231.33333.j6t@kdbg.org>
+References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com> <1293528648-21873-19-git-send-email-martin.von.zweigbergk@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Christian Couder <chriscool@tuxfamily.org>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Dec 29 22:31:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PY3AO-0002lO-Q8
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Dec 2010 22:02:41 +0100
+	id 1PY3cS-0006aG-OO
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Dec 2010 22:31:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753301Ab0L2VCf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Dec 2010 16:02:35 -0500
-Received: from mail.isohunt.com ([208.95.172.20]:50093 "EHLO mail.as30085.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753310Ab0L2VCe (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Dec 2010 16:02:34 -0500
-Received: (qmail 10406 invoked from network); 29 Dec 2010 21:02:33 -0000
-Received: from tsi-static.orbis-terrarum.net (HELO grubbs.orbis-terrarum.net) (76.10.188.108)
-    by mail.as30085.net (qpsmtpd/0.33-dev on beta01) with (AES256-SHA encrypted) ESMTPS; Wed, 29 Dec 2010 21:02:33 +0000
-Received: (qmail 5491 invoked by uid 0); 29 Dec 2010 21:02:31 -0000
-X-Mailer: git-send-email 1.7.3.2
+	id S1753989Ab0L2Vbg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Dec 2010 16:31:36 -0500
+Received: from bsmtp2.bon.at ([213.33.87.16]:56738 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753524Ab0L2Vbf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Dec 2010 16:31:35 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id A06B313004D;
+	Wed, 29 Dec 2010 22:31:33 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 6D78819F6A0;
+	Wed, 29 Dec 2010 22:31:33 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <1293528648-21873-19-git-send-email-martin.von.zweigbergk@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164330>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164331>
 
-Add in missing Perl prerequisites for new tests of send-email.
+On Dienstag, 28. Dezember 2010, Martin von Zweigbergk wrote:
+> -run_interactive_rebase () {
+> +run_specific_rebase () {
+>  	if [ "$interactive_rebase" = implied ]; then
+>  		GIT_EDITOR=:
+>  		export GIT_EDITOR
+>  	fi
+>  	export onto autosquash strategy strategy_opts verbose rebase_root \
+> -	force_rebase action preserve_merges upstream switch_to head_name
+> -	exec git-rebase--interactive
+> +	force_rebase action preserve_merges upstream switch_to head_name \
+> +	state_dir orig_head onto_name GIT_QUIET revisions RESOLVEMSG \
+> +	allow_rerere_autoupdate
+> +	export -f move_to_original_branch
 
-Signed-off-by: Robin H. Johnson <robbat2@gentoo.org>
----
- t/t9001-send-email.sh |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+Is export -f portable?
 
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 1dc4a92..3271426 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -1135,7 +1135,7 @@ test_expect_success $PREREQ '--8bit-encoding also treats subject' '
- # Note that the patches in this test are deliberately out of order; we
- # want to make sure it works even if the cover-letter is not in the
- # first mail.
--test_expect_success 'refusing to send cover letter template' '
-+test_expect_success $PREREQ 'refusing to send cover letter template' '
- 	clean_fake_sendmail &&
- 	rm -fr outdir &&
- 	git format-patch --cover-letter -2 -o outdir &&
-@@ -1151,7 +1151,7 @@ test_expect_success 'refusing to send cover letter template' '
- 	test -z "$(ls msgtxt*)"
- '
- 
--test_expect_success '--force sends cover letter template anyway' '
-+test_expect_success $PREREQ '--force sends cover letter template anyway' '
- 	clean_fake_sendmail &&
- 	rm -fr outdir &&
- 	git format-patch --cover-letter -2 -o outdir &&
--- 
-1.7.3.2
+> +	test "$type" != am && exec git-rebase--$type
+
+I'd prefer to dispatch to the final rebase type using
+
+	. git-rebase--$type
+
+This way, you can avoid to export the huge list of helper variables and the 
+function. (And it might be faster by a millisecond - or a few dozens on 
+Windows.)
+
+-- Hannes
