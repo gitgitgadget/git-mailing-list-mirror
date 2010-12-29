@@ -1,121 +1,112 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 3/3] gitweb: add css class to remote url titles
-Date: Wed, 29 Dec 2010 14:44:37 -0800 (PST)
-Message-ID: <m3bp44ci8p.fsf@localhost.localdomain>
-References: <1293651215-4924-1-git-send-email-sylvain@abstraction.fr>
-	<1293651215-4924-4-git-send-email-sylvain@abstraction.fr>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [BUGFIX PATCH 1/4] git-instaweb: Fix issue with static files for
+ 'plackup' server
+Date: Wed, 29 Dec 2010 15:24:19 -0800
+Message-ID: <7v62ucrwm4.fsf@alter.siamese.dyndns.org>
+References: <201012291743.41213.jnareb@gmail.com>
+ <201012291747.01288.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sylvain Rabot <sylvain@abstraction.fr>
-X-From: git-owner@vger.kernel.org Wed Dec 29 23:44:46 2010
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Tadeusz Sosnierz <tadzikes@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 30 00:24:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PY4lB-0000cJ-Gk
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Dec 2010 23:44:45 +0100
+	id 1PY5Nn-0006IR-5H
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 00:24:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753752Ab0L2Wol (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Dec 2010 17:44:41 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:45230 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753314Ab0L2Wok (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Dec 2010 17:44:40 -0500
-Received: by bwz15 with SMTP id 15so11331248bwz.19
-        for <git@vger.kernel.org>; Wed, 29 Dec 2010 14:44:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=7Vx8Fk6fupBSKzTgmu1jPAEhccB7DOjhEe7mlyEQhko=;
-        b=KQ8Wt1r86Mi0Y/KCtWf3RewWu2mu6SSO/7Cxpe4CX4g3jdrDcZ2gpCN/8tkEMpCOPJ
-         nodq7EFXXoSiUcg5Q0XBy5CJqgYjODhZasX+pBvQsU/IBW0JnIdPGhd/lDLULW3UGmkP
-         HATK0AHQzfqbBflROj4Z2kLIwEh6FQcQsBwnE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=JK52M+HQfL3aKzT7pClu8uP3n/gYPy+2uNYBbB7jfvgdMPc0NC8J4ShjvC6i5qrQn3
-         MUvKJrFKUyWL5RETFb9iy+wIDwxqSxMTXFv2ZD2I5lzIdPehlui/Wa9jmcgP/UCmA0e6
-         9XnE3AaH4NBc0f2yr/29qTSvubsPJpUswtJEo=
-Received: by 10.204.74.74 with SMTP id t10mr5680101bkj.161.1293662679098;
-        Wed, 29 Dec 2010 14:44:39 -0800 (PST)
-Received: from localhost.localdomain (abvc66.neoplus.adsl.tpnet.pl [83.8.200.66])
-        by mx.google.com with ESMTPS id j11sm9014491bka.12.2010.12.29.14.44.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 29 Dec 2010 14:44:37 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id oBTMi6Kd027237;
-	Wed, 29 Dec 2010 23:44:16 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id oBTMhoCg027233;
-	Wed, 29 Dec 2010 23:43:50 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <1293651215-4924-4-git-send-email-sylvain@abstraction.fr>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1754028Ab0L2XYd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Dec 2010 18:24:33 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55626 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752086Ab0L2XYc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 29 Dec 2010 18:24:32 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 286AD3050;
+	Wed, 29 Dec 2010 18:25:04 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=Id93px1uQBBu
+	nTRAyPzlulLd9ng=; b=oDxX6N6Me/r+vO8dxgVSuGsmlF9nTHN07sDG9D/Q0D4J
+	1dE5lKb/S9C6Pb23UV2GWYpPY8FuHeROyNPICnaHqocPVBIJoM531vw5He71535l
+	o5rbdMXOKZ7D+u25lcqZiv0zLP6NtEkr2W1Bxy1TRQ2GCKQDZ+5+oJ4ZQO/FC5o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=rGRgAe
+	4IsdkljJ+gLEwyX2Q/bCKYvSsVodAFo6+3eZMkB7Q6Rpo9+OqKpHlTzDmkAZnbEs
+	SoK0qeC6rUsXmdiItdsWzJtx5QBmL4s3vuDciqYIKBTaIgod6q+/8gzvW6ir80Xo
+	eWFQdMKG18Rx32v5T1YuE1SrkJ8bEbJcSdJq4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BD431304D;
+	Wed, 29 Dec 2010 18:24:59 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4FA0D3048; Wed, 29 Dec 2010
+ 18:24:54 -0500 (EST)
+In-Reply-To: <201012291747.01288.jnareb@gmail.com> (Jakub Narebski's message
+ of "Wed\, 29 Dec 2010 17\:47\:00 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: DAC6054E-13A2-11E0-967D-C4BE9B774584-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164338>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164339>
 
-Sylvain Rabot <sylvain@abstraction.fr> writes:
+Jakub Narebski <jnareb@gmail.com> writes:
 
-> Signed-off-by: Sylvain Rabot <sylvain@abstraction.fr>
+> The default (in gitweb/Makefile) is to use relative paths for gitweb
+> static files, e.g. "static/gitweb.css" for GITWEB_CSS.  But the
+> configuration for Plack::Middleware::Static in plackup_conf assumed
+> that static files must be absolute paths starting with "/gitweb/"
+> prefix which had to be stripped, e.g. "/gitweb/static/gitweb.css".
+> This in turn caused web server run by "git instaweb --httpd=3Dplackup=
+"
+> to not access static files (e.g. CSS) correctly.
+>
+> This is a minimal fixup, making 'plackup' web server in git-instaweb
+> work with default gitweb build configuration.
+>
+> Reported-by: Tadeusz So=C5=9Bnierz <tadzikes@gmail.com>
+> Signed-off-by: Jakub Narebski <jnareb@gmail.com>
 > ---
->  gitweb/gitweb.perl       |    8 ++++----
->  gitweb/static/gitweb.css |    5 +++++
->  2 files changed, 9 insertions(+), 4 deletions(-)
-> 
-> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index eae75ac..cb169c7 100755
-> --- a/gitweb/gitweb.perl
-> +++ b/gitweb/gitweb.perl
-> @@ -5146,13 +5146,13 @@ sub git_remote_block {
->  
->  	if (defined $fetch) {
->  		if ($fetch eq $push) {
-> -			$urls_table .= format_repo_url("URL", $fetch);
-> +			$urls_table .= format_repo_url("<span class=\"metadata_remote_fetch_url\">URL</span>", $fetch);
->  		} else {
-> -			$urls_table .= format_repo_url("Fetch URL", $fetch);
-> -			$urls_table .= format_repo_url("Push URL", $push) if defined $push;
-> +			$urls_table .= format_repo_url("<span class=\"metadata_remote_fetch_url\">Fetch URL</span>", $fetch);
-> +			$urls_table .= format_repo_url("<span class=\"metadata_remote_push_url\">Push URL</span>", $push) if defined $push;
->  		}
->  	} elsif (defined $push) {
-> -		$urls_table .= format_repo_url("Push URL", $push);
-> +		$urls_table .= format_repo_url("<span class=\"metadata_remote_push_url\">Push URL</span>", $push);
->  	} else {
->  		$urls_table .= format_repo_url("", "No remote URL");
->  	}
+> The regexp is probably too strict: qr{^/static/} should be enough,
+> but I didn't want to change too much at once.
+>
+> This bug was not noticed because we don't have any test for
+> git-instaweb, not mentioning tests for all web servers supported.  An=
+d
+> the fact that I was checking "git instaweb -httpd=3Dplackup" against
+> gitweb.cgi built with custom configuration (including the fact that
+> GITWEB_CSS=3D"/gitweb/static/gitweb.css").
+>
+> tadzik, does that fix the issue you noticed?
+>
+> Junio, could you apply this before 1.7.4?
 
-I'm not sure if in this situation if it would not be better to extend
-format_repo_url subroutine to take additional parameter describing
-_type_ of repo URL; it then would do styling internally.  Which means
-moving wrapping 'URL', 'Fetch URL' etc. in span element to
-format_repo_url from the caller.
+Hmph, I was kind of hoping that I can issue 1.7.3.5 tonight...
 
-> diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
-> index 79d7eeb..631b20d 100644
-> --- a/gitweb/static/gitweb.css
-> +++ b/gitweb/static/gitweb.css
-> @@ -579,6 +579,11 @@ div.remote {
->  	display: inline-block;
->  }
->  
-> +.metadata_remote_fetch_url,
-> +.metadata_remote_push_url {
-> +	font-weight: bold;
-> +}
-> +
-
-Good!
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+>
+>  git-instaweb.sh |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/git-instaweb.sh b/git-instaweb.sh
+> index 10fcebb..bb57d81 100755
+> --- a/git-instaweb.sh
+> +++ b/git-instaweb.sh
+> @@ -549,7 +549,7 @@ my \$app =3D builder {
+>  	};
+>  	# serve static files, i.e. stylesheet, images, script
+>  	enable 'Static',
+> -		path =3D> sub { m!\.(js|css|png)\$! && s!^/gitweb/!! },
+> +		path =3D> qr{^/static/.*(?:js|css|png)\$},
+>  		root =3D> "$root/",
+>  		encoding =3D> 'utf-8'; # encoding for 'text/plain' files
+>  	# convert CGI application to PSGI app
+> --=20
+> 1.7.3
