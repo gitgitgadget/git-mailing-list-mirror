@@ -1,73 +1,91 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH 01/31] rebase: clearer names for directory variables
-Date: Tue, 28 Dec 2010 21:53:46 +0100 (CET)
-Message-ID: <alpine.DEB.1.10.1012282137580.29381@debian>
-References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com> <1293528648-21873-2-git-send-email-martin.von.zweigbergk@gmail.com> <7vtyhxts0a.fsf@alter.siamese.dyndns.org>
+From: Maaartin <grajcar1@seznam.cz>
+Subject: Re: Git Architecture Question
+Date: Wed, 29 Dec 2010 03:58:52 +0000 (UTC)
+Message-ID: <loom.20101229T043516-592@post.gmane.org>
+References: <20FFFEFA-5808-4673-B876-C5F76B52D12E@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Dec 29 03:53:17 2010
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Dec 29 05:00:56 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PXmA6-0006qH-Ss
-	for gcvg-git-2@lo.gmane.org; Wed, 29 Dec 2010 03:53:15 +0100
+	id 1PXnDc-0005qV-2u
+	for gcvg-git-2@lo.gmane.org; Wed, 29 Dec 2010 05:00:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751788Ab0L2Cwz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 28 Dec 2010 21:52:55 -0500
-Received: from mail-qy0-f194.google.com ([209.85.216.194]:38899 "EHLO
-	mail-qy0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751015Ab0L2Cwy (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 28 Dec 2010 21:52:54 -0500
-Received: by qyk4 with SMTP id 4so2915055qyk.1
-        for <git@vger.kernel.org>; Tue, 28 Dec 2010 18:52:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:x-x-sender:to:cc
-         :subject:in-reply-to:message-id:references:user-agent:mime-version
-         :content-type;
-        bh=grpOmNAuo1TaTgEX1fKellkj7I5CEytT+rc43hSIMgE=;
-        b=k/n0oIhkZdQJj3wA4PcdV62y5TsvumoNn0ziWZKu1IBjiWp8QUjqww6sdA2pku2Mcg
-         1EXfDTyx6vtN1nZ++c2e+AKviOFpESlcfJZs/EE2jvV4DEeHeDimmZ2m2RhwJdpseAiZ
-         CKrGwtCGL1F3ovWzLB2mN431XoIEo/qHvYxLg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=DVFCvN9aexfqbCm4AdR8GA9KjtysgzWE7RFgpD/2/YTIKe+3lhhOWi/saowA6l/RTy
-         5soSxsfim2PYAh3fNtShyojp03ZIIG0hcqZ494WzFGTTJi/0ZiFM06cptz22alJMOwU5
-         XI8a8fpEGpVrI3T6GYx+P8vGHNTwNN9bJrlLU=
-Received: by 10.229.229.132 with SMTP id ji4mr12453095qcb.285.1293591173660;
-        Tue, 28 Dec 2010 18:52:53 -0800 (PST)
-Received: from [192.168.1.105] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id s10sm6614835qco.11.2010.12.28.18.52.51
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 28 Dec 2010 18:52:52 -0800 (PST)
-X-X-Sender: martin@debian
-In-Reply-To: <7vtyhxts0a.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1752179Ab0L2D7G (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 28 Dec 2010 22:59:06 -0500
+Received: from lo.gmane.org ([80.91.229.12]:38914 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752111Ab0L2D7E (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 28 Dec 2010 22:59:04 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PXnBm-0005TH-RH
+	for git@vger.kernel.org; Wed, 29 Dec 2010 04:59:02 +0100
+Received: from 188-120-198-113.luckynet.cz ([188-120-198-113.luckynet.cz])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 29 Dec 2010 04:59:02 +0100
+Received: from grajcar1 by 188-120-198-113.luckynet.cz with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Wed, 29 Dec 2010 04:59:02 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 188.120.198.113 (Opera/9.80 (Windows NT 5.2; U; en) Presto/2.7.62 Version/11.00)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164302>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164303>
 
+Anuj Gakhar <anuj.gakhar <at> gmail.com> writes:
 
-On Tue, 28 Dec 2010, Junio C Hamano wrote:
+> 
+> Hi all,
+> 
+> I am new to Git and learning this powerful tool these days.
+> 
+> I have a simple question :-
+> 
+> I work on a project that has 3 different environments. dev, staging  
+> and production. dev is obviously the local git repo that all dev's  
+> work on. staging is where most of the development takes places on a  
+> daily basis. and production is where least development happens but we  
+> still do it because sometimes we have to fix things quickly directly  
+> on the production server.
+> 
+> So how should I set this up ?
+> 
+> 2 branches staging and master (default) ?
 
-> If this were just "s/dotest/merge_dir/g" and the same for rebase-apply, I
-> would have to say it is long overdue ;-)
+I wouldn't use "master" for the production branch, I'd call it simply 
+"production" (there's nothing special about master, except that it's the 
+default when you start). However, it's quite easy to change it anytime. 
+Especially, each developer may create their own private branches at will. When 
+working on multiple topics concurrently you'll probably create multiple shared 
+"staging" branches. It's all very fast and very easy to do.
 
+> How can I make it so that the staging branch gets deployed to a  
+> different folder on the server and the master branch gets deployed on  
+> a different folder ?
 
-Yes, that should be all!
+You can control both the working tree directory and the git directory using 
+environment variables (GIT_WORK_TREE and GIT_DIR), so it's easy, e.g.
 
-Well, to be precise, in the "@@ -560,35 +561,35 @@ then" hunk, I also
-moved the quotes to contain the file name as was done for
-rebase-merge. I redid the search/replace just to double check.
+cd stagingFolder; GIT_DIR=..../.git git checkout staging
+
+You can use options like --git-dir instead, s. http://www.kernel.org/pub/
+software/scm/git/docs/
+
+> Once a week, we would merge all the staging work into production and  
+> make a release.
+> 
+> Any ideas ?
+
+It may be useful to have a single person responsible for this merging.
