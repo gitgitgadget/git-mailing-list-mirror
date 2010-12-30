@@ -1,88 +1,105 @@
-From: Yann Dirson <ydirson@free.fr>
-Subject: Re: [PATCH v6] generalizing sorted-array handling
-Date: Thu, 30 Dec 2010 01:01:19 +0100
-Message-ID: <20101230000119.GA6639@home.lan>
-References: <1291848695-24601-1-git-send-email-ydirson@altern.org>
- <7vd3p9b4d1.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [BUGFIX PATCH 1/4] git-instaweb: Fix issue with static files for 'plackup' server
+Date: Thu, 30 Dec 2010 01:40:06 +0100
+Message-ID: <201012300140.07843.jnareb@gmail.com>
+References: <201012291743.41213.jnareb@gmail.com> <201012291747.01288.jnareb@gmail.com> <7v1v50rvat.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Tadeusz Sosnierz <tadzikes@gmail.com>,
+	Eric Wong <normalperson@yhbt.net>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 30 01:02:35 2010
+X-From: git-owner@vger.kernel.org Thu Dec 30 01:40:26 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PY5yT-0001gs-U6
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 01:02:34 +0100
+	id 1PY6Z7-0004sd-I5
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 01:40:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754221Ab0L3AB1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Dec 2010 19:01:27 -0500
-Received: from smtp5-g21.free.fr ([212.27.42.5]:56835 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752079Ab0L3AB1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Dec 2010 19:01:27 -0500
-Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 59C5FD48085;
-	Thu, 30 Dec 2010 01:01:20 +0100 (CET)
-Received: from yann by home.lan with local (Exim 4.72)
-	(envelope-from <ydirson@free.fr>)
-	id 1PY5xH-0002ca-5t; Thu, 30 Dec 2010 01:01:19 +0100
+	id S1754601Ab0L3AkQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Dec 2010 19:40:16 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:54077 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753182Ab0L3AkO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Dec 2010 19:40:14 -0500
+Received: by bwz15 with SMTP id 15so11384342bwz.19
+        for <git@vger.kernel.org>; Wed, 29 Dec 2010 16:40:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=/aPnLmClI4wfU+TS2bUeIxhZUfYjacSmSPMvrY40n4w=;
+        b=XFiYBZ2YOiuD7f0z+j7HLER4NP2XtUMBQFQnywp7O3IhQ0xq/sznhj97asOqaZWb6b
+         KPI4BCXhWJv/OHBi+cejTk8MoCaAlVDuGstryRnzaL+gPPGpqUDVM1Mag7ip1mMfLKdW
+         rncKXIQVitAM3e1siOUfZSA1/ID7iABI0BEz0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=EAd1xlG631MW1/4/agjCa7uTgrEG1nV7Pe7JbZJ/wC5Q+Z3n3BVHvS9KPr0Z+tR/A7
+         cbYvxZSUzlMSeMWqWVgdm6cpyz2ysV81fONKT141g59m3XqVa6Sc0VoVQgitPP1q/oan
+         AnS1u27UCXA85fb3TP8yDUsQ4B0QgiR/m5HcY=
+Received: by 10.204.72.130 with SMTP id m2mr4126015bkj.15.1293669613569;
+        Wed, 29 Dec 2010 16:40:13 -0800 (PST)
+Received: from [192.168.1.13] (abvc66.neoplus.adsl.tpnet.pl [83.8.200.66])
+        by mx.google.com with ESMTPS id b6sm8121849bkb.22.2010.12.29.16.40.11
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 29 Dec 2010 16:40:12 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <7v1v50rvat.fsf@alter.siamese.dyndns.org>
 Content-Disposition: inline
-In-Reply-To: <7vd3p9b4d1.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164342>
 
-On Fri, Dec 10, 2010 at 03:22:18PM -0800, Junio C Hamano wrote:
-> Yann Dirson <ydirson@altern.org> writes:
-> 
-> > ... I want to get my focus back to
-> > bulk-rename/builk-rm patches, which will make heavy use of this API.
-> 
-> Final comment.  As the primary thing you want to use this is to change the
-> way how the rename_dst/rename_src tables are managed, and these are both
-> tables sorted by a string, I suspect a more reasonable might be to first
-> updated them to use string-list API and add to that API whatever necessary
-> features you might need, if any.
+On Thu, 30 Dec 2010, Junio C Hamano wrote:
+> Jakub Narebski <jnareb@gmail.com> writes:
+>=20
+> > The default (in gitweb/Makefile) is to use relative paths for gitwe=
+b
+> > static files, e.g. "static/gitweb.css" for GITWEB_CSS.  But the
+> > configuration for Plack::Middleware::Static in plackup_conf assumed
+> > that static files must be absolute paths starting with "/gitweb/"
+> > prefix which had to be stripped, e.g. "/gitweb/static/gitweb.css".
+> > This in turn caused web server run by "git instaweb --httpd=3Dplack=
+up"
+> > to not access static files (e.g. CSS) correctly.
+> >
+> > This is a minimal fixup, making 'plackup' web server in git-instawe=
+b
+> > work with default gitweb build configuration.
+> >
+> > Reported-by: Tadeusz So=C5=9Bnierz <tadzikes@gmail.com>
+> > Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+> > ---
+> > The regexp is probably too strict: qr{^/static/} should be enough,
+> > but I didn't want to change too much at once.
+[...]
+> > diff --git a/git-instaweb.sh b/git-instaweb.sh
+> > index 10fcebb..bb57d81 100755
+> > --- a/git-instaweb.sh
+> > +++ b/git-instaweb.sh
+> > @@ -549,7 +549,7 @@ my \$app =3D builder {
+> >  	};
+> >  	# serve static files, i.e. stylesheet, images, script
+> >  	enable 'Static',
+> > -		path =3D> sub { m!\.(js|css|png)\$! && s!^/gitweb/!! },
+> > +		path =3D> qr{^/static/.*(?:js|css|png)\$},
+>=20
+> I wonder if you meant qr{^/static/.*\\.(?:js|css|png)\$} here, to mak=
+e
+> sure that these three tokens are file suffixes, not just random
+> substring.
 
-It sounds reasonable to build on existing stuff (furthermore, the
-string-list binary search is one I had missed).
+Yes, it should be qr{^/static/.*\\.(?:js|css|png)\$} though as I said:
+"The regexp is probably too strict: qr{^/static/} should be enough,"
 
-Using string-lists here however will imply some tradeofs:
-
-* the additional char* pointer in every list element is possibly not
-  so high a price to pay
-
-* using the "util" pointer for the payload will make memory management
-  even more hairy (eg. "util" as a pointer to a struct which contains
-  a pointer to a diff_filespec).  Convenience wrappers will be highly
-  needed, and will also be required to keep calls to lookup/insert
-  readable, when the elements we deal with are not strings but indeed
-  the "util" stuff.
-
-All in all, looks that the data-structure needed should have a higher
-focus on the "util" field than string-list has.
-
-Features that seem to miss from string-list today (for the
-"dir-rename" series) include:
-
-* custom string-comparison function (ie. prefix comparison): that
-  would not be so difficult to generalize by adding a cmp_func
-  parameter to get_entry_index().  That would imply changing
-  widely-used API funcs like string_list_lookup() to shallow wrappers
-  around variants that also take a cmp_func argument.
-
-* lists indexed by 2 strings (bulkmove_candidates): could be replaced
-  by using string-lists of string-lists instead, but I'm not sure the
-  result would be that great
-
-
-I still have mixed feelings about all of this.
-
--- 
-Yann
+--=20
+Jakub Narebski
+Poland
