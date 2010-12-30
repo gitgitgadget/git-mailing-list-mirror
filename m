@@ -1,67 +1,69 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: rebase parents, or tracking upstream but removing
- non-distributable bits
-Date: Thu, 30 Dec 2010 14:58:47 -0600
-Message-ID: <20101230205847.GA29012@burratino>
-References: <ord3ojb0yy.fsf@livre.localdomain>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alexandre Oliva <lxoliva@fsfla.org>
-X-From: git-owner@vger.kernel.org Thu Dec 30 21:59:11 2010
+From: Sylvain Rabot <sylvain@abstraction.fr>
+Subject: [PATCH 1/4] gitweb: add extensions to highlight feature map
+Date: Thu, 30 Dec 2010 22:20:28 +0100
+Message-ID: <1293744031-17790-2-git-send-email-sylvain@abstraction.fr>
+References: <1293744031-17790-1-git-send-email-sylvain@abstraction.fr>
+Cc: Sylvain Rabot <sylvain@abstraction.fr>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 30 22:20:49 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PYPaW-0005Zz-Ft
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 21:59:08 +0100
+	id 1PYPvR-0007rf-Rn
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 22:20:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755336Ab0L3U7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Dec 2010 15:59:00 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:56515 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755329Ab0L3U7A (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Dec 2010 15:59:00 -0500
-Received: by vws16 with SMTP id 16so4545174vws.19
-        for <git@vger.kernel.org>; Thu, 30 Dec 2010 12:58:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=PhJp9pZDCAXll38akxowU0u8j8SUQ8dkJ4BN4ozxxd0=;
-        b=eRcPNTx3UUzfDMgskx8NpvY4Awn/ihcEw/cmofO9JOPbrbWVFfX3AeqGAlB1Ge7fCe
-         tmbyc87/E1YLSfuWbJj8C1a2LIWkbqsA17ABcZ2AaxSnkl0p/DvZgdZY4H7WR8KCW8+U
-         w84YyHiCdkHOIpvgIJp21MYh3/y58gTq/8JtQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ASjCzjrKYJh0Ko6m7bWi8JLS++H0fUmZGxgkRBuv5V2qY3FWISkdPUl7Sz2kSYGNM8
-         vf2597c+7lIkTrZ8yTyutGrNRHEcvPq2N//wAacj9e9SnRKe2Q7dAdRA9aTnoEvWG4Ce
-         psL7CYC6rnWBsUZlzs8oS2l2Al7bGIWxX3z4A=
-Received: by 10.220.183.4 with SMTP id ce4mr4893231vcb.132.1293742739256;
-        Thu, 30 Dec 2010 12:58:59 -0800 (PST)
-Received: from burratino (c-76-126-174-171.hsd1.ca.comcast.net [76.126.174.171])
-        by mx.google.com with ESMTPS id u4sm3440658vch.12.2010.12.30.12.58.54
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 30 Dec 2010 12:58:55 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <ord3ojb0yy.fsf@livre.localdomain>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755328Ab0L3VUl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Dec 2010 16:20:41 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:47626 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751131Ab0L3VUk (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Dec 2010 16:20:40 -0500
+Received: by wyb28 with SMTP id 28so11326094wyb.19
+        for <git@vger.kernel.org>; Thu, 30 Dec 2010 13:20:39 -0800 (PST)
+Received: by 10.227.168.79 with SMTP id t15mr9612058wby.200.1293744039502;
+        Thu, 30 Dec 2010 13:20:39 -0800 (PST)
+Received: from localhost.localdomain (85-168-197-251.rev.numericable.fr [85.168.197.251])
+        by mx.google.com with ESMTPS id m10sm11283348wbc.16.2010.12.30.13.20.38
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 30 Dec 2010 13:20:38 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.4.523.g72f0d.dirty
+In-Reply-To: <1293744031-17790-1-git-send-email-sylvain@abstraction.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164364>
 
-Alexandre Oliva wrote:
+added: sql, php5, phps, bash, zsh, ksh, mk, make
 
-> Now, it looks like I might be able to pull from upstream if I maintain
-> manually a graft file that named each upstream commit as an additional
-> parent of the corresponding local rebase commit that brought it into my
-> rewritten tree.  Workable, maybe, but this wouldn't help third parties
-> that used my public repository.
+Signed-off-by: Sylvain Rabot <sylvain@abstraction.fr>
+---
+ gitweb/gitweb.perl |    7 ++++---
+ 1 files changed, 4 insertions(+), 3 deletions(-)
 
-Have you looked into "git replace"?
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 4779618..ea984b9 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -250,13 +250,14 @@ our %highlight_ext = (
+ 	# main extensions, defining name of syntax;
+ 	# see files in /usr/share/highlight/langDefs/ directory
+ 	map { $_ => $_ }
+-		qw(py c cpp rb java css php sh pl js tex bib xml awk bat ini spec tcl),
++		qw(py c cpp rb java css php sh pl js tex bib xml awk bat ini spec tcl sql make),
+ 	# alternate extensions, see /etc/highlight/filetypes.conf
+ 	'h' => 'c',
++	map { $_ => 'sh'  } qw(bash zsh ksh),
+ 	map { $_ => 'cpp' } qw(cxx c++ cc),
+-	map { $_ => 'php' } qw(php3 php4),
++	map { $_ => 'php' } qw(php3 php4 php5 phps),
+ 	map { $_ => 'pl'  } qw(perl pm), # perhaps also 'cgi'
+-	'mak' => 'make',
++	map { $_ => 'make'} qw(mak mk),
+ 	map { $_ => 'xml' } qw(xhtml html htm),
+ );
+ 
+-- 
+1.7.3.4.523.g72f0d.dirty
