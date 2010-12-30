@@ -1,58 +1,103 @@
 From: Sylvain Rabot <sylvain@abstraction.fr>
-Subject: [PATCH 4/4] gitweb: add vim modeline header which describes gitweb coding rule
-Date: Thu, 30 Dec 2010 22:20:31 +0100
-Message-ID: <1293744031-17790-5-git-send-email-sylvain@abstraction.fr>
+Subject: [PATCH 3/4] gitweb: add css class to remote url titles
+Date: Thu, 30 Dec 2010 22:20:30 +0100
+Message-ID: <1293744031-17790-4-git-send-email-sylvain@abstraction.fr>
 References: <1293744031-17790-1-git-send-email-sylvain@abstraction.fr>
 Cc: Sylvain Rabot <sylvain@abstraction.fr>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 30 22:21:04 2010
+X-From: git-owner@vger.kernel.org Thu Dec 30 22:21:05 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PYPvk-00089D-0M
+	id 1PYPvk-00089D-I8
 	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 22:21:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755372Ab0L3VUq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1755370Ab0L3VUq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
 	Thu, 30 Dec 2010 16:20:46 -0500
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:44214 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751131Ab0L3VUq (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Dec 2010 16:20:46 -0500
-Received: by wwi17 with SMTP id 17so11674794wwi.1
-        for <git@vger.kernel.org>; Thu, 30 Dec 2010 13:20:44 -0800 (PST)
-Received: by 10.227.72.198 with SMTP id n6mr5095441wbj.91.1293744044695;
-        Thu, 30 Dec 2010 13:20:44 -0800 (PST)
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:55433 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755329Ab0L3VUn (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Dec 2010 16:20:43 -0500
+Received: by mail-ww0-f44.google.com with SMTP id 36so11945274wwa.1
+        for <git@vger.kernel.org>; Thu, 30 Dec 2010 13:20:42 -0800 (PST)
+Received: by 10.227.136.146 with SMTP id r18mr9614123wbt.46.1293744042576;
+        Thu, 30 Dec 2010 13:20:42 -0800 (PST)
 Received: from localhost.localdomain (85-168-197-251.rev.numericable.fr [85.168.197.251])
-        by mx.google.com with ESMTPS id m10sm11283348wbc.16.2010.12.30.13.20.42
+        by mx.google.com with ESMTPS id m10sm11283348wbc.16.2010.12.30.13.20.41
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 30 Dec 2010 13:20:43 -0800 (PST)
+        Thu, 30 Dec 2010 13:20:41 -0800 (PST)
 X-Mailer: git-send-email 1.7.3.4.523.g72f0d.dirty
 In-Reply-To: <1293744031-17790-1-git-send-email-sylvain@abstraction.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164367>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164368>
 
-It is useful for people who have their modeline compliant editor(s)
-configured to replace tabs by spaces by default.
+add a new optional parameter to format_repo_url
+routine used to add a css class to the url title cell.
 
 Signed-off-by: Sylvain Rabot <sylvain@abstraction.fr>
 ---
- gitweb/gitweb.perl |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
+ gitweb/gitweb.perl       |   17 +++++++++++------
+ gitweb/static/gitweb.css |    5 +++++
+ 2 files changed, 16 insertions(+), 6 deletions(-)
 
 diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index 350f8b8..cfe86b4 100755
+index eae75ac..350f8b8 100755
 --- a/gitweb/gitweb.perl
 +++ b/gitweb/gitweb.perl
-@@ -1,4 +1,5 @@
- #!/usr/bin/perl
-+# vim: syntax=perl tabstop=4 noexpandtab:
+@@ -3881,8 +3881,13 @@ sub git_print_header_div {
+ }
  
- # gitweb - simple web interface to track changes in git repositories
- #
+ sub format_repo_url {
+-	my ($name, $url) = @_;
+-	return "<tr class=\"metadata_url\"><td>$name</td><td>$url</td></tr>\n";
++	my ($name, $url, $class) = @_;
++
++	if (defined $class) {
++		return "<tr class=\"metadata_url\"><td class=\"$class\">$name</td><td>$url</td></tr>\n";
++	} else {
++		return "<tr class=\"metadata_url\"><td>$name</td><td>$url</td></tr>\n";
++	}
+ }
+ 
+ # Group output by placing it in a DIV element and adding a header.
+@@ -5146,13 +5151,13 @@ sub git_remote_block {
+ 
+ 	if (defined $fetch) {
+ 		if ($fetch eq $push) {
+-			$urls_table .= format_repo_url("URL", $fetch);
++			$urls_table .= format_repo_url("URL", $fetch, 'metadata_remote_fetch_url');
+ 		} else {
+-			$urls_table .= format_repo_url("Fetch URL", $fetch);
+-			$urls_table .= format_repo_url("Push URL", $push) if defined $push;
++			$urls_table .= format_repo_url("Fetch URL", $fetch, 'metadata_remote_fetch_url');
++			$urls_table .= format_repo_url("Push URL", $push, 'metadata_remote_push_url') if defined $push;
+ 		}
+ 	} elsif (defined $push) {
+-		$urls_table .= format_repo_url("Push URL", $push);
++		$urls_table .= format_repo_url("Push URL", $push, 'metadata_remote_push_url');
+ 	} else {
+ 		$urls_table .= format_repo_url("", "No remote URL");
+ 	}
+diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
+index 79d7eeb..631b20d 100644
+--- a/gitweb/static/gitweb.css
++++ b/gitweb/static/gitweb.css
+@@ -579,6 +579,11 @@ div.remote {
+ 	display: inline-block;
+ }
+ 
++.metadata_remote_fetch_url,
++.metadata_remote_push_url {
++	font-weight: bold;
++}
++
+ /* Style definition generated by highlight 2.4.5, http://www.andre-simon.de/ */
+ 
+ /* Highlighting theme definition: */
 -- 
 1.7.3.4.523.g72f0d.dirty
