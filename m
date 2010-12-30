@@ -1,62 +1,123 @@
-From: Yann Dirson <ydirson@free.fr>
-Subject: Re: [PATCH 1/6] Introduce sorted-array binary-search function.
-Date: Thu, 30 Dec 2010 11:49:08 +0100
-Message-ID: <20101230104908.GB3296@home.lan>
-References: <1291848695-24601-1-git-send-email-ydirson@altern.org>
- <1291848695-24601-2-git-send-email-ydirson@altern.org>
- <7vwrnhb6tm.fsf@alter.siamese.dyndns.org>
- <20101230004027.GB6639@home.lan>
- <AANLkTimkemRW1H7XvwbECWUHHWVpGnvKukn06DiQO9Ce@mail.gmail.com>
+From: Zenaan Harkness <zen@freedbms.net>
+Subject: custom diff - text file diary entries
+Date: Thu, 30 Dec 2010 22:33:07 +1100
+Message-ID: <AANLkTimPTYEWr0qQwYM4jmJSLcrLRt27GC0nTVgVzHK2@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Erik Faye-Lund <kusmabite@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 30 11:49:39 2010
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 30 12:33:46 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PYG4c-0003yP-N8
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 11:49:35 +0100
+	id 1PYGlM-0002wy-9o
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 12:33:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754089Ab0L3KtS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Dec 2010 05:49:18 -0500
-Received: from smtp5-g21.free.fr ([212.27.42.5]:53885 "EHLO smtp5-g21.free.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753430Ab0L3KtQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Dec 2010 05:49:16 -0500
-Received: from home.lan (unknown [81.57.214.146])
-	by smtp5-g21.free.fr (Postfix) with ESMTP id 63166D480EC;
-	Thu, 30 Dec 2010 11:49:09 +0100 (CET)
-Received: from yann by home.lan with local (Exim 4.72)
-	(envelope-from <ydirson@free.fr>)
-	id 1PYG4C-00034o-70; Thu, 30 Dec 2010 11:49:08 +0100
-Content-Disposition: inline
-In-Reply-To: <AANLkTimkemRW1H7XvwbECWUHHWVpGnvKukn06DiQO9Ce@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752616Ab0L3Ldj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Dec 2010 06:33:39 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:33427 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751933Ab0L3Ldi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Dec 2010 06:33:38 -0500
+Received: by bwz15 with SMTP id 15so11639021bwz.19
+        for <git@vger.kernel.org>; Thu, 30 Dec 2010 03:33:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:sender:received:from:date
+         :x-google-sender-auth:message-id:subject:to:content-type;
+        bh=pkvjLiuYvBpbVtl2IXpLr8StMEuIG+3Mg00ARSNDVAg=;
+        b=GRLWU3kSFXUkabdhc+qS0DNPoAv+NAgr+qh10+c4EeOpCyc5OtGuf1wDYCTFgZAd5J
+         YvY1G5Xs2Xw6dHiZtnXYfLAJS+FR2Jzb9+PiNliWcvcVUT4st2Kh7zPqAzinoc0mxOUs
+         31Ge2wD8vWgJmqqDrwsH4728Bdf1ydO9TnraI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type;
+        b=VpM6APWSG+moPdqiUFLfLL9b86HPsOs2ptjNL05YxDL00SpzHBX5Vu3XLcKiPqeKKg
+         VJylQZZADnKvaCEZsEZ274ZPtKlF00rgr3pxmOR3ojL/WT4HIHbzbVZff922v+CZhje9
+         e7SynUMDu9mEuuyAQ9F+hTJ6n7FJmJpU51v2M=
+Received: by 10.204.76.145 with SMTP id c17mr197468bkk.52.1293708817284; Thu,
+ 30 Dec 2010 03:33:37 -0800 (PST)
+Received: by 10.204.112.210 with HTTP; Thu, 30 Dec 2010 03:33:07 -0800 (PST)
+X-Google-Sender-Auth: vtqh1UjnZDGkbOUs55oVMTvY3ZQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164354>
 
-On Thu, Dec 30, 2010 at 02:06:28AM +0100, Erik Faye-Lund wrote:
-> On Thu, Dec 30, 2010 at 1:40 AM, Yann Dirson <ydirson@free.fr> wrote:
-> > On Fri, Dec 10, 2010 at 02:29:09PM -0800, Junio C Hamano wrote:
-> >> In addition, these macros in this patch are almost unreadable, but=
- that
-> >> probably is mostly a fault of C's macro, not yours.
-> >
-> > Yes. =A0When writing those I sorely missed the readability of C++
-> > templates - yuck :)
->=20
-> Unfortunately, it's something that ends up subtracting from the value
-> of the change; a couple of duplicate functions is often easier to
-> maintain than nasty macros.
+Problem:
+Separate text file diary entries, committed in separate repos,
+cause merge clash when pushed to central repo,
+since git thinks the two entries are a single conflicting entry
+(since they begin at the same location in the same file).
 
-Well, I don't find this one much less readable than, say, vcs-svn/trp.h
+What we need is two diary entries automatically detected and inserted
+into the one file, one above the other (ordering is not so important).
 
-At least the declare_gen_* ones are quite readable.  Maybe making the
-macro names shorter would help clarify the convenience wrappers ?
+
+Detail:
+I have a repo of diary text files;
+each diary entry is separated by three blank lines
+and has an asterisked + dated header, and a body.
+Here is an example diary file contents:
+----
+*20101230 by sarah, @~3:00pm
+Phoned James and asked why he took so long shopping.
+He said he had planned a one day trip, but got lost in Bunnings.
+I told him 'yeah sure, like I believe that'. I asked him what he got.
+
+This is the list he told me:
+ - pliers
+ - hammer
+ - nails
+
+
+
+*20101229 by james
+Today I went shopping.
+Bought some eggs.
+----
+
+Each new diary entry gets added in the appropriate diary file
+in reverse chronological order.
+
+james, sarah and others each share a few diary files
+(different diaries have different purposes).
+
+The problem is:
+james and sarah, each in their own clone of the central repo;
+they each add a new diary entry to the same file, then commit, then push;
+
+the second person to push will fail,
+since each new diary entry occurs in the same location, the top of the file;
+this requires a pull: result is git gives me the following (james pushed 2nd)
+extract:
+
+<<<<<<< HEAD
+*20101231 by james
+I took a day off today.
+Didn't do much at all.
+=======
+*20101231 by sarah
+James told me this morning he was taking a day off,
+so bugger it, I decided to take a day off too.
+
+I switched on the answering machine.
+>>>>>>> a55d55a7a074bed5dbc24416f20a1d9391f2bb40
+
+
+Desired outcome:
+Two new diary entries - two separate insertions into the text file,
+not the conflict.
+
+Is there an easy way I can automate this diary entry merging, so my
+users don't have to manually resolve the conflict?
+
+Please note: SOMETIMES, one user will go and correct spelling and/ or
+grammar fixes in another person's diary entry, or in their own older
+diary entry - this is quite common.
+
+TIA
+Zen
