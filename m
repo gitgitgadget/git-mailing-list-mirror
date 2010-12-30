@@ -1,72 +1,67 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [PATCH 1/6] Introduce sorted-array binary-search function.
-Date: Thu, 30 Dec 2010 02:06:28 +0100
-Message-ID: <AANLkTimkemRW1H7XvwbECWUHHWVpGnvKukn06DiQO9Ce@mail.gmail.com>
-References: <1291848695-24601-1-git-send-email-ydirson@altern.org>
- <1291848695-24601-2-git-send-email-ydirson@altern.org> <7vwrnhb6tm.fsf@alter.siamese.dyndns.org>
- <20101230004027.GB6639@home.lan>
-Reply-To: kusmabite@gmail.com
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] Use a temporary index for interactive git-commit
+Date: Wed, 29 Dec 2010 20:51:26 -0600
+Message-ID: <20101230025126.GA1868@burratino>
+References: <1293670038-8606-1-git-send-email-conrad.irwin@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Yann Dirson <ydirson@free.fr>
-X-From: git-owner@vger.kernel.org Thu Dec 30 02:07:03 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+To: Conrad Irwin <conrad.irwin@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 30 03:51:41 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PY6ys-0004O4-3X
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 02:07:02 +0100
+	id 1PY8c8-0002Ap-AU
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 03:51:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754672Ab0L3BGu convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 29 Dec 2010 20:06:50 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:37948 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754529Ab0L3BGt convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 29 Dec 2010 20:06:49 -0500
-Received: by fxm20 with SMTP id 20so10880300fxm.19
-        for <git@vger.kernel.org>; Wed, 29 Dec 2010 17:06:48 -0800 (PST)
+	id S1754821Ab0L3Cvf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 29 Dec 2010 21:51:35 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:37183 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754798Ab0L3Cvf (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 29 Dec 2010 21:51:35 -0500
+Received: by vws16 with SMTP id 16so4340182vws.19
+        for <git@vger.kernel.org>; Wed, 29 Dec 2010 18:51:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=XlTdtICWlltS+0a7gjRWucWiEN7fXqtsfcObAZqSGYE=;
-        b=u/M80sVjqDnKVnkwDW2mKNIt64tKCImWcOvKgf3DiDM3qIDTqpPA3l6rahqPXzgQW6
-         0cFbavgR3M5H5zdrRVcb0Alwao0kqditD3RBOZXWrpD/UIzk+zbhs8zvstgQEMx/4tVj
-         SuXyn8RsjBrV+feB7TZ37jxE6rXMQcITX9WVo=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=obc0xiiT0dHPzncfnphZOYqLcvofOgVgL22NJlQzx9Q=;
+        b=WB4RjXvcmL1pdCNLHcuyULeGJah1DroZdJQAEzRbvPov3yBdXEZ2ZIqg1P7nrCVUr3
+         qeMMZvwjR8YdVfffqBUilSaEfSaRnDgJR6lNvNnNH1p9mt3vf0LV79xKCofPE5o5Xipb
+         LiqSKiAH+OfcPSsssNHKlQkhUSNhVbv3HGWrg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=mJG4d/9jsncpBNFYzF97dKYIqBhuXo8HOjBay/RjsF8SkRkoFah2j/kL9M/OlPwiVX
-         o6X9Dj0CrQuTtsiG6EjZPuKXUZfL9z7AGEVO+pGnTZDtia9N58eWg4nm4Glk4EBzTT1U
-         DFKhekVq2/N3tQPA17cc0WbGsSPCMDn7gKJ+g=
-Received: by 10.223.86.193 with SMTP id t1mr906968fal.147.1293671208539; Wed,
- 29 Dec 2010 17:06:48 -0800 (PST)
-Received: by 10.223.79.3 with HTTP; Wed, 29 Dec 2010 17:06:28 -0800 (PST)
-In-Reply-To: <20101230004027.GB6639@home.lan>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=kcKRmPP2tk+E/l6YHR8on3m1KqGdQlzlWkG/afwrWTskXDd7Wqoq1bCDLaYkffVCem
+         pmxAD0VcqB1bs5FzWxczblWOKGG9jSk2gJWCk6oS1ZyglDGxGHgDmQMoHCGqIg1XuD1l
+         U9a5jhEy5RqGPjkNxSfB8HP39qezJYpXuZAw4=
+Received: by 10.220.94.149 with SMTP id z21mr4637376vcm.153.1293677494237;
+        Wed, 29 Dec 2010 18:51:34 -0800 (PST)
+Received: from burratino (c-76-126-174-171.hsd1.ca.comcast.net [76.126.174.171])
+        by mx.google.com with ESMTPS id y15sm2750580vch.29.2010.12.29.18.51.31
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 29 Dec 2010 18:51:33 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1293670038-8606-1-git-send-email-conrad.irwin@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164345>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164346>
 
-On Thu, Dec 30, 2010 at 1:40 AM, Yann Dirson <ydirson@free.fr> wrote:
-> On Fri, Dec 10, 2010 at 02:29:09PM -0800, Junio C Hamano wrote:
->> In addition, these macros in this patch are almost unreadable, but t=
-hat
->> probably is mostly a fault of C's macro, not yours.
->
-> Yes. =A0When writing those I sorely missed the readability of C++
-> templates - yuck :)
+Conrad Irwin wrote:
 
-Unfortunately, it's something that ends up subtracting from the value
-of the change; a couple of duplicate functions is often easier to
-maintain than nasty macros.
+> I'm not sure that adding parameters to functions willy-nilly is the best
+> way of doing this. Can anyone suggest a cleaner mechanism?
 
-Perhaps the pre-processor is not the right tool for the job? Some
-times a generator (a perl script?) can be more readable.
-Unfortunately, some times it's not :P
+Would a simple
+
+	setenv(INDEX_ENVIRONMENT, index_file);
+
+in the caller make sense?
