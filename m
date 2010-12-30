@@ -1,155 +1,67 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: [PATCH] lib-git-svn.sh: Move web-server handling code into separate
- function
-Date: Thu, 30 Dec 2010 19:44:48 +0000
-Message-ID: <4D1CE130.9000006@ramsay1.demon.co.uk>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: rebase parents, or tracking upstream but removing
+ non-distributable bits
+Date: Thu, 30 Dec 2010 14:58:47 -0600
+Message-ID: <20101230205847.GA29012@burratino>
+References: <ord3ojb0yy.fsf@livre.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: GIT Mailing-list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Dec 30 20:47:16 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Alexandre Oliva <lxoliva@fsfla.org>
+X-From: git-owner@vger.kernel.org Thu Dec 30 21:59:11 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PYOSx-0006Bn-39
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 20:47:15 +0100
+	id 1PYPaW-0005Zz-Ft
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 21:59:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755262Ab0L3TrI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Dec 2010 14:47:08 -0500
-Received: from lon1-post-2.mail.demon.net ([195.173.77.149]:59102 "EHLO
-	lon1-post-2.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755041Ab0L3TrG (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 30 Dec 2010 14:47:06 -0500
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-2.mail.demon.net with esmtp (Exim 4.69)
-	id 1PYOSm-0005Cc-cT; Thu, 30 Dec 2010 19:47:05 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+	id S1755336Ab0L3U7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Dec 2010 15:59:00 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:56515 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755329Ab0L3U7A (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Dec 2010 15:59:00 -0500
+Received: by vws16 with SMTP id 16so4545174vws.19
+        for <git@vger.kernel.org>; Thu, 30 Dec 2010 12:58:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=PhJp9pZDCAXll38akxowU0u8j8SUQ8dkJ4BN4ozxxd0=;
+        b=eRcPNTx3UUzfDMgskx8NpvY4Awn/ihcEw/cmofO9JOPbrbWVFfX3AeqGAlB1Ge7fCe
+         tmbyc87/E1YLSfuWbJj8C1a2LIWkbqsA17ABcZ2AaxSnkl0p/DvZgdZY4H7WR8KCW8+U
+         w84YyHiCdkHOIpvgIJp21MYh3/y58gTq/8JtQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ASjCzjrKYJh0Ko6m7bWi8JLS++H0fUmZGxgkRBuv5V2qY3FWISkdPUl7Sz2kSYGNM8
+         vf2597c+7lIkTrZ8yTyutGrNRHEcvPq2N//wAacj9e9SnRKe2Q7dAdRA9aTnoEvWG4Ce
+         psL7CYC6rnWBsUZlzs8oS2l2Al7bGIWxX3z4A=
+Received: by 10.220.183.4 with SMTP id ce4mr4893231vcb.132.1293742739256;
+        Thu, 30 Dec 2010 12:58:59 -0800 (PST)
+Received: from burratino (c-76-126-174-171.hsd1.ca.comcast.net [76.126.174.171])
+        by mx.google.com with ESMTPS id u4sm3440658vch.12.2010.12.30.12.58.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 30 Dec 2010 12:58:55 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <ord3ojb0yy.fsf@livre.localdomain>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164362>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164363>
 
+Alexandre Oliva wrote:
 
-This library file is currently sourced by 57 test files, of which
-only four may (optionally) start a web-server in order to access
-the svn repo via an http url, rather than a file url.
+> Now, it looks like I might be able to pull from upstream if I maintain
+> manually a graft file that named each upstream commit as an additional
+> parent of the corresponding local rebase commit that brought it into my
+> rewritten tree.  Workable, maybe, but this wouldn't help third parties
+> that used my public repository.
 
-In addition to isolating the current web-server handling code from
-the majority of tests, in a new prepare_httpd function, we also
-add some more error checking and reporting code to validate the
-apache installation. Only those tests which attempt to start the
-web-server, by calling start_httpd, will execute this code.
-
-Note that it is important for start_httpd to return an error
-indication, if prepare_httpd fails, so that the failure to use
-the web-server, as requested by the user, should not go unnoticed.
-(Unless the svnrepo variable is set to an http url at the end of
-start_httpd, the remaining tests will use file urls, without
-comment.)
-
-Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
----
-
-Hi Junio,
-
-I just noticed that you have already included the "lib-git-svn.sh:
-Add check for mis-configured web server variables" patch (from the
-rj/maint-test-fixes branch) into the master branch. This was still
-in pu last time I looked! (And so the fix-up patch in my last e-mail
-is no longer useful - sorry about that)
-
-This patch is on top of master (as of a couple of days ago: 73e7b2e)
-and addresses the fault with the above patch.
-
-ATB,
-Ramsay Jones
-
- t/lib-git-svn.sh |   38 +++++++++++++++++++++-----------------
- 1 files changed, 21 insertions(+), 17 deletions(-)
-
-diff --git a/t/lib-git-svn.sh b/t/lib-git-svn.sh
-index 6a9d975..199f22c 100644
---- a/t/lib-git-svn.sh
-+++ b/t/lib-git-svn.sh
-@@ -68,8 +68,7 @@ svn_cmd () {
- 	svn "$orig_svncmd" --config-dir "$svnconf" "$@"
- }
- 
--if test -n "$SVN_HTTPD_PORT"
--then
-+prepare_httpd () {
- 	for d in \
- 		"$SVN_HTTPD_PATH" \
- 		/usr/sbin/apache2 \
-@@ -83,8 +82,8 @@ then
- 	done
- 	if test -z "$SVN_HTTPD_PATH"
- 	then
--		skip_all='skipping git svn tests, Apache not found'
--		test_done
-+		echo >&2 '*** error: Apache not found'
-+		return 1
- 	fi
- 	for d in \
- 		"$SVN_HTTPD_MODULE_PATH" \
-@@ -99,23 +98,16 @@ then
- 	done
- 	if test -z "$SVN_HTTPD_MODULE_PATH"
- 	then
--		skip_all='skipping git svn tests, Apache module dir not found'
--		test_done
--	fi
--fi
--
--start_httpd () {
--	repo_base_path="$1"
--	if test -z "$SVN_HTTPD_PORT"
--	then
--		echo >&2 'SVN_HTTPD_PORT is not defined!'
--		return
-+		echo >&2 '*** error: Apache module dir not found'
-+		return 1
- 	fi
--	if test -z "$repo_base_path"
-+	if test ! -f "$SVN_HTTPD_MODULE_PATH/mod_dav_svn.so"
- 	then
--		repo_base_path=svn
-+		echo >&2 '*** error: Apache module "mod_dav_svn" not found'
-+		return 1
- 	fi
- 
-+	repo_base_path="${1-svn}"
- 	mkdir "$GIT_DIR"/logs
- 
- 	cat > "$GIT_DIR/httpd.conf" <<EOF
-@@ -132,12 +124,24 @@ LoadModule dav_svn_module $SVN_HTTPD_MODULE_PATH/mod_dav_svn.so
- 	SVNPath "$rawsvnrepo"
- </Location>
- EOF
-+}
-+
-+start_httpd () {
-+	if test -z "$SVN_HTTPD_PORT"
-+	then
-+		echo >&2 'SVN_HTTPD_PORT is not defined!'
-+		return
-+	fi
-+
-+	prepare_httpd "$1" || return 1
-+
- 	"$SVN_HTTPD_PATH" -f "$GIT_DIR"/httpd.conf -k start
- 	svnrepo="http://127.0.0.1:$SVN_HTTPD_PORT/$repo_base_path"
- }
- 
- stop_httpd () {
- 	test -z "$SVN_HTTPD_PORT" && return
-+	test ! -f "$GIT_DIR/httpd.conf" && return
- 	"$SVN_HTTPD_PATH" -f "$GIT_DIR"/httpd.conf -k stop
- }
- 
--- 
-1.7.3
+Have you looked into "git replace"?
