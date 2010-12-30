@@ -1,61 +1,66 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] Use a temporary index for interactive git-commit
-Date: Wed, 29 Dec 2010 23:33:55 -0500
-Message-ID: <20101230043355.GA24555@sigill.intra.peff.net>
-References: <1293670038-8606-1-git-send-email-conrad.irwin@gmail.com>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: Rebasing multiple branches
+Date: Thu, 30 Dec 2010 06:35:31 +0100
+Message-ID: <20101230053530.GA10511@nibiru.local>
+References: <4D10AE5B.2080700@gmail.com> <4D10B44D.5090309@viscovery.net> <20101222143654.GA4829@nibiru.local> <4D121136.6050906@gmail.com>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-To: Conrad Irwin <conrad.irwin@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Dec 30 05:34:05 2010
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Dec 30 06:42:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PYADC-00028i-NN
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 05:34:03 +0100
+	id 1PYBHC-0001Qn-QC
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 06:42:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752108Ab0L3Ed6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 29 Dec 2010 23:33:58 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:41870 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751669Ab0L3Ed5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 29 Dec 2010 23:33:57 -0500
-Received: (qmail 9954 invoked by uid 111); 30 Dec 2010 04:33:56 -0000
-Received: from pool-74-108-55-63.nycmny.fios.verizon.net (HELO sigill.intra.peff.net) (74.108.55.63)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 30 Dec 2010 04:33:56 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 29 Dec 2010 23:33:55 -0500
+	id S1751247Ab0L3FlZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Dec 2010 00:41:25 -0500
+Received: from caprica.metux.de ([82.165.128.25]:48049 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750728Ab0L3FlY (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Dec 2010 00:41:24 -0500
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id oBU5b1fJ029894
+	for <git@vger.kernel.org>; Thu, 30 Dec 2010 06:37:02 +0100
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id oBU5aUEj029878
+	for git@vger.kernel.org; Thu, 30 Dec 2010 06:36:30 +0100
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id oBU5ZVfs010960
+	for git@vger.kernel.org; Thu, 30 Dec 2010 06:35:31 +0100
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <1293670038-8606-1-git-send-email-conrad.irwin@gmail.com>
+In-Reply-To: <4D121136.6050906@gmail.com>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164349>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164350>
 
-On Thu, Dec 30, 2010 at 12:47:18AM +0000, Conrad Irwin wrote:
+* Leonid Podolny <leonidp.lists@gmail.com> wrote:
 
-> Hitherto even an aborted git commit -p or git commit --interactive has
-> added the selected changes to the index.
+> Ah, nice. I didn't notice the -p option. However, the man page advises 
+> against using -p and -i together.
 
-Hmm. I see how it could be confusing if you do ^C in "git commit -p" and
-it actually commits what you had staged. But if I am reading the patch
-right here:
+Last time I checked, -i required -p ...
 
-> --- a/builtin/add.c
-> +++ b/builtin/add.c
-> @@ -378,7 +386,7 @@ int cmd_add(int argc, const char **argv, const char *prefix)
->  	if (patch_interactive)
->  		add_interactive = 1;
->  	if (add_interactive)
-> -		exit(interactive_add(argc - 1, argv + 1, prefix, patch_interactive));
-> +		exit(interactive_add(argc - 1, argv + 1, prefix, patch_interactive, NULL));
->  
 
-this behavior will not apply to "git add -p". So doesn't that introduce
-a new confusing inconsistency, that ^C from "git commit -p" abandons
-changes entirely, but from "git add -p" will silently stage changes?
+cu
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
 
--Peff
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
