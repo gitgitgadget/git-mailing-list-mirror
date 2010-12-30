@@ -1,99 +1,62 @@
-From: David Borowitz <dave@bwitz.com>
-Subject: HTTP push not respecting .netrc
-Date: Wed, 29 Dec 2010 22:56:28 -0800
-Message-ID: <AANLkTik84-zRwi+0dGGFoTUrj6Zr3bxO=fE9P_3MuZdZ@mail.gmail.com>
+From: Yann Dirson <ydirson@free.fr>
+Subject: Re: [PATCH 1/6] Introduce sorted-array binary-search function.
+Date: Thu, 30 Dec 2010 11:49:08 +0100
+Message-ID: <20101230104908.GB3296@home.lan>
+References: <1291848695-24601-1-git-send-email-ydirson@altern.org>
+ <1291848695-24601-2-git-send-email-ydirson@altern.org>
+ <7vwrnhb6tm.fsf@alter.siamese.dyndns.org>
+ <20101230004027.GB6639@home.lan>
+ <AANLkTimkemRW1H7XvwbECWUHHWVpGnvKukn06DiQO9Ce@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 30 07:58:25 2010
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Dec 30 11:49:39 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PYCSu-0002Kp-9v
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 07:58:24 +0100
+	id 1PYG4c-0003yP-N8
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 11:49:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751206Ab0L3G4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Dec 2010 01:56:50 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:46604 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751452Ab0L3G4t (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Dec 2010 01:56:49 -0500
-Received: by wyb28 with SMTP id 28so10737491wyb.19
-        for <git@vger.kernel.org>; Wed, 29 Dec 2010 22:56:48 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received:from:date
-         :x-google-sender-auth:message-id:subject:to:content-type;
-        bh=0RUWvV/SvtAj6PZqUHdEaoaqdJXeIqcsnF9TD28FMGk=;
-        b=L6qtNc179UGAc4ah6sni1OpjDxdQK9iFjCaFpytnRsmuvW0E5K+hTS4/XSUpAOxR3N
-         dARP0ALe3BAdZpaNCvpHVcDok8l0KlULR/H3/WOsF4ftPwnrqktt3HReI4ZPZmL8Wzug
-         xJm7vsePJfCH186hu2Vq9GTEkYZL7nSUzVIWI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:from:date:x-google-sender-auth:message-id
-         :subject:to:content-type;
-        b=uQPB3mNZ0/tVl39FfkTrsci8MUX5TCFJg95DIKdSX+ssr5N8IWctRi7f7Aj+R0mtI2
-         GaGc2Spoqsp9zHiRRM2KpLNStl+5JjffFGAB1UPoSbud3ePEhPxdjOr+D3qIMCG97gQ1
-         WeqsxcN7KpKtKxKICm30SXeJaFn5jDdlzYP1Y=
-Received: by 10.216.18.204 with SMTP id l54mr5975094wel.99.1293692208576; Wed,
- 29 Dec 2010 22:56:48 -0800 (PST)
-Received: by 10.216.189.31 with HTTP; Wed, 29 Dec 2010 22:56:28 -0800 (PST)
-X-Google-Sender-Auth: pEgZwzBqrr3B2R0fUkd7IV7nCto
+	id S1754089Ab0L3KtS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Dec 2010 05:49:18 -0500
+Received: from smtp5-g21.free.fr ([212.27.42.5]:53885 "EHLO smtp5-g21.free.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753430Ab0L3KtQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Dec 2010 05:49:16 -0500
+Received: from home.lan (unknown [81.57.214.146])
+	by smtp5-g21.free.fr (Postfix) with ESMTP id 63166D480EC;
+	Thu, 30 Dec 2010 11:49:09 +0100 (CET)
+Received: from yann by home.lan with local (Exim 4.72)
+	(envelope-from <ydirson@free.fr>)
+	id 1PYG4C-00034o-70; Thu, 30 Dec 2010 11:49:08 +0100
+Content-Disposition: inline
+In-Reply-To: <AANLkTimkemRW1H7XvwbECWUHHWVpGnvKukn06DiQO9Ce@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164353>
 
-Hi all,
+On Thu, Dec 30, 2010 at 02:06:28AM +0100, Erik Faye-Lund wrote:
+> On Thu, Dec 30, 2010 at 1:40 AM, Yann Dirson <ydirson@free.fr> wrote:
+> > On Fri, Dec 10, 2010 at 02:29:09PM -0800, Junio C Hamano wrote:
+> >> In addition, these macros in this patch are almost unreadable, but=
+ that
+> >> probably is mostly a fault of C's macro, not yours.
+> >
+> > Yes. =A0When writing those I sorely missed the readability of C++
+> > templates - yuck :)
+>=20
+> Unfortunately, it's something that ends up subtracting from the value
+> of the change; a couple of duplicate functions is often easier to
+> maintain than nasty macros.
 
-I'm trying to push to a smart HTTP remote using the following command line:
-http_proxy=localhost:4242 git push -v http://xxxxx:25989/git/foo
-+refs/heads/*:refs/heads/*
-(The weird proxy and port are not under my control.)
+Well, I don't find this one much less readable than, say, vcs-svn/trp.h
 
-The webserver should return 401 for unauthorized access, and indeed it does:
-error: RPC failed; result=65, HTTP code = 401
-(The rest of the error text from git push is not particularly useful,
-but I'm not worried about that at the moment.)
-
-Making a request manually with curl --netrc shows that the auth header
-is being sent[1]. But sniffing the HTTP traffic from git shows that
-the auth header is not sent[2].
-
-I also tried various other things like aliasing xxxxx to 127.0.0.1 and
-removing the proxy and port number, and specifying user@xxxxx in the
-URL, and nothing I've done makes git send the necessary auth header.
-(In the last case it does prompt for a password.)
-
-Anyone have any other ideas? I could swear this was working a few
-weeks ago, so I must be missing something simple.
-
-[1]
-$ http_proxy=localhost:4242 curl -vvn
-http://xxxxx:25989/git/foo/info/refs?service=git-receive-pack
-* About to connect() to proxy localhost port 4242 (#0)
-*   Trying ::1... Connection refused
-*   Trying 127.0.0.1... connected
-* Connected to localhost (127.0.0.1) port 4242 (#0)
-* Server auth using Basic with user 'yyyyy'         <----
-> GET http://xxxxx:25989/git/foo/info/refs?service=git-receive-pack HTTP/1.1
-> Authorization: Basic zzzzzzzz          <----
-> User-Agent: curl/7.19.7 (x86_64-pc-linux-gnu) libcurl/7.19.7 OpenSSL/0.9.8k zlib/1.2.3.3 libidn/1.15
-> Host: xxxxx:25989
-> Accept: */*
-> Proxy-Connection: Keep-Alive
->
-< HTTP/1.1 200 OK
-...
-
-
-[2]
-GET http://xxxxx:25989/git/foo/info/refs?service=git-receive-pack HTTP/1.1
-User-Agent: git/1.7.4.rc0
-Host: xxxxx:25989
-Accept: */*
-Proxy-Connection: Keep-Alive
-Pragma: no-cache
+At least the declare_gen_* ones are quite readable.  Maybe making the
+macro names shorter would help clarify the convenience wrappers ?
