@@ -1,103 +1,104 @@
-From: Sylvain Rabot <sylvain@abstraction.fr>
-Subject: [PATCH 3/4] gitweb: add css class to remote url titles
-Date: Thu, 30 Dec 2010 22:20:30 +0100
-Message-ID: <1293744031-17790-4-git-send-email-sylvain@abstraction.fr>
-References: <1293744031-17790-1-git-send-email-sylvain@abstraction.fr>
-Cc: Sylvain Rabot <sylvain@abstraction.fr>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Dec 30 22:21:05 2010
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH] msvc: Fix compilation error due to missing mktemp() declaration
+Date: Thu, 30 Dec 2010 22:47:04 +0100
+Message-ID: <AANLkTinAAGWeFDomo-NQrVtrdf9ue1xVxufy+bkWz1Fc@mail.gmail.com>
+References: <4D139D91.8080503@ramsay1.demon.co.uk> <AANLkTineKS2e8PJs76PLZP4L4APwX2kAiFPg4pz3esae@mail.gmail.com>
+ <4D1CDE84.7090402@ramsay1.demon.co.uk>
+Reply-To: kusmabite@gmail.com
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>,
+	GIT Mailing-list <git@vger.kernel.org>
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Thu Dec 30 22:48:15 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PYPvk-00089D-I8
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 22:21:04 +0100
+	id 1PYQM2-00037p-Ez
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 22:48:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755370Ab0L3VUq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Dec 2010 16:20:46 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:55433 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755329Ab0L3VUn (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Dec 2010 16:20:43 -0500
-Received: by mail-ww0-f44.google.com with SMTP id 36so11945274wwa.1
-        for <git@vger.kernel.org>; Thu, 30 Dec 2010 13:20:42 -0800 (PST)
-Received: by 10.227.136.146 with SMTP id r18mr9614123wbt.46.1293744042576;
-        Thu, 30 Dec 2010 13:20:42 -0800 (PST)
-Received: from localhost.localdomain (85-168-197-251.rev.numericable.fr [85.168.197.251])
-        by mx.google.com with ESMTPS id m10sm11283348wbc.16.2010.12.30.13.20.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 30 Dec 2010 13:20:41 -0800 (PST)
-X-Mailer: git-send-email 1.7.3.4.523.g72f0d.dirty
-In-Reply-To: <1293744031-17790-1-git-send-email-sylvain@abstraction.fr>
+	id S1755297Ab0L3Vr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 30 Dec 2010 16:47:26 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56023 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751342Ab0L3VrZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 30 Dec 2010 16:47:25 -0500
+Received: by fxm20 with SMTP id 20so11509380fxm.19
+        for <git@vger.kernel.org>; Thu, 30 Dec 2010 13:47:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type;
+        bh=EJ2PKmqtHa0kUrN1gth+TOT5n1cglxQp9tGB+oNaqV0=;
+        b=tDTt9ANGr6i7P+tjYMzxkAyIN0/Kn3dz7AB/poJrQOsbUxBUgHeUOkn7KQLfNnLM2S
+         ZMnFtd53KgPmYDfoYSgAbTPu9KC1O3T36D4VMgIVdDjBcJmv3/0iIeZ0N00Z+yaCe/c0
+         hJFhYwSv2VMhPAEZNIaSfi8XBTOpMvTRDDcQk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        b=uDNCMOrmoc/Mhk8/l7NnPF8uI1b5dKWMzatpEz17dUxlCwZYqEYfeuwhCDuodViCJS
+         lO2dzBTYLDWXizcyOMJj8qSZ/colZzghvxxbX/W0nvc9ZU44LqrFSagYmOphNKR+NpAu
+         q2aFxX2GH6Mhr+hKyCX6RVhDHA6ZJotCyZpUk=
+Received: by 10.223.86.193 with SMTP id t1mr1983765fal.147.1293745644491; Thu,
+ 30 Dec 2010 13:47:24 -0800 (PST)
+Received: by 10.223.79.3 with HTTP; Thu, 30 Dec 2010 13:47:04 -0800 (PST)
+In-Reply-To: <4D1CDE84.7090402@ramsay1.demon.co.uk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164368>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164369>
 
-add a new optional parameter to format_repo_url
-routine used to add a css class to the url title cell.
+On Thu, Dec 30, 2010 at 8:33 PM, Ramsay Jones
+<ramsay@ramsay1.demon.co.uk> wrote:
+> Erik Faye-Lund wrote:
+>> On Thu, Dec 23, 2010 at 8:05 PM, Ramsay Jones
+>> <ramsay@ramsay1.demon.co.uk> wrote:
+>>> Commit d1b6e6e (win32: use our own dirent.h, 2010-11-23) removed
+>>> the compat/vcbuild/include/dirent.h compatibility header file.
+>>> This file, among other things, included the <io.h> system header
+>>> file which provides the declaration of the mktemp() function.
+>>>
+>>> In order to fix the compilation error, we add an include directive
+>>> for <io.h> to the compat/vcbuild/include/unistd.h header. (The
+>>> MinGW build includes <io.h> from it's <unistd.h> header too.)
+>>>
+>>> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+>>> ---
+>>
+>> Thanks. But shouldn't this header be included in mingw.h (or perhaps
+>> msvc.h) because of _get_osfhandle and _commit?
+>
+> Er... no. ;-)
+>
+> All uses of _get_osfhandle() and _commit() on the msvc build (after this
+> patch) are within the scope of an appropriate declaration, so there is
+> no *need* to include <io.h> in either mingw.h or msvc.h.
+> [I'm confident the same is true of the MinGW build as well, but I didn't
+> have time to check before sending this mail...]
+>
+> I suspect that you already know this and I'm just being dumb in missing
+> the import of your question... Perhaps you could clarify your concerns
+> regarding this patch?
+>
 
-Signed-off-by: Sylvain Rabot <sylvain@abstraction.fr>
----
- gitweb/gitweb.perl       |   17 +++++++++++------
- gitweb/static/gitweb.css |    5 +++++
- 2 files changed, 16 insertions(+), 6 deletions(-)
+Actually, I suspect that you know exactly what my concern is (based on
+the above), and that it's not with your patch.
 
-diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-index eae75ac..350f8b8 100755
---- a/gitweb/gitweb.perl
-+++ b/gitweb/gitweb.perl
-@@ -3881,8 +3881,13 @@ sub git_print_header_div {
- }
- 
- sub format_repo_url {
--	my ($name, $url) = @_;
--	return "<tr class=\"metadata_url\"><td>$name</td><td>$url</td></tr>\n";
-+	my ($name, $url, $class) = @_;
-+
-+	if (defined $class) {
-+		return "<tr class=\"metadata_url\"><td class=\"$class\">$name</td><td>$url</td></tr>\n";
-+	} else {
-+		return "<tr class=\"metadata_url\"><td>$name</td><td>$url</td></tr>\n";
-+	}
- }
- 
- # Group output by placing it in a DIV element and adding a header.
-@@ -5146,13 +5151,13 @@ sub git_remote_block {
- 
- 	if (defined $fetch) {
- 		if ($fetch eq $push) {
--			$urls_table .= format_repo_url("URL", $fetch);
-+			$urls_table .= format_repo_url("URL", $fetch, 'metadata_remote_fetch_url');
- 		} else {
--			$urls_table .= format_repo_url("Fetch URL", $fetch);
--			$urls_table .= format_repo_url("Push URL", $push) if defined $push;
-+			$urls_table .= format_repo_url("Fetch URL", $fetch, 'metadata_remote_fetch_url');
-+			$urls_table .= format_repo_url("Push URL", $push, 'metadata_remote_push_url') if defined $push;
- 		}
- 	} elsif (defined $push) {
--		$urls_table .= format_repo_url("Push URL", $push);
-+		$urls_table .= format_repo_url("Push URL", $push, 'metadata_remote_push_url');
- 	} else {
- 		$urls_table .= format_repo_url("", "No remote URL");
- 	}
-diff --git a/gitweb/static/gitweb.css b/gitweb/static/gitweb.css
-index 79d7eeb..631b20d 100644
---- a/gitweb/static/gitweb.css
-+++ b/gitweb/static/gitweb.css
-@@ -579,6 +579,11 @@ div.remote {
- 	display: inline-block;
- }
- 
-+.metadata_remote_fetch_url,
-+.metadata_remote_push_url {
-+	font-weight: bold;
-+}
-+
- /* Style definition generated by highlight 2.4.5, http://www.andre-simon.de/ */
- 
- /* Highlighting theme definition: */
--- 
-1.7.3.4.523.g72f0d.dirty
+I have a patch in my MSVC-tree that includes io.h in mingw.h, because
+mingw.h already depends on facilities from io.h on MSVC. My point was
+simply that this dependency was already present, and as such I think
+mingw.h is the appropriate place to include it.
+
+Your patch might remove the warnings (perhaps it was only msvc.c that
+depends on io.h, I don't remember), and that's fine. But I think we
+should solve the problem in msvc.[ch] instread, as this is the
+compatibility-layer that the rest of the system includes.
+
+But it's just an opinion, deal with it as you please. The most
+important part is to prevent warnings/errors, how we do it is
+secondary.
