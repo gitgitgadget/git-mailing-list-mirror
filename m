@@ -1,84 +1,74 @@
-From: Conrad Irwin <conrad.irwin@gmail.com>
-Subject: Re: [PATCH] Use a temporary index for interactive git-commit
-Date: Thu, 30 Dec 2010 12:41:18 +0000
-Message-ID: <AANLkTina562i6KzYR4AQbTNExJbCBA3bKHwA_7W45qAG@mail.gmail.com>
-References: <1293670038-8606-1-git-send-email-conrad.irwin@gmail.com>
-	<20101230043355.GA24555@sigill.intra.peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] unpack_trees(): skip trees that are the same in all input
+Date: Thu, 30 Dec 2010 19:44:08 +0700
+Message-ID: <AANLkTinWj7vjQcJVZ732HDj++F8PjUHhne8unoORsVB9@mail.gmail.com>
+References: <7vr5d94fs4.fsf@alter.siamese.dyndns.org> <AANLkTinm=k_84Nh4YakbkdNNLO4-yeVxGF+p_rR5TFB=@mail.gmail.com>
+ <7vd3oktmoo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Dec 30 13:41:25 2010
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Linus Torvalds <torvalds@linux-foundation.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Dec 30 13:44:58 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PYHoq-0002BC-F7
-	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 13:41:24 +0100
+	id 1PYHsE-0003SQ-NV
+	for gcvg-git-2@lo.gmane.org; Thu, 30 Dec 2010 13:44:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751557Ab0L3MlU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 30 Dec 2010 07:41:20 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:50816 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751056Ab0L3MlT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 30 Dec 2010 07:41:19 -0500
-Received: by ywl5 with SMTP id 5so4434613ywl.19
-        for <git@vger.kernel.org>; Thu, 30 Dec 2010 04:41:18 -0800 (PST)
+	id S1751890Ab0L3Mou convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 30 Dec 2010 07:44:50 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:53025 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750761Ab0L3Mot convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 30 Dec 2010 07:44:49 -0500
+Received: by wyb28 with SMTP id 28so10932387wyb.19
+        for <git@vger.kernel.org>; Thu, 30 Dec 2010 04:44:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=Ut27cevWLz1P38gtyOVJBwc/lpdUlPhA6pXtdm9UxDM=;
-        b=XDt8gzT6n/3TZDNxTC33vrcXNhNgpbuMpQthQg7RozeJgO7F1sf8p1UpzsHeJT8kxN
-         8EW2bhBZK0EArue1/frM/mnzKUJGD0jrTSZB17zdBn7G166Kcb/I+thKhHc95IA7ZlVi
-         TCTAZVoTLP89bFsoK4+PYVivJX8JtZyLV/sDw=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=k5TZkRQY5t0ESjob/G2gjLM1mqanlJXdTZ+x7E8fYV8=;
+        b=YM15jihabEnFc7Kr6U9nf3R/OfU9KeMZqJqG2wgf0uVdV8s+5gdJxvGwerJ/g1iwo2
+         TLiFG9DaMOSKlSGAsmTogfGzQTBSQ8T0cCHzGwOVgT8qQCXQsoIR7AuxzZ64Lj1mvHFN
+         0yhqXkry8u6eSQJWR59NQ/0m9wkgHc5s3f4x0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=aGuFm5xzVrRzgsP2+5N/SI0Mq4OxPb7r1YLibaLy3CQELzr3/ykln8THeuc9Rzf+mu
-         be2f4hd0DRJamocGhT22wguiAAuh2lX4w3qK8KCDrc666Jigju7ISc4Hm3gfQ262aXh5
-         HC5u8LRNii90e0vywdp/WbOl2U0SZRukqqM/E=
-Received: by 10.236.111.38 with SMTP id v26mr2065408yhg.39.1293712878653; Thu,
- 30 Dec 2010 04:41:18 -0800 (PST)
-Received: by 10.236.105.206 with HTTP; Thu, 30 Dec 2010 04:41:18 -0800 (PST)
-In-Reply-To: <20101230043355.GA24555@sigill.intra.peff.net>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=lXG6l5+bcDZsSeM+nruX4XcIdUkeOb+cfE6zUNGt4mZbY1fqXEMQEh/LvbQ472vFlm
+         NV9r2Pw2Uh2FiXn0ZtoetxoGm7kktbLdYAaZrquWPyvoynMF7fmWExrGjkDPLT9Nkie2
+         3hD24TDC+Dv9IfrHNSk2HtKLSnj8gB/pBnCyY=
+Received: by 10.216.59.143 with SMTP id s15mr99999wec.49.1293713088388; Thu,
+ 30 Dec 2010 04:44:48 -0800 (PST)
+Received: by 10.216.63.14 with HTTP; Thu, 30 Dec 2010 04:44:08 -0800 (PST)
+In-Reply-To: <7vd3oktmoo.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164357>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164358>
 
-On 30 December 2010 04:33, Jeff King <peff@peff.net> wrote:
->
-> this behavior will not apply to "git add -p". So doesn't that introduce
-> a new confusing inconsistency, that ^C from "git commit -p" abandons
-> changes entirely, but from "git add -p" will silently stage changes?
->
+On Thu, Dec 30, 2010 at 2:15 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> By the way, I think info->data->skip_sparse_checkout should be fixed =
+by
+> renaming it to info->data->sparse_checkout. =C2=A0The flag controls a=
+ special
+> case logic that should not be in effect unless explicitly asked, and
+> forcing normal codepath to say "If skip_sparse_checkout is not false,=
+ do
+> this" in double-negative is unnice than "If sparse_checkout is in eff=
+ect,
+> please run this special case" when reading the code.
 
-That is an interesting observation. The intention of the commit was
-not to make the
-interactive add atomic, just isolated from the real index (much like
-git commit /path/to/file.c
-or git commit -a). This means that if you leave the commit message
-empty (even after a
-successful git-add--interactive) you have not staged any new files.
-
-I'd agree that it would also make sense for git-add--interactive to be
-atomic, so that when you
-abort it forgets everything you've told it to do (and that this patch
-highlights that very nicely).
-At the moment git-add--interactive is atomic at a file level, i.e. it
-remembers each decision for
-git add --interactive, and for git add --patch, it saves your
-decisions only once you've got to
-the end of a file (not that you'd notice).
-
-While I could fix git add -p in the same manner as git commit -p, by
-using a temporary isolated
-index, it would be better to change git-add--interactive directly, and
-thus git checkout -p and
-git reset -p too.
-
-Conrad
+It's something to do with zero value being "feature set by default".
+Unless explicitly said otherwise, sparse checkout code should be in
+effect so that skip-checkout bit is preserved in index. No, double
+negation is not nice. But I don't know how I can set
+unpack_trees_options.sparse_checkout =3D 1 by default.
+--=20
+Duy
