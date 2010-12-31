@@ -1,103 +1,84 @@
-From: Oliver Kullmann <O.Kullmann@swansea.ac.uk>
-Subject: how to update a submodule?
-Date: Fri, 31 Dec 2010 22:24:38 +0000
-Message-ID: <20101231222438.GA28199@cs-wsok.swansea.ac.uk>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Dec 31 23:24:46 2010
+From: Seth Robertson <in-gitvger@baka.org>
+Subject: Re: how to update a submodule?
+Date: Fri, 31 Dec 2010 18:42:01 -0500
+Message-ID: <201012312342.oBVNg1lx021930@no.baka.org>
+References: <20101231222438.GA28199@cs-wsok.swansea.ac.uk>
+Cc: git@vger.kernel.org
+To: Oliver Kullmann <O.Kullmann@swansea.ac.uk>
+X-From: git-owner@vger.kernel.org Sat Jan 01 00:49:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PYnOu-0007L1-No
-	for gcvg-git-2@lo.gmane.org; Fri, 31 Dec 2010 23:24:45 +0100
+	id 1PYoiq-0003iR-O9
+	for gcvg-git-2@lo.gmane.org; Sat, 01 Jan 2011 00:49:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754302Ab0LaWYk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Dec 2010 17:24:40 -0500
-Received: from laurel.swan.ac.uk ([137.44.1.237]:35291 "EHLO laurel.swan.ac.uk"
+	id S1754350Ab0LaXmN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Dec 2010 18:42:13 -0500
+Received: from tsutomu.baka.org ([66.114.72.182]:46339 "EHLO tsutomu.baka.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754196Ab0LaWYk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Dec 2010 17:24:40 -0500
-Received: from [137.44.2.59] (helo=cs-svr1.swan.ac.uk)
-	by laurel.swan.ac.uk with esmtp (Exim 4.72)
-	(envelope-from <O.Kullmann@swansea.ac.uk>)
-	id 1PYnOo-0003Da-UH; Fri, 31 Dec 2010 22:24:39 +0000
-Received: from cs-wsok.swansea.ac.uk (cs-wsok [137.44.2.227])
-	by cs-svr1.swan.ac.uk (Postfix) with ESMTP id D5E9F1C192B;
-	Fri, 31 Dec 2010 22:24:38 +0000 (GMT)
-Received: by cs-wsok.swansea.ac.uk (Postfix, from userid 3579)
-	id C4BAE741EC; Fri, 31 Dec 2010 22:24:38 +0000 (GMT)
-Content-Disposition: inline
-User-Agent: Mutt/1.5.9i
+	id S1754304Ab0LaXmM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Dec 2010 18:42:12 -0500
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id oBVNg2Gc001177
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 31 Dec 2010 18:42:02 -0500
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id oBVNg1lx021930;
+	Fri, 31 Dec 2010 18:42:01 -0500
+In-reply-to: <20101231222438.GA28199@cs-wsok.swansea.ac.uk>
+Comments: In reply to a message from "Oliver Kullmann <O.Kullmann@swansea.ac.uk>" dated "Fri, 31 Dec 2010 22:24:38 +0000."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164399>
 
-Hello,
 
-it would be very helpful if somebody could tell me the
-supposed workflow how to update a submodule (I'm using version
-1.7.3.2; the man-page doesn't say much about it).
+In message <20101231222438.GA28199@cs-wsok.swansea.ac.uk>, Oliver Kullmann writ
+es:
 
-I have on the same machine two versions of repository A,
-say A1, A2, and both contain repository B as submodule, but are otherwise
-unrelated.
+    it would be very helpful if somebody could tell me the
+    supposed workflow how to update a submodule (I'm using version
+    1.7.3.2; the man-page doesn't say much about it).
 
-In A1 we have B up-to-date, but not in A2 (and with up-to-date I mean
-the master branch in the same state as in A1).
+https://git.wiki.kernel.org/index.php/GitSubmoduleTutorial
 
+--------------------------------------------------
+cd submodule_path
+git checkout <branchname>
+git pull
+cd .. # or otherwise get to the superproject
+
+git add submodule_path
+git commit -m "Updated submodule to latest <branchname>"
 git submodule update
+--------------------------------------------------
 
-is of no help, since A1, A2 have no relation to each other, and "update"
-assumes some relation; the man-page doesn't speak of options for update,
-and since "git submodule update" runs through all submodules, it's hard
-to see how that could work.
+This (untested) code obviously only works for a single repository.  If
+you want to do it for all repositories, you need something more like
+the untested:
 
-So I have to go into B in A2, and do some pull (I suppose), but that
-doesn't work so easily; the man-page seems to speak of B in A2 is a "normal repository"
-but that doesn't seem to be the case in the sense that by default 
-we are on "no branch". So it seems one can't do anything there, since 
-you can't merge "no branch" into some other branch. The branch "no branch"
-is up-to-date after a pull, but this can't be communicated to the other
-branches (so seems to be misleading, or a waste of time).
+--------------------------------------------------
+git submodule foreach git checkout <branchname>
+git submodule foreach git pull
+git add -a -m "Updated all submodules to latest <branchname>"
+git submodule update
+--------------------------------------------------
 
-So apparently I have to checkout master in A2:B, and then pull from
-master in A1:B ?
+If you find yourself doing this continuously, and doing it for all of
+your submodules, you may way to use gitslave instead of submodules
+which keeps the branches checked out all of the time so all you need to
+do is `gits pull`.  This may be better, or worse, for you workflow.
 
-Would be good if somebody could shed light on this.
+gitslave (http://gitslave.sf.net) is useful when you control and
+develop on the subprojects at more of less the same time as the
+superproject, and furthermore when you typically want to tag, branch,
+push, pull, etc all repositories at the same time.
 
-In general I find that "pull" is much under-documented in git.
-What I would like to do in A2 is just to say "pull everything from A1",
-which seems a logical thing to do, and which should include all corresponding
-branches and all corresponding submodules, but such a "pull all" doesn't
-seem to exist?
+git-submodule is better when you do not control the subprojects or
+more specifically wish to fix the subproject at a specific revision
+even as the subproject changes
 
-Thanks for your help in any case!
-
-Oliver
-
-P.S. What would be really needed for the Git documentation is to speak
-about the fundamental ideas, about the "mental images".
-
-The submodule documentation starts with a blurb-sentence which I would
-regard as misleading.
-Then comes a paragraph about what it is not.
-Then comes some hints regarding the implementation.
-Then the final paragraph seems to indicate that above I could just
-use "git pull A2" for A1, and would get B in A2 from B in A1, but only not checked out?
-This doesn't seem to be the case, since apparently then "git submodule update"
-tries to fetch from some foreign repository (not just checking out what was fetched before)?
-
-Adding here examples for a complete workflow (perhaps with various stages, but without
-complications(!)), from initialisation to updates from other repositories would be
-very helpful.
-
-As you can see, I don't know what to expect, and so I don't know what are errors in
-the usage, and what is supposed to be. No mental image about "submodule" is offered,
-and I don't know what is its intention. A great thing would be using the computer-science
-concept of an abstract data type, so to explain what the interface and its semantics is,
-not what is the implementation.
+					-Seth Robertson
