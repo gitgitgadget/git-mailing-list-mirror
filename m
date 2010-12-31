@@ -1,79 +1,65 @@
-From: "David D. Kilzer" <ddkilzer@kilzer.net>
-Subject: Re: Intermittent failures in t9119
-Date: Fri, 31 Dec 2010 06:13:56 -0800 (PST)
-Message-ID: <190893.69491.qm@web30005.mail.mud.yahoo.com>
-References: <7vmxoml1p7.fsf@alter.siamese.dyndns.org> <7vy684t0mt.fsf@alter.siamese.dyndns.org> <20101206191055.GA9597@dcvr.yhbt.net> <7vd3pesb99.fsf@alter.siamese.dyndns.org> <20101209175503.GA16478@dcvr.yhbt.net>
-Reply-To: "David D. Kilzer" <ddkilzer@kilzer.net>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: Rebasing multiple branches
+Date: Fri, 31 Dec 2010 15:55:26 +0100
+Message-ID: <201012311555.26354.trast@student.ethz.ch>
+References: <4D10AE5B.2080700@gmail.com> <4D121136.6050906@gmail.com> <20101230053530.GA10511@nibiru.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Eric Wong <normalperson@yhbt.net>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Dec 31 15:14:08 2010
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, <leonidp.lists@gmail.com>,
+	Johannes Sixt <j.sixt@viscovery.net>
+To: <weigelt@metux.de>
+X-From: git-owner@vger.kernel.org Fri Dec 31 15:55:59 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PYfk7-00078v-3G
-	for gcvg-git-2@lo.gmane.org; Fri, 31 Dec 2010 15:14:07 +0100
+	id 1PYgOb-0008Aj-AF
+	for gcvg-git-2@lo.gmane.org; Fri, 31 Dec 2010 15:55:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753604Ab0LaON6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Dec 2010 09:13:58 -0500
-Received: from web30005.mail.mud.yahoo.com ([209.191.69.22]:43960 "HELO
-	web30005.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1753545Ab0LaON5 (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 31 Dec 2010 09:13:57 -0500
-Received: (qmail 70793 invoked by uid 60001); 31 Dec 2010 14:13:56 -0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1293804836; bh=5rrmOodaiG4lLe+kJzEhxxpE+RL5rvUCEQG6nx3vUQo=; h=Message-ID:X-YMail-OSG:Received:X-RocketYMMF:X-Mailer:References:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type; b=Qg4xpx2IYiUodp+jDIDGAqYzKb1F8IYttWbx1eKIq25MjNY/coWnEpHQDpFvn7O84h9iR96gEAJbTDGK9/+LqpPu88tloLpDb6vMp0EdKSEhZyzNdPDKM3ZSjxZiXpqVoYE4EbcDTpNMqmeG17f9+3kUYlVsHxSVBVgwt/BTuVg=
-X-YMail-OSG: VDRHp8MVM1m6X2Ppuwq4BAgofe4gGYeWQBiDjC8XhxDZ5W8
- F95EFHTpO8A7356A2QHKBBmtIQYuYwcGLLj9hJ8zb7OWr8.vgNSKRPs0iVEw
- Z3pK5.b4D6xo_1BNO5VdPGvAvTDePdAsuuIJ.uoENs_eKHjZZGlYV0JupPvB
- zm4bn_d4meXmxHTik5ZbzPqIlgzqdsGzJi09eQ73FJVMwtOGgMwIQfVPRNnY
- ptRtcRzsJUF.zD2hEq7JYp0tbikQ0wBgHR_rdYkbkcjcwRcZdSCN0lMfzdQ1
- 4bNbV8Brajzd3zPrFIY7VYc1fx8G8LHVqm8ZWRJdMFTjc8VakK6J8yp2gPJO
- oociZ5DfdqI1h0hqzuwJimObYM_iawDtRk9gbbNaI3QRC7y03OodyepoMgef
- xtLvNljal83tn
-Received: from [98.207.50.178] by web30005.mail.mud.yahoo.com via HTTP; Fri, 31 Dec 2010 06:13:56 PST
-X-RocketYMMF: ddkilzer
-X-Mailer: YahooMailRC/553 YahooMailWebService/0.8.107.285259
-In-Reply-To: <20101209175503.GA16478@dcvr.yhbt.net>
+	id S1753609Ab0LaOz3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Dec 2010 09:55:29 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:51200 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753528Ab0LaOz3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 31 Dec 2010 09:55:29 -0500
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Fri, 31 Dec
+ 2010 15:54:54 +0100
+Received: from pctrast.inf.ethz.ch (217.162.250.31) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.218.12; Fri, 31 Dec
+ 2010 15:55:27 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-rc6-desktop; KDE/4.5.4; x86_64; ; )
+In-Reply-To: <20101230053530.GA10511@nibiru.local>
+X-Originating-IP: [217.162.250.31]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164383>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164384>
 
-Eric Wong <normalperson@yhbt.net> wrote:
-> Junio C Hamano <gitster@pobox.com> wrote:
-> > Eric  Wong <normalperson@yhbt.net>  writes:
-> > > Junio C Hamano <gitster@pobox.com> wrote:
-> >  >>  (2) Nobody uses the value from "Text Last Updated" field in  practice, 
->so
-> > >>      that bug has been unnoticed so  far;
-> > >> 
-> > >>  (3) And it is not worth fixing it  ;-)
-> > >> 
-> > >> For now, I would suggest fixing the  failing test to ignore the "Text 
-Last
-> > >> Updated" field while  comparing, and if somebody is inclined to, we would
-> > >> update the  code to match what "svn info" does.
-> > >
-> > > Agreed on both  points.  I consider "git svn log" and "git svn info" to
-> > > be  reasonable approximations of svn behavior, not exact replicas.
-> > >  Exactly matching would be extremely difficult given variations between
-> >  > different svn versions, and also svn requiring network access while
-> >  > git svn does not.
-> > 
-> > Ok, here is a minimum patch to do  that.
+Please don't cull the Cc lists.  Unless he's subscribed, Leonid never
+got your reply!
+
+Enrico Weigelt wrote:
+> * Leonid Podolny <leonidp.lists@gmail.com> wrote:
 > 
-> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> > Ah, nice. I didn't notice the -p option. However, the man page advises 
+> > against using -p and -i together.
 > 
-> Thanks,  Acked-by: Eric Wong <normalperson@yhbt.net>
+> Last time I checked, -i required -p ...
 
+-p internally implies -i, but the user doesn't have to know that ;-)
 
-Acked-by: David Kilzer <ddkilzer@kilzer.net>
+The problem is that the todo file language is not expressive enough
+for what -p needs to do.  Running a rebase -p without changing the
+todo file should behave reasonably.  On the other hand, if you
+rearrange or extend the todo file in many cases that gives unexpected
+results.
 
-Thanks!
+Hence the recommendation to not use it with -i.
 
-Dave
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
