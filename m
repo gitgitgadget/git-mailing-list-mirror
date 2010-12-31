@@ -1,81 +1,79 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH 18/31] rebase: extract merge code to new source file
-Date: Fri, 31 Dec 2010 09:05:01 -0500 (EST)
-Message-ID: <alpine.DEB.1.10.1012310841340.16976@debian>
-References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com> <201012292231.33333.j6t@kdbg.org> <alpine.DEB.1.10.1012292315070.7175@debian> <201012311323.47102.trast@student.ethz.ch>
+From: "David D. Kilzer" <ddkilzer@kilzer.net>
+Subject: Re: Intermittent failures in t9119
+Date: Fri, 31 Dec 2010 06:13:56 -0800 (PST)
+Message-ID: <190893.69491.qm@web30005.mail.mud.yahoo.com>
+References: <7vmxoml1p7.fsf@alter.siamese.dyndns.org> <7vy684t0mt.fsf@alter.siamese.dyndns.org> <20101206191055.GA9597@dcvr.yhbt.net> <7vd3pesb99.fsf@alter.siamese.dyndns.org> <20101209175503.GA16478@dcvr.yhbt.net>
+Reply-To: "David D. Kilzer" <ddkilzer@kilzer.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Fri Dec 31 15:05:18 2010
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Eric Wong <normalperson@yhbt.net>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Dec 31 15:14:08 2010
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PYfbZ-0003Qk-7l
-	for gcvg-git-2@lo.gmane.org; Fri, 31 Dec 2010 15:05:17 +0100
+	id 1PYfk7-00078v-3G
+	for gcvg-git-2@lo.gmane.org; Fri, 31 Dec 2010 15:14:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753483Ab0LaOFJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 31 Dec 2010 09:05:09 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:63371 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753436Ab0LaOFI (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 31 Dec 2010 09:05:08 -0500
-Received: by qwa26 with SMTP id 26so11921880qwa.19
-        for <git@vger.kernel.org>; Fri, 31 Dec 2010 06:05:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:x-x-sender:to:cc
-         :subject:in-reply-to:message-id:references:user-agent:mime-version
-         :content-type;
-        bh=o3/rPBrM3jTiIeQ215s76+c3ACC7UeTHHerKUWenbo4=;
-        b=e8uWQ142a6Pr64OyP+wWqzOI67XWimfoVE6IckYlgIjdAj++0S78Fc34GOviBkSi2T
-         LPcIUEg3zA0Nl4yptACQWH3d1koWhOzE4FRCYJkkBl/I7SiU97fW0T6Wrl+ZSoLyIKnf
-         gyArf6HT3Mhse+sJCS+2mSJ3FhdwYX6PdJ5Z8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=t30ze+evAjvZtyW/CMfnhabIt6irp1p2/5rRIBBgqVSEBPBMD7L9o2RGUf7Cl2Z+GH
-         oxqv5xqaW9t5jR5MOb7urxzkj2Fmn8sp+ICMn2teFoA+/3Z8GAlPi930zawCN1EDDGer
-         PB9BM+++a9dnbUULSRhi8N985AIeIrYjLe7mE=
-Received: by 10.224.63.218 with SMTP id c26mr16966755qai.24.1293804307371;
-        Fri, 31 Dec 2010 06:05:07 -0800 (PST)
-Received: from [192.168.1.103] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id q12sm9999081qcu.6.2010.12.31.06.05.04
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 31 Dec 2010 06:05:05 -0800 (PST)
-X-X-Sender: martin@debian
-In-Reply-To: <201012311323.47102.trast@student.ethz.ch>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1753604Ab0LaON6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 31 Dec 2010 09:13:58 -0500
+Received: from web30005.mail.mud.yahoo.com ([209.191.69.22]:43960 "HELO
+	web30005.mail.mud.yahoo.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with SMTP id S1753545Ab0LaON5 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 31 Dec 2010 09:13:57 -0500
+Received: (qmail 70793 invoked by uid 60001); 31 Dec 2010 14:13:56 -0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yahoo.com; s=s1024; t=1293804836; bh=5rrmOodaiG4lLe+kJzEhxxpE+RL5rvUCEQG6nx3vUQo=; h=Message-ID:X-YMail-OSG:Received:X-RocketYMMF:X-Mailer:References:Date:From:Reply-To:Subject:To:Cc:In-Reply-To:MIME-Version:Content-Type; b=Qg4xpx2IYiUodp+jDIDGAqYzKb1F8IYttWbx1eKIq25MjNY/coWnEpHQDpFvn7O84h9iR96gEAJbTDGK9/+LqpPu88tloLpDb6vMp0EdKSEhZyzNdPDKM3ZSjxZiXpqVoYE4EbcDTpNMqmeG17f9+3kUYlVsHxSVBVgwt/BTuVg=
+X-YMail-OSG: VDRHp8MVM1m6X2Ppuwq4BAgofe4gGYeWQBiDjC8XhxDZ5W8
+ F95EFHTpO8A7356A2QHKBBmtIQYuYwcGLLj9hJ8zb7OWr8.vgNSKRPs0iVEw
+ Z3pK5.b4D6xo_1BNO5VdPGvAvTDePdAsuuIJ.uoENs_eKHjZZGlYV0JupPvB
+ zm4bn_d4meXmxHTik5ZbzPqIlgzqdsGzJi09eQ73FJVMwtOGgMwIQfVPRNnY
+ ptRtcRzsJUF.zD2hEq7JYp0tbikQ0wBgHR_rdYkbkcjcwRcZdSCN0lMfzdQ1
+ 4bNbV8Brajzd3zPrFIY7VYc1fx8G8LHVqm8ZWRJdMFTjc8VakK6J8yp2gPJO
+ oociZ5DfdqI1h0hqzuwJimObYM_iawDtRk9gbbNaI3QRC7y03OodyepoMgef
+ xtLvNljal83tn
+Received: from [98.207.50.178] by web30005.mail.mud.yahoo.com via HTTP; Fri, 31 Dec 2010 06:13:56 PST
+X-RocketYMMF: ddkilzer
+X-Mailer: YahooMailRC/553 YahooMailWebService/0.8.107.285259
+In-Reply-To: <20101209175503.GA16478@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164382>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164383>
 
-On Fri, 31 Dec 2010, Thomas Rast wrote:
-
-> Martin von Zweigbergk wrote:
-> > On Wed, 29 Dec 2010, Johannes Sixt wrote:
-> > > 
-> > > Is export -f portable?
+Eric Wong <normalperson@yhbt.net> wrote:
+> Junio C Hamano <gitster@pobox.com> wrote:
+> > Eric  Wong <normalperson@yhbt.net>  writes:
+> > > Junio C Hamano <gitster@pobox.com> wrote:
+> >  >>  (2) Nobody uses the value from "Text Last Updated" field in  practice, 
+>so
+> > >>      that bug has been unnoticed so  far;
+> > >> 
+> > >>  (3) And it is not worth fixing it  ;-)
+> > >> 
+> > >> For now, I would suggest fixing the  failing test to ignore the "Text 
+Last
+> > >> Updated" field while  comparing, and if somebody is inclined to, we would
+> > >> update the  code to match what "svn info" does.
+> > >
+> > > Agreed on both  points.  I consider "git svn log" and "git svn info" to
+> > > be  reasonable approximations of svn behavior, not exact replicas.
+> > >  Exactly matching would be extremely difficult given variations between
+> >  > different svn versions, and also svn requiring network access while
+> >  > git svn does not.
 > > 
-> > It seems like it isn't. What is a good way to check?
+> > Ok, here is a minimum patch to do  that.
 > 
-> On my system I have POSIX docs for various commands, coming from the
-> 'man-pages-posix' package.  Maybe your distribution has those too?
-> Then you can simply run 'man 1p export' for the documentation.
-> Anything that is documented there should be safe (except on Windows
-> maybe).
-
-Thanks. I'm running Debian and I just installed the package from
-non-free. Thanks for the hint on the '1p' syntax as well.
+> > Signed-off-by: Junio C Hamano <gitster@pobox.com>
+> 
+> Thanks,  Acked-by: Eric Wong <normalperson@yhbt.net>
 
 
-/Martin
+Acked-by: David Kilzer <ddkilzer@kilzer.net>
+
+Thanks!
+
+Dave
