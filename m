@@ -1,135 +1,147 @@
-From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-Subject: Re: [PATCH] Consistent use of AC_LANG_PROGRAM in configure.ac and
- aclocal.m4.
-Date: Sun, 2 Jan 2011 10:47:30 +0100
-Organization: Institute for Numerical Simulation, University of Bonn
-Message-ID: <20110102094730.GA10365@gmx.de>
-References: <20110102060044.GJ19818@gmx.de>
- <20110102075953.GB8937@burratino>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: Push to all repositories
+Date: Sun, 2 Jan 2011 10:54:25 +0100
+Message-ID: <20110102095425.GA7061@nibiru.local>
+References: <1291829983410-5816069.post@n2.nabble.com> <20101208180049.GC5687@burratino> <1291849156593-5817177.post@n2.nabble.com> <1291898174244-5818757.post@n2.nabble.com> <AANLkTik9CxVD9A-2QEyD_tZiyYoCOitfViWucGCudzh-@mail.gmail.com> <20101209195204.GB6884@burratino>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 02 10:47:42 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 02 11:00:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PZKXM-0004Qf-Vq
-	for gcvg-git-2@lo.gmane.org; Sun, 02 Jan 2011 10:47:41 +0100
+	id 1PZKjt-0004VQ-H8
+	for gcvg-git-2@lo.gmane.org; Sun, 02 Jan 2011 11:00:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754931Ab1ABJre (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Jan 2011 04:47:34 -0500
-Received: from mailout-de.gmx.net ([213.165.64.23]:37632 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1751002Ab1ABJrd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jan 2011 04:47:33 -0500
-Received: (qmail invoked by alias); 02 Jan 2011 09:47:31 -0000
-Received: from xdsl-78-34-215-55.netcologne.de (EHLO localhost.localdomain) [78.34.215.55]
-  by mail.gmx.net (mp021) with SMTP; 02 Jan 2011 10:47:31 +0100
-X-Authenticated: #13673931
-X-Provags-ID: V01U2FsdGVkX19e1W4KbrdeYSW9upSKbc7HECjP96hiFVgltB0iWd
-	ZSY2PVjmEhuIGW
-Received: from ralf by localhost.localdomain with local (Exim 4.69)
-	(envelope-from <Ralf.Wildenhues@gmx.de>)
-	id 1PZKXC-0002i4-EG; Sun, 02 Jan 2011 10:47:30 +0100
-Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+	id S1755187Ab1ABKAZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Jan 2011 05:00:25 -0500
+Received: from caprica.metux.de ([82.165.128.25]:38323 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751304Ab1ABKAW (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 2 Jan 2011 05:00:22 -0500
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p029u1HT010619
+	for <git@vger.kernel.org>; Sun, 2 Jan 2011 10:56:04 +0100
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p029tj0l010600
+	for git@vger.kernel.org; Sun, 2 Jan 2011 10:55:45 +0100
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id p029sPE3008238
+	for git@vger.kernel.org; Sun, 2 Jan 2011 10:54:25 +0100
+Mail-Followup-To: git@vger.kernel.org
 Content-Disposition: inline
-In-Reply-To: <20110102075953.GB8937@burratino>
-User-Agent: Mutt/1.5.20 (2010-08-04)
-X-Y-GMX-Trusted: 0
+In-Reply-To: <20101209195204.GB6884@burratino>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164413>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164414>
 
-* Jonathan Nieder wrote on Sun, Jan 02, 2011 at 08:59:53AM CET:
-> Ralf Wildenhues wrote:
+* Jonathan Nieder <jrnieder@gmail.com> wrote:
+
+> Consider a project in a patches+tarballs workflow.  It begins like
+> this:
 > 
-> > The patch should not cause any semantic changes in the generated
-> > configure script.
+>  1. Acquire a tarball with the version you want to base your work on.
+>  2. Untar.
+>  3. Copy the result to save the current state.
+>  4. Test it.
+>  5. Fix a bug or add a feature.
+>  6. Make a patch with "diff -pruN"
+>  7. Return to step 3.
+>     ...
+>  8. Looks good; email out the patches to get some feedback.
 > 
-> This part belongs in the commit message too, imho (though no need to
-> resend just for that, of course).
-
-Yeah, you're right.
-
-> > -   AC_LINK_IFELSE(AC_LANG_PROGRAM([], []), [git_cv_ld_dashr=yes], [git_cv_ld_dashr=no])
-> > +   AC_LINK_IFELSE([AC_LANG_PROGRAM([], [])], [git_cv_ld_dashr=yes], [git_cv_ld_dashr=no])
+> Now another person wants to test the patches; so she tries:
 > 
-> Could you say a few words about the effect of this?  Mostly because
-> it would be useful to people down the line tempted to make the same
-> mistake again.
-
-Allow me to quote autoconf-2.68/NEWS:
-
-  ** The macros AC_PREPROC_IFELSE, AC_COMPILE_IFELSE, AC_LINK_IFELSE, and
-     AC_RUN_IFELSE now warn if the first argument failed to use
-     AC_LANG_SOURCE or AC_LANG_PROGRAM to generate the conftest file
-     contents.  A new macro AC_LANG_DEFINES_PROVIDED exists if you have
-     a compelling reason why you cannot use AC_LANG_SOURCE but must
-     avoid the warning.
-
-The underlying reason for this change is that AC_LANG_{SOURCE,PROGRAM}
-take care to actually supply the previously computed set of #defines
-(and include the standard headers if so desired), for preprocessed
-languages like C and C++.  In the above case, AC_LANG_PROGRAM is already
-used, but not sufficiently m4-quoted, so that the autoconf warning will
-be triggered bogusly.
-
-The general rule for m4 quotation is: one set of quotes for each macro
-argument, e.g.:
-  MACRO1([arg with MACRO2([arg], [arg])], [arg], ...)
-
-and for innermost arguments which need to undergo no m4 expansion at all
-a double set of quotes should be used, e.g.:
-  AC_LANG_SOURCE([[int s[42]; /* Program sources containing brackets.  */]])
-
-Only for some special macros that need to be expanded before recursion
-no quoting should be used.
-
-These and more rules are described in detail in 'info Autoconf
-"Programming in M4"'.  The rules can often be relaxed when the macro
-arguments contain no active characters like comma, brackets or other
-macro invocations themselves, but IMVHO it is easier getting used to
-just quote things normally.
-
-> > @@ -500,7 +494,7 @@ for l in $lib_order; do
-> >      old_LIBS="$LIBS"
-> >      LIBS="$LIBS $l"
-> >      AC_MSG_CHECKING([for iconv in $l])
-> > -    AC_LINK_IFELSE(ICONVTEST_SRC,
-> > +    AC_LINK_IFELSE([ICONVTEST_SRC],
+>  1. Acquire a tarball with the version you want to test against.
+>  2. Untar.
+>  3. Apply patches with "patch -p1".
 > 
-> I'm curious about this one, too.
-
-Likewise this is just underquotation leading to false positive.
-
-> > @@ -931,18 +915,16 @@ AC_SUBST(NO_INITGROUPS)
-> >  #
-> >  # Define PTHREAD_LIBS to the linker flag used for Pthread support.
-> >  AC_DEFUN([PTHREADTEST_SRC], [
-> > +AC_LANG_PROGRAM([[
-> >  #include <pthread.h>
-> > -
-> > -int main(void)
-> > -{
-> > +]], [[
-> >  	pthread_mutex_t test_mutex;
+> Wait a second --- the patches don't apply!  Or worse, they
+> apply but the result is broken.  Okay:
 > 
-> By the way, what problem is the warning about AC_LANG_PROGRAM meant to
-> prevent?  (Just curious.  A five-minute google search didn't reveal
-> anything obvious.)
+>  4. Complain to the patch author.
+> 
+> Finally the patch author has more work to do:
+> 
+>  9. Acquire a newer tarball, and use either "patch --reject-file"
+>     or rcs "merge" to reconcile the differences.  Email out the
+>     result.
 
-See above.
+Compared to git:
 
-I would be happy to update the patch in a way that makes it more
-helpful, but most of the above is fairly general Autoconf rules,
-so I'm not sure what you need (being blinded by looking at this
-stuff too often).
+1. Clone repo and checkout the desired version
+2. Fix a bug or add a feature and commit to your local branch
+3. Do your tests and cleanups (eg. cleanups w/ interactive rebase)
+3. Push your branch to some place others can catch it and
+   announce it to others
 
-Cheers,
-Ralf
+Now another person wants to test your version:
+
+1. Clone your repo and checkout your branch.
+--> there is nothing that could fail to apply - everything's consistant
+    by design (assuming the repo was cleanly cloned ;-o)
+2. Possibly become an author yourself:
+   a. rebase to a newer upstream version
+   --> same as above
+
+> The result is a sequence of snapshots that have been _tested_ to work
+> correctly.  Now compare the svn workflow I briefly used at work:
+> 
+>  1. svn update
+>  2. hack hack hack
+>  3. svn update
+>  4. hack hack hack
+>  5. svn update
+>  6. hack hack hack
+>  7. send out a patch for feedback
+
+SVN has a quite bad idea of branches and isn't even near to support
+things like rebasing anyhow.
+
+> Unfortunately, the version committed (1) does not reflect the
+> development history and (2) is not even tested, if changes
+> happened in trunk between step 9 and step 10.
+
+The idea of having everything in a big trunk is, aehm, quite suboptimal.
+Better: have each issue in its own branch, that gets rebased to the
+mainline frequently and merged back there when properly tested.
+
+> Of course in the opposite direction is
+> 
+>  - changes to workflow can be hard for a team to adjust to
+> 
+> (i.e., "don't fix what isn't broken").
+
+Well, many people tend to stick in old ideas (including workflows),
+no matter what newer developments are made. I currently have to cope
+with that in an customer project: most of the people here don't even
+consider using branches since the only vcs'es they know have no really
+usable support for this (TFS, etc ;-o), and they refuse to learn
+something new as long as their old way seems to work somehow (no matter
+of costs). I've estimated the productivity loss caused by sticking
+backwards cruft like TFS on factors of 5..10 - nobody cares.
+(actually, not really bad for me: the longer it takes, the more 
+money I earn ;-P)
+
+
+cu
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
+
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
