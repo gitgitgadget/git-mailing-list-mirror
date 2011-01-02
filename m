@@ -1,93 +1,98 @@
-From: Bruce Korb <bruce.korb@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: fatal: ambiguous message
-Date: Sun, 02 Jan 2011 10:03:55 -0800
-Message-ID: <4D20BE0B.6040104@gmail.com>
-References: <4D1D33D7.7040809@gmail.com> <4D1DFF96.4010004@redhat.com>
+Date: Sun, 2 Jan 2011 12:34:53 -0600
+Message-ID: <20110102183453.GA13463@burratino>
+References: <4D1D33D7.7040809@gmail.com>
+ <4D1DFF96.4010004@redhat.com>
+ <4D20BE0B.6040104@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=windows-1256
-Content-Transfer-Encoding: 7bit
-Cc: GNU Autoconf mailing list <autoconf@gnu.org>
-To: Eric Blake <eblake@redhat.com>,
-	GIT Development <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 02 19:04:21 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Eric Blake <eblake@redhat.com>,
+	GIT Development <git@vger.kernel.org>,
+	GNU Autoconf mailing list <autoconf@gnu.org>
+To: Bruce Korb <bruce.korb@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 02 19:35:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PZSI0-0001v1-Er
-	for gcvg-git-2@lo.gmane.org; Sun, 02 Jan 2011 19:04:20 +0100
+	id 1PZSlv-0004Ap-G2
+	for gcvg-git-2@lo.gmane.org; Sun, 02 Jan 2011 19:35:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754668Ab1ABSEG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Jan 2011 13:04:06 -0500
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:46048 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754558Ab1ABSEE (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jan 2011 13:04:04 -0500
-Received: by pva4 with SMTP id 4so2356261pva.19
-        for <git@vger.kernel.org>; Sun, 02 Jan 2011 10:04:03 -0800 (PST)
+	id S1754924Ab1ABSfI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Jan 2011 13:35:08 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:52463 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754126Ab1ABSfH (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jan 2011 13:35:07 -0500
+Received: by iyi12 with SMTP id 12so11583974iyi.19
+        for <git@vger.kernel.org>; Sun, 02 Jan 2011 10:35:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        bh=AByoaZrMZwo1e45UUf4QRy6we1PDLAw0EjZVUyKrinY=;
-        b=rkNC23mI+n5qwF8dfo6/p7pNr+jiTtyLV/1A62OBqc3fno0r4npKvhhzAoR2j7qAKj
-         snibCummmGE5jVgQB6FBI2a9xI3l1XO/YM1Enn80AMbji/9CjSKzlnqx0Ao+6JPq8mY1
-         aLdQ7YGGkpNHnWDDKAWUsgRLAESycyxyU0i38=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=YwmGjO+rj/jrrtUYYHzs1MQzaPPgFmJ9OCQbZWFszBQ=;
+        b=jhahko22e3X43i5AW7iinlUGhd8qZzzT9AHAwbxcZl1fmt8nSXMuDXvKKBnf+icRsm
+         YgLRd20N9dXhorXcy//U2Ito5l8kpwgeNwLyRz9NCX2tBi/T3nas3bGV92X9lkPM1bZw
+         /4r56tw8Ij954R+e7fjZFFY3j+cqeGoBjWOhY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=HJtbV8sbOHGi8oCXvmjSn71YASxVqBIsh4Jnvd2CpX6x3aFh++y+7etJy+eNe4wTd1
-         EckhMHaYYwRYv9U0DrMUDZiqME/j69ZLdsNkcOSqcAPm+7Tn0/40y4f9Z3yNpUAUOlMV
-         pmh1GuRKcVY+bU0NEjAEM3MQtT4aYFc0kvuLc=
-Received: by 10.142.203.1 with SMTP id a1mr16126083wfg.345.1293991443641;
-        Sun, 02 Jan 2011 10:04:03 -0800 (PST)
-Received: from [10.10.1.101] (adsl-75-2-133-184.dsl.pltn13.sbcglobal.net [75.2.133.184])
-        by mx.google.com with ESMTPS id w14sm27950289wfd.18.2011.01.02.10.04.02
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 02 Jan 2011 10:04:02 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20101125 SUSE/3.0.11 Thunderbird/3.0.11
-In-Reply-To: <4D1DFF96.4010004@redhat.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=IvgHahCF5/q94r4L5l9wXSHmA4OraFDhucmAMdAO+R3p7zE+yFu5IrYKPH2revhPCx
+         /kIhfIRrt1tyWu6hO18+IKaBJuq4X738QDCpyzkDu/8/QKNKW5AqHvtHWw23SoDhHKdr
+         BOntiMzrh+MPA3jyJd5acfw8lHdfUehW4YdOQ=
+Received: by 10.42.227.131 with SMTP id ja3mr6081051icb.250.1293993305878;
+        Sun, 02 Jan 2011 10:35:05 -0800 (PST)
+Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
+        by mx.google.com with ESMTPS id jv9sm16897371icb.1.2011.01.02.10.35.03
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 02 Jan 2011 10:35:05 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4D20BE0B.6040104@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164424>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164425>
 
-On 12/31/10 08:06, Eric Blake wrote:
-> On 12/30/2010 06:37 PM, Bruce Korb wrote:
->> Hi,
->>
->> Is this fatal?  If so, how come it continued?
-> 
-> It's fatal to git-version-gen, which did not continue.
+Hi,
 
-git-version-gen has but two fatal conditions: invalid arguments
-yielding a usage message and an unreadable "tarball version file".
-That is not this message, but might be clarified with:
+Context: http://git.savannah.gnu.org/gitweb/?p=autoconf.git;a=blob;f=build-aux/git-version-gen
 
-    v=`cat $tarball_version_file 2>&1` || {
-        echo "$0 error: unreadable tarball version file $1:  $v" >&2
-        exit 1
-    }
+Bruce Korb wrote:
+>                          So, this message says, "fatal: ..."
+> and comes from git and all three "git" invocations redirect stderr to
+> /dev/null.  The fact that we see it is a git bug.  Error messages
+> should be directed to stderr and thus written to /dev/null.
 
-In any event, the invocation is:
-   ./git-version-gen .tarball-version
-and the file ".tarball-version" does not exist, hence git-version-gen
-should not fail at all.  So, this message says, "fatal: ..."
-and comes from git and all three "git" invocations redirect stderr to
-/dev/null.  The fact that we see it is a git bug.  Error messages
-should be directed to stderr and thus written to /dev/null.
+Were you been able to reproduce that outside the script?
 
-So, git-version-gen is correct to continue, but git should fail
-with a message that names the program that fails ("git") and
-should direct the message to stderr.
+> So, git-version-gen is correct to continue, but git should fail
+> with a message that names the program that fails ("git") and
+> should direct the message to stderr.
 
-Note to GIT list: the message in question:
+No thoughts on this part.  git has at least four kinds of message it
+sends to stderr (fatal:, warning:, error:, and usage:) but I am
+not sure it is useful to distinguish them ---
 
-    fatal: ambiguous argument 'v0.1..HEAD': unknown revision \
-       or path not in the working tree.
+	git add: pathspec 'nonsense' did not match any files
 
-Thanks!  Regards, Bruce
+might be nicer.
+
+diff --git a/build-aux/git-version-gen b/build-aux/git-version-gen
+index 5617eb8..119d7aa 100755
+--- a/build-aux/git-version-gen
++++ b/build-aux/git-version-gen
+@@ -119,7 +119,7 @@ then
+ 	    # result is the same as if we were using the newer version
+ 	    # of git describe.
+ 	    vtag=`echo "$v" | sed 's/-.*//'`
+-	    numcommits=`git rev-list "$vtag"..HEAD | wc -l`
++	    numcommits=`git rev-list "$vtag"..HEAD 2>/dev/null | wc -l`
+ 	    v=`echo "$v" | sed "s/\(.*\)-\(.*\)/\1-$numcommits-\2/"`;
+ 	    ;;
+     esac
