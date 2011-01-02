@@ -1,141 +1,98 @@
-From: Sylvain Rabot <sylvain@abstraction.fr>
-Subject: Re: [PATCH 0/4 v4] minor gitweb modifications
-Date: Sun, 02 Jan 2011 17:27:21 +0100
-Message-ID: <1293985641.15404.11.camel@kheops>
-References: <1293744031-17790-1-git-send-email-sylvain@abstraction.fr>
-	 <20110101104121.GA12734@burratino>
-Reply-To: sylvain@abstraction.fr
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: how to update a submodule?
+Date: Sun, 02 Jan 2011 18:30:17 +0100
+Message-ID: <4D20B629.8000107@web.de>
+References: <20101231222438.GA28199@cs-wsok.swansea.ac.uk> <201012312342.oBVNg1lx021930@no.baka.org> <20110101203957.GC26920@cs-wsok.swansea.ac.uk> <4D2061C7.5050405@web.de> <20110102155514.GB32745@cs-wsok.swansea.ac.uk>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg="pgp-sha1"; protocol="application/pgp-signature"; boundary="=-AxR8CFD1UTDnL8G9szmT"
-Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 02 17:27:40 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Seth Robertson <in-gitvger@baka.org>, git@vger.kernel.org
+To: Oliver Kullmann <O.Kullmann@swansea.ac.uk>
+X-From: git-owner@vger.kernel.org Sun Jan 02 18:30:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PZQmQ-0003Ad-Ja
-	for gcvg-git-2@lo.gmane.org; Sun, 02 Jan 2011 17:27:39 +0100
+	id 1PZRld-0007GW-Ak
+	for gcvg-git-2@lo.gmane.org; Sun, 02 Jan 2011 18:30:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752492Ab1ABQ1b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Jan 2011 11:27:31 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:53517 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752439Ab1ABQ12 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jan 2011 11:27:28 -0500
-Received: by wwa36 with SMTP id 36so13554726wwa.1
-        for <git@vger.kernel.org>; Sun, 02 Jan 2011 08:27:27 -0800 (PST)
-Received: by 10.216.173.15 with SMTP id u15mr4203666wel.83.1293985645650;
-        Sun, 02 Jan 2011 08:27:25 -0800 (PST)
-Received: from [192.168.0.7] (85-168-197-251.rev.numericable.fr [85.168.197.251])
-        by mx.google.com with ESMTPS id m6sm9345099wej.10.2011.01.02.08.27.22
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 02 Jan 2011 08:27:23 -0800 (PST)
-In-Reply-To: <20110101104121.GA12734@burratino>
-X-Mailer: Evolution 2.30.3 
+	id S1754617Ab1ABRa3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Jan 2011 12:30:29 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:60754 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754558Ab1ABRa2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jan 2011 12:30:28 -0500
+Received: from smtp04.web.de  ( [172.20.0.225])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 33B7A192DDA6C;
+	Sun,  2 Jan 2011 18:30:27 +0100 (CET)
+Received: from [93.240.108.214] (helo=[192.168.178.53])
+	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1PZRlC-0003iF-00; Sun, 02 Jan 2011 18:30:27 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <20110102155514.GB32745@cs-wsok.swansea.ac.uk>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19VSLtHQ+D+e0v8Zl98Wlxlrviwqo011O/gvjTw
+	m/INWtf2T24/u7Nt/BWfnDatviztvFvnAE16gV/d0AsN//suIB
+	Uo3qZiJuUXDZ9LvhD53Q==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164419>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164421>
+
+Am 02.01.2011 16:55, schrieb Oliver Kullmann:
+> On Sun, Jan 02, 2011 at 12:30:15PM +0100, Jens Lehmann wrote:
+>> Am 01.01.2011 21:39, schrieb Oliver Kullmann:
+>>> On Fri, Dec 31, 2010 at 06:42:01PM -0500, Seth Robertson wrote:
+>>> As far as I see that, this doesn't concern the problem how to I update
+>>> one repository with submodules from another repository with "these" submodules
+>>> (as the same paths)?
+>>
+>> I'm not sure I completely understand your use case, but submodules are
+>> repositories of their own, so they don't get updated by just pulling
+>> a superproject into another containing the same submodule. The submodule
+>> changes have to be pushed to its own parent repository and can then be
+>> fetched from there into another superproject's submodule.
+> 
+> I know that --- but if there wouldn't be any savings possible (in terms of using it),
+> then submodules would be pointless, and so the question is *how* to use them.
+
+No, they aren't pointless at all. But if you want to collaborate using
+submodules they IMO work best if all your coworkers are able to access
+the same submodule repos you are pushing to. Otherwise you'll have to
+transport all submodule changes additionally to those of the superproject
+(which might be more of a hassle than not using submodules in the first
+place). Then you might be better off pulling the modules into your repo
+using "git subtree" or "gitslave".
+
+A possibility to put all submodule commits in the object directory of
+the superproject has been discussed some time ago on this list [1] and
+at the last GitTogether. That might be just what you need, but I am not
+aware of any work done in that direction yet.
+
+> The good thing with Git is that there are no central repositories.
+> That's exactly what I want to use, but again and again the automatic
+> assumptions of "central repositories" are made, which should be actually alien to Git.
+
+No, Git works perfectly fine with central repositories too (and that is
+a feature :-). But I think I understand where your impression comes from.
+Submodules don't work very well when you change URLs (that can result
+in forcing your coworkers to do a "git submodule sync" in their repo
+every time they switch to a commit with a changed URL). But while that
+somehow works not being able to access a submodules repo doesn't work at
+all. So the constraint for submodules is to have a repo which is visible
+for the people you work with.
+
+But submodules don't really force you into the centralized model, as you
+can modify the .gitmodules file e.g. in a downstream fork and let it point
+to your own forked version of the submodules repos where you can do your
+own development independent of the submodules upstream.
+
+> Puuuh, I really really tried hard now to make my use-case clear :-|. Hopefully
+> now the picture emerges.
+
+Yep, thanks for sharing that!
 
 
---=-AxR8CFD1UTDnL8G9szmT
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Sat, 2011-01-01 at 04:41 -0600, Jonathan Nieder wrote:
-> (adding back cc: jakub)
->=20
-> Hi,
->=20
-> Sylvain Rabot wrote:
->=20
-> >   gitweb: add extensions to highlight feature map
-> >   gitweb: remove unnecessary test when closing file descriptor
->=20
-> I like the above two.
->=20
-> >   gitweb: add css class to remote url titles
->=20
-> I had a question (why make the remote url table inconsistent with the
-> older projects_list table) and suggested a more generic approach in
-> reply to v2[1]:
->=20
-> 	<table class=3D"projects_list">
-> 	<tr id=3D"metadata_desc">
-> 		<td class=3D"metadata_tag">description</td>
-> 		<td>Unnamed repository; edit this file to name it for gitweb.</td>
-> 	</tr>
-> 	<tr id=3D"metadata_owner">
-> 		<td class=3D"metadata_tag">owner</td>
-> 		<td>UNKNOWN</td>
-> 	</tr>
-> 	...
->=20
-> The idea was that the rows are already labelled for use by css, so to
-> make this stylable all we need to do is use a class for the first
-> column.  This way if some site operator wants the first column
-> *always* be bold then that is easy to do.
-
-So your idea is to use the same class for all this kind of tables' first
-column ?
-
->=20
-> Another approach with similar effect would be
->=20
-> 	<dl class=3D"projects_list">
-> 	<dt>description</dt>
-> 	<dd id=3D"metadata_desc"
-> 		>Unnamed repository; edit this file to name it for gitweb</dd>
-> 	<dt>owner>
-> 	<dd id=3D"metadata_owner"
-> 		>UNKNOWN</dd>
-> 	...
->=20
-> but that does not degrade as well to browsers not supporting css.  Any
-> thoughts on this?
-
-I think table is fine, don't see the need to replace it by dd, dt, dl.
-
->=20
-> >   gitweb: add vim modeline header which describes gitweb coding rule
->=20
-> I don't like this one.  Isn't the tabstop whatever the reader wants it
-> to be (e.g., 8)?  I don't like modelines as a way of documenting
-> coding standards because
->=20
->  (1) they are not clear to humans and editors other than vim
->  (2) they require annotating each source file separately.
->=20
-> See [1] for an alternative approach to configuring an editor to hack
-> on git.
->=20
-> Regards,
-> Jonathan
->=20
-> [1] http://thread.gmane.org/gmane.comp.version-control.git/109462/focus=
-=3D109538
-
-
---=20
-Sylvain Rabot <sylvain@abstraction.fr>
-
---=-AxR8CFD1UTDnL8G9szmT
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-
-iQEcBAABAgAGBQJNIKdkAAoJECLlHVUnhaoWdBkIAK4GX5LeB9IrvsbLgrOFOjIg
-sZTyc2HAxsXRIFW+FPfeW+nY051yZzn+O4c/0fvgHJbw5jA0e8h9TS7x0hhhwC0e
-uhnLmr6MAsfxGiBCSJMpS7/kaHFEY3+7DkLZ3mXam3nj4V7A1xireZ6G+yEz5ZXr
-U7ge+c7/ojA/76X76wuvJv4bksn20h3DyyXcHaOBdXoNHo69N5peXAO+v/c6Mq9+
-0CDLkZ0mamZw+GoCaX681S51BgEQCN/pF34gzvCuL42gHwAxmiixDzkJoshaeF6w
-qk0i0B8KCBkXNlFKCNT4NwAP3ILAx1tFOeUmhpjuj/PMosCQmb23gYNJBTi1t24=
-=L2TI
------END PGP SIGNATURE-----
-
---=-AxR8CFD1UTDnL8G9szmT--
+[1] http://thread.gmane.org/gmane.comp.version-control.git/151473/
