@@ -1,92 +1,85 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git-daemon serving repos with repo.git/git-daemon-export-ok
-Date: Mon, 3 Jan 2011 17:11:53 -0600
-Message-ID: <20110103231153.GA10733@burratino>
-References: <S1751603Ab1ACU6e/20110103205834Z+1762@vger.kernel.org>
- <4D224475.1090805@ecosensory.com>
+From: "J.H." <warthog9@eaglescrag.net>
+Subject: Re: [RFC PATCH v7 11/9] [PoC] gitweb/lib - tee, i.e. print and capture
+ during cache entry generation
+Date: Mon, 03 Jan 2011 15:31:58 -0800
+Message-ID: <4D225C6E.9000108@eaglescrag.net>
+References: <20101222234843.7998.87068.stgit@localhost.localdomain> <201101032233.16174.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: John Griessen <john@ecosensory.com>
-X-From: git-owner@vger.kernel.org Tue Jan 04 00:12:17 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "John 'Warthog9' Hawley" <warthog9@kernel.org>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 04 00:32:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PZtZY-0000aW-C8
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 00:12:16 +0100
+	id 1PZtsx-0003Tu-Nx
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 00:32:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750906Ab1ACXMJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jan 2011 18:12:09 -0500
-Received: from mail-yi0-f66.google.com ([209.85.218.66]:62353 "EHLO
-	mail-yi0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750757Ab1ACXMI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jan 2011 18:12:08 -0500
-Received: by yic24 with SMTP id 24so1851422yic.1
-        for <git@vger.kernel.org>; Mon, 03 Jan 2011 15:12:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=NN3xZKImpmu/LYX9S+ZzAyP20XzTEK2zVxPUQY6c4V8=;
-        b=AKh20H5ivQk8kqAOCVePD3Wg6D5y9giOfAmVGfDEqAeLVO/h9EGwIa85kfZh0Na5D5
-         rvSwePecSw6WmjlmfpWsrDKtLHbzwfCgzLOesXzia3Prrn09wx4Va1nbeKi4yJMM+vmY
-         42fwhKnA6J3cWN4TpYJgWujgCK/E6Id3BGmS0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=CPCRDJvKHz8PcHyNLygBw89CTItFHvS9uD0RiH796BQFaaySH6eICD7Lc/J1jBlh97
-         US0TsQF4pVFYKzmqtNT3vYhk9RKQQYRPSXxxiHxucdVGN1JMOLoPmhhKNwC15F7dePGQ
-         gMn54yXJY8wm6oQuUDOiSIHV/7Hqkpjpau+EY=
-Received: by 10.90.2.20 with SMTP id 20mr13114330agb.69.1294096325842;
-        Mon, 03 Jan 2011 15:12:05 -0800 (PST)
-Received: from burratino (adsl-69-209-72-219.dsl.chcgil.sbcglobal.net [69.209.72.219])
-        by mx.google.com with ESMTPS id 35sm28710878ano.31.2011.01.03.15.12.04
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 03 Jan 2011 15:12:04 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4D224475.1090805@ecosensory.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1750757Ab1ACXcI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jan 2011 18:32:08 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:46539 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750716Ab1ACXcH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jan 2011 18:32:07 -0500
+Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id p03NVw0w021679
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Mon, 3 Jan 2011 15:31:59 -0800
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
+In-Reply-To: <201101032233.16174.jnareb@gmail.com>
+X-Enigmail-Version: 1.0.1
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Mon, 03 Jan 2011 15:31:59 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164460>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164461>
 
-Hi John,
+On 01/03/2011 01:33 PM, Jakub Narebski wrote:
+> Instead of having gitweb use progress info indicator / throbber to
+> notify user that data is being generated by current process, gitweb
+> can now (provided that PerlIO::tee from PerlIO::Util is available)
+> send page to web browser while simultaneously saving it to cache
+> (print and capture, i.e. tee), thus having incremental generating of
+> page serve as a progress indicator.
 
-John Griessen wrote:
+In general, and particularly for the large sites that caching is
+targeted at, teeing is a really bad idea.  I've mentioned this several
+times before, and the progress indicator is a *MUCH* better idea.  I'm
+not sure how many times I can say that, even if this was added it would
+have the potential to exacerbate disk thrashing and overall make things
+a lot more complex.
 
-> john@toolbench:~/EEProjects/test$ git clone git://ecosensory.com/tek_7k_ext.git
-> Cloning into tek_7k_ext...
-> fatal: protocol error: bad line length character: fata
-[...]
-> Next I tried changing my command that runs git-daemon
-> from
-> 
-> exec 2>&1
-> echo 'git-daemon starting.'
-> exec chpst -ugitdaemon \
->   "$(git --exec-path)"/git-daemon --verbose --base-path=/var/cache /var/cache/git
+1) Errors may still be generated in flight as the cache is being
+generated.  It would be better to let the cache run with a progress
+indicator and should an error occur, display the error instead of giving
+any output that may have been generated (and thus likely a broken page).
 
-Worrisome.  Based on /usr/share/doc/git-daemon-run/README.Debian,
-I would be interested in:
+2) Having multiple clients all waiting on the same page (in particular
+the index page) can lead to invalid output.  In particular if you are
+teeing the output a reading client now must come in, read the current
+contents of the file (as written), then pick up on the the tee after
+that.  It's actually possible for the reading client to miss data as it
+may be in flight to be written and the client is switching from reading
+the file to reading the tee.  I don't see anything in your code to
+handle that kind of switch over.
 
-	git --version
-	dpkg -l git-daemon-run
-	sv stat git-daemon
-	cat /var/log/git-daemon/current
+3) This makes no allowance for the file to be generated completely in
+the background while serving stale data in the interim.  Keep in mind
+that it can (as Fedora has experienced) take *HOURS* to generate the
+index page, teeing that output just means brokenness and isn't useful.
 
-It looks like the daemon is sending a malformed reply starting with
-"fatal: ", similar to the bug fixed by v1.7.0.3~7 (daemon:
-parse_host_and_port SIGSEGV if port is specified, 2010-03-20).
+It's much better to have a simple, lightweight waiting message get
+displayed while things happen.  When they are done, output the completed
+page to all waiting clients.
 
-It the error message does not provide any insight, I'd also suggest
-using strace or ltrace to attach to the running git-daemon process to
-see what's going on.
+- John 'Warthog9' Hawley
 
-Thanks for reporting,
-Jonathan
+P.S. I'm back to work full-time on Wednesday, which I'll be catching up
+on gitweb and trying to make forward progress on my gitweb code again.
