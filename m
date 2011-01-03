@@ -1,82 +1,592 @@
-From: John Griessen <john@ecosensory.com>
-Subject: git-daemon serving repos with repo.git/git-daemon-export-ok
-Date: Mon, 03 Jan 2011 15:49:41 -0600
-Message-ID: <4D224475.1090805@ecosensory.com>
-References: <S1751603Ab1ACU6e/20110103205834Z+1762@vger.kernel.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [RFC PATCH v7 11/9] [PoC] gitweb/lib - tee, i.e. print and capture during cache entry generation
+Date: Mon, 3 Jan 2011 22:33:02 +0100
+Message-ID: <201101032233.16174.jnareb@gmail.com>
+References: <20101222234843.7998.87068.stgit@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Cc: "J.H." <warthog9@eaglescrag.net>,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 03 22:49:50 2011
+X-From: git-owner@vger.kernel.org Mon Jan 03 23:09:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PZsHl-0001Eb-Md
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Jan 2011 22:49:50 +0100
+	id 1PZsaR-0004OJ-VA
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Jan 2011 23:09:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754960Ab1ACVto (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jan 2011 16:49:44 -0500
-Received: from hrndva-omtalb.mail.rr.com ([71.74.56.122]:42002 "EHLO
-	hrndva-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753235Ab1ACVtn (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jan 2011 16:49:43 -0500
-X-Authority-Analysis: v=1.1 cv=UQuFHoD2CPQ248x8AXEbKhr4z9AaDqApxmEl3BhfZ64= c=1 sm=0 a=SldSeXCDZ5oA:10 a=8nJEP1OIZ-IA:10 a=hpnIzNeuzKcqG6phuHbX0Q==:17 a=wR-FlJDvAAAA:8 a=QN1-tMDUMlsjoChOZaQA:9 a=v0gmY6xSFTbcK_cvM9ebZt8uQ08A:4 a=wPNLvfGTeEIA:10 a=_rE2JZbVKix_j0qc:21 a=XhBYgyN2kqwayTr0:21 a=hpnIzNeuzKcqG6phuHbX0Q==:117
-X-Cloudmark-Score: 0
-X-Originating-IP: 66.68.104.159
-Received: from [66.68.104.159] ([66.68.104.159:40307] helo=[192.168.15.39])
-	by hrndva-oedge02.mail.rr.com (envelope-from <john@ecosensory.com>)
-	(ecelerity 2.2.3.46 r()) with ESMTP
-	id 08/E6-00963-574422D4; Mon, 03 Jan 2011 21:49:42 +0000
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <S1751603Ab1ACU6e/20110103205834Z+1762@vger.kernel.org>
+	id S1751847Ab1ACWJB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jan 2011 17:09:01 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:63511 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750971Ab1ACWI7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jan 2011 17:08:59 -0500
+Received: by wwa36 with SMTP id 36so14612943wwa.1
+        for <git@vger.kernel.org>; Mon, 03 Jan 2011 14:08:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=GYjEogSbWbw8yE/t6fA9SEnRJv/0BCdtE7LMZ5d1HIc=;
+        b=GvWnFYqRCbYTh35rHYoKZ2daiZLPyJgLNWOTmJqtrchKu+zzZXPJqb4XGa8CTOqGwj
+         hCDkZc1uAWS0QmxVtV1gGAkFpnXBH0b+hDKgVDtHhC4Ddqy6KfGB/Ga+yAugyMy+XbIW
+         bGnGjSxN9sl0fr7uXlmyv+iA/ouF0s5z5NyzA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=FkoJHEoLu5Qxkwv1rOAvcYdRGX9ws6SCLM3yxekNoik+pz3FhnO0JkES+r7go8q2r9
+         5QBriM43xzJnFv1YSNHeCEB20VH1s/4OveDephvB2hTVIYGnCcoFSW6IdSwL39QU8Lh+
+         /4LaPfj0KUMt5dWwJyg2Eyu857/BczGa6ZUOc=
+Received: by 10.227.141.197 with SMTP id n5mr4425955wbu.100.1294092537888;
+        Mon, 03 Jan 2011 14:08:57 -0800 (PST)
+Received: from [192.168.1.13] (abwu207.neoplus.adsl.tpnet.pl [83.8.244.207])
+        by mx.google.com with ESMTPS id m10sm14515761wbc.10.2011.01.03.14.08.54
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 03 Jan 2011 14:08:56 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20101222234843.7998.87068.stgit@localhost.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164458>
 
-I would like to serving repos with repo.git/git-daemon-export-ok from a debian linux server installation,
-but I am getting symptoms of clone failing.
-
-john@toolbench:~/EEProjects/test$ git clone git://ecosensory.com/tek_7k_ext.git
-Cloning into tek_7k_ext...
-fatal: protocol error: bad line length character: fata
-
-I've read that that is due to the shell at the client end putting out extra characters...
-but other testers on other machines get it the same way...
+Instead of having gitweb use progress info indicator / throbber to
+notify user that data is being generated by current process, gitweb
+can now (provided that PerlIO::tee from PerlIO::Util is available)
+send page to web browser while simultaneously saving it to cache
+(print and capture, i.e. tee), thus having incremental generating of
+page serve as a progress indicator.
 
 
-Next I tried changing my command that runs git-daemon
-from
+To do this, the GitwebCache::Capture::ToFile module acquired ->tee()
+subroutine, similar to ->capture(), but it prints while capturing
+output.  The ->tee() method (and its worker methods ->tee_start() and
+->tee_end()) are available only if PerlIO::tee from PerlIO::Util
+distribution is present.  Tests checking if this feature works as
+expected were added to t9510 test.
 
-exec 2>&1
-echo 'git-daemon starting.'
-exec chpst -ugitdaemon \
-   "$(git --exec-path)"/git-daemon --verbose --base-path=/var/cache /var/cache/git
-
-to
-
-exec 2>&1
-echo 'git-daemon starting.'
-exec chpst -ugitdaemon \
-   "$(git --exec-path)"/git-daemon --verbose --base-path=/srv/gitosis /srv/gitosis/repositories
-
-and results are:
-
-john@toolbench:~/EEProjects/test$  git clone git://ecosensory.com/tek_7k_ext.git
-Cloning into tek_7k_ext...
-fatal: protocol error: bad line length character: fata
-john@toolbench:~/EEProjects/test$  git clone git://ecosensory.com/repositories/tek_7k_ext.git
-Cloning into tek_7k_ext...
-fatal: protocol error: bad line length character: fata
+An alternative would be to provide two versions of
+GitwebCache::Capture::ToFile.  Note also that PerlIO::tee is not
+strictly necessary, as Capture::Tiny shows, but in most generic case
+(like done in Capture::Tiny) one needs separate process functioning as
+multplexer.
 
 
-What can I do to simplify this testing and pin point the problem?
+Because tee-ing (printing while capturing) can function as a kind of
+progress indicator only for process generating the data for cache
+entry, and not for the processes waiting for data to be generated,
+therefore 'generating_info' got splitinto 'get_progress_info' and
+'set_progress_info'.  You can set now in GitwebCache::FIleCacheWithLocking
+those two separately.  You are expected to unset 'set_progress_info'
+when using tee-ing capturing engine.  Some tests added to t9511 with
+tee-like situation.
 
-Or is gitweb recommended?
+As a proof of concept gitweb now uses two slightly different versions
+of "Generating..." page; if you worry about interaction between progress
+indicator and non-cacheable error pages, you can set 'set_progress_info'
+separately to undef.
 
-thanks,
 
-John Griessen
+The cache_output subroutine from GitwebCache::CacheOutput got updated
+to use ->tee() subroutine if $capture supports it.  If ->tee() is
+used, then of course generated data doesn't need to and shouldn't be
+printed; also cache_output unsets 'set_progress_info' locally.  Note
+that ->tee() is used only if we are not in background process; if we
+are in background process, simple ->capture() is used.  No new tests
+for now.
+
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+Note: the change to t/gitweb-lib.sh and some of changes to t9510 are
+incidental fixes; original commits should be fixed instead.
+
+This is proof of concept (PoC) patch, showing how one can use
+"tee"-ing in capturing engine together with gitweb output caching.
+Because we don't need and don't use 'generating_info' subroutine for
+process that is writing data (one that acquired writers lock) we are
+(or at least should be) now safe to have error pages not cached.
+
+Currently the "tee"-ing support requires PerlIO::tee module from the
+PerlIO::Util distribution, as it was easiest way to add such feature.
+In the future we would have probably to do something similar what
+'tee' in Capture::Tiny (or in other capture modules) does.  I'm not
+sure if PerlIO::Util is packaged as RPM package anywhere...; well, I have
+googled that ALT Linux has it: http://sisyphus.ru/en/srpm/perl-PerlIO-Util
+
+I have only ran tests, I haven't actually run gitweb with those
+changes... :-P
+
+ gitweb/gitweb.perl                             |   32 +++++++----
+ gitweb/lib/GitwebCache/CacheOutput.pm          |   18 ++++++-
+ gitweb/lib/GitwebCache/Capture/ToFile.pm       |   67 ++++++++++++++++++++++-
+ gitweb/lib/GitwebCache/FileCacheWithLocking.pm |   52 +++++++++++++-----
+ t/gitweb-lib.sh                                |    2 +-
+ t/t9510/test_capture_interface.pl              |   28 +++++++++-
+ t/t9511/test_cache_interface.pl                |   29 ++++++++++
+ 7 files changed, 194 insertions(+), 34 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 5ef668d..de283a0 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -325,19 +325,17 @@ our %cache_options = (
+ 	# serving possibly stale data.
+ 	'background_cache' => 1,
+ 
+-	# Subroutine which would be called when gitweb has to wait for data to
++	# Subroutines which would be called when gitweb has to wait for data to
+ 	# be generated (it can't serve stale data because there isn't any,
+-	# or if it exists it is older than 'max_lifetime').  The default
+-	# is to use git_generating_data_html(), which creates "Generating..."
+-	# page, which would then redirect or redraw/rewrite the page when
+-	# data is ready.
+-	# Set it to `undef' to disable this feature.
++	# or if it exists it is older than 'max_lifetime').
++	# Set them to `undef' to disable this feature.
+ 	#
+-	# Such subroutine (if invoked from GitwebCache::FileCacheWithLocking)
++	# Such subroutines (if invoked from GitwebCache::FileCacheWithLocking)
+ 	# is passed the following parameters: $cache instance, human-readable
+ 	# $key to current page, and $sync_coderef subroutine to invoke to wait
+ 	# (in a blocking way) for data.
+-	'generating_info' => \&git_generating_data_html,
++	'get_progress_info' => \&git_get_progress_info_html,
++	'set_progress_info' => \&git_set_progress_info_html,
+ 
+ 	# How to handle runtime errors occurring during cache gets and cache
+ 	# sets.  Options are:
+@@ -3721,9 +3719,21 @@ sub get_page_title {
+ 	return $title;
+ }
+ 
++sub git_get_progress_info_html {
++	git_generating_data_html("Waiting", @_);
++}
++
++sub git_set_progress_info_html {
++	# minimum startup delay is 2 seconds, just in case, for error handling
++	local $generating_options{'startup_delay'} =
++		$generating_options{'startup_delay'} > 2 ? $generating_options{'startup_delay'} : 2;
++
++	git_generating_data_html("Generating", @_);
++}
++
+ # creates "Generating..." page when caching enabled and not in cache
+ sub git_generating_data_html {
+-	my ($cache, $key, $sync_coderef) = @_;
++	my ($msg, $cache, $key, $sync_coderef) = @_;
+ 
+ 	# when should gitweb show "Generating..." page
+ 	if ((defined $actions_info{$action}{'output_format'} &&
+@@ -3749,7 +3759,7 @@ sub git_generating_data_html {
+ 		}
+ 	}
+ 
+-	my $title = "[Generating...] " . get_page_title();
++	my $title = "[$msg...] " . get_page_title();
+ 	# TODO: the following line of code duplicates the one
+ 	# in git_header_html, and it should probably be refactored.
+ 	my $mod_perl_version = $ENV{'MOD_PERL'} ? " $ENV{'MOD_PERL'}" : '';
+@@ -3786,7 +3796,7 @@ sub git_generating_data_html {
+ EOF
+ 
+ 	local $| = 1; # autoflush
+-	print STDOUT 'Generating...';
++	print STDOUT "$msg...";
+ 
+ 	my $total_time = 0;
+ 	my $interval = $generating_options{'print_interval'} || 1;
+diff --git a/gitweb/lib/GitwebCache/CacheOutput.pm b/gitweb/lib/GitwebCache/CacheOutput.pm
+index 188d4ab..3bcd35b 100644
+--- a/gitweb/lib/GitwebCache/CacheOutput.pm
++++ b/gitweb/lib/GitwebCache/CacheOutput.pm
+@@ -42,6 +42,14 @@ sub cache_output {
+ 
+ 
+ 	my $pid = $$;
++	my $can_tee = $capture->can('tee');
++	# if $capture can tee, we don't need progress info for generating (on set).
++	# the below breaks encapsulation, but it is a bit simpler than
++	# $old = $cache->get_...; $cache->set_...(...); ...; $cache->set_...($old);
++	local $cache->{'set_progress_info'} = undef
++		if ($can_tee);
++
++	my $printed = 0;
+ 	my ($fh, $filename);
+ 	my ($capture_fh, $capture_filename);
+ 	eval { # this `eval` is to catch rethrown error, so we can print captured output
+@@ -54,7 +62,12 @@ sub cache_output {
+ 			}
+ 
+ 			# this `eval` is to be able to cache error output (up till 'die')
+-			eval { $capture->capture($code, $capture_fh); };
++			if ($can_tee && $$ == $pid) {
++				$printed = 1;
++				eval { $capture->tee($code, $capture_fh); };
++			} else {
++				eval { $capture->capture($code, $capture_fh); };
++			}
+ 
+ 			# note that $cache can catch this error itself (like e.g. CHI);
+ 			# use "die"-ing error handler to rethrow this exception to outside
+@@ -69,7 +82,8 @@ sub cache_output {
+ 		$filename ||= $capture_filename;
+ 	}
+ 
+-	if (defined $fh || defined $filename) {
++	if ((defined $fh || defined $filename) &&
++	    !$printed) { # did we tee, i.e. already printed output?
+ 		# set binmode only if $fh is defined (is a filehandle)
+ 		# File::Copy::copy opens files given by filename in binary mode
+ 		binmode $fh,    ':raw' if (defined $fh);
+diff --git a/gitweb/lib/GitwebCache/Capture/ToFile.pm b/gitweb/lib/GitwebCache/Capture/ToFile.pm
+index d2dbf0f..0290ec4 100644
+--- a/gitweb/lib/GitwebCache/Capture/ToFile.pm
++++ b/gitweb/lib/GitwebCache/Capture/ToFile.pm
+@@ -20,6 +20,10 @@ use warnings;
+ use PerlIO;
+ use Symbol qw(qualify_to_ref);
+ 
++BEGIN {
++	eval { use PerlIO::Util; };
++}
++
+ # Constructor
+ sub new {
+ 	my $class = shift;
+@@ -30,22 +34,41 @@ sub new {
+ 	return $self;
+ }
+ 
+-sub capture {
++sub capture_or_tee {
+ 	my $self = shift;
+ 	my $code = shift;
++	my ($start, $stop) = @{ shift() };
+ 
+-	$self->capture_start(@_); # pass rest of params
++	$self->$start(@_); # pass rest of params
+ 	eval { $code->(); 1; };
+ 	my $exit_code = $?; # save this for later
+ 	my $error = $@;     # save this for later
+ 
+-	my $got_out = $self->capture_stop();
++	my $got_out = $self->$stop();
+ 	$? = $exit_code;
+ 	die $error if $error;
+ 
+ 	return $got_out;
+ }
+ 
++sub capture {
++	my ($self, $code, @args) = @_;
++
++	return
++		$self->capture_or_tee($code, ['capture_start', 'capture_stop'], @args);
++}
++
++BEGIN {
++	if ($INC{'PerlIO/Util.pm'}) {
++		*tee = sub {
++			my ($self, $code, @args) = @_;
++
++			return
++				$self->capture_or_tee($code, ['tee_start', 'tee_stop'], @args);
++		};
++	}
++}
++
+ # ----------------------------------------------------------------------
+ 
+ # Start capturing data (STDOUT)
+@@ -92,6 +115,44 @@ sub capture_stop {
+ 	return exists $self->{'to'} ? $self->{'to'} : $self->{'data'};
+ }
+ 
++# ......................................................................
++
++BEGIN {
++	if ($INC{'PerlIO/Util.pm'}) {
++		*tee_start = sub {
++			my ($self, $to) = @_;
++
++			# save layers, to replay them on top of 'tee' layer (?)
++			my @layers = PerlIO::get_layers(\*STDOUT);
++
++			$self->{'to'} = $to;
++			*STDOUT->push_layer('tee' => $to);
++
++			_relayer(\*STDOUT, \@layers); # is it necessary?
++
++			# started tee-ing
++			$self->{'teeing'} = 1;
++		};
++		*tee_stop = sub {
++			my $self = shift;
++
++			# return if we didn't start tee-ing
++			return unless delete $self->{'teeing'};
++
++			my @top_layers;
++			while ((my $layer = *STDOUT->pop_layer()) ne 'tee') {
++				push @top_layers, $layer;
++			}
++			binmode(STDOUT, join(":", ":", @top_layers));
++			# or is it binmode(STDOUT, join(":", ":raw", @top_layers));
++
++			return exists $self->{'to'} ? $self->{'to'} : $self->{'data'};
++		};
++	}
++}
++
++# ----------------------------------------------------------------------
++
+ # taken from Capture::Tiny by David Golden, Apache License 2.0
+ # with debugging stripped out
+ sub _relayer {
+diff --git a/gitweb/lib/GitwebCache/FileCacheWithLocking.pm b/gitweb/lib/GitwebCache/FileCacheWithLocking.pm
+index 291526e..09ae7b2 100644
+--- a/gitweb/lib/GitwebCache/FileCacheWithLocking.pm
++++ b/gitweb/lib/GitwebCache/FileCacheWithLocking.pm
+@@ -76,12 +76,17 @@ our $EXPIRE_NOW = 0;
+ #  * 'background_cache' (boolean)
+ #    This enables/disables regenerating cache in background process.
+ #    Defaults to true.
+-#  * 'generating_info'
++#  * 'get_progress_info',
++#    'set_progress_info',
++#    'generating_info' (code reference)
+ #    Subroutine (code) called when process has to wait for cache entry
+ #    to be (re)generated (when there is no not-too-stale data to serve
+ #    instead), for other process (or bacground process).  It is passed
+ #    $cache instance, $key, and $wait_code subroutine (code reference)
+ #    to invoke (to call) to wait for cache entry to be ready.
++#    'get_progress_info' gets called on getting data from cache, i.e.
++#    when waiting for data to be generated, 'set_progress_info' gets
++#    called when waiting to generate data; 'generating_info' sets both.
+ #    Unset by default (which means no activity indicator).
+ #  * 'on_error' (similar to CHI 'on_get_error'/'on_set_error')
+ #    How to handle runtime errors occurring during cache gets and cache
+@@ -120,8 +125,14 @@ sub new {
+ 	$self->{'background_cache'} =
+ 		exists $opts{'background_cache'} ? $opts{'background_cache'} :
+ 		1;
+-	$self->{'generating_info'} = $opts{'generating_info'}
+-		if exists $opts{'generating_info'};
++	$self->{'get_progress_info'} =
++		exists $opts{'get_progress_info'} ? $opts{'get_progress_info'} :
++		exists $opts{'generating_info'}   ? $opts{'generating_info'} :
++		undef;
++	$self->{'set_progress_info'} =
++		exists $opts{'set_progress_info'} ? $opts{'set_progress_info'} :
++		exists $opts{'generating_info'}   ? $opts{'generating_info'} :
++		undef;
+ 	$self->{'on_error'} =
+ 		exists $opts{'on_error'}      ? $opts{'on_error'} :
+ 		exists $opts{'on_get_error'}  ? $opts{'on_get_error'} :
+@@ -142,7 +153,7 @@ sub new {
+ 
+ # creates get_depth() and set_depth($depth) etc. methods
+ foreach my $i (qw(depth root namespace expires_in max_lifetime
+-                  background_cache generating_info
++                  background_cache get_progress_info set_progress_info
+                   on_error)) {
+ 	my $field = $i;
+ 	no strict 'refs';
+@@ -156,14 +167,25 @@ foreach my $i (qw(depth root namespace expires_in max_lifetime
+ 	};
+ }
+ 
+-# $cache->generating_info($wait_code);
+-# runs 'generating_info' subroutine, for activity indicator,
+-# checking if it is defined first.
+-sub generating_info {
++sub set_generating_info {
+ 	my $self = shift;
+ 
+-	if (defined $self->{'generating_info'}) {
+-		$self->{'generating_info'}->($self, @_);
++	$self->set_get_progress_info(@_);
++	$self->set_set_progress_info(@_);
++}
++
++# $cache->{get,set}_progress_info($key, $wait_code);
++# runs '{get,set}_progress_info' subroutine, for activity indicator,
++# checking if it is defined first.
++foreach my $name qw(get_progress_info set_progress_info) {
++	my $method = $name;
++	no strict 'refs';
++	*{"$method"} = sub {
++		my $self = shift;
++
++		if (defined $self->{$name}) {
++			$self->{$name}->($self, @_);
++		}
+ 	}
+ }
+ 
+@@ -269,11 +291,11 @@ sub _tempfile_to_path {
+ # Wait for data to be available using (blocking) $code,
+ # then return filehandle and filename to read from for $key.
+ sub _wait_for_data {
+-	my ($self, $key, $sync_coderef) = @_;
++	my ($self, $key, $progress_info, $sync_coderef) = @_;
+ 	my @result;
+ 
+ 	# provide "generating page..." info, if exists
+-	$self->generating_info($key, $sync_coderef);
++	$self->$progress_info($key, $sync_coderef);
+ 	# generating info may exit, so we can not get there
+ 
+ 	# wait for data to be available
+@@ -300,7 +322,7 @@ sub _set_maybe_background {
+ 		# or if main process would show progress indicator
+ 		$detach = @stale_result;
+ 		$pid = fork()
+-			if (@stale_result || $self->{'generating_info'});
++			if (@stale_result || $self->{'set_progress_info'});
+ 	}
+ 
+ 	if ($pid) {
+@@ -503,7 +525,7 @@ sub compute_fh {
+ 					or $self->_handle_error("Couldn't reopen (for reading) lockfile '$lockfile': $!");
+ 
+ 				eval {
+-					@result = $self->_wait_for_data($key, sub {
++					@result = $self->_wait_for_data($key, 'set_progress_info', sub {
+ 						flock($lock_fh, LOCK_SH);
+ 						# or 'waitpid -1, 0;', or 'wait;', as we don't detach now in this situation
+ 					});
+@@ -534,7 +556,7 @@ sub compute_fh {
+ 			# wait for regeneration if no stale data to serve,
+ 			# using shared / readers lock to sync (wait for data)
+ 			eval {
+-				@result = $self->_wait_for_data($key, sub {
++				@result = $self->_wait_for_data($key, 'get_progress_info', sub {
+ 					flock($lock_fh, LOCK_SH);
+ 				});
+ 			};
+diff --git a/t/gitweb-lib.sh b/t/gitweb-lib.sh
+index 8652c91..f0ef009 100755
+--- a/t/gitweb-lib.sh
++++ b/t/gitweb-lib.sh
+@@ -57,7 +57,7 @@ gitweb_enable_caching () {
+ 		cat >>gitweb_config.perl <<-\EOF &&
+ 		$caching_enabled = 1;
+ 		$cache_options{"expires_in"} = -1;      # never expire cache for tests
+-		$cache_options{"cache_root"} = "$TRASH_DIRECTORY/cache"; # to clear the right thing
++		$cache_options{"cache_root"} = "cache"; # to clear the right thing
+ 		$cache_options{"background_cache"} = 0; # no background processes in test suite
+ 		$cache_options{"generating_info"} = undef; # tests do not use web browser
+ 		EOF
+diff --git a/t/t9510/test_capture_interface.pl b/t/t9510/test_capture_interface.pl
+index 6d90497..35e46ad 100755
+--- a/t/t9510/test_capture_interface.pl
++++ b/t/t9510/test_capture_interface.pl
+@@ -116,8 +116,8 @@ $captured = $outer_capture->capture(sub {
+ 	print "|post";
+ }, 'outer_actual');
+ 
+-my $inner = read_file('inner_actual');
+-my $outer = read_file('outer_actual');
++$inner = read_file('inner_actual');
++$outer = read_file('outer_actual');
+ 
+ is($inner, "INNER:pre|",
+    'nested capture with die: inner output captured up to die');
+@@ -125,6 +125,30 @@ is($outer, "pre|@=die from inner\n|post",
+    'nested capture with die: outer caught rethrown exception from inner');
+ 
+ 
++# Testing tee feature, if available
++#
++SKIP: {
++	skip "PerlIO::Util module not found", 3
++		unless eval { require PerlIO::Util; 1 };
++
++	can_ok($capture, 'tee');
++
++	$captured = $outer_capture->capture(sub {
++		print "pre|";
++		my $captured = $capture->tee(sub {
++			print "INNER";
++		}, 'inner_actual');
++		print "|post";
++	}, 'outer_actual');
++
++	$inner = read_file('inner_actual');
++	$outer = read_file('outer_actual');
++
++	is($inner, "INNER",          'tee: captured');
++	is($outer, "pre|INNER|post", 'tee: printed');
++};
++
++
+ done_testing();
+ 
+ # Local Variables:
+diff --git a/t/t9511/test_cache_interface.pl b/t/t9511/test_cache_interface.pl
+index 1e8feb3..83f3894 100755
+--- a/t/t9511/test_cache_interface.pl
++++ b/t/t9511/test_cache_interface.pl
+@@ -154,6 +154,14 @@ sub get_value_slow_fh {
+ 	sleep $slow_time;
+ 	print {$fh} $value;
+ }
++sub tee_value_slow_fh {
++	my $fh = shift;
++
++	$call_count++;
++	sleep $slow_time;
++	print       $value;
++	print {$fh} $value;
++}
+ sub get_value_die {
+ 	$call_count++;
+ 	die "get_value_die\n";
+@@ -402,6 +410,26 @@ subtest 'generating progress info' => sub {
+ 	);
+ 
+ 
++	# with background generation, tee-like, no stale data
++	$cache->set_set_progress_info(undef);
++	$cache->set_background_cache(1);
++	$cache->remove($key); # no data and no stale value
++	$call_count = 0;
++
++	@output = parallel_run {
++		my $data = cache_compute_fh($cache, $key, \&tee_value_slow_fh);
++		print "$sep$call_count$sep";
++		print $data if defined $data;
++	};
++	my $getting_output = (grep /\Q${sep}0${sep}\E/, @output)[0];
++	my $setting_output = (grep /\Q${sep}1${sep}\E/, @output)[0];
++	is($getting_output, "$progress_info${sep}0$sep$value",
++	   'background, no stale, tee: waiting process prints progress, gets data');
++	is($setting_output, "$value${sep}1$sep$value",
++	   'background, no stale, tee: generating process prints data, sets data');
++	$cache->set_generating_info(\&test_generating_info); # restore
++
++
+ 	# with background generation, with stale value
+ 	cache_set_fh($cache, $key, $stale_value);
+ 	$cache->set_expires_in(0);    # set value is now expired
+@@ -427,6 +455,7 @@ subtest 'generating progress info' => sub {
+ };
+ $cache->set_expires_in(-1);
+ 
++
+ done_testing();
+ 
+ 
+-- 
+1.7.3
