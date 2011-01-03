@@ -1,131 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Commiting automatically (2)
-Date: Mon, 3 Jan 2011 18:34:08 +0100
-Message-ID: <201101031834.09115.jnareb@gmail.com>
-References: <loom.20101219T090500-396@post.gmane.org> <201012271304.03915.jnareb@gmail.com> <4D211AA4.4050108@seznam.cz>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: [PATCH] Fix typos in the documentation
+Date: Mon, 03 Jan 2011 12:57:30 -0500
+Message-ID: <1294077450.12519.15.camel@drew-northup.unet.maine.edu>
+References: <20110102055653.GI19818@gmx.de>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
+Content-Type: text/plain
 Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Maaartin-1 <grajcar1@seznam.cz>
-X-From: git-owner@vger.kernel.org Mon Jan 03 18:34:42 2011
+To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jan 03 18:58:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PZoIq-00088o-Ty
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Jan 2011 18:34:41 +0100
+	id 1PZoff-0007wz-12
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Jan 2011 18:58:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932405Ab1ACRee (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jan 2011 12:34:34 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:36730 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932303Ab1ACRed (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jan 2011 12:34:33 -0500
-Received: by wwa36 with SMTP id 36so14356924wwa.1
-        for <git@vger.kernel.org>; Mon, 03 Jan 2011 09:34:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=OKHNAIT1fewiHRxEbKNWuPl00rYrj1bdAd8i+xkFwvM=;
-        b=Pq33esYYAr/iIgGnBWGjG/kbs45Iumr7bLY5ODnkYJ2IJmAl3Y8M9+8JqU/uMi8HyX
-         DUtdMm0BCUY+1ahLmuyHb26GR5Xj2G5SZaF0DDk2ldjxv2m4c4FUxhaU6hvSh1IULFMA
-         M3qBfNHwQq09QpLy2jCgT3rCjwBkXOv1j2o9g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=B7EbVvO6fho2nBqYssnjiiaxiGRBhL5cJ+pzB1k0X4nVHtTQyvhqg3SjjkV8nqQ0eq
-         ZdEAUj67LuCUiOxSWrp6lN+hYieeo58PSw6s10c5vJNureouF8n8+ftEfgE0FJ+iTrZn
-         CKdomVo/E/odP6f8LrgAiS7GpIa46rABC/yQ4=
-Received: by 10.216.171.19 with SMTP id q19mr2882608wel.53.1294076072578;
-        Mon, 03 Jan 2011 09:34:32 -0800 (PST)
-Received: from [192.168.1.13] (abwu207.neoplus.adsl.tpnet.pl [83.8.244.207])
-        by mx.google.com with ESMTPS id m50sm9996633wek.32.2011.01.03.09.34.09
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 03 Jan 2011 09:34:19 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4D211AA4.4050108@seznam.cz>
-Content-Disposition: inline
+	id S1755463Ab1ACR6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jan 2011 12:58:09 -0500
+Received: from basalt.its.maine.edu ([130.111.32.66]:60430 "EHLO
+	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755365Ab1ACR6I (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jan 2011 12:58:08 -0500
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p03HvYRB007144
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 3 Jan 2011 12:57:39 -0500
+In-Reply-To: <20110102055653.GI19818@gmx.de>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=2
+	Fuz1=2 Fuz2=2
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p03HvYRB007144
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1294682263.76342@mRYECwmsrgGAPN3Q07citg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164453>
 
-On Mon, 3 Jan 2011, Maaartin-1 wrote:
-> On 10-12-27 13:04, Jakub Narebski wrote:
->> On Wed, 22 Dec 2010, Maaartin-1 wrote:
 
->>> Moreover, git-show-ref --head shows all branches and tags, this can't be
->>> right, can it? According to your above explanation, getting HEAD using a
->>> pattern is impossible, so I'd say that's what is "--head" good for.
->>>
->>> Moreover, "git-show-ref --heads" shows less than "git-show-ref --head",
->>> despite the plural.
->> 
->> "git show-ref --head" is strange in that it doesn't play well
->> with '--heads' and '--tags' and '<pattern>'.
->> 
->> I think it is a bit of misdesign, but I don't know how it should be
->> fixed; current output of "git show-ref --head" has to be kept because
->> of backward compatibility - git-show-ref is plumbing.
-> 
-> I wonder what
-> git show-ref --head
-> really does. It seems to output everything, is this the expected (albeit
-> strange) behavior? Maybe, I know now, s. below.
-> 
-> For sure, either the doc is completely wrong or the implementation. I
-> hope I understand "Show the HEAD reference" correctly as showing the
-> HEAD reference, don't I? So it must show a single reference (singular).
-> Instead I get all tags and all heads. Could anybody either fix the doc
-> or convince me that the many lines I'm seeing are a single one?
+On Sun, 2011-01-02 at 06:56 +0100, Ralf Wildenhues wrote:
 
-Well, it might be that *both* documentation and implementation are wrong.
+<snip for clarity> 
+> diff --git a/Documentation/RelNotes/1.7.4.txt b/Documentation/RelNotes/1.7.4.txt
+> index b736d39..5619641 100644
+> --- a/Documentation/RelNotes/1.7.4.txt
+> +++ b/Documentation/RelNotes/1.7.4.txt
+> @@ -8,12 +8,11 @@ Updates since v1.7.3
+>     docbook-xsl >= 1.73. If you have older versions, you can set
+>     ASCIIDOC7 and ASCIIDOC_ROFF, respectively.
+>  
+> - * The option parsers of various commands that create new branch (or
+> + * The option parsers of various commands that create new branches (or
+>     rename existing ones to a new name) were too loose and users were
+> -   allowed to call a branch with a name that begins with a dash by
+> -   creative abuse of their command line options, which only lead to
+> -   burn themselves.  The name of a branch cannot begin with a dash
+> -   now.
+> +   allowed to give a branch a name that begins with a dash by creative
+> +   abuse of their command line options, which only led to burn themselves.
+> +   The name of a branch cannot begin with a dash now.
+>  
+>   * System-wide fallback default attributes can be stored in
+>     /etc/gitattributes; core.attributesfile configuration variable can
+<snip for clarity>
 
-> 
-> Shouldn't there be an option *really* doing what --head is expected and
-> documented to do? I mean something like
-> git show-ref --head --yes-I-really-mean-the-head
-> with the output consisting of a single line like
-> 4ba2b422cf3cc229d894bb31c429c0c588de85c0 HEAD
-> Maybe it could be called --head-only.
-> 
-> It could help a lot to add the word "additionally" to the doc like
-> --head
-> Additionally show the HEAD reference.
+Ralf,
+Perhaps that should be:
 
-Well, actually it doesn't do that.  If '--head' is *alone* ref selector
-(e.g. "git show-ref --head") it shows HEAD reference in addition to all
-other refs (e.g. what "git show-ref" would show).  But it doesn't seem
-to work in described way when combined with any of ref specifiers; neither
-"git show-ref --head --heads" not "git show-ref --head master" work as 
-one would expect.
+- * The option parsers of various commands that create new branch (or
++ * The option parsers of various commands that create new branches (or
+    rename existing ones to a new name) were too loose and users were
+-   allowed to call a branch with a name that begins with a dash by
+-   creative abuse of their command line options, which only lead to
+-   burn themselves.  The name of a branch cannot begin with a dash
+-   now.
++   allowed to give a branch a name that begins with a dash by creative
++   abuse of their command line options, which only led to burning 
++   themselves. The name of a branch cannot begin with a dash now.
 
-> 
->>>> I tripped over strange git-show-ref <pattern> semantic too.
->>>>
->>>> P.S. there is also git-for-each-ref.
->> 
->> I don't know why there is git-show-ref when we have git-for-each-ref
->> for scripting; I guess they were added nearly at the same time...
-> 
-> I guess, I can get the single line I wanted using
-> git for-each-ref $(git symbolic-ref HEAD)
-> right?
-
-Well, both git-show-ref and git-for-each-ref are meant for checking or
-viewing multiple refs at once.  If you are working with a single ref,
-then git-rev-parse (e.g. "git rev-parse --symboolic HEAD" or 
-"git rev-parse --symbolic-full-name HEAD") or git-symbolic-ref would be
-a better choice IMHO.
+(for consistency)?
 
 -- 
-Jakub Narebski
-Poland
+-Drew Northup N1XIM
+   AKA RvnPhnx on OPN
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
