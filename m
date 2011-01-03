@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 1/3] fast-import: clarify handling of cat-blob feature
-Date: Mon, 3 Jan 2011 02:22:46 -0600
-Message-ID: <20110103082246.GB8842@burratino>
+Subject: [PATCH 2/3] fast-import: treat filemodify with empty tree as delete
+Date: Mon, 3 Jan 2011 02:24:58 -0600
+Message-ID: <20110103082458.GC8842@burratino>
 References: <1291286420-13591-1-git-send-email-david.barr@cordelta.com>
  <20110103080130.GA8842@burratino>
 Mime-Version: 1.0
@@ -11,45 +11,45 @@ Cc: Git Mailing List <git@vger.kernel.org>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>
 To: David Barr <david.barr@cordelta.com>
-X-From: git-owner@vger.kernel.org Mon Jan 03 09:23:02 2011
+X-From: git-owner@vger.kernel.org Mon Jan 03 09:25:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PZfgz-0007K0-So
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Jan 2011 09:23:02 +0100
+	id 1PZfjB-00005a-5H
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Jan 2011 09:25:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753485Ab1ACIW4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jan 2011 03:22:56 -0500
-Received: from mail-gy0-f194.google.com ([209.85.160.194]:62688 "EHLO
-	mail-gy0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752889Ab1ACIWz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jan 2011 03:22:55 -0500
-Received: by gyf1 with SMTP id 1so3129240gyf.1
-        for <git@vger.kernel.org>; Mon, 03 Jan 2011 00:22:55 -0800 (PST)
+	id S1753548Ab1ACIZK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jan 2011 03:25:10 -0500
+Received: from mail-yw0-f66.google.com ([209.85.213.66]:60692 "EHLO
+	mail-yw0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751778Ab1ACIZI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jan 2011 03:25:08 -0500
+Received: by ywi6 with SMTP id 6so3208719ywi.1
+        for <git@vger.kernel.org>; Mon, 03 Jan 2011 00:25:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=k7/5UQXhfT6Ggz8wyYydAV4HXWANnKue0xvsDWysbQc=;
-        b=SsQ/CnsNYPHNcOdxNZagH/WJA2HZNOse39/wCcvAkh5ZkKQ0r4xmjyumLy/BaB5p3J
-         iUJ5hcv/5CmTTKOI4eV1rIPJaAOutFVolW1RyZP9kof4Z4mnogPz8MonGXPeHD1dL+22
-         maRCJ0WgegAfvp8HiybhIpi7U7S34jS7XTP9U=
+        bh=ujORcWEmS5Rbiv4VsbhuerEBbYSjz8ghi2eKAaquu9A=;
+        b=tb1Z3nR6S7PgJMB8dToTYnjFQrxafpfZLyONx8O5naXDrRRkBUS2+aZboTxqws99QQ
+         fnWt1/3UgHRlCdia/Mt4/8I2+82x0/pmnXjPDTCyilYeAtPsfXN08v9tugVQlDaEZOSI
+         8nWfd7BmgzNCAFkpR8MqgrFvg2aluIZPOKGBo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=qj4Qd5UQgoB4xn149TpQ6rb2xQHDrJIfYpcMuVnIU4BGm0gm05csz/s/3xnaEMDGTW
-         DTG8z1AcL0foPjNv0G5lcPS1zoOnLTHeSJmGZ2VcNGndUCkZlK3XXxauU4ApjV7XsN8p
-         sk2euucR3KLmdrojVnR7CSYTbWdpcd5ayFs7w=
-Received: by 10.100.4.13 with SMTP id 13mr11983583and.108.1294042975087;
-        Mon, 03 Jan 2011 00:22:55 -0800 (PST)
-Received: from burratino (adsl-69-209-72-219.dsl.chcgil.sbcglobal.net [69.209.72.219])
-        by mx.google.com with ESMTPS id j14sm27897853anb.39.2011.01.03.00.22.53
+        b=VeL7EOKb9IZI4nXBlWD1VUJ6QyTiP2qhxW5tEoZY87UV+lU41LBNJ3a4U/psoWOhCk
+         0VDlqGm+uHUdy5RsmqGJIl9gWDnmXh6TDvRMAFBW/nOqARdaCOEh59nM1is/K/9TqIm3
+         Fj9lQ1b91N/H2R0JyG0sYEn7yTxqu7NaXj9dk=
+Received: by 10.90.88.20 with SMTP id l20mr12218442agb.57.1294043107675;
+        Mon, 03 Jan 2011 00:25:07 -0800 (PST)
+Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
+        by mx.google.com with ESMTPS id c34sm27875461anc.10.2011.01.03.00.25.05
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 03 Jan 2011 00:22:54 -0800 (PST)
+        Mon, 03 Jan 2011 00:25:06 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20110103080130.GA8842@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -57,80 +57,138 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164446>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164447>
 
-Date: Thu Dec 9 14:45:21 2010 -0600
+Date: Sat, 11 Dec 2010 16:42:28 -0600
 
-Remove the undocumented --cat-blob command line option.  It used to be
-a no-op.
+Traditionally, git trees do not contain entries for empty
+subdirectories.  Generally speaking, subtrees are not created or
+destroyed explicitly; instead, they automatically appear when needed
+to hold regular files, symlinks, and submodules.
 
-While at it, move parsing of --cat-blob-fd to parse_one_feature; this
-makes the parse_argv loop a little easier to read and puts the code
-implementing 'feature cat-blob' and --cat-blob-fd closer to each
-other.
+v1.7.3-rc0~75^2 (Teach fast-import to import subtrees named by tree
+id, 2010-06-30) changed that, by allowing an empty subtree to be
+included in a fast-import stream explicitly:
 
+	M 040000 4b825dc642cb6eb9a060e54bf8d69288fbee4904 subdir
+
+That was unintentional.  Better and more closely analogous to "git
+read-tree --prefix" to treat such an input line as a request to delete
+("to empty") subdir.
+
+Noticed-by: David Barr <david.barr@cordelta.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-Forgot to mention: these are based against v1.7.4-rc0~24 (t9300: use
-perl "head -c" clone in place of "dd bs=1 count=16000" kluge,
-2010-12-13) but I wouldn't be surprised if they apply cleanly to other
-commits, too. ;-)
+If this seems like a good idea it might be a candidate for v1.7.4.x.
+Perhaps fsck.c should learn a "no empty trees" rule, too.
 
- fast-import.c          |    9 +++------
- t/t9300-fast-import.sh |    9 +++++++++
- 2 files changed, 12 insertions(+), 6 deletions(-)
+ fast-import.c          |   10 ++++++++
+ t/t9300-fast-import.sh |   58 +++++++++++++++++++++++++++++++++++++++++------
+ 2 files changed, 60 insertions(+), 8 deletions(-)
 
 diff --git a/fast-import.c b/fast-import.c
-index 7857760..a5cea45 100644
+index a5cea45..385d12d 100644
 --- a/fast-import.c
 +++ b/fast-import.c
-@@ -2977,8 +2977,10 @@ static int parse_one_feature(const char *feature, int from_stream)
- 		option_import_marks(feature + 13, from_stream);
- 	} else if (!prefixcmp(feature, "export-marks=")) {
- 		option_export_marks(feature + 13);
--	} else if (!strcmp(feature, "cat-blob")) {
-+	} else if (from_stream && !strcmp(feature, "cat-blob")) {
- 		; /* Don't die - this feature is supported */
-+	} else if (!from_stream && !prefixcmp(feature, "cat-blob-fd=")) {
-+		option_cat_blob_fd(feature + strlen("cat-blob-fd="));
- 	} else if (!prefixcmp(feature, "relative-marks")) {
- 		relative_marks_paths = 1;
- 	} else if (!prefixcmp(feature, "no-relative-marks")) {
-@@ -3073,11 +3075,6 @@ static void parse_argv(void)
- 		if (parse_one_feature(a + 2, 0))
- 			continue;
- 
--		if (!prefixcmp(a + 2, "cat-blob-fd=")) {
--			option_cat_blob_fd(a + 2 + strlen("cat-blob-fd="));
--			continue;
--		}
--
- 		die("unknown option %s", a);
+@@ -2231,6 +2231,16 @@ static void file_change_m(struct branch *b)
+ 		p = uq.buf;
  	}
- 	if (i != global_argc)
+ 
++	/*
++	 * Git does not track empty, non-toplevel directories.
++	 */
++	if (S_ISDIR(mode) &&
++	    !memcmp(sha1, (const unsigned char *) EMPTY_TREE_SHA1_BIN, 20) &&
++	    *p) {
++		tree_content_remove(&b->branch_tree, p, NULL);
++		return;
++	}
++
+ 	if (S_ISGITLINK(mode)) {
+ 		if (inline_data)
+ 			die("Git links cannot be specified 'inline': %s",
 diff --git a/t/t9300-fast-import.sh b/t/t9300-fast-import.sh
-index 222d105..53aad51 100755
+index 53aad51..b9aa3f0 100755
 --- a/t/t9300-fast-import.sh
 +++ b/t/t9300-fast-import.sh
-@@ -1769,10 +1769,19 @@ test_expect_success 'R: feature cat-blob supported' '
- 	git fast-import
- '
+@@ -42,6 +42,14 @@ echo "$@"'
  
-+test_expect_success 'R: no command line option for cat-blob feature' '
-+	test_must_fail git fast-import --cat-blob <empty
+ >empty
+ 
++test_expect_success 'setup: have pipes?' '
++	rm -f frob &&
++	if mkfifo frob
++	then
++		test_set_prereq PIPE
++	fi
 +'
 +
- test_expect_success 'R: cat-blob-fd must be a nonnegative integer' '
- 	test_must_fail git fast-import --cat-blob-fd=-1 </dev/null
+ ###
+ ### series A
+ ###
+@@ -899,6 +907,48 @@ test_expect_success \
+ 	 compare_diff_raw expect actual'
+ 
+ test_expect_success \
++	'N: delete directory by copying' \
++	'cat >expect <<-\EOF &&
++	OBJID
++	:100644 000000 OBJID OBJID D	foo/bar/qux
++	OBJID
++	:000000 100644 OBJID OBJID A	foo/bar/baz
++	:000000 100644 OBJID OBJID A	foo/bar/qux
++	EOF
++	 empty_tree=$(git mktree </dev/null) &&
++	 cat >input <<-INPUT_END &&
++	commit refs/heads/N-delete
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	collect data to be deleted
++	COMMIT
++
++	deleteall
++	M 100644 inline foo/bar/baz
++	data <<DATA_END
++	hello
++	DATA_END
++	C "foo/bar/baz" "foo/bar/qux"
++	C "foo/bar/baz" "foo/bar/quux/1"
++	C "foo/bar/baz" "foo/bar/quuux"
++	M 040000 $empty_tree foo/bar/quux
++	M 040000 $empty_tree foo/bar/quuux
++
++	commit refs/heads/N-delete
++	committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
++	data <<COMMIT
++	delete subdirectory
++	COMMIT
++
++	M 040000 $empty_tree foo/bar/qux
++	INPUT_END
++	 git fast-import <input &&
++	 git rev-list N-delete |
++		git diff-tree -r --stdin --root --always |
++		sed -e "s/$_x40/OBJID/g" >actual &&
++	 test_cmp expect actual'
++
++test_expect_success \
+ 	'N: copy root directory by tree hash' \
+ 	'cat >expect <<-\EOF &&
+ 	:100755 000000 f1fb5da718392694d0076d677d6d0e364c79b0bc 0000000000000000000000000000000000000000 D	file3/newf
+@@ -1898,14 +1948,6 @@ test_expect_success 'R: print two blobs to stdout' '
+ 	test_cmp expect actual
  '
  
-+test_expect_success 'R: cat-blob-fd cannot be specified in stream' '
-+	echo "feature cat-blob-fd=1" |
-+	test_must_fail git fast-import
-+'
-+
- test_expect_success 'R: print old blob' '
- 	blob=$(echo "yes it can" | git hash-object -w --stdin) &&
- 	cat >expect <<-EOF &&
+-test_expect_success 'setup: have pipes?' '
+-	rm -f frob &&
+-	if mkfifo frob
+-	then
+-		test_set_prereq PIPE
+-	fi
+-'
+-
+ test_expect_success PIPE 'R: copy using cat-file' '
+ 	expect_id=$(git hash-object big) &&
+ 	expect_len=$(wc -c <big) &&
 -- 
 1.7.4.rc0.580.g89dc.dirty
