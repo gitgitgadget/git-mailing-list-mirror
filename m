@@ -1,93 +1,89 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [PATCH] Fix typos in the documentation
-Date: Mon, 03 Jan 2011 12:57:30 -0500
-Message-ID: <1294077450.12519.15.camel@drew-northup.unet.maine.edu>
-References: <20110102055653.GI19818@gmx.de>
+From: Levend Sayar <levendsayar@gmail.com>
+Subject: clone --bare vs push
+Date: Mon, 3 Jan 2011 20:24:14 +0200
+Message-ID: <AANLkTi=RNDYrRbyEJXA_c30JEVr=SYUQ01cfA3FyWpLT@mail.gmail.com>
+References: <AANLkTi=+cRqD_CDFyaYj8uWOxUA1+5Dgr_pv1guaaT40@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Jan 03 18:58:15 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Mon Jan 03 19:24:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PZoff-0007wz-12
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Jan 2011 18:58:15 +0100
+	id 1PZp5G-0007Ma-B3
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Jan 2011 19:24:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755463Ab1ACR6J (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jan 2011 12:58:09 -0500
-Received: from basalt.its.maine.edu ([130.111.32.66]:60430 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755365Ab1ACR6I (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jan 2011 12:58:08 -0500
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p03HvYRB007144
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Mon, 3 Jan 2011 12:57:39 -0500
-In-Reply-To: <20110102055653.GI19818@gmx.de>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=2
-	Fuz1=2 Fuz2=2
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p03HvYRB007144
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1294682263.76342@mRYECwmsrgGAPN3Q07citg
+	id S1751099Ab1ACSYg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jan 2011 13:24:36 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:57611 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750766Ab1ACSYf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jan 2011 13:24:35 -0500
+Received: by qwa26 with SMTP id 26so13660421qwa.19
+        for <git@vger.kernel.org>; Mon, 03 Jan 2011 10:24:34 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:content-type;
+        bh=zbsGZa+zK/CxCLLdy/MrHsOsN9ogyB+UyPv6A4J5tso=;
+        b=MHRRjP/uw+t/9jX3FWq18HxHVQTOfad1/mrtkj3/s4H7UDQdq3v09OWkzyHgUT9g/0
+         ln8NBEk6yOIckr8veT0rJH+E4STlsQRXJVBcAlwPv1Ty/37U1ZVx6bZAkR0XABAl29Rl
+         EmVCcNbQThOaVt+M3ckhejBpO7vQlZWbGectU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :content-type;
+        b=PsVFttuOn7jjlasbN14lo+4qZhNxcRu3NKy1GYAX1V4/TOGe++ViAa0TddE3QM+4fl
+         qEJL97+e1fkbsy9zyS5D+4P5aG3YiJIQ2XLcfnPL3y5r3goAhbpWPBnPnGh9jfFO79r7
+         I5trNh42/ErQqrxB6rX24YBHjhln/6G7mav7c=
+Received: by 10.229.81.71 with SMTP id w7mr18474640qck.12.1294079074912; Mon,
+ 03 Jan 2011 10:24:34 -0800 (PST)
+Received: by 10.229.219.147 with HTTP; Mon, 3 Jan 2011 10:24:14 -0800 (PST)
+In-Reply-To: <AANLkTi=+cRqD_CDFyaYj8uWOxUA1+5Dgr_pv1guaaT40@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164454>
 
+Hi, all.
 
-On Sun, 2011-01-02 at 06:56 +0100, Ralf Wildenhues wrote:
+We cloned a repo from github on our local server. Say X for this. At
+that repo, we did
 
-<snip for clarity> 
-> diff --git a/Documentation/RelNotes/1.7.4.txt b/Documentation/RelNotes/1.7.4.txt
-> index b736d39..5619641 100644
-> --- a/Documentation/RelNotes/1.7.4.txt
-> +++ b/Documentation/RelNotes/1.7.4.txt
-> @@ -8,12 +8,11 @@ Updates since v1.7.3
->     docbook-xsl >= 1.73. If you have older versions, you can set
->     ASCIIDOC7 and ASCIIDOC_ROFF, respectively.
->  
-> - * The option parsers of various commands that create new branch (or
-> + * The option parsers of various commands that create new branches (or
->     rename existing ones to a new name) were too loose and users were
-> -   allowed to call a branch with a name that begins with a dash by
-> -   creative abuse of their command line options, which only lead to
-> -   burn themselves.  The name of a branch cannot begin with a dash
-> -   now.
-> +   allowed to give a branch a name that begins with a dash by creative
-> +   abuse of their command line options, which only led to burn themselves.
-> +   The name of a branch cannot begin with a dash now.
->  
->   * System-wide fallback default attributes can be stored in
->     /etc/gitattributes; core.attributesfile configuration variable can
-<snip for clarity>
+git clone --bare X y.git
 
-Ralf,
-Perhaps that should be:
+Now y.git is ready for other machines to clone.
 
-- * The option parsers of various commands that create new branch (or
-+ * The option parsers of various commands that create new branches (or
-    rename existing ones to a new name) were too loose and users were
--   allowed to call a branch with a name that begins with a dash by
--   creative abuse of their command line options, which only lead to
--   burn themselves.  The name of a branch cannot begin with a dash
--   now.
-+   allowed to give a branch a name that begins with a dash by creative
-+   abuse of their command line options, which only led to burning 
-+   themselves. The name of a branch cannot begin with a dash now.
+To update our upstream repo X, we do
 
-(for consistency)?
+git pull
 
--- 
--Drew Northup N1XIM
-   AKA RvnPhnx on OPN
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+and then
+
+git push --all
+
+to update y.git.
+
+Now questions:
+
+1) When I compare X/.git directory and y.git directory there are many
+objects missing in y.git. What is the reason ?
+
+2) git clone --bare is too fast. My .git directory is nearly 1GB. How
+can it be copied that much fast ?
+
+3) Is this more safe then git pull, git push
+
+rm -rf y.git
+git pull
+git clone --bare X y.git
+
+Namely bare cloning each time when we update our main repo ?
+
+TIA
+
+_lvnd_
+ (^_^)
