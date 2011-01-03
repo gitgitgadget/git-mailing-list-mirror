@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 11/12] vcs-svn: allow input from file descriptor
-Date: Sun, 2 Jan 2011 21:09:38 -0600
-Message-ID: <20110103030938.GD10143@burratino>
+Subject: [PATCH 12/12] vcs-svn: teach line_buffer about temporary files
+Date: Sun, 2 Jan 2011 21:10:59 -0600
+Message-ID: <20110103031059.GE10143@burratino>
 References: <20101224080505.GA29681@burratino>
  <20110103004900.GA30506@burratino>
  <20110103030328.GA10143@burratino>
@@ -11,45 +11,45 @@ Cc: David Barr <david.barr@cordelta.com>,
 	Thomas Rast <trast@student.ethz.ch>,
 	Ramkumar Ramachandra <artagnon@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 03 04:09:53 2011
+X-From: git-owner@vger.kernel.org Mon Jan 03 04:11:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PZanw-0001U0-J8
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Jan 2011 04:09:52 +0100
+	id 1PZapG-0002Fn-UL
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Jan 2011 04:11:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753434Ab1ACDJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Jan 2011 22:09:47 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:54091 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751506Ab1ACDJq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jan 2011 22:09:46 -0500
-Received: by ywl5 with SMTP id 5so5145359ywl.19
-        for <git@vger.kernel.org>; Sun, 02 Jan 2011 19:09:46 -0800 (PST)
+	id S1753455Ab1ACDLJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Jan 2011 22:11:09 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:43118 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751506Ab1ACDLI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jan 2011 22:11:08 -0500
+Received: by qyk12 with SMTP id 12so14616741qyk.19
+        for <git@vger.kernel.org>; Sun, 02 Jan 2011 19:11:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=PSVDX5SVL46iMiIxAT8wF5HJ5e/XCzp4Z8YnKJDNmOY=;
-        b=nhlv//lf9C46Ky5+zbT/kSthM8rqFh0EIlg1LoT59LvxNK4bt0GPGor40VbXMMfrf2
-         RbOhjSXTHwoZt2l6jMoW1NC5TEjgYF1S+rId2U6h4Zi9Qh21oBe9A7v/3ANUxBnW8gEd
-         8a+tnpwxGLOy6uQkqH64uGc8Dth4IfzRT6YoE=
+        bh=CFpWSPmT82XlfTSojgqxW0YSl9JU3uy3vquC92hq20Q=;
+        b=ligbKDh/YEHltPKNDDatnL05SoaKZNFLcguFHTMKedCSJIHqVrzPzdHDZV1B5iP9FJ
+         aNsSU5tt73VhAb7GvylqTUMBzcujPjmcH3YDtxQvK+T3cDO1QwiJG38ZFpqsvu5IvUJy
+         yLC5HMoOrCmyE4eZkkwzU3CgrvurbB+qP4SUI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=OWGKvEjCHDkKg3zED6iDJv9gsiivTsTlIzBPTSkPOFeZhSwWcQZaJOZkY8lKbmXX9I
-         5Wa4k+1TKGPs7HTTG4iRKarVXAy4THqe1kWZZwcXPFA0BAPXI3dWBNzk+rX6+SIl8o0J
-         wRCZxc2Qjr84idTPGvqvCPkxlGZwo2ZCBt2wI=
-Received: by 10.146.86.14 with SMTP id j14mr28318923yab.31.1294024185971;
-        Sun, 02 Jan 2011 19:09:45 -0800 (PST)
+        b=XbTPzyjnKhh0RH7Yf6lybl1dOTqfd8Jrl92aCuQOYCxucM81x4Kgs7Aurl+LZd7/yQ
+         3whq/SDfLXNsNhyNRbIK1rNL9rbdw/A4YbCZo92wCSFQ3X163jL8lgD8rUcFyJ3piz/y
+         +PYsnq1c68z11KVj2sh6moGRrUPAyTwuMi7w0=
+Received: by 10.224.61.21 with SMTP id r21mr6499023qah.245.1294024268116;
+        Sun, 02 Jan 2011 19:11:08 -0800 (PST)
 Received: from burratino (adsl-69-209-72-219.dsl.chcgil.sbcglobal.net [69.209.72.219])
-        by mx.google.com with ESMTPS id i10sm27510088anh.12.2011.01.02.19.09.44
+        by mx.google.com with ESMTPS id g32sm11722968qck.34.2011.01.02.19.11.06
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 02 Jan 2011 19:09:45 -0800 (PST)
+        Sun, 02 Jan 2011 19:11:07 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20110103030328.GA10143@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -57,78 +57,51 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164440>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164441>
+
+It can sometimes be useful to write information temporarily to file,
+to read back later.  These functions allow a program to use the
+line_buffer facilities when doing so.
+
+It works like this:
+
+ 1. find a unique filename with buffer_tmpfile_init.
+ 2. rewind with buffer_tmpfile_rewind.  This returns a stdio
+    handle for writing.
+ 3. when finished writing, declare so with
+    buffer_tmpfile_prepare_to_read.  The return value indicates
+    how many bytes were written.
+ 4. read whatever portion of the file is needed.
+ 5. if finished, remove the temporary file with buffer_deinit.
+    otherwise, go back to step 2,
+
+The svn support would use this to buffer the postimage from delta
+application until the length is known and fast-import can receive
+the resulting blob.
 
 Based-on-patch-by: David Barr <david.barr@cordelta.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-No fd_buffer.  This is essentially the way David did it in the first
-place; sorry to have doubted.
+David, this is another piece of infrastructure from early svn-fe3
+history.  I've cleaned up the API a little bit but the idea is the
+same.  Thank you.
 
- t/t0081-line-buffer.sh  |    9 +++++++++
- test-line-buffer.c      |   11 ++++++++---
- vcs-svn/line_buffer.c   |    8 ++++++++
- vcs-svn/line_buffer.h   |    1 +
- vcs-svn/line_buffer.txt |    9 +++++----
- 5 files changed, 31 insertions(+), 7 deletions(-)
+ vcs-svn/line_buffer.c   |   24 ++++++++++++++++++++++++
+ vcs-svn/line_buffer.h   |    7 ++++++-
+ vcs-svn/line_buffer.txt |   22 ++++++++++++++++++++++
+ 3 files changed, 52 insertions(+), 1 deletions(-)
 
-diff --git a/t/t0081-line-buffer.sh b/t/t0081-line-buffer.sh
-index a8eeb20..550fad0 100755
---- a/t/t0081-line-buffer.sh
-+++ b/t/t0081-line-buffer.sh
-@@ -131,6 +131,15 @@ test_expect_success PIPE,EXPENSIVE 'longer read (around 65536 bytes)' '
- 	long_read_test 65536
- '
- 
-+test_expect_success 'read from file descriptor' '
-+	rm -f input &&
-+	echo hello >expect &&
-+	echo hello >input &&
-+	echo copy 6 |
-+	test-line-buffer "&4" 4<input >actual &&
-+	test_cmp expect actual
-+'
-+
- test_expect_success 'buffer_read_string copes with null byte' '
- 	>expect &&
- 	q_to_nul <<-\EOF | test-line-buffer >actual &&
-diff --git a/test-line-buffer.c b/test-line-buffer.c
-index 19bf2d4..25b20b9 100644
---- a/test-line-buffer.c
-+++ b/test-line-buffer.c
-@@ -69,13 +69,18 @@ int main(int argc, char *argv[])
- 	else if (argc == 2)
- 		filename = argv[1];
- 	else
--		usage("test-line-buffer [file] < script");
-+		usage("test-line-buffer [file | &fd] < script");
- 
- 	if (buffer_init(&stdin_buf, NULL))
- 		die_errno("open error");
- 	if (filename) {
--		if (buffer_init(&file_buf, filename))
--			die_errno("error opening %s", filename);
-+		if (*filename == '&') {
-+			if (buffer_fdinit(&file_buf, strtouint32(filename + 1)))
-+				die_errno("error opening fd %s", filename + 1);
-+		} else {
-+			if (buffer_init(&file_buf, filename))
-+				die_errno("error opening %s", filename);
-+		}
- 		input = &file_buf;
- 	}
- 
 diff --git a/vcs-svn/line_buffer.c b/vcs-svn/line_buffer.c
-index 37ec56e..e29a81a 100644
+index e29a81a..aedf105 100644
 --- a/vcs-svn/line_buffer.c
 +++ b/vcs-svn/line_buffer.c
-@@ -17,6 +17,14 @@ int buffer_init(struct line_buffer *buf, const char *filename)
+@@ -25,6 +25,14 @@ int buffer_fdinit(struct line_buffer *buf, int fd)
  	return 0;
  }
  
-+int buffer_fdinit(struct line_buffer *buf, int fd)
++int buffer_tmpfile_init(struct line_buffer *buf)
 +{
-+	buf->infile = fdopen(fd, "r");
++	buf->infile = tmpfile();
 +	if (!buf->infile)
 +		return -1;
 +	return 0;
@@ -137,37 +110,84 @@ index 37ec56e..e29a81a 100644
  int buffer_deinit(struct line_buffer *buf)
  {
  	int err;
+@@ -35,6 +43,22 @@ int buffer_deinit(struct line_buffer *buf)
+ 	return err;
+ }
+ 
++FILE *buffer_tmpfile_rewind(struct line_buffer *buf)
++{
++	rewind(buf->infile);
++	return buf->infile;
++}
++
++long buffer_tmpfile_prepare_to_read(struct line_buffer *buf)
++{
++	long pos = ftell(buf->infile);
++	if (pos < 0)
++		return error("ftell error: %s", strerror(errno));
++	if (fseek(buf->infile, 0, SEEK_SET))
++		return error("seek error: %s", strerror(errno));
++	return pos;
++}
++
+ int buffer_read_char(struct line_buffer *buf)
+ {
+ 	return fgetc(buf->infile);
 diff --git a/vcs-svn/line_buffer.h b/vcs-svn/line_buffer.h
-index 0a59c73..630d83c 100644
+index 630d83c..96ce966 100644
 --- a/vcs-svn/line_buffer.h
 +++ b/vcs-svn/line_buffer.h
-@@ -13,6 +13,7 @@ struct line_buffer {
- #define LINE_BUFFER_INIT {"", STRBUF_INIT, NULL}
- 
+@@ -15,12 +15,17 @@ struct line_buffer {
  int buffer_init(struct line_buffer *buf, const char *filename);
-+int buffer_fdinit(struct line_buffer *buf, int fd);
+ int buffer_fdinit(struct line_buffer *buf, int fd);
  int buffer_deinit(struct line_buffer *buf);
++void buffer_reset(struct line_buffer *buf);
++
++int buffer_tmpfile_init(struct line_buffer *buf);
++FILE *buffer_tmpfile_rewind(struct line_buffer *buf);	/* prepare to write. */
++long buffer_tmpfile_prepare_to_read(struct line_buffer *buf);
++
  char *buffer_read_line(struct line_buffer *buf);
  char *buffer_read_string(struct line_buffer *buf, uint32_t len);
+ int buffer_read_char(struct line_buffer *buf);
+ void buffer_read_binary(struct line_buffer *buf, struct strbuf *sb, uint32_t len);
+ void buffer_copy_bytes(struct line_buffer *buf, uint32_t len);
+ void buffer_skip_bytes(struct line_buffer *buf, uint32_t len);
+-void buffer_reset(struct line_buffer *buf);
+ 
+ #endif
 diff --git a/vcs-svn/line_buffer.txt b/vcs-svn/line_buffer.txt
-index f8eaa4d..4e8fb71 100644
+index 4e8fb71..e89cc41 100644
 --- a/vcs-svn/line_buffer.txt
 +++ b/vcs-svn/line_buffer.txt
-@@ -27,10 +27,11 @@ resources.
+@@ -24,6 +24,28 @@ The calling program:
+ When finished, the caller can use `buffer_reset` to deallocate
+ resources.
+ 
++Using temporary files
++---------------------
++
++Temporary files provide a place to store data that should not outlive
++the calling program.  A program
++
++ - initializes a `struct line_buffer` to LINE_BUFFER_INIT
++ - requests a temporary file with `buffer_tmpfile_init`
++ - acquires an output handle by calling `buffer_tmpfile_rewind`
++ - uses standard I/O functions like `fprintf` and `fwrite` to fill
++   the temporary file
++ - declares writing is over with `buffer_tmpfile_prepare_to_read`
++ - can re-read what was written with `buffer_read_line`,
++   `buffer_read_string`, and so on
++ - can reuse the temporary file by calling `buffer_tmpfile_rewind`
++   again
++ - removes the temporary file with `buffer_deinit`, perhaps to
++   reuse the line_buffer for some other file.
++
++When finished, the calling program can use `buffer_reset` to deallocate
++resources.
++
  Functions
  ---------
  
--`buffer_init`::
--	Open the named file for input.  If filename is NULL,
--	start reading from stdin.  On failure, returns -1 (with
--	errno indicating the nature of the failure).
-+`buffer_init`, `buffer_fdinit`::
-+	Open the named file or file descriptor for input.
-+	buffer_init(buf, NULL) prepares to read from stdin.
-+	On failure, returns -1 (with errno indicating the nature
-+	of the failure).
- 
- `buffer_deinit`::
- 	Stop reading from the current file (closing it unless
 -- 
 1.7.4.rc0.580.g89dc.dirty
