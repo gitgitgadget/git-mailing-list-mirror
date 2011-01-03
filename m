@@ -1,155 +1,94 @@
-From: Jeffrey Phillips Freeman <jeffrey.freeman@syncleus.com>
-Subject: Re: [RFC PATCH 3/3] filter-branch: support --submodule-filter
-Date: Mon, 03 Jan 2011 18:44:35 -0500
-Message-ID: <4D225F63.1040502@syncleus.com>
-References: <cover.1293809100.git.trast@student.ethz.ch> <44e6104ba28c80a6befe0f39fa4e2d6eeec56aa9.1293809100.git.trast@student.ethz.ch>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git-daemon serving repos with repo.git/git-daemon-export-ok
+Date: Mon, 3 Jan 2011 17:55:01 -0600
+Message-ID: <20110103235501.GA32262@burratino>
+References: <S1751603Ab1ACU6e/20110103205834Z+1762@vger.kernel.org>
+ <4D224475.1090805@ecosensory.com>
+ <20110103231153.GA10733@burratino>
+ <4D225DFA.50805@ecosensory.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jan 04 00:54:14 2011
+To: John Griessen <john@ecosensory.com>
+X-From: git-owner@vger.kernel.org Tue Jan 04 00:55:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PZuE9-0007Om-UC
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 00:54:14 +0100
+	id 1PZuFI-00088u-Gc
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 00:55:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750830Ab1ACXyI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jan 2011 18:54:08 -0500
-Received: from ambriel.syncleus.com ([74.208.167.238]:42331 "EHLO
-	ambriel.syncleus.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750800Ab1ACXyH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jan 2011 18:54:07 -0500
-X-Greylist: delayed 569 seconds by postgrey-1.27 at vger.kernel.org; Mon, 03 Jan 2011 18:54:07 EST
-Received: from localhost (localhost [127.0.0.1])
-	by ambriel.syncleus.com (Postfix) with ESMTP id 7EFDA180C0E0;
-	Mon,  3 Jan 2011 18:44:37 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=syncleus.com;
-	s=syncleus-dkim; t=1294098277;
-	bh=tsIqFb3OY09S0CBFtkTnOZDD9SrfYXio9C8RZZcFw0c=;
-	h=Message-ID:Date:From:MIME-Version:To:CC:Subject:References:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	b=m8LGZGO1dheDixP/Dvike/bCW0fqNlmHhg+jOQILL9yugkcdP0M0kpIdKCNL9SnjW
-	 c4J3pyXlas4OrigGOJnnGKFBQvvkZfCcu77gVxGuxlKKMpNbQhBO7gl8MuMu0wC3ei
-	 FhfGiyZj2YEHVElNqKNTTKgaLN+bK6taQxsmLMHk=
-X-Virus-Scanned: by Syncleus using ClamAV at ambriel.syncleus.com
-Received: from ambriel.syncleus.com ([127.0.0.1])
-	by localhost (ambriel.syncleus.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id e8g21mQT7raY; Mon,  3 Jan 2011 18:44:35 -0500 (EST)
-Received: from [192.168.0.105] (c-68-63-138-197.hsd1.pa.comcast.net [68.63.138.197])
-	by ambriel.syncleus.com (Postfix) with ESMTPSA id D8525180C0D9;
-	Mon,  3 Jan 2011 18:44:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=syncleus.com;
-	s=syncleus-dkim; t=1294098275;
-	bh=tsIqFb3OY09S0CBFtkTnOZDD9SrfYXio9C8RZZcFw0c=;
-	h=Message-ID:Date:From:MIME-Version:To:CC:Subject:References:
-	 In-Reply-To:Content-Type:Content-Transfer-Encoding;
-	b=LgmxheOoiJN82Uc4HBL1H/mZt2u+FvIwfkcbKAmYGngSbtrk0XxLc0esfsRoK6dD0
-	 jiJTueb0fBhG56HHL7mEXUg9IQXNtQ6sakIlFv6Orw1eaFfBWbn531u+vL3Il7jK7n
-	 L7Kf36JtqPpRVs5VMUM6m1cfBqggCapPD6tj4kuY=
-DomainKey-Signature: a=rsa-sha1; s=syncleus-dk; d=syncleus.com; c=simple; q=dns;
-	h=message-id:date:from:user-agent:mime-version:to:cc:subject:
-	references:in-reply-to:content-type:content-transfer-encoding;
-	b=A9PfGW8TBDExli4wp9BS+IgkWXDFcJOmReYvpuA8yB38EYeimjT8+KA/4VEyLZqlb
-	rIX4QdZqPERjHIeNPlhHHH3jMPIifGMczAfU8aVrkZPZXl8WKUWi9MFy2dMBH5BF2pg
-	lUFbqlK6Y7s3vJB4CpaMUZYqVPIFzMluteN7+yU=
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <44e6104ba28c80a6befe0f39fa4e2d6eeec56aa9.1293809100.git.trast@student.ethz.ch>
+	id S1750861Ab1ACXzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jan 2011 18:55:18 -0500
+Received: from mail-yx0-f194.google.com ([209.85.213.194]:57317 "EHLO
+	mail-yx0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750766Ab1ACXzR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jan 2011 18:55:17 -0500
+Received: by yxd5 with SMTP id 5so3300307yxd.1
+        for <git@vger.kernel.org>; Mon, 03 Jan 2011 15:55:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=kQjGTjzYwk6PYbagpD03euRCYp3XVkARTvKgEsYJ7JI=;
+        b=o7P2PJmKhi8cPjjaJj0KorEWAj4imD00Dj/UBqbUPjbu+4VwSy4aqvcl9FBszALiiq
+         D9rowk8PDeIxeTGaQTzYMHIQNMNLsYoCY2ejsBI6TSizc3/Y8sF4H1a9erb4NVHwiEOG
+         7o2GV+hA5igWB3dnY2nMQ6IweCKeYIcVt1rb0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=AQV+IxincR7BJLD7jB9vw5wHLVBPj8ZzXefHTGvmb/Z6lPZL9nVxLwAG7f5yqU2DSk
+         V8Ow2GW+jFJ9L096X99dsfJ8XupPNnL0joIOMskKpv1S0RoRYXz9qG1fymT2IQDyS4Qq
+         ebgUvgHaauP+DlKQKjLuPDi7sTlx/yMkCfhUs=
+Received: by 10.91.11.11 with SMTP id o11mr13204632agi.131.1294098916638;
+        Mon, 03 Jan 2011 15:55:16 -0800 (PST)
+Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
+        by mx.google.com with ESMTPS id c34sm28746890anc.10.2011.01.03.15.55.14
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 03 Jan 2011 15:55:15 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4D225DFA.50805@ecosensory.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164463>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164464>
 
-So im kinda new with all this so bare with me guys. I wanted to figure 
-out how to apply these patches, now i know i can use git to do this with 
-its patch command and such. However i was curious does this exist as a 
-branch somewhere official or semi-official? I currently seem to be using 
---split-submodule which is itself in a git repo i have (which i want to 
-also find its source repo so i can keep up to date with it). So applying 
-the patch itself might be somewhat troubling due to conflicts, therefore 
-id like to actually merge in a remote branch to keep things easy. So can 
-you guys point me to which repo would be best for me to keep up to date 
-with this would be?
+John Griessen wrote:
 
-On 12/31/2010 10:29 AM, Thomas Rast wrote:
-> This new filter gets each submodule's current sha1 and path on stdin,
-> separated by a tab.  It can then emit a new submodule sha1 and/or
-> path, and filter-branch will:
+> git version 1.7.2.3
+
+Good.
+
+> vking@mail:/etc/sv$ sv stat git-daemon
+> fail: git-daemon: unable to change to service directory: file does not exist
+
+Ah, you switched to running git daemon directly.
+
+> I can push to these repos with gitosis, and the permissions are:
 >
-> * if the path differs, remove the submodule at the old path;
->
-> * add/replace the new sha1 at the new path.
->
-> Additionally, returning an empty new sha1 deletes the submodule.
->
-> You can tie this together with the last two commits to filter the
-> super-project after a subproject filtering as follows:
->
->    ( cd sub1&&  git filter-branch --dump-map map<filters|args>  )
->    ( cd sub2&&  git filter-branch --dump-map map<filters|args>  )
->    cat sub1/map sub2/map>  map
->    git filter-branch --load-map map \
->    	--submodule-filter "map $(cut -f1)" \
-> 	<args>
->
-> Other use-cases should also be covered since we also pass through the
-> path.
->
-> Signed-off-by: Thomas Rast<trast@student.ethz.ch>
-> ---
->   git-filter-branch.sh |   24 ++++++++++++++++++++++++
->   1 files changed, 24 insertions(+), 0 deletions(-)
->
-> diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-> index 9feeb26..4a321c4 100755
-> --- a/git-filter-branch.sh
-> +++ b/git-filter-branch.sh
-> @@ -122,6 +122,7 @@ filter_msg=cat
->   filter_commit=
->   filter_tag_name=
->   filter_subdir=
-> +filter_submodule=
->   orig_namespace=refs/original/
->   force=
->   prune_empty=
-> @@ -193,6 +194,9 @@ do
->   		filter_subdir="$OPTARG"
->   		remap_to_ancestor=t
->   		;;
-> +	--submodule-filter)
-> +		filter_submodule="$OPTARG"
-> +		;;
->   	--original)
->   		orig_namespace=$(expr "$OPTARG/" : '\(.*[^/]\)/*$')/
->   		;;
-> @@ -379,6 +383,26 @@ while read commit parents; do
->   	eval "$filter_index"<  /dev/null ||
->   		die "index filter failed: $filter_index"
->
-> +	if [ "$filter_submodule" ]; then
-> +		git ls-files -s |
-> +		grep '^160000' |
-> +		while read mode sha1 stage path; do
-> +			printf "$sha1\t$path\n" |
-> +			{ eval "$filter_submodule" ||
-> +				die "submodule filter failed: $filter_submodule"; } |
-> +			read newsha1 newpath
-> +			if [ -z "$newsha1" ] || [ "$path" != "$newpath" ]; then
-> +				git update-index --remove "$path" ||
-> +					die "failed to remove submodule $path"
-> +			fi
-> +			if [ -n "$newsha1" ]&&  [ "$sha1" != "$newsha1" ]; then
-> +				git update-index --add --replace --cacheinfo \
-> +					160000 "$newsha1" "$newpath" ||
-> +					die "failed to add submodule $newpath"
-> +			fi
-> +		done
-> +	fi
-> +
->   	parentstr=
->   	for parent in $parents; do
->   		for reparent in $(map "$parent"); do
+> vking@mail:/srv/gitosis/repositories$ ll
+> total 16
+> drwxr-xr-x 7 gitosis gitosis 4096 Dec 30 12:32 extrudator.data.git
+
+So the gitdaemon user (used by git-daemon-run) wouldn't be able to
+access them.
+
+> vking@mail:/etc/sv$ cat strace.out
+> execve("/usr/lib/git-core/git-daemon",
+> ["/usr/lib/git-core/git-daemon", "--verbose", "--strict-paths",
+> "--user=git", "--group=gitosis", "/srv/gitosis/repositories"], [/*
+> 10 vars */]) = 0
+
+In this case simple --verbose output would probably be more useful.
+(That's what cat-ing /var/log/git-daemon/current would have given
+if git-daemon-run were still installed.)
+
+Thanks for the strace.  I should have mentioned that strace -f can
+help by following child processes, though that doesn't seem to be
+an issue here.  It looks like another git-daemon process is running at
+the same time?  (One can check with "netstat -t -a".)
