@@ -1,9 +1,10 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCHES 9-12/12] line_buffer: more wrappers around stdio functions
-Date: Sun, 2 Jan 2011 21:03:28 -0600
-Message-ID: <20110103030328.GA10143@burratino>
+Subject: [PATCH 09/12] vcs-svn: add binary-safe read function
+Date: Sun, 2 Jan 2011 21:05:46 -0600
+Message-ID: <20110103030546.GB10143@burratino>
 References: <20101224080505.GA29681@burratino>
  <20110103004900.GA30506@burratino>
+ <20110103030328.GA10143@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: David Barr <david.barr@cordelta.com>,
@@ -16,93 +17,157 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PZakw-0008TF-Kv
-	for gcvg-git-2@lo.gmane.org; Mon, 03 Jan 2011 04:06:46 +0100
+	id 1PZakx-0008TF-5A
+	for gcvg-git-2@lo.gmane.org; Mon, 03 Jan 2011 04:06:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753364Ab1ACDDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 2 Jan 2011 22:03:39 -0500
-Received: from mail-yx0-f194.google.com ([209.85.213.194]:35245 "EHLO
-	mail-yx0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753203Ab1ACDDj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 2 Jan 2011 22:03:39 -0500
-Received: by yxd5 with SMTP id 5so3188107yxd.1
-        for <git@vger.kernel.org>; Sun, 02 Jan 2011 19:03:38 -0800 (PST)
+	id S1753222Ab1ACDFz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 2 Jan 2011 22:05:55 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:37675 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752449Ab1ACDFz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 2 Jan 2011 22:05:55 -0500
+Received: by gwj20 with SMTP id 20so6061187gwj.19
+        for <git@vger.kernel.org>; Sun, 02 Jan 2011 19:05:54 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=KMObCgi6re2BanRX8KlXPfiSJQmDr0PS9FJlFI9cYE0=;
-        b=eHagPhayU/ZMLOX/wrjptar8bJMTuj9FpdWzHVyCdrXDE7SdWKTgL6X8TwWDnTL08U
-         M5LGcv1JTL9rHwcGDVLw5MuM7qRNWaROi1lzmfSjdSs5oOx0dg5fyDh7cGKYOTEe+QX6
-         Bado+CaLy3akHy2CyeIDdNxOsqACvarql/gTA=
+        bh=rDjs1DxNxjC8tnD8CoMGiFPUjOff/vyOUddyzbmh2mI=;
+        b=PGVIPFvQn7K7aksGu6lB2l9ZdJ2TlRno2igRZAvHGLbAHwQRJsgHRbePZ0u17YWvgD
+         4ujLMGR3NQmcXRYrIZ6Zf7LRhR1Q1uYAJFq3iXlKKwTLqD3vbrs3PqRpikbf6RMh2Ewh
+         mCdjOONObWtfnOHGNtMCo2zQCuShVbs8rmN2M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=DSVpAgFPTKQSEUDNgrJuTncnC/yJ1CTn+zSMO0FFF2982eMfbfBkAeeioSeth+Njge
-         YAHu3KgQXGqTwnhj3/HkC9KA8S3qgZdiq7QYunTKK02yb3DaM1xJDjM+M1zEDImfMBdk
-         7WE4n2KVnHKnS5U2EnEqdpTu5S+82XSKsc4qA=
-Received: by 10.100.109.19 with SMTP id h19mr6402543anc.4.1294023818186;
-        Sun, 02 Jan 2011 19:03:38 -0800 (PST)
+        b=NIvdvhEwd3RRdwsXGKypbZqWUSSkxYuTrqNIM5q4V/JvGZthm/dEIeF12nubjMIXyM
+         yDDzjwgdefc3pmDjiY81lKt7wK0gnI5kD4zCXKWquoPC9M5ZYT3C54tBGYzwpjkF3BJm
+         6iM9IuuAALG/laHI6/5+VMAPd9JKbjn1DzzEA=
+Received: by 10.147.182.5 with SMTP id j5mr16038090yap.18.1294023954341;
+        Sun, 02 Jan 2011 19:05:54 -0800 (PST)
 Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
-        by mx.google.com with ESMTPS id i10sm27509665anh.32.2011.01.02.19.03.36
+        by mx.google.com with ESMTPS id i52sm11955056yhd.41.2011.01.02.19.05.52
         (version=SSLv3 cipher=RC4-MD5);
-        Sun, 02 Jan 2011 19:03:37 -0800 (PST)
+        Sun, 02 Jan 2011 19:05:53 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20110103004900.GA30506@burratino>
+In-Reply-To: <20110103030328.GA10143@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164438>
 
-This might be the last batch of line_buffer patches for the moment[1].
-It introduces wrappers around strbuf_fread, fgetc, fdopen, and tmpfile
-so the line_buffer lib can do what those functions do.
+buffer_read_string works well for non line-oriented input except for
+one problem: it does not tell the caller how many bytes were actually
+written.  This means that unless one is very careful about checking
+for errors (and eof) the calling program cannot tell the difference
+between the string "foo" followed by an early end of file and the
+string "foo\0bar\0baz".
 
-The motivation in the background is delta application.  We need:
+So introduce a variant that reports the length, too, a thinner wrapper
+around strbuf_fread.  Its result is written to a strbuf so the caller
+does not need to keep track of the number of bytes read.
 
- - binary-safe input, since svn (like most version control systems)
-   gets used to store binary files from time to time.
- - character-oriented input (fgetc) as a basic convenience, needed in
-   particular for reading variable-length integers in svndiff blocks.
- - input from file descriptors, to read information requested from
-   fast-import (in particular, delta preimages).
- - temporary files, to store the result of delta application and
-   retrieve its length so svn-fe can write
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ t/t0081-line-buffer.sh |   18 ++++++++++++++++++
+ test-line-buffer.c     |   10 ++++++++++
+ vcs-svn/line_buffer.c  |    6 ++++++
+ vcs-svn/line_buffer.h  |    1 +
+ 4 files changed, 35 insertions(+), 0 deletions(-)
 
-	data <length>
-	... delta application result ...
-
-   to fast-import.
-
-The ideas behind the third and fourth patches (patches 11 and 12) are
-from David Barr's earlier work in the same direction.  Patches are
-based against
-
-  [PATCH 8/8] t0081 (line-buffer): add buffering tests
-
-so we can reuse some of the testing infrastructure.  They are numbered
-accordingly for easy application.
-
-Each patch introduces new API.  I would be happy if you can find an
-infelicity or two so we can fix the functions now before people get
-used to them.
-
-Jonathan Nieder (4):
-  vcs-svn: add binary-safe read function
-  vcs-svn: allow character-oriented input
-  vcs-svn: allow input from file descriptor
-  vcs-svn: teach line_buffer about temporary files
-
- t/t0081-line-buffer.sh  |   27 +++++++++++++++++++++++++++
- test-line-buffer.c      |   21 ++++++++++++++++++---
- vcs-svn/line_buffer.c   |   43 +++++++++++++++++++++++++++++++++++++++++++
- vcs-svn/line_buffer.h   |   10 +++++++++-
- vcs-svn/line_buffer.txt |   31 +++++++++++++++++++++++++++----
- 5 files changed, 124 insertions(+), 8 deletions(-)
-
-[1] There's another patch to use 64-bit offsets but the API changes
-are more obvious.
+diff --git a/t/t0081-line-buffer.sh b/t/t0081-line-buffer.sh
+index 33a728e..a8eeb20 100755
+--- a/t/t0081-line-buffer.sh
++++ b/t/t0081-line-buffer.sh
+@@ -151,6 +151,15 @@ test_expect_success 'skip, copy null byte' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'read null byte' '
++	echo ">QhelloQ" | q_to_nul >expect &&
++	q_to_nul <<-\EOF | test-line-buffer >actual &&
++	binary 8
++	QhelloQ
++	EOF
++	test_cmp expect actual
++'
++
+ test_expect_success 'long reads are truncated' '
+ 	echo foo >expect &&
+ 	test-line-buffer <<-\EOF >actual &&
+@@ -171,4 +180,13 @@ test_expect_success 'long copies are truncated' '
+ 	test_cmp expect actual
+ '
+ 
++test_expect_success 'long binary reads are truncated' '
++	echo ">foo" >expect &&
++	test-line-buffer <<-\EOF >actual &&
++	binary 5
++	foo
++	EOF
++	test_cmp expect actual
++'
++
+ test_done
+diff --git a/test-line-buffer.c b/test-line-buffer.c
+index ec19b13..19bf2d4 100644
+--- a/test-line-buffer.c
++++ b/test-line-buffer.c
+@@ -3,6 +3,7 @@
+  */
+ 
+ #include "git-compat-util.h"
++#include "strbuf.h"
+ #include "vcs-svn/line_buffer.h"
+ 
+ static uint32_t strtouint32(const char *s)
+@@ -17,6 +18,15 @@ static uint32_t strtouint32(const char *s)
+ static void handle_command(const char *command, const char *arg, struct line_buffer *buf)
+ {
+ 	switch (*command) {
++	case 'b':
++		if (!prefixcmp(command, "binary ")) {
++			struct strbuf sb = STRBUF_INIT;
++			strbuf_addch(&sb, '>');
++			buffer_read_binary(buf, &sb, strtouint32(arg));
++			fwrite(sb.buf, 1, sb.len, stdout);
++			strbuf_release(&sb);
++			return;
++		}
+ 	case 'c':
+ 		if (!prefixcmp(command, "copy ")) {
+ 			buffer_copy_bytes(buf, strtouint32(arg));
+diff --git a/vcs-svn/line_buffer.c b/vcs-svn/line_buffer.c
+index 806932b..661b007 100644
+--- a/vcs-svn/line_buffer.c
++++ b/vcs-svn/line_buffer.c
+@@ -56,6 +56,12 @@ char *buffer_read_string(struct line_buffer *buf, uint32_t len)
+ 	return ferror(buf->infile) ? NULL : buf->blob_buffer.buf;
+ }
+ 
++void buffer_read_binary(struct line_buffer *buf,
++				struct strbuf *sb, uint32_t size)
++{
++	strbuf_fread(sb, size, buf->infile);
++}
++
+ void buffer_copy_bytes(struct line_buffer *buf, uint32_t len)
+ {
+ 	char byte_buffer[COPY_BUFFER_LEN];
+diff --git a/vcs-svn/line_buffer.h b/vcs-svn/line_buffer.h
+index fb37390..0c2d3d9 100644
+--- a/vcs-svn/line_buffer.h
++++ b/vcs-svn/line_buffer.h
+@@ -16,6 +16,7 @@ int buffer_init(struct line_buffer *buf, const char *filename);
+ int buffer_deinit(struct line_buffer *buf);
+ char *buffer_read_line(struct line_buffer *buf);
+ char *buffer_read_string(struct line_buffer *buf, uint32_t len);
++void buffer_read_binary(struct line_buffer *buf, struct strbuf *sb, uint32_t len);
+ void buffer_copy_bytes(struct line_buffer *buf, uint32_t len);
+ void buffer_skip_bytes(struct line_buffer *buf, uint32_t len);
+ void buffer_reset(struct line_buffer *buf);
+-- 
+1.7.4.rc0.580.g89dc.dirty
