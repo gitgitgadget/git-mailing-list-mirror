@@ -1,103 +1,77 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: git repo corruption
-Date: Tue, 04 Jan 2011 15:42:40 -0600
-Message-ID: <4D239450.2010509@gmail.com>
-References: <AANLkTi=TSy1WQZARNQgGfPiV93hQ-xmCTip75JAixgDB@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH v2] Fix false positives in t3404 due to SHELL=/bin/false
+Date: Tue, 04 Jan 2011 23:28:58 +0100
+Message-ID: <vpqhbdoxpzp.fsf@bauges.imag.fr>
+References: <robbat2-20101227T024837-537032076Z@orbis-terrarum.net>
+	<7vsjxjyce6.fsf@alter.siamese.dyndns.org>
+	<20101227080343.GA15026@orbis-terrarum.net>
+	<982E526FA742C94E9AC26DA766FD07090A3399@NYCMBX3.winmail.deshaw.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Levend Sayar <levendsayar@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 04 22:43:17 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: "'Robin H. Johnson'" <robbat2@gentoo.org>,
+	Junio C Hamano <gitster@pobox.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: "Vallon\, Justin" <Justin.Vallon@deshaw.com>
+X-From: git-owner@vger.kernel.org Tue Jan 04 23:29:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaEey-0007m4-Mx
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 22:43:17 +0100
+	id 1PaFNe-0005NH-2u
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 23:29:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751226Ab1ADVnK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jan 2011 16:43:10 -0500
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:39105 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750980Ab1ADVnJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jan 2011 16:43:09 -0500
-Received: by yib18 with SMTP id 18so3573293yib.19
-        for <git@vger.kernel.org>; Tue, 04 Jan 2011 13:43:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:newsgroups:to:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=5eybSxiptEvMtGoIWMiMDUuBgUuKQE46gmFpdFbc00A=;
-        b=FMXSv1VyQfN15Zotey3msrsbJg9l5Ow/9bzRhQaJuXdRGI4E2rBPMCxwtI0YiBDvA5
-         ktM0ti4BxVySWbqkRbDt8W9zUMkDigvHRsIfPK80av46bLMpqbAhotEIPsHuPcLjIH0Z
-         kVBu9MP/uTPqbruh32131/6Ujq3mbKOOFXMM4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        b=CsaTI/NiX7HmRgl9iBpVHF2s0wNP3lOeL9Om9pAfgvp1ssfE4WfaYowON0bbPRilvX
-         7Wg5LcHvI4EhVd6AsutbUQTZhpOlriHBubukjm7rtRFKmAt0q+mRGJDrN/bptNV76Zdh
-         dZ2DWnTVSDWeY/fNC/inOgTI9qDsIdICgIoSo=
-Received: by 10.150.220.15 with SMTP id s15mr21274850ybg.138.1294177388458;
-        Tue, 04 Jan 2011 13:43:08 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id v8sm10986477ybe.13.2011.01.04.13.43.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 04 Jan 2011 13:43:07 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <AANLkTi=TSy1WQZARNQgGfPiV93hQ-xmCTip75JAixgDB@mail.gmail.com>
+	id S1750946Ab1ADW3U (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jan 2011 17:29:20 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:53236 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750699Ab1ADW3U (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jan 2011 17:29:20 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p04MSuMs015497
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 4 Jan 2011 23:28:56 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PaFNC-0007Au-QG; Tue, 04 Jan 2011 23:28:58 +0100
+In-Reply-To: <982E526FA742C94E9AC26DA766FD07090A3399@NYCMBX3.winmail.deshaw.com> (Justin Vallon's message of "Tue\, 4 Jan 2011 09\:43\:12 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 04 Jan 2011 23:28:57 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p04MSuMs015497
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1294784937.82126@8I31GlH/jrr+PO0gN0F2jQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164521>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164522>
 
-On 1/4/2011 3:10 AM, Levend Sayar wrote:
-> Hi, all.
->
-> We have a repo on a corporate server. The sysadmin changed access
-> rights of files on our repo by accedant.
-> Some directories have 2750 acces rights before, but he changed as
->
-> chmod -R 2770 *
->
-> Now when you make git status, every file that is tracked by git is said as
->
-> changed but not updated
->
-> So is there a way to get this back to normal ?
->
-> TIA
->
-> _lvnd_
-> (^_^)
+"Vallon, Justin" <Justin.Vallon@deshaw.com> writes:
 
-I assume the correct permissions for your tracked files should be 2750? 
-  If so, then here's what I would do:
+> How was SHELL=/bin/false causing problems?  Is git using $SHELL?
 
-1.  First make a copy of your repo and test these steps on the copy:
+The explanation is in the comment right above the modification in the
+patch. "user's shell" can be read as "$SHELL":
 
-e.g.  bare repo:  cp -rvp repo.git repocopy.git
-non-bare-repo:  cp -rvp worktree worktreecopy
+> --- a/t/t3404-rebase-interactive.sh
+> +++ b/t/t3404-rebase-interactive.sh
+> @@ -71,8 +71,9 @@ test_expect_success 'setup' '
+>  # "exec" commands are ran with the user shell by default, but this may
+>  # be non-POSIX. For example, if SHELL=zsh then ">file" doesn't work
+>  # to create a file. Unseting SHELL avoids such non-portable behavior
+> -# in tests.
+> +# in tests. It must be exported for it to take effect where needed.
+>  SHELL=
+> +export SHELL
 
-2. Then cd to the parent of the objects dir in you git repo:
+(my bad, I wrote this SHELL= without exporting it. Since bash
+re-exports already exported variables when they are assigned, and my
+/bin/sh points to bash, I didn't notice)
 
-e.g.  bare repo:  cd repocopy.git
-non-bare repo:  cd worktreecopy/.git
-
-3.  Then change the permissions of your objects dir:
-
-chmod -R 2750 objects
-
-4.  Validate the results.  Your permissions should match again.
-
-5.  If it worked, then do it on the real repo.
-
-
-v/r,
-Neal
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
