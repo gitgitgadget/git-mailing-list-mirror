@@ -1,89 +1,120 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH 2/2] gitweb: make logo optional
-Date: Tue, 4 Jan 2011 12:52:39 +0100
-Message-ID: <201101041252.40254.jnareb@gmail.com>
-References: <20110104050206.GA8280@burratino> <20110104050555.GC8280@burratino>
+From: Alexander Gladysh <agladysh@gmail.com>
+Subject: Re: False positives in git diff-index
+Date: Tue, 4 Jan 2011 15:01:56 +0300
+Message-ID: <AANLkTinfbyve-k8xBzDb1sTcXhJGvL_B+auuA8BQSUy2@mail.gmail.com>
+References: <AANLkTimLW+J_rmRsqUQJO-9Gzn7aK0ZHkd1-s=Wg4Vbi@mail.gmail.com>
+ <AANLkTinDSCPz-oukxzn24hj94d9WpzZ8_64TBHeNTmoG@mail.gmail.com> <AANLkTi=Po7zA1YG-VdN6cZEV+ZF3GYNM9W9CLVXFaE5Z@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, John 'Warthog9' Hawley <warthog9@kernel.org>,
-	Eric Wong <normalperson@yhbt.net>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 04 12:53:01 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
+To: Zenaan Harkness <zen@freedbms.net>
+X-From: git-owner@vger.kernel.org Tue Jan 04 13:02:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pa5Ri-000622-2C
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 12:52:58 +0100
+	id 1Pa5ao-00034d-Pu
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 13:02:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750995Ab1ADLwx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jan 2011 06:52:53 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:58225 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750855Ab1ADLww (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jan 2011 06:52:52 -0500
-Received: by bwz15 with SMTP id 15so14476068bwz.19
-        for <git@vger.kernel.org>; Tue, 04 Jan 2011 03:52:51 -0800 (PST)
+	id S1751063Ab1ADMCS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Jan 2011 07:02:18 -0500
+Received: from mail-qy0-f194.google.com ([209.85.216.194]:60223 "EHLO
+	mail-qy0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750906Ab1ADMCR convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jan 2011 07:02:17 -0500
+Received: by qyk4 with SMTP id 4so4348661qyk.1
+        for <git@vger.kernel.org>; Tue, 04 Jan 2011 04:02:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:subject:date
-         :user-agent:cc:references:in-reply-to:mime-version:content-type
-         :content-transfer-encoding:content-disposition:message-id;
-        bh=pX0bYcWDd52KFtSIRE7I/aMOgvaaJcq9IyT1FvDeif8=;
-        b=BrPDnYJfuTkySdj2+5Q6MDwVSHMBYFb7A/Jd4GiC3agrwX4/X0UJ4xy2Q7K8iB68Ot
-         VQXrL4kML4eUXdrIT+p9KqVpU2rk70y8pHdRu+fG9vOxZ7yCb3avu8sqBgSV10HMqtSh
-         uuX1xeaIxTUS5xpLwrLoP/l445OF5i+VnYHtg=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=7F8Tb4xAze1ur5Xs66qCveyW1MASdq1dDwyjcWPVZ24=;
+        b=Fl9WfN2a50jI1ZtUsiaWkjpR0YAkrDRjj3dDSev+sVN7GxN1UN57QufsF6+gXkhvkF
+         eSzYWrhVd51m+ZKrhwn9eusGETkwmrzuYlBI/kX/WPbCHHB1N9jZwC1mdLmywSW1E1ih
+         leluysWCtziFNHd5VOhHRIG9HmTQer49xabnA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=scX3wI0LSuad87Mz2y4eq/XftVOIBAbEgUunX1fXvOCAQ5UaCd/hJX5yVRp+eHptKN
-         nbVK1Vadv0uxAWpEWHl3OblqdV0GKJMcSLzXYDgGHrR1Gdgk6TltTMtSZEi0qLwjBTo5
-         KHVbN7j8hY4cdPQnC4crWQYphguZD+BUuE6dU=
-Received: by 10.204.72.130 with SMTP id m2mr764802bkj.15.1294141970901;
-        Tue, 04 Jan 2011 03:52:50 -0800 (PST)
-Received: from [192.168.1.13] (abvw52.neoplus.adsl.tpnet.pl [83.8.220.52])
-        by mx.google.com with ESMTPS id b17sm12152292bku.20.2011.01.04.03.52.48
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 04 Jan 2011 03:52:49 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20110104050555.GC8280@burratino>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=RhR3CceWk+ZBV4M+6EfILgYanPJDxG91ACcmBq1kADNY7fSO9mmHZbdN8PtZdnPszb
+         ZcO793HIfgWfO5t9pFrpkYocf3bGiZH+tcU88cy/xFAtMK7Is+VOjOMrxtRM8y1E86Vj
+         ovjjeykjwYF8fcnicjFKj/vJTM4H2rCK/U0d0=
+Received: by 10.229.79.12 with SMTP id n12mr18725362qck.129.1294142536730;
+ Tue, 04 Jan 2011 04:02:16 -0800 (PST)
+Received: by 10.229.48.5 with HTTP; Tue, 4 Jan 2011 04:01:56 -0800 (PST)
+In-Reply-To: <AANLkTi=Po7zA1YG-VdN6cZEV+ZF3GYNM9W9CLVXFaE5Z@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164484>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164485>
 
-On Tue, 4 Dec 2011, Jonathan Nieder wrote:
+On Tue, Jan 4, 2011 at 14:47, Zenaan Harkness <zen@freedbms.net> wrote:
+> On Tue, Jan 4, 2011 at 20:45, Alexander Gladysh <agladysh@gmail.com> =
+wrote:
+>> Nobody is interested?
 
-> Some sites may not want to have a logo at all.  In particular, git
-> instaweb can benefit from this.
+> Your problem set appears that you have a rather gnarly corner case
+> issue, arising from your custom build processes. Although git really
+> is amazing, I believe you may well be pushing git to its technologica=
+l
+> limits.
 
-Why do you think that git-instaweb can benefit from not having logo?
-You need gitweb.css anyway, so it is not much more trouble to serve
-additional static file, git-logo.png.
+Committing few megabytes of data several times per second is
+technological limits? I do not believe so.
 
-> 
-> While at it, use $cgi->img to simplify this code.  (CGI.pm learned
-> most HTML4 tags by version 2.79, so this should be portable to perl
-> 5.8, though I haven't tested.)
+> So your problem could be quite hard to debug, whilst being distinctly
+> difficult to ascertain the root causes.
 
-corelist (Module::CoreList) says that Perl 5.8.0 has CGI.pm version 2.81;
-IIRC gitweb requires something later than 5.8.0 for good support of
-Unicode (Encode module).
+> It also appears that your custom complicated build process is likely
+> protecting, or at least integral to, your high value corporate proces=
+s
+> assets.
 
-> 
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> So _in this case_ you would be remiss to not find a suitable
+> consultant to provide professional and discreet assistance - perhaps
+> GitHub.com, as GitHub=E2=80=99s Tender provides both public and _priv=
+ate_
+> support issue posting, and customized and private training if you and=
+/
+> or your colleagues require; you might contact GitHub direct (
+> https://github.com/contact ) as their Support page does not link
+> directly to support contract information; oh, and GitHub supports a
+> lot of community projects too: their support for our community ought
+> be supported.
 
-For what it is worth it:
+> <disclaimer> I am _not_ affiliated with GitHub, I do work full time
+> with a human rights association in Australia.
 
-Acked-by: Jakub Narebski <jnareb@gmail.com>
+Thank you for your opinion.
 
--- 
-Jakub Narebski
-Poland
+I view this particular situation as follows:
+
+1. I found a reproducible case for a hard to catch bug in Git. (This
+is a bug in Git, not in my build process.) This bug in its
+intermittent form annoyed me for quite some time =E2=80=94 several mont=
+hs at
+least =E2=80=94 and is likely to annoy other users. (I'm not *that* uni=
+que!)
+
+2. I can live happily with sleep(0.2) in my deployment code (while
+this is not very satisfying, it is acceptable =E2=80=94 certainly cheap=
+er than
+a paid consultant).
+
+3. I'm willing to help Git developers with catching this bug for
+mutual benefit =E2=80=94 I will get rid of annoying issue and make my
+deployment code more robust. Git will, well, be a bit more robust as
+well.
+
+4. The sole reason I'm pinging back on this bug report is that I'm
+afraid to accidentally lose the data snapshot (or something in
+environment) that makes the issue reproducible.
+
+5. If no one is interested, well, that's opensource :-) No hard feeling=
+s.
+
+Alexander.
