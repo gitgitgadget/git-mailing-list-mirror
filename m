@@ -1,180 +1,176 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [RFC PATCH v7 11/9] [PoC] gitweb/lib - tee, i.e. print and capture during cache entry generation
-Date: Tue, 4 Jan 2011 01:28:25 +0100
-Message-ID: <201101040128.26826.jnareb@gmail.com>
-References: <20101222234843.7998.87068.stgit@localhost.localdomain> <201101032233.16174.jnareb@gmail.com> <4D225C6E.9000108@eaglescrag.net>
+Subject: [RFC PATCH v7 2.5/9] gitweb: Make die_error just die, and use send_error to create error pages
+Date: Tue, 4 Jan 2011 01:35:07 +0100
+Message-ID: <201101040135.08638.jnareb@gmail.com>
+References: <20101222234843.7998.87068.stgit@localhost.localdomain> <20101222235525.7998.99816.stgit@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain;
   charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, "John 'Warthog9' Hawley" <warthog9@kernel.org>
-To: "J.H." <warthog9@eaglescrag.net>
-X-From: git-owner@vger.kernel.org Tue Jan 04 01:28:42 2011
+Cc: "J.H." <warthog9@eaglescrag.net>,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 04 01:35:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PZulT-0000ul-Tk
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 01:28:40 +0100
+	id 1PZuru-0004J0-Lm
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 01:35:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750955Ab1ADA2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jan 2011 19:28:34 -0500
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:33746 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750896Ab1ADA2d (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jan 2011 19:28:33 -0500
-Received: by wwi17 with SMTP id 17so14372329wwi.1
-        for <git@vger.kernel.org>; Mon, 03 Jan 2011 16:28:32 -0800 (PST)
+	id S1751014Ab1ADAfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jan 2011 19:35:12 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:47850 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750910Ab1ADAfK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jan 2011 19:35:10 -0500
+Received: by wyb28 with SMTP id 28so13860299wyb.19
+        for <git@vger.kernel.org>; Mon, 03 Jan 2011 16:35:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:from:to:subject:date
          :user-agent:cc:references:in-reply-to:mime-version:content-type
          :content-transfer-encoding:content-disposition:message-id;
-        bh=yqsaDIGo/lAPkX+m7cU1XB8ztD5VvGfN4dJ0hiJnsRk=;
-        b=T/b2lL1tUNdGpyu/F/02jHDpCJmcJ8DgtCHUbEgvSmjKXIHI7IyIEG/c10JeyZOhi0
-         WTLAsm2162jySMtJeoOZ6Y+8xwTLeOFGujoirC6ThLw5AKPSZgJfoMkPxHiyDMRQLdT7
-         Fkem/2uq2lCSbP99o67Xydsmv935xa17kLMok=
+        bh=bPvQzFF+qBlZk/Ldb1FzSYSIny2KbqWqYj1hMZZlfuc=;
+        b=L7T/IMHo4e1WAxIpQ73YMC/i+qdeMW8PiB04ReeoTLS9P8vtJSpq6eNzl+6SC1YH8v
+         GamQGQMFsHD3HbJMzSEUIuBq7Gu7EDlNjIHHTcRylUhSfV6Fg0amCofTSd++/dYDuSpK
+         E4GPmIgxzvYMlb+BcIRbi+EfbUs598rRHk1Ds=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:subject:date:user-agent:cc:references:in-reply-to
          :mime-version:content-type:content-transfer-encoding
          :content-disposition:message-id;
-        b=cVPJmByeP9d15DzFo24b67Ur2iKTYqa97j5g/Rv2jxxICMzKoi95Aad2ruWqFLZj2I
-         F2B5GHbrIaHhJC0EhH1BcfzKWiaJLE8Z8efHraCrPE3N+pCPzRSLM1oIU7xdcT8/qlh8
-         CSc3vcD0NUCRS+cewPSGPvn1graX53ngb0Iwc=
-Received: by 10.216.213.15 with SMTP id z15mr20806646weo.61.1294100912325;
-        Mon, 03 Jan 2011 16:28:32 -0800 (PST)
+        b=c3HCjZAo1JTNBkxFZfzaHWXgx+7+7+uBZ/GKMAsAxoxztv34/7sql39Vdfef5WkXBn
+         JuUtYpYPHx2ml1mPAdVg5dnCUipo5H3CJFKlocV8Iwe9UCAdxvcs5DQ9m0HZ2IImoXiK
+         kqSWMh+BDbe0uWwIwj3OxGbtA5utJAO5WmJc8=
+Received: by 10.227.162.194 with SMTP id w2mr12207961wbx.203.1294101309514;
+        Mon, 03 Jan 2011 16:35:09 -0800 (PST)
 Received: from [192.168.1.13] (abvw52.neoplus.adsl.tpnet.pl [83.8.220.52])
-        by mx.google.com with ESMTPS id f52sm10207177wes.35.2011.01.03.16.28.30
+        by mx.google.com with ESMTPS id f35sm14591000wbf.14.2011.01.03.16.35.07
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 03 Jan 2011 16:28:31 -0800 (PST)
+        Mon, 03 Jan 2011 16:35:08 -0800 (PST)
 User-Agent: KMail/1.9.3
-In-Reply-To: <4D225C6E.9000108@eaglescrag.net>
+In-Reply-To: <20101222235525.7998.99816.stgit@localhost.localdomain>
 Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164466>
 
-On Tue, 4 Jan 2011, J.H. wrote:
-> On 01/03/2011 01:33 PM, Jakub Narebski wrote:
+Unify error handling by treating errors from Perl (and thrown early in
+process using 'die STRING'), and errors from gitweb in the same way.
+This means that in both cases error page is generated after an error
+is caught in run() subroutine.
 
-> > Instead of having gitweb use progress info indicator / throbber to
-> > notify user that data is being generated by current process, gitweb
-> > can now (provided that PerlIO::tee from PerlIO::Util is available)
-> > send page to web browser while simultaneously saving it to cache
-> > (print and capture, i.e. tee), thus having incremental generating of
-> > page serve as a progress indicator.
-> 
-> In general, and particularly for the large sites that caching is
-> targeted at, teeing is a really bad idea.  I've mentioned this several
-> times before, and the progress indicator is a *MUCH* better idea.  I'm
-> not sure how many times I can say that, even if this was added it would
-> have the potential to exacerbate disk thrashing and overall make things
-> a lot more complex.
-
-It might be true that tee-ing is bad for very large sites, as it
-increases load a bit in those (I think) extremly rare cases where
-clients concurrently access the very same error page.  But it might
-be a solution for those in between cases.  I think that incrementally
-generated page is better progress indicator than just "Generating..."
-page.
-
-Anyway this proof of concept patch is to show how such thing should
-be implemented.  I don't think that it makes things a lot more complex;
-in this rewrite everything is quite well modularized, encapsulated, and
-isolated.
+die_error() subroutine is now split into three: gen_error() which
+massages parameters (escaping HTML, turning HTTP status number into
+full HTTP status code), die_error() which uses gen_error() and just
+throws an error (and does not generate an error page), and
+send_error() which catually generate error page based on provided
+error / exception.
 
 
-But the main intent behind this patch was to avoid bad interaction between
-'progress info' indicator (in the process that is generating page, see
-below), and non-cached error pages.
+Sidenote: probably in the future instead of using simple hash for
+throwing gitweb exception, gitweb would use some custom error class,
+e.g. derivative of Exception::Class (like SVN::Web does it).
 
-> 
-> 1) Errors may still be generated in flight as the cache is being
-> generated.  It would be better to let the cache run with a progress
-> indicator and should an error occur, display the error instead of giving
-> any output that may have been generated (and thus likely a broken page).
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This is sent early to facilitate early comments.  It passes test suite,
+but it was not extensively tested.
 
-On the contrary, with tee-ing (and zero size sanity check) you would be
-able to see pages even if there are errors saving cache entry.  Though
-this wouldn't help very large sites which cannot function without caching,
-it could be useful for smaller sites.
+Now die_error() functions mode like 'die'...
+
+ gitweb/gitweb.perl |   47 ++++++++++++++++++++++++++++++++++++-----------
+ 1 files changed, 36 insertions(+), 11 deletions(-)
+
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index c7a1892..5854f73 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -1153,9 +1154,13 @@ sub run {
+ 			if $pre_dispatch_hook;
  
-But see below.
-
-> 2) Having multiple clients all waiting on the same page (in particular
-> the index page) can lead to invalid output.  In particular if you are
-> teeing the output a reading client now must come in, read the current
-> contents of the file (as written), then pick up on the the tee after
-> that.  It's actually possible for the reading client to miss data as it
-> may be in flight to be written and the client is switching from reading
-> the file to reading the tee.  I don't see anything in your code to
-> handle that kind of switch over.
-
-Err... could you explain what do you mean by "client is switching from
-reading the file to reading the tee"?
-
-
-Hmmm... I thought that the code is clear.  Generating data, whether it
-is captured to be displayed later, or tee-ed i.e. printed and captured
-to cache, is inside critical section, protected by exclusive lock.  Only
-after cache entry is written (in full), the lock is released, and clients
-waiting for data can access it; they use shared (readers) lock for sync.
+ 		eval { run_request() };
+-		if (defined $@ && !ref($@)) {
++		my $error = $@;
++		if ($error) {
+ 			# some Perl error, but not one thrown by die_error
+-			die_error(undef, undef, $@, -error_handler => 1);
++			$error = gen_error(undef, undef, $error)
++				unless ref($error);
++
++			send_error($error);
+ 		}
  
-Note that in my rewrite (and I think also in _some_ cases in your version)
-files are written atomically, by writing to temporary file then renaming
-it to final destination.
-
-> 3) This makes no allowance for the file to be generated completely in
-> the background while serving stale data in the interim.  Keep in mind
-> that it can (as Fedora has experienced) take *HOURS* to generate the
-> index page, teeing that output just means brokenness and isn't useful.
-
-It does make allowance.  cache_output from GitwebCache::CacheOutput uses
-capturing and not tee-ing if we are in background process.  When there
-is stale data to serve, cache entry is (re)generated in background in
-detached process.
+ 	DONE_REQUEST:
+@@ -3730,11 +3735,14 @@ sub git_footer_html {
+ #      an unknown error occurred (e.g. the git binary died unexpectedly).
+ # 503: The server is currently unavailable (because it is overloaded,
+ #      or down for maintenance).  Generally, this is a temporary state.
+-sub die_error {
++
++# gen_error()  generates error object from parameters
++# die_error()  uses gen_error() to generate error object and dies
++# send_error() generates an error page from provided error object
++sub gen_error {
+ 	my $status = shift || 500;
+ 	my $error = esc_html(shift) || "Internal Server Error";
+ 	my $extra = shift;
+-	my %opts = @_;
  
-Moreover by default cache_output has safety in that error pages generated
-by such detached process are cached.
-
-Note also that in my rewrite you can simply (by changing one single 
-configuration knob) configure gitweb to also cache error pages.  This
-might be best and safest solution for very large sites with very large
-disk space, but not so good for smaller sites.
-
->
-> It's much better to have a simple, lightweight waiting message get
-> displayed while things happen.  When they are done, output the completed
-> page to all waiting clients.
-
-The problem with 'lightweight waiting message', as it is implemented in
-your code, and as I stole it ;-), is that it doesn't provide any indicator
-how much work is already done, and how much work might there be left.
-Well, at least for now.
-
-With tee-ing client (well, at least the one that is generating data; other
-would get "Generating...", or rather "Waiting..." page) can estimate how
-long would he/she had to wait, and literally see progress, not just some
-progress indicator.
-
-
-P.S. In my rewrite clients would retry generating page if it was not
-generated when they were waiting for it, till they try their own hand
-at generating.  This protects against process generating data being 
-killed; see also test suite for caching interface.
-
-> - John 'Warthog9' Hawley
-> 
-> P.S. I'm back to work full-time on Wednesday, which I'll be catching up
-> on gitweb and trying to make forward progress on my gitweb code again.
-
-I'll try to send much simplified (and easier to use in caching) error
-handling using exceptions (die / eval used as throw / catch) today.
-
+ 	my %http_responses = (
+ 		400 => '400 Bad Request',
+@@ -3743,23 +3751,40 @@ sub die_error {
+ 		500 => '500 Internal Server Error',
+ 		503 => '503 Service Unavailable',
+ 	);
+-	git_header_html($http_responses{$status}, undef, %opts);
++
++	my $err = {
++		'status' => $status,
++		'http_status' => $http_responses{$status},
++		'error'  => $error,
++		'extra'  => $extra,
++	};
++	return $err;
++}
++
++sub die_error {
++	my $error = gen_error(@_);
++	print STDERR Dumper($error);
++	die $error;
++}
++
++sub send_error {
++	my $error = shift;
++
++	git_header_html($error->{'http_status'}, undef);
++
+ 	print <<EOF;
+ <div class="page_body">
+ <br /><br />
+-$status - $error
++$error->{'status'} - $error->{'error'}
+ <br />
+ EOF
+-	if (defined $extra) {
++	if (defined $error->{'extra'}) {
+ 		print "<hr />\n" .
+-		      "$extra\n";
++		      "$error->{'extra'}\n";
+ 	}
+ 	print "</div>\n";
+ 
+ 	git_footer_html();
+-
+-	die {'status' => $status, 'error' => $error}
+-		unless ($opts{'-error_handler'});
+ }
+ 
+ ## ----------------------------------------------------------------------
 -- 
-Jakub Narebski
-Poland
+1.7.3
