@@ -1,65 +1,105 @@
-From: Levend Sayar <levendsayar@gmail.com>
-Subject: git repo corruption
-Date: Tue, 4 Jan 2011 11:10:38 +0200
-Message-ID: <AANLkTi=TSy1WQZARNQgGfPiV93hQ-xmCTip75JAixgDB@mail.gmail.com>
+From: Alexander Gladysh <agladysh@gmail.com>
+Subject: Re: False positives in git diff-index
+Date: Tue, 4 Jan 2011 12:45:33 +0300
+Message-ID: <AANLkTinDSCPz-oukxzn24hj94d9WpzZ8_64TBHeNTmoG@mail.gmail.com>
+References: <AANLkTimLW+J_rmRsqUQJO-9Gzn7aK0ZHkd1-s=Wg4Vbi@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 04 10:11:09 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 04 10:46:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pa2v6-00009k-PZ
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 10:11:09 +0100
+	id 1Pa3Sq-0004XM-SH
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 10:46:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751429Ab1ADJLA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jan 2011 04:11:00 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:49967 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751097Ab1ADJK7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jan 2011 04:10:59 -0500
-Received: by qyk12 with SMTP id 12so15935964qyk.19
-        for <git@vger.kernel.org>; Tue, 04 Jan 2011 01:10:58 -0800 (PST)
+	id S1750840Ab1ADJpz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Jan 2011 04:45:55 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:44457 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750779Ab1ADJpy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jan 2011 04:45:54 -0500
+Received: by qwa26 with SMTP id 26so14290508qwa.19
+        for <git@vger.kernel.org>; Tue, 04 Jan 2011 01:45:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:from:date
-         :message-id:subject:to:content-type;
-        bh=OFeubhRuri/HJM0O8MhqTbIE/NH3S+6JGsZon5PiP5Y=;
-        b=M6iuagkrs9U3F4+VG+JLBjVoYI66ElDqGof1YULA0/mTnWuvVstepB5Ko2S10OSWf/
-         P8MYhAvlIqyi/v6yI2jnxt8dWKBRvSFfswGRZa+D/rmTmlt4RhHgzJ6IeCiy+XPTSR++
-         mNvZKhb3xmgGY216NEtyJiqIXqFjPKPTPeRnQ=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=9w+cMwuRW7skSjtKfCbv9GJgGP7BWLdW3saRmZ7O8eE=;
+        b=PqIouXcgTRR1rR6TiGm9yMVWJAExV7kN7GjhD3by0R87GH0Ors8CbU6YdTLFjITo8S
+         rdlY1r5AKov1GhIuMqIlR73YNKP6EtyBlc87UUVE1fFqcViee3NwSTJKYzVXMJvGnJiM
+         DRmDAab2Djgm5Ncmv9GlkH3ZraV4yKD6OwzBw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=gvywpeM39GwMjeICeQZJcdrBKf2qmtVVSyUmODUNBJ2he/jOx+tYiMJ+qWQRBrXCf8
-         NxWGPypfxgsKSjVaxGOyYckz514IPiB+wJxjPfX6C6S0p6jtbOxUuu3Uxz9OsBd91Q0r
-         QqROFTva7T3reZ7BgvKEbMNLWr+Gq8NfgUCnE=
-Received: by 10.229.230.80 with SMTP id jl16mr909757qcb.240.1294132258801;
- Tue, 04 Jan 2011 01:10:58 -0800 (PST)
-Received: by 10.229.219.147 with HTTP; Tue, 4 Jan 2011 01:10:38 -0800 (PST)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Js+EyguvSDP4cgZdnfmpUiu3NLR49jKyZhmtG58onksX3YlE7i+YABUHfGWQukS6bT
+         NPzrCa1w4jJXfPi3oc3k2yuMBQSZOIDlU/R3CoWNgY72HniuKOCViN8I4ysEWLeFKc94
+         MonM4cZQoHWtmDgMT90i8VmXx0JcL5ccFnHEo=
+Received: by 10.229.95.211 with SMTP id e19mr19096050qcn.53.1294134353261;
+ Tue, 04 Jan 2011 01:45:53 -0800 (PST)
+Received: by 10.229.48.5 with HTTP; Tue, 4 Jan 2011 01:45:33 -0800 (PST)
+In-Reply-To: <AANLkTimLW+J_rmRsqUQJO-9Gzn7aK0ZHkd1-s=Wg4Vbi@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164480>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164481>
 
-Hi, all.
+Nobody is interested?
 
-We have a repo on a corporate server. The sysadmin changed access
-rights of files on our repo by accedant.
-Some directories have 2750 acces rights before, but he changed as
+Is there a way I can get some help with this issue?
 
-chmod -R 2770 *
+Thanks,
+Alexander.
 
-Now when you make git status, every file that is tracked by git is said as
-
-changed but not updated
-
-So is there a way to get this back to normal ?
-
-TIA
-
-_lvnd_
-(^_^)
+On Mon, Dec 27, 2010 at 11:49, Alexander Gladysh <agladysh@gmail.com> w=
+rote:
+> Hi, list!
+>
+> I wrote about the related issue earlier:
+>
+> http://lists-archives.org/git/731516-false-positives-from-git-diff-in=
+dex-when-used-with-git-dir.html
+>
+> Now I've got a case when I can reproduce this problem each time I try=
+ to.
+>
+> Unfortunately I can not share it or create a minimal example =E2=80=94=
+ the
+> case is triggered by a custom complicated automated build process on =
+a
+> private repository.
+>
+> Anyway, I'm ready to debug this issue if someone will guide me.
+>
+> Workflow:
+>
+> <...change files in /path/dir1/...>
+> (cd /path && git add </path/dir1/>)
+> (cd /path && git commit -m <message1>)
+>
+> ... repeat change-add-commit several times for various directories
+> (can be the same directory or not) ...
+>
+> <...generate file /path/dirN/foo...>
+> # Accidentally the file is generated the same as it was
+>
+> (cd /path && git add </path/dirN/>)
+> (cd /path && git status) # Refresh index
+> (cd /path && git diff-index --exit-code --quiet HEAD -- /path/dirN) #
+> Incorrectly reports that there are some changes
+> (cd /path && git commit -m <messageN>) # fails, saying that there is
+> nothing to commit
+>
+> If I insert sleep 10 between git status and git diff-index, the
+> problem goes away.
+>
+> Any help?
+> Alexander.
+>
