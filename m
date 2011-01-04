@@ -1,100 +1,98 @@
-From: Antonio Ospite <ospite@studenti.unina.it>
-Subject: [PATCH v2] t/t9001-send-email.sh: fix '&&' chain in some tests
-Date: Tue,  4 Jan 2011 21:56:58 +0100
-Message-ID: <1294174618-14571-1-git-send-email-ospite@studenti.unina.it>
-Cc: Antonio Ospite <ospite@studenti.unina.it>,
-	Junio C Hamano <gitster@pobox.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
+From: Marcin =?iso-8859-2?q?Wi=B6nicki?= <mwisnicki@gmail.com>
+Subject: Re: [PATCH] gitattributes.txt: mention exceptions to gitignore
+ rules
+Date: Tue, 4 Jan 2011 21:17:26 +0000 (UTC)
+Message-ID: <ig02p5$kh3$1@dough.gmane.org>
+References: <iftvu6@dough.gmane.org>
+	<1294147915-1475-1-git-send-email-pclouds@gmail.com>
+	<7vwrmkfphh.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 04 22:03:19 2011
+X-From: git-owner@vger.kernel.org Tue Jan 04 22:17:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaE2I-00061r-99
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 22:03:18 +0100
+	id 1PaEGM-0007Je-Tg
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 22:17:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751285Ab1ADVDM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jan 2011 16:03:12 -0500
-Received: from smtp208.alice.it ([82.57.200.104]:45031 "EHLO smtp208.alice.it"
+	id S1751401Ab1ADVRo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jan 2011 16:17:44 -0500
+Received: from lo.gmane.org ([80.91.229.12]:56715 "EHLO lo.gmane.org"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751005Ab1ADVDM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jan 2011 16:03:12 -0500
-X-Greylist: delayed 367 seconds by postgrey-1.27 at vger.kernel.org; Tue, 04 Jan 2011 16:03:11 EST
-Received: from jcn (82.57.107.216) by smtp208.alice.it (8.5.124.08)
-        id 4C1A27160E5B95F6; Tue, 4 Jan 2011 21:57:02 +0100
-Received: from ao2 by jcn with local (Exim 4.72)
-	(envelope-from <ospite@studenti.unina.it>)
-	id 1PaDwD-0003nW-9f; Tue, 04 Jan 2011 21:57:01 +0100
-X-Mailer: git-send-email 1.7.2.3
-X-Face: z*RaLf`X<@C75u6Ig9}{oW$H;1_\2t5)({*|jhM<pyWR#k60!#=#>/Vb;]yA5<GWI5`6u&+ ;6b'@y|8w"wB;4/e!7wYYrcqdJFY,~%Gk_4]cq$Ei/7<j&N3ah(m`ku?pX.&+~:_/wC~dwn^)MizBG !pE^+iDQQ1yC6^,)YDKkxDd!T>\I~93>J<_`<4)A{':UrE
+	id S1751100Ab1ADVRo (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jan 2011 16:17:44 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PaEGE-0007EY-F8
+	for git@vger.kernel.org; Tue, 04 Jan 2011 22:17:42 +0100
+Received: from static-78-8-147-77.ssp.dialog.net.pl ([78.8.147.77])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 Jan 2011 22:17:42 +0100
+Received: from mwisnicki by static-78-8-147-77.ssp.dialog.net.pl with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Tue, 04 Jan 2011 22:17:42 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: static-78-8-147-77.ssp.dialog.net.pl
+User-Agent: Pan/0.133 (House of Butterflies; GIT 3b0ee7d master)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164519>
 
-t/README recommends chaining test assertions.
+On Tue, 04 Jan 2011 11:17:14 -0800, Junio C Hamano wrote:
 
-Signed-off-by: Antonio Ospite <ospite@studenti.unina.it>
----
+>> Patterns that do not match but should:
+>>   d2/*
+> 
+> This shouldn't match unless it appears in d1/.gitattributes.
+> 
+> The presense of '/' makes the pattern anchored to the directory it
+> appear in, and .git/info/attributes is taken as being at the top level.
+> 
 
-Hi sorry for the delay,
+After more carefully re-reading gitignore(5) I think that now I get it.
 
-the only change wrt. v1 is the use of test_might_fail with
-git config --unset as requested by Jonathan.
+I presume that is is not possible to match certain pattern occurring 
+*anywhere* in the path.
 
-Note that in t9001-send-email.sh and other tests git config --unset is used
-without the test_might_fail handler some other times, you might wat to check
-this.
+Would it be possible to extend pattern format to include double-star 
+wildcard that matches anything including slashes ?
 
-Thanks and best regards,
-   Antonio Ospite
-   http://ao2.it
+Like: **/whatever/**
 
- t/t9001-send-email.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+Many tools (in java at least) and libraries support such extension to 
+globs. Unfortunately standard fnmatch(3) that's used by git is not one of 
+them, but glibc's implementation looks portable and self-contained so it 
+could be included and modified.
 
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 1dc4a92..ace3c78 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -265,7 +265,7 @@ test_expect_success $PREREQ 'Author From: in message body' '
- 		--to=nobody@example.com \
- 		--smtp-server="$(pwd)/fake.sendmail" \
- 		$patches &&
--	sed "1,/^\$/d" < msgtxt1 > msgbody1
-+	sed "1,/^\$/d" < msgtxt1 > msgbody1 &&
- 	grep "From: A <author@example.com>" msgbody1
- '
- 
-@@ -276,7 +276,7 @@ test_expect_success $PREREQ 'Author From: not in message body' '
- 		--to=nobody@example.com \
- 		--smtp-server="$(pwd)/fake.sendmail" \
- 		$patches &&
--	sed "1,/^\$/d" < msgtxt1 > msgbody1
-+	sed "1,/^\$/d" < msgtxt1 > msgbody1 &&
- 	! grep "From: A <author@example.com>" msgbody1
- '
- 
-@@ -298,7 +298,7 @@ test_expect_success $PREREQ 'Invalid In-Reply-To' '
- 		--in-reply-to=" " \
- 		--smtp-server="$(pwd)/fake.sendmail" \
- 		$patches \
--		2>errors
-+		2>errors &&
- 	! grep "^In-Reply-To: < *>" msgtxt1
- '
- 
-@@ -617,7 +617,7 @@ EOF
- "
- 
- test_expect_success $PREREQ '--suppress-cc=sob' '
--	git config --unset sendemail.cccmd
-+	test_might_fail git config --unset sendemail.cccmd &&
- 	test_suppression sob
- '
- 
--- 
-1.7.2.3
+
+>>   d2/
+>>   d2
+> 
+> These shouldn't for the same reason.
+> 
+>>   d1/d2
+>>   /d1/d2
+> 
+> We somehow don't do leading path match like we do for gitignore, but I
+> do not think this was intended.  My gut feeling is that these should
+> match.
+> 
+> The thinking back, when we wrote the code, could have been that, unlike
+> gitignore that maintains only one bit (either "ignored" or "not"),
+> attributes are richer and giving the same attribute (say "whitespace
+> checking criteria") to files inside a directory and the containing
+> directory itself was nonsensical.  But if that was the reason, it is
+> faulty, as we do not track directories anyway.
+> 
+> Wouldn't it be sufficient to teach attr.c:path_matches() that a pattern
+> could also match with leading path?  That would automatically cover the
+> case where a pattern is terminated with a slash, as pattern "d/e/" would
+> never match path "d/e" but does match "d/e/f"?
