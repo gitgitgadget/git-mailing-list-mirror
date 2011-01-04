@@ -1,104 +1,121 @@
-From: "Vallon, Justin" <Justin.Vallon@deshaw.com>
-Subject: RE: [PATCH v2] Fix false positives in t3404 due to SHELL=/bin/false
-Date: Tue, 4 Jan 2011 09:43:12 -0500
-Message-ID: <982E526FA742C94E9AC26DA766FD07090A3399@NYCMBX3.winmail.deshaw.com>
-References: <robbat2-20101227T024837-537032076Z@orbis-terrarum.net>
- <7vsjxjyce6.fsf@alter.siamese.dyndns.org>
- <20101227080343.GA15026@orbis-terrarum.net>
+From: Alexander Gladysh <agladysh@gmail.com>
+Subject: Re: False positives in git diff-index
+Date: Tue, 4 Jan 2011 14:46:54 +0000
+Message-ID: <AANLkTikD5znEPTqR-UeLsusV6sj80vO0dOPuK9QDN6LW@mail.gmail.com>
+References: <AANLkTimLW+J_rmRsqUQJO-9Gzn7aK0ZHkd1-s=Wg4Vbi@mail.gmail.com>
+ <AANLkTinDSCPz-oukxzn24hj94d9WpzZ8_64TBHeNTmoG@mail.gmail.com>
+ <AANLkTi=Po7zA1YG-VdN6cZEV+ZF3GYNM9W9CLVXFaE5Z@mail.gmail.com>
+ <AANLkTinfbyve-k8xBzDb1sTcXhJGvL_B+auuA8BQSUy2@mail.gmail.com> <m339p8dap4.fsf@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 8BIT
-To: "'Robin H. Johnson'" <robbat2@gentoo.org>,
-	Junio C Hamano <gitster@pobox.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Tue Jan 04 15:46:17 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Zenaan Harkness <zen@freedbms.net>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 04 15:47:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pa89M-0006JY-AS
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 15:46:12 +0100
+	id 1Pa8AZ-0007BV-PI
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 15:47:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751317Ab1ADOqG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jan 2011 09:46:06 -0500
-Received: from master.nyc.deshaw.com ([149.77.10.1]:50045 "EHLO
-	master.nyc.deshaw.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751249Ab1ADOqF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 4 Jan 2011 09:46:05 -0500
-Received: from winmail.deshaw.com ([149.77.72.51])
- by master.nyc.deshaw.com (8.13.8+Sun/8.13.7/2.0.kim.desco.357) with ESMTP id p04EjCIR005229;
- Tue, 4 Jan 2011 09:45:13 -0500 (EST)
-Received: from NYCMBX3.winmail.deshaw.com ([149.77.72.43]) by
- mailnychts1.winmail.deshaw.com ([149.77.72.51]) with mapi; Tue, 4 Jan 2011
- 09:45:12 -0500
-Thread-Topic: [PATCH v2] Fix false positives in t3404 due to SHELL=/bin/false
-Thread-Index: AculnJxNjQZg4nlmTNyz4+rx5QpT7QGgEP4g
-In-Reply-To: <20101227080343.GA15026@orbis-terrarum.net>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-acceptlanguage: en-US
+	id S1752017Ab1ADOrT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Jan 2011 09:47:19 -0500
+Received: from mail-qw0-f66.google.com ([209.85.216.66]:47803 "EHLO
+	mail-qw0-f66.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751847Ab1ADOrS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jan 2011 09:47:18 -0500
+Received: by qwk3 with SMTP id 3so4654964qwk.1
+        for <git@vger.kernel.org>; Tue, 04 Jan 2011 06:47:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=dMjNkP4dlZGH+EgkQ3JGVENO4nun7b4IgAI30+77oOU=;
+        b=IXqTbTigfP+PavJBo9QvpvHver0W+ZYmMNdKoUbxFNgdLC4q3L0kaxnSyMYnGrE9Im
+         ux92dosijpa3pkw2HivyogB4SEZNJorPR2h1PJqGESc4YsfDvfc6H2r3Te+Pgd10l9d+
+         3zO0Rzq/ubkIx7G50G9YqVgmTFFwzdNdJUw1Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=JNEkCU7ymlWWhL9dUNJjVClJmLRRC+15Yi94kyIVlbulFbRiEvsx5qx2hOT43BWQrh
+         BWEr5hBfFc3agVpuXa0QHrIUj1XHSf8vtDWnR3gC0uHpVktkaY9wl99zdFn3Vzstvuha
+         gE6AL8AWYzmojHLRnPlE3NVDL/MPa2OBoFdO0=
+Received: by 10.229.182.11 with SMTP id ca11mr11624663qcb.15.1294152435010;
+ Tue, 04 Jan 2011 06:47:15 -0800 (PST)
+Received: by 10.229.48.5 with HTTP; Tue, 4 Jan 2011 06:46:54 -0800 (PST)
+In-Reply-To: <m339p8dap4.fsf@localhost.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164494>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164495>
 
- # "exec" commands are ran with the user shell by default, but this may
- # be non-POSIX. For example, if SHELL=zsh then ">file" doesn't work
- # to create a file. Unseting SHELL avoids such non-portable behavior
+On Tue, Jan 4, 2011 at 14:08, Jakub Narebski <jnareb@gmail.com> wrote:
+> Alexander Gladysh <agladysh@gmail.com> writes:
+>> On Tue, Jan 4, 2011 at 14:47, Zenaan Harkness <zen@freedbms.net> wro=
+te:
+>> > On Tue, Jan 4, 2011 at 20:45, Alexander Gladysh <agladysh@gmail.co=
+m> wrote:
 
-Perl's exec and system do not use SHELL (as far as perlfunc states).  It uses /bin/sh -c "$cmd", or a platform-dependent equivalent.
+>> > So your problem could be quite hard to debug, whilst being distinc=
+tly
+>> > difficult to ascertain the root causes.
 
-$SHELL is typically only used when a program wants to invoke a user-shell (ie: editor shell-escape, xterm, typescript, screen).
+>> 1. I found a reproducible case for a hard to catch bug in Git. (This
+>> is a bug in Git, not in my build process.) This bug in its
+>> intermittent form annoyed me for quite some time =E2=80=94 several m=
+onths at
+>> least =E2=80=94 and is likely to annoy other users. (I'm not *that* =
+unique!)
 
-How was SHELL=/bin/false causing problems?  Is git using $SHELL?
+> But it is reproductible to you: from what I understand you didn't fin=
+d
+> some minimal example to reproduce this issue without need for access
+> your proprietary build process.
 
--- 
--Justin
+> AG> Unfortunately I can not share it or create a minimal example ? th=
+e
+> AG> case is triggered by a custom complicated automated build process=
+ on a
+> AG> private repository.
 
+Yes, that is true. Still, much, much better than intermittent.
 
------Original Message-----
-From: git-owner@vger.kernel.org [mailto:git-owner@vger.kernel.org] On Behalf Of Robin H. Johnson
-Sent: Monday, December 27, 2010 3:04 AM
-To: Junio C Hamano; git@vger.kernel.org
-Subject: [PATCH v2] Fix false positives in t3404 due to SHELL=/bin/false
+>> 3. I'm willing to help Git developers with catching this bug for
+>> mutual benefit =E2=80=94 I will get rid of annoying issue and make m=
+y
+>> deployment code more robust. Git will, well, be a bit more robust as
+>> well.
 
-If the user's shell in NSS passwd is /bin/false (eg as found during Gentoo's
-package building), the git-rebase exec tests will fail, because they call
-$SHELL around the command, and in the existing testcase, $SHELL was not being
-cleared sufficently.
+> To debug it, if you cannot do it yourself, you would have to find git
+> developer who is both knowledgeable about fairly deep part of git
+> code, and can work with remote debugging with you at remote.
 
-This lead to false positive failures of t3404 on systems where the package
-build user was locked down as noted above.
+I understand that. But is the second part of requirement is such a
+large problem?
 
-Signed-off-by: "Robin H. Johnson" <robbat2@gentoo.org>
-X-Gentoo-Bug: 349083
-X-Gentoo-Bug-URL: http://bugs.gentoo.org/show_bug.cgi?id=349083
----
- t/t3404-rebase-interactive.sh |    3 ++-
- 1 files changed, 2 insertions(+), 1 deletions(-)
+Anyway, as I said, if no one will step up, no problem.
 
-diff --git a/t/t3404-rebase-interactive.sh b/t/t3404-rebase-interactive.sh
-index d3a3bd2..7d8147b 100755
---- a/t/t3404-rebase-interactive.sh
-+++ b/t/t3404-rebase-interactive.sh
-@@ -71,8 +71,9 @@ test_expect_success 'setup' '
- # "exec" commands are ran with the user shell by default, but this may
- # be non-POSIX. For example, if SHELL=zsh then ">file" doesn't work
- # to create a file. Unseting SHELL avoids such non-portable behavior
--# in tests.
-+# in tests. It must be exported for it to take effect where needed.
- SHELL=
-+export SHELL
- 
- test_expect_success 'rebase -i with the exec command' '
- 	git checkout master &&
+> P.S. Somewhere in the depths of git maling list archive (it didn't
+> unfortunately made it to "Interfaces, Frontends and tools" page on gi=
+t
+> wiki) there is tool/script for anonymizing git repository, to allow
+> debugging of bugs which occurs in some repositories that cannot be
+> made public. =C2=A0Perhaps something similar could be done for your b=
+uild
+> process (you need to reproduce only stat + git part)?
 
--- 
-Robin Hugh Johnson
-Gentoo Linux: Developer, Trustee & Infrastructure Lead
-E-Mail     : robbat2@gentoo.org
-GnuPG FP   : 11AC BA4F 4778 E3F6 E4ED  F38E B27B 944E 3488 4E85
+I remember, somebody advised me to use this tool, when I reported some
+bug some time (maybe a year) ago.
+
+But, I'm afraid, I do not know how to separate my deployment tool
+logic (which reproduces the bug) from the repository data. If I did
+know, I'd come up with a minimal example already. Nothing trivial
+"along the lines", that I tried so far, does reproduce it.
+
+Alexander.
