@@ -1,94 +1,82 @@
-From: "Neal Kreitzinger" <neal@rsss.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: clone --bare vs push
-Date: Mon, 3 Jan 2011 22:40:32 -0600
-Message-ID: <ifu8d2$t61$1@dough.gmane.org>
-References: <AANLkTi=+cRqD_CDFyaYj8uWOxUA1+5Dgr_pv1guaaT40@mail.gmail.com> <AANLkTi=RNDYrRbyEJXA_c30JEVr=SYUQ01cfA3FyWpLT@mail.gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 04 05:41:25 2011
+Date: Mon, 3 Jan 2011 22:58:39 -0600
+Message-ID: <20110104045839.GA8225@burratino>
+References: <AANLkTi=+cRqD_CDFyaYj8uWOxUA1+5Dgr_pv1guaaT40@mail.gmail.com>
+ <AANLkTi=RNDYrRbyEJXA_c30JEVr=SYUQ01cfA3FyWpLT@mail.gmail.com>
+ <ifu8d2$t61$1@dough.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Neal Kreitzinger <neal@rsss.com>,
+	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+To: Levend Sayar <levendsayar@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 04 05:59:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PZyi4-0006wn-IV
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 05:41:24 +0100
+	id 1PZyzD-0006bM-44
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 05:59:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751319Ab1ADElT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jan 2011 23:41:19 -0500
-Received: from lo.gmane.org ([80.91.229.12]:35697 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750981Ab1ADElT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jan 2011 23:41:19 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PZyhx-0006uc-OQ
-	for git@vger.kernel.org; Tue, 04 Jan 2011 05:41:17 +0100
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 04 Jan 2011 05:41:17 +0100
-Received: from neal by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Tue, 04 Jan 2011 05:41:17 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-X-Newsreader: Microsoft Outlook Express 6.00.2900.5931
-X-RFC2646: Format=Flowed; Original
-X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2900.5931
+	id S1751447Ab1ADE6y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jan 2011 23:58:54 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:50902 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751300Ab1ADE6x (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jan 2011 23:58:53 -0500
+Received: by yxt3 with SMTP id 3so5502722yxt.19
+        for <git@vger.kernel.org>; Mon, 03 Jan 2011 20:58:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=LA4mhsJFIuU3KWICPSYdutKELy5+um5n6TE8gGNUgys=;
+        b=BdaDjR+kuYncoDt/72/SyJhNTOqzp5zCoPICmep+/uzo/JKKCbkZcfi5cKd+yKroNc
+         6SioX/xVies022qG8S+Q91P2V8UsTuLui1vhIx6p/7QA3w8QCTSNOAq9OTCnddM+zpxC
+         ezZS3GYwqJdgZLsBHNtBEJvbSSkx+2e/ddmiI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=iISoA44lirk0k8b+rtUBBSyQgLkTlyzuy0UmOepA+HY4bNPSOAcMI6bCFzRDRztBBX
+         N9kJvfNkdwaXi4JlDo4zW6OnDTalcTnpszv6Ddzi/ZjNrkgE9crOyTjT9qMM/QdKT77/
+         iXTp1iGcHO0QkGM1vakWf4CwQmjQ0oq0abZnc=
+Received: by 10.100.163.3 with SMTP id l3mr12848446ane.9.1294117132710;
+        Mon, 03 Jan 2011 20:58:52 -0800 (PST)
+Received: from burratino (adsl-69-209-72-219.dsl.chcgil.sbcglobal.net [69.209.72.219])
+        by mx.google.com with ESMTPS id b19sm19556009ana.7.2011.01.03.20.58.50
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 03 Jan 2011 20:58:51 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <ifu8d2$t61$1@dough.gmane.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164473>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164474>
 
+Neal Kreitzinger wrote:
 
-"Levend Sayar" <levendsayar@gmail.com> wrote in message 
-news:AANLkTi=RNDYrRbyEJXA_c30JEVr=SYUQ01cfA3FyWpLT@mail.gmail.com...
-> Hi, all.
->
-> We cloned a repo from github on our local server. Say X for this. At
-> that repo, we did
->
-> git clone --bare X y.git
->
-> Now y.git is ready for other machines to clone.
->
-> To update our upstream repo X, we do
->
-> git pull
->
-> and then
->
-> git push --all
->
-> to update y.git.
->
-> Now questions:
->
-> 1) When I compare X/.git directory and y.git directory there are many
-> objects missing in y.git. What is the reason ?
->
-> 2) git clone --bare is too fast. My .git directory is nearly 1GB. How
-> can it be copied that much fast ?
->
-> 3) Is this more safe then git pull, git push
->
-> rm -rf y.git
-> git pull
-> git clone --bare X y.git
->
-> Namely bare cloning each time when we update our main repo ?
->
-> TIA
->
-> _lvnd_
-> (^_^)
+> you can also use the file:// url format to create a complete copy and not 
+> use hardlinks.  see git-clone manpage.
+> 
+> e.g. git clone --bare file:///fullpathto/X y.git
 
-you can also use the file:// url format to create a complete copy and not 
-use hardlinks.  see git-clone manpage.
+Thanks, that's useful; cc-ing Levend.
 
-e.g. git clone --bare file:///fullpathto/X y.git
+[Side note: I wrote in the past:
 
-v/r,
-Neal 
+| In traditional newsgroups it seems to be most common to just reply to
+| the author by mail or follow-up to the group, so I wouldn't feel too
+| bad.
+
+but probably that was unclear of me.  The convention on _this_ list[1] is
+to reply to all participants in a thread, so new participants do not
+need to subscribe if they don't want to.  Thunderbird (e.g.) seems to
+be good at doing that for what it's worth.]
+
+[1] at least as I perceive it; please feel free to correct me if I
+have misunderstood
