@@ -1,176 +1,141 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC PATCH 3/3] filter-branch: support --submodule-filter
-Date: Tue, 4 Jan 2011 14:14:19 +0100
-Message-ID: <201101041414.19587.trast@student.ethz.ch>
-References: <cover.1293809100.git.trast@student.ethz.ch> <44e6104ba28c80a6befe0f39fa4e2d6eeec56aa9.1293809100.git.trast@student.ethz.ch> <4D225F63.1040502@syncleus.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC PATCH v7 11/9] [PoC] gitweb/lib - tee, i.e. print and capture during cache entry generation
+Date: Tue, 4 Jan 2011 14:20:10 +0100
+Message-ID: <201101041420.11577.jnareb@gmail.com>
+References: <20101222234843.7998.87068.stgit@localhost.localdomain> <4D225C6E.9000108@eaglescrag.net> <201101040128.26826.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, Johannes Sixt <j6t@kdbg.org>,
-	Jens Lehmann <Jens.Lehmann@web.de>
-To: Jeffrey Phillips Freeman <jeffrey.freeman@syncleus.com>
-X-From: git-owner@vger.kernel.org Tue Jan 04 14:14:32 2011
+Cc: git@vger.kernel.org, "John 'Warthog9' Hawley" <warthog9@kernel.org>
+To: "J.H." <warthog9@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Tue Jan 04 14:20:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pa6iZ-00049D-FD
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 14:14:27 +0100
+	id 1Pa6oN-0008Ig-Pp
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 14:20:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751211Ab1ADNOW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jan 2011 08:14:22 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:47405 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751129Ab1ADNOV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jan 2011 08:14:21 -0500
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 4 Jan
- 2011 14:14:14 +0100
-Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 4 Jan
- 2011 14:14:20 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-rc6-desktop; KDE/4.5.4; x86_64; ; )
-In-Reply-To: <4D225F63.1040502@syncleus.com>
-X-Originating-IP: [129.132.153.233]
+	id S1751091Ab1ADNUX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jan 2011 08:20:23 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:51947 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750903Ab1ADNUW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jan 2011 08:20:22 -0500
+Received: by wyb28 with SMTP id 28so14292338wyb.19
+        for <git@vger.kernel.org>; Tue, 04 Jan 2011 05:20:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=hxNmAZ1R+ALoV7ms3z8H9ek67rqjnb1nS82Vsk8Hbzs=;
+        b=Ss4dWT7dJ9vWF2PbqW2M5svfk73zDWOmZ4e+kOgfq1l7+fvB6ntCaoK71IasNVAueQ
+         oc+UQSovSPPybbddP/ZeijWNKPj7hHAkRFce0TYOUW48YPCLKhlZwf2saBQlsXTESnZ3
+         glMGFZY6P2VKCuNMsANsg3b34XVwbp30Sz4VE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=schLVJFpPfVGR4wxMNdz+vCiNRh6wEICS6JXE5VOygZ3GBcbWDqMdmOmhG7HkjCa42
+         f2PGH/hkKza1wYiXGZ8D/wOu534hUmafT4KwBb9g4W+3f6yfLayBGX3uG5TOTlj+Vh3R
+         e4etq2hxJa5hq5TTdL82VlJRS0h2huQftVQXY=
+Received: by 10.216.185.199 with SMTP id u49mr6957726wem.45.1294147220981;
+        Tue, 04 Jan 2011 05:20:20 -0800 (PST)
+Received: from [192.168.1.13] (abvw52.neoplus.adsl.tpnet.pl [83.8.220.52])
+        by mx.google.com with ESMTPS id j58sm10516677wes.21.2011.01.04.05.20.18
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 04 Jan 2011 05:20:19 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <201101040128.26826.jnareb@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164489>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164490>
 
-Please don't top-post.  (There's nothing wrong with snipping the whole
-message if it does not really relate, as in this case.)
+Jakub Narebski wrote:
+> On Tue, 4 Jan 2011, J.H. wrote:
+> > On 01/03/2011 01:33 PM, Jakub Narebski wrote:
+> 
+> > > Instead of having gitweb use progress info indicator / throbber to
+> > > notify user that data is being generated by current process, gitweb
+> > > can now (provided that PerlIO::tee from PerlIO::Util is available)
+> > > send page to web browser while simultaneously saving it to cache
+> > > (print and capture, i.e. tee), thus having incremental generating of
+> > > page serve as a progress indicator.
+> > 
+> > In general, and particularly for the large sites that caching is
+> > targeted at, teeing is a really bad idea.
+[...]
+> > 1) Errors may still be generated in flight as the cache is being
+> > generated.  It would be better to let the cache run with a progress
+> > indicator and should an error occur, display the error instead of giving
+> > any output that may have been generated (and thus likely a broken page).
+> 
+> On the contrary, with tee-ing (and zero size sanity check) you would be
+> able to see pages even if there are errors saving cache entry.  Though
+> this wouldn't help very large sites which cannot function without caching,
+> it could be useful for smaller sites.
 
-Ccs for the patch at the end; I don't really care much but I could
-roll all of it into a sort of "submodule tools" series for g-f-b, so
-if you like it, speak up.
+I was not sure how Perl reacts to ENOSPC (No space left on device), 
+which I think it is only error that can be generated in flight as
+cache is being generated (or as gitweb output is printed i.e. sent
+to browser and captured/tee-ed i.e. saved to cache entry file), so
+I have checked this (using loopback to create small filesystem).
 
-Jeffrey Phillips Freeman wrote:
-> So im kinda new with all this so bare with me guys. I wanted to figure 
-> out how to apply these patches, now i know i can use git to do this with 
-> its patch command and such. However i was curious does this exist as a 
-> branch somewhere official or semi-official?
+The outcomes one worry about are the following:
+* Perl dies during printing - this leads to broken page send to
+  browser, and no cache entry generated
+* Perl prints output without dying at all; the page send to browser
+  via tee-in is all right, but cache entry is truncated which results
+  in broken page shown to other clients.
 
-Not really.
+But what actually happens is actually different, and quite safe:
+* Perl prints output without dying, and dies on closing cache entry
+  file with ENOSPC.  This means that client generating data gets correct
+  output, and cache entry is not generated.  Other clients with my code
+  try their hand at generation and also get correct page, but not save
+  it to cache.
 
-You can dig through the mailing list archives and also e.g.
-gitworkflows to see how Junio handles incoming patches, but for series
-like this you usually have to apply them yourself.  I deliberately
-flagged it RFC because I wanted to get some feedback ... and because I
-would have had to spend more time on it for docs&tests.
+This means that no error page about problems with cache is shown, which
+is bad.  On the other hand, at least for smaller sites, gitweb keeps 
+working as if without cache for newer entries.
+  
+Note that observed behaviour might depend on operating system / filesystem
+parameters, such as buffer sizes.
 
-> I currently seem to be using
-> --split-submodule which is itself in a git repo i have (which i want to 
-> also find its source repo so i can keep up to date with it).
+> But see below.
 
-For others reading this, I wrote --split-submodule also based on an
-IRC request from Jeffrey.  The patch is at the end.  But it's way less
-thought through than the --{dump,load}-map feature.  In particular
-I've been wondering whether it's possible to use the latter to
-implement --split-submodule as a fairly concise index filter.
+[...]
 
-> So applying 
-> the patch itself might be somewhat troubling due to conflicts, therefore 
-> id like to actually merge in a remote branch to keep things easy. So can 
-> you guys point me to which repo would be best for me to keep up to date 
-> with this would be?
+> Note also that in my rewrite you can simply (by changing one single 
+> configuration knob) configure gitweb to also cache error pages.  This
+> might be best and safest solution for very large sites with very large
+> disk space, but not so good for smaller sites.
 
-You'll get the same conflicts from merging two little branches with
-the features on them as with a 'git am -3'.
+Errr... now after rereading your email I see that caching error pages
+has one problem: errors that come from the caching engine or capturing
+engine - those errors you cannot cache.  Sorry, my mistake.
 
-Many patches are never pushed to a public repo (there are some notable
-exceptions in longer-running work).  The hassle of sending and
-applying email is far outweighed by the ease of review.  Many reviews
-happen without applying the series at all.  That I pushed both of them
-to a public repo was an exception for your convenience.
+> > - John 'Warthog9' Hawley
+> > 
+> > P.S. I'm back to work full-time on Wednesday, which I'll be catching up
+> > on gitweb and trying to make forward progress on my gitweb code again.
+> 
+> I'll try to send much simplified (and easier to use in caching) error
+> handling using exceptions (die / eval used as throw / catch) today.
 
-
---- 8< ---
-Subject: TOY PATCH: filter-branch --split-submodule
-
-Sometimes it makes sense to split out a path not as a subdirectory
-(that would be merged by subtree-merge), but as a submodule.  Since
-git objects are just shaped in the right way, this is actually quite
-easy to do in a way that maintains the correct history relations:
-
-When splitting out DIR in commit C, the submodule commit has tree
-C:DIR and the rewritten superproject commit C' gets a submodule entry
-at C:DIR instead.
-
-Parent rewriting is done in the obvious way: submodule commits have
-their corresponding submodule-changing ancestors as parents.  These
-are easy to fetch since we can basically use $(map C^):DIR.
-
-This is a toy patch because of its terrible interface: you will still
-have to put the submodule in place.  As a start, you can
-
-  git clone . DIR
-  ( cd DIR && git reset --hard $(git rev-parse :DIR) )
-
-to get a sub-repo set to the correct commit.
-
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
-
-diff --git a/git-filter-branch.sh b/git-filter-branch.sh
-index 962a93b..329d85c 100755
---- a/git-filter-branch.sh
-+++ b/git-filter-branch.sh
-@@ -191,6 +191,9 @@ do
- 		filter_subdir="$OPTARG"
- 		remap_to_ancestor=t
- 		;;
-+	--split-submodule)
-+		split_submodule="$OPTARG"
-+		;;
- 	--original)
- 		orig_namespace=$(expr "$OPTARG/" : '\(.*[^/]\)/*$')/
- 		;;
-@@ -349,6 +352,43 @@ while read commit parents; do
- 	eval "$filter_index" < /dev/null ||
- 		die "index filter failed: $filter_index"
- 
-+	if test -n "$split_submodule"; then
-+		sub_differs=
-+		sub_parents=
-+		sub_commit=
-+		submodule="$(git rev-parse --verify $commit:$split_submodule 2>/dev/null)"
-+		if test -z "$parents"; then
-+			if test -n "$submodule"; then
-+				sub_differs=t
-+			fi
-+		fi
-+		for parent in $parents; do
-+			if ! test "$(git rev-parse --verify $parent:$split_submodule 2>/dev/null)" = "$submodule"; then
-+				sub_differs=t
-+			fi
-+			for reparent in $(map "$parent"); do
-+				p="$(git rev-parse --verify $reparent:$split_submodule 2>/dev/null)"
-+				if test -n "$p"; then
-+					sub_parents="$sub_parents -p $p"
-+				fi
-+			done
-+		done
-+		if test -n "$sub_differs"; then
-+			sub_commit="$(sed -e '1,/^$/d' <../commit |
-+				      git commit-tree $submodule $sub_parents)" || exit
-+		else
-+			for parent in $parents; do
-+				sub_commit="$(git rev-parse --verify "$(map "$parent")":$split_submodule 2>/dev/null)"
-+				break
-+			done
-+		fi
-+		if test -n "$sub_commit"; then
-+			git update-index --add --replace --cacheinfo 160000 $sub_commit "$split_submodule" || exit
-+		else
-+			git update-index --remove "$split_submodule"
-+		fi
-+	fi
-+
- 	parentstr=
- 	for parent in $parents; do
- 		for reparent in $(map "$parent"); do
+Sent as
+  [RFC PATCH v7 2.5/9] gitweb: Make die_error just die, and use send_error
+    to create error pages
+  Message-ID: <201101040135.08638.jnareb@gmail.com>
+  http://permalink.gmane.org/gmane.comp.version-control.git/164466
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Jakub Narebski
+Poland
