@@ -1,85 +1,88 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 2/2] gitweb: make logo optional
-Date: Tue, 4 Jan 2011 10:29:18 -0600
-Message-ID: <20110104162918.GA30141@burratino>
-References: <20110104050206.GA8280@burratino>
- <20110104050555.GC8280@burratino>
- <201101041252.40254.jnareb@gmail.com>
+From: John Griessen <john@ecosensory.com>
+Subject: debugging git clone  via git-daemon     "cannot handle daemon internally"
+Date: Tue, 04 Jan 2011 10:50:55 -0600
+Message-ID: <4D234FEF.2030501@ecosensory.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, John 'Warthog9' Hawley <warthog9@kernel.org>,
-	Eric Wong <normalperson@yhbt.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 04 17:29:45 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 04 17:51:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pa9lV-00046O-5b
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 17:29:41 +0100
+	id 1PaA6B-00027O-0f
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 17:51:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751298Ab1ADQ3g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jan 2011 11:29:36 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:63106 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751100Ab1ADQ3f (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jan 2011 11:29:35 -0500
-Received: by fxm20 with SMTP id 20so14220047fxm.19
-        for <git@vger.kernel.org>; Tue, 04 Jan 2011 08:29:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=WOTp4DzQY/zIyzoR+7Xgv2elLM0002zcKUHoEbDXeIs=;
-        b=piWtM3HGOLL/wo01OJC+42AMYBM8gFtdiV7por9LowheDRyLrfN9DjsWwDh7uAbjdI
-         4NSyz/VKWsf4+ax5kZq8NEuFG8N7C1sBFKW9enEiien3kY8lEADq3XaK20yCRAUVh92+
-         v+fXbwp60aCdnwev2F6gJyGMZBK5tIq3aco1s=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=fO1Zr/W0F+Fx1eOyP3qlfyLm0G6JoHcresZfXPHOpiJfH+wzpKv01Xmxh33E9yyrJL
-         Bj5lLmNYFV5wBaecU63kAokPMkVoWfB5tlm/ZWgXGG7y2qGogDK2NWx84wXHTBZctwaF
-         PxPClnJJt3zdtmFL4XaUoUwt458cscB834Egw=
-Received: by 10.223.96.200 with SMTP id i8mr1753416fan.76.1294158573974;
-        Tue, 04 Jan 2011 08:29:33 -0800 (PST)
-Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
-        by mx.google.com with ESMTPS id n1sm5153869fam.16.2011.01.04.08.29.31
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 04 Jan 2011 08:29:32 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <201101041252.40254.jnareb@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751551Ab1ADQu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jan 2011 11:50:58 -0500
+Received: from hrndva-omtalb.mail.rr.com ([71.74.56.123]:64848 "EHLO
+	hrndva-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750954Ab1ADQu5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jan 2011 11:50:57 -0500
+X-Authority-Analysis: v=1.1 cv=UQuFHoD2CPQ248x8AXEbKhr4z9AaDqApxmEl3BhfZ64= c=1 sm=0 a=-4fNSqmjlTwA:10 a=8nJEP1OIZ-IA:10 a=hpnIzNeuzKcqG6phuHbX0Q==:17 a=wyvzCOmcxTsvDdF3RvEA:9 a=UqYKIMB556daDv8AfiS6qaYjb9QA:4 a=wPNLvfGTeEIA:10 a=Kc5_tDKYYfWjy68_:21 a=7sJ3Y2wpAIuUVGti:21 a=hpnIzNeuzKcqG6phuHbX0Q==:117
+X-Cloudmark-Score: 0
+X-Originating-IP: 66.68.104.159
+Received: from [66.68.104.159] ([66.68.104.159:54423] helo=[192.168.15.39])
+	by hrndva-oedge02.mail.rr.com (envelope-from <john@ecosensory.com>)
+	(ecelerity 2.2.3.46 r()) with ESMTP
+	id 01/09-00963-FEF432D4; Tue, 04 Jan 2011 16:50:55 +0000
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164501>
 
-Jakub Narebski wrote:
-> On Tue, 4 Dec 2011, Jonathan Nieder wrote:
+I have a server running debian  git-core, gitosis,  git version 1.7.2.3 and local git version 1.7.2.3.
 
->> Some sites may not want to have a logo at all.  In particular, git
->> instaweb can benefit from this.
->
-> Why do you think that git-instaweb can benefit from not having logo?
-> You need gitweb.css anyway, so it is not much more trouble to serve
-> additional static file, git-logo.png.
+I've uninstalled git-daemon-run from the server for testing simplicity.
 
-Yep, that sentence is stale (it only applied in 1.7.1.x days) and
-should have been removed.
+The server is running this:
+sudo /usr/lib/git-core/git-daemon --verbose --strict-paths --user=git --group=gitosis /srv/gitosis/repositories  &>git-daemon-err.log
 
-> corelist (Module::CoreList) says that Perl 5.8.0 has CGI.pm version 2.81;
-> IIRC gitweb requires something later than 5.8.0 for good support of
-> Unicode (Encode module).
->
->>
->> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
->
-> For what it is worth it:
->
-> Acked-by: Jakub Narebski <jnareb@gmail.com>
+when I try  cloning from my local machine I get these results:
 
-Thanks for looking it over.
+john@toolbench:~/EEProjects/test$ git clone git://mail.cibolo.us/gitosis-admin.git
+Cloning into gitosis-admin...
+fatal: protocol error: bad line length character: fata
+
+
+
+john@toolbench:~/EEProjects/test$ telnet mail.cibolo.us 9418
+Trying 76.191.252.85...
+Connected to mail.cibolo.us.
+Escape character is '^]'.
+fatal: cannot handle daemon internally
+Connection closed by foreign host.
+
+
+What does "cannot handle daemon internally" signify to you all?
+The part where telnet connects is saying the firewall is open at 9418, so that's good.
+
+What do you think about debian's package of gitosis?  It is working to push,
+and clone with this command:
+git clone gitosis@mail.cibolo.us:gitosis-admin.git
+but not these:
+
+john@toolbench:~/EEProjects/test$ git clone git://mail.cibolo.us/gitosis-admin.git
+Cloning into gitosis-admin...
+fatal: protocol error: bad line length character: fata
+john@toolbench:~/EEProjects/test$ git clone git://mail.cibolo.us/srv/gitosis/repositories/gitosis-admin.git
+Cloning into gitosis-admin...
+fatal: protocol error: bad line length character: fata
+
+it creates a gitosis user.
+Should I install gitosis from source and have a git user only?
+
+What can I simplify to debug this?
+
+gitweb skips this by not using port 9418, so I will be setting that up in the meantime.
+
+thanks,
+
+John
+
+-- 
+Ecosensory   Austin TX
