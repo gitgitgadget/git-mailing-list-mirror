@@ -1,94 +1,180 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git-daemon serving repos with repo.git/git-daemon-export-ok
-Date: Mon, 3 Jan 2011 17:55:01 -0600
-Message-ID: <20110103235501.GA32262@burratino>
-References: <S1751603Ab1ACU6e/20110103205834Z+1762@vger.kernel.org>
- <4D224475.1090805@ecosensory.com>
- <20110103231153.GA10733@burratino>
- <4D225DFA.50805@ecosensory.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFC PATCH v7 11/9] [PoC] gitweb/lib - tee, i.e. print and capture during cache entry generation
+Date: Tue, 4 Jan 2011 01:28:25 +0100
+Message-ID: <201101040128.26826.jnareb@gmail.com>
+References: <20101222234843.7998.87068.stgit@localhost.localdomain> <201101032233.16174.jnareb@gmail.com> <4D225C6E.9000108@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: John Griessen <john@ecosensory.com>
-X-From: git-owner@vger.kernel.org Tue Jan 04 00:55:25 2011
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, "John 'Warthog9' Hawley" <warthog9@kernel.org>
+To: "J.H." <warthog9@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Tue Jan 04 01:28:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PZuFI-00088u-Gc
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 00:55:24 +0100
+	id 1PZulT-0000ul-Tk
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 01:28:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750861Ab1ACXzS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 3 Jan 2011 18:55:18 -0500
-Received: from mail-yx0-f194.google.com ([209.85.213.194]:57317 "EHLO
-	mail-yx0-f194.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750766Ab1ACXzR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 3 Jan 2011 18:55:17 -0500
-Received: by yxd5 with SMTP id 5so3300307yxd.1
-        for <git@vger.kernel.org>; Mon, 03 Jan 2011 15:55:16 -0800 (PST)
+	id S1750955Ab1ADA2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 3 Jan 2011 19:28:34 -0500
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:33746 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750896Ab1ADA2d (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 3 Jan 2011 19:28:33 -0500
+Received: by wwi17 with SMTP id 17so14372329wwi.1
+        for <git@vger.kernel.org>; Mon, 03 Jan 2011 16:28:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=kQjGTjzYwk6PYbagpD03euRCYp3XVkARTvKgEsYJ7JI=;
-        b=o7P2PJmKhi8cPjjaJj0KorEWAj4imD00Dj/UBqbUPjbu+4VwSy4aqvcl9FBszALiiq
-         D9rowk8PDeIxeTGaQTzYMHIQNMNLsYoCY2ejsBI6TSizc3/Y8sF4H1a9erb4NVHwiEOG
-         7o2GV+hA5igWB3dnY2nMQ6IweCKeYIcVt1rb0=
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=yqsaDIGo/lAPkX+m7cU1XB8ztD5VvGfN4dJ0hiJnsRk=;
+        b=T/b2lL1tUNdGpyu/F/02jHDpCJmcJ8DgtCHUbEgvSmjKXIHI7IyIEG/c10JeyZOhi0
+         WTLAsm2162jySMtJeoOZ6Y+8xwTLeOFGujoirC6ThLw5AKPSZgJfoMkPxHiyDMRQLdT7
+         Fkem/2uq2lCSbP99o67Xydsmv935xa17kLMok=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=AQV+IxincR7BJLD7jB9vw5wHLVBPj8ZzXefHTGvmb/Z6lPZL9nVxLwAG7f5yqU2DSk
-         V8Ow2GW+jFJ9L096X99dsfJ8XupPNnL0joIOMskKpv1S0RoRYXz9qG1fymT2IQDyS4Qq
-         ebgUvgHaauP+DlKQKjLuPDi7sTlx/yMkCfhUs=
-Received: by 10.91.11.11 with SMTP id o11mr13204632agi.131.1294098916638;
-        Mon, 03 Jan 2011 15:55:16 -0800 (PST)
-Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
-        by mx.google.com with ESMTPS id c34sm28746890anc.10.2011.01.03.15.55.14
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 03 Jan 2011 15:55:15 -0800 (PST)
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=cVPJmByeP9d15DzFo24b67Ur2iKTYqa97j5g/Rv2jxxICMzKoi95Aad2ruWqFLZj2I
+         F2B5GHbrIaHhJC0EhH1BcfzKWiaJLE8Z8efHraCrPE3N+pCPzRSLM1oIU7xdcT8/qlh8
+         CSc3vcD0NUCRS+cewPSGPvn1graX53ngb0Iwc=
+Received: by 10.216.213.15 with SMTP id z15mr20806646weo.61.1294100912325;
+        Mon, 03 Jan 2011 16:28:32 -0800 (PST)
+Received: from [192.168.1.13] (abvw52.neoplus.adsl.tpnet.pl [83.8.220.52])
+        by mx.google.com with ESMTPS id f52sm10207177wes.35.2011.01.03.16.28.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 03 Jan 2011 16:28:31 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4D225C6E.9000108@eaglescrag.net>
 Content-Disposition: inline
-In-Reply-To: <4D225DFA.50805@ecosensory.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164465>
 
-John Griessen wrote:
+On Tue, 4 Jan 2011, J.H. wrote:
+> On 01/03/2011 01:33 PM, Jakub Narebski wrote:
 
-> git version 1.7.2.3
+> > Instead of having gitweb use progress info indicator / throbber to
+> > notify user that data is being generated by current process, gitweb
+> > can now (provided that PerlIO::tee from PerlIO::Util is available)
+> > send page to web browser while simultaneously saving it to cache
+> > (print and capture, i.e. tee), thus having incremental generating of
+> > page serve as a progress indicator.
+> 
+> In general, and particularly for the large sites that caching is
+> targeted at, teeing is a really bad idea.  I've mentioned this several
+> times before, and the progress indicator is a *MUCH* better idea.  I'm
+> not sure how many times I can say that, even if this was added it would
+> have the potential to exacerbate disk thrashing and overall make things
+> a lot more complex.
 
-Good.
+It might be true that tee-ing is bad for very large sites, as it
+increases load a bit in those (I think) extremly rare cases where
+clients concurrently access the very same error page.  But it might
+be a solution for those in between cases.  I think that incrementally
+generated page is better progress indicator than just "Generating..."
+page.
 
-> vking@mail:/etc/sv$ sv stat git-daemon
-> fail: git-daemon: unable to change to service directory: file does not exist
+Anyway this proof of concept patch is to show how such thing should
+be implemented.  I don't think that it makes things a lot more complex;
+in this rewrite everything is quite well modularized, encapsulated, and
+isolated.
 
-Ah, you switched to running git daemon directly.
 
-> I can push to these repos with gitosis, and the permissions are:
+But the main intent behind this patch was to avoid bad interaction between
+'progress info' indicator (in the process that is generating page, see
+below), and non-cached error pages.
+
+> 
+> 1) Errors may still be generated in flight as the cache is being
+> generated.  It would be better to let the cache run with a progress
+> indicator and should an error occur, display the error instead of giving
+> any output that may have been generated (and thus likely a broken page).
+
+On the contrary, with tee-ing (and zero size sanity check) you would be
+able to see pages even if there are errors saving cache entry.  Though
+this wouldn't help very large sites which cannot function without caching,
+it could be useful for smaller sites.
+ 
+But see below.
+
+> 2) Having multiple clients all waiting on the same page (in particular
+> the index page) can lead to invalid output.  In particular if you are
+> teeing the output a reading client now must come in, read the current
+> contents of the file (as written), then pick up on the the tee after
+> that.  It's actually possible for the reading client to miss data as it
+> may be in flight to be written and the client is switching from reading
+> the file to reading the tee.  I don't see anything in your code to
+> handle that kind of switch over.
+
+Err... could you explain what do you mean by "client is switching from
+reading the file to reading the tee"?
+
+
+Hmmm... I thought that the code is clear.  Generating data, whether it
+is captured to be displayed later, or tee-ed i.e. printed and captured
+to cache, is inside critical section, protected by exclusive lock.  Only
+after cache entry is written (in full), the lock is released, and clients
+waiting for data can access it; they use shared (readers) lock for sync.
+ 
+Note that in my rewrite (and I think also in _some_ cases in your version)
+files are written atomically, by writing to temporary file then renaming
+it to final destination.
+
+> 3) This makes no allowance for the file to be generated completely in
+> the background while serving stale data in the interim.  Keep in mind
+> that it can (as Fedora has experienced) take *HOURS* to generate the
+> index page, teeing that output just means brokenness and isn't useful.
+
+It does make allowance.  cache_output from GitwebCache::CacheOutput uses
+capturing and not tee-ing if we are in background process.  When there
+is stale data to serve, cache entry is (re)generated in background in
+detached process.
+ 
+Moreover by default cache_output has safety in that error pages generated
+by such detached process are cached.
+
+Note also that in my rewrite you can simply (by changing one single 
+configuration knob) configure gitweb to also cache error pages.  This
+might be best and safest solution for very large sites with very large
+disk space, but not so good for smaller sites.
+
 >
-> vking@mail:/srv/gitosis/repositories$ ll
-> total 16
-> drwxr-xr-x 7 gitosis gitosis 4096 Dec 30 12:32 extrudator.data.git
+> It's much better to have a simple, lightweight waiting message get
+> displayed while things happen.  When they are done, output the completed
+> page to all waiting clients.
 
-So the gitdaemon user (used by git-daemon-run) wouldn't be able to
-access them.
+The problem with 'lightweight waiting message', as it is implemented in
+your code, and as I stole it ;-), is that it doesn't provide any indicator
+how much work is already done, and how much work might there be left.
+Well, at least for now.
 
-> vking@mail:/etc/sv$ cat strace.out
-> execve("/usr/lib/git-core/git-daemon",
-> ["/usr/lib/git-core/git-daemon", "--verbose", "--strict-paths",
-> "--user=git", "--group=gitosis", "/srv/gitosis/repositories"], [/*
-> 10 vars */]) = 0
+With tee-ing client (well, at least the one that is generating data; other
+would get "Generating...", or rather "Waiting..." page) can estimate how
+long would he/she had to wait, and literally see progress, not just some
+progress indicator.
 
-In this case simple --verbose output would probably be more useful.
-(That's what cat-ing /var/log/git-daemon/current would have given
-if git-daemon-run were still installed.)
 
-Thanks for the strace.  I should have mentioned that strace -f can
-help by following child processes, though that doesn't seem to be
-an issue here.  It looks like another git-daemon process is running at
-the same time?  (One can check with "netstat -t -a".)
+P.S. In my rewrite clients would retry generating page if it was not
+generated when they were waiting for it, till they try their own hand
+at generating.  This protects against process generating data being 
+killed; see also test suite for caching interface.
+
+> - John 'Warthog9' Hawley
+> 
+> P.S. I'm back to work full-time on Wednesday, which I'll be catching up
+> on gitweb and trying to make forward progress on my gitweb code again.
+
+I'll try to send much simplified (and easier to use in caching) error
+handling using exceptions (die / eval used as throw / catch) today.
+
+-- 
+Jakub Narebski
+Poland
