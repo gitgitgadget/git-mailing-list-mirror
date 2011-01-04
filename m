@@ -1,88 +1,93 @@
-From: John Griessen <john@ecosensory.com>
-Subject: debugging git clone  via git-daemon     "cannot handle daemon internally"
-Date: Tue, 04 Jan 2011 10:50:55 -0600
-Message-ID: <4D234FEF.2030501@ecosensory.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 1/3] Fixes bug: git-diff: class methods are not detected in hunk headers for Pascal
+Date: Tue, 4 Jan 2011 18:13:44 +0100
+Message-ID: <201101041813.45053.trast@student.ethz.ch>
+References: <1293240049-7744-1-git-send-email-zapped@mail.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 04 17:51:04 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>
+To: Zapped <zapped@mail.ru>
+X-From: git-owner@vger.kernel.org Tue Jan 04 18:13:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaA6B-00027O-0f
-	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 17:51:03 +0100
+	id 1PaASG-0001AN-Q6
+	for gcvg-git-2@lo.gmane.org; Tue, 04 Jan 2011 18:13:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751551Ab1ADQu6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jan 2011 11:50:58 -0500
-Received: from hrndva-omtalb.mail.rr.com ([71.74.56.123]:64848 "EHLO
-	hrndva-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750954Ab1ADQu5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jan 2011 11:50:57 -0500
-X-Authority-Analysis: v=1.1 cv=UQuFHoD2CPQ248x8AXEbKhr4z9AaDqApxmEl3BhfZ64= c=1 sm=0 a=-4fNSqmjlTwA:10 a=8nJEP1OIZ-IA:10 a=hpnIzNeuzKcqG6phuHbX0Q==:17 a=wyvzCOmcxTsvDdF3RvEA:9 a=UqYKIMB556daDv8AfiS6qaYjb9QA:4 a=wPNLvfGTeEIA:10 a=Kc5_tDKYYfWjy68_:21 a=7sJ3Y2wpAIuUVGti:21 a=hpnIzNeuzKcqG6phuHbX0Q==:117
-X-Cloudmark-Score: 0
-X-Originating-IP: 66.68.104.159
-Received: from [66.68.104.159] ([66.68.104.159:54423] helo=[192.168.15.39])
-	by hrndva-oedge02.mail.rr.com (envelope-from <john@ecosensory.com>)
-	(ecelerity 2.2.3.46 r()) with ESMTP
-	id 01/09-00963-FEF432D4; Tue, 04 Jan 2011 16:50:55 +0000
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
+	id S1752590Ab1ADRNr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 4 Jan 2011 12:13:47 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:45765 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752575Ab1ADRNr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 4 Jan 2011 12:13:47 -0500
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 4 Jan
+ 2011 18:13:04 +0100
+Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 4 Jan
+ 2011 18:13:45 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-rc6-desktop; KDE/4.5.4; x86_64; ; )
+In-Reply-To: <1293240049-7744-1-git-send-email-zapped@mail.ru>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164502>
 
-I have a server running debian  git-core, gitosis,  git version 1.7.2.3 and local git version 1.7.2.3.
+Zapped wrote:
+> Signed-off-by: Zapped <zapped@mail.ru>
 
-I've uninstalled git-daemon-run from the server for testing simplicity.
+As Junio already said, please provide a real name for the sign-off.
+But I also found the commit message and content confusing, probably
+because I haven't programmed Pascal for 15 years.
 
-The server is running this:
-sudo /usr/lib/git-core/git-daemon --verbose --strict-paths --user=git --group=gitosis /srv/gitosis/repositories  &>git-daemon-err.log
+You said
 
-when I try  cloning from my local machine I get these results:
+  Fixes bug: git-diff: class methods are not detected in hunk headers f=
+or Pascal
 
-john@toolbench:~/EEProjects/test$ git clone git://mail.cibolo.us/gitosis-admin.git
-Cloning into gitosis-admin...
-fatal: protocol error: bad line length character: fata
+>  PATTERNS("pascal",
+> -	 "^((procedure|function|constructor|destructor|interface|"
+> +	 "^(((class[ \t]+)?(procedure|function)|constructor|destructor|inte=
+rface|"
+>  		"implementation|initialization|finalization)[ \t]*.*)$"
+>  	 "\n"
+>  	 "^(.*=3D[ \t]*(class|record).*)$",
 
+But the last line very conspicuously already mentions 'class', so why
+does it fail?
 
+I had to look up a bit of Pascal syntax.  Google helped with
 
-john@toolbench:~/EEProjects/test$ telnet mail.cibolo.us 9418
-Trying 76.191.252.85...
-Connected to mail.cibolo.us.
-Escape character is '^]'.
-fatal: cannot handle daemon internally
-Connection closed by foreign host.
+  http://www.freepascal.org/docs-html/ref/ref.html
 
+which answers this.  Also, as stated in SubmittingPatches, we
+generally word the messages as stating the behaviour of the changed
+version in the present tense.  So a better commit message would be
 
-What does "cannot handle daemon internally" signify to you all?
-The part where telnet connects is saying the firewall is open at 9418, so that's good.
+  userdiff: match Pascal class methods
 
-What do you think about debian's package of gitosis?  It is working to push,
-and clone with this command:
-git clone gitosis@mail.cibolo.us:gitosis-admin.git
-but not these:
+  Class declarations were already covered by the second pattern, but
+  class methods have the 'class' keyword in front too.  Account for
+  it.
 
-john@toolbench:~/EEProjects/test$ git clone git://mail.cibolo.us/gitosis-admin.git
-Cloning into gitosis-admin...
-fatal: protocol error: bad line length character: fata
-john@toolbench:~/EEProjects/test$ git clone git://mail.cibolo.us/srv/gitosis/repositories/gitosis-admin.git
-Cloning into gitosis-admin...
-fatal: protocol error: bad line length character: fata
+  Signed-off-by: =D0=90=D0=BB=D0=B5=D0=BA=D1=81=D0=B5=D0=B9 =D0=9A=D1=80=
+=D0=B5=D0=B7=D0=BE=D0=B2 <zapped@mail.ru>
 
-it creates a gitosis user.
-Should I install gitosis from source and have a git user only?
+Ok, now I feel silly for only having a two-liner despite my
+complaints.
 
-What can I simplify to debug this?
+That being said, I have now verified that the patch is good, and, you
+can include my
 
-gitweb skips this by not using port 9418, so I will be setting that up in the meantime.
+  Acked-by: Thomas Rast <trast@student.ethz.ch>
 
-thanks,
+in a reroll if you fix the above.
 
-John
-
--- 
-Ecosensory   Austin TX
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
