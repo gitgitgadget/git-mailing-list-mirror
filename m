@@ -1,115 +1,101 @@
-From: Chris Packham <judge.packham@gmail.com>
-Subject: Re: [BUG?] "git submodule foreach" when command is ssh
-Date: Thu, 6 Jan 2011 12:22:17 +1300
-Message-ID: <AANLkTikCUKbHUrvXjWVyzmrZMzUtgrLrCDr8wSeFVgsZ@mail.gmail.com>
-References: <AANLkTi=x2i6NvDNRzbszhk-a-z5AYe46-iUBxQsxJJHC@mail.gmail.com>
-	<AANLkTini=GaGSHDX4e1jhPVxKaSayUJoWa=w4u4Rz-+5@mail.gmail.com>
-	<20110105230334.GB9774@sigill.intra.peff.net>
+From: Maaartin <grajcar1@seznam.cz>
+Subject: Re: Resumable clone/Gittorrent (again)
+Date: Wed, 5 Jan 2011 23:28:11 +0000 (UTC)
+Message-ID: <loom.20110105T222915-261@post.gmane.org>
+References: <AANLkTinUV9Z_w85Gz13J+bm8xqnxJ9jBJXJm9bn5Y2ec@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: GIT <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 06 00:22:27 2011
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 06 00:28:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PacgT-00075m-9w
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 00:22:25 +0100
+	id 1Pacmc-00025N-MS
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 00:28:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752798Ab1AEXWU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Jan 2011 18:22:20 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:33567 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752137Ab1AEXWT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Jan 2011 18:22:19 -0500
-Received: by fxm20 with SMTP id 20so15557247fxm.19
-        for <git@vger.kernel.org>; Wed, 05 Jan 2011 15:22:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=GDz3/TmYlWQ8AR0LafAKUcoiY3J4ghnIXTKfWGPGLnQ=;
-        b=i0Ro52l6tl1Sksaiw68TAZEdsMDuZoTsr9aiJG+O+1plCbA+gL76lx2zNULvkzzCbG
-         0//OtV05WUcLeKFrkHX60yJ/Wa+aA52dKZ1YILv91tgzKqiK1QJIG0wYmxAwhZiaAu9z
-         IBCxH1rEYbGRmejj/3h+ET+Ot+20FkdN1QUmM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=T0MbuqNOb+zD2tXwwHBRgLRbGU4Hsuzr+MfYHVw4m6/kGhd/r9NeDtitQnTLf/FHM6
-         ok7pKObeVhItxhFOSjy9I3Mv+qv+qrMVbvbx+BoUVeeM7ILad+Era4z+Psj96khWckK1
-         fGeifv4bZNacCp70d9nY+BPIzb3jtYkvYaJ5Y=
-Received: by 10.223.83.8 with SMTP id d8mr327770fal.94.1294269737972; Wed, 05
- Jan 2011 15:22:17 -0800 (PST)
-Received: by 10.223.73.205 with HTTP; Wed, 5 Jan 2011 15:22:17 -0800 (PST)
-In-Reply-To: <20110105230334.GB9774@sigill.intra.peff.net>
+	id S1752812Ab1AEX2g (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jan 2011 18:28:36 -0500
+Received: from lo.gmane.org ([80.91.229.12]:33453 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752338Ab1AEX2g (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jan 2011 18:28:36 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PacmO-0001yx-1x
+	for git@vger.kernel.org; Thu, 06 Jan 2011 00:28:32 +0100
+Received: from 188-120-198-113.luckynet.cz ([188-120-198-113.luckynet.cz])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 06 Jan 2011 00:28:32 +0100
+Received: from grajcar1 by 188-120-198-113.luckynet.cz with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 06 Jan 2011 00:28:32 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 188.120.198.113 (Opera/9.80 (Windows NT 5.2; U; en) Presto/2.7.62 Version/11.00)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164607>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164608>
 
-On Thu, Jan 6, 2011 at 12:03 PM, Jeff King <peff@peff.net> wrote:
-> On Thu, Jan 06, 2011 at 11:50:58AM +1300, Chris Packham wrote:
->
->> Actually this might be a ssh/bash bug (feature?). There is different
->> behaviour between
->>
->> =C2=A0 find . -maxdepth 1 -type d -a ! -name '\.*' | while read; do =
-echo
->> $REPLY && ssh localhost ls /; done
->>
->> and
->>
->> =C2=A0 find . -maxdepth 1 -type d -a ! -name '\.*' | while read; do =
-echo
->> $REPLY && ls /; done
->
-> Ssh will opportunistically eat data on stdin to send to the other sid=
-e,
-> even though the command on the other side ("ls" in this case) will ne=
-ver
-> read it. Because of course ssh has no way of knowing that, and is try=
-ing
-> to be an interactive terminal. So it ends up eating some random amoun=
-t
-> of the data you expected to go to the "read" call.
->
-> You can use the "-n" option to suppress it. For example:
->
-> =C2=A0$ (echo foo; echo bar) |
-> =C2=A0 =C2=A0while read line; do
-> =C2=A0 =C2=A0 =C2=A0echo local $line
-> =C2=A0 =C2=A0 =C2=A0ssh host "echo remote $line"
-> =C2=A0 =C2=A0done
->
-> produces:
->
-> =C2=A0local foo
-> =C2=A0remote foo
->
-> but:
->
-> =C2=A0$ (echo foo; echo bar) |
-> =C2=A0 =C2=A0while read line; do
-> =C2=A0 =C2=A0 =C2=A0echo local $line
-> =C2=A0 =C2=A0 =C2=A0ssh -n host "echo remote $line"
-> =C2=A0 =C2=A0done
->
-> produces:
->
-> =C2=A0local foo
-> =C2=A0remote foo
-> =C2=A0local bar
-> =C2=A0remote bar
->
-> which is what you want.
->
-> -Peff
+Nguyen Thai Ngoc Duy <pclouds <at> gmail.com> writes:
 
-Thanks that makes sense and adding -n to my ssh invocations solves the =
-problem.
+> I've been analyzing bittorrent protocol and come up with this. The
+> last idea about a similar thing [1], gittorrent, was given by Nicolas.
+> This keeps close to that idea (i.e the transfer protocol must be around git
+> objects, not file chunks) with a bit difference.
+>
+> The idea is to transfer a chain of objects (trees or blobs), including
+> base object and delta chain. Objects are chained in according to
+> worktree layout, e.g. all objects of path/to/any/blob will form a
+> chain, from a commit tip down to the root commits. Chains can have
+> gaps, and don't need to start from commit tip. The transfer is
+> resumable because if a delta chain is corrupt at some point, we can
+> just request another chain from where it stops. Base object is
+> obviously resumable.
+
+I may be talking nonsense, please bare with me.
+
+I'm not sure if it works well, since chains defined this way change over time. 
+I may request commits A and B while declaring to possess commits C and D. One 
+server may be ahead of A, so should it send me more data or repack the chain so 
+that the non-requested versions get excluded? At the same time the server may 
+be missing B and posses only some ancestors of it. Should it send me only a 
+part of the chain or should I better ask a different server?
+
+Moreover, in case a directory gets renamed, the content may get transfered 
+needlessly. This is probably no big problem.
+
+I haven't read the whole other thread yet, but what about going the other way 
+round? Use a single commit as a chain, create deltas assuming that all 
+ancestors are already available. The packs may arrive out of order, so the 
+decompression may have to wait. The number of commits may be one order of 
+magnitude larger than the the number of paths (there are currently 2254 paths 
+and 24235 commits in git.git), so grouping consequent commits into one larger 
+pack may be useful.
+
+The advantage is that the packs stays stable over time, you may create them 
+using the most aggressive and time-consuming settings and store them forever. 
+You could create packs for single commits, packs for non-overlapping 
+consecutive pairs of them, for non-overlapping pairs of pairs, etc. I mean with 
+commits numbered 0, 1, 2, ... create packs [0,1], [2,3], ..., [0,3], [4,7], 
+etc. The reason for this is obviously to allow reading groups of commits from 
+different servers so that they fit together (similar to Buddy memory 
+allocation). Of course, there are things like branches bringing chaos in this 
+simple scheme, but I'm sure this can be solved somehow.
+
+Another problem is the client requesting commits A and B while declaring to 
+possess commits C and D. When both C and D are ancestors of either A or B, you 
+can ignore it (as you assume this while packing, anyway). The other case is 
+less probable, unless e.g. C is the master and A is a developing branch. 
+Currently. I've no idea how to optimize this and whether this could be 
+important.
+
+I see no disadvantage when compared to path-based chains, but am probably 
+overlooking something obvious.
