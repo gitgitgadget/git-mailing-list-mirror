@@ -1,64 +1,115 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: patch for git-p4
-Date: Wed, 05 Jan 2011 15:16:07 -0800
-Message-ID: <7vfwt7c56w.fsf@alter.siamese.dyndns.org>
-References: <AANLkTi=sNsDy9oo0iBE-qJwvFSDMFYma3oYhbP1J-th=@mail.gmail.com>
- <AANLkTimdMH_HcF-Qk3SSmqT24OgxynYnXpSLiDtU7Y6c@mail.gmail.com>
+From: Chris Packham <judge.packham@gmail.com>
+Subject: Re: [BUG?] "git submodule foreach" when command is ssh
+Date: Thu, 6 Jan 2011 12:22:17 +1300
+Message-ID: <AANLkTikCUKbHUrvXjWVyzmrZMzUtgrLrCDr8wSeFVgsZ@mail.gmail.com>
+References: <AANLkTi=x2i6NvDNRzbszhk-a-z5AYe46-iUBxQsxJJHC@mail.gmail.com>
+	<AANLkTini=GaGSHDX4e1jhPVxKaSayUJoWa=w4u4Rz-+5@mail.gmail.com>
+	<20110105230334.GB9774@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Andrew Garber <andrew@andrewgarber.com>, git@vger.kernel.org
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Thu Jan 06 00:16:27 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: GIT <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Jan 06 00:22:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pacaf-0003nC-Kw
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 00:16:25 +0100
+	id 1PacgT-00075m-9w
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 00:22:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752695Ab1AEXQT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jan 2011 18:16:19 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41539 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751392Ab1AEXQT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jan 2011 18:16:19 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5A96C4ED0;
-	Wed,  5 Jan 2011 18:16:54 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=47k8SPpQrSUgK7t8riF0pAxN/TE=; b=Otau4Z
-	Bjgn2zHicFDZRpoW/Y+lmQ/Yaq6MFEfyfi28ZfOUn0VCOixaLBpYboQeb9WXve5L
-	164ZUQuNhpym8lRiKrJvwVGSmr0pVV8NGo1AzwpbNJyLOg7UDv1yhnZDFPOpXjcP
-	CHM0Tp5XbRtDR6pyo0BYcwECPWq0KY93BlnTU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=LYdqaP/XKJNeReDwfDxh/C9r04MYaimF
-	LCmyaZfAZqROZyYcRxjwKpAkBpH/nTiyugWJmARbnUXZ1GjBaH2WzwmlLST8J7qI
-	Vw9qqv0XAHOiGqpiZgHEn4b5S8Ukw1NUJ1rzE6MF27FjpkdpMMD0Q2KirOSDRliP
-	N59wEIG+RK8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 286814ECF;
-	Wed,  5 Jan 2011 18:16:51 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 146F04ECE; Wed,  5 Jan 2011
- 18:16:46 -0500 (EST)
-In-Reply-To: <AANLkTimdMH_HcF-Qk3SSmqT24OgxynYnXpSLiDtU7Y6c@mail.gmail.com>
- (Erik Faye-Lund's message of "Wed\, 5 Jan 2011 22\:31\:24 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: E07176A2-1921-11E0-8A32-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
+	id S1752798Ab1AEXWU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Jan 2011 18:22:20 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:33567 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752137Ab1AEXWT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Jan 2011 18:22:19 -0500
+Received: by fxm20 with SMTP id 20so15557247fxm.19
+        for <git@vger.kernel.org>; Wed, 05 Jan 2011 15:22:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GDz3/TmYlWQ8AR0LafAKUcoiY3J4ghnIXTKfWGPGLnQ=;
+        b=i0Ro52l6tl1Sksaiw68TAZEdsMDuZoTsr9aiJG+O+1plCbA+gL76lx2zNULvkzzCbG
+         0//OtV05WUcLeKFrkHX60yJ/Wa+aA52dKZ1YILv91tgzKqiK1QJIG0wYmxAwhZiaAu9z
+         IBCxH1rEYbGRmejj/3h+ET+Ot+20FkdN1QUmM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=T0MbuqNOb+zD2tXwwHBRgLRbGU4Hsuzr+MfYHVw4m6/kGhd/r9NeDtitQnTLf/FHM6
+         ok7pKObeVhItxhFOSjy9I3Mv+qv+qrMVbvbx+BoUVeeM7ILad+Era4z+Psj96khWckK1
+         fGeifv4bZNacCp70d9nY+BPIzb3jtYkvYaJ5Y=
+Received: by 10.223.83.8 with SMTP id d8mr327770fal.94.1294269737972; Wed, 05
+ Jan 2011 15:22:17 -0800 (PST)
+Received: by 10.223.73.205 with HTTP; Wed, 5 Jan 2011 15:22:17 -0800 (PST)
+In-Reply-To: <20110105230334.GB9774@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164606>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164607>
 
-Erik Faye-Lund <kusmabite@gmail.com> writes:
+On Thu, Jan 6, 2011 at 12:03 PM, Jeff King <peff@peff.net> wrote:
+> On Thu, Jan 06, 2011 at 11:50:58AM +1300, Chris Packham wrote:
+>
+>> Actually this might be a ssh/bash bug (feature?). There is different
+>> behaviour between
+>>
+>> =C2=A0 find . -maxdepth 1 -type d -a ! -name '\.*' | while read; do =
+echo
+>> $REPLY && ssh localhost ls /; done
+>>
+>> and
+>>
+>> =C2=A0 find . -maxdepth 1 -type d -a ! -name '\.*' | while read; do =
+echo
+>> $REPLY && ls /; done
+>
+> Ssh will opportunistically eat data on stdin to send to the other sid=
+e,
+> even though the command on the other side ("ls" in this case) will ne=
+ver
+> read it. Because of course ssh has no way of knowing that, and is try=
+ing
+> to be an interactive terminal. So it ends up eating some random amoun=
+t
+> of the data you expected to go to the "read" call.
+>
+> You can use the "-n" option to suppress it. For example:
+>
+> =C2=A0$ (echo foo; echo bar) |
+> =C2=A0 =C2=A0while read line; do
+> =C2=A0 =C2=A0 =C2=A0echo local $line
+> =C2=A0 =C2=A0 =C2=A0ssh host "echo remote $line"
+> =C2=A0 =C2=A0done
+>
+> produces:
+>
+> =C2=A0local foo
+> =C2=A0remote foo
+>
+> but:
+>
+> =C2=A0$ (echo foo; echo bar) |
+> =C2=A0 =C2=A0while read line; do
+> =C2=A0 =C2=A0 =C2=A0echo local $line
+> =C2=A0 =C2=A0 =C2=A0ssh -n host "echo remote $line"
+> =C2=A0 =C2=A0done
+>
+> produces:
+>
+> =C2=A0local foo
+> =C2=A0remote foo
+> =C2=A0local bar
+> =C2=A0remote bar
+>
+> which is what you want.
+>
+> -Peff
 
-> We tend not to write commit messages in past tence. E.g "git-p4:
-> replace tabs with spaces" (notice that I removed a 'd').
-
-Just for the record, we do not write in present tense either.  That
-"replace" is imperative.
+Thanks that makes sense and adding -n to my ssh invocations solves the =
+problem.
