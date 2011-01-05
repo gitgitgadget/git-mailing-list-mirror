@@ -1,57 +1,158 @@
-From: Maaartin <grajcar1@seznam.cz>
-Subject: Re: Web browser and Git wiki (kernel.org) not getting along....
-Date: Wed, 5 Jan 2011 01:05:17 +0000 (UTC)
-Message-ID: <loom.20110105T020320-207@post.gmane.org>
-References: <1293941768.30849.32.camel@drew-northup.unet.maine.edu> <4D20301F.5050002@kernel.org>
+From: Andrew Garber <andrew@andrewgarber.com>
+Subject: patch for git-p4
+Date: Tue, 4 Jan 2011 17:45:50 -0800
+Message-ID: <AANLkTi=sNsDy9oo0iBE-qJwvFSDMFYma3oYhbP1J-th=@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/mixed; boundary=000e0cd1d750b33c7104990f8cee
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 05 02:05:34 2011
+X-From: git-owner@vger.kernel.org Wed Jan 05 02:46:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaHoj-0007HX-N0
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 02:05:34 +0100
+	id 1PaISQ-0003TT-70
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 02:46:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751169Ab1AEBF3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jan 2011 20:05:29 -0500
-Received: from lo.gmane.org ([80.91.229.12]:55662 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750919Ab1AEBF2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jan 2011 20:05:28 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PaHod-0007Dv-U3
-	for git@vger.kernel.org; Wed, 05 Jan 2011 02:05:27 +0100
-Received: from 188-120-198-113.luckynet.cz ([188-120-198-113.luckynet.cz])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 05 Jan 2011 02:05:27 +0100
-Received: from grajcar1 by 188-120-198-113.luckynet.cz with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 05 Jan 2011 02:05:27 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: sea.gmane.org
-User-Agent: Loom/3.14 (http://gmane.org/)
-X-Loom-IP: 188.120.198.113 (Opera/9.80 (Windows NT 5.2; U; en) Presto/2.7.62 Version/11.00)
+	id S1751351Ab1AEBqN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jan 2011 20:46:13 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:38166 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751342Ab1AEBqM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jan 2011 20:46:12 -0500
+Received: by ewy5 with SMTP id 5so6714771ewy.19
+        for <git@vger.kernel.org>; Tue, 04 Jan 2011 17:46:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:sender:received:from:date
+         :x-google-sender-auth:message-id:subject:to:content-type;
+        bh=Se/0St3Y9D9bOTBCtO/CPgKHS5KxvEDn0OhuVEYErCw=;
+        b=ndFgtiDSpxskZLsdrIwm1IpHoXL4QMWz8LZVyGNweBAVJbISo90siewhw4VTHGOlVC
+         C8KnKv8n5V/Q57g6yMDLKRPxP0fu2yXqvKC1XgDqdx+Kcy6FUTbdS7vHDcRNbq+qmN00
+         w8y0VdFxhCkivSOsOtI8ZDuHURZiUbKZ02AO0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:from:date:x-google-sender-auth:message-id
+         :subject:to:content-type;
+        b=lmLT53A/IgsbOZjleoPkci/mJKvGEgwi3R1Ki75DaUac2ZpFrLuFT+HJfHSclJpTvi
+         efRT5LNeHTbQLDpVpzej+sp3ieFaPxzMhDPvGRRKAXs+Z0vJv8QEAP3Ta06InOieD7w0
+         34N+CdfvLA6QRRVmdAzhCGe+3ztXCazk+xyag=
+Received: by 10.213.104.132 with SMTP id p4mr15094917ebo.94.1294191970958;
+ Tue, 04 Jan 2011 17:46:10 -0800 (PST)
+Received: by 10.213.98.83 with HTTP; Tue, 4 Jan 2011 17:45:50 -0800 (PST)
+X-Google-Sender-Auth: Oh0T7lvCcOIkmMLJ9EuETP4An_w
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164537>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164538>
 
-J.H. <warthog9 <at> kernel.org> writes:
+--000e0cd1d750b33c7104990f8cee
+Content-Type: text/plain; charset=UTF-8
 
-> On 01/01/2011 08:16 PM, Drew Northup wrote:
-> > Are any other Opera users getting this error when attempting to go to
-> > https://git.wiki.kernel.org ?
-> 
-> Known bug in Opera, the problem lies in how it handles wild card
-> certificates.  It is claimed to be fixed in the next version by another
-> user who has pushed the issue with Opera.
+Hi everyone! This is my first post to the git mailing list.
 
-That's true, I'm using Opera 11.00 (under Windows XP) and it works now fine.
+I was reading the git-p4 source and noticed that some of the lines are
+indented using tabs instead of spaces (very bad in Python). Here's a
+patch against tag v1.7.4-rc0 (commit
+01b97a4cb60723d18b437efdc474503d2a9dd384) of the git source repo.
+
+Thanks!
+Andrew Garber
+
+--000e0cd1d750b33c7104990f8cee
+Content-Type: application/octet-stream; name="git-p4_tabs_to_spaces.patch"
+Content-Disposition: attachment; filename="git-p4_tabs_to_spaces.patch"
+Content-Transfer-Encoding: base64
+X-Attachment-Id: f_gijkencu0
+
+RnJvbSBjZTdmZjI3NTI5YmI1ZWM2MDhiYTZiNmE4NDFjZTJmM2NlNjA1YTNjIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBBbmRyZXcgR2FyYmVyIDxhbmRyZXdAYW5kcmV3Z2FyYmVyLmNv
+bT4KRGF0ZTogV2VkLCAyOSBEZWMgMjAxMCAwMDoyMzowNSAtMDgwMApTdWJqZWN0OiBbUEFUQ0hd
+IGdpdC1wNDogcmVwbGFjZWQgdGFicyB3aXRoIHNwYWNlcwoKU29tZSB0aGUgY29tbWl0cyB0byBn
+aXQtcDQgdXNlZCB0YWJzIGZvciBpbmRlbnRpbmcgaW5zdGVhZCBvZiBzcGFjZXMuIEkKYWxzbyBk
+aWQgc29tZSBtaW5vciByZWZvcm1hdHRpbmcuCi0tLQogY29udHJpYi9mYXN0LWltcG9ydC9naXQt
+cDQgfCAgIDcxICsrKysrKysrKysrKysrKysrKysrKy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tCiAx
+IGZpbGVzIGNoYW5nZWQsIDM0IGluc2VydGlvbnMoKyksIDM3IGRlbGV0aW9ucygtKQoKZGlmZiAt
+LWdpdCBhL2NvbnRyaWIvZmFzdC1pbXBvcnQvZ2l0LXA0IGIvY29udHJpYi9mYXN0LWltcG9ydC9n
+aXQtcDQKaW5kZXggMDRjZTdlMy4uNDQ5ZGYyZSAxMDA3NTUKLS0tIGEvY29udHJpYi9mYXN0LWlt
+cG9ydC9naXQtcDQKKysrIGIvY29udHJpYi9mYXN0LWltcG9ydC9naXQtcDQKQEAgLTIyMiwxMCAr
+MjIyLDEwIEBAIGRlZiBwNENtZExpc3QoY21kLCBzdGRpbj1Ob25lLCBzdGRpbl9tb2RlPSd3K2In
+LCBjYj1Ob25lKToKICAgICB0cnk6CiAgICAgICAgIHdoaWxlIFRydWU6CiAgICAgICAgICAgICBl
+bnRyeSA9IG1hcnNoYWwubG9hZChwNC5zdGRvdXQpCi0JICAgIGlmIGNiIGlzIG5vdCBOb25lOgot
+CQljYihlbnRyeSkKLQkgICAgZWxzZToKLQkJcmVzdWx0LmFwcGVuZChlbnRyeSkKKyAgICAgICAg
+ICAgIGlmIGNiIGlzIG5vdCBOb25lOgorICAgICAgICAgICAgICAgIGNiKGVudHJ5KQorICAgICAg
+ICAgICAgZWxzZToKKyAgICAgICAgICAgICAgICByZXN1bHQuYXBwZW5kKGVudHJ5KQogICAgIGV4
+Y2VwdCBFT0ZFcnJvcjoKICAgICAgICAgcGFzcwogICAgIGV4aXRDb2RlID0gcDQud2FpdCgpCkBA
+IC00NDUsOCArNDQ1LDggQEAgZGVmIHA0Q2hhbmdlc0ZvclBhdGhzKGRlcG90UGF0aHMsIGNoYW5n
+ZVJhbmdlKToKIAogICAgIGNoYW5nZXMgPSB7fQogICAgIGZvciBsaW5lIGluIG91dHB1dDoKLQlj
+aGFuZ2VOdW0gPSBpbnQobGluZS5zcGxpdCgiICIpWzFdKQotCWNoYW5nZXNbY2hhbmdlTnVtXSA9
+IFRydWUKKyAgICAgICAgY2hhbmdlTnVtID0gaW50KGxpbmUuc3BsaXQoIiAiKVsxXSkKKyAgICAg
+ICAgY2hhbmdlc1tjaGFuZ2VOdW1dID0gVHJ1ZQogCiAgICAgY2hhbmdlbGlzdCA9IGNoYW5nZXMu
+a2V5cygpCiAgICAgY2hhbmdlbGlzdC5zb3J0KCkKQEAgLTk1NCwxMCArOTU0LDkgQEAgY2xhc3Mg
+UDRTeW5jKENvbW1hbmQpOgogICAgICMgLSBoZWxwZXIgZm9yIHN0cmVhbVA0RmlsZXMKIAogICAg
+IGRlZiBzdHJlYW1PbmVQNEZpbGUoc2VsZiwgZmlsZSwgY29udGVudHMpOgotCWlmIGZpbGVbInR5
+cGUiXSA9PSAiYXBwbGUiOgotCSAgICBwcmludCAiXG5maWxlICVzIGlzIGEgc3RyYW5nZSBhcHBs
+ZSBmaWxlIHRoYXQgZm9ya3MuIElnbm9yaW5nIiAlIFwKLQkJZmlsZVsnZGVwb3RGaWxlJ10KLQkg
+ICAgcmV0dXJuCisgICAgICAgIGlmIGZpbGVbInR5cGUiXSA9PSAiYXBwbGUiOgorICAgICAgICAg
+ICAgcHJpbnQgIlxuZmlsZSAlcyBpcyBhIHN0cmFuZ2UgYXBwbGUgZmlsZSB0aGF0IGZvcmtzLiBJ
+Z25vcmluZyIgJSBmaWxlWydkZXBvdEZpbGUnXQorICAgICAgICAgICAgcmV0dXJuCiAKICAgICAg
+ICAgcmVsUGF0aCA9IHNlbGYuc3RyaXBSZXBvUGF0aChmaWxlWydkZXBvdEZpbGUnXSwgc2VsZi5i
+cmFuY2hQcmVmaXhlcykKICAgICAgICAgaWYgdmVyYm9zZToKQEAgLTEwMDQsMjMgKzEwMDMsMjIg
+QEAgY2xhc3MgUDRTeW5jKENvbW1hbmQpOgogCiAgICAgIyBoYW5kbGUgYW5vdGhlciBjaHVuayBv
+ZiBzdHJlYW1pbmcgZGF0YQogICAgIGRlZiBzdHJlYW1QNEZpbGVzQ2Ioc2VsZiwgbWFyc2hhbGxl
+ZCk6CisgICAgICAgIGlmIG1hcnNoYWxsZWQuaGFzX2tleSgnZGVwb3RGaWxlJykgYW5kIHNlbGYu
+c3RyZWFtX2hhdmVfZmlsZV9pbmZvOgorICAgICAgICAgICAgIyBzdGFydCBvZiBhIG5ldyBmaWxl
+IC0gb3V0cHV0IHRoZSBvbGQgb25lIGZpcnN0CisgICAgICAgICAgICBzZWxmLnN0cmVhbU9uZVA0
+RmlsZShzZWxmLnN0cmVhbV9maWxlLCBzZWxmLnN0cmVhbV9jb250ZW50cykKKyAgICAgICAgICAg
+IHNlbGYuc3RyZWFtX2ZpbGUgPSB7fQorICAgICAgICAgICAgc2VsZi5zdHJlYW1fY29udGVudHMg
+PSBbXQorICAgICAgICAgICAgc2VsZi5zdHJlYW1faGF2ZV9maWxlX2luZm8gPSBGYWxzZQogCi0J
+aWYgbWFyc2hhbGxlZC5oYXNfa2V5KCdkZXBvdEZpbGUnKSBhbmQgc2VsZi5zdHJlYW1faGF2ZV9m
+aWxlX2luZm86Ci0JICAgICMgc3RhcnQgb2YgYSBuZXcgZmlsZSAtIG91dHB1dCB0aGUgb2xkIG9u
+ZSBmaXJzdAotCSAgICBzZWxmLnN0cmVhbU9uZVA0RmlsZShzZWxmLnN0cmVhbV9maWxlLCBzZWxm
+LnN0cmVhbV9jb250ZW50cykKLQkgICAgc2VsZi5zdHJlYW1fZmlsZSA9IHt9Ci0JICAgIHNlbGYu
+c3RyZWFtX2NvbnRlbnRzID0gW10KLQkgICAgc2VsZi5zdHJlYW1faGF2ZV9maWxlX2luZm8gPSBG
+YWxzZQotCi0JIyBwaWNrIHVwIHRoZSBuZXcgZmlsZSBpbmZvcm1hdGlvbi4uLiBmb3IgdGhlCi0J
+IyAnZGF0YScgZmllbGQgd2UgbmVlZCB0byBhcHBlbmQgdG8gb3VyIGFycmF5Ci0JZm9yIGsgaW4g
+bWFyc2hhbGxlZC5rZXlzKCk6Ci0JICAgIGlmIGsgPT0gJ2RhdGEnOgotCQlzZWxmLnN0cmVhbV9j
+b250ZW50cy5hcHBlbmQobWFyc2hhbGxlZFsnZGF0YSddKQotCSAgICBlbHNlOgotCQlzZWxmLnN0
+cmVhbV9maWxlW2tdID0gbWFyc2hhbGxlZFtrXQorICAgICAgICAjIHBpY2sgdXAgdGhlIG5ldyBm
+aWxlIGluZm9ybWF0aW9uLi4uIGZvciB0aGUKKyAgICAgICAgIyAnZGF0YScgZmllbGQgd2UgbmVl
+ZCB0byBhcHBlbmQgdG8gb3VyIGFycmF5CisgICAgICAgIGZvciBrIGluIG1hcnNoYWxsZWQua2V5
+cygpOgorICAgICAgICAgICAgaWYgayA9PSAnZGF0YSc6CisgICAgICAgICAgICAgICAgc2VsZi5z
+dHJlYW1fY29udGVudHMuYXBwZW5kKG1hcnNoYWxsZWRbJ2RhdGEnXSkKKyAgICAgICAgICAgIGVs
+c2U6CisgICAgICAgICAgICAgICAgc2VsZi5zdHJlYW1fZmlsZVtrXSA9IG1hcnNoYWxsZWRba10K
+IAotCXNlbGYuc3RyZWFtX2hhdmVfZmlsZV9pbmZvID0gVHJ1ZQorICAgICAgICBzZWxmLnN0cmVh
+bV9oYXZlX2ZpbGVfaW5mbyA9IFRydWUKIAogICAgICMgU3RyZWFtIGRpcmVjdGx5IGZyb20gInA0
+IGZpbGVzIiBpbnRvICJnaXQgZmFzdC1pbXBvcnQiCiAgICAgZGVmIHN0cmVhbVA0RmlsZXMoc2Vs
+ZiwgZmlsZXMpOgpAQCAtMTA1MiwyMyArMTA1MCwyMiBAQCBjbGFzcyBQNFN5bmMoQ29tbWFuZCk6
+CiAgICAgICAgICAgICBzZWxmLnN0cmVhbV9jb250ZW50cyA9IFtdCiAgICAgICAgICAgICBzZWxm
+LnN0cmVhbV9oYXZlX2ZpbGVfaW5mbyA9IEZhbHNlCiAKLQkgICAgIyBjdXJyeSBzZWxmIGFyZ3Vt
+ZW50Ci0JICAgIGRlZiBzdHJlYW1QNEZpbGVzQ2JTZWxmKGVudHJ5KToKLQkJc2VsZi5zdHJlYW1Q
+NEZpbGVzQ2IoZW50cnkpCisgICAgICAgICMgY3Vycnkgc2VsZiBhcmd1bWVudAorICAgICAgICBk
+ZWYgc3RyZWFtUDRGaWxlc0NiU2VsZihlbnRyeSk6CisgICAgICAgICAgICBzZWxmLnN0cmVhbVA0
+RmlsZXNDYihlbnRyeSkKIAotCSAgICBwNENtZExpc3QoIi14IC0gcHJpbnQiLAotCQknXG4nLmpv
+aW4oWyclcyMlcycgJSAoZlsncGF0aCddLCBmWydyZXYnXSkKLSAgICAgICAgICAgICAgICAgICAg
+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgZm9yIGYgaW4gZmlsZXNUb1JlYWRdKSwKLQkg
+ICAgICAgIGNiPXN0cmVhbVA0RmlsZXNDYlNlbGYpCisgICAgICAgIHA0Q21kTGlzdCgiLXggLSBw
+cmludCIsCisgICAgICAgICAgICAgICAgICAnXG4nLmpvaW4oWyclcyMlcycgJSAoZlsncGF0aCdd
+LCBmWydyZXYnXSkgZm9yIGYgaW4gZmlsZXNUb1JlYWRdKSwKKyAgICAgICAgICAgICAgICAgIGNi
+PXN0cmVhbVA0RmlsZXNDYlNlbGYpCiAKLSAgICAgICAgICAgICMgZG8gdGhlIGxhc3QgY2h1bmsK
+LSAgICAgICAgICAgIGlmIHNlbGYuc3RyZWFtX2ZpbGUuaGFzX2tleSgnZGVwb3RGaWxlJyk6Ci0g
+ICAgICAgICAgICAgICAgc2VsZi5zdHJlYW1PbmVQNEZpbGUoc2VsZi5zdHJlYW1fZmlsZSwgc2Vs
+Zi5zdHJlYW1fY29udGVudHMpCisgICAgICAgICMgZG8gdGhlIGxhc3QgY2h1bmsKKyAgICAgICAg
+aWYgc2VsZi5zdHJlYW1fZmlsZS5oYXNfa2V5KCdkZXBvdEZpbGUnKToKKyAgICAgICAgICAgIHNl
+bGYuc3RyZWFtT25lUDRGaWxlKHNlbGYuc3RyZWFtX2ZpbGUsIHNlbGYuc3RyZWFtX2NvbnRlbnRz
+KQogCiAgICAgZGVmIGNvbW1pdChzZWxmLCBkZXRhaWxzLCBmaWxlcywgYnJhbmNoLCBicmFuY2hQ
+cmVmaXhlcywgcGFyZW50ID0gIiIpOgogICAgICAgICBlcG9jaCA9IGRldGFpbHNbInRpbWUiXQog
+ICAgICAgICBhdXRob3IgPSBkZXRhaWxzWyJ1c2VyIl0KLQlzZWxmLmJyYW5jaFByZWZpeGVzID0g
+YnJhbmNoUHJlZml4ZXMKKyAgICAgICAgc2VsZi5icmFuY2hQcmVmaXhlcyA9IGJyYW5jaFByZWZp
+eGVzCiAKICAgICAgICAgaWYgc2VsZi52ZXJib3NlOgogICAgICAgICAgICAgcHJpbnQgImNvbW1p
+dCBpbnRvICVzIiAlIGJyYW5jaApAQCAtMTE3Myw3ICsxMTcwLDcgQEAgY2xhc3MgUDRTeW5jKENv
+bW1hbmQpOgogCiAgICAgICAgIHMgPSAnJwogICAgICAgICBmb3IgKGtleSwgdmFsKSBpbiBzZWxm
+LnVzZXJzLml0ZW1zKCk6Ci0JICAgIHMgKz0gIiVzXHQlc1xuIiAlIChrZXkuZXhwYW5kdGFicygx
+KSwgdmFsLmV4cGFuZHRhYnMoMSkpCisgICAgICAgICAgICBzICs9ICIlc1x0JXNcbiIgJSAoa2V5
+LmV4cGFuZHRhYnMoMSksIHZhbC5leHBhbmR0YWJzKDEpKQogCiAgICAgICAgIG9wZW4oc2VsZi5n
+ZXRVc2VyQ2FjaGVGaWxlbmFtZSgpLCAid2IiKS53cml0ZShzKQogICAgICAgICBzZWxmLnVzZXJN
+YXBGcm9tUGVyZm9yY2VTZXJ2ZXIgPSBUcnVlCi0tIAoxLjcuMy4yCgo=
+--000e0cd1d750b33c7104990f8cee--
