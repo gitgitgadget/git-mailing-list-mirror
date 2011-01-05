@@ -1,196 +1,151 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: developing a modified Linux-style workflow
-Date: Tue, 04 Jan 2011 18:47:30 -0600
-Message-ID: <4D23BFA2.7000603@gmail.com>
-References: <E54235A96EB484418EBD9509F37176D210049C61@htmail10.hightouchinc.com> <344D6422-8F2B-4545-A680-06F434C17F5B@at.or.at> <4D238EDC.9000503@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 2/4] gitweb: remove unnecessary test when closing file descriptor
+Date: Tue, 04 Jan 2011 16:50:25 -0800 (PST)
+Message-ID: <m3y670b2ef.fsf@localhost.localdomain>
+References: <1293744031-17790-1-git-send-email-sylvain@abstraction.fr>
+	<1293744031-17790-3-git-send-email-sylvain@abstraction.fr>
+	<7vaajgdx35.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Neal Kreitzinger <neal@rsss.com>
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Wed Jan 05 01:48:11 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Sylvain Rabot <sylvain@abstraction.fr>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 05 01:50:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaHXs-0006QV-IS
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 01:48:09 +0100
+	id 1PaHaD-0007pg-QN
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 01:50:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751047Ab1AEAsD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jan 2011 19:48:03 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:35301 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750892Ab1AEAsB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jan 2011 19:48:01 -0500
-Received: by gwj20 with SMTP id 20so6732449gwj.19
-        for <git@vger.kernel.org>; Tue, 04 Jan 2011 16:48:01 -0800 (PST)
+	id S1751238Ab1AEAu2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jan 2011 19:50:28 -0500
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:54091 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751116Ab1AEAu2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jan 2011 19:50:28 -0500
+Received: by wwi17 with SMTP id 17so15443613wwi.1
+        for <git@vger.kernel.org>; Tue, 04 Jan 2011 16:50:26 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id:date:from
-         :user-agent:mime-version:newsgroups:cc:subject:references
-         :in-reply-to:content-type:content-transfer-encoding;
-        bh=xrSTo4GKFE+I3LC+2u3+IGGnEP1zk+X+DABeClWh7Hg=;
-        b=XHAr9TjziZq2zKATASUGS3RHY+ljTwyz7VLUXR/Hw9ng6NoTQf1I9k3s577HU3KSYZ
-         4sXKP8sjM5lYUn1Ie6jqkdqpK56ryYbiJkpv089+sZ/MVMnjA4yL180C1KloDY77qMfK
-         f4UAxeFWAMvhLouUUpdG/XIrUlnAcE/MlcvTw=
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=2LOsOEYNnx/WEbtuqDaWr2DdnxtopP+LEsxb7Wy+zUE=;
+        b=GxtPaaMJ0hWRqZK36Sat3bNDTV6fTuJdzJ202f8hZdFEc1RjZe7Kx0DQw0j99e6G1C
+         hbDyhl+NPN2vdCYD99rYIHXGVzYt6Dz1B/hNsRZERYLEjbn2tKlBIU1U027yVC3ghfDY
+         qclZ8ClzZDdkHT69SIw9crp6di3Yp7vmW66G0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=RjLmKGeLp5qLGduLoIfvTgWU92fRqedoIRiOqQ0MyG+Wj7GmLkjpQV/LY/akyYZgPF
-         zgPj7+PLpG5jlkwUD/52Q1ZsZlrY5GLVHfpOKTUFGo9dz/4riTFYuyuFG34mGHYow4cq
-         oia8WOVzpWXy8bkKp44axNGjUkXCvscVsRdmo=
-Received: by 10.100.125.1 with SMTP id x1mr13356243anc.82.1294188479635;
-        Tue, 04 Jan 2011 16:47:59 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id d4sm285991and.19.2011.01.04.16.47.58
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=LyJoAk7875YJavvZGg8HXKLcIddqWqKxDmtfNndWObpLWgjb3xPna+C/zGk59V70CS
+         7213gNSpDWCmO9ZJvJMVr26MUB1iDPlJuIossJsJNCf33T2cRnHT/U2TAXIL7LWQ7T60
+         Oc4sFaciTzw9rY8o0a0SZHc/drvV+9poY2edI=
+Received: by 10.227.126.204 with SMTP id d12mr13057455wbs.174.1294188626674;
+        Tue, 04 Jan 2011 16:50:26 -0800 (PST)
+Received: from localhost.localdomain (abwq27.neoplus.adsl.tpnet.pl [83.8.240.27])
+        by mx.google.com with ESMTPS id m10sm15504595wbc.16.2011.01.04.16.50.25
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 04 Jan 2011 16:47:58 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <4D238EDC.9000503@gmail.com>
+        Tue, 04 Jan 2011 16:50:25 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p050noCT014869;
+	Wed, 5 Jan 2011 01:50:00 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p050nSm6014864;
+	Wed, 5 Jan 2011 01:49:28 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vaajgdx35.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164535>
 
-On 1/4/2011 3:19 PM, Neal Kreitzinger wrote:
-> On 1/4/2011 1:01 PM, Hans-Christoph Steiner wrote:
->>
->> On Dec 13, 2010, at 11:16 AM, Neal Kreitzinger wrote:
->>
->>> "Hans-Christoph Steiner" <hans@at.or.at> wrote in message
->>> news:7EAE16CF-A9A8-47A6-9294-3646CCDB0E9C@at.or.at...
->>>>
->>>> Hey all,
->>>>
->>>> (and my second post on this list...)
->>>>
->>>> I've gotten pretty good at git, and its helping me already with
->>>> managing
->>>> the very odd workflows I have with the software I work a lot on
->>>> called Pd
->>>> (http://puredata.info). My role in Pd development is like a Linux
->>>> lieutenant.
->>>>
->>>> I also the main dev for an app called Pd-extended, which is based on
->>>> Pd.
->>>> Now I'm stuck trying to figure out how to use git to match my current
->>>> workflow for Pd-extended, which is a kind of long-lived branch, almost
->>>> like a friendly fork. So its kind of close to the Linux workflow
->>>> with me
->>>> as a lieutenant, but not quite.
->>>>
->>>> What makes it tricky is that I make releases directly from my repo that
->>>> are widely used. So my repo is both lieutenant and dictator at the same
->>>> time. So that's where I am stumped. I want to be able to rebase and
->>>> push to a public repo, but that would be stupid. So there has got to be
->>>> another way.
->>>>
->>>> .hc
->>>>
->>> I don't think pushing to a public repo is stupid. You could create a
->>> bare
->>> repo with a Pd branch and Pd-extended branch that contain the production
->>> versions of Pd and Pd-extended. The main reason our shop chose git is
->>> because it allows us to easily have multiple concurrent versions of
->>> production by having a branch for each of our custom versions. These
->>> versions eventually get merged together into a major release, but in the
->>> meantime they are longlived branches representing the productional
->>> customized system for each major customer.
->>>
->>> *If* you end up merging Pd and Pd-extended at some point, then you could
->>> have another branch for that, e.g. master or Pd-master or whatever. BTW,
->>> you do not have to use master as the representative of your final merged
->>> work so don't think that is the way you HAVE to do it. It's just the
->>> default, and a common practice for systems with a single version of
->>> production. Master can become vestigial or secondary, if you choose to
->>> create a new branch called Pd-master, etc. to represent your eventual
->>> merges
->>> of Pd and Pd-extended.
->>
->>
->> For me the biggest feature that I am looking for is the automatic
->> merging of commits, and second, having a branch that puts my collection
->> of patches/commits ahead of the Pd master so that its easy to manage the
->> patches. I don't think I see how I could do that with this multiple
->> branches idea. Is that possible?
->>
->
-> I have _no_ experience using patches (in git or otherwise) to manage
-> change control, ie. git-am, git-format-patch, etc., as of yet...
->
-> That being said, FWIW, here is a suggestion based on the following
-> assumptions:
->
-> a. It sounds like Pd and Pd-extended only get merged once-in-a-while
-> (infrequently).
-> b. Pd is the main version in use, and Pd-extended is a future version or
-> a not-yet-widely-used version.
-> c. Pd-extended is based on Pd, but since the inception of Pd-extended
-> both Pd and Pd-extended have advanced (diverged).
->
->
-> Assuming that is the case, this is similar to what our shop does. We
-> have a production system X12 and a new system X13 that is based on X12.
-> Periodically, bugfixes and enhancements from X12 need to be merged into
-> X13. Here's how we do it:
->
-> 1. Identify the range of commits in X12 that are not yet in X13 (new X12
-> commits since the last X12-X13 merge):
-> $ git log
-> sha1-of-last-X12-commit-alreadyMERGED-into-X13..sha1-of-newest-X12-commit-you-want-MERGED-into-X13
-> --format="%h%d %s"
->  >/somepath/whereIkeepstuff/X12-X13-MRG.01-REBASE-TO-DO.lst
-> 2. Identify any commits in the X12 commits that you do not want merged
-> into X13.
-> 3. Create a throw-away-integration-branch which is a copy of X12:
-> $ git checkout X12
-> $ git branch X12-Squash
-> 4. Create a throw-away-integration-branch which is a copy of X13:
-> $ git checkout X13
-> $ git branch X13-Merge-X12 <-------corrected typo here
-> 5. Squash the X12 merge series into a single commit:
-> $ git checkout X12-Squash
-> $ git reset --hard sha1-of-newest-X12-commit-you-want-MERGED-into-X13
-> (in case its not the head commit of the branch)
-> $ git rebase -i sha1-of-last-X12-commit-alreadyMERGED-into-X13
-> (interactive rebase to squash the X12 "new commits" series)
-> #comment out any commits that you don't want in X13, if applicable.
-> put an "s" next to all the other commits to squash them.
-> 6. Cherry pick the X12 squashed commit onto X13:
-> $ git checkout X13-Merge-X12
-> $ git cherry-pick --edit X12-Squash
-> resolve any conflicts
-> review what got merged automatically and make sure its right (git
-> doesn't know about conflicts in logic)
-> 7. Merge results into real X13:
-> $ git checkout X13
-> $ git merge --ff-only X13-Merge-X12
-> 8. Create a test copy of the bare repo of X13:
-> $ cp -rvp X13.git QA-X13.git
-> 9. Push to QA copy of X13 repo: (make sure your push results are ok)
-> $ git push QA-X13-remotename HEAD
-> review in gitk, etc. to verify it is correct
-> 10. Push to real X13 repo:
-> $ git push X13-remotename HEAD
-> review results
-> notify others of update.
->
-> Note: you can have X12 and X13 in separate bare repos if you want, or as
-> branches in a single bare repo. If X12 and X13 are in separate bare
-> repos, then you can use an 'integration manager' repo to remote to them
-> and pull their changes into integration branches. That's actually how
-> our shop currently does it because the X13 people do not maintain X12.
-> The steps above are for a single bare repo in order to save on the
-> number of steps in the example.
->
-> Hope this helps. If my assumptions are incorrect then we might have
-> other merge techniques that may be applicable...
+Junio C Hamano <gitster@pobox.com> writes:
 
-see note on corrected typo above!
+> Sylvain Rabot <sylvain@abstraction.fr> writes:
+> 
+> > it happens that closing file descriptor fails whereas
+> > the blob is perfectly readable. According to perlman
+> > the reasons could be:
+> >
+> >    If the file handle came from a piped open, "close" will additionally
+> >    return false if one of the other system calls involved fails, or if the
+> >    program exits with non-zero status.  (If the only problem was that the
+> >    program exited non-zero, $! will be set to 0.)  Closing a pipe also waits
+> >    for the process executing on the pipe to complete, in case you want to
+> >    look at the output of the pipe afterwards, and implicitly puts the exit
+> >    status value of that command into $?.
+> >
+> >    Prematurely closing the read end of a pipe (i.e. before the process writ-
+> >    ing to it at the other end has closed it) will result in a SIGPIPE being
+> >    delivered to the writer.  If the other end can't handle that, be sure to
+> >    read all the data before closing the pipe.
+> >
+> > In this case we don't mind that close fails.
+> >
+> > Signed-off-by: Sylvain Rabot <sylvain@abstraction.fr>
+> 
+> Hmm, do you want a few helped-by lines here?
+> 
+> I'll queue this to 'pu', but only because I do not care too much about
+> this part of the codepath, not because I think this is explained well.
 
-v/r,
-Neal
+True, I might now agree with code, but I still don't like the
+explanation...
+
+> 
+> For example, what does "the reasons could be" mean?  If the reasons turned
+> out to be totally different, that would make this patch useless?  IOW, is
+> it fixing the real issue?  Without knowing the reasons, how can we
+> conclude that "In this case" we don't mind?
+
+Well, "in this case" of run_highlighter() we close filehandle from
+git-cat-file, which was used only to test if it passes -T test (file
+is an ASCII text file (heuristic guess)), to _reopen_ it with
+highlighter as a filter.
+
+Also, with test if failed for Sylvain, with test removed it works all
+right.
+
+> Having said all that, I agree that you are seeing a failure exactly
+> because of the reason you stated above with an unnecessary weak "could
+> be".  A filehandle to a pipe to cat-file is opened by the caller of
+> blob_mimetype(), it gets peeked at with -T inside the function, then it
+> gets peeked at with -B inside the caller (by the way, didn't anybody find
+> this sloppy?  Why isn't blob_mimetype() doing all of that itself?), and
+
+I think the -B test is here because -T test is last resort in
+blob_mimetype; depending on used mime.types one can get something
+other than application/octet-stream for non-text file.  But I agree
+that it could have been done better.
+
+> then after that the run_highligher closes the filehandle, because it does
+> not want to read from the unadorned cat-file output at all.  Of course,
+> cat-file may receive SIGPIPE if we do that, and we know we don't care how
+> cat-file died in that particular case.
+> 
+> But do we care if the first cat-file died due to some other reason?  Is
+> there anything that catches the failure mode?
+
+Well, the alternate would be to examine $! or %!, e.g.
+
+> > @@ -3465,8 +3465,7 @@ sub run_highlighter {
+> >  	my ($fd, $highlight, $syntax) = @_;
+> >  	return $fd unless ($highlight && defined $syntax);
+> >  
+> > 	close $fd
+> > -		or die_error(404, "Reading blob failed");
+> > +		or $!{EPIPE} or die_error(404, "Reading blob failed");
+> >  	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
+> >  	          quote_command($highlight_bin).
+> >  	          " --xhtml --fragment --syntax $syntax |"
+
+Though this version is cryptic (but compact).
+
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
