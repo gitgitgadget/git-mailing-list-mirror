@@ -1,67 +1,120 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 1/3] Fixes bug: git-diff: class methods are not detected in hunk headers for Pascal
-Date: Wed, 5 Jan 2011 15:31:48 +0100
-Message-ID: <201101051531.49142.trast@student.ethz.ch>
-References: <1293240049-7744-1-git-send-email-zapped@mail.ru> <4510264083.20110105145302@mail.ru> <201101051523.55749.trast@student.ethz.ch>
+From: "Vallon, Justin" <Justin.Vallon@deshaw.com>
+Subject: RE: [PATCH v2] Fix false positives in t3404 due to SHELL=/bin/false
+Date: Wed, 5 Jan 2011 10:04:54 -0500
+Message-ID: <982E526FA742C94E9AC26DA766FD07090A33A5@NYCMBX3.winmail.deshaw.com>
+References: <robbat2-20101227T024837-537032076Z@orbis-terrarum.net>
+ <7vsjxjyce6.fsf@alter.siamese.dyndns.org>
+ <20101227080343.GA15026@orbis-terrarum.net>
+ <982E526FA742C94E9AC26DA766FD07090A3399@NYCMBX3.winmail.deshaw.com>
+ <vpqhbdoxpzp.fsf@bauges.imag.fr> <20110104225826.GA2122@burratino>
+ <7vmxngdys8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>
-To: =?utf-8?b?0JDQu9C10LrRgdC10Lkg0KjRg9C80LrQuNC9?= <zapped@mail.ru>
-X-From: git-owner@vger.kernel.org Wed Jan 05 15:31:58 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8BIT
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	"Robin H. Johnson" <robbat2@gentoo.org>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: "'Junio C Hamano'" <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 05 16:08:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaUP6-00036P-3F
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 15:31:56 +0100
+	id 1PaUyG-0008Al-IH
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 16:08:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751110Ab1AEObv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Jan 2011 09:31:51 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:49972 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750699Ab1AEObv convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Jan 2011 09:31:51 -0500
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 5 Jan
- 2011 15:31:41 +0100
-Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 5 Jan
- 2011 15:31:49 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-rc6-desktop; KDE/4.5.4; x86_64; ; )
-In-Reply-To: <201101051523.55749.trast@student.ethz.ch>
-X-Originating-IP: [129.132.153.233]
+	id S1751256Ab1AEPIK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jan 2011 10:08:10 -0500
+Received: from master.dr.deshaw.com ([149.77.227.1]:61761 "EHLO
+	master.dr.deshaw.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751231Ab1AEPIJ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Jan 2011 10:08:09 -0500
+Received: from winmail.deshaw.com ([149.77.72.51])
+ by master.dr.deshaw.com (8.13.8+Sun/8.13.7/2.0.kim.desco.357) with ESMTP id p05F6ttR017723;
+ Wed, 5 Jan 2011 10:06:55 -0500 (EST)
+Received: from NYCMBX3.winmail.deshaw.com ([149.77.72.43]) by
+ mailnychts1.winmail.deshaw.com ([149.77.72.51]) with mapi; Wed, 5 Jan 2011
+ 10:06:54 -0500
+Thread-Topic: [PATCH v2] Fix false positives in t3404 due to SHELL=/bin/false
+Thread-Index: AcusaKZy0wRAyj6JS82l50rcE4JXvQAfS1Mg
+In-Reply-To: <7vmxngdys8.fsf@alter.siamese.dyndns.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+acceptlanguage: en-US
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164566>
 
-Thomas Rast wrote:
-> =D0=90=D0=BB=D0=B5=D0=BA=D1=81=D0=B5=D0=B9 =D0=A8=D1=83=D0=BC=D0=BA=D0=
-=B8=D0=BD wrote:
-> > I did as you said I changed commit message (also included
-> > "Acked-by:"). So should I re-submit patch to the maillist as a new =
-one
-> > or as an answer to this thread?
->=20
-> It doesn't matter that much; most people resend as a reply to some
-> email in the thread.  Just don't distribute the reroll all across the
-> thread :-)
+>-----Original Message-----
+>From: Junio C Hamano [mailto:gitster@pobox.com]
+>Sent: Tuesday, January 04, 2011 6:39 PM
+>To: Jonathan Nieder
+>Cc: Matthieu Moy; Vallon, Justin; Robin H. Johnson; git@vger.kernel.org
+>Subject: Re: [PATCH v2] Fix false positives in t3404 due to
+>SHELL=/bin/false
+>
+>Jonathan Nieder <jrnieder@gmail.com> writes:
+>
+>> Matthieu Moy wrote:
+>>>
+>>> (my bad, I wrote this SHELL= without exporting it. Since bash
+>>> re-exports already exported variables when they are assigned, and my
+>>> /bin/sh points to bash, I didn't notice)
+>>
+>> Isn't that how export works in all Bourne-style shells?  For example:
+>>
+>> 	$ env var=outside dash -c '
+>> 		var=inside;
+>> 		dash -c "echo \$var"
+>> 	  '
+>> 	inside
+>> 	$
+>>
+>> Maybe in the failing case SHELL was not exported but just set to
+>> /bin/false in .bashrc or similar?
+>
+>Thanks, you saved me some time responding ;-)
+>
+>Matthieu's diagnosis is only half correct in that bash is why he didn't
+>notice the problem, but if in this sequence
+>
+>	var=foo
+>        export var
+>        var=bar
+>        some-command
+>
+>some-command does not see "bar" as the value of environment variable
+>"var", your shell is not POSIX (there is no such thing as "re-exporting").
 
-BTW speaking of series (and sorry for not pointing this out earlier):
+But, when you say "your shell", you are really referring to /bin/sh, because this behavior is being observed in t/t3404-rebase-interactive.sh.  Which leads to...
 
-Since these patches are not related to each other at all, it's better
-if you treat them as separate, not as a series.  Making a series is
-sort of an "all or nothing" hint, meaning that if something holds up
-one patch in the series, Junio will treat the whole series as stalled,
-etc.
+Robin: have you observed the problem with Gentoo's /bin/sh?
 
-So probably it's better if you resend the acked patch alone, to show
-that it can stand on its own.  Then later repeat the same for the
-other two patches when you have them ready.
+X=1 ; export X ; /bin/sh -c 'X= ; env | grep ^X='
 
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+If so, I would qualify the export with a comment about the mis-behavior:
+
+# Reexport in case sh is non-POSIX
+export SHELL
+
+(or, just unset SHELL)
+
+Else, I don't think the re-export is needed (something else is causing your trouble).
+
+>Because POSIX shells are required to mark variables they inherit from the
+>environment with the export attribute, your tests will run with SHELL
+>exported to the environment if your usual shell is bash (i.e. SHELL is
+>already exported to processes it spawns), even if you use another POSIX
+>shell to run your git and tests.  That makes the issue doubly harder to
+>notice.
+
+I don't really follow this.  The #! line is /bin/sh.  The user's $SHELL does not come into play.  Either SHELL is in /bin/sh's environment and it should be cleared in the child, or it isn't and it won't matter.
+
+-- 
+-Justin
