@@ -1,98 +1,229 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Fix false positives in t3404 due to SHELL=/bin/false
-Date: Wed, 05 Jan 2011 10:51:09 -0800
-Message-ID: <7vsjx7chgi.fsf@alter.siamese.dyndns.org>
-References: <robbat2-20101227T024837-537032076Z@orbis-terrarum.net>
- <7vsjxjyce6.fsf@alter.siamese.dyndns.org>
- <20101227080343.GA15026@orbis-terrarum.net>
- <982E526FA742C94E9AC26DA766FD07090A3399@NYCMBX3.winmail.deshaw.com>
- <vpqhbdoxpzp.fsf@bauges.imag.fr> <20110104225826.GA2122@burratino>
- <7vmxngdys8.fsf@alter.siamese.dyndns.org>
- <982E526FA742C94E9AC26DA766FD07090A33A5@NYCMBX3.winmail.deshaw.com>
+From: Levend Sayar <levendsayar@gmail.com>
+Subject: Re: git repo corruption
+Date: Wed, 5 Jan 2011 20:58:44 +0200
+Message-ID: <AANLkTikxW-kEhCFKBb-rGPM2xZtk7WyomYnFwz_DYV43@mail.gmail.com>
+References: <AANLkTi=TSy1WQZARNQgGfPiV93hQ-xmCTip75JAixgDB@mail.gmail.com> <4D24B969.50007@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	"Robin H. Johnson" <robbat2@gentoo.org>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>
-To: "Vallon\, Justin" <Justin.Vallon@deshaw.com>
-X-From: git-owner@vger.kernel.org Wed Jan 05 19:51:40 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git <git@vger.kernel.org>
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 05 19:59:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaYSQ-0007iH-W6
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 19:51:39 +0100
+	id 1PaYZl-0003tY-15
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 19:59:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752548Ab1AESv0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jan 2011 13:51:26 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:38089 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752286Ab1AESvZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jan 2011 13:51:25 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2C3244FD2;
-	Wed,  5 Jan 2011 13:52:02 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=ygK+imRq5DNgjGrZ6RRj/N34EG4=; b=OBjdwk
-	89LaSI87NnJeqVwST7kxLlMLk0zuvV4DVVJszg2dFzg9ZUyDa9j6FukmxMz6iIwI
-	nbFUCCYuvw9LFT+NZibIOvXlz/mNYE4AHd1BM88QyLMDtqXR3J2YpULbjjHZqN3r
-	7Cv7h0c7lj+PQtXqRln61ZoMUVnjcMvHd0OcY=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=M0rJabGCMs9bazVx4MjTw2HY1TcGIbFU
-	W1gWWWhl6HC8+PgW2AiSkSOGmazyj/tNFPNVq8MYG9nhXddpw6xfCnNPhXz3pbis
-	cpbmSMmwTloATD12QnQDT/uJfvsAL+ljj1gdDhVakWidolCUxgnlE7Qmrsgz6R8k
-	UybLoKEIvUQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CD9754FCD;
-	Wed,  5 Jan 2011 13:51:56 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 215FA4FCC; Wed,  5 Jan 2011
- 13:51:49 -0500 (EST)
-In-Reply-To: <982E526FA742C94E9AC26DA766FD07090A33A5@NYCMBX3.winmail.deshaw.com> (Justin
- Vallon's message of "Wed\, 5 Jan 2011 10\:04\:54 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: DEB01E7E-18FC-11E0-80A8-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
+	id S1752529Ab1AES7H convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Jan 2011 13:59:07 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:37903 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752286Ab1AES7F convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Jan 2011 13:59:05 -0500
+Received: by qwa26 with SMTP id 26so15973118qwa.19
+        for <git@vger.kernel.org>; Wed, 05 Jan 2011 10:59:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=ijtww9rrgKkAqQecjQ4mUm4V0fH4Um076kFQ+c/9Y3Q=;
+        b=XMDEO9ZGHUM0J8Y/IQkEs+WmpqZYMzQRz7mK15BWuVrNzK23mlJfZfsvzltR2PNy6O
+         fL9Cg4LVJGjCP2HuuztnPs7l+RHeA6GplPju5Ig3fQfe+Ygmyj2GVOisHx9wNTEaPHWC
+         UmNRXhd2z+yPtHfdZjtR0QSh3CyWBnX4a4Y7M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=AxNO0BfwVm8hxR0TolkUXp82ySLUkAGxrokvwTeUWENEDSvFhw8Vjlw9a5U0jgxGRs
+         xm/2PvCJTV7iAx6hqm4zsrgDXwnQK1vik6A8q1o6FmkDVAyp9W0jEAxOzdjsLfmHoVBc
+         OBGhBaAk7GEsBZAi5A/Ce+eP+NgMy58Rnx7lg=
+Received: by 10.229.241.9 with SMTP id lc9mr20496198qcb.88.1294253944854; Wed,
+ 05 Jan 2011 10:59:04 -0800 (PST)
+Received: by 10.229.219.147 with HTTP; Wed, 5 Jan 2011 10:58:44 -0800 (PST)
+In-Reply-To: <4D24B969.50007@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164583>
 
-"Vallon, Justin" <Justin.Vallon@deshaw.com> writes:
+In fact, let me summarize what I did.
 
->>Because POSIX shells are required to mark variables they inherit from the
->>environment with the export attribute, your tests will run with SHELL
->>exported to the environment if your usual shell is bash (i.e. SHELL is
->>already exported to processes it spawns), even if you use another POSIX
->>shell to run your git and tests.  That makes the issue doubly harder to
->>notice.
+After sysadmin changed permissions, git status gave
+
+Changed but not updated:
+
+modified: bla bla
+modified: bla bla
+modified: ....
+
+That modifed files are all the files that tracked in fact. So many
+files. And git diff gave
+
+diff bla bla
+old mode 644
+new mode 750
+
+for all files. So only permissions are changed. To revert back I did on=
+ly
+
+git ls-files -m | xargs git checkout --
+
+And everything is fine.
+
+
+_lvnd_
+(^_^)
+
+
+
+On Wed, Jan 5, 2011 at 8:33 PM, Neal Kreitzinger <nkreitzinger@gmail.co=
+m> wrote:
+> On 1/4/2011 3:10 AM, Levend Sayar wrote:
+>>
+>> Hi, all.
+>>
+>> We have a repo on a corporate server. The sysadmin changed access
+>> rights of files on our repo by accedant.
+>> Some directories have 2750 acces rights before, but he changed as
+>>
+>> chmod -R 2770 *
+>>
+>> Now when you make git status, every file that is tracked by git is s=
+aid as
+>>
+>> changed but not updated
+>>
+>> So is there a way to get this back to normal ?
+>>
+>> TIA
+>>
+>> _lvnd_
+>> (^_^)
 >
-> I don't really follow this.  The #! line is /bin/sh.  The user's $SHELL
-> does not come into play.  Either SHELL is in /bin/sh's environment and
-> it should be cleared in the child, or it isn't and it won't matter.
-
-Read what you are responding to again.
-
-The "doubly harder to notice" is _not_ about gentoo's /bin/sh, but about
-the experiment Matthieu did (ask: "what shell spawned t3404 that has the
-she-bang /bin/sh?").
-
-If that shell is bash, which automatically marks SHELL with the export
-attribute, it places the variable in the environment.  t3404 is run under
-/bin/sh, which presumably is POSIX and initializes its shell variable SHELL
-with what was in the environment, and while doing so, it also marks the
-variable with the export attribute.  The script does not "unset SHELL" but
-merely assigns an empty string to it, which is the value to be exported to
-the processes the script runs.
-
-Imagine that whoever was having trouble did not have SHELL exported to the
-environment when t3404 is run.  The script assigns an empty string to its
-shell variable SHELL but nothing marks the variable with the export
-attribute, hence the processes the script runs will never see that as the
-value of the environment variable (in fact, they wouldn't see SHELL
-environment variable at all).
+> If you want to reset the permissions back to exactly what git would d=
+o, here
+> is the way I did it after hours one night to fix the repo at our shop
+> (modify the permissions value to what you want):
+>
+> Here is the technique I devised to change permissions on a git repo. =
+=A0I
+> needed to lock down a repo so only the integration manager has write =
+access.
+> This method ensures that git sets the permissions according to gits r=
+ules.
+> Please let me know if you know of an easier/better way to do this.
+>
+> Change Permissions on an Existing Git Repo:
+>
+> Check System for Users who may be using the Repo:
+> # w =A0(see who's logged in)
+> # ps -A |grep git-menu-scriptname =A0(where scriptname is some unique=
+ string
+> in the name of the main script your users use to access that repo, if
+> applicable)
+> # skill -KILL pts/99 =A0(where 99 =3D the pts/# from w command, log t=
+he user
+> off)
+>
+> Change Shared=3Dgroup to Shared=3D0644 =A0(change group read+write to=
+ group read
+> only):
+> Create Template for permissions:
+> login as fsngit0
+> $ cd /path/to/template
+> $ cat config
+> [core]
+> =A0 =A0 =A0 =A0sharedRepository =3D 0644
+>
+> Clone repo to set permissions via git:
+> $ cd /path/to/repo-parent-dir
+> $ git clone --bare --template=3D/path/to/template file:///path/to/REP=
+O.git
+> REPOMOD.git
+>
+> Compare old and new versions:
+> $ diff -r REPO.git REPOMOD.git
+> Only in REPO.git: branches =A0(empty, keep the old version)
+> diff -r REPO.git/config REPOMOD.git/config =A0(merge the old and new =
+together)
+> 1a2
+>> =A0 =A0 =A0 sharedrepository =3D 0644
+> 6,7c7
+> < =A0 =A0 =A0 =A0 denyDeletes =3D true
+> < =A0 =A0 =A0 =A0 denyNonFastForwards =3D true
+> ---
+>> =A0 =A0 =A0 denyNonFastforwards =3D true
+> Only in REPO.git: description =A0(keep the old version)
+> Only in REPO.git: gitk.cache =A0(gitk will recreate this)
+> Only in REPO.git: hooks =A0(contains sample scripts only or whatever =
+scripts
+> your using, keep the old version)
+> Only in REPO.git: info =A0(keep the old version: contains attributes,=
+ exclude,
+> or whatever you've setup)
+> Only in REPO.git/objects: aa (keep new version, loose object have bee=
+n
+> packed)
+> Only in REPO.git/objects/pack:
+> pack-A5735e9b894dce1498ec1c776dcabc97fd8ceAfc.idx
+> diff -r REPO.git/packed-refs REPOMOD.git/packed-refs =A0(keep the new=
+ version
+> because fresh clone has been optimized)
+> 2c2
+> < Xa8b7b8c8fd3920b89770f2e8356f4ecb71a58cX refs/heads/master
+> ---
+>> Ya69744e46276a37932d5f0755a53f76cdf83e0dY refs/heads/master
+> Only in REPO.git/refs/heads: master =A0(old version not needed becaus=
+e fresh
+> clone has been optimized)
+>
+> Copy over REPO.git files that the clone didn't replicate, but that yo=
+u need
+> in order to retain all settings:
+> $ cp -rv /path/to/REPO.git/info .
+> repeat as needed...
+>
+> change permissions to g-w or whatever your core.sharedRepository new =
+value
+> is supposed to be:
+> $ chmod -R g-w info
+> repeat as needed...
+>
+> Validate your changes:
+> $ diff -r REPO.git REPOMOD.git
+> diff -r REPO.git/config REPOMOD.git/config
+> 1a2
+>> =A0 =A0 =A0 sharedrepository =3D 0644
+> 7c8
+> < =A0 =A0 =A0 =A0 denyNonFastForwards =3D true
+> ---
+>> =A0 =A0 =A0 denyNonFastforwards =3D true
+> Only in REPO.git: gitk.cache
+> Only in REPO.git/objects: aa
+> Only in REPO.git/objects/pack:
+> pack-A5735e9b894dce1498ec1c776dcabc97fd8ceAfc.idx
+> diff -r REPO.git/packed-refs REPOMOD.git/packed-refs
+> 2c2
+> < Xa8b7b8c8fd3920b89770f2e8356f4ecb71a58cX refs/heads/master
+> ---
+>> Y69744e46276a37932d5f0755a53f76cdf83e0dY refs/heads/master
+> Only in REPO.git/refs/heads: master
+>
+> Backup REPO.git and rename REPOMOD.git to REPO.git:
+> $ cp -rvp REPO.git REPO.git-old
+> $ diff -r REPO.git REPO.git-old
+> $ rm -rf REPO.git
+> $ cp -rvp REPOMOD.git REPO.git
+> $ diff -r REPO.git REPOMOD.git
+> $ diff -r REPO.git REPO.git-old
+>
+> v/r,
+> Neal
+>
+>
+>
