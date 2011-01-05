@@ -1,62 +1,86 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: [minor BUG] cherry-pick -x doesn't work if a conflict occurs
-Date: Wed, 5 Jan 2011 07:31:05 +0100
-Message-ID: <24C35180-AED6-4848-9F05-908831F911F9@dewire.com>
-References: <20101229141638.GA14865@pengutronix.de>
-Mime-Version: 1.0 (Apple Message framework v1082)
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?iso-8859-1?Q?Uwe_Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Wed Jan 05 07:31:35 2011
+From: Edmond Halley <halleyinvent@gmail.com>
+Subject: How to import a exist git repository into another git repository?
+Date: Wed, 5 Jan 2011 14:50:35 +0800
+Message-ID: <AANLkTi=ahqFz=NVMrhtf+u2fJR_PAW-vcXgNYcce=2R+@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Halley <halleyinvent@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 05 07:50:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaMuD-0006iG-GH
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 07:31:33 +0100
+	id 1PaNCl-0006oj-Ke
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 07:50:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751310Ab1AEGbJ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Jan 2011 01:31:09 -0500
-Received: from mail.dewire.com ([83.140.172.130]:1946 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751225Ab1AEGbI convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Jan 2011 01:31:08 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 3460D8003A0;
-	Wed,  5 Jan 2011 07:31:07 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id AHdnnamyZ58a; Wed,  5 Jan 2011 07:31:06 +0100 (CET)
-Received: from [10.9.0.2] (unknown [10.9.0.2])
-	by dewire.com (Postfix) with ESMTP id B7E9A80025B;
-	Wed,  5 Jan 2011 07:31:06 +0100 (CET)
-In-Reply-To: <20101229141638.GA14865@pengutronix.de>
-X-Mailer: Apple Mail (2.1082)
+	id S1751310Ab1AEGuh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jan 2011 01:50:37 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:37394 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751169Ab1AEGug (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jan 2011 01:50:36 -0500
+Received: by iwn9 with SMTP id 9so14976644iwn.19
+        for <git@vger.kernel.org>; Tue, 04 Jan 2011 22:50:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:cc:content-type;
+        bh=qN5HfMKPxTRLj0W/4UmO1VLECZmTObs71K1gi7hz/xk=;
+        b=qcSP3gMod0/zYQycL7l/8zHvH3UZdS/8/5CeI/GPJZc1fAVz/zkr5bKaQneloRHufQ
+         dH/6ieO8b8qZoQcKSVRfmiVuXptSzDJExyIZVunZ+oi5Ogawty9vTN6K6C7DKtlccOiP
+         XLeEcnEXvPtL5fKTV22qwbid92BhTZj/ZkSFA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:cc:content-type;
+        b=K/mgxtxHKZEl95Aqq5p4V/Vo8UR29tVJswxl5/HSFL990mVfjNpbohLha4CGUAWDVQ
+         I2I5DmPwO2g0BjDbZ3M8ORopgBtU6knOGblZO/Y+mgQr0wUdWQzfSuV8Qro/9ZeiXNga
+         bqaYZczuq6970krKs1xhFjji+pFFCrSQeTXv4=
+Received: by 10.231.174.71 with SMTP id s7mr6523367ibz.56.1294210235952; Tue,
+ 04 Jan 2011 22:50:35 -0800 (PST)
+Received: by 10.231.157.9 with HTTP; Tue, 4 Jan 2011 22:50:35 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164552>
 
+Hi,
 
-29 dec 2010 kl. 15:16 skrev Uwe Kleine-K=F6nig:
+I have two exit repos A and B. I would like A becomes part of B. For example:
+original:
+A
+|-- a.cpp
+`-- Makefile
 
-> Hello,
->=20
-> when hitting a conflict cherry-pick suggests using
->=20
-> 	git commit -c $sha1
->=20
-> but the resulting (suggested) commit log doesn't have the extra
-> reference requested by -x.
->=20
+B
+|-- b.cpp
+`-- Makefile
 
-The man page says -x only takes effect when you do not have a conflict,=
- so there
-is no bug.
+combined:
+B
+|-- b.cpp
+|-- Makefile
+`-- A
+    |-- a.cpp
+    `-- Makefile
 
--- robin
+The git log of repo A is kept in the combined repo.
+
+I try google but the following methods turn out they do not work like
+what I want. I can not view the log of original repo A after
+combining.
+1) http://stackoverflow.com/questions/1683531/how-to-import-existing-git-repository-into-another
+Fail at the following command.
+git checkout -b ZZZ other/master
+error: Untracked working tree file 'Makefile' would be overwritten by merge.
+
+2) http://thread.gmane.org/gmane.comp.version-control.git/5126/
+git log only give the lastest commit message. I do not know how to get
+the log if orignal repo A.
+
+Thank you!
+
+Best regards,
+Halley
