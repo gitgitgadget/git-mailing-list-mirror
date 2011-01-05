@@ -1,109 +1,67 @@
-From: Zenaan Harkness <zen@freedbms.net>
-Subject: git fails on large repo clone on intermittent, or intermittently-high-latency,
- connections
-Date: Thu, 6 Jan 2011 01:28:40 +1100
-Message-ID: <AANLkTinkhmHpAQjraviKjqFAczThR5GtT_qdyf6Sb3nm@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 1/3] Fixes bug: git-diff: class methods are not detected in hunk headers for Pascal
+Date: Wed, 5 Jan 2011 15:31:48 +0100
+Message-ID: <201101051531.49142.trast@student.ethz.ch>
+References: <1293240049-7744-1-git-send-email-zapped@mail.ru> <4510264083.20110105145302@mail.ru> <201101051523.55749.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 05 15:29:19 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>
+To: =?utf-8?b?0JDQu9C10LrRgdC10Lkg0KjRg9C80LrQuNC9?= <zapped@mail.ru>
+X-From: git-owner@vger.kernel.org Wed Jan 05 15:31:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaUMX-0001sw-T8
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 15:29:18 +0100
+	id 1PaUP6-00036P-3F
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 15:31:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751245Ab1AEO3M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jan 2011 09:29:12 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:64408 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751184Ab1AEO3L (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jan 2011 09:29:11 -0500
-Received: by bwz15 with SMTP id 15so15515623bwz.19
-        for <git@vger.kernel.org>; Wed, 05 Jan 2011 06:29:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:sender:received:from:date
-         :x-google-sender-auth:message-id:subject:to:content-type;
-        bh=zonDD1z/kduyV17898zdrQolztVO45uaDgFO2HJmlWI=;
-        b=p8ylrLNv8284tKchq5npGd6yJKAaRiiS+1+yEI3gwXHr9e0BGQlXrkeNBnwQR9VR/z
-         nbqc6HeLQTtSpYgwGMDTB0YOkwG8zcKoWj3jvwPACQu8sH+mFl7FHJQdrVrTJ1MiwUnZ
-         d0MWi6snNy9guqyJN2Zv6txIpKuc8etQYFYNQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:from:date:x-google-sender-auth:message-id
-         :subject:to:content-type;
-        b=C3CXofEtVLOKy/RWkQ0J/NEuDqpWdqYwLni0d+CDoEVWqBFzoJtWJ7eBxtZHRVkNG4
-         wiLTvY094WxLvySSb8CdJFTkRZPs3u5ejPgTCX8qwzlfZAtNDS2R3z6H5E/AIUqL4GZW
-         QTGSR/hjsDsnHvFKdcnVkCl/SpnPciQ8pzvyg=
-Received: by 10.204.112.196 with SMTP id x4mr232580bkp.133.1294237750221; Wed,
- 05 Jan 2011 06:29:10 -0800 (PST)
-Received: by 10.204.112.210 with HTTP; Wed, 5 Jan 2011 06:28:40 -0800 (PST)
-X-Google-Sender-Auth: yCd1SsLwkZTdv8FCSgK6Y4rVCXw
+	id S1751110Ab1AEObv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Jan 2011 09:31:51 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:49972 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750699Ab1AEObv convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Jan 2011 09:31:51 -0500
+Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 5 Jan
+ 2011 15:31:41 +0100
+Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS12.d.ethz.ch
+ (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 5 Jan
+ 2011 15:31:49 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-rc6-desktop; KDE/4.5.4; x86_64; ; )
+In-Reply-To: <201101051523.55749.trast@student.ethz.ch>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164564>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164565>
 
-Hi, I am trying to clone opentaps.git. The following is my third try,
-and I am giving up now. As you can see I pressed <Return> every now
-and then, and for the last long while, absolutely nothing downloading
-- the connection has clearly died once again. My last run was
-yesterday and I left it run overnight.
+Thomas Rast wrote:
+> =D0=90=D0=BB=D0=B5=D0=BA=D1=81=D0=B5=D0=B9 =D0=A8=D1=83=D0=BC=D0=BA=D0=
+=B8=D0=BD wrote:
+> > I did as you said I changed commit message (also included
+> > "Acked-by:"). So should I re-submit patch to the maillist as a new =
+one
+> > or as an answer to this thread?
+>=20
+> It doesn't matter that much; most people resend as a reply to some
+> email in the thread.  Just don't distribute the reroll all across the
+> thread :-)
 
-I cannot download (with a git clone/ initial repo), more than roughly
-100MiB. I am on a satellite connection. I have also experienced this
-with wireless connection about 18 months ago.
+BTW speaking of series (and sorry for not pointing this out earlier):
 
-I have in the middle there (a few months ago) spent a couple months at
-a friend's place, and never had the same problem - nice ADSL2+
-connection, ~1.5MiB/s connections. As you can see with my satellite
-(rural) and also with my older wireless (also rural) connections, I do
-not get more than about 64KiB/s, but it's usually slower, and I've
-always had satellite latency issues in the order of 450ms, and
-sometimes the odd dropout.
+Since these patches are not related to each other at all, it's better
+if you treat them as separate, not as a series.  Making a series is
+sort of an "all or nothing" hint, meaning that if something holds up
+one patch in the series, Junio will treat the whole series as stalled,
+etc.
 
-As opposed to git, wget on the other hand not only retries and
-continues from where it left off when it retries (HTTP protocol)
-(default retry 10 times I think), but I can completely INTerrupt wget,
-and start it again from an entirely different computer if I want
-(using wget's --continue option), and it will (with HTTP) happily
-continue right where it left off, and eventually my download
-completes.
+So probably it's better if you resend the acked patch alone, to show
+that it can stand on its own.  Then later repeat the same for the
+other two patches when you have them ready.
 
-NOT so with git! :
-
-$ git clone git://gitorious.org/opentaps/opentaps.git opentaps.git
-Cloning into opentaps.git...
-remote: Counting objects: 105724, done.
-remote: Compressing objects: 100% (30417/30417), done.
-Receiving objects:   5% (5888/105724), 10.44 MiB | 21 KiB/s
-Receiving objects:   5% (5898/105724), 12.18 MiB | 51 KiB/s
-Receiving objects:   5% (5920/105724), 17.47 MiB | 38 KiB/s
-Receiving objects:   5% (5923/105724), 19.64 MiB | 23 KiB/s
-Receiving objects:   5% (5939/105724), 30.01 MiB | 27 KiB/s
-Receiving objects:   5% (6184/105724), 41.00 MiB | 47 KiB/s
-Receiving objects:   7% (7818/105724), 52.77 MiB | 58 KiB/s
-Receiving objects:   8% (9170/105724), 67.66 MiB | 56 KiB/s
-Receiving objects:  10% (11309/105724), 70.57 MiB | 24 KiB/s
-Receiving objects:  12% (13413/105724), 82.43 MiB | 29 KiB/s
-Receiving objects:  12% (13495/105724), 96.81 MiB | 39 KiB/s
-Receiving objects:  12% (13495/105724), 101.57 MiB | 47 KiB/s
-Receiving objects:  12% (13523/105724), 142.64 MiB | 27 KiB/s
-<here it died, after over an hour dead, I killed it completely>
-
-Git cannot operate robustly with larger repos, it appears to me, on
-internet connections with even slightly flaky links.
-
-I've googled for a tar-ball of the git repo for opentaps, but found nothing.
-
-What can I do to work around my flaky link?
-
-How hard would it be to add a wget-like mode to git, for the initial
-repo download?
-
-TIA
-Zen
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
