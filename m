@@ -1,125 +1,100 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/4] gitweb: remove unnecessary test when closing file
- descriptor
-Date: Tue, 04 Jan 2011 16:15:58 -0800
-Message-ID: <7vaajgdx35.fsf@alter.siamese.dyndns.org>
-References: <1293744031-17790-1-git-send-email-sylvain@abstraction.fr>
- <1293744031-17790-3-git-send-email-sylvain@abstraction.fr>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [PATCH 1/2] gitweb: skip logo in atom feed when there is none
+Date: Wed, 5 Jan 2011 01:25:52 +0100
+Message-ID: <201101050125.52824.jnareb@gmail.com>
+References: <20110104050206.GA8280@burratino> <20110104050247.GB8280@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Sylvain Rabot <sylvain@abstraction.fr>
-X-From: git-owner@vger.kernel.org Wed Jan 05 01:16:18 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, John 'Warthog9' Hawley <warthog9@kernel.org>,
+	Eric Wong <normalperson@yhbt.net>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 05 01:26:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaH30-000620-Oc
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 01:16:15 +0100
+	id 1PaHCd-0002XR-56
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 01:26:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751259Ab1AEAQJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jan 2011 19:16:09 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:43426 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750919Ab1AEAQI (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jan 2011 19:16:08 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3AB923A51;
-	Tue,  4 Jan 2011 19:16:43 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=/nE9IfDj9m/S/7/ABHaQzt1Gm0Y=; b=qutheD
-	WowHF/h0MZmZDwrw1Xb56h7b1eow93GWNu27yhkv1/3BJ3p7wG4fr0MechWzJo83
-	pn2L12gtw4wYRxdQWlUrPEc5K0NPWbMFep03lgVXQlT5TXKBW53sb7mQqh8pn1lx
-	BowUmNCX7IS0QvEoNkOZusq+dqVL2vjFyYxqs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=iG968OeO0GwmaAust21NmS185zRc1Ut3
-	sWqHFaGwVUGjU3q2l+IyonPzRlF1Seo1gOd5G1USMZauN66sib593cah3BunZBfz
-	/7DCpbLyZo9mTaZA50ODLlkz9VMQeb5HQpHfNkhAwgqcTiGHAYSuJ2msfXN14qIo
-	+P07C9U1boU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 185433A50;
-	Tue,  4 Jan 2011 19:16:41 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id ED0713A4F; Tue,  4 Jan 2011
- 19:16:37 -0500 (EST)
-In-Reply-To: <1293744031-17790-3-git-send-email-sylvain@abstraction.fr>
- (Sylvain Rabot's message of "Thu\, 30 Dec 2010 22\:20\:29 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 11CC5508-1861-11E0-8D90-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
+	id S1751323Ab1AEA0F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jan 2011 19:26:05 -0500
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:55774 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750919Ab1AEA0D (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jan 2011 19:26:03 -0500
+Received: by wwi17 with SMTP id 17so15430525wwi.1
+        for <git@vger.kernel.org>; Tue, 04 Jan 2011 16:26:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=e1xc+Sw0gYgtDDtX4txYwzgMpghWSKJ3WAjxIjdilI4=;
+        b=N3g/Q/4MOBjfhbkgY6kibTekoSfzL7SdJfbqly4qp2K1PLAevVZ2BS3rfM3oWBW25y
+         b+dQHY3OuprZJam7BhhJu9e99CkjsbbAHCjD2q42tBoJyApEJuEeUBasip1z4IxaKeIw
+         26F7xasA8DXK6BlAX5T5Qg7y4zS5uzH4K2GWU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=kGdCSW7CTz2EkKg9gOwWryGe7ogK7OocsrOJ7RzytdaQ35XR/uqYlFWX/J9W1pDC3p
+         ggekuWIDT8haL0d+cxK7w+b6a9KdAgvxPHn2NO7qP2H5yFlbXDrIiBkLcubO9D6zd0UP
+         tSwHi2QWbL6xztrQ4Q9Fg23BXxdajoZ+VxV1w=
+Received: by 10.227.98.158 with SMTP id q30mr6882718wbn.151.1294187161713;
+        Tue, 04 Jan 2011 16:26:01 -0800 (PST)
+Received: from [192.168.1.13] (abwq27.neoplus.adsl.tpnet.pl [83.8.240.27])
+        by mx.google.com with ESMTPS id x3sm10878978wes.46.2011.01.04.16.25.59
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 04 Jan 2011 16:26:00 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20110104050247.GB8280@burratino>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164530>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164531>
 
-Sylvain Rabot <sylvain@abstraction.fr> writes:
+Jonathan Nieder wrote:
+> Date: Fri, 3 Sep 2010 19:44:39 -0500
+> 
+> With v1.5.0-rc0~169 (gitweb: Fix Atom feed <logo>: it is $logo,
+> not $logo_url, 2006-12-04), the logo URI to be written to Atom
+> feeds was corrected but the case of no logo forgotten.
+> 
+> Acked-by: Eric Wong <normalperson@yhbt.net>
+> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 
-> it happens that closing file descriptor fails whereas
-> the blob is perfectly readable. According to perlman
-> the reasons could be:
->
->    If the file handle came from a piped open, "close" will additionally
->    return false if one of the other system calls involved fails, or if the
->    program exits with non-zero status.  (If the only problem was that the
->    program exited non-zero, $! will be set to 0.)  Closing a pipe also waits
->    for the process executing on the pipe to complete, in case you want to
->    look at the output of the pipe afterwards, and implicitly puts the exit
->    status value of that command into $?.
->
->    Prematurely closing the read end of a pipe (i.e. before the process writ-
->    ing to it at the other end has closed it) will result in a SIGPIPE being
->    delivered to the writer.  If the other end can't handle that, be sure to
->    read all the data before closing the pipe.
->
-> In this case we don't mind that close fails.
->
-> Signed-off-by: Sylvain Rabot <sylvain@abstraction.fr>
+Good catch.  As an obvious bugfix:
 
-Hmm, do you want a few helped-by lines here?
-
-I'll queue this to 'pu', but only because I do not care too much about
-this part of the codepath, not because I think this is explained well.
-
-For example, what does "the reasons could be" mean?  If the reasons turned
-out to be totally different, that would make this patch useless?  IOW, is
-it fixing the real issue?  Without knowing the reasons, how can we
-conclude that "In this case" we don't mind?
-
-Having said all that, I agree that you are seeing a failure exactly
-because of the reason you stated above with an unnecessary weak "could
-be".  A filehandle to a pipe to cat-file is opened by the caller of
-blob_mimetype(), it gets peeked at with -T inside the function, then it
-gets peeked at with -B inside the caller (by the way, didn't anybody find
-this sloppy?  Why isn't blob_mimetype() doing all of that itself?), and
-then after that the run_highligher closes the filehandle, because it does
-not want to read from the unadorned cat-file output at all.  Of course,
-cat-file may receive SIGPIPE if we do that, and we know we don't care how
-cat-file died in that particular case.
-
-But do we care if the first cat-file died due to some other reason?  Is
-there anything that catches the failure mode?
+Acked-by: Jakub Narebski <jnareb@gmail.com>
 
 > ---
->  gitweb/gitweb.perl |    3 +--
->  1 files changed, 1 insertions(+), 2 deletions(-)
->
+>  gitweb/gitweb.perl |    2 +-
+>  1 files changed, 1 insertions(+), 1 deletions(-)
+> 
 > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> index ea984b9..eae75ac 100755
+> index 4779618..c65af1a 100755
 > --- a/gitweb/gitweb.perl
 > +++ b/gitweb/gitweb.perl
-> @@ -3465,8 +3465,7 @@ sub run_highlighter {
->  	my ($fd, $highlight, $syntax) = @_;
->  	return $fd unless ($highlight && defined $syntax);
->  
-> -	close $fd
-> -		or die_error(404, "Reading blob failed");
-> +	close $fd;
->  	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
->  	          quote_command($highlight_bin).
->  	          " --xhtml --fragment --syntax $syntax |"
+> @@ -7169,7 +7169,7 @@ XML
+>  		if (defined $favicon) {
+>  			print "<icon>" . esc_url($favicon) . "</icon>\n";
+>  		}
+> -		if (defined $logo_url) {
+> +		if (defined $logo) {
+>  			# not twice as wide as tall: 72 x 27 pixels
+>  			print "<logo>" . esc_url($logo) . "</logo>\n";
+>  		}
 > -- 
-> 1.7.3.4.523.g72f0d.dirty
+> 1.7.4.rc0
+> 
+> 
+
+-- 
+Jakub Narebski
+Poland
