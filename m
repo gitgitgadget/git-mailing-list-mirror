@@ -1,156 +1,107 @@
-From: Alexandre Oliva <lxoliva@fsfla.org>
-Subject: Re: rebase parents, or tracking upstream but removing non-distributable bits
-Date: Wed, 05 Jan 2011 09:44:15 -0200
-Organization: Free thinker, not speaking for FSF Latin America
-Message-ID: <orwrmj378w.fsf@livre.localdomain>
-References: <ord3ojb0yy.fsf@livre.localdomain>
-	<20101230205847.GA29012@burratino> <or4o9uc2ny.fsf@livre.localdomain>
-	<m37heqdfck.fsf@localhost.localdomain>
+From: =?utf-8?B?0JDQu9C10LrRgdC10Lkg0KjRg9C80LrQuNC9?= <zapped@mail.ru>
+Subject: Re[2]: [PATCH 1/3] Fixes bug: git-diff: class methods are not detected in hunk headers for Pascal
+Date: Wed, 5 Jan 2011 14:53:02 +0300
+Message-ID: <4510264083.20110105145302@mail.ru>
+References: <1293240049-7744-1-git-send-email-zapped@mail.ru> <201101041813.45053.trast@student.ethz.ch>
+Reply-To: =?utf-8?B?0JDQu9C10LrRgdC10Lkg0KjRg9C80LrQuNC9?= <zapped@mail.ru>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>, Yann Dirson <ydirson@free.fr>
-X-From: git-owner@vger.kernel.org Wed Jan 05 12:44:59 2011
+Cc: git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Jan 05 12:52:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaRnV-0004ld-4Z
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 12:44:57 +0100
+	id 1PaRuv-0000fW-BN
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 12:52:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751901Ab1AELow convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Jan 2011 06:44:52 -0500
-Received: from fsfla.org ([217.69.89.164]:33508 "EHLO fsfla.org"
+	id S1751901Ab1AELwc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Jan 2011 06:52:32 -0500
+Received: from smtp5.mail.ru ([94.100.176.132]:41489 "EHLO smtp5.mail.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751569Ab1AELov convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Jan 2011 06:44:51 -0500
-Received: from freie.oliva.athome.lsd.ic.unicamp.br (unknown [201.82.179.20])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by fsfla.org (Postfix) with ESMTPSA id CEC14436006;
-	Wed,  5 Jan 2011 11:44:46 +0000 (UTC)
-Received: from livre.localdomain (livre-to-gw.oliva.athome.lsd.ic.unicamp.br [172.31.160.19])
-	by freie.oliva.athome.lsd.ic.unicamp.br (8.14.4/8.14.4) with ESMTP id p05BiVuG031152;
-	Wed, 5 Jan 2011 09:44:32 -0200
-Received: from livre.localdomain (aoliva@localhost [127.0.0.1])
-	by livre.localdomain (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p05BiUg9029808;
-	Wed, 5 Jan 2011 09:44:30 -0200
-Received: (from aoliva@localhost)
-	by livre.localdomain (8.14.3/8.14.3/Submit) id p05BiLJb029805;
-	Wed, 5 Jan 2011 09:44:21 -0200
-X-Authentication-Warning: livre.localdomain: aoliva set sender to lxoliva@fsfla.org using -f
-Mail-Followup-To: Alexandre Oliva <lxoliva@fsfla.org>, git@vger.kernel.org
-In-Reply-To: <m37heqdfck.fsf@localhost.localdomain> (Jakub Narebski's message
-	of "Thu, 30 Dec 2010 15:14:07 -0800 (PST)")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
+	id S1751678Ab1AELwb (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jan 2011 06:52:31 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
+	h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Subject:CC:To:Message-ID:Reply-To:From:Date; bh=9sQhzXrgKuojRxLubPfhK7KEgsIWi4P3zpWZcqA0qoE=;
+	b=n4Luz7TLyMl/XH83D1EwumeXs9ZhsJN5TGPwsaVhMHRXcslje0GQCoPaHXqrw+shPg6hkFseWzhuC1SdnMab6eLCuhbsloWSctdvqe+X+cz6bIINUPu7eG69KjNe+gvK;
+Received: from [85.140.55.58] (port=44529 helo=ppp85-140-55-58.pppoe.mtu-net.ru)
+	by smtp5.mail.ru with asmtp 
+	id 1PaRun-0003XA-00; Wed, 05 Jan 2011 14:52:29 +0300
+X-Mailer: The Bat! (v3.99.3) Professional
+X-Priority: 3 (Normal)
+In-Reply-To: <201101041813.45053.trast@student.ethz.ch>
+X-Mras: Ok
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164560>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164561>
 
-On Dec 30, 2010, Jakub Narebski <jnareb@gmail.com> wrote:
+Hello, Thomas
 
-> They are not sent by default, but they (refs/replace/*) can be send a=
-s
-> any other ref.
+TR> But the last line very conspicuously already mentions 'class', so w=
+hy
+TR> does it fail?
+Yes, As you already discovered that last line match for class/record
+definition but not for class methods.
 
-Oh, doh, I was modeling them after grafts, but indeed the replace refs,
-unlike grafts, can be sent out.  Which doesn't really help, since they'=
-d
-be sent out in addition to the objectionable stuff.
+I did as you said I changed commit message (also included
+"Acked-by:"). So should I re-submit patch to the maillist as a new one
+or as an answer to this thread?
 
-Unless the idea is to replace the other way round, i.e., instead of
-cleaned-up commit replacing contaminated commit, mark the contaminated
-commit as replacing the cleaned-up one.  I haven't explored this
-possibility, for it dids't seem to make much sense at first.
+TR> Zapped wrote:
+>> Signed-off-by: Zapped <zapped@mail.ru>
 
-> * you replace merge-turned-ordinary commit with a proper merge
->   commit
+TR> As Junio already said, please provide a real name for the sign-off.
+TR> But I also found the commit message and content confusing, probably
+TR> because I haven't programmed Pascal for 15 years.
 
-Aah...  and this would presumably enable further merges onto my local
-tree, but I'd public commits that lost history and relationship with
-their upstream commits.
+TR> You said
 
-I'm aiming at something better than this, something more like the resul=
+TR>   Fixes bug: git-diff: class methods are not detected in hunk heade=
+rs for Pascal
+
+>>  PATTERNS("pascal",
+>> -      "^((procedure|function|constructor|destructor|interface|"
+>> +      "^(((class[ \t]+)?(procedure|function)|constructor|destructor=
+|interface|"
+>>               "implementation|initialization|finalization)[ \t]*.*)$=
+"
+>>        "\n"
+>>        "^(.*=3D[ \t]*(class|record).*)$",
+
+TR> But the last line very conspicuously already mentions 'class', so w=
+hy
+TR> does it fail?
+
+TR> I had to look up a bit of Pascal syntax.  Google helped with
+
+TR>   http://www.freepascal.org/docs-html/ref/ref.html
+
+TR> which answers this.  Also, as stated in SubmittingPatches, we
+TR> generally word the messages as stating the behaviour of the changed
+TR> version in the present tense.  So a better commit message would be
+
+TR>   userdiff: match Pascal class methods
+
+TR>   Class declarations were already covered by the second pattern, bu=
 t
-of filter-branch, but with improvements for git pull/merge that (i) use
-some ref/original mapping (that provides nearly equivalent info to that
-of the weak parent idea I proposed before) to tell where we are, what w=
-e
-have and what needs rewriting, and (ii) perform rewriting of each
-brought in commit, keeping local history isomorphic to that of upstream=
-,
-and updating the remapping.  Ideally, (iii) have means for merge to use
-the remapping backwards, so that one could merge from the cleaned-up
-branch to the contaminated branch, or even to publish the remapping as
-equivalences rather than unidirectional mappings.  Perhaps storing them
-as trees (or some other format) rather than as long lists of refs would
-make them more efficient to deal with, especially after packing.
+TR>   class methods have the 'class' keyword in front too.  Account for
+TR>   it.
 
-More details about what we're after in the thread containing:
-http://www.mail-archive.com/gnu-linux-libre@nongnu.org/msg00903.html
+TR>   Signed-off-by: =D0=90=D0=BB=D0=B5=D0=BA=D1=81=D0=B5=D0=B9 =D0=9A=D1=
+=80=D0=B5=D0=B7=D0=BE=D0=B2 <zapped@mail.ru>
 
+TR> Ok, now I feel silly for only having a two-liner despite my
+TR> complaints.
 
-As for the rewriting itself (which I regard as a solved problem, it's
-compatibility between rewritten branches that I'm trying to adress), I'=
-m
-thinking of making manual changes to the trees whose commits introduced
-undesirable content, taking note of the contaminated and clean objects,
-and then writing a script to remap with git filter-branch the contents
-of the index for each commit, replacing contaminated with clean file, o=
-r
-removing fully-contaminated file.
+TR> That being said, I have now verified that the patch is good, and, y=
+ou
+TR> can include my
 
-> Though I think that better solution would be feature-branch based
-> workflow.
+TR>   Acked-by: Thomas Rast <trast@student.ethz.ch>
 
-We are not in a position to influence how upstream does their
-development, and I suppose this would be the case in many (but not all)
-of the situations I described as motivators.
-
-
-On Dec 30, 2010, Yann Dirson <ydirson@free.fr> wrote:
-
->> I'm under the impression that this could not just work, but also mak=
-e
->> rebasing in general (especially the hard case) far less problematic,=
- for
->> git would be able to relate a rebased commit with an original commit=
-=2E
-
-> I suppose that by "hard case" you mean forking off a branch that gets
-> rebased later ?
-
-I meant the case described as =E2=80=9Chard case=E2=80=9D in the git-re=
-base man page:
-
-http://www.kernel.org/pub/software/scm/git/docs/git-rebase.html
-
-Hard case: The changes are not the same.
-
-    This happens if the subsystem rebase had conflicts, or used
-    --interactive to omit, edit, squash, or fixup commits; or if the
-    upstream used one of commit --amend, reset, or filter-branch.
-
-> This problem suggests a more generic one: how to "merge back" most
-> changes from a branch while still not merging some specific changes ?
-
-Thanks for the suggestion.  That made me think that, more than a
-parent/child relationship, the original and rewritten commits should be
-perceived as siblings as far as merges are concerned, when a
-correspondence/equivalence table is given.  Hopefully this wouldn't be
-too much of a change to merge and rebase.
-
-
-Am I making sense?  Does this seem generally useful, say, for someone
-trying to do participate in the development of unencumbered portions of
-a (patent|copyright|contractually|restriction)-encumbered project?
-
---=20
-Alexandre Oliva, freedom fighter    http://FSFLA.org/~lxoliva/
-You must be the change you wish to see in the world. -- Gandhi
-Be Free! -- http://FSFLA.org/   FSF Latin America board member
-=46ree Software Evangelist      Red Hat Brazil Compiler Engineer
+TR> in a reroll if you fix the above.
