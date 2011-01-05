@@ -1,57 +1,89 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] t/t9001-send-email.sh: fix '&&' chain in some tests
-Date: Tue, 04 Jan 2011 15:56:31 -0800
-Message-ID: <7vei8sdxzk.fsf@alter.siamese.dyndns.org>
-References: <1294174618-14571-1-git-send-email-ospite@studenti.unina.it>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: jn/svn-fe (Re: What's cooking in git.git (Jan 2011, #01; Tue, 4))
+Date: Tue, 4 Jan 2011 18:01:58 -0600
+Message-ID: <20110105000157.GA3138@burratino>
+References: <7vipy4dy8y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jonathan Nieder <jrnieder@gmail.com>
-To: Antonio Ospite <ospite@studenti.unina.it>
-X-From: git-owner@vger.kernel.org Wed Jan 05 00:56:48 2011
+Cc: git@vger.kernel.org, David Barr <david.barr@cordelta.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Jan 05 01:02:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaGkA-0003i6-78
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 00:56:46 +0100
+	id 1PaGpR-0006uv-JA
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 01:02:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751351Ab1ADX4l (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jan 2011 18:56:41 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49597 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751146Ab1ADX4k (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jan 2011 18:56:40 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 336BC373A;
-	Tue,  4 Jan 2011 18:57:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=58TUtX7PRKuYWjlTJ473tDInOi0=; b=Elv5tl
-	QDKkg0qcADL5Syehg/QS/TugKr7vLir7X0wAVYooJbH1KnCuCE4VOhFCzCj/d2JX
-	5R7o/wTovkDA3j+hrEhy9hesWuHIiZHvESYKxfO/qwTd/8/1x29su8h/hxcEE2vf
-	0bs7laOELt/xcdsHsqwrne/PyE7IDnBdwNOTs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=tYvs/fsmVh2+32v8QBXvsqtvsgJQwNhF
-	4hwNjq9POBeMCdarnwxYsbRmn5iBdnRdS5pXark8PU48SfeOUt5UszZ80cuuzk3+
-	SFBaQ/fVZ0fwvGsM4TeBu3qndsPcui/VBgBMYeMmJ1+Cn8HXcVAnYfcqlb4FnyZF
-	hhjAUj+wyG4=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 020C33739;
-	Tue,  4 Jan 2011 18:57:14 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DDF1C3738; Tue,  4 Jan 2011
- 18:57:10 -0500 (EST)
-In-Reply-To: <1294174618-14571-1-git-send-email-ospite@studenti.unina.it>
- (Antonio Ospite's message of "Tue\,  4 Jan 2011 21\:56\:58 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 5AC05AA0-185E-11E0-B63C-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
+	id S1751630Ab1AEACH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 4 Jan 2011 19:02:07 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:44285 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751623Ab1AEACG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 4 Jan 2011 19:02:06 -0500
+Received: by vws16 with SMTP id 16so6290751vws.19
+        for <git@vger.kernel.org>; Tue, 04 Jan 2011 16:02:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=uItRdDF1DuVWFqkYN4V+Anwsh/ldqGJqsg6i07xRcd0=;
+        b=m9nD4fiVIAiMbnFGsLYra343VKB7DwIVw0ggxrzcfpdwJ5I2v4mRqGHOAXh8TTCSNg
+         wfg+7gZnhcAI0hL9JbgPEEK7HQVnrMdgWzD8IxN1MnAyaBqWwrK5eB2Hm/SmFnU4lk8h
+         0vPs0S4evwzofi08QE70V0+NSwNSG/yc+ogf8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=oQSsiJVaWHrpIUP2G31XCtIp/eu05uxXbV/Uq1tEc9Ypfdo+pRrftEXwN/Aylix+pY
+         5Q4j+RdGqOcmpMFOg8lvgV8fmYo/qENfRJGLwP+AxOf5viv/rcUF3bduXKAtjMzQGMJY
+         Z/J33GvI7WzSoyGGmliTMAZuxvDwqeKEQM+eo=
+Received: by 10.220.177.4 with SMTP id bg4mr107890vcb.89.1294185725938;
+        Tue, 04 Jan 2011 16:02:05 -0800 (PST)
+Received: from burratino (adsl-69-209-72-219.dsl.chcgil.sbcglobal.net [69.209.72.219])
+        by mx.google.com with ESMTPS id w7sm4739737vch.20.2011.01.04.16.02.03
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 04 Jan 2011 16:02:05 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vipy4dy8y.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164528>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164529>
 
-Thanks.
+Junio C Hamano wrote:
+
+> * jn/svn-fe (2010-12-06) 18 commits
+>  - vcs-svn: Allow change nodes for root of tree (/)
+>  - vcs-svn: Implement Prop-delta handling
+>  - vcs-svn: Sharpen parsing of property lines
+>  - vcs-svn: Split off function for handling of individual properties
+>  - vcs-svn: Make source easier to read on small screens
+>  - vcs-svn: More dump format sanity checks
+>  - vcs-svn: Reject path nodes without Node-action
+>  - vcs-svn: Delay read of per-path properties
+>  - vcs-svn: Combine repo_replace and repo_modify functions
+>  - vcs-svn: Replace = Delete + Add
+>  - vcs-svn: handle_node: Handle deletion case early
+>  - vcs-svn: Use mark to indicate nodes with included text
+>  - vcs-svn: Unclutter handle_node by introducing have_props var
+>  - vcs-svn: Eliminate node_ctx.mark global
+>  - vcs-svn: Eliminate node_ctx.srcRev global
+>  - vcs-svn: Check for errors from open()
+>  - vcs-svn: Allow simple v3 dumps (no deltas yet)
+>  - vcs-svn: Error out for v3 dumps
+> 
+> Some RFC patches, to give them early and wider exposure.  Perhaps drop
+> these during the -rc period?
+
+The bottom one is a useful bugfix (to get an error message instead of
+succeeding with nonsensical mode and blobs when the user tries to
+import a --deltas dump) and should ideally be applied for v1.7.4.
+
+The rest are a new feature (a surprisingly non-buggy one) and I don't
+mind if you drop them.
