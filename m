@@ -1,74 +1,86 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: False positives in git diff-index
-Date: Wed, 5 Jan 2011 01:15:15 -0500
-Message-ID: <20110105061515.GA12163@sigill.intra.peff.net>
-References: <AANLkTimLW+J_rmRsqUQJO-9Gzn7aK0ZHkd1-s=Wg4Vbi@mail.gmail.com>
- <AANLkTinDSCPz-oukxzn24hj94d9WpzZ8_64TBHeNTmoG@mail.gmail.com>
- <20110105054825.GC5884@sigill.intra.peff.net>
- <AANLkTimQCMr+emw=rXdBKKnD_W9G981zCkboKgiDWxPF@mail.gmail.com>
+From: Albert Dvornik <dvornik+git@gmail.com>
+Subject: "git svn fetch" on a branch is broken after "git svn reset"
+Date: Wed, 5 Jan 2011 01:22:35 -0500
+Message-ID: <AANLkTikhaPP0bHEEeFf_2RgK_bdE-i+gaCKopfQjqgHP@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Alexander Gladysh <agladysh@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 05 07:15:27 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 05 07:22:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaMec-0007sr-Sp
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 07:15:27 +0100
+	id 1PaMle-0002qz-6U
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 07:22:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751298Ab1AEGPW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jan 2011 01:15:22 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:43573 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751047Ab1AEGPV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jan 2011 01:15:21 -0500
-Received: (qmail 29549 invoked by uid 111); 5 Jan 2011 06:15:20 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 05 Jan 2011 06:15:20 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Jan 2011 01:15:15 -0500
-Content-Disposition: inline
-In-Reply-To: <AANLkTimQCMr+emw=rXdBKKnD_W9G981zCkboKgiDWxPF@mail.gmail.com>
+	id S1751398Ab1AEGWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jan 2011 01:22:37 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:43476 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751225Ab1AEGWg (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jan 2011 01:22:36 -0500
+Received: by eye27 with SMTP id 27so6608201eye.19
+        for <git@vger.kernel.org>; Tue, 04 Jan 2011 22:22:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:sender:received:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type;
+        bh=gYYdIvGFU30XRr+TBNCGVS7QWL2KyyLGg6uyFkKYzK4=;
+        b=gBgP9GeOenQxYa3BMTSYyuCBsdr7dJA0kK06qIyka8sxeeBmDkFP/8numEQ6PDaTuf
+         zf1Re+QlclmmNFmWZQi3kMQgXt05EFRqlhkPqc/HDWnbjeDIX6qBXjC28crRrQ7quXSK
+         Y/YKZHQ69AWJ0rUqaddzih67qwJC7/iAoa9SM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
+         :from:to:content-type;
+        b=JPcaqYF/sEtNeMrK1PN0aIyFozsdKG+CbY6aT21oOEVECMb71enbk/j3nkhH+O6V59
+         aDlcTm+PxTgEuoIdkeOT80WWmiQZxbi5slL0ydtkJYJEmf5/CtDRZ3ZgwuFUHtS+VpQV
+         Qc5LxiHRcZbXX49Rsk2VPQyBIpNtzSIGhZ04Q=
+Received: by 10.213.22.66 with SMTP id m2mr18605269ebb.76.1294208555459; Tue,
+ 04 Jan 2011 22:22:35 -0800 (PST)
+Received: by 10.213.113.137 with HTTP; Tue, 4 Jan 2011 22:22:35 -0800 (PST)
+X-Google-Sender-Auth: UBlNyvuKSLosQvIsqm8NRBgnE8g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164549>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164550>
 
-On Wed, Jan 05, 2011 at 06:07:35AM +0000, Alexander Gladysh wrote:
+The documentation for git svn claims that this should work:
 
-> > Basically, we generate random data which has a 20% chance of
-> > being the same as what's there. When it is, we should get "not bothering
-> > to commit", but in your error case, we would try to commit (and get "no
-> > changes").
-> 
-> > But using that script, I can't replicate your problem. Can you try
-> > running it on the same box you're having trouble with? That might at
-> > least tell us if it's your environment or something more complex going
-> > on.
-> 
-> Thank you. I tried it, and, unfortunately, it does not reproduce the
-> problem.
+    git svn reset -r2 -p
+    git svn fetch
 
-Oh well, thanks for trying.
+But when I tried it (using an SVN tree that has recent commits only in
+a branch, not the trunk), it didn't work correctly.  "fetch" grabbed
+just the latest version from SVN, and not all revs from <revnum> to
+the head!  Note that it matters that this is in an SVN branch-- if I
+repeat the test using revs in the trunk, everything works as expected.
 
-Going back to your original reproduction recipe, can you change the
-"diff-index" line to actually report on what it thinks is different?
-That is, drop the "--quiet" and have it actually produce a patch?
+Specifically, what I did was this:
 
-It would be interesting to see what is different, and how that compares
-with the "git status" you run just prior to it (and whether it matches
-the file you "git add"ed just above).
+    git co -b testing refs/remotes/test-branch
+    git svn fetch
 
-You haven't told us much about your build process. Are you absolutely
-sure that there couldn't be another process on the system manipulating
-the files between the various runs?
+    git svn reset -r 850
+    # does correctly rewind to rev 850, undoing commits in test-branch
 
-Are you running on top of any special filesystem that might not meet the
-consistency guarantees we expect (though in that case, I would assume my
-trivial script would have reproduced).
+    git svn fetch
+    # oops, only fetches the *head* revision (rev 856) from SVN!
+    # In refs/remotes/test-branch, SVN rev 850 is now followed by 856!
 
--Peff
+I then tried this again, but between reset and fetching I manually
+edited .git/svn/.metadata and moved back the *-maxRev versions to 850;
+after doing this, the fetch does the right thing.  I tried examining
+the logic in git-svn.perl to figure out why this happens and why it
+would be affecting a branch but not the trunk, but I didn't get very
+far.
+
+I can reproduce the problem on Linux (git version 1.7.2.1) and Windows
+(Git for Windows version 1.7.3.2.msysgit.0.4.ga4f3f or Cygwin git
+1.7.2.3).
+
+Thoughts?
+
+--bert
