@@ -1,78 +1,128 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH 00/31] Refactor rebase
-Date: Tue, 4 Jan 2011 22:39:17 -0500 (EST)
-Message-ID: <alpine.DEB.1.10.1101042234450.11516@debian>
-References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com> <201101042057.29809.trast@student.ethz.ch>
+From: Jeff King <peff@peff.net>
+Subject: Re: Tracking branches and pulling on remote
+Date: Wed, 5 Jan 2011 00:01:08 -0500
+Message-ID: <20110105050108.GA5884@sigill.intra.peff.net>
+References: <loom.20110105T013525-413@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Christian Couder <chriscool@tuxfamily.org>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Jan 05 04:39:33 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Maaartin <grajcar1@seznam.cz>
+X-From: git-owner@vger.kernel.org Wed Jan 05 06:06:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaKDk-0006Dd-Tz
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 04:39:33 +0100
+	id 1PaLZU-0002Wc-K8
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 06:06:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751078Ab1AEDjY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 4 Jan 2011 22:39:24 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:62733 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750995Ab1AEDjV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 4 Jan 2011 22:39:21 -0500
-Received: by qwa26 with SMTP id 26so15249138qwa.19
-        for <git@vger.kernel.org>; Tue, 04 Jan 2011 19:39:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:x-x-sender:to:cc
-         :subject:in-reply-to:message-id:references:user-agent:mime-version
-         :content-type;
-        bh=MbYSk2h7q0wWr0iuu7bgCFVxrcl6L77WC1SYBfd5h34=;
-        b=HSYurvvGRP3AOws9eTLXQUOiFO4K5/fJSEaH5QHZLahwwph84Vah6dOwP0P2WZVD6X
-         +okvVJ/dCwj3VXr8RqeaJSjv0Eej+3nWj/5ZlJ2tVWM6hOH/X3NCYJ+t57eCZU3hzy5R
-         pNAwIS7KYREqFG3a0Xf42PhbDnLiTCVnl2fAo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=sErdJRbCqMDlJE4bxxJ7y2PBCTVTS1UUP9kl/s8/Kw+fnc1amH5yJaAC9PNLxZXsps
-         qZpba/I1SWQ2MOjYLRl0lRB3qYC5EY9JBmJdH0pU+qh27p2Vup8dPEgUvAUpYUQYM9hb
-         GFDSA6b9gm+uTBtyTT0ierMmaEAfsKhJSAAOg=
-Received: by 10.224.2.70 with SMTP id 6mr21614712qai.83.1294198760992;
-        Tue, 04 Jan 2011 19:39:20 -0800 (PST)
-Received: from [192.168.1.101] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id g32sm13299835qck.46.2011.01.04.19.39.18
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 04 Jan 2011 19:39:19 -0800 (PST)
-X-X-Sender: martin@debian
-In-Reply-To: <201101042057.29809.trast@student.ethz.ch>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S1750814Ab1AEFBP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jan 2011 00:01:15 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:44892 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750696Ab1AEFBP (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jan 2011 00:01:15 -0500
+Received: (qmail 28706 invoked by uid 111); 5 Jan 2011 05:01:13 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 05 Jan 2011 05:01:13 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Jan 2011 00:01:08 -0500
+Content-Disposition: inline
+In-Reply-To: <loom.20110105T013525-413@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164544>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164545>
 
-On Tue, 4 Jan 2011, Thomas Rast wrote:
+On Wed, Jan 05, 2011 at 12:58:47AM +0000, Maaartin wrote:
 
-> Martin von Zweigbergk wrote:
-> > For the past two months, I have been working on refactoring the rebase
-> > code. See [1] for background information. I have been trying to polish
-> > the patch set for some time, but now I don't think I will get much
-> > further without your help.
-> 
-> Thanks a lot for undertaking this effort!  I just finished looking
-> through the entire series, and it all seems sane to me.  Apart from
-> j6t's reply I think we're mostly nit-picking or agreeing with you, and
-> this is the first iteration!
+> 1.
+> I'm using git for couple of months and still don't get it. In a new repo a have 
+> two branches: master and X. I pushed both to the server, everything seems to 
+> work. However, there's origin/master but no origin/X in my repo. When I execute
+> git fetch --all -v
+> only master gets fetched. I've created an entry in the .git/config, no change. 
+> I've tried things like
+> git branch --track X origin/X
+> and all of them ends with an error message. Finally I've found out that
+> git config --add remote.origin.fetch refs/heads/X:refs/remotes/origin/X
+> seems to do it, was it right?
 
-Thanks. And thanks a lot for taking the time to review it!
+There should already have been a remote.origin.fetch that looked like:
 
+  $ git config remote.origin.fetch
+  +refs/heads/*:refs/remotes/origin/*
 
-/Martin
+which is a superset of what you added. If you run the git config command
+I did above, what do you see? If you have a wildcard line like the one
+above (which is added during the initial clone), then the config you
+added would have done nothing.
+
+Are you absolutely sure that the branch was pushed to the remote side in
+the first place? How did you push it?
+
+> 2.
+> I'd like to do some (at least for now) private changes on a foreign project. The 
+> ideal way I think about would be the following:
+> - my local repo is linked to my own server (for backup purposes and for private 
+> cooperation with a college)
+> - the repo on my server is linked to the github hosting the project
+> Now, I'd need to do something like
+> ssh myserver git fetch
+> and everything would be fine. I can do it this way, but I'd prefer something like
+> git remote fetch
+> or even
+> git fetch --remote-too
+> which would first make my server fetch from its origin and then my local repo 
+> fetch from my server. Is there such a thing? Would you recommend me doing it in 
+> a different way?
+
+There isn't really a shortcut for the two-level thing you're trying to
+do. But consider rearranging your topology to always pull to the local
+repo, and then push changes up to your backup/collaboration server.
+
+Something like:
+
+  $ git clone http://github.com/whatever/project.git
+  $ cd project
+  $ git remote add myserver myserver:/path/to/backup repo
+
+and then your workflow is:
+
+  : hmm, I feel like working on project. what happened upstream?
+  $ git pull ;# or git fetch origin; gitk origin... ; git merge origin
+  $ hack hack hack
+  : ok, now I have some work to show to my collaborator
+  $ git push myserver
+
+or possibly:
+
+  : ok, now what has my collaborator been up to
+  $ git fetch myserver
+  $ gitk myserver/topic
+  : I like it, let's merge
+  $ git merge myserver/topic
+  : Now push back my merge
+  $ git push myserver
+
+You might also find it convenient to swap which remote is "origin"
+(since it is the default for "git push" without arguments). That is, you
+primarily consider your local repo to be a clone of what's on
+"myserver", but you occasionally fetch and merge changes from upstream,
+like:
+
+  : ok, what has my collaborator been working on?
+  $ git pull
+  : and what has upstream been up to?
+  $ git fetch upstream
+  : oh, neat stuff. let's merge it
+  $ git merge upstream
+  : and then let's publish it so our collaborator will also work on top
+  : of it
+  $ git push ;# implicitly to origin
+
+How you want to set it up really depends on which mental model
+represents your workflow best.
+
+-Peff
