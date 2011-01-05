@@ -1,105 +1,79 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: fast-import --report-fd (Re: fast-import tweaks for remote helpers)
-Date: Wed, 5 Jan 2011 15:20:18 -0600
-Message-ID: <20110105212018.GA22975@burratino>
-References: <20101107112129.GA30042@burratino>
- <20101121063149.GA15449@burratino>
- <20101205113717.GH4332@burratino>
- <4CFFCDCD.9060602@dbservice.com>
- <20101212061437.GA17185@burratino>
- <4D049BA5.1060509@vilain.net>
- <20101212171633.GB18847@burratino>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: patch for git-p4
+Date: Wed, 5 Jan 2011 22:31:24 +0100
+Message-ID: <AANLkTimdMH_HcF-Qk3SSmqT24OgxynYnXpSLiDtU7Y6c@mail.gmail.com>
+References: <AANLkTi=sNsDy9oo0iBE-qJwvFSDMFYma3oYhbP1J-th=@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tomas Carnecky <tom@dbservice.com>, git@vger.kernel.org,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	David Barr <david.barr@cordelta.com>,
-	Stephen Bash <bash@genarts.com>
-To: Sam Vilain <sam@vilain.net>
-X-From: git-owner@vger.kernel.org Wed Jan 05 22:21:15 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Andrew Garber <andrew@andrewgarber.com>
+X-From: git-owner@vger.kernel.org Wed Jan 05 22:32:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaanC-0002Tz-GP
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 22:21:14 +0100
+	id 1Paaxb-0000QM-La
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 22:32:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753063Ab1AEVVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jan 2011 16:21:07 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:44627 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752937Ab1AEVVG (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jan 2011 16:21:06 -0500
-Received: by qwa26 with SMTP id 26so16106367qwa.19
-        for <git@vger.kernel.org>; Wed, 05 Jan 2011 13:21:05 -0800 (PST)
+	id S1752243Ab1AEVbr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jan 2011 16:31:47 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:60898 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751801Ab1AEVbq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jan 2011 16:31:46 -0500
+Received: by fxm20 with SMTP id 20so15473647fxm.19
+        for <git@vger.kernel.org>; Wed, 05 Jan 2011 13:31:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=YljfEP9FWaDMyOgnRdabMDjkqBQHV2OJ3vwC1tB1AsU=;
-        b=UB2lGuLH1J2rZUcSxSsM3QTDiS50RvX8oP/gTEklnzYw4LHny+bCTfGAmy3qN8wV9a
-         Puou4tsvdpw96lNlypUVz/R/tF8F+8reJ1m6xPrL8csy+8w5wYbrV7BWXtLqdNIgELB1
-         o1NoliIZ/WKfi16rSG1qTU+ODpHRLB0V+H9vs=
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type;
+        bh=+fdN/MLlwdfx+f19pZWpfvToSFtuOXn9dnej7L0emn4=;
+        b=n/fSonNfPwpv3TCJlrC3LLJrmsjZlAQ3clSNFwV+dZZmxFaqpP/Pl2NN/oEM7bhPKr
+         abl/PbCP8/FIflf3yvQ7hL6TYhLDKOxdUgcQWwxBFXTdpgyhgqS/h1sIiyUILfH7hF9J
+         PTJgH311sJur5Sg3q48awTh5pLXxwu+w99OMY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=hz9ArESDZCSqb1yjoPB5cv1PhaCJrod1ESC29N/GOpxdo7mbJwyB3HMpq3/YBTRZlU
-         WQolKTM9spDk9E+Dex/2NUPvWoSI/Uj9yoYN9q4oNHrSjJoYKaxRfUVkwn+CXXjd88Rz
-         dpQIelyRhWt+OzUao/lKiPKpEElv3KVDuEo0I=
-Received: by 10.224.2.143 with SMTP id 15mr22148204qaj.179.1294262464863;
-        Wed, 05 Jan 2011 13:21:04 -0800 (PST)
-Received: from burratino (adsl-69-209-72-219.dsl.chcgil.sbcglobal.net [69.209.72.219])
-        by mx.google.com with ESMTPS id q12sm13842023qcu.6.2011.01.05.13.21.01
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 05 Jan 2011 13:21:02 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20101212171633.GB18847@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        b=Ie29H+2gFOdZqsCBqUGxBbrak6nbaoFzlr6Z8b9WMqHQcM1knVy5Cq5pbEkkfRcpmX
+         S6470LbG/LDiwE4pBsCh4gF0gnyuv3tvTCfg16SEHRm5wVgd26hciCzkuxenywAFNPfB
+         0u0LPlRoClKrkMf/np9FM5Vl1BImestxdiiA4=
+Received: by 10.223.86.193 with SMTP id t1mr744156fal.147.1294263105121; Wed,
+ 05 Jan 2011 13:31:45 -0800 (PST)
+Received: by 10.223.79.3 with HTTP; Wed, 5 Jan 2011 13:31:24 -0800 (PST)
+In-Reply-To: <AANLkTi=sNsDy9oo0iBE-qJwvFSDMFYma3oYhbP1J-th=@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164598>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164599>
 
-Jonathan Nieder wrote:
-> Sam Vilain wrote:
-
->> What happened to --report-fd ?
+On Wed, Jan 5, 2011 at 2:45 AM, Andrew Garber <andrew@andrewgarber.com> wrote:
+> Hi everyone! This is my first post to the git mailing list.
 >
-> The patch still works.  The main problem with report-fd is that it
-> introduced a synchronization point after every commit: the frontend
-> has to read the commit id before fast-import will continue.
 
-Correction: more precisely, that was and is the main problem with
-svn-fe's use of bidirectional communication.  An application like
-Tom's remote helper would probably not suffer so much from it, since
-commit ids are just queued up as long as the pipe doesn't fill before
-the frontend reads any.  It is transactions like
+Welcome!
 
-	FI>	r5 = 734987a9878b97c879c798a897c897ac
-	FE>	cat 734987a9878b97c879c798a897c897ac
-	FI>	734987a9878b97c879c798a897c897ac commit 448
-		tree 8d5bcf0f24bdfea1fdab8d39ba3c8ba91a52547c
-		parent 84279592b8b5816d00300ba5d4412adf05cc80d6
-		parent 3ca7353cab4ed6c7efac0c8d7477c87112fc7350
-		author Junio C Hamano <gitster@pobox.com> 1294187068 -0800
-		committer Junio C Hamano <gitster@pobox.com> 1294187068 -0800
+> I was reading the git-p4 source and noticed that some of the lines are
+> indented using tabs instead of spaces (very bad in Python). Here's a
+> patch against tag v1.7.4-rc0 (commit
+> 01b97a4cb60723d18b437efdc474503d2a9dd384) of the git source repo.
+>
+> Thanks!
+> Andrew Garber
+>
 
-		Merge branch 'sr/gitweb-hilite-more' into pu
+Please read Documentation/SubmittingPatches for the correct procedure
+for submitting patches. The two most important things is:
+1) We send patches inline instead of attached (git send-email can do
+this for you)
+2) You need to add a sign-off
 
-		* sr/gitweb-hilite-more:
-		  gitweb: remove unnecessary test when closing file descriptor
-		  gitweb: add extensions to highlight feature map
+As a side-note, your commit message has some broken grammar in it.
+"Some the commits", I'm guessing you omitted a "of" there?
 
-	FE>	cat 8d5bcf0f24bdfea1fdab8d39ba3c8ba91a52547c "main.c"
-
-(i.e., round-trips) that were and are creating overhead in svn-fe.
-See [1] if curious about details.
-
-So please don't be dissuaded by the nonsense I sent. :)
-
-[1] http://colabti.org/irclogger/irclogger_log_search/git-devel?search=overhead&action=search
+We tend not to write commit messages in past tence. E.g "git-p4:
+replace tabs with spaces" (notice that I removed a 'd').
