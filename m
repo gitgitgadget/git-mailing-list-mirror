@@ -1,7 +1,7 @@
 From: Neal Kreitzinger <nkreitzinger@gmail.com>
 Subject: Re: concurrent fetches to update same mirror
-Date: Wed, 05 Jan 2011 16:34:38 -0600
-Message-ID: <4D24F1FE.5060400@gmail.com>
+Date: Wed, 05 Jan 2011 16:42:49 -0600
+Message-ID: <4D24F3E9.3070904@gmail.com>
 References: <ig2kjt$f2u$1@dough.gmane.org> <20110105204738.GA7629@sigill.intra.peff.net> <AANLkTini61q+NtDr6oytTcfA6QNGN74L60exdLrNmakd@mail.gmail.com> <20110105205324.GA7808@sigill.intra.peff.net> <20110105211313.GB7808@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8; format=flowed
@@ -9,46 +9,46 @@ Content-Transfer-Encoding: 7bit
 Cc: Shawn Pearce <spearce@spearce.org>,
 	Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 05 23:35:21 2011
+X-From: git-owner@vger.kernel.org Wed Jan 05 23:43:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pabwu-0005AN-6O
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 23:35:20 +0100
+	id 1Pac4k-0001Wh-SH
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 23:43:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752161Ab1AEWfM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jan 2011 17:35:12 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:52349 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751338Ab1AEWfL (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jan 2011 17:35:11 -0500
-Received: by gxk9 with SMTP id 9so3526587gxk.19
-        for <git@vger.kernel.org>; Wed, 05 Jan 2011 14:35:11 -0800 (PST)
+	id S1751556Ab1AEWnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jan 2011 17:43:21 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:44434 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751338Ab1AEWnV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jan 2011 17:43:21 -0500
+Received: by yxt3 with SMTP id 3so6208575yxt.19
+        for <git@vger.kernel.org>; Wed, 05 Jan 2011 14:43:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:message-id:date:from
          :user-agent:mime-version:newsgroups:to:cc:subject:references
          :in-reply-to:content-type:content-transfer-encoding;
-        bh=/bd/NXcCmdtYbkClzNu5UN5JPz9Qptl66bzhYSVdruQ=;
-        b=xj6GvG+Sd1mglYNU3wth+wRvZHIF35mI9/9bBZm+duJzzwKruEaQNXUMIY9u3nn7Zp
-         4xswl+f/J1m6GEwb4c4Obey/itXuzb0DMCB1b24ttYocMHdWGDj4Z0TOqal4WKoOR3Tj
-         dh3Jv0da8hItnlR6wwzk9CA1KQ3kohvHpNzOo=
+        bh=ly6UtzMcWzVXyW7zLZi/N6tRer3pdSTdBbnHg5lvFbQ=;
+        b=YNftSWJyUzyBQE9Ug0k617VFEC3zUM5H/7cfvyrB9ahUD4FU8zfrChZJDaSqrX9M9i
+         HrbaydNjY1y4a0Zw7fISkN94e8w1aomSfTFa9bAIpqRlVV2ve9CzW9xKIITkOsuTFa3u
+         y6rhJHTI6qooOorcSjNINPxBjdYRGIA3mZTis=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
          :subject:references:in-reply-to:content-type
          :content-transfer-encoding;
-        b=ZNiRGysdT4GHg1KwByaV5T36GLf3Y4X/A1O5MfxohQaLSpFde47HaF9Iw4THHAzLar
-         2aeMbvbkYNYK86wF7G5/OtkspJ2XSiiKfFQl3cAFw9EWCsO+aVymRULLLGeC6evQML8n
-         v/h9mjFuppiWmkBiPzft+oUhdNVh4dNNAu/IA=
-Received: by 10.151.6.15 with SMTP id j15mr1223901ybi.353.1294266910891;
-        Wed, 05 Jan 2011 14:35:10 -0800 (PST)
+        b=hDYlBM7FNBUh19KQHZUAMehgCorzeNFsVmCOwfWbs2UEYJuukToOkXdYoSTE8texJ8
+         5NZYIqBCswHY+shrLmnVwgKTtY3spw+nEI4hqUgpwIQH3ySlj6ofTXCaOv6uyrVW3Ggv
+         K+Ug6FYx9rERjzL2jZ2jfKRHP0/qFLfeI/KUM=
+Received: by 10.100.164.1 with SMTP id m1mr14277381ane.269.1294267400287;
+        Wed, 05 Jan 2011 14:43:20 -0800 (PST)
 Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id p32sm11739743ybk.8.2011.01.05.14.35.09
+        by mx.google.com with ESMTPS id w4sm31381661anw.36.2011.01.05.14.43.19
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 05 Jan 2011 14:35:10 -0800 (PST)
+        Wed, 05 Jan 2011 14:43:19 -0800 (PST)
 User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
 Newsgroups: gmane.comp.version-control.git
 In-Reply-To: <20110105211313.GB7808@sigill.intra.peff.net>
@@ -56,7 +56,7 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164601>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164602>
 
 On 1/5/2011 3:13 PM, Jeff King wrote:
 > On Wed, Jan 05, 2011 at 03:53:25PM -0500, Jeff King wrote:
@@ -112,11 +112,9 @@ On 1/5/2011 3:13 PM, Jeff King wrote:
 >
 > -Peff
 
-This was actually the case in my test.  Updates to the mirror are always 
-new branches except for master.  The only pre-existing branch that might 
-get updated is master, but in that test it didn't.  The new branches and 
-tags were updated.  The new tags always point to the new branches.  I'm 
-running 1.7.1 on both servers.
+In the case of concurrent pulls to the same non-bare repo, could the 
+working tree or index get corrupted, or does git have concurrency 
+control mechanisms for this too?
 
 v/r,
 Neal
