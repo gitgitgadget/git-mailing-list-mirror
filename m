@@ -1,107 +1,104 @@
-From: =?utf-8?B?0JDQu9C10LrRgdC10Lkg0KjRg9C80LrQuNC9?= <zapped@mail.ru>
-Subject: Re[2]: [PATCH 1/3] Fixes bug: git-diff: class methods are not detected in hunk headers for Pascal
-Date: Wed, 5 Jan 2011 14:53:02 +0300
-Message-ID: <4510264083.20110105145302@mail.ru>
-References: <1293240049-7744-1-git-send-email-zapped@mail.ru> <201101041813.45053.trast@student.ethz.ch>
-Reply-To: =?utf-8?B?0JDQu9C10LrRgdC10Lkg0KjRg9C80LrQuNC9?= <zapped@mail.ru>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Jan 05 12:52:37 2011
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH] Document escaping of special characters in gitignore files
+Date: Wed,  5 Jan 2011 14:38:52 +0100
+Message-ID: <1294234732-20094-1-git-send-email-jnareb@gmail.com>
+Cc: Bruce Korb <bruce.korb@gmail.com>, avarab@gmail.com,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 05 14:39:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaRuv-0000fW-BN
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 12:52:37 +0100
+	id 1PaTaU-0006K6-L8
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 14:39:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751901Ab1AELwc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Jan 2011 06:52:32 -0500
-Received: from smtp5.mail.ru ([94.100.176.132]:41489 "EHLO smtp5.mail.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751678Ab1AELwb (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jan 2011 06:52:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
-	h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Subject:CC:To:Message-ID:Reply-To:From:Date; bh=9sQhzXrgKuojRxLubPfhK7KEgsIWi4P3zpWZcqA0qoE=;
-	b=n4Luz7TLyMl/XH83D1EwumeXs9ZhsJN5TGPwsaVhMHRXcslje0GQCoPaHXqrw+shPg6hkFseWzhuC1SdnMab6eLCuhbsloWSctdvqe+X+cz6bIINUPu7eG69KjNe+gvK;
-Received: from [85.140.55.58] (port=44529 helo=ppp85-140-55-58.pppoe.mtu-net.ru)
-	by smtp5.mail.ru with asmtp 
-	id 1PaRun-0003XA-00; Wed, 05 Jan 2011 14:52:29 +0300
-X-Mailer: The Bat! (v3.99.3) Professional
-X-Priority: 3 (Normal)
-In-Reply-To: <201101041813.45053.trast@student.ethz.ch>
-X-Mras: Ok
+	id S1751360Ab1AENjd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jan 2011 08:39:33 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:43857 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751298Ab1AENjc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jan 2011 08:39:32 -0500
+Received: by wwa36 with SMTP id 36so16279717wwa.1
+        for <git@vger.kernel.org>; Wed, 05 Jan 2011 05:39:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=YZlGT4gCqkmnFL734zGScGeMgYKEWDih64uuxh9TKAk=;
+        b=LQy/ltu0+pLJ9NJuKI6kD3fGGmvRpmcRjBr3QgQOWkrekdCWknZPGrrSc4ZbS7zUas
+         WHJVZ7EiNM5bs4FVsRu8JHU6ERbOYEYTAsU5/gy51SpY+HbIX2nB3WgH2Or1ZLDzCfQ7
+         VcaAyO/JZlGDwMcz+NQwnC1T+kdvoy8ziVVqQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=PV36jfdDONozEu1UTYRd44oE/0BfYo0AmfOLmbD9nrAQpm8zh4UIkDIIxVP7EdkD0k
+         VxGmgLpbzEnRAZ7CRSQWylXpigCt8EpcGNk03qE+LjtK8MxUnO4V096fF7I5F9wdaiqb
+         JVHvZAL91iWNtkYe1O4CSN3jmuiwO8FcLaF1w=
+Received: by 10.216.166.67 with SMTP id f45mr2488262wel.112.1294234771132;
+        Wed, 05 Jan 2011 05:39:31 -0800 (PST)
+Received: from localhost.localdomain (abwq27.neoplus.adsl.tpnet.pl [83.8.240.27])
+        by mx.google.com with ESMTPS id n78sm11180037weq.3.2011.01.05.05.39.22
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 05 Jan 2011 05:39:30 -0800 (PST)
+X-Mailer: git-send-email 1.7.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164562>
 
-Hello, Thomas
+You can use backslash to escape special characters, like '#' or '*',
+in gitignore files.
 
-TR> But the last line very conspicuously already mentions 'class', so w=
-hy
-TR> does it fail?
-Yes, As you already discovered that last line match for class/record
-definition but not for class methods.
+Requested-by: Bruce Korb <bruce.korb@gmail.com>
+Signed-off-by: Jakub Narebski <jnareb@gmail.com>
+---
+This patch was originally send 10 Sep 2010, but I guess it was lost
+because it appeared only deep in thread inside response, and not as
+well separated patch.  I have found about it when I got conflict
+merging current code.
 
-I did as you said I changed commit message (also included
-"Acked-by:"). So should I re-submit patch to the maillist as a new one
-or as an answer to this thread?
+It applies on top of current 'master'.
 
-TR> Zapped wrote:
->> Signed-off-by: Zapped <zapped@mail.ru>
+ Documentation/gitignore.txt |    7 +++++++
+ templates/info--exclude     |    1 +
+ 2 files changed, 8 insertions(+), 0 deletions(-)
 
-TR> As Junio already said, please provide a real name for the sign-off.
-TR> But I also found the commit message and content confusing, probably
-TR> because I haven't programmed Pascal for 15 years.
-
-TR> You said
-
-TR>   Fixes bug: git-diff: class methods are not detected in hunk heade=
-rs for Pascal
-
->>  PATTERNS("pascal",
->> -      "^((procedure|function|constructor|destructor|interface|"
->> +      "^(((class[ \t]+)?(procedure|function)|constructor|destructor=
-|interface|"
->>               "implementation|initialization|finalization)[ \t]*.*)$=
-"
->>        "\n"
->>        "^(.*=3D[ \t]*(class|record).*)$",
-
-TR> But the last line very conspicuously already mentions 'class', so w=
-hy
-TR> does it fail?
-
-TR> I had to look up a bit of Pascal syntax.  Google helped with
-
-TR>   http://www.freepascal.org/docs-html/ref/ref.html
-
-TR> which answers this.  Also, as stated in SubmittingPatches, we
-TR> generally word the messages as stating the behaviour of the changed
-TR> version in the present tense.  So a better commit message would be
-
-TR>   userdiff: match Pascal class methods
-
-TR>   Class declarations were already covered by the second pattern, bu=
-t
-TR>   class methods have the 'class' keyword in front too.  Account for
-TR>   it.
-
-TR>   Signed-off-by: =D0=90=D0=BB=D0=B5=D0=BA=D1=81=D0=B5=D0=B9 =D0=9A=D1=
-=80=D0=B5=D0=B7=D0=BE=D0=B2 <zapped@mail.ru>
-
-TR> Ok, now I feel silly for only having a two-liner despite my
-TR> complaints.
-
-TR> That being said, I have now verified that the patch is good, and, y=
-ou
-TR> can include my
-
-TR>   Acked-by: Thomas Rast <trast@student.ethz.ch>
-
-TR> in a reroll if you fix the above.
+diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
+index 7dc2e8b..20abc20 100644
+--- a/Documentation/gitignore.txt
++++ b/Documentation/gitignore.txt
+@@ -68,6 +68,7 @@ Patterns have the following format:
+    for readability.
+ 
+  - A line starting with # serves as a comment.
++   Use `\#` for a literal # character starting filename.
+ 
+  - An optional prefix '!' which negates the pattern; any
+    matching file excluded by a previous pattern will become
+@@ -98,6 +99,12 @@ Patterns have the following format:
+    For example, "/{asterisk}.c" matches "cat-file.c" but not
+    "mozilla-sha1/sha1.c".
+ 
++ - You can escape special characters using backslash.
++   For example, "{backslash}#*" matches files beginning in `#`
++   (otherwise it would be considered comment),
++   and "{backslash}!*{backslash}?" matches files starting with `!`
++   (negate pattern prefix) and ending with `?` (glob wildcard).
++
+ NOTES
+ -----
+ 
+diff --git a/templates/info--exclude b/templates/info--exclude
+index a5196d1..2ebaf0d 100644
+--- a/templates/info--exclude
++++ b/templates/info--exclude
+@@ -4,3 +4,4 @@
+ # exclude patterns (uncomment them if you want to use them):
+ # *.[oa]
+ # *~
++# \#*#
+-- 
+1.7.3
