@@ -1,104 +1,57 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] Document escaping of special characters in gitignore files
-Date: Wed,  5 Jan 2011 14:38:52 +0100
-Message-ID: <1294234732-20094-1-git-send-email-jnareb@gmail.com>
-Cc: Bruce Korb <bruce.korb@gmail.com>, avarab@gmail.com,
-	Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 05 14:39:40 2011
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [PATCH 1/3] Fixes bug: git-diff: class methods are not detected in hunk headers for Pascal
+Date: Wed, 5 Jan 2011 15:23:55 +0100
+Message-ID: <201101051523.55749.trast@student.ethz.ch>
+References: <1293240049-7744-1-git-send-email-zapped@mail.ru> <201101041813.45053.trast@student.ethz.ch> <4510264083.20110105145302@mail.ru>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: <git@vger.kernel.org>
+To: =?utf-8?b?0JDQu9C10LrRgdC10Lkg0KjRg9C80LrQuNC9?= <zapped@mail.ru>
+X-From: git-owner@vger.kernel.org Wed Jan 05 15:24:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaTaU-0006K6-L8
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 14:39:38 +0100
+	id 1PaUHU-0007NN-14
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 15:24:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751360Ab1AENjd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jan 2011 08:39:33 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:43857 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751298Ab1AENjc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jan 2011 08:39:32 -0500
-Received: by wwa36 with SMTP id 36so16279717wwa.1
-        for <git@vger.kernel.org>; Wed, 05 Jan 2011 05:39:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=YZlGT4gCqkmnFL734zGScGeMgYKEWDih64uuxh9TKAk=;
-        b=LQy/ltu0+pLJ9NJuKI6kD3fGGmvRpmcRjBr3QgQOWkrekdCWknZPGrrSc4ZbS7zUas
-         WHJVZ7EiNM5bs4FVsRu8JHU6ERbOYEYTAsU5/gy51SpY+HbIX2nB3WgH2Or1ZLDzCfQ7
-         VcaAyO/JZlGDwMcz+NQwnC1T+kdvoy8ziVVqQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=PV36jfdDONozEu1UTYRd44oE/0BfYo0AmfOLmbD9nrAQpm8zh4UIkDIIxVP7EdkD0k
-         VxGmgLpbzEnRAZ7CRSQWylXpigCt8EpcGNk03qE+LjtK8MxUnO4V096fF7I5F9wdaiqb
-         JVHvZAL91iWNtkYe1O4CSN3jmuiwO8FcLaF1w=
-Received: by 10.216.166.67 with SMTP id f45mr2488262wel.112.1294234771132;
-        Wed, 05 Jan 2011 05:39:31 -0800 (PST)
-Received: from localhost.localdomain (abwq27.neoplus.adsl.tpnet.pl [83.8.240.27])
-        by mx.google.com with ESMTPS id n78sm11180037weq.3.2011.01.05.05.39.22
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 05 Jan 2011 05:39:30 -0800 (PST)
-X-Mailer: git-send-email 1.7.3
+	id S1751697Ab1AEOX6 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Jan 2011 09:23:58 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:35433 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751312Ab1AEOX5 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 5 Jan 2011 09:23:57 -0500
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 5 Jan
+ 2011 15:23:12 +0100
+Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 5 Jan
+ 2011 15:23:56 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-rc6-desktop; KDE/4.5.4; x86_64; ; )
+In-Reply-To: <4510264083.20110105145302@mail.ru>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164563>
 
-You can use backslash to escape special characters, like '#' or '*',
-in gitignore files.
+=D0=90=D0=BB=D0=B5=D0=BA=D1=81=D0=B5=D0=B9 =D0=A8=D1=83=D0=BC=D0=BA=D0=B8=
+=D0=BD wrote:
+> I did as you said I changed commit message (also included
+> "Acked-by:"). So should I re-submit patch to the maillist as a new on=
+e
+> or as an answer to this thread?
 
-Requested-by: Bruce Korb <bruce.korb@gmail.com>
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
-This patch was originally send 10 Sep 2010, but I guess it was lost
-because it appeared only deep in thread inside response, and not as
-well separated patch.  I have found about it when I got conflict
-merging current code.
+It doesn't matter that much; most people resend as a reply to some
+email in the thread.  Just don't distribute the reroll all across the
+thread :-)
 
-It applies on top of current 'master'.
+What you can do now that you have an Ack, or if you feel otherwise
+confident that this patch is ready for inclusion, is Cc it to Junio.
 
- Documentation/gitignore.txt |    7 +++++++
- templates/info--exclude     |    1 +
- 2 files changed, 8 insertions(+), 0 deletions(-)
-
-diff --git a/Documentation/gitignore.txt b/Documentation/gitignore.txt
-index 7dc2e8b..20abc20 100644
---- a/Documentation/gitignore.txt
-+++ b/Documentation/gitignore.txt
-@@ -68,6 +68,7 @@ Patterns have the following format:
-    for readability.
- 
-  - A line starting with # serves as a comment.
-+   Use `\#` for a literal # character starting filename.
- 
-  - An optional prefix '!' which negates the pattern; any
-    matching file excluded by a previous pattern will become
-@@ -98,6 +99,12 @@ Patterns have the following format:
-    For example, "/{asterisk}.c" matches "cat-file.c" but not
-    "mozilla-sha1/sha1.c".
- 
-+ - You can escape special characters using backslash.
-+   For example, "{backslash}#*" matches files beginning in `#`
-+   (otherwise it would be considered comment),
-+   and "{backslash}!*{backslash}?" matches files starting with `!`
-+   (negate pattern prefix) and ending with `?` (glob wildcard).
-+
- NOTES
- -----
- 
-diff --git a/templates/info--exclude b/templates/info--exclude
-index a5196d1..2ebaf0d 100644
---- a/templates/info--exclude
-+++ b/templates/info--exclude
-@@ -4,3 +4,4 @@
- # exclude patterns (uncomment them if you want to use them):
- # *.[oa]
- # *~
-+# \#*#
--- 
-1.7.3
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
