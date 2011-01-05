@@ -1,69 +1,64 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [minor BUG] cherry-pick -x doesn't work if a conflict occurs
-Date: Wed, 5 Jan 2011 11:37:39 -0500
-Message-ID: <AANLkTi==nMhcN538ekww3FEYFxhOqDqj4_Z7xg0a0B0Z@mail.gmail.com>
-References: <20101229141638.GA14865@pengutronix.de> <24C35180-AED6-4848-9F05-908831F911F9@dewire.com>
- <20110105065047.GJ25121@pengutronix.de> <AANLkTimi8s7QRYuEgr2x=bqwEuFPqUUQF4E=f=_PsoV0@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: Tracking branches and pulling on remote
+Date: Wed, 5 Jan 2011 11:44:16 -0500
+Message-ID: <20110105164416.GA4393@sigill.intra.peff.net>
+References: <loom.20110105T013525-413@post.gmane.org>
+ <20110105050108.GA5884@sigill.intra.peff.net>
+ <4D249EFA.5050408@seznam.cz>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Robin Rosenberg <robin.rosenberg@dewire.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>
-To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Wed Jan 05 17:38:23 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Maaartin-1 <grajcar1@seznam.cz>
+X-From: git-owner@vger.kernel.org Wed Jan 05 17:44:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaWNN-0006rh-OF
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 17:38:18 +0100
+	id 1PaWTK-0002fl-UO
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 17:44:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751534Ab1AEQiL convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 5 Jan 2011 11:38:11 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:34312 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751176Ab1AEQiK convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 5 Jan 2011 11:38:10 -0500
-Received: by iyi12 with SMTP id 12so14070996iyi.19
-        for <git@vger.kernel.org>; Wed, 05 Jan 2011 08:38:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=RThoBpcfxLPV0GDp9B634b5z7tsUfQC6gpe64mPbHAQ=;
-        b=EwqXxRsLA1qd+ZeNQY1e+2DfjJTj/P9kIF+Ce/sS/UjaM95SqvDreFSj++4uQIvs2Q
-         KsiTACPIqmntLJnGI0nIoPWoBpA3CUxPTxO5dNr9apS8M6GcDbKGMINXigIFZEg699rO
-         9kxoWjHHYze+Reebc+QfFWDVD+5cYMcH6ZhlA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=GtZikYcE9A+xtdyVj6/mSf4wDoxY3/L/Lm96zbKWabIBOTeH+BN0IORGuJznV3wg1O
-         b1HYRX9LP+tRIrJQp9GW4KQZVNObKKOarLA5EVexT/EerRthv8JuS+pQVCVIrvuKljzu
-         eBA14Ax07HdsJSXRFTVfMEPuZtYWblLLCrvK4=
-Received: by 10.231.200.138 with SMTP id ew10mr7245669ibb.59.1294245489481;
- Wed, 05 Jan 2011 08:38:09 -0800 (PST)
-Received: by 10.231.167.78 with HTTP; Wed, 5 Jan 2011 08:37:39 -0800 (PST)
-In-Reply-To: <AANLkTimi8s7QRYuEgr2x=bqwEuFPqUUQF4E=f=_PsoV0@mail.gmail.com>
+	id S1751763Ab1AEQoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jan 2011 11:44:19 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:53052 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751260Ab1AEQoT (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jan 2011 11:44:19 -0500
+Received: (qmail 31915 invoked by uid 111); 5 Jan 2011 16:44:18 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 05 Jan 2011 16:44:18 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Jan 2011 11:44:16 -0500
+Content-Disposition: inline
+In-Reply-To: <4D249EFA.5050408@seznam.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164572>
 
-2011/1/5 Jay Soffian <jaysoffian@gmail.com>:
-> 2011/1/5 Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>:
->> ah, I wonder if this is intended or just documenting a short-coming =
-:-)
->
-> I think it's intended as it's no longer the original commit, but
+On Wed, Jan 05, 2011 at 05:40:26PM +0100, Maaartin-1 wrote:
 
-Ah, seems to be a documented short-coming after-all:
+> >   $ git config remote.origin.fetch
+> >   +refs/heads/*:refs/remotes/origin/*
+> > 
+> > which is a superset of what you added. If you run the git config command
+> > I did above, what do you see?
+> 
+> No, there had been just the single line
+> 
+> refs/heads/master:refs/remotes/origin/master
 
-  http://thread.gmane.org/gmane.comp.version-control.git/61737/focus=3D=
-61933
+Ah, OK, then that is the culprit. And the config line you added was a
+reasonable solution (though you may consider simply switching it to a
+wildcard to cover any future branches, too).
 
-j.
+> OK, I swapped origin and upstream and made aliases
+> 	fetchboth = !"git fetch; git fetch upstream"
+> 	fetup = fetch upstream
+> which is about everything I need for now.
+
+Cool. You can also use "git fetch --all" to do the equivalent of your
+fetchboth.
+
+-Peff
