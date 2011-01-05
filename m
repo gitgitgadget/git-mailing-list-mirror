@@ -1,92 +1,105 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: concurrent fetches to update same mirror
-Date: Wed, 5 Jan 2011 16:13:14 -0500
-Message-ID: <20110105211313.GB7808@sigill.intra.peff.net>
-References: <ig2kjt$f2u$1@dough.gmane.org>
- <20110105204738.GA7629@sigill.intra.peff.net>
- <AANLkTini61q+NtDr6oytTcfA6QNGN74L60exdLrNmakd@mail.gmail.com>
- <20110105205324.GA7808@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: fast-import --report-fd (Re: fast-import tweaks for remote helpers)
+Date: Wed, 5 Jan 2011 15:20:18 -0600
+Message-ID: <20110105212018.GA22975@burratino>
+References: <20101107112129.GA30042@burratino>
+ <20101121063149.GA15449@burratino>
+ <20101205113717.GH4332@burratino>
+ <4CFFCDCD.9060602@dbservice.com>
+ <20101212061437.GA17185@burratino>
+ <4D049BA5.1060509@vilain.net>
+ <20101212171633.GB18847@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Wed Jan 05 22:13:25 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Tomas Carnecky <tom@dbservice.com>, git@vger.kernel.org,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	David Barr <david.barr@cordelta.com>,
+	Stephen Bash <bash@genarts.com>
+To: Sam Vilain <sam@vilain.net>
+X-From: git-owner@vger.kernel.org Wed Jan 05 22:21:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Paafc-00064D-Iz
-	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 22:13:24 +0100
+	id 1PaanC-0002Tz-GP
+	for gcvg-git-2@lo.gmane.org; Wed, 05 Jan 2011 22:21:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751798Ab1AEVNR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jan 2011 16:13:17 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:52959 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751296Ab1AEVNQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jan 2011 16:13:16 -0500
-Received: (qmail 1208 invoked by uid 111); 5 Jan 2011 21:13:15 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 05 Jan 2011 21:13:15 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 05 Jan 2011 16:13:14 -0500
+	id S1753063Ab1AEVVH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jan 2011 16:21:07 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:44627 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752937Ab1AEVVG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jan 2011 16:21:06 -0500
+Received: by qwa26 with SMTP id 26so16106367qwa.19
+        for <git@vger.kernel.org>; Wed, 05 Jan 2011 13:21:05 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=YljfEP9FWaDMyOgnRdabMDjkqBQHV2OJ3vwC1tB1AsU=;
+        b=UB2lGuLH1J2rZUcSxSsM3QTDiS50RvX8oP/gTEklnzYw4LHny+bCTfGAmy3qN8wV9a
+         Puou4tsvdpw96lNlypUVz/R/tF8F+8reJ1m6xPrL8csy+8w5wYbrV7BWXtLqdNIgELB1
+         o1NoliIZ/WKfi16rSG1qTU+ODpHRLB0V+H9vs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=hz9ArESDZCSqb1yjoPB5cv1PhaCJrod1ESC29N/GOpxdo7mbJwyB3HMpq3/YBTRZlU
+         WQolKTM9spDk9E+Dex/2NUPvWoSI/Uj9yoYN9q4oNHrSjJoYKaxRfUVkwn+CXXjd88Rz
+         dpQIelyRhWt+OzUao/lKiPKpEElv3KVDuEo0I=
+Received: by 10.224.2.143 with SMTP id 15mr22148204qaj.179.1294262464863;
+        Wed, 05 Jan 2011 13:21:04 -0800 (PST)
+Received: from burratino (adsl-69-209-72-219.dsl.chcgil.sbcglobal.net [69.209.72.219])
+        by mx.google.com with ESMTPS id q12sm13842023qcu.6.2011.01.05.13.21.01
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 05 Jan 2011 13:21:02 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20110105205324.GA7808@sigill.intra.peff.net>
+In-Reply-To: <20101212171633.GB18847@burratino>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164598>
 
-On Wed, Jan 05, 2011 at 03:53:25PM -0500, Jeff King wrote:
+Jonathan Nieder wrote:
+> Sam Vilain wrote:
 
-> > If both fetch processes try to update the same ref at the same time,
-> > one will get the lock and continue, and the other will crash with an
-> > error (because the lock was busy).  If one is slightly slower than the
-> > other, they will probably update the refs twice, with the slower fetch
-> > updating what the faster one had just updated.  :-)
-> 
-> I assumed it would take the "old" value at the very beginning of the
-> fetch (before talking with the remote), and then see that the ref was
-> changed under our feet. Or does it simply do it at the end?
+>> What happened to --report-fd ?
+>
+> The patch still works.  The main problem with report-fd is that it
+> introduced a synchronization point after every commit: the frontend
+> has to read the commit id before fast-import will continue.
 
-Hmm. Weirder even, builtin/fetch.c:s_update_ref takes a "check_old"
-flag, and we do always use it for branch updates. But not for tag
-updates. I can't think of why. The code blames all the way back to the
-original builtin-fetch.
+Correction: more precisely, that was and is the main problem with
+svn-fe's use of bidirectional communication.  An application like
+Tom's remote helper would probably not suffer so much from it, since
+commit ids are just queued up as long as the pipe doesn't fill before
+the frontend reads any.  It is transactions like
 
-Anyway, when we do check, we check the value from the beginning of the
-fetch. So you can get lock conflicts. For example, doing this:
+	FI>	r5 = 734987a9878b97c879c798a897c897ac
+	FE>	cat 734987a9878b97c879c798a897c897ac
+	FI>	734987a9878b97c879c798a897c897ac commit 448
+		tree 8d5bcf0f24bdfea1fdab8d39ba3c8ba91a52547c
+		parent 84279592b8b5816d00300ba5d4412adf05cc80d6
+		parent 3ca7353cab4ed6c7efac0c8d7477c87112fc7350
+		author Junio C Hamano <gitster@pobox.com> 1294187068 -0800
+		committer Junio C Hamano <gitster@pobox.com> 1294187068 -0800
 
-  mkdir repo && cd repo && git init
-  echo contents >foo && git add . && git commit -m one
-  git update-ref refs/remotes/origin/master refs/heads/master
-  git remote add origin some-remote-repo-that-takes-a-few-seconds
-  xterm -e 'git fetch -v; read' & xterm -e 'git fetch -v; read'
+		Merge branch 'sr/gitweb-hilite-more' into pu
 
-I.e., putting some cruft into the ref and then updating it. One fetch
-will force-write over the ref properly:
+		* sr/gitweb-hilite-more:
+		  gitweb: remove unnecessary test when closing file descriptor
+		  gitweb: add extensions to highlight feature map
 
-   + ac32203...4e64590 master     -> origin/master  (forced update)
+	FE>	cat 8d5bcf0f24bdfea1fdab8d39ba3c8ba91a52547c "main.c"
 
-but the other one will barf on the lock:
+(i.e., round-trips) that were and are creating overhead in svn-fe.
+See [1] if curious about details.
 
-  error: Ref refs/remotes/origin/master is at 4e6459052ab329914c7712a926773e566b8c821d but expected ac32203727daa3bcb5fc041786aa45adbbe86299
-  ...
-   ! ac32203...4e64590 master     -> origin/master  (unable to update local ref)
+So please don't be dissuaded by the nonsense I sent. :)
 
-Interestingly, in the case of ref _creation_, not update, like this:
-
-  mkdir repo && cd repo && git init
-  git remote add origin some-remote-repo-that-takes-a-few-seconds
-  xterm -e 'git fetch -v; read' & xterm -e 'git fetch -v; read'
-
-then both will happily update, the second one overwriting the results of
-the first. It seems in the case of locking a ref which previously didn't
-exist, we don't enforce that it still doesn't exist.
-
-I wonder if we should, but perhaps there is some corner case I am not
-considering. The code is in lock_ref_sha1_basic, but blaming didn't turn
-up anything helpful.
-
--Peff
+[1] http://colabti.org/irclogger/irclogger_log_search/git-devel?search=overhead&action=search
