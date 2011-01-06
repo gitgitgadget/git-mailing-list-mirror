@@ -1,118 +1,128 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: [PATCH v3] alias: use run_command api to execute aliases
-Date: Fri,  7 Jan 2011 00:00:38 +0100
-Message-ID: <1294354838-6336-1-git-send-email-kusmabite@gmail.com>
-Cc: msysgit@googlegroups.com, j6t@kdbg.org, jrnieder@gmail.com
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 07 00:01:03 2011
+From: Jeff King <peff@peff.net>
+Subject: Re: concurrent fetches to update same mirror
+Date: Thu, 6 Jan 2011 18:45:12 -0500
+Message-ID: <20110106234512.GA17231@sigill.intra.peff.net>
+References: <ig2kjt$f2u$1@dough.gmane.org>
+ <20110105204738.GA7629@sigill.intra.peff.net>
+ <AANLkTini61q+NtDr6oytTcfA6QNGN74L60exdLrNmakd@mail.gmail.com>
+ <20110105205324.GA7808@sigill.intra.peff.net>
+ <20110105211313.GB7808@sigill.intra.peff.net>
+ <7vbp3vc4k4.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 07 00:45:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaypJ-0000W7-6M
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 00:01:01 +0100
+	id 1PazWG-0004bK-Bh
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 00:45:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753977Ab1AFXAz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jan 2011 18:00:55 -0500
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:41465 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752484Ab1AFXAy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jan 2011 18:00:54 -0500
-Received: by ewy5 with SMTP id 5so7605222ewy.19
-        for <git@vger.kernel.org>; Thu, 06 Jan 2011 15:00:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer;
-        bh=ks6f6dDQ5CTGaoXfdUTAa8cqsXy0sRMrYN3dg710BiA=;
-        b=SCArXqrZjS6TbkJ8r/A2qT777MqKQBxNlW7AYCqKCzVzKy9zrm6381YW1uLxaEA2/G
-         as28osssBqwc0SpAyqet6H5zoGUf3ER5+uTDbbcuM31PHCAzgxDLlbMTIUWm7MAJzQ62
-         XBMz681JQU3QGcrCJgz79NMmv5TO6DOAFJq9Q=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=AYvLXFQQ4ccNz5C7gHbAoPJOQ/5xKmp4vMKeWvj+7SyLWtxpDfzhi3VU/jtPjJ4PTd
-         ro/AzdUM33Feg//rMi+71b+z/gAyeCwYwdqiMe5xjkm1GAxAwWXszhKvekum8z2w/D9U
-         c/AdmVFnhESHDGzYfu8bPXIgqQQY976WjivB0=
-Received: by 10.213.7.17 with SMTP id b17mr905673ebb.44.1294354853154;
-        Thu, 06 Jan 2011 15:00:53 -0800 (PST)
-Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
-        by mx.google.com with ESMTPS id t5sm1698072eeh.14.2011.01.06.15.00.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 06 Jan 2011 15:00:52 -0800 (PST)
-X-Mailer: git-send-email 1.7.3.3.585.g74f6e
+	id S1752317Ab1AFXpQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jan 2011 18:45:16 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:60164 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751699Ab1AFXpP (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jan 2011 18:45:15 -0500
+Received: (qmail 9993 invoked by uid 111); 6 Jan 2011 23:45:14 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 06 Jan 2011 23:45:14 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 06 Jan 2011 18:45:12 -0500
+Content-Disposition: inline
+In-Reply-To: <7vbp3vc4k4.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164686>
 
-On Windows, system() executes with cmd.exe instead of /bin/sh. This
-means that aliases currently has to be batch-scripts instead of
-bourne-scripts. On top of that, cmd.exe does not handle single quotes,
-which is what the code-path currently uses to handle arguments with
-spaces.
+On Wed, Jan 05, 2011 at 03:29:47PM -0800, Junio C Hamano wrote:
 
-To solve both problems in one go, use run_command_v_opt() to execute
-the alias. It already does the right thing prepend "sh -c " to the
-alias.
+> Jeff King <peff@peff.net> writes:
+> 
+> > Interestingly, in the case of ref _creation_, not update, like this:
+> >
+> >   mkdir repo && cd repo && git init
+> >   git remote add origin some-remote-repo-that-takes-a-few-seconds
+> >   xterm -e 'git fetch -v; read' & xterm -e 'git fetch -v; read'
+> >
+> > then both will happily update, the second one overwriting the results of
+> > the first. It seems in the case of locking a ref which previously didn't
+> > exist, we don't enforce that it still doesn't exist.
+> 
+> We probably should, especially when there is no --force or +prefix is
+> involved.
 
-Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
----
+Hmph. So I created the test below to try to exercise this, expecting to
+see at least one failure: according to the above example, we aren't
+actually checking "null sha1 means ref must not exist", so we should get
+an erroneous success for that case. And there is the added complication
+that the null sha1 may also mean "don't care what the old one was". So
+even if I changed the code, we would get erroneous failures the other
+way.
 
-Fixed the issues pointed out by Jonathan Nieder. For real this time.
-Also changed die to die_errno, as suggested by Johannes Sixt.
+But much to my surprise, it actually passes with stock git. Which means
+I need to dig a little further to see exactly what is going on.
 
- git.c |   34 +++++++++++++++++-----------------
- 1 files changed, 17 insertions(+), 17 deletions(-)
+Hooray for test-driven development, I guess? :)
 
-diff --git a/git.c b/git.c
-index 68334f6..23610aa 100644
---- a/git.c
-+++ b/git.c
-@@ -177,24 +177,24 @@ static int handle_alias(int *argcp, const char ***argv)
- 	alias_string = alias_lookup(alias_command);
- 	if (alias_string) {
- 		if (alias_string[0] == '!') {
-+			const char **alias_argv;
-+			int argc = *argcp, i;
+diff --git a/t/t1403-concurrent-refs.sh b/t/t1403-concurrent-refs.sh
+new file mode 100755
+index 0000000..7fb4424
+--- /dev/null
++++ b/t/t1403-concurrent-refs.sh
+@@ -0,0 +1,49 @@
++#!/bin/sh
 +
- 			commit_pager_choice();
--			if (*argcp > 1) {
--				struct strbuf buf;
--
--				strbuf_init(&buf, PATH_MAX);
--				strbuf_addstr(&buf, alias_string);
--				sq_quote_argv(&buf, (*argv) + 1, PATH_MAX);
--				free(alias_string);
--				alias_string = buf.buf;
--			}
--			trace_printf("trace: alias to shell cmd: %s => %s\n",
--				     alias_command, alias_string + 1);
--			ret = system(alias_string + 1);
--			if (ret >= 0 && WIFEXITED(ret) &&
--			    WEXITSTATUS(ret) != 127)
--				exit(WEXITSTATUS(ret));
--			die("Failed to run '%s' when expanding alias '%s'",
--			    alias_string + 1, alias_command);
++test_description='test behavior of concurrent ref updates'
++. ./test-lib.sh
 +
-+			/* build alias_argv */
-+			alias_argv = xmalloc(sizeof(*alias_argv) * (argc + 1));
-+			alias_argv[0] = alias_string + 1;
-+			for (i = 1; i < argc; ++i)
-+				alias_argv[i] = (*argv)[i];
-+			alias_argv[argc] = NULL;
++ref=refs/heads/foo
++null=0000000000000000000000000000000000000000
 +
-+			ret = run_command_v_opt(alias_argv, RUN_USING_SHELL);
-+			if (ret >= 0)   /* normal exit */
-+				exit(ret);
++check_ref() {
++	echo $2 >expect &&
++	git rev-parse --verify $1 >actual &&
++	test_cmp expect actual
++}
 +
-+			die_errno("While expanding alias '%s': '%s'",
-+			    alias_command, alias_string + 1);
- 		}
- 		count = split_cmdline(alias_string, &new_argv);
- 		if (count < 0)
--- 
-1.7.3.3.585.g74f6e
++test_expect_success setup '
++	for name in A B C; do
++		test_tick &&
++		T=$(git write-tree) &&
++		sha1=$(echo $name | git commit-tree $T) &&
++		eval $name=$sha1
++	done
++'
++
++test_expect_success '(create ref, expecting non-null sha1) should fail' '
++	test_must_fail git update-ref $ref $A $C &&
++	test_must_fail git rev-parse --verify $ref
++'
++
++test_expect_success '(create ref, expecting null sha1) should work' '
++	git update-ref $ref $A $null &&
++	check_ref $ref $A
++'
++
++test_expect_success '(update ref, expecting null sha1) should fail' '
++	test_must_fail git update-ref $ref $B $null &&
++	check_ref $ref $A
++'
++
++test_expect_success '(update ref, expecting wrong sha1) should fail' '
++	test_must_fail git update-ref $ref $B $C &&
++	check_ref $ref $A
++'
++
++test_expect_success '(update ref, expecting current sha1) should work' '
++	git update-ref $ref $B $A &&
++	check_ref $ref $B
++'
++
++test_done
