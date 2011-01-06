@@ -1,157 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH 2/3] diffcore-rename: record filepair for rename src
-Date: Thu,  6 Jan 2011 13:50:05 -0800
-Message-ID: <1294350606-19530-3-git-send-email-gitster@pobox.com>
-References: <1294350606-19530-1-git-send-email-gitster@pobox.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 06 22:50:44 2011
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: Concurrent pushes updating the same ref
+Date: Thu, 06 Jan 2011 16:51:53 -0500
+Message-ID: <4D263979.1080403@xiplink.com>
+References: <4D25E3DE.7050801@xiplink.com> <20110106163035.GA7812@sigill.intra.peff.net> <7v1v4pbz6y.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 06 22:52:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PaxjF-0005g3-SE
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 22:50:42 +0100
+	id 1Paxkk-0006bs-Sk
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 22:52:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753944Ab1AFVuc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jan 2011 16:50:32 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46425 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753768Ab1AFVuP (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jan 2011 16:50:15 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 80E613157
-	for <git@vger.kernel.org>; Thu,  6 Jan 2011 16:50:52 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=from:to
-	:subject:date:message-id:in-reply-to:references; s=sasl; bh=Ctve
-	z4BOS1ILpd0aaV3+ZAquWCk=; b=rcqmz8VfWKFc1whNTjIl+I1mCUcf4KTD3+3z
-	2ADyxEJbC0BotqdPAer8LFLY0HmOJgTnI0msKZ6m2zbdu+0bSAuebnVcaOB+5cnS
-	dtRm3p7lL3hdHJfOTwwuG1hZP36/ZkBESSFjDcWU2Csc1yrTEwybKLLNkAequEei
-	3TwT1/E=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=from:to:subject
-	:date:message-id:in-reply-to:references; q=dns; s=sasl; b=CQU5bZ
-	RQqjvKE15NBB+Ce7noPq9KOfT7nhUJnIdKzwZAKPuZSB+2Q7JGS27KZZNYD6pJFq
-	lVOBpREKc9rovT49QBwO1FMA6s0QyMTTGFwvc9DR/QNYXE4dyStPWs19FUQqR3pc
-	p51UbBHST1V7sh8cDiQOZdwksKONfZXHBWc6E=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7E5383155
-	for <git@vger.kernel.org>; Thu,  6 Jan 2011 16:50:52 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B8B6A3154 for
- <git@vger.kernel.org>; Thu,  6 Jan 2011 16:50:51 -0500 (EST)
-X-Mailer: git-send-email 1.7.4.rc1.214.g2a4f9
-In-Reply-To: <1294350606-19530-1-git-send-email-gitster@pobox.com>
-X-Pobox-Relay-ID: 08102D8A-19DF-11E0-B2BC-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
+	id S1752729Ab1AFVwJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jan 2011 16:52:09 -0500
+Received: from smtp132.iad.emailsrvr.com ([207.97.245.132]:44027 "EHLO
+	smtp132.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751087Ab1AFVwI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jan 2011 16:52:08 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp43.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id C60BD2D0622;
+	Thu,  6 Jan 2011 16:52:07 -0500 (EST)
+X-Virus-Scanned: OK
+Received: by smtp43.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 835662D06D6;
+	Thu,  6 Jan 2011 16:52:07 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
+In-Reply-To: <7v1v4pbz6y.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164680>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164681>
 
-This will allow us to later skip unmodified entries added due to "-C -C".
-We might also want to do something similar to rename_dst side, but that
-would only be for the sake of symmetry and not necessary for this series.
+On 11-01-06 02:37 PM, Junio C Hamano wrote:
+> Jeff King <peff@peff.net> writes:
+> 
+>> On Thu, Jan 06, 2011 at 10:46:38AM -0500, Marc Branchaud wrote:
+>>
+>>> fatal: Unable to create
+>>> '/usr/xiplink/git/public/Main.git/refs/builds/3.3.0-3.lock': File exists.
+>>> If no other git process is currently running, this probably means a
+>>> git process crashed in this repository earlier. Make sure no other git
+>>> process is running and remove the file manually to continue.
+>>> fatal: The remote end hung up unexpectedly
+>>>
+>>> I think the cause is pretty obvious, and in a normal interactive situation
+>>> the solution would be to simply try again.  But in a script trying again
+>>> isn't so straightforward.
+>>>
+>>> So I'm wondering if there's any sense or desire to make git a little more
+>>> flexible here.  Maybe teach it to wait and try again once or twice when it
+>>> sees a lock file.  I presume that normally a ref lock file should disappear
+>>> pretty quickly, so there shouldn't be a need to wait very long.
+>>
+>> Yeah, we probably should try again. The simplest possible (and untested)
+>> patch is below. However, a few caveats:
+>>
+>>   1. This patch unconditionally retries for all lock files. Do all
+>>      callers want that?
+> 
+> I actually have to say that _no_ caller should want this.  If somebody
+> earlier crashed, we would want to know about it (and how).  If somebody
+> else alive is actively holding a lock, why not make it the responsibility
+> of a calling script to decide if it wants to retry itself or perhaps
+> decide to do something else?
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- diffcore-rename.c |   23 ++++++++++++-----------
- 1 files changed, 12 insertions(+), 11 deletions(-)
+I'm not sure I follow this.
 
-diff --git a/diffcore-rename.c b/diffcore-rename.c
-index 6ab050d..9ce81b6 100644
---- a/diffcore-rename.c
-+++ b/diffcore-rename.c
-@@ -54,22 +54,23 @@ static struct diff_rename_dst *locate_rename_dst(struct diff_filespec *two,
- 
- /* Table of rename/copy src files */
- static struct diff_rename_src {
--	struct diff_filespec *one;
-+	struct diff_filepair *p;
- 	unsigned short score; /* to remember the break score */
- } *rename_src;
- static int rename_src_nr, rename_src_alloc;
- 
--static struct diff_rename_src *register_rename_src(struct diff_filespec *one,
--						   unsigned short score)
-+static struct diff_rename_src *register_rename_src(struct diff_filepair *p)
- {
- 	int first, last;
-+	struct diff_filespec *one = p->one;
-+	unsigned short score = p->score;
- 
- 	first = 0;
- 	last = rename_src_nr;
- 	while (last > first) {
- 		int next = (last + first) >> 1;
- 		struct diff_rename_src *src = &(rename_src[next]);
--		int cmp = strcmp(one->path, src->one->path);
-+		int cmp = strcmp(one->path, src->p->one->path);
- 		if (!cmp)
- 			return src;
- 		if (cmp < 0) {
-@@ -89,7 +90,7 @@ static struct diff_rename_src *register_rename_src(struct diff_filespec *one,
- 	if (first < rename_src_nr)
- 		memmove(rename_src + first + 1, rename_src + first,
- 			(rename_src_nr - first - 1) * sizeof(*rename_src));
--	rename_src[first].one = one;
-+	rename_src[first].p = p;
- 	rename_src[first].score = score;
- 	return &(rename_src[first]);
- }
-@@ -204,7 +205,7 @@ static void record_rename_pair(int dst_index, int src_index, int score)
- 	if (rename_dst[dst_index].pair)
- 		die("internal error: dst already matched.");
- 
--	src = rename_src[src_index].one;
-+	src = rename_src[src_index].p->one;
- 	src->rename_used++;
- 	src->count++;
- 
-@@ -384,7 +385,7 @@ static int find_exact_renames(void)
- 
- 	init_hash(&file_table);
- 	for (i = 0; i < rename_src_nr; i++)
--		insert_file_table(&file_table, -1, i, rename_src[i].one);
-+		insert_file_table(&file_table, -1, i, rename_src[i].p->one);
- 
- 	for (i = 0; i < rename_dst_nr; i++)
- 		insert_file_table(&file_table, 1, i, rename_dst[i].two);
-@@ -472,7 +473,7 @@ void diffcore_rename(struct diff_options *options)
- 			 */
- 			if (p->broken_pair && !p->score)
- 				p->one->rename_used++;
--			register_rename_src(p->one, p->score);
-+			register_rename_src(p);
- 		}
- 		else if (detect_rename == DIFF_DETECT_COPY) {
- 			/*
-@@ -480,7 +481,7 @@ void diffcore_rename(struct diff_options *options)
- 			 * one, to indicate ourselves as a user.
- 			 */
- 			p->one->rename_used++;
--			register_rename_src(p->one, p->score);
-+			register_rename_src(p);
- 		}
- 	}
- 	if (rename_dst_nr == 0 || rename_src_nr == 0)
-@@ -526,7 +527,7 @@ void diffcore_rename(struct diff_options *options)
- 			m[j].dst = -1;
- 
- 		for (j = 0; j < rename_src_nr; j++) {
--			struct diff_filespec *one = rename_src[j].one;
-+			struct diff_filespec *one = rename_src[j].p->one;
- 			struct diff_score this_src;
- 			this_src.score = estimate_similarity(one, two,
- 							     minimum_score);
-@@ -556,7 +557,7 @@ void diffcore_rename(struct diff_options *options)
- 		dst = &rename_dst[mx[i].dst];
- 		if (dst->pair)
- 			continue; /* already done, either exact or fuzzy. */
--		if (rename_src[mx[i].src].one->rename_used)
-+		if (rename_src[mx[i].src].p->one->rename_used)
- 			continue;
- 		record_rename_pair(mx[i].dst, mx[i].src, mx[i].score);
- 		rename_count++;
--- 
-1.7.4.rc1.214.g2a4f9
+How would retrying a few times prevent us from finding out about an earlier
+crash?  It's not like we're overriding the lock by retrying.  Nobody's going
+to be able to remove a lock created by a crashed process, right?
+
+And if someone active doesn't release the lock and the low-level code retried
+a few times, the caller can still decide what to do.  I don't see how it
+would even impact that decision -- if the caller wants to try again, the
+system can still retry a few times underneath the caller's one retry.  It
+seems fine to me.
+
+		M.
