@@ -1,210 +1,131 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.4-rc1
-Date: Wed, 05 Jan 2011 16:54:14 -0800
-Message-ID: <7vtyhmc0nd.fsf@alter.siamese.dyndns.org>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Resumable clone/Gittorrent (again)
+Date: Thu, 6 Jan 2011 08:32:12 +0700
+Message-ID: <AANLkTi=_R53fm5Er0CdtZCFvDpE-Dqt8tMHAubcjOUBb@mail.gmail.com>
+References: <AANLkTinUV9Z_w85Gz13J+bm8xqnxJ9jBJXJm9bn5Y2ec@mail.gmail.com> <loom.20110105T222915-261@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 06 01:54:41 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Maaartin <grajcar1@seznam.cz>
+X-From: git-owner@vger.kernel.org Thu Jan 06 02:32:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pae7k-0004tm-Ve
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 01:54:41 +0100
+	id 1Paeii-0005Yr-3u
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 02:32:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754210Ab1AFAy1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 5 Jan 2011 19:54:27 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42823 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754128Ab1AFAyY (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 5 Jan 2011 19:54:24 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 02F4238B9;
-	Wed,  5 Jan 2011 19:55:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=vwpL
-	k2bdLTccCMC34iEtkEXNtjI=; b=W9Pbc4CcE9e7vm9/5aZN6hgQyNbRL7LW5HRD
-	j7bUkANKGZgyQDftuqhYGCy3w6npVdG7a6b9jjOAPm6QejFETb6V+nkog48uMgbC
-	sBY1inoktqtkb7SvvO4/9ejuFUUq4QOJu02JQCXLwW6knJFca0haioVEigycMzn9
-	mH0q1yA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=wxP
-	LELIvgYlWst24g3fmuXq5NNJ3V21ZKMNThskmLICIJJQwnObBvyQVpbCPw51PrG4
-	zVF7me+9VZZ5vRlTLqbU1Pp75DDB/mXnUXBFppHkdZj+VcezRrgxLn0e02ye3nqy
-	a35Lt7GWLVYYqXULEVyQzF3aFNOkGe+LjbGv+v7w=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BDC9038B8;
-	Wed,  5 Jan 2011 19:54:57 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4AC1C38B4; Wed,  5 Jan 2011
- 19:54:53 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9522EDBC-192F-11E0-A09F-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
+	id S1753421Ab1AFBco (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jan 2011 20:32:44 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:46493 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753231Ab1AFBcn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jan 2011 20:32:43 -0500
+Received: by wyb28 with SMTP id 28so15958569wyb.19
+        for <git@vger.kernel.org>; Wed, 05 Jan 2011 17:32:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type;
+        bh=PLrRbIc2sA0JUjgoryIGHbJ1xXgQ9C73E08AONAJONM=;
+        b=Fb8fVDlwQ6z7ugvYNUZvJpwGdYDpE5tAtKSHkw2NuXnmuO/PpgGPI+rY3dqMx3NHUM
+         j1FNngEB98Ggp7laLVcJbhtSdiDgjtasUZm6wDDKerKvDJXSRacQmkS2ivMJt+zjX4SR
+         4+jUB/4h1xgM7uq1r3ZKHFUyrU57Yrk7+OsFk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=B3znAv+HZi+lrZEfNQwIc3j5Dqe9Is3oBZlgsmN20zZgNhTg0eDQzuxW4UclZLkaKp
+         GaHVrrC/zGb5pLf9U49nQUa2GrmRyi1ObhSQSb3o2FmAlT72T7JUSQe9GIyIRhaiFLNf
+         Q1BqFduDNjcn+O4rB+an1EEbeXpJTt+YV/fro=
+Received: by 10.216.24.134 with SMTP id x6mr134452wex.34.1294277562524; Wed,
+ 05 Jan 2011 17:32:42 -0800 (PST)
+Received: by 10.216.63.14 with HTTP; Wed, 5 Jan 2011 17:32:12 -0800 (PST)
+In-Reply-To: <loom.20110105T222915-261@post.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164617>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164618>
 
-A release candidate Git 1.7.4-rc1 is available at the usual places
-for testing:
+On Thu, Jan 6, 2011 at 6:28 AM, Maaartin <grajcar1@seznam.cz> wrote:
+> Nguyen Thai Ngoc Duy <pclouds <at> gmail.com> writes:
+>
+>> I've been analyzing bittorrent protocol and come up with this. The
+>> last idea about a similar thing [1], gittorrent, was given by Nicolas.
+>> This keeps close to that idea (i.e the transfer protocol must be around git
+>> objects, not file chunks) with a bit difference.
+>>
+>> The idea is to transfer a chain of objects (trees or blobs), including
+>> base object and delta chain. Objects are chained in according to
+>> worktree layout, e.g. all objects of path/to/any/blob will form a
+>> chain, from a commit tip down to the root commits. Chains can have
+>> gaps, and don't need to start from commit tip. The transfer is
+>> resumable because if a delta chain is corrupt at some point, we can
+>> just request another chain from where it stops. Base object is
+>> obviously resumable.
+>
+> I may be talking nonsense, please bare with me.
+>
+> I'm not sure if it works well, since chains defined this way change over time.
+> I may request commits A and B while declaring to possess commits C and D. One
+> server may be ahead of A, so should it send me more data or repack the chain so
+> that the non-requested versions get excluded? At the same time the server may
+> be missing B and posses only some ancestors of it. Should it send me only a
+> part of the chain or should I better ask a different server?
 
-  http://www.kernel.org/pub/software/scm/git/
+I'll keep it simple. A chain is defined by one commit head. Such a
+chain can't change over time. But you can ask for just part of the
+chain, rev-list syntax can be used here. For example if you already
+have commits C and D and 10 delta in the chain (linear history for
+simplicity here), requesting "give me A~10 ^C ^D" should give required
+commits.
 
-  git-1.7.4.rc1.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.7.4.rc1.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.7.4.rc1.tar.{gz,bz2}		(preformatted docs)
+> Moreover, in case a directory gets renamed, the content may get transfered
+> needlessly. This is probably no big problem.
 
-The RPM binary packages for a few architectures are found in:
+Yes, the chain constraint can backfire in these cases. We can mix
+standard upload-pack/fetch-pack and this if the server can recognize
+these cases, by cutting commit history into chunks. The dir rename
+chunks can be fetched with git-fetch.
 
-  testing/git-*-1.7.4.rc1-1.fc13.$arch.rpm	(RPM)
+> I haven't read the whole other thread yet, but what about going the other way
+> round? Use a single commit as a chain, create deltas assuming that all
+> ancestors are already available. The packs may arrive out of order, so the
+> decompression may have to wait. The number of commits may be one order of
+> magnitude larger than the the number of paths (there are currently 2254 paths
+> and 24235 commits in git.git), so grouping consequent commits into one larger
+> pack may be useful.
 
+The number of commits can increase fast. I'd rather have a
+small/stable number over time. And commits depend on other commits so
+you can't verify a commit until you have got all of its parents. That
+does apply to file, but then this file chain does not interfere other
+file chains.
 
-Git v1.7.4 Release Notes (draft)
-================================
+> The advantage is that the packs stays stable over time, you may create them
+> using the most aggressive and time-consuming settings and store them forever.
+> You could create packs for single commits, packs for non-overlapping
+> consecutive pairs of them, for non-overlapping pairs of pairs, etc. I mean with
+> commits numbered 0, 1, 2, ... create packs [0,1], [2,3], ..., [0,3], [4,7],
+> etc. The reason for this is obviously to allow reading groups of commits from
+> different servers so that they fit together (similar to Buddy memory
+> allocation). Of course, there are things like branches bringing chaos in this
+> simple scheme, but I'm sure this can be solved somehow.
 
-Updates since v1.7.3
---------------------
+Pack encoding can change. And packs can contain objects you don't want
+to share (i.e. hidden from public view).
 
- * The documentation Makefile now assumes by default asciidoc 8 and
-   docbook-xsl >= 1.73. If you have older versions, you can set
-   ASCIIDOC7 and ASCIIDOC_ROFF, respectively.
+> Another problem is the client requesting commits A and B while declaring to
+> possess commits C and D. When both C and D are ancestors of either A or B, you
+> can ignore it (as you assume this while packing, anyway). The other case is
+> less probable, unless e.g. C is the master and A is a developing branch.
+> Currently. I've no idea how to optimize this and whether this could be
+> important.
 
- * The option parsers of various commands that create new branches (or
-   rename existing ones to a new name) were too loose and users were
-   allowed to give a branch a name that begins with a dash by creative
-   abuse of their command line options, which only led to burning
-   themselves.  The name of a branch cannot begin with a dash now.
-
- * System-wide fallback default attributes can be stored in
-   /etc/gitattributes; core.attributesfile configuration variable can
-   be used to customize the path to this file.
-
- * The thread structure generated by "git send-email" has changed
-   slightly.  Setting the cover letter of the latest series as a reply
-   to the cover letter of the previous series with --in-reply-to used
-   to make the new cover letter and all the patches replies to the
-   cover letter of the previous series; this has been changed to make
-   the patches in the new series replies to the new cover letter.
-
- * Bash completion script in contrib/ has been adjusted to be usable with
-   Bash 4 (options with '=value' didn't complete)  It has been also made
-   usable with zsh.
-
- * Different pagers can be chosen depending on which subcommand is
-   being run under the pager, using "pager.<subcommand>" variable.
-
- * The hardcoded tab-width of 8 used in whitespace breakage checks is now
-   configurable via the attributes mechanism.
-
- * Support of case insensitive filesystems (i.e. "core.ignorecase") has
-   been improved.  For example, the gitignore mechanism didn't pay attention
-   to the case insensitivity.
-
- * The <tree>:<path> syntax to name a blob in a tree, and :<path>
-   syntax to name a blob in the index (e.g. "master:Makefile",
-   ":hello.c") have been extended.  You can start <path> with "./" to
-   implicitly have the (sub)directory you are in prefixed to the
-   lookup.  Similarly, ":../Makefile" from a subdirectory would mean
-   "the Makefile of the parent directory in the index".
-
- * "git blame" learned --show-email option to display the e-mail
-   addresses instead of the names of authors.
-
- * "git commit" learned --fixup and --squash options to help later invocation
-   of the interactive rebase.
-
- * Command line options to "git cvsimport" whose names are in capital
-   letters (-A, -M, -R and -S) can now be specified as the default in
-   the .git/config file by their longer names (cvsimport.authorsFile,
-   cvsimport.mergeRegex, cvsimport.trackRevisions, cvsimport.ignorePaths).
-
- * "git daemon" can be built in MinGW environment.
-
- * "git daemon" can take more than one --listen option to listen to
-   multiple addresses.
-
- * "git describe --exact-match" was optimized not to read commit
-   objects unnecessarily.
-
- * "git diff" and "git grep" learned how functions and subroutines
-   in Fortran look like.
-
- * "git fetch" learned "--recurse-submodules" option.
-
- * "git mergetool" tells vim/gvim to show three-way diff by default
-   (use vimdiff2/gvimdiff2 as the tool name for old behaviour).
-
- * "git log -G<pattern>" limits the output to commits whose change has
-   added or deleted lines that match the given pattern.
-
- * "git read-tree" with no argument as a way to empty the index is
-   deprecated; we might want to remove it in the future.  Users can
-   use the new --empty option to be more explicit instead.
-
- * "git repack -f" does not spend cycles to recompress objects in the
-   non-delta representation anymore (use -F if you really mean it
-   e.g. after you changed the core.compression variable setting).
-
- * "git merge --log" used to limit the resulting merge log to 20
-   entries; this is now customizable by giving e.g. "--log=47".
-
- * "git merge" may work better when all files were moved out of a
-   directory in one branch while a new file is created in place of that
-   directory in the other branch.
-
- * "git rebase --autosquash" can use SHA-1 object names to name which
-   commit to fix up (e.g. "fixup! e83c5163").
-
- * The default "recursive" merge strategy learned --rename-threshold
-   option to influence the rename detection, similar to the -M option
-   of "git diff".  From "git merge" frontend, "-X<strategy option>"
-   interface, e.g. "git merge -Xrename-threshold=50% ...", can be used
-   to trigger this.
-
- * The "recursive" strategy also learned to ignore various whitespace
-   changes; the most notable is -Xignore-space-at-eol.
-
- * "git send-email" learned "--to-cmd", similar to "--cc-cmd", to read
-   recipient list from a command output.
-
- * "git send-email" learned to read and use "To:" from its input files.
-
- * you can extend "git shell", which is often used on boxes that allow
-   git-only login over ssh as login shell, with custom set of
-   commands.
-
- * The current branch name in "git status" output can be colored differently
-   from the generic header color by setting "color.status.branch" variable.
-
- * "git submodule sync" updates metainformation for all submodules,
-   not just the ones that have been checked out.
-
- * gitweb can use custom 'highlight' command with its configuration file.
-
- * other gitweb updates.
-
-
-Also contains various documentation updates.
-
-
-Fixes since v1.7.3
-------------------
-
-All of the fixes in v1.7.3.X maintenance series are included in this
-release, unless otherwise noted.
-
- * "git log --author=me --author=her" did not find commits written by
-   me or by her; instead it looked for commits written by me and by
-   her, which is impossible.
-
- * "git push --progress" shows progress indicators now.
-
- * "git repack" places its temporary packs under $GIT_OBJECT_DIRECTORY/pack
-   instead of $GIT_OBJECT_DIRECTORY/ to avoid cross directory renames.
-
- * "git submodule update --recursive --other-flags" passes flags down
-   to its subinvocations.
+As I said, we can request just part of a chain (from A+B to C+D).
+git-fetch should be used if the repo is quite uptodate though. It's
+just more efficient.
+-- 
+Duy
