@@ -1,65 +1,133 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: git mergetool broken when rerere active
-Date: Thu, 6 Jan 2011 14:51:34 -0500
-Message-ID: <AANLkTimOzwaw6VN+NPfCJPH9t0G64r=WrffNpfHQ0h-F@mail.gmail.com>
-References: <alpine.DEB.1.10.1101052119530.26654@debian>
-	<7vbp3tc142.fsf@alter.siamese.dyndns.org>
-	<7v62u1bzeg.fsf@alter.siamese.dyndns.org>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH/RFC] alias: use run_command api to execute aliases
+Date: Thu, 6 Jan 2011 20:52:04 +0100
+Message-ID: <AANLkTiniRYH2jz69vhuSCzPMmAg4KQ5nowd7NqrmMYVw@mail.gmail.com>
+References: <1294341187-3956-1-git-send-email-kusmabite@gmail.com> <20110106194101.GA14750@burratino>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Magnus Baeck <magnus.back@sonyericsson.com>,
-	Avery Pennarun <apenwarr@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	David Aguilar <davvid@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 06 20:51:42 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, msysgit@googlegroups.com, j6t@kdbg.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 06 20:52:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pavs5-000692-AZ
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 20:51:41 +0100
+	id 1Pavss-0006dp-MS
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 20:52:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752644Ab1AFTvg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jan 2011 14:51:36 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:52539 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752250Ab1AFTvf (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jan 2011 14:51:35 -0500
-Received: by eye27 with SMTP id 27so7376944eye.19
-        for <git@vger.kernel.org>; Thu, 06 Jan 2011 11:51:34 -0800 (PST)
+	id S1752704Ab1AFTw0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Jan 2011 14:52:26 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:36640 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752407Ab1AFTwZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Jan 2011 14:52:25 -0500
+Received: by fxm20 with SMTP id 20so16343989fxm.19
+        for <git@vger.kernel.org>; Thu, 06 Jan 2011 11:52:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=H4EJIAGDbwnN4wNclcbX+RP6EqcX7Uv65AzdrDPr0VE=;
-        b=qt/7zodLUicpFIK9lbkwJMcuv/WQW5Ay+JsXgi3VKe6h4DvtGDwr/Kh63MaErXmXP+
-         gTLLWWQIDWLsu6QRQdtcW2aPLgO1/skntff+DNeXM2yeuUmPyXy+IhC11C2AJcKGhu7J
-         QCICShimIv97LZdYW3OvlYBP7evcRmyU+Fm7w=
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=xYgyCghpg6kCv5wiUpCT9moXK53C7XUCNWHSWd+dLoM=;
+        b=GTkAlcEnwRiagEMeS4D30rA3+Wf9LJpEg/2KrW0XX5uQkbomQBQYek63yaS/ld32BZ
+         I5s2UI223gieuy4w6S50FliVWz9XcbislZxBHjFEm9vldu/cbA4Ev8WW+Kk2f1B2mfsl
+         YQtj5E7ErTNzNJJl09Enlcg8LJfTLC3H3lR88=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=PLV0EzNlm4d1HbHxqRMYvSJbAVjuDfN5EFiM0Y9Wt/xTJkXVn3lH10Bm9N4N+25IB6
-         b8ho7pjLAq9OItjPBU18tRzlNWJv9mbbEApF7O/SLyrYIWvJvWWiQcXvWIcSuF5OV47C
-         OFdf7tGdCfufcncZXPt03/RnQZtt/5F2V6B84=
-Received: by 10.213.19.84 with SMTP id z20mr753082eba.80.1294343494240; Thu,
- 06 Jan 2011 11:51:34 -0800 (PST)
-Received: by 10.14.124.197 with HTTP; Thu, 6 Jan 2011 11:51:34 -0800 (PST)
-In-Reply-To: <7v62u1bzeg.fsf@alter.siamese.dyndns.org>
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=re59pUd7+qSH96vD1pxOYIsOuruYDDI6XzxCKH/wTuc2jutSpNvm8XSRzs6CjihAP5
+         vpN2xFJD4qlkVgzCRL2fCjOVEtSu6mOUmPJZOoJPyrIPK6VAdjkDuHG1iyK+lQRT/+6H
+         UUBXpXkGYxFl7hBs8z/9q43ar/IPfAVI4r0eA=
+Received: by 10.223.118.136 with SMTP id v8mr7622102faq.90.1294343544273; Thu,
+ 06 Jan 2011 11:52:24 -0800 (PST)
+Received: by 10.223.79.3 with HTTP; Thu, 6 Jan 2011 11:52:04 -0800 (PST)
+In-Reply-To: <20110106194101.GA14750@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164661>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164662>
 
-On Thu, Jan 6, 2011 at 2:33 PM, Junio C Hamano <gitster@pobox.com> wrote:
-> Junio C Hamano <gitster@pobox.com> writes:
+On Thu, Jan 6, 2011 at 8:41 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
+ote:
+> Erik Faye-Lund wrote:
 >
->> Probably we would need a "git rerere remaining" sobcommand that is similar
->> to status but also includes the "punted" paths.
+>> --- a/git.c
+>> +++ b/git.c
+>> @@ -177,19 +177,20 @@ static int handle_alias(int *argcp, const char=
+ ***argv)
+> [...]
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 trace_printf("trace: alias=
+ to shell cmd: %s =3D> %s\n",
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+alias_command, alias_string + 1);
 >
-> ... which may look like this.
+> Replaced by
+>
+> =A0 =A0 =A0 =A0trace: run_command: ...
+>
+> (followed by "trace: exec: ..." on non-Windows (execv_shell_cmd)).
+> Ok.
+>
+>> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ret =3D system(alias_strin=
+g + 1);
+>> +
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* build alias_argv */
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 alias_argv =3D malloc(size=
+of(char *) * *argcp + 1);
+>
+> This seems to be missing parentheses, so valgrind will complain
+> except on 8-bit systems. ;-)
+>
+> What if malloc fails?
+>
 
-Thanks! Will have a look at this tonight when I get home.
+2x whoops :)
+
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 alias_argv[0] =3D alias_st=
+ring + 1;
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 for (i =3D 1; i < *argcp; =
+++i)
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 alias_argv=
+[i] =3D (*argv)[i];
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 alias_argv[*argcp] =3D NUL=
+L;
+>
+> Nit: all these *argcp are noisy.
+>
+
+Yes. Fetching argc once is cleaner, thanks.
+
+>> +
+>> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 ret =3D run_command_v_opt(=
+alias_argv, RUN_USING_SHELL);
+>> +
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (ret >=3D 0 && WIFEXI=
+TED(ret) &&
+>
+> The return value from run_command and from system do not mean
+> the same thing.
+>
+
+Yet another "whoops" :)
+
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 die("Failed to run '%s' =
+when expanding alias '%s'",
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 alias_string + 1=
+, alias_command);
+>
+> run_command already prints an error message, but this one still
+> seems useful since it mentions the alias.
+>
+> Except as noted above,
+> Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+>
+
+Thanks, I agree with all your comments. But why did you remove the "/*
+build alias_argv */"-comment? :)
+
+v2 coming up!
