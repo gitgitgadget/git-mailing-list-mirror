@@ -1,72 +1,66 @@
-From: Phillip Susi <psusi@cfl.rr.com>
-Subject: log -p hides changes in merge commit
-Date: Thu, 06 Jan 2011 12:07:10 -0500
-Message-ID: <4D25F6BE.7010300@cfl.rr.com>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Resumable clone/Gittorrent (again) - stable packs?
+Date: Thu, 6 Jan 2011 09:05:00 -0800
+Message-ID: <AANLkTinc12H01Us1mkKieZo75hwjgTCZth_wFvRNscMq@mail.gmail.com>
+References: <AANLkTikv+L5Da7A5VM7BAgnue=m0O_-nHmHchJzfGxJa@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 06 18:02:38 2011
+Cc: git@vger.kernel.org
+To: Zenaan Harkness <zen@freedbms.net>
+X-From: git-owner@vger.kernel.org Thu Jan 06 18:05:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PatET-0005pL-F3
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 18:02:37 +0100
+	id 1PatHD-0007UF-Au
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 18:05:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753889Ab1AFRCb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jan 2011 12:02:31 -0500
-Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:33967 "EHLO
-	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753633Ab1AFRCa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jan 2011 12:02:30 -0500
-Authentication-Results: cdptpa-omtalb.mail.rr.com smtp.user=psusi@cfl.rr.com; auth=pass (PLAIN)
-X-Authority-Analysis: v=1.1 cv=Inhw+Jdt7z1D3BivGPfn2aw54OvUEJw5lAn/booRZkE= c=1 sm=0 a=qjtE1AqrqaAA:10 a=8nJEP1OIZ-IA:10 a=pg4Dpxby4z7sZisWVyJ9NA==:17 a=SCNhSqmx-buy6JJbC8sA:9 a=uEXf4jpHdigjlRENOuAA:7 a=TihdqA9JT9YPJWJrG3BaIl50cOcA:4 a=wPNLvfGTeEIA:10 a=pg4Dpxby4z7sZisWVyJ9NA==:117
-X-Cloudmark-Score: 0
-X-Originating-IP: 72.242.190.170
-Received: from [72.242.190.170] ([72.242.190.170:2768] helo=[10.1.1.235])
-	by cdptpa-oedge04.mail.rr.com (envelope-from <psusi@cfl.rr.com>)
-	(ecelerity 2.2.3.46 r()) with ESMTPA
-	id 10/85-13137-4A5F52D4; Thu, 06 Jan 2011 17:02:29 +0000
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-X-Enigmail-Version: 1.1.1
+	id S1753960Ab1AFRFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jan 2011 12:05:23 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:52264 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753633Ab1AFRFV (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jan 2011 12:05:21 -0500
+Received: by iwn9 with SMTP id 9so16448263iwn.19
+        for <git@vger.kernel.org>; Thu, 06 Jan 2011 09:05:20 -0800 (PST)
+Received: by 10.231.199.77 with SMTP id er13mr8669478ibb.44.1294333520671;
+ Thu, 06 Jan 2011 09:05:20 -0800 (PST)
+Received: by 10.231.168.3 with HTTP; Thu, 6 Jan 2011 09:05:00 -0800 (PST)
+In-Reply-To: <AANLkTikv+L5Da7A5VM7BAgnue=m0O_-nHmHchJzfGxJa@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164642>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164643>
 
-git log -p never shows a diff for merge commits.  It is nice that it
-does not show a giant diff that is the sum of all of the changes being
-merged, but any manual changes made on top of the merge are also lost
-from view, and this is not good.  Here is a reproduction recipe:
+On Wed, Jan 5, 2011 at 18:29, Zenaan Harkness <zen@freedbms.net> wrote:
+> Bittorrent requires some stability around torrent files.
+>
+> Can packs be generated deterministically?
 
-git init
-echo foo > a
-git add a
-git commit -m "added a"
-git branch other
-git checkout other
-echo bar > b
-git add b
-git commit -m "added b"
-git checkout master
-git merge other
-git log -p
+No.  We have been trying to avoid doing that, because it ties us into
+one particular compression scheme.  We can't tune the algorithm and
+get better compression later, because it would generate a different
+pack.  We also rely on the system's libz to generate the compressed
+data.  A version change to libz may generate a different encoding for
+the same uncompressed data, simply because they made a tweak to how
+the compression was performed.  Likewise our own delta compression
+code can be tweaked to produce a different (but logically identical)
+delta between the same two objects.
 
-At this point there is no diff shown in the log output.  This is fine
-since there were no changes needed to complete the merge, and the
-addition of b is already documented in the merged commit.  The problem
-is that if you add --no-merge to the git merge, and then:
+Right now packs aren't deterministic because they use multiple threads
+to generate the deltas, the thread scheduling impacts which base
+objects deltas are tried against because threads can steal work from
+each other if one finishes before the other one.  Disabling threading
+entirely slows down delta compression considerably on multi-core
+machines, but does remove this work-stealing, making the pack
+deterministic... but only for this exact Git binary, with this same
+shared libz.  If the system libz or Git changes, all bets are off.
 
-echo bart > a
-git add a
-git commit
+We've been down this road before; we don't want to box ourselves into
+a tight corner by setting for all time these tunable portions of the
+compression algorithms.
 
-Now in addition to merging b, you have modified a, but git log -p still
-shows no diff, effectively hiding the fact that you snuck in a
-modification to a during the merge.
-
-It seems that adding -c or --cc to the log correctly shows the change to
-a, but why is this not shown by default?
+-- 
+Shawn.
