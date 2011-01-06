@@ -1,105 +1,107 @@
-From: A Large Angry SCM <gitzilla@gmail.com>
-Subject: Re: Repeatable test t9010-svn-fe.sh failure w/ master (685e9d9, 1.7.4.rc1)
-Date: Thu, 06 Jan 2011 14:06:40 -0500
-Message-ID: <4D2612C0.6000309@gmail.com>
-References: <4D25E818.5050909@gmail.com> <20110106165958.GA11190@burratino> <4D25F9C5.6030503@gmail.com> <7vipy1c313.fsf@alter.siamese.dyndns.org>
-Reply-To: gitzilla@gmail.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 06 20:06:50 2011
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH/RFC] alias: use run_command api to execute aliases
+Date: Thu,  6 Jan 2011 20:13:07 +0100
+Message-ID: <1294341187-3956-1-git-send-email-kusmabite@gmail.com>
+Cc: msysgit@googlegroups.com, j6t@kdbg.org
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 06 20:13:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PavAg-0004lR-AO
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 20:06:50 +0100
+	id 1PavH6-0008Td-4Y
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 20:13:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751612Ab1AFTGp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jan 2011 14:06:45 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:38063 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751176Ab1AFTGo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jan 2011 14:06:44 -0500
-Received: by qyj19 with SMTP id 19so19684599qyj.19
-        for <git@vger.kernel.org>; Thu, 06 Jan 2011 11:06:43 -0800 (PST)
+	id S1751663Ab1AFTNX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jan 2011 14:13:23 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:39728 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751355Ab1AFTNW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jan 2011 14:13:22 -0500
+Received: by ewy5 with SMTP id 5so7516206ewy.19
+        for <git@vger.kernel.org>; Thu, 06 Jan 2011 11:13:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:message-id
-         :disposition-notification-to:date:from:reply-to:user-agent
-         :mime-version:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=mKOG4hL4AnDfj4j6a2mlVUvEVEkaQgK3Dgx5pc4HCpk=;
-        b=rbNu5iEjGJkkiBoxi9ooCwNwDUOPA5ASO0HhpxKWXcMCqA+wFi249d14LpGVcCJFas
-         jpBD9gUANZ0FnAOL/Sl7EnAOHR7VR64o0ZpWcAxUiPwwWtSMTw70gslP3qRmv37WGy/q
-         7nSQUg3s6kQz9NKJRbIY2vmmPZVaRXzJVJ5M8=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=aoer2xXVC1wGF8Smx3DCR8FXxSvsikmsdqWAMW1jHkA=;
+        b=tbHkG9+ck3O1puyztpXuWWtXXj9lud+Ww98kwarLYZvZkWaj9k4M9DwfNB8iU5ZuOv
+         XmdLgciLhUsAlnK5dfMnEXEQTeLwQZ/gJZl5rw7YmFJ6efEwpifePB8rzQoPNFDYvkQZ
+         7PyEnAg6d+UaO08YCKss1b4kmqeQhvqyK+cpE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:disposition-notification-to:date:from:reply-to
-         :user-agent:mime-version:to:cc:subject:references:in-reply-to
-         :content-type:content-transfer-encoding;
-        b=T2MG0nraNdAwx/W3tn7VDwXEuHbpdDvvNy/WIazNZD7XfKTLFS7d+ybKYe4fj59SvK
-         r0TweVMrezRM3WXiFNZAsSekRcNk1K5DAaU1tiCEYb1WRWKkFyRgRGJrer4f/hkfw+4X
-         Gc4ihkKNGC4V0h4EvDQwSiVtmV93VSUTEWy0g=
-Received: by 10.229.211.206 with SMTP id gp14mr1962932qcb.289.1294340803479;
-        Thu, 06 Jan 2011 11:06:43 -0800 (PST)
-Received: from [10.0.1.130] (cpe-67-248-185-165.nycap.res.rr.com [67.248.185.165])
-        by mx.google.com with ESMTPS id p13sm14553112qcu.5.2011.01.06.11.06.41
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=xXufBSMSQxWYxFT+aiY5Ka8rGXpyt04n7pFUatAAtVrC/Ak2ioDboGA1XRmdmKnHrJ
+         OsOh+4QdVXejcWWf+EtpQgp+KCVRbStKfrFnv2NVEFSZjOf3J1tiWF5sq7lYsJv0qUkq
+         vd8DdH4nztkKPSpPEhmHYtiMHDFeMaQPvb3j4=
+Received: by 10.213.27.71 with SMTP id h7mr748278ebc.21.1294341201153;
+        Thu, 06 Jan 2011 11:13:21 -0800 (PST)
+Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
+        by mx.google.com with ESMTPS id q58sm1550047eeh.3.2011.01.06.11.13.20
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 06 Jan 2011 11:06:42 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20101226 Icedove/3.0.11
-In-Reply-To: <7vipy1c313.fsf@alter.siamese.dyndns.org>
+        Thu, 06 Jan 2011 11:13:20 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.3.585.g74f6e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164655>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164656>
 
-On 01/06/2011 01:15 PM, Junio C Hamano wrote:
-> A Large Angry SCM<gitzilla@gmail.com>  writes:
->
->> + svnadmin load simple-svn
->> <<<  Started new transaction, based on original revision 1
->>       * adding path : branches ... done.
->>       * adding path : trunk ... done.
->> svnadmin: Couldn't perform atomic initialization
->> svnadmin: Couldn't perform atomic initialization
->> svnadmin: SQLite compiled for 3.7.4, but running with 3.7.3
->> + eval_ret=1
->
-> Hmm.  Do any other svn related tests that use "svnadmin load" work in your
-> environment?
->
->      $ cd t/
->      $ git grep -l 'svnadmin load'
->      t9010-svn-fe.sh
->      t9110-git-svn-use-svm-props.sh
->      t9111-git-svn-use-svnsync-props.sh
->      t9112-git-svn-md5less-file.sh
->      t9115-git-svn-dcommit-funky-renames.sh
->      t9121-git-svn-fetch-renamed-dir.sh
->      t9126-git-svn-follow-deleted-readded-directory.sh
->      t9131-git-svn-empty-symlink.sh
->      t9132-git-svn-broken-symlink.sh
->      t9135-git-svn-moved-branch-empty-file.sh
->      t9136-git-svn-recreated-branch-empty-file.sh
->      t9150-svk-mergetickets.sh
->      t9151-svn-mergeinfo.sh
->      t9153-git-svn-rewrite-uuid.sh
->      t9154-git-svn-fancy-glob.sh
->
-> Web searching for "svnadmin: SQLite compiled for" seems to give a handful
-> of hits, even though I don't see anything from Debian offhand.
->
+On Windows, system() executes with cmd.exe instead of /bin/sh. This
+means that aliases currently has to be batch-scripts instead of
+bourne-scripts. On top of that, cmd.exe does not handle single quotes,
+which is what the code-path currently uses to handle arguments with
+spaces.
 
-It looks like all of the svn tests are failing.
+To solve both problems in one go, use run_command_v_opt() to execute
+the alias. It already does the right thing prepend "sh -c " to the
+alias.
 
-I checked out the last version I built and tested, f2665ec, and it's 
-failing the svn tests also. So, it looks like the current Debian 
-(Squeeze) svn package is broken. And the following seems to confirm that.
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+---
 
-	http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=608925
+This fixes issue 553 in the msysGit issue tracker.
+
+ git.c |   25 +++++++++++++------------
+ 1 files changed, 13 insertions(+), 12 deletions(-)
+
+diff --git a/git.c b/git.c
+index 68334f6..5b0b9d8 100644
+--- a/git.c
++++ b/git.c
+@@ -177,19 +177,20 @@ static int handle_alias(int *argcp, const char ***argv)
+ 	alias_string = alias_lookup(alias_command);
+ 	if (alias_string) {
+ 		if (alias_string[0] == '!') {
++			const char **alias_argv;
++			int i;
++
+ 			commit_pager_choice();
+-			if (*argcp > 1) {
+-				struct strbuf buf;
+-
+-				strbuf_init(&buf, PATH_MAX);
+-				strbuf_addstr(&buf, alias_string);
+-				sq_quote_argv(&buf, (*argv) + 1, PATH_MAX);
+-				free(alias_string);
+-				alias_string = buf.buf;
+-			}
+-			trace_printf("trace: alias to shell cmd: %s => %s\n",
+-				     alias_command, alias_string + 1);
+-			ret = system(alias_string + 1);
++
++			/* build alias_argv */
++			alias_argv = malloc(sizeof(char *) * *argcp + 1);
++			alias_argv[0] = alias_string + 1;
++			for (i = 1; i < *argcp; ++i)
++				alias_argv[i] = (*argv)[i];
++			alias_argv[*argcp] = NULL;
++
++			ret = run_command_v_opt(alias_argv, RUN_USING_SHELL);
++
+ 			if (ret >= 0 && WIFEXITED(ret) &&
+ 			    WEXITSTATUS(ret) != 127)
+ 				exit(WEXITSTATUS(ret));
+-- 
+1.7.3.3.585.g74f6e
