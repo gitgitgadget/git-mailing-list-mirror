@@ -1,148 +1,186 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git checkout branch behaves differently from what specified in
- man page
-Date: Thu, 6 Jan 2011 11:35:22 -0600
-Message-ID: <20110106173522.GB11346@burratino>
-References: <20110106154418.3348.29438.reportbug@localhost>
+From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+Subject: Re: Resumable clone/Gittorrent (again)
+Date: Thu, 6 Jan 2011 17:50:24 +0000
+Message-ID: <AANLkTimgpbzbu-cD0+fFPie4U2R_ZoG46cDJkNt43R83@mail.gmail.com>
+References: <AANLkTinUV9Z_w85Gz13J+bm8xqnxJ9jBJXJm9bn5Y2ec@mail.gmail.com>
+	<AANLkTimHb8O6s_KfhSGqvStZkEGWvPeAVcqQkYoyk49j@mail.gmail.com>
+	<201101051813.57603.trast@student.ethz.ch>
+	<AANLkTikn+89iGbkt90Bv1Hndiimf4brcCNOo0HBX-oPy@mail.gmail.com>
+	<AANLkTi=-gomYOpX6+RSboBXBytPry1Qhf31ohmv1dC5d@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: "r.ductor" <r.ductor@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 06 18:35:41 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 06 18:50:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PatkS-0000hx-GX
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 18:35:40 +0100
+	id 1Patz3-0001MP-2O
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 18:50:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754057Ab1AFRff (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jan 2011 12:35:35 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:40416 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754036Ab1AFRfe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jan 2011 12:35:34 -0500
-Received: by qyj19 with SMTP id 19so19590869qyj.19
-        for <git@vger.kernel.org>; Thu, 06 Jan 2011 09:35:34 -0800 (PST)
+	id S1753954Ab1AFRu2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Jan 2011 12:50:28 -0500
+Received: from mail-px0-f174.google.com ([209.85.212.174]:57652 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753647Ab1AFRuZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Jan 2011 12:50:25 -0500
+Received: by pxi15 with SMTP id 15so2945614pxi.19
+        for <git@vger.kernel.org>; Thu, 06 Jan 2011 09:50:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=t/e9qClmfp5oYehMOIg2X/8qnJTUF80T1CZiJDh9M6g=;
-        b=gHHZoMy/gm4rtWKY2BCQ2mU0y9sUl646NIGAb4cR/6Us8AhCgqnXGcG/SqJ9gcTAk0
-         8B/65oA0+sFh51szz/L6puuYr0Z78gaAhRvlpAMppcBv8+SBBGm2NskW4xkaGU3nHyZO
-         WmNYHiULXTodshInqgsSfzFlipTrPWOgAMsiM=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=V8G2L/DRiFnae7auH1qXe6bTZvI2523FN/ylwJPqxQo=;
+        b=edwlx1C0o9Ew6aWEAx+ZGlo0e5PQ3GNaHJjk9y3KqbV6JFWX9JXbebPtNUv/Smo9Ia
+         aRS23zGlz7dQLoOpm+tTyGJ3fyKQyJzKWTyPp+7W32dHBx8eqPJdwtLFYjMwrR9w7B8o
+         xdGVSXpTqX12loiLfzrZ6q9esvDvfMrJ3Y9XU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ZZAMHhSFrl7cLJ9+kBYxGnCVMm3wuUAHpKyjDVZZE5rjT8Gmrn+Lrt9Est80T6Y0kv
-         wtED7+fENvFJxi39LstsI+0e2ilctNSxocSckVhIzql9oMtzyKl9uZnMh528f02g0fn+
-         BW31zmT1+dtqg18xlCW0U9FTRiUFSi7lHONZE=
-Received: by 10.229.183.147 with SMTP id cg19mr21849062qcb.37.1294335332998;
-        Thu, 06 Jan 2011 09:35:32 -0800 (PST)
-Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
-        by mx.google.com with ESMTPS id y17sm14519239qci.45.2011.01.06.09.35.30
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 06 Jan 2011 09:35:31 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110106154418.3348.29438.reportbug@localhost>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=T/5PmfJVy6oyO76LqBv8VkyB2OD0Bj1eHW8SD7YoGz0dY4n8OcXy8DaG4UaiLdAdGN
+         +PSvQtCbTAHY0GCKR94WVxopAej5nUFOqKBpx4yowXq8Iri/rmJL7YL14BBRbws/ToZ4
+         E2NQ1DvwnjpKF5N8LEZg6o3Al0VL2yhAnUOAQ=
+Received: by 10.142.191.15 with SMTP id o15mr982418wff.29.1294336224657; Thu,
+ 06 Jan 2011 09:50:24 -0800 (PST)
+Received: by 10.142.58.11 with HTTP; Thu, 6 Jan 2011 09:50:24 -0800 (PST)
+In-Reply-To: <AANLkTi=-gomYOpX6+RSboBXBytPry1Qhf31ohmv1dC5d@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164647>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164648>
 
-Hi,
-
-r. ductor wrote[1]:
-
->  git checkout [<branch>], git checkout -b <new branch> [<start point>] 
->	This form switches branches by updating the index, working tree,
->	and HEAD to reflect the specified branch. "
+On Thu, Jan 6, 2011 at 1:47 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com=
+> wrote:
+> On Thu, Jan 6, 2011 at 1:07 AM, Luke Kenneth Casson Leighton
+> <luke.leighton@gmail.com> wrote:
+>> =C2=A0the plan is to turn that variation in the git pack-objects res=
+ponses,
+>> across multiple peers, into an *advantage* not a liability. =C2=A0ho=
+w?
+>> like this:
+>>
+>> =C2=A0* a client requiring objects from commit abcd0123 up to commit
+>> efga3456 sends out a DHT broadcast query to all and sundry who have
+>> commits abcd0123 and everything in between up to efga3456.
+>>
+>> =C2=A0* those clients that can be bothered to respond, do so [refine=
+ments below]
+>>
+>> =C2=A0* the requestor selects a few of them, and asks them to create=
+ git
+>> pack-objects. =C2=A0this takes time, but that's ok. =C2=A0once creat=
+ed, the size
+>> of the git pack-object is sent as part of the acknowledgement.
+>>
+>> =C2=A0* the requestor, on receipt of all the sizes, selects the *sma=
+llest*
+>> one to begin the p2p (.torrent) from (by asking the remote client to
+>> create a .torrent specifically for that purpose, with the filename
+>> abcd0123-ebga3456).
 >
-> The key is the meaning of "to reflect": a normal (?) human being
-> like me understands that git  checkout branch will reset the
-> contents of working directory, and index exactly equal to that of
-> the head of the branch.  As you might know this is not true (see
-> example below).
-[example with both unregistered and staged local modifications]
+> That defeats the purpose of distributing. You are putting pressure on
+> certain peers.
 
-Yes, I agree that this could be a lot clearer.  For reference, here's
-the current description section:
+ that's unavoidable, but it's not actually as bad as it seems.  think
+about it.  normally, "pressure" is put onto a git server, by forcing
+that server to perform multiple "git pack-object" calculations,
+repeatedly, for each and every "git pull".
 
- Updates files in the working tree to match the version in the index
- or the specified tree. If no paths are given, git checkout will also
- update HEAD to set the specified branch as the current branch.
+ so, the principle behind this RFC (is it an RFC? yes, kinda...) is
+that a) you cache those git pack-objects, thus avoiding heavy CPU
+usage b) you make the requests to _many_ peers that you'll likely find
+already are in the process of distributing that particular
+commit-range _anyway_ so will _definitely_ have it  ... etc. etc.
 
- git checkout [<branch>], git checkout -b|-B <new_branch> [<start point>]
-	This form switches branches by updating the index, working tree,
-	and HEAD to reflect the specified branch.
+ so there's a ton of reasons why it's quite a big improvement over the
+present star-network arrangement.
 
-	If -b is given,
-[... description of -b and -B ...]
+>
+>> =C2=A0now, an immediately obvious refinement of this is that those .=
+torrent
+>> (pack-objects) "stick around", in a cache (with a hard limit defined
+>> on the cache size of course). =C2=A0and so, when the client that req=
+uires a
+>> pack-object makes the request, of course, those remote clients that
+>> *already* have that cached pack-object for that specific commit-rang=
+e
+>> should be given first priority, to avoid other clients from having t=
+o
+>> make massive amounts of git pack-objects.
+>
+> Cache have its limits too. Suppose I half-fetch a pack then stop and
+> go wild for a month. The next month I restart the fetch, the pack may
+> no longer in cache. A new pack may or may not be identical to the old
+> pack.
 
- git checkout [--patch] [<tree-ish>] [--] <pathspec>...
-	When <paths> or --patch are given, git checkout does not switch
-	branches. It updates the named paths in the working tree from
-	the index file or from a named <tree-ish> (most often a commit).
-	In this case, the -b and --track options are meaningless and
-	giving either of them results in an error. The <tree-ish>
-	argument can be used to specify a specific tree-ish (i.e.
-	commit, tag or tree) to update the index for the given paths
-	before updating the working tree.
+ correct.  that's not in the slightest bit a problem.  the peer which
+has that new pack will be asked to make a new .torrent for _that_
+pack.  with a new name that uniquely identifies it (the md5sum of the
+pack would do as the .torrent filename)
 
-	The index may contain unmerged entries because of a previous
-	failed merge.
-[... more details about the unmerged entries case ...]
+> Also if you go with packs, you are tied to the peer that generates
+> that pack. Two different peers can, in theory, generate different
+> packs (in encoding) for the same input.
 
-Proposed clearer text would be welcome, especially if in the form of
-a patch to Documentation/git-checkout.txt (see Documentation/SubmittingPatches).
+ yes.  correct.  i _did_ say that you pick the one that is the
+smallest of the two (or three.  or 10).  in this way you actually do
+much better than you would otherwise in a "star network" such as a
+standard HTTP git server, because you've asked 2, 3 or 10 (whatever)
+peers, and you'll end up with _the_ most efficient representation of
+that commit-range.  statistically speaking, of course :)
 
-Currently I think the examples section explains it better.  The
-details are something like this:
 
- - git checkout <branch> --
+> Another thing with packs (ok, not exactly with packs) is how you
+> verify that's you have got what you asked.
 
-	tries to change the current branch to <branch>, dragging other
-	state kicking and screaming along with it.
+ ok - how do you verify that you've got what you asked, when you ask
+from a git server using HTTP?
 
-	- if a file does _not_ differ between the current commit and
-	  <branch>, it does not need to be touched.  Any local changes
-	  in that file will be preserved.
+> Bittorrent can verify every
+> piece a peer receives because sha-1 sum of those pieces are recorded
+> in .torrent file.
 
-	- if a file that _does_ differ between the current commit and
-	  <branch> has local changes, git gives up --- the operation is
-	  cancelled and all state is preserved.
-	  This behavior can be tweaked with the --merge option.
+ yes.  this is simply a part of the bittorrent protocol, to ensure
+that the file being transferred is correctly transferred.
 
- - git checkout <tree> -- <path specifiers>
+ these verifications steps should be _trusted_ and should _not_ be
+confused with anything else (i've deleted the rest of the paragraph
+you wrote, in order to reduce any opportunity for confusion).
 
-	keeping the current branch the same, grabs some files from <tree>
-	to replace the current versions in the index and work tree
+ if you mentally keep git separate from bittorrent it helps.  imagine
+that bittorrent is merely a drop-in replacement for git over HTTP
+(nicolas kindly explained the plugin system for git which would add
+another protocol for downloading of git repos, and yes this can all be
+implemented as a plugin)
 
-	- no matter what, the local state of the specified paths is
-	  forgotten and both the index and worktree made to match <tree>
 
-	- paths not specified are left alone.
+>> so, can you see that a) this is a far cry from the "simplistic
+>> transfer of blobs and trees" b) it's *not* going to overload peoples=
+'
+>> systems by splattering (eek!) millions of md5 sums across the intern=
+et
+>> as bittorrent files c) it _does_ fit neatly into the bittorrent
+>> protocol d) it combines the best of git with the best of p2p
+>> distributed networking principles...
+>
+> How can you advertise what you have to another peer?
 
-If you just want to reset the worktree and index to match some
-branch, then you can use
+ you don't.  it's done "on-demand".
 
-	git reset --hard <branch>
+ the concept of "git push" becomes virtually a null-op, updating the
+bittorrent tracker and that's... about it.
 
-or
+ it's where "git pull" that all the work is done, starting with that
+DHT query [no i know "bittorrent the protocol" doesn't have DHT, but
+many bittorrent clients _do_ have DHT, and Tribler has an extremely
+good one].
 
-	git checkout <tree> -- .
-
-.  The former even forgets what branch you were on (well, it is
-remembered in the reflog).  The latter adopts the content of <tree>
-as content registered for the next commit on the current branch.
-
-Hope that helps,
-Jonathan
-
-[1] http://bugs.debian.org/609128
+ l.
