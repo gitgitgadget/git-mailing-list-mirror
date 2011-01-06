@@ -1,89 +1,142 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Concurrent pushes updating the same ref
-Date: Thu, 06 Jan 2011 11:37:57 -0800
-Message-ID: <7v1v4pbz6y.fsf@alter.siamese.dyndns.org>
-References: <4D25E3DE.7050801@xiplink.com>
- <20110106163035.GA7812@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH/RFC] alias: use run_command api to execute aliases
+Date: Thu, 6 Jan 2011 13:41:01 -0600
+Message-ID: <20110106194101.GA14750@burratino>
+References: <1294341187-3956-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Marc Branchaud <marcnarc@xiplink.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 06 20:38:14 2011
+Cc: git@vger.kernel.org, msysgit@googlegroups.com, j6t@kdbg.org
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 06 20:41:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pavf3-0006K4-95
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 20:38:13 +0100
+	id 1Pavi7-0008Fh-Ek
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 20:41:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752071Ab1AFTiI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jan 2011 14:38:08 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36063 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751233Ab1AFTiH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jan 2011 14:38:07 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0DD0F3E55;
-	Thu,  6 Jan 2011 14:38:44 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Pdfsrbcrv6z+bBk4NmiINdI2Xis=; b=opiStY
-	BVoJdEGB768ffEbSNBDdy/x8XvhRo2O3MP0D3PvLlSxF4krKmq5rqYNwny/rHQZF
-	UKH8QXI+gJ6pZMRxbUm2M3Bxt5R03hoyrBX4MdsVYg36JQRwlek9yCe276B6NAFR
-	XIVB6S0GE/O7i84K2Uc9sAdnCPD7E3wxwTjQc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eiqJUWcGDNY1XRJ2PBuTt/H8RB+kt7Up
-	r3Pwqgio9nitqRI+vtWltDosRpYCNA1zn2tfFno+kJ/q4GsJHdNZ1jzi5VBF1ohN
-	jefO83xqpj3LtfS5epHjctZDyqT1gPX3jjhXlqj2t7IJuQMa1NgZNG13WBW+eCoQ
-	3zKSjLe8500=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D04583E52;
-	Thu,  6 Jan 2011 14:38:40 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9A9D83E50; Thu,  6 Jan 2011
- 14:38:36 -0500 (EST)
-In-Reply-To: <20110106163035.GA7812@sigill.intra.peff.net> (Jeff King's
- message of "Thu\, 6 Jan 2011 11\:30\:35 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 906C3862-19CC-11E0-A13A-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
+	id S1752363Ab1AFTlT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jan 2011 14:41:19 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:59149 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751233Ab1AFTlS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jan 2011 14:41:18 -0500
+Received: by qyj19 with SMTP id 19so19720967qyj.19
+        for <git@vger.kernel.org>; Thu, 06 Jan 2011 11:41:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=OwyIJ2P/2MOPvwy7hJNzl4ZFNtCgCuPbotDXbyc5g0U=;
+        b=qhBY8112eYXiD+7WK8u8kLygkhd77XwaYdeVpuZxoeMZmaX96jnd2zhbrN9QpwHITb
+         ZX1TEWF6rGw3ZdvvO0MxwDoskny8ueTp5nQJnv28QYZ1p80dPfF3mhZFoST+xqLXKqxw
+         U4Lp9Q/q834uCNdM/ZdqTFw7T5uYsNlE22Nlg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=dFtuD0cHgrVfZHLb22QeK0zfN6zgLsbQkXwOOsx4grL887e3lNaW5NQvGe+upUq44O
+         Qlv2uDW2msLYjArJBkPswgqYt0B5FvL3lQdPxjCpgda62KL/z0ongtaUphK/9xDCQFB5
+         eKgkgAxTZSpggtxTIGLJsQyoBD5wfnUvw5s78=
+Received: by 10.224.28.76 with SMTP id l12mr22873310qac.294.1294342877541;
+        Thu, 06 Jan 2011 11:41:17 -0800 (PST)
+Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
+        by mx.google.com with ESMTPS id q12sm14576361qcu.18.2011.01.06.11.41.13
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 06 Jan 2011 11:41:14 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1294341187-3956-1-git-send-email-kusmabite@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164658>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164659>
 
-Jeff King <peff@peff.net> writes:
+Erik Faye-Lund wrote:
 
-> On Thu, Jan 06, 2011 at 10:46:38AM -0500, Marc Branchaud wrote:
->
->> fatal: Unable to create
->> '/usr/xiplink/git/public/Main.git/refs/builds/3.3.0-3.lock': File exists.
->> If no other git process is currently running, this probably means a
->> git process crashed in this repository earlier. Make sure no other git
->> process is running and remove the file manually to continue.
->> fatal: The remote end hung up unexpectedly
->> 
->> I think the cause is pretty obvious, and in a normal interactive situation
->> the solution would be to simply try again.  But in a script trying again
->> isn't so straightforward.
->> 
->> So I'm wondering if there's any sense or desire to make git a little more
->> flexible here.  Maybe teach it to wait and try again once or twice when it
->> sees a lock file.  I presume that normally a ref lock file should disappear
->> pretty quickly, so there shouldn't be a need to wait very long.
->
-> Yeah, we probably should try again. The simplest possible (and untested)
-> patch is below. However, a few caveats:
->
->   1. This patch unconditionally retries for all lock files. Do all
->      callers want that?
+> --- a/git.c
+> +++ b/git.c
+> @@ -177,19 +177,20 @@ static int handle_alias(int *argcp, const char ***argv)
+[...]
+> -			trace_printf("trace: alias to shell cmd: %s => %s\n",
+> -				     alias_command, alias_string + 1);
 
-I actually have to say that _no_ caller should want this.  If somebody
-earlier crashed, we would want to know about it (and how).  If somebody
-else alive is actively holding a lock, why not make it the responsibility
-of a calling script to decide if it wants to retry itself or perhaps
-decide to do something else?
+Replaced by
+
+	trace: run_command: ...
+
+(followed by "trace: exec: ..." on non-Windows (execv_shell_cmd)).
+Ok.
+
+> -			ret = system(alias_string + 1);
+> +
+> +			/* build alias_argv */
+> +			alias_argv = malloc(sizeof(char *) * *argcp + 1);
+
+This seems to be missing parentheses, so valgrind will complain
+except on 8-bit systems. ;-)
+
+What if malloc fails?
+
+> +			alias_argv[0] = alias_string + 1;
+> +			for (i = 1; i < *argcp; ++i)
+> +				alias_argv[i] = (*argv)[i];
+> +			alias_argv[*argcp] = NULL;
+
+Nit: all these *argcp are noisy.
+
+> +
+> +			ret = run_command_v_opt(alias_argv, RUN_USING_SHELL);
+> +
+>  			if (ret >= 0 && WIFEXITED(ret) &&
+
+The return value from run_command and from system do not mean
+the same thing.
+
+>  			die("Failed to run '%s' when expanding alias '%s'",
+>  			    alias_string + 1, alias_command);
+
+run_command already prints an error message, but this one still
+seems useful since it mentions the alias.
+
+Except as noted above,
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+
+Thanks.
+
+diff --git a/git.c b/git.c
+index 5b0b9d8..dbf061d 100644
+--- a/git.c
++++ b/git.c
+@@ -178,22 +178,20 @@ static int handle_alias(int *argcp, const char ***argv)
+ 	if (alias_string) {
+ 		if (alias_string[0] == '!') {
+ 			const char **alias_argv;
+-			int i;
++			int argc = *argcp, i;
+ 
+ 			commit_pager_choice();
+ 
+-			/* build alias_argv */
+-			alias_argv = malloc(sizeof(char *) * *argcp + 1);
++			alias_argv = xmalloc(sizeof(*alias_argv) * (argc + 1));
+ 			alias_argv[0] = alias_string + 1;
+-			for (i = 1; i < *argcp; ++i)
++			for (i = 1; i < argc; ++i)
+ 				alias_argv[i] = (*argv)[i];
+-			alias_argv[*argcp] = NULL;
++			alias_argv[argc] = NULL;
+ 
+ 			ret = run_command_v_opt(alias_argv, RUN_USING_SHELL);
++			if (ret >= 0)	/* normal exit */
++				exit(ret);
+ 
+-			if (ret >= 0 && WIFEXITED(ret) &&
+-			    WEXITSTATUS(ret) != 127)
+-				exit(WEXITSTATUS(ret));
+ 			die("Failed to run '%s' when expanding alias '%s'",
+ 			    alias_string + 1, alias_command);
+ 		}
