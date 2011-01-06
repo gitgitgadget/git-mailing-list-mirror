@@ -1,119 +1,118 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH/RFC] Documentation/checkout: explain behavior wrt local
- changes
-Date: Thu, 6 Jan 2011 16:52:22 -0600
-Message-ID: <20110106225222.GA15900@burratino>
-References: <20110106154418.3348.29438.reportbug@localhost>
- <20110106173522.GB11346@burratino>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>
-To: "r.ductor" <r.ductor@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 06 23:52:43 2011
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: [PATCH v3] alias: use run_command api to execute aliases
+Date: Fri,  7 Jan 2011 00:00:38 +0100
+Message-ID: <1294354838-6336-1-git-send-email-kusmabite@gmail.com>
+Cc: msysgit@googlegroups.com, j6t@kdbg.org, jrnieder@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 07 00:01:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PayhG-0004pD-Sb
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 23:52:43 +0100
+	id 1PaypJ-0000W7-6M
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 00:01:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754388Ab1AFWwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jan 2011 17:52:37 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:51914 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752782Ab1AFWwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jan 2011 17:52:36 -0500
-Received: by vws16 with SMTP id 16so6981706vws.19
-        for <git@vger.kernel.org>; Thu, 06 Jan 2011 14:52:36 -0800 (PST)
+	id S1753977Ab1AFXAz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jan 2011 18:00:55 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:41465 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752484Ab1AFXAy (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jan 2011 18:00:54 -0500
+Received: by ewy5 with SMTP id 5so7605222ewy.19
+        for <git@vger.kernel.org>; Thu, 06 Jan 2011 15:00:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=zfyaxrnSX6mkkT02fkUGjAnM5narHnnYQ7QZ/bXkO1Y=;
-        b=CdBSrL4VZD/HwqWM8B1NneANB+0ocLpfmmTu0h6FFJBivIPNSSAY0XWGi/yCHfGih6
-         sbXZgQW7rgA8vsqP9qKDp5BE+2S5y1w8hnoMc+j/VxZ/UR+pkhNaxmT6WgKhWNXM8k18
-         IoOogvQRwtTWprdGwgRtXWorTsAMuah/dDQms=
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=ks6f6dDQ5CTGaoXfdUTAa8cqsXy0sRMrYN3dg710BiA=;
+        b=SCArXqrZjS6TbkJ8r/A2qT777MqKQBxNlW7AYCqKCzVzKy9zrm6381YW1uLxaEA2/G
+         as28osssBqwc0SpAyqet6H5zoGUf3ER5+uTDbbcuM31PHCAzgxDLlbMTIUWm7MAJzQ62
+         XBMz681JQU3QGcrCJgz79NMmv5TO6DOAFJq9Q=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=IrT/di79DLLQ/e52xGQLbf/m8H0mBPoYOtIzA7rIgbSxMoN52Kn3uKNYXqCqa5lXz3
-         DqnGrYgfiIPY4KD/uTWJeNeCqCQogLV/dLUyOa5oXlQPaMqosOA1kqIwZaJl0lHZItwn
-         VlYfbtZOnK7eHU8K4DRNYJLYhTM9/1VDVRxVI=
-Received: by 10.220.193.8 with SMTP id ds8mr69629vcb.2.1294354355954;
-        Thu, 06 Jan 2011 14:52:35 -0800 (PST)
-Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
-        by mx.google.com with ESMTPS id r20sm5491795vcf.10.2011.01.06.14.52.34
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 06 Jan 2011 14:52:35 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110106173522.GB11346@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=AYvLXFQQ4ccNz5C7gHbAoPJOQ/5xKmp4vMKeWvj+7SyLWtxpDfzhi3VU/jtPjJ4PTd
+         ro/AzdUM33Feg//rMi+71b+z/gAyeCwYwdqiMe5xjkm1GAxAwWXszhKvekum8z2w/D9U
+         c/AdmVFnhESHDGzYfu8bPXIgqQQY976WjivB0=
+Received: by 10.213.7.17 with SMTP id b17mr905673ebb.44.1294354853154;
+        Thu, 06 Jan 2011 15:00:53 -0800 (PST)
+Received: from localhost (cm-84.215.188.225.getinternet.no [84.215.188.225])
+        by mx.google.com with ESMTPS id t5sm1698072eeh.14.2011.01.06.15.00.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 06 Jan 2011 15:00:52 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.3.585.g74f6e
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164684>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164685>
 
-Jonathan Nieder wrote:
+On Windows, system() executes with cmd.exe instead of /bin/sh. This
+means that aliases currently has to be batch-scripts instead of
+bourne-scripts. On top of that, cmd.exe does not handle single quotes,
+which is what the code-path currently uses to handle arguments with
+spaces.
 
-> Proposed clearer text would be welcome, especially if in the form of
-> a patch to Documentation/git-checkout.txt (see Documentation/SubmittingPatches).
+To solve both problems in one go, use run_command_v_opt() to execute
+the alias. It already does the right thing prepend "sh -c " to the
+alias.
 
-Like this, maybe?
-
--- 8< --
-Subject: Documentation/checkout: explain behavior wrt local changes
-
-The current start of the description to "git checkout" tries to
-combine an explanation of "git checkout <branch> --" with "git
-checkout -- <paths>" and ends up with a muddle (as Jeff noticed).
-
-In particular, the text does not make it obvious that the "git
-checkout <branch> --" form does not clobber local changes relative
-to the HEAD commit in the worktree and index.
-
-Reported-by: r.ductor <r.ductor@gmail.com>
-Helped-by: Jeff King <peff@peff.net>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-I somehow suspect that a mention of --merge would make this clearer
-but good words for it aren't coming at the moment.  Improvements
-welcome.
 
- Documentation/git-checkout.txt |   14 ++++++++------
- 1 files changed, 8 insertions(+), 6 deletions(-)
+Fixed the issues pointed out by Jonathan Nieder. For real this time.
+Also changed die to die_errno, as suggested by Johannes Sixt.
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 22d3611..cfb71a8 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -15,16 +15,18 @@ SYNOPSIS
- 
- DESCRIPTION
- -----------
--Updates files in the working tree to match the version in the index
--or the specified tree.  If no paths are given, 'git checkout' will
--also update `HEAD` to set the specified branch as the current
--branch.
-+There are two different modes -- one to switch branches and one to
-+make some paths in the work tree match the index or specified tree.
- 
- 'git checkout' [<branch>]::
- 'git checkout' -b|-B <new_branch> [<start point>]::
- 
--	This form switches branches by updating the index, working
--	tree, and HEAD to reflect the specified branch.
-+	This form switches branches by changing `HEAD` and updating the
-+	tracked files to the specified branch.  'git checkout' will
-+	stop without doing anything if local changes overlap with
-+	changes to the tracked files.  (Any local changes that do not
-+	overlap with changes from `HEAD` to the specified branch will
-+	be preserved.)
- +
- If `-b` is given, a new branch is created as if linkgit:git-branch[1]
- were called and then checked out; in this case you can
+ git.c |   34 +++++++++++++++++-----------------
+ 1 files changed, 17 insertions(+), 17 deletions(-)
+
+diff --git a/git.c b/git.c
+index 68334f6..23610aa 100644
+--- a/git.c
++++ b/git.c
+@@ -177,24 +177,24 @@ static int handle_alias(int *argcp, const char ***argv)
+ 	alias_string = alias_lookup(alias_command);
+ 	if (alias_string) {
+ 		if (alias_string[0] == '!') {
++			const char **alias_argv;
++			int argc = *argcp, i;
++
+ 			commit_pager_choice();
+-			if (*argcp > 1) {
+-				struct strbuf buf;
+-
+-				strbuf_init(&buf, PATH_MAX);
+-				strbuf_addstr(&buf, alias_string);
+-				sq_quote_argv(&buf, (*argv) + 1, PATH_MAX);
+-				free(alias_string);
+-				alias_string = buf.buf;
+-			}
+-			trace_printf("trace: alias to shell cmd: %s => %s\n",
+-				     alias_command, alias_string + 1);
+-			ret = system(alias_string + 1);
+-			if (ret >= 0 && WIFEXITED(ret) &&
+-			    WEXITSTATUS(ret) != 127)
+-				exit(WEXITSTATUS(ret));
+-			die("Failed to run '%s' when expanding alias '%s'",
+-			    alias_string + 1, alias_command);
++
++			/* build alias_argv */
++			alias_argv = xmalloc(sizeof(*alias_argv) * (argc + 1));
++			alias_argv[0] = alias_string + 1;
++			for (i = 1; i < argc; ++i)
++				alias_argv[i] = (*argv)[i];
++			alias_argv[argc] = NULL;
++
++			ret = run_command_v_opt(alias_argv, RUN_USING_SHELL);
++			if (ret >= 0)   /* normal exit */
++				exit(ret);
++
++			die_errno("While expanding alias '%s': '%s'",
++			    alias_command, alias_string + 1);
+ 		}
+ 		count = split_cmdline(alias_string, &new_argv);
+ 		if (count < 0)
 -- 
-1.7.4.rc1
+1.7.3.3.585.g74f6e
