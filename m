@@ -1,60 +1,108 @@
-From: Phillip Susi <psusi@cfl.rr.com>
-Subject: Re: log -p hides changes in merge commit
-Date: Thu, 06 Jan 2011 15:50:13 -0500
-Message-ID: <4D262B05.2060306@cfl.rr.com>
-References: <4D25F6BE.7010300@cfl.rr.com> <7vwrmhakdz.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] t9010: svnadmin can fail even if available
+Date: Thu, 6 Jan 2011 14:46:05 -0600
+Message-ID: <20110106204605.GA15090@burratino>
+References: <4D25E818.5050909@gmail.com>
+ <20110106165958.GA11190@burratino>
+ <4D25F9C5.6030503@gmail.com>
+ <20110106180051.GC11346@burratino>
+ <7vpqs9aiul.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: A Large Angry SCM <gitzilla@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 06 21:45:01 2011
+X-From: git-owner@vger.kernel.org Thu Jan 06 21:46:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pawhg-0002tf-1D
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 21:45:00 +0100
+	id 1PawjW-00042J-Dh
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 21:46:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752407Ab1AFUoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jan 2011 15:44:55 -0500
-Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:52874 "EHLO
-	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751355Ab1AFUoz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jan 2011 15:44:55 -0500
-Authentication-Results: cdptpa-omtalb.mail.rr.com smtp.user=psusi@cfl.rr.com; auth=pass (PLAIN)
-X-Authority-Analysis: v=1.1 cv=Inhw+Jdt7z1D3BivGPfn2aw54OvUEJw5lAn/booRZkE= c=1 sm=0 a=D86Jg8a-DgoA:10 a=8nJEP1OIZ-IA:10 a=pg4Dpxby4z7sZisWVyJ9NA==:17 a=MDdYYv4VsgnpCBNDDtsA:9 a=wMki-pMdweSNHGtAs80w4Azyl2YA:4 a=wPNLvfGTeEIA:10 a=pg4Dpxby4z7sZisWVyJ9NA==:117
-X-Cloudmark-Score: 0
-X-Originating-IP: 72.242.190.170
-Received: from [72.242.190.170] ([72.242.190.170:4911] helo=[10.1.1.235])
-	by cdptpa-oedge04.mail.rr.com (envelope-from <psusi@cfl.rr.com>)
-	(ecelerity 2.2.3.46 r()) with ESMTPA
-	id FF/D8-13137-5C9262D4; Thu, 06 Jan 2011 20:44:53 +0000
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <7vwrmhakdz.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.1.1
+	id S1753284Ab1AFUq0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jan 2011 15:46:26 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:51828 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753408Ab1AFUqW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jan 2011 15:46:22 -0500
+Received: by qyj19 with SMTP id 19so19787555qyj.19
+        for <git@vger.kernel.org>; Thu, 06 Jan 2011 12:46:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=QGQN49JdY0SryF2xN/X1up54hJnpr4SFUF2ZSoXwWqQ=;
+        b=CZoC3mqhzSHfuOS5Ew+NDSPNIMax7Hehw9QFkOxy5cw4nnXC+kwonQYD8EXSfA3l1J
+         mYptpWYaBxpTgBy+EHUa5LVKQ9GrjRB/KymJ35UfbcvauDEZtCQ/IU+vOMjIbphgrgrj
+         4I6QvSJF/nT6NiyPRH91Z7kkmgbxcU+AxqWcU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=BReHqF+XsvlET63Q/CpTYcze2YziEDf4tXPhnJkWvXzQemmixodBu7vfQ/PD10Rk6o
+         2tVKu9A+tlAqiNFdR8Eqg01EhzQ3Xcww89XSQ56EW1nreacD6B58Wrv2fIoWlYno1A3O
+         U8E8DY+S6ImVkevUSAJj4FeaTHJ4LrdL4rWYo=
+Received: by 10.224.37.2 with SMTP id v2mr23771849qad.92.1294346781800;
+        Thu, 06 Jan 2011 12:46:21 -0800 (PST)
+Received: from burratino ([69.209.72.219])
+        by mx.google.com with ESMTPS id nb15sm13707032qcb.14.2011.01.06.12.46.19
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 06 Jan 2011 12:46:20 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vpqs9aiul.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164670>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164671>
 
-On 1/6/2011 2:43 PM, Junio C Hamano wrote:
-> Depends on the definition of "correctly", but perhaps you have a
-> definition different from ours ;-) The "patches" shown with -c/--cc are
-> designed to be different from normal diff so that people do not
-> accidentally try to apply them with "patch" or "git apply".
+Junio C Hamano wrote:
+
+> But I am somewhat unhappy because I do not think we want to cater to all
+> the broken installations of system tools.  When tests fail because
+> somebody's "mkdir -p" (just a random example I picked from your patch)
+> does not work correctly, we would just say "Your system is broken, and
+> here is a nickle; get a better computer".  Why is svnadmin so special?
 > 
-> "log -p" omits merge commits by default because diffs of merges are mostly
-> not useful for ordinary purposes.  If you are trying to use "log -p" to
-> reproduce a (part of) history, perhaps you would want to also study -m
-> option.
+> Also isn't the breakage not just this test, but also in all the tests that
+> try to run "svnadmin load"?  Shouldn't we somehow hoist this logic out of
+> t9010 and put it in t/lib-vcs-svn.sh or somewhere?
+>
+> As far as I understand, svn interoperability bits (git-svn and vcs-svn) do
+> not rely on svnadmin at runtime, so a breakage in the system's svnadmin
+> would not be a reason to omit building and installing them.
 
-What I would like to do is be able to review a merge to sign off on it.
- While the full diff against the left parent would be a large and
-unhelpful amalgamation of the changes in the merged branch, any
-additional changes made during the commit should not be hidden.  This
-allows someone performing the merge to effectively sneak in unintended
-changes.  I would expect any such changes to be shown by log -p, but
-this only seems to happen if you add -c.
+You're right, I did not do a good job of selling the patch.  I should
+have said:
+
+	Subject: t9010: svnadmin can fail even if available
+
+	If svn is built against one version of SQLite and run against
+	another, libsvn_subr needlessly errors out in operations that
+	need to make a commit.
+
+	That is clearly not a bug in git but let us consider the
+	ramifications for the test suite.  git-svn uses libsvn directly
+	and is probably broken by that bug; it is right for git-svn
+	tests to fail.  The vcs-svn lib, on the other hand, does not use
+	libsvn and the test t9010 only uses svn to check its work.  This
+	points to two possible improvements:
+
+	 - do not disable most vcs-svn tests if svn is missing.
+	 - skip validation rather than failing it when svn fails.
+
+	Bring about both by putting the svn invocations into a single
+	test that builds a repo to compare the test-svn-fe result
+	against.  The test will always pass but only will set the new
+	SVNREPO test prereq if svn succeeds; and validation using that
+	repo gets an SVNREPO prerequisite so it only runs with working
+	svn installations.
+
+	Works-around: http://bugs.debian.org/608925
+	Noticed-by: A Large Angry SCM <gitzilla@gmail.com>
+	Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
