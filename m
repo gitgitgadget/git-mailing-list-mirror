@@ -1,133 +1,210 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.3.5
-Date: Wed, 05 Jan 2011 16:52:46 -0800
-Message-ID: <7vy66yc0pt.fsf@alter.siamese.dyndns.org>
+Subject: [ANNOUNCE] Git 1.7.4-rc1
+Date: Wed, 05 Jan 2011 16:54:14 -0800
+Message-ID: <7vtyhmc0nd.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=us-ascii
 To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Thu Jan 06 01:53:39 2011
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+X-From: git-owner@vger.kernel.org Thu Jan 06 01:54:41 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1Pae6k-0004TV-Ve
-	for glk-linux-kernel-3@lo.gmane.org; Thu, 06 Jan 2011 01:53:39 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1Pae7k-0004tm-Ve
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 01:54:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754583Ab1AFAw7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Wed, 5 Jan 2011 19:52:59 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41009 "EHLO
+	id S1754210Ab1AFAy1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 5 Jan 2011 19:54:27 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42823 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754210Ab1AFAw5 convert rfc822-to-8bit (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Wed, 5 Jan 2011 19:52:57 -0500
+	with ESMTP id S1754128Ab1AFAyY (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 5 Jan 2011 19:54:24 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 140CA38A8;
-	Wed,  5 Jan 2011 19:53:33 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 02F4238B9;
+	Wed,  5 Jan 2011 19:55:01 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type
-	:content-transfer-encoding; s=sasl; bh=kVAtpqYir9DL60oYrphh6IZOA
-	bw=; b=YEtJchr7D+TgNtOYmU2gF3Hxvo9tfMSWFJzv+XkTwXHTD1Js32haEGhFf
-	2728j2yQXlMZhHkTDTXqYYH+n3jfm90rBcZniPlQFFIpkDUC8YVE+hqrqNEEDYfh
-	1XmdkZjbLVNHOcbRTSZ+bzMg0Y2j88oro1BCCMClfeE2LZ/qDI=
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=vwpL
+	k2bdLTccCMC34iEtkEXNtjI=; b=W9Pbc4CcE9e7vm9/5aZN6hgQyNbRL7LW5HRD
+	j7bUkANKGZgyQDftuqhYGCy3w6npVdG7a6b9jjOAPm6QejFETb6V+nkog48uMgbC
+	sBY1inoktqtkb7SvvO4/9ejuFUUq4QOJu02JQCXLwW6knJFca0haioVEigycMzn9
+	mH0q1yA=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type
-	:content-transfer-encoding; q=dns; s=sasl; b=Cm3qE0pJEI2QVJvLgsx
-	A0gejU+kLqEx6OaVSNhLGEvPIHM0rs5C/Ms4PV7jGPiXTZ4ud2Cu1UGtxGXbs6rh
-	shFhsNHRCpBzcj0OLmrfVkvFOWkS0dlRrbtOSRU03RnlI64sNjSqZ5oA75yrpVbP
-	7bOVdTcCk3mA/vqEbvZeqceM=
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=wxP
+	LELIvgYlWst24g3fmuXq5NNJ3V21ZKMNThskmLICIJJQwnObBvyQVpbCPw51PrG4
+	zVF7me+9VZZ5vRlTLqbU1Pp75DDB/mXnUXBFppHkdZj+VcezRrgxLn0e02ye3nqy
+	a35Lt7GWLVYYqXULEVyQzF3aFNOkGe+LjbGv+v7w=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D43FB38A7;
-	Wed,  5 Jan 2011 19:53:29 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BDC9038B8;
+	Wed,  5 Jan 2011 19:54:57 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 798A638A6; Wed,  5 Jan 2011
- 19:53:25 -0500 (EST)
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4AC1C38B4; Wed,  5 Jan 2011
+ 19:54:53 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 60BD7740-192F-11E0-A09F-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+X-Pobox-Relay-ID: 9522EDBC-192F-11E0-A09F-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164616>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164617>
 
-The latest maintenance release Git 1.7.3.5 is available at the
-usual places:
+A release candidate Git 1.7.4-rc1 is available at the usual places
+for testing:
 
   http://www.kernel.org/pub/software/scm/git/
 
-  git-1.7.3.5.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.7.3.5.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.7.3.5.tar.{gz,bz2}		(preformatted docs)
+  git-1.7.4.rc1.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.7.4.rc1.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.7.4.rc1.tar.{gz,bz2}		(preformatted docs)
 
 The RPM binary packages for a few architectures are found in:
 
-  RPMS/$arch/git-*-1.7.3.5-1.fc11.$arch.rpm	(RPM)
+  testing/git-*-1.7.4.rc1-1.fc13.$arch.rpm	(RPM)
 
-Just a handful of small fixes here and there, nothing spectacular, exce=
-pt
-perhaps for a fix to the "am --abort" safety issue Linus noticed the ot=
-her
-day.
 
-----------------------------------------------------------------
+Git v1.7.4 Release Notes (draft)
+================================
 
-Changes since v1.7.3.4 are as follows:
+Updates since v1.7.3
+--------------------
 
-Brandon Casey (1):
-      test-lib.sh/test_decode_color(): use octal not hex in awk script
+ * The documentation Makefile now assumes by default asciidoc 8 and
+   docbook-xsl >= 1.73. If you have older versions, you can set
+   ASCIIDOC7 and ASCIIDOC_ROFF, respectively.
 
-Jakub Narebski (1):
-      gitweb: Include links to feeds in HTML header only for '200 OK' r=
-esponse
+ * The option parsers of various commands that create new branches (or
+   rename existing ones to a new name) were too loose and users were
+   allowed to give a branch a name that begins with a dash by creative
+   abuse of their command line options, which only led to burning
+   themselves.  The name of a branch cannot begin with a dash now.
 
-Jeff King (1):
-      ident: die on bogus date format
+ * System-wide fallback default attributes can be stored in
+   /etc/gitattributes; core.attributesfile configuration variable can
+   be used to customize the path to this file.
 
-Jiang Xin (1):
-      Fix typo in git-gc document.
+ * The thread structure generated by "git send-email" has changed
+   slightly.  Setting the cover letter of the latest series as a reply
+   to the cover letter of the previous series with --in-reply-to used
+   to make the new cover letter and all the patches replies to the
+   cover letter of the previous series; this has been changed to make
+   the patches in the new series replies to the new cover letter.
 
-Jonathan Nieder (2):
-      t0050: fix printf format strings for portability
-      gitweb: skip logo in atom feed when there is none
+ * Bash completion script in contrib/ has been adjusted to be usable with
+   Bash 4 (options with '=value' didn't complete)  It has been also made
+   usable with zsh.
 
-Junio C Hamano (5):
-      commit: die before asking to edit the log message
-      am --abort: keep unrelated commits since the last failure and war=
-n
-      rebase --skip: correctly wrap-up when skipping the last patch
-      Prepare for 1.7.3.5
-      Git 1.7.3.5
+ * Different pagers can be chosen depending on which subcommand is
+   being run under the pager, using "pager.<subcommand>" variable.
 
-Kevin Ballard (1):
-      status: Quote paths with spaces in short format
+ * The hardcoded tab-width of 8 used in whitespace breakage checks is now
+   configurable via the attributes mechanism.
 
-Kirill Smelkov (2):
-      t/t8006: Demonstrate blame is broken when cachetextconv is on
-      fill_textconv(): Don't get/put cache if sha1 is not valid
+ * Support of case insensitive filesystems (i.e. "core.ignorecase") has
+   been improved.  For example, the gitignore mechanism didn't pay attention
+   to the case insensitivity.
 
-Mark Lodato (1):
-      fsck docs: remove outdated and useless diagnostic
+ * The <tree>:<path> syntax to name a blob in a tree, and :<path>
+   syntax to name a blob in the index (e.g. "master:Makefile",
+   ":hello.c") have been extended.  You can start <path> with "./" to
+   implicitly have the (sub)directory you are in prefixed to the
+   lookup.  Similarly, ":../Makefile" from a subdirectory would mean
+   "the Makefile of the parent directory in the index".
 
-Michael J Gruber (2):
-      git-difftool.txt: correct the description of $BASE and describe $=
-MERGED
-      difftool: provide basename to external tools
+ * "git blame" learned --show-email option to display the e-mail
+   addresses instead of the names of authors.
 
-Ramsay Allan Jones (1):
-      t3419-*.sh: Fix arithmetic expansion syntax error
+ * "git commit" learned --fixup and --squash options to help later invocation
+   of the interactive rebase.
 
-Ren=C3=A9 Scharfe (1):
-      close file on error in read_mmfile()
+ * Command line options to "git cvsimport" whose names are in capital
+   letters (-A, -M, -R and -S) can now be specified as the default in
+   the .git/config file by their longer names (cvsimport.authorsFile,
+   cvsimport.mergeRegex, cvsimport.trackRevisions, cvsimport.ignorePaths).
 
-Robin H. Johnson (2):
-      Fix false positives in t3404 due to SHELL=3D/bin/false
-      t9001: Fix test prerequisites
+ * "git daemon" can be built in MinGW environment.
 
-Thomas Rast (1):
-      userdiff: fix typo in ruby and python word regexes
+ * "git daemon" can take more than one --listen option to listen to
+   multiple addresses.
 
-Vasyl' Vavrychuk (1):
-      trace.c: mark file-local function static
+ * "git describe --exact-match" was optimized not to read commit
+   objects unnecessarily.
+
+ * "git diff" and "git grep" learned how functions and subroutines
+   in Fortran look like.
+
+ * "git fetch" learned "--recurse-submodules" option.
+
+ * "git mergetool" tells vim/gvim to show three-way diff by default
+   (use vimdiff2/gvimdiff2 as the tool name for old behaviour).
+
+ * "git log -G<pattern>" limits the output to commits whose change has
+   added or deleted lines that match the given pattern.
+
+ * "git read-tree" with no argument as a way to empty the index is
+   deprecated; we might want to remove it in the future.  Users can
+   use the new --empty option to be more explicit instead.
+
+ * "git repack -f" does not spend cycles to recompress objects in the
+   non-delta representation anymore (use -F if you really mean it
+   e.g. after you changed the core.compression variable setting).
+
+ * "git merge --log" used to limit the resulting merge log to 20
+   entries; this is now customizable by giving e.g. "--log=47".
+
+ * "git merge" may work better when all files were moved out of a
+   directory in one branch while a new file is created in place of that
+   directory in the other branch.
+
+ * "git rebase --autosquash" can use SHA-1 object names to name which
+   commit to fix up (e.g. "fixup! e83c5163").
+
+ * The default "recursive" merge strategy learned --rename-threshold
+   option to influence the rename detection, similar to the -M option
+   of "git diff".  From "git merge" frontend, "-X<strategy option>"
+   interface, e.g. "git merge -Xrename-threshold=50% ...", can be used
+   to trigger this.
+
+ * The "recursive" strategy also learned to ignore various whitespace
+   changes; the most notable is -Xignore-space-at-eol.
+
+ * "git send-email" learned "--to-cmd", similar to "--cc-cmd", to read
+   recipient list from a command output.
+
+ * "git send-email" learned to read and use "To:" from its input files.
+
+ * you can extend "git shell", which is often used on boxes that allow
+   git-only login over ssh as login shell, with custom set of
+   commands.
+
+ * The current branch name in "git status" output can be colored differently
+   from the generic header color by setting "color.status.branch" variable.
+
+ * "git submodule sync" updates metainformation for all submodules,
+   not just the ones that have been checked out.
+
+ * gitweb can use custom 'highlight' command with its configuration file.
+
+ * other gitweb updates.
+
+
+Also contains various documentation updates.
+
+
+Fixes since v1.7.3
+------------------
+
+All of the fixes in v1.7.3.X maintenance series are included in this
+release, unless otherwise noted.
+
+ * "git log --author=me --author=her" did not find commits written by
+   me or by her; instead it looked for commits written by me and by
+   her, which is impossible.
+
+ * "git push --progress" shows progress indicators now.
+
+ * "git repack" places its temporary packs under $GIT_OBJECT_DIRECTORY/pack
+   instead of $GIT_OBJECT_DIRECTORY/ to avoid cross directory renames.
+
+ * "git submodule update --recursive --other-flags" passes flags down
+   to its subinvocations.
