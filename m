@@ -1,84 +1,57 @@
-From: Matthijs Kooijman <matthijs@stdin.nl>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
 Subject: Re: git color in commit editor
-Date: Thu, 6 Jan 2011 11:15:31 +0100
-Message-ID: <20110106101531.GU3069@login.drsnuggles.stderr.nl>
+Date: Thu, 6 Jan 2011 11:58:20 +0100
+Message-ID: <AANLkTimAXV9u4FfL2cv5vE9oDgs-LfJu2DopRw=FEqUE@mail.gmail.com>
 References: <AANLkTimMZaSW4ZUS60Vo38vyuq-PPqPhGdCVZjFzF2Gs@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="y+YP6lsTt6PYX/7e"
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
 To: Pavan Savoy <pavan_savoy@sify.com>
-X-From: git-owner@vger.kernel.org Thu Jan 06 11:15:41 2011
+X-From: git-owner@vger.kernel.org Thu Jan 06 11:58:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pamse-0002vx-Ez
-	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 11:15:40 +0100
+	id 1PanY3-00065g-7z
+	for gcvg-git-2@lo.gmane.org; Thu, 06 Jan 2011 11:58:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752492Ab1AFKPf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jan 2011 05:15:35 -0500
-Received: from drsnuggles.stderr.nl ([94.142.244.14]:55260 "EHLO
-	drsnuggles.stderr.nl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752423Ab1AFKPe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jan 2011 05:15:34 -0500
-Received: from login.drsnuggles.stderr.nl ([10.42.0.9] ident=mail)
-	by mail.drsnuggles.stderr.nl with smtp (Exim 4.69)
-	(envelope-from <matthijs@stdin.nl>)
-	id 1PamsV-0006B4-U9; Thu, 06 Jan 2011 11:15:32 +0100
-Received: (nullmailer pid 23746 invoked by uid 1000);
-	Thu, 06 Jan 2011 10:15:31 -0000
-Mail-Followup-To: Pavan Savoy <pavan_savoy@sify.com>, git@vger.kernel.org
-Content-Disposition: inline
+	id S1753021Ab1AFK6W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jan 2011 05:58:22 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:55901 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752932Ab1AFK6V (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jan 2011 05:58:21 -0500
+Received: by fxm20 with SMTP id 20so15898603fxm.19
+        for <git@vger.kernel.org>; Thu, 06 Jan 2011 02:58:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=Xxc51mtvSTMVAIcVmIh4O0RWGUZpdUnb5fzS4xQTSGg=;
+        b=m+xUIv8FN5N0bqieeU+CTQKA0IKAypQ4YW7xpMsrfpWyM6kY7L4t9Vn1mySphOMGJb
+         ++3kSC/KB1OGtik8KHabomiiMDRkI0XnUwSNp21CNH4Hxe5FIiaGV70LdUU0nxAZSezu
+         v1RssKSvgqMHKLwWRTBHPWMBPSbgAN8d+GcZ8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=hqxBOV+Gy2Sq4gGkdgun3T6542yjhWCySp+Ypa11N+w44XYnOK1zj7P4+Hkk1OB15U
+         VoubT6baDw3AAEScJ+8CwFY7pdA+NXcSsBk4F0CK7dGVP7FGqbKgDSSPNm8SbadOAliM
+         KLDsbxnwm3/29/+hGz8+68/ZOYF4uhYjEEx78=
+Received: by 10.223.103.8 with SMTP id i8mr1454832fao.47.1294311500508; Thu,
+ 06 Jan 2011 02:58:20 -0800 (PST)
+Received: by 10.223.86.204 with HTTP; Thu, 6 Jan 2011 02:58:20 -0800 (PST)
 In-Reply-To: <AANLkTimMZaSW4ZUS60Vo38vyuq-PPqPhGdCVZjFzF2Gs@mail.gmail.com>
-X-PGP-Fingerprint: 7F6A 9F44 2820 18E2 18DE  24AA CF49 D0E6 8A2F AFBC
-X-PGP-Key: http://www.stderr.nl/static/files/gpg_pubkey.asc
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-Spam-Score: -2.6 (--)
-X-Spam-Report: Spamchecked on "mail.drsnuggles.stderr.nl"
-	pts  rule name              description
-	---- ---------------------- -------------------------------------------
-	-2.6 BAYES_00               BODY: Bayesian spam probability is 0 to 1%
-	[score: 0.0000]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164627>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164628>
 
-
---y+YP6lsTt6PYX/7e
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-Hey Pavan,
-
+On Thu, Jan 6, 2011 at 07:42, Pavan Savoy <pavan_savoy@sify.com> wrote:
 > I have git version git version 1.5.6.3, on 1 system and get the colors
 > right during a git commit (commit editor being vim..)
-> On another machine with same vim version and same gitconfig and pretty
-> much all the same settings except that the
-> git version is git version 1.6.3.3, I don't have color in the commit editor...
-Try the ":syntax on" command in your vim (without the quotes, with the
-colon).
 
-You can put it in your ~/.vimrc file as well (without the colon there).
-
-Gr.
-
-Matthijs
-
---y+YP6lsTt6PYX/7e
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.9 (GNU/Linux)
-
-iEYEARECAAYFAk0llkMACgkQz0nQ5oovr7zTJQCeOW3JmDZHNsH11HTuNXAIBOxb
-EFUAoJg9gRv5h5Va8DO+Qbr1GCBCznZc
-=PLUj
------END PGP SIGNATURE-----
-
---y+YP6lsTt6PYX/7e--
+FWIW here's how to get those colors under Emacs:
+https://github.com/rafl/git-commit-mode
