@@ -1,68 +1,135 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Mark gitk script executable
-Date: Thu, 06 Jan 2011 18:34:55 -0800
-Message-ID: <7vlj2x8mr4.fsf@alter.siamese.dyndns.org>
-References: <alpine.DEB.2.02.1101061943140.6372@dr-wily.mit.edu>
+From: Zenaan Harkness <zen@freedbms.net>
+Subject: Re: Resumable clone/Gittorrent (again) - stable packs?
+Date: Fri, 7 Jan 2011 13:36:31 +1100
+Message-ID: <AANLkTikgzqoG2cymNJ0NN03RsTRJi22R9M+0LFJ8U2yB@mail.gmail.com>
+References: <AANLkTikv+L5Da7A5VM7BAgnue=m0O_-nHmHchJzfGxJa@mail.gmail.com> <alpine.LFD.2.00.1101061552580.22191@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Anders Kaseorg <andersk@MIT.EDU>
-X-From: git-owner@vger.kernel.org Fri Jan 07 03:35:14 2011
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Fri Jan 07 03:37:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pb2Ac-0006lJ-GS
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 03:35:14 +0100
+	id 1Pb2Cp-0007gE-U3
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 03:37:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755137Ab1AGCfF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jan 2011 21:35:05 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42678 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753953Ab1AGCfE (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jan 2011 21:35:04 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2422B3055;
-	Thu,  6 Jan 2011 21:35:41 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=SCA6+coVGR2Xvy6Y9TRuH3uM3IQ=; b=fBcjFC
-	dAR7ZYpsqVHm8tTKN+Uft5j5MuuN5w2VjcIzjad73Qb+NG0o0UPawFEzTUAUwY5D
-	c2/xBxpo9WICROzWc9QRRO9fZm0GPB+GK43NZaJvPM3EQoFhrfLc0OCYSsdArXfq
-	xvKc/jIXbCpV7NIqX+QQCqOBgr+pYg/dsm6mI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=jI11livjnroodVyMqYJA47gzmiuwuNVt
-	S1EspxyuUxwsrv5wZh8iMtxIz12ChP1u6fve1zUSouIAoCiJBTnssSFo5lXppxu/
-	XkAartBLGpDdPIMA1Q9JOpRCiBOxDqDOxefj+PMBFIJAXqW2xsKO9sCIIO57LBse
-	NZs/BahL1ZI=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 028173052;
-	Thu,  6 Jan 2011 21:35:38 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 23123304D; Thu,  6 Jan 2011
- 21:35:35 -0500 (EST)
-In-Reply-To: <alpine.DEB.2.02.1101061943140.6372@dr-wily.mit.edu> (Anders
- Kaseorg's message of "Thu\, 6 Jan 2011 20\:14\:41 -0500 \(EST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D067C35C-1A06-11E0-B763-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
+	id S1755400Ab1AGChF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Jan 2011 21:37:05 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:65360 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755382Ab1AGChD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 6 Jan 2011 21:37:03 -0500
+Received: by bwz15 with SMTP id 15so16973943bwz.19
+        for <git@vger.kernel.org>; Thu, 06 Jan 2011 18:37:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:sender:received
+         :in-reply-to:references:from:date:x-google-sender-auth:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        bh=m9W4wXRJbXMDSCtXSvAgQCX7KrDgo7ph80mNZNSTWW0=;
+        b=X8/TYKHs53fTQiF8GkypV3peOBn3qg4e72pg99yxKGvhkQ7qxX5juUk2qJZT8/ZZVP
+         zYXEiFG03nG8Hx43Sr7gma0drUcObbP4a9ZjrOyjQTbNW744oWhROpldvyuz6jj9xwSy
+         J1FVPaJ9CcTvdHyVnUjvEFFb6a0l1SCamEqxg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=X55ozu+35Efip9U2kaTMyLeJuI7DKd994/35iooVTHZ8O/ed+XzUwi4op9puNEmnos
+         bnVVJpMoJw4sLZiGGuEyRc35YkmMYTsH2FX+C6TJ5zZdnz+dxACeGJl7JOEM5jdbPHx6
+         4JpfDpIzjdOnkVA1ShtwBHXa6YPwg/ztWeKB0=
+Received: by 10.204.75.193 with SMTP id z1mr3005569bkj.214.1294367822016; Thu,
+ 06 Jan 2011 18:37:02 -0800 (PST)
+Received: by 10.204.112.210 with HTTP; Thu, 6 Jan 2011 18:36:31 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.1101061552580.22191@xanadu.home>
+X-Google-Sender-Auth: J2gShbmY-1QNLS-C6Sw0n_U21Eo
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164695>
 
-Anders Kaseorg <andersk@MIT.EDU> writes:
-
-> The executable bit on gitk-git/gitk was lost (accidentally it seems) by 
-> commit 62ba5143ec2ab9d4083669b1b1679355e7639cd5.  Put it back, so that 
-> gitk can be run directly from a git.git checkout.
+On Fri, Jan 7, 2011 at 08:09, Nicolas Pitre <nico@fluxnic.net> wrote:
+> On Thu, 6 Jan 2011, Zenaan Harkness wrote:
 >
-> Note that the script is already executable in gitk.git, just not in 
-> git.git.
+>> Bittorrent requires some stability around torrent files.
+>>
+>> Can packs be generated deterministically?
+>
+> They _could_, but we do _not_ want to do that.
+>
+> The only thing which is stable in Git is the canonical representation=
+ of
+> objects, and the objects they depend on, expressed by their SHA1
+> signature. =A0Any BitTorrent-alike design for Git must be based on th=
+at
+> property and not the packed representation of those objects which is =
+not
+> meant to be stable.
+>
+> If you don't want to design anything and simply reuse current BitTorr=
+ent
+> codebase then simply create a Git bundle from some release version an=
+d
+> seed that bundle for a sufficiently long period to be worth it. =A0Th=
+en
+> falling back to git fetch in order to bring the repo up to date with =
+the
+> very latest commits should be small and quick. =A0When that clone get=
+s too
+> big then it's time to start seeding another more up-to-date bundle.
 
-It did not lose the bit by accident but 62ba5143 pretty much was a
-deliberate fix.  "gitk" is a source file, and its build product,
-gitk-wish, is what is eventually installed with executable bit on.
+Thanks guys for the explanations.
+
+So, we don't _want_ to generate packs deterministically.
+BUT, we _can_ reliably unpack a pack (duh).
+
+So if my configured "canonical upstream" decides on a particular
+compression etc, I (my git client) doesn't care what has been chosen
+by my upstream.
+
+What is important for torrent-able packs though is stability over some
+time period, no matter what the format.
+
+There's been much talk of caching, invalidating of caches, overlapping
+torrent-packs etc.
+
+In every case, for torrents to work, the P2P'd files must have some
+stability over some time period.
+(If this assumption is incorrect, please clarify, not counting
+every-file-is-a-torrent and every-commit-is-a-torrent.)
+
+So, torrentable options:
+- torrent per commit
+- torrent per pack
+- torrent per torrent-archive - new file format
+
+Torrent per commit - too small, too many torrents; we need larger
+p2p-able sizes in general.
+
+Torrent per pack - packs non-deterministically created, both between
+hosts and even intra-host (libz upgrade, nr_threads change, git pack
+algorithm optimization).
+
+A new torrent format, if "close enough" to current git pack
+performance (cpu load, threadability, size) is potential for new
+version of git pack file format - we don't want to store two sets of
+pack files on disk, if sensible to not do so; unlikely to happen - I
+can't conceive that a torrentable format would be anything but worse
+than pack files and therefore would be rejected from git master.
+
+Can we can relax the perceived requirement to deterministically create
+pack files?
+Well, over what time period are pack files stable in a particular git?
+Over what time period do we require stable files for torrenting?
+
+Can we simply configure our local git to keep specified pack files for
+specified time period?
+And use those for torrent-packs?
+Perhaps the torrent file could have a UseBy date?
+
+Zen
