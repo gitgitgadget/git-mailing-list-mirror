@@ -1,64 +1,93 @@
-From: Steven Walter <stevenrwalter@gmail.com>
-Subject: Re: [RFC/PATCH] t9157-*.sh: Add an svn version check
-Date: Fri, 7 Jan 2011 12:44:55 -0500
-Message-ID: <AANLkTi=VpHtQ+x5hyfCei-=X=ry4X=+TSGg7EKa7zs4j@mail.gmail.com>
-References: <4D260A03.90903@ramsay1.demon.co.uk>
-	<20110107173114.GA31376@dcvr.yhbt.net>
+From: Stephen Kelly <steveire@gmail.com>
+Subject: Re: Wish: make commiter email address configurable per-repo
+Date: Fri, 07 Jan 2011 19:01:54 +0100
+Message-ID: <ig7kej$j4p$1@dough.gmane.org>
+References: <ig73o1$lbg$1@dough.gmane.org> <201101071420.40570.trast@student.ethz.ch> <ig7449$lbg$2@dough.gmane.org> <201101071443.51574.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	Junio C Hamano <gitster@pobox.com>
-To: Eric Wong <normalperson@yhbt.net>
-X-From: git-owner@vger.kernel.org Fri Jan 07 18:45:06 2011
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 07 19:02:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbGN5-00024r-Ci
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 18:45:03 +0100
+	id 1PbGdj-000311-4u
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 19:02:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754654Ab1AGRo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jan 2011 12:44:58 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:33688 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754603Ab1AGRo5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jan 2011 12:44:57 -0500
-Received: by bwz15 with SMTP id 15so17506685bwz.19
-        for <git@vger.kernel.org>; Fri, 07 Jan 2011 09:44:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type;
-        bh=ZTCXu5RWr5UDEjc25al65fSXsYDaiBvRuTiQ20cKqAA=;
-        b=nSGHBqQXeHxtkMlQAWhk2oo0qepD4GbJE2xWPd0x+GGjjYeaNk94bb6ruaQ8Ker2MQ
-         +R+65lVy+4ag+cqOTgAAjbYQjMkysfm/4xdrWuSFa7z/A8wQXvVbfJ365w3aIR8oiw59
-         GYkYxdqaDZc4W87cdDgrQpk+nur++Uu/REIl4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=sGV7FCuuv8uEIHrAN/4qIb1xofT0d/YPFpXV8fVzJdQDfGlKbbPF/cIYoT5RaVxq5r
-         OisqhWAiQQcbFnmrromo0SviJbOgTQ5hHntWyzn0zKOA9z9jfM/4Hk9IgNYo4h58ib6J
-         72YovQ6di44KsZxK2qDZkPHrGr4tYH8rtrZBE=
-Received: by 10.204.138.142 with SMTP id a14mr1374623bku.197.1294422295370;
- Fri, 07 Jan 2011 09:44:55 -0800 (PST)
-Received: by 10.204.152.212 with HTTP; Fri, 7 Jan 2011 09:44:55 -0800 (PST)
-In-Reply-To: <20110107173114.GA31376@dcvr.yhbt.net>
+	id S1755087Ab1AGSCI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jan 2011 13:02:08 -0500
+Received: from lo.gmane.org ([80.91.229.12]:48655 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754660Ab1AGSCH (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 13:02:07 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PbGda-0002xs-F6
+	for git@vger.kernel.org; Fri, 07 Jan 2011 19:02:06 +0100
+Received: from 188.111.54.34 ([188.111.54.34])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Jan 2011 19:02:06 +0100
+Received: from steveire by 188.111.54.34 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Jan 2011 19:02:06 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 188.111.54.34
+User-Agent: KNode/4.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164727>
 
-On Fri, Jan 7, 2011 at 12:31 PM, Eric Wong <normalperson@yhbt.net> wrote:
-> Ramsay Jones <ramsay@ramsay1.demon.co.uk> wrote:
->> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk> ---
+Thomas Rast wrote:
+
+> Stephen Kelly wrote:
+>> Thomas Rast wrote:
+>> > See user.email in git-config(1).  Most people set it globally, as in
+>> > 
+>> >   git config --global user.email "author@example.com"
+>> > 
+>> > but there's nothing stopping you from doing
+>> > 
+>> >   git config user.email "alias@example.com"
+>> > 
+>> > to set it on a per-repo level.  (Or just edit .git/config, of course.)
+>> 
+>> Doesn't this set both the author and the committer?
+> 
+> Oh, I see.  Yes, it does.
 >
-> Consider this
-> Acked-by: Eric Wong <normalperson@yhbt.net>
+> Stephen Kelly wrote earlier:
+>> If my email address that I use for committing is not the same as that
+>> configured in the bugzilla, the automated bug closing does not work.
+> 
+> 
+> Probably if KDE has this use-case then that means we need to implement
+> it as a feature on size alone, but I briefly looked into the code and
+> it requires a bit more restructuring than I'm willing to do over
+> coffee.
+> 
+> I think as a stop-gap measure you'll have to use an alias such as
+> 
+>   ci = commit --author="your usual <author>"
+> 
+> along with a local setting for user.email to force them to be
+> different.  (Note that this will re-set the author when saying 'git
+> ci --amend' on other people's commits!)
+> 
 
-Acked-by: Steven Walter <stevenrwalter@gmail.com>
--- 
--Steven Walter <stevenrwalter@gmail.com>
+Thanks for looking into it!
+
+I'll consider the alias you suggest. Git command aliases can be configured 
+per repo, right?
+
+Is there a bug tracker used for git so that this issue doesn't get lost?
+
+All the best,
+
+Steve.
