@@ -1,83 +1,75 @@
-From: "r.ductor@gmail.com" <r.ductor@gmail.com>
-Subject: Re: [PATCH/RFC] Documentation/checkout: explain behavior wrt local changes
-Date: Fri, 7 Jan 2011 15:27:42 +0100
-Message-ID: <201101071527.42544.r.ductor@gmail.com>
-References: <20110106154418.3348.29438.reportbug@localhost> <20110106225222.GA15900@burratino> <7vtyhl8t5y.fsf@alter.siamese.dyndns.org>
+From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+Subject: Re: Resumable clone/Gittorrent (again)
+Date: Fri, 7 Jan 2011 15:59:56 +0000
+Message-ID: <AANLkTikKn1+2OX1KPy+9US_yX=E6+CiaCTTB6yqnAWwW@mail.gmail.com>
+References: <AANLkTinUV9Z_w85Gz13J+bm8xqnxJ9jBJXJm9bn5Y2ec@mail.gmail.com>
+	<alpine.LFD.2.00.1101061956470.22191@xanadu.home>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 07 16:26:40 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Fri Jan 07 17:00:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbED9-0001vJ-Q9
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 16:26:40 +0100
+	id 1PbEjU-0003Ec-AU
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 17:00:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751901Ab1AGP0e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jan 2011 10:26:34 -0500
-Received: from cirse-out.extra.cea.fr ([132.166.172.106]:33937 "EHLO
-	cirse-out.extra.cea.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751641Ab1AGP0d (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jan 2011 10:26:33 -0500
-X-Greylist: delayed 3489 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 Jan 2011 10:26:33 EST
-Received: from epeire2.extra.cea.fr (epeire2.extra.cea.fr [132.167.198.32])
-	by cirse.extra.cea.fr (8.14.2/8.14.2/CEAnet-Internet-out-2.0) with ESMTP id p07ERuSB005118
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 7 Jan 2011 15:27:56 +0100
-Received: from orpin1.extra.cea.fr (orpin1.extra.cea.fr [132.167.198.4])
-	by epeire2.extra.cea.fr (8.14.4/8.14.4) with ESMTP id p07ERtnA007241;
-	Fri, 7 Jan 2011 15:27:56 +0100
-	(envelope-from r.ductor@gmail.com)
-Received: from galileo.localnet ([132.166.22.182])
-	by orpin1.extra.cea.fr (8.13.8/8.13.8/CEAnet-Extranet-out-1.1) with ESMTP id p07ERt9H032673;
-	Fri, 7 Jan 2011 15:27:55 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.32-5-amd64; KDE/4.4.5; x86_64; ; )
-In-Reply-To: <7vtyhl8t5y.fsf@alter.siamese.dyndns.org>
+	id S1754189Ab1AGP76 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jan 2011 10:59:58 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:50214 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752065Ab1AGP76 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 10:59:58 -0500
+Received: by qyj19 with SMTP id 19so617727qyj.19
+        for <git@vger.kernel.org>; Fri, 07 Jan 2011 07:59:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=9lgXv1cnfTF0xSPPRpABKawYCAzio5aQ0cWodHFpoUY=;
+        b=Sat1zgEvQ2FCixYX/NAOwURHqAuk2PwTG0nUQRV74j1Ej4ESxsDeBddRaU9gxhna3w
+         HRSbUTLCrCAW8Bdhnpl8tihoL6XRy4PZccOXEMX2maYZdykkLaKQK1TB14CUUlgBj3no
+         XH2hesJxGVurXrsV8VsRIitiRMY3ZP1djPwDk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=KlAMru6vPO9dvvYZIF3yabGzQ0lKEuYdollwBdWcRp/cbGIovytHqNnZFeemje24BP
+         hyMMlKbO9WxJP3rYrUKTMDfKGfQffdFp3GVWOMJ7Xh0/DSc8rSSQqOs5ejnZfY1VsjDp
+         tb7TU5hMjHQMkr08zfLZvHElvPJwHqgyYzVdQ=
+Received: by 10.229.251.139 with SMTP id ms11mr1229551qcb.198.1294415997341;
+ Fri, 07 Jan 2011 07:59:57 -0800 (PST)
+Received: by 10.220.190.203 with HTTP; Fri, 7 Jan 2011 07:59:56 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.1101061956470.22191@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164718>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164719>
 
-Dear all
+On Fri, Jan 7, 2011 at 3:21 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
 
-I'm a beginner git user trying to defend the beginners' party. Using Jonathan's explanations (and some educated guess on git behavior) I tried to concoct the man git-checkout documentation I would have liked to read, which is somewhat more explicit than Jonathan's patch. If you want to implement/improve it please double check it (and maybe warn me about my own errors). If you are happy about that I will try to send more suggestions. Thanks for your time and your work.
+>> The last thing I like about these chains is that the number of chains
+>> is reasonable. It won't increase too fast over time (as compared to
+>> the number of commits). As such it maps well to BitTorrent's "pieces".
+>
+> My problem right now is that I don't see how this maps well to Git.
 
-riccardo   
+ bittorrent as "just another file getting method" maps very well.
 
-git checkout [<branch>]
-git checkout -b|-B <new_branch> [<start point>]
+ only with some modifications to the bittorrent protocol would the
+concept map well to bittorrent "pieces" because the pieces are at
+present a) fixed size b) defined by a heuristic based on the file size
+(logarithmic) so that the number of pieces are kept to within a
+reasonable limit.
 
-     Tries to change the current HEAD to <branch> (or <start point>) and to safely update the working tree and the index.
-     If there exist files having three distinct contents in the current commit, in the new branch and in the working tree, then the operation is canceled and all state is preserved.
-     (This behavior may be changed with the option --merge.) If this is not the case, for all other files it acts as follows.  
-       - Files not differing between the current commit and the new branch: their contents in the working tree (and eventually in the index) are left unchanged. 
-       - Files in the current commit, unchanged or absent in the working tree, but not present in the new branch are removed from the working tree and from the index.
-       - Files in the new branch but not in the current commit are added to the working tree and to the index (if they were already there they must have had the same contents by hypothesis).
-       - Files in the working tree or in the index that are absent in the current commit and in the new branch are left unchanged.
-    
-    If -b is given, ...
+ bottom line: my take on this is (sorry to say, nguyen) that i don't
+believe bittorrent "pieces" map well to the chains concept, unless the
+chains are perfectly fixed identical sizes [which they could well be?
+am i mistaken about this?]
 
-
-
-On Friday 07 January 2011 01:16:25 Junio C Hamano wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
-> 
-> >  'git checkout' [<branch>]::
-> >  'git checkout' -b|-B <new_branch> [<start point>]::
-> >  
-> > -	This form switches branches by updating the index, working
-> > -	tree, and HEAD to reflect the specified branch.
-> > +	This form switches branches by changing `HEAD` and updating the
-> > +	tracked files to the specified branch.  'git checkout' will
-> > +	stop without doing anything if local changes overlap with
-> > +	changes to the tracked files.  (Any local changes that do not
-> > +	overlap with changes from `HEAD` to the specified branch will
-> > +	be preserved.)
-> 
+ l.
