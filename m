@@ -1,104 +1,116 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: problem with cherry-picking a commit which comes before
- introducing a new submodule
-Date: Fri, 7 Jan 2011 12:15:01 -0600
-Message-ID: <20110107181501.GA28980@burratino>
-References: <20110107172432.GA6040@onerussian.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: Wish: make commiter email address configurable per-repo
+Date: Fri, 7 Jan 2011 19:19:01 +0100
+Message-ID: <AANLkTikaSwLGG_=uhF+-YqOHrqtLRBqc2qLw46G03-pg@mail.gmail.com>
+References: <ig73o1$lbg$1@dough.gmane.org> <201101071420.40570.trast@student.ethz.ch>
+ <ig7449$lbg$2@dough.gmane.org> <201101071443.51574.trast@student.ethz.ch> <ig7kej$j4p$1@dough.gmane.org>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-To: Yaroslav Halchenko <debian@onerussian.com>
-X-From: git-owner@vger.kernel.org Fri Jan 07 19:15:27 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Stephen Kelly <steveire@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 07 19:19:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbGqT-0001TM-8A
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 19:15:25 +0100
+	id 1PbGuO-0003TG-7D
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 19:19:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755071Ab1AGSPT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jan 2011 13:15:19 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:44208 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754741Ab1AGSPR (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jan 2011 13:15:17 -0500
-Received: by qwa26 with SMTP id 26so18064089qwa.19
-        for <git@vger.kernel.org>; Fri, 07 Jan 2011 10:15:17 -0800 (PST)
+	id S1755004Ab1AGSTX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jan 2011 13:19:23 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:58166 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754758Ab1AGSTW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Jan 2011 13:19:22 -0500
+Received: by fxm20 with SMTP id 20so17176655fxm.19
+        for <git@vger.kernel.org>; Fri, 07 Jan 2011 10:19:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=ykC2SyAzepj2i7R6F1tdaS61NmxHBMVLW0mfPyicOIA=;
-        b=miw2ga3Sl4Mbd4X3hpd8/igXsJgMLpoaHk84oFu/9/vdeBMaBGqbUkA8joCMJ+q7lQ
-         CKPE+YulHBMrY3Cm3INgyVdoHc8DOBJxYBb8ac6tQCWnzbAn2J1EGiwlNOv+dUPVxXGK
-         It8tRh+ZjqQXCrOicCoHGj9cqkYrp4d1OzTgE=
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=dCtS/4xFiMAb12lUk4zu9Vue+JIug+ZsGo0sWGQ2irE=;
+        b=occF65HV6wTEGZ208wP3bPIBXZt1G0dJIO30P1+HcPfWbhtfb/PlFjBD7BB60jyKIA
+         ZQWg5dR8tAmW76NSJx3GqTQ4I91IaJAOBgfzfjnhKwCreH/ZCoSJDpqyF6BfW31/vSRO
+         6R1B3w2Qw0R8kfGGxeYazKZft1U+BPQSRAglY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Ul9KiZ3aFtV2L0ZVKZZSfppws5EG3jOWby+/97H2VFgwjeZYawY3e0P9UWs8/971/w
-         DvEGrPHuJfgx9CDMCfOOS/awNIP4OQRcOsYmP3IyUEb8oJ23caMjHSQuSSZSMk+xTw4r
-         hKcSh2/KkZyn/Xv6mwNie+U6haU04wLCgOBVI=
-Received: by 10.229.220.144 with SMTP id hy16mr21558499qcb.80.1294424117059;
-        Fri, 07 Jan 2011 10:15:17 -0800 (PST)
-Received: from burratino (adsl-69-209-72-219.dsl.chcgil.sbcglobal.net [69.209.72.219])
-        by mx.google.com with ESMTPS id nb15sm14392260qcb.14.2011.01.07.10.15.14
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 07 Jan 2011 10:15:15 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110107172432.GA6040@onerussian.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=TH2c4bci6DOgnN4V8dDmJQRK9ND6YYFO7dHXko2Tkd0tAGfs55fN+u+TyWW/zgoLCS
+         ZYmAi7HuBjS4Sqr83fjtOm7Hx0UTGlxWl5g8Ymvh+jTeomCc7mvdf6UJPOkQlj6oSE4+
+         x77q2rCfeETHdjP4H2vxAK4JXZXceHJlnYqPc=
+Received: by 10.223.118.136 with SMTP id v8mr61764faq.90.1294424361367; Fri,
+ 07 Jan 2011 10:19:21 -0800 (PST)
+Received: by 10.223.79.3 with HTTP; Fri, 7 Jan 2011 10:19:01 -0800 (PST)
+In-Reply-To: <ig7kej$j4p$1@dough.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164730>
 
-(+cc: Elijah Newren, who has worked on some of this code)
+On Fri, Jan 7, 2011 at 7:01 PM, Stephen Kelly <steveire@gmail.com> wrot=
+e:
+> Thomas Rast wrote:
+>
+>> Stephen Kelly wrote:
+>>> Thomas Rast wrote:
+>>> > See user.email in git-config(1). =A0Most people set it globally, =
+as in
+>>> >
+>>> > =A0 git config --global user.email "author@example.com"
+>>> >
+>>> > but there's nothing stopping you from doing
+>>> >
+>>> > =A0 git config user.email "alias@example.com"
+>>> >
+>>> > to set it on a per-repo level. =A0(Or just edit .git/config, of c=
+ourse.)
+>>>
+>>> Doesn't this set both the author and the committer?
+>>
+>> Oh, I see. =A0Yes, it does.
+>>
+>> Stephen Kelly wrote earlier:
+>>> If my email address that I use for committing is not the same as th=
+at
+>>> configured in the bugzilla, the automated bug closing does not work=
+=2E
+>>
+>>
+>> Probably if KDE has this use-case then that means we need to impleme=
+nt
+>> it as a feature on size alone, but I briefly looked into the code an=
+d
+>> it requires a bit more restructuring than I'm willing to do over
+>> coffee.
+>>
+>> I think as a stop-gap measure you'll have to use an alias such as
+>>
+>> =A0 ci =3D commit --author=3D"your usual <author>"
+>>
+>> along with a local setting for user.email to force them to be
+>> different. =A0(Note that this will re-set the author when saying 'gi=
+t
+>> ci --amend' on other people's commits!)
+>>
+>
+> Thanks for looking into it!
+>
+> I'll consider the alias you suggest. Git command aliases can be confi=
+gured
+> per repo, right?
+>
 
-Yaroslav Halchenko wrote:
+Yes, aliases are normal configuration variables, and can be set per rep=
+o.
 
-> In our repository we had some submodules, then there was a branch off
-> (call new branch todonotloose) with a single commit.  In the master we
-> had some other commits and moved one of the subdirectories into a
-> submodule.
-> 
-> Later on we decided to cherry pick todonotloose into master but
-> cherry-pick fails despite the fact that 'git show todonotloose | patch
-> -p1' applies just fine, ie there were no changes touching any of the
-> submodules.
-[...]
-> $> git status
-> # On branch master
-> # Changes to be committed:
-> #   (use "git reset HEAD <file>..." to unstage)
-> #
-> #	new file:   poster-hbm2011_neurodebian/abstract.txt
-> #	modified:   poster-hbm2011_neurodebian/jb.txt
-> #
-> # Unmerged paths:
-> #   (use "git reset HEAD <file>..." to unstage)
-> #   (use "git add/rm <file>..." as appropriate to mark resolution)
-> #
-> #	added by us:        frontiers/code
-> #
+> Is there a bug tracker used for git so that this issue doesn't get lo=
+st?
+>
 
-As contrib/examples/git-revert.sh explains, the heart of "git
-cherry-pick" is
-
-	base=todonotloose^
-	next=todonotloose
-	head=HEAD
-
-	git merge-recursive $base -- $head $next
-
-Could you try that, perhaps with GIT_MERGE_VERBOSITY=4 (or some other
-number from 1 to 5, larger is louder) in the environment?  For context,
-
-	git ls-files -u;	# after the merge
-	git diff-tree todonotloose
-	git diff-tree todonotloose^ HEAD
-
-would also be interesting.
+No, just this mailing list.
