@@ -1,116 +1,78 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Wish: make commiter email address configurable per-repo
-Date: Fri, 7 Jan 2011 19:19:01 +0100
-Message-ID: <AANLkTikaSwLGG_=uhF+-YqOHrqtLRBqc2qLw46G03-pg@mail.gmail.com>
-References: <ig73o1$lbg$1@dough.gmane.org> <201101071420.40570.trast@student.ethz.ch>
- <ig7449$lbg$2@dough.gmane.org> <201101071443.51574.trast@student.ethz.ch> <ig7kej$j4p$1@dough.gmane.org>
-Reply-To: kusmabite@gmail.com
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCH] t9157-*.sh: Add an svn version check
+Date: Fri, 7 Jan 2011 12:19:46 -0600
+Message-ID: <20110107181946.GB28980@burratino>
+References: <4D260A03.90903@ramsay1.demon.co.uk>
+ <20110107173114.GA31376@dcvr.yhbt.net>
+ <AANLkTi=VpHtQ+x5hyfCei-=X=ry4X=+TSGg7EKa7zs4j@mail.gmail.com>
+ <20110107180220.GA20031@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Stephen Kelly <steveire@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 07 19:19:29 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Steven Walter <stevenrwalter@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Jan 07 19:20:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbGuO-0003TG-7D
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 19:19:28 +0100
+	id 1PbGv6-0003kz-V8
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 19:20:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755004Ab1AGSTX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jan 2011 13:19:23 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:58166 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754758Ab1AGSTW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Jan 2011 13:19:22 -0500
-Received: by fxm20 with SMTP id 20so17176655fxm.19
-        for <git@vger.kernel.org>; Fri, 07 Jan 2011 10:19:21 -0800 (PST)
+	id S1755140Ab1AGSUF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jan 2011 13:20:05 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:40051 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755100Ab1AGSUE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 13:20:04 -0500
+Received: by vws16 with SMTP id 16so7230073vws.19
+        for <git@vger.kernel.org>; Fri, 07 Jan 2011 10:20:03 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=dCtS/4xFiMAb12lUk4zu9Vue+JIug+ZsGo0sWGQ2irE=;
-        b=occF65HV6wTEGZ208wP3bPIBXZt1G0dJIO30P1+HcPfWbhtfb/PlFjBD7BB60jyKIA
-         ZQWg5dR8tAmW76NSJx3GqTQ4I91IaJAOBgfzfjnhKwCreH/ZCoSJDpqyF6BfW31/vSRO
-         6R1B3w2Qw0R8kfGGxeYazKZft1U+BPQSRAglY=
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=gmnVe+2ZIE2WMuNGNw/LGzx8ybveUDkXGijAt4qsra8=;
+        b=eJ2kyuFipqXF4x53sB0saKAOGKx90TCAbofFJo/cmmugyVcCWRruyE6w5VF3lGgPwx
+         MLXvHT1SBvmRPvsph2nYhUluJTVcnZskdjWvKGN5wspVjmJ2I+3F6iOrMuc/Jwcn/0PD
+         KzqOVQsaiP9NuBcMCu7aHXmh0KS/fiQSAc9DQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=TH2c4bci6DOgnN4V8dDmJQRK9ND6YYFO7dHXko2Tkd0tAGfs55fN+u+TyWW/zgoLCS
-         ZYmAi7HuBjS4Sqr83fjtOm7Hx0UTGlxWl5g8Ymvh+jTeomCc7mvdf6UJPOkQlj6oSE4+
-         x77q2rCfeETHdjP4H2vxAK4JXZXceHJlnYqPc=
-Received: by 10.223.118.136 with SMTP id v8mr61764faq.90.1294424361367; Fri,
- 07 Jan 2011 10:19:21 -0800 (PST)
-Received: by 10.223.79.3 with HTTP; Fri, 7 Jan 2011 10:19:01 -0800 (PST)
-In-Reply-To: <ig7kej$j4p$1@dough.gmane.org>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=vMPXxqxFIJWLqUXeoBv2dgt3Uim85Ip3dYzmDMVBU7+Wroo7S+hmVgQuSCKFQF8mwk
+         Ws5zzgGIq/4CgtNcIhoaHLeR6CGYukQjTX0UbVy7QK3QmEEO5E2jeYo5IUSAFYcOExgz
+         I90u7YyrhlIL9GvtHHLRH7uFZ4JHmT16gVQT4=
+Received: by 10.220.191.200 with SMTP id dn8mr3033070vcb.147.1294424402215;
+        Fri, 07 Jan 2011 10:20:02 -0800 (PST)
+Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
+        by mx.google.com with ESMTPS id c11sm5160618vcc.14.2011.01.07.10.19.58
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 07 Jan 2011 10:19:59 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20110107180220.GA20031@dcvr.yhbt.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164730>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164731>
 
-On Fri, Jan 7, 2011 at 7:01 PM, Stephen Kelly <steveire@gmail.com> wrot=
-e:
-> Thomas Rast wrote:
->
->> Stephen Kelly wrote:
->>> Thomas Rast wrote:
->>> > See user.email in git-config(1). =A0Most people set it globally, =
-as in
->>> >
->>> > =A0 git config --global user.email "author@example.com"
->>> >
->>> > but there's nothing stopping you from doing
->>> >
->>> > =A0 git config user.email "alias@example.com"
->>> >
->>> > to set it on a per-repo level. =A0(Or just edit .git/config, of c=
-ourse.)
->>>
->>> Doesn't this set both the author and the committer?
->>
->> Oh, I see. =A0Yes, it does.
->>
->> Stephen Kelly wrote earlier:
->>> If my email address that I use for committing is not the same as th=
-at
->>> configured in the bugzilla, the automated bug closing does not work=
-=2E
->>
->>
->> Probably if KDE has this use-case then that means we need to impleme=
-nt
->> it as a feature on size alone, but I briefly looked into the code an=
-d
->> it requires a bit more restructuring than I'm willing to do over
->> coffee.
->>
->> I think as a stop-gap measure you'll have to use an alias such as
->>
->> =A0 ci =3D commit --author=3D"your usual <author>"
->>
->> along with a local setting for user.email to force them to be
->> different. =A0(Note that this will re-set the author when saying 'gi=
-t
->> ci --amend' on other people's commits!)
->>
->
-> Thanks for looking into it!
->
-> I'll consider the alias you suggest. Git command aliases can be confi=
-gured
-> per repo, right?
->
+Eric Wong wrote:
 
-Yes, aliases are normal configuration variables, and can be set per rep=
-o.
+> Wait, looking through my backlog, this could fix the problem
+> Ramsay was having but was lost in the shuffle (my fault) :x
+> 
+> Ramsay: does this fix it?
+> 
+> From 9a4f35d6ff9a66b7b5e57c7124a7cd6df0adad7b Mon Sep 17 00:00:00 2001
+> From: Steven Walter <stevenrwalter@gmail.com>
+> Date: Fri, 22 Oct 2010 21:55:58 -0400
+> Subject: [PATCH] t9157-git-svn-fetch-merge.sh: remove dependency on subversion 1.5
 
-> Is there a bug tracker used for git so that this issue doesn't get lo=
-st?
->
+Context, for reference:
 
-No, just this mailing list.
+  http://thread.gmane.org/gmane.linux.kernel/1052314/focus=161717
