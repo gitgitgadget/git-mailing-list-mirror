@@ -1,81 +1,67 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: [PATCH] gitk: Take only numeric version components when computing
- $git_version
-Date: Thu, 06 Jan 2011 17:42:33 -0700
-Message-ID: <1294360953.21006.2.camel@fixed-disk>
-References: <4D231646.5080005@debugon.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t9010: svnadmin can fail even if available
+Date: Thu, 06 Jan 2011 17:07:05 -0800
+Message-ID: <7vpqs98qti.fsf@alter.siamese.dyndns.org>
+References: <4D25E818.5050909@gmail.com> <20110106165958.GA11190@burratino>
+ <4D25F9C5.6030503@gmail.com> <20110106180051.GC11346@burratino>
+ <7vpqs9aiul.fsf@alter.siamese.dyndns.org> <20110106204605.GA15090@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Mathias Lafeldt <misfire@debugon.org>, git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 07 01:42:50 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: A Large Angry SCM <gitzilla@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 07 02:07:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pb0Po-0005Mg-FB
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 01:42:48 +0100
+	id 1Pb0nu-0007c4-Kj
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 02:07:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753506Ab1AGAmm convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 6 Jan 2011 19:42:42 -0500
-Received: from DMZ-MAILSEC-SCANNER-4.MIT.EDU ([18.9.25.15]:57033 "EHLO
-	dmz-mailsec-scanner-4.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752137Ab1AGAml (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Jan 2011 19:42:41 -0500
-X-AuditID: 1209190f-b7c1dae000000a2b-43-4d2661806ba3
-Received: from mailhub-auth-3.mit.edu ( [18.9.21.43])
-	by dmz-mailsec-scanner-4.mit.edu (Symantec Brightmail Gateway) with SMTP id 38.CB.02603.081662D4; Thu,  6 Jan 2011 19:42:40 -0500 (EST)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id p070gc3v016049;
-	Thu, 6 Jan 2011 19:42:39 -0500
-Received: from [192.168.1.108] (c-71-56-216-201.hsd1.co.comcast.net [71.56.216.201])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p070gYcY023600
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Thu, 6 Jan 2011 19:42:36 -0500 (EST)
-In-Reply-To: <4D231646.5080005@debugon.org>
-X-Mailer: Evolution 2.32.1 
-X-Brightmail-Tracker: AAAAARcU4pI=
+	id S1755216Ab1AGBHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jan 2011 20:07:21 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57440 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755196Ab1AGBHT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jan 2011 20:07:19 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A94444842;
+	Thu,  6 Jan 2011 20:07:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=EaPtU4d9+LSoTFJA17mtiHARjxo=; b=wjy4vU
+	gYSP0zv8YHk5ET+IfVUkNKTgb/qbzbt/lvi96IU+6SK53RG9XpgbwFCT96js+hkf
+	fNw1v/NdXDieRfJ04G8E3heQ55gU1iwfpAQsNUZj3a0qGSVEF0RWlSaq2D/bxc4l
+	9ksO6MTmue4No8Wzyx4F0i3EQ2h3osnKZL/MA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Eb4aGbnhNb6jVxpUOycbr8ABkcCKUY9L
+	gqz0nJWtxDe6vHELwXNCYG2vX8+8/bDK81c+q0lBlQx2X2jEtczWstyWyY+6R/sF
+	Nri1TmfpxQae34PRs38dWfxzhybk2uXmLhfCwVV5CJwVnlKeab81C1Zkez0rqiqj
+	b6nSPjdoLp4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 659184840;
+	Thu,  6 Jan 2011 20:07:51 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 17A26483E; Thu,  6 Jan 2011
+ 20:07:45 -0500 (EST)
+In-Reply-To: <20110106204605.GA15090@burratino> (Jonathan Nieder's message of
+ "Thu\, 6 Jan 2011 14\:46\:05 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8CACCEFC-19FA-11E0-86F7-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164689>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164690>
 
-This fixes errors running with release candidate versions of Git:
-  Error in startup script: expected version number but got "1.7.4-rc0"
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Also, $git_version is no longer artificially limited to three
-components.  That limitation was added by commit
-194bbf6cc8c2f3c14a920c841841d66b7667a848 to deal with msysGit version
-strings like =E2=80=9C1.6.4.msysgit.0=E2=80=9D, and we don=E2=80=99t ne=
-ed it now.  Hence as
-another side effect, this enables showing notes with git version
-1.6.6.2 or 1.6.6.3, as originally intended by commit
-7defefb134270b6e8ab3e422b343b41a4a383f5d.
+>> Also isn't the breakage not just this test, but also in all the tests that
+>> try to run "svnadmin load"?  Shouldn't we somehow hoist this logic out of
+>> t9010 and put it in t/lib-vcs-svn.sh or somewhere?
 
-Signed-off-by: Anders Kaseorg <andersk@mit.edu>
----
- gitk-git/gitk |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-index e82c6bf..9cbc09d 100755
---- a/gitk-git/gitk
-+++ b/gitk-git/gitk
-@@ -11581,7 +11581,7 @@ if {![info exists have_ttk]} {
- set use_ttk [expr {$have_ttk && $want_ttk}]
- set NS [expr {$use_ttk ? "ttk" : ""}]
-=20
--set git_version [join [lrange [split [lindex [exec git version] end] .=
-] 0 2] .]
-+regexp {^git version ([\d.]*\d)} [exec git version] _ git_version
-=20
- set show_notes {}
- if {[package vcompare $git_version "1.6.6.2"] >=3D 0} {
---=20
-1.7.4-rc0
+Am I mistaken and t9010 is the only one that needs the fix in your patch?
