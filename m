@@ -1,72 +1,99 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: Re: Resumable clone/Gittorrent (again) - stable packs?
-Date: Fri, 7 Jan 2011 20:52:18 +0200
-Message-ID: <20110107185218.GA16645@LK-Perkele-VI.localdomain>
-References: <AANLkTikv+L5Da7A5VM7BAgnue=m0O_-nHmHchJzfGxJa@mail.gmail.com>
- <alpine.LFD.2.00.1101061552580.22191@xanadu.home>
- <AANLkTikgzqoG2cymNJ0NN03RsTRJi22R9M+0LFJ8U2yB@mail.gmail.com>
- <alpine.LFD.2.00.1101062221480.22191@xanadu.home>
- <20110107052207.GA23128@sigill.intra.peff.net>
- <20110107053119.GA23177@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] t9010: svnadmin can fail even if available
+Date: Fri, 07 Jan 2011 10:54:18 -0800
+Message-ID: <7vfwt47det.fsf@alter.siamese.dyndns.org>
+References: <4D25E818.5050909@gmail.com> <20110106165958.GA11190@burratino>
+ <4D25F9C5.6030503@gmail.com> <20110106180051.GC11346@burratino>
+ <7vpqs9aiul.fsf@alter.siamese.dyndns.org> <20110106204605.GA15090@burratino>
+ <7vpqs98qti.fsf@alter.siamese.dyndns.org> <20110107013159.GA23280@burratino>
+ <20110107165837.GA8062@kytes>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Zenaan Harkness <zen@freedbms.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 07 19:52:20 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	A Large Angry SCM <gitzilla@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 07 19:54:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbHQB-0003DP-ER
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 19:52:19 +0100
+	id 1PbHSP-0004Tu-1A
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 19:54:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752195Ab1AGSwN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jan 2011 13:52:13 -0500
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:42416 "EHLO
-	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751910Ab1AGSwM (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jan 2011 13:52:12 -0500
-Received: from saunalahti-vams (vs3-12.mail.saunalahti.fi [62.142.5.96])
-	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 3980BC7C49;
-	Fri,  7 Jan 2011 20:52:11 +0200 (EET)
-Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
-	by vs3-12.mail.saunalahti.fi ([62.142.5.96])
-	with SMTP (gateway) id A05262F3152; Fri, 07 Jan 2011 20:52:10 +0200
-Received: from LK-Perkele-VI (a88-112-56-215.elisa-laajakaista.fi [88.112.56.215])
-	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id 4D50127D84;
-	Fri,  7 Jan 2011 20:52:05 +0200 (EET)
-Content-Disposition: inline
-In-Reply-To: <20110107053119.GA23177@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Antivirus: VAMS
+	id S1754216Ab1AGSyb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jan 2011 13:54:31 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40211 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753968Ab1AGSya (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 13:54:30 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 356782E8E;
+	Fri,  7 Jan 2011 13:55:09 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; s=sasl; bh=/+O5l0zfzykSt0cuX+6n+jm66SA=; b=JrJNyv
+	dmN/vxpkaMImjpL+5Qqd550jAyqLKnNr7zfT2X9ReUV2TLUZm+6Ov54tMB5BZYQT
+	+lEoKjTOTe1lYbn7gjUawXtC3QwX+4PdYFvI7H2BZuX4x5bkWe6CupjuR/P8euOJ
+	bxgaP/cFLf9dE2U3Z18CT/2KikbQuQrvm1E3o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:in-reply-to:date:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=UUizrkd2Ep5pJ1Ld+6hqh5ht8Nm3XmFJ
+	ooJQdA2pm7N38DE+0vGx8lO/untTpfQMDWsIDnxTVI31vuWbzYb7sCvFNRuFfNZx
+	X6r2uIa5QvwDrdNggmfoINorhOBkWfBFr7DAXc1S9EeDe/3mJxqZg7pqewlR9U5q
+	e8I94SXWuQI=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D34682E8D;
+	Fri,  7 Jan 2011 13:55:04 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 76F152E8B; Fri,  7 Jan 2011
+ 13:54:59 -0500 (EST)
+In-Reply-To: <20110107165837.GA8062@kytes> (Ramkumar Ramachandra's message of
+ "Fri\, 7 Jan 2011 22\:28\:40 +0530")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A3960576-1A8F-11E0-8AC2-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164740>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164741>
 
-On Fri, Jan 07, 2011 at 12:31:19AM -0500, Jeff King wrote:
-> 
->   3. people on low-bandwidth servers who fork major projects; if I write
->      three kernel patches and host a git server, I would really like
->      people to only fetch my patches from me and get the rest of it from
->      kernel.org
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-One client-side-only feature that could be useful:
+> Jonathan Nieder writes:
+>> To do the same for t91* would be impossible.  If svn is broken or not
+>> installed, svn-fe will run fine, but "git svn" will not.  On the other
+>> hand, if svnadmin were broken but svn still worked, "git svn" would be
+>> fine but that would be quite strange and I do not think it is worth
+>> spending time to prepare for.
+>
+> I don't think it's worth spending time preparing for every concievable
+> breakage. The patch A few more examples of possible breakages I've
+> encountered:
+> - APR compiled without threading support, SVN compiled with it, or
+>   viceversa.
+> - SVN is compiled against GNU iconv, but apr-iconv installed, or
+>   viceversa.
+> - Two different versions of a dependent library are installed, and SVN
+>   links to a different version in a different location.
+>
+> One or many components of SVN may fail. So, I'm in favor of the
+> current approach: if SVN is installed, attempt to run all the t91*
+> tests. Any failure can either be interpreted as a real test failure or
+> malformed SVN installation.
 
-Ability to contact multiple servers in sequence, each time advertising
-everything obtained so far. Then treat the new repo as clone of the last
-address.
+That was what I was alluding to earlier, but ...
 
-This would e.g. be very handy if you happen to have local mirror of say, Linux
-kernel and want to fetch some related project without messing with alternates
-or downloading everything again:
+ (1) the patch has already been written and it looks obviously correct;
 
-git clone --use-mirror=~/repositories/linux-2.6 git://foo.example/linux-foo
+ (2) the code after the patch is shorter and more readable; and
 
-This would first fetch everything from local source and then update that
-from remote, likely being vastly faster.
+ (3) this will prevent the mailing list from getting spammed by useless
+     "bug reports" that should have been directed to distros that packaged
+     subversion in one broken way.
 
--Ilari
+Admittedly, it may only catch a breakage in one particular way and not
+other ways, so we cannot put too much weight on (3), but I would say (2)
+above alone is a merit enough for us to have this.
