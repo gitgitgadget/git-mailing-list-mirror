@@ -1,75 +1,114 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Mark gitk script executable
-Date: Thu, 6 Jan 2011 21:01:19 -0600
-Message-ID: <20110107030119.GA32290@burratino>
-References: <alpine.DEB.2.02.1101061943140.6372@dr-wily.mit.edu>
- <7vlj2x8mr4.fsf@alter.siamese.dyndns.org>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: Resumable clone/Gittorrent (again)
+Date: Thu, 06 Jan 2011 22:21:36 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1101061956470.22191@xanadu.home>
+References: <AANLkTinUV9Z_w85Gz13J+bm8xqnxJ9jBJXJm9bn5Y2ec@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Anders Kaseorg <andersk@MIT.EDU>, git@vger.kernel.org,
-	Paul Mackerras <paulus@samba.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 07 04:01:40 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 07 04:21:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pb2aA-0007TW-Iy
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 04:01:38 +0100
+	id 1Pb2tp-00073B-Vc
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 04:21:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755918Ab1AGDBf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jan 2011 22:01:35 -0500
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:63776 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755748Ab1AGDBe (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jan 2011 22:01:34 -0500
-Received: by yib18 with SMTP id 18so4425535yib.19
-        for <git@vger.kernel.org>; Thu, 06 Jan 2011 19:01:33 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=jaZ+eEYoduykxl9tRcWDBJsLawq3nGPaqkKOD7ZSEwE=;
-        b=QUvlwU1mJ0bcbj8sPGeCBI0f3U4GOWv2HVI43/4hBlCeY0pH6lFXDVWTc/VTOlW0jw
-         p71Gia6E8sM2onhZ4P12jtGxpJaiW5eKfTevusORJPqksDZ4WOhcHgWBBBT0/UlXmkaD
-         u/CIAG5zSWBwL3XmWmfSXbjQ98BXB0Hh+wab0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=nSndwLxessVX4rh+G3WNM7RLZ5w52MLzvlu/oVNHNjG56CEaNlhcD3JTF3qaPuYucn
-         dDswfsVBzjQ9vN8mP5L01fCdUrT7eyNHgSNgmJQ7Mnp9aKV0ArPHh9b9bB5QYhgXbVR5
-         6Sx6OiCgTzfvWDVNE/xMcRhGFUIlOCmuVpNcA=
-Received: by 10.90.80.18 with SMTP id d18mr2762313agb.31.1294369293565;
-        Thu, 06 Jan 2011 19:01:33 -0800 (PST)
-Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
-        by mx.google.com with ESMTPS id b19sm23476245ana.27.2011.01.06.19.01.31
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 06 Jan 2011 19:01:32 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vlj2x8mr4.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755742Ab1AGDVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jan 2011 22:21:39 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:18337 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755471Ab1AGDVh (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jan 2011 22:21:37 -0500
+Received: from xanadu.home ([66.130.28.92]) by vl-mh-mrz25.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0LEM00H2SUMQ8U10@vl-mh-mrz25.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 06 Jan 2011 22:20:50 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <AANLkTinUV9Z_w85Gz13J+bm8xqnxJ9jBJXJm9bn5Y2ec@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164697>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164698>
 
-Junio C Hamano wrote:
-> Anders Kaseorg <andersk@MIT.EDU> writes:
+On Wed, 5 Jan 2011, Nguyen Thai Ngoc Duy wrote:
 
->> The executable bit on gitk-git/gitk was lost (accidentally it seems) by 
->> commit 62ba5143ec2ab9d4083669b1b1679355e7639cd5.  Put it back, so that 
->> gitk can be run directly from a git.git checkout.
->>
->> Note that the script is already executable in gitk.git, just not in 
->> git.git.
->
-> It did not lose the bit by accident but 62ba5143 pretty much was a
-> deliberate fix.  "gitk" is a source file, and its build product,
-> gitk-wish, is what is eventually installed with executable bit on.
+> Hi,
+> 
+> I've been analyzing bittorrent protocol and come up with this. The
+> last idea about a similar thing [1], gittorrent, was given by Nicolas.
+> This keeps close to that idea (i.e the transfer protocol must be around git
+> objects, not file chunks) with a bit difference.
+> 
+> The idea is to transfer a chain of objects (trees or blobs), including
+> base object and delta chain. Objects are chained in according to
+> worktree layout, e.g. all objects of path/to/any/blob will form a
+> chain, from a commit tip down to the root commits. Chains can have
+> gaps, and don't need to start from commit tip. The transfer is
+> resumable because if a delta chain is corrupt at some point, we can
+> just request another chain from where it stops. Base object is
+> obviously resumable.
 
-How does this case differ from other executable source files like
-git-am.sh?
+How do you actually define your chain?  Given that Git is conceptually 
+snapshot based, there is currently no relationship between two blobs 
+forming the content for two different versions of the same file.  Even 
+delta objects are not really part of the Git data model as they are only 
+an encoding variation of a given primary object.  In fact, we may and 
+actually do have deltas where the base object is not from the same 
+worktree file as the delta object itself.
+
+The only thing that 
+ties this all together is the commit graph.  And that graph might have 
+multiple forks and merges so any attempt at a linearity representation 
+into a chain is rather futile.  Therefore it is not clear to me how you 
+can define a chain with a beginning and an end, and how this can be 
+resumed midway.
+
+> We start by fetching all commit contents reachable from a commit tip.
+
+Sure.  This is doable today and is called a shalow clone with depth=1.
+
+> This is a chain, therefore resumable.
+
+I don't get that part though.  How is this resumable?  That's the very 
+issue we have with a clone.
+
+I proposed a solution to that already, which is to use 
+git-upload-archive for one of the tip commit since the data stream 
+produced by upload-archive (once decompressed) is actually 
+deterministic.  Once completed, this can be converted into a shalow 
+clone on the client side, and can be deepened in smaller steps 
+afterwards.
+
+> From there each commit can be
+> examined. Missing trees and blobs will be fetched as chains. Everytime
+> a delta is received, we can recreate the new object and verify it (we
+> should have its SHA-1 from its parent trees/commits).
+
+What if the delta is based on an object from another chain?  How do you 
+determine which chain to ask for to get that base?
+
+> Because these chains are quite independent, in a sense that a blob
+> chain is independent from another blob chain (but requires tree
+> chains, of course). We can fetch as many as we want in parallel, once
+> we're done with the commit chain.
+
+But in practice, most of those chains will end up containing objects 
+which are duplicate of objects in another chain.  How do you tell the 
+remote that you want part of a chain because you've got 96% of it in 
+another chain already?
+
+> The last thing I like about these chains is that the number of chains
+> is reasonable. It won't increase too fast over time (as compared to
+> the number of commits). As such it maps well to BitTorrent's "pieces".
+
+My problem right now is that I don't see how this maps well to Git.
+
+
+Nicolas
