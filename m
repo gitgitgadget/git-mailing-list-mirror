@@ -1,60 +1,62 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: [PATCH] Mark gitk script executable
-Date: Thu, 6 Jan 2011 20:14:41 -0500 (EST)
-Message-ID: <alpine.DEB.2.02.1101061943140.6372@dr-wily.mit.edu>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [msysGit] [PATCH/RFC] alias: use run_command api to execute
+ aliases
+Date: Fri, 7 Jan 2011 02:17:19 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1101070216390.1542@bonsai2>
+References: <1294341187-3956-1-git-send-email-kusmabite@gmail.com>
 Mime-Version: 1.0
 Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 07 02:14:51 2011
+Cc: git@vger.kernel.org, msysgit@googlegroups.com, j6t@kdbg.org
+To: Erik Faye-Lund <kusmabite@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 07 02:17:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pb0up-0002FF-GL
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 02:14:51 +0100
+	id 1Pb0xM-0003Kw-VR
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 02:17:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754981Ab1AGBOp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jan 2011 20:14:45 -0500
-Received: from DMZ-MAILSEC-SCANNER-8.MIT.EDU ([18.7.68.37]:62309 "EHLO
-	dmz-mailsec-scanner-8.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754970Ab1AGBOp (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 6 Jan 2011 20:14:45 -0500
-X-AuditID: 12074425-b7c98ae000000a04-6b-4d266904117c
-Received: from mailhub-auth-4.mit.edu ( [18.7.62.39])
-	by dmz-mailsec-scanner-8.mit.edu (Symantec Brightmail Gateway) with SMTP id 04.DB.02564.409662D4; Thu,  6 Jan 2011 20:14:44 -0500 (EST)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id p071EhGC026627;
-	Thu, 6 Jan 2011 20:14:44 -0500
-Received: from localhost (LINERVA.MIT.EDU [18.181.0.232])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p071Ef46027394
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Thu, 6 Jan 2011 20:14:43 -0500 (EST)
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
-X-Brightmail-Tracker: AAAAAA==
+	id S1755176Ab1AGBRY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jan 2011 20:17:24 -0500
+Received: from mailout-de.gmx.net ([213.165.64.22]:59134 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1754849Ab1AGBRX (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jan 2011 20:17:23 -0500
+Received: (qmail invoked by alias); 07 Jan 2011 01:17:21 -0000
+Received: from pD9EB23F8.dip0.t-ipconnect.de (EHLO noname) [217.235.35.248]
+  by mail.gmx.net (mp066) with SMTP; 07 Jan 2011 02:17:21 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19cKAgRtBJcfE8Dl3g0yp2luqxfREYZ5TYpO4laMp
+	IMb5uz83w2zTLg
+X-X-Sender: gene099@bonsai2
+In-Reply-To: <1294341187-3956-1-git-send-email-kusmabite@gmail.com>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164691>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164692>
 
-The executable bit on gitk-git/gitk was lost (accidentally it seems) by 
-commit 62ba5143ec2ab9d4083669b1b1679355e7639cd5.  Put it back, so that 
-gitk can be run directly from a git.git checkout.
+Hi,
 
-Note that the script is already executable in gitk.git, just not in 
-git.git.
+On Thu, 6 Jan 2011, Erik Faye-Lund wrote:
 
-Signed-off-by: Anders Kaseorg <andersk@mit.edu>
----
- 0 files changed, 0 insertions(+), 0 deletions(-)
- mode change 100644 => 100755 gitk-git/gitk
+> On Windows, system() executes with cmd.exe instead of /bin/sh. This
+> means that aliases currently has to be batch-scripts instead of
+> bourne-scripts. On top of that, cmd.exe does not handle single quotes,
+> which is what the code-path currently uses to handle arguments with
+> spaces.
+> 
+> To solve both problems in one go, use run_command_v_opt() to execute
+> the alias. It already does the right thing prepend "sh -c " to the
+> alias.
 
-diff --git a/gitk-git/gitk b/gitk-git/gitk
-old mode 100644
-new mode 100755
--- 
-1.7.4-rc0
+Would this not break setups where aliases were defined to execute batch 
+scripts?
+
+If this is true, I'm of two minds here.
+
+Ciao,
+Dscho
