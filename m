@@ -1,79 +1,98 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: clone breaks replace
-Date: Fri, 07 Jan 2011 14:58:34 -0800
-Message-ID: <7vmxnc48yt.fsf@alter.siamese.dyndns.org>
-References: <4D262D68.2050804@cfl.rr.com> <20110106213338.GA15325@burratino>
- <4D276CD2.60607@cfl.rr.com> <20110107205103.GC4629@burratino>
- <4D278930.7010100@cfl.rr.com> <20110107214907.GA9194@burratino>
- <20110107220942.GB10343@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: problem with cherry-picking a commit which comes before
+ introducing a new submodule
+Date: Fri, 7 Jan 2011 17:00:17 -0600
+Message-ID: <20110107230017.GA15495@burratino>
+References: <20110107172432.GA6040@onerussian.com>
+ <20110107181501.GA28980@burratino>
+ <20110107183226.GG6040@onerussian.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Phillip Susi <psusi@cfl.rr.com>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Stephen Bash <bash@genarts.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 07 23:58:56 2011
+Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+To: Yaroslav Halchenko <debian@onerussian.com>
+X-From: git-owner@vger.kernel.org Sat Jan 08 00:00:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbLGq-0002VQ-Cc
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 23:58:56 +0100
+	id 1PbLIc-0002lV-3w
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 00:00:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754241Ab1AGW6v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jan 2011 17:58:51 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62098 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753932Ab1AGW6v (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jan 2011 17:58:51 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4816D2F29;
-	Fri,  7 Jan 2011 17:59:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vIpOyNHEvYKV/ItKjJufrlXAXhc=; b=XsNb+E
-	nq0qkVfbsPgZrCyZeP7iD/RLTFZlk0mGdLdEURtsgV/rAs3flm1JLQQvSjat9GQ3
-	FyFqDYEJDOdW63C5NTzuIekw3DmdofArltYKxD2LX7tdvAt0VKyGzjDZtsoQSUkt
-	NHEiWUQqUbhiHqtgW3GUK+ETueaV1R63JeEy4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p8jTplkT3VCjo2nh1vWnR6OEmgfBxxWM
-	pK9B9jsB+tukuRFPUsD+se/Ki9xqXIL73YUJiMPA/JF+ANxVjyAA9GT1AZlfPTzs
-	KSirup555oSwWyq1aUdUE8oxPwrpNoHhOz1xsPXwoy5BXin3tm/Pf9JyeCXGeIfe
-	PJ5BdyZlMjc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D3AD32F27;
-	Fri,  7 Jan 2011 17:59:22 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2E0392F26; Fri,  7 Jan 2011
- 17:59:14 -0500 (EST)
-In-Reply-To: <20110107220942.GB10343@sigill.intra.peff.net> (Jeff King's
- message of "Fri\, 7 Jan 2011 17\:09\:42 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: C46F3D40-1AB1-11E0-A79D-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
+	id S1755682Ab1AGXAk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jan 2011 18:00:40 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:43154 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755623Ab1AGXAg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 18:00:36 -0500
+Received: by ywl5 with SMTP id 5so6932039ywl.19
+        for <git@vger.kernel.org>; Fri, 07 Jan 2011 15:00:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=dJCtOIJtz8lvHrgNa2uNnqEM/kl2+y9NuJoOCYjp6C8=;
+        b=T/uuZDMan2xysck3weoUkILAsnG+PNOeH09qb9JGb2fhLd8w84cHAkaw27eiLkh8Lb
+         90G72NbK7JatAllyXqQRyxOQBqIdd7zmVUsaccWTS+NfdxvaAJoHFSXi0DKW3TpLOZEW
+         vlqaihU4IkE76h1oEDrxckv0NrbD5sqs5nlj4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=XqQxKxemlC262/9i6Pi9k7skrFBSdfj/3fxla6Nz8Vwoh5c5LJ6ia7oB9N4Nok7oYZ
+         KfqNalHhzC3W2ZsUuItlyE2BBT1rQQQGZFk0rnOqd5RPFFJ+4r4GM3mMcEuVidbjxj3Y
+         Ek2A/cTEagow66r9wKv2YqnsvJ9mhlyf8oS5s=
+Received: by 10.151.156.9 with SMTP id i9mr25487456ybo.444.1294441236029;
+        Fri, 07 Jan 2011 15:00:36 -0800 (PST)
+Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
+        by mx.google.com with ESMTPS id v7sm700832ybe.3.2011.01.07.15.00.33
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 07 Jan 2011 15:00:35 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20110107183226.GG6040@onerussian.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164782>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164783>
 
-Jeff King <peff@peff.net> writes:
+Yaroslav Halchenko wrote [abbreviated]:
 
->   2. Should clone fetch refs from refs/replace (either by default, or
->      with an option)?
-> ...
-> Which leads to the second question. It is basically a matter of saying
-> "do you want to fetch the view that upstream has"? I can definitely see
-> that being useful, and meriting an option. However, it may or may not be
-> worth turning on by default, as upstream's view may be confusing.
+> Merging HEAD with todonotloose
+> Merging:
+> 855981d just placeholders in the abstract
+> a00c497 Initial draft for HBM abstract.
+> CONFLICT (file/directory): There is a directory with name frontiers/code in todonotloose. Adding frontiers/code as
+> +frontiers/code~HEAD
+> %         git ls-files -u
+> 160000 a2b5787 2   frontiers/code
+> %         git diff-tree todonotloose
+> a00c497
+> :040000 040000 40427e34 c7ba910 M	poster-hbm2011_neurodebian
+> %         git diff-tree todonotloose^ HEAD
+> :100644 100644 378e137 c39ced7 M	.gitmodules
+> :000000 040000 0000000 141dbc1 A	challenge-execpapers
+> :040000 040000 401fd66 ee190f0 M	frontiers
+> :040000 040000 26c884a ad3e829 M	sty
 
-I think that should be stated a bit differently.  "Do you want to fetch
-the view that the upstream offers as an option, and if you want, which
-ones (meaning: there could be more than one replacement grafts to give
-different views)?"
+One more piece of protocol: what git version are you using?  The
+release notes mention a fix in this area in v1.7.3[1]:
 
-And as an optional view, I would say it is perfectly Ok to fetch whichever
-view you want as a separate step after the initial clone.
+ * "git merge -s recursive" (which is the default) did not handle cases
+   where a directory becomes a file (or vice versa) very well.
+
+Hopefully this is that.  In any case, sounds like a bug.
+
+(Hopefully someone else can comment on why cherry-pick uses the
+merge machinery to notice conflicts that would not be clear from
+the patch alone.)
+
+Thanks again.
+Jonathan
+
+[1] There is an updated Debian source package at [2].  Or, probably
+faster: one can use the build result in bin-wrappers/ from a git.git
+clone in place.
+[2] http://mentors.debian.net/debian/pool/main/g/git/git_1.7.4~rc1-0.1.dsc
