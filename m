@@ -1,81 +1,82 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: 'git add' option to non-interactively stage working tree changes
-Date: Fri, 07 Jan 2011 15:50:38 -0800 (PST)
-Message-ID: <m3pqs8b7fj.fsf@localhost.localdomain>
-References: <AANLkTimLKZnVn8Lr-E-8M8T5mXA55XabCT5rC+broeFJ@mail.gmail.com>
-	<m2aajcbiei.fsf@igel.home>
-	<AANLkTi=iwOGv3PzrRcVGDwwoTXmJ4CuC11vuYsjn4xxV@mail.gmail.com>
-	<7vfwt45tqv.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-cvs*: Make building (and testing) of CVS interface
+ scripts optionally selectable
+Date: Fri, 07 Jan 2011 15:50:41 -0800
+Message-ID: <7vei8o46jy.fsf@alter.siamese.dyndns.org>
+References: <1294433290-9262-1-git-send-email-robbat2@gentoo.org>
+ <20110107220147.GB9194@burratino>
+ <robbat2-20110107T225413-429815896Z@orbis-terrarum.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?iso-8859-2?q?Hrvoje_Nik=B9i=E6?= <hniksic@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
+To: "Robin H. Johnson" <robbat2@gentoo.org>
 X-From: git-owner@vger.kernel.org Sat Jan 08 00:50:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbM5A-0008QK-Qg
+	id 1PbM5B-0008QK-Dk
 	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 00:50:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752540Ab1AGXul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jan 2011 18:50:41 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:40184 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752513Ab1AGXuk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jan 2011 18:50:40 -0500
-Received: by wwa36 with SMTP id 36so19024333wwa.1
-        for <git@vger.kernel.org>; Fri, 07 Jan 2011 15:50:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:received:received
-         :x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        bh=olRl+lt2Bo0sg/ZLCqQSrttv6ELFAOYyd2xcnaUFSi0=;
-        b=F/NBklURESgnrxgO6RxCVdGwYCZJcPpK5advxztlxUa2a2d+DWlPAG97AHa6YgJePN
-         cd3LFtwBAR/p40/vq0KHsYLtp3RtKGjKqmoP78FUmEyJyoeQDp/BbQplZiOtBqHqOpJy
-         5ySMh+nBVP/ncrcsYGyBUvk4zVEc/51wKGKoY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=GYhdHiwhYeMydHwSc8leQ4DpxXq3T3aMaG7u5NElwMBlwQXntexCS00Xt4zFNHYwV7
-         M1tISbig1RisE1MvVBIzsF5oJNRtFjdgkCKdpBRamsT1ReZ8aFjCl1EU2+UpLWB33uwa
-         iJRF/S9Gd+d0SzmoyfBJwt57jCmgp/MtNmCmU=
-Received: by 10.227.138.132 with SMTP id a4mr448521wbu.77.1294444239361;
-        Fri, 07 Jan 2011 15:50:39 -0800 (PST)
-Received: from localhost.localdomain (abvf4.neoplus.adsl.tpnet.pl [83.8.203.4])
-        by mx.google.com with ESMTPS id e12sm12732272wer.36.2011.01.07.15.50.37
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 07 Jan 2011 15:50:38 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p07No8hj009558;
-	Sat, 8 Jan 2011 00:50:14 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p07NnqP3009550;
-	Sat, 8 Jan 2011 00:49:52 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <7vfwt45tqv.fsf@alter.siamese.dyndns.org>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1752466Ab1AGXuw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jan 2011 18:50:52 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41397 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752286Ab1AGXuw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 18:50:52 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 60827350C;
+	Fri,  7 Jan 2011 18:51:29 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=en+lXzid/S25qXbPGk8dJ5H/nIY=; b=fS66Hn
+	Ng+Ww6Z++SCTdyzXoYVDFlO0D3lAqyYPxxBiVET9db0K6odKPuYoAO1Y47Ej0Fxf
+	xiSEBwVFrwgPMNx5I4qEyn9n7VrbSlFA8mq2DV98btwl16vo79kiXEJxx5oV3ueE
+	NBhEbx6CMkKLmjTP2mrfAf3kxAO0cZ+3daaqo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Gv3O2zpRdTbWbDKUT/cHB6WaQ/X9tlS3
+	+r9YOAoXQ9ZOmo1Pt29wsf+nEEQTMG2pcAZPZl6vM0mOCswjVvXG1L/8Y5vxo4PW
+	UioK1jo8jCw0MSV3BnxieyRFcIvxGXTJ8llM/L9Pm5qeqkHINE447bM0dz7EKIBs
+	2Nq+8JZmZgs=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2EB743504;
+	Fri,  7 Jan 2011 18:51:26 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 147073503; Fri,  7 Jan 2011
+ 18:51:21 -0500 (EST)
+In-Reply-To: <robbat2-20110107T225413-429815896Z@orbis-terrarum.net> (Robin
+ H. Johnson's message of "Fri\, 7 Jan 2011 22\:55\:54 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 0A14F036-1AB9-11E0-A29E-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164791>
 
-Junio C Hamano <gitster@pobox.com> writes:
+"Robin H. Johnson" <robbat2@gentoo.org> writes:
 
-> I think it might be Ok to introduce a --full-tree option to "git add" (and
-> "git grep"), though.  But introduction of corresponding configuration
-> variable to flip the default needs to be done carefully in steps across
-> major version boundaries as usual (i.e. first introduce --no-full-tree,
+> On Fri, Jan 07, 2011 at 04:01:48PM -0600, Jonathan Nieder wrote:
+>> This explanation seems quite odd to me.  Are you saying we can't rely
+>> on the 'cvs' name being "taken" and should live in fear that someone
+>> will implement an incompatible utility with the same name?  Did that
+>> actually happen?
+> Not in the linked bug report, but it does explain a previous bug I had
+> seen, where a user had a little script in /usr/local/bin that complained
+> at him whenever he ran 'cvs', so he would learn to migrate away faster.
 
-You meant --relative[1] here (instead of --no-full-tree), didn't you?
+I suspect that NO_CVS is not the best way to help a person who is trying
+to wean herself off of cvs by having a phony cvs in a directory that is
+early on the $PATH (be it $HOME/bin/cvs or /usr/local/bin/cvs).  Before
+ceasing to actively build more histories in cvs, it would help to have an
+access to git-cvsimport and friends to salvage what's already there, no?
 
-[1] Supported by diff, and in a way by git-diff-tree
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+A change that models after PERL_PATH, not after NO_PERL, would be a more
+appropriate thing to do for that particular purpose.
+
+I still think the patch itself is a worthy thing to have, so everything
+above is a tangent that is orthogonal to what your patch tries to do,
+though.
