@@ -1,77 +1,83 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: Re: concurrent fetches to update same mirror
-Date: Fri, 07 Jan 2011 09:51:53 -0500
-Message-ID: <4D272889.7080601@xiplink.com>
-References: <ig2kjt$f2u$1@dough.gmane.org> <20110105204738.GA7629@sigill.intra.peff.net> <AANLkTini61q+NtDr6oytTcfA6QNGN74L60exdLrNmakd@mail.gmail.com> <20110105205324.GA7808@sigill.intra.peff.net> <20110105211313.GB7808@sigill.intra.peff.net> <7vbp3vc4k4.fsf@alter.siamese.dyndns.org> <20110106234512.GA17231@sigill.intra.peff.net> <4D272834.9060001@xiplink.com>
+From: "r.ductor@gmail.com" <r.ductor@gmail.com>
+Subject: Re: [PATCH/RFC] Documentation/checkout: explain behavior wrt local changes
+Date: Fri, 7 Jan 2011 15:27:42 +0100
+Message-ID: <201101071527.42544.r.ductor@gmail.com>
+References: <20110106154418.3348.29438.reportbug@localhost> <20110106225222.GA15900@burratino> <7vtyhl8t5y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: Text/Plain;
+  charset="iso-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	Neal Kreitzinger <neal@rsss.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 07 15:52:18 2011
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 07 16:26:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbDft-0000Vv-Kq
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 15:52:17 +0100
+	id 1PbED9-0001vJ-Q9
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 16:26:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753784Ab1AGOwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jan 2011 09:52:12 -0500
-Received: from smtp162.iad.emailsrvr.com ([207.97.245.162]:48509 "EHLO
-	smtp162.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753617Ab1AGOwL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jan 2011 09:52:11 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp46.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 81BC3E84A8;
-	Fri,  7 Jan 2011 09:52:10 -0500 (EST)
-X-Virus-Scanned: OK
-Received: by smtp46.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 31526E8588;
-	Fri,  7 Jan 2011 09:52:06 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
-In-Reply-To: <4D272834.9060001@xiplink.com>
+	id S1751901Ab1AGP0e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jan 2011 10:26:34 -0500
+Received: from cirse-out.extra.cea.fr ([132.166.172.106]:33937 "EHLO
+	cirse-out.extra.cea.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751641Ab1AGP0d (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 10:26:33 -0500
+X-Greylist: delayed 3489 seconds by postgrey-1.27 at vger.kernel.org; Fri, 07 Jan 2011 10:26:33 EST
+Received: from epeire2.extra.cea.fr (epeire2.extra.cea.fr [132.167.198.32])
+	by cirse.extra.cea.fr (8.14.2/8.14.2/CEAnet-Internet-out-2.0) with ESMTP id p07ERuSB005118
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 7 Jan 2011 15:27:56 +0100
+Received: from orpin1.extra.cea.fr (orpin1.extra.cea.fr [132.167.198.4])
+	by epeire2.extra.cea.fr (8.14.4/8.14.4) with ESMTP id p07ERtnA007241;
+	Fri, 7 Jan 2011 15:27:56 +0100
+	(envelope-from r.ductor@gmail.com)
+Received: from galileo.localnet ([132.166.22.182])
+	by orpin1.extra.cea.fr (8.13.8/8.13.8/CEAnet-Extranet-out-1.1) with ESMTP id p07ERt9H032673;
+	Fri, 7 Jan 2011 15:27:55 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.32-5-amd64; KDE/4.4.5; x86_64; ; )
+In-Reply-To: <7vtyhl8t5y.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164717>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164718>
 
-On 11-01-07 09:50 AM, Marc Branchaud wrote:
-> On 11-01-06 06:45 PM, Jeff King wrote:
->> On Wed, Jan 05, 2011 at 03:29:47PM -0800, Junio C Hamano wrote:
->>
->>> Jeff King <peff@peff.net> writes:
->>>
->>>> Interestingly, in the case of ref _creation_, not update, like this:
->>>>
->>>>   mkdir repo && cd repo && git init
->>>>   git remote add origin some-remote-repo-that-takes-a-few-seconds
->>>>   xterm -e 'git fetch -v; read' & xterm -e 'git fetch -v; read'
->>>>
->>>> then both will happily update, the second one overwriting the results of
->>>> the first. It seems in the case of locking a ref which previously didn't
->>>> exist, we don't enforce that it still doesn't exist.
->>>
->>> We probably should, especially when there is no --force or +prefix is
->>> involved.
->>
->> Hmph. So I created the test below to try to exercise this, expecting to
->> see at least one failure: according to the above example, we aren't
->> actually checking "null sha1 means ref must not exist", so we should get
->> an erroneous success for that case. And there is the added complication
->> that the null sha1 may also mean "don't care what the old one was". So
->> even if I changed the code, we would get erroneous failures the other
->> way.
->>
->> But much to my surprise, it actually passes with stock git. Which means
->> I need to dig a little further to see exactly what is going on.
+Dear all
+
+I'm a beginner git user trying to defend the beginners' party. Using Jonathan's explanations (and some educated guess on git behavior) I tried to concoct the man git-checkout documentation I would have liked to read, which is somewhat more explicit than Jonathan's patch. If you want to implement/improve it please double check it (and maybe warn me about my own errors). If you are happy about that I will try to send more suggestions. Thanks for your time and your work.
+
+riccardo   
+
+git checkout [<branch>]
+git checkout -b|-B <new_branch> [<start point>]
+
+     Tries to change the current HEAD to <branch> (or <start point>) and to safely update the working tree and the index.
+     If there exist files having three distinct contents in the current commit, in the new branch and in the working tree, then the operation is canceled and all state is preserved.
+     (This behavior may be changed with the option --merge.) If this is not the case, for all other files it acts as follows.  
+       - Files not differing between the current commit and the new branch: their contents in the working tree (and eventually in the index) are left unchanged. 
+       - Files in the current commit, unchanged or absent in the working tree, but not present in the new branch are removed from the working tree and from the index.
+       - Files in the new branch but not in the current commit are added to the working tree and to the index (if they were already there they must have had the same contents by hypothesis).
+       - Files in the working tree or in the index that are absent in the current commit and in the new branch are left unchanged.
+    
+    If -b is given, ...
+
+
+
+On Friday 07 January 2011 01:16:25 Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 > 
-> I should point out that the repository where I saw this issue is running git
-> 1.7.1.
-
-Oops -- sorry!  I'm in the wrong concurrency thread...
-
-		M.
+> >  'git checkout' [<branch>]::
+> >  'git checkout' -b|-B <new_branch> [<start point>]::
+> >  
+> > -	This form switches branches by updating the index, working
+> > -	tree, and HEAD to reflect the specified branch.
+> > +	This form switches branches by changing `HEAD` and updating the
+> > +	tracked files to the specified branch.  'git checkout' will
+> > +	stop without doing anything if local changes overlap with
+> > +	changes to the tracked files.  (Any local changes that do not
+> > +	overlap with changes from `HEAD` to the specified branch will
+> > +	be preserved.)
+> 
