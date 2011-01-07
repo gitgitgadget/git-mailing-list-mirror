@@ -1,61 +1,63 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: bug: git fetch via http breaks repo on Ctrl-C
-Date: Fri, 7 Jan 2011 12:43:23 +0100
-Message-ID: <20110107114323.GG25121@pengutronix.de>
+From: Stephen Kelly <steveire@gmail.com>
+Subject: Wish: make commiter email address configurable per-repo
+Date: Fri, 07 Jan 2011 14:16:49 +0100
+Message-ID: <ig73o1$lbg$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sascha Hauer <s.hauer@pengutronix.de>
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7Bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 07 12:43:33 2011
+X-From: git-owner@vger.kernel.org Fri Jan 07 14:17:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbAjE-000546-Jc
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 12:43:32 +0100
+	id 1PbCBp-0004Lo-1k
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 14:17:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751725Ab1AGLnZ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jan 2011 06:43:25 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:39210 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751517Ab1AGLnY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jan 2011 06:43:24 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1PbAj5-0001pB-QU; Fri, 07 Jan 2011 12:43:23 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1PbAj5-0002Rb-Nn; Fri, 07 Jan 2011 12:43:23 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.18 (2008-05-17)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1752816Ab1AGNRD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jan 2011 08:17:03 -0500
+Received: from lo.gmane.org ([80.91.229.12]:44315 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752096Ab1AGNRC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 08:17:02 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PbCBg-0004Gc-OY
+	for git@vger.kernel.org; Fri, 07 Jan 2011 14:17:00 +0100
+Received: from 188.111.54.34 ([188.111.54.34])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Jan 2011 14:17:00 +0100
+Received: from steveire by 188.111.54.34 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Fri, 07 Jan 2011 14:17:00 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 188.111.54.34
+User-Agent: KNode/4.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164707>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164708>
 
-Hello,
+Hi,
 
-It happend the third time now that a repository was currupted after
-interrupting a git fetch from a http remote.  One of the occurences
-(together with the needed fix) can be found here:
+In KDE the committer email address is used to be able to use keywords in 
+commit messages to automatically close bugs.
 
-	http://article.gmane.org/gmane.linux.kernel.next/14355
+If my email address that I use for committing is not the same as that 
+configured in the bugzilla, the automated bug closing does not work.
 
-It would be nice to get that fixed.
+So for some git repos in KDE which I work on on work time, I'd like to set a 
+different committer address. I can't just set GIT_COMMITTER_EMAIL or 
+whatever in my bashrc, because in other repos I want to use a different 
+committer email, and don't want it set globally for all git repos I work on.
 
-Uwe
+This doesn't seem to be configurable in git config. Can that be changed?
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+All the best,
+
+Steve.
