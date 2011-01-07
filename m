@@ -1,91 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-cvs*: Make building (and testing) of CVS interface
- scripts optionally selectable
-Date: Fri, 07 Jan 2011 14:05:59 -0800
-Message-ID: <7v39p45pyw.fsf@alter.siamese.dyndns.org>
-References: <1294433290-9262-1-git-send-email-robbat2@gentoo.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: clone breaks replace
+Date: Fri, 7 Jan 2011 17:09:42 -0500
+Message-ID: <20110107220942.GB10343@sigill.intra.peff.net>
+References: <4D262D68.2050804@cfl.rr.com>
+ <20110106213338.GA15325@burratino>
+ <4D276CD2.60607@cfl.rr.com>
+ <20110107205103.GC4629@burratino>
+ <4D278930.7010100@cfl.rr.com>
+ <20110107214907.GA9194@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
-To: "Robin H. Johnson" <robbat2@gentoo.org>
-X-From: git-owner@vger.kernel.org Fri Jan 07 23:06:30 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Phillip Susi <psusi@cfl.rr.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Stephen Bash <bash@genarts.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 07 23:09:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbKS4-00051u-FF
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 23:06:28 +0100
+	id 1PbKVN-0006OE-NR
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 23:09:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754143Ab1AGWGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jan 2011 17:06:12 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54023 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753988Ab1AGWGK (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jan 2011 17:06:10 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DFC162956;
-	Fri,  7 Jan 2011 17:06:46 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=e9EA5KdFYpIOHRnU2AWIF841WsQ=; b=RFCJzG
-	AiBBnrJy3YJcNgLi1aHaaD52I+uQ97mP+OS+1Nnn/Ms9vQTFwBHa68BvDLg5jviM
-	EXiJi3rxdb3kc1fsUjhRmsOmofQIB7Q2T5aNHbaaFFcd3BsSx6WujfdxYtPP7lKT
-	ySAkrF6BfNMJpRo5OjkSEfOSu46xDfq5HaqlQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=rSsW4uJMET3/QEBmd9N9S/7h0twYQqnk
-	Fk/YsIisGEPpUFB3P/3PMc+VJS1UrnMtHYYJgU8FRAoGb+QXjdru+16NkshfA4Qk
-	pe19Bik792Yp++m2TdkDp4DnMp7UNSPWtVpuA7jRcOO25XWiWejcvmKhRdbGiBhz
-	dRB0vYQLtHM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AD66E2955;
-	Fri,  7 Jan 2011 17:06:43 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 924832954; Fri,  7 Jan 2011
- 17:06:39 -0500 (EST)
-In-Reply-To: <1294433290-9262-1-git-send-email-robbat2@gentoo.org> (Robin H.
- Johnson's message of "Fri\,  7 Jan 2011 20\:48\:10 +0000")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 696E0798-1AAA-11E0-918D-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
+	id S1754205Ab1AGWJr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jan 2011 17:09:47 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:35353 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753695Ab1AGWJq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 17:09:46 -0500
+Received: (qmail 18956 invoked by uid 111); 7 Jan 2011 22:09:45 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 07 Jan 2011 22:09:44 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Jan 2011 17:09:42 -0500
+Content-Disposition: inline
+In-Reply-To: <20110107214907.GA9194@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164773>
 
-"Robin H. Johnson" <robbat2@gentoo.org> writes:
+On Fri, Jan 07, 2011 at 03:49:07PM -0600, Jonathan Nieder wrote:
 
-> Presently, the CVS interface scripts are always built, and their
-> test-suites run based on a binary named 'cvs' happening to return zero.
-> If there something other than the real CVS there, bad things happened
-> during the test-suite run.
+> Phillip Susi wrote:
+> 
+> > Take the kernel history as an example, only imagine that Linus did not
+> > originally make that first commit leaving out the prior history, but
+> > wants to go back and fix it now.  He can do it with a replace, but then
+> > if he runs filter-branch as you suggest to make the change 'real', then
+> > everyone tracking his tree will fail the next time they try to pull.
+> > You could get the same result without replace, so why bother?
+> >
+> > If the replace was fetched by default, the people already tracking would
+> > get it the next time they pull and would not have a problem.
+> 
+> Interesting.  I hadn't thought about this detail before.
 
-Is that a problem?
+I think there are two separate issues here:
 
-It makes sense to let people whose system happens to have a working cvs to
-omit cvs interoperability bits when they know the do not want them, and
-that alone would be a good enough motivation.
+  1. Should transport protocols respect replacements (i.e., if you
+     truncate history with a replacement object and I fetch from you,
+     should you get the full history or the truncated one)?
 
-I'd even consider the above justification of yours detrimental---it would
-be an excuse for other people to add patches to support NO_CAT, NO_DIFF,
-NO_LS, ... saying "if a binary 'cat' that is not cat is there, things
-break, so work it around".  That is a road to nonsense land.
+  2. Should clone fetch refs from refs/replace (either by default, or
+     with an option)?
 
-> This patch implements NO_CVS in the manner of NO_PERL, and ensures that
-> the CVS scripts get the unimplemented variant when appropriate, as well
-> as making sure that the tests properly declare CVS as a prerequisite
-> (shortcut to test_done like the Perl prerequisites).
+Based on previous discussions, I think the answer to the first is no.
+The resulting repo violates a fundamental assumption of git. Yes,
+because of the replacement object, many things will still work. But many
+parts of git intentionally do not respect replacement, and they will be
+broken.
 
-While the patch looks good, some people seem to prefer skipping individual
-tests without shortcut; see 900eab4 (t/t9600-cvsimport.sh: change from
-skip_all=* to prereq skip, 2010-08-13) for example.  I am slightly in
-favor of the short-cut as I haven't heard convincing argument against it
-other than "skipped statistics" which I don't think is interesting nor
-accurate anyway.
+Instead, I think of replacements as a specific view into history, not a
+fundamental history-changing operation itself. Which means you can never
+save bandwidth or space by truncating history with replacements. You can
+only give somebody the full history, and share with them your view. If
+you want to truncate, you must rewrite history[1].
 
-I wonder if "check PERL and CVS prerequisite and say test_done" should be
-made into a helper in lib-cvs.sh or somewhere instead of repeating them in
-individual tests, but that is a minor point.
+Which leads to the second question. It is basically a matter of saying
+"do you want to fetch the view that upstream has"? I can definitely see
+that being useful, and meriting an option. However, it may or may not be
+worth turning on by default, as upstream's view may be confusing.
+
+-Peff
+
+[1] Actually, what we are talking about it basically shallow clone.
+    Which does do exactly this truncation, but does not use the replace
+    mechanism. So it _is_ possible, but lots of things need to be
+    tweaked to understand the shallow-ness. Perhaps in the long run
+    making git understand replacement-truncated repos with missing
+    objects would be a good thing, and shallow clones can be implemented
+    simply as a special case of that. It would probably make the code a
+    bit cleaner.
