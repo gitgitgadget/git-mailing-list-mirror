@@ -1,78 +1,166 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Resumable clone/Gittorrent (again) - stable packs?
-Date: Fri, 7 Jan 2011 00:31:19 -0500
-Message-ID: <20110107053119.GA23177@sigill.intra.peff.net>
-References: <AANLkTikv+L5Da7A5VM7BAgnue=m0O_-nHmHchJzfGxJa@mail.gmail.com>
- <alpine.LFD.2.00.1101061552580.22191@xanadu.home>
- <AANLkTikgzqoG2cymNJ0NN03RsTRJi22R9M+0LFJ8U2yB@mail.gmail.com>
- <alpine.LFD.2.00.1101062221480.22191@xanadu.home>
- <20110107052207.GA23128@sigill.intra.peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Resumable clone/Gittorrent (again)
+Date: Fri, 7 Jan 2011 13:34:31 +0700
+Message-ID: <AANLkTik_Q-W2yjnyB3=NKGQcn-MeFwnPQqnrGgWN_Q7C@mail.gmail.com>
+References: <AANLkTinUV9Z_w85Gz13J+bm8xqnxJ9jBJXJm9bn5Y2ec@mail.gmail.com> <alpine.LFD.2.00.1101061956470.22191@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Zenaan Harkness <zen@freedbms.net>, git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
 To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Fri Jan 07 06:31:31 2011
+X-From: git-owner@vger.kernel.org Fri Jan 07 07:35:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pb4vD-0002yY-1P
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 06:31:31 +0100
+	id 1Pb5v2-00022b-Bw
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 07:35:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753855Ab1AGFbX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jan 2011 00:31:23 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:38250 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753510Ab1AGFbW (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jan 2011 00:31:22 -0500
-Received: (qmail 11924 invoked by uid 111); 7 Jan 2011 05:31:22 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 07 Jan 2011 05:31:22 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Jan 2011 00:31:19 -0500
-Content-Disposition: inline
-In-Reply-To: <20110107052207.GA23128@sigill.intra.peff.net>
+	id S1754053Ab1AGGfF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jan 2011 01:35:05 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:53284 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753904Ab1AGGfD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 7 Jan 2011 01:35:03 -0500
+Received: by wwa36 with SMTP id 36so18198578wwa.1
+        for <git@vger.kernel.org>; Thu, 06 Jan 2011 22:35:01 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=KICgASXEFOCwCSgyhEqDsilnd2Q66qJLXvuLrWhix7k=;
+        b=WvJfs8X2Zl87lBvaRpEJYsFKNx2USd6bWJF0A4iwzCKN8MhVE2lgAvoSF7OtZfn5p0
+         bwk/kofo16dTSOP5WVQiuLPxIAkjwmAJQB2nHNFp9pGoNA1rgYLhUTf8r1FAEMs3jSgL
+         mGuSEGHUEiWNDjrsEEJNjoUdhJJqrqDOoc4qY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=a02U1ViJ4lnD7JNsLLkUjwyrGiNdcDcqpHB8nbS3On2nz7uVqhSX4BODYgGd1I/WAN
+         M+T0Ropd+lVjsz+eaQ+AbM+4YsmjrYzqxfwV9NlPlIjSVi4UVQRvJEsuAjgM9+myDUXd
+         UBbY6UZZiohEAWVdov+YDMMgaJ7mscW3+6k1Q=
+Received: by 10.216.177.9 with SMTP id c9mr25120024wem.34.1294382101205; Thu,
+ 06 Jan 2011 22:35:01 -0800 (PST)
+Received: by 10.216.63.14 with HTTP; Thu, 6 Jan 2011 22:34:31 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.1101061956470.22191@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164701>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164702>
 
-On Fri, Jan 07, 2011 at 12:22:07AM -0500, Jeff King wrote:
+On Fri, Jan 7, 2011 at 10:21 AM, Nicolas Pitre <nico@fluxnic.net> wrote=
+:
+> How do you actually define your chain? =C2=A0Given that Git is concep=
+tually
+> snapshot based, there is currently no relationship between two blobs
+> forming the content for two different versions of the same file. =C2=A0=
+Even
+> delta objects are not really part of the Git data model as they are o=
+nly
+> an encoding variation of a given primary object. =C2=A0In fact, we ma=
+y and
+> actually do have deltas where the base object is not from the same
+> worktree file as the delta object itself.
+>
+> The only thing that
+> ties this all together is the commit graph. =C2=A0And that graph migh=
+t have
+> multiple forks and merges so any attempt at a linearity representatio=
+n
+> into a chain is rather futile. =C2=A0Therefore it is not clear to me =
+how you
+> can define a chain with a beginning and an end, and how this can be
+> resumed midway.
 
->   refs/mirrors/bundle/torrent
->   refs/mirrors/bundle/http
->   refs/mirrors/fetch/git
->   refs/mirrors/fetch/http
-> 
-> and the client can decide its preferred way of getting data: a bundle by
-> http or by torrent, or connecting directly to some other git repository
-> by git protocol or http. It would fetch the appropriate ref, which would
-> contain a blob in some method-specific format. For torrent, it would be
-> a torrent file. For the others, probably a newline-delimited set of
-> URLs. You could also provide a torrent-magnet ref if you didn't even
-> want to distribute the torrent file.
-> 
-> And no matter what the method used, at the end you have some set of refs
-> and objects, and you can re-try your (now much smaller fetch).
+There's no need to be linear. OK it's not a chain, but a DAG of
+objects that has the same path, in the same structure of commit DAG.
 
-And I think it is probably obvious to you, Nicolas, since these are
-problems you have been thinking about for some time, but the reason I am
-interested in this expanded definition of mirroring is for a few
-features people have been asking for:
+>> We start by fetching all commit contents reachable from a commit tip=
+=2E
+>
+> Sure. =C2=A0This is doable today and is called a shalow clone with de=
+pth=3D1.
 
-  1. restartable clone; any bundle format is easily restartable using
-     standard protocols
+I meant only commit objects, no trees nor blobs.
 
-  2. avoid too-big clones; I remember the gentoo folks wanting to
-     disallow full clones from their actual dev machines and push people
-     off to some more static method of pulling. I think not just because
-     of restartability, but because of the load on the dev machines
+>> This is a chain, therefore resumable.
+>
+> I don't get that part though. =C2=A0How is this resumable? =C2=A0That=
+'s the very
+> issue we have with a clone.
 
-  3. people on low-bandwidth servers who fork major projects; if I write
-     three kernel patches and host a git server, I would really like
-     people to only fetch my patches from me and get the rest of it from
-     kernel.org
+I assume that all commits are sent in an order that parent commits are
+always after the commit in question. We can make a pack of undeltified
+commit objects in such order. That would make sure we could recover a
+continuous commit DAG from the tip if the pack cannot be sent
+completely to client.
 
--Peff
+We can traverse commit graph we have, and request for a pack of
+missing commits to grow the commit DAG until we have all commits.
+
+> I proposed a solution to that already, which is to use
+> git-upload-archive for one of the tip commit since the data stream
+> produced by upload-archive (once decompressed) is actually
+> deterministic. =C2=A0Once completed, this can be converted into a sha=
+low
+> clone on the client side, and can be deepened in smaller steps
+> afterwards.
+
+You see, I don't send trees and blobs in this phase. There are three
+phases. Phase 1 fetches all commits. Once we have all commits. We can
+use them to request packs of trees of the same path. Those packs are
+like the commit pack, but deltified. That's phase 2. When we have
+enough trees, we can proceed to phase 3: fetching packs of blobs.
+
+>> From there each commit can be
+>> examined. Missing trees and blobs will be fetched as chains. Everyti=
+me
+>> a delta is received, we can recreate the new object and verify it (w=
+e
+>> should have its SHA-1 from its parent trees/commits).
+>
+> What if the delta is based on an object from another chain? =C2=A0How=
+ do you
+> determine which chain to ask for to get that base?
+
+Chains should be independent. If a chain is based on another chain and
+we have not got its base yet (because the other chain is not
+completed), we can fetch the base separately. In theory we need to
+fetch a version of all paths once for them to become bases. So it's
+like a broken down version of git-upload-archive.
+
+>> Because these chains are quite independent, in a sense that a blob
+>> chain is independent from another blob chain (but requires tree
+>> chains, of course). We can fetch as many as we want in parallel, onc=
+e
+>> we're done with the commit chain.
+>
+> But in practice, most of those chains will end up containing objects
+> which are duplicate of objects in another chain. =C2=A0How do you tel=
+l the
+> remote that you want part of a chain because you've got 96% of it in
+> another chain already?
+
+Because all clients should have full commit graph (without trees and
+blobs) before doing anything, they should be able to specify a rev
+list for the chain they need. So if you only need SHA1~76..SHA1~100 of
+a path, say so to remote side. SHA-1 must be one of the refs on remote
+side, so it can parse the syntax and verify quickly if "SHA1~76" is
+reachable/allowed to transfer.
+
+>> The last thing I like about these chains is that the number of chain=
+s
+>> is reasonable. It won't increase too fast over time (as compared to
+>> the number of commits). As such it maps well to BitTorrent's "pieces=
+".
+>
+> My problem right now is that I don't see how this maps well to Git.
+
+Git sees a repository as history of snapshots. This way I see it as a
+bunch of "git log -- path", not that bad.
+--=20
+Duy
