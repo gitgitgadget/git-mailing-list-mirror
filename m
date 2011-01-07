@@ -1,60 +1,61 @@
 Return-Path: <git-owner@vger.kernel.org>
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on dcvr.yhbt.net
-X-Spam-Level: 
+X-Spam-Level: **
 X-Spam-ASN: AS31976 209.132.180.0/23
-X-Spam-Status: No, score=0.6 required=3.0 tests=AWL,BAYES_00,
-	FREEMAIL_FORGED_FROMDOMAIN,FREEMAIL_FROM,HEADER_FROM_DIFFERENT_DOMAINS,
-	RP_MATCHES_RCVD,URI_HEX shortcircuit=no autolearn=no autolearn_force=no
-	version=3.4.0
-Received: (qmail 18921 invoked by uid 111); 4 Oct 2010 12:28:55 -0000
+X-Spam-Status: No, score=2.4 required=3.0 tests=AWL,BAYES_00,DKIM_ADSP_ALL,
+	HEADER_FROM_DIFFERENT_DOMAINS,RP_MATCHES_RCVD shortcircuit=no autolearn=no
+	autolearn_force=no version=3.4.0
+Received: (qmail 19132 invoked by uid 111); 7 Jan 2011 22:25:23 -0000
 Received: from vger.kernel.org (HELO vger.kernel.org) (209.132.180.67)
-    by peff.net (qpsmtpd/0.40) with ESMTP; Mon, 04 Oct 2010 12:28:54 +0000
+    by peff.net (qpsmtpd/0.40) with ESMTP; Fri, 07 Jan 2011 22:25:22 +0000
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755667Ab0JDM2t (ORCPT <rfc822;peff@peff.net>);
-	Mon, 4 Oct 2010 08:28:49 -0400
-Received: from kuber.nabble.com ([216.139.236.158]:36896 "EHLO
-	kuber.nabble.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755648Ab0JDM2t (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 4 Oct 2010 08:28:49 -0400
-Received: from jim.nabble.com ([192.168.236.80])
-	by kuber.nabble.com with esmtp (Exim 4.63)
-	(envelope-from <274040551@qq.com>)
-	id 1P2k9x-0002QP-1R
-	for git@vger.kernel.org; Mon, 04 Oct 2010 05:28:49 -0700
-Date:	Mon, 4 Oct 2010 05:28:49 -0700 (PDT)
-From:	yj2133011 <274040551@qq.com>
-To:	git@vger.kernel.org
-Message-ID: <1286195329038-5598912.post@n2.nabble.com>
-In-Reply-To: <1286136014-7728-1-git-send-email-newren@gmail.com>
-References: <1286136014-7728-1-git-send-email-newren@gmail.com>
-Subject: Re: [PATCHv6 00/16] Add missing &&'s in the testsuite
+	id S1754122Ab1AGWZQ (ORCPT <rfc822;peff@peff.net>);
+	Fri, 7 Jan 2011 17:25:16 -0500
+Received: from smtp-fw-9101.amazon.com ([207.171.184.25]:48171 "EHLO
+	smtp-fw-9101.amazon.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753264Ab1AGWZO (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 17:25:14 -0500
+X-IronPort-AV: E=Sophos;i="4.60,291,1291593600"; 
+   d="scan'208";a="596293171"
+Received: from smtp-in-9003.sea19.amazon.com ([10.186.104.20])
+  by smtp-border-fw-out-9101.sea19.amazon.com with ESMTP/TLS/DHE-RSA-AES256-SHA; 07 Jan 2011 22:25:13 +0000
+Received: from ex-hub-0101.ant.amazon.com (ex-hub-0101.sea3.amazon.com [172.21.19.21])
+	by smtp-in-9003.sea19.amazon.com (8.13.8/8.13.8) with ESMTP id p07MPDLx012688
+	(version=TLSv1/SSLv3 cipher=AES128-SHA bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Fri, 7 Jan 2011 22:25:13 GMT
+Received: from [10.51.32.56] (10.224.80.22) by ex-hub-0101.ant.amazon.com
+ (172.21.19.21) with Microsoft SMTP Server id 8.2.254.0; Fri, 7 Jan 2011
+ 14:25:13 -0800
+Message-ID: <4D2792C9.6050504@amazon.com>
+Date:	Fri, 7 Jan 2011 14:25:13 -0800
+From:	Neil Macneale <macneale@amazon.com>
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+To:	git@vger.kernel.org
+Subject: Job Opportunity at Amazon.com
+Content-Type: text/plain; charset="ISO-8859-1"; format=flowed
 Content-Transfer-Encoding: 7bit
 Sender:	git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List:	git@vger.kernel.org
 
+Hello Git Enthusiasts,
 
-Write good cheer, host.
+I am a software engineer at Amazon.com on the Developer Tools Team, and 
+we are looking for engineers with significant git expertise. We have 
+lots of great features in the pipeline and could use your help!
 
+The job listing is here: https://us-amazon.icims.com/jobs/130459/job
 
---------------------------------------------------------
-This 
-http://www.tomtop.com/black-remote-controller-charger2x-2800mah-battery-packs-for-wii_p11124.html?aid=z
-Wii Charger  looks good n stylish. It lights up all blue which made me think
-this is good. Get a 
-http://www.tomtop.com/mini-bluetooth-keyboard-for-ps3-mac-os-android-pc-pda.html?aid=z
-Wireless Keyboard  and mouse combo for your computer workstation and reduce
-desktop clutter.
+If you have questions about what we are building or what it's like to 
+work at Amazon, I encourage you to contact me directly at macneale [at] 
+amazon.com.
 
------
-The voice input and output is very good in this 
-http://www.tomtop.com/black-ps3-wireless-bluetooth-headset-for-playstation-3.html?aid=z
-Wireless PS3 Headset . It is compatible with all PS3 games.Buy from Reliable 
-http://www.tomtop.com/google-android-7-notebook-3g-tablet-pc-umpc-wifi-mid-pda.html?aid=z
-Google Android PC  apad Wholesalers.
+Regards,
+Neil Macneale
+
 -- 
-View this message in context: http://git.661346.n2.nabble.com/PATCHv6-00-16-Add-missing-s-in-the-testsuite-tp5596961p5598912.html
-Sent from the git mailing list archive at Nabble.com.
+Neil Macneale IV - macneale [at] amazon.com
+Software Engineer - Developer Tools
+
