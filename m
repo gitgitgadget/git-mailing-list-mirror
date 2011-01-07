@@ -1,69 +1,64 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: Re: [PATCH] Mark gitk script executable
-Date: Fri, 7 Jan 2011 15:56:57 -0500 (EST)
-Message-ID: <alpine.DEB.2.02.1101071548020.31807@dr-wily.mit.edu>
-References: <alpine.DEB.2.02.1101061943140.6372@dr-wily.mit.edu> <7vlj2x8mr4.fsf@alter.siamese.dyndns.org> <20110107030119.GA32290@burratino> <7v4o9k7brc.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.02.1101071526180.31807@dr-wily.mit.edu>
- <7vbp3s5tpl.fsf@alter.siamese.dyndns.org>
+From: Stephen Bash <bash@genarts.com>
+Subject: Re: clone breaks replace
+Date: Fri, 7 Jan 2011 16:15:05 -0500 (EST)
+Message-ID: <1351312.105443.1294434905621.JavaMail.root@mail.hq.genarts.com>
+References: <20110107205103.GC4629@burratino>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Paul Mackerras <paulus@samba.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 07 21:57:09 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Phillip Susi <psusi@cfl.rr.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 07 22:15:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbJMx-0006M6-Fu
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 21:57:07 +0100
+	id 1PbJet-0006UI-7a
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 22:15:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752483Ab1AGU5A convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jan 2011 15:57:00 -0500
-Received: from DMZ-MAILSEC-SCANNER-3.MIT.EDU ([18.9.25.14]:49035 "EHLO
-	dmz-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751801Ab1AGU5A convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>); Fri, 7 Jan 2011 15:57:00 -0500
-X-AuditID: 1209190e-b7b3bae000000a71-ce-4d277e1b1e8e
-Received: from mailhub-auth-2.mit.edu ( [18.7.62.36])
-	by dmz-mailsec-scanner-3.mit.edu (Symantec Brightmail Gateway) with SMTP id D0.61.02673.B1E772D4; Fri,  7 Jan 2011 15:56:59 -0500 (EST)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-2.mit.edu (8.13.8/8.9.2) with ESMTP id p07Kuw7j006043;
-	Fri, 7 Jan 2011 15:56:58 -0500
-Received: from localhost (DR-WILY.MIT.EDU [18.181.0.233])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p07KuvXX004726
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES128-SHA bits=128 verify=NOT);
-	Fri, 7 Jan 2011 15:56:57 -0500 (EST)
-In-Reply-To: <7vbp3s5tpl.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
-X-Brightmail-Tracker: AAAAAA==
+	id S1753606Ab1AGVPU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jan 2011 16:15:20 -0500
+Received: from hq.genarts.com ([173.9.65.1]:2191 "HELO mail.hq.genarts.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1753582Ab1AGVPS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 16:15:18 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by mail.hq.genarts.com (Postfix) with ESMTP id DED7B1E2604D;
+	Fri,  7 Jan 2011 16:15:11 -0500 (EST)
+X-Virus-Scanned: amavisd-new at mail.hq.genarts.com
+Received: from mail.hq.genarts.com ([127.0.0.1])
+	by localhost (mail.hq.genarts.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id WuRnOsHQuqId; Fri,  7 Jan 2011 16:15:05 -0500 (EST)
+Received: from mail.hq.genarts.com (mail.hq.genarts.com [10.102.202.62])
+	by mail.hq.genarts.com (Postfix) with ESMTP id CBC011E2604C;
+	Fri,  7 Jan 2011 16:15:05 -0500 (EST)
+In-Reply-To: <20110107205103.GC4629@burratino>
+X-Mailer: Zimbra 6.0.10_GA_2692 (ZimbraWebClient - SAF3 (Mac)/6.0.10_GA_2692)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164763>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164764>
 
-On Fri, 7 Jan 2011, Junio C Hamano wrote:
-> If that is the case perhaps the next pull will fix that ;-)
+----- Original Message -----
+> From: "Jonathan Nieder" <jrnieder@gmail.com>
+> To: "Phillip Susi" <psusi@cfl.rr.com>
+> Cc: git@vger.kernel.org, "Christian Couder" <chriscool@tuxfamily.org>
+> Sent: Friday, January 7, 2011 3:51:03 PM
+> Subject: Re: clone breaks replace
+> Phillip Susi wrote:
+> 
+> > Isn't the whole purpose of using replace to avoid having to use
+> > filter-branch, which throws out all of the existing commit records,
+> > and creates an entirely new commit chain that is slightly modified?
+> 
+> No. What documentation suggested that? Maybe it can be fixed.
 
-Nope.  There=E2=80=99s nothing to pull; the current gitk.git master was=
- already=20
-taken by the last pull.  Even once there are commits to pull, the commo=
-n=20
-ancestor will be 6758ad94, in which the script is executable, so the=20
-script will remain non-executable in the merge result.  (And you can se=
-e=20
-for yourself that the last 28 pulls since 62ba5143 haven=E2=80=99t adde=
-d the=20
-executable bit.)
+I'll chime in here as another person who read the ProGit blog entry on git-replace [1] and came to the same conclusion Phillip (and I'm guessing others) did.  OTOH when I attempted to read the actual git-replace manpage, I got completely lost, so I retained my (apparently incorrect) understanding from ProGit.
 
-The point is that 62ba5143 introduced a change to git.git that wasn=E2=80=
-=99t in=20
-gitk.git, and that change will remain in git.git until it=E2=80=99s und=
-one in=20
-git.git.
+Thanks,
+Stephen
 
-Anders
+[1] http://progit.org/2010/03/17/replace.html
