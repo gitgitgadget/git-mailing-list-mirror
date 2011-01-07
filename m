@@ -1,105 +1,89 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Resumable clone/Gittorrent (again) - stable packs?
-Date: Fri, 7 Jan 2011 16:56:31 -0500
-Message-ID: <20110107215631.GA10343@sigill.intra.peff.net>
-References: <AANLkTikv+L5Da7A5VM7BAgnue=m0O_-nHmHchJzfGxJa@mail.gmail.com>
- <alpine.LFD.2.00.1101061552580.22191@xanadu.home>
- <AANLkTikgzqoG2cymNJ0NN03RsTRJi22R9M+0LFJ8U2yB@mail.gmail.com>
- <alpine.LFD.2.00.1101062221480.22191@xanadu.home>
- <20110107052207.GA23128@sigill.intra.peff.net>
- <20110107053119.GA23177@sigill.intra.peff.net>
- <20110107185218.GA16645@LK-Perkele-VI.localdomain>
- <20110107191719.GA6175@sigill.intra.peff.net>
- <20110107214501.GA29959@LK-Perkele-VI.localdomain>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] git-cvs*: Make building (and testing) of CVS interface
+ scripts optionally selectable
+Date: Fri, 7 Jan 2011 16:01:48 -0600
+Message-ID: <20110107220147.GB9194@burratino>
+References: <1294433290-9262-1-git-send-email-robbat2@gentoo.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Zenaan Harkness <zen@freedbms.net>, git@vger.kernel.org
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Fri Jan 07 22:57:04 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: "Robin H. Johnson" <robbat2@gentoo.org>
+X-From: git-owner@vger.kernel.org Fri Jan 07 23:02:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbKIw-0007iE-4v
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 22:57:02 +0100
+	id 1PbKNt-0000aD-4r
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 23:02:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754170Ab1AGV4h (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jan 2011 16:56:37 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:38232 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754145Ab1AGV4e (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jan 2011 16:56:34 -0500
-Received: (qmail 18856 invoked by uid 111); 7 Jan 2011 21:56:33 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 07 Jan 2011 21:56:33 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Jan 2011 16:56:31 -0500
+	id S1755627Ab1AGWCF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jan 2011 17:02:05 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:35136 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755623Ab1AGWCE (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 17:02:04 -0500
+Received: by vws16 with SMTP id 16so7300350vws.19
+        for <git@vger.kernel.org>; Fri, 07 Jan 2011 14:02:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=Ssejy52RLe5nS37M+w/csn01BZ10sfIW19zv49t7/Po=;
+        b=p/OY+nDYcBuXuRklw37rWOoTrxldEEHSEBAvtfv4AJMeFb1NF9E3uilmCMRpWsbsyn
+         q9BJUc2dpCt338LxVe4RsNPtODBA0S5bvGzD9CBgMp5QZd4ZhQlfnespQReJNcMTnKcW
+         BTegPe8Uwyz9q0vYsF1Y3H55vOAo4GSYxYkWQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ID8+6kWAyJTsHIG9hb1qE168FMedLeYPO3BPLlkcFLVCFBm48fE3nBPZASp3wowJQt
+         055cD8U1j9YuUukwJOuhFWHY2t/m7oFgoL+gnp1R7aYNKB/3hx+v0Qa/E4fnB6vJXXnb
+         LgMouJlkhgI3QdsXA11xYWP9BpbFJjGq9QN+Q=
+Received: by 10.220.179.7 with SMTP id bo7mr233701vcb.105.1294437723896;
+        Fri, 07 Jan 2011 14:02:03 -0800 (PST)
+Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
+        by mx.google.com with ESMTPS id b26sm9994673vby.13.2011.01.07.14.02.01
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 07 Jan 2011 14:02:02 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20110107214501.GA29959@LK-Perkele-VI.localdomain>
+In-Reply-To: <1294433290-9262-1-git-send-email-robbat2@gentoo.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164770>
 
-On Fri, Jan 07, 2011 at 11:45:01PM +0200, Ilari Liusvaara wrote:
+Robin H. Johnson wrote:
 
-> > I'm not clear in your example what ~/repositories/linux-2.6 is. Is it a
-> > repo? In that case, isn't that basically the same as --reference? Or is
-> > it a local mirror list?
-> 
-> Yes, it is a repo. No, it isn't the same as --reference. It is list
-> of mirrors to try first before connecting to final repository and can
-> be any type of repository URL (local, true smart transport, smart HTTP,
-> dumb HTTP, etc...)
+> Presently, the CVS interface scripts are always built, and their
+> test-suites run based on a binary named 'cvs' happening to return zero.
+> If there something other than the real CVS there, bad things happened
+> during the test-suite run.
 
-OK, I understand what you mean. I was thrown off by your example using a
-local repository (in which case you probably would want --reference to
-save disk space, unless the burden of alternates management is too
-much).
+This explanation seems quite odd to me.  Are you saying we can't rely
+on the 'cvs' name being "taken" and should live in fear that someone
+will implement an incompatible utility with the same name?  Did that
+actually happen?
 
-So yeah, I think we are on the same page, except that you were proposing
-to pass the mirror directly, and I was proposing passing a mirror file
-which would contain a list of mirrors. Yours is much simpler and would
-probably be what people want most of the time.
+I would find it easier to believe
 
-> > If the latter, then yeah, I think it is a good idea. Clients should
-> > definitely be able to ignore, override, or add to mirror lists provided
-> > by servers. The server can provide hints about useful mirrors, but it is
-> > up to the client to decide which methods are useful to it and which
-> > mirrors are closest.
-> 
-> This is essentially adding mirrors to mirror list (modulo that mirrors
-> are not assumed to be complete).
+	Building and testing git's cvs support is slow, because ...
 
-I think there should always be an assumption that mirrors are not
-necessarily complete. That is necessary for bundle-like mirrors to be
-feasible, since updating the bundle for every commit defeats the
-purpose.
+	So give users with no interest in cvs interoperability a way
+	out.  By defining NO_CVS you can avoid this time-consuming
+	piece of the build process.
 
-It would be nice for there to be a way for some mirrors to be marked as
-"should be considered complete and authoritative", since we can optimize
-out the final check of the master in that case (as well as for future
-fetches). But that's a future feature. My plan was to leave space in the
-mirror list for arbitrary metadata of that sort.
+Or for a different patch:
 
-> > Of course there are some servers who will want to do more than hint
-> > (e.g., the gentoo case where they really don't want people cloning from
-> > the main machine). For those cases, though, I think it is best to
-> > provide the hint and to reject clients who don't follow it (e.g., by
-> > barfing on somebody who tries to do a full clone). You have to implement
-> > that rejection layer anyway for older clients.
-> 
-> With option like this, a client could do:
-> 
-> git clone --use-mirror=http://git.example.org/base/foo git://git.example.org/foo
-> 
-> To first grab stuff via HTTP (well-packed dumb HTTP is very light on the
-> server) and then continue via git:// (now much cheaper because client is
-> relatively up to date).
+	Add a NO_CVS knob so users with no interest in cvs support
+	can avoid polluting their $(libexecdir) with unwanted entries.
 
-Yes, exactly.
+Or:
 
--Peff
+	Introduce a new NO_CVS knob.  If set, the CVS interop scripts
+	will be replaced by unimplemented.sh so sysadmins and
+	distributors can hopefully get a nice, clear error report instead
+	of confusion when users try to run them with cvs not installed.
