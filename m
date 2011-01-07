@@ -1,100 +1,64 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] commit: suggest --amend --reset-author to fix commiter
- identity
-Date: Fri, 7 Jan 2011 11:34:28 -0600
-Message-ID: <20110107173428.GC16571@burratino>
-References: <1294409671-5479-1-git-send-email-Matthieu.Moy@imag.fr>
- <20110107171329.GA16571@burratino>
- <vpq7hegmy66.fsf@bauges.imag.fr>
+From: Steven Walter <stevenrwalter@gmail.com>
+Subject: Re: [RFC/PATCH] t9157-*.sh: Add an svn version check
+Date: Fri, 7 Jan 2011 12:44:55 -0500
+Message-ID: <AANLkTi=VpHtQ+x5hyfCei-=X=ry4X=+TSGg7EKa7zs4j@mail.gmail.com>
+References: <4D260A03.90903@ramsay1.demon.co.uk>
+	<20110107173114.GA31376@dcvr.yhbt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, gitster@pobox.com
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Jan 07 18:34:50 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Ramsay Jones <ramsay@ramsay1.demon.co.uk>,
+	GIT Mailing-list <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Eric Wong <normalperson@yhbt.net>
+X-From: git-owner@vger.kernel.org Fri Jan 07 18:45:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbGDB-0004tX-Lm
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 18:34:50 +0100
+	id 1PbGN5-00024r-Ci
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 18:45:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754966Ab1AGRep (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jan 2011 12:34:45 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:60426 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754688Ab1AGReo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jan 2011 12:34:44 -0500
-Received: by fxm20 with SMTP id 20so17135284fxm.19
-        for <git@vger.kernel.org>; Fri, 07 Jan 2011 09:34:42 -0800 (PST)
+	id S1754654Ab1AGRo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jan 2011 12:44:58 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:33688 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754603Ab1AGRo5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 12:44:57 -0500
+Received: by bwz15 with SMTP id 15so17506685bwz.19
+        for <git@vger.kernel.org>; Fri, 07 Jan 2011 09:44:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=7X53nOMPEOK4KJYg8Cew+8cEmhW747oZCJwZKCInP7o=;
-        b=DdH7FJqmFna+wnXxc69wG3I7D3lUK2SHQC3EyJTE6uL44GtczlhnH02WqhmMModlis
-         JcRj0YjWFTFbriDgVSxKBmeO3WauV/21d0X19bslOIyQf977KP2+SS6WWaDwVhb2EKDU
-         nFKbPFtUGJQYFjMpQgF1H6WP4fDh/ghvxtVEE=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type;
+        bh=ZTCXu5RWr5UDEjc25al65fSXsYDaiBvRuTiQ20cKqAA=;
+        b=nSGHBqQXeHxtkMlQAWhk2oo0qepD4GbJE2xWPd0x+GGjjYeaNk94bb6ruaQ8Ker2MQ
+         +R+65lVy+4ag+cqOTgAAjbYQjMkysfm/4xdrWuSFa7z/A8wQXvVbfJ365w3aIR8oiw59
+         GYkYxdqaDZc4W87cdDgrQpk+nur++Uu/REIl4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=oaropekXq/QgBaSnvVkq5qxVs/CBnu0LWzZR126IMaBN5PUh4IuesQx07V4UjPIvVI
-         CHrGcAZwhmLUHQBxiMzATf2yECEnQr19x8NSdUl5GD2K8aCSDfEKMKCgCUU9TGUBA3zJ
-         6DrBXCSK4VfLWxGTi5TKnHRS9mgz+YkvMvaaw=
-Received: by 10.223.103.6 with SMTP id i6mr2988938fao.84.1294421682680;
-        Fri, 07 Jan 2011 09:34:42 -0800 (PST)
-Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
-        by mx.google.com with ESMTPS id n1sm6222130fam.16.2011.01.07.09.34.40
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 07 Jan 2011 09:34:41 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <vpq7hegmy66.fsf@bauges.imag.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=sGV7FCuuv8uEIHrAN/4qIb1xofT0d/YPFpXV8fVzJdQDfGlKbbPF/cIYoT5RaVxq5r
+         OisqhWAiQQcbFnmrromo0SviJbOgTQ5hHntWyzn0zKOA9z9jfM/4Hk9IgNYo4h58ib6J
+         72YovQ6di44KsZxK2qDZkPHrGr4tYH8rtrZBE=
+Received: by 10.204.138.142 with SMTP id a14mr1374623bku.197.1294422295370;
+ Fri, 07 Jan 2011 09:44:55 -0800 (PST)
+Received: by 10.204.152.212 with HTTP; Fri, 7 Jan 2011 09:44:55 -0800 (PST)
+In-Reply-To: <20110107173114.GA31376@dcvr.yhbt.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164725>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164726>
 
-Matthieu Moy wrote:
+On Fri, Jan 7, 2011 at 12:31 PM, Eric Wong <normalperson@yhbt.net> wrote:
+> Ramsay Jones <ramsay@ramsay1.demon.co.uk> wrote:
+>> Signed-off-by: Ramsay Jones <ramsay@ramsay1.demon.co.uk> ---
+>
+> Consider this
+> Acked-by: Eric Wong <normalperson@yhbt.net>
 
-> The complete message says:
-> 
-> "Your name and email address were configured automatically based\n"
-> "on your username and hostname. Please check that they are accurate.\n"
-> "You can suppress this message by setting them explicitly:\n"
-> "\n"
-> "    git config --global user.name \"Your Name\"\n"
-> "    git config --global user.email you@example.com\n"
-> "\n"
-> "If the identity used for this commit is wrong, you can fix it with:\n"
-> "\n"
-> "    git commit --amend --author='Your Name <you@example.com>'\n"
-
-Sloppy reading on my part.  So the original text explains:
-
-	how to configure your identity globally
-	how to change the identity for a single commit
-
-> "\n"
-> "or\n"
-> "\n"
-> "    git commit --amend --reset-author\n";
-
-Maybe:
-
-	If the identity used for this commit is wrong, you can fix it:
-
-	    git commit --amend --author='Patch Submitter <author@example.com>'
-
-	To just use your newly configured identity:
-
-	    git commit --amend --reset-author
-
-(modulo wording).  The idea being to make it clear to the user why we
-are telling two ways to do the same thing.
-
-Sorry for the nonsense.
-Jonathan
+Acked-by: Steven Walter <stevenrwalter@gmail.com>
+-- 
+-Steven Walter <stevenrwalter@gmail.com>
