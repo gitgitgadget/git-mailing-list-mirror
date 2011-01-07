@@ -1,108 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: bug? in checkout with ambiguous refnames
-Date: Fri, 07 Jan 2011 11:44:34 -0800
-Message-ID: <7vzkrc5wil.fsf@alter.siamese.dyndns.org>
+Date: Fri, 7 Jan 2011 14:49:09 -0500
+Message-ID: <20110107194909.GB6175@sigill.intra.peff.net>
 References: <20110107104650.GA5399@pengutronix.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-X-From: git-owner@vger.kernel.org Fri Jan 07 20:44:49 2011
+X-From: git-owner@vger.kernel.org Fri Jan 07 20:49:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbIEx-0004xJ-Ij
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 20:44:47 +0100
+	id 1PbIJK-0007JX-0C
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 20:49:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754135Ab1AGTom convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jan 2011 14:44:42 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35345 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753385Ab1AGTol convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 7 Jan 2011 14:44:41 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DAE2E3551;
-	Fri,  7 Jan 2011 14:45:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=yI5sC0gNjwkC
-	M+uv1nBSpl6TRAY=; b=kpaSlK3pEpniw22q47ARguUdfCB8zidSXMrDj90YJmeo
-	wJUKRKnYxKCBYt4do3LrudOYl6XodJFsZBonLvbFCCkVOSzl6AMsMUz5tsj2H8Rp
-	LO/uRigMLEFQxrlVkDA2NKHsElUxd6qF9C4BUkSsW3sJyD3CJYTqnoCtYoK23+g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=iELfUR
-	G9RZZMwWkO5uLF+S4z2n6qhMecV7DEwTSK1ml+2/Os0zlXy+gEFrYVMb4700QLJO
-	pZVDpg7vx3+4r247p1OkGF4IYAIFFchaCpSC8DZyCALPZeIv6T4Vdkhrt2e0afiI
-	idwoseQdA8OHrAKIie9yy887GcQxL9Eo6oXHQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B63343550;
-	Fri,  7 Jan 2011 14:45:17 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C5B40354D; Fri,  7 Jan 2011
- 14:45:14 -0500 (EST)
-In-Reply-To: <20110107104650.GA5399@pengutronix.de> ("Uwe =?utf-8?Q?Kleine?=
- =?utf-8?Q?-K=C3=B6nig=22's?= message of "Fri\, 7 Jan 2011 11\:46\:50 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: A766F0A0-1A96-11E0-BF3E-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
+	id S1755290Ab1AGTtM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 7 Jan 2011 14:49:12 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:57877 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753094Ab1AGTtM (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 14:49:12 -0500
+Received: (qmail 17652 invoked by uid 111); 7 Jan 2011 19:49:11 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 07 Jan 2011 19:49:11 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 07 Jan 2011 14:49:09 -0500
+Content-Disposition: inline
+In-Reply-To: <20110107104650.GA5399@pengutronix.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164748>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164749>
 
-Uwe Kleine-K=C3=B6nig  <u.kleine-koenig@pengutronix.de> writes:
+On Fri, Jan 07, 2011 at 11:46:50AM +0100, Uwe Kleine-K=C3=B6nig wrote:
 
+> 	ukl@octopus:~/gsrc/linux-2.6$ git diff; git diff --cached
+>=20
+> 	ukl@octopus:~/gsrc/linux-2.6$ git checkout sgu/mxs-amba-uart
+> 	warning: refname 'sgu/mxs-amba-uart' is ambiguous.
+> 	Previous HEAD position was c13fb17... Merge commit '65e29a85a419f9a1=
+61ab0f09f9d69924e36d940e' into HEAD
+> 	Switched to branch 'sgu/mxs-amba-uart'
+>=20
+> OK, it might be a bad idea to have this ambiguity, still ...
+> [...]
 > So working copy and cache are at refs/tags/sgu/mxs-amba-uart, HEAD
 > points to refs/heads/sgu/mxs-amba-uart
 
-I somehow thought that we had an explicit logic to favor an exact branc=
-h
-name for "git checkout $branch" even when refs/something-other-than-hea=
-d/$branch=20
-exists, while issuing the ambiguity warning.
+Yeah, we generally resolve ambiguities in favor of the tag (and that
+warning comes from deep within get_sha1_basic). So the real bug here is
+that it still said "Switched to branch", which is totally wrong.
 
-Ahh, what this part of the code in builtin/checkout.c does is totally
-wrong:
+That being said, it probably would make more sense for "git checkout" t=
+o
+prefer branches to tags. That's probably going to take a lot more
+surgery, and we're in -rc right now. So I think the best thing to do is
+to fix the broken message and add some tests, and then if somebody want=
+s
+to revisit it with a larger patch, they can do so on top.
 
-	/* we can't end up being in (2) anymore, eat the argument */
-	argv++;
-	argc--;
+I'll work on the first part and post a patch in a few minutes.
 
-	new.name =3D arg;
-	if ((new.commit =3D lookup_commit_reference_gently(rev, 1))) {
-		setup_branch_path(&new);
-
-		if ((check_ref_format(new.path) =3D=3D CHECK_REF_FORMAT_OK) &&
-		    resolve_ref(new.path, rev, 1, NULL))
-			;
-		else
-			new.path =3D NULL;
-		parse_commit(new.commit);
-		source_tree =3D new.commit->tree;
-	} else
-		source_tree =3D parse_tree_indirect(rev);
-
-It uses lookup_commit_reference_gently() that follows the usual
-tags-then-heads preference order, but then uses setup_branch_path() to
-prefix the raw name with "refs/heads", which is totally backwards.
-It should do something like:
-
- - use setup-branch-path to get refs/heads/$name
-
- - check-ref-format and resolve it; if these fail, then we are detachin=
-g
-   head at rev;
-
- - otherwise, if the result of the resolution is not the same as rev, w=
-hat
-   we have in rev is incorrect (it was taken from the usual
-   tags-then-heads rule but "checkout $name" must favor local branches)=
-=2E
-   update the rev with the result of resolving refs/heads/$name
-
- - parse new.commit out of rev.  we are checking out the branch $name.
+-Peff
