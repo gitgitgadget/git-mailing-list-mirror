@@ -1,95 +1,81 @@
-From: Yaroslav Halchenko <debian@onerussian.com>
-Subject: Re: problem with cherry-picking a commit which comes before
- introducing a new submodule
-Date: Fri, 7 Jan 2011 18:48:42 -0500
-Message-ID: <20110107234841.GQ6040@onerussian.com>
-References: <20110107172432.GA6040@onerussian.com>
- <20110107181501.GA28980@burratino>
- <20110107183226.GG6040@onerussian.com>
- <20110107230017.GA15495@burratino>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: 'git add' option to non-interactively stage working tree changes
+Date: Fri, 07 Jan 2011 15:50:38 -0800 (PST)
+Message-ID: <m3pqs8b7fj.fsf@localhost.localdomain>
+References: <AANLkTimLKZnVn8Lr-E-8M8T5mXA55XabCT5rC+broeFJ@mail.gmail.com>
+	<m2aajcbiei.fsf@igel.home>
+	<AANLkTi=iwOGv3PzrRcVGDwwoTXmJ4CuC11vuYsjn4xxV@mail.gmail.com>
+	<7vfwt45tqv.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 08 00:48:53 2011
+Cc: =?iso-8859-2?q?Hrvoje_Nik=B9i=E6?= <hniksic@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 08 00:50:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbM37-0007Tt-Pd
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 00:48:50 +0100
+	id 1PbM5A-0008QK-Qg
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 00:50:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752101Ab1AGXso (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jan 2011 18:48:44 -0500
-Received: from washoe.dartmouth.edu ([129.170.30.229]:43875 "EHLO
-	smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751978Ab1AGXsn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jan 2011 18:48:43 -0500
-Received: from smtp.onerussian.com ([192.168.100.6] helo=washoe.onerussian.com)
-	by smtp.onerussian.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <yoh@onerussian.com>)
-	id 1PbM30-0006mU-8u; Fri, 07 Jan 2011 18:48:42 -0500
-Received: from yoh by washoe.onerussian.com with local (Exim 4.69)
-	(envelope-from <yoh@onerussian.com>)
-	id 1PbM30-0006mR-26; Fri, 07 Jan 2011 18:48:42 -0500
-Content-Disposition: inline
-In-Reply-To: <20110107230017.GA15495@burratino>
-X-URL: http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: 192.168.100.6
-X-SA-Exim-Rcpt-To: git@vger.kernel.org, jrnieder@gmail.com, newren@gmail.com
-X-SA-Exim-Mail-From: yoh@onerussian.com
-X-SA-Exim-Scanned: No (on smtp.onerussian.com); SAEximRunCond expanded to false
+	id S1752540Ab1AGXul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jan 2011 18:50:41 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:40184 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752513Ab1AGXuk (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 18:50:40 -0500
+Received: by wwa36 with SMTP id 36so19024333wwa.1
+        for <git@vger.kernel.org>; Fri, 07 Jan 2011 15:50:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:received:received
+         :x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        bh=olRl+lt2Bo0sg/ZLCqQSrttv6ELFAOYyd2xcnaUFSi0=;
+        b=F/NBklURESgnrxgO6RxCVdGwYCZJcPpK5advxztlxUa2a2d+DWlPAG97AHa6YgJePN
+         cd3LFtwBAR/p40/vq0KHsYLtp3RtKGjKqmoP78FUmEyJyoeQDp/BbQplZiOtBqHqOpJy
+         5ySMh+nBVP/ncrcsYGyBUvk4zVEc/51wKGKoY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=GYhdHiwhYeMydHwSc8leQ4DpxXq3T3aMaG7u5NElwMBlwQXntexCS00Xt4zFNHYwV7
+         M1tISbig1RisE1MvVBIzsF5oJNRtFjdgkCKdpBRamsT1ReZ8aFjCl1EU2+UpLWB33uwa
+         iJRF/S9Gd+d0SzmoyfBJwt57jCmgp/MtNmCmU=
+Received: by 10.227.138.132 with SMTP id a4mr448521wbu.77.1294444239361;
+        Fri, 07 Jan 2011 15:50:39 -0800 (PST)
+Received: from localhost.localdomain (abvf4.neoplus.adsl.tpnet.pl [83.8.203.4])
+        by mx.google.com with ESMTPS id e12sm12732272wer.36.2011.01.07.15.50.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 07 Jan 2011 15:50:38 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p07No8hj009558;
+	Sat, 8 Jan 2011 00:50:14 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p07NnqP3009550;
+	Sat, 8 Jan 2011 00:49:52 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vfwt45tqv.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164789>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164790>
 
-sorry -- lame me... 1.7.2.3 ... I will check with current version as soon as
-kids permit ;-)
+Junio C Hamano <gitster@pobox.com> writes:
 
-% apt-cache policy git
-git:
-  Installed: 1:1.7.2.3-2.2
-  Candidate: 1:1.7.2.3-2.2
-  Version table:
- *** 1:1.7.2.3-2.2 0
-        900 http://debian.lcs.mit.edu/debian/ squeeze/main amd64 Packages
-        800 http://debian.lcs.mit.edu/debian/ sid/main amd64 Packages
-        100 /var/lib/dpkg/status
-% git --version
-git version 1.7.2.3
+> I think it might be Ok to introduce a --full-tree option to "git add" (and
+> "git grep"), though.  But introduction of corresponding configuration
+> variable to flip the default needs to be done carefully in steps across
+> major version boundaries as usual (i.e. first introduce --no-full-tree,
 
+You meant --relative[1] here (instead of --no-full-tree), didn't you?
 
-On Fri, 07 Jan 2011, Jonathan Nieder wrote:
-> One more piece of protocol: what git version are you using?  The
-> release notes mention a fix in this area in v1.7.3[1]:
-
->  * "git merge -s recursive" (which is the default) did not handle cases
->    where a directory becomes a file (or vice versa) very well.
-
-> Hopefully this is that.  In any case, sounds like a bug.
-
-> (Hopefully someone else can comment on why cherry-pick uses the
-> merge machinery to notice conflicts that would not be clear from
-> the patch alone.)
-
-> Thanks again.
-> Jonathan
-
-> [1] There is an updated Debian source package at [2].  Or, probably
-> faster: one can use the build result in bin-wrappers/ from a git.git
-> clone in place.
-> [2] http://mentors.debian.net/debian/pool/main/g/git/git_1.7.4~rc1-0.1.dsc
-
-
+[1] Supported by diff, and in a way by git-diff-tree
 -- 
-=------------------------------------------------------------------=
-Keep in touch                                     www.onerussian.com
-Yaroslav Halchenko                 www.ohloh.net/accounts/yarikoptic
+Jakub Narebski
+Poland
+ShadeHawk on #git
