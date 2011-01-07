@@ -1,107 +1,90 @@
-From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-Subject: Re: Resumable clone/Gittorrent (again) - stable packs?
-Date: Fri, 7 Jan 2011 23:45:01 +0200
-Message-ID: <20110107214501.GA29959@LK-Perkele-VI.localdomain>
-References: <AANLkTikv+L5Da7A5VM7BAgnue=m0O_-nHmHchJzfGxJa@mail.gmail.com>
- <alpine.LFD.2.00.1101061552580.22191@xanadu.home>
- <AANLkTikgzqoG2cymNJ0NN03RsTRJi22R9M+0LFJ8U2yB@mail.gmail.com>
- <alpine.LFD.2.00.1101062221480.22191@xanadu.home>
- <20110107052207.GA23128@sigill.intra.peff.net>
- <20110107053119.GA23177@sigill.intra.peff.net>
- <20110107185218.GA16645@LK-Perkele-VI.localdomain>
- <20110107191719.GA6175@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: clone breaks replace
+Date: Fri, 7 Jan 2011 15:49:07 -0600
+Message-ID: <20110107214907.GA9194@burratino>
+References: <4D262D68.2050804@cfl.rr.com>
+ <20110106213338.GA15325@burratino>
+ <4D276CD2.60607@cfl.rr.com>
+ <20110107205103.GC4629@burratino>
+ <4D278930.7010100@cfl.rr.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Zenaan Harkness <zen@freedbms.net>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 07 22:45:18 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Stephen Bash <bash@genarts.com>
+To: Phillip Susi <psusi@cfl.rr.com>
+X-From: git-owner@vger.kernel.org Fri Jan 07 22:49:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbK7Z-0002jN-H1
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 22:45:17 +0100
+	id 1PbKBe-0004Vo-LK
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 22:49:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753264Ab1AGVoz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jan 2011 16:44:55 -0500
-Received: from emh06.mail.saunalahti.fi ([62.142.5.116]:36121 "EHLO
-	emh06.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751790Ab1AGVoy (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jan 2011 16:44:54 -0500
-Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
-	by emh06-2.mail.saunalahti.fi (Postfix) with SMTP id 3403EC7DD5;
-	Fri,  7 Jan 2011 23:44:53 +0200 (EET)
-Received: from emh01.mail.saunalahti.fi ([62.142.5.107])
-	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
-	with SMTP (gateway) id A01F362EA56; Fri, 07 Jan 2011 23:44:53 +0200
-Received: from LK-Perkele-VI (a88-112-56-215.elisa-laajakaista.fi [88.112.56.215])
-	by emh01.mail.saunalahti.fi (Postfix) with ESMTP id B533A402E;
-	Fri,  7 Jan 2011 23:44:47 +0200 (EET)
+	id S1753827Ab1AGVt0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jan 2011 16:49:26 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:49914 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752425Ab1AGVtZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 16:49:25 -0500
+Received: by qwa26 with SMTP id 26so18255503qwa.19
+        for <git@vger.kernel.org>; Fri, 07 Jan 2011 13:49:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=v1BhWsTJHol29mEgDDWQKMfeKwlkNbzkrBwygm3++jQ=;
+        b=n09UpRrIjbWxaaTUgE94JIM9SMOH1phX7qFggwPUOXOh/LPCJGguoguzePXkLjPGQ4
+         azfQqsRqbAK6F5WROl6hgSMCl1tuI/ck9m2h4JJbMMuDWArF5ChllBmxhIfC/+FqFQpT
+         FE/SZqDYq0LHlJgSZ/7UVFfVeZSrXhfxKsJ4U=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=pUgo63vBXQeBIfazQcfu8/sHkjIAnEERDjRhqs2jO2QFjOdTwjPhzYvbeMLpndIaP9
+         L1ZyB5rBkyovkD/RHO+nZmIGjHF2zphbFm906B/xXN6wYCF7HutFs2BL2krd60DW8USQ
+         a94IkKm4u0U7J+RwwFUabl3XkQz8mxnqg93cE=
+Received: by 10.229.240.198 with SMTP id lb6mr22219530qcb.255.1294436964609;
+        Fri, 07 Jan 2011 13:49:24 -0800 (PST)
+Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
+        by mx.google.com with ESMTPS id p13sm15441432qcu.29.2011.01.07.13.49.21
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 07 Jan 2011 13:49:23 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20110107191719.GA6175@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-Antivirus: VAMS
+In-Reply-To: <4D278930.7010100@cfl.rr.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164768>
 
-On Fri, Jan 07, 2011 at 02:17:19PM -0500, Jeff King wrote:
-> On Fri, Jan 07, 2011 at 08:52:18PM +0200, Ilari Liusvaara wrote:
-> 
-> > 
-> > git clone --use-mirror=~/repositories/linux-2.6 git://foo.example/linux-foo
-> > 
-> > This would first fetch everything from local source and then update that
-> > from remote, likely being vastly faster.
-> 
-> I'm not clear in your example what ~/repositories/linux-2.6 is. Is it a
-> repo? In that case, isn't that basically the same as --reference? Or is
-> it a local mirror list?
+Phillip Susi wrote:
 
-Yes, it is a repo. No, it isn't the same as --reference. It is list
-of mirrors to try first before connecting to final repository and can
-be any type of repository URL (local, true smart transport, smart HTTP,
-dumb HTTP, etc...)
+> Take the kernel history as an example, only imagine that Linus did not
+> originally make that first commit leaving out the prior history, but
+> wants to go back and fix it now.  He can do it with a replace, but then
+> if he runs filter-branch as you suggest to make the change 'real', then
+> everyone tracking his tree will fail the next time they try to pull.
+> You could get the same result without replace, so why bother?
+>
+> If the replace was fetched by default, the people already tracking would
+> get it the next time they pull and would not have a problem.
 
-Idea is that you have list of mirrors that are faster than the final
-repository, but not necressarily complete. You want to download most of
-the stuff from there.
+Interesting.  I hadn't thought about this detail before.
 
-> If the latter, then yeah, I think it is a good idea. Clients should
-> definitely be able to ignore, override, or add to mirror lists provided
-> by servers. The server can provide hints about useful mirrors, but it is
-> up to the client to decide which methods are useful to it and which
-> mirrors are closest.
+> Those cloning the repository for the first
+> time would get it, and avoid fetching all of the old history since they
+> would be using the replace record in place of the original commit.
 
-This is essentially adding mirrors to mirror list (modulo that mirrors
-are not assumed to be complete).
+No, it doesn't work that way.  Imagine for a moment that each commit
+object actually contains all of its ancestors.  That isn't precisely
+right but in a way it is close.
 
-Security:
+To change the ancestry of a commit, you really do need to change its
+name.  If you disagree, feel free to try it and I'd be glad to help
+where I can with the coding if the design is sane.  Deal?
 
-Confidentiality: The connection to mirror must transverse only trusted
-links or be encrypted if material from mirror is sensitive.
-
-Integerity: The same integerity as the connection to final repo (assuming
-SHA-1 can't be collided) due to fact that git object naming is securely
-unique.
-
-> Of course there are some servers who will want to do more than hint
-> (e.g., the gentoo case where they really don't want people cloning from
-> the main machine). For those cases, though, I think it is best to
-> provide the hint and to reject clients who don't follow it (e.g., by
-> barfing on somebody who tries to do a full clone). You have to implement
-> that rejection layer anyway for older clients.
-
-With option like this, a client could do:
-
-git clone --use-mirror=http://git.example.org/base/foo git://git.example.org/foo
-
-To first grab stuff via HTTP (well-packed dumb HTTP is very light on the
-server) and then continue via git:// (now much cheaper because client is
-relatively up to date).
-
--Ilari
+Maybe it would be nice if git replace worked that way, but that would
+be fundamentally a _different_ feature.
