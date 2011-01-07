@@ -1,114 +1,193 @@
 From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: Resumable clone/Gittorrent (again)
-Date: Thu, 06 Jan 2011 22:21:36 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1101061956470.22191@xanadu.home>
-References: <AANLkTinUV9Z_w85Gz13J+bm8xqnxJ9jBJXJm9bn5Y2ec@mail.gmail.com>
+Subject: Re: Resumable clone/Gittorrent (again) - stable packs?
+Date: Thu, 06 Jan 2011 23:33:51 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1101062221480.22191@xanadu.home>
+References: <AANLkTikv+L5Da7A5VM7BAgnue=m0O_-nHmHchJzfGxJa@mail.gmail.com>
+ <alpine.LFD.2.00.1101061552580.22191@xanadu.home>
+ <AANLkTikgzqoG2cymNJ0NN03RsTRJi22R9M+0LFJ8U2yB@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 07 04:21:58 2011
+Content-Type: multipart/mixed; boundary="Boundary_(ID_I1Oht3+7w2/51e6GYTu8Xg)"
+Cc: git@vger.kernel.org
+To: Zenaan Harkness <zen@freedbms.net>
+X-From: git-owner@vger.kernel.org Fri Jan 07 05:33:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pb2tp-00073B-Vc
-	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 04:21:58 +0100
+	id 1Pb41W-0004Zw-Dp
+	for gcvg-git-2@lo.gmane.org; Fri, 07 Jan 2011 05:33:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755742Ab1AGDVj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 6 Jan 2011 22:21:39 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:18337 "EHLO
+	id S1754823Ab1AGEdw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 6 Jan 2011 23:33:52 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:49713 "EHLO
 	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755471Ab1AGDVh (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 6 Jan 2011 22:21:37 -0500
-Received: from xanadu.home ([66.130.28.92]) by vl-mh-mrz25.ip.videotron.ca
+	with ESMTP id S1752957Ab1AGEdw (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 6 Jan 2011 23:33:52 -0500
+Received: from xanadu.home ([66.130.28.92]) by vl-mh-mrz21.ip.videotron.ca
  (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0LEM00H2SUMQ8U10@vl-mh-mrz25.ip.videotron.ca> for
- git@vger.kernel.org; Thu, 06 Jan 2011 22:20:50 -0500 (EST)
+ with ESMTP id <0LEM00B4GXZWR1C0@vl-mh-mrz21.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 06 Jan 2011 23:33:32 -0500 (EST)
 X-X-Sender: nico@xanadu.home
-In-reply-to: <AANLkTinUV9Z_w85Gz13J+bm8xqnxJ9jBJXJm9bn5Y2ec@mail.gmail.com>
+In-reply-to: <AANLkTikgzqoG2cymNJ0NN03RsTRJi22R9M+0LFJ8U2yB@mail.gmail.com>
 User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164698>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164699>
 
-On Wed, 5 Jan 2011, Nguyen Thai Ngoc Duy wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Hi,
+--Boundary_(ID_I1Oht3+7w2/51e6GYTu8Xg)
+Content-type: TEXT/PLAIN; charset=ISO-8859-1
+Content-transfer-encoding: 8BIT
+
+On Fri, 7 Jan 2011, Zenaan Harkness wrote:
+
+> On Fri, Jan 7, 2011 at 08:09, Nicolas Pitre <nico@fluxnic.net> wrote:
+> > On Thu, 6 Jan 2011, Zenaan Harkness wrote:
+> >
+> >> Bittorrent requires some stability around torrent files.
+> >>
+> >> Can packs be generated deterministically?
+> >
+> > They _could_, but we do _not_ want to do that.
+> >
+> > The only thing which is stable in Git is the canonical representation of
+> > objects, and the objects they depend on, expressed by their SHA1
+> > signature.  Any BitTorrent-alike design for Git must be based on that
+> > property and not the packed representation of those objects which is not
+> > meant to be stable.
+> >
+> > If you don't want to design anything and simply reuse current BitTorrent
+> > codebase then simply create a Git bundle from some release version and
+> > seed that bundle for a sufficiently long period to be worth it.  Then
+> > falling back to git fetch in order to bring the repo up to date with the
+> > very latest commits should be small and quick.  When that clone gets too
+> > big then it's time to start seeding another more up-to-date bundle.
 > 
-> I've been analyzing bittorrent protocol and come up with this. The
-> last idea about a similar thing [1], gittorrent, was given by Nicolas.
-> This keeps close to that idea (i.e the transfer protocol must be around git
-> objects, not file chunks) with a bit difference.
+> Thanks guys for the explanations.
 > 
-> The idea is to transfer a chain of objects (trees or blobs), including
-> base object and delta chain. Objects are chained in according to
-> worktree layout, e.g. all objects of path/to/any/blob will form a
-> chain, from a commit tip down to the root commits. Chains can have
-> gaps, and don't need to start from commit tip. The transfer is
-> resumable because if a delta chain is corrupt at some point, we can
-> just request another chain from where it stops. Base object is
-> obviously resumable.
+> So, we don't _want_ to generate packs deterministically.
+> BUT, we _can_ reliably unpack a pack (duh).
 
-How do you actually define your chain?  Given that Git is conceptually 
-snapshot based, there is currently no relationship between two blobs 
-forming the content for two different versions of the same file.  Even 
-delta objects are not really part of the Git data model as they are only 
-an encoding variation of a given primary object.  In fact, we may and 
-actually do have deltas where the base object is not from the same 
-worktree file as the delta object itself.
+Of course.
 
-The only thing that 
-ties this all together is the commit graph.  And that graph might have 
-multiple forks and merges so any attempt at a linearity representation 
-into a chain is rather futile.  Therefore it is not clear to me how you 
-can define a chain with a beginning and an end, and how this can be 
-resumed midway.
+> So if my configured "canonical upstream" decides on a particular
+> compression etc, I (my git client) doesn't care what has been chosen
+> by my upstream.
 
-> We start by fetching all commit contents reachable from a commit tip.
+Indeed.  This is like saying: I'm sending you the value 52, but I chose 
+to use the representation "24 + 28", while someone else might decide to 
+encode that value as "13 * 4" instead.  You still are able to decode it 
+to the same result in both cases.
 
-Sure.  This is doable today and is called a shalow clone with depth=1.
+> What is important for torrent-able packs though is stability over some
+> time period, no matter what the format.
 
-> This is a chain, therefore resumable.
+Hence my suggestion to simply seed a Git bundle over BitTorrent. Bundles 
+are files which are designed to be used by completely ad hoc transports 
+and you can fetch from them just like if they were a remote repository.
 
-I don't get that part though.  How is this resumable?  That's the very 
-issue we have with a clone.
+> There's been much talk of caching, invalidating of caches, overlapping
+> torrent-packs etc.
 
-I proposed a solution to that already, which is to use 
-git-upload-archive for one of the tip commit since the data stream 
-produced by upload-archive (once decompressed) is actually 
-deterministic.  Once completed, this can be converted into a shalow 
-clone on the client side, and can be deepened in smaller steps 
-afterwards.
+And in my humble opinion this is just all crap.  All those suggestions 
+are fragile, create administrative issues, eat up server resources, and 
+they all are suboptimal in the end. No one ever implemented a working 
+prototype so far either.
 
-> From there each commit can be
-> examined. Missing trees and blobs will be fetched as chains. Everytime
-> a delta is received, we can recreate the new object and verify it (we
-> should have its SHA-1 from its parent trees/commits).
+We don't want caches.  Fundamentally, we do not need any cache.  Caches 
+are a pain to administrate on a busy server anyway as they eat disk 
+space and they also represent a much bigger security risk compared to a 
+read-only operation.
 
-What if the delta is based on an object from another chain?  How do you 
-determine which chain to ask for to get that base?
+Furthermore, a cache is good only for the common case that everyone 
+want.  but with Git, you cannot presume that everyone is at the same 
+version locally.  So either you do a custom transfer for each client to 
+minimize transfers and caching the result in that case might not benefit 
+that many people, or you make the cached data bigger so to cover more 
+cases while making the transfer suboptimal.
 
-> Because these chains are quite independent, in a sense that a blob
-> chain is independent from another blob chain (but requires tree
-> chains, of course). We can fetch as many as we want in parallel, once
-> we're done with the commit chain.
+Finally, we do have a cache already, and that's the existing packs 
+themselves.  During a clone, the vast majority of the transferred data 
+is streamed without further processing straight of those existing packs 
+as we try to reuse as much data as possible from those packs so not to 
+recompute/recompress that data all the time.
 
-But in practice, most of those chains will end up containing objects 
-which are duplicate of objects in another chain.  How do you tell the 
-remote that you want part of a chain because you've got 96% of it in 
-another chain already?
+> In every case, for torrents to work, the P2P'd files must have some
+> stability over some time period.
+> (If this assumption is incorrect, please clarify, not counting
+> every-file-is-a-torrent and every-commit-is-a-torrent.)
+> 
+> So, torrentable options:
+> - torrent per commit
+> - torrent per pack
+> - torrent per torrent-archive - new file format
+> 
+> Torrent per commit - too small, too many torrents; we need larger
+> p2p-able sizes in general.
+> 
+> Torrent per pack - packs non-deterministically created, both between
+> hosts and even intra-host (libz upgrade, nr_threads change, git pack
+> algorithm optimization).
+> 
+> A new torrent format, if "close enough" to current git pack
+> performance (cpu load, threadability, size) is potential for new
+> version of git pack file format - we don't want to store two sets of
+> pack files on disk, if sensible to not do so; unlikely to happen - I
+> can't conceive that a torrentable format would be anything but worse
+> than pack files and therefore would be rejected from git master.
+> 
+> Can we can relax the perceived requirement to deterministically create
+> pack files?
+> Well, over what time period are pack files stable in a particular git?
+> Over what time period do we require stable files for torrenting?
+> 
+> Can we simply configure our local git to keep specified pack files for
+> specified time period?
+> And use those for torrent-packs?
+> Perhaps the torrent file could have a UseBy date?
 
-> The last thing I like about these chains is that the number of chains
-> is reasonable. It won't increase too fast over time (as compared to
-> the number of commits). As such it maps well to BitTorrent's "pieces".
+Again, this is just too much complexity for so little gain.
 
-My problem right now is that I don't see how this maps well to Git.
+Here's what I suggest:
+
+	cd my_project
+	BUNDLENAME=my_project_$(date "+%s").gitbundle
+	git bundle create $BUNDLENAME --all
+	maketorrent-console your_favorite_tracker $BUNDLENAME
+
+Then start seeding that bundle, and upload $BUNDLENAME.torrent as 
+bundle.torrent inside my_project.git on your server.
+
+Now... Git clients could be improved to first check for the availability 
+of the file "bundle.torrent" on the remote side, either directly in 
+my_project.git, or through some Git protocol extension.  Or even better, 
+the torrent hash could be stored in a Git ref, such as 
+refs/bittorrent/bundle and the client could use that to retrieve the 
+bundle.torrent file through some other means.
+
+When the bundle.torrent file is retrieved, then just pull the torrent 
+content (and seed it some more to be nice).  Then simply run "git clone" 
+using the original arguments but with the obtained bundle instead of the 
+original URL.  Then replace the remote URL in .git/config with the 
+actual remote URL instead of the bundle file path.  And finally perform 
+a "git pull" to bring the new commits that were added to the remote 
+repository since the bundle was created.  That final pull will be small 
+and quick.
+
+After a while, that final pull will get bigger as the difference between 
+the bundled version and the current tip in the remote repository will 
+grow.  So every so often, say 3 months, it might be a good idea to 
+create a new bundle so that the latest commits are included into it in 
+order to make that final pull small and quick again.
+
+Isn't that sufficient?
 
 
 Nicolas
+
+--Boundary_(ID_I1Oht3+7w2/51e6GYTu8Xg)--
