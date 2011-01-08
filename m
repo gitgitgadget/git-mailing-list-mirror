@@ -1,100 +1,107 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Avoid unportable nested double- and backquotes in shell
- scripts.
-Date: Sat, 8 Jan 2011 10:48:25 -0600
-Message-ID: <20110108164825.GC28898@burratino>
-References: <20110108090105.GB14536@gmx.de>
- <20110108161441.GA28898@burratino>
- <20110108162353.GB4786@gmx.de>
+From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+Subject: Re: Resumable clone/Gittorrent (again)
+Date: Sat, 8 Jan 2011 17:21:47 +0000
+Message-ID: <AANLkTim2A4=y=XcuPuPiYGDGZyKAUEk-yv2cZVEGhQ3C@mail.gmail.com>
+References: <AANLkTinUV9Z_w85Gz13J+bm8xqnxJ9jBJXJm9bn5Y2ec@mail.gmail.com>
+	<alpine.LFD.2.00.1101061956470.22191@xanadu.home>
+	<AANLkTikKn1+2OX1KPy+9US_yX=E6+CiaCTTB6yqnAWwW@mail.gmail.com>
+	<AANLkTimgn2_BWYjbGKbGoeGJ=erKundX4umfy=s16dB1@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 08 17:48:38 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Pitre <nico@fluxnic.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 08 18:23:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pbby1-0004Fd-Mn
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 17:48:38 +0100
+	id 1PbcW2-0006L7-Uo
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 18:23:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751328Ab1AHQsd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jan 2011 11:48:33 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:47178 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751385Ab1AHQsc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jan 2011 11:48:32 -0500
-Received: by iwn9 with SMTP id 9so18061004iwn.19
-        for <git@vger.kernel.org>; Sat, 08 Jan 2011 08:48:31 -0800 (PST)
+	id S1751046Ab1AHRVt convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Jan 2011 12:21:49 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:57104 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750907Ab1AHRVs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Jan 2011 12:21:48 -0500
+Received: by qwa26 with SMTP id 26so18687868qwa.19
+        for <git@vger.kernel.org>; Sat, 08 Jan 2011 09:21:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=VUmIfkFwZ9SAz1USdvgmrlyTMdk4WJWuBvCg3fSsopk=;
-        b=lP7zBGo5wzAluWmJFJumcFfmjF90A/7+MymCy4q05l0udtKl1Ya0RnWqia2l7jXYFf
-         3a9di2IIZx5ROVbNBcbcBfXDoRiZuF+e81CVbrstX8sucW/RieCjWad4KI51B50K0hfP
-         gK/bWQjEuA8RJg3IzY5/+SIeGOpqk9wApWw3o=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=SioemU5UuboIeBHIpBtCybhskfrhf+a0aNjJ2wyuE84=;
+        b=O+iKWnNaw77tK9TDCXgfSk0pqTufzf36NTD7cQa1FaxBwCxR042/SogRTlVBVL2oxt
+         DZMrjHolLaZ2lkanIJ6/u4b9QWsRtzqbBR+XLAwn/RdUQoT3iTqhmo4vmHt8197n6tyM
+         CNUkqxr51D0zfOmWHcCmMxjI2597ilGVesHBo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=QrNQuYNb4biu/xcdIU2RFmdd+rf68s/FVwzrHe20GWGm042rfp/dqb7j8KueLHj9LX
-         5whz7WCZiiM2T9M/Wg4T2JJNEmw0jKzmv7dRkRE+tFOiStSCUQmcPKCCgEyM3aVXJMMI
-         zi+PDwvZ5cm9LB9IKsySilKlDZC7P6s1qV4Bw=
-Received: by 10.42.227.3 with SMTP id iy3mr2151252icb.453.1294505311528;
-        Sat, 08 Jan 2011 08:48:31 -0800 (PST)
-Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
-        by mx.google.com with ESMTPS id k42sm1786265ick.8.2011.01.08.08.48.29
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 08 Jan 2011 08:48:30 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110108162353.GB4786@gmx.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=C8fmsW58aypQ3Nch5+vPn6GBtv6UQghspmr0V6hIKNWoTWzgkFobSCNxkdzdGwL75x
+         UGJQL/ERQbCTVEHyTETBwc3DlDQ/p4ZKbZ0OnvmJcdJPFzkGYEbOn3ak6erde2oMxMEx
+         m68adf7tehuYJ7u91+yNul/mFuO1Ro/s2oj+E=
+Received: by 10.229.98.131 with SMTP id q3mr18261768qcn.236.1294507307461;
+ Sat, 08 Jan 2011 09:21:47 -0800 (PST)
+Received: by 10.220.190.203 with HTTP; Sat, 8 Jan 2011 09:21:47 -0800 (PST)
+In-Reply-To: <AANLkTimgn2_BWYjbGKbGoeGJ=erKundX4umfy=s16dB1@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164832>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164833>
 
-Ralf Wildenhues wrote:
+On Sat, Jan 8, 2011 at 2:17 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com=
+> wrote:
+> On Fri, Jan 7, 2011 at 10:59 PM, Luke Kenneth Casson Leighton
+> <luke.leighton@gmail.com> wrote:
+>> =C2=A0bottom line: my take on this is (sorry to say, nguyen) that i =
+don't
+>> believe bittorrent "pieces" map well to the chains concept, unless t=
+he
+>> chains are perfectly fixed identical sizes [which they could well be=
+?
+>> am i mistaken about this?]
+>
+> there are a few characteristics of bittorrent pieces that i see:
+> verifiable, resumable, uniquely identifiable across peers and
+> reasonbly small in count.
+>
+> The fixed size helps peers uniquely identify any pieces by splitting
+> the whole transfer equally and indexing them in 1-dimension.
 
-> But git makes heavy use of "no quoting needed on RHS of assignment"
-> anyway, so it seems like this would be a good move nonetheless.
+ ok - you haven't answered the question: are the chains perfectly
+fixed identical sizes?
 
-No disagreement there.
+ if so they can be slotted into the bittorrent protocol by simply
+pre-selecting the size to match.  with the downside that if there are
+a million such "chains" you now pretty much overwhelm the peers with
+the amount of processing, network traffic and memory requirements to
+maintain the "pieces" map.
 
-> And the
-> testsuite uses backticks a lot,
+ if not then you now need to modify the bittorrent protocol to cope
+with variable-length block sizes: the protocol only allows for the
+last block to be of variable-length.
 
->From a quick grep, it seems you are right:
+ also, it's worth pointing out that the entire code-base of every
+single bittorrent client that you will ever be able to find revolves
+around the concept of reassembly of files from "pieces".
 
- $ git grep -c -F -e '`' -- 't/*.sh' | cut -d: -f2 | sum
- 65126     1
- $ git grep -c -F -e '$(' -- 't/*.sh' | cut -d: -f2 | sum
- 64807     1
- $ git grep -c -F -e '`' -- '*.sh' | cut -d: -f2 | sum
- 13350     1
- $ git grep -c -F -e '$(' -- '*.sh' | cut -d: -f2 | sum
- 07810     1
+ bottom line: the bittorrent protocol and the available bittorrent
+source code libraries, both of which save you a great deal of time in
+getting something up-and-running, is _not_ the right fit for the
+concept of placing the proposed "chains" into bittorrent "pieces".
 
-Documentation/CodingGuidelines 
+ translation: if you wish to pursue the "chains" concept, either a
+heavily-modified bittorrent protocol and client _or_ an entirely new
+peer-to-peer protocol is far more appropriate.
 
- - We prefer $( ... ) for command substitution; unlike ``, it
-   properly nests.  It should have been the way Bourne spelled
-   it from day one, but unfortunately isn't.
+ orrr, doing what i initially suggested, which is to leave the
+bittorrent protocol as-is and to open one .torrent per "chain".
+especially if these "chains" vary considerably in size (k to gb)
 
-> it seems a move away from that should be
-> done more uniformly?
-
-I don't see why. :)  In fact, I personally would not be happy at all
-to see such a high-churn patch as that, while using the $( ... )
-form in new code and as part of clarifications to other parts of the
-same lines would seem to me to be a welcome thing.
-
-Having said all that, I have no strong investment in this.  Feel
-free to do what works best for you.
-
-Thanks,
-Jonathan
+l.
