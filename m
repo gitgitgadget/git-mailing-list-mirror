@@ -1,83 +1,95 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] commit: suggest --amend --reset-author to fix commiter identity
-Date: Sat, 08 Jan 2011 11:56:00 +0100
-Message-ID: <vpq1v4nirzz.fsf@bauges.imag.fr>
-References: <1294409671-5479-1-git-send-email-Matthieu.Moy@imag.fr>
-	<7vsjx45w7g.fsf@alter.siamese.dyndns.org>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: [RFD] My thoughts about implementing gitweb output caching
+Date: Sat, 8 Jan 2011 12:15:39 +0100
+Message-ID: <201101081215.42188.jnareb@gmail.com>
+References: <201101080042.36156.jnareb@gmail.com> <20110108002643.GD15495@burratino> <alpine.LFD.2.00.1101072142550.22191@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 08 11:56:31 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	"J.H." <warthog9@eaglescrag.net>,
+	John 'Warthog9' Hawley <warthog9@kernel.org>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sat Jan 08 12:16:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbWTG-0003oj-8w
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 11:56:30 +0100
+	id 1PbWmA-0005h8-A5
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 12:16:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751838Ab1AHK4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jan 2011 05:56:11 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:51949 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751613Ab1AHK4K (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jan 2011 05:56:10 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p08Au0xW018663
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sat, 8 Jan 2011 11:56:00 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PbWSm-0002J6-LW; Sat, 08 Jan 2011 11:56:00 +0100
-In-Reply-To: <7vsjx45w7g.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 07 Jan 2011 11\:51\:15 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 08 Jan 2011 11:56:00 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p08Au0xW018663
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1295088961.78911@4Lb+YSRmY1vSBwHK/Rd6Lg
+	id S1752032Ab1AHLP4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jan 2011 06:15:56 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:62098 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751838Ab1AHLPz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jan 2011 06:15:55 -0500
+Received: by wyb28 with SMTP id 28so18155120wyb.19
+        for <git@vger.kernel.org>; Sat, 08 Jan 2011 03:15:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:subject:date
+         :user-agent:cc:references:in-reply-to:mime-version:content-type
+         :content-transfer-encoding:content-disposition:message-id;
+        bh=GB+78MiJpyja5X+ZRiVcAl5g4f9PYKwR+FbtW4KlnrU=;
+        b=VcHzNyjPwNb7hCtFnUJxwA/zxmEioteFM1rTq3GC7qLNg2zJrAHqYv0UL4FUVSlV6h
+         IjZDc7l0KQqOsAvq75P0FR6gSgqsMZAlMHtBCFB4we7yJPnz8IHk/pDue8LYXGDObV3v
+         YSOPakBz8MQHyZttmX3o6U5DIvVHBSW3NwMgs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=pv7iBozkUnwvPMyzfM0uBjzd2utL7kDjY2g04661/1hJQ8Scu1Jfd4y2wtg8LXPiQD
+         D9SyFYzVATBmmMKxP+NY8aK6bPw/ORjw+9O37Cke7OE0v1QKMxCkQ8gOvFUoqd5VIJm/
+         P+IMSCuLBxXHDCUYmgZybXRZ7hLNZeKwk/+PQ=
+Received: by 10.216.179.81 with SMTP id g59mr214500wem.35.1294485353600;
+        Sat, 08 Jan 2011 03:15:53 -0800 (PST)
+Received: from [192.168.1.13] (abvf4.neoplus.adsl.tpnet.pl [83.8.203.4])
+        by mx.google.com with ESMTPS id n1sm12926212weq.7.2011.01.08.03.15.50
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 08 Jan 2011 03:15:52 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <alpine.LFD.2.00.1101072142550.22191@xanadu.home>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164815>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Nicolas Pitre wrote:
+> On Fri, 7 Jan 2011, Jonathan Nieder wrote:
+> > Jakub Narebski wrote:
 
-> I don't think making the "cheat-sheet" insn longer by offering more
-> choices is a good idea.  These are messages for lazy and busy
-> people.
+> > > With output caching gitweb can also support 'Range' requests, which
+> > > means that it would support resumable download.  This would mean hat we
+> > > would be able to resume downloading of snapshot (or in the future
+> > > bundle)... if we cannot do this now.  This would require some more code
+> > > to be added.
+> > 
+> > Exciting stuff.
+> > 
+> > Teaching gitweb to generate bundles sounds like a recipe for high server
+> > loads, though.  I suspect manual (or by cronjob) generation would work
+> > better, with a possible exception of very frequently cloned and
+> > infrequently pushed-to repos like linus's linux-2.6.
+> 
+> Even for Linus' linux repo, it is not a good idea to auto create bundle, 
+> except maybe once every major release which is every 3 months or so.  I 
+> really don't think this is a good idea to put this in the realm of 
+> gitweb caching.
 
-The reason I kept both forms was that the message is designed to be
-seen once (or once for each new machine one works on), and the most
-scary it is, the most efficient ;-). 
+You are right, making gitweb aware of bundles (if they are put in some
+specified place, e.g. .git/objects/pack or .git/objects/bundle) is I guess
+a better idea than allowing for gitweb to generate bundles, perhaps
+only if caching is enabled, and perhaps with very long expiration time.
 
-> Wouldn't it work better to just get rid of the longer form and say
-> something like:
->
->     ... here is how to tell your name to git (existing message) ...
->
->     After doing the above, run
->
->     	git commit --amend --reset-author
->
->     to fix the identity used for this commit.
-
-I'm fine with that proposal too. I'll resend with that if no one
-objects. Probalby rewording it to
-
-After doing this, you can fix the identity used for this commit with:
-
-  git commit --amend --reset-author
-
-
-would make it even concisier (no break of the sentence with a
-command).
+Of course the standard way should be also the standard place for git
+clients to find bundles in proposed extension to git-clone.
 
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Jakub Narebski
+Poland
