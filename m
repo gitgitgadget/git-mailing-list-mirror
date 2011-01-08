@@ -1,74 +1,79 @@
-From: Robin Rosenberg <robin.rosenberg@dewire.com>
-Subject: Re: Creating CVS-style patch headers with git-diff
-Date: Sat, 8 Jan 2011 17:35:25 +0100
-Message-ID: <E49730A5-CD28-4E6F-A655-38505D47897C@dewire.com>
-References: <AANLkTinmq=3kJmtSVutf7dHAQ0QL3fr9_E3hZ7gDe1JY@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v1082)
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: No way to resolve git am conflicts.
+Date: Sat, 8 Jan 2011 10:36:33 -0600
+Message-ID: <20110108163633.GB28898@burratino>
+References: <ig9nqq$4ib$1@dough.gmane.org>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
 Cc: git@vger.kernel.org
-To: David Chanters <david.chanters@googlemail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 08 17:35:44 2011
+To: Stephen Kelly <steveire@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 08 17:36:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbblX-0005nT-Ov
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 17:35:44 +0100
+	id 1PbbmZ-0006Mp-Eb
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 17:36:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752770Ab1AHQf3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jan 2011 11:35:29 -0500
-Received: from mail.dewire.com ([83.140.172.130]:2120 "EHLO dewire.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752494Ab1AHQf2 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Jan 2011 11:35:28 -0500
-Received: from localhost (localhost [127.0.0.1])
-	by dewire.com (Postfix) with ESMTP id 9F2EC8003A0;
-	Sat,  8 Jan 2011 17:35:27 +0100 (CET)
-X-Virus-Scanned: by amavisd-new at dewire.com
-Received: from dewire.com ([127.0.0.1])
-	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id K4bK+0ssUCgt; Sat,  8 Jan 2011 17:35:27 +0100 (CET)
-Received: from [10.9.0.3] (unknown [10.9.0.3])
-	by dewire.com (Postfix) with ESMTP id 25E79800265;
-	Sat,  8 Jan 2011 17:35:27 +0100 (CET)
-In-Reply-To: <AANLkTinmq=3kJmtSVutf7dHAQ0QL3fr9_E3hZ7gDe1JY@mail.gmail.com>
-X-Mailer: Apple Mail (2.1082)
+	id S1752822Ab1AHQgl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jan 2011 11:36:41 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:59263 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752494Ab1AHQgk (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jan 2011 11:36:40 -0500
+Received: by iwn9 with SMTP id 9so18056296iwn.19
+        for <git@vger.kernel.org>; Sat, 08 Jan 2011 08:36:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=nXpsIzSq8ncmKc37yQjKNO4Rlq3GTyfAPX4LcF4URYE=;
+        b=xR5xpNI+FML6bsWy5jOaYWtqTkgO/HQB5WSzq9sIcL5egnSNme1rzjtqw3OIIFesX/
+         7NScGj5odOFVrK7na1FS8/Iels/UVu/2sUcUxoXctfqrLVMAaHRZEgHCR5TCRPc/tq+x
+         8MqaKWY8SIQGU07TOapGf/shlm6JFPSvq29fw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=F92dxntxngxRbrUGTqswe4wTixo9vI2ASKo2csOwKTwf6UvReEyHSftiNPSyffFGnN
+         buOADrzV96S1P0lW0SA2yfyh+dvmhX5KKMdYzqI9v22nQrewJ7nKPOKrLFgxvWTRarsr
+         IJXgnWKhJZyx+9mhA1h3EPi9XniFMlUw+ssLI=
+Received: by 10.42.241.3 with SMTP id lc3mr2208493icb.347.1294504599804;
+        Sat, 08 Jan 2011 08:36:39 -0800 (PST)
+Received: from burratino (adsl-69-209-72-219.dsl.chcgil.sbcglobal.net [69.209.72.219])
+        by mx.google.com with ESMTPS id z4sm24209199ibg.19.2011.01.08.08.36.38
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 08 Jan 2011 08:36:38 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <ig9nqq$4ib$1@dough.gmane.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164830>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164831>
 
+Stephen Kelly wrote:
 
-8 jan 2011 kl. 12:23 skrev David Chanters:
+> git am the.patch
+[...]
+> Applying: Introduce new configuation option to override committer 
+> information
+> error: patch failed: builtin/commit.c:1352
+> error: builtin/commit.c: patch does not apply
+> Patch failed at 0001 Introduce new configuation option to override committer 
+> information
+> When you have resolved this problem run "git am --resolved".
+> If you would prefer to skip this patch, instead run "git am --skip".
+> To restore the original branch and stop patching run "git am --abort".
+> $ git diff
+[...]
+> As git status doesn't tell me what the conflict is, I can't resolve it.
 
-> Hi all,
-> 
-> [ Please Cc me on any replies as I am not subscribed to this list, thanks. ]
-> 
-> I am wondering if I can get git diff to create "CVS-style patches"?
-> What do I mean by that?  Well, whenever I do:
-> 
-> git diff
-> 
-> I get patch headers in the form:
-> 
-> diff --git a/foo.c b/foo.c
-> index 57b9527..a2d947b 100644
-> --- a/foo.c
-> +++ b/foo.c
-> 
-> This is fine for git, but if I then want to import the same patch into
-> CVS I have to either edit the patch, or mess around with the -p option
-> to patch(1).
-> 
-Adding -p1 is not what I'd call "mess around". It is pretty standard
-use with patch since most patches has en extra directory level anyway. I
-think that's why git has those a/ b/ prefixes by default.
+Have you tried "git am -3" or "git am --reject" (after "git am
+--abort")?
 
-Have you tries git cvsexportcommit? It is by far the easiest way of exporting
-from git to CVS.
-
--- robin
+I agree that the hints printed are suboptimal in this case.  Please
+feel free to make them better if you have time for it. :)
