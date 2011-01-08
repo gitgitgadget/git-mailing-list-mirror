@@ -1,88 +1,74 @@
-From: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-Subject: Re: [PATCH] Avoid unportable nested double- and backquotes in shell
- scripts.
-Date: Sat, 8 Jan 2011 17:23:53 +0100
-Organization: Institute for Numerical Simulation, University of Bonn
-Message-ID: <20110108162353.GB4786@gmx.de>
-References: <20110108090105.GB14536@gmx.de>
- <20110108161441.GA28898@burratino>
-Mime-Version: 1.0
+From: Robin Rosenberg <robin.rosenberg@dewire.com>
+Subject: Re: Creating CVS-style patch headers with git-diff
+Date: Sat, 8 Jan 2011 17:35:25 +0100
+Message-ID: <E49730A5-CD28-4E6F-A655-38505D47897C@dewire.com>
+References: <AANLkTinmq=3kJmtSVutf7dHAQ0QL3fr9_E3hZ7gDe1JY@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1082)
 Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
 Cc: git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 08 17:24:02 2011
+To: David Chanters <david.chanters@googlemail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 08 17:35:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbbaD-0007k3-Nh
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 17:24:02 +0100
+	id 1PbblX-0005nT-Ov
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 17:35:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753042Ab1AHQX5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jan 2011 11:23:57 -0500
-Received: from mailout-de.gmx.net ([213.165.64.22]:33635 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1753012Ab1AHQX4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jan 2011 11:23:56 -0500
-Received: (qmail invoked by alias); 08 Jan 2011 16:23:54 -0000
-Received: from xdsl-78-34-215-107.netcologne.de (EHLO localhost.localdomain) [78.34.215.107]
-  by mail.gmx.net (mp072) with SMTP; 08 Jan 2011 17:23:54 +0100
-X-Authenticated: #13673931
-X-Provags-ID: V01U2FsdGVkX19YVC0SwcdYHLCk89TtgoToM8IBsqizaTs16QylsD
-	FMra4di1pMtyxN
-Received: from ralf by localhost.localdomain with local (Exim 4.69)
-	(envelope-from <Ralf.Wildenhues@gmx.de>)
-	id 1Pbba5-0001XY-PP; Sat, 08 Jan 2011 17:23:53 +0100
-Mail-Followup-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>,
-	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <20110108161441.GA28898@burratino>
-User-Agent: Mutt/1.5.20 (2010-08-04)
-X-Y-GMX-Trusted: 0
+	id S1752770Ab1AHQf3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jan 2011 11:35:29 -0500
+Received: from mail.dewire.com ([83.140.172.130]:2120 "EHLO dewire.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752494Ab1AHQf2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Jan 2011 11:35:28 -0500
+Received: from localhost (localhost [127.0.0.1])
+	by dewire.com (Postfix) with ESMTP id 9F2EC8003A0;
+	Sat,  8 Jan 2011 17:35:27 +0100 (CET)
+X-Virus-Scanned: by amavisd-new at dewire.com
+Received: from dewire.com ([127.0.0.1])
+	by localhost (torino.dewire.com [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id K4bK+0ssUCgt; Sat,  8 Jan 2011 17:35:27 +0100 (CET)
+Received: from [10.9.0.3] (unknown [10.9.0.3])
+	by dewire.com (Postfix) with ESMTP id 25E79800265;
+	Sat,  8 Jan 2011 17:35:27 +0100 (CET)
+In-Reply-To: <AANLkTinmq=3kJmtSVutf7dHAQ0QL3fr9_E3hZ7gDe1JY@mail.gmail.com>
+X-Mailer: Apple Mail (2.1082)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164829>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164830>
 
-* Jonathan Nieder wrote on Sat, Jan 08, 2011 at 05:14:41PM CET:
-> Ralf Wildenhues wrote:
+
+8 jan 2011 kl. 12:23 skrev David Chanters:
+
+> Hi all,
 > 
-> > [Subject: Avoid unportable nested double- and backquotes in shell scripts]
-> >
-> > Some shells parse them wrongly, esp. pdksh.
+> [ Please Cc me on any replies as I am not subscribed to this list, thanks. ]
 > 
-> How does it treat $( ) command substitutions?  (We use those more
-> heavily and they are easier on the eyes anyway.)
-
-Better (except for the usual problems when 'case ...)' comes into play).
-But git makes heavy use of "no quoting needed on RHS of assignment"
-anyway, so it seems like this would be a good move nonetheless.  And the
-testsuite uses backticks a lot, it seems a move away from that should be
-done more uniformly?
-
-Anyway, I'll be happy to respin in whatever form is acceptable.
-
-> > --- a/t/t9107-git-svn-migrate.sh
-> > +++ b/t/t9107-git-svn-migrate.sh
-> > @@ -94,7 +94,7 @@ test_expect_success 'migrate --minimize on old inited layout' '
-> >  		echo "$svnrepo"$path > "$GIT_DIR"/svn/$ref/info/url ) || exit 1;
-> >  	done &&
-> >  	git svn migrate --minimize &&
-> > -	test -z "`git config -l | grep "^svn-remote\.git-svn\."`" &&
-> > +	! git config -l | grep "^svn-remote\.git-svn\." &&
+> I am wondering if I can get git diff to create "CVS-style patches"?
+> What do I mean by that?  Well, whenever I do:
 > 
-> I thought I remembered portability problems with the
+> git diff
 > 
-> 	! a | b
+> I get patch headers in the form:
 > 
-> construct but it seems I am wrong; t7810-grep.sh uses that
-> construct without trouble, at least.
+> diff --git a/foo.c b/foo.c
+> index 57b9527..a2d947b 100644
+> --- a/foo.c
+> +++ b/foo.c
+> 
+> This is fine for git, but if I then want to import the same patch into
+> CVS I have to either edit the patch, or mess around with the -p option
+> to patch(1).
+> 
+Adding -p1 is not what I'd call "mess around". It is pretty standard
+use with patch since most patches has en extra directory level anyway. I
+think that's why git has those a/ b/ prefixes by default.
 
-Some non-Posix-conforming shells have problems with that too, e.g.,
-Solaris /bin/sh, but I figured git wouldn't cater to them as I also saw
-other such uses in the tree.
+Have you tries git cvsexportcommit? It is by far the easiest way of exporting
+from git to CVS.
 
-Cheers,
-Ralf
+-- robin
