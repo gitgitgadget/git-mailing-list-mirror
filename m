@@ -1,68 +1,75 @@
-From: Stephen Kelly <steveire@gmail.com>
-Subject: Re: [PATCH] Introduce new configuation option to override committer information
-Date: Sat, 08 Jan 2011 20:24:01 +0100
-Message-ID: <igadki$4tb$2@dough.gmane.org>
-References: <ig73o1$lbg$1@dough.gmane.org> <1294473809-11850-1-git-send-email-artagnon@gmail.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: What's cooking in git.git (Jan 2011, #01; Tue, 4)
+Date: Sat, 8 Jan 2011 20:47:20 +0100
+Message-ID: <201101082047.20446.j6t@kdbg.org>
+References: <7vipy4dy8y.fsf@alter.siamese.dyndns.org> <4D28AF82.4040102@ramsay1.demon.co.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="ISO-8859-1"
-Content-Transfer-Encoding: 7Bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 08 20:25:18 2011
+Content-Type: text/plain;
+  charset="iso-8859-1"
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+X-From: git-owner@vger.kernel.org Sat Jan 08 20:48:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbePe-0004zp-1l
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 20:25:18 +0100
+	id 1Pbelo-0007KZ-4x
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 20:48:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751455Ab1AHTZH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jan 2011 14:25:07 -0500
-Received: from lo.gmane.org ([80.91.229.12]:59682 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751086Ab1AHTZF (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jan 2011 14:25:05 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1PbePQ-0004tV-Qj
-	for git@vger.kernel.org; Sat, 08 Jan 2011 20:25:04 +0100
-Received: from dslb-092-078-138-003.pools.arcor-ip.net ([92.78.138.3])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 08 Jan 2011 20:25:04 +0100
-Received: from steveire by dslb-092-078-138-003.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 08 Jan 2011 20:25:04 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-Followup-To: gmane.comp.version-control.git
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: dslb-092-078-138-003.pools.arcor-ip.net
-User-Agent: KNode/4.4.6
+	id S1751159Ab1AHTr2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jan 2011 14:47:28 -0500
+Received: from bsmtp2.bon.at ([213.33.87.16]:2659 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1750965Ab1AHTr1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jan 2011 14:47:27 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id AA955A7EB0;
+	Sat,  8 Jan 2011 20:46:00 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id B5BA419F5C4;
+	Sat,  8 Jan 2011 20:47:20 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <4D28AF82.4040102@ramsay1.demon.co.uk>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164838>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164839>
 
-Ramkumar Ramachandra wrote:
+On Samstag, 8. Januar 2011, Ramsay Jones wrote:
+> Junio C Hamano wrote:
+> > * rj/test-fixes (2010-12-14) 4 commits
+> >  - t4135-*.sh: Skip the "backslash" tests on cygwin
+> >  - t3032-*.sh: Do not strip CR from line-endings while grepping on MinGW
+> >  - t3032-*.sh: Pass the -b (--binary) option to sed on cygwin
+> >  - t6038-*.sh: Pass the -b (--binary) option to sed on cygwin
+> >
+> > I don't think people on different vintage of Cygwin agreed they are good
+> > workarounds---please correct me if I am mistaken.
+>
+> No, it was different vintages of MinGW not Cygwin. Well, to be more
+> precise, it is the different versions of sed that are installed in MinGW by
+> the msysGit installer. ;-)
+>
+> I used msysGit-fullinstall-1.6.4-preview20090729.exe to install msysGit,
+> 18 months ago, and my version of sed is quite old. However, these patches
+> (which were done mainly for the benefit of cygwin) were written assuming
+> the more recent sed version installed by a more recent msysGit installer.
+> (judging by commit ca02ad34.) In other words, the sed version on cygwin
+> is new enough to know about the -b (--binary) option and so is the more
+> recent msysGit installers (but I don't know exactly which version).
+>
+> I can use my patch #14, which you didn't pick up, to run the above tests
+> on my old installation. (Johannes was the only other laggard identified
+> and he claims to be upgrading soon! :-D Yeah, I should too.)
+>
+> So, unless Johannes can think of something I've missed, I think all of
+> these commits are good to go...
 
-> Currently, there is no way to set committer information on a
-> per-repository basis. The 'user.name' and 'user.email' configuration
-> options set both author and committer information. To solve this,
-> introduce 'user.committername' and 'user.committeremail' configuration
-> options to override committer name and email respectively.
-> 
-> Reported-by: Stephen Kelly <steveire@gmail.com>
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.co
+I've upgraded meanwhile ;-) and have been using this branch since it was 
+published the first time. From my POV, these series should go in.
 
-<snip>
-
-Thanks for working on this. I wanted to try it out, but it no longer applies 
-cleanly since 4c28e4ada03f5440251545cf91e0d81bce9b010d and after trivial 
-merging, I can't build.
-
-Can you update the patch?
-
-Thanks,
-
-Steve.
+-- Hannes
