@@ -1,68 +1,128 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] git rev-list --no-walk A B C sorts by commit date
- incorrectly
-Date: Fri, 07 Jan 2011 17:00:41 -0800
-Message-ID: <7v62u043ba.fsf@alter.siamese.dyndns.org>
-References: <CEF26B82-4281-4B8F-A994-DE32EFB92BA7@sb.org>
+From: Maaartin-1 <grajcar1@seznam.cz>
+Subject: Re: Resumable clone/Gittorrent (again)
+Date: Sat, 08 Jan 2011 02:04:40 +0100
+Message-ID: <4D27B828.8020108@seznam.cz>
+References: <AANLkTinUV9Z_w85Gz13J+bm8xqnxJ9jBJXJm9bn5Y2ec@mail.gmail.com> <loom.20110105T222915-261@post.gmane.org> <AANLkTi=_R53fm5Er0CdtZCFvDpE-Dqt8tMHAubcjOUBb@mail.gmail.com> <4D25385B.3010103@seznam.cz> <AANLkTikXcrZqhCw+2u2HObUZz5QCStY6BCHTTYYfngMN@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Sat Jan 08 02:00:57 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 08 02:04:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbNAv-0007AT-6u
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 02:00:57 +0100
+	id 1PbNEj-0008M9-2u
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 02:04:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752340Ab1AHBAv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jan 2011 20:00:51 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33399 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751779Ab1AHBAu (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jan 2011 20:00:50 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 40C223C28;
-	Fri,  7 Jan 2011 20:01:28 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=EFyMESAe4t7NklRewEu4tKayFlE=; b=iSyeMk
-	gF/pGbHjICl9imHnJe3mM7suI/M+rUys+0BguHmoE7pJ37DEnTnHajEpRhsjoHZR
-	uHcp+ibFFw/YaOAqWduoufKB5lgaDFNfQsrKbPwdpkrs0kiP4VBoVUAS7wtVVQX9
-	KVaWsKS/cT3qmdY7RvaTcCEsvfVuvnTuhyR0A=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=FiLs8eqF2TFN6ydJ0pMVrhUk8z4C5A9j
-	98k7SApwNxoSNlo3CE5DCp+7A5eHiBsCB7X6nqwh5lQVUXX+tfbA92c4g0C+L+m7
-	LSlJjuqvVzfanHaRn/eHA+ZFrW6mb+F9An4CoW176HMwjq7KmocdowvznnCXx17k
-	9tqbHKA8EKA=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 135053C27;
-	Fri,  7 Jan 2011 20:01:26 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 27BC53C24; Fri,  7 Jan 2011
- 20:01:20 -0500 (EST)
-In-Reply-To: <CEF26B82-4281-4B8F-A994-DE32EFB92BA7@sb.org> (Kevin Ballard's
- message of "Fri\, 7 Jan 2011 16\:19\:02 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: D168E986-1AC2-11E0-BF73-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
+	id S1752397Ab1AHBEr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jan 2011 20:04:47 -0500
+Received: from smtp.seznam.cz ([77.75.72.43]:58866 "EHLO smtp.seznam.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752036Ab1AHBEq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 20:04:46 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=beta; d=seznam.cz;
+	h=X-Seznam-DomainKeys:X-Seznam-SPF:X-Virus-Info:Received:Message-ID:Date:From:User-Agent:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Smtpd:X-Seznam-User:X-Session:X-Country:X-QM-Mark;
+	b=BI83BRc1tSgpivar2hkdnDav4GRPd2Ck9E6dSmGqxCyE2/YltGL6kvY8WWHBUtLsS
+	z/Ozt4UAgoX6J3o7ObnXMtTSrbMiyjFj03AH7JAsDb3sbbxpRvw3JcOqAizXDht11Jk
+	vctPUmUtCs+4mBCWGpw8CG5DSmh7G2yVomFZeoo=
+X-Seznam-DomainKeys: unknown
+X-Seznam-SPF: neutral
+X-Virus-Info: clean
+Received: from [10.0.3.100] (188-120-198-113.luckynet.cz [188.120.198.113])
+	by email-relay1.go.seznam.cz (Seznam SMTPD 1.2.14@16206) with ESMTP;
+	Sat, 08 Jan 2011 02:04:42 +0100 (CET)  
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <AANLkTikXcrZqhCw+2u2HObUZz5QCStY6BCHTTYYfngMN@mail.gmail.com>
+X-Smtpd: 1.2.14@16206
+X-Seznam-User: grajcar1@seznam.cz
+X-Session: 16306
+X-Country: CZ
+X-QM-Mark: email-qm3<455267646>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164799>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164800>
 
-Kevin Ballard <kevin@sb.org> writes:
+On 11-01-06 07:36, Nguyen Thai Ngoc Duy wrote:
+> On Thu, Jan 6, 2011 at 10:34 AM, Maaartin-1 <grajcar1@seznam.cz> wrote:
+>> In theory, I could create many commits per seconds. I could create many
+>> unique paths per seconds, too. But I don't think it really happens. I do
+>> know no larger repository than git.git and I don't want to download it
+>> just to see how many commits, paths, and object it contains, but I'd
+>> suppose it's less than one million commits, which should be manageable,
+>> especially when commits get grouped together as I described below.
+> 
+> In pratice, commits are created every day in an active project. Paths
+> on the other hand are added less often (perhaps except webkit).
+> 
+> I've got some numbers:
+> 
+>  - wine.git has 72k commits, 260k trees, 200k blobs, 12k paths
+>  - git.git has 24k commits, 39k trees, 24k blobs, 2.7k paths
+>  - linux-2.6.git has 160k commits, 760k trees, 442k blobs, 46k paths
+> 
+> Large repos are more interesting because small ones can be cloned with
+> git-clone.
 
-> Is there any rationale for this behavior?
+Sure. Linux is the winner and has 4 times as much commits as paths.
 
-Not a rationale, but an explanation is that most of the time we walk the
-history and sorting by date is the first thing that needs to be done, and
-the --no-walk option was an afterthought that was tucked in.
+> Listing all those commits in linux-2.6.git takes 160k*20=3M (I suppose
+> compressing is useless because SHA-1 is random). A compressed listing
+> of those 46k paths takes 200k.
 
-I suspect that a three-liner patch to revision.c:prepare_revision_walk()
-would give you what you want.  Instead of calling insert-by-date, you
-append to the tail when revs->no_walk is given, or something.
+Sure, Linux has only 4 times as much commits as paths, but the commits
+need 30 times more storage. What does it tell us?
+
+IMHO it speaks in favor of my proposal. Imagine a path changing with
+nearly every commit. The root directory is such a path and near top
+directories come close to (as may other files like todo-lists do). For
+each such file you need 3MB for storing the commits SHAs only. Of
+course, you can invent a schema making storing all the SHAs unnecessary,
+but this is another complication.
+
+OTOH, with the commits used as directory entries we get quite a large
+directory. Is this a problem you wanted me to get aware of?
+
+> The point is you need to fetch its parent commits first in order to
+> verify a commit. Fetching a whole commit is more expensive than a
+> file. So while you can fetch a few commit bases and request for packs
+> from those bases in parallel, the cost of initial commit bases will be
+> high.
+
+You've lost me. I assume you mean that something like that there may be
+very large commits (e.g., in a project not versioned from the very
+beginning). I'd suggest to split such commits in two parts by
+classifying the blobs (and trees) using a fixed bit of their SHAs. Of
+course, this can be repeated in order to get even smaller parts. Let's
+assume a commit X gets split into X0 and X1. As before, for compressing
+of X0 you may use the content any predecessor of X. For compressing of
+X0 you may additionally use the content of X0. This way the compression
+rate could stay close to optimal, IMHO.
+
+> They are interchangeable as a whole, yes. But you cannot fetch half
+> the pack from server A and the other half from server B. You can try
+> to recover as many deltas as possible in a broken pack, but how do you
+> request a server to send the rest of the pack to you?
+
+Indeed, it's not resumable. For most commits it's not needed since they
+are very small. Why? There are more commits than paths, so the commits
+are smaller than paths on the average. I expect my schema to allow for
+nearly as good compression as git usually does, especially I'd hope it's
+no worse than when packing paths.
+
+However, there may be very large commits in my schema (and maybe also
+very large "path-packs" in yours). Such large commits get split as I
+described above. Small commits get paired (possibly multiple times) as I
+described earlier. You end up with only reasonably sized pieces of data,
+let's say between 256 and 512 kB, so you don't need to resume.
+
+Actually, with a really bad connection, you could ask the very server
+from which you obtained an incomplete pack to resume from a given byte
+offset (similar to HTTP ranges). The server may or may not have it. This
+time it should try to keep it available for you in case you connections
+abort again. Don't get me wrong -- this is just an additional help for
+very badly connected people.
