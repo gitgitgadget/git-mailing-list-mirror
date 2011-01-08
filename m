@@ -1,68 +1,73 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: What's cooking in git.git (Jan 2011, #01; Tue, 4)
-Date: Sat, 08 Jan 2011 18:40:02 +0000
-Message-ID: <4D28AF82.4040102@ramsay1.demon.co.uk>
-References: <7vipy4dy8y.fsf@alter.siamese.dyndns.org>
+From: Stephen Kelly <steveire@gmail.com>
+Subject: Re: No way to resolve git am conflicts.
+Date: Sat, 08 Jan 2011 20:21:42 +0100
+Message-ID: <igadg7$4tb$1@dough.gmane.org>
+References: <ig9nqq$4ib$1@dough.gmane.org> <20110108163633.GB28898@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 08 19:42:47 2011
+Content-Type: text/plain; charset="ISO-8859-1"
+Content-Transfer-Encoding: 7Bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 08 20:22:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbdkV-00028z-3Q
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 19:42:47 +0100
+	id 1PbeMd-0003c4-E2
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 20:22:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751086Ab1AHSmm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jan 2011 13:42:42 -0500
-Received: from lon1-post-3.mail.demon.net ([195.173.77.150]:37950 "EHLO
-	lon1-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1750965Ab1AHSml (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Jan 2011 13:42:41 -0500
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1PbdkO-00018x-dj; Sat, 08 Jan 2011 18:42:40 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <7vipy4dy8y.fsf@alter.siamese.dyndns.org>
+	id S1751383Ab1AHTV4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jan 2011 14:21:56 -0500
+Received: from lo.gmane.org ([80.91.229.12]:58670 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751086Ab1AHTVz (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jan 2011 14:21:55 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PbeMM-0003VS-K9
+	for git@vger.kernel.org; Sat, 08 Jan 2011 20:21:54 +0100
+Received: from dslb-092-078-138-003.pools.arcor-ip.net ([92.78.138.3])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 08 Jan 2011 20:21:54 +0100
+Received: from steveire by dslb-092-078-138-003.pools.arcor-ip.net with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 08 Jan 2011 20:21:54 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: dslb-092-078-138-003.pools.arcor-ip.net
+User-Agent: KNode/4.4.6
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164837>
 
-Junio C Hamano wrote:
+Jonathan Nieder wrote:
+
+> Stephen Kelly wrote:
 > 
-> * rj/test-fixes (2010-12-14) 4 commits
->  - t4135-*.sh: Skip the "backslash" tests on cygwin
->  - t3032-*.sh: Do not strip CR from line-endings while grepping on MinGW
->  - t3032-*.sh: Pass the -b (--binary) option to sed on cygwin
->  - t6038-*.sh: Pass the -b (--binary) option to sed on cygwin
+>> git am the.patch
+> [...]
+>> Applying: Introduce new configuation option to override committer
+>> information
+>> error: patch failed: builtin/commit.c:1352
+>> error: builtin/commit.c: patch does not apply
+>> Patch failed at 0001 Introduce new configuation option to override
+>> committer information
+>> When you have resolved this problem run "git am --resolved".
+>> If you would prefer to skip this patch, instead run "git am --skip".
+>> To restore the original branch and stop patching run "git am --abort".
+>> $ git diff
+> [...]
+>> As git status doesn't tell me what the conflict is, I can't resolve it.
 > 
-> I don't think people on different vintage of Cygwin agreed they are good
-> workarounds---please correct me if I am mistaken.
+> Have you tried "git am -3" or "git am --reject" (after "git am
+> --abort")?
 
-No, it was different vintages of MinGW not Cygwin. Well, to be more precise,
-it is the different versions of sed that are installed in MinGW by the
-msysGit installer. ;-)
+git am -3 worked, thanks.
 
-I used msysGit-fullinstall-1.6.4-preview20090729.exe to install msysGit,
-18 months ago, and my version of sed is quite old. However, these patches
-(which were done mainly for the benefit of cygwin) were written assuming
-the more recent sed version installed by a more recent msysGit installer.
-(judging by commit ca02ad34.) In other words, the sed version on cygwin
-is new enough to know about the -b (--binary) option and so is the more
-recent msysGit installers (but I don't know exactly which version).
-
-I can use my patch #14, which you didn't pick up, to run the above tests
-on my old installation. (Johannes was the only other laggard identified
-and he claims to be upgrading soon! :-D Yeah, I should too.)
-
-So, unless Johannes can think of something I've missed, I think all of
-these commits are good to go...
-
-ATB,
-Ramsay Jones
+> 
+> I agree that the hints printed are suboptimal in this case.  Please
+> feel free to make them better if you have time for it. :)
