@@ -1,57 +1,83 @@
-From: Anders Kaseorg <andersk@MIT.EDU>
-Subject: Re: [RFC/PATCH] t9157-*.sh: Add an svn version check
-Date: Sat, 08 Jan 2011 02:19:02 -0700
-Message-ID: <1294478342.2791.4.camel@fixed-disk>
-References: <4D260A03.90903@ramsay1.demon.co.uk>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH] commit: suggest --amend --reset-author to fix commiter identity
+Date: Sat, 08 Jan 2011 11:56:00 +0100
+Message-ID: <vpq1v4nirzz.fsf@bauges.imag.fr>
+References: <1294409671-5479-1-git-send-email-Matthieu.Moy@imag.fr>
+	<7vsjx45w7g.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	stevenrwalter@gmail.com, normalperson@yhbt.net
-To: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-X-From: git-owner@vger.kernel.org Sat Jan 08 10:19:19 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 08 11:56:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbUxD-00010r-Bo
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 10:19:19 +0100
+	id 1PbWTG-0003oj-8w
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 11:56:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751399Ab1AHJTM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jan 2011 04:19:12 -0500
-Received: from DMZ-MAILSEC-SCANNER-5.MIT.EDU ([18.7.68.34]:46609 "EHLO
-	dmz-mailsec-scanner-5.mit.edu" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1751250Ab1AHJTL (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Jan 2011 04:19:11 -0500
-X-AuditID: 12074422-b7c3eae000000a70-e1-4d282c0e07f6
-Received: from mailhub-auth-3.mit.edu ( [18.9.21.43])
-	by dmz-mailsec-scanner-5.mit.edu (Symantec Brightmail Gateway) with SMTP id C1.47.02672.E0C282D4; Sat,  8 Jan 2011 04:19:10 -0500 (EST)
-Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
-	by mailhub-auth-3.mit.edu (8.13.8/8.9.2) with ESMTP id p089J9TV008162;
-	Sat, 8 Jan 2011 04:19:09 -0500
-Received: from [192.168.1.108] (c-71-56-216-201.hsd1.co.comcast.net [71.56.216.201])
-	(authenticated bits=0)
-        (User authenticated as andersk@ATHENA.MIT.EDU)
-	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p089J329004055
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Sat, 8 Jan 2011 04:19:07 -0500 (EST)
-In-Reply-To: <4D260A03.90903@ramsay1.demon.co.uk>
-X-Mailer: Evolution 2.32.1 
-X-Brightmail-Tracker: AAAAARcU4pI=
+	id S1751838Ab1AHK4L (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jan 2011 05:56:11 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:51949 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751613Ab1AHK4K (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jan 2011 05:56:10 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p08Au0xW018663
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sat, 8 Jan 2011 11:56:00 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PbWSm-0002J6-LW; Sat, 08 Jan 2011 11:56:00 +0100
+In-Reply-To: <7vsjx45w7g.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Fri\, 07 Jan 2011 11\:51\:15 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sat, 08 Jan 2011 11:56:00 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p08Au0xW018663
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1295088961.78911@4Lb+YSRmY1vSBwHK/Rd6Lg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164814>
 
-On Thu, 2011-01-06 at 18:29 +0000, Ramsay Jones wrote:
-> +svn_ver="$(svn --version --quiet)"
-> +case $svn_ver in
-> +[0-1].[0-4].[0-6])
+Junio C Hamano <gitster@pobox.com> writes:
 
-Thanks for the patch.  Can I suggest the more precise
+> I don't think making the "cheat-sheet" insn longer by offering more
+> choices is a good idea.  These are messages for lazy and busy
+> people.
 
-0.* | 1.[0-4].*)
+The reason I kept both forms was that the message is designed to be
+seen once (or once for each new machine one works on), and the most
+scary it is, the most efficient ;-). 
 
-Anders
+> Wouldn't it work better to just get rid of the longer form and say
+> something like:
+>
+>     ... here is how to tell your name to git (existing message) ...
+>
+>     After doing the above, run
+>
+>     	git commit --amend --reset-author
+>
+>     to fix the identity used for this commit.
+
+I'm fine with that proposal too. I'll resend with that if no one
+objects. Probalby rewording it to
+
+After doing this, you can fix the identity used for this commit with:
+
+  git commit --amend --reset-author
+
+
+would make it even concisier (no break of the sentence with a
+command).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
