@@ -1,83 +1,67 @@
-From: Kevin Ballard <kevin@sb.org>
-Subject: Re: [BUG] git rev-list --no-walk A B C sorts by commit date incorrectly
-Date: Fri, 7 Jan 2011 21:51:54 -0800
-Message-ID: <E2E98544-70D0-4549-8395-DBE2397F0FCB@sb.org>
-References: <CEF26B82-4281-4B8F-A994-DE32EFB92BA7@sb.org> <7v62u043ba.fsf@alter.siamese.dyndns.org> <BB84A2F6-E6B0-49E4-9DC7-6BA8860623E6@sb.org> <7vk4ig7y0t.fsf@alter.siamese.dyndns.org>
-Mime-Version: 1.0 (Apple Message framework v1082)
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: different name and email address depending on folder
+Date: Sat, 8 Jan 2011 13:09:30 +0530
+Message-ID: <20110108073928.GD27334@kytes>
+References: <3178E076-FA22-4C3C-BEB2-2581A0E12086@gmail.com>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git list <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 08 06:52:03 2011
+Cc: git@vger.kernel.org
+To: Rich Eakin <reakinator@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 08 08:38:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbRic-0006gC-RY
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 06:52:03 +0100
+	id 1PbTNx-0002mk-Nu
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 08:38:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750816Ab1AHFv5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jan 2011 00:51:57 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:60957 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750773Ab1AHFv5 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Jan 2011 00:51:57 -0500
-Received: by iyi12 with SMTP id 12so16364383iyi.19
-        for <git@vger.kernel.org>; Fri, 07 Jan 2011 21:51:56 -0800 (PST)
-Received: by 10.42.222.6 with SMTP id ie6mr1727992icb.217.1294465916583;
-        Fri, 07 Jan 2011 21:51:56 -0800 (PST)
-Received: from [10.0.1.14] (c-69-181-71-253.hsd1.ca.comcast.net [69.181.71.253])
-        by mx.google.com with ESMTPS id 8sm23688656iba.22.2011.01.07.21.51.55
+	id S1750936Ab1AHHi3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jan 2011 02:38:29 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:49071 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750877Ab1AHHi2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jan 2011 02:38:28 -0500
+Received: by iwn9 with SMTP id 9so17848897iwn.19
+        for <git@vger.kernel.org>; Fri, 07 Jan 2011 23:38:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=kpzbvMjmCCjZD61xpVot5aL2wAuxs3xzAk3IxOZJ0XA=;
+        b=kA9fscUh9Cn/03+vy6oqs4VfwruBNaEZh8Cckovitt9QNN4o4QMQQS1oZu4DPaUt+7
+         mk4qm2FmkUBinVaAS748DymVTuZiBrrfTFDKLN3YTWKW3IUJlAsjAEglnAaK4DjlVLyN
+         bMPAqkO/JMd5aAqzPxUOEspCrmgzQpqgdP3HA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=PwC4if3PwAu8y6Lv2JNIfZommP7jVt+hi2vE1fJQkLEAZnmTUzNkYYY4vejqGb2AUb
+         Ymnp9Qr8Ix4dwb8BdXNDasnSjGlgtvYHCQdbuIdL6+AGTM6fd0LyilxNc2FvnDtbtwQA
+         aqV3qXMPOru/y7BKRXQGQ7h4V8ajmLj4MQA/M=
+Received: by 10.42.240.66 with SMTP id kz2mr1781453icb.340.1294472307430;
+        Fri, 07 Jan 2011 23:38:27 -0800 (PST)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id f5sm763528icu.4.2011.01.07.23.38.24
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 07 Jan 2011 21:51:56 -0800 (PST)
-In-Reply-To: <7vk4ig7y0t.fsf@alter.siamese.dyndns.org>
-X-Mailer: Apple Mail (2.1082)
+        Fri, 07 Jan 2011 23:38:26 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <3178E076-FA22-4C3C-BEB2-2581A0E12086@gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164807>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164808>
 
-On Jan 7, 2011, at 9:41 PM, Junio C Hamano wrote:
+Hi Rich,
 
-> Kevin Ballard <kevin@sb.org> writes:
-> 
->> It almost works, but not quite. My inclination is to say
->> `git rev-list --no-walk A B C` should emit A B C in that order. Implemented
->> this way, `git rev-list --no-walk ^HEAD~3 HEAD` emits commits in the wrong
->> order,
-> 
-> "git rev-list --no-walk ^HEAD~3 HEAD"?  Isn't it a nonsense?  If it is "no
-> walk", then why do you even list a negative one?
+Rich Eakin writes:
+> I am using git for development with a company and myself on the same computer and the name / user fields need to be different for each.  As I keep all my company's repos in one directory and my private stuff in another, I was wondering if there is a way to tell git to use a separate user and email whenever I make commits from within a specified directory.  
 
-That seemed odd to me too, but t3508 tests to make sure git cherry-pick accepts
-that syntax. Specifically it tests `git cherry-pick ^first fourth`. It does
-make a certain sense, though; it should be (and, I believe, is) equivalent to
-saying `git rev-list --no-walk HEAD~3..HEAD`, though I don't know if it's
-handled the same internally.
+Yes. Please see the 'user.name' and 'user.email' configuration options
+in git-config(1). You can set them globally or on a per-repository
+basis.
 
-> As to cherry-pick, I wouldn't be surprised if it relies on the current
-> internal working of pushing commits in the date order to the queue
-> regardless of how they were given from the command line.
-
-My belief is that it doesn't. It sets the reverse flag, so it gets the oldest
-commit first. I think it's always just been tested taking commits in the same
-order that they were committed, which seems fine except when two commits have
-the same date. In that case, if A and B have the same date, then A B C will
-get transformed to B A C. It's possible that this one quirk can be fixed by
-changing the date test in commit_list_insert_by_date to use <= instead of <,
-but that still leaves the issue where `git cherry-pick A B C` will sort those
-commits even if the user explicitly wanted to apply them in the given order.
-
-I suspect this just wasn't noticed before because cherry-pick didn't used to
-accept multiple commits, and after that support was added, nobody's tried to
-cherry-pick commits in a different order than they were committed.
-
-> Indeed, it does exactly that, and then tries to compensate it---notice
-> that builtin/revert.c:prepare_revs() gives "revs->reverse" to it.  That
-> also needs to be fixed.
-
-I did see that, I just left it out of my explanation.
-
--Kevin Ballard
+-- Ram
