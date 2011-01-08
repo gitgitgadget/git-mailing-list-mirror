@@ -1,73 +1,55 @@
-From: David Chanters <david.chanters@googlemail.com>
+From: Tomas Carnecky <tom@dbservice.com>
 Subject: Re: Creating CVS-style patch headers with git-diff
-Date: Sat, 8 Jan 2011 15:35:39 +0000
-Message-ID: <AANLkTi=_YdTsvFboQAj447SUtcxrVhM18QkvSVdpvdMJ@mail.gmail.com>
-References: <AANLkTinmq=3kJmtSVutf7dHAQ0QL3fr9_E3hZ7gDe1JY@mail.gmail.com>
-	<4D284F57.2000808@dbservice.com>
-	<AANLkTinx9qM=fjH53UodY0G870Ne3wpFiFEgEGNXxOY7@mail.gmail.com>
-	<m2vd1za0af.fsf@igel.home>
+Date: Sat, 08 Jan 2011 16:51:32 +0100
+Message-ID: <4D288804.2050204@dbservice.com>
+References: <AANLkTinmq=3kJmtSVutf7dHAQ0QL3fr9_E3hZ7gDe1JY@mail.gmail.com>	<4D284F57.2000808@dbservice.com>	<AANLkTinx9qM=fjH53UodY0G870Ne3wpFiFEgEGNXxOY7@mail.gmail.com>	<m2vd1za0af.fsf@igel.home> <AANLkTi=_YdTsvFboQAj447SUtcxrVhM18QkvSVdpvdMJ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Tomas Carnecky <tom@dbservice.com>, git@vger.kernel.org
-To: Andreas Schwab <schwab@linux-m68k.org>
-X-From: git-owner@vger.kernel.org Sat Jan 08 16:35:47 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org
+To: David Chanters <david.chanters@googlemail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 08 16:52:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbapW-0007Kp-Aa
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 16:35:46 +0100
+	id 1Pbb5Q-0007dS-Ej
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 16:52:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753084Ab1AHPfl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Jan 2011 10:35:41 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:39881 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752937Ab1AHPfk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 8 Jan 2011 10:35:40 -0500
-Received: by fxm20 with SMTP id 20so17728528fxm.19
-        for <git@vger.kernel.org>; Sat, 08 Jan 2011 07:35:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=e961I4X3ao3yfXbQQ8oEVYbedj+gSuqP5aSmN3BfsS0=;
-        b=WwMaNAuNX8+zcteOD/sOoPlTV1HjfyKB5YhCGMf0gBlp4BMUYmod1b1vkiNuyYUXGg
-         w4G+G9lUmoEF78iND6n3s2lI6U9PF+1De2MjdgOD4rFicygQbWxWL8eU2kDc0a1C0dGw
-         dJyoJd+nSq61+iPDofRGRMqWG2xF0xFxNcxO8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=Dz39JManhBge1trVWGCIJsqITpV6KeKHn3aOqGh+uJu+P1BsTkfdVgWh7r9XgsBFiv
-         ypWZUUyYKAn4gvrnB94nP8s+NGQorDue70BHed7OFaIXEXRGGQgIhjAuyZRFed1yIGIu
-         WDV8GpRPRcZGMdJokEQkRrhZIRohNXILBMv8Y=
-Received: by 10.223.83.194 with SMTP id g2mr1389676fal.75.1294500939248; Sat,
- 08 Jan 2011 07:35:39 -0800 (PST)
-Received: by 10.223.86.197 with HTTP; Sat, 8 Jan 2011 07:35:39 -0800 (PST)
-In-Reply-To: <m2vd1za0af.fsf@igel.home>
+	id S1753141Ab1AHPvl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jan 2011 10:51:41 -0500
+Received: from office.neopsis.com ([78.46.209.98]:45771 "EHLO
+	office.neopsis.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753012Ab1AHPvl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 8 Jan 2011 10:51:41 -0500
+X-Spam-Status: No, hits=0.0 required=5.0
+	tests=AWL: 0.079,BAYES_00: -1.665,TOTAL_SCORE: -1.586,autolearn=ham
+X-Spam-Level: 
+Received: from calvin.local ([62.65.141.13])
+	(authenticated user tom@dbservice.com)
+	by office.neopsis.com
+	(using TLSv1/SSLv3 with cipher AES256-SHA (256 bits));
+	Sat, 8 Jan 2011 16:51:32 +0100
+User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.8) Gecko/20100802 Thunderbird/3.1.2
+In-Reply-To: <AANLkTi=_YdTsvFboQAj447SUtcxrVhM18QkvSVdpvdMJ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164825>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164826>
 
-On 8 January 2011 15:21, Andreas Schwab <schwab@linux-m68k.org> wrote:
-> David Chanters <david.chanters@googlemail.com> writes:
->
->> Well, any one of those goals, really. =A0I just want to generate a p=
-atch
->> that CVS won't barf on
->
-> What does "CVS won't barf" mean in this context? =A0CVS does not oper=
-ate
-> on patches.
+  On 1/8/11 4:35 PM, David Chanters wrote:
+> Sorry about that, that's poor wording on my part.  I don't mean "CVS
+> won't barf" -- I meant that GNU Patch can still apply the patch
+> without the meta-data referencing git still.  I think though this
+> "--no-prefix" option might just do it.
 
-Sorry about that, that's poor wording on my part.  I don't mean "CVS
-won't barf" -- I meant that GNU Patch can still apply the patch
-without the meta-data referencing git still.  I think though this
-"--no-prefix" option might just do it.
+Update your gnu patch. Never versions know how to handle the git 
+specific metadata (gnu patch simply ignores it).
 
-David
+And the a/, b/ prefix is *not* git specific. Pretty much all versions of 
+a patch program know how to deal with that, you just need to use -p1 on 
+the commandline.
+
+tom
