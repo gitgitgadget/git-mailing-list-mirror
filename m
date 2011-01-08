@@ -1,97 +1,68 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Avoid unportable nested double- and backquotes in shell
- scripts.
-Date: Sat, 8 Jan 2011 12:22:01 -0600
-Message-ID: <20110108182201.GB29788@burratino>
-References: <20110108090105.GB14536@gmx.de>
- <20110108161441.GA28898@burratino>
- <20110108162353.GB4786@gmx.de>
- <20110108164825.GC28898@burratino>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: What's cooking in git.git (Jan 2011, #01; Tue, 4)
+Date: Sat, 08 Jan 2011 18:40:02 +0000
+Message-ID: <4D28AF82.4040102@ramsay1.demon.co.uk>
+References: <7vipy4dy8y.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 08 19:22:19 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 08 19:42:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbdQd-0000sa-PT
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 19:22:16 +0100
+	id 1PbdkV-00028z-3Q
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 19:42:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751498Ab1AHSWK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jan 2011 13:22:10 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:44577 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751383Ab1AHSWJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jan 2011 13:22:09 -0500
-Received: by gxk9 with SMTP id 9so4524566gxk.19
-        for <git@vger.kernel.org>; Sat, 08 Jan 2011 10:22:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=DtchuRQaXGrwq0NVGHMNa/GXSTC/HbPlb+yWp5KL4pY=;
-        b=oGhQZpcp8pcBnpi4XM6f3/DR1yEZ29AhRx0zpFMBbOQwQ4+dqQl5ZNgBz+F0ClNPAv
-         Rn9qCrlxv2MOwSAgwozwsT/cLfejlqrPN+1ygxWfDaa8SNcC131SZJZxy7TpkmLDKLGj
-         4LYNNc9B/wmZCTqA3Yi2fgIUiRJ8w1P6x3wxM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=u21rA0lGFda0cqFlUznG7ULaAJm/X8fFtdmUS9wCyUHrnGt1+eJT86MgeM2JdybbaF
-         F9q+UtrfJaPgrLA2kX5My1jeuR7EXEvrlAOIbxenje/NPxIzuq/tY0QEl93Fwl527tzT
-         oHzZ4iicgOAqLsYLlJ9aAVny758VY4xbYpxOo=
-Received: by 10.151.43.7 with SMTP id v7mr26255787ybj.201.1294510928251;
-        Sat, 08 Jan 2011 10:22:08 -0800 (PST)
-Received: from burratino (adsl-69-209-72-219.dsl.chcgil.sbcglobal.net [69.209.72.219])
-        by mx.google.com with ESMTPS id v4sm1178822ybe.5.2011.01.08.10.22.06
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 08 Jan 2011 10:22:07 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110108164825.GC28898@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1751086Ab1AHSmm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 8 Jan 2011 13:42:42 -0500
+Received: from lon1-post-3.mail.demon.net ([195.173.77.150]:37950 "EHLO
+	lon1-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1750965Ab1AHSml (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Jan 2011 13:42:41 -0500
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by lon1-post-3.mail.demon.net with esmtp (Exim 4.69)
+	id 1PbdkO-00018x-dj; Sat, 08 Jan 2011 18:42:40 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <7vipy4dy8y.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164836>
 
-Jonathan Nieder wrote:
-
-> From a quick grep, it seems you are right:
+Junio C Hamano wrote:
 > 
->  $ git grep -c -F -e '`' -- 't/*.sh' | cut -d: -f2 | sum
->  65126     1
->  $ git grep -c -F -e '$(' -- 't/*.sh' | cut -d: -f2 | sum
->  64807     1
->  $ git grep -c -F -e '`' -- '*.sh' | cut -d: -f2 | sum
->  13350     1
->  $ git grep -c -F -e '$(' -- '*.sh' | cut -d: -f2 | sum
->  07810     1
+> * rj/test-fixes (2010-12-14) 4 commits
+>  - t4135-*.sh: Skip the "backslash" tests on cygwin
+>  - t3032-*.sh: Do not strip CR from line-endings while grepping on MinGW
+>  - t3032-*.sh: Pass the -b (--binary) option to sed on cygwin
+>  - t6038-*.sh: Pass the -b (--binary) option to sed on cygwin
+> 
+> I don't think people on different vintage of Cygwin agreed they are good
+> workarounds---please correct me if I am mistaken.
 
-sum does something totally different than I expected.  With [1]
-comes the more reasonable
+No, it was different vintages of MinGW not Cygwin. Well, to be more precise,
+it is the different versions of sed that are installed in MinGW by the
+msysGit installer. ;-)
 
- $ git grep -c -F -e '`' -- 't/*.sh' | cut -d: -f2 | addup
- 485
- $ git grep -c -F -e '$(' -- 't/*.sh' | cut -d: -f2 | addup
- 2620
- $ git grep -c -F -e '`' -- '*.sh' | cut -d: -f2 | addup
- 594
- $ git grep -c -F -e '$(' -- '*.sh' | cut -d: -f2 | addup
- 3133
+I used msysGit-fullinstall-1.6.4-preview20090729.exe to install msysGit,
+18 months ago, and my version of sed is quite old. However, these patches
+(which were done mainly for the benefit of cygwin) were written assuming
+the more recent sed version installed by a more recent msysGit installer.
+(judging by commit ca02ad34.) In other words, the sed version on cygwin
+is new enough to know about the -b (--binary) option and so is the more
+recent msysGit installers (but I don't know exactly which version).
 
-So the code bloat and use of backticks are less dire than I feared.
+I can use my patch #14, which you didn't pick up, to run the above tests
+on my old installation. (Johannes was the only other laggard identified
+and he claims to be upgrading soon! :-D Yeah, I should too.)
 
-[1] 
-	addup () {
-		sum=0
-		while read term
-		do
-			: $((sum = $sum + $term))
-		done
-		echo $sum
-	}
+So, unless Johannes can think of something I've missed, I think all of
+these commits are good to go...
+
+ATB,
+Ramsay Jones
