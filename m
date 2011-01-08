@@ -1,127 +1,78 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFD] My thoughts about implementing gitweb output caching
-Date: Fri, 7 Jan 2011 18:26:43 -0600
-Message-ID: <20110108002643.GD15495@burratino>
-References: <201101080042.36156.jnareb@gmail.com>
+From: Phillip Susi <psusi@cfl.rr.com>
+Subject: Re: clone breaks replace
+Date: Fri, 07 Jan 2011 19:43:40 -0500
+Message-ID: <4D27B33C.2020907@cfl.rr.com>
+References: <4D262D68.2050804@cfl.rr.com> <20110106213338.GA15325@burratino> <4D276CD2.60607@cfl.rr.com> <20110107205103.GC4629@burratino> <4D278930.7010100@cfl.rr.com> <20110107214907.GA9194@burratino> <20110107220942.GB10343@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "J.H." <warthog9@eaglescrag.net>,
-	John 'Warthog9' Hawley <warthog9@kernel.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 08 01:27:16 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Stephen Bash <bash@genarts.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Jan 08 01:43:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbMeJ-0004Tl-Ui
-	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 01:27:16 +0100
+	id 1PbMuL-0001X4-Bk
+	for gcvg-git-2@lo.gmane.org; Sat, 08 Jan 2011 01:43:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752340Ab1AHA1C (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 7 Jan 2011 19:27:02 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:61763 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751480Ab1AHA1A (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 7 Jan 2011 19:27:00 -0500
-Received: by gwj20 with SMTP id 20so7954383gwj.19
-        for <git@vger.kernel.org>; Fri, 07 Jan 2011 16:26:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=nhuXjZqFxIhQh1F4JjFMlQQM0AQhGJ6fWpbm6uOCifQ=;
-        b=Wu03HGyCfjV1z2+Y/p3SMTIbIUXFqGy7OiJP6AxL+66nSNctm7LpHJNk8TXrM4Oj1L
-         5W/b2qrmotC1lodzdCKmSO1UaibhXSs4C1gUdJaU/gLRmMYAwt+sm8KdHRoTmf6nhK5a
-         oXgXyH2HSE3xzuvkX0b1XIfbhs1SujDCfr9M0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=cAqF4IkaQ7qFEIltC8+LSXJpQVthPxpuXqgA0CLsYjSGQ+RJnGUIi63nnlUj2aPwSZ
-         NEIsX64YEZWNp66VYbzIeRvyCpLJFpR9iwVh8tjfRiMN5rbbjWIvBiSQvA3HB19C6FVZ
-         IrvHY22RRVK4Chhfy1TwUzx97N1WOqxQxvmGs=
-Received: by 10.236.110.1 with SMTP id t1mr469827yhg.94.1294446419726;
-        Fri, 07 Jan 2011 16:26:59 -0800 (PST)
-Received: from burratino (adsl-69-209-72-219.dsl.chcgil.ameritech.net [69.209.72.219])
-        by mx.google.com with ESMTPS id h48sm4422992yha.21.2011.01.07.16.26.56
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 07 Jan 2011 16:26:58 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <201101080042.36156.jnareb@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752731Ab1AHAnn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 7 Jan 2011 19:43:43 -0500
+Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.121]:54337 "EHLO
+	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752573Ab1AHAnm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 7 Jan 2011 19:43:42 -0500
+X-Authority-Analysis: v=1.1 cv=Inhw+Jdt7z1D3BivGPfn2aw54OvUEJw5lAn/booRZkE= c=1 sm=0 a=IkcTkHD0fZMA:10 a=JmtI77n5PKyEllQSDapvNg==:17 a=BwIhM0POwfTtjgtMt1wA:9 a=Vdgao4lGtDvGkfilP2IA:7 a=Wl0zXEsO93AO8LZoPWK_aNgAz_4A:4 a=QEXdDO2ut3YA:10 a=JmtI77n5PKyEllQSDapvNg==:117
+X-Cloudmark-Score: 0
+X-Originating-IP: 184.91.189.177
+Received: from [184.91.189.177] ([184.91.189.177:55960] helo=[192.168.1.3])
+	by cdptpa-oedge04.mail.rr.com (envelope-from <psusi@cfl.rr.com>)
+	(ecelerity 2.2.3.46 r()) with ESMTP
+	id CD/FB-13137-C33B72D4; Sat, 08 Jan 2011 00:43:41 +0000
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
+In-Reply-To: <20110107220942.GB10343@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164795>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164796>
 
-Hi,
-
-Thanks for these design notes.  A few uninformed reactions.
-
-Jakub Narebski wrote:
-
-> There was request to support installing gitweb modules in a separate
-> directory, but that would require changes to "gitweb: Prepare for
-> splitting gitweb" patch (but it is doable).  Is there wider interest
-> in supporting such feature?
-
-If you are referring to my suggestion, I see no reason to wait on
-that.  The lib/ dir can be made configurable later.
-
-> Simplest solution is to use $cgi->self_url() (note that what J.H. v8
-> uses, i.e.: "$my_url?". $ENV{'QUERY_STRING'}, where $my_url is just
-> $cgi->url() is not enough - it doesn't take path_info into account).
+On 01/07/2011 05:09 PM, Jeff King wrote:
+> I think there are two separate issues here:
 >
-> Alternate solution, which I used in my rewrite, is to come up with
-> "canonical" URL, e.g. href(-replay => 1, -full => 1, -path_info => 0);
-> with this solution using path_info vs query parameters or reordering
-> query parameters still gives the same key.
+>    1. Should transport protocols respect replacements (i.e., if you
+>       truncate history with a replacement object and I fetch from you,
+>       should you get the full history or the truncated one)?
+>
+>    2. Should clone fetch refs from refs/replace (either by default, or
+>       with an option)?
+>
+> Based on previous discussions, I think the answer to the first is no.
+> The resulting repo violates a fundamental assumption of git. Yes,
+> because of the replacement object, many things will still work. But many
+> parts of git intentionally do not respect replacement, and they will be
+> broken.
 
-It is easy to miss dependencies on parts of the URL that are being
-fuzzed out.  For example, the <base href...> tag is only inserted with
-path_info.  Maybe it would be less risky to first use self_url(), then
-canonicalize it in a separate patch?
+What parts do not respect replacement?  More importantly, what parts 
+will be broken?  The man page seems to indicate that about the only 
+thing that does not by default is reachability testing, which to me 
+means fsck and prune.  It seems to be the purpose of replace to 
+/prevent/ breakage and be respected by default, unless doing so would 
+cause harm, which is why fsck and prune do not.
 
-> J.H. patches up and including v7, and my rewrite up and including v6,
-> excluded error pages from caching.  I think that the original resoning
-> behind choosing to do it this way was that A.), each of specific error
-> pages is usually accessed only once, so caching them would only take up
-> space bloating cache, but what is more important B.) that you can't
-> cache errors from caching engine.
+> Instead, I think of replacements as a specific view into history, not a
+> fundamental history-changing operation itself. Which means you can never
+> save bandwidth or space by truncating history with replacements. You can
+> only give somebody the full history, and share with them your view. If
+> you want to truncate, you must rewrite history[1].
 
-Perhaps there is a user experience reason?  If I receive an error page
-due to a problem with my repository, all else being equal, I would
-prefer that the next time I reload it is fixed.  By comparison, having
-to reload multiple times to forget an obsolete non-error response
-would be less aggravating and perhaps expected.
-
-But the benefit from caching e.g. a response from a broken link would
-outweigh that.
-
-> Second is if there is no stale data to serve (or data is too stale), but
-> we have progress indicator.  In this case the foreground process is
-> responsible for rendering progress indicator, and background process is
-> responsible for generating data.  In this case foreground process waits
-> for data to be generated (unless progress info subroutine exits), so
-> strictly spaking we don't need to detach background process in this
-> case.
-
-What happens when the client gets tired of waiting and closes the
-connection?
-
-> With output caching gitweb can also support 'Range' requests, which
-> means that it would support resumable download.  This would mean hat we
-> would be able to resume downloading of snapshot (or in the future
-> bundle)... if we cannot do this now.  This would require some more code
-> to be added.
-
-Exciting stuff.
-
-Teaching gitweb to generate bundles sounds like a recipe for high server
-loads, though.  I suspect manual (or by cronjob) generation would work
-better, with a possible exception of very frequently cloned and
-infrequently pushed-to repos like linus's linux-2.6.
-
-Jonathan
+Right, but if you only care about that view, then there is no need to 
+waste bandwidth fetching the original one.  It goes without saying that 
+people pulling from the repository mainly care about the view upstream 
+chooses to publish.  Upstream can choose to rewrite, which will cause 
+breakage and is a sort of sneaky way to hide the original history, or 
+they can use replace, which avoids the breakage and gives the client the 
+choice of which view to use.
