@@ -1,75 +1,112 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [BUG] git rev-list --no-walk A B C sorts by commit date
- incorrectly
-Date: Sat, 08 Jan 2011 22:58:22 -0800
-Message-ID: <7vaaja8sxd.fsf@alter.siamese.dyndns.org>
-References: <CEF26B82-4281-4B8F-A994-DE32EFB92BA7@sb.org>
- <7v62u043ba.fsf@alter.siamese.dyndns.org>
- <BB84A2F6-E6B0-49E4-9DC7-6BA8860623E6@sb.org>
- <7vk4ig7y0t.fsf@alter.siamese.dyndns.org>
+Subject: Re: bug? in checkout with ambiguous refnames
+Date: Sat, 08 Jan 2011 23:31:18 -0800
+Message-ID: <7v1v4m8reh.fsf@alter.siamese.dyndns.org>
+References: <20110107104650.GA5399@pengutronix.de>
+ <20110107194909.GB6175@sigill.intra.peff.net>
+ <alpine.DEB.1.10.1101081449220.12031@debian>
+ <20110108214011.GA4753@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git list <git@vger.kernel.org>
-To: Kevin Ballard <kevin@sb.org>
-X-From: git-owner@vger.kernel.org Sun Jan 09 07:58:52 2011
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jan 09 08:31:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbpEk-0002o1-9u
-	for gcvg-git-2@lo.gmane.org; Sun, 09 Jan 2011 07:58:46 +0100
+	id 1Pbpka-0003hf-FT
+	for gcvg-git-2@lo.gmane.org; Sun, 09 Jan 2011 08:31:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750952Ab1AIG6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jan 2011 01:58:32 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54757 "EHLO
+	id S1750869Ab1AIHbd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jan 2011 02:31:33 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58170 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750764Ab1AIG6b (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jan 2011 01:58:31 -0500
+	with ESMTP id S1750703Ab1AIHbc (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jan 2011 02:31:32 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8F3B9456C;
-	Sun,  9 Jan 2011 01:59:08 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E18794702;
+	Sun,  9 Jan 2011 02:32:10 -0500 (EST)
 DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=CqHaumXMhFTuslN/CfT3f9tB8BE=; b=VwP0c0
-	43RPUQwt2q5B5HuW3kaytPEVwRz5COwMm8B3jgavNGYBSutLgmchQxnTt+wkx1Bs
-	FrDyqGBNZxglaYDKuC5248V9hkdxht5NZrJjV4MrgUgj+6EIUWi1FMDR+6boUhWR
-	Dyh/gFWKcYb7O9YDoUTzwzyQnGEJ62z5yRLSI=
+	:content-type; s=sasl; bh=E4ty8YGPFfPe+6dBbXs00KivyX0=; b=UdBJKQ
+	7yaz4bUXvE4aMOClIMGxWIjB2DqPwArUkbXX9iDYW1ukjYUI6U/5Hy61CXwRrnEm
+	+S6gOcb/Mj8ybCrOU24ZkRLlGMerZRbrbIbuwPGGeuT5vXp+O7/ME6btDMS5jmCk
+	rdk5IUhGIb7eYKKU4HAwFOMdGoCEI9/N6Py6M=
 DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
 	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=b3qiT9QtAFoI/+UJUJjQTtKlpsq2567U
-	EOw2lrVA7b+xFhE/MkdEI962yAwK25OhhGHhYzuP5Sn23jy+1r7s/FTXqA5S/7va
-	JD2VSliluQe1+osrTCjWYTee+gJn7wrIbOzUv+WlmTHAuhYXGBhM2pW4E/kP3/ip
-	owfaZQzaWwA=
+	:content-type; q=dns; s=sasl; b=GuHIZ0bQrOwgffJiCt+Nkro+A/IMU8NV
+	o7Q4SGQ198PAmySOpQ9arbuYacaVmINRYyWvbl1wcJvre+riKyZw6TsmJzS/KqSl
+	bCcPC/l52l/NqlcHY2mCNfGu9Lxg8LP1sWPsMH2Q3Y1L7zS6NWNxggbyTiTnghn3
+	hwgwzkho1KM=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6CC46456B;
-	Sun,  9 Jan 2011 01:59:06 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9F0F84701;
+	Sun,  9 Jan 2011 02:32:06 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 91C22456A; Sun,  9 Jan 2011
- 01:59:03 -0500 (EST)
-In-Reply-To: <7vk4ig7y0t.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Fri\, 07 Jan 2011 21\:41\:22 -0800")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2243B4700; Sun,  9 Jan 2011
+ 02:32:00 -0500 (EST)
+In-Reply-To: <20110108214011.GA4753@sigill.intra.peff.net> (Jeff King's
+ message of "Sat\, 8 Jan 2011 16\:40\:11 -0500")
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F3327888-1BBD-11E0-BA48-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
+X-Pobox-Relay-ID: 8F7DE48A-1BC2-11E0-8327-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164844>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164845>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Jeff King <peff@peff.net> writes:
 
-> "git rev-list --no-walk ^HEAD~3 HEAD"?  Isn't it a nonsense?  If it is "no
-> walk", then why do you even list a negative one?
+> On Sat, Jan 08, 2011 at 03:40:33PM -0500, Martin von Zweigbergk wrote:
+>
+>> > Yeah, we generally resolve ambiguities in favor of the tag (and that
+>> > warning comes from deep within get_sha1_basic). So the real bug here is
+>> > that it still said "Switched to branch", which is totally wrong.
+>> > 
+>> > That being said, it probably would make more sense for "git checkout" to
+>> > prefer branches to tags.
+>> 
+>> What was the rationale for generally favoring tags?
+>
+> I don't recall hearing any specific argument, but it has always been
+> that way from early on. I think it is from a vague sense of "tags are
+> more important than branch tips because they are about marking specific
+> points, not lines of development". But maybe other old-timers can say
+> more.
+>
+> I don't necessarily buy that argument; my only reasoning is that we
+> should probably keep historic behavior.
 
-The above was my thinko.
+I don't think "tags are more important" has ever been a serious argument,
+either.  We prefix refs/tags/ and refs/heads/ to see if what the user gave
+us is a short hand, and we have to pick one to check first, and we
+happened to have chosen to check tags/ before heads/.  Majority of people
+have been trained by the ambiguity warning not to use the same name for
+their tags and branches, and the rest have learned to live with this
+convention.
 
-When you explicitly give range to no-walk, you override that no-walk with
-"please walk".  This is primarily to help Linus who wanted to do "git show
-HEAD~3..HEAD"---see how his thinking changed over time by comparing
-aa27e461 and f222abde.
+Among those "rest who have learned to live with" minority are people who
+use v1.0 branch to maintain v1.0 codebase after it is tagged, and they
+would want to work on v1.0 branch (by checking out v1.0 branch) and
+measure their progress by disambiguating between heads/v1.0 and tags/v1.0
+when driving "git log" family.  There is no strong reason to forbid them
+from doing this by requiring uniqueness if that is what they want,
+although I personally would suggest them to use maint-1.0 branch that
+forks from v1.0 tag.
 
-The right fix then would be to first always add in the order things were
-given, and sort by date at the end after adding everything to queue and we
-still have no_walk set, or something like that.
+Aside from your "'checkout branch' is about checking out a branch"
+explanation, there are two reasons to favor branches over tags in
+"checkout" command:
+
+ (1) You cannot disambiguate "git checkout heads/master" when you have
+     "master" tag, as this notation is used to tell the command "I want to
+     detach HEAD at that commit"; and
+
+ (2) The command already treats an unadorned branch name specially by not
+     complaining ref/path ambiguity when you said "git checkout master"
+     and you have a file called "master" in your working tree, so users
+     already expect that an unadorned branch name is special to it.
