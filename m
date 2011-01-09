@@ -1,72 +1,92 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: PostScript files: textconv and "git add -p"
-Date: Sun, 09 Jan 2011 19:55:43 +0100
-Message-ID: <vpqr5clsy8g.fsf@bauges.imag.fr>
-References: <vpqy670brcb.fsf@bauges.imag.fr>
-	<20110105051807.GB5884@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jan 09 19:56:01 2011
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] fast-import: Create import-marks file when necessary
+Date: Mon, 10 Jan 2011 01:03:57 +0530
+Message-ID: <1294601637-18416-1-git-send-email-artagnon@gmail.com>
+Cc: Jonathan Nieder <jrnieder@gmail.com>
+To: Git List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 09 20:33:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pc0Qq-0005Rq-9m
-	for gcvg-git-2@lo.gmane.org; Sun, 09 Jan 2011 19:56:00 +0100
+	id 1Pc11P-0007Tt-MM
+	for gcvg-git-2@lo.gmane.org; Sun, 09 Jan 2011 20:33:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752176Ab1AISzw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jan 2011 13:55:52 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:39655 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751990Ab1AISzw (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jan 2011 13:55:52 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p09Itg6V021887
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 9 Jan 2011 19:55:42 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Pc0QZ-0000KP-Si; Sun, 09 Jan 2011 19:55:43 +0100
-In-Reply-To: <20110105051807.GB5884@sigill.intra.peff.net> (Jeff King's message of "Wed\, 5 Jan 2011 00\:18\:07 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Sun, 09 Jan 2011 19:55:42 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p09Itg6V021887
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1295204144.60111@lgg1NCI4/wfNNs/7Sw9qBQ
+	id S1751964Ab1AITdm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jan 2011 14:33:42 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:40862 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751237Ab1AITdl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jan 2011 14:33:41 -0500
+Received: by iyj18 with SMTP id 18so314927iyj.19
+        for <git@vger.kernel.org>; Sun, 09 Jan 2011 11:33:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:from:to:cc:subject:date
+         :message-id:x-mailer;
+        bh=gS8DSsW9MX58deq1hIdPyHoM/ckd+ARF6nWpiaQ9Uyo=;
+        b=t39wQUpRoH/3oyf8CREAZLG/zOQ3ca+XsflQTnqAaE4IZy0vrpkhQMTzCfVOmD+pfJ
+         qo/6X0Klt7GTA+l6C6xWZsHuYbqrZrFKmJXS1PVCdejAvZwjt60yO5BHGjGavFUuBTSy
+         sn1Dug0VCknkS/8hlQD3jsnJ1DhT6ww+9Zclg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=VyTSo8t9Ub4nHfhDhmP/X0uwibQft6M5auuouVRTWAIbxtOBr/h0H1cGj46xnvUCuY
+         rzrIV/Ii0CcJoR9+w2YFufBYrbxrd8XfHDyFqOh6SxixR2r5pwnmC4JVpjun1QAruelh
+         g+O8USbQdT8QhbYDyIkQ9xyId6w24Xv/JvHew=
+Received: by 10.42.230.1 with SMTP id jk1mr3422205icb.67.1294601620949;
+        Sun, 09 Jan 2011 11:33:40 -0800 (PST)
+Received: from localhost.localdomain ([203.110.240.41])
+        by mx.google.com with ESMTPS id gy41sm25461143ibb.5.2011.01.09.11.33.37
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 09 Jan 2011 11:33:39 -0800 (PST)
+X-Mailer: git-send-email 1.7.4.rc1.8.g98938a.dirty
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164858>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164859>
 
-Jeff King <peff@peff.net> writes:
+When both --import-marks and --export-marks are given, and specify the
+same file, that file should be created if it doesn't exist. Without
+this patch, the caller would have to check for the existence of a
+marks file and vary its fast-import invocation accordingly.
 
-> you can get what you want with:
->
->   echo '*.ps diff=ps' >.gitattributes
->   git config diff.ps.textconv ps2ascii
->   git config diff.ps.binary true
+Requested-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ fast-import.c |   17 ++++++++++++++++-
+ 1 files changed, 16 insertions(+), 1 deletions(-)
 
-Yes, this works great. Thanks.
-
-Did I miss something, or is this undocumented? I can't find that in
-either man gitattributes or man git-config.
-
-> PS Your question made me very happy. I implemented "diff.*.binary" the
->    way I did out of a vague sense of orthogonality, but I never quite
->    came up with a concrete example where it was useful to set both.
->    Thanks for providing one. :)
-
-I vaguely remember such discussions, and may well have thought "hmm,
-yet another overkill stuff that nobody'll ever use" at that time ;-).
-
+diff --git a/fast-import.c b/fast-import.c
+index 5055504..cb7a9c9 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -3247,8 +3247,23 @@ static void parse_argv(void)
+ 		usage(fast_import_usage);
+ 
+ 	seen_data_command = 1;
+-	if (import_marks_file)
++	if (import_marks_file) {
++		FILE *f = fopen(import_marks_file, "r");
++		if (!f) {
++			if (errno == ENOENT &&
++				!strcmp(import_marks_file, export_marks_file)) {
++				FILE *d = fopen(import_marks_file, "w");
++				if (!d)
++					die_errno("cannot create '%s'", import_marks_file);
++				fclose(d);
++			}
++			else
++				die_errno("cannot read '%s'", import_marks_file);
++		}
++		else
++			fclose(f);
+ 		read_marks();
++	}
+ }
+ 
+ int main(int argc, const char **argv)
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+1.7.4.rc1.8.g98938a.dirty
