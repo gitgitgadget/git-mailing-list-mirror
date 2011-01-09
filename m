@@ -1,107 +1,76 @@
-From: Guy Rouillier <guyr@burntmail.com>
-Subject: Re: cvsimport still not working with cvsnt
-Date: Mon, 10 Jan 2011 02:33:17 -0500
-Message-ID: <4D2AB63D.7040803@burntmail.com>
-References: <4D0ED5EC.9020402@burntmail.com> <20101220213654.GA24628@burratino> <4D112586.2060904@Freescale.com> <4D119015.6020207@burntmail.com>
+From: James Cloos <cloos@jhcloos.com>
+Subject: Re: git fails on large repo clone on intermittent, or intermittently-high-latency, connections
+Date: Sun, 09 Jan 2011 15:04:55 -0500
+Message-ID: <m38vyt7shs.fsf@jhcloos.com>
+References: <AANLkTinkhmHpAQjraviKjqFAczThR5GtT_qdyf6Sb3nm@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Pascal Obry <pascal@obry.net>,
-	Clemens Buchacher <drizzd@aon.at>,
-	Martin Langhoff <martin@laptop.org>
-To: Emil Medve <Emilian.Medve@Freescale.com>
-X-From: git-owner@vger.kernel.org Mon Jan 10 08:34:07 2011
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Zenaan Harkness <zen@freedbms.net>
+X-From: git-owner@vger.kernel.org Mon Jan 10 08:37:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcCGR-00089Y-Qs
-	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 08:34:04 +0100
+	id 1PcCJx-00019J-31
+	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 08:37:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751459Ab1AJHd6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jan 2011 02:33:58 -0500
-Received: from mx02.burntmail.com ([70.87.63.122]:52842 "EHLO
-	mx02.burntmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751009Ab1AJHd5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jan 2011 02:33:57 -0500
-Received: from [173.79.59.45] (helo=[192.168.1.60])
-	by mx02.burntmail.com with esmtpa (Exim 4.63)
-	(envelope-from <guyr@burntmail.com>)
-	id 1PcCFl-0008TO-3q; Mon, 10 Jan 2011 01:33:21 -0600
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <4D119015.6020207@burntmail.com>
+	id S1750852Ab1AJHhg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jan 2011 02:37:36 -0500
+Received: from eagle.jhcloos.com ([207.210.242.212]:33673 "EHLO
+	eagle.jhcloos.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751459Ab1AJHhf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jan 2011 02:37:35 -0500
+X-Greylist: delayed 621 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Jan 2011 02:37:35 EST
+Received: by eagle.jhcloos.com (Postfix, from userid 10)
+	id 0F42940142; Mon, 10 Jan 2011 07:26:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jhcloos.com;
+	s=eagle; t=1294644434;
+	bh=Tvixhs47tIW8NJKzvYdmZleU6sZTzf3gHYYA1oyoNHQ=;
+	h=From:To:Cc:Subject:In-Reply-To:References:Date:Message-ID:
+	 MIME-Version:Content-Type;
+	b=AFqe6UrnDtw5KYLve0z+zO0SCrBU/IjrQUUI8xQUU4Q81nm9bw/1P/ZdVRxwGn81a
+	 KlfX/N/9JkV9eFcJu/ifMUrQ+XsqZlXBvYNk+tlTgLZTCjw+5cjRzyqk7X0MYquiZF
+	 J3pxLt3wXJHqUPcCMtSlK6vck3z+O00Qhz2PaeMc=
+Received: from carbon (localhost [127.0.0.1])
+	by carbon.jhcloos.org (Postfix) with ESMTP id BC5C6360011;
+	Sun,  9 Jan 2011 20:04:55 +0000 (UTC)
+In-Reply-To: <AANLkTinkhmHpAQjraviKjqFAczThR5GtT_qdyf6Sb3nm@mail.gmail.com>
+	(Zenaan Harkness's message of "Thu, 6 Jan 2011 01:28:40 +1100")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/24.0.50 (gnu/linux)
+Face: iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAI1J
+ REFUOE+lU9ESgCAIg64P1y+ngUdxhl5H8wFbbM0OmUiEhKkCYaZThXCo6KE5sCbA1DDX3genvO4d
+ eBQgEMaM5qy6uWk4SfBYfdu9jvBN9nSVDOKRtwb+I3epboOsOX5pZbJNsBJFvmQQ05YMfieIBnYX
+ FK2N6dOawd97r/e8RjkTLzmMsiVgrAoEugtviCM3v2WzjgAAAABJRU5ErkJggg==
+Copyright: Copyright 2009 James Cloos
+OpenPGP: ED7DAEA6; url=http://jhcloos.com/public_key/0xED7DAEA6.asc
+OpenPGP-Fingerprint: E9E9 F828 61A4 6EA9 0F2B  63E7 997A 9F17 ED7D AEA6
+X-Hashcash: 1:30:110110:zen@freedbms.net::ofk83gjciCLJu33+:9deGU
+X-Hashcash: 1:30:110110:git@vger.kernel.org::UweM1ycu6zzlppqs:00000000000000000000000000000000000000000EYoxQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164867>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164868>
 
-On 12/22/2010 12:43 AM, Guy Rouillier wrote:
->
-> Emil and Jonathan, thanks for the feedback. Perl is not my strong point,
-> but I'll take a crack at it over the upcoming holidays. I'm inclined not
-> to get too fancy and try to second-guess the user's environment. Perhaps
-> he has both cvs and cvsnt installed for some reason (testing one, using
-> the other for regular work); perhaps a tool installed one or the other
-> and he doesn't even know he has them both. Etc.
->
-> So, at most I can see, as Emil suggested, seeing if the entry exists in
-> both files and is the same in both. If so, or if the entry is only in
-> one of them, then just use the entry. However, if the entry is in both
-> files and is different, I'd prefer to just exit with an error and have
-> the user clarify his environment.
+In addition to the other replies, if you have a shell login elswhere you
+can clone there, bundle the file, and use rsync, http, ftp or the like
+to copy it down.
 
-Here is my patch for accomplishing the above.  As this is my first time
-submitting a patch, please let me know the correct procedure if
-submitting a diff here is not appropriate.  Thanks.
+If the remote site's git is too old to have git bundle, use a bare clone
+and tar it.  You will not need to compress the tar.
 
---- git-cvsimport.org	2011-01-09 03:52:39.000000000 -0500
-+++ git-cvsimport.cvsnt	2011-01-10 01:42:29.000000000 -0500
-@@ -260,6 +260,8 @@
-  		if ($pass) {
-  			$pass = $self->_scramble($pass);
-  		} else {
-+			# First try the original CVS location.
-+
-  			open(H,$ENV{'HOME'}."/.cvspass") and do {
-  				# :pserver:cvs@mea.tmt.tele.fi:/cvsroot/zmailer Ah<Z
-  				while (<H>) {
-@@ -272,7 +274,30 @@
-  					}
-  				}
-  			};
--			$pass = "A" unless $pass;
-+
-+			# Now try the CVSNT location.
-+
-+			open(H,$ENV{'HOME'}."/.cvs/cvspass") and do {
-+				# :pserver:cvs@mea.tmt.tele.fi:/cvsroot/zmailer Ah<Z
-+				while (<H>) {
-+					chomp;
-+					s/^\/\d+\s+//;
-+					my ($w,$p) = split(/=/,$_,2);
-+					if ($w eq $rr or $w eq $rr2) {
-+						my $cvsntpass = $p;
-+
-+						if (!$pass) {
-+							$pass = $cvsntpass;
-+						} elsif ($pass ne $cvsntpass) {
-+							die("CVSROOT found in both CVS and CVSNT cvspass files, passwords do not match\n");
-+						}
-+						last;
-+					}
-+				}
-+			};
-+
-+
-+			die("Password not found for CVSROOT: $opt_d\n") unless $pass;
-  		}
+You can also use split(1) to break up the bundle or tar into smaller
+chunks if that helps.  cat(1) will happily recombine those chunks.
 
-  		my ($s, $rep);
+If git bundle was not available, you can use the copied bare repo as
+a --reference for a new clone, then copy the bare's pack file into
+that new clone and remove the new clone's objects/info/alternates file.
 
+I've had to use that method to get a clean clone across a small straw
+(dialup or wireless) for several large repositories over the years.
 
-
+-JimC
 -- 
-Guy Rouillier
+James Cloos <cloos@jhcloos.com>         OpenPGP: 1024D/ED7DAEA6
