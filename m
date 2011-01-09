@@ -1,139 +1,86 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: bug? in checkout with ambiguous refnames
-Date: Sat, 8 Jan 2011 21:43:57 -0500 (EST)
-Message-ID: <alpine.DEB.1.10.1101081902150.12031@debian>
-References: <20110107104650.GA5399@pengutronix.de> <20110107194909.GB6175@sigill.intra.peff.net> <alpine.DEB.1.10.1101081449220.12031@debian> <20110108214011.GA4753@sigill.intra.peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Resumable clone/Gittorrent (again)
+Date: Sun, 9 Jan 2011 10:34:27 +0700
+Message-ID: <AANLkTi=KPVMEviQhyJeWHynPa2q6NJpQ2VyAhbRcmQ1D@mail.gmail.com>
+References: <AANLkTinUV9Z_w85Gz13J+bm8xqnxJ9jBJXJm9bn5Y2ec@mail.gmail.com>
+ <alpine.LFD.2.00.1101061956470.22191@xanadu.home> <AANLkTikKn1+2OX1KPy+9US_yX=E6+CiaCTTB6yqnAWwW@mail.gmail.com>
+ <AANLkTimgn2_BWYjbGKbGoeGJ=erKundX4umfy=s16dB1@mail.gmail.com> <AANLkTim2A4=y=XcuPuPiYGDGZyKAUEk-yv2cZVEGhQ3C@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	=?ISO-8859-15?Q?Uwe_Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jan 09 03:44:08 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nicolas Pitre <nico@fluxnic.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 09 04:35:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PblGK-0006if-Et
-	for gcvg-git-2@lo.gmane.org; Sun, 09 Jan 2011 03:44:08 +0100
+	id 1Pbm3r-0004ya-2S
+	for gcvg-git-2@lo.gmane.org; Sun, 09 Jan 2011 04:35:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751358Ab1AICoB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 8 Jan 2011 21:44:01 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:61927 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751297Ab1AICoA (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 8 Jan 2011 21:44:00 -0500
-Received: by qwa26 with SMTP id 26so18854168qwa.19
-        for <git@vger.kernel.org>; Sat, 08 Jan 2011 18:44:00 -0800 (PST)
+	id S1751497Ab1AIDe7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 8 Jan 2011 22:34:59 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:33476 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751114Ab1AIDe7 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 8 Jan 2011 22:34:59 -0500
+Received: by wwa36 with SMTP id 36so19731859wwa.1
+        for <git@vger.kernel.org>; Sat, 08 Jan 2011 19:34:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:x-x-sender:to:cc
-         :subject:in-reply-to:message-id:references:user-agent:mime-version
-         :content-type;
-        bh=u1Lll2TQTXJhWOIbVVkmaip9wenHDKoVHbQBxB5B0p8=;
-        b=OUBBvxNEUE9qTLECbeZjgaTmkb5Sb8InSVq5eim5Brck6b2Q6/rg2FVcQd9tiHr21m
-         rEJyPIGpKQduxyAGLplleDDXg3HNfo4OAjYdEbCGTGGJIFPgIy2xbI98gLUKp4+NSlpB
-         2UOY1uSYnBufuDV5bFfWxRDqQKdnm0P0mRgq0=
+        h=domainkey-signature:received:mime-version:received:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=SjOhWbDfEIDiRNEfGn8SHHB7J2vn/8U6aCAFbZqubfk=;
+        b=selHOVWVaAMmuAgXofuHmlnpV2rqg15ATEOCtHdB0toCYJEfDeJ+ggzYM/mleWpzHX
+         1lYi77oyd9UEC9X8fbsC9RfyrRViwtRyCoXyPTJzxWX+tHPFC9nw/Oedco0v+BNsgu37
+         xoOGe7qKSkdf2MKj2YimGodtHB9Lfr4uD3Qdg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=gNAycIitnrtYX5MMFRr4Gd8FXxBUKd5nVDLsTLKukGoG5UiyZSBCdzxA/RvhAqhPJ6
-         kbz/sxuN0876WaehFAuAYBhnH8G0TGIGFTWiK59Kc/Yz0Qkr26gkwSPdKM690tX7xWpj
-         rjI3nfE7QGpzgFs1+ILCP1n7GUrGsMZL409c4=
-Received: by 10.224.11.71 with SMTP id s7mr26314800qas.13.1294541039929;
-        Sat, 08 Jan 2011 18:43:59 -0800 (PST)
-Received: from [192.168.1.101] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id p13sm16363411qcu.41.2011.01.08.18.43.58
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 08 Jan 2011 18:43:59 -0800 (PST)
-X-X-Sender: martin@debian
-In-Reply-To: <20110108214011.GA4753@sigill.intra.peff.net>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=b1LflKsS9h20+SBaTdstLfBnAO24vkOcLXjVwx6TNnjlcnKFpzcDDsCwR8ufhEj+vz
+         cfLHfaqa+FnBKCPEwhX90hf6PeSfk6pkB+hlIaXYq6O9oN0/+HJ9bq1wy1DH1SOGd67T
+         QWvFuxMggH0jCZIdUWtgB68ZWQaKos86M7UdY=
+Received: by 10.216.52.206 with SMTP id e56mr26241102wec.19.1294544097926;
+ Sat, 08 Jan 2011 19:34:57 -0800 (PST)
+Received: by 10.216.63.14 with HTTP; Sat, 8 Jan 2011 19:34:27 -0800 (PST)
+In-Reply-To: <AANLkTim2A4=y=XcuPuPiYGDGZyKAUEk-yv2cZVEGhQ3C@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164842>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164843>
 
-On Sat, 8 Jan 2011, Jeff King wrote:
+On Sun, Jan 9, 2011 at 12:21 AM, Luke Kenneth Casson Leighton
+<luke.leighton@gmail.com> wrote:
+> =C2=A0ok - you haven't answered the question: are the chains perfectl=
+y
+> fixed identical sizes?
 
-> On Sat, Jan 08, 2011 at 03:40:33PM -0500, Martin von Zweigbergk wrote:
-> 
-> > > Yeah, we generally resolve ambiguities in favor of the tag (and that
-> > > warning comes from deep within get_sha1_basic). So the real bug here is
-> > > that it still said "Switched to branch", which is totally wrong.
-> > > 
-> > > That being said, it probably would make more sense for "git checkout" to
-> > > prefer branches to tags.
-> > 
-> > What was the rationale for generally favoring tags?
-> 
-> I don't recall hearing any specific argument, but it has always been
-> that way from early on. I think it is from a vague sense of "tags are
-> more important than branch tips because they are about marking specific
-> points, not lines of development". But maybe other old-timers can say
-> more.
-> 
-> I don't necessarily buy that argument; my only reasoning is that we
-> should probably keep historic behavior.
-> 
-> > Why does that reasoning not apply to 'git checkout' too?
-> 
-> Because checkout has always been fundamentally about branches. It did
-> end up growing sane behavior for "git checkout tag" (i.e., a detached
-> HEAD), but branches are still the fundamental unit for most of its
-> arguments.
+No.
 
-I had a look at the history of the lines Junio mentioned in another
-message on this thread (lookup_commit_reference_gently() and
-setup_branch_path()). I don't understand the code, but just looking at
-where the lines came from, they seem to have been there ever since
-782c2d6 (Build in checkout, 2008-02-07). If that is correct (but
-please check for yourselves), it seems like the broken checkout of
-ambiguous references causes problems rarely enough that no one has
-bothered to report it for almost two years. If it has been broken for
-that long, it seems to me like we could resolve it whichever way makes
-most sense, without much concern to how it used to work, no?
+> =C2=A0if so they can be slotted into the bittorrent protocol by simpl=
+y
+> pre-selecting the size to match. =C2=A0with the downside that if ther=
+e are
+> a million such "chains" you now pretty much overwhelm the peers with
+> the amount of processing, network traffic and memory requirements to
+> maintain the "pieces" map.
 
-> > Btw, what exactly does "generally" mean, i.e. which other commands
-> > don't favor tags? I know rebase is one example of a command that does
-> > not favor tags.
-> 
-> It means "we favor tags in resolve_ref, which is the underlying
-> machinery for most commands, so unless a command special-cases it, that
-> will be the behavior, and I am too lazy to exhaustively search for such
-> special cases".
+No, there are thousands of them only (less than 100k for repos I
+examined). It's precisely the reason I stay away from commits as
+pieces because commits can potentially go up to millions.
 
-Sensible definition :-). I was just hoping for an example where it
-more obviously makes sense to favor branches. Maybe rebase is actually
-one of the better examples.
+> =C2=A0if not then you now need to modify the bittorrent protocol to c=
+ope
+> with variable-length block sizes: the protocol only allows for the
+> last block to be of variable-length.
 
-> > The reason I'm asking is because I just happened to see in the rebase
-> > code the other day that it will rebase a detached head if the <branch>
-> > parameter is not "completely unqualified". For example 'git rebase
-> > master heads/topic' or 'git rebase master refs/heads/topic' will not
-> > update refs/heads/topic. I was trying to fix that by using 'git
-> > rev-parse --symbolic-full-name' to parse <branch>. That seemed to work
-> > fine until I saw this thread :-).
-> 
-> Heh. I think that would be an argument in favor of changing rev-parse's
-> behavior.
-
-I was hoping to do something like
-
-head_name=$(git rev-parse --symbolic-full-name -q --verify "$1")
-case "$head_name" in
-refs/heads/*) ;;
-*) head_name="detached HEAD" ;;
-esac
-
-plus setting another variable or two in each case. So even if 'git
-rev-parse --symbolic-full-name' would return refs/tags/$name, it
-wouldn't actually help here, since rebase currently favors
-branches. In order to keep that behavior, I will need to add an extra
-check before the above code.
-
-It still feels like rev-parse should return refs/tags/$name, though.
+Ah I see. I do not reuse bittorrent code out there. Just its ideas,
+adapted to git model. If you don't want to modify bittorrent protocol
+at all, seed a bundle (as mentioned in another thread).
+--=20
+Duy
