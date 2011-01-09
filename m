@@ -1,107 +1,87 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: bug? in checkout with ambiguous refnames
-Date: Sun, 9 Jan 2011 11:18:09 -0500 (EST)
-Message-ID: <alpine.DEB.1.10.1101090847120.12031@debian>
-References: <20110107104650.GA5399@pengutronix.de> <20110107194909.GB6175@sigill.intra.peff.net> <alpine.DEB.1.10.1101081449220.12031@debian> <20110108214011.GA4753@sigill.intra.peff.net> <7v1v4m8reh.fsf@alter.siamese.dyndns.org>
+From: Tay Ray Chuan <rctay89@gmail.com>
+Subject: Re: manual http authorization (no netrc)
+Date: Mon, 10 Jan 2011 00:35:16 +0800
+Message-ID: <AANLkTik2QjOOoOcx0E7NeYEbs3YnLFPbG3x5J2RUFmRU@mail.gmail.com>
+References: <auto-000024252997@sci.utah.edu>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jeff King <peff@peff.net>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	=?ISO-8859-15?Q?Uwe_Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 09 17:18:20 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: tfogal@sci.utah.edu
+X-From: git-owner@vger.kernel.org Sun Jan 09 17:35:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbxyG-0005mr-15
-	for gcvg-git-2@lo.gmane.org; Sun, 09 Jan 2011 17:18:20 +0100
+	id 1PbyEo-000507-2S
+	for gcvg-git-2@lo.gmane.org; Sun, 09 Jan 2011 17:35:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751998Ab1AIQSO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 9 Jan 2011 11:18:14 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:39892 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751961Ab1AIQSN (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 9 Jan 2011 11:18:13 -0500
-Received: by vws16 with SMTP id 16so7860749vws.19
-        for <git@vger.kernel.org>; Sun, 09 Jan 2011 08:18:13 -0800 (PST)
+	id S1752185Ab1AIQfU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jan 2011 11:35:20 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:35533 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751814Ab1AIQfT convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 9 Jan 2011 11:35:19 -0500
+Received: by fxm20 with SMTP id 20so18195135fxm.19
+        for <git@vger.kernel.org>; Sun, 09 Jan 2011 08:35:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:x-x-sender:to:cc
-         :subject:in-reply-to:message-id:references:user-agent:mime-version
-         :content-type;
-        bh=x+udCdmxqgEG2H9gI1mwTewIOrqDT8btz36ybmH9JK0=;
-        b=WH1R3JU49ok1UR5KmnfDg/XyBrCXFN645ZYPSNmI0oTi80TX6KLvQStk+4jE3rQt5V
-         AizaH8DCqLTqcwwFvXI99Mi7rQlmOPVfLJKOUglCRyyRBkYdyWE0zLWbQFzj9c8RseLF
-         98kDh+DV+HjcHI6j+npAT3bgu8vJ3j7KfSrhc=
+        h=domainkey-signature:mime-version:received:received:in-reply-to
+         :references:date:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=1Lc5tnKSZuy8QfKdp7JIvoqmPQ2Jp/x3rQ+tWppzMfc=;
+        b=eIpSI5FxVTV0m0jouBVC9e12BEAQF4xboGkELTA0wcWxefF5N3beTmrYCPZbfPVWjh
+         1KynJY/cH9yFMCPzWnmDXQGnr8uJ2mkB4+aQ5V2S0dKG/pgh04hvoHyssWDTvGIX1gnI
+         1DyLsc/VG2irV7CGDvWfL4arkVxotDOuN3BS0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=tvAyijzU1EVdtqfJ2l8/e7F7/2tkYby3JDN75fKvD9Pxw0lpJN6EAXnIxRxzjb2g+d
-         9kNny9v1idB/gmZ/I3qcVlhPrtzbqiE+/NP+PsEyyNxwM4xRwuaKiLjrpA7WRrSfYG4R
-         jEUdzhusvwA0qgcUxxBTyKp+mGwWECiQL0zJQ=
-Received: by 10.220.193.11 with SMTP id ds11mr8474094vcb.209.1294589892922;
-        Sun, 09 Jan 2011 08:18:12 -0800 (PST)
-Received: from [192.168.1.101] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id d14sm6124304vcx.23.2011.01.09.08.18.10
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 09 Jan 2011 08:18:11 -0800 (PST)
-X-X-Sender: martin@debian
-In-Reply-To: <7v1v4m8reh.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=vHY3HF95JlpLPo6LJihgVLpJtPLBhjbf4LxJDvC/qKWWfX7h6ljdfntHxaAXxGBWun
+         Z9MmkRG/avJiVgvE8Uy5L3Mdi6uJITW2YkDKlpTocx1ycwDocPNovzQcx2cwVpkB6ziX
+         vXyF5tpaVOP/xFDo1/1jhXmaQ5BeF47SGUSbo=
+Received: by 10.223.113.131 with SMTP id a3mr10448875faq.135.1294590916785;
+ Sun, 09 Jan 2011 08:35:16 -0800 (PST)
+Received: by 10.223.115.82 with HTTP; Sun, 9 Jan 2011 08:35:16 -0800 (PST)
+In-Reply-To: <auto-000024252997@sci.utah.edu>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164851>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164852>
 
-On Sat, 8 Jan 2011, Junio C Hamano wrote:
+On Fri, Jan 7, 2011 at 1:20 AM, tom fogal <tfogal@sci.utah.edu> wrote:
+> I'm getting authorization errors when I lack a .netrc for an http-bas=
+ed
+> server. =A0Specifically:
+>
+> =A0tf@shigeru tmp $ git clone http://myhost:port/git/io.git
+> =A0Cloning into io...
+> =A0Username:
+> =A0Password:
+> =A0error: The requested URL returned error: 401 (curl_result =3D 22, =
+http_code =3D
+> =A0401, sha1 =3D 9c201da4d64e2fd178935b9ebbd6e110a97578d4)
+> =A0error: Unable to find 9c201da4d64e2fd178935b9ebbd6e110a97578d4 und=
+er
+> =A0http://shigeru.sci.utah.edu:1234/git/io.git
+> =A0Cannot obtain needed blob 9c201da4d64e2fd178935b9ebbd6e110a97578d4
+> =A0while processing commit b1853d6f6a54cf22e259a75f77770eef53b8cb38.
+> =A0error: Fetch failed.
+>
+> I did try multiple times; the username/password combo is correct :)
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > On Sat, Jan 08, 2011 at 03:40:33PM -0500, Martin von Zweigbergk wrote:
-> >
-> >> > Yeah, we generally resolve ambiguities in favor of the tag (and that
-> >> > warning comes from deep within get_sha1_basic). So the real bug here is
-> >> > that it still said "Switched to branch", which is totally wrong.
-> >> > 
-> >> > That being said, it probably would make more sense for "git checkout" to
-> >> > prefer branches to tags.
-> >> 
-> >> What was the rationale for generally favoring tags?
-> >
-> > I don't recall hearing any specific argument, but it has always been
-> > that way from early on. I think it is from a vague sense of "tags are
-> > more important than branch tips because they are about marking specific
-> > points, not lines of development". But maybe other old-timers can say
-> > more.
-> >
-> Aside from your "'checkout branch' is about checking out a branch"
-> explanation, there are two reasons to favor branches over tags in
-> "checkout" command:
-> 
->  (1) You cannot disambiguate "git checkout heads/master" when you have
->      "master" tag, as this notation is used to tell the command "I want to
->      detach HEAD at that commit"; and
+hmm, can you try passing username and password in this manner
 
-Interesting. I had no idea that 'git checkout heads/master' means to
-detach the HEAD. Thanks.
+  http://<user>:<pwd>@server:port/
 
-By analogy, I guess that means that 'git rebase master heads/topic' is
-supposed to rebase a detached HEAD, so I will stop trying to "fix"
-that then :-)
+?
 
->  (2) The command already treats an unadorned branch name specially by not
->      complaining ref/path ambiguity when you said "git checkout master"
->      and you have a file called "master" in your working tree, so users
->      already expect that an unadorned branch name is special to it.
+Also, does your username/password contain special, non-alphanumeric
+characters? I remember there was a change to how we handled those some
+time ago.
 
-If I understand correctly, that actually applies to tags as well.
-Checking out a tag called e.g. Makefile doesn't give any warnings or
-errors.
-
-
-/Martin
+--=20
+Cheers,
+Ray Chuan
