@@ -1,87 +1,102 @@
-From: Tay Ray Chuan <rctay89@gmail.com>
-Subject: Re: manual http authorization (no netrc)
-Date: Mon, 10 Jan 2011 00:35:16 +0800
-Message-ID: <AANLkTik2QjOOoOcx0E7NeYEbs3YnLFPbG3x5J2RUFmRU@mail.gmail.com>
-References: <auto-000024252997@sci.utah.edu>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: tfogal@sci.utah.edu
-X-From: git-owner@vger.kernel.org Sun Jan 09 17:35:27 2011
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: [PATCH/RFC] completion: support git blame
+Date: Sun,  9 Jan 2011 11:38:39 -0500
+Message-ID: <1294591119-19701-1-git-send-email-martin.von.zweigbergk@gmail.com>
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 09 17:39:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PbyEo-000507-2S
-	for gcvg-git-2@lo.gmane.org; Sun, 09 Jan 2011 17:35:26 +0100
+	id 1PbyIN-0006ck-3l
+	for gcvg-git-2@lo.gmane.org; Sun, 09 Jan 2011 17:39:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752185Ab1AIQfU convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 9 Jan 2011 11:35:20 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:35533 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751814Ab1AIQfT convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 9 Jan 2011 11:35:19 -0500
-Received: by fxm20 with SMTP id 20so18195135fxm.19
-        for <git@vger.kernel.org>; Sun, 09 Jan 2011 08:35:18 -0800 (PST)
+	id S1752230Ab1AIQjB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 9 Jan 2011 11:39:01 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:46251 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751814Ab1AIQjA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 9 Jan 2011 11:39:00 -0500
+Received: by qyj19 with SMTP id 19so897183qyj.19
+        for <git@vger.kernel.org>; Sun, 09 Jan 2011 08:38:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:received:received:in-reply-to
-         :references:date:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=1Lc5tnKSZuy8QfKdp7JIvoqmPQ2Jp/x3rQ+tWppzMfc=;
-        b=eIpSI5FxVTV0m0jouBVC9e12BEAQF4xboGkELTA0wcWxefF5N3beTmrYCPZbfPVWjh
-         1KynJY/cH9yFMCPzWnmDXQGnr8uJ2mkB4+aQ5V2S0dKG/pgh04hvoHyssWDTvGIX1gnI
-         1DyLsc/VG2irV7CGDvWfL4arkVxotDOuN3BS0=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=yglmDhTO7pBZIZFOq9zrzrIkwIF0/Abt1HkOYqVYbBc=;
+        b=K8pJVUC46OxMBq0WG8Y+8as5z86iYoFzcI+rwl6LDMkxpadPEpGujEWnPgisKNgXuH
+         oMgipO/hX+oZLZzgqTfMt+Oc8MihDjXZMv49gP8BKJxhmw68OvTBNRSQUmJ6mm/QOHw9
+         jhFjXEo9BJHayJq7FryYWwpJMF6JdKwza4FH4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=vHY3HF95JlpLPo6LJihgVLpJtPLBhjbf4LxJDvC/qKWWfX7h6ljdfntHxaAXxGBWun
-         Z9MmkRG/avJiVgvE8Uy5L3Mdi6uJITW2YkDKlpTocx1ycwDocPNovzQcx2cwVpkB6ziX
-         vXyF5tpaVOP/xFDo1/1jhXmaQ5BeF47SGUSbo=
-Received: by 10.223.113.131 with SMTP id a3mr10448875faq.135.1294590916785;
- Sun, 09 Jan 2011 08:35:16 -0800 (PST)
-Received: by 10.223.115.82 with HTTP; Sun, 9 Jan 2011 08:35:16 -0800 (PST)
-In-Reply-To: <auto-000024252997@sci.utah.edu>
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=Xv31raScrZJi4clNVlFR7K/yCfJqRpqPvgIfmJisedfRzY1B5BeY25LyZANZ/9rZDP
+         XveKKbaLWUYmrd6NH1Tc2oouJsaMCjnzuCuF3rDdSQeqdD46Arh9pEzVcszguZy6rtVE
+         gk7mF57uL9x8L6wizj0WP9Tb7zmFwHxF9R6sE=
+Received: by 10.229.251.137 with SMTP id ms9mr21679345qcb.188.1294591139723;
+        Sun, 09 Jan 2011 08:38:59 -0800 (PST)
+Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id t7sm15594830qcs.4.2011.01.09.08.38.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 09 Jan 2011 08:38:58 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2.864.gbbb96
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164853>
 
-On Fri, Jan 7, 2011 at 1:20 AM, tom fogal <tfogal@sci.utah.edu> wrote:
-> I'm getting authorization errors when I lack a .netrc for an http-bas=
-ed
-> server. =A0Specifically:
->
-> =A0tf@shigeru tmp $ git clone http://myhost:port/git/io.git
-> =A0Cloning into io...
-> =A0Username:
-> =A0Password:
-> =A0error: The requested URL returned error: 401 (curl_result =3D 22, =
-http_code =3D
-> =A0401, sha1 =3D 9c201da4d64e2fd178935b9ebbd6e110a97578d4)
-> =A0error: Unable to find 9c201da4d64e2fd178935b9ebbd6e110a97578d4 und=
-er
-> =A0http://shigeru.sci.utah.edu:1234/git/io.git
-> =A0Cannot obtain needed blob 9c201da4d64e2fd178935b9ebbd6e110a97578d4
-> =A0while processing commit b1853d6f6a54cf22e259a75f77770eef53b8cb38.
-> =A0error: Fetch failed.
->
-> I did try multiple times; the username/password combo is correct :)
+Add basic support for completion of refs with git blame.
 
-hmm, can you try passing username and password in this manner
+Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+---
 
-  http://<user>:<pwd>@server:port/
+Maybe leave --porcelain and --incremental out since they are intended
+for scripts?
 
-?
+blame is pretty uninteresting on untracked files. It would be nice if
+to only complete files that exist in the specified commit, just like
+'git show $rev:$file' does. I think this applies to some other
+commands as well, like 'git checkout $rev [--] $file'. Has this been
+discussed before? I didn't find anything when searching the
+archives. I can imagine it might have been rejected because of
+performance problems.
 
-Also, does your username/password contain special, non-alphanumeric
-characters? I remember there was a change to how we handled those some
-time ago.
 
---=20
-Cheers,
-Ray Chuan
+ contrib/completion/git-completion.bash |   20 ++++++++++++++++++++
+ 1 files changed, 20 insertions(+), 0 deletions(-)
+
+diff --git a/contrib/completion/git-completion.bash b/contrib/completion/git-completion.bash
+index 645549c..d9074ba 100755
+--- a/contrib/completion/git-completion.bash
++++ b/contrib/completion/git-completion.bash
+@@ -1128,6 +1128,26 @@ _git_bisect ()
+ 	esac
+ }
+ 
++_git_blame ()
++{
++	__git_has_doubledash && return
++
++	local cur
++	_get_comp_words_by_ref -n =: cur
++	case "$cur" in
++	--*)
++		__gitcomp "
++			--root --show-stats --reverse --encoding=
++			--contents --date --score-debug --show-name
++			--show-number --show-email
++			"
++		;;
++	*)
++		__gitcomp "$(__git_refs)"
++		;;
++	esac
++}
++
+ _git_branch ()
+ {
+ 	local i c=1 only_local_ref="n" has_r="n" cur words cword
+-- 
+1.7.3.2.864.gbbb96
