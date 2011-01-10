@@ -1,77 +1,74 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: git-archive and core.eol
-Date: Mon, 10 Jan 2011 14:00:51 +0100
-Message-ID: <AANLkTi=WyzVzPkhOAMC2A8Dd=Zj_P-7YMVP-GaUz0-Qm@mail.gmail.com>
-References: <AANLkTi=kfE88F7dY5F_xtbEuh9DyUcN+ymeXqLMWztGQ@mail.gmail.com>
- <4D28683B.4020400@lsrfire.ath.cx> <AANLkTi==eqwrwq-P6czDvOH5GDEi6WgvRUuZ2dMoiK7e@mail.gmail.com>
- <4D29AF80.5060008@lsrfire.ath.cx> <AANLkTinxVCQuTMeKHQ9mLbs=94fck90rwJwa1DhzGPmX@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: Resumable clone/Gittorrent (again) - stable packs?
+Date: Mon, 10 Jan 2011 08:50:44 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1101100846220.6883@xanadu.home>
+References: <AANLkTikv+L5Da7A5VM7BAgnue=m0O_-nHmHchJzfGxJa@mail.gmail.com>
+ <alpine.LFD.2.00.1101061552580.22191@xanadu.home>
+ <AANLkTikgzqoG2cymNJ0NN03RsTRJi22R9M+0LFJ8U2yB@mail.gmail.com>
+ <alpine.LFD.2.00.1101062221480.22191@xanadu.home>
+ <AANLkTinVYWit95O9Y0r5BKJiMGJRAOvgPqZ0s8Eez7KJ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Git Mailing List <git@vger.kernel.org>,
-	msysGit <msysgit@googlegroups.com>, eyvind.bernhardsen@gmail.com
-To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Mon Jan 10 14:01:19 2011
+Content-Type: multipart/mixed; boundary="Boundary_(ID_CU4VxYkfOdcRnoaMVKSXgw)"
+Cc: Zenaan Harkness <zen@freedbms.net>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 10 14:50:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcHN8-0007me-KG
-	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 14:01:18 +0100
+	id 1PcI94-0003M5-8T
+	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 14:50:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753864Ab1AJNBN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jan 2011 08:01:13 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:61801 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753827Ab1AJNBN (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jan 2011 08:01:13 -0500
-Received: by fxm20 with SMTP id 20so18806147fxm.19
-        for <git@vger.kernel.org>; Mon, 10 Jan 2011 05:01:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:reply-to
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type;
-        bh=+/Dvjd11c4AhzEsggE3AIRQPXXnydRL+iQnB7LzF9H0=;
-        b=Vz0VcHEn3b64c3YpgaMPyfUXR4aMhCU1i6Xb3cumZboeYjWxRcm8oyuvFK3K0LOpuU
-         ZGrucJySqBTG4FfJxdXVA3zN5odZb7t5xg6peI5iNsEu58u6v2n7CdPHgLI/cRwfWVwn
-         oashx83Dz6EV8JymBpJwbrUNHrwD5/0UhVVrs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        b=uVMbNru1KLfyA4R1ZNSVY/NajWrTRMSHWww8CXbZZE9OTPMgQ3LyXEVJc6XGmrbmLW
-         Sp5jMPaKCS5p4VemigL2JOyyu+N9ayK0fpkfWYjFgOSOqklDKZqVCgjmzgv8jQ2vb/6q
-         B3e9mfU3awECAyzzFgAE30Zn46JAXUB/XgnE4=
-Received: by 10.223.79.7 with SMTP id n7mr5620564fak.71.1294664471686; Mon, 10
- Jan 2011 05:01:11 -0800 (PST)
-Received: by 10.223.79.3 with HTTP; Mon, 10 Jan 2011 05:00:51 -0800 (PST)
-In-Reply-To: <AANLkTinxVCQuTMeKHQ9mLbs=94fck90rwJwa1DhzGPmX@mail.gmail.com>
+	id S1751681Ab1AJNup (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jan 2011 08:50:45 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:19007 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751011Ab1AJNup (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jan 2011 08:50:45 -0500
+Received: from xanadu.home ([66.130.28.92]) by vl-mh-mrz21.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0LET00GTA7S00XC0@vl-mh-mrz21.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 10 Jan 2011 08:50:25 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <AANLkTinVYWit95O9Y0r5BKJiMGJRAOvgPqZ0s8Eez7KJ@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164875>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164876>
 
-On Mon, Jan 10, 2011 at 1:11 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
-> test. So now I've got to figure out what is different between your
-> test and mine. Perhaps I misdiagnosed to begin with?
->
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-No, it doesn't quite seem like I misdiagnosed, but your test had
-different expectations than I have after reading the documentation. I
-expected core.autocrlf=true + core.eol=lf to pretty much be identical
-to core.autocrlf=false, but only because LF->LF conversion is a NOP.
+--Boundary_(ID_CU4VxYkfOdcRnoaMVKSXgw)
+Content-type: TEXT/PLAIN; charset=UTF-8
+Content-transfer-encoding: 8BIT
 
-'core.autocrlf' is documented as meaning the same as setting the
-'text' attribute to 'auto' for all files, plus "files that contain
-CRLF in the repository will not be touched". I figured that last part
-shouldn't affect me as I only had LFs in the repository.
+On Mon, 10 Jan 2011, Nguyen Thai Ngoc Duy wrote:
 
-If I disable core.autocrlf, I get what I want (no matter what I set
-core.eol to, it seems). But I still don't understand WHY
-core.autocrlf=true + core.eol=lf outputs CRLF.
+> On Fri, Jan 7, 2011 at 11:33 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
+> > Here's what I suggest:
+> >
+> >        cd my_project
+> >        BUNDLENAME=my_project_$(date "+%s").gitbundle
+> >        git bundle create $BUNDLENAME --all
+> >        maketorrent-console your_favorite_tracker $BUNDLENAME
+> >
+> > Then start seeding that bundle, and upload $BUNDLENAME.torrent as
+> > bundle.torrent inside my_project.git on your server.
+> 
+> I was about to ask if we could put more "trailer" sha-1 checksums to
+> the bundle, so we can verify which part is corrupt without
+> redownloading the whole thing (this is over http/ftp.. not torrent).
 
-It seems to me that there's a big gap between what the documentation
-claims and what actually happens here.
+Aren't HTTP and FTP based on TCP which is meant to be a reliable 
+transport protocol already?  In this case, isn't the final SHA1 embedded 
+in the bundle/pack sufficient enough?  Normally, your HTTP/FTP client 
+should get you all data or partial data, but not wrong data.
+
+
+Nicolas
+
+--Boundary_(ID_CU4VxYkfOdcRnoaMVKSXgw)--
