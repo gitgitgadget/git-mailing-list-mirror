@@ -1,45 +1,41 @@
 From: Sam Vilain <sam@vilain.net>
-Subject: Re: Resumable clone/Gittorrent (again) - stable packs?
-Date: Tue, 11 Jan 2011 10:07:46 +1300
-Message-ID: <4D2B7522.9050400@vilain.net>
-References: <AANLkTikv+L5Da7A5VM7BAgnue=m0O_-nHmHchJzfGxJa@mail.gmail.com> <alpine.LFD.2.00.1101061552580.22191@xanadu.home> <AANLkTikgzqoG2cymNJ0NN03RsTRJi22R9M+0LFJ8U2yB@mail.gmail.com> <alpine.LFD.2.00.1101062221480.22191@xanadu.home> <20110107052207.GA23128@sigill.intra.peff.net> <20110107053119.GA23177@sigill.intra.peff.net> <20110107185218.GA16645@LK-Perkele-VI.localdomain>
+Subject: Re: Resumable clone/Gittorrent (again)
+Date: Tue, 11 Jan 2011 10:38:48 +1300
+Message-ID: <4D2B7C68.1010200@vilain.net>
+References: <AANLkTinUV9Z_w85Gz13J+bm8xqnxJ9jBJXJm9bn5Y2ec@mail.gmail.com>	<alpine.LFD.2.00.1101061956470.22191@xanadu.home>	<AANLkTikKn1+2OX1KPy+9US_yX=E6+CiaCTTB6yqnAWwW@mail.gmail.com>	<AANLkTimgn2_BWYjbGKbGoeGJ=erKundX4umfy=s16dB1@mail.gmail.com> <AANLkTim2A4=y=XcuPuPiYGDGZyKAUEk-yv2cZVEGhQ3C@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Nicolas Pitre <nico@fluxnic.net>,
-	Zenaan Harkness <zen@freedbms.net>, git@vger.kernel.org,
-	Shawn Pearce <sop@google.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Joshua Roys <roysjosh@gmail.com>,
-	Nick Edelen <sirnot@gmail.com>, Jonas Fonseca <fonseca@diku.dk>
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Mon Jan 10 22:36:18 2011
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 10 22:39:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcPPU-0006ss-25
-	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 22:36:16 +0100
+	id 1PcPSJ-00008s-14
+	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 22:39:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754945Ab1AJVgM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jan 2011 16:36:12 -0500
-Received: from mx7.orcon.net.nz ([219.88.242.57]:50870 "EHLO mx7.orcon.net.nz"
+	id S1754618Ab1AJVjG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jan 2011 16:39:06 -0500
+Received: from mx6.orcon.net.nz ([219.88.242.56]:35309 "EHLO mx6.orcon.net.nz"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754926Ab1AJVgJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jan 2011 16:36:09 -0500
-X-Greylist: delayed 1668 seconds by postgrey-1.27 at vger.kernel.org; Mon, 10 Jan 2011 16:36:09 EST
-Received: from Debian-exim by mx7.orcon.net.nz with local (Exim 4.69)
+	id S1754353Ab1AJVjF (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jan 2011 16:39:05 -0500
+Received: from Debian-exim by mx6.orcon.net.nz with local (Exim 4.69)
 	(envelope-from <sam@vilain.net>)
-	id 1PcOyR-0005rZ-F9
-	for git@vger.kernel.org; Tue, 11 Jan 2011 10:08:19 +1300
+	id 1PcPSB-0006pw-13
+	for git@vger.kernel.org; Tue, 11 Jan 2011 10:39:03 +1300
 Received: from [60.234.254.246] (helo=mail.utsl.gen.nz)
-	by mx7.orcon.net.nz with esmtp (Exim 4.69)
+	by mx6.orcon.net.nz with esmtp (Exim 4.69)
 	(envelope-from <sam@vilain.net>)
-	id 1PcOyR-0005rR-5c
-	for git@vger.kernel.org; Tue, 11 Jan 2011 10:08:19 +1300
+	id 1PcPSA-0006pk-OC
+	for git@vger.kernel.org; Tue, 11 Jan 2011 10:39:02 +1300
 Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id E09332E09B; Tue, 11 Jan 2011 10:08:18 +1300 (NZDT)
+	id 77D6C2E09B; Tue, 11 Jan 2011 10:39:02 +1300 (NZDT)
 X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on naos.lan
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
@@ -47,80 +43,54 @@ X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
 Received: from [192.168.1.83] (arcturus.lan [192.168.1.83])
 	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
 	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 2CA0C2E094;
-	Tue, 11 Jan 2011 10:07:47 +1300 (NZDT)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 9FD8B2E094;
+	Tue, 11 Jan 2011 10:38:49 +1300 (NZDT)
 User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
-In-Reply-To: <20110107185218.GA16645@LK-Perkele-VI.localdomain>
+In-Reply-To: <AANLkTim2A4=y=XcuPuPiYGDGZyKAUEk-yv2cZVEGhQ3C@mail.gmail.com>
 X-Enigmail-Version: 1.1.2
-X-DSPAM-Check: by mx7.orcon.net.nz on Tue, 11 Jan 2011 10:08:19 +1300
+X-DSPAM-Check: by mx6.orcon.net.nz on Tue, 11 Jan 2011 10:39:02 +1300
 X-DSPAM-Result: Innocent
-X-DSPAM-Processed: Tue Jan 11 10:08:19 2011
-X-DSPAM-Confidence: 0.6192
+X-DSPAM-Processed: Tue Jan 11 10:39:03 2011
+X-DSPAM-Confidence: 0.5736
 X-DSPAM-Probability: 0.0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164897>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164898>
 
-On 08/01/11 07:52, Ilari Liusvaara wrote:
-> Ability to contact multiple servers in sequence, each time advertising
-> everything obtained so far. Then treat the new repo as clone of the last
-> address.
+On 09/01/11 06:21, Luke Kenneth Casson Leighton wrote:
+> On Sat, Jan 8, 2011 at 2:17 AM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+>> there are a few characteristics of bittorrent pieces that i see:
+>> verifiable, resumable, uniquely identifiable across peers and
+>> reasonbly small in count.
+>>
+>> The fixed size helps peers uniquely identify any pieces by splitting
+>> the whole transfer equally and indexing them in 1-dimension.
+>  ok - you haven't answered the question: are the chains perfectly
+> fixed identical sizes?
 >
-> This would e.g. be very handy if you happen to have local mirror of say, Linux
-> kernel and want to fetch some related project without messing with alternates
-> or downloading everything again:
->
-> git clone --use-mirror=~/repositories/linux-2.6 git://foo.example/linux-foo
->
-> This would first fetch everything from local source and then update that
-> from remote, likely being vastly faster.
+>  if so they can be slotted into the bittorrent protocol by simply
+> pre-selecting the size to match.  with the downside that if there are
+> a million such "chains" you now pretty much overwhelm the peers with
+> the amount of processing, network traffic and memory requirements to
+> maintain the "pieces" map.
 
-Coming to this discussion a little late, I'll summarise the previous
-research.
+I'll respond also to this sub-point.  This can be done; but instead of
+doing it at the pack level, you take the list of objects between A and B
+(for a fetch from A to B), order them by some deterministic order
+(called the "commit reel" in the Gittorrent RFC) and then carve that
+list up into chunks based on the uncompressed object sizes.
 
-First, the idea of applying the straight BitTorrent protocol to the pack
-files was raised, but as Nicolas mentions, this is not useful because
-the pack files are not deterministic.  The protocol was revisited based
-around the part which is stable, object manifests.  The RFC is at
-http://utsl.gen.nz/gittorrent/rfc.html and the prototype code (an
-unsuccessful GSoC project) is at http://repo.or.cz/w/VCS-Git-Torrent.git
+The ordering defined in the RFC is such that it is possible to create
+"thin" packs for discrete ranges of commits using existing plumbing, so
+that the total transfer size is relatively similar to a complete clone. 
+In experiments the network overhead was found to be around 10-20% in
+this way.
 
-After some thought, I decided that the BitTorrent protocol itself is all
-cruft and that trying to cut it down to be useful was a waste of time. 
-So, this is where the idea of "automatic mirroring" came from.  With
-Automatic Mirroring, the two main functions of P2P operation - peer
-discovery and partial transfer - are broken into discrete features.
+However I must discourage looking for "inspiration" from the Bittorrent
+protocol; it reinvents many wheels unnecessarily, and contains much
+shonky advice in it.  See the revision history for the gittorrent RFC
+(github.com/samv/gittorrent) for the gory details.
 
-I wrote this patch series so far, for "client-side mirroring":
-
-http://thread.gmane.org/gmane.comp.version-control.git/133626/focus=133628
-
-The later levels are roughly discussed on this page:
-
-http://code.google.com/p/gittorrent/wiki/MirrorSync
-
-The "mirror sync" part is the complicated one, and as others have noted
-no truly successful prototype has yet been built.  Actually the Perl
-gittorrent implementation did manage to perform an incremental clone; it
-just didn't wrap it up nicely.  But I won't go into that too much. 
-There was also another GSoC program to look at caching the object list
-generation, the most expensive part of the process in the Perl
-implementation.  This was a generic mechanism for accelerating object
-graph traversal and showed promise, however unfortunately was never merged.
-
-The client-side mirroring patch, in its current form, already supports
-out-of-date mirrors.  It saves refs first into
-'refs/mirrors/hostname/...' and finally contacts the main server to
-check what objects it is still missing.  So, if there was a regular
-bittorrent+bundle transport available, it would be a useful way to
-support an incremental clone; the client would first clone the (static)
-bittorrent bundle, unpack it with its refs into the 'refs/mirrors/xxx/'
-namespace, making the subsequent 'git fetch' to get the most recent
-objects a much more efficient operation.
-
-Hope that helps!
-
-Cheers,
 Sam
