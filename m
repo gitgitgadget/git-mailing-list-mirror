@@ -1,94 +1,94 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] submodule: fix relative url parsing for scp-style origin
-Date: Mon, 10 Jan 2011 11:22:27 -0600
-Message-ID: <20110110172227.GA7882@burratino>
-References: <7a578ef3384a891cebd4a39421302983499771e0.1294655635.git.trast@student.ethz.ch>
- <20110110164801.GA7714@burratino>
- <201101101805.13251.trast@student.ethz.ch>
+Subject: Re: [PATCH] Fix wrong failures in config test
+Date: Mon, 10 Jan 2011 11:29:31 -0600
+Message-ID: <20110110172931.GB7882@burratino>
+References: <20110110165251.GB7714@burratino>
+ <4d2b3ecd.7c62abb5.bm000@wupperonline.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Mark Levedahl <mlevedahl@gmail.com>,
-	Jeffrey Phillips Freeman <jeffrey.freeman@syncleus.com>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Jan 10 18:22:43 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>
+X-From: git-owner@vger.kernel.org Mon Jan 10 18:29:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcLS6-0000dS-QX
-	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 18:22:43 +0100
+	id 1PcLYy-00055i-AE
+	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 18:29:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754469Ab1AJRWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jan 2011 12:22:38 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:61859 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753814Ab1AJRWh (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jan 2011 12:22:37 -0500
-Received: by qwa26 with SMTP id 26so19998386qwa.19
-        for <git@vger.kernel.org>; Mon, 10 Jan 2011 09:22:37 -0800 (PST)
+	id S1754533Ab1AJR3k convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Jan 2011 12:29:40 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:59315 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754524Ab1AJR3j convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 10 Jan 2011 12:29:39 -0500
+Received: by vws16 with SMTP id 16so8189779vws.19
+        for <git@vger.kernel.org>; Mon, 10 Jan 2011 09:29:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=vCi7RI0wK9fOzmskOiG9qWzksJNJBHk+q2pyfHQQKnY=;
-        b=RzOcdIsCO0tX12SMwrzDYeFL1aymYMTSEJe755VutE9RYEjG3IaLeXI/HuiPXb3IFO
-         WEfhdOzql+fZLH5miw1Bm2v3/nKHMSGabgdc4/9T9bM6tF9SsW0Vuzy0lWibbeZxDb8C
-         6tL7ptUCVOAlzzR5WIeBHbgzq65N2+i1+3KDg=
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=eDhrn3Oe0UFI4xytwvhjPtHuzpnSFN84+sGklGr1mt8=;
+        b=Dg4mD+5rs3coyR7cW6jBAaBv7wNFcU9MnmIjLoWEQtdly/zG1QjFVs+vNdIlKIBKva
+         14Op5Wm1yl+qgx+fJYIoCRE9RQ5OlKOI6feNpmol3xCqZ4VumBvLy9exRcuBXp+Yh6et
+         BK/tnEyr6DjkNVUygjZU7I/Pe3waQniKW869I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=s9RLcPMJz5qlN3UyMzxH+HNfcnvDEOOeTkmKkRz/l9oJL/6VVIzjxi1ZK9SOIlo0Z0
-         2Cx0vbOdyYMIKT7TYkzUTCKuUmpeTWAonLWKmkjcf8UDubBYe0RxBvkZDCHg/zEQ6cGz
-         AI3o1DxQob655bpdF/SQCSeHBF9XWIth5sUGg=
-Received: by 10.224.54.85 with SMTP id p21mr26891367qag.147.1294680157349;
-        Mon, 10 Jan 2011 09:22:37 -0800 (PST)
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=BG35BvCxkLx+fC6WorOhJiS4mlkxJu9EyCtWt7uYZd8cdhvQQkCzy07o1PMubB4NwE
+         TL8HLC9/drqkIMoEc+wgF7i2WRLrhz2OXB03thC3PVYDkNGDuDKUXJ1doZ89lLTPw7dw
+         z10r0jhoVbDFB7+24JSJD7QPHdzFm7dghlZJo=
+Received: by 10.220.181.135 with SMTP id by7mr7785146vcb.258.1294680579001;
+        Mon, 10 Jan 2011 09:29:39 -0800 (PST)
 Received: from burratino (adsl-69-209-76-37.dsl.chcgil.sbcglobal.net [69.209.76.37])
-        by mx.google.com with ESMTPS id e29sm17587060qck.15.2011.01.10.09.22.34
+        by mx.google.com with ESMTPS id r20sm6377323vcf.34.2011.01.10.09.29.37
         (version=SSLv3 cipher=RC4-MD5);
-        Mon, 10 Jan 2011 09:22:35 -0800 (PST)
+        Mon, 10 Jan 2011 09:29:37 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <201101101805.13251.trast@student.ethz.ch>
+In-Reply-To: <4d2b3ecd.7c62abb5.bm000@wupperonline.de>
 User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164886>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164887>
 
-Thomas Rast wrote:
-> Jonathan Nieder wrote:
+Ingo Br=C3=BCckl wrote:
+> Jonathan Nieder wrote on Mon, 10 Jan 2011 10:52:51 -0600:
 
->> 	url = /local/path/with/a/colon:in:it
->> 	url = git://example.com/path/with/a/colon:in:it
+>> How does output from "sh t1300-repo-config.sh -v -i" end?
 >
-> These work fine because the first case arm is "do we still have a
-> slash?", and thus takes precedence over the colon splitting.
+>   expecting success: git config --rename-section branch.eins branch.z=
+wei
+>   fatal: No such section!
+>   not ok - 50 rename section
+>   #       git config --rename-section branch.eins branch.zwei
 
-Ah, nice (sorry I missed that).  So this can't create a regression
-and for what it's worth
+Thanks.
 
-Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
+> The problem is that the last 'git config' worked on other-config due =
+to
+> variable GIT_CONFIG.
 
->> 	url = simple.subdir.of.cwd
->
-> That's caught by the outer 'case':
+I'm still missing something.
 
-I meant if remoteurl is not fully qualified.  For what it's worth,
-the answer seems to be that
+	GIT_CONFIG=3Dother-config git config -l > output
+	echo $GIT_CONFIG
 
-	git clone repo newdir
+should result in no output to stdout, right?  In other words, the
+construct
 
-replaces "repo" with the absolute path "$(pwd)/repo" and manually
-using a relative path as in
+	envvar=3Dvalue git command
 
-	git remote add origin subdir
+is not supposed to pollute the current environment.
 
-creates a remote that is not usable, perhaps because different parts
-of the code treat it as relative to different directories (.git or the
-toplevel).
+It sounds like you've checked that "unset GIT_CONFIG" fixes it; what's
+left is to explain why GIT_CONFIG had a value in the first place.
 
-Sorry for the laziness --- I should have just checked.
+Confused,
+Jonathan
