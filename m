@@ -1,113 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: [PATCH] Fix wrong failures in config test
-Date: Mon, 10 Jan 2011 13:42:42 -0600
-Message-ID: <20110110194242.GA11801@burratino>
+Date: Mon, 10 Jan 2011 13:30:12 -0800
+Message-ID: <7v62tw5twb.fsf@alter.siamese.dyndns.org>
 References: <7vhbdg6286.fsf@alter.siamese.dyndns.org>
- <4d2b5c52.68e3cdc2.bm000@wupperonline.de>
+ <4d2b5c52.68e3cdc2.bm000@wupperonline.de> <20110110194242.GA11801@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>
-X-From: git-owner@vger.kernel.org Mon Jan 10 20:43:09 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 10 22:30:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcNe1-0004zM-2Q
-	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 20:43:09 +0100
+	id 1PcPJv-0001e7-Gx
+	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 22:30:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754364Ab1AJTnA convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Jan 2011 14:43:00 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:53174 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753856Ab1AJTm7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Jan 2011 14:42:59 -0500
-Received: by vws16 with SMTP id 16so8253923vws.19
-        for <git@vger.kernel.org>; Mon, 10 Jan 2011 11:42:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=8ZtXqYpbaDUnNGbe/WDuheUl8e4xD7HGaZOJfDsZhok=;
-        b=gj+9Cha8gQGOSKWONkEIogrQyeC3dHqo83nAzaXr3bI26zuVd0Bm4q0Bo8ritxTcrh
-         iUP/I0RiqOd4oOANTYDFqWGo64Sux+CsrNRnlg+YFUBiW+ri2uM2vsBp2pygQru1rJkF
-         o4JjVvbDHipUGDceh8+Aq/R+oRl0LEWts0ibE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=JI3bdbqNw0n4L1rnQFc/95Iwrmlh4hOiaKzkIO6tybSeSRPYQpxk+8U9q7+sW60f5N
-         8oH7EJV7Irvov74EDlgisMb+hdxTsmB6P8NW1kaeT2ph+41zKAhY4nuc3orYGkThYi80
-         v7gIo5rzEj2UuX0oij2gx7zyZm8UOlvqeptBI=
-Received: by 10.220.201.194 with SMTP id fb2mr8665337vcb.199.1294688577970;
-        Mon, 10 Jan 2011 11:42:57 -0800 (PST)
-Received: from burratino ([69.209.76.37])
-        by mx.google.com with ESMTPS id fl9sm11162475vbb.0.2011.01.10.11.42.54
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 10 Jan 2011 11:42:55 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4d2b5c52.68e3cdc2.bm000@wupperonline.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754873Ab1AJVaZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jan 2011 16:30:25 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55050 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753710Ab1AJVaY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jan 2011 16:30:24 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DF38F3C96;
+	Mon, 10 Jan 2011 16:31:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=5Y8Xy3WE/EwYDBwdcQNrCVk8PXs=; b=TFHLcY
+	wuc6OX8QJzznRSI1F1MKHpvystKyH8/Vw9jHWWOnYnwRKBxVlLe5+6deBQxUeRkU
+	tT7XqkkM74Zz0CtDsDzCL9wl88SngIj4YrJ4a86kEH36Ylkqe5ijhNsdbvNruHW7
+	RIaC0Y68nDOjcR2G1L9QbR/zzNDzfvalrJUfE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=N9k3QFVeAjDeoRN/EYkIVWfCDRS6hN5R
+	Vvd48KrqTC7HMGrPxXrLJnXCaPPN4L/y5CkmYlUYclhkhvCu046Q9Vs072ghXP4E
+	91baIGarp5cGwkGHj3o0thNudkd31oZihG81gIIGzG8BF581liQKX+5hVZ4aRyXc
+	ayzt3mts4Po=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A8FDC3C90;
+	Mon, 10 Jan 2011 16:30:59 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8D4043C8F; Mon, 10 Jan 2011
+ 16:30:55 -0500 (EST)
+In-Reply-To: <20110110194242.GA11801@burratino> (Jonathan Nieder's message of
+ "Mon\, 10 Jan 2011 13\:42\:42 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: EABC3C9A-1D00-11E0-B15A-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164895>
 
-Ingo Br=C3=BCckl wrote:
-> As Jonathan and Junio stated,
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
->>  envvar=3Dvalue git command
->
->>  GIT_CONFIG=3Dother-config git config anwohner.park ausweis
->
-> shouldn't affect the environment of the tests.
->
-> Unfortunately, I had a shell alias function named git that interfered=
-=2E In
-> fact it passes to the git program (command git "$@") but sadly does n=
-ot know
-> about the newly set PATH and (still inexplicably to me) makes the var=
-iable
-> set.
+>> Unfortunately, I had a shell alias function named git that interfered. In
+>> fact it passes to the git program (command git "$@") but sadly does not know
+>> about the newly set PATH and (still inexplicably to me) makes the variable
+>> set.
 
-=46or what it's worth, here's what POSIX[1] has to say:
+Yuck.  I really do not want to do something like this X-<.
 
-	When a given simple command is required to be executed [...] the
-	following expansions, assignments, and redirections shall all be
-	performed from the beginning of the command text to the end:
-[...]
-	If no command name results, variable assignments shall affect
-	the current execution environment. Otherwise, the variable
-	assignments shall be exported for the execution environment of
-	the command and shall not affect the current execution
-	environment (except for special built-ins).=20
+ t/test-lib.sh |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-I am guessing the expansion of your 'git' alias starts with a special
-builtin.  For the future, it is probably best to guard settings for
-interactive use with
-
-	if test "${PS1+set}"
-	then
-		CDPATH=3Dsomething
-		alias foo=3Dbar
-		alias baz=3Dqux
-		...
-	fi
-
-or even better,
-
-	case $- in
-	*i*)
-		CDPATH=3Dsomething
-		...
-	esac
-
-Thanks for explaining.
-Jonathan
-
-[1] http://unix.org/2008edition/
+diff --git a/t/test-lib.sh b/t/test-lib.sh
+index cb1ca97..df1b4f2 100644
+--- a/t/test-lib.sh
++++ b/t/test-lib.sh
+@@ -77,10 +77,10 @@ export GIT_COMMITTER_EMAIL GIT_COMMITTER_NAME
+ export EDITOR
+ 
+ # Protect ourselves from common misconfiguration to export
+-# CDPATH into the environment
++# CDPATH into the environment and such
+ unset CDPATH
+-
+ unset GREP_OPTIONS
++unalias git >/dev/null 2>&1 || :
+ 
+ case $(echo $GIT_TRACE |tr "[A-Z]" "[a-z]") in
+ 	1|2|true)
