@@ -1,94 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Fix wrong failures in config test
-Date: Mon, 10 Jan 2011 11:29:31 -0600
-Message-ID: <20110110172931.GB7882@burratino>
-References: <20110110165251.GB7714@burratino>
- <4d2b3ecd.7c62abb5.bm000@wupperonline.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] docs: explain diff.*.binary option
+Date: Mon, 10 Jan 2011 09:59:07 -0800
+Message-ID: <7vpqs463o4.fsf@alter.siamese.dyndns.org>
+References: <vpqy670brcb.fsf@bauges.imag.fr>
+ <20110105051807.GB5884@sigill.intra.peff.net>
+ <vpqr5clsy8g.fsf@bauges.imag.fr>
+ <20110109201003.GA4406@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>
-X-From: git-owner@vger.kernel.org Mon Jan 10 18:29:48 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Jan 10 18:59:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcLYy-00055i-AE
-	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 18:29:48 +0100
+	id 1PcM1i-0007iH-TZ
+	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 18:59:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754533Ab1AJR3k convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Jan 2011 12:29:40 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:59315 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754524Ab1AJR3j convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Jan 2011 12:29:39 -0500
-Received: by vws16 with SMTP id 16so8189779vws.19
-        for <git@vger.kernel.org>; Mon, 10 Jan 2011 09:29:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=eDhrn3Oe0UFI4xytwvhjPtHuzpnSFN84+sGklGr1mt8=;
-        b=Dg4mD+5rs3coyR7cW6jBAaBv7wNFcU9MnmIjLoWEQtdly/zG1QjFVs+vNdIlKIBKva
-         14Op5Wm1yl+qgx+fJYIoCRE9RQ5OlKOI6feNpmol3xCqZ4VumBvLy9exRcuBXp+Yh6et
-         BK/tnEyr6DjkNVUygjZU7I/Pe3waQniKW869I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=BG35BvCxkLx+fC6WorOhJiS4mlkxJu9EyCtWt7uYZd8cdhvQQkCzy07o1PMubB4NwE
-         TL8HLC9/drqkIMoEc+wgF7i2WRLrhz2OXB03thC3PVYDkNGDuDKUXJ1doZ89lLTPw7dw
-         z10r0jhoVbDFB7+24JSJD7QPHdzFm7dghlZJo=
-Received: by 10.220.181.135 with SMTP id by7mr7785146vcb.258.1294680579001;
-        Mon, 10 Jan 2011 09:29:39 -0800 (PST)
-Received: from burratino (adsl-69-209-76-37.dsl.chcgil.sbcglobal.net [69.209.76.37])
-        by mx.google.com with ESMTPS id r20sm6377323vcf.34.2011.01.10.09.29.37
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 10 Jan 2011 09:29:37 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4d2b3ecd.7c62abb5.bm000@wupperonline.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754111Ab1AJR7V (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jan 2011 12:59:21 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47357 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754127Ab1AJR7T (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jan 2011 12:59:19 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BED623E1A;
+	Mon, 10 Jan 2011 12:59:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=CzvSOfXRG0ueu1ctim37k0L0p/Q=; b=Cak3Xh
+	on7J56eNS71jl2/ppv5fzrZjoMwA6Orelcj3IdIQmMU7dsN8Jeps82dpAH7W/g98
+	BH4NcLHgeVfz9WftYs6eEkGReCkzbXdDqkcN75WeoE+52nzN6Q8N34luhIAiW0eS
+	d1AqbAwlDp1/0C5b1K0ox+ljADqcs9zYQf4d8=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=M0N7Lv/8dBgTHHUw8Wanvnuf4+3byZvg
+	XWIoU7iLE9gbSPkHKg/Xw6CeZQ/PuWyKqIw+9AOk75fQ/VNLZukAI1tb6C+Bliru
+	WKmXu8+NrrQN3heCRGft2rUAoJ1wYCH8gNP+2gf+JqN6IKdC3B2ZRZOkvmnIbjwA
+	odroyE4XO6g=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 765473E16;
+	Mon, 10 Jan 2011 12:59:53 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5EF9C3E11; Mon, 10 Jan 2011
+ 12:59:49 -0500 (EST)
+In-Reply-To: <20110109201003.GA4406@sigill.intra.peff.net> (Jeff King's
+ message of "Sun\, 9 Jan 2011 15\:10\:04 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 6D1653CE-1CE3-11E0-B664-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164887>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164889>
 
-Ingo Br=C3=BCckl wrote:
-> Jonathan Nieder wrote on Mon, 10 Jan 2011 10:52:51 -0600:
+Jeff King <peff@peff.net> writes:
 
->> How does output from "sh t1300-repo-config.sh -v -i" end?
+> This was added long ago as part of the userdiff refactoring
+> for textconv, as internally it made the code simpler and
+> cleaner. However, there was never a concrete use case for
+> actually using the config variable.
 >
->   expecting success: git config --rename-section branch.eins branch.z=
-wei
->   fatal: No such section!
->   not ok - 50 rename section
->   #       git config --rename-section branch.eins branch.zwei
+> Now that Matthieu Moy has provided such a use case, it's
+> easy to explain it using his example.
 
-Thanks.
+Thanks.  I take it that this documents 122aa6f (diff: introduce
+diff.<driver>.binary, 2008-10-05) where you said...
 
-> The problem is that the last 'git config' worked on other-config due =
-to
-> variable GIT_CONFIG.
+    This patch introduces a "binary" config option for a diff
+    driver, so that one can explicitly set diff.foo.binary. We
+    default this value to "don't know". That is, setting a diff
+    attribute to "foo" and using "diff.foo.funcname" will have
+    no effect on the binaryness of a file. To get the current
+    behavior, one can set diff.foo.binary to true.
 
-I'm still missing something.
-
-	GIT_CONFIG=3Dother-config git config -l > output
-	echo $GIT_CONFIG
-
-should result in no output to stdout, right?  In other words, the
-construct
-
-	envvar=3Dvalue git command
-
-is not supposed to pollute the current environment.
-
-It sounds like you've checked that "unset GIT_CONFIG" fixes it; what's
-left is to explain why GIT_CONFIG had a value in the first place.
-
-Confused,
-Jonathan
+I am scratching my head about the last sentence, though.  Shouldn't that
+be "false"?  In the olden days, setting diff.foo.funcname made it text but
+with this change it no longer is the case and instead binaryness is
+determined by content inspection, so forcing "text" needs to be done by
+saying "this is _not_ binary", no?
