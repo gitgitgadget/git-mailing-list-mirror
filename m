@@ -1,75 +1,73 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] Fix wrong failures in config test
-Date: Mon, 10 Jan 2011 10:52:51 -0600
-Message-ID: <20110110165251.GB7714@burratino>
-References: <4d2b3198.674034bb.bm000@wupperonline.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] submodule: fix relative url parsing for scp-style origin
+Date: Mon, 10 Jan 2011 09:01:09 -0800
+Message-ID: <7v62tw7kx6.fsf@alter.siamese.dyndns.org>
+References: <7a578ef3384a891cebd4a39421302983499771e0.1294655635.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Ingo =?utf-8?Q?Br=C3=BCckl?= <ib@wupperonline.de>
-X-From: git-owner@vger.kernel.org Mon Jan 10 17:53:23 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, Mark Levedahl <mlevedahl@gmail.com>,
+	Jeffrey Phillips Freeman <jeffrey.freeman@syncleus.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Jan 10 18:01:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcKzi-0006oY-EH
-	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 17:53:22 +0100
+	id 1PcL7Z-0003iM-M6
+	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 18:01:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753961Ab1AJQxE convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 10 Jan 2011 11:53:04 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:40308 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753948Ab1AJQxD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 10 Jan 2011 11:53:03 -0500
-Received: by iwn9 with SMTP id 9so19334095iwn.19
-        for <git@vger.kernel.org>; Mon, 10 Jan 2011 08:53:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=qDzA7NtG3MRNwD7+oKR49EU78eRiOpUKUsa+0V+Ayqc=;
-        b=j6RtIEUXJBTQwJJVfRnfk9TBlisJlX4E9UzL4y5EsBCaGGHnWLhsGxRjwr/px2/WTc
-         vxtaw1KnNRGHy7JO1+YyB/MbY6yGmQqpjrEACL5KuhLpF3JfpIMvCJMl9v0kFEaNav24
-         Cgz8gxam/fy+kEDZ5SexCF9BbV333uZgOfNoM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=QDdtc9ddEjm+3Zj4+tg2qLTxs1v0puS8C++JvpbQjlhupRQ9gpDhcJc9mNzYi9tQ4R
-         isLr4/E1JSJRb7s/6mxVkD6Wa0tp5rBnxskP6btqPlYn45+YRDZGmNsiLpLf9M2d5v6W
-         NXYS9eal/2wPJeL4U1dWVJc2BL9ufZzlTOT0E=
-Received: by 10.42.171.201 with SMTP id k9mr4498299icz.498.1294678381919;
-        Mon, 10 Jan 2011 08:53:01 -0800 (PST)
-Received: from burratino (adsl-69-209-76-37.dsl.chcgil.ameritech.net [69.209.76.37])
-        by mx.google.com with ESMTPS id he5sm3779280icb.10.2011.01.10.08.52.58
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 10 Jan 2011 08:52:59 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4d2b3198.674034bb.bm000@wupperonline.de>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1754353Ab1AJRBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jan 2011 12:01:24 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:49404 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753333Ab1AJRBX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jan 2011 12:01:23 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D9B5D36CC;
+	Mon, 10 Jan 2011 12:02:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=OjN4Cx0A6yOV8tJH9+05usyyQMQ=; b=JfzgaS
+	QL+6ZK9CdMwHO40DidRUKWy17MzdqT6+jTjJU4YxXJj4iw2KQf+YLJ+nd+Qry+N1
+	5HmyKcOQvgxZiBrq3+EUbmgetg8dIymdzjz98xPNPSttps1howc+l9u+ecamQ+ur
+	MloZbcxia2SYH0DO2b2bFdfMkGn++PjOI32fA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=n9cKY7EsiKoABNNXjPm4KnclII22QLKJ
+	sIgRb/l/OdIo7EgaIEeUmnHkn+YC3/2LmnKc3+e8ZBwOYl81J/vgdqXxkUc35/hB
+	/plACCAVZw7EXmddsCSuw8np1LGBGjnjsr4lC7VwD3+GGcwcuUDbcqr/J7YdHUJs
+	mLajjCKC91w=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8ED3036BE;
+	Mon, 10 Jan 2011 12:01:57 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4A35E36BD; Mon, 10 Jan 2011
+ 12:01:52 -0500 (EST)
+In-Reply-To: <7a578ef3384a891cebd4a39421302983499771e0.1294655635.git.trast@student.ethz.ch> (Thomas Rast's message of "Mon\, 10 Jan 2011 11\:37\:26 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 554A2D0E-1CDB-11E0-9423-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164881>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164882>
 
-Ingo Br=C3=BCckl wrote:
+Thomas Rast <trast@student.ethz.ch> writes:
 
-> The tests after '--set in alternative GIT_CONFIG' failed because
-> variable GIT_CONFIG was still set.
-[...]
-> Is it only me (bash 3.2.48(1)-release) experiencing these failures?
+> The function resolve_relative_url was not prepared to deal with an
+> scp-style origin 'user@host:path' in the case where 'path' is only a
+> single component.  Fix this by extending the logic that strips one
+> path component from the $remoteurl.
+>
+> Also add tests for both styles of URLs.
+>
+> Noticed-by: Jeffrey Phillips Freeman <jeffrey.freeman@syncleus.com>
+> Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+> ---
+>
+> If Mark agrees with the fix, I think this should go in before 1.7.4
+> since it's a pretty annoying bug.
 
-Could you explain the nature of the failures in more detail?  What
-version of git are you building?  Is GIT_CONFIG already set in the
-environment before you run t1300-repo-config.sh (it shouldn't matter)?
-How does output from "sh t1300-repo-config.sh -v -i" end?  If that
-doesn't end up being helpful, how about "GIT_TRACE=3D1 sh -x
-t1300-repo-config.sh -v -i"?
-
-Regards,
-Jonathan
+Seems obvious to me from a cursory look; thanks.
