@@ -1,65 +1,94 @@
-From: Ingo Br=?ISO-8859-1?Q?=FCckl?= <ib@wupperonline.de>
-Subject: Re: [PATCH] Fix wrong failures in config test
-Date: Mon, 10 Jan 2011 18:15:22 +0100
-Message-ID: <4d2b3ecd.7c62abb5.bm000@wupperonline.de>
-References: <20110110165251.GB7714@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH] submodule: fix relative url parsing for scp-style origin
+Date: Mon, 10 Jan 2011 11:22:27 -0600
+Message-ID: <20110110172227.GA7882@burratino>
+References: <7a578ef3384a891cebd4a39421302983499771e0.1294655635.git.trast@student.ethz.ch>
+ <20110110164801.GA7714@burratino>
+ <201101101805.13251.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 10 18:16:44 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Mark Levedahl <mlevedahl@gmail.com>,
+	Jeffrey Phillips Freeman <jeffrey.freeman@syncleus.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Jan 10 18:22:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcLMA-0004UX-VX
-	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 18:16:35 +0100
+	id 1PcLS6-0000dS-QX
+	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 18:22:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754462Ab1AJRQc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jan 2011 12:16:32 -0500
-Received: from smtp-a.tal.de ([81.92.1.9]:54698 "EHLO smtp-a.tal.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754391Ab1AJRQc (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jan 2011 12:16:32 -0500
-Received: from point.localnet (mue-88-130-97-192.dsl.tropolys.de [88.130.97.192])
-	(Authenticated sender: ib@wtal.de)
-	by smtp-a.tal.de (Postfix) with ESMTP id E8E7A111C2C0
-	for <git@vger.kernel.org>; Mon, 10 Jan 2011 18:16:29 +0100 (CET)
-Received: from ib by point.localnet with local (masqmail 0.2.21) id
- 1PcLM4-5jI-00 for <git@vger.kernel.org>; Mon, 10 Jan 2011 18:16:28 +0100
-In-Reply-To: <20110110165251.GB7714@burratino>
-X-Mailer: blueMail/Linux 1.5
+	id S1754469Ab1AJRWi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jan 2011 12:22:38 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:61859 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753814Ab1AJRWh (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jan 2011 12:22:37 -0500
+Received: by qwa26 with SMTP id 26so19998386qwa.19
+        for <git@vger.kernel.org>; Mon, 10 Jan 2011 09:22:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=vCi7RI0wK9fOzmskOiG9qWzksJNJBHk+q2pyfHQQKnY=;
+        b=RzOcdIsCO0tX12SMwrzDYeFL1aymYMTSEJe755VutE9RYEjG3IaLeXI/HuiPXb3IFO
+         WEfhdOzql+fZLH5miw1Bm2v3/nKHMSGabgdc4/9T9bM6tF9SsW0Vuzy0lWibbeZxDb8C
+         6tL7ptUCVOAlzzR5WIeBHbgzq65N2+i1+3KDg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=s9RLcPMJz5qlN3UyMzxH+HNfcnvDEOOeTkmKkRz/l9oJL/6VVIzjxi1ZK9SOIlo0Z0
+         2Cx0vbOdyYMIKT7TYkzUTCKuUmpeTWAonLWKmkjcf8UDubBYe0RxBvkZDCHg/zEQ6cGz
+         AI3o1DxQob655bpdF/SQCSeHBF9XWIth5sUGg=
+Received: by 10.224.54.85 with SMTP id p21mr26891367qag.147.1294680157349;
+        Mon, 10 Jan 2011 09:22:37 -0800 (PST)
+Received: from burratino (adsl-69-209-76-37.dsl.chcgil.sbcglobal.net [69.209.76.37])
+        by mx.google.com with ESMTPS id e29sm17587060qck.15.2011.01.10.09.22.34
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 10 Jan 2011 09:22:35 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <201101101805.13251.trast@student.ethz.ch>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164885>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164886>
 
-Jonathan Nieder wrote on Mon, 10 Jan 2011 10:52:51 -0600:
+Thomas Rast wrote:
+> Jonathan Nieder wrote:
 
-> Could you explain the nature of the failures in more detail?
+>> 	url = /local/path/with/a/colon:in:it
+>> 	url = git://example.com/path/with/a/colon:in:it
+>
+> These work fine because the first case arm is "do we still have a
+> slash?", and thus takes precedence over the colon splitting.
 
-Yeah, sorry.
+Ah, nice (sorry I missed that).  So this can't create a regression
+and for what it's worth
 
-> What version of git are you building?
+Reviewed-by: Jonathan Nieder <jrnieder@gmail.com>
 
-1.7.3.5
+>> 	url = simple.subdir.of.cwd
+>
+> That's caught by the outer 'case':
 
-> Is GIT_CONFIG already set in the environment before you run
-> t1300-repo-config.sh (it shouldn't matter)?
+I meant if remoteurl is not fully qualified.  For what it's worth,
+the answer seems to be that
 
-No.
+	git clone repo newdir
 
-> How does output from "sh t1300-repo-config.sh -v -i" end?
+replaces "repo" with the absolute path "$(pwd)/repo" and manually
+using a relative path as in
 
-  expecting success: git config --rename-section branch.eins branch.zwei
-  fatal: No such section!
-  not ok - 50 rename section
-  #       git config --rename-section branch.eins branch.zwei
+	git remote add origin subdir
 
-The problem is that the last 'git config' worked on other-config due to
-variable GIT_CONFIG. Test 50 should work now on .git/config, but as
-GIT_CONFIG is still set, it doesn't and fails.
+creates a remote that is not usable, perhaps because different parts
+of the code treat it as relative to different directories (.git or the
+toplevel).
 
-Ingo
+Sorry for the laziness --- I should have just checked.
