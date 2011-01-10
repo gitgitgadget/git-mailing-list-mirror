@@ -1,66 +1,77 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: [PATCH] Documentation/git-archive: spell --worktree-attributes correctly
-Date: Mon, 10 Jan 2011 13:57:43 +0100
-Message-ID: <70050800dea108b9e371210fc85b45cb6ba4d691.1294664224.git.trast@student.ethz.ch>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: git-archive and core.eol
+Date: Mon, 10 Jan 2011 14:00:51 +0100
+Message-ID: <AANLkTi=WyzVzPkhOAMC2A8Dd=Zj_P-7YMVP-GaUz0-Qm@mail.gmail.com>
+References: <AANLkTi=kfE88F7dY5F_xtbEuh9DyUcN+ymeXqLMWztGQ@mail.gmail.com>
+ <4D28683B.4020400@lsrfire.ath.cx> <AANLkTi==eqwrwq-P6czDvOH5GDEi6WgvRUuZ2dMoiK7e@mail.gmail.com>
+ <4D29AF80.5060008@lsrfire.ath.cx> <AANLkTinxVCQuTMeKHQ9mLbs=94fck90rwJwa1DhzGPmX@mail.gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: <git@vger.kernel.org>,
-	Jeffrey Phillips Freeman <jeffrey.freeman@syncleus.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 10 13:58:05 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Git Mailing List <git@vger.kernel.org>,
+	msysGit <msysgit@googlegroups.com>, eyvind.bernhardsen@gmail.com
+To: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Jan 10 14:01:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcHK0-00067u-0N
-	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 13:58:04 +0100
+	id 1PcHN8-0007me-KG
+	for gcvg-git-2@lo.gmane.org; Mon, 10 Jan 2011 14:01:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753924Ab1AJM5q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 10 Jan 2011 07:57:46 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:13952 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753907Ab1AJM5p (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 10 Jan 2011 07:57:45 -0500
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Mon, 10 Jan
- 2011 13:57:43 +0100
-Received: from localhost.localdomain (129.132.153.233) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.218.12; Mon, 10 Jan
- 2011 13:57:43 +0100
-X-Mailer: git-send-email 1.7.4.rc1.309.g58aa0
-X-Originating-IP: [129.132.153.233]
+	id S1753864Ab1AJNBN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 10 Jan 2011 08:01:13 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:61801 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753827Ab1AJNBN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 10 Jan 2011 08:01:13 -0500
+Received: by fxm20 with SMTP id 20so18806147fxm.19
+        for <git@vger.kernel.org>; Mon, 10 Jan 2011 05:01:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:mime-version:received:reply-to
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type;
+        bh=+/Dvjd11c4AhzEsggE3AIRQPXXnydRL+iQnB7LzF9H0=;
+        b=Vz0VcHEn3b64c3YpgaMPyfUXR4aMhCU1i6Xb3cumZboeYjWxRcm8oyuvFK3K0LOpuU
+         ZGrucJySqBTG4FfJxdXVA3zN5odZb7t5xg6peI5iNsEu58u6v2n7CdPHgLI/cRwfWVwn
+         oashx83Dz6EV8JymBpJwbrUNHrwD5/0UhVVrs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type;
+        b=uVMbNru1KLfyA4R1ZNSVY/NajWrTRMSHWww8CXbZZE9OTPMgQ3LyXEVJc6XGmrbmLW
+         Sp5jMPaKCS5p4VemigL2JOyyu+N9ayK0fpkfWYjFgOSOqklDKZqVCgjmzgv8jQ2vb/6q
+         B3e9mfU3awECAyzzFgAE30Zn46JAXUB/XgnE4=
+Received: by 10.223.79.7 with SMTP id n7mr5620564fak.71.1294664471686; Mon, 10
+ Jan 2011 05:01:11 -0800 (PST)
+Received: by 10.223.79.3 with HTTP; Mon, 10 Jan 2011 05:00:51 -0800 (PST)
+In-Reply-To: <AANLkTinxVCQuTMeKHQ9mLbs=94fck90rwJwa1DhzGPmX@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164874>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164875>
 
-The --worktree-attributes option was correctly documented in ba053ea
-(archive: do not read .gitattributes in working directory,
-2009-04-18).  However, later in 9b4c8b0 (archive documentation:
-attributes are taken from the tree by default, 2010-02-10) the
-misspelling "--work-tree-attributes" was used to refer to it.  Fix
-this.
+On Mon, Jan 10, 2011 at 1:11 PM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
+> test. So now I've got to figure out what is different between your
+> test and mine. Perhaps I misdiagnosed to begin with?
+>
 
-Noticed-by: Jeffrey Phillips Freeman <jeffrey.freeman@syncleus.com>
-Signed-off-by: Thomas Rast <trast@student.ethz.ch>
----
- Documentation/git-archive.txt |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+No, it doesn't quite seem like I misdiagnosed, but your test had
+different expectations than I have after reading the documentation. I
+expected core.autocrlf=true + core.eol=lf to pretty much be identical
+to core.autocrlf=false, but only because LF->LF conversion is a NOP.
 
-diff --git a/Documentation/git-archive.txt b/Documentation/git-archive.txt
-index 4163a1b..bf5037a 100644
---- a/Documentation/git-archive.txt
-+++ b/Documentation/git-archive.txt
-@@ -116,7 +116,7 @@ Note that attributes are by default taken from the `.gitattributes` files
- in the tree that is being archived.  If you want to tweak the way the
- output is generated after the fact (e.g. you committed without adding an
- appropriate export-ignore in its `.gitattributes`), adjust the checked out
--`.gitattributes` file as necessary and use `--work-tree-attributes`
-+`.gitattributes` file as necessary and use `--worktree-attributes`
- option.  Alternatively you can keep necessary attributes that should apply
- while archiving any tree in your `$GIT_DIR/info/attributes` file.
- 
--- 
-1.7.4.rc1.309.g58aa0
+'core.autocrlf' is documented as meaning the same as setting the
+'text' attribute to 'auto' for all files, plus "files that contain
+CRLF in the repository will not be touched". I figured that last part
+shouldn't affect me as I only had LFs in the repository.
+
+If I disable core.autocrlf, I get what I want (no matter what I set
+core.eol to, it seems). But I still don't understand WHY
+core.autocrlf=true + core.eol=lf outputs CRLF.
+
+It seems to me that there's a big gap between what the documentation
+claims and what actually happens here.
