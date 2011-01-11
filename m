@@ -1,53 +1,74 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [RFC] Support for arbitrary tags in commits
-Date: Tue, 11 Jan 2011 14:53:08 +0100
-Message-ID: <201101111453.08178.trast@student.ethz.ch>
-References: <74b0628dffbd2bc0adabe5e8b0a10960.squirrel@webmail.hitco.org> <201101111340.50508.trast@student.ethz.ch> <edec2e42a531b00ffd6a2689095460d5.squirrel@webmail.hitco.org>
+From: Marc Strapetz <marc.strapetz@syntevo.com>
+Subject: Re: Applying .gitattributes text/eol changes
+Date: Tue, 11 Jan 2011 15:02:07 +0100
+Message-ID: <4D2C62DF.20706@syntevo.com>
+References: <4D220500.2000104@syntevo.com> <4D2C4902.4010705@drmicha.warpmail.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Philipp Marek <philipp@marek.priv.at>
-X-From: git-owner@vger.kernel.org Tue Jan 11 14:53:23 2011
+Cc: git@vger.kernel.org
+To: Michael J Gruber <git@drmicha.warpmail.net>
+X-From: git-owner@vger.kernel.org Tue Jan 11 15:02:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pcef0-0006pE-9C
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 14:53:18 +0100
+	id 1Pcenh-0003SK-Ur
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 15:02:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932075Ab1AKNxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 08:53:10 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:17225 "EHLO edge10.ethz.ch"
+	id S1754144Ab1AKOCN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 09:02:13 -0500
+Received: from syntevo.com ([85.214.39.145]:53426 "EHLO syntevo.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753540Ab1AKNxK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 08:53:10 -0500
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 11 Jan
- 2011 14:53:06 +0100
-Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 11 Jan
- 2011 14:53:08 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
-In-Reply-To: <edec2e42a531b00ffd6a2689095460d5.squirrel@webmail.hitco.org>
-X-Originating-IP: [129.132.153.233]
+	id S1755970Ab1AKOCM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 09:02:12 -0500
+Received: from [127.0.0.1] (localhost [127.0.0.1]) with ESMTPSA id EE65C174006
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
+In-Reply-To: <4D2C4902.4010705@drmicha.warpmail.net>
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164945>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164946>
 
-Philipp Marek wrote:
-> > In particular, in what way do notes (as in git-notes(1)) fail to solve
-> > your problem?
-> Well, my biggest concerns are that users might trash them, and that they are
-> voided by amend, rebase etc. (which I tried to address by collecting header
-> lines).
+On 11.01.2011 13:11, Michael J Gruber wrote:
+> Marc Strapetz venit, vidit, dixit 03.01.2011 18:18:
+>> I'm looking for an unobtrusive way to apply (committed) changes for
+>> text/eol attributes to the working tree. For instance, after having
+>> changed "*.txt eol=crlf" to "*.txt eol=lf", all *.txt files should be
+>> converted from CRLF to LF endings. The only advice I found so far is to
+>> remove .git/index and do a reset --hard. The disadvantage of this
+>> approach is that every file will be touched:
+>>
+>> - although the content does not change, timestamps will be changed. This
+> 
+> The bytewise content does change.
 
-They aren't lost any more (since 1.7.1) if you properly configure
-notes.rewriteRef.
+The content has only changed for *.txt files, but the timestamps of
+*all* files are updated. I guess (but didn't verify from code), that in
+case of missing .git/index, Git freshly writes all working tree files,
+ignoring already existing files which already have the correct content.
+Maybe this behavior is by intention and makes sense in some cases. In my
+case it has adverse effects on IDEs and probably other tools which are
+monitoring the file system.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+>> One solution I could think of which might be helpful in other situations
+>> as well would be to have an "--unobtrusive" option for reset which would
+>> only replace a file if the content has actually been changed.
+> 
+> How about
+> 
+> git ls-files \*.txt | xargs touch -a
+> git ls-files \*.txt | git checkout
+
+That won't be helpful as it requires me to know what has changed.
+
+--
+Best regards,
+Marc Strapetz
+=============
+syntevo GmbH
+http://www.syntevo.com
+http://blog.syntevo.com
