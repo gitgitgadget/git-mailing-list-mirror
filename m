@@ -1,125 +1,166 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Documentation/rev-parse: --verify does not check
- existence
-Date: Tue, 11 Jan 2011 13:00:28 -0800
-Message-ID: <7v39oz40lv.fsf@alter.siamese.dyndns.org>
-References: <2441701cf9c9cc09d86f52b093bfa896479daad8.1294771717.git.trast@student.ethz.ch>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [RFC/PATCH 0/3] Re: t4034: bulk verify builtin word regex sanity
+Date: Tue, 11 Jan 2011 15:47:07 -0600
+Message-ID: <20110111214707.GA29133@burratino>
+References: <cover.1292688058.git.trast@student.ethz.ch>
+ <854c8b6fa8a368bb34cc22d3fc948ae7136ed177.1292688058.git.trast@student.ethz.ch>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: <git@vger.kernel.org>, Zachery Hostens <zacheryph@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Scott Johnson <scottj75074@yahoo.com>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Matthijs Kooijman <matthijs@stdin.nl>, git@vger.kernel.org
 To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jan 11 22:00:46 2011
+X-From: git-owner@vger.kernel.org Tue Jan 11 22:47:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PclKf-0007ok-Kk
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 22:00:46 +0100
+	id 1Pcm3v-0001va-Lw
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 22:47:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754604Ab1AKVAl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 16:00:41 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46696 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754110Ab1AKVAj (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 16:00:39 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 563853F17;
-	Tue, 11 Jan 2011 16:01:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=LvaSV32BfUSMdAMk8Vk6JKukmkE=; b=GxWFFm
-	KXHNg790VQNTfNWnJTjF/yawcVehllIKY+lK7pTWxf7NvXdGX22KjonuEKi4zMQ8
-	S1DWytV0OpKWC67gYwq8qiyq6fnG3w4H1ZLD9L2Xnezp8YFh3zkEcxG8WUdPvfzW
-	NeFsXuHYOHPfy027OZ2PJomOgkrUPbIUjbuCk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=p+VjkyDV0sXLPwaI0EoHzdYw1x8K2m+E
-	rI5Y62FAKNJ/m3s8l4Tj06LAo+hrf2LzygW4v2cCuKCS7+tzRfw8oRdNPgD/Fi3u
-	kdJEH5HRbw+TdSaLlUbmjvbedORMS414eNsKzHzi/Jk/qWjBKR6GyBGHrWdtXqhq
-	3Wtf/HaX6TM=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 25CDA3F16;
-	Tue, 11 Jan 2011 16:01:16 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CC36A3F15; Tue, 11 Jan 2011
- 16:01:11 -0500 (EST)
-In-Reply-To: <2441701cf9c9cc09d86f52b093bfa896479daad8.1294771717.git.trast@student.ethz.ch> (Thomas Rast's message of "Tue\, 11 Jan 2011 19\:51\:02 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EE11D8D0-1DC5-11E0-A572-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
+	id S1755662Ab1AKVr0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 16:47:26 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:46808 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752112Ab1AKVrZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 16:47:25 -0500
+Received: by fxm20 with SMTP id 20so20399399fxm.19
+        for <git@vger.kernel.org>; Tue, 11 Jan 2011 13:47:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=PW7S5EA7K1nhi1JmAUdS2wkWV1UpbtXnl04vyhhLPRE=;
+        b=AI2ERkwSNGV5abwLUID2Df2G+0FogzIPgldNwNx6kIQNJXSCC6g5HVpGSVudo8tmkD
+         1f9mlYnfLrQkxQFg2lHvuncfQ3GXSlFvKfU+MS/jgovEEWjQXfZ8TbQXLXoDt3JJwPNM
+         CSSP9gqIUuBfEiA6PZeNUIwdLZKkzZl25lYas=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=Dwa6dBWli4rJ5okOVHaBirIDHoWB61M7uWFqGGGyzxPimE3shNK+RaurS0RG5bbQcW
+         ezRp8ppmwH77X3sXjbgQSgJoqVfYzM5qLpH/aMHTxUU3sCNNomRbnJoCD0ZZ4cowzM9A
+         9LEQWNU4/r+pMS6hWtZ2eFEgpTwZdooLfR1eI=
+Received: by 10.223.86.196 with SMTP id t4mr160597fal.34.1294782443374;
+        Tue, 11 Jan 2011 13:47:23 -0800 (PST)
+Received: from burratino (adsl-69-209-76-37.dsl.chcgil.ameritech.net [69.209.76.37])
+        by mx.google.com with ESMTPS id f24sm7599049fak.24.2011.01.11.13.47.20
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 11 Jan 2011 13:47:21 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <854c8b6fa8a368bb34cc22d3fc948ae7136ed177.1292688058.git.trast@student.ethz.ch>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164992>
 
-Thomas Rast <trast@student.ethz.ch> writes:
+Thomas Rast wrote:
 
-> diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
-> index ff23cb0..779fa87 100644
-> --- a/Documentation/git-rev-parse.txt
-> +++ b/Documentation/git-rev-parse.txt
-> @@ -59,8 +59,9 @@ OPTIONS
->  	instead.
->  
->  --verify::
-> -	The parameter given must be usable as a single, valid
-> -	object name.  Otherwise barf and abort.
-> +	The parameter must either be formed like an object name, or
-> +	dereference to an object name.  This does 'not' verify that
-> +	the object actually exists!  See EXAMPLES below.
+> The builtin word regexes should be tested with some simple examples
+> against simple issues, like failing to match a non-space character.
+> Do this in bulk.
 
-To paraphrase what this text says, if you do
+The above patch depends on "diff.c: implement a sanity check for word
+regexes" but not in any essential way.  Patch 1 below is the part that
+is still relevant without it.
 
-	echo >.git/refs/tags/next e17aa8a9dca972ca278dd91a097873101066e963
+Patch 2 changes the UTF-8 catchall to match a single non-ASCII
+character[1], at the same time as making it harder to forget to use.
+(My motivation is that the UTF-8 catchall is missing in the new perl
+support.)
 
-where that hexstring does not name any existing object [*1*], you can
-successfully verify "tags/next" (i.e. "git rev-parse --verify tags/next"),
-but not "tags/next^0", because "tags/next^0" does not "dereference" to a
-40-hex string, while "tags/next" does.
+Patch 3 contains some cosmetic tweaks to the tests.  They were meant
+as preparations for patch 2 but I checkened out and stopped there.
 
-That's all good, but as I said, the hexstring is _not_ an object name.  So
-"dereference to an object name" is actively a wrong thing to say here.
+Thoughts and improvements welcome, as always.
 
-You meant "40-hex string" with "formed _like_ an object name" in the
-above, and the "like" is an attempt to say "could be usable to name an
-object, but does not mean that the object has to exist".
+Jonathan Nieder (2):
+  userdiff: simplify word-diff safeguard
+  t4034 (diff --word-diff): style suggestions
 
-But "dereferencing" a 40-hex string yields itself, so what you wrote can
-be simplified to something like this, without using a wrong term "object
-name":
+Thomas Rast (1):
+  t4034: bulk verify builtin word regex sanity
 
-        Makes sure that the parameter dereferences to a string of 40
-        hexadecimal characters.  Otherwise barf and abort.
+ t/t4034-diff-words.sh  |  463 +++++++++++++++++++++++-------------------------
+ t/t4034/bibtex/expect  |   15 ++
+ t/t4034/bibtex/post    |   10 +
+ t/t4034/bibtex/pre     |    9 +
+ t/t4034/cpp/expect     |   36 ++++
+ t/t4034/cpp/post       |   19 ++
+ t/t4034/cpp/pre        |   19 ++
+ t/t4034/csharp/expect  |   35 ++++
+ t/t4034/csharp/post    |   18 ++
+ t/t4034/csharp/pre     |   18 ++
+ t/t4034/fortran/expect |   10 +
+ t/t4034/fortran/post   |    5 +
+ t/t4034/fortran/pre    |    5 +
+ t/t4034/html/expect    |    8 +
+ t/t4034/html/post      |    3 +
+ t/t4034/html/pre       |    3 +
+ t/t4034/java/expect    |   36 ++++
+ t/t4034/java/post      |   19 ++
+ t/t4034/java/pre       |   19 ++
+ t/t4034/objc/expect    |   35 ++++
+ t/t4034/objc/post      |   18 ++
+ t/t4034/objc/pre       |   18 ++
+ t/t4034/pascal/expect  |   35 ++++
+ t/t4034/pascal/post    |   18 ++
+ t/t4034/pascal/pre     |   18 ++
+ t/t4034/php/expect     |   35 ++++
+ t/t4034/php/post       |   18 ++
+ t/t4034/php/pre        |   18 ++
+ t/t4034/python/expect  |   34 ++++
+ t/t4034/python/post    |   17 ++
+ t/t4034/python/pre     |   17 ++
+ t/t4034/ruby/expect    |   34 ++++
+ t/t4034/ruby/post      |   17 ++
+ t/t4034/ruby/pre       |   17 ++
+ t/t4034/tex/expect     |    9 +
+ t/t4034/tex/post       |    4 +
+ t/t4034/tex/pre        |    4 +
+ userdiff.c             |   37 ++---
+ 38 files changed, 887 insertions(+), 266 deletions(-)
+ create mode 100644 t/t4034/bibtex/expect
+ create mode 100644 t/t4034/bibtex/post
+ create mode 100644 t/t4034/bibtex/pre
+ create mode 100644 t/t4034/cpp/expect
+ create mode 100644 t/t4034/cpp/post
+ create mode 100644 t/t4034/cpp/pre
+ create mode 100644 t/t4034/csharp/expect
+ create mode 100644 t/t4034/csharp/post
+ create mode 100644 t/t4034/csharp/pre
+ create mode 100644 t/t4034/fortran/expect
+ create mode 100644 t/t4034/fortran/post
+ create mode 100644 t/t4034/fortran/pre
+ create mode 100644 t/t4034/html/expect
+ create mode 100644 t/t4034/html/post
+ create mode 100644 t/t4034/html/pre
+ create mode 100644 t/t4034/java/expect
+ create mode 100644 t/t4034/java/post
+ create mode 100644 t/t4034/java/pre
+ create mode 100644 t/t4034/objc/expect
+ create mode 100644 t/t4034/objc/post
+ create mode 100644 t/t4034/objc/pre
+ create mode 100644 t/t4034/pascal/expect
+ create mode 100644 t/t4034/pascal/post
+ create mode 100644 t/t4034/pascal/pre
+ create mode 100644 t/t4034/php/expect
+ create mode 100644 t/t4034/php/post
+ create mode 100644 t/t4034/php/pre
+ create mode 100644 t/t4034/python/expect
+ create mode 100644 t/t4034/python/post
+ create mode 100644 t/t4034/python/pre
+ create mode 100644 t/t4034/ruby/expect
+ create mode 100644 t/t4034/ruby/post
+ create mode 100644 t/t4034/ruby/pre
+ create mode 100644 t/t4034/tex/expect
+ create mode 100644 t/t4034/tex/post
+ create mode 100644 t/t4034/tex/pre
 
-But then, if you read the original carefully, it already says "must be
-usable as a single valid object name", and "be usable as" does not
-necessarily mean "named object must exist".  So I agree you identified
-something that needs to be clarified, but I do not think your rewrite
-clarified things very much.
-
-How about this?
-
-	The parameter given must be usable as a string to name a single
-        object (note that the named object does not have to exist).
-        Otherwise barf and abort.
-
-Unfortunately, this does not clarify if it satisfies the above condition
-to say "refs/heads/nosuch" in a repository without "nosuch" branch---the
-ref expression is usable as a string to name a single object, so it should
-verify Ok, but the reason it doesn't name a single object is not because
-it yields a 40-hex string that no object with that name exists, but
-because it doesn't dereference to a 40-hex string to begin with.  So it
-actually should _not_ verify well.
-
-To fully clarify this, I think the first step we need is to add a better
-definition of "to dereference" (or whatever word we would end up using to
-call the act of passing a string through get_sha1()) to the glossary.
-Then we can use the "string of 40 hexadecimal" rewrite I gave earlier.
-
-[Footnote]
-
-*1* These days, "git tag" and even "git update-ref" seems to verify that
-the given name actually refers to an existing object, so this experiment
-has to be done by manually futzing with the repository.  Joy of safety ;-)
+[1] suggested in <201012261206.11942.trast@student.ethz.ch>, which is
+missing from gmane for some reason.
