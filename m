@@ -1,76 +1,59 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: git notes and core.editor config
-Date: Tue, 11 Jan 2011 13:36:19 +0100
-Message-ID: <201101111336.19466.johan@herland.net>
-References: <AANLkTi=0BrBV+DLF_QfDi0mMVdz5tCLFsDMBKvw52nzz@mail.gmail.com> <201101111131.17429.johan@herland.net> <AANLkTik-=s-F8dmBRLU8o9LcSztb1P0WnkN5HK_n_No4@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [RFC] Support for arbitrary tags in commits
+Date: Tue, 11 Jan 2011 13:40:50 +0100
+Message-ID: <201101111340.50508.trast@student.ethz.ch>
+References: <74b0628dffbd2bc0adabe5e8b0a10960.squirrel@webmail.hitco.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeenu V <jeenuv@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 11 13:36:29 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Philipp Marek <philipp@marek.priv.at>
+X-From: git-owner@vger.kernel.org Tue Jan 11 13:41:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcdSd-0007hp-B3
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 13:36:27 +0100
+	id 1PcdWz-0001W0-FA
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 13:40:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754139Ab1AKMgX convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jan 2011 07:36:23 -0500
-Received: from smtp.opera.com ([213.236.208.81]:58249 "EHLO smtp.opera.com"
+	id S1755592Ab1AKMkx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 07:40:53 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:25184 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753837Ab1AKMgV (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 07:36:21 -0500
-Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
-	(authenticated bits=0)
-	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p0BCaJqo012494
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Tue, 11 Jan 2011 12:36:19 GMT
-User-Agent: KMail/1.9.9
-In-Reply-To: <AANLkTik-=s-F8dmBRLU8o9LcSztb1P0WnkN5HK_n_No4@mail.gmail.com>
-Content-Disposition: inline
+	id S1755564Ab1AKMkw (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 07:40:52 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 11 Jan
+ 2011 13:40:48 +0100
+Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 11 Jan
+ 2011 13:40:50 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
+In-Reply-To: <74b0628dffbd2bc0adabe5e8b0a10960.squirrel@webmail.hitco.org>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164935>
 
-On Tuesday 11 January 2011, Jeenu V wrote:
-> On Tue, Jan 11, 2011 at 4:01 PM, Johan Herland <johan@herland.net>=20
-wrote:
-> > On Tuesday 11 January 2011, Jeenu V wrote:
-> >> My core.editor value in $HOME/.gitconfig is set to
-> >>
-> >> =A0 [core]
-> >> =A0 =A0 =A0 editor =3D vi "+set tw=3D72 spell"
-> >>
-> >> so that I've text width of 72 with spell check turned on. I
-> >> haven't found problems with any git commands that invoke editor,
-> >> but notes. 'git notes' seems to invoke the vi for me with 3
-> >> separate arguments instead of just one: "+set, tw=3D72, and spell"=
-=2E
-> >> In other words, I don't think it honors shell quoting for editor
-> >> config variable.
-> >>
-> >> Could this be a bug?
-> >
-> > What Git version are you running?
->
-> $ git --version
-> git version 1.7.0.4
+Philipp Marek wrote:
+> 
+> The best way I've found (so far) is to put an additional header line in the
+> commit header that references an additional blob.
 
-Ah, there's your problem. In v1.7.1 "git notes" was builtin-ified (it=20
-used to be a shell script, but was reimplemented in C), so you're still=
-=20
-running the shell script version of "git notes". I believe upgrading=20
-will solve your problem (as well as making "git notes" more=20
-featureful).
+This comes up every few months.  The last large discussion about this
+that we had IIRC was
 
+  http://thread.gmane.org/gmane.comp.version-control.git/138848
 
-=2E..Johan
+Can you please look through that thread and state in what way your
+use-case invalidates the previous reasoning?
 
---=20
-Johan Herland, <johan@herland.net>
-www.herland.net
+In particular, in what way do notes (as in git-notes(1)) fail to solve
+your problem?
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
