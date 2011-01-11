@@ -1,47 +1,69 @@
-From: =?windows-1251?B?wOvl6vHl6SDY8+zq6O0=?= <zapped@mail.ru>
-Subject: Re[2]: Merge two different repositories (v2.4 + v2.5) into the one (v2.4 -> v2.5). Possible?
-Date: Tue, 11 Jan 2011 18:16:56 +0300
-Message-ID: <694738910.20110111181656@mail.ru>
-References: <746745466.20110111134101@mail.ru> <m3lj2rbmq5.fsf@localhost.localdomain>
-Reply-To: =?windows-1251?B?wOvl6vHl6SDY8+zq6O0=?= <zapped@mail.ru>
+From: Phillip Susi <psusi@cfl.rr.com>
+Subject: Re: clone breaks replace
+Date: Tue, 11 Jan 2011 10:24:01 -0500
+Message-ID: <4D2C7611.6060204@cfl.rr.com>
+References: <4D262D68.2050804@cfl.rr.com> <20110106213338.GA15325@burratino> <4D276CD2.60607@cfl.rr.com> <20110107205103.GC4629@burratino> <4D278930.7010100@cfl.rr.com> <20110107214907.GA9194@burratino> <20110107220942.GB10343@sigill.intra.peff.net> <4D27B33C.2020907@cfl.rr.com> <20110111054735.GC10094@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 11 16:17:04 2011
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Stephen Bash <bash@genarts.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 11 16:24:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pcfy3-0004az-Lh
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 16:17:04 +0100
+	id 1Pcg4l-0000Ho-M3
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 16:24:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756102Ab1AKPRA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 10:17:00 -0500
-Received: from smtp15.mail.ru ([94.100.176.133]:48667 "EHLO smtp15.mail.ru"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753786Ab1AKPQ6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 10:16:58 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
-	h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Subject:CC:To:Message-ID:Reply-To:From:Date; bh=/rvU+va3fbbQ3VRoy5pr8PaJI5YyoYdxkyeo6TMvfoY=;
-	b=eH60T95iB9R2JbRzk0RpQ0+quW9CJqa9uPSlYRA7OUKap3TTK0zfhdsQlh62Yfw3B2bvigXM7TcIlR8+8UE2lN0+cQrW6jNVr1K//4Z+k3Gk3Cx5Gwn5zwDYrheCS11u;
-Received: from [85.140.106.43] (port=55419 helo=ppp85-140-106-43.pppoe.mtu-net.ru)
-	by smtp15.mail.ru with asmtp 
-	id 1Pcfxx-0003cO-00; Tue, 11 Jan 2011 18:16:57 +0300
-X-Mailer: The Bat! (v3.99.3) Professional
-X-Priority: 3 (Normal)
-In-Reply-To: <m3lj2rbmq5.fsf@localhost.localdomain>
-X-Mras: Ok
+	id S1755817Ab1AKPXz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 10:23:55 -0500
+Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.122]:45913 "EHLO
+	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756039Ab1AKPXx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 10:23:53 -0500
+Authentication-Results: cdptpa-omtalb.mail.rr.com smtp.user=psusi@cfl.rr.com; auth=pass (PLAIN)
+X-Authority-Analysis: v=1.1 cv=3jtQBdTzPyV+fq4oCU/u8ZPrJJGN11HvhaDVxyWhycI= c=1 sm=0 a=IkcTkHD0fZMA:10 a=pg4Dpxby4z7sZisWVyJ9NA==:17 a=Uz8AtSd8N45dNJWDb3YA:9 a=BkpTXpaOqM8OJdE0aRIA:7 a=4j61ZZtaDHG3N279NzMb3GjXiCkA:4 a=QEXdDO2ut3YA:10 a=pg4Dpxby4z7sZisWVyJ9NA==:117
+X-Cloudmark-Score: 0
+X-Originating-IP: 72.242.190.170
+Received: from [72.242.190.170] ([72.242.190.170:1517] helo=[10.1.1.235])
+	by cdptpa-oedge02.mail.rr.com (envelope-from <psusi@cfl.rr.com>)
+	(ecelerity 2.2.3.46 r()) with ESMTPA
+	id B3/6B-02631-7067C2D4; Tue, 11 Jan 2011 15:23:52 +0000
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <20110111054735.GC10094@sigill.intra.peff.net>
+X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164952>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164953>
 
+On 1/11/2011 12:47 AM, Jeff King wrote:
+> Once you have fetched with that view, how locked into that view are you?
+> Certainly you can never push to or be the fetch remote for another
+> repository that does not want to respect that view, because you simply
+> don't have the objects to complete the history for them.
 
-There is one more method using grafts and fast-export/import
-http://ben.straubnet.net/post/939181602/git-grafting-repositories
+If you want to fetch the original history, then it is as simple as git
+--no-replace-objects fetch.  Unless of course, the upstream repository
+actually removed the original history ( or you are pulling from someone
+else who only pulled the truncated history ), possibly transplanting it
+to a historical repository that they should refer you to in the message
+of the replace commit.  Then you just fetch from there instead, and
+viola!  You have the complete original history.
 
-Let it be here too
+> I guess you can get the parent pointer from the real, "non-replaced"
+> object and ask for it. But you can't ask for a specific commit, so for
+> every such truncation, the parent needs to publish an extra ref (but
+> _not_ make it one of the ones fetched by default, or it would nullify
+> your original shallow fetch), and we need to contact them and find that
+> ref.
+
+Yes, either a new branch or separate historical repository could be
+published to pull the original history from, or git would need to pass
+the --no-replace-objects flag to git-upload-pack on the server, causing
+it to ignore the replace and send the original history.
