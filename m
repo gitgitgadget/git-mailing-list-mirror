@@ -1,70 +1,96 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: git notes and core.editor config
-Date: Tue, 11 Jan 2011 13:26:02 +0100
-Message-ID: <201101111326.02277.trast@student.ethz.ch>
-References: <AANLkTi=0BrBV+DLF_QfDi0mMVdz5tCLFsDMBKvw52nzz@mail.gmail.com> <201101111131.17429.johan@herland.net> <AANLkTik-=s-F8dmBRLU8o9LcSztb1P0WnkN5HK_n_No4@mail.gmail.com>
+From: "Philipp Marek" <philipp@marek.priv.at>
+Subject: [RFC] Support for arbitrary tags in commits
+Date: Tue, 11 Jan 2011 13:23:32 +0100 (CET)
+Message-ID: <74b0628dffbd2bc0adabe5e8b0a10960.squirrel@webmail.hitco.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Johan Herland <johan@herland.net>, <git@vger.kernel.org>
-To: Jeenu V <jeenuv@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 11 13:26:16 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 11 13:31:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcdIh-00026M-1f
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 13:26:11 +0100
+	id 1PcdNL-0004c0-SN
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 13:31:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753663Ab1AKM0F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 07:26:05 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:24295 "EHLO edge10.ethz.ch"
+	id S1755510Ab1AKMay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 07:30:54 -0500
+Received: from vps.hitco.at ([84.200.20.238]:53981 "EHLO vps.hitco.at"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753330Ab1AKM0E (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 07:26:04 -0500
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 11 Jan
- 2011 13:26:00 +0100
-Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 11 Jan
- 2011 13:26:02 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
-In-Reply-To: <AANLkTik-=s-F8dmBRLU8o9LcSztb1P0WnkN5HK_n_No4@mail.gmail.com>
-X-Originating-IP: [129.132.153.233]
+	id S1753471Ab1AKMax (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 07:30:53 -0500
+X-Greylist: delayed 432 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Jan 2011 07:30:52 EST
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by vps.hitco.at (Postfix) with ESMTP id 10A6E9C68017
+	for <git@vger.kernel.org>; Tue, 11 Jan 2011 13:23:38 +0100 (CET)
+X-Virus-Scanned: Debian amavisd-new at vps.hitco.at
+X-Spam-Flag: NO
+X-Spam-Score: -4.282
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.282 tagged_above=-999 required=6.31
+	tests=[ALL_TRUSTED=-1.8, AWL=0.117, BAYES_00=-2.599]
+Received: from vps.hitco.at ([127.0.0.1])
+	by localhost (vps.hitco.at [127.0.0.1]) (amavisd-new, port 10024)
+	with ESMTP id u+Wn5AuWQijT for <git@vger.kernel.org>;
+	Tue, 11 Jan 2011 13:23:32 +0100 (CET)
+Received: from webmail.hitco.org (localhost.localdomain [127.0.0.1])
+	by vps.hitco.at (Postfix) with ESMTP id E2F819C68001
+	for <git@vger.kernel.org>; Tue, 11 Jan 2011 13:23:32 +0100 (CET)
+Received: from 86.59.100.100
+        (SquirrelMail authenticated user flip)
+        by webmail.hitco.org with HTTP;
+        Tue, 11 Jan 2011 13:23:32 +0100 (CET)
+User-Agent: SquirrelMail/1.4.15
+X-Priority: 3 (Normal)
+Importance: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164931>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164932>
 
-Jeenu V wrote:
-> On Tue, Jan 11, 2011 at 4:01 PM, Johan Herland <johan@herland.net> wrote:
-> >> In other words, I
-> >> don't think [git-notes] honors shell quoting for editor config variable.
-> >
-> > Indeed, it could, but I cannot immediately see what causes it. In
-> > current 'master', builtin/notes.c launches the editor like this:
-> >
-> >  if (launch_editor(path, &(msg->buf), NULL)) ...
-> >
-> > while builtin/commit.c lauches the editor like this:
-> >
-> >  if (launch_editor(git_path(commit_editmsg), NULL, env)) ...
-[...]
-> $ git --version
-> git version 1.7.0.4
+Hello everybody,
 
-git-notes was a script before 1.7.1, and that was indeed buggy in that
-it used the editor as
+I'd like to attach some additional data to commits.
 
-  ${GIT_EDITOR:-${core_editor:-${VISUAL:-${EDITOR:-vi}}}} "$MSG_FILE"
+The best way I've found (so far) is to put an additional header line in the
+commit header that references an additional blob.
 
-instead of using git_editor() from git-sh-setup, which would have gone
-through eval.
 
-The builtin version of git-notes does not have this problem.
+Currently I've found "tree", "parent", "author", "committer", and so on; git
+accepts additional lines before the "\n\n" separator (and the commit message),
+so that's where I'd like to put the line.
+
+"git fsck" allows that, too; only "rebase -i" and similar don't know about them
+(yet), and discard them.
+
+
+Now I want to ask:
+ * Is this acceptable?
+ * If yes, I'd try to provide a patch to make "amend" and similar keep the
+   header-lines (by collecting them in order - obviously with editing commits
+   a header could exist multiple times).
+ * Perhaps there should be an option for "git-commit" that inserts arbitrary
+   header lines?
+ * Is there some documentation for the commit-file format so that this can be
+   written down?
+ * How should namespace-issues be handled?
+   I can imagine that multiple people want to put data there, how should the
+   tag be allocated?
+   This could be solved by the previous point, ie. there's some page that
+   header tags should be registered at to avoid collisions.
+
+
+Thank you for all feedback.
+
+
+Regards,
+
+Phil
+
 
 -- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Versioning your /etc, /home or even your whole installation?
+             Try fsvs (fsvs.tigris.org)!
