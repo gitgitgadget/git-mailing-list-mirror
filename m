@@ -1,71 +1,106 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH] docs: explain diff.*.binary option
-Date: Tue, 11 Jan 2011 01:11:14 -0500
-Message-ID: <20110111061114.GE10094@sigill.intra.peff.net>
-References: <vpqy670brcb.fsf@bauges.imag.fr>
- <20110105051807.GB5884@sigill.intra.peff.net>
- <vpqr5clsy8g.fsf@bauges.imag.fr>
- <20110109201003.GA4406@sigill.intra.peff.net>
- <7vpqs463o4.fsf@alter.siamese.dyndns.org>
+Subject: Re: bug? in checkout with ambiguous refnames
+Date: Tue, 11 Jan 2011 01:52:07 -0500
+Message-ID: <20110111065207.GF10094@sigill.intra.peff.net>
+References: <20110107104650.GA5399@pengutronix.de>
+ <20110107194909.GB6175@sigill.intra.peff.net>
+ <20110107195417.GC6175@sigill.intra.peff.net>
+ <7vsjx449bv.fsf@alter.siamese.dyndns.org>
+ <7vipy0483h.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org
+Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 11 07:11:24 2011
+X-From: git-owner@vger.kernel.org Tue Jan 11 07:52:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcXRz-0000Gd-74
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 07:11:23 +0100
+	id 1PcY5Z-0005vL-90
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 07:52:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751795Ab1AKGLS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 01:11:18 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:47598 "EHLO peff.net"
+	id S1752971Ab1AKGwM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 01:52:12 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:60529 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751035Ab1AKGLR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 01:11:17 -0500
-Received: (qmail 11527 invoked by uid 111); 11 Jan 2011 06:11:16 -0000
+	id S1751320Ab1AKGwL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 01:52:11 -0500
+Received: (qmail 11845 invoked by uid 111); 11 Jan 2011 06:52:09 -0000
 Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 11 Jan 2011 06:11:16 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Jan 2011 01:11:14 -0500
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 11 Jan 2011 06:52:09 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Jan 2011 01:52:07 -0500
 Content-Disposition: inline
-In-Reply-To: <7vpqs463o4.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <7vipy0483h.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164912>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164913>
 
-On Mon, Jan 10, 2011 at 09:59:07AM -0800, Junio C Hamano wrote:
+On Fri, Jan 07, 2011 at 03:17:22PM -0800, Junio C Hamano wrote:
 
-> Thanks.  I take it that this documents 122aa6f (diff: introduce
-> diff.<driver>.binary, 2008-10-05) where you said...
+> ... And this comes on top (should probably be squashed into one) to really
+> favor a branch over a tag.
 > 
->     This patch introduces a "binary" config option for a diff
->     driver, so that one can explicitly set diff.foo.binary. We
->     default this value to "don't know". That is, setting a diff
->     attribute to "foo" and using "diff.foo.funcname" will have
->     no effect on the binaryness of a file. To get the current
->     behavior, one can set diff.foo.binary to true.
-> 
-> I am scratching my head about the last sentence, though.  Shouldn't that
-> be "false"?  In the olden days, setting diff.foo.funcname made it text but
-> with this change it no longer is the case and instead binaryness is
-> determined by content inspection, so forcing "text" needs to be done by
-> saying "this is _not_ binary", no?
+>  builtin/checkout.c               |   26 ++++++++++----------------
+>  t/t2019-checkout-amiguous-ref.sh |    2 +-
+>  2 files changed, 11 insertions(+), 17 deletions(-)
 
-Yeah, that definitely should be "false". I think it was simply a think-o
-when typing the commit message (and I just did a quick test to double
-check that the behavior described by the message is in fact what
-happens).
+Yeah, that looks sane to me (assuming all three patches squashed
+together). It took me a minute to figure out one subtlety, though:
 
-Reading that thread, too, I think I was a little confused at first back
-then about how diff.*.binary would be used with respect to textconv, but
-between some thinking and JSixt beating some sense into me, it came out
-with at least the correct semantics, if not an accurate commit message.
-:)
+> +		if ((check_ref_format(new.path) != CHECK_REF_FORMAT_OK) ||
+> +		    !resolve_ref(new.path, rev, 1, NULL))
+> +			new.path = NULL; /* not an existing branch */
+> +
+> +		if (!(new.commit = lookup_commit_reference_gently(rev, 1))) {
+
+We are relying on the fact that resolve_ref leaves "rev" alone in the
+case that it does not find anything. Which is mostly true (the only
+exception seems to be if you have a ref with non-hex garbage in it, in
+which case you will get some bogus sha1 in the output). I dunno if it is
+worth making it more explicit, like:
+
+diff --git a/builtin/checkout.c b/builtin/checkout.c
+index f6f6172..afff56f 100644
+--- a/builtin/checkout.c
++++ b/builtin/checkout.c
+@@ -678,7 +678,7 @@ static const char *unique_tracking_name(const char *name)
+ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ {
+ 	struct checkout_opts opts;
+-	unsigned char rev[20];
++	unsigned char rev[20], branch_rev[20];
+ 	const char *arg;
+ 	struct branch_info new;
+ 	struct tree *source_tree = NULL;
+@@ -834,8 +834,10 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
+ 		new.name = arg;
+ 		setup_branch_path(&new);
+ 
+-		if ((check_ref_format(new.path) != CHECK_REF_FORMAT_OK) ||
+-		    !resolve_ref(new.path, rev, 1, NULL))
++		if ((check_ref_format(new.path) == CHECK_REF_FORMAT_OK) &&
++		     resolve_ref(new.path, branch_rev, 1, NULL))
++			hashcpy(rev, branch_rev);
++		else
+ 			new.path = NULL; /* not an existing branch */
+ 
+ 		if (!(new.commit = lookup_commit_reference_gently(rev, 1))) {
+
+My version somehow looks uglier, but I just worry about resolve_ref
+violating this undocumented subtlety sometime in the future.
+
+Also, one other question while we are on the subject. I think we all
+agree that "git checkout $foo" should prefer $foo as a branch. But what
+about "git checkout -b $branch $start_point"? Should $start_point follow
+the same "prefer branches" rule, or should it use the usual ref lookup
+rules?
+
+I was surprised to find that the current behavior is to die(), due to an
+explicit case in branch.c:create_branch.
 
 -Peff
