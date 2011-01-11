@@ -1,88 +1,77 @@
-From: =?iso-8859-1?Q?=22Martin_Kr=FCger=22?= <martin.krueger@gmx.com>
-Subject: Re: Merge two different repositories (v2.4 + v2.5) into the one (v2.4
- -> v2.5). Possible?
-Date: Tue, 11 Jan 2011 12:49:43 +0100
-Message-ID: <20110111114943.40890@gmx.net>
-References: <746745466.20110111134101@mail.ru>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Applying .gitattributes text/eol changes
+Date: Tue, 11 Jan 2011 13:11:46 +0100
+Message-ID: <4D2C4902.4010705@drmicha.warpmail.net>
+References: <4D220500.2000104@syntevo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-To: =?iso-8859-1?B?ItCQ0LvQtdC60YHQtdC5INCo0YPQvNC60LjQvSI=?= 
-	<zapped@mail.ru>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 11 12:49:55 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Marc Strapetz <marc.strapetz@syntevo.com>
+X-From: git-owner@vger.kernel.org Tue Jan 11 13:14:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PccjX-0006Y8-T0
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 12:49:52 +0100
+	id 1Pcd7M-0002du-PR
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 13:14:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755521Ab1AKLtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 06:49:47 -0500
-Received: from mailout-de.gmx.net ([213.165.64.23]:48984 "HELO mail.gmx.net"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
-	id S1752142Ab1AKLtq (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 06:49:46 -0500
-Received: (qmail 16843 invoked by uid 0); 11 Jan 2011 11:49:44 -0000
-Received: from 213.39.246.106 by www049.gmx.net with HTTP;
- Tue, 11 Jan 2011 12:49:42 +0100 (CET)
-In-Reply-To: <746745466.20110111134101@mail.ru>
-X-Authenticated: #34047341
-X-Flags: 0001
-X-Mailer: WWW-Mail 6100 (Global Message Exchange)
-X-Priority: 3
-X-Provags-ID: V01U2FsdGVkX1+f+IRgLUaf2B+arChlofxmF0tWutRODZn3Xy/YNW
- +3T4Wi82mzsJ4UK33Mhbv4sMZo6YAMPkh6eA== 
-X-GMX-UID: gAdmCrFoa2AoVwmzMHYy2gc6OWhhakf9
+	id S1754924Ab1AKMOY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 07:14:24 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33661 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1753484Ab1AKMOX (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Jan 2011 07:14:23 -0500
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 9B46F20594;
+	Tue, 11 Jan 2011 07:14:22 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Tue, 11 Jan 2011 07:14:22 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=fRB2Kl85OKMhv366YDizRvx8N44=; b=Iu0MmOoiMU3QuFAx/CnPABzFSTQrBScyAF0MF7odObLCd3kcdBCQEQ4G358UQ6n7CaAWruuzcklqiiZ+MfFaw+xFvwINMKKhS5boTwIfXFxsOVKZFpGpEt3y6n6p/X7J2aDdTAzMOyGtFboVgKQy59dFWPHk0Y8sXUTjqRQLSxQ=
+X-Sasl-enc: kKF9lzIM0DS/eH+Hd2AD0LUuxjquM7b+gtbrJc3wtghF 1294748062
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 1D91144852D;
+	Tue, 11 Jan 2011 07:14:21 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
+In-Reply-To: <4D220500.2000104@syntevo.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164929>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164930>
 
+Marc Strapetz venit, vidit, dixit 03.01.2011 18:18:
+> I'm looking for an unobtrusive way to apply (committed) changes for
+> text/eol attributes to the working tree. For instance, after having
+> changed "*.txt eol=crlf" to "*.txt eol=lf", all *.txt files should be
+> converted from CRLF to LF endings. The only advice I found so far is to
+> remove .git/index and do a reset --hard. The disadvantage of this
+> approach is that every file will be touched:
 > 
-> Now I'd like to merge them as v2.5 was a continuos branch from v2.4,
-> but without a rebasing (i.e. without a global changing of v2.5
-> repository, which already has another branches)
-> It must look like LAST commit of v2.4 should be a PARENT of FIRST commit
-> of v2.5
+> - although the content does not change, timestamps will be changed. This
+
+The bytewise content does change.
+
+> makes tools like IDEs assume that the file content has been changed.
+
+It may be that the content is semantically equivalent.
+
+> (Even if the timestamps would be properly reset, the replacement of the
+> files would have triggered system file change notifications and I'd
+> expect various tools to still reload these files)
 > 
-> Now there's a question: Is it possible to do so (no rebasing!), and If
-> "yes" then how to?
+> - there will be warnings for files which are locked by other processes
+> (at least on Windows). I'm usually seeing this for JAR files which are
+> not affected by eol-attribute changes at all.
 > 
->
-It's possible with a little arts an crafts. 
-You have 2 friends:  git format-patch & git am .
-With "git format-patch" you  will see what a branch really is:
-a serie of patches.  With "git am"  you can apply these patches to a branch created on the correct point of the commit-history . E voila the branch is recreated in the repository.
+> One solution I could think of which might be helpful in other situations
+> as well would be to have an "--unobtrusive" option for reset which would
+> only replace a file if the content has actually been changed.
 
-In your case:
+How about
 
-On the 2.5 repository master branch:
-git format-patch  INITIAL_COMMITID
+git ls-files \*.txt | xargs touch -a
+git ls-files \*.txt | git checkout
 
-On the 2.4 repository master branch:
-git branch 2.5
-git checkout 2.4
-git reset --hard  INITIAL_COMMITID 
-cat *.patch | git am
-
-E voila you habe both branches in a single repository.
-
-Nearly  same procedure for every  branch of the  2.5 repository
-git checkout branchname 
-git format-patch master
-
-In the 2.4(Contains now both branches.) respository:
-git checkout 2.5
-git branch branchname
-git reset --hard CORRECT_BRANCHBASE
-cat *.patch | git am
-
-Best regards 
-   martin
-
-
-
- 
+?
