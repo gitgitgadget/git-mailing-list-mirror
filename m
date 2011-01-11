@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 2/3] userdiff: simplify word-diff safeguard
-Date: Tue, 11 Jan 2011 15:48:50 -0600
-Message-ID: <20110111214850.GC29133@burratino>
+Subject: [PATCH 3/3] t4034 (diff --word-diff): style suggestions
+Date: Tue, 11 Jan 2011 15:49:57 -0600
+Message-ID: <20110111214957.GD29133@burratino>
 References: <cover.1292688058.git.trast@student.ethz.ch>
  <854c8b6fa8a368bb34cc22d3fc948ae7136ed177.1292688058.git.trast@student.ethz.ch>
  <20110111214707.GA29133@burratino>
@@ -12,45 +12,45 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Michael J Gruber <git@drmicha.warpmail.net>,
 	Matthijs Kooijman <matthijs@stdin.nl>, git@vger.kernel.org
 To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jan 11 22:49:12 2011
+X-From: git-owner@vger.kernel.org Tue Jan 11 22:50:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pcm5X-0002rb-7x
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 22:49:11 +0100
+	id 1Pcm6b-0003PT-Mx
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 22:50:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756144Ab1AKVtF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 16:49:05 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:37155 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753621Ab1AKVtD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 16:49:03 -0500
-Received: by vws16 with SMTP id 16so8709003vws.19
-        for <git@vger.kernel.org>; Tue, 11 Jan 2011 13:49:02 -0800 (PST)
+	id S1756191Ab1AKVuN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 16:50:13 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:65179 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753621Ab1AKVuL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 16:50:11 -0500
+Received: by wyb28 with SMTP id 28so20943060wyb.19
+        for <git@vger.kernel.org>; Tue, 11 Jan 2011 13:50:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:received:received:date:from:to:cc:subject
          :message-id:references:mime-version:content-type:content-disposition
          :in-reply-to:user-agent;
-        bh=pYBbE4x3KOnrQOGgmiJTEZvdJtL8IVi8fs6oxfcobi0=;
-        b=nfWri2s2TbLj/mtXytxbk74ZUoY2uPtqK//E3WXZzDkmn/8o8Qe1oXqQo0ek/ucPp6
-         bwPpGbXeGkkFthiGkhl3cmpnDsbYB95iYVoESyvcT7wmkN76h4dDaTbS9BPHdGFCq71d
-         NjKoAjcoxx4Ond466VyLDLIpRd8LfblBpDikI=
+        bh=OkrrnnCAiG49B9sM4zXQ8jDhqra3e0GHdX4geVs6QwI=;
+        b=csRDMu1dXzVirohIkYbuYOnA+UOkYEmexqQDY8y9Q/4DZ2RocC5nT4MPe356Sruif0
+         mf4bIbnXTGwwv4ZmmuehB3vqqzjsxjiNkppcdfsOpSkW/6UKnw/4dqzIsQtMD4VPRdNu
+         3xKq0AsMcglre2m0wX99sYcm+TT8A+ADv6hY0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=oD3BUnalj1CoGG0fbkNZYxfZYkHP9Jzv3n99mbp4Uxz+M2mX7ExMNYonQr6kVaJd99
-         1J3tXIiv2sLOs2vlcztadkyuqPvHyqXmjaGKHFgPdK3JMtxqWU/fgPycIGNHXP0cBRaP
-         2AzKuFrabLfmlbT0jww16CzIN2cpRYELgaDAc=
-Received: by 10.220.75.209 with SMTP id z17mr27437vcj.225.1294782542051;
-        Tue, 11 Jan 2011 13:49:02 -0800 (PST)
+        b=K39CJ166FnRIHfuCsXwNKBgALDLe3P6FXL8+XP7j8A5NnpN5zz0YWEHd1SABU/O6QI
+         mFcMPbxmFokS7psbwpS9vkbUw+TTbcrmBh6uTNYk9V2gjSKpiQ0uwwMdlG2PJrUQ83Mm
+         hJHG63++VsoDAjYeiPXV3N18o4hN2AuYFpTFU=
+Received: by 10.227.179.77 with SMTP id bp13mr105385wbb.226.1294782609407;
+        Tue, 11 Jan 2011 13:50:09 -0800 (PST)
 Received: from burratino (adsl-69-209-76-37.dsl.chcgil.ameritech.net [69.209.76.37])
-        by mx.google.com with ESMTPS id f17sm11770413vbv.6.2011.01.11.13.49.00
+        by mx.google.com with ESMTPS id m10sm21296060wbc.4.2011.01.11.13.50.06
         (version=SSLv3 cipher=RC4-MD5);
-        Tue, 11 Jan 2011 13:49:01 -0800 (PST)
+        Tue, 11 Jan 2011 13:50:08 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20110111214707.GA29133@burratino>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -58,144 +58,604 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164994>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164995>
 
-git's diff-words support has a detail that can be a little dangerous:
-any text not matched by a given language's tokenization pattern is
-treated as whitespace and changes in such text would go unnoticed.
-Therefore each of the built-in regexes allows a special token type
-consisting of a single non-whitespace character [^[:space:]].
+Rearrange code to be easier to browse:
 
-To make sure UTF-8 sequences remain human readable, the builtin
-regexes also have a special token type for runs of bytes with the high
-bit set.  In English, non-ASCII characters are usually isolated so
-this is analogous to the [^[:space:]] pattern, except it matches a
-single _multibyte_ character despite use of the C locale.
+ - first data
+ - then functions
+ - then test assertions
 
-Unfortunately it is easy to make typos or forget entirely to include
-these catch-all token types when adding support for new languages (see
-v1.7.3.5~16, userdiff: fix typo in ruby and python word regexes,
-2010-12-18).  Avoid this by including them automatically within the
-PATTERNS and IPATTERN macros.
+Mark up inline test vectors as
 
-While at it, change the UTF-8 sequence token type to match exactly one
-non-ASCII multi-byte character, rather than an arbitrary run of them.
+  cat >vector <<-\EOF
+	data
+	data
+  EOF
 
-Suggested-by: Thomas Rast <trast@student.ethz.ch>
+for visual scannability.  Use words like "set up" for tests that set
+up for other tests, to make it obvious which tests are safe to skip.
+Use repeated function calls instead of a loop for the
+language-specific tests, so the invocations can be easily tweaked
+individually (for example if one starts to fail).
+
+This means if you add a new subdirectory to t4034/, it will not be
+automatically used.  I think that's worth it for the added
+explicitness.
+
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
- userdiff.c |   37 +++++++++++++++----------------------
- 1 files changed, 15 insertions(+), 22 deletions(-)
+ t/t4034-diff-words.sh |  476 ++++++++++++++++++++++--------------------------
+ 1 files changed, 218 insertions(+), 258 deletions(-)
 
-diff --git a/userdiff.c b/userdiff.c
-index 2d54536..91586cf 100644
---- a/userdiff.c
-+++ b/userdiff.c
-@@ -8,9 +8,11 @@ static int ndrivers;
- static int drivers_alloc;
+diff --git a/t/t4034-diff-words.sh b/t/t4034-diff-words.sh
+index 2647191..c3b1c48 100755
+--- a/t/t4034-diff-words.sh
++++ b/t/t4034-diff-words.sh
+@@ -4,346 +4,306 @@ test_description='word diff colors'
  
- #define PATTERNS(name, pattern, word_regex)			\
--	{ name, NULL, -1, { pattern, REG_EXTENDED }, word_regex }
-+	{ name, NULL, -1, { pattern, REG_EXTENDED },		\
-+	  word_regex "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+" }
- #define IPATTERN(name, pattern, word_regex)			\
--	{ name, NULL, -1, { pattern, REG_EXTENDED | REG_ICASE }, word_regex }
-+	{ name, NULL, -1, { pattern, REG_EXTENDED | REG_ICASE }, \
-+	  word_regex "|[^[:space:]]|[\xc0-\xff][\x80-\xbf]+" }
- static struct userdiff_driver builtin_drivers[] = {
- IPATTERN("fortran",
- 	 "!^([C*]|[ \t]*!)\n"
-@@ -24,10 +26,9 @@ IPATTERN("fortran",
- 	  * Don't worry about format statements without leading digits since
- 	  * they would have been matched above as a variable anyway. */
- 	 "|[-+]?[0-9.]+([AaIiDdEeFfLlTtXx][Ss]?[-+]?[0-9.]*)?(_[a-zA-Z0-9][a-zA-Z0-9_]*)?"
--	 "|//|\\*\\*|::|[/<>=]="
--	 "|[^[:space:]]|[\x80-\xff]+"),
-+	 "|//|\\*\\*|::|[/<>=]="),
- PATTERNS("html", "^[ \t]*(<[Hh][1-6][ \t].*>.*)$",
--	 "[^<>= \t]+|[^[:space:]]|[\x80-\xff]+"),
-+	 "[^<>= \t]+"),
- PATTERNS("java",
- 	 "!^[ \t]*(catch|do|for|if|instanceof|new|return|switch|throw|while)\n"
- 	 "^[ \t]*(([A-Za-z_][A-Za-z_0-9]*[ \t]+)+[A-Za-z_][A-Za-z_0-9]*[ \t]*\\([^;]*)$",
-@@ -35,8 +36,7 @@ PATTERNS("java",
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
- 	 "|[-+*/<>%&^|=!]="
--	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"
--	 "|[^[:space:]]|[\x80-\xff]+"),
-+	 "|--|\\+\\+|<<=?|>>>?=?|&&|\\|\\|"),
- PATTERNS("objc",
- 	 /* Negate C statements that can look like functions */
- 	 "!^[ \t]*(do|for|if|else|return|switch|while)\n"
-@@ -49,8 +49,7 @@ PATTERNS("objc",
- 	 /* -- */
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
--	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"
--	 "|[^[:space:]]|[\x80-\xff]+"),
-+	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"),
- PATTERNS("pascal",
- 	 "^((procedure|function|constructor|destructor|interface|"
- 		"implementation|initialization|finalization)[ \t]*.*)$"
-@@ -59,33 +58,29 @@ PATTERNS("pascal",
- 	 /* -- */
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+"
--	 "|<>|<=|>=|:=|\\.\\."
--	 "|[^[:space:]]|[\x80-\xff]+"),
-+	 "|<>|<=|>=|:=|\\.\\."),
- PATTERNS("php",
- 	 "^[\t ]*(((public|protected|private|static)[\t ]+)*function.*)$\n"
- 	 "^[\t ]*(class.*)$",
- 	 /* -- */
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+"
--	 "|[-+*/<>%&^|=!.]=|--|\\+\\+|<<=?|>>=?|===|&&|\\|\\||::|->"
--	 "|[^[:space:]]|[\x80-\xff]+"),
-+	 "|[-+*/<>%&^|=!.]=|--|\\+\\+|<<=?|>>=?|===|&&|\\|\\||::|->"),
- PATTERNS("python", "^[ \t]*((class|def)[ \t].*)$",
- 	 /* -- */
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+[jJlL]?|0[xX]?[0-9a-fA-F]+[lL]?"
--	 "|[-+*/<>%&^|=!]=|//=?|<<=?|>>=?|\\*\\*=?"
--	 "|[^[:space:]]|[\x80-\xff]+"),
-+	 "|[-+*/<>%&^|=!]=|//=?|<<=?|>>=?|\\*\\*=?"),
- 	 /* -- */
- PATTERNS("ruby", "^[ \t]*((class|module|def)[ \t].*)$",
- 	 /* -- */
- 	 "(@|@@|\\$)?[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+|0[xXbB]?[0-9a-fA-F]+|\\?(\\\\C-)?(\\\\M-)?."
--	 "|//=?|[-+*/<>%&^|=!]=|<<=?|>>=?|===|\\.{1,3}|::|[!=]~"
--	 "|[^[:space:]]|[\x80-\xff]+"),
-+	 "|//=?|[-+*/<>%&^|=!]=|<<=?|>>=?|===|\\.{1,3}|::|[!=]~"),
- PATTERNS("bibtex", "(@[a-zA-Z]{1,}[ \t]*\\{{0,1}[ \t]*[^ \t\"@',\\#}{~%]*).*$",
- 	 "[={}\"]|[^={}\" \t]+"),
- PATTERNS("tex", "^(\\\\((sub)*section|chapter|part)\\*{0,1}\\{.*)$",
--	 "\\\\[a-zA-Z@]+|\\\\.|[a-zA-Z0-9\x80-\xff]+|[^[:space:]]"),
-+	 "\\\\[a-zA-Z@]+|\\\\.|[a-zA-Z0-9\x80-\xff]+"),
- PATTERNS("cpp",
- 	 /* Jump targets or access declarations */
- 	 "!^[ \t]*[A-Za-z_][A-Za-z_0-9]*:.*$\n"
-@@ -96,8 +91,7 @@ PATTERNS("cpp",
- 	 /* -- */
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
--	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"
--	 "|[^[:space:]]|[\x80-\xff]+"),
-+	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"),
- PATTERNS("csharp",
- 	 /* Keywords */
- 	 "!^[ \t]*(do|while|for|if|else|instanceof|new|return|switch|case|throw|catch|using)\n"
-@@ -112,8 +106,7 @@ PATTERNS("csharp",
- 	 /* -- */
- 	 "[a-zA-Z_][a-zA-Z0-9_]*"
- 	 "|[-+0-9.e]+[fFlL]?|0[xXbB]?[0-9a-fA-F]+[lL]?"
--	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"
--	 "|[^[:space:]]|[\x80-\xff]+"),
-+	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"),
- { "default", NULL, -1, { NULL, 0 } },
- };
- #undef PATTERNS
+ . ./test-lib.sh
+ 
++cat >pre.simple <<-\EOF
++	h(4)
++
++	a = b + c
++EOF
++cat >post.simple <<-\EOF
++	h(4),hh[44]
++
++	a = b + c
++
++	aa = a
++
++	aeff = aeff * ( aaa )
++EOF
++cat >expect.letter-runs-are-words <<-\EOF
++	<BOLD>diff --git a/pre b/post<RESET>
++	<BOLD>index 330b04f..5ed8eff 100644<RESET>
++	<BOLD>--- a/pre<RESET>
++	<BOLD>+++ b/post<RESET>
++	<CYAN>@@ -1,3 +1,7 @@<RESET>
++	h(4),<GREEN>hh<RESET>[44]
++
++	a = b + c<RESET>
++
++	<GREEN>aa = a<RESET>
++
++	<GREEN>aeff = aeff * ( aaa<RESET> )
++EOF
++cat >expect.non-whitespace-is-word <<-\EOF
++	<BOLD>diff --git a/pre b/post<RESET>
++	<BOLD>index 330b04f..5ed8eff 100644<RESET>
++	<BOLD>--- a/pre<RESET>
++	<BOLD>+++ b/post<RESET>
++	<CYAN>@@ -1,3 +1,7 @@<RESET>
++	h(4)<GREEN>,hh[44]<RESET>
++
++	a = b + c<RESET>
++
++	<GREEN>aa = a<RESET>
++
++	<GREEN>aeff = aeff * ( aaa )<RESET>
++EOF
++
++word_diff () {
++	test_must_fail git diff --no-index "$@" pre post >output &&
++	test_decode_color <output >output.decrypted &&
++	test_cmp expect output.decrypted
++}
++
++test_language_driver () {
++	lang=$1
++	test_expect_success "diff driver '$lang'" '
++		cp "$TEST_DIRECTORY/t4034/'"$lang"'/pre" \
++			"$TEST_DIRECTORY/t4034/'"$lang"'/post" \
++			"$TEST_DIRECTORY/t4034/'"$lang"'/expect" . &&
++		echo "* diff='"$lang"'" >.gitattributes &&
++		word_diff --color-words
++	'
++}
++
+ test_expect_success setup '
+-
+ 	git config diff.color.old red &&
+ 	git config diff.color.new green &&
+ 	git config diff.color.func magenta
+-
+ '
+ 
+-word_diff () {
+-	test_must_fail git diff --no-index "$@" pre post > output &&
+-	test_decode_color <output >output.decrypted &&
+-	test_cmp expect output.decrypted
+-}
+-
+-cat > pre <<\EOF
+-h(4)
+-
+-a = b + c
+-EOF
+-
+-cat > post <<\EOF
+-h(4),hh[44]
+-
+-a = b + c
+-
+-aa = a
+-
+-aeff = aeff * ( aaa )
+-EOF
+-
+-cat > expect <<\EOF
+-<BOLD>diff --git a/pre b/post<RESET>
+-<BOLD>index 330b04f..5ed8eff 100644<RESET>
+-<BOLD>--- a/pre<RESET>
+-<BOLD>+++ b/post<RESET>
+-<CYAN>@@ -1,3 +1,7 @@<RESET>
+-<RED>h(4)<RESET><GREEN>h(4),hh[44]<RESET>
+-
+-a = b + c<RESET>
+-
+-<GREEN>aa = a<RESET>
+-
+-<GREEN>aeff = aeff * ( aaa )<RESET>
+-EOF
++test_expect_success 'set up pre and post with runs of whitespace' '
++	cp pre.simple pre &&
++	cp post.simple post
++'
+ 
+ test_expect_success 'word diff with runs of whitespace' '
++	cat >expect <<-\EOF &&
++		<BOLD>diff --git a/pre b/post<RESET>
++		<BOLD>index 330b04f..5ed8eff 100644<RESET>
++		<BOLD>--- a/pre<RESET>
++		<BOLD>+++ b/post<RESET>
++		<CYAN>@@ -1,3 +1,7 @@<RESET>
++		<RED>h(4)<RESET><GREEN>h(4),hh[44]<RESET>
+ 
+-	word_diff --color-words
++		a = b + c<RESET>
+ 
+-'
+-
+-test_expect_success '--word-diff=color' '
+-
+-	word_diff --word-diff=color
+-
+-'
+-
+-test_expect_success '--color --word-diff=color' '
++		<GREEN>aa = a<RESET>
+ 
++		<GREEN>aeff = aeff * ( aaa )<RESET>
++	EOF
++	word_diff --color-words &&
++	word_diff --word-diff=color &&
+ 	word_diff --color --word-diff=color
+-
+ '
+ 
+-sed 's/#.*$//' > expect <<EOF
+-diff --git a/pre b/post
+-index 330b04f..5ed8eff 100644
+---- a/pre
+-+++ b/post
+-@@ -1,3 +1,7 @@
+--h(4)
+-+h(4),hh[44]
+-~
+- # significant space
+-~
+- a = b + c
+-~
+-~
+-+aa = a
+-~
+-~
+-+aeff = aeff * ( aaa )
+-~
+-EOF
+-
+ test_expect_success '--word-diff=porcelain' '
+-
++	sed 's/#.*$//' >expect <<-\EOF &&
++		diff --git a/pre b/post
++		index 330b04f..5ed8eff 100644
++		--- a/pre
++		+++ b/post
++		@@ -1,3 +1,7 @@
++		-h(4)
++		+h(4),hh[44]
++		~
++		 # significant space
++		~
++		 a = b + c
++		~
++		~
++		+aa = a
++		~
++		~
++		+aeff = aeff * ( aaa )
++		~
++	EOF
+ 	word_diff --word-diff=porcelain
+-
+ '
+ 
+-cat > expect <<EOF
+-diff --git a/pre b/post
+-index 330b04f..5ed8eff 100644
+---- a/pre
+-+++ b/post
+-@@ -1,3 +1,7 @@
+-[-h(4)-]{+h(4),hh[44]+}
+-
+-a = b + c
+-
+-{+aa = a+}
+-
+-{+aeff = aeff * ( aaa )+}
+-EOF
+-
+ test_expect_success '--word-diff=plain' '
++	cat >expect <<-\EOF &&
++		diff --git a/pre b/post
++		index 330b04f..5ed8eff 100644
++		--- a/pre
++		+++ b/post
++		@@ -1,3 +1,7 @@
++		[-h(4)-]{+h(4),hh[44]+}
+ 
+-	word_diff --word-diff=plain
++		a = b + c
+ 
+-'
+-
+-test_expect_success '--word-diff=plain --no-color' '
++		{+aa = a+}
+ 
++		{+aeff = aeff * ( aaa )+}
++	EOF
++	word_diff --word-diff=plain &&
+ 	word_diff --word-diff=plain --no-color
+-
+ '
+ 
+-cat > expect <<EOF
+-<BOLD>diff --git a/pre b/post<RESET>
+-<BOLD>index 330b04f..5ed8eff 100644<RESET>
+-<BOLD>--- a/pre<RESET>
+-<BOLD>+++ b/post<RESET>
+-<CYAN>@@ -1,3 +1,7 @@<RESET>
+-<RED>[-h(4)-]<RESET><GREEN>{+h(4),hh[44]+}<RESET>
+-
+-a = b + c<RESET>
+-
+-<GREEN>{+aa = a+}<RESET>
+-
+-<GREEN>{+aeff = aeff * ( aaa )+}<RESET>
+-EOF
+-
+ test_expect_success '--word-diff=plain --color' '
++	cat >expect <<-\EOF &&
++		<BOLD>diff --git a/pre b/post<RESET>
++		<BOLD>index 330b04f..5ed8eff 100644<RESET>
++		<BOLD>--- a/pre<RESET>
++		<BOLD>+++ b/post<RESET>
++		<CYAN>@@ -1,3 +1,7 @@<RESET>
++		<RED>[-h(4)-]<RESET><GREEN>{+h(4),hh[44]+}<RESET>
+ 
++		a = b + c<RESET>
++
++		<GREEN>{+aa = a+}<RESET>
++
++		<GREEN>{+aeff = aeff * ( aaa )+}<RESET>
++	EOF
+ 	word_diff --word-diff=plain --color
+-
+ '
+ 
+-cat > expect <<\EOF
+-<BOLD>diff --git a/pre b/post<RESET>
+-<BOLD>index 330b04f..5ed8eff 100644<RESET>
+-<BOLD>--- a/pre<RESET>
+-<BOLD>+++ b/post<RESET>
+-<CYAN>@@ -1 +1 @@<RESET>
+-<RED>h(4)<RESET><GREEN>h(4),hh[44]<RESET>
+-<CYAN>@@ -3,0 +4,4 @@<RESET> <RESET><MAGENTA>a = b + c<RESET>
+-
+-<GREEN>aa = a<RESET>
+-
+-<GREEN>aeff = aeff * ( aaa )<RESET>
+-EOF
+-
+ test_expect_success 'word diff without context' '
++	cat >expect <<-\EOF &&
++		<BOLD>diff --git a/pre b/post<RESET>
++		<BOLD>index 330b04f..5ed8eff 100644<RESET>
++		<BOLD>--- a/pre<RESET>
++		<BOLD>+++ b/post<RESET>
++		<CYAN>@@ -1 +1 @@<RESET>
++		<RED>h(4)<RESET><GREEN>h(4),hh[44]<RESET>
++		<CYAN>@@ -3,0 +4,4 @@<RESET> <RESET><MAGENTA>a = b + c<RESET>
+ 
++		<GREEN>aa = a<RESET>
++
++		<GREEN>aeff = aeff * ( aaa )<RESET>
++	EOF
+ 	word_diff --color-words --unified=0
+-
+ '
+ 
+-cat > expect <<\EOF
+-<BOLD>diff --git a/pre b/post<RESET>
+-<BOLD>index 330b04f..5ed8eff 100644<RESET>
+-<BOLD>--- a/pre<RESET>
+-<BOLD>+++ b/post<RESET>
+-<CYAN>@@ -1,3 +1,7 @@<RESET>
+-h(4),<GREEN>hh<RESET>[44]
+-
+-a = b + c<RESET>
+-
+-<GREEN>aa = a<RESET>
+-
+-<GREEN>aeff = aeff * ( aaa<RESET> )
+-EOF
+-cp expect expect.letter-runs-are-words
+-
+ test_expect_success 'word diff with a regular expression' '
+-
++	cp expect.letter-runs-are-words expect &&
+ 	word_diff --color-words="[a-z]+"
+-
+ '
+ 
+-test_expect_success 'set a diff driver' '
++test_expect_success 'set up a diff driver' '
+ 	git config diff.testdriver.wordRegex "[^[:space:]]" &&
+-	cat <<EOF > .gitattributes
+-pre diff=testdriver
+-post diff=testdriver
+-EOF
++	cat <<-\EOF >.gitattributes
++		pre diff=testdriver
++		post diff=testdriver
++	EOF
+ '
+ 
+ test_expect_success 'option overrides .gitattributes' '
+-
++	cp expect.letter-runs-are-words expect &&
+ 	word_diff --color-words="[a-z]+"
+-
+ '
+ 
+-cat > expect <<\EOF
+-<BOLD>diff --git a/pre b/post<RESET>
+-<BOLD>index 330b04f..5ed8eff 100644<RESET>
+-<BOLD>--- a/pre<RESET>
+-<BOLD>+++ b/post<RESET>
+-<CYAN>@@ -1,3 +1,7 @@<RESET>
+-h(4)<GREEN>,hh[44]<RESET>
+-
+-a = b + c<RESET>
+-
+-<GREEN>aa = a<RESET>
+-
+-<GREEN>aeff = aeff * ( aaa )<RESET>
+-EOF
+-cp expect expect.non-whitespace-is-word
+-
+ test_expect_success 'use regex supplied by driver' '
+-
++	cp expect.non-whitespace-is-word expect &&
+ 	word_diff --color-words
+-
+ '
+ 
+-test_expect_success 'set diff.wordRegex option' '
++test_expect_success 'set up diff.wordRegex option' '
+ 	git config diff.wordRegex "[[:alnum:]]+"
+ '
+ 
+-cp expect.letter-runs-are-words expect
+-
+ test_expect_success 'command-line overrides config' '
++	cp expect.letter-runs-are-words expect &&
+ 	word_diff --color-words="[a-z]+"
+ '
+ 
+-cat > expect <<\EOF
+-<BOLD>diff --git a/pre b/post<RESET>
+-<BOLD>index 330b04f..5ed8eff 100644<RESET>
+-<BOLD>--- a/pre<RESET>
+-<BOLD>+++ b/post<RESET>
+-<CYAN>@@ -1,3 +1,7 @@<RESET>
+-h(4),<GREEN>{+hh+}<RESET>[44]
+-
+-a = b + c<RESET>
+-
+-<GREEN>{+aa = a+}<RESET>
+-
+-<GREEN>{+aeff = aeff * ( aaa+}<RESET> )
+-EOF
+-
+ test_expect_success 'command-line overrides config: --word-diff-regex' '
++	cat >expect <<-\EOF &&
++		<BOLD>diff --git a/pre b/post<RESET>
++		<BOLD>index 330b04f..5ed8eff 100644<RESET>
++		<BOLD>--- a/pre<RESET>
++		<BOLD>+++ b/post<RESET>
++		<CYAN>@@ -1,3 +1,7 @@<RESET>
++		h(4),<GREEN>{+hh+}<RESET>[44]
++
++		a = b + c<RESET>
++
++		<GREEN>{+aa = a+}<RESET>
++
++		<GREEN>{+aeff = aeff * ( aaa+}<RESET> )
++	EOF
+ 	word_diff --color --word-diff-regex="[a-z]+"
+ '
+ 
+-cp expect.non-whitespace-is-word expect
+-
+ test_expect_success '.gitattributes override config' '
++	cp expect.non-whitespace-is-word expect &&
+ 	word_diff --color-words
+ '
+ 
+-test_expect_success 'remove diff driver regex' '
+-	git config --unset diff.testdriver.wordRegex
++test_expect_success 'setup: remove diff driver regex' '
++	test_might_fail git config --unset diff.testdriver.wordRegex
+ '
+ 
+-cat > expect <<\EOF
+-<BOLD>diff --git a/pre b/post<RESET>
+-<BOLD>index 330b04f..5ed8eff 100644<RESET>
+-<BOLD>--- a/pre<RESET>
+-<BOLD>+++ b/post<RESET>
+-<CYAN>@@ -1,3 +1,7 @@<RESET>
+-h(4),<GREEN>hh[44<RESET>]
+-
+-a = b + c<RESET>
+-
+-<GREEN>aa = a<RESET>
+-
+-<GREEN>aeff = aeff * ( aaa<RESET> )
+-EOF
+-
+ test_expect_success 'use configured regex' '
++	cat >expect <<-\EOF &&
++		<BOLD>diff --git a/pre b/post<RESET>
++		<BOLD>index 330b04f..5ed8eff 100644<RESET>
++		<BOLD>--- a/pre<RESET>
++		<BOLD>+++ b/post<RESET>
++		<CYAN>@@ -1,3 +1,7 @@<RESET>
++		h(4),<GREEN>hh[44<RESET>]
++
++		a = b + c<RESET>
++
++		<GREEN>aa = a<RESET>
++
++		<GREEN>aeff = aeff * ( aaa<RESET> )
++	EOF
+ 	word_diff --color-words
+ '
+ 
+-echo 'aaa (aaa)' > pre
+-echo 'aaa (aaa) aaa' > post
+-
+-cat > expect <<\EOF
+-<BOLD>diff --git a/pre b/post<RESET>
+-<BOLD>index c29453b..be22f37 100644<RESET>
+-<BOLD>--- a/pre<RESET>
+-<BOLD>+++ b/post<RESET>
+-<CYAN>@@ -1 +1 @@<RESET>
+-aaa (aaa) <GREEN>aaa<RESET>
+-EOF
+-
+ test_expect_success 'test parsing words for newline' '
+-
++	echo "aaa (aaa)" >pre &&
++	echo "aaa (aaa) aaa" >post &&
++	cat >expect <<-\EOF &&
++		<BOLD>diff --git a/pre b/post<RESET>
++		<BOLD>index c29453b..be22f37 100644<RESET>
++		<BOLD>--- a/pre<RESET>
++		<BOLD>+++ b/post<RESET>
++		<CYAN>@@ -1 +1 @@<RESET>
++		aaa (aaa) <GREEN>aaa<RESET>
++	EOF
+ 	word_diff --color-words="a+"
+-
+-
+ '
+ 
+-echo '(:' > pre
+-echo '(' > post
+-
+-cat > expect <<\EOF
+-<BOLD>diff --git a/pre b/post<RESET>
+-<BOLD>index 289cb9d..2d06f37 100644<RESET>
+-<BOLD>--- a/pre<RESET>
+-<BOLD>+++ b/post<RESET>
+-<CYAN>@@ -1 +1 @@<RESET>
+-(<RED>:<RESET>
+-EOF
+-
+ test_expect_success 'test when words are only removed at the end' '
+-
++	echo "(:" >pre &&
++	echo "(" >post &&
++	cat >expect <<-\EOF &&
++		<BOLD>diff --git a/pre b/post<RESET>
++		<BOLD>index 289cb9d..2d06f37 100644<RESET>
++		<BOLD>--- a/pre<RESET>
++		<BOLD>+++ b/post<RESET>
++		<CYAN>@@ -1 +1 @@<RESET>
++		(<RED>:<RESET>
++	EOF
+ 	word_diff --color-words=.
+-
+ '
+ 
+-cat > expect <<\EOF
+-diff --git a/pre b/post
+-index 289cb9d..2d06f37 100644
+---- a/pre
+-+++ b/post
+-@@ -1 +1 @@
+--(:
+-+(
+-EOF
+-
+ test_expect_success '--word-diff=none' '
+-
++	echo "(:" >pre &&
++	echo "(" >post &&
++	cat >expect <<-\EOF &&
++		diff --git a/pre b/post
++		index 289cb9d..2d06f37 100644
++		--- a/pre
++		+++ b/post
++		@@ -1 +1 @@
++		-(:
++		+(
++	EOF
+ 	word_diff --word-diff=plain --word-diff=none
+-
+ '
+ 
+-word_diff_for_language () {
+-	cp "$TEST_DIRECTORY/t4034/$1/pre" \
+-		"$TEST_DIRECTORY/t4034/$1/post" \
+-		"$TEST_DIRECTORY/t4034/$1/expect" . &&
+-	echo "* diff=$1" >.gitattributes &&
+-	word_diff --color-words && cp output output.$1
+-}
+-
+-for lang_dir in $TEST_DIRECTORY/t4034/*; do
+-	lang=${lang_dir#$TEST_DIRECTORY/t4034/}
+-	test_expect_success "diff driver '$lang' has sane word regex" "
+-		word_diff_for_language $lang
+-	"
+-done
++test_language_driver bibtex
++test_language_driver cpp
++test_language_driver csharp
++test_language_driver fortran
++test_language_driver html
++test_language_driver java
++test_language_driver objc
++test_language_driver pascal
++test_language_driver php
++test_language_driver python
++test_language_driver ruby
++test_language_driver tex
+ 
+ test_done
 -- 
 1.7.4.rc1
