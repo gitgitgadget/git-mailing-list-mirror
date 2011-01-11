@@ -1,74 +1,78 @@
-From: Marc Strapetz <marc.strapetz@syntevo.com>
-Subject: Re: Applying .gitattributes text/eol changes
-Date: Tue, 11 Jan 2011 15:02:07 +0100
-Message-ID: <4D2C62DF.20706@syntevo.com>
-References: <4D220500.2000104@syntevo.com> <4D2C4902.4010705@drmicha.warpmail.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Michael J Gruber <git@drmicha.warpmail.net>
-X-From: git-owner@vger.kernel.org Tue Jan 11 15:02:19 2011
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH] commit: suggest --amend --reset-author to fix commiter identity
+Date: Tue, 11 Jan 2011 15:07:40 +0100
+Message-ID: <1294754860-17701-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <vpq1v4nirzz.fsf@bauges.imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Tue Jan 11 15:08:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pcenh-0003SK-Ur
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 15:02:18 +0100
+	id 1PcetN-0006kS-6u
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 15:08:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754144Ab1AKOCN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 09:02:13 -0500
-Received: from syntevo.com ([85.214.39.145]:53426 "EHLO syntevo.com"
+	id S932182Ab1AKOID (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 09:08:03 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:33822 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755970Ab1AKOCM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 09:02:12 -0500
-Received: from [127.0.0.1] (localhost [127.0.0.1]) with ESMTPSA id EE65C174006
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <4D2C4902.4010705@drmicha.warpmail.net>
-X-Enigmail-Version: 1.1.1
+	id S932179Ab1AKOIB (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 09:08:01 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p0BE7gNB020535
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Tue, 11 Jan 2011 15:07:42 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1Pcesx-0008NY-Fj; Tue, 11 Jan 2011 15:07:43 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1Pcesx-0005ID-B7; Tue, 11 Jan 2011 15:07:43 +0100
+X-Mailer: git-send-email 1.7.4.rc0.2.g3e22c.dirty
+In-Reply-To: <vpq1v4nirzz.fsf@bauges.imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 11 Jan 2011 15:07:42 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p0BE7gNB020535
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1295359662.60816@fBIt76xrvjpviLwdqa85kA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164946>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164947>
 
-On 11.01.2011 13:11, Michael J Gruber wrote:
-> Marc Strapetz venit, vidit, dixit 03.01.2011 18:18:
->> I'm looking for an unobtrusive way to apply (committed) changes for
->> text/eol attributes to the working tree. For instance, after having
->> changed "*.txt eol=crlf" to "*.txt eol=lf", all *.txt files should be
->> converted from CRLF to LF endings. The only advice I found so far is to
->> remove .git/index and do a reset --hard. The disadvantage of this
->> approach is that every file will be touched:
->>
->> - although the content does not change, timestamps will be changed. This
-> 
-> The bytewise content does change.
+Since the message advise to fix the configuration first, the advantage
+of this command is that it is cut-and-paste ready, while using
+--author='...' requires the user to type his name and email a second
+time.
 
-The content has only changed for *.txt files, but the timestamps of
-*all* files are updated. I guess (but didn't verify from code), that in
-case of missing .git/index, Git freshly writes all working tree files,
-ignoring already existing files which already have the correct content.
-Maybe this behavior is by intention and makes sense in some cases. In my
-case it has adverse effects on IDEs and probably other tools which are
-monitoring the file system.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+ builtin/commit.c |    6 +++++-
+ 1 files changed, 5 insertions(+), 1 deletions(-)
 
->> One solution I could think of which might be helpful in other situations
->> as well would be to have an "--unobtrusive" option for reset which would
->> only replace a file if the content has actually been changed.
-> 
-> How about
-> 
-> git ls-files \*.txt | xargs touch -a
-> git ls-files \*.txt | git checkout
-
-That won't be helpful as it requires me to know what has changed.
-
---
-Best regards,
-Marc Strapetz
-=============
-syntevo GmbH
-http://www.syntevo.com
-http://blog.syntevo.com
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 22ba54f..440223c 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -47,7 +47,11 @@ static const char implicit_ident_advice[] =
+ "\n"
+ "If the identity used for this commit is wrong, you can fix it with:\n"
+ "\n"
+-"    git commit --amend --author='Your Name <you@example.com>'\n";
++"    git commit --amend --author='Your Name <you@example.com>'\n"
++"\n"
++"or\n"
++"\n"
++"    git commit --amend --reset-author\n";
+ 
+ static const char empty_amend_advice[] =
+ "You asked to amend the most recent commit, but doing so would make\n"
+-- 
+1.7.4.rc0.2.g3e22c.dirty
