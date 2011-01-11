@@ -1,196 +1,69 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: bug? in checkout with ambiguous refnames
-Date: Tue, 11 Jan 2011 15:00:38 -0500
-Message-ID: <20110111200037.GA24777@sigill.intra.peff.net>
-References: <20110107104650.GA5399@pengutronix.de>
- <20110107194909.GB6175@sigill.intra.peff.net>
- <20110107195417.GC6175@sigill.intra.peff.net>
- <20110111065509.GG10094@sigill.intra.peff.net>
- <20110111192020.GA15608@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] fast-import: Don't barf if import-marks file is missing
+Date: Tue, 11 Jan 2011 12:05:32 -0800
+Message-ID: <7vei8j435f.fsf@alter.siamese.dyndns.org>
+References: <7vwrmd7kxe.fsf@alter.siamese.dyndns.org>
+ <1294766058-29739-1-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 11 21:01:02 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 11 21:06:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PckOf-0005SX-HR
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 21:00:49 +0100
+	id 1PckTx-00022s-6d
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 21:06:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932300Ab1AKUAp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 15:00:45 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:51259 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932206Ab1AKUAn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 15:00:43 -0500
-Received: (qmail 15852 invoked by uid 111); 11 Jan 2011 20:00:40 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 11 Jan 2011 20:00:40 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Jan 2011 15:00:38 -0500
-Content-Disposition: inline
-In-Reply-To: <20110111192020.GA15608@sigill.intra.peff.net>
+	id S932326Ab1AKUGM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 15:06:12 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:41839 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932206Ab1AKUGL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 15:06:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5D78436E3;
+	Tue, 11 Jan 2011 15:06:49 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=Pvq2t6t5jCDAmZw31aGpYM6lB8o=; b=HKiAcI
+	3gSIB37bCnyV3HXf5CLYANz13d2hs6w1H/EjBh3YWZfqMe5JdS9tvxOsSlHr2wug
+	eXYWN1Yr8oYHEziNpFqyh7EfcrFvMYjCTzvo0ilwmUWABe4zXEVXykahGCRsGo9F
+	kclEm+/uwA+sW6eqIQ4PDa2pAlN/fwMf0BpR4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=k1dnq1nRB40bpHe+2SDhcdkkWjtV6DDy
+	jkdYFyUmVljUzEMJ3ILsvB1Bffd5/AMXpES7B9kVfoEgwVtTmz2AdzAcWfcP2SV6
+	A52duq2RMcxL5xfeCdsnep3xzwdVhjro1BheKvxXYwjbiVMC6Fyien+hhH2stUtE
+	LTSz7qpyVdU=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 24BC336DC;
+	Tue, 11 Jan 2011 15:06:46 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9F5AC36AB; Tue, 11 Jan 2011
+ 15:06:15 -0500 (EST)
+In-Reply-To: <1294766058-29739-1-git-send-email-artagnon@gmail.com> (Ramkumar
+ Ramachandra's message of "Tue\, 11 Jan 2011 22\:44\:18 +0530")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 51009F4C-1DBE-11E0-BED5-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164986>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164987>
 
-On Tue, Jan 11, 2011 at 02:20:20PM -0500, Jeff King wrote:
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
-> Hmm. One other thing to note on these ambiguity tests.
+> The --import-marks option used to barf when the specified marks file
+> doesn't exist. Change its meaning to "read marks file if it exists" so
+> that callers don't have to handle bootstraping as a special case.
 
-I was starting to get confused with all the back-and-forth, so here is a
-squashed patch that contains everything discussed so far: my original
-tests, your squashed patches, my test fixups, and the less-subtle
-resolve_ref thing.
+It is very plausible that people other than you are relying on "barf if it
+does not exist" semantics, and the above does not justify breaking their
+workflow.
 
-I didn't bisect the breakage, so I'm not sure how far back it goes. But
-this is potentially maint-worthy.
-
-This doesn't include any tests or fixes for "git checkout -b newbranch
-ambiguous". I'll work on that separately as a patch on top.
-
--- >8 --
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] checkout: fix bug with ambiguous refs
-
-The usual dwim_ref lookup prefers tags to branches. Because
-checkout primarily works on branches, though, we switch that
-behavior to prefer branches.
-
-However, there was a bug in the implementation in which we
-used lookup_commit_reference (which used the regular lookup
-rules) to get the actual commit to checkout. Checking out an
-ambiguous ref therefore ended up putting us in an extremely
-broken state in which we wrote the branch ref into HEAD, but
-actually checked out the tree for the tag.
-
-This patch fixes the bug by always attempting to pull the
-commit to be checked out from the branch-ified version of
-the name we were given.
-
-Patch by Junio, tests and commit message from Jeff King.
-
-Signed-off-by: Jeff King <peff@peff.net>
----
- builtin/checkout.c               |   23 ++++++++------
- t/t2019-checkout-amiguous-ref.sh |   59 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 72 insertions(+), 10 deletions(-)
- create mode 100755 t/t2019-checkout-amiguous-ref.sh
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 757f9a0..d3cfaf0 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -678,7 +678,7 @@ static const char *unique_tracking_name(const char *name)
- int cmd_checkout(int argc, const char **argv, const char *prefix)
- {
- 	struct checkout_opts opts;
--	unsigned char rev[20];
-+	unsigned char rev[20], branch_rev[20];
- 	const char *arg;
- 	struct branch_info new;
- 	struct tree *source_tree = NULL;
-@@ -832,18 +832,21 @@ int cmd_checkout(int argc, const char **argv, const char *prefix)
- 		argc--;
- 
- 		new.name = arg;
--		if ((new.commit = lookup_commit_reference_gently(rev, 1))) {
--			setup_branch_path(&new);
-+		setup_branch_path(&new);
- 
--			if ((check_ref_format(new.path) == CHECK_REF_FORMAT_OK) &&
--			    resolve_ref(new.path, rev, 1, NULL))
--				;
--			else
--				new.path = NULL;
-+		if (check_ref_format(new.path) == CHECK_REF_FORMAT_OK &&
-+		    resolve_ref(new.path, branch_rev, 1, NULL))
-+			hashcpy(rev, branch_rev);
-+		else
-+			new.path = NULL; /* not an existing branch */
-+
-+		if (!(new.commit = lookup_commit_reference_gently(rev, 1))) {
-+			/* not a commit */
-+			source_tree = parse_tree_indirect(rev);
-+		} else {
- 			parse_commit(new.commit);
- 			source_tree = new.commit->tree;
--		} else
--			source_tree = parse_tree_indirect(rev);
-+		}
- 
- 		if (!source_tree)                   /* case (1): want a tree */
- 			die("reference is not a tree: %s", arg);
-diff --git a/t/t2019-checkout-amiguous-ref.sh b/t/t2019-checkout-amiguous-ref.sh
-new file mode 100755
-index 0000000..943541d
---- /dev/null
-+++ b/t/t2019-checkout-amiguous-ref.sh
-@@ -0,0 +1,59 @@
-+#!/bin/sh
-+
-+test_description='checkout handling of ambiguous (branch/tag) refs'
-+. ./test-lib.sh
-+
-+test_expect_success 'setup ambiguous refs' '
-+	test_commit branch file &&
-+	git branch ambiguity &&
-+	git branch vagueness &&
-+	test_commit tag file &&
-+	git tag ambiguity &&
-+	git tag vagueness HEAD:file &&
-+	test_commit other file
-+'
-+
-+test_expect_success 'checkout ambiguous ref succeeds' '
-+	git checkout ambiguity >stdout 2>stderr
-+'
-+
-+test_expect_success 'checkout produces ambiguity warning' '
-+	grep "warning.*ambiguous" stderr
-+'
-+
-+test_expect_success 'checkout chooses branch over tag' '
-+	echo refs/heads/ambiguity >expect &&
-+	git symbolic-ref HEAD >actual &&
-+	test_cmp expect actual &&
-+	echo branch >expect &&
-+	test_cmp expect file
-+'
-+
-+test_expect_success 'checkout reports switch to branch' '
-+	grep "Switched to branch" stderr &&
-+	! grep "^HEAD is now at" stderr
-+'
-+
-+test_expect_success 'checkout vague ref succeeds' '
-+	git checkout vagueness >stdout 2>stderr &&
-+	test_set_prereq VAGUENESS_SUCCESS
-+'
-+
-+test_expect_success VAGUENESS_SUCCESS 'checkout produces ambiguity warning' '
-+	grep "warning.*ambiguous" stderr
-+'
-+
-+test_expect_success VAGUENESS_SUCCESS 'checkout chooses branch over tag' '
-+	echo refs/heads/vagueness >expect &&
-+	git symbolic-ref HEAD >actual &&
-+	test_cmp expect actual &&
-+	echo branch >expect &&
-+	test_cmp expect file
-+'
-+
-+test_expect_success VAGUENESS_SUCCESS 'checkout reports switch to branch' '
-+	grep "Switched to branch" stderr &&
-+	! grep "^HEAD is now at" stderr
-+'
-+
-+test_done
--- 
-1.7.3.5.4.g0dc52
+I'd suggest making this an optional feature.
