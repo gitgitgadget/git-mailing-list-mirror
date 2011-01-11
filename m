@@ -1,90 +1,67 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: bug? in checkout with ambiguous refnames
-Date: Tue, 11 Jan 2011 13:02:08 -0500
-Message-ID: <20110111180208.GC1833@sigill.intra.peff.net>
-References: <20110107104650.GA5399@pengutronix.de>
- <20110107194909.GB6175@sigill.intra.peff.net>
- <20110107195417.GC6175@sigill.intra.peff.net>
- <7vsjx449bv.fsf@alter.siamese.dyndns.org>
- <7vipy0483h.fsf@alter.siamese.dyndns.org>
- <20110111065207.GF10094@sigill.intra.peff.net>
- <7vvd1v4bmt.fsf@alter.siamese.dyndns.org>
+Subject: Re: clone breaks replace
+Date: Tue, 11 Jan 2011 13:03:32 -0500
+Message-ID: <20110111180332.GD1833@sigill.intra.peff.net>
+References: <4D276CD2.60607@cfl.rr.com>
+ <20110107205103.GC4629@burratino>
+ <4D278930.7010100@cfl.rr.com>
+ <20110107214907.GA9194@burratino>
+ <20110107220942.GB10343@sigill.intra.peff.net>
+ <7vmxnc48yt.fsf@alter.siamese.dyndns.org>
+ <20110111053653.GB10094@sigill.intra.peff.net>
+ <7vr5cj49vi.fsf@alter.siamese.dyndns.org>
+ <20110111175031.GA2085@sigill.intra.peff.net>
+ <20110111175621.GC15133@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 11 19:02:19 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Phillip Susi <psusi@cfl.rr.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Stephen Bash <bash@genarts.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 11 19:03:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PciXy-0005jp-R3
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 19:02:19 +0100
+	id 1PciZI-0006e4-T4
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 19:03:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756232Ab1AKSCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 13:02:14 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:57049 "EHLO peff.net"
+	id S1756246Ab1AKSDg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 13:03:36 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:41001 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751596Ab1AKSCM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 13:02:12 -0500
-Received: (qmail 14565 invoked by uid 111); 11 Jan 2011 18:02:10 -0000
+	id S1753913Ab1AKSDf (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 13:03:35 -0500
+Received: (qmail 14590 invoked by uid 111); 11 Jan 2011 18:03:34 -0000
 Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 11 Jan 2011 18:02:10 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Jan 2011 13:02:08 -0500
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 11 Jan 2011 18:03:34 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Jan 2011 13:03:32 -0500
 Content-Disposition: inline
-In-Reply-To: <7vvd1v4bmt.fsf@alter.siamese.dyndns.org>
+In-Reply-To: <20110111175621.GC15133@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164965>
 
-On Tue, Jan 11, 2011 at 09:02:18AM -0800, Junio C Hamano wrote:
+On Tue, Jan 11, 2011 at 11:56:21AM -0600, Jonathan Nieder wrote:
 
-> > Also, one other question while we are on the subject. I think we all
-> > agree that "git checkout $foo" should prefer $foo as a branch. But what
-> > about "git checkout -b $branch $start_point"?
+> Maybe something like
 > 
-> That has always been defined as a synonym for
+> 	git fetch origin refs/views/2009/*:refs/replace/*
+
+Heh, yeah, that is much simpler than what I did. :)
+
+> A potential usability enhancement might be to allow additional
+> replacement hierarchies to be requested on a per command basis, like
 > 
-> 	git branch $branch $start_point && git checkout $branch
+> 	GIT_REPLACE_REFS=refs/remotes/origin/views/2009 gitk --all
 > 
-> so $start_point is just a random extended SHA-1 expression.
+> along the lines of GIT_NOTES_REF.
 
-That's what I would have expected, but I wanted to write a test to make
-sure it was the case.
-
-But it's not. Even taking away the die, my second test here fails (built
-on top of the three previous commits under discussion):
-
-diff --git a/t/t2019-checkout-amiguous-ref.sh b/t/t2019-checkout-amiguous-ref.sh
-index e2b330b..7a6b30b 100755
---- a/t/t2019-checkout-amiguous-ref.sh
-+++ b/t/t2019-checkout-amiguous-ref.sh
-@@ -50,4 +50,13 @@ test_expect_success VAGUENESS_SUCCESS 'checkout reports switch to detached HEAD'
- 	! grep "^HEAD is now at" stderr
- '
- 
-+test_expect_success 'new branch from ambiguous start_point works' '
-+	git checkout -b newbranch ambiguity
-+'
-+
-+test_expect_success 'checkout chooses tag over branch for start_point' '
-+	echo tag >expect &&
-+	test_cmp expect file
-+'
-+
- test_done
-
-For bonus fun, doing this:
-
-  git branch newbranch ambiguity
-  git checkout newbranch
-
-_does_ prefer the branch. So it is checkout feeding create_branch() the
-modified sha1. I'll see if I can dig further.
+Yes, that is a much better solution, IMHO.
 
 -Peff
