@@ -1,73 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: [PATCH 2/2] t/README: hint about using $(pwd) rather than $PWD in
- tests
-Date: Tue, 11 Jan 2011 08:44:30 +0100
-Message-ID: <4D2C0A5E.7090708@viscovery.net>
-References: <201012302205.13728.j6t@kdbg.org> <201012311711.06989.j6t@kdbg.org> <20101231203019.GC5898@burratino> <201012312321.31294.j6t@kdbg.org> <7v62u8hz01.fsf@alter.siamese.dyndns.org> <4D2C09D7.3070700@viscovery.net>
+From: Pietro Battiston <me@pietrobattiston.it>
+Subject: git-repack & big files
+Date: Tue, 11 Jan 2011 08:37:18 +0100
+Message-ID: <1294731438.3300.973.camel@voubian.casa>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 11 08:44:42 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 11 08:46:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcYuE-0001le-G7
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 08:44:38 +0100
+	id 1PcYwE-0002YC-CE
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 08:46:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753434Ab1AKHoe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 02:44:34 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:16806 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1753022Ab1AKHoc (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 02:44:32 -0500
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1PcYu7-0005fw-6y; Tue, 11 Jan 2011 08:44:31 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id EC05D1660F;
-	Tue, 11 Jan 2011 08:44:30 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <4D2C09D7.3070700@viscovery.net>
-X-Spam-Score: -1.4 (-)
+	id S1753022Ab1AKHqi convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jan 2011 02:46:38 -0500
+Received: from pietrobattiston.it ([92.243.7.39]:53808 "EHLO
+	jauntuale.pietrobattiston.it" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1751405Ab1AKHqg (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 11 Jan 2011 02:46:36 -0500
+X-Greylist: delayed 539 seconds by postgrey-1.27 at vger.kernel.org; Tue, 11 Jan 2011 02:46:36 EST
+Received: from [192.168.1.2] (net-188-218-63-65.cust.dsl.vodafone.it [188.218.63.65])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jauntuale.pietrobattiston.it (Postfix) with ESMTPSA id C1CDC13560
+	for <git@vger.kernel.org>; Tue, 11 Jan 2011 07:37:32 +0000 (UTC)
+X-Mailer: Evolution 2.30.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164916>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164917>
 
-From: Johannes Sixt <j6t@kdbg.org>
+Hello,
 
-This adds just a "do it this way" instruction without a lot of explanation,
-because the details are too complex to be explained at this point.
+first, I do know git is not optimized for big files, and that's fine.
+But it is able, on my machine with 3 GB of RAM, to succesfully backup m=
+y
+home directory=C2=B9, which contains, among others, several files of se=
+veral
+hundreds of megabytes each. And I like that a lot.
 
-Signed-off-by: Johannes Sixt <j6t@kdbg.org>
----
- t/README |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
+Since it perfectly does what it is not optimized to do... I then wonder
+when it does not do what it declares: if I run git-repack=C2=B2 with th=
+e
+parameter --window-memory set to, for instance, "100m", it takes
+hundreds and hundreds of MB of memory until it runs out of memory, fail=
+s
+a malloc and aborts.
+So, two questions:
 
-diff --git a/t/README b/t/README
-index 90718b4..f98ebb3 100644
---- a/t/README
-+++ b/t/README
-@@ -283,6 +283,12 @@ Do:
-    Tests that are likely to smoke out future regressions are better
-    than tests that just inflate the coverage metrics.
- 
-+ - When a test checks for an absolute path that a git command generated,
-+   construct the expected value using $(pwd) rather than $PWD,
-+   $TEST_DIRECTORY, or $TRASH_DIRECTORY. It makes a difference on
-+   Windows, where the shell (MSYS bash) mangles absolute path names.
-+   For details, see the commit message of 4114156ae9.
-+
- Don't:
- 
-  - exit() within a <script> part.
--- 
-1.7.4.rc1.1258.g84aa
+1) is there a bug, is the documentation about that parameter a bit too
+optimistic or did I just not understand it?
+
+2) do I have any hope that in one way or another my 500+ MB mailboxes
+with relatively small changes over time are archived smartly (=3Ddiffs)=
+ by
+git at the current state of development? If I understand correctly, the
+project git-bigfiles=C2=B3 would just "solve" my problems by not making
+differences of big files.
+
+thanks for the clarifications
+
+Pietro
+
+
+=C2=B9 Just for the records: through gibak:
+http://eigenclass.org/hiki/gibak-0.3.0
+
+=C2=B2 git version 1:1.7.2.3-2.2 on Debian
+
+=C2=B3 http://caca.zoy.org/wiki/git-bigfiles
