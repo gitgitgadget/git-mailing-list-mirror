@@ -1,56 +1,84 @@
-From: Phillip Susi <psusi@cfl.rr.com>
-Subject: Re: git-repack & big files
-Date: Tue, 11 Jan 2011 14:48:05 -0500
-Message-ID: <4D2CB3F5.106@cfl.rr.com>
-References: <1294731438.3300.973.camel@voubian.casa>	 <4D2C7AA9.1020506@cfl.rr.com> <1294772603.3435.67.camel@voubian.casa>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: clone breaks replace
+Date: Tue, 11 Jan 2011 20:48:57 +0100
+Message-ID: <201101112048.57326.j6t@kdbg.org>
+References: <4D262D68.2050804@cfl.rr.com> <4D2C7611.6060204@cfl.rr.com> <20110111173922.GB1833@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain;
+  charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Pietro Battiston <me@pietrobattiston.it>
-X-From: git-owner@vger.kernel.org Tue Jan 11 20:47:33 2011
+Cc: Phillip Susi <psusi@cfl.rr.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Stephen Bash <bash@genarts.com>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 11 20:49:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PckBm-0007fm-6r
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 20:47:30 +0100
+	id 1PckDN-0000C5-LY
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 20:49:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932637Ab1AKTrZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 14:47:25 -0500
-Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:55288 "EHLO
-	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932378Ab1AKTrY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 14:47:24 -0500
-Authentication-Results: cdptpa-omtalb.mail.rr.com smtp.user=psusi@cfl.rr.com; auth=pass (PLAIN)
-X-Authority-Analysis: v=1.1 cv=pepdxKapwHuwCZNFD5uob2wvham6E+RljB0uXw08FdQ= c=1 sm=0 a=IkcTkHD0fZMA:10 a=pg4Dpxby4z7sZisWVyJ9NA==:17 a=Dz5xeKug-8cZugKJxd8A:9 a=pRp3DInPaRQOGySiC_IKkfNFV-gA:4 a=QEXdDO2ut3YA:10 a=pg4Dpxby4z7sZisWVyJ9NA==:117
-X-Cloudmark-Score: 0
-X-Originating-IP: 72.242.190.170
-Received: from [72.242.190.170] ([72.242.190.170:2603] helo=[10.1.1.235])
-	by cdptpa-oedge03.mail.rr.com (envelope-from <psusi@cfl.rr.com>)
-	(ecelerity 2.2.3.46 r()) with ESMTPA
-	id 66/48-19545-AC3BC2D4; Tue, 11 Jan 2011 19:47:22 +0000
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <1294772603.3435.67.camel@voubian.casa>
-X-Enigmail-Version: 1.1.1
+	id S932577Ab1AKTtE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 14:49:04 -0500
+Received: from bsmtp2.bon.at ([213.33.87.16]:61346 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S932319Ab1AKTtD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 14:49:03 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id C49CDCDF86;
+	Tue, 11 Jan 2011 20:48:56 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id AD2C019F5F2;
+	Tue, 11 Jan 2011 20:48:57 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <20110111173922.GB1833@sigill.intra.peff.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164981>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164982>
 
-On 1/11/2011 2:03 PM, Pietro Battiston wrote:
-> That's unfortunate - I think I prefer to split my mailboxes than to
-> loose many of the nice features git provides. But thanks a lot for the
-> suggestion.
+On Dienstag, 11. Januar 2011, Jeff King wrote:
+> On Tue, Jan 11, 2011 at 10:24:01AM -0500, Phillip Susi wrote:
+> > Yes, either a new branch or separate historical repository could be
+> > published to pull the original history from, or git would need to pass
+> > the --no-replace-objects flag to git-upload-pack on the server, causing
+> > it to ignore the replace and send the original history.
+>
+> AFAIK, git can't pass --no-replace-objects to the server over git:// (or
+> smart http). You would need a protocol extension.
 
-I'm curious what features of git you find helpful for this purpose.  The
-history log doesn't seem useful at all.  Generally mail is only added,
-and sometimes deleted, never changed, so it also does not seem useful to
-keep multiple revisions.  If you really want that though, rdiff-backup
-will do that and keep the old revisions delta compressed.
+Why would you have to? git-upload-pack never looks at replacement objects.
 
-I use Maildir instead of mbox and do a nightly incremental backup of the
-whole system with dump, so any mail I might loose by accident I can pull
-from the backup if it is older than a day, and I never delete mail.
+> And here's another corner case I thought of:
+>
+> Suppose you have some server S1 with this history:
+>
+>   A--B--C--D
+>
+> and a replace object truncating history to look like:
+>
+>   B'--C--D
+>
+> You clone from S1 and have only commits B', C, and D (or maybe even B,
+> depending on the implementation). But definitely not A, nor its
+> associated tree and blobs.
+
+Why so? Cloning transfers the database using git-upload-pack, 
+git-pack-objects, git-index-pack, and git-unpack-objects. All of them have 
+object replacements disabled. (And AFAICS, there is no possibility to 
+*enable* it.)
+
+Therefore, after cloning you get
+
+ A--B--C--D
+
+and perhaps also the replacement object B'.
+
+Hint: git grep read_replace_refs
+
+-- Hannes
