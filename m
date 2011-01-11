@@ -1,128 +1,124 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: problem with cherry-picking a commit which comes before
- introducing a new submodule
-Date: Tue, 11 Jan 2011 07:27:10 -0600
-Message-ID: <20110111132710.GA14905@burratino>
-References: <20110107172432.GA6040@onerussian.com>
- <20110107181501.GA28980@burratino>
- <20110107183226.GG6040@onerussian.com>
- <20110107230017.GA15495@burratino>
- <20110108000131.GR6040@onerussian.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: [BUG] difference of info from diff and blame
+Date: Tue, 11 Jan 2011 14:40:08 +0100
+Message-ID: <201101111440.08619.trast@student.ethz.ch>
+References: <4D2C333A.3010401@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
-To: Yaroslav Halchenko <debian@onerussian.com>
-X-From: git-owner@vger.kernel.org Tue Jan 11 14:27:31 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Semyon Kirnosenko <semyon.kirnosenko@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 11 14:40:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PceG2-0000ps-5o
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 14:27:30 +0100
+	id 1PceSQ-0007M5-Eh
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 14:40:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755824Ab1AKN1Z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 08:27:25 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:63086 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755771Ab1AKN1Y (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 08:27:24 -0500
-Received: by gxk9 with SMTP id 9so5331204gxk.19
-        for <git@vger.kernel.org>; Tue, 11 Jan 2011 05:27:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:date:from:to:cc:subject
-         :message-id:references:mime-version:content-type:content-disposition
-         :in-reply-to:user-agent;
-        bh=hOChebg34LZjuvxHx53RCsbOP67/MBnhF0KEKOckbdo=;
-        b=VFLmeOH0/RF2aZ13qvC6YheVLV2UGrd9OubCIK/47/aCv7jL61DHeBfXj0hB+4CpkY
-         Y0+M6G1cwHSU0rROeZX4sTdv2mBuRZ6owB+b5ImQucN2brMY74xG5vgVYcg1vfZQublY
-         WtCR6AXPj1b/g/Jl48uUOvSC8y/OmTQ5OiOdo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=aW2omXqSfOLn/lMZysPhxk4UxQyQKDr2Jj6ljEIf1NQQY3uXzqiWfzTZSQa+ZBMue9
-         8fh0JRhL4muNlan2TIxqGHIwhx+0LyiFyOAEb6v0w8XaN0+L9UVxc/L+9VWc03NBwt0k
-         0JEDri0RbrYyPiqk1nzxjIQaiJrv2SEQsaL/A=
-Received: by 10.150.203.20 with SMTP id a20mr42517ybg.389.1294752443249;
-        Tue, 11 Jan 2011 05:27:23 -0800 (PST)
-Received: from burratino (adsl-69-209-76-37.dsl.chcgil.ameritech.net [69.209.76.37])
-        by mx.google.com with ESMTPS id n67sm17966510yha.26.2011.01.11.05.27.20
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 11 Jan 2011 05:27:21 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110108000131.GR6040@onerussian.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755788Ab1AKNkM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 08:40:12 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:27839 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753540Ab1AKNkK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 08:40:10 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 11 Jan
+ 2011 14:40:06 +0100
+Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 11 Jan
+ 2011 14:40:09 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
+In-Reply-To: <4D2C333A.3010401@gmail.com>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164941>
 
-Yaroslav Halchenko wrote [abbreviated]:
+Semyon Kirnosenko wrote:
+[Word wrap fixed.]
+> 
+> I have jquery repo (https://github.com/jquery/jquery.git)
+> Let's get blame for some file in some revision:
+> git blame -l -s 2ad223aedd1f93c783d98d60adc9fda3bdfbb4b6 -- src/event/event.js
+> According to blame, line 127 was added in revision 
+> 2ad223aedd1f93c783d98d60adc9fda3bdfbb4b6.
 
-> CONFLICT (file/directory): There is a directory with name frontiers/code in todonotloose. Adding frontiers/code as frontiers/code~HEAD
-> % git ls-files -u
-> 160000 a2b5787 2   frontiers/code
-> % git diff-tree todonotloose
-> a00c497
-> :040000 040000 40427e3 c7ba910 M  poster-hbm2011_neurodebian
-> % git diff-tree todonotloose^ HEAD
-> :100644 100644 378e137 c39ced7 M  .gitmodules
-> :000000 040000 0000000 141dbc1 A  challenge-execpapers
-> :040000 040000 401fd66 ee190f0 M  frontiers
-> :040000 040000 26c884a ad3e829 M  sty
+The surrounding context (with authorship and some whitespace snipped,
+obviously it's always the same) is
 
-Here is what happens.
+2ad223ae (124)		
+2ad223ae (125)		// Pass along a fake event
+2ad223ae (126)		data.unshift( this.fix({ type: type, target: element }) );
+2ad223ae (127)
+2ad223ae (128)		// Trigger the event
+2ad223ae (129)		if ( (val = this.handle.apply( element, data )) !== false )
+2ad223ae (130)			this.triggered = true;
 
-In the heart of merge_trees:
 
-	/*
-	 * If there are D/F conflicts, and the paths currently exist
-	 * in the working copy as a file, remove them to make room
-	 * for the corresponding directory.  Such paths will later be
-	 * processed in process_df_entry() at the end.
-	 *
-	 * If the corresponding directory ends up being removed by the
-	 * merge, then the file will be reinstated at that time;
-	 * otherwise, if the file is not supposed to be removed by the
-	 * merge, the contents of the file will be placed in another
-	 * unique filename.
-	 */
-	make_room_for_directories_of_df_conflicts(o, entries);
+> Let's get diff for that revision:
+> git diff-tree -p 2ad223aedd1f93c783d98d60adc9fda3bdfbb4b6 -- src/event/event.js
+> We can see this:
+> @@ -105,19 +120,16 @@ jQuery.event = {
+> 
+>   		// Handle triggering a single element
+>   		else {
+> -			var handler = element["on" + type ], val,
+> -				fn = jQuery.isFunction( element[ type
+> +			var val, ret, fn = jQuery.isFunction( element
+> +			
+> +			// Pass along a fake event
+> +			data.unshift( this.fix({ type: type, target:
+> 
+[this blank context line is line 127 in the postimage]
+> -			if ( handler ) {
+> 
+> As you can see line 127 is not marked with '+' char, which means it was 
+> not added in this revision. But blame sad otherwise.
 
-In this case I suppose it is rather a directory/submodule conflict; in
-any case, there are no regular files involved, so this logic does not
-kick in and the directory is left alone.
+git-blame internally runs a diff with no context lines to "pass
+blame".  On all lines in this diff, the current commit can pass on
+blame to the parent, thus avoiding having to take it for itself.
 
-Next comes rename handling, which is irrelevant for our purposes.
+And indeed, running
 
-Next comes the per entry merge.
+  git show -U0 2ad223ae -- src/event/event.js
 
-	/*
-	 * Per entry merge.  D/F conflicts are deferred so files
-	 * contained in such a directory can be resolved first.
-	 */
-	for (i = 0; i < entries->nr; i++) {
-		const char *path = entries->items[i].string;
-		struct stage_data *e = entries->items[i].util;
-		if (!e->processed
-			&& !process_entry(o, path, e))
-			clean = 0;
-	}
+in your repository gives a hunk
 
-This is case B: "added in one" (like all directories, the
-frontiers/code directory does not have an index entry, while the
-submodule does have one).  Since that path is in the current directory
-set, it is deferred for later processing.
+@@ -108,11 +123,8 @@ jQuery.event = {
+-			var handler = element["on" + type ], val,
+-				fn = jQuery.isFunction( element[ type ] );
+-
+-			if ( handler ) {
+-				// Pass along a fake event
+-				data.unshift( this.fix({ type: type, target: element }) );
+-	
+-				// Trigger the event
+-				if ( (val = handler.apply( element, data )) !== false )
+-					this.triggered = true;
+-			}
++			var val, ret, fn = jQuery.isFunction( element[ type ] );
++			
++			// Pass along a fake event
++			data.unshift( this.fix({ type: type, target: element }) );
++
++			// Trigger the event
++			if ( (val = this.handle.apply( element, data )) !== false )
++				this.triggered = true;
 
-Next comes the per entry merge for D/F conflicts (process_df_entry in
-merge-recursive.c).  This is the case "directory -> (directory,
-file)".  Unfortunately the check that the old and new directories
-match is not implemented.  Even worse, git checks for a directory
-(which was not moved out of the way before) and does not realize that
-a submodule might be another reason for a directory in the worktree.
-In any event, we get a spurious conflict.
+So I would tend to agree with the blame implementation.  If anything
+it's a bug in git-diff when not using any context.
 
-Thanks, that was interesting (no patch yet, alas).
+Do you have a reproduction recipe that exhibits the flaw on a
+non-whitespace line?  I'm not up to speed on the diff implementation
+(maybe someone else can help?), but I wouldn't be too surprised if it
+had heuristics that put lines consisting only of whitespace at a lower
+importance than "actual" lines.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
