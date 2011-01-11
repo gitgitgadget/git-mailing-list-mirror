@@ -1,71 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] userdiff: match Pascal class methods
-Date: Tue, 11 Jan 2011 11:13:01 -0800
-Message-ID: <7vipxv45ky.fsf@alter.siamese.dyndns.org>
-References: <1294736039-5912-1-git-send-email-zapped@mail.ru>
+From: Jeff King <peff@peff.net>
+Subject: Re: bug? in checkout with ambiguous refnames
+Date: Tue, 11 Jan 2011 14:20:20 -0500
+Message-ID: <20110111192020.GA15608@sigill.intra.peff.net>
+References: <20110107104650.GA5399@pengutronix.de>
+ <20110107194909.GB6175@sigill.intra.peff.net>
+ <20110107195417.GC6175@sigill.intra.peff.net>
+ <20110111065509.GG10094@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Alexey Shumkin <zapped@mail.ru>
-X-From: git-owner@vger.kernel.org Tue Jan 11 20:13:19 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Jan 11 20:20:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pcjeh-0005Cq-9H
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 20:13:19 +0100
+	id 1Pcjlg-0000uL-GO
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 20:20:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932614Ab1AKTNM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 14:13:12 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45506 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932543Ab1AKTNK (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 14:13:10 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B7827307A;
-	Tue, 11 Jan 2011 14:13:49 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=NUE2dioZcbVxLbhTNei8t96kmJ8=; b=oVI0+e
-	HRqc7t5StpGCTvXMLJ2H/a3Ot2K/e1JWJqm8DmQR9mIJ5Vaq+HTvDC2DRe3sm7Tl
-	8swUULRY7L0zns/9oDyWtlNFDdLEgmoNNXew408c3VRx+rnDAqURF46wmVUiPNSX
-	Q2c1XcKITC+5WpEAtTlPdXZGkWVz0dAX5JPdA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=KSGXZqihbVtz3fD78zEVEewCoKGqqUMF
-	DhOTuBURMkYtRmPjyvzUKTE5JHpWrbOAWdQRcnvbB64pM5vWON1/siZi2gL/CpRO
-	AD+R5T7S6Qqiz9OhYSN1ZS3a4mNP9STMv8JNKI5SC+h/OHeQi61mu0pVcSbdMns6
-	8+B7ckKvcKY=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 95F353079;
-	Tue, 11 Jan 2011 14:13:47 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B6E3F3078; Tue, 11 Jan 2011
- 14:13:44 -0500 (EST)
-In-Reply-To: <1294736039-5912-1-git-send-email-zapped@mail.ru> (Alexey
- Shumkin's message of "Tue\, 11 Jan 2011 11\:53\:59 +0300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EA7294E4-1DB6-11E0-A830-CBB45B885003-77302942!a-pb-sasl-sd.pobox.com
+	id S932319Ab1AKTU1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 14:20:27 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:40926 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756147Ab1AKTUZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 14:20:25 -0500
+Received: (qmail 15362 invoked by uid 111); 11 Jan 2011 19:20:23 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 11 Jan 2011 19:20:23 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Jan 2011 14:20:20 -0500
+Content-Disposition: inline
+In-Reply-To: <20110111065509.GG10094@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164976>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164977>
 
-Alexey Shumkin <zapped@mail.ru> writes:
+On Tue, Jan 11, 2011 at 01:55:09AM -0500, Jeff King wrote:
 
-> Class declarations were already covered by the second pattern, but class methods have the 'class' keyword in front too. Account for it.
+> On Fri, Jan 07, 2011 at 02:54:17PM -0500, Jeff King wrote:
+> 
+> > +test_expect_success 'checkout reports switch to detached HEAD' '
+> > +	grep "Switched to branch" stderr &&
+> > +	! grep "^HEAD is now at" stderr
+> 
+> Junio, one minor fixup here. The test is correct, but the description
+> should read "checkout reports switch to branch", not "...detached HEAD".
 
-Too long a line (which I could re-wrap locally but I'd rather not be in
-the business of doing that for everybody).
+Hmm. One other thing to note on these ambiguity tests. Apparently we did
+already have a test for this in t7201 (which should perhaps be renamed
+into the t20* area with the other checkout tests), but it was passing.
 
->  PATTERNS("pascal",
-> -	 "^((procedure|function|constructor|destructor|interface|"
-> +	 "^(((class[ \t]+)?(procedure|function)|constructor|destructor|interface|"
->  		"implementation|initialization|finalization)[ \t]*.*)$"
+The problem is that the current behavior is way more broken than just
+"accidentally choose tag over branch". It actually writes the branch ref
+into HEAD, but checks out the tree from the tag! The test in 7201 only
+checks the former, but our new test checked the latter.
 
-Earlier we took "^procedure frotz", "^function frotz", etc. and now we
-also take "^class procedure frotz", "^class function frotz", but not
-"^class constructor frotz"---am I reading the patterns correctly?
+Probably we should be checking both, just to be sure (and yes, with your
+patch it does the right thing):
+
+diff --git a/t/t2019-checkout-amiguous-ref.sh b/t/t2019-checkout-amiguous-ref.sh
+index e2b330b..606081b 100755
+--- a/t/t2019-checkout-amiguous-ref.sh
++++ b/t/t2019-checkout-amiguous-ref.sh
+@@ -22,6 +22,9 @@ test_expect_success 'checkout produces ambiguity warning' '
+ '
+ 
+ test_expect_success 'checkout chooses branch over tag' '
++	echo refs/heads/ambiguity >expect &&
++	git symbolic-ref HEAD >actual &&
++	test_cmp expect actual &&
+ 	echo branch >expect &&
+ 	test_cmp expect file
+ '
+@@ -41,6 +44,9 @@ test_expect_success VAGUENESS_SUCCESS 'checkout produces ambiguity warning' '
+ '
+ 
+ test_expect_success VAGUENESS_SUCCESS 'checkout chooses branch over tag' '
++	echo refs/heads/vagueness >expect &&
++	git symbolic-ref HEAD >actual &&
++	test_cmp expect actual &&
+ 	echo branch >expect &&
+ 	test_cmp expect file
+ '
