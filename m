@@ -1,77 +1,70 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Applying .gitattributes text/eol changes
-Date: Tue, 11 Jan 2011 13:11:46 +0100
-Message-ID: <4D2C4902.4010705@drmicha.warpmail.net>
-References: <4D220500.2000104@syntevo.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: git notes and core.editor config
+Date: Tue, 11 Jan 2011 13:26:02 +0100
+Message-ID: <201101111326.02277.trast@student.ethz.ch>
+References: <AANLkTi=0BrBV+DLF_QfDi0mMVdz5tCLFsDMBKvw52nzz@mail.gmail.com> <201101111131.17429.johan@herland.net> <AANLkTik-=s-F8dmBRLU8o9LcSztb1P0WnkN5HK_n_No4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Marc Strapetz <marc.strapetz@syntevo.com>
-X-From: git-owner@vger.kernel.org Tue Jan 11 13:14:29 2011
+Cc: Johan Herland <johan@herland.net>, <git@vger.kernel.org>
+To: Jeenu V <jeenuv@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 11 13:26:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pcd7M-0002du-PR
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 13:14:29 +0100
+	id 1PcdIh-00026M-1f
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 13:26:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754924Ab1AKMOY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 07:14:24 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:33661 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1753484Ab1AKMOX (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jan 2011 07:14:23 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 9B46F20594;
-	Tue, 11 Jan 2011 07:14:22 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Tue, 11 Jan 2011 07:14:22 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=fRB2Kl85OKMhv366YDizRvx8N44=; b=Iu0MmOoiMU3QuFAx/CnPABzFSTQrBScyAF0MF7odObLCd3kcdBCQEQ4G358UQ6n7CaAWruuzcklqiiZ+MfFaw+xFvwINMKKhS5boTwIfXFxsOVKZFpGpEt3y6n6p/X7J2aDdTAzMOyGtFboVgKQy59dFWPHk0Y8sXUTjqRQLSxQ=
-X-Sasl-enc: kKF9lzIM0DS/eH+Hd2AD0LUuxjquM7b+gtbrJc3wtghF 1294748062
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 1D91144852D;
-	Tue, 11 Jan 2011 07:14:21 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <4D220500.2000104@syntevo.com>
+	id S1753663Ab1AKM0F (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 07:26:05 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:24295 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753330Ab1AKM0E (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 07:26:04 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 11 Jan
+ 2011 13:26:00 +0100
+Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 11 Jan
+ 2011 13:26:02 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
+In-Reply-To: <AANLkTik-=s-F8dmBRLU8o9LcSztb1P0WnkN5HK_n_No4@mail.gmail.com>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164931>
 
-Marc Strapetz venit, vidit, dixit 03.01.2011 18:18:
-> I'm looking for an unobtrusive way to apply (committed) changes for
-> text/eol attributes to the working tree. For instance, after having
-> changed "*.txt eol=crlf" to "*.txt eol=lf", all *.txt files should be
-> converted from CRLF to LF endings. The only advice I found so far is to
-> remove .git/index and do a reset --hard. The disadvantage of this
-> approach is that every file will be touched:
-> 
-> - although the content does not change, timestamps will be changed. This
+Jeenu V wrote:
+> On Tue, Jan 11, 2011 at 4:01 PM, Johan Herland <johan@herland.net> wrote:
+> >> In other words, I
+> >> don't think [git-notes] honors shell quoting for editor config variable.
+> >
+> > Indeed, it could, but I cannot immediately see what causes it. In
+> > current 'master', builtin/notes.c launches the editor like this:
+> >
+> >  if (launch_editor(path, &(msg->buf), NULL)) ...
+> >
+> > while builtin/commit.c lauches the editor like this:
+> >
+> >  if (launch_editor(git_path(commit_editmsg), NULL, env)) ...
+[...]
+> $ git --version
+> git version 1.7.0.4
 
-The bytewise content does change.
+git-notes was a script before 1.7.1, and that was indeed buggy in that
+it used the editor as
 
-> makes tools like IDEs assume that the file content has been changed.
+  ${GIT_EDITOR:-${core_editor:-${VISUAL:-${EDITOR:-vi}}}} "$MSG_FILE"
 
-It may be that the content is semantically equivalent.
+instead of using git_editor() from git-sh-setup, which would have gone
+through eval.
 
-> (Even if the timestamps would be properly reset, the replacement of the
-> files would have triggered system file change notifications and I'd
-> expect various tools to still reload these files)
-> 
-> - there will be warnings for files which are locked by other processes
-> (at least on Windows). I'm usually seeing this for JAR files which are
-> not affected by eol-attribute changes at all.
-> 
-> One solution I could think of which might be helpful in other situations
-> as well would be to have an "--unobtrusive" option for reset which would
-> only replace a file if the content has actually been changed.
+The builtin version of git-notes does not have this problem.
 
-How about
-
-git ls-files \*.txt | xargs touch -a
-git ls-files \*.txt | git checkout
-
-?
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
