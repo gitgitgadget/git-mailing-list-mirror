@@ -1,97 +1,92 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH] fast-import: Don't barf if import-marks file is missing
-Date: Tue, 11 Jan 2011 22:44:18 +0530
-Message-ID: <1294766058-29739-1-git-send-email-artagnon@gmail.com>
-References: <7vwrmd7kxe.fsf@alter.siamese.dyndns.org>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Git List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 11 18:14:13 2011
+From: Jeff King <peff@peff.net>
+Subject: Re: clone breaks replace
+Date: Tue, 11 Jan 2011 12:39:22 -0500
+Message-ID: <20110111173922.GB1833@sigill.intra.peff.net>
+References: <4D262D68.2050804@cfl.rr.com>
+ <20110106213338.GA15325@burratino>
+ <4D276CD2.60607@cfl.rr.com>
+ <20110107205103.GC4629@burratino>
+ <4D278930.7010100@cfl.rr.com>
+ <20110107214907.GA9194@burratino>
+ <20110107220942.GB10343@sigill.intra.peff.net>
+ <4D27B33C.2020907@cfl.rr.com>
+ <20110111054735.GC10094@sigill.intra.peff.net>
+ <4D2C7611.6060204@cfl.rr.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Stephen Bash <bash@genarts.com>
+To: Phillip Susi <psusi@cfl.rr.com>
+X-From: git-owner@vger.kernel.org Tue Jan 11 18:39:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PchnM-0000V9-Vr
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 18:14:09 +0100
+	id 1PciBv-0000GY-0z
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 18:39:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932451Ab1AKROA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 12:14:00 -0500
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:34174 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932422Ab1AKRN7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 12:13:59 -0500
-Received: by yib18 with SMTP id 18so5778768yib.19
-        for <git@vger.kernel.org>; Tue, 11 Jan 2011 09:13:58 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:received:from:to:cc:subject:date
-         :message-id:x-mailer:in-reply-to:references;
-        bh=h6hHlYXZ6Y7FRNCLpGsAtNkYYizsY2Nj7+FYozNvK8U=;
-        b=LolRZhb3DwcpbIspkJaICdVzHKWa2zAfj18q5+wjzRMuX4pV1azRuyk21I2v4hmfQE
-         bhz3Ei7MX1wvdnd+mMI6RwRBNvf9c6+18tVHVySdAlYqqknfQ/tSw/tVwn08E55sZeL0
-         6L525v7EwFKjJrRHWnKagGnH//mlbVpi2cjQM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=P55ap3f/cXqLdDsgD3a7Zfl/zIqd7rTAI5BPklB1IYyC7EN84BoYvWrR74AEC9PfAd
-         9X17JLPzvTk6drLtnn5LkUQFbjMcz+iW/gY1tj1c9BWBeGR9CTDhIOk2UtslPHqNqjkg
-         44ErOQqC21isHj8vNeOYxCokPMAfb2ygRc3Sc=
-Received: by 10.90.25.13 with SMTP id 13mr395440agy.33.1294766038284;
-        Tue, 11 Jan 2011 09:13:58 -0800 (PST)
-Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id e24sm39110504ana.22.2011.01.11.09.13.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 11 Jan 2011 09:13:57 -0800 (PST)
-X-Mailer: git-send-email 1.7.3.2.529.gc7bce.dirty
-In-Reply-To: <7vwrmd7kxe.fsf@alter.siamese.dyndns.org>
+	id S1756190Ab1AKRj1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 12:39:27 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:41874 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753368Ab1AKRjZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 12:39:25 -0500
+Received: (qmail 14208 invoked by uid 111); 11 Jan 2011 17:39:24 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 11 Jan 2011 17:39:24 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Jan 2011 12:39:22 -0500
+Content-Disposition: inline
+In-Reply-To: <4D2C7611.6060204@cfl.rr.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164958>
 
-The --import-marks option used to barf when the specified marks file
-doesn't exist. Change its meaning to "read marks file if it exists" so
-that callers don't have to handle bootstraping as a special case.
+On Tue, Jan 11, 2011 at 10:24:01AM -0500, Phillip Susi wrote:
 
-Requested-by: Jonathan Nieder <jrnieder@gmail.com>
-Thanks-to: Junio C Hamano <gitster@pobox.com>
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- Documentation/git-fast-import.txt |    2 +-
- fast-import.c                     |    6 +++++-
- 2 files changed, 6 insertions(+), 2 deletions(-)
+> Yes, either a new branch or separate historical repository could be
+> published to pull the original history from, or git would need to pass
+> the --no-replace-objects flag to git-upload-pack on the server, causing
+> it to ignore the replace and send the original history.
 
-diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index f56dfca..94fbe54 100644
---- a/Documentation/git-fast-import.txt
-+++ b/Documentation/git-fast-import.txt
-@@ -72,7 +72,7 @@ OPTIONS
- 
- --import-marks=<file>::
- 	Before processing any input, load the marks specified in
--	<file>.  The input file must exist, must be readable, and
-+	<file>, if it exists.  The input file must be readable, and
- 	must use the same format as produced by \--export-marks.
- 	Multiple options may be supplied to import more than one
- 	set of marks.  If a mark is defined to different values,
-diff --git a/fast-import.c b/fast-import.c
-index 7857760..cbd5124 100644
---- a/fast-import.c
-+++ b/fast-import.c
-@@ -1795,7 +1795,11 @@ static void read_marks(void)
- {
- 	char line[512];
- 	FILE *f = fopen(import_marks_file, "r");
--	if (!f)
-+	if (f)
-+		;
-+	else if (errno == ENOENT)
-+		return; /* Marks file does not exist */
-+	else
- 		die_errno("cannot read '%s'", import_marks_file);
- 	while (fgets(line, sizeof(line), f)) {
- 		uintmax_t mark;
--- 
-1.7.2.2.409.gdbb11.dirty
+AFAIK, git can't pass --no-replace-objects to the server over git:// (or
+smart http). You would need a protocol extension.
+
+And here's another corner case I thought of:
+
+Suppose you have some server S1 with this history:
+
+  A--B--C--D
+
+and a replace object truncating history to look like:
+
+  B'--C--D
+
+You clone from S1 and have only commits B', C, and D (or maybe even B,
+depending on the implementation). But definitely not A, nor its
+associated tree and blobs.
+
+Now you want to fetch from another server S2, which built some commits
+on the original history:
+
+  A--B--C--D--E--F
+
+You and S2 negotiate that you both have D, which implies that you have
+all of the ancestors of D. S2 therefore sends you a thin pack containing
+E and F, which may contain deltas against objects found in D or its
+ancestors. Some of which may be only in A, which means you do not have
+them.
+
+Aside from fetching the entire real history, the only solution is that
+you somehow have to communicate to S2 exactly which objects you have,
+presumably by telling them which replacements you have used to arrive at
+the object set you have. Which in the general case would mean actually
+shipping them your replacement refs and objects (simply handling the
+special case of commit truncation isn't sufficient; you could have
+replaced any object with any other one).
+
+-Peff
