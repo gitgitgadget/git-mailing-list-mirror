@@ -1,88 +1,144 @@
-From: Phillip Susi <psusi@cfl.rr.com>
-Subject: Re: clone breaks replace
-Date: Tue, 11 Jan 2011 13:42:52 -0500
-Message-ID: <4D2CA4AC.8060005@cfl.rr.com>
-References: <20110106213338.GA15325@burratino> <4D276CD2.60607@cfl.rr.com> <20110107205103.GC4629@burratino> <4D278930.7010100@cfl.rr.com> <20110107214907.GA9194@burratino> <20110107220942.GB10343@sigill.intra.peff.net> <4D27B33C.2020907@cfl.rr.com> <20110111054735.GC10094@sigill.intra.peff.net> <20110111065244.GB8631@burratino> <4D2C7948.6080304@cfl.rr.com> <20110111182225.GE15133@burratino>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [PATCH] Documentation/rev-parse: --verify does not check existence
+Date: Tue, 11 Jan 2011 19:51:02 +0100
+Message-ID: <2441701cf9c9cc09d86f52b093bfa896479daad8.1294771717.git.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Christian Couder <chriscool@tuxfamily.org>,
-	Stephen Bash <bash@genarts.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 11 19:42:30 2011
+Content-Type: text/plain
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Zachery Hostens <zacheryph@gmail.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 11 19:51:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcjAp-0003UN-8S
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 19:42:27 +0100
+	id 1PcjJI-0008Tc-Cu
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 19:51:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932191Ab1AKSmX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 13:42:23 -0500
-Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.122]:42753 "EHLO
-	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753913Ab1AKSmW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 13:42:22 -0500
-Authentication-Results: cdptpa-omtalb.mail.rr.com smtp.user=psusi@cfl.rr.com; auth=pass (PLAIN)
-X-Authority-Analysis: v=1.1 cv=Inhw+Jdt7z1D3BivGPfn2aw54OvUEJw5lAn/booRZkE= c=1 sm=0 a=8nJEP1OIZ-IA:10 a=pg4Dpxby4z7sZisWVyJ9NA==:17 a=hU-Yyvw0tki6ssvcTOYA:9 a=BFH5EFavrNcAStdg3KYA:7 a=JK7ssGyVhr9PNAdhTKRmwOFSJcsA:4 a=wPNLvfGTeEIA:10 a=pg4Dpxby4z7sZisWVyJ9NA==:117
-X-Cloudmark-Score: 0
-X-Originating-IP: 72.242.190.170
-Received: from [72.242.190.170] ([72.242.190.170:2298] helo=[10.1.1.235])
-	by cdptpa-oedge04.mail.rr.com (envelope-from <psusi@cfl.rr.com>)
-	(ecelerity 2.2.3.46 r()) with ESMTPA
-	id A0/87-13137-784AC2D4; Tue, 11 Jan 2011 18:42:21 +0000
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <20110111182225.GE15133@burratino>
-X-Enigmail-Version: 1.1.1
+	id S932314Ab1AKSvH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 13:51:07 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:39430 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756184Ab1AKSvF (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 13:51:05 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 11 Jan
+ 2011 19:51:00 +0100
+Received: from localhost.localdomain (84.74.105.24) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 11 Jan
+ 2011 19:51:03 +0100
+X-Mailer: git-send-email 1.7.4.rc1.309.g58aa0
+X-Originating-IP: [84.74.105.24]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164971>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164972>
 
-On 1/11/2011 1:22 PM, Jonathan Nieder wrote:
->> 1)  Those tracking your repo don't have breakage when they next fetch
->> because the chain of commits they were tracking has been destroyed and
->> replaced by a completely different one.
-> 
-> This does not require transport respecting replacements.  Just start
-> a new line of history and teach "git pull" to pull replacement refs
-> first when requested in the refspec.
+Rather counterintuitively,
 
-That's what I've been saying.  My statement that you quote above is
-stating why git replace is better than git filter-branch.
+  $ git rev-parse --verify aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
->> 2)  It is obvious when a replace has been done, and the original is
->> still available.  This is good for auditing and traceability.  Paper
->> trails are good.
-> 
-> With the method you are suggesting, others do _not_ always have the
-> original still available.  After I fetch from you with
-> --respect-hard-replacements, then while I am on an airplane I will
-> have this hard replacement ref staring at me that I cannot remove.
+does *not* fail.  The check is based solely on whether we can come up
+with something that "looks like" a SHA1, not whether the object
+actually exists.  To wit:
 
-They may not have it in their local repository, but it is clear that
-there IS an original history, and the replace record comment should tell
-them from where they can fetch it, and those tracking the repository
-before the replace was added already have it.
+  # this cannot be done with update-ref as that *does* check
+  $ echo aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa > .git/refs/heads/nonexistent
+  $ git rev-parse --verify nonexistent
+  aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
-Using filter-branch on the other hand, is a sort of dirty hack that
-violates the integrity constrains normally in place, and can leave you
-with a history that has no indication that there ever was more.
+Note that the commit message of 79162bb makes clear that this is
+exactly the intended behaviour:
 
-> If the original goes missing or gets corrupted on the few machines
-> that had it, the hard replacement ref is permanent.
+  git-rev-parse: Allow a "zeroth" parent of a commit - the commit itself.
 
-I think it goes without saying that if you loose part of the repository,
-and there are no other copies, then you have lost part of the repository.
+  This sounds nonsensical, but it's useful to make sure that the result is
+  a commit.
+[...]
+  Also, since the "parent" code will actually parse the commit, this,
+  together with the "--verify" flag, will verify not only that the result
+  is a single SHA1, but will also have verified that it's a proper commit
+  that we can see.
 
-> If the modified history is much shorter than the original (as in the
-> use case you described), would building it really take so much CPU and
-> I/O?  Moreover, is the extra CPU time to keep checking all the
-> replacements on the client side worth saving that one-time CPU time
-> expenditure on the server?
+Document this clearly in the description for --verify.
 
-It would take more than just inserting the replace record.  I'm not sure
-what you mean by "keep checking all the replacements on the client side".
+Furthermore the second item in EXAMPLES
+
+  * Print the commit object name from the revision in the $REV shell variable:
+
+seems to imply that rev-parse should actually check that the object
+exists *and* is a commit, when in reality it does neither.  We could
+suggest the ^0 trick alluded to above, but instead document the more
+verbose (and clear)
+
+  $ git rev-parse --verify "$REV^{commit}"
+
+Observe that if you ran
+
+  $ git rev-parse --verify "nonexistent^{commit}"
+
+after the above setup, the failure would come from the ^{} peeling
+operator and not from --verify.
+
+Noticed-by: Zachery Hostens <zacheryph@gmail.com>
+Signed-off-by: Thomas Rast <trast@student.ethz.ch>
+---
+ Documentation/git-rev-parse.txt |   23 +++++++++++++++++------
+ 1 files changed, 17 insertions(+), 6 deletions(-)
+
+diff --git a/Documentation/git-rev-parse.txt b/Documentation/git-rev-parse.txt
+index ff23cb0..779fa87 100644
+--- a/Documentation/git-rev-parse.txt
++++ b/Documentation/git-rev-parse.txt
+@@ -59,8 +59,9 @@ OPTIONS
+ 	instead.
+ 
+ --verify::
+-	The parameter given must be usable as a single, valid
+-	object name.  Otherwise barf and abort.
++	The parameter must either be formed like an object name, or
++	dereference to an object name.  This does 'not' verify that
++	the object actually exists!  See EXAMPLES below.
+ 
+ -q::
+ --quiet::
+@@ -292,21 +293,31 @@ EXAMPLES
+ $ git rev-parse --verify HEAD
+ ------------
+ 
+-* Print the commit object name from the revision in the $REV shell variable:
++* Print the object name from the revision in the $REV shell variable:
+ +
+ ------------
+ $ git rev-parse --verify $REV
+ ------------
+ +
+-This will error out if $REV is empty or not a valid revision.
++This will error out if $REV does not dereference to a well-formed
++object name (i.e., SHA1).
+ 
+-* Same as above:
++* Same as above, but also verify that the object exists and is a commit:
+++
++------------
++$ git rev-parse --verify "$REV^{commit}"
++------------
+++
++This works because the `{caret}\{commit\}` peeling operator will fail
++unless the object exists and can be peeled into a commit.
++
++* Print the object name from $REV, but default to master:
+ +
+ ------------
+ $ git rev-parse --default master --verify $REV
+ ------------
+ +
+-but if $REV is empty, the commit object name from master will be printed.
++If $REV is empty, the commit object name from master will be printed.
+ 
+ 
+ Author
+-- 
+1.7.4.rc1.309.g58aa0
