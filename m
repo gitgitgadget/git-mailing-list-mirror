@@ -1,63 +1,69 @@
-From: sundarbun <sundarbun@yahoo.com>
-Subject: Re: JGIT newbie question
-Date: Tue, 11 Jan 2011 13:58:58 -0800 (PST)
-Message-ID: <1294783138346-5912619.post@n2.nabble.com>
-References: <1294771910028-5911913.post@n2.nabble.com> <AANLkTin=bZAgYeKHN2NUjYjZU5NBC_bs3bpCNNhijppq@mail.gmail.com>
+From: Tony Sales <vinux.development@gmail.com>
+Subject: I want to report a bug/anomaly in Git
+Date: Tue, 11 Jan 2011 22:22:29 +0000
+Message-ID: <AANLkTimt+U3oo4FaywUr86ArG8d29yWAeVYhpRkBYa_K@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 11 22:59:05 2011
+X-From: git-owner@vger.kernel.org Tue Jan 11 23:22:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcmF6-0000DL-Jx
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 22:59:04 +0100
+	id 1Pcmbw-0005i9-8A
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 23:22:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756121Ab1AKV7A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 16:59:00 -0500
-Received: from sam.nabble.com ([216.139.236.26]:50620 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755542Ab1AKV67 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 16:58:59 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.69)
-	(envelope-from <sundarbun@yahoo.com>)
-	id 1PcmF0-0000to-BW
-	for git@vger.kernel.org; Tue, 11 Jan 2011 13:58:58 -0800
-In-Reply-To: <AANLkTin=bZAgYeKHN2NUjYjZU5NBC_bs3bpCNNhijppq@mail.gmail.com>
+	id S932364Ab1AKWWc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 17:22:32 -0500
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:54273 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752316Ab1AKWWb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 17:22:31 -0500
+Received: by yib18 with SMTP id 18so5884764yib.19
+        for <git@vger.kernel.org>; Tue, 11 Jan 2011 14:22:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:received:received:date:message-id
+         :subject:from:to:content-type;
+        bh=GTFZNNgLByusXCoxiF9diuHvTn7MsB1KGad/qeVhvV4=;
+        b=QjA9pI8/udquMSb+9qldPcU5aEwqjsNCFZZtEcQXOK46LJTdZrBaCXTtqA2BXKmxvZ
+         buP1tLs4JG3cTvj65FdPsd6CN55hiwLnYqo7UqhlpbB9O1dvru/lttbePO2av7fkAdDz
+         RZw5PYRqTlA/Dq3CvC9zpn5a7tZ+iL5sTpjm0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=UN0yUmX/DzHje9yu1LGrcpnaRqth8/KygKDvVM/yo8qy817rUiOcJaMs4oznmZ3phH
+         uwLtrR7jni2wLrRZS/R6TLT9PyXNlhBsl9moGSicd81ca6x7ucDdm1pFcbGNlF/gGYaS
+         /OL2/h/NTkciQikJMQ8zjwthnRMKJeHYfhnyw=
+Received: by 10.100.173.20 with SMTP id v20mr112284ane.133.1294784549996; Tue,
+ 11 Jan 2011 14:22:29 -0800 (PST)
+Received: by 10.100.4.6 with HTTP; Tue, 11 Jan 2011 14:22:29 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164996>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164997>
 
-
-Thanks Shawn.. I did look at the jGit list and I will post there as well.
-
->>But if you want to avoid using the working directory
-Not sure what this means.. perhaps I have to read up some more...
-
-I got as far as what you have suggested with the Git object in the 
-org.eclipse.jgit.api jar.
-
-Where I got stumped was the specification of the userid/pwd/repo path
-parameters that tells git when I init it (as I run on an aws machine with no
-.git directory initially) to setup shop in a temp working directory that I
-specify in the init. 
-
-I was hoping to have an init command that I could pass a valid git repo url,
-a user name and pwd and local fileDir so that a .git would be created and
-then I can call checkout to get the part of the tree that I am interested
-in.
-
-If you have any insight.. I'd appreciate your comments.
-
-thanks again.
-S
+Hi, how do I report a bug/anomaly in git? I have looked on the git
+website and tried to ask on the git irc on freenode but couldn't post,
+even after requesting a 'voice'. The bug is that if you happen to
+create a new remote branch which shares it's name with an existing
+directory in the top level of the git repository, git then seems to
+get confused and the: git checkout <branch> - command doesn't switch
+to that branch or turn tracking on (and seems to think it was created
+from origin/<branch> rather than from refs/remotes/origin/<branch>),
+which it does if the branch doesn't share a name with an existing top
+level directory. This can be rectified by running: git checkout
+--track -b debian origin/debian - but this confused me for several
+hours and it was only because I had another repository with the same
+branch names, but different top level directories where the command
+worked that it finally dawned on me what the problem was. I then
+deleted the branch and created a new one with a differnt name and
+everything worked as expected.
 
 -- 
-View this message in context: http://git.661346.n2.nabble.com/JGIT-newbie-question-tp5911913p5912619.html
-Sent from the git mailing list archive at Nabble.com.
+drbongo
+
+Dig that crazy beat on the drums: <http://vinux.org.uk>  The best is
+getting better!
