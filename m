@@ -1,78 +1,94 @@
-From: Matthieu Moy <Matthieu.Moy@imag.fr>
-Subject: [PATCH] commit: suggest --amend --reset-author to fix commiter identity
-Date: Tue, 11 Jan 2011 15:07:40 +0100
-Message-ID: <1294754860-17701-1-git-send-email-Matthieu.Moy@imag.fr>
-References: <vpq1v4nirzz.fsf@bauges.imag.fr>
-Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Tue Jan 11 15:08:10 2011
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: [PATCH v2] Introduce new configuation option to override
+ committer information
+Date: Tue, 11 Jan 2011 19:49:01 +0530
+Message-ID: <20110111141857.GB21967@kytes>
+References: <igadki$4tb$2@dough.gmane.org>
+ <1294568989-5848-1-git-send-email-artagnon@gmail.com>
+ <20110109172431.GA7718@burratino>
+ <AANLkTi=t98=4p=R2DXeCJ0OVPey8EtTLxHQ=3KfqrQpE@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Erik Faye-Lund <kusmabite@gmail.com>
+To: Stephen Kelly <steveire@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 11 15:18:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcetN-0006kS-6u
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 15:08:09 +0100
+	id 1Pcf3V-0004Lu-QN
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 15:18:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932182Ab1AKOID (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 09:08:03 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:33822 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932179Ab1AKOIB (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 09:08:01 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p0BE7gNB020535
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 11 Jan 2011 15:07:42 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1Pcesx-0008NY-Fj; Tue, 11 Jan 2011 15:07:43 +0100
-Received: from moy by bauges.imag.fr with local (Exim 4.69)
-	(envelope-from <moy@imag.fr>)
-	id 1Pcesx-0005ID-B7; Tue, 11 Jan 2011 15:07:43 +0100
-X-Mailer: git-send-email 1.7.4.rc0.2.g3e22c.dirty
-In-Reply-To: <vpq1v4nirzz.fsf@bauges.imag.fr>
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 11 Jan 2011 15:07:42 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p0BE7gNB020535
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: moy@imag.fr
-MailScanner-NULL-Check: 1295359662.60816@fBIt76xrvjpviLwdqa85kA
+	id S932211Ab1AKOS2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jan 2011 09:18:28 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:39336 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932208Ab1AKOS1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 09:18:27 -0500
+Received: by gwj20 with SMTP id 20so8939530gwj.19
+        for <git@vger.kernel.org>; Tue, 11 Jan 2011 06:18:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:received:received:date:from:to:cc:subject
+         :message-id:references:mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=E8WujXP2dfD4bUqItodbPRFfh5ckXZLxC7NLNLCvTbg=;
+        b=aIDXiK3MKtKX65RAFxoUQlXZCok79cIGgfs/7ZGiEX3B3Iu/5qzkGHXU/0LziKx2f6
+         M0pU87/mRc1tZQUppG8paKB4Z+/JMSsyuHW2NxwVNpe72BpmGz9HrryLoA1QC8SlvTrQ
+         lT1yCfdDI0ChUhArz/vGvt8jIsiDTIrkJChvo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=ZQvWarMwVAEFOsmNiZjAtL26w13+DS95fAGZF+s7Si14hlsrFB29awa/yVH+h04FOW
+         Lp4O6qERQr5ndYg1w6pD5eHISj0suCLXK4Eh35BM4YkDq5ap8jUs09Fn04sdGKOasXL9
+         OhlmspWcyfYgjZ2fJUq6nDS+zuLwN1nko2eiY=
+Received: by 10.151.109.8 with SMTP id l8mr210344ybm.46.1294755506237;
+        Tue, 11 Jan 2011 06:18:26 -0800 (PST)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id v4sm2949157ybe.17.2011.01.11.06.18.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 11 Jan 2011 06:18:24 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=t98=4p=R2DXeCJ0OVPey8EtTLxHQ=3KfqrQpE@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164947>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164948>
 
-Since the message advise to fix the configuration first, the advantage
-of this command is that it is cut-and-paste ready, while using
---author='...' requires the user to type his name and email a second
-time.
+Hi,
 
-Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
----
- builtin/commit.c |    6 +++++-
- 1 files changed, 5 insertions(+), 1 deletions(-)
+Stephen Kelly writes:
+> On Sun, Jan 9, 2011 at 6:24 PM, Jonathan Nieder <jrnieder@gmail.com> =
+wrote:
+> > Ramkumar Ramachandra wrote:
+> >
+> >> The 'user.name' and 'user.email' configuration
+> >> options set both author and committer information. To solve this,
+> >> introduce 'user.committername' and 'user.committeremail' configura=
+tion
+> >> options to override committer name and email respectively.
+> >
+> > Predictably, I don't like this idea at all. =A0How would we explain=
+ this
+> > to a new user that is reading over gitconfig(5) for the first time?
+> > It makes the semantics of the committer and author name (that are m=
+ostly
+> > meant for giving credit and a contact address) much more murky.
+>=20
+> It's like the difference between who are you, and what is your log-in
+> identity on remote service X.
 
-diff --git a/builtin/commit.c b/builtin/commit.c
-index 22ba54f..440223c 100644
---- a/builtin/commit.c
-+++ b/builtin/commit.c
-@@ -47,7 +47,11 @@ static const char implicit_ident_advice[] =
- "\n"
- "If the identity used for this commit is wrong, you can fix it with:\n"
- "\n"
--"    git commit --amend --author='Your Name <you@example.com>'\n";
-+"    git commit --amend --author='Your Name <you@example.com>'\n"
-+"\n"
-+"or\n"
-+"\n"
-+"    git commit --amend --reset-author\n";
- 
- static const char empty_amend_advice[] =
- "You asked to amend the most recent commit, but doing so would make\n"
--- 
-1.7.4.rc0.2.g3e22c.dirty
+This feature should not be widely advertised- while it can confuse
+many new users, I think it's useful to have in some scenarios like
+this one.
+
+-- Ram
