@@ -1,59 +1,61 @@
-From: =?windows-1251?B?wOvl6vHl6SDY8+zq6O0=?= <zapped@mail.ru>
-Subject: Re[2]: [PATCH] userdiff: match Pascal class methods
-Date: Tue, 11 Jan 2011 22:50:59 +0300
-Message-ID: <1093185322.20110111225059@mail.ru>
-References: <1294736039-5912-1-git-send-email-zapped@mail.ru> <7vipxv45ky.fsf@alter.siamese.dyndns.org>
-Reply-To: =?windows-1251?B?wOvl6vHl6SDY8+zq6O0=?= <zapped@mail.ru>
+From: Jeff King <peff@peff.net>
+Subject: Re: clone breaks replace
+Date: Tue, 11 Jan 2011 14:51:07 -0500
+Message-ID: <20110111195107.GA18714@sigill.intra.peff.net>
+References: <4D262D68.2050804@cfl.rr.com>
+ <4D2C7611.6060204@cfl.rr.com>
+ <20110111173922.GB1833@sigill.intra.peff.net>
+ <201101112048.57326.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 11 20:51:36 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Phillip Susi <psusi@cfl.rr.com>,
+	Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Stephen Bash <bash@genarts.com>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Tue Jan 11 20:51:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PckFj-0001ka-Ja
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 20:51:36 +0100
+	id 1PckFk-0001ka-Ry
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 20:51:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932657Ab1AKTvF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 14:51:05 -0500
-Received: from smtp2.mail.ru ([94.100.176.130]:48018 "EHLO smtp2.mail.ru"
+	id S932671Ab1AKTvM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 14:51:12 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:42382 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S932622Ab1AKTvD (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 14:51:03 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
-	h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Subject:CC:To:Message-ID:Reply-To:From:Date; bh=I8QmGBmxTxESajcID1MLFmV7OwLxsJ+ObwlstcUgZGI=;
-	b=wuvdmu+kyI/gV2ehtEO2kS2+YQ0WuRIcY6XVb+fMz+V2rHgCDVdQmxwdwuJBqvrIX5CptQQKg90Gq7owYFzoWeHM/Y2ouEu3PLdzek+sbqirxcq0jX2yV+JwcCTT8XTQ;
-Received: from [85.140.106.43] (port=28329 helo=ppp85-140-106-43.pppoe.mtu-net.ru)
-	by smtp2.mail.ru with asmtp 
-	id 1PckFB-0003rx-00; Tue, 11 Jan 2011 22:51:01 +0300
-X-Mailer: The Bat! (v3.99.3) Professional
-X-Priority: 3 (Normal)
-In-Reply-To: <7vipxv45ky.fsf@alter.siamese.dyndns.org>
-X-Mras: Ok
+	id S932622Ab1AKTvL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 14:51:11 -0500
+Received: (qmail 15750 invoked by uid 111); 11 Jan 2011 19:51:10 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 11 Jan 2011 19:51:10 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Jan 2011 14:51:07 -0500
+Content-Disposition: inline
+In-Reply-To: <201101112048.57326.j6t@kdbg.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164983>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164984>
 
-JCH> Alexey Shumkin <zapped@mail.ru> writes:
+On Tue, Jan 11, 2011 at 08:48:57PM +0100, Johannes Sixt wrote:
 
->> Class declarations were already covered by the second pattern, but class methods have the 'class' keyword in front too. Account for it.
+> On Dienstag, 11. Januar 2011, Jeff King wrote:
+> > On Tue, Jan 11, 2011 at 10:24:01AM -0500, Phillip Susi wrote:
+> > > Yes, either a new branch or separate historical repository could be
+> > > published to pull the original history from, or git would need to pass
+> > > the --no-replace-objects flag to git-upload-pack on the server, causing
+> > > it to ignore the replace and send the original history.
+> >
+> > AFAIK, git can't pass --no-replace-objects to the server over git:// (or
+> > smart http). You would need a protocol extension.
+> 
+> Why would you have to? git-upload-pack never looks at replacement objects.
 
-JCH> Too long a line (which I could re-wrap locally but I'd rather not be in
-JCH> the business of doing that for everybody).
-Ooh, I'm sorry
+I think you missed the first part of this discussion. Phillip is
+proposing that it should, and I am arguing against it.
 
->>  PATTERNS("pascal",
->> -      "^((procedure|function|constructor|destructor|interface|"
->> +      "^(((class[ \t]+)?(procedure|function)|constructor|destructor|interface|"
->>               "implementation|initialization|finalization)[ \t]*.*)$"
-JCH> Earlier we took "^procedure frotz", "^function frotz", etc. and now we
-JCH> also take "^class procedure frotz", "^class function frotz", but not
-JCH> "^class constructor frotz"---am I reading the patterns correctly?
-Yes, you're reading correctly. 'class' keyword might precede only
-'procedure' or 'function' keyword but not the other ones
+-Peff
