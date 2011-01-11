@@ -1,90 +1,88 @@
-From: Jeenu V <jeenuv@gmail.com>
-Subject: Re: git notes and core.editor config
-Date: Tue, 11 Jan 2011 16:44:21 +0530
-Message-ID: <AANLkTik-=s-F8dmBRLU8o9LcSztb1P0WnkN5HK_n_No4@mail.gmail.com>
-References: <AANLkTi=0BrBV+DLF_QfDi0mMVdz5tCLFsDMBKvw52nzz@mail.gmail.com> <201101111131.17429.johan@herland.net>
+From: =?iso-8859-1?Q?=22Martin_Kr=FCger=22?= <martin.krueger@gmx.com>
+Subject: Re: Merge two different repositories (v2.4 + v2.5) into the one (v2.4
+ -> v2.5). Possible?
+Date: Tue, 11 Jan 2011 12:49:43 +0100
+Message-ID: <20110111114943.40890@gmx.net>
+References: <746745466.20110111134101@mail.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Jan 11 12:15:00 2011
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+To: =?iso-8859-1?B?ItCQ0LvQtdC60YHQtdC5INCo0YPQvNC60LjQvSI=?= 
+	<zapped@mail.ru>, git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 11 12:49:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PccBn-0005XJ-9K
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 12:14:59 +0100
+	id 1PccjX-0006Y8-T0
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 12:49:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755829Ab1AKLOy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jan 2011 06:14:54 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:40320 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755634Ab1AKLOx convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 11 Jan 2011 06:14:53 -0500
-Received: by wwa36 with SMTP id 36so1631807wwa.1
-        for <git@vger.kernel.org>; Tue, 11 Jan 2011 03:14:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:received:mime-version:received:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=5waZ5Aa37P4p7zxTmQuAsFtqtxnMrFQvo6ElYYM3GVM=;
-        b=YSUWKQyywUlT7L6+QOhoRlyQBMZu6RFeLz6KzYle32TSXYQmaHDdbVYV8c7Y9Mm9Cu
-         8C98IfVHg+EKjIRBOVe3mJviSzVJMN+9wXRvG6Qff/1BUL09KhMDD8j0P85/1zjgPe53
-         JSayikQ1rNf+jBKqWbtXvC4hHjLX0K13E55wg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=eSZa5T0uHI8sIQT5tDrCrUoAR2qLuMn30knjaKLkImSFWKJapl/UbXDa2R0lOH4eKP
-         aNUeR1Ed/nd1N/ZU+fMIh4tLl3pBwtJ+biqcvOeY53ZAJRxXNV9+FBbyUkYTKQRxOGki
-         1iAiYlL5I+hcd0nsUHa9+MqOYgeiOYwRxYUhM=
-Received: by 10.216.187.82 with SMTP id x60mr867357wem.9.1294744491700; Tue,
- 11 Jan 2011 03:14:51 -0800 (PST)
-Received: by 10.216.254.166 with HTTP; Tue, 11 Jan 2011 03:14:21 -0800 (PST)
-In-Reply-To: <201101111131.17429.johan@herland.net>
+	id S1755521Ab1AKLtr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 06:49:47 -0500
+Received: from mailout-de.gmx.net ([213.165.64.23]:48984 "HELO mail.gmx.net"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with SMTP
+	id S1752142Ab1AKLtq (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 06:49:46 -0500
+Received: (qmail 16843 invoked by uid 0); 11 Jan 2011 11:49:44 -0000
+Received: from 213.39.246.106 by www049.gmx.net with HTTP;
+ Tue, 11 Jan 2011 12:49:42 +0100 (CET)
+In-Reply-To: <746745466.20110111134101@mail.ru>
+X-Authenticated: #34047341
+X-Flags: 0001
+X-Mailer: WWW-Mail 6100 (Global Message Exchange)
+X-Priority: 3
+X-Provags-ID: V01U2FsdGVkX1+f+IRgLUaf2B+arChlofxmF0tWutRODZn3Xy/YNW
+ +3T4Wi82mzsJ4UK33Mhbv4sMZo6YAMPkh6eA== 
+X-GMX-UID: gAdmCrFoa2AoVwmzMHYy2gc6OWhhakf9
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164928>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164929>
 
-On Tue, Jan 11, 2011 at 4:01 PM, Johan Herland <johan@herland.net> wrot=
-e:
-> On Tuesday 11 January 2011, Jeenu V wrote:
->> My core.editor value in $HOME/.gitconfig is set to
->>
->> =A0 [core]
->> =A0 =A0 =A0 editor =3D vi "+set tw=3D72 spell"
->>
->> so that I've text width of 72 with spell check turned on. I haven't
->> found problems with any git commands that invoke editor, but notes.
->> 'git notes' seems to invoke the vi for me with 3 separate arguments
->> instead of just one: "+set, tw=3D72, and spell". In other words, I
->> don't think it honors shell quoting for editor config variable.
->>
->> Could this be a bug?
+> 
+> Now I'd like to merge them as v2.5 was a continuos branch from v2.4,
+> but without a rebasing (i.e. without a global changing of v2.5
+> repository, which already has another branches)
+> It must look like LAST commit of v2.4 should be a PARENT of FIRST commit
+> of v2.5
+> 
+> Now there's a question: Is it possible to do so (no rebasing!), and If
+> "yes" then how to?
+> 
 >
-> Indeed, it could, but I cannot immediately see what causes it. In
-> current 'master', builtin/notes.c launches the editor like this:
->
-> =A0if (launch_editor(path, &(msg->buf), NULL)) ...
->
-> while builtin/commit.c lauches the editor like this:
->
-> =A0if (launch_editor(git_path(commit_editmsg), NULL, env)) ...
->
-> In both cases, the details of interpreting core.editor is left to
-> git_default_core_config(), and passed to launch_editor() using the
-> editor_program global variable. AFAICS there is no difference between
-> how "notes" and "commit" interprets core.editor.
->
-> What Git version are you running?
+It's possible with a little arts an crafts. 
+You have 2 friends:  git format-patch & git am .
+With "git format-patch" you  will see what a branch really is:
+a serie of patches.  With "git am"  you can apply these patches to a branch created on the correct point of the commit-history . E voila the branch is recreated in the repository.
 
-$ git --version
-git version 1.7.0.4
+In your case:
 
---=20
-Jeenu
+On the 2.5 repository master branch:
+git format-patch  INITIAL_COMMITID
+
+On the 2.4 repository master branch:
+git branch 2.5
+git checkout 2.4
+git reset --hard  INITIAL_COMMITID 
+cat *.patch | git am
+
+E voila you habe both branches in a single repository.
+
+Nearly  same procedure for every  branch of the  2.5 repository
+git checkout branchname 
+git format-patch master
+
+In the 2.4(Contains now both branches.) respository:
+git checkout 2.5
+git branch branchname
+git reset --hard CORRECT_BRANCHBASE
+cat *.patch | git am
+
+Best regards 
+   martin
+
+
+
+ 
