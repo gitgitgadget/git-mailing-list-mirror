@@ -1,73 +1,112 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH v2] Introduce new configuation option to override committer information
-Date: Tue, 11 Jan 2011 15:42:14 +0100
-Message-ID: <201101111542.15185.trast@student.ethz.ch>
-References: <igadki$4tb$2@dough.gmane.org> <1294568989-5848-1-git-send-email-artagnon@gmail.com> <20110109172431.GA7718@burratino>
+From: =?windows-1251?B?wOvl6vHl6SDY8+zq6O0=?= <zapped@mail.ru>
+Subject: Re[2]: Merge two different repositories (v2.4 + v2.5) into the one (v2.4 -> v2.5). Possible?
+Date: Tue, 11 Jan 2011 17:49:07 +0300
+Message-ID: <961742587.20110111174907@mail.ru>
+References: <746745466.20110111134101@mail.ru> <m3lj2rbmq5.fsf@localhost.localdomain>
+Reply-To: =?windows-1251?B?wOvl6vHl6SDY8+zq6O0=?= <zapped@mail.ru>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=us-ascii
 Content-Transfer-Encoding: 7bit
-Cc: Git List <git@vger.kernel.org>, Stephen Kelly <steveire@gmail.com>,
-	Erik Faye-Lund <kusmabite@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 11 15:42:27 2011
+Cc: git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 11 15:49:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcfQV-0001FN-RY
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 15:42:24 +0100
+	id 1PcfXA-0005KD-7o
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 15:49:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756039Ab1AKOmS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 09:42:18 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:33097 "EHLO edge20.ethz.ch"
+	id S1756039Ab1AKOtL (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 09:49:11 -0500
+Received: from smtp13.mail.ru ([94.100.176.90]:58487 "EHLO smtp13.mail.ru"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753837Ab1AKOmR (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 09:42:17 -0500
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 11 Jan
- 2011 15:42:13 +0100
-Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 11 Jan
- 2011 15:42:15 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
-In-Reply-To: <20110109172431.GA7718@burratino>
-X-Originating-IP: [129.132.153.233]
+	id S1755775Ab1AKOtJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 09:49:09 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
+	h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Subject:CC:To:Message-ID:Reply-To:From:Date; bh=AiKtB6UZBw0IIGMpeiN4P/zfvXFhBR6vM8OJemnrowQ=;
+	b=Ha4aWI3oA3iHDbEI7CrknYXi+ltOKO1piEoI2OoqFPAPTjEtBTCrwR08+mxVbog29hv57ToOWBrU89LXbxLSeIoeG4o6c7eAW+CZHZ3AJBUg20CVfuzfGEdW05BKb6bP;
+Received: from [85.140.106.43] (port=43532 helo=ppp85-140-106-43.pppoe.mtu-net.ru)
+	by smtp13.mail.ru with asmtp 
+	id 1PcfX1-0005AS-00; Tue, 11 Jan 2011 17:49:08 +0300
+X-Mailer: The Bat! (v3.99.3) Professional
+X-Priority: 3 (Normal)
+In-Reply-To: <m3lj2rbmq5.fsf@localhost.localdomain>
+X-Mras: Ok
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164950>
 
-Jonathan Nieder wrote:
-> Ramkumar Ramachandra wrote:
-> 
-> > The 'user.name' and 'user.email' configuration
-> > options set both author and committer information. To solve this,
-> > introduce 'user.committername' and 'user.committeremail' configuration
-> > options to override committer name and email respectively.
-> 
-> Predictably, I don't like this idea at all.  How would we explain this
-> to a new user that is reading over gitconfig(5) for the first time?
-> It makes the semantics of the committer and author name (that are mostly
-> meant for giving credit and a contact address) much more murky.
+Hello, Jakub.
 
-Well, now that I'm rethinking it, the weird thing is that it does not
-override in the way that the user intuitively might expect.
+Thank you very much. Your method works great and it suits for me well
 
-Assume we also had user.authoremail for completeness, and you do
+>> 1.5 years ago I had sources of a project in a SVN repository (actually it does not
+>> matter what SCM was used before). And I had two branches: v2.4 and v2.5.
+>> They differed enough at that moment and (as usual for SVN branches)
+>> laid in two different folders.
+>> Then I had known of Git and I decided to try to use this powerful DVCS.
+>> But as I was a newbie I created two git-repositories: one per each
+>> branch. So v2.4 has its own git-repo. v2.5 (and above) has another one.
+>> 
+>> Now I'd like to merge them as v2.5 was a continuos branch from v2.4,
+>> but without a rebasing (i.e. without a global changing of v2.5
+>> repository, which already has another branches)
+>> It must look like LAST commit of v2.4 should be a PARENT of FIRST commit of v2.5
+>> 
+>> Now there's a question: Is it possible to do so (no rebasing!), and If
+>> "yes" then how to?
 
-  git config --global user.authoremail author@example.com
-  git config --global user.committeremail committer@example.com
-  git config user.email user@example.com
+JN> As Andreas Ericsson wrote, you can do this using grafts (and you can
+JN> make history with grafts permanent using "git filter-branch").
 
-Probably the user would expect this to result in a uniform
-user@example.com identity for the current repo, but I don't think we
-can twist it that way with the current config infrastructure.  The
-obvious option of having user.{author,committer}* override the more
-generic user.* would be contrary to that intuition.
+JN> Better solution might be to use more modern replace mechanism, see
+JN> e.g. "git replace" manpage.  Below there is untested step-by-step
+JN> instruction.
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+JN> First, you have put history of v2.4 and of v2.5 in a single repository
+JN> (e.g. using "git remote add").  Then you need to find FIRST commit of
+JN> v2.5 among
+
+JN>   $ git rev-list master --parents | grep -v ' '
+
+JN> The above finds all parent-less commits in 'master' branch; replace it
+JN> with branch holding v2.5 history.  Then you need to find LAST commit
+JN> of v2.4 and its SHA-1, e.g. via
+
+JN>   $ git rev-parse v2.4
+
+JN> Save current state of FIRST commit of v2.5 to a file
+
+JN>   $ git cat-file -p FIRST > tmp
+
+JN> Edit this file, adding 'parent' line between 'tree' and 'author'
+JN> headers, so the header of this file looks like the following:
+
+JN>   tree 13d050266e05f7c66000240814199fcf3b559d43
+JN>   parent ada9983c4256f5a7bac1f7f0e29d52011741d6aa
+JN>   author Jakub Narebski <jnareb@gmail.com> 1294231771 +0100
+
+JN> (trailing space added for better readibility).
+
+JN> Then you need to add newly created object to repository:
+
+JN>   $ git hash-object -t commit -w tmp
+
+JN> and then use it as replacement
+
+JN>   $ git replace <SHA-1 of FIRST> <SHA-1 returned by hash-object>
+
+JN> Finally check that replacement works, e.g.:
+
+JN>   $ git show FIRST
+JN>   $ git log --graph --oneline -3 FIRST
+
+JN> The anyone who would fetch refs/replace/ would get joined history, and
+JN> who doesn't would see it not connected.
+
+
+JN> P.S. This probably should made it into Documentation/howto
