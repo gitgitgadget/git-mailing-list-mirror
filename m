@@ -1,74 +1,58 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH 2/2] t/README: hint about using $(pwd) rather than $PWD
- in tests
-Date: Tue, 11 Jan 2011 09:54:06 +0100
-Message-ID: <4D2C1AAE.1040002@viscovery.net>
-References: <201012302205.13728.j6t@kdbg.org> <201012311711.06989.j6t@kdbg.org> <20101231203019.GC5898@burratino> <201012312321.31294.j6t@kdbg.org> <7v62u8hz01.fsf@alter.siamese.dyndns.org> <4D2C09D7.3070700@viscovery.net> <4D2C0A5E.7090708@viscovery.net> <20110111075441.GB9445@burratino> <4D2C11A5.4050709@viscovery.net> <20110111083729.GD9445@burratino>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Jan 11 09:54:21 2011
+From: Alexey Shumkin <zapped@mail.ru>
+Subject: [PATCH] userdiff: match Pascal class methods
+Date: Tue, 11 Jan 2011 11:53:59 +0300
+Message-ID: <1294736039-5912-1-git-send-email-zapped@mail.ru>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 11 09:54:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcZzh-0005mz-00
+	id 1PcZzh-0005mz-GM
 	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 09:54:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755470Ab1AKIyN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 03:54:13 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:24924 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754501Ab1AKIyL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 03:54:11 -0500
-Received: from [81.10.228.254] (helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1PcZzT-0004Om-0m; Tue, 11 Jan 2011 09:54:07 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id BDCE51660F;
-	Tue, 11 Jan 2011 09:54:06 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <20110111083729.GD9445@burratino>
-X-Enigmail-Version: 1.1.1
-X-Spam-Score: -1.4 (-)
+	id S1755476Ab1AKIyP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 03:54:15 -0500
+Received: from smtp13.mail.ru ([94.100.176.90]:57071 "EHLO smtp13.mail.ru"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754041Ab1AKIyM (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 03:54:12 -0500
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
+	h=Message-Id:Date:Subject:Cc:To:From; bh=aBfjXYZRi1NQoH2Ou4Wmxy3qdudl5hnbff2QPcJbnic=;
+	b=GOfGMtSGRG5tcWURhW2vtUVzRaue+MWtGPSzD86VLXaBmZNykL9WYgozo0u3RhHCExBDMHCFSCruS9P4fVKz38RWfSEGrrpdGI98fSdHiJEg52Pg0Gc2GtqnLG/tltpa;
+Received: from [85.140.106.43] (port=42124 helo=localhost.localdomain)
+	by smtp13.mail.ru with asmtp 
+	id 1PcZzW-0008VA-00; Tue, 11 Jan 2011 11:54:10 +0300
+X-Mailer: git-send-email 1.7.3.4.3.g3f811
+X-Mras: Ok
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164921>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164922>
 
-Am 1/11/2011 9:37, schrieb Jonathan Nieder:
-> I suspect that the reader will end up wondering "why does this have to
-> be so complicated" no matter what.
+Class declarations were already covered by the second pattern, but class methods have the 'class' keyword in front too. Account for it.
 
-Unfortunately, yes. Therefore, I'd like to keep the paragraph minimal,
-focused on how expected values should be constructed, which is where
-errors will happen primarily.
+Signed-off-by: Alexey Shumkin <zapped@mail.ru>
+Acked-by: Thomas Rast <trast@student.ethz.ch>
+---
+ userdiff.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
->>>       It makes a difference on Windows, where
->>>
->>> 	 - $(pwd) is a Windows-style path such as git might output, and
->>> 	 - $PWD is a Unix-style path that the shell (MSYS bash) will
->>> 	   mangle before passing to native apps like git.
->>
->> This information is already included by reference to 4114156ae9.
-> 
-> ... but if we can summarize it nicely, we can save the reader a
-> step, no?
-
-I don't think so: it's not complete enough. Readers will ask: "So what?"
-Digging archives or a three paragraph follow-up explanation on the ML will
-be required anyway.
-
-> Anyway, what you have already written is useful; clearing up these
-> details would just be icing on the top.
-
-OK, thanks for a review.
-
--- Hannes
+diff --git a/userdiff.c b/userdiff.c
+index f9e05b5..259a382 100644
+--- a/userdiff.c
++++ b/userdiff.c
+@@ -52,7 +52,7 @@ PATTERNS("objc",
+ 	 "|[-+*/<>%&^|=!]=|--|\\+\\+|<<=?|>>=?|&&|\\|\\||::|->"
+ 	 "|[^[:space:]]|[\x80-\xff]+"),
+ PATTERNS("pascal",
+-	 "^((procedure|function|constructor|destructor|interface|"
++	 "^(((class[ \t]+)?(procedure|function)|constructor|destructor|interface|"
+ 		"implementation|initialization|finalization)[ \t]*.*)$"
+ 	 "\n"
+ 	 "^(.*=[ \t]*(class|record).*)$",
+-- 
+1.7.3.4.3.g3f811
