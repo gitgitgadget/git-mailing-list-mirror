@@ -1,78 +1,76 @@
-From: =?utf-8?B?0JDQu9C10LrRgdC10Lkg0KjRg9C80LrQuNC9?= <zapped@mail.ru>
-Subject: Re[2]: Merge two different repositories (v2.4 + v2.5) into the one (v2.4 -> v2.5). Possible?
-Date: Tue, 11 Jan 2011 15:33:29 +0300
-Message-ID: <76067992.20110111153329@mail.ru>
-References: <746745466.20110111134101@mail.ru> <20110111114943.40890@gmx.net>
-Reply-To: =?utf-8?B?0JDQu9C10LrRgdC10Lkg0KjRg9C80LrQuNC9?= <zapped@mail.ru>
+From: Johan Herland <johan@herland.net>
+Subject: Re: git notes and core.editor config
+Date: Tue, 11 Jan 2011 13:36:19 +0100
+Message-ID: <201101111336.19466.johan@herland.net>
+References: <AANLkTi=0BrBV+DLF_QfDi0mMVdz5tCLFsDMBKvw52nzz@mail.gmail.com> <201101111131.17429.johan@herland.net> <AANLkTik-=s-F8dmBRLU8o9LcSztb1P0WnkN5HK_n_No4@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: =?utf-8?Q?=22Martin_Kr=C3=BCger=22?= <martin.krueger@gmx.com>
-X-From: git-owner@vger.kernel.org Tue Jan 11 13:33:37 2011
+To: Jeenu V <jeenuv@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 11 13:36:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcdPs-0006Jk-GZ
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 13:33:36 +0100
+	id 1PcdSd-0007hp-B3
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 13:36:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754139Ab1AKMdd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 07:33:33 -0500
-Received: from smtp5.mail.ru ([94.100.176.132]:48872 "EHLO smtp5.mail.ru"
+	id S1754139Ab1AKMgX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 11 Jan 2011 07:36:23 -0500
+Received: from smtp.opera.com ([213.236.208.81]:58249 "EHLO smtp.opera.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753663Ab1AKMdb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 07:33:31 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=mail.ru; s=mail;
-	h=Content-Transfer-Encoding:Content-Type:MIME-Version:References:In-Reply-To:Subject:CC:To:Message-ID:Reply-To:From:Date; bh=k2OEGSAM4H86pf6TJZdyrPRAgbkmhe/3jp6I8ku7Bz4=;
-	b=QIVsjyu9SILljHTfLC//aVzUci9PXc2tlWpdEXDIudtxJeI98iWw8pRRz0xEH9XNsQh0KKP7l/H7lhg/CelRsneusJP6JSenecuHLmONfzbCSgKZqryyhCMOlINXA5WJ;
-Received: from [85.140.106.43] (port=13473 helo=ppp85-140-106-43.pppoe.mtu-net.ru)
-	by smtp5.mail.ru with asmtp 
-	id 1PcdPl-0006EF-00; Tue, 11 Jan 2011 15:33:30 +0300
-X-Mailer: The Bat! (v3.99.3) Professional
-X-Priority: 3 (Normal)
-In-Reply-To: <20110111114943.40890@gmx.net>
-X-Mras: Ok
+	id S1753837Ab1AKMgV (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 07:36:21 -0500
+Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p0BCaJqo012494
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Tue, 11 Jan 2011 12:36:19 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <AANLkTik-=s-F8dmBRLU8o9LcSztb1P0WnkN5HK_n_No4@mail.gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164934>
 
-Thank you for the answer, but it's not what I want ))
-Applying patches is the same as rebasing, I guess.
-But I do not want to change v2.5-repo (let's call it so) that much.
-I'd like to know is there any method (low-level I suppose, as far as Git
-manages tree-objects as files) to make v2.4 LAST commit to be the
-parent of v2.5 FIRST commit?
+On Tuesday 11 January 2011, Jeenu V wrote:
+> On Tue, Jan 11, 2011 at 4:01 PM, Johan Herland <johan@herland.net>=20
+wrote:
+> > On Tuesday 11 January 2011, Jeenu V wrote:
+> >> My core.editor value in $HOME/.gitconfig is set to
+> >>
+> >> =A0 [core]
+> >> =A0 =A0 =A0 editor =3D vi "+set tw=3D72 spell"
+> >>
+> >> so that I've text width of 72 with spell check turned on. I
+> >> haven't found problems with any git commands that invoke editor,
+> >> but notes. 'git notes' seems to invoke the vi for me with 3
+> >> separate arguments instead of just one: "+set, tw=3D72, and spell"=
+=2E
+> >> In other words, I don't think it honors shell quoting for editor
+> >> config variable.
+> >>
+> >> Could this be a bug?
+> >
+> > What Git version are you running?
+>
+> $ git --version
+> git version 1.7.0.4
 
-MK> It's possible with a little arts an crafts.
-MK> You have 2 friends:  git format-patch & git am .
-MK> With "git format-patch" you  will see what a branch really is:
-MK> a serie of patches.  With "git am"  you can apply these patches
-MK> to a branch created on the correct point of the commit-history . E
-MK> voila the branch is recreated in the repository.
+Ah, there's your problem. In v1.7.1 "git notes" was builtin-ified (it=20
+used to be a shell script, but was reimplemented in C), so you're still=
+=20
+running the shell script version of "git notes". I believe upgrading=20
+will solve your problem (as well as making "git notes" more=20
+featureful).
 
-MK> In your case:
 
-MK> On the 2.5 repository master branch:
-MK> git format-patch  INITIAL_COMMITID
+=2E..Johan
 
-MK> On the 2.4 repository master branch:
-MK> git branch 2.5
-MK> git checkout 2.4
-MK> git reset --hard  INITIAL_COMMITID 
-MK> cat *.patch | git am
-
-MK> E voila you habe both branches in a single repository.
-
-MK> Nearly  same procedure for every  branch of the  2.5 repository
-MK> git checkout branchname 
-MK> git format-patch master
-
-MK> In the 2.4(Contains now both branches.) respository:
-MK> git checkout 2.5
-MK> git branch branchname
-MK> git reset --hard CORRECT_BRANCHBASE
-MK> cat *.patch | git am
+--=20
+Johan Herland, <johan@herland.net>
+www.herland.net
