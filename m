@@ -1,93 +1,53 @@
-From: "Philipp Marek" <philipp@marek.priv.at>
+From: Thomas Rast <trast@student.ethz.ch>
 Subject: Re: [RFC] Support for arbitrary tags in commits
-Date: Tue, 11 Jan 2011 14:48:59 +0100 (CET)
-Message-ID: <edec2e42a531b00ffd6a2689095460d5.squirrel@webmail.hitco.org>
-References: <74b0628dffbd2bc0adabe5e8b0a10960.squirrel@webmail.hitco.org>
-    <201101111340.50508.trast@student.ethz.ch>
+Date: Tue, 11 Jan 2011 14:53:08 +0100
+Message-ID: <201101111453.08178.trast@student.ethz.ch>
+References: <74b0628dffbd2bc0adabe5e8b0a10960.squirrel@webmail.hitco.org> <201101111340.50508.trast@student.ethz.ch> <edec2e42a531b00ffd6a2689095460d5.squirrel@webmail.hitco.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org
-To: "Thomas Rast" <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jan 11 14:49:15 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Philipp Marek <philipp@marek.priv.at>
+X-From: git-owner@vger.kernel.org Tue Jan 11 14:53:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pceb4-0004Bf-2t
-	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 14:49:14 +0100
+	id 1Pcef0-0006pE-9C
+	for gcvg-git-2@lo.gmane.org; Tue, 11 Jan 2011 14:53:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756020Ab1AKNtI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 08:49:08 -0500
-Received: from vps.hitco.at ([84.200.20.238]:46966 "EHLO vps.hitco.at"
+	id S932075Ab1AKNxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 08:53:10 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:17225 "EHLO edge10.ethz.ch"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754144Ab1AKNtH (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 08:49:07 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by vps.hitco.at (Postfix) with ESMTP id 0AC439C68001;
-	Tue, 11 Jan 2011 14:49:05 +0100 (CET)
-X-Virus-Scanned: Debian amavisd-new at vps.hitco.at
-X-Spam-Flag: NO
-X-Spam-Score: -4.282
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.282 tagged_above=-999 required=6.31
-	tests=[ALL_TRUSTED=-1.8, AWL=0.117, BAYES_00=-2.599]
-Received: from vps.hitco.at ([127.0.0.1])
-	by localhost (vps.hitco.at [127.0.0.1]) (amavisd-new, port 10024)
-	with ESMTP id 36Vo5gU78ZoV; Tue, 11 Jan 2011 14:48:59 +0100 (CET)
-Received: from webmail.hitco.org (localhost.localdomain [127.0.0.1])
-	by vps.hitco.at (Postfix) with ESMTP id 0AB7D8F40002;
-	Tue, 11 Jan 2011 14:48:59 +0100 (CET)
-Received: from 86.59.100.100
-        (SquirrelMail authenticated user flip)
-        by webmail.hitco.org with HTTP;
-        Tue, 11 Jan 2011 14:48:59 +0100 (CET)
-In-Reply-To: <201101111340.50508.trast@student.ethz.ch>
-User-Agent: SquirrelMail/1.4.15
-X-Priority: 3 (Normal)
-Importance: Normal
+	id S1753540Ab1AKNxK (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 08:53:10 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 11 Jan
+ 2011 14:53:06 +0100
+Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 11 Jan
+ 2011 14:53:08 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
+In-Reply-To: <edec2e42a531b00ffd6a2689095460d5.squirrel@webmail.hitco.org>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164945>
 
-Hello Thomas,
+Philipp Marek wrote:
+> > In particular, in what way do notes (as in git-notes(1)) fail to solve
+> > your problem?
+> Well, my biggest concerns are that users might trash them, and that they are
+> voided by amend, rebase etc. (which I tried to address by collecting header
+> lines).
 
-thank you very much for the quick answer.
-
->> The best way I've found (so far) is to put an additional header line in the
->> commit header that references an additional blob.
->
-> This comes up every few months.  The last large discussion about this
-> that we had IIRC was
->
->   http://thread.gmane.org/gmane.comp.version-control.git/138848
->
-> Can you please look through that thread and state in what way your
-> use-case invalidates the previous reasoning?
-Thank you, just reading it.
-
-> In particular, in what way do notes (as in git-notes(1)) fail to solve
-> your problem?
-Well, my biggest concerns are that users might trash them, and that they are
-voided by amend, rebase etc. (which I tried to address by collecting header
-lines).
-
-
-Well, from this thread I suppose the "best" (or at least easiest) way forward
-is to use notes, if necessary.
-
-
-Thank you!
-
-
-Regards,
-
-Phil
-
+They aren't lost any more (since 1.7.1) if you properly configure
+notes.rewriteRef.
 
 -- 
-Versioning your /etc, /home or even your whole installation?
-             Try fsvs (fsvs.tigris.org)!
+Thomas Rast
+trast@{inf,student}.ethz.ch
