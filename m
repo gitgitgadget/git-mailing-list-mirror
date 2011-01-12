@@ -1,76 +1,82 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Git Rebase blows away GIT_AUTHOR_NAME
-Date: Wed, 12 Jan 2011 13:21:50 -0500
-Message-ID: <20110112182150.GC31747@sigill.intra.peff.net>
-References: <AANLkTinMX0yEPvSc-c=96R42SbFZTjW5Mnveuxk3ZHS=@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: JT Olds <jtolds@xnet5.com>
-X-From: git-owner@vger.kernel.org Wed Jan 12 19:22:17 2011
+From: Matthieu Moy <Matthieu.Moy@imag.fr>
+Subject: [PATCH v2] commit: suggest --amend --reset-author to fix commiter identity
+Date: Wed, 12 Jan 2011 19:29:14 +0100
+Message-ID: <1294856954-26841-1-git-send-email-Matthieu.Moy@imag.fr>
+References: <1294754860-17701-1-git-send-email-Matthieu.Moy@imag.fr>
+Cc: Matthieu Moy <Matthieu.Moy@imag.fr>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Wed Jan 12 19:30:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pd5Kq-0004S9-QR
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Jan 2011 19:22:17 +0100
+	id 1Pd5SN-0000Jh-Eg
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Jan 2011 19:30:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755695Ab1ALSVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Jan 2011 13:21:54 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:58750 "EHLO peff.net"
+	id S1752171Ab1ALS3z (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jan 2011 13:29:55 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:39445 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754957Ab1ALSVx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jan 2011 13:21:53 -0500
-Received: (qmail 22910 invoked by uid 111); 12 Jan 2011 18:21:52 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 12 Jan 2011 18:21:52 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Jan 2011 13:21:50 -0500
-Content-Disposition: inline
-In-Reply-To: <AANLkTinMX0yEPvSc-c=96R42SbFZTjW5Mnveuxk3ZHS=@mail.gmail.com>
+	id S1750722Ab1ALS3y (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jan 2011 13:29:54 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p0CITFwS016815
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 12 Jan 2011 19:29:15 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	(Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1Pd5Rd-0006gq-7a; Wed, 12 Jan 2011 19:29:17 +0100
+Received: from moy by bauges.imag.fr with local (Exim 4.69)
+	(envelope-from <moy@imag.fr>)
+	id 1Pd5Rd-0006zo-22; Wed, 12 Jan 2011 19:29:17 +0100
+X-Mailer: git-send-email 1.7.4.rc0.2.g3e22c.dirty
+In-Reply-To: <1294754860-17701-1-git-send-email-Matthieu.Moy@imag.fr>
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 12 Jan 2011 19:29:16 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p0CITFwS016815
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: moy@imag.fr
+MailScanner-NULL-Check: 1295461757.47001@FUYD3WQDsIPKxQO+qFFuhQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165024>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165025>
 
-On Wed, Jan 12, 2011 at 09:15:41AM -0700, JT Olds wrote:
+Since the message advise to fix the configuration first, the advantage
+of this command is that it is cut-and-paste ready, while using
+--author='...' requires the user to type his name and email a second
+time.
 
-> On every fresh install of Ubuntu that I have used (by default, I use
-> ecryptfs for my home directory, which of course has its own set of
-> silly Git errors right now), when I clone from a remote repository,
-> have changes local to me, and changes on the remote repository, do
-> 'git pull --rebase', occasionally my GIT_AUTHOR_NAME gets set to my
-> GIT_AUTHOR_EMAIL on my changes that get applied on top of the remote
-> changes.
+Signed-off-by: Matthieu Moy <Matthieu.Moy@imag.fr>
+---
+Sorry, I did a resend the other day, which was plain wrong (I had the
+changes in my tree, but sent before commit--amend-ing).
 
-Weird. I have never heard of anything like it.
+This one should be OK.
 
-Some things off the top of my head: Does your GIT_AUTHOR_NAME or
-GIT_AUTHOR_EMAIL contain any odd characters that might confuse a parser?
-Do you do anything special with setting up those environment variables
-in your shell (e.g., in a .bashrc or .profile; those files _shouldn't_
-be read by a non-interactive shell, but it's something to investigate)?
-For that matter, how do you set up your identity in general (by
-environment, or in ~/.gitconfig, or a local .git/config in each repo),
-and what does it contain?
+ builtin/commit.c |    4 ++--
+ 1 files changed, 2 insertions(+), 2 deletions(-)
 
-Can you try running this in a repo that's giving you problems:
-
-  . git-sh-setup
-  git log --format=%H --author=your.name |
-  while read rev; do
-    get_author_ident_from_commit $rev
-    git format-patch -1 --stdout $rev |
-      git mailinfo /dev/null /dev/null
-  done | less
-
-and check that the output looks sane? I want to make sure there's
-nothing in your commits that is confusing our parser.
-
-If that doesn't turn up anything, I think the next thing to try would be
-making a script that reproduces the problem for you, and see if I can
-reproduce it here.
-
--Peff
+diff --git a/builtin/commit.c b/builtin/commit.c
+index 22ba54f..03cff5a 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -45,9 +45,9 @@ static const char implicit_ident_advice[] =
+ "    git config --global user.name \"Your Name\"\n"
+ "    git config --global user.email you@example.com\n"
+ "\n"
+-"If the identity used for this commit is wrong, you can fix it with:\n"
++"After doing this, you may fix the identity used for this commit with:\n"
+ "\n"
+-"    git commit --amend --author='Your Name <you@example.com>'\n";
++"    git commit --amend --reset-author\n";
+ 
+ static const char empty_amend_advice[] =
+ "You asked to amend the most recent commit, but doing so would make\n"
+-- 
+1.7.4.rc0.2.g3e22c.dirty
