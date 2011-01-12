@@ -1,78 +1,115 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [BUG] git rev-list --no-walk A B C sorts by commit date
- incorrectly
-Date: Tue, 11 Jan 2011 19:54:53 -0500 (EST)
-Message-ID: <alpine.DEB.1.10.1101111949230.856@debian>
-References: <CEF26B82-4281-4B8F-A994-DE32EFB92BA7@sb.org> <7v62u043ba.fsf@alter.siamese.dyndns.org> <BB84A2F6-E6B0-49E4-9DC7-6BA8860623E6@sb.org> <7vk4ig7y0t.fsf@alter.siamese.dyndns.org> <7vaaja8sxd.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: bug? in checkout with ambiguous refnames
+Date: Tue, 11 Jan 2011 20:25:15 -0500
+Message-ID: <20110112012515.GA30856@sigill.intra.peff.net>
+References: <20110107104650.GA5399@pengutronix.de>
+ <20110107194909.GB6175@sigill.intra.peff.net>
+ <20110107195417.GC6175@sigill.intra.peff.net>
+ <7vsjx449bv.fsf@alter.siamese.dyndns.org>
+ <7vipy0483h.fsf@alter.siamese.dyndns.org>
+ <20110111065207.GF10094@sigill.intra.peff.net>
+ <7vvd1v4bmt.fsf@alter.siamese.dyndns.org>
+ <20110111180208.GC1833@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Kevin Ballard <kevin@sb.org>, git list <git@vger.kernel.org>
+Content-Type: text/plain; charset=utf-8
+Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 12 01:55:13 2011
+X-From: git-owner@vger.kernel.org Wed Jan 12 02:25:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcozX-00076T-RU
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Jan 2011 01:55:12 +0100
+	id 1PcpSq-0005Rb-Kd
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Jan 2011 02:25:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932702Ab1ALAzE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 19:55:04 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:47146 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756406Ab1ALAzC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 19:55:02 -0500
-Received: by vws16 with SMTP id 16so32384vws.19
-        for <git@vger.kernel.org>; Tue, 11 Jan 2011 16:55:00 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
-         :message-id:references:user-agent:mime-version:content-type;
-        bh=psbA/emGL609kjC23tCU+3ohauPvbQiTuNDCqnIDgUQ=;
-        b=Couwft0D43AzIL7B2N1uwYKEQW+9JYGRPefmTxI+Z/2YT5SXGcJ8Xh+jbcf3+bMcWk
-         a5+qa2+FORKVsdRrJ5CBeMHQAH2hugupBnjtjJGHYO3u6YbrOyyFhw9X61+Q/r5LYMdO
-         RLNCrnTYzYIp+9DnX33+dYs5+AJ7WqhG13VQk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=Dybt/6VrI8i80EJccaIZdzEYymMyXm5MNbNB+7+k4E3Lfpp05dM9QLtCEE0bFUCyeZ
-         oFoKYjaU9ryERvBqsv6YXDD+9jMU1SyVbsu411fl4/X/n/AQPA2wgtCr0yogkrv1ts3J
-         wvuD4bR5yL6zMw72fenXAj8lXwGwZ123uRryk=
-Received: by 10.220.170.78 with SMTP id c14mr77567vcz.205.1294793700296;
-        Tue, 11 Jan 2011 16:55:00 -0800 (PST)
-Received: from [192.168.1.101] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id c8sm6912184vcc.9.2011.01.11.16.54.57
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 11 Jan 2011 16:54:59 -0800 (PST)
-X-X-Sender: martin@debian
-In-Reply-To: <7vaaja8sxd.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
+	id S932520Ab1ALBZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 20:25:23 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:44473 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756393Ab1ALBZW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 20:25:22 -0500
+Received: (qmail 17408 invoked by uid 111); 12 Jan 2011 01:25:19 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 12 Jan 2011 01:25:19 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Jan 2011 20:25:15 -0500
+Content-Disposition: inline
+In-Reply-To: <20110111180208.GC1833@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/164999>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165001>
 
-On Sat, 8 Jan 2011, Junio C Hamano wrote:
+On Tue, Jan 11, 2011 at 01:02:08PM -0500, Jeff King wrote:
 
-> Junio C Hamano <gitster@pobox.com> writes:
+> On Tue, Jan 11, 2011 at 09:02:18AM -0800, Junio C Hamano wrote:
 > 
-> > "git rev-list --no-walk ^HEAD~3 HEAD"?  Isn't it a nonsense?  If it is "no
-> > walk", then why do you even list a negative one?
+> > > Also, one other question while we are on the subject. I think we all
+> > > agree that "git checkout $foo" should prefer $foo as a branch. But what
+> > > about "git checkout -b $branch $start_point"?
+> > 
+> > That has always been defined as a synonym for
+> > 
+> > 	git branch $branch $start_point && git checkout $branch
+> > 
+> > so $start_point is just a random extended SHA-1 expression.
 > 
-> The above was my thinko.
-> 
-> When you explicitly give range to no-walk, you override that no-walk with
-> "please walk".  This is primarily to help Linus who wanted to do "git show
-> HEAD~3..HEAD"---see how his thinking changed over time by comparing
-> aa27e461 and f222abde.
+> That's what I would have expected, but I wanted to write a test to make
+> sure it was the case.
 
-Just a quick note: I didn't know that 'git show' was supposed to
-support that syntax, so I had try it out. When I ran 'git show
-origin/master..' on my branch, which was not rebase on top of
-origin/master, it seemed to print the history all the way back. It
-seems to stop only if all the positive refences contain the negative
-reference. Is this intended? Not that it matter much, since 'git log
--p' seems to do the same thing but stops where I expect...
+Looking into this more, I'm not sure what the right behavior is. The
+offending lines are in branch.c:create_branch:
+
+        switch (dwim_ref(start_name, strlen(start_name), sha1, &real_ref)) {
+        case 0:
+                /* Not branching from any existing branch */
+                if (explicit_tracking)
+                        die("Cannot setup tracking information; starting point is not a branch.");
+                break;
+        case 1:
+                /* Unique completion -- good, only if it is a real ref */
+                if (explicit_tracking && !strcmp(real_ref, "HEAD"))
+                        die("Cannot setup tracking information; starting point is not a branch.");
+                break;
+        default:
+                die("Ambiguous object name: '%s'.", start_name);
+                break;
+        }
+
+The die("Ambiguous...") blames all the way back to 0746d19 (git-branch,
+git-checkout: autosetup for remote branch tracking, 2007-03-08) and
+seems to just be a regression there that we didn't catch.
+
+Obviously we can loosen the die() there and just handle the ambiguous
+case like the unique case. But I'm not sure how tracking should interact
+with the branch/tag thing.
+
+This code seems to be trying to only track branches, but it fails at
+that. It actually will track _any_ ref. So I can happily do:
+
+  git branch --track foo v1.5
+
+and start tracking refs/tags/v1.5. Is that a bug or a feature?
+
+And then that makes me wonder. What should:
+
+  git branch --track foo ambiguity
+
+do? Should it choose the branch, because that is more useful for
+tracking? Or choose the tag? And if branch, then what should:
+
+  git branch foo ambiguity
+
+do? It won't track a tag unless --track is given explicitly. Should it
+prefer a branch with implicit tracking, or an untracked tag?
+
+I'm not sure. And to be honest I don't really care, because I think
+people with ambiguous refs are little bit crazy anyway (after all, in
+the current code it simply calls die()). But I think there is some
+argument to be made that due to tracking, start_point is not _just_
+a regular ref. We do care about its branchiness.
+
+-Peff
