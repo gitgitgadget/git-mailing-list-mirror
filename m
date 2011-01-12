@@ -1,115 +1,119 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: bug? in checkout with ambiguous refnames
-Date: Tue, 11 Jan 2011 20:25:15 -0500
-Message-ID: <20110112012515.GA30856@sigill.intra.peff.net>
-References: <20110107104650.GA5399@pengutronix.de>
- <20110107194909.GB6175@sigill.intra.peff.net>
- <20110107195417.GC6175@sigill.intra.peff.net>
- <7vsjx449bv.fsf@alter.siamese.dyndns.org>
- <7vipy0483h.fsf@alter.siamese.dyndns.org>
- <20110111065207.GF10094@sigill.intra.peff.net>
- <7vvd1v4bmt.fsf@alter.siamese.dyndns.org>
- <20110111180208.GC1833@sigill.intra.peff.net>
+From: Joe Corneli <holtzermann17@gmail.com>
+Subject: working with a large repository and git svn
+Date: Wed, 12 Jan 2011 01:27:10 +0000
+Message-ID: <AANLkTimKbS3ECzOaGtNgvx7DThJGH_DkPmg4ehKXGtwc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-	<u.kleine-koenig@pengutronix.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 12 02:25:29 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 12 02:27:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcpSq-0005Rb-Kd
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Jan 2011 02:25:28 +0100
+	id 1PcpUb-000669-Er
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Jan 2011 02:27:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932520Ab1ALBZX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 20:25:23 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:44473 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756393Ab1ALBZW (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 20:25:22 -0500
-Received: (qmail 17408 invoked by uid 111); 12 Jan 2011 01:25:19 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 12 Jan 2011 01:25:19 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 11 Jan 2011 20:25:15 -0500
-Content-Disposition: inline
-In-Reply-To: <20110111180208.GC1833@sigill.intra.peff.net>
+	id S932663Ab1ALB1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 11 Jan 2011 20:27:13 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:47914 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932362Ab1ALB1L (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 11 Jan 2011 20:27:11 -0500
+Received: by iwn9 with SMTP id 9so48673iwn.19
+        for <git@vger.kernel.org>; Tue, 11 Jan 2011 17:27:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=Pbf/2wP/HSC7TM678282dZUDaaVTwc1wZhNlebLMZ4g=;
+        b=xVRhp3XS69cbK2hu2J2Ayof0WOhtzPsrsXgmDmQg/akTi3hTfNJTOzl4ohwjnksO/y
+         JPJKHvpZ55LfNeJvQF5JfZEh5HvcZ/zoxecQja3ce3HRjeXiMUse3KwmwxBXMsUnA1zM
+         GAbKvyoyerA//70yzj80k1Vw1i6CdAZZr7vFA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=PREB1eyMXo9R1b47J9Rzigsmo7I1r/JtQaClOYQnu3gANgdvWzeH5gb2HJRwjq7ab1
+         oKbtS4jQo+XnSl7cKc1PBBOUeakvLFftzrFsCYvmptG6h79Vlats4dFVK4omryi2ZlP+
+         VLZuWjxVnhNTvAG34iHKefNZjjgkWJWgfElAo=
+Received: by 10.231.30.71 with SMTP id t7mr341440ibc.153.1294795630755; Tue,
+ 11 Jan 2011 17:27:10 -0800 (PST)
+Received: by 10.231.85.146 with HTTP; Tue, 11 Jan 2011 17:27:10 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165001>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165002>
 
-On Tue, Jan 11, 2011 at 01:02:08PM -0500, Jeff King wrote:
+Greetings -
 
-> On Tue, Jan 11, 2011 at 09:02:18AM -0800, Junio C Hamano wrote:
-> 
-> > > Also, one other question while we are on the subject. I think we all
-> > > agree that "git checkout $foo" should prefer $foo as a branch. But what
-> > > about "git checkout -b $branch $start_point"?
-> > 
-> > That has always been defined as a synonym for
-> > 
-> > 	git branch $branch $start_point && git checkout $branch
-> > 
-> > so $start_point is just a random extended SHA-1 expression.
-> 
-> That's what I would have expected, but I wanted to write a test to make
-> sure it was the case.
+I am experiencing trouble with git svn, trying to import a
+large repository (7.9 gigs, ~54000 commits) from Git into
+SVN.
 
-Looking into this more, I'm not sure what the right behavior is. The
-offending lines are in branch.c:create_branch:
+This has failed in a couple of different ways, depending
+on the operating environment.  With Git version 1.7.3.5
+running on Ubuntu 9.10, in the final step
 
-        switch (dwim_ref(start_name, strlen(start_name), sha1, &real_ref)) {
-        case 0:
-                /* Not branching from any existing branch */
-                if (explicit_tracking)
-                        die("Cannot setup tracking information; starting point is not a branch.");
-                break;
-        case 1:
-                /* Unique completion -- good, only if it is a real ref */
-                if (explicit_tracking && !strcmp(real_ref, "HEAD"))
-                        die("Cannot setup tracking information; starting point is not a branch.");
-                break;
-        default:
-                die("Ambiguous object name: '%s'.", start_name);
-                break;
-        }
+  git svn dcommit --no-rebase
 
-The die("Ambiguous...") blames all the way back to 0746d19 (git-branch,
-git-checkout: autosetup for remote branch tracking, 2007-03-08) and
-seems to just be a regression there that we didn't catch.
+of the formula described below, I get:
 
-Obviously we can loosen the die() there and just handle the ambiguous
-case like the unique case. But I'm not sure how tracking should interact
-with the branch/tag thing.
+ failing with "Can't fork at /usr/share/perl/5.10.0/Git.pm line 1261."
 
-This code seems to be trying to only track branches, but it fails at
-that. It actually will track _any_ ref. So I can happily do:
+after committing just over 2000 revisions.
 
-  git branch --track foo v1.5
+Previously, on Mac OS X 10.6.4 with git version 1.7.3.4,
+it made it through about 18000 commits before failing with
+some other error.  (I don't have that one recorded at the
+moment.)
 
-and start tracking refs/tags/v1.5. Is that a bug or a feature?
+Separately from the latest attempt, I tried repacking the
+repository before doing the "git svn" stuff, with
 
-And then that makes me wonder. What should:
+  git repack -a -d --depth=250 --window=250 -f
 
-  git branch --track foo ambiguity
+but that also failed ("pack-objects died of signal 11").
 
-do? Should it choose the branch, because that is more useful for
-tracking? Or choose the tag? And if branch, then what should:
+Any tips for dealing with new, large, repositories would
+be appreciated.  The sequence of commands I used are below
+the 8<.
 
-  git branch foo ambiguity
+Thanks,
+Joe
 
-do? It won't track a tag unless --track is given explicitly. Should it
-prefer a branch with implicit tracking, or an untracked tag?
+8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<
 
-I'm not sure. And to be honest I don't really care, because I think
-people with ambiguous refs are little bit crazy anyway (after all, in
-the current code it simply calls die()). But I think there is some
-argument to be made that due to tracking, start_point is not _just_
-a regular ref. We do care about its branchiness.
+## Creating an svn repo
 
--Peff
+$ mkdir repo;
+$ svnadmin create repo;
+$ mkdir init;
+$ touch init/README;
+$ svn import init file://`pwd`/repo/init -m "Initial import";
+$ svn checkout file://`pwd`/repo/init working;
+
+## THIS PART FOLLOWS THE MODEL SUGGESTED BY THE FOLKS AT code.google.com
+## (/Users/jac2349/planetary/destination/ IS THE LOCATION OF MY GIT REPO.)
+
+$ mkdir cloning
+$ cd cloning
+$ git svn clone file:///Users/jac2349/planetary/repo/init
+$ cd init
+$ git fetch git:///Users/jac2349/planetary/destination/.git
+
+$ git branch tmp $(cut -b-40 .git/FETCH_HEAD)
+$ git tag -a -m "Last fetch" last tmp
+
+$ INIT_COMMIT=$(git log tmp --pretty=format:%H | tail -1)
+$ git checkout $INIT_COMMIT .
+$ git commit -C $INIT_COMMIT
+
+$ git rebase master tmp
+$ git branch -M tmp master
+
+$ git svn dcommit --no-rebase
+
+$ mv .git/refs/tags/newlast .git/refs/tags/last
+
+## BTW, THE --no-rebase FLAG KEEPS IT FROM BEING IMPOSSIBLY SLOW!
