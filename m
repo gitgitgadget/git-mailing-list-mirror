@@ -1,108 +1,76 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: bug? in checkout with ambiguous refnames
-Date: Wed, 12 Jan 2011 19:19:37 +0100
-Message-ID: <20110112181937.GK24920@pengutronix.de>
-References: <20110107104650.GA5399@pengutronix.de>
- <20110107194909.GB6175@sigill.intra.peff.net>
- <20110112091130.GC24920@pengutronix.de>
- <20110112174600.GB31747@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: Git Rebase blows away GIT_AUTHOR_NAME
+Date: Wed, 12 Jan 2011 13:21:50 -0500
+Message-ID: <20110112182150.GC31747@sigill.intra.peff.net>
+References: <AANLkTinMX0yEPvSc-c=96R42SbFZTjW5Mnveuxk3ZHS=@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 12 19:19:45 2011
+To: JT Olds <jtolds@xnet5.com>
+X-From: git-owner@vger.kernel.org Wed Jan 12 19:22:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pd5IO-0002v2-Nt
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Jan 2011 19:19:45 +0100
+	id 1Pd5Kq-0004S9-QR
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Jan 2011 19:22:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753654Ab1ALSTk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jan 2011 13:19:40 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:49732 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751696Ab1ALSTj (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jan 2011 13:19:39 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Pd5IH-00033N-KO; Wed, 12 Jan 2011 19:19:37 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Pd5IH-0003Ml-Es; Wed, 12 Jan 2011 19:19:37 +0100
+	id S1755695Ab1ALSVy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jan 2011 13:21:54 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:58750 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754957Ab1ALSVx (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jan 2011 13:21:53 -0500
+Received: (qmail 22910 invoked by uid 111); 12 Jan 2011 18:21:52 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 12 Jan 2011 18:21:52 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 12 Jan 2011 13:21:50 -0500
 Content-Disposition: inline
-In-Reply-To: <20110112174600.GB31747@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+In-Reply-To: <AANLkTinMX0yEPvSc-c=96R42SbFZTjW5Mnveuxk3ZHS=@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165023>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165024>
 
-Hi,
+On Wed, Jan 12, 2011 at 09:15:41AM -0700, JT Olds wrote:
 
-On Wed, Jan 12, 2011 at 12:46:00PM -0500, Jeff King wrote:
-> On Wed, Jan 12, 2011 at 10:11:30AM +0100, Uwe Kleine-K=F6nig wrote:
-> > > > So working copy and cache are at refs/tags/sgu/mxs-amba-uart, H=
-EAD
-> > > > points to refs/heads/sgu/mxs-amba-uart
-> > >=20
-> > > Yeah, we generally resolve ambiguities in favor of the tag (and t=
-hat
-> > > warning comes from deep within get_sha1_basic). So the real bug h=
-ere is
-> > > that it still said "Switched to branch", which is totally wrong.
-> > I wonder how I can resolve the ambiguity when calling checkout.  (W=
-ell
-> > apart from changing either branch name or tag name)
-> >=20
-> > git checkout refs/heads/sgu/mxs-amba-uart results in a detached HEA=
-D.
->=20
-> You can't disambiguate to the branch without going to a detached HEAD=
- in
-> the current code; it's just broken[1].
->=20
-> With the patch here:
->=20
->   http://article.gmane.org/gmane.comp.version-control.git/164986
->=20
-> it will disambiguate to the branch by default, and if you want the ta=
-g,
-> you can do:
->=20
->   git checkout tags/sgu/mxs-amba-uart
-that's fine.
+> On every fresh install of Ubuntu that I have used (by default, I use
+> ecryptfs for my home directory, which of course has its own set of
+> silly Git errors right now), when I clone from a remote repository,
+> have changes local to me, and changes on the remote repository, do
+> 'git pull --rebase', occasionally my GIT_AUTHOR_NAME gets set to my
+> GIT_AUTHOR_EMAIL on my changes that get applied on top of the remote
+> changes.
 
-> [1]: You can't do it with checkout, that is. You can still hack aroun=
-d
->      it with:
->=20
->         branch=3Drefs/heads/sgu/mxs-amba-uart
->         git read-tree -m -u $branch &&
->         git symbolic-ref HEAD $branch
-I did
+Weird. I have never heard of anything like it.
 
-	git checkout refs/heads/sgu/mxs-amba-uart
-	git symbolic-ref HEAD refs/heads/sgu/mxs-amba-uart
+Some things off the top of my head: Does your GIT_AUTHOR_NAME or
+GIT_AUTHOR_EMAIL contain any odd characters that might confuse a parser?
+Do you do anything special with setting up those environment variables
+in your shell (e.g., in a .bashrc or .profile; those files _shouldn't_
+be read by a non-interactive shell, but it's something to investigate)?
+For that matter, how do you set up your identity in general (by
+environment, or in ~/.gitconfig, or a local .git/config in each repo),
+and what does it contain?
 
-:-)
+Can you try running this in a repo that's giving you problems:
 
-Uwe
->=20
->      which is a simplified version of what checkout is doing.
->=20
+  . git-sh-setup
+  git log --format=%H --author=your.name |
+  while read rev; do
+    get_author_ident_from_commit $rev
+    git format-patch -1 --stdout $rev |
+      git mailinfo /dev/null /dev/null
+  done | less
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+and check that the output looks sane? I want to make sure there's
+nothing in your commits that is confusing our parser.
+
+If that doesn't turn up anything, I think the next thing to try would be
+making a script that reproduces the problem for you, and see if I can
+reproduce it here.
+
+-Peff
