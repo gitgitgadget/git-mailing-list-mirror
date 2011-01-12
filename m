@@ -1,119 +1,169 @@
-From: Joe Corneli <holtzermann17@gmail.com>
-Subject: working with a large repository and git svn
-Date: Wed, 12 Jan 2011 01:27:10 +0000
-Message-ID: <AANLkTimKbS3ECzOaGtNgvx7DThJGH_DkPmg4ehKXGtwc@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+From: Andrew Garber <andrew@andrewgarber.com>
+Subject: [PATCH] git-p4: correct indenting and formatting
+Date: Tue, 11 Jan 2011 21:05:03 -0800
+Message-ID: <1294808703-1848-1-git-send-email-andrew@andrewgarber.com>
+Cc: Andrew Garber <andrew@andrewgarber.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 12 02:27:18 2011
+X-From: git-owner@vger.kernel.org Wed Jan 12 06:05:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcpUb-000669-Er
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Jan 2011 02:27:17 +0100
+	id 1Pcsu6-0007FE-LY
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Jan 2011 06:05:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932663Ab1ALB1N (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 11 Jan 2011 20:27:13 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:47914 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932362Ab1ALB1L (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 11 Jan 2011 20:27:11 -0500
-Received: by iwn9 with SMTP id 9so48673iwn.19
-        for <git@vger.kernel.org>; Tue, 11 Jan 2011 17:27:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=Pbf/2wP/HSC7TM678282dZUDaaVTwc1wZhNlebLMZ4g=;
-        b=xVRhp3XS69cbK2hu2J2Ayof0WOhtzPsrsXgmDmQg/akTi3hTfNJTOzl4ohwjnksO/y
-         JPJKHvpZ55LfNeJvQF5JfZEh5HvcZ/zoxecQja3ce3HRjeXiMUse3KwmwxBXMsUnA1zM
-         GAbKvyoyerA//70yzj80k1Vw1i6CdAZZr7vFA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=PREB1eyMXo9R1b47J9Rzigsmo7I1r/JtQaClOYQnu3gANgdvWzeH5gb2HJRwjq7ab1
-         oKbtS4jQo+XnSl7cKc1PBBOUeakvLFftzrFsCYvmptG6h79Vlats4dFVK4omryi2ZlP+
-         VLZuWjxVnhNTvAG34iHKefNZjjgkWJWgfElAo=
-Received: by 10.231.30.71 with SMTP id t7mr341440ibc.153.1294795630755; Tue,
- 11 Jan 2011 17:27:10 -0800 (PST)
-Received: by 10.231.85.146 with HTTP; Tue, 11 Jan 2011 17:27:10 -0800 (PST)
+	id S1750780Ab1ALFFq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 12 Jan 2011 00:05:46 -0500
+Received: from mail-px0-f174.google.com ([209.85.212.174]:46681 "EHLO
+	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750704Ab1ALFFp (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 12 Jan 2011 00:05:45 -0500
+Received: by pxi15 with SMTP id 15so22047pxi.19
+        for <git@vger.kernel.org>; Tue, 11 Jan 2011 21:05:44 -0800 (PST)
+Received: by 10.142.133.14 with SMTP id g14mr501416wfd.409.1294808744494;
+        Tue, 11 Jan 2011 21:05:44 -0800 (PST)
+Received: from localhost.localdomain (d206-116-116-32.bchsia.telus.net [206.116.116.32])
+        by mx.google.com with ESMTPS id v19sm303047wfh.12.2011.01.11.21.05.43
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 11 Jan 2011 21:05:43 -0800 (PST)
+X-Mailer: git-send-email 1.7.3.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165004>
 
-Greetings -
+- replace tabs with appropriate number of spaces
+- minor tweaks to code formatting
+---
+ contrib/fast-import/git-p4 |   71 +++++++++++++++++++++-----------------------
+ 1 files changed, 34 insertions(+), 37 deletions(-)
 
-I am experiencing trouble with git svn, trying to import a
-large repository (7.9 gigs, ~54000 commits) from Git into
-SVN.
-
-This has failed in a couple of different ways, depending
-on the operating environment.  With Git version 1.7.3.5
-running on Ubuntu 9.10, in the final step
-
-  git svn dcommit --no-rebase
-
-of the formula described below, I get:
-
- failing with "Can't fork at /usr/share/perl/5.10.0/Git.pm line 1261."
-
-after committing just over 2000 revisions.
-
-Previously, on Mac OS X 10.6.4 with git version 1.7.3.4,
-it made it through about 18000 commits before failing with
-some other error.  (I don't have that one recorded at the
-moment.)
-
-Separately from the latest attempt, I tried repacking the
-repository before doing the "git svn" stuff, with
-
-  git repack -a -d --depth=250 --window=250 -f
-
-but that also failed ("pack-objects died of signal 11").
-
-Any tips for dealing with new, large, repositories would
-be appreciated.  The sequence of commands I used are below
-the 8<.
-
-Thanks,
-Joe
-
-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<-8<
-
-## Creating an svn repo
-
-$ mkdir repo;
-$ svnadmin create repo;
-$ mkdir init;
-$ touch init/README;
-$ svn import init file://`pwd`/repo/init -m "Initial import";
-$ svn checkout file://`pwd`/repo/init working;
-
-## THIS PART FOLLOWS THE MODEL SUGGESTED BY THE FOLKS AT code.google.com
-## (/Users/jac2349/planetary/destination/ IS THE LOCATION OF MY GIT REPO.)
-
-$ mkdir cloning
-$ cd cloning
-$ git svn clone file:///Users/jac2349/planetary/repo/init
-$ cd init
-$ git fetch git:///Users/jac2349/planetary/destination/.git
-
-$ git branch tmp $(cut -b-40 .git/FETCH_HEAD)
-$ git tag -a -m "Last fetch" last tmp
-
-$ INIT_COMMIT=$(git log tmp --pretty=format:%H | tail -1)
-$ git checkout $INIT_COMMIT .
-$ git commit -C $INIT_COMMIT
-
-$ git rebase master tmp
-$ git branch -M tmp master
-
-$ git svn dcommit --no-rebase
-
-$ mv .git/refs/tags/newlast .git/refs/tags/last
-
-## BTW, THE --no-rebase FLAG KEEPS IT FROM BEING IMPOSSIBLY SLOW!
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 04ce7e3..449df2e 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -222,10 +222,10 @@ def p4CmdList(cmd, stdin=None, stdin_mode='w+b', cb=None):
+     try:
+         while True:
+             entry = marshal.load(p4.stdout)
+-	    if cb is not None:
+-		cb(entry)
+-	    else:
+-		result.append(entry)
++            if cb is not None:
++                cb(entry)
++            else:
++                result.append(entry)
+     except EOFError:
+         pass
+     exitCode = p4.wait()
+@@ -445,8 +445,8 @@ def p4ChangesForPaths(depotPaths, changeRange):
+ 
+     changes = {}
+     for line in output:
+-	changeNum = int(line.split(" ")[1])
+-	changes[changeNum] = True
++        changeNum = int(line.split(" ")[1])
++        changes[changeNum] = True
+ 
+     changelist = changes.keys()
+     changelist.sort()
+@@ -954,10 +954,9 @@ class P4Sync(Command):
+     # - helper for streamP4Files
+ 
+     def streamOneP4File(self, file, contents):
+-	if file["type"] == "apple":
+-	    print "\nfile %s is a strange apple file that forks. Ignoring" % \
+-		file['depotFile']
+-	    return
++        if file["type"] == "apple":
++            print "\nfile %s is a strange apple file that forks. Ignoring" % file['depotFile']
++            return
+ 
+         relPath = self.stripRepoPath(file['depotFile'], self.branchPrefixes)
+         if verbose:
+@@ -1004,23 +1003,22 @@ class P4Sync(Command):
+ 
+     # handle another chunk of streaming data
+     def streamP4FilesCb(self, marshalled):
++        if marshalled.has_key('depotFile') and self.stream_have_file_info:
++            # start of a new file - output the old one first
++            self.streamOneP4File(self.stream_file, self.stream_contents)
++            self.stream_file = {}
++            self.stream_contents = []
++            self.stream_have_file_info = False
+ 
+-	if marshalled.has_key('depotFile') and self.stream_have_file_info:
+-	    # start of a new file - output the old one first
+-	    self.streamOneP4File(self.stream_file, self.stream_contents)
+-	    self.stream_file = {}
+-	    self.stream_contents = []
+-	    self.stream_have_file_info = False
+-
+-	# pick up the new file information... for the
+-	# 'data' field we need to append to our array
+-	for k in marshalled.keys():
+-	    if k == 'data':
+-		self.stream_contents.append(marshalled['data'])
+-	    else:
+-		self.stream_file[k] = marshalled[k]
++        # pick up the new file information... for the
++        # 'data' field we need to append to our array
++        for k in marshalled.keys():
++            if k == 'data':
++                self.stream_contents.append(marshalled['data'])
++            else:
++                self.stream_file[k] = marshalled[k]
+ 
+-	self.stream_have_file_info = True
++        self.stream_have_file_info = True
+ 
+     # Stream directly from "p4 files" into "git fast-import"
+     def streamP4Files(self, files):
+@@ -1052,23 +1050,22 @@ class P4Sync(Command):
+             self.stream_contents = []
+             self.stream_have_file_info = False
+ 
+-	    # curry self argument
+-	    def streamP4FilesCbSelf(entry):
+-		self.streamP4FilesCb(entry)
++        # curry self argument
++        def streamP4FilesCbSelf(entry):
++            self.streamP4FilesCb(entry)
+ 
+-	    p4CmdList("-x - print",
+-		'\n'.join(['%s#%s' % (f['path'], f['rev'])
+-                                                  for f in filesToRead]),
+-	        cb=streamP4FilesCbSelf)
++        p4CmdList("-x - print",
++                  '\n'.join(['%s#%s' % (f['path'], f['rev']) for f in filesToRead]),
++                  cb=streamP4FilesCbSelf)
+ 
+-            # do the last chunk
+-            if self.stream_file.has_key('depotFile'):
+-                self.streamOneP4File(self.stream_file, self.stream_contents)
++        # do the last chunk
++        if self.stream_file.has_key('depotFile'):
++            self.streamOneP4File(self.stream_file, self.stream_contents)
+ 
+     def commit(self, details, files, branch, branchPrefixes, parent = ""):
+         epoch = details["time"]
+         author = details["user"]
+-	self.branchPrefixes = branchPrefixes
++        self.branchPrefixes = branchPrefixes
+ 
+         if self.verbose:
+             print "commit into %s" % branch
+@@ -1173,7 +1170,7 @@ class P4Sync(Command):
+ 
+         s = ''
+         for (key, val) in self.users.items():
+-	    s += "%s\t%s\n" % (key.expandtabs(1), val.expandtabs(1))
++            s += "%s\t%s\n" % (key.expandtabs(1), val.expandtabs(1))
+ 
+         open(self.getUserCacheFilename(), "wb").write(s)
+         self.userMapFromPerforceServer = True
+-- 
+1.7.3.2
