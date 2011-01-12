@@ -1,81 +1,95 @@
-From: Andrew Garber <andrew@andrewgarber.com>
-Subject: Re: [PATCH] git-p4: correct indenting and formatting
-Date: Wed, 12 Jan 2011 01:13:42 -0800
-Message-ID: <AANLkTimJOsRd4WcDSJZcehP3nn_rckL4hx4ngt48w9gD@mail.gmail.com>
-References: <1294808703-1848-1-git-send-email-andrew@andrewgarber.com>
- <7vsjwy33zn.fsf@alter.siamese.dyndns.org> <7vlj2q3339.fsf@alter.siamese.dyndns.org>
- <7vhbde331h.fsf@alter.siamese.dyndns.org>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: diff -U0 occasionally misses a chance to make empty lines context [was: Re: [BUG] difference of info from diff and blame]
+Date: Wed, 12 Jan 2011 11:20:26 +0100
+Message-ID: <201101121120.26724.trast@student.ethz.ch>
+References: <4D2C333A.3010401@gmail.com> <201101111440.08619.trast@student.ethz.ch> <4D2D5E08.9040804@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 12 10:14:11 2011
+Cc: <git@vger.kernel.org>,
+	Johannes Schindelin <johannes.schindelin@gmx.de>,
+	Junio C Hamano <gitster@pobox.com>,
+	Davide Libenzi <davidel@xmailserver.org>
+To: Semyon Kirnosenko <semyon.kirnosenko@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 12 11:20:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PcwmR-00052i-35
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Jan 2011 10:14:11 +0100
+	id 1Pcxoh-0004lB-R5
+	for gcvg-git-2@lo.gmane.org; Wed, 12 Jan 2011 11:20:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932092Ab1ALJOG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jan 2011 04:14:06 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:39493 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754718Ab1ALJOD convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 12 Jan 2011 04:14:03 -0500
-Received: by mail-ey0-f174.google.com with SMTP id 27so129287eye.19
-        for <git@vger.kernel.org>; Wed, 12 Jan 2011 01:14:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:from
-         :date:x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=SwIcqxy2ILwfN5ws7WzpX3MJNWtXV3v0q/7Y93IFrPk=;
-        b=orDDVd0rOC1s4qBAnovzf6idcLnmo1GuRLgF5zzIgbSNPV4V1kdkACNmVje8ePViru
-         wLKMT3d/eyRQmk02prfF3sKxzmv9ZKl444aOnlG/xfIj4ppEE8s5KrQkXIecvu50MYen
-         hiRliA47Jo6jJvPHkV04R6KYo98tYpjcyutJw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:from:date
-         :x-google-sender-auth:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=INHq1fa5Y3ZOBuTc42yNCf1fsBPF5wPjW7DaAS3wM3F+Gg+4fZ/Ddk9nRGtM+BWdvW
-         EjICEo0l7hh++CzKrYeV3TjpKPiItsHz7w3tGDYtU0tbafE+2a11F1F0Ln5/ngISWhDA
-         iKWSish1V2Q1aQqbrxBS2XKBv+nYKkifclRi8=
-Received: by 10.213.104.143 with SMTP id p15mr854136ebo.68.1294823642402; Wed,
- 12 Jan 2011 01:14:02 -0800 (PST)
-Received: by 10.213.98.83 with HTTP; Wed, 12 Jan 2011 01:13:42 -0800 (PST)
-In-Reply-To: <7vhbde331h.fsf@alter.siamese.dyndns.org>
-X-Google-Sender-Auth: tGYCHRm596CVps1NAMjoaSbENMQ
+	id S1752356Ab1ALKUa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 12 Jan 2011 05:20:30 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:26505 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752244Ab1ALKU3 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 12 Jan 2011 05:20:29 -0500
+Received: from CAS10.d.ethz.ch (172.31.38.210) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 12 Jan
+ 2011 11:20:22 +0100
+Received: from pctrast.inf.ethz.ch (129.132.153.233) by cas10.d.ethz.ch
+ (172.31.38.210) with Microsoft SMTP Server (TLS) id 14.1.218.12; Wed, 12 Jan
+ 2011 11:20:27 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
+In-Reply-To: <4D2D5E08.9040804@gmail.com>
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165011>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165012>
 
-Great! Thanks Junio. Sorry about forgetting to sign-off my patch.
+Ok, so to summarize for late joiners and the new Ccs:
 
-On Wed, Jan 12, 2011 at 1:05 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Junio C Hamano <gitster@pobox.com> writes:
->
->> Junio C Hamano <gitster@pobox.com> writes:
->>
->>> Andrew Garber <andrew@andrewgarber.com> writes:
->>>
->>>> - replace tabs with appropriate number of spaces
->>>> - minor tweaks to code formatting
->>>> ---
->>>> =C2=A0contrib/fast-import/git-p4 | =C2=A0 71 +++++++++++++++++++++=
------------------------
->>>> =C2=A01 files changed, 34 insertions(+), 37 deletions(-)
->>> ...
->> Will queue on a separate branch for you, expecting that you are doin=
-g this
->> in preparation for a new feature or a bugfix to the script.
->
-> Forgot to say obligatory "Please sign-off your patch". =C2=A0Please d=
-o so.
->
+git diff -U0 occasionally gives suboptimal results in hunks like
+
+Semyon Kirnosenko wrote:
+> 11.01.2011 16:40, Thomas Rast =D0=BF=D0=B8=D1=88=D0=B5=D1=82:
+> > @@ -108,11 +123,8 @@ jQuery.event =3D {
+> > -			var handler =3D element["on" + type ], val,
+> > -				fn =3D jQuery.isFunction( element[ type ] );
+> > -
+> > -			if ( handler ) {
+> > -				// Pass along a fake event
+> > -				data.unshift( this.fix({ type: type, target: element }) );
+> > -=09
+> > -				// Trigger the event
+> > -				if ( (val =3D handler.apply( element, data )) !=3D=3D false )
+> > -					this.triggered =3D true;
+> > -			}
+> > +			var val, ret, fn =3D jQuery.isFunction( element[ type ] );
+> > +		=09
+> > +			// Pass along a fake event
+> > +			data.unshift( this.fix({ type: type, target: element }) );
+> > +
+> > +			// Trigger the event
+> > +			if ( (val =3D this.handle.apply( element, data )) !=3D=3D false=
+ )
+> > +				this.triggered =3D true;
+
+where two of the whitespace lines are the same and thus could have
+been made context.  Oddly enough, this specific line *is* made context
+for the default -U3.  This occasionally causes git-blame (which uses
+the equivalent of 'git diff -U0' internally) to misattribute blank
+lines.  This does *not* affect correctness of the diff, it is just
+suboptimal.
+
+My own guess at the problem is
+
+> > I wouldn't be too surprised if it had heuristics that put lines
+> > consisting only of whitespace at a lower importance than "actual"
+> > lines.
+
+i.e. that it's whitespace-related, and indeed Semyon says
+
+> All cases I have seen were about whitespace lines.
+
+I don't really care, since I haven't seen a single use-case where the
+attribution of empty lines matters.  Still, let's at least bring it to
+the attention of the people who have worked on libxdiff.
+
+--=20
+Thomas Rast
+trast@{inf,student}.ethz.ch
