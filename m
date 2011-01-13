@@ -1,68 +1,113 @@
-From: Carter Lamb <carter.lamb@livetext.com>
-Subject: git diff
-Date: Thu, 13 Jan 2011 16:46:16 -0600
-Message-ID: <AANLkTik7cfu_DS=GS5gz_Tu94NC=ZGi-eA8YXztyd9Ra@mail.gmail.com>
-References: <AANLkTi=ASvicFGaaDfqxjOxJELWPLKsQwvk7rEeT36Fh@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Applying .gitattributes text/eol changes
+Date: Thu, 13 Jan 2011 15:30:30 -0800
+Message-ID: <7vd3o01iw9.fsf@alter.siamese.dyndns.org>
+References: <4D220500.2000104@syntevo.com>
+ <4D2C4902.4010705@drmicha.warpmail.net> <4D2C62DF.20706@syntevo.com>
+ <4D2EFCBD.4020402@drmicha.warpmail.net> <4D2F0BF3.2000808@syntevo.com>
+ <4D2F0E3A.8090108@drmicha.warpmail.net> <4D2F12EE.4020400@syntevo.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 13 23:47:05 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
+To: Marc Strapetz <marc.strapetz@syntevo.com>
+X-From: git-owner@vger.kernel.org Fri Jan 14 00:30:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PdVwZ-0005QV-MJ
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Jan 2011 23:47:00 +0100
+	id 1PdWcz-0004fw-DE
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 00:30:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757283Ab1AMWqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jan 2011 17:46:43 -0500
-Received: from nospam.livetext.com ([64.94.43.179]:55220 "EHLO
-	nospam.livetext.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757136Ab1AMWqi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jan 2011 17:46:38 -0500
-Received: from mail-wy0-f179.google.com (mail-wy0-f179.google.com [74.125.82.179])
-	by nospam.livetext.com (Postfix) with ESMTP id 98A97246DDC
-	for <git@vger.kernel.org>; Thu, 13 Jan 2011 16:46:37 -0600 (CST)
-Received: by wyi11 with SMTP id 11so2220168wyi.10
-        for <git@vger.kernel.org>; Thu, 13 Jan 2011 14:46:36 -0800 (PST)
-Received: by 10.216.13.194 with SMTP id b44mr2383516web.68.1294958796828; Thu,
- 13 Jan 2011 14:46:36 -0800 (PST)
-Received: by 10.216.71.145 with HTTP; Thu, 13 Jan 2011 14:46:16 -0800 (PST)
-In-Reply-To: <AANLkTi=ASvicFGaaDfqxjOxJELWPLKsQwvk7rEeT36Fh@mail.gmail.com>
+	id S1757313Ab1AMXao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jan 2011 18:30:44 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33399 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756916Ab1AMXam (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jan 2011 18:30:42 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D972E4C59;
+	Thu, 13 Jan 2011 18:31:21 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=g8Dv9A5W/THmBwz3Y1qyUq70MCw=; b=LWSTXk
+	wcgAN8DAlGBoORyb8dbfXmgYL/PLi3fKwB0OAvJ0iGogN7bRXJKFCbA5ZyILRTmX
+	3ZrqP1Nsl7lkvd5LzaGXrSLwM2Fy+DDPHrmbQ3mDMJo/n41LGeeDMGm+MlXO80JF
+	OTB31laesbRoQJhlbuHjsqRgbaxMT7lqiSX+g=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=nINf84FFsTa6Xrt6eP56LAvwQthkg5nG
+	i8I16Uxp6PaaYxS7F/ryq2JmuIezYlkm+dYyM+Cs9aXfQHkkPc3h4R+0FZn/1Swp
+	sb9EjPVvxSai3DsoEgMmVrA+z2u5B9NHvzc8Owfjl+OHM/56+NThHb1ENaeYsfWh
+	/hdvAUtrZQo=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A98DF4C57;
+	Thu, 13 Jan 2011 18:31:18 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3B1A14C56; Thu, 13 Jan 2011
+ 18:31:13 -0500 (EST)
+In-Reply-To: <4D2F12EE.4020400@syntevo.com> (Marc Strapetz's message of
+ "Thu\, 13 Jan 2011 15\:57\:50 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 38C7EA38-1F6D-11E0-B18E-94B21C7297B3-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165068>
 
-I use git diff --summary --numstat <commit> to report the files
-modified, created, and deleted between the current commit and some
-prior commit. The --stat and --numstat options count the lines added
-and deleted for each file. Is there a way to report the lines modified
-for each file. For example:
+Marc Strapetz <marc.strapetz@syntevo.com> writes:
 
-Given content below for commit 1:
-aaaaa
-ccccc
+> So your suggestion is to fix "git update-index --really-refresh", so
 
-Given content below for commit 2:
-aaaaa
-bbbbb
-ccccc
+The option is about telling git: "Earlier I promised I wouldn't touch
+these paths by setting their assume-unchanged bit, but I touched them.
+Please refresh the cached stat information in the index, ignoring the
+promise I didn't keep."
 
-Given content below for commit 3:
-Aaaaa
-Bbbbb
-ccccc
-ddddd
+I do not think it is a good idea to conflate your "Everything is suspect
+because smudge filter has changed; please recompute all" request into the
+same option.  People who use assume-unchanged would probably want "Please
+rescan because I changed smudge filter" request to be carried out while
+still honoring the assume-unchanged bit they set earlier.
 
-git diff --numstat between commits 1 and 2 will report one line added.
-git diff --numstat between commits 2 and 3 will report three lines
-added and two lines deleted.
-I'd like to see the diff between commits 2 and 3 report two lines
-modified and one line added.
-Can this be done?
+> Anyway, I'm still wondering if it will resolve the "git reset --hard"
+> problem of re-checking out every file, even if content is already
+> identical in the working tree. I think that part has to be fixed, too.
 
-Best,
-Carter
+There is not much to fix there. If you removed the index, then there is no
+information to tell you that "content is already identical" unless you
+actually check things out and compare.  By the time you found it out, you
+already have done the checkout.
+
+IOW, the current code does:
+
+	open object
+        read from the object
+        deflate and write to the destination file
+
+while your "fix" needs to look like this:
+
+	open object
+        read from the object
+        deflate and write to a temporary file
+        open the existing file
+        read from the file and compare it to the temporary we just wrote
+        if same, delete, otherwise rename the temporary file.
+
+just for the rare case where there is an untracked file that the user is
+willing to overwrite (we are discussing "rm .git/index && reset --hard"
+here) happens to have the same contents.  Not a good enough reason to add
+unwelcome complexity to the codepath.
+
+> What do you think about "git checkout --fix-eols" option as an
+> alternative? Its uses cases are more limited, though.
+
+What does it do?  "git checkout --fix-eols $path" will overwrite $path
+with the data at $path in the index?  Perhaps you can use the "-f" option.
+
+Adding an option to "checkout" might be better than update-index from the
+UI point of view, but the issue is not just "eols".  "eol" is a mere
+special case of smudge filter that controls how the contents from the
+repository are modified before getting written out to the working tree.
