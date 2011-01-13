@@ -1,62 +1,61 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 2/2] RelNotes/1.7.4: remove helper script traces
-Date: Thu, 13 Jan 2011 10:35:35 +0100
-Message-ID: <a385867f72eb019e3629eacfabe8b6546a5604da.1294911294.git.git@drmicha.warpmail.net>
-References: <be158c63c44562e87488d742148f54d1c71107df.1294911294.git.git@drmicha.warpmail.net>
-Cc: Junio C Hamano <gitster@pobox.com>
+From: Alexey Shumkin <zapped@mail.ru>
+Subject: Re: [RFC/PATCH] Documentation: start to explain what git replace is for
+Date: Thu, 13 Jan 2011 07:52:06 +0000 (UTC)
+Message-ID: <loom.20110113T084227-667@post.gmane.org>
+References: <746745466.20110111134101@mail.ru> <m3lj2rbmq5.fsf@localhost.localdomain> <20110112000812.GA31950@burratino> <loom.20110112T232501-316@post.gmane.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 13 10:38:28 2011
+X-From: git-owner@vger.kernel.org Thu Jan 13 11:00:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PdJdS-0004HA-AK
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Jan 2011 10:38:26 +0100
+	id 1PdJyU-00060N-Mw
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Jan 2011 11:00:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932885Ab1AMJiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jan 2011 04:38:17 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:37845 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932827Ab1AMJiQ (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Jan 2011 04:38:16 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 0F9C42093D;
-	Thu, 13 Jan 2011 04:38:16 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Thu, 13 Jan 2011 04:38:16 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=NT3aAFIBUNMM0EJIB+AjGtujZm4=; b=pKh9NiwD6FLk+zSZ6+snDv2bhogkiIA0XL8D4tPWSBaz7vYaYDAk6TDLnT2qqHbSGBsUYkmXise7VT1QpIm7/0uUbHnCxw/44IqCAITMmL/x5bGelIF4cG6ugXAtRvwoS8PzC7Z56t7rYxieAOuXhXCDbyV74RwQONKcVEV/7lU=
-X-Sasl-enc: tSbvMRtkrPwlveH4rbwWVOqK7XdkOkitofS8+tLHB2oQ 1294911495
-Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 8543E400E5D;
-	Thu, 13 Jan 2011 04:38:15 -0500 (EST)
-X-Mailer: git-send-email 1.7.4.rc1.253.gb7420
-In-Reply-To: <be158c63c44562e87488d742148f54d1c71107df.1294911294.git.git@drmicha.warpmail.net>
+	id S1756190Ab1AMKAF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 13 Jan 2011 05:00:05 -0500
+Received: from lo.gmane.org ([80.91.229.12]:47522 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752980Ab1AMKAE (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jan 2011 05:00:04 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1PdJyM-0005vj-WB
+	for git@vger.kernel.org; Thu, 13 Jan 2011 11:00:03 +0100
+Received: from 212.34.37.3 ([212.34.37.3])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 13 Jan 2011 11:00:02 +0100
+Received: from zapped by 212.34.37.3 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Thu, 13 Jan 2011 11:00:02 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: sea.gmane.org
+User-Agent: Loom/3.14 (http://gmane.org/)
+X-Loom-IP: 212.34.37.3 (Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/534.10 (KHTML, like Gecko) Chrome/8.0.552.215 Safari/534.10)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165045>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165046>
 
-Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
----
-Dunno whether you do this automatically on release.
+Maaartin <grajcar1 <at> seznam.cz> writes:
+> I know unicode exists already for many years, but in cygwin I get jus=
+t a bunch=20
+> of question marks instead of the name. So I'd suggest to replace "=D0=
+=90=D0=BB=D0=B5=D0=BA=D1=81=D0=B5=D0=B9=20
+> =D0=A8=D1=83=D0=BC=D0=BA=D0=B8=D0=BD" by "Alexej Shumkin" or whatever=
+ his preferred transcription is.
 
- Documentation/RelNotes/1.7.4.txt |    5 -----
- 1 files changed, 0 insertions(+), 5 deletions(-)
+"Alexey Shumkin" I'd prefer ) (it can be noticed in the patche)
 
-diff --git a/Documentation/RelNotes/1.7.4.txt b/Documentation/RelNotes/1.7.4.txt
-index 48dd964..21e1e3f 100644
---- a/Documentation/RelNotes/1.7.4.txt
-+++ b/Documentation/RelNotes/1.7.4.txt
-@@ -144,8 +144,3 @@ release, unless otherwise noted.
-  * "git submodule update --recursive --other-flags" passes flags down
-    to its subinvocations.
- 
-----
--exec >/var/tmp/1
--O=v1.7.4-rc1
--echo O=$(git describe master)
--git shortlog --no-merges ^maint ^$O master
--- 
-1.7.4.rc1.253.gb7420
+I use email-client for this account primarily for Russian correspondent=
+s
+so the  signature is in Russian
+* "Maybe that's the reason to know how "The Bat!" can change letter
+templates for particular recipients" he thought *
