@@ -1,85 +1,179 @@
-From: WINS <fbc73@cox.net>
-Subject: NEW YEAR WINNER !
-Date: Thu, 13 Jan 2011 0:40:28 -0800
-Message-ID: <20110113034029.OGLTG.450610.imail@fed1rmwml4101>
-Reply-To: chvtexgnt04@aol.com
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-To: unlisted-recipients:; (no To-header on input)
-X-From: git-owner@vger.kernel.org Thu Jan 13 09:46:04 2011
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: [PATCH 1/2] RelNotes/1.7.4: minor fixes
+Date: Thu, 13 Jan 2011 10:35:34 +0100
+Message-ID: <be158c63c44562e87488d742148f54d1c71107df.1294911294.git.git@drmicha.warpmail.net>
+Cc: Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Jan 13 10:38:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PdIok-0005Hk-0Y
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Jan 2011 09:46:02 +0100
+	id 1PdJdR-0004HA-K3
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Jan 2011 10:38:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756294Ab1AMIp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jan 2011 03:45:56 -0500
-Received: from fed1rmpop107.cox.net ([68.230.241.11]:47384 "EHLO
-	fed1rmpop107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755954Ab1AMIpz (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jan 2011 03:45:55 -0500
-X-Greylist: delayed 321 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Jan 2011 03:45:54 EST
-Received: from fed1rmimpo01.cox.net ([70.169.32.71])
-          by fed1rmmtao105.cox.net
-          (InterMail vM.8.01.03.00 201-2260-125-20100507) with ESMTP
-          id <20110113084029.KZDE14403.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
-          Thu, 13 Jan 2011 03:40:29 -0500
-Received: from fed1rmwml4101 ([172.18.140.218])
-	by fed1rmimpo01.cox.net with bizsmtp
-	id uwgT1f00F4iv3b803wgT8s; Thu, 13 Jan 2011 03:40:27 -0500
-X-VR-Score: 250.00
-X-Authority-Analysis: v=1.1 cv=3z1fhageN2+f9LVFv+eTkysbyEqTX/pUW0tQ4wyK9Sw=
- c=1 sm=1 a=M58Ut_zYM0YA:10 a=Z6WwYdEpHsUA:10 a=IkcTkHD0fZMA:10
- a=CA97L4c2R2SWvNNgQse4rQ==:17 a=vO4pztE-4Fp-NvtIrVYA:9
- a=9y7RZjQ6sSXPaSd72XvhJbYdg-cA:4 a=QEXdDO2ut3YA:10 a=TCyqOGwsgAYA:10
- a=TnWjwr_eb9-Evw1V:21 a=LunEWTlIunv1W0oY:21 a=CA97L4c2R2SWvNNgQse4rQ==:117
-X-CM-Score: 0.00
-Authentication-Results: cox.net; none
-Received: from 76.163.252.90 by webmail.west.cox.net; Thu, 13 Jan 2011 3:40:28 -0500
-X-Priority: 3 (Normal)
-Sensitivity: Normal
+	id S932878Ab1AMJiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jan 2011 04:38:16 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:60099 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S932532Ab1AMJiO (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Jan 2011 04:38:14 -0500
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id D94C12092F;
+	Thu, 13 Jan 2011 04:38:13 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Thu, 13 Jan 2011 04:38:13 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=kVLFAibb2HqW50dHNOiWQBx3Rak=; b=pcGUskOB1/4GIb5z1KlhvU5hamH6CeySMJzm9vgDsS19RDJf66KB10emZec283i+FlWOoZkzErWS2rh9m9UdQUivSUJsDVKFaZZM6DehedDKWn8ClMgZJQw8R5lnhnoo9cKKufscDEv1rSuwVWJj0/+YszMgow6kHJVvkShWiIk=
+X-Sasl-enc: PuPxj/Z3hT5s1Ec1FNStSA0Gqyi6c9pX1vmak5KhmDsG 1294911493
+Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 2F349442361;
+	Thu, 13 Jan 2011 04:38:13 -0500 (EST)
+X-Mailer: git-send-email 1.7.4.rc1.253.gb7420
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-X-Spam-Report: 5.1 points;
- *  2.1 SUBJ_ALL_CAPS Subject is all capitals
- *  3.2 DEAR_WINNER BODY: DEAR_WINNER
- * -0.2 BAYES_40 BODY: Bayesian spam probability is 20 to 40%
- *      [score: 0.2774]
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165043>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165044>
 
-Dear Winner,
+Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
+---
+ Documentation/RelNotes/1.7.4.txt |   50 +++++++++++++++++++-------------------
+ 1 files changed, 25 insertions(+), 25 deletions(-)
 
-You have been selected in the on-going Chevron/Texaco award held this january 2011.
-
-We the promo board are pleased to inform you that you have been approved for a payment
-of One Million Pounds. If you receive this email, it means you are one of the five(5) lucky
-
-winners. Your verification number is:
-
-(CT-222-6747,FGN/P-900-56).  CONTACT CLAIMS PROCESSING OFFICER:
-
-Name: Mr. Albert Thomas
-chvtexnt08@onfruit.cn                     
-
-Provide below:
-
-NAME IN FULL:
-DELIVERY ADDRESS:
-NATIONALITY:
-OCCUPATION:
-SEX:
-PHONE:
-AGE:
-COUNTRY:
-
-Congratulations !!!
-
-Yours Sincerely,
-Mrs Sandra Bloogs.
-Online Co-ordinator.
+diff --git a/Documentation/RelNotes/1.7.4.txt b/Documentation/RelNotes/1.7.4.txt
+index 055c1ca..48dd964 100644
+--- a/Documentation/RelNotes/1.7.4.txt
++++ b/Documentation/RelNotes/1.7.4.txt
+@@ -15,7 +15,7 @@ Updates since v1.7.3
+    themselves.  The name of a branch cannot begin with a dash now.
+ 
+  * System-wide fallback default attributes can be stored in
+-   /etc/gitattributes; core.attributesfile configuration variable can
++   /etc/gitattributes; the core.attributesfile configuration variable can
+    be used to customize the path to this file.
+ 
+  * The thread structure generated by "git send-email" has changed
+@@ -25,39 +25,39 @@ Updates since v1.7.3
+    cover letter of the previous series; this has been changed to make
+    the patches in the new series replies to the new cover letter.
+ 
+- * Bash completion script in contrib/ has been adjusted to be usable with
+-   Bash 4 (options with '=value' didn't complete)  It has been also made
++ * The Bash completion script in contrib/ has been adjusted to be usable with
++   Bash 4 (options with '=value' didn't complete).  It has been also made
+    usable with zsh.
+ 
+  * Different pagers can be chosen depending on which subcommand is
+-   being run under the pager, using "pager.<subcommand>" variable.
++   being run under the pager, using the "pager.<subcommand>" variable.
+ 
+- * The hardcoded tab-width of 8 used in whitespace breakage checks is now
++ * The hardcoded tab-width of 8 that is used in whitespace breakage checks is now
+    configurable via the attributes mechanism.
+ 
+  * Support of case insensitive filesystems (i.e. "core.ignorecase") has
+    been improved.  For example, the gitignore mechanism didn't pay attention
+-   to the case insensitivity.
++   to case insensitivity.
+ 
+- * The <tree>:<path> syntax to name a blob in a tree, and :<path>
+-   syntax to name a blob in the index (e.g. "master:Makefile",
++ * The <tree>:<path> syntax for naming a blob in a tree, and the :<path>
++   syntax for naming a blob in the index (e.g. "master:Makefile",
+    ":hello.c") have been extended.  You can start <path> with "./" to
+    implicitly have the (sub)directory you are in prefixed to the
+    lookup.  Similarly, ":../Makefile" from a subdirectory would mean
+    "the Makefile of the parent directory in the index".
+ 
+- * "git blame" learned --show-email option to display the e-mail
++ * "git blame" learned the --show-email option to display the e-mail
+    addresses instead of the names of authors.
+ 
+- * "git commit" learned --fixup and --squash options to help later invocation
+-   of the interactive rebase.
++ * "git commit" learned the --fixup and --squash options to help later invocation
++   of interactive rebase.
+ 
+  * Command line options to "git cvsimport" whose names are in capital
+    letters (-A, -M, -R and -S) can now be specified as the default in
+    the .git/config file by their longer names (cvsimport.authorsFile,
+    cvsimport.mergeRegex, cvsimport.trackRevisions, cvsimport.ignorePaths).
+ 
+- * "git daemon" can be built in MinGW environment.
++ * "git daemon" can be built in the MinGW environment.
+ 
+  * "git daemon" can take more than one --listen option to listen to
+    multiple addresses.
+@@ -65,13 +65,13 @@ Updates since v1.7.3
+  * "git describe --exact-match" was optimized not to read commit
+    objects unnecessarily.
+ 
+- * "git diff" and "git grep" learned how functions and subroutines
++ * "git diff" and "git grep" learned what functions and subroutines
+    in Fortran look like.
+ 
+- * "git fetch" learned "--recurse-submodules" option.
++ * "git fetch" learned the "--recurse-submodules" option.
+ 
+- * "git mergetool" tells vim/gvim to show three-way diff by default
+-   (use vimdiff2/gvimdiff2 as the tool name for old behaviour).
++ * "git mergetool" tells vim/gvim to show a three-way diff by default
++   (use vimdiff2/gvimdiff2 as the tool name for old behavior).
+ 
+  * "git log -G<pattern>" limits the output to commits whose change has
+    added or deleted lines that match the given pattern.
+@@ -91,12 +91,12 @@ Updates since v1.7.3
+    directory in one branch while a new file is created in place of that
+    directory in the other branch.
+ 
+- * "git rebase --autosquash" can use SHA-1 object names to name which
+-   commit to fix up (e.g. "fixup! e83c5163").
++ * "git rebase --autosquash" can use SHA-1 object names to name the
++   commit which is to be fixed up (e.g. "fixup! e83c5163").
+ 
+- * The default "recursive" merge strategy learned --rename-threshold
++ * The default "recursive" merge strategy learned the --rename-threshold
+    option to influence the rename detection, similar to the -M option
+-   of "git diff".  From "git merge" frontend, "-X<strategy option>"
++   of "git diff".  From the "git merge" frontend, the "-X<strategy option>"
+    interface, e.g. "git merge -Xrename-threshold=50% ...", can be used
+    to trigger this.
+ 
+@@ -104,21 +104,21 @@ Updates since v1.7.3
+    changes; the most notable is -Xignore-space-at-eol.
+ 
+  * "git send-email" learned "--to-cmd", similar to "--cc-cmd", to read
+-   recipient list from a command output.
++   the recipient list from a command output.
+ 
+  * "git send-email" learned to read and use "To:" from its input files.
+ 
+  * you can extend "git shell", which is often used on boxes that allow
+-   git-only login over ssh as login shell, with custom set of
++   git-only login over ssh as login shell, with a custom set of
+    commands.
+ 
+  * The current branch name in "git status" output can be colored differently
+-   from the generic header color by setting "color.status.branch" variable.
++   from the generic header color by setting the "color.status.branch" variable.
+ 
+  * "git submodule sync" updates metainformation for all submodules,
+    not just the ones that have been checked out.
+ 
+- * gitweb can use custom 'highlight' command with its configuration file.
++ * gitweb can use a custom 'highlight' command with its configuration file.
+ 
+  * other gitweb updates.
+ 
+@@ -129,7 +129,7 @@ Also contains various documentation updates.
+ Fixes since v1.7.3
+ ------------------
+ 
+-All of the fixes in v1.7.3.X maintenance series are included in this
++All of the fixes in the v1.7.3.X maintenance series are included in this
+ release, unless otherwise noted.
+ 
+  * "git log --author=me --author=her" did not find commits written by
+-- 
+1.7.4.rc1.253.gb7420
