@@ -1,179 +1,62 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 1/2] RelNotes/1.7.4: minor fixes
-Date: Thu, 13 Jan 2011 10:35:34 +0100
-Message-ID: <be158c63c44562e87488d742148f54d1c71107df.1294911294.git.git@drmicha.warpmail.net>
+Subject: [PATCH 2/2] RelNotes/1.7.4: remove helper script traces
+Date: Thu, 13 Jan 2011 10:35:35 +0100
+Message-ID: <a385867f72eb019e3629eacfabe8b6546a5604da.1294911294.git.git@drmicha.warpmail.net>
+References: <be158c63c44562e87488d742148f54d1c71107df.1294911294.git.git@drmicha.warpmail.net>
 Cc: Junio C Hamano <gitster@pobox.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 13 10:38:26 2011
+X-From: git-owner@vger.kernel.org Thu Jan 13 10:38:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PdJdR-0004HA-K3
+	id 1PdJdS-0004HA-AK
 	for gcvg-git-2@lo.gmane.org; Thu, 13 Jan 2011 10:38:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932878Ab1AMJiQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jan 2011 04:38:16 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:60099 "EHLO
+	id S932885Ab1AMJiR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jan 2011 04:38:17 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:37845 "EHLO
 	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S932532Ab1AMJiO (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Jan 2011 04:38:14 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id D94C12092F;
-	Thu, 13 Jan 2011 04:38:13 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute2.internal (MEProxy); Thu, 13 Jan 2011 04:38:13 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id; s=smtpout; bh=kVLFAibb2HqW50dHNOiWQBx3Rak=; b=pcGUskOB1/4GIb5z1KlhvU5hamH6CeySMJzm9vgDsS19RDJf66KB10emZec283i+FlWOoZkzErWS2rh9m9UdQUivSUJsDVKFaZZM6DehedDKWn8ClMgZJQw8R5lnhnoo9cKKufscDEv1rSuwVWJj0/+YszMgow6kHJVvkShWiIk=
-X-Sasl-enc: PuPxj/Z3hT5s1Ec1FNStSA0Gqyi6c9pX1vmak5KhmDsG 1294911493
+	by vger.kernel.org with ESMTP id S932827Ab1AMJiQ (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Jan 2011 04:38:16 -0500
+Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 0F9C42093D;
+	Thu, 13 Jan 2011 04:38:16 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute1.internal (MEProxy); Thu, 13 Jan 2011 04:38:16 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:cc:subject:date:message-id:in-reply-to:references; s=smtpout; bh=NT3aAFIBUNMM0EJIB+AjGtujZm4=; b=pKh9NiwD6FLk+zSZ6+snDv2bhogkiIA0XL8D4tPWSBaz7vYaYDAk6TDLnT2qqHbSGBsUYkmXise7VT1QpIm7/0uUbHnCxw/44IqCAITMmL/x5bGelIF4cG6ugXAtRvwoS8PzC7Z56t7rYxieAOuXhXCDbyV74RwQONKcVEV/7lU=
+X-Sasl-enc: tSbvMRtkrPwlveH4rbwWVOqK7XdkOkitofS8+tLHB2oQ 1294911495
 Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.12])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 2F349442361;
-	Thu, 13 Jan 2011 04:38:13 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 8543E400E5D;
+	Thu, 13 Jan 2011 04:38:15 -0500 (EST)
 X-Mailer: git-send-email 1.7.4.rc1.253.gb7420
+In-Reply-To: <be158c63c44562e87488d742148f54d1c71107df.1294911294.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165044>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165045>
 
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- Documentation/RelNotes/1.7.4.txt |   50 +++++++++++++++++++-------------------
- 1 files changed, 25 insertions(+), 25 deletions(-)
+Dunno whether you do this automatically on release.
+
+ Documentation/RelNotes/1.7.4.txt |    5 -----
+ 1 files changed, 0 insertions(+), 5 deletions(-)
 
 diff --git a/Documentation/RelNotes/1.7.4.txt b/Documentation/RelNotes/1.7.4.txt
-index 055c1ca..48dd964 100644
+index 48dd964..21e1e3f 100644
 --- a/Documentation/RelNotes/1.7.4.txt
 +++ b/Documentation/RelNotes/1.7.4.txt
-@@ -15,7 +15,7 @@ Updates since v1.7.3
-    themselves.  The name of a branch cannot begin with a dash now.
+@@ -144,8 +144,3 @@ release, unless otherwise noted.
+  * "git submodule update --recursive --other-flags" passes flags down
+    to its subinvocations.
  
-  * System-wide fallback default attributes can be stored in
--   /etc/gitattributes; core.attributesfile configuration variable can
-+   /etc/gitattributes; the core.attributesfile configuration variable can
-    be used to customize the path to this file.
- 
-  * The thread structure generated by "git send-email" has changed
-@@ -25,39 +25,39 @@ Updates since v1.7.3
-    cover letter of the previous series; this has been changed to make
-    the patches in the new series replies to the new cover letter.
- 
-- * Bash completion script in contrib/ has been adjusted to be usable with
--   Bash 4 (options with '=value' didn't complete)  It has been also made
-+ * The Bash completion script in contrib/ has been adjusted to be usable with
-+   Bash 4 (options with '=value' didn't complete).  It has been also made
-    usable with zsh.
- 
-  * Different pagers can be chosen depending on which subcommand is
--   being run under the pager, using "pager.<subcommand>" variable.
-+   being run under the pager, using the "pager.<subcommand>" variable.
- 
-- * The hardcoded tab-width of 8 used in whitespace breakage checks is now
-+ * The hardcoded tab-width of 8 that is used in whitespace breakage checks is now
-    configurable via the attributes mechanism.
- 
-  * Support of case insensitive filesystems (i.e. "core.ignorecase") has
-    been improved.  For example, the gitignore mechanism didn't pay attention
--   to the case insensitivity.
-+   to case insensitivity.
- 
-- * The <tree>:<path> syntax to name a blob in a tree, and :<path>
--   syntax to name a blob in the index (e.g. "master:Makefile",
-+ * The <tree>:<path> syntax for naming a blob in a tree, and the :<path>
-+   syntax for naming a blob in the index (e.g. "master:Makefile",
-    ":hello.c") have been extended.  You can start <path> with "./" to
-    implicitly have the (sub)directory you are in prefixed to the
-    lookup.  Similarly, ":../Makefile" from a subdirectory would mean
-    "the Makefile of the parent directory in the index".
- 
-- * "git blame" learned --show-email option to display the e-mail
-+ * "git blame" learned the --show-email option to display the e-mail
-    addresses instead of the names of authors.
- 
-- * "git commit" learned --fixup and --squash options to help later invocation
--   of the interactive rebase.
-+ * "git commit" learned the --fixup and --squash options to help later invocation
-+   of interactive rebase.
- 
-  * Command line options to "git cvsimport" whose names are in capital
-    letters (-A, -M, -R and -S) can now be specified as the default in
-    the .git/config file by their longer names (cvsimport.authorsFile,
-    cvsimport.mergeRegex, cvsimport.trackRevisions, cvsimport.ignorePaths).
- 
-- * "git daemon" can be built in MinGW environment.
-+ * "git daemon" can be built in the MinGW environment.
- 
-  * "git daemon" can take more than one --listen option to listen to
-    multiple addresses.
-@@ -65,13 +65,13 @@ Updates since v1.7.3
-  * "git describe --exact-match" was optimized not to read commit
-    objects unnecessarily.
- 
-- * "git diff" and "git grep" learned how functions and subroutines
-+ * "git diff" and "git grep" learned what functions and subroutines
-    in Fortran look like.
- 
-- * "git fetch" learned "--recurse-submodules" option.
-+ * "git fetch" learned the "--recurse-submodules" option.
- 
-- * "git mergetool" tells vim/gvim to show three-way diff by default
--   (use vimdiff2/gvimdiff2 as the tool name for old behaviour).
-+ * "git mergetool" tells vim/gvim to show a three-way diff by default
-+   (use vimdiff2/gvimdiff2 as the tool name for old behavior).
- 
-  * "git log -G<pattern>" limits the output to commits whose change has
-    added or deleted lines that match the given pattern.
-@@ -91,12 +91,12 @@ Updates since v1.7.3
-    directory in one branch while a new file is created in place of that
-    directory in the other branch.
- 
-- * "git rebase --autosquash" can use SHA-1 object names to name which
--   commit to fix up (e.g. "fixup! e83c5163").
-+ * "git rebase --autosquash" can use SHA-1 object names to name the
-+   commit which is to be fixed up (e.g. "fixup! e83c5163").
- 
-- * The default "recursive" merge strategy learned --rename-threshold
-+ * The default "recursive" merge strategy learned the --rename-threshold
-    option to influence the rename detection, similar to the -M option
--   of "git diff".  From "git merge" frontend, "-X<strategy option>"
-+   of "git diff".  From the "git merge" frontend, the "-X<strategy option>"
-    interface, e.g. "git merge -Xrename-threshold=50% ...", can be used
-    to trigger this.
- 
-@@ -104,21 +104,21 @@ Updates since v1.7.3
-    changes; the most notable is -Xignore-space-at-eol.
- 
-  * "git send-email" learned "--to-cmd", similar to "--cc-cmd", to read
--   recipient list from a command output.
-+   the recipient list from a command output.
- 
-  * "git send-email" learned to read and use "To:" from its input files.
- 
-  * you can extend "git shell", which is often used on boxes that allow
--   git-only login over ssh as login shell, with custom set of
-+   git-only login over ssh as login shell, with a custom set of
-    commands.
- 
-  * The current branch name in "git status" output can be colored differently
--   from the generic header color by setting "color.status.branch" variable.
-+   from the generic header color by setting the "color.status.branch" variable.
- 
-  * "git submodule sync" updates metainformation for all submodules,
-    not just the ones that have been checked out.
- 
-- * gitweb can use custom 'highlight' command with its configuration file.
-+ * gitweb can use a custom 'highlight' command with its configuration file.
- 
-  * other gitweb updates.
- 
-@@ -129,7 +129,7 @@ Also contains various documentation updates.
- Fixes since v1.7.3
- ------------------
- 
--All of the fixes in v1.7.3.X maintenance series are included in this
-+All of the fixes in the v1.7.3.X maintenance series are included in this
- release, unless otherwise noted.
- 
-  * "git log --author=me --author=her" did not find commits written by
+----
+-exec >/var/tmp/1
+-O=v1.7.4-rc1
+-echo O=$(git describe master)
+-git shortlog --no-merges ^maint ^$O master
 -- 
 1.7.4.rc1.253.gb7420
