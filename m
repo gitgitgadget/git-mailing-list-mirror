@@ -1,113 +1,88 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Applying .gitattributes text/eol changes
-Date: Thu, 13 Jan 2011 15:30:30 -0800
-Message-ID: <7vd3o01iw9.fsf@alter.siamese.dyndns.org>
-References: <4D220500.2000104@syntevo.com>
- <4D2C4902.4010705@drmicha.warpmail.net> <4D2C62DF.20706@syntevo.com>
- <4D2EFCBD.4020402@drmicha.warpmail.net> <4D2F0BF3.2000808@syntevo.com>
- <4D2F0E3A.8090108@drmicha.warpmail.net> <4D2F12EE.4020400@syntevo.com>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: Resumable clone/Gittorrent (again)
+Date: Fri, 14 Jan 2011 12:40:46 +1300
+Message-ID: <4D2F8D7E.6030305@vilain.net>
+References: <AANLkTinUV9Z_w85Gz13J+bm8xqnxJ9jBJXJm9bn5Y2ec@mail.gmail.com>	<alpine.LFD.2.00.1101061956470.22191@xanadu.home>	<AANLkTikKn1+2OX1KPy+9US_yX=E6+CiaCTTB6yqnAWwW@mail.gmail.com>	<AANLkTimgn2_BWYjbGKbGoeGJ=erKundX4umfy=s16dB1@mail.gmail.com>	<AANLkTim2A4=y=XcuPuPiYGDGZyKAUEk-yv2cZVEGhQ3C@mail.gmail.com>	<AANLkTi=KPVMEviQhyJeWHynPa2q6NJpQ2VyAhbRcmQ1D@mail.gmail.com>	<AANLkTinwb8orMBjcQjK0ogXd6rMEtRwT8SV41k8D3AXL@mail.gmail.com>	<AANLkTimkDYCL7+N-Rno1-0p3Gy6o0wYrnuStV_n5k4Hk@mail.gmail.com> <AANLkTi=3ikJ2UNNCW582CT7LQ7o2DBZ1hXJhPfMUNbKk@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Michael J Gruber <git@drmicha.warpmail.net>, git@vger.kernel.org
-To: Marc Strapetz <marc.strapetz@syntevo.com>
-X-From: git-owner@vger.kernel.org Fri Jan 14 00:30:50 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	Git Mailing List <git@vger.kernel.org>
+To: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 14 00:40:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PdWcz-0004fw-DE
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 00:30:49 +0100
+	id 1PdWmm-0002ER-2B
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 00:40:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757313Ab1AMXao (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jan 2011 18:30:44 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33399 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756916Ab1AMXam (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jan 2011 18:30:42 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D972E4C59;
-	Thu, 13 Jan 2011 18:31:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=g8Dv9A5W/THmBwz3Y1qyUq70MCw=; b=LWSTXk
-	wcgAN8DAlGBoORyb8dbfXmgYL/PLi3fKwB0OAvJ0iGogN7bRXJKFCbA5ZyILRTmX
-	3ZrqP1Nsl7lkvd5LzaGXrSLwM2Fy+DDPHrmbQ3mDMJo/n41LGeeDMGm+MlXO80JF
-	OTB31laesbRoQJhlbuHjsqRgbaxMT7lqiSX+g=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=nINf84FFsTa6Xrt6eP56LAvwQthkg5nG
-	i8I16Uxp6PaaYxS7F/ryq2JmuIezYlkm+dYyM+Cs9aXfQHkkPc3h4R+0FZn/1Swp
-	sb9EjPVvxSai3DsoEgMmVrA+z2u5B9NHvzc8Owfjl+OHM/56+NThHb1ENaeYsfWh
-	/hdvAUtrZQo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A98DF4C57;
-	Thu, 13 Jan 2011 18:31:18 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3B1A14C56; Thu, 13 Jan 2011
- 18:31:13 -0500 (EST)
-In-Reply-To: <4D2F12EE.4020400@syntevo.com> (Marc Strapetz's message of
- "Thu\, 13 Jan 2011 15\:57\:50 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 38C7EA38-1F6D-11E0-B18E-94B21C7297B3-77302942!a-pb-sasl-sd.pobox.com
+	id S1756883Ab1AMXku (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jan 2011 18:40:50 -0500
+Received: from mx3.orcon.net.nz ([219.88.242.53]:41185 "EHLO mx3.orcon.net.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752480Ab1AMXkt (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jan 2011 18:40:49 -0500
+Received: from Debian-exim by mx3.orcon.net.nz with local (Exim 4.69)
+	(envelope-from <sam@vilain.net>)
+	id 1PdWme-0000mG-2i
+	for git@vger.kernel.org; Fri, 14 Jan 2011 12:40:48 +1300
+Received: from [60.234.254.246] (helo=mail.utsl.gen.nz)
+	by mx3.orcon.net.nz with esmtp (Exim 4.69)
+	(envelope-from <sam@vilain.net>)
+	id 1PdWmd-0000m7-Tn
+	for git@vger.kernel.org; Fri, 14 Jan 2011 12:40:47 +1300
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id C52922E09D; Fri, 14 Jan 2011 12:40:47 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on naos.lan
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=unavailable version=3.3.1
+Received: from [192.168.1.83] (arcturus.local [192.168.1.83])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 20D722E094;
+	Fri, 14 Jan 2011 12:40:46 +1300 (NZDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <AANLkTi=3ikJ2UNNCW582CT7LQ7o2DBZ1hXJhPfMUNbKk@mail.gmail.com>
+X-Enigmail-Version: 1.1.2
+X-DSPAM-Check: by mx3.orcon.net.nz on Fri, 14 Jan 2011 12:40:48 +1300
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Fri Jan 14 12:40:48 2011
+X-DSPAM-Confidence: 0.5736
+X-DSPAM-Probability: 0.0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165068>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165069>
 
-Marc Strapetz <marc.strapetz@syntevo.com> writes:
+On 14/01/11 00:39, Luke Kenneth Casson Leighton wrote:
+> On Sun, Jan 9, 2011 at 5:48 PM, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+>> On Sun, Jan 9, 2011 at 8:55 PM, Luke Kenneth Casson Leighton
+>> <luke.leighton@gmail.com> wrote:
+>>>  you still have to come up with a mapping from "chains" to "pieces".
+>>> in the bittorrent protocol the mapping is done *entirely* implicitly
+>>> and algorithmically.
+>> Given a commit SHA-1, the mapping can be done algorithmically because
+>> the graph from the commit tip is fixed. Perhaps not mapping all at
+>> once, but as you have more pieces in the graph, you can map more.
+>  you're _sure_ about this?  what happens when new commits get added,
+> and change that graph?  are you _certain_ that you can write an
+> algorithm which is capable of generating exactly the same mapping,
+> even as more commits are added to the repository being mirrored, or,
+> does that situation not matter?
 
-> So your suggestion is to fix "git update-index --really-refresh", so
+For a given set of start and end points, and a given sort algorithm,
+walking the commit tree can yield deterministic results.
 
-The option is about telling git: "Earlier I promised I wouldn't touch
-these paths by setting their assume-unchanged bit, but I touched them.
-Please refresh the cached stat information in the index, ignoring the
-promise I didn't keep."
+You need to first make sure topological sanity prevails, then order by
+commit date where there are ties.  git rev-list --date-order does this. 
+There is the possibility of commits with the same commit date, so if you
+need to be really particular you can tie break on those, too.
 
-I do not think it is a good idea to conflate your "Everything is suspect
-because smudge filter has changed; please recompute all" request into the
-same option.  People who use assume-unchanged would probably want "Please
-rescan because I changed smudge filter" request to be carried out while
-still honoring the assume-unchanged bit they set earlier.
+Did you look at any of the previous research I linked to before?
 
-> Anyway, I'm still wondering if it will resolve the "git reset --hard"
-> problem of re-checking out every file, even if content is already
-> identical in the working tree. I think that part has to be fixed, too.
-
-There is not much to fix there. If you removed the index, then there is no
-information to tell you that "content is already identical" unless you
-actually check things out and compare.  By the time you found it out, you
-already have done the checkout.
-
-IOW, the current code does:
-
-	open object
-        read from the object
-        deflate and write to the destination file
-
-while your "fix" needs to look like this:
-
-	open object
-        read from the object
-        deflate and write to a temporary file
-        open the existing file
-        read from the file and compare it to the temporary we just wrote
-        if same, delete, otherwise rename the temporary file.
-
-just for the rare case where there is an untracked file that the user is
-willing to overwrite (we are discussing "rm .git/index && reset --hard"
-here) happens to have the same contents.  Not a good enough reason to add
-unwelcome complexity to the codepath.
-
-> What do you think about "git checkout --fix-eols" option as an
-> alternative? Its uses cases are more limited, though.
-
-What does it do?  "git checkout --fix-eols $path" will overwrite $path
-with the data at $path in the index?  Perhaps you can use the "-f" option.
-
-Adding an option to "checkout" might be better than update-index from the
-UI point of view, but the issue is not just "eols".  "eol" is a mere
-special case of smudge filter that controls how the contents from the
-repository are modified before getting written out to the working tree.
+Sam
