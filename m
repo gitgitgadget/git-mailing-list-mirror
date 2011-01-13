@@ -1,107 +1,85 @@
-From: Pietro Battiston <me@pietrobattiston.it>
-Subject: Re: git-repack & big files
-Date: Thu, 13 Jan 2011 09:00:40 +0100
-Message-ID: <1294905640.4033.920.camel@voubian.casa>
-References: <1294731438.3300.973.camel@voubian.casa>
-	 <4D2C7AA9.1020506@cfl.rr.com> <1294772603.3435.67.camel@voubian.casa>
-	 <4D2CB3F5.106@cfl.rr.com>
+From: WINS <fbc73@cox.net>
+Subject: NEW YEAR WINNER !
+Date: Thu, 13 Jan 2011 0:40:28 -0800
+Message-ID: <20110113034029.OGLTG.450610.imail@fed1rmwml4101>
+Reply-To: chvtexgnt04@aol.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Phillip Susi <psusi@cfl.rr.com>
-X-From: git-owner@vger.kernel.org Thu Jan 13 09:01:10 2011
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Thu Jan 13 09:46:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PdI7K-0002AC-1L
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Jan 2011 09:01:10 +0100
+	id 1PdIok-0005Hk-0Y
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Jan 2011 09:46:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752749Ab1AMIBE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jan 2011 03:01:04 -0500
-Received: from pietrobattiston.it ([92.243.7.39]:39800 "EHLO
-	jauntuale.pietrobattiston.it" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752601Ab1AMIBD (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 13 Jan 2011 03:01:03 -0500
-Received: from [192.168.1.2] (net-188-218-44-247.cust.dsl.vodafone.it [188.218.44.247])
-	(using TLSv1 with cipher AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by jauntuale.pietrobattiston.it (Postfix) with ESMTPSA id 3750713560;
-	Thu, 13 Jan 2011 08:01:00 +0000 (UTC)
-In-Reply-To: <4D2CB3F5.106@cfl.rr.com>
-X-Mailer: Evolution 2.30.3 
+	id S1756294Ab1AMIp4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jan 2011 03:45:56 -0500
+Received: from fed1rmpop107.cox.net ([68.230.241.11]:47384 "EHLO
+	fed1rmpop107.cox.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755954Ab1AMIpz (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 13 Jan 2011 03:45:55 -0500
+X-Greylist: delayed 321 seconds by postgrey-1.27 at vger.kernel.org; Thu, 13 Jan 2011 03:45:54 EST
+Received: from fed1rmimpo01.cox.net ([70.169.32.71])
+          by fed1rmmtao105.cox.net
+          (InterMail vM.8.01.03.00 201-2260-125-20100507) with ESMTP
+          id <20110113084029.KZDE14403.fed1rmmtao105.cox.net@fed1rmimpo01.cox.net>;
+          Thu, 13 Jan 2011 03:40:29 -0500
+Received: from fed1rmwml4101 ([172.18.140.218])
+	by fed1rmimpo01.cox.net with bizsmtp
+	id uwgT1f00F4iv3b803wgT8s; Thu, 13 Jan 2011 03:40:27 -0500
+X-VR-Score: 250.00
+X-Authority-Analysis: v=1.1 cv=3z1fhageN2+f9LVFv+eTkysbyEqTX/pUW0tQ4wyK9Sw=
+ c=1 sm=1 a=M58Ut_zYM0YA:10 a=Z6WwYdEpHsUA:10 a=IkcTkHD0fZMA:10
+ a=CA97L4c2R2SWvNNgQse4rQ==:17 a=vO4pztE-4Fp-NvtIrVYA:9
+ a=9y7RZjQ6sSXPaSd72XvhJbYdg-cA:4 a=QEXdDO2ut3YA:10 a=TCyqOGwsgAYA:10
+ a=TnWjwr_eb9-Evw1V:21 a=LunEWTlIunv1W0oY:21 a=CA97L4c2R2SWvNNgQse4rQ==:117
+X-CM-Score: 0.00
+Authentication-Results: cox.net; none
+Received: from 76.163.252.90 by webmail.west.cox.net; Thu, 13 Jan 2011 3:40:28 -0500
+X-Priority: 3 (Normal)
+Sensitivity: Normal
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165042>
+X-Spam-Report: 5.1 points;
+ *  2.1 SUBJ_ALL_CAPS Subject is all capitals
+ *  3.2 DEAR_WINNER BODY: DEAR_WINNER
+ * -0.2 BAYES_40 BODY: Bayesian spam probability is 20 to 40%
+ *      [score: 0.2774]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165043>
 
-Il giorno mar, 11/01/2011 alle 14.48 -0500, Phillip Susi ha scritto: 
-> On 1/11/2011 2:03 PM, Pietro Battiston wrote:
-> > That's unfortunate - I think I prefer to split my mailboxes than to
-> > loose many of the nice features git provides. But thanks a lot for the
-> > suggestion.
-> 
-> I'm curious what features of git you find helpful for this purpose.  
+Dear Winner,
 
-Many more, I guess, that the ones I'll be able to remember now. But for
-instance some features that make it better than rdiff-backup are:
+You have been selected in the on-going Chevron/Texaco award held this january 2011.
 
-1) I like to see how a given file changed at a given point in time with
-a comfortable interface - not just "restore this there", or search for
-the right diff gzipped somewhere
+We the promo board are pleased to inform you that you have been approved for a payment
+of One Million Pounds. If you receive this email, it means you are one of the five(5) lucky
 
-2) I like to delete some given files/folders that I forgot to
-(.git)ignore from all the backups with a single command
+winners. Your verification number is:
 
-3) I love the fact that if I move/rename a file/folder, git notices it
-(and doesn't think I just deleted some files and created some others).
-Since I often move/rename files/folders, when I knew git I really though
-"after years of waiting, finally backups will be smart".
+(CT-222-6747,FGN/P-900-56).  CONTACT CLAIMS PROCESSING OFFICER:
 
-4) in principle - though I admit I still never tried - I like the idea
-that if I have two copies of the git repo, I can backup once on each
-(think of one staying home and one following me when I travel) and then
-rebase one on the other
+Name: Mr. Albert Thomas
+chvtexnt08@onfruit.cn                     
 
-5) to backup my home the first time, rdiff-backup takes slightly less
-than 5 hours and uses 32 GB , git takes around 2 hours and uses 17 GB
+Provide below:
 
-6) in general, just having a powerful interface I'm used to
+NAME IN FULL:
+DELIVERY ADDRESS:
+NATIONALITY:
+OCCUPATION:
+SEX:
+PHONE:
+AGE:
+COUNTRY:
 
-> The
-> history log doesn't seem useful at all. 
+Congratulations !!!
 
-I also like the fact that my commits have comments such as "before
-changing PC", "after system upgrade", "before reordering mail"...
-
-
-> Generally mail is only added,
-> and sometimes deleted, never changed, so it also does not seem useful to
-> keep multiple revisions.  
-
-I'm not sure I get what you mean - mail is added and deleted, hence the
-mailbox is changed, hence I find it useful to keep multiple revisions.
-
-
-> If you really want that though, rdiff-backup
-> will do that and keep the old revisions delta compressed.
-> 
-
-Yes, I think I will live with rdiff-backup. And miss git, but I
-perfectly understand that git simply doesn't aim at solving my problem,
-and that's fair.
-
-
-> I use Maildir instead of mbox and do a nightly incremental backup of the
-> whole system with dump, so any mail I might loose by accident I can pull
-> from the backup if it is older than a day, and I never delete mail.
-
-Yep, Maildir is nice from this point of view. But nope, it is not
-practical for me to change now.
-
-thanks to all for suggestions (and sorry for the OT)
-
-Pietro
+Yours Sincerely,
+Mrs Sandra Bloogs.
+Online Co-ordinator.
