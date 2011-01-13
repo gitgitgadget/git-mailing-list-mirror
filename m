@@ -1,66 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Forcing re-reading files with unchanged stats
-Date: Wed, 12 Jan 2011 23:26:42 -0800
-Message-ID: <7vmxn51cy5.fsf@alter.siamese.dyndns.org>
-References: <loom.20110112T150313-103@post.gmane.org>
- <4D2E6D99.9060907@dbservice.com>
- <20110113033217.GA32661@sigill.intra.peff.net>
+From: Pietro Battiston <me@pietrobattiston.it>
+Subject: Re: git-repack & big files
+Date: Thu, 13 Jan 2011 09:00:40 +0100
+Message-ID: <1294905640.4033.920.camel@voubian.casa>
+References: <1294731438.3300.973.camel@voubian.casa>
+	 <4D2C7AA9.1020506@cfl.rr.com> <1294772603.3435.67.camel@voubian.casa>
+	 <4D2CB3F5.106@cfl.rr.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Tomas Carnecky <tom@dbservice.com>, Maaartin <grajcar1@seznam.cz>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 13 08:27:40 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Phillip Susi <psusi@cfl.rr.com>
+X-From: git-owner@vger.kernel.org Thu Jan 13 09:01:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PdHas-0005by-T2
-	for gcvg-git-2@lo.gmane.org; Thu, 13 Jan 2011 08:27:39 +0100
+	id 1PdI7K-0002AC-1L
+	for gcvg-git-2@lo.gmane.org; Thu, 13 Jan 2011 09:01:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752601Ab1AMH05 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 13 Jan 2011 02:26:57 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:35604 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752703Ab1AMH04 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 13 Jan 2011 02:26:56 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 34D233F62;
-	Thu, 13 Jan 2011 02:27:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=lWDgRcJngOzr8IoyQhNYoYOpeZI=; b=crQFwo
-	3rzY/Ub82KVUuO04GxRU2I7abTULnPDt9WIow4C1VSpV3+rg9f5qb4Rd+2a22Dd9
-	fxTDsD+/PiHNZXRxw4PsC+p2a7bTvYcWS0uEJB2/N1zmflMRBFHI3AjLhuryXQPg
-	GOey2jfG5u4ppWcogoNKkEyh1kdceIvydhjjs=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=PYOSATZreFeDwWXkpY5R/Xlrt8TsKV14
-	d76Ufu3aDrtikVZOExFURNiOGKYk2lFzT2V5qfnP0UUVKWWtv4vpbghGbN3VaKqr
-	3fG6kkvY+FiCwVfuvXw8vrkzdatQe9RqPMHvsJuNR1tQH53TLijwRnUUns1zjqXv
-	dtp7FiQLv/I=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E62213F5E;
-	Thu, 13 Jan 2011 02:27:30 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9733F3F5C; Thu, 13 Jan 2011
- 02:27:25 -0500 (EST)
-In-Reply-To: <20110113033217.GA32661@sigill.intra.peff.net> (Jeff King's
- message of "Wed\, 12 Jan 2011 22\:32\:18 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 94CF39BC-1EE6-11E0-AFC9-C7CE2BC26F3A-77302942!a-pb-sasl-sd.pobox.com
+	id S1752749Ab1AMIBE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 13 Jan 2011 03:01:04 -0500
+Received: from pietrobattiston.it ([92.243.7.39]:39800 "EHLO
+	jauntuale.pietrobattiston.it" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752601Ab1AMIBD (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 13 Jan 2011 03:01:03 -0500
+Received: from [192.168.1.2] (net-188-218-44-247.cust.dsl.vodafone.it [188.218.44.247])
+	(using TLSv1 with cipher AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by jauntuale.pietrobattiston.it (Postfix) with ESMTPSA id 3750713560;
+	Thu, 13 Jan 2011 08:01:00 +0000 (UTC)
+In-Reply-To: <4D2CB3F5.106@cfl.rr.com>
+X-Mailer: Evolution 2.30.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165041>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165042>
 
-Jeff King <peff@peff.net> writes:
+Il giorno mar, 11/01/2011 alle 14.48 -0500, Phillip Susi ha scritto: 
+> On 1/11/2011 2:03 PM, Pietro Battiston wrote:
+> > That's unfortunate - I think I prefer to split my mailboxes than to
+> > loose many of the nice features git provides. But thanks a lot for the
+> > suggestion.
+> 
+> I'm curious what features of git you find helpful for this purpose.  
 
-> I'm curious what this use case is, and whether it would be acceptable to
-> update something like ctime on the files to make them stat-dirty to git.
+Many more, I guess, that the ones I'll be able to remember now. But for
+instance some features that make it better than rdiff-backup are:
 
-Changing crlf-related attributes (or filter/smudge) after the fact,
-perhaps?
+1) I like to see how a given file changed at a given point in time with
+a comfortable interface - not just "restore this there", or search for
+the right diff gzipped somewhere
+
+2) I like to delete some given files/folders that I forgot to
+(.git)ignore from all the backups with a single command
+
+3) I love the fact that if I move/rename a file/folder, git notices it
+(and doesn't think I just deleted some files and created some others).
+Since I often move/rename files/folders, when I knew git I really though
+"after years of waiting, finally backups will be smart".
+
+4) in principle - though I admit I still never tried - I like the idea
+that if I have two copies of the git repo, I can backup once on each
+(think of one staying home and one following me when I travel) and then
+rebase one on the other
+
+5) to backup my home the first time, rdiff-backup takes slightly less
+than 5 hours and uses 32 GB , git takes around 2 hours and uses 17 GB
+
+6) in general, just having a powerful interface I'm used to
+
+> The
+> history log doesn't seem useful at all. 
+
+I also like the fact that my commits have comments such as "before
+changing PC", "after system upgrade", "before reordering mail"...
+
+
+> Generally mail is only added,
+> and sometimes deleted, never changed, so it also does not seem useful to
+> keep multiple revisions.  
+
+I'm not sure I get what you mean - mail is added and deleted, hence the
+mailbox is changed, hence I find it useful to keep multiple revisions.
+
+
+> If you really want that though, rdiff-backup
+> will do that and keep the old revisions delta compressed.
+> 
+
+Yes, I think I will live with rdiff-backup. And miss git, but I
+perfectly understand that git simply doesn't aim at solving my problem,
+and that's fair.
+
+
+> I use Maildir instead of mbox and do a nightly incremental backup of the
+> whole system with dump, so any mail I might loose by accident I can pull
+> from the backup if it is older than a day, and I never delete mail.
+
+Yep, Maildir is nice from this point of view. But nope, it is not
+practical for me to change now.
+
+thanks to all for suggestions (and sorry for the OT)
+
+Pietro
