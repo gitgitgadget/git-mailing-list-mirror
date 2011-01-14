@@ -1,71 +1,53 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: noob question
-Date: Fri, 14 Jan 2011 12:10:25 +0100
-Message-ID: <201101141210.25523.trast@student.ethz.ch>
-References: <AANLkTinU---Bw5nWFXr7psSyZEty=awihPrDGqNX916O@mail.gmail.com>
+From: Edwin Kempin <edwin.kempin@gmail.com>
+Subject: Re: How does 'git notes --ref' work?
+Date: Fri, 14 Jan 2011 12:14:21 +0100
+Message-ID: <AANLkTimV6LguyjJEiECAVg1zLj=v-GQkrkxBez6t9HHf@mail.gmail.com>
+References: <AANLkTimL137aFt2dyvdHxTMUjB4diwJQG-FQiYEK8tVJ@mail.gmail.com>
+	<201101141149.38778.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>
-To: Harry Johnson <hjohnson@viasic.com>
-X-From: git-owner@vger.kernel.org Fri Jan 14 12:10:46 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri Jan 14 12:14:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PdhYI-00020e-SJ
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 12:10:43 +0100
+	id 1Pdhbv-0004BX-EK
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 12:14:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752429Ab1ANLK3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jan 2011 06:10:29 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:30126 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751152Ab1ANLK2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jan 2011 06:10:28 -0500
-Received: from CAS12.d.ethz.ch (172.31.38.212) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Fri, 14 Jan
- 2011 12:10:17 +0100
-Received: from pctrast.inf.ethz.ch (217.162.250.31) by CAS12.d.ethz.ch
- (172.31.38.212) with Microsoft SMTP Server (TLS) id 14.1.218.12; Fri, 14 Jan
- 2011 12:10:26 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
-In-Reply-To: <AANLkTinU---Bw5nWFXr7psSyZEty=awihPrDGqNX916O@mail.gmail.com>
-X-Originating-IP: [217.162.250.31]
+	id S1756731Ab1ANLOX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jan 2011 06:14:23 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:60253 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751570Ab1ANLOW (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jan 2011 06:14:22 -0500
+Received: by qyj19 with SMTP id 19so6686175qyj.19
+        for <git@vger.kernel.org>; Fri, 14 Jan 2011 03:14:21 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=mdh9R9+vh5cujfcyJqP9wcYLmZVZ9rw7mqpP7raHZZY=;
+        b=ogjzCWpzSmD3Vt20mfQ1siMLiFFGohYmE9uc4FSkkwQrEP/9TSk0cUXqOd01LVf/iB
+         V2SFYFHJdwvQa8+Xxq4YxgNWK+vWgzBI7675suf4SHAB+Fj0oRkMpi6HY38cJFPHEhqv
+         MmZnA7lfTXBsa4RLzRUAwn9ez1cxPKuz073dg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=VuKwBgxwoJ+dLdei9grxD0udsAQWhI3Ejs+3t0zA87BqEB6jF071Jg34y6PAqikgK6
+         37+isK4o9ZHtky6+q5f5L78tgAzZQNw4UiiQF4Q/0LNfj+UkjltNipqn6y4scKQz7Mcb
+         B5sXOuRwOGqYxEoFgSTRfCp0oelnOevYvbd/Q=
+Received: by 10.229.90.196 with SMTP id j4mr555178qcm.144.1295003661542; Fri,
+ 14 Jan 2011 03:14:21 -0800 (PST)
+Received: by 10.220.117.67 with HTTP; Fri, 14 Jan 2011 03:14:21 -0800 (PST)
+In-Reply-To: <201101141149.38778.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165092>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165093>
 
-Harry Johnson wrote:
-> 
-> I have used git-svn to create a git repo from our subversion repo. I
-> have done this as user foo which is just an account that is used for
-> doing central builds. I have then cloned this as repo as myself,
-> harry. My thought is that the repo owned by foo would be a central
-> repo that all of the developers, including myself, could clone and to
-> which  we could then 'git push' our changes.
-[...]
-> when checking the git log is that while the changes I made and checked
-> into my repo clearly showed me as the author, the same changes after
-> being pushed to foo's repo showed a different author.
-> 
-> So two things.. First should the author have been preserved? How can I
-> make sure that it is?
-
-Yes, absolutely, and since the author is encoded in the commit objects
-it's impossible to change it without also changing the commit sha1s.
-
-Can you spell your experiments in actual commands and output snippets
-so we can see what happened?
-
-Did you ever run 'git svn dcommit', 'git rebase', 'git commit --amend'
-or similar in foo's repo?  All of these rewrite commits.  As part of
-their rewriting they set the *committer* to the identity of the
-current user.  'git svn dcommit' sets author&committer to the identity
-coming back from SVN.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Thanks for the clarification.
