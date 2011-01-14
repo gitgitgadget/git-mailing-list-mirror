@@ -1,88 +1,109 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git Rebase blows away GIT_AUTHOR_NAME
-Date: Fri, 14 Jan 2011 10:28:58 -0800
-Message-ID: <7vhbdbnxud.fsf@alter.siamese.dyndns.org>
-References: <AANLkTimvK3p3M8kbGzLxyhchoFONiD4=FGPWxxs=i0GA@mail.gmail.com>
- <AANLkTikqfX3jhSdP5xhFj=VktqW2S6AeGL_MF18g8ZA_@mail.gmail.com>
- <AANLkTimf2rwKqyWwQbdj7cjS8YcQwCXYGRCvQbZ5HZ19@mail.gmail.com>
- <AANLkTik15iV9SOv6rRL5+DQkAZ4JwBGTS+gqS3nXy2hN@mail.gmail.com>
- <AANLkTikk7Xdiey76Dmy848_B4qNX2-Vbis7p=E8vtNL9@mail.gmail.com>
- <AANLkTimONqL4=E4Unrsj9PU5u57KGXrmO6xWUOCLorgs@mail.gmail.com>
- <AANLkTi=PTgmOSC7pRLjujO5fi9Wdp69Jmj4zCkhGSYSz@mail.gmail.com>
- <AANLkTiksAZSi-Yo8yJv5ca9XWWvB3iVQhZOJtTs-F8gk@mail.gmail.com>
- <AANLkTi=Z6Dx6m68zi7Q1eRVxX3DXOyKj+Ff177UCQrAj@mail.gmail.com>
- <AANLkTimZF+r2aNzrXsUuHVZR65N5wpOYLutFgGAGoci_@mail.gmail.com>
- <20110114162144.GA867@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC/PATCH 2/1] fixup! Documentation: start to explain what git
+ replace is for
+Date: Fri, 14 Jan 2011 13:30:23 -0600
+Message-ID: <20110114193023.GA14294@burratino>
+References: <746745466.20110111134101@mail.ru>
+ <m3lj2rbmq5.fsf@localhost.localdomain>
+ <20110112000812.GA31950@burratino>
+ <loom.20110112T232501-316@post.gmane.org>
+ <20110114084903.GD11343@burratino>
+ <4D308B69.1050003@seznam.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Erik Faye-Lund <kusmabite@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Tor Arntsen <tor@spacetec.no>, JT Olds <jtolds@xnet5.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 14 19:29:25 2011
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Aleksey Shumkin <zapped@mail.ru>
+To: Maaartin-1 <grajcar1@seznam.cz>
+X-From: git-owner@vger.kernel.org Fri Jan 14 20:31:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PdoOp-0003rq-Po
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 19:29:24 +0100
+	id 1PdpMP-0008VL-Cc
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 20:30:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757524Ab1ANS3R (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jan 2011 13:29:17 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45002 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751923Ab1ANS3Q (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jan 2011 13:29:16 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C3D6F33E7;
-	Fri, 14 Jan 2011 13:29:57 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=djzyQHrbW4TiiSKX/6oq+wRSMIQ=; b=vd6Nuq
-	esx0o4I7Cl+t1rqSusWGZ5RJRu6mk/z/pnX7LhetAxwwJja79lA7/+whBavVDO6m
-	iQYQACviSkvcbmCxYW5xTatQ8sQ+UL4vyCofXqnqEC/UNvj3mQtYWXdswUX1KwV7
-	aWhdkUYXU0sqZ7J8spluuRwbSs1ow+Sj4e+3o=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=XR0+TAoDEjVlkr4lYBcSTDUlI/nEHaae
-	et4vGY8nGxvLdE8KIl+Ah2ncpZkBEluiV/+FlFfHOQML8YbTMCSK1M0RHOkXoIol
-	Sb4WEd6DW1x9v+/fCmz5PG6AFV4Ll7PXBS4kPjyoicYz8eZhSqtH1F/Dzs64wJEQ
-	uhYZs8ZgDyo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 644F033E5;
-	Fri, 14 Jan 2011 13:29:51 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id F3CB833E3; Fri, 14 Jan 2011
- 13:29:42 -0500 (EST)
-In-Reply-To: <20110114162144.GA867@sigill.intra.peff.net> (Jeff King's
- message of "Fri\, 14 Jan 2011 11\:21\:45 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4661D682-200C-11E0-A798-C83E909A2CA0-77302942!a-pb-sasl-sd.pobox.com
+	id S1758099Ab1ANTau (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jan 2011 14:30:50 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:64959 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752229Ab1ANTat (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jan 2011 14:30:49 -0500
+Received: by qyk12 with SMTP id 12so3718233qyk.19
+        for <git@vger.kernel.org>; Fri, 14 Jan 2011 11:30:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=Pxh3TS8+LhqsQAspvFM7Mze3Ryop7GvxP6kYJ6kgM/U=;
+        b=cDMXDvUVm27dhH8IXViMyLGkdTEtaPZXB+Nn1NS7YHpVwAE+WVcRfv3mLZV2QF+sqe
+         Rol8HoOptVZiM4AR4FJ7QZOm4PvYXkE2JE6PgfU3USQynSAOzNr7Q3qkSuBhZ2+xozqA
+         TkqRCTKBxZwA8YkBlqQd9tQXqhYrKPzi8ac6E=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=lCLEDE80f7LeDZiNxmxMvVSrKlfQ5bKK3PwonPaz3eZuY9mJrHBTjals/5wV6sJNpv
+         UEjOTcLY/+1gdNdfWHLHY+bSEdIV0irnwnxd087kOT0WeN/RgFTtRXvbTdlZibdUtRRo
+         AToCxuhI/lkPRTupqKq9v2sycepMmL81u4/+0=
+Received: by 10.224.67.195 with SMTP id s3mr981870qai.256.1295033447178;
+        Fri, 14 Jan 2011 11:30:47 -0800 (PST)
+Received: from burratino (adsl-69-209-76-37.dsl.chcgil.sbcglobal.net [69.209.76.37])
+        by mx.google.com with ESMTPS id g28sm1007471qck.25.2011.01.14.11.30.44
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 14 Jan 2011 11:30:45 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <4D308B69.1050003@seznam.cz>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165117>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165118>
 
-Jeff King <peff@peff.net> writes:
+Maaartin wrote:
+> On 11-01-14 09:49, Jonathan Nieder wrote:
 
-> So we should probably do one or both of:
+>> [side note: please do not prune the cc list; I only stumbled on this
+>> message in the online archive by luck]
 >
->   1. Make an --allow-any-name option to mailinfo, and use it when we
->      invoke mailinfo internally for rebasing. That still doesn't solve
->      the emailed patch problem, but at least keeps purely internal
->      operations sane.
->
->   2. Bump the check up to git-commit time, which is the best place to
->      catch and tell somebody that their name is too short, because they
->      can actually fix it.
->
-> Even if we dropped the check now, option (2) is still useful, because
-> you have no idea which version of git the other end will use to apply
-> your patch.
+> What could I have done about it?
 
-I am perfectly Ok with making the check looser in "am" when $rebasing is
-in effect.  Wouldn't that solve the issue?
+See [1].
+
+> Maybe just something like "Let's assume there's only one and let's call
+> it FIRST". For the example, this is enough.
+
+True enough.  Even better would be to give a reference to the "coolest merge
+ever" (is that documented anywhere?) so the interested reader can discover
+how there could be more than one.
+
+> I'd go the other way round and use "-i" so I'd need only one file.
+
+"sed -i" is not portable (not sure how important that is for documentation).
+But perl -i is. :)
+
+> $ first_commit = $($ echo $first_commit |
+> perl -p
+> "s/^tree .*/$&\nparent $(git rev-parse v2.4)/")      <4>
+
+So:
+
+	perl -pi -e "s/^tree .*$/\$&\nparent $(git rev-parse v2.4)/" new
+
+Unfortunately "echo" and process substitution destroy some formatting
+in the commit message --- in particular, trailing whitespace.
+
+Thanks for the suggestions.  Please feel free to pick up the patch and
+run with it (I trust you for this more than I would trust myself).
+
+Regards,
+Jonathan
+
+[1] My current method: [2]  Yes, I agree that this is cumbersome.
+
+I'm also told that Thunderbird when used as a newsreader can reply-to-all
+easily, though I haven't tried it.
+
+[2] http://thread.gmane.org/gmane.comp.version-control.git/154490
