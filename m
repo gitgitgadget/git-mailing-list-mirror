@@ -1,84 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Git Rebase blows away GIT_AUTHOR_NAME
-Date: Fri, 14 Jan 2011 14:30:35 -0800
-Message-ID: <7v4o9bnmno.fsf@alter.siamese.dyndns.org>
-References: <AANLkTimf2rwKqyWwQbdj7cjS8YcQwCXYGRCvQbZ5HZ19@mail.gmail.com>
- <AANLkTik15iV9SOv6rRL5+DQkAZ4JwBGTS+gqS3nXy2hN@mail.gmail.com>
- <AANLkTikk7Xdiey76Dmy848_B4qNX2-Vbis7p=E8vtNL9@mail.gmail.com>
- <AANLkTimONqL4=E4Unrsj9PU5u57KGXrmO6xWUOCLorgs@mail.gmail.com>
- <AANLkTi=PTgmOSC7pRLjujO5fi9Wdp69Jmj4zCkhGSYSz@mail.gmail.com>
- <AANLkTiksAZSi-Yo8yJv5ca9XWWvB3iVQhZOJtTs-F8gk@mail.gmail.com>
- <AANLkTi=Z6Dx6m68zi7Q1eRVxX3DXOyKj+Ff177UCQrAj@mail.gmail.com>
- <AANLkTimZF+r2aNzrXsUuHVZR65N5wpOYLutFgGAGoci_@mail.gmail.com>
- <20110114162144.GA867@sigill.intra.peff.net>
- <7vhbdbnxud.fsf@alter.siamese.dyndns.org>
- <20110114200705.GA3316@sigill.intra.peff.net>
-Mime-Version: 1.0
+From: Jerzy Kozera <jerzy.kozera@gmail.com>
+Subject: Re: [PATCH] git-p4: Fixed handling of file names with spaces
+Date: Fri, 14 Jan 2011 22:45:45 +0000
+Message-ID: <A0F152FE-C659-4F9B-9625-505AA5DAF942@gmail.com>
+References: <AANLkTi=Cp=FCuJdthr7JfML6jdNzUiDAUPjrWpTQfWGk@mail.gmail.com> <1294944715-5647-1-git-send-email-jerzy.kozera@gmail.com> <m28vyncffu.fsf@igel.home>
+Mime-Version: 1.0 (Apple Message framework v1082)
 Content-Type: text/plain; charset=us-ascii
-Cc: Erik Faye-Lund <kusmabite@gmail.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Tor Arntsen <tor@spacetec.no>, JT Olds <jtolds@xnet5.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 14 23:30:59 2011
+Content-Transfer-Encoding: 8BIT
+Cc: git@vger.kernel.org, gitster@pobox.com, msclrhd@googlemail.com
+To: Andreas Schwab <schwab@linux-m68k.org>
+X-From: git-owner@vger.kernel.org Fri Jan 14 23:46:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PdsAd-0003QW-45
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 23:30:59 +0100
+	id 1PdsPK-000540-0n
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 23:46:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752591Ab1ANWay (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jan 2011 17:30:54 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33578 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752043Ab1ANWax (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jan 2011 17:30:53 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 90D134E9E;
-	Fri, 14 Jan 2011 17:31:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=c0ObE+/oh0tFA3fsayoS9iU4ljA=; b=m3dn8j
-	/4fgdZbmQFxSlCSs6ccpNLavlhugy1cfxSHdZ9LgK0q7qAs4v21RRRyUJhMLPjT5
-	DtKjJULBrGHt/FN0nd72t1PfffJTntuw9iAy0aDvOFuht55r806sBA3WP4kuslAe
-	o9X/zLuBlXXLO1wk0sPBd3gi9J+Kg9kW/k6ts=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=Wdi3Q2IGTWRjTyZkAqvNa6wFwgT9joPk
-	d+3IBpOFYKIy47O/mgWj8MNdT5BGkugrrwovc8u9Femt92NUfh+lM+KNSCxZCLjn
-	m/nr696zWVH/CjwGmYMYS/ZGM9JFwjUy9s+mPSrM8yZ6qjaiipl/l1B/7xa69gUc
-	t5x1NRSFpfQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E63B64E9D;
-	Fri, 14 Jan 2011 17:31:28 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0F8A14E9C; Fri, 14 Jan 2011
- 17:31:20 -0500 (EST)
-In-Reply-To: <20110114200705.GA3316@sigill.intra.peff.net> (Jeff King's
- message of "Fri\, 14 Jan 2011 15\:07\:06 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0796F280-202E-11E0-97F3-C83E909A2CA0-77302942!a-pb-sasl-sd.pobox.com
+	id S1752474Ab1ANWqD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jan 2011 17:46:03 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:54543 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752043Ab1ANWqB convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Jan 2011 17:46:01 -0500
+Received: by ewy5 with SMTP id 5so1828733ewy.19
+        for <git@vger.kernel.org>; Fri, 14 Jan 2011 14:46:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:subject:mime-version:content-type:from
+         :in-reply-to:date:cc:content-transfer-encoding:message-id:references
+         :to:x-mailer;
+        bh=kmTe+jbuiiUnPKaez/44QUAfd/WEq90Q84TjMvJktLA=;
+        b=n13bgKsthHVxFxN4Z4EcXRc1w3XNv/GD1+rMBVaSROUHlO5a/QARCUECyWOA2XhInI
+         EofaDBPiyXYs8I3ALgpV7OUf/iRpOrflRHEm6txfGSFl6RzRLf+0x7nv5M+mr1Dz/tHU
+         ji5nvwY1s0k0BuGAKbX553mscz5UWyc5spJ+Y=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=subject:mime-version:content-type:from:in-reply-to:date:cc
+         :content-transfer-encoding:message-id:references:to:x-mailer;
+        b=aJuqnPOoiEQ14omTg58ZdzB+wVxJoAuz7d/UMBJdQ/VYUiGGgB4wrnl/psVt/kP4S5
+         BQozsun3njLUYw6Cv04IzIJ0aY9bzAgEMoqsbX9ZszVKTsbb7XZMih73zBqDxAKWhF1x
+         5JqWGizQ0WUO3nngvEv0KIaLzwQQhOiB3WRnk=
+Received: by 10.216.173.7 with SMTP id u7mr48792wel.50.1295045148892;
+        Fri, 14 Jan 2011 14:45:48 -0800 (PST)
+Received: from jk.home (host81-151-227-102.range81-151.btcentralplus.com [81.151.227.102])
+        by mx.google.com with ESMTPS id p4sm954751wer.29.2011.01.14.14.45.47
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 14 Jan 2011 14:45:47 -0800 (PST)
+In-Reply-To: <m28vyncffu.fsf@igel.home>
+X-Mailer: Apple Mail (2.1082)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165127>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165128>
 
-Jeff King <peff@peff.net> writes:
+On 14 Jan 2011, at 22:01, Andreas Schwab wrote:
+> Can those file names also include a double quote or a backquote or a
+> dollar sign?
 
-> More or less. You would still have some lossiness when emailing your
-> patch. Do we want to warn about that?
 
-Probably not.
+Double quote and backquote get escaped by git so they are not a problem:
+$ git diff-tree -r HEAD^ HEAD
+:000000 100644 0000000000000000000000000000000000000000 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 A	"\" \\ $"
 
-There will only be less than hundred people with a single letter name in
-the world (I was tempted to say 26 but decided to be generous ;-) like
-that, and you will much more likely to see an overly short "name" part
-from a misconfiguration or misparsing than from receiving a real patch
-from people with such a name.
+But as you can see above, the dollar sign remains intact, so it needs to be handled as well - patch below takes it into account.
 
-But I haven't thought the issues, possible improvements and pros-and-cons
-through.
+Thanks,
+Jerzy
+
+---
+ contrib/fast-import/git-p4 |    8 ++++----
+ 1 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 04ce7e3..d930908 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -47,7 +47,7 @@ def p4_build_cmd(cmd):
+     real_cmd += "%s" % (cmd)
+     if verbose:
+         print real_cmd
+-    return real_cmd
++    return real_cmd.replace('$', '\\$')
+ 
+ def chdir(dir):
+     if os.name == 'nt':
+@@ -139,12 +139,12 @@ def setP4ExecBit(file, mode):
+         if p4Type[-1] == "+":
+             p4Type = p4Type[0:-1]
+ 
+-    p4_system("reopen -t %s %s" % (p4Type, file))
++    p4_system("reopen -t %s \"%s\"" % (p4Type, file))
+ 
+ def getP4OpenedType(file):
+     # Returns the perforce file type for the given file.
+ 
+-    result = p4_read_pipe("opened %s" % file)
++    result = p4_read_pipe("opened \"%s\"" % file)
+     match = re.match(".*\((.+)\)\r?$", result)
+     if match:
+         return match.group(1)
+@@ -666,7 +666,7 @@ class P4Submit(Command):
+                 for f in editedFiles:
+                     p4_system("revert \"%s\"" % f);
+                 for f in filesToAdd:
+-                    system("rm %s" %f)
++                    system("rm \"%s\"" % f.replace('$', '\\$'))
+                 return
+             elif response == "a":
+                 os.system(applyPatchCmd)
+-- 
+1.7.1
