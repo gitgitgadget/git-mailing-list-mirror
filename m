@@ -1,125 +1,117 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: working with a large repository and git svn
-Date: Fri, 14 Jan 2011 02:29:31 -0600
-Message-ID: <20110114082931.GC11343@burratino>
-References: <AANLkTimKbS3ECzOaGtNgvx7DThJGH_DkPmg4ehKXGtwc@mail.gmail.com>
- <201101120830.47016.wjl@icecavern.net>
- <20110113032300.GB9184@burratino>
- <AANLkTikCvjDqUpL-=srVKcMQx+NM6bV7FabmJ+4sPqD7@mail.gmail.com>
- <20110114080554.GA1735@kytes>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: Applying .gitattributes text/eol changes
+Date: Fri, 14 Jan 2011 09:31:15 +0100
+Message-ID: <4D3009D3.3050403@drmicha.warpmail.net>
+References: <4D220500.2000104@syntevo.com> <4D2C4902.4010705@drmicha.warpmail.net> <4D2C62DF.20706@syntevo.com> <4D2EFCBD.4020402@drmicha.warpmail.net> <4D2F0BF3.2000808@syntevo.com> <4D2F0E3A.8090108@drmicha.warpmail.net> <4D2F12EE.4020400@syntevo.com> <7vd3o01iw9.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Joe Corneli <holtzermann17@gmail.com>, git@vger.kernel.org,
-	Love =?utf-8?Q?H=C3=B6rnquist_=C3=85strand?= <lha@kth.se>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 14 09:30:02 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Marc Strapetz <marc.strapetz@syntevo.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 14 09:34:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pdf2n-0003RB-Bk
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 09:30:01 +0100
+	id 1Pdf6l-0005Qj-8h
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 09:34:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757370Ab1ANI3y (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jan 2011 03:29:54 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:60407 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756981Ab1ANI3x (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jan 2011 03:29:53 -0500
-Received: by yxt3 with SMTP id 3so1038296yxt.19
-        for <git@vger.kernel.org>; Fri, 14 Jan 2011 00:29:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=wy7IIbCQZXY4JWmNefC9P3ppkLJGBYgRVTDpL683Jng=;
-        b=yCXkutWx5DpJIzVdb2HjN13o0qM7w/wjbqnBVVWIMszdT/8V0Zc6mq4AqNchqiMK4b
-         EO4xrY/TD40j4og/MhTbE9AAAr6I5420+oiN9z6X3NXElQNda1ArVkxmD7ELKZaU/NhP
-         ttHoYscuYCkxVwM52Q+N6+TlRB0hjf+pxKa44=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=PKyPEkNiSG1JE3VoLNSuyFe30P/mXV2p5/Qr7mSOfNIB5IkiroXJ+BKu26nstx/r47
-         CzOqikshRcfvNGw1Uf31VKEmM8xcqLqk9R/5mgwz8jvFeEuQ/OT5/q1ycHMPVpnKwXhW
-         smNvVGRZarVlQmw0hUvkPTKB6AmiO5q2Nz6Nw=
-Received: by 10.150.199.17 with SMTP id w17mr842084ybf.301.1294993791656;
-        Fri, 14 Jan 2011 00:29:51 -0800 (PST)
-Received: from burratino (adsl-69-209-76-37.dsl.chcgil.sbcglobal.net [69.209.76.37])
-        by mx.google.com with ESMTPS id v39sm150735yba.7.2011.01.14.00.29.49
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 14 Jan 2011 00:29:50 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110114080554.GA1735@kytes>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753764Ab1ANId6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jan 2011 03:33:58 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:54977 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751341Ab1ANId4 (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Jan 2011 03:33:56 -0500
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 77CF02079C;
+	Fri, 14 Jan 2011 03:33:55 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Fri, 14 Jan 2011 03:33:55 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=rOHYqvMacHs65bNauaq1ySbUSqI=; b=rYaDGElOQQ/K9yw+kemuF1QFIXghMmhB1N3Max8hOpwDkoUkgs/Z6FRRixvTbc4qkTRm00JgkH7yECVKiPBrLQK9JIlOXeOIhbtETx2rw3YTcXdEyklfhbOyYReazM1lGlJx5zs7UtHBmpYBQaitVXYPnrKzuPw+RpEfRAQuHSI=
+X-Sasl-enc: oPT3dvWPARB/UKE2iHi04SB7FHPwO2n/Bm94EC2uIXsV 1294994035
+Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.12])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id A1027407766;
+	Fri, 14 Jan 2011 03:33:54 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
+In-Reply-To: <7vd3o01iw9.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165078>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165079>
 
-Ramkumar Ramachandra wrote:
-> Joe Corneli writes:
+Junio C Hamano venit, vidit, dixit 14.01.2011 00:30:
+> Marc Strapetz <marc.strapetz@syntevo.com> writes:
+> 
+>> So your suggestion is to fix "git update-index --really-refresh", so
+> 
+> The option is about telling git: "Earlier I promised I wouldn't touch
+> these paths by setting their assume-unchanged bit, but I touched them.
+> Please refresh the cached stat information in the index, ignoring the
+> promise I didn't keep."
+> 
+> I do not think it is a good idea to conflate your "Everything is suspect
+> because smudge filter has changed; please recompute all" request into the
+> same option.  People who use assume-unchanged would probably want "Please
+> rescan because I changed smudge filter" request to be carried out while
+> still honoring the assume-unchanged bit they set earlier.
 
->>> I think the state of the art is currently git2svn
->>
->> Thanks, that did indeed work, though, for the record it uses committer
->> name and email in the log that it generates, not author name and
->> email, but no worries!
->
-> That should be easy enough to fix with something like this (warning:
-> untested). A more elegant solution would actually use some sort of
-> user-configurable mapping from Git authors/ committers to SVN authors
-> though.
-
-Thanks for the cc.  (cc-ing lha, as I should have before.)
-
-I suppose if svn will show only one of the two (committer and author)
-then it is better to show the author.  Possible complications:
-
-. The author lines in fast-import streams are optional.
-
-. Existing users of the incremental import facility might not want the
-  meaning of svn:author to change between imports.  _If_ that is a
-  problem then a command-line option to switch behaviors might help.
-
-. Is svn okay with non-monotonic dates?  (If not, then the committer
-  date would need to be used.)
-
-Modulo those complications I like the idea.  (Though I haven't read
-the implementation, which follows for reference.)
+What I meant was to introduce a new option --refresh-stat or something.
+We have solved the "stale stat info problem" (changed dev nums after
+reboot) in a different way meanwhile, but I think there was a different
+case (can't come up with the thread right now) where something like this
+could have helped.
 
 > 
-> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
-> --8<--
-> diff --git a/git2svn b/git2svn
-> index 2380775..3856696 100755
-> --- a/git2svn
-> +++ b/git2svn
-> @@ -261,12 +261,8 @@ COMMAND: while (!eof(IN)) {
->  	    $commit{Mark} = $1;
->  	    $next = next_line($IN);
->  	}
-> -	if ($next =~ m/author +(.*)/) {
-> -	    $commit{Author} = $1;
-> -	    $next = next_line($IN);
-> -	}
-> -	unless ($next =~ m/committer +(.+) +<([^>]+)> +(\d+) +[+-](\d+)$/) {
-> -	    die "missing comitter: $_";
-> +	unless ($next =~ m/author +(.+) +<([^>]+)> +(\d+) +[+-](\d+)$/) {
-> +	    die "missing author: $_";
->  	}
->  
->  	$commit{CommitterName} = $1;
-> @@ -275,6 +271,9 @@ COMMAND: while (!eof(IN)) {
->  	$commit{CommitterTZ} = $4;
->  
->  	$next = next_line($IN);
-> +	if ($next =~ m/committer +(.*)/) {
-> +	    $next = next_line($IN);
-> +	}
->  	my $log = read_data($IN, $next);
->  
->  	$next = next_line($IN);
+>> Anyway, I'm still wondering if it will resolve the "git reset --hard"
+>> problem of re-checking out every file, even if content is already
+>> identical in the working tree. I think that part has to be fixed, too.
+> 
+> There is not much to fix there. If you removed the index, then there is no
+> information to tell you that "content is already identical" unless you
+> actually check things out and compare.  By the time you found it out, you
+> already have done the checkout.
+> 
+> IOW, the current code does:
+> 
+> 	open object
+>         read from the object
+>         deflate and write to the destination file
+> 
+> while your "fix" needs to look like this:
+> 
+> 	open object
+>         read from the object
+>         deflate and write to a temporary file
+>         open the existing file
+>         read from the file and compare it to the temporary we just wrote
+>         if same, delete, otherwise rename the temporary file.
+> 
+> just for the rare case where there is an untracked file that the user is
+> willing to overwrite (we are discussing "rm .git/index && reset --hard"
+> here) happens to have the same contents.  Not a good enough reason to add
+> unwelcome complexity to the codepath.
+> 
+>> What do you think about "git checkout --fix-eols" option as an
+>> alternative? Its uses cases are more limited, though.
+> 
+> What does it do?  "git checkout --fix-eols $path" will overwrite $path
+> with the data at $path in the index?  Perhaps you can use the "-f" option.
+> 
+> Adding an option to "checkout" might be better than update-index from the
+> UI point of view, but the issue is not just "eols".  "eol" is a mere
+> special case of smudge filter that controls how the contents from the
+> repository are modified before getting written out to the working tree.
+
+Exactly, this is a more general issue. The typical answer to these
+issues is that you change attributes and filters only occasionally, so
+the cost of a rm .git/index && git reset --hard is irrelevant. But still
+there should be a less scary way of (really) refreshing the index. Also
+note that the cost of the command itself is only a part of the picture -
+in the OP's case (which is a bit convoluted, of course) "cost" is really
+command execution + the cost of the consequences (rebuilding triggered
+by unnecessary touches). For the typical use cases, the existing options
+and command paths do the perfectly sane and efficient thing.
+
+Michael
