@@ -1,78 +1,119 @@
-From: Linus Torvalds <torvalds@linux-foundation.org>
-Subject: Re: Git Rebase blows away GIT_AUTHOR_NAME
-Date: Fri, 14 Jan 2011 09:18:59 -0800
-Message-ID: <AANLkTi=3Z5Wnh_s3S10fDn26dypbt9aG93nOKan_8c4d@mail.gmail.com>
-References: <AANLkTinMX0yEPvSc-c=96R42SbFZTjW5Mnveuxk3ZHS=@mail.gmail.com>
- <20110112182150.GC31747@sigill.intra.peff.net> <AANLkTimanDRHwoqSj7i9sVCZkze1L3Qp-zFYwTwHAOHX@mail.gmail.com>
- <AANLkTimvK3p3M8kbGzLxyhchoFONiD4=FGPWxxs=i0GA@mail.gmail.com>
- <AANLkTikqfX3jhSdP5xhFj=VktqW2S6AeGL_MF18g8ZA_@mail.gmail.com>
- <AANLkTimf2rwKqyWwQbdj7cjS8YcQwCXYGRCvQbZ5HZ19@mail.gmail.com>
- <AANLkTik15iV9SOv6rRL5+DQkAZ4JwBGTS+gqS3nXy2hN@mail.gmail.com>
- <AANLkTikk7Xdiey76Dmy848_B4qNX2-Vbis7p=E8vtNL9@mail.gmail.com>
- <AANLkTimONqL4=E4Unrsj9PU5u57KGXrmO6xWUOCLorgs@mail.gmail.com>
- <AANLkTi=PTgmOSC7pRLjujO5fi9Wdp69Jmj4zCkhGSYSz@mail.gmail.com>
- <AANLkTiksAZSi-Yo8yJv5ca9XWWvB3iVQhZOJtTs-F8gk@mail.gmail.com>
- <AANLkTi=Z6Dx6m68zi7Q1eRVxX3DXOyKj+Ff177UCQrAj@mail.gmail.com>
- <AANLkTimZF+r2aNzrXsUuHVZR65N5wpOYLutFgGAGoci_@mail.gmail.com> <4D3077FE.9090407@spacetec.no>
+From: Maaartin-1 <grajcar1@seznam.cz>
+Subject: Re: [RFC/PATCH 2/1] fixup! Documentation: start to explain what git
+ replace is for
+Date: Fri, 14 Jan 2011 18:44:09 +0100
+Message-ID: <4D308B69.1050003@seznam.cz>
+References: <746745466.20110111134101@mail.ru> <m3lj2rbmq5.fsf@localhost.localdomain> <20110112000812.GA31950@burratino> <loom.20110112T232501-316@post.gmane.org> <20110114084903.GD11343@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: kusmabite@gmail.com, JT Olds <jtolds@xnet5.com>,
-	Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Tor Arntsen <tor@spacetec.no>
-X-From: git-owner@vger.kernel.org Fri Jan 14 18:20:03 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Jakub Narebski <jnareb@gmail.com>,
+	Aleksey Shumkin <zapped@mail.ru>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 14 18:44:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PdnJd-00022M-QJ
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 18:19:58 +0100
+	id 1PdnhG-0003MD-Ex
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 18:44:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757651Ab1ANRTx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jan 2011 12:19:53 -0500
-Received: from smtp1.linux-foundation.org ([140.211.169.13]:36682 "EHLO
-	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757532Ab1ANRTv (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Jan 2011 12:19:51 -0500
-Received: from mail-iy0-f174.google.com (mail-iy0-f174.google.com [209.85.210.174])
-	(authenticated bits=0)
-	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p0EHJKbb026895
-	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=FAIL)
-	for <git@vger.kernel.org>; Fri, 14 Jan 2011 09:19:21 -0800
-Received: by iyj18 with SMTP id 18so2694099iyj.19
-        for <git@vger.kernel.org>; Fri, 14 Jan 2011 09:19:19 -0800 (PST)
-Received: by 10.231.35.204 with SMTP id q12mr933770ibd.191.1295025559210; Fri,
- 14 Jan 2011 09:19:19 -0800 (PST)
-Received: by 10.231.31.72 with HTTP; Fri, 14 Jan 2011 09:18:59 -0800 (PST)
-In-Reply-To: <4D3077FE.9090407@spacetec.no>
-X-Spam-Status: No, hits=-2.378 required=5 tests=AWL,BAYES_05
-X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
-X-MIMEDefang-Filter: lf$Revision: 1.188 $
-X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
+	id S1757303Ab1ANRoR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jan 2011 12:44:17 -0500
+Received: from smtp.seznam.cz ([77.75.76.43]:49398 "EHLO smtp.seznam.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752190Ab1ANRoQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jan 2011 12:44:16 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=beta; d=seznam.cz;
+	h=X-Seznam-DomainKeys:X-Seznam-SPF:X-Virus-Info:Received:Message-ID:Date:From:User-Agent:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Smtpd:X-Seznam-User:X-Session:X-Country:X-QM-Mark;
+	b=cbxbsMulSp0tWa0UWPTdWhvj5KDTKG1NgubXk8R85UcgZPgXoDNK3yV808/5kXquH
+	QgF3CfwqmCW6gSVPDCyLObUZq5J40urYIVpfvQ30p8Waun7QgrJDdmNPwDOYMnkLi6S
+	hMd7WnPfE49KXZvemtMaILtI6Mv1dnjT1qTlFRo=
+X-Seznam-DomainKeys: unknown
+X-Seznam-SPF: neutral
+X-Virus-Info: clean
+Received: from [10.0.3.100] (188-120-198-113.luckynet.cz [188.120.198.113])
+	by email-relay2.ng.seznam.cz (Seznam SMTPD 1.2.14@16206) with ESMTP;
+	Fri, 14 Jan 2011 18:44:12 +0100 (CET)  
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <20110114084903.GD11343@burratino>
+X-Smtpd: 1.2.14@16206
+X-Seznam-User: grajcar1@seznam.cz
+X-Session: 13455
+X-Country: CZ
+X-QM-Mark: email-qm2<573649597>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165115>
 
-On Fri, Jan 14, 2011 at 8:21 AM, Tor Arntsen <tor@spacetec.no> wrote:
-> On 14/01/2011 17:13, Erik Faye-Lund wrote:
->
->> I think Tor pointed out that he knew a swede with his full legal name
->> to be only one letter long. I would suppose that meant that he didn't
->> have a surename?
->
-> Exactly. He didn't. Bank printouts etc. would only have that single
-> letter, he didn't use a nickname - that letter was his legal name.
->
-> As for the rest of the world - I don't think the first name/last name combo
-> (almost) everyone in the west use is necessarily a universal rule.
+On 11-01-14 09:49, Jonathan Nieder wrote:
+> Some tweaks suggested by Maaartin:
 
-Quite frankly, I'd suggest that person then use "The letter 'G'" as
-his/her git name.
+[snip]
 
-git names aren't "legal names". They are for informational purposes.
+> [side note: please do not prune the cc list; I only stumbled on this
+> message in the online archive by luck]
 
-And a single letter just isn't informational.
+What could I have done about it? I didn't received it by email and
+answered using post.gmane.org. There's no way to add CC there. If I'd
+wrote an email instead, it wouldn't be placed in the thread.
 
-                Linus
+[snip]
+
+>>> +<1> Find all parentless commits in the 'master' branch;
+>>> +for 'master' read the branch holding v2.5 history.
+>>
+>> Aren't you later calling it "FIRST" and assuming there's only one?
+> 
+> Hmm.  I want to say that there _could_ be multiple parentless commits
+> in the v2.5 history and we are treating one of them as its root (just
+> like git master has multiple parentless ancestors but e83c5163 is
+> conventionally considered its beginning).  Not sure how to write that
+> clearly.
+
+Maybe just something like "Let's assume there's only one and let's call
+it FIRST". For the example, this is enough.
+
+>> Isn't the combination of "-i" (=in-place edit) with redirection wrong?
+> 
+> Good catch (the "-i" is a typo).
+
+I'd go the other way round and use "-i" so I'd need only one file. Using
+a shell variable instead would be even better, s. below.
+
+[snip]
+
+I tried to use the vars instead of files below, but never tested it. I
+used "first_commit" instead of both "tmp" and "new", which is not really
+nice.
+
+> +$ git rev-list master --parents | grep -v ' '
+> +$ first=$(git rev-list master --parents | grep -v ' ') <1>
+> +$ git rev-parse v2.4                                   <2>
+> +$ git cat-file commit $first >tmp                      <3>
+
+$ first_commit = $(git cat-file commit FIRST)       <3>
+
+> +$ sed "/^tree / a \\
+> +parent $(git rev-parse v2.4)" <tmp >new                <4>
+
+$ first_commit = $($ echo $first_commit |
+sed  "/^tree / a \\
+parent $(git rev-parse v2.4)")                      <4>
+
+Unfortunately, the line got too long. For sed unaware people like me it
+may not be obvious that a line break is required. I'd use perl, anyway.
+
+$ first_commit = $($ echo $first_commit |
+perl -p
+"s/^tree .*/$&\nparent $(git rev-parse v2.4)/")      <4>
+
+> +$ new_commit=$(git hash-object -t commit -w new)       <5>
+
+$ new_commit=$(echo $first_commit |
+git hash-object -t commit -w --stdin)       <5>
+
+[snip]
