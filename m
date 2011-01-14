@@ -1,95 +1,84 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: small downloads and immutable history (Re: clone breaks replace)
-Date: Fri, 14 Jan 2011 14:53:08 -0600
-Message-ID: <20110114205308.GA15286@burratino>
-References: <4D262D68.2050804@cfl.rr.com>
- <201101112048.57326.j6t@kdbg.org>
- <20110111195107.GA18714@sigill.intra.peff.net>
- <201101112100.32083.j6t@kdbg.org>
- <4D2CBC1A.9000302@cfl.rr.com>
- <20110111205043.GA19928@burratino>
- <4D2CFD0A.1060901@cfl.rr.com>
+From: Maaartin-1 <grajcar1@seznam.cz>
+Subject: Re: Forcing re-reading files with unchanged stats
+Date: Fri, 14 Jan 2011 22:03:02 +0100
+Message-ID: <4D30BA06.3090100@seznam.cz>
+References: <loom.20110112T150313-103@post.gmane.org> <4D2E6D99.9060907@dbservice.com> <20110113033217.GA32661@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
-	Stephen Bash <bash@genarts.com>
-To: Phillip Susi <psusi@cfl.rr.com>
-X-From: git-owner@vger.kernel.org Fri Jan 14 21:53:41 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Tomas Carnecky <tom@dbservice.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 14 22:03:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PdqeR-0001rg-Eq
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 21:53:39 +0100
+	id 1PdqoE-0000PK-Dv
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 22:03:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751585Ab1ANUxd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jan 2011 15:53:33 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:61171 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751446Ab1ANUxc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jan 2011 15:53:32 -0500
-Received: by qwa26 with SMTP id 26so3135687qwa.19
-        for <git@vger.kernel.org>; Fri, 14 Jan 2011 12:53:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=Ubf3QOAEXzHOMmM1asFgciyhiMs57mxRsiFqGzKmtvo=;
-        b=UJwgBydVprrRwN/XMl/Tcc7rpJ46n7uJ7lDsM46OV/TkxqHf00PLthxzTG/81F5p0b
-         U0MUpxixs3QM2rAOtzL83s0B+bzENTNl1LD9k6le8UEgn2VQ2NMtIdlS2riVZhlvotqq
-         w29Q5F2Q2igbfnVT6PvDeroFuar6+OIMU1Rrg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=q4+pEIC6clfa7Zh4OKbWHl+D0ySKnCBX2kL1H4fJrk7nJ7455OKe9f5EZXxe0gLb/9
-         WWBBdtYRmAQPtP5DANZV10zjYtk1AuLpP+V+4f0aP7AmQ8rjL8x9DE9zcbAW5GexGcKZ
-         YoAo84OBOlVUuNyDIhtZ2Hq07nCHuk4xnReoU=
-Received: by 10.224.74.68 with SMTP id t4mr1043279qaj.325.1295038411614;
-        Fri, 14 Jan 2011 12:53:31 -0800 (PST)
-Received: from burratino (adsl-69-209-76-37.dsl.chcgil.sbcglobal.net [69.209.76.37])
-        by mx.google.com with ESMTPS id l12sm1056085qcu.19.2011.01.14.12.53.29
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 14 Jan 2011 12:53:30 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4D2CFD0A.1060901@cfl.rr.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752379Ab1ANVDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jan 2011 16:03:39 -0500
+Received: from smtp.seznam.cz ([77.75.72.43]:34183 "EHLO smtp.seznam.cz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752050Ab1ANVDj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jan 2011 16:03:39 -0500
+DomainKey-Signature: a=rsa-sha1; q=dns; c=nofws; s=beta; d=seznam.cz;
+	h=X-Seznam-DomainKeys:X-Seznam-SPF:X-Virus-Info:Received:Message-ID:Date:From:User-Agent:MIME-Version:To:CC:Subject:References:In-Reply-To:Content-Type:Content-Transfer-Encoding:X-Smtpd:X-Seznam-User:X-Session:X-Country:X-QM-Mark;
+	b=fSbvpoKcdtAh/dlmSWK/hHnVdVsiRA4aAAmz35Ms/3OvUAmfbo4llKUqW2MGSPwpd
+	QB7zTMhXUgAuB6uEjTBWf2LJUBFFM96rnsGpm0nE60kFR2cyRqqFPJKde59Qw6kMPgw
+	r0+3I1APSGUH1vMQDMapx4oYNo4dXZWqmGwhKOk=
+X-Seznam-DomainKeys: unknown
+X-Seznam-SPF: neutral
+X-Virus-Info: clean
+Received: from [10.0.3.100] (188-120-198-113.luckynet.cz [188.120.198.113])
+	by email-relay2.go.seznam.cz (Seznam SMTPD 1.2.14@16206) with ESMTP;
+	Fri, 14 Jan 2011 22:03:06 +0100 (CET)  
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <20110113033217.GA32661@sigill.intra.peff.net>
+X-Smtpd: 1.2.14@16206
+X-Seznam-User: grajcar1@seznam.cz
+X-Session: 2506
+X-Country: CZ
+X-QM-Mark: email-qm3<459866260>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165121>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165122>
 
-Phillip Susi wrote:
-> On 01/11/2011 03:50 PM, Jonathan Nieder wrote:
+On 11-01-13 04:32, Jeff King wrote:
+> On Thu, Jan 13, 2011 at 04:12:25AM +0100, Tomas Carnecky wrote:
+> 
+>>  On 1/12/11 3:07 PM, Maaartin wrote:
+>>> There are files in my working tree which changes, but their size and mtime
+>>> remains the same (I know it's strange, but it's useful). Can I make git to re-
+>>
+>> When can this be useful?
 
->> Yes, except for "Using filter-branch is bad".  Using filter-branch is
->> not bad.
->
-> It is bad because it breaks people tracking your branch, and
-> violates the immutability of history.
+Well, not really. I was asked to place a line containing a version
+number and a fingerprint in each file (of course the fingerprint must
+ignore this line), so I did. This gets done using a script, and I didn't
+like always saying "yes" to Emacs complaining about editing a file
+changed on the disk, so I reset the mtime. I really don't think it was
+the brightest idea ever.
 
-Ah, I forgot the use case.  If you are using this to at long last get
-past the limitations (e.g., inability to push) of "fetch --depth",
-then yes, rewriting existing history is bad.
+>>> read them all, so it recognizes the change? Ideally, using a configuration
+>>> variable. The repo is fairly small, so speed is no issue here.
+>>
+>> Try git update-index --refresh. I'm not aware of any config option,
+>> but you might want to look through man git-config.
+> 
+> That won't work, as it respects the stat information. So does
+> --really-refresh. AFAIK, there isn't a way to tell update-index to
+> ignore start information, short of blowing away the index entirely, and
+> doing a read-tree to repopulate it.
 
-So what's left is some way to make the "have" part of transport
-negotiation make sense in this context.  I'll be happy if it happens.
+Blowing away the index could work for me. I had to check if it's clean
+(equal to the HEAD or working tree) first, so I loose no work. But this
+is a bit too much work for making my mtime hack work.
 
-Thanks for clarifying.
-Jonathan
+> I'm curious what this use case is, and whether it would be acceptable to
+> update something like ctime on the files to make them stat-dirty to git.
 
-[note: if you occasionally use
-
- git commit; # new commit
- git tag tmp
- git checkout --orphan newroot
- git replace newroot tmp
- git tag -d tmp
-
-so the history without replacement refs is short, no rewriting of
-history has to take place.  Some testing and tweaking might be
-required to make "git pull" continue to fast-forward.]
+I'd suppose, Emacs does the same checks.
