@@ -1,117 +1,64 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [ANNOUNCE] Git 1.7.4-rc2
-Date: Thu, 13 Jan 2011 22:33:21 -0800
-Message-ID: <7voc7kngem.fsf@alter.siamese.dyndns.org>
+From: Guy Rouillier <guyr@burntmail.com>
+Subject: Re: cvsimport still not working with cvsnt
+Date: Fri, 14 Jan 2011 01:38:01 -0500
+Message-ID: <4D2FEF49.8070205@burntmail.com>
+References: <4D0ED5EC.9020402@burntmail.com>	<20101220213654.GA24628@burratino>	<4D112586.2060904@Freescale.com>	<4D119015.6020207@burntmail.com>	<4D2AB63D.7040803@burntmail.com> <AANLkTikreDJmUPfwNJ2ABivrafjvQNN6WrytNMAcse4A@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: linux-kernel-owner@vger.kernel.org Fri Jan 14 07:33:51 2011
-Return-path: <linux-kernel-owner@vger.kernel.org>
-Envelope-to: glk-linux-kernel-3@lo.gmane.org
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Emil Medve <Emilian.Medve@freescale.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	git <git@vger.kernel.org>, Pascal Obry <pascal@obry.net>,
+	Clemens Buchacher <drizzd@aon.at>
+To: Martin Langhoff <martin@laptop.org>
+X-From: git-owner@vger.kernel.org Fri Jan 14 07:38:55 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-kernel-owner@vger.kernel.org>)
-	id 1PddEM-00085N-0F
-	for glk-linux-kernel-3@lo.gmane.org; Fri, 14 Jan 2011 07:33:50 +0100
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1PddJG-00019f-QO
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 07:38:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752829Ab1ANGdh (ORCPT <rfc822;glk-linux-kernel-3@m.gmane.org>);
-	Fri, 14 Jan 2011 01:33:37 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34692 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751007Ab1ANGdb (ORCPT
-	<rfc822;linux-kernel@vger.kernel.org>);
-	Fri, 14 Jan 2011 01:33:31 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C2DC2210F;
-	Fri, 14 Jan 2011 01:34:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=Bq6M
-	3Mk+lIDKWNrvEl94WjpdGF0=; b=xsPHViWPTq/1xYQNxPmLQ3DP4aGC/RwL0zev
-	O/eIpIOsBBkMfAEv8T37guRsodd9p43psc3NEYZMVUFHgUY+rNIlzTffayZFwhCQ
-	5gL35Y+mztf6Nmla20UipMUuEtLgQcCr5MZOW/uJnLJ8BzNcPd9z2XaF8LSfY+/7
-	opG2to4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
-	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=BCb
-	XyzNjKAvxkUlV9EdnipK9d0dlDNdnaNBByn+w6rjkrgneMsKZJ0TepTAHiNYqtRn
-	8pOQe41k6nb+GcWOG4a6qoIrbau/YBM3wJkodUw/vKzgFbKORZXBVhjk+cNoEiil
-	Ra2Zw6eLS/MrDi1ybHYIuyz55kXtx4lLiaQxwUC0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 92EDC210E;
-	Fri, 14 Jan 2011 01:34:10 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3C5D7210D; Fri, 14 Jan 2011
- 01:34:05 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 4BABB50E-1FA8-11E0-B579-94B21C7297B3-77302942!a-pb-sasl-sd.pobox.com
-Sender: linux-kernel-owner@vger.kernel.org
+	id S1752116Ab1ANGiu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jan 2011 01:38:50 -0500
+Received: from mx02.burntmail.com ([70.87.63.122]:41329 "EHLO
+	mx02.burntmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751046Ab1ANGit (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jan 2011 01:38:49 -0500
+Received: from [173.79.59.45] (helo=[192.168.1.60])
+	by mx02.burntmail.com with esmtpa (Exim 4.63)
+	(envelope-from <guyr@burntmail.com>)
+	id 1PddIW-0001LL-ST; Fri, 14 Jan 2011 00:38:08 -0600
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
+In-Reply-To: <AANLkTikreDJmUPfwNJ2ABivrafjvQNN6WrytNMAcse4A@mail.gmail.com>
+Sender: git-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <linux-kernel.vger.kernel.org>
-X-Mailing-List: linux-kernel@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165073>
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165074>
 
-A release candidate Git 1.7.4-rc2 is available at the usual places
-for testing:
+On 1/10/2011 10:38 AM, Martin Langhoff wrote:
+> On Mon, Jan 10, 2011 at 2:33 AM, Guy Rouillier<guyr@burntmail.com>  wrote:
+>> Here is my patch for accomplishing the above.  As this is my first time
+>> submitting a patch, please let me know the correct procedure if
+>> submitting a diff here is not appropriate.  Thanks.
+>
+> The concept of what the patch is doing is good, but I'd recommend
+>
+> @cvspasslocations = ($ENV{'HOME'}."/cvspass", $ENV{'HOME'}."/.cvs/cvspass")
+>
+> foreach $cvspass (@cvspasslocations) {
+>     open(...
+>
+> and forgo the "matching" test.
+>
 
-  http://www.kernel.org/pub/software/scm/git/
+Martin, thanks for the reply.  Have you had a chance to read the entire 
+thread?  The matching test was suggested by Emil.
 
-  git-1.7.4.rc2.tar.{gz,bz2}			(source tarball)
-  git-htmldocs-1.7.4.rc2.tar.{gz,bz2}		(preformatted docs)
-  git-manpages-1.7.4.rc2.tar.{gz,bz2}		(preformatted docs)
+This is my first patch submission.  What is the process for reaching 
+consensus?
 
-The RPM binary packages for a few architectures are found in:
-
-  testing/git-*-1.7.4.rc2-1.fc13.$arch.rpm	(RPM)
-
-Hopefully we can declare victory soon and cut the final mid-next week.
-
-----------------------------------------------------------------
-Changes since v1.7.4-rc1 include nothing spectacular.
-
-Anders Kaseorg (1):
-      Mark gitk script executable
-
-Brandon Casey (3):
-      trace.c: ensure NULL is not passed to printf
-      t0001,t1510,t3301: use sane_unset which always returns with status 0
-      t3032: limit sed branch labels to 8 characters
-
-Jeff King (1):
-      docs: explain diff.*.binary option
-
-Jonathan Nieder (3):
-      diff: funcname and word patterns for perl
-      gitweb: make logo optional
-      t9010: svnadmin can fail even if available
-
-Junio C Hamano (2):
-      userdiff/perl: catch BEGIN/END/... and POD as headers
-      Git 1.7.4-rc2
-
-Matthieu Moy (1):
-      commit: suggest --amend --reset-author to fix commiter identity
-
-Michael J Gruber (1):
-      RelNotes/1.7.4: minor fixes
-
-Ramsay Allan Jones (7):
-      lib-git-svn.sh: Move web-server handling code into separate function
-      t9157-*.sh: Add an svn version check
-      t6038-*.sh: Pass the -b (--binary) option to sed on cygwin
-      t3032-*.sh: Pass the -b (--binary) option to sed on cygwin
-      t3032-*.sh: Do not strip CR from line-endings while grepping on MinGW
-      t4135-*.sh: Skip the "backslash" tests on cygwin
-      t9157-*.sh: Make the svn version check more precise
-
-StephenB (1):
-      git svn: fix the final example in man page
-
-Sylvain Rabot (2):
-      gitweb: add extensions to highlight feature map
-      gitweb: remove unnecessary test when closing file descriptor
-
-Thomas Rast (4):
-      Documentation/git-archive: spell --worktree-attributes correctly
-      Documentation/githooks: post-rewrite-copy-notes never existed
-      submodule: fix relative url parsing for scp-style origin
-      t0000: quote TAP snippets in test code
+-- 
+Guy Rouillier
