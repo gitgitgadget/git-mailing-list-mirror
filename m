@@ -1,104 +1,149 @@
-From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: Git Rebase blows away GIT_AUTHOR_NAME
-Date: Fri, 14 Jan 2011 10:55:37 +0100
-Message-ID: <AANLkTi=P8DXNa5b0iZV+A3Sx0bKNSG+fsViQgid5ovo3@mail.gmail.com>
-References: <AANLkTinMX0yEPvSc-c=96R42SbFZTjW5Mnveuxk3ZHS=@mail.gmail.com>
- <20110112182150.GC31747@sigill.intra.peff.net> <AANLkTimanDRHwoqSj7i9sVCZkze1L3Qp-zFYwTwHAOHX@mail.gmail.com>
- <AANLkTimvK3p3M8kbGzLxyhchoFONiD4=FGPWxxs=i0GA@mail.gmail.com>
- <AANLkTikqfX3jhSdP5xhFj=VktqW2S6AeGL_MF18g8ZA_@mail.gmail.com>
- <AANLkTimf2rwKqyWwQbdj7cjS8YcQwCXYGRCvQbZ5HZ19@mail.gmail.com>
- <AANLkTik15iV9SOv6rRL5+DQkAZ4JwBGTS+gqS3nXy2hN@mail.gmail.com>
- <AANLkTikk7Xdiey76Dmy848_B4qNX2-Vbis7p=E8vtNL9@mail.gmail.com>
- <AANLkTimONqL4=E4Unrsj9PU5u57KGXrmO6xWUOCLorgs@mail.gmail.com> <AANLkTi=PTgmOSC7pRLjujO5fi9Wdp69Jmj4zCkhGSYSz@mail.gmail.com>
-Reply-To: kusmabite@gmail.com
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: [PATCH] Optionally parse author information
+Date: Fri, 14 Jan 2011 15:46:38 +0530
+Message-ID: <20110114101636.GA22970@kytes>
+References: <AANLkTimKbS3ECzOaGtNgvx7DThJGH_DkPmg4ehKXGtwc@mail.gmail.com>
+ <201101120830.47016.wjl@icecavern.net>
+ <20110113032300.GB9184@burratino>
+ <AANLkTikCvjDqUpL-=srVKcMQx+NM6bV7FabmJ+4sPqD7@mail.gmail.com>
+ <20110114080554.GA1735@kytes>
+ <20110114082931.GC11343@burratino>
+ <F0299861-B36C-459C-972E-856212A92615@kth.se>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: JT Olds <jtolds@xnet5.com>, Jeff King <peff@peff.net>,
-	git@vger.kernel.org, torvalds@linux-foundation.org
-To: Tor Arntsen <tor@spacetec.no>
-X-From: git-owner@vger.kernel.org Fri Jan 14 10:56:05 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Joe Corneli <holtzermann17@gmail.com>,
+	Git List <git@vger.kernel.org>,
+	Michael Haggerty <mhagger@alum.mit.edu>
+To: Love =?iso-8859-1?Q?H=F6rnquist_=C5strand?= <lha@kth.se>
+X-From: git-owner@vger.kernel.org Fri Jan 14 11:16:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PdgO3-0005Wn-UT
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 10:56:04 +0100
+	id 1PdghQ-0008D1-3u
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 11:16:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753943Ab1ANJ4A convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Jan 2011 04:56:00 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:41669 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751294Ab1ANJz6 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Jan 2011 04:55:58 -0500
-Received: by fxm20 with SMTP id 20so2580197fxm.19
-        for <git@vger.kernel.org>; Fri, 14 Jan 2011 01:55:57 -0800 (PST)
+	id S1752921Ab1ANKP6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jan 2011 05:15:58 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:64195 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751152Ab1ANKP5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jan 2011 05:15:57 -0500
+Received: by iyj18 with SMTP id 18so2366463iyj.19
+        for <git@vger.kernel.org>; Fri, 14 Jan 2011 02:15:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        bh=1zsmuEgbESqYChe4djcOA4H8Zph1x2f4o/8NJhqhi3w=;
-        b=OYbqpulIfTlzMA0XncBVJlC5B434ArP4z8zsaajgymhVN06UCruiLw/mzEZEZVEodT
-         KIfm78S9ufAMo+EHWtMcx9ZTsxF8AgjcVyrDXKw6Rn58rbjSaSLunDH9UYsaCPv+wr7z
-         GW3pnwBE4fTCiCqoXLp8mIS2D0TJtOg7Lf/ko=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=bsgvPsGM7qx89uBCzJtTJ2P7f+4qrXeZIH7LRTqzMQI=;
+        b=xc5LBFWnDcZfE19RroKYgY+fiwwrnTeLMEWdCBY+hbJNnVz39/roxlV81KfH+5Glpa
+         AkLefeCkbmrP85EU4h9LKx8QM8P6VeNWFKFP45x0YOURAj4UrbNolfwHh08cA76iifXi
+         fa/IBjG7XnmDYZoy+n1pjTgoHTWCqLLC03sQM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type:content-transfer-encoding;
-        b=d3oAdxo2iIzYs0MmmnEMkq0ZRVgsXMuoYBDy13n0tcijPPk5bNIOV8EqaGco+Vtbty
-         K1fLtT5w47huEg8AS457pe5u8p5haSWrXnl6VP3w4MGBXAUKfRrdSExXgeUYB5uwXYdB
-         +0v2aggxvcJbc6sCSzT9z2SNlBzQnCQ9YbIe8=
-Received: by 10.223.118.136 with SMTP id v8mr503898faq.90.1294998957637; Fri,
- 14 Jan 2011 01:55:57 -0800 (PST)
-Received: by 10.223.79.3 with HTTP; Fri, 14 Jan 2011 01:55:37 -0800 (PST)
-In-Reply-To: <AANLkTi=PTgmOSC7pRLjujO5fi9Wdp69Jmj4zCkhGSYSz@mail.gmail.com>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=mkHseAXCmWsZMlwyIfV6IBmUcGjU5PrNZsVW4hISI+Bp6Np4plwU9dx7QPkN/To/Wc
+         Ptb+pOGRrfsMA7uJ0DczI+PBl7ECr3it5wdiXwyKtuCSubq6AekpMWYBtRt/+N268yXq
+         luv19NWPx3StGrmTRaPJZRN1Y3nPRJSFGxM3Y=
+Received: by 10.42.178.74 with SMTP id bl10mr602318icb.335.1295000156727;
+        Fri, 14 Jan 2011 02:15:56 -0800 (PST)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id gy41sm852656ibb.17.2011.01.14.02.15.52
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 14 Jan 2011 02:15:55 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <F0299861-B36C-459C-972E-856212A92615@kth.se>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165088>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165089>
 
-(CC'ed Linus, as he wrote mailinfo's sanity-checking -- sorry, forgot
-to actually CC him the first time)
-On Fri, Jan 14, 2011 at 10:24 AM, Tor Arntsen <tor@spacetec.no> wrote:
-> On Fri, Jan 14, 2011 at 09:56, Erik Faye-Lund <kusmabite@gmail.com> w=
-rote:
->> On Fri, Jan 14, 2011 at 9:45 AM, Tor Arntsen <tor@spacetec.no> wrote=
-:
->>> I think I've mentioned this before in another thread, but first/las=
-t
->>> name isn't universal, not even within countries where it's the comm=
-on
->>> form. When I was as student there was a fellow student from another
->>> scandinavian country and his legal, full name consisted of a single
->>> letter.
->>>
->>
->> I'm curious, what Scandinavian country was this? Because as a
->> Norwegian, I know a lot of people from all Scandinavian country, yet
->> I've never heard of such names. In Norway, I the shortest legal name
->> I've ever heard of was five characters.
->
-> Sweden (I'm Norwegian too - this guy was a Swede studying in Norway).
-> Admittedly I have only that single example, and it was back in the
-> late seventies. His name was accepted as legal by Statens L=E5nekasse
-> (bank for students) and when the loans arrived his single-letter name
-> would be found at the very end of the long lists of wide listing-pape=
-r
-> printouts from the bank that was stiched up on the billboard wall
-> outside the administration offices. The loans arrived a couple of
-> times per year but we always had to go looking - the rest of us were
-> just amazed that we could really find that single letter down there
-> and he wasn't bs'ing the rest of us about his name.
->
-> I'm not sure why there's a 3-letter limit on git author names.. but I
-> would suggest it should be set down to 1 letter minimum.. below that
-> would, I think, be overdoing it..
->
+When creating a new commit, instead of picking up the SVN author from
+the committer's email, pick it up from the author's email, when
+possible. Also add a new command-line switch '--ignore-author' to
+force older behavior for backward compatibilty.
 
-Linus, you wrote sanity_check (from 2744b23). Do you remember if there
-were any specific reason for the minimum length of 3 of an
-author-name? It seems that in Sweden, legal names can be even a single
-letter (see Tor's comment)...
+Noticed-by: Joe Corneli <holtzermann17@gmail.com>
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+---
+ git2svn |   25 +++++++++++++++++++------
+ 1 files changed, 19 insertions(+), 6 deletions(-)
+
+diff --git a/git2svn b/git2svn
+index 2380775..8ef55f1 100755
+--- a/git2svn
++++ b/git2svn
+@@ -36,7 +36,7 @@ use Pod::Usage;
+ my $IN;
+ my $OUT;
+ 
+-my ($help, $verbose, $keeplogs, $no_load);
++my ($help, $verbose, $keeplogs, $no_load, $ignore_author);
+ 
+ # svn
+ my $svntree = "repro";
+@@ -200,6 +200,7 @@ $result = GetOptions ("git-branch=s" => \$branch,
+ 		      "svn-prefix=s" => \$basedir,
+ 		      "keep-logs" => \$keeplogs,
+ 		      "no-load" => \$no_load,
++		      "ignore-author" => \$ignore_author,
+ 		      "verbose+" => \$verbose,
+ 		      "help" => \$help) or pod2usage(2);
+ 
+@@ -261,12 +262,15 @@ COMMAND: while (!eof(IN)) {
+ 	    $commit{Mark} = $1;
+ 	    $next = next_line($IN);
+ 	}
+-	if ($next =~ m/author +(.*)/) {
+-	    $commit{Author} = $1;
++	if ($next =~ m/author +(.+) +<([^>]+)> +(\d+) +[+-](\d+)$/) {
++	    $commit{AuthorName} = $1;
++	    $commit{AuthorEmail} = $2;
++	    $commit{AuthorWhen} = $3;
++	    $commit{AuthorTZ} = $4;
+ 	    $next = next_line($IN);
+ 	}
+ 	unless ($next =~ m/committer +(.+) +<([^>]+)> +(\d+) +[+-](\d+)$/) {
+-	    die "missing comitter: $_";
++	    die "missing committer: $_";
+ 	}
+ 
+ 	$commit{CommitterName} = $1;
+@@ -291,11 +295,15 @@ COMMAND: while (!eof(IN)) {
+ 	    strftime("%Y-%m-%dT%H:%M:%S.000000Z", 
+ 		     gmtime($commit{CommitterWhen}));
+ 
+-	my $author = "(no author)";
++	my $author = "git2svn-dump";
+ 	if ($commit{CommitterEmail} =~ m/([^@]+)/) {
+ 	    $author = $1;
+ 	}
+-	$author = "git2svn-dump" if ($author eq "(no author)");
++	unless ($ignore_author) {
++	    if ($commit{AuthorEmail} =~ m/([^@]+)/) {
++	        $author = $1;
++	    }
++	}
+ 
+ 	my $props = "";
+ 	$props .= prop("svn:author", $author);
+@@ -486,6 +494,11 @@ match the default GIT branch (master).
+ 
+ Don't load the svn repository or update the syncpoint tagname.
+ 
++=item B<--ignore-author>
++
++Ignore "author" lines in the fast-import stream. Use "committer"
++information instead.
++
+ =item B<--keep-logs>
+ 
+ Don't delete the logs in $CWD/.data on success.
+-- 
+1.7.4.rc1.7.g2cf08.dirty
