@@ -1,173 +1,87 @@
-From: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <totte.enea@gmail.com>
-Subject: Re: weird github capitalization problem
-Date: Fri, 14 Jan 2011 16:30:24 +0100
-Message-ID: <4D306C10.4000103@gmail.com>
-References: <1294146242606-5888573.post@n2.nabble.com> <4D26DA12.50002@futurelab.ch> <4D303D5D.6090108@web.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Subject: Re: Git Rebase blows away GIT_AUTHOR_NAME
+Date: Fri, 14 Jan 2011 07:41:43 -0800
+Message-ID: <AANLkTi=Z6Dx6m68zi7Q1eRVxX3DXOyKj+Ff177UCQrAj@mail.gmail.com>
+References: <AANLkTinMX0yEPvSc-c=96R42SbFZTjW5Mnveuxk3ZHS=@mail.gmail.com>
+ <20110112182150.GC31747@sigill.intra.peff.net> <AANLkTimanDRHwoqSj7i9sVCZkze1L3Qp-zFYwTwHAOHX@mail.gmail.com>
+ <AANLkTimvK3p3M8kbGzLxyhchoFONiD4=FGPWxxs=i0GA@mail.gmail.com>
+ <AANLkTikqfX3jhSdP5xhFj=VktqW2S6AeGL_MF18g8ZA_@mail.gmail.com>
+ <AANLkTimf2rwKqyWwQbdj7cjS8YcQwCXYGRCvQbZ5HZ19@mail.gmail.com>
+ <AANLkTik15iV9SOv6rRL5+DQkAZ4JwBGTS+gqS3nXy2hN@mail.gmail.com>
+ <AANLkTikk7Xdiey76Dmy848_B4qNX2-Vbis7p=E8vtNL9@mail.gmail.com>
+ <AANLkTimONqL4=E4Unrsj9PU5u57KGXrmO6xWUOCLorgs@mail.gmail.com>
+ <AANLkTi=PTgmOSC7pRLjujO5fi9Wdp69Jmj4zCkhGSYSz@mail.gmail.com> <AANLkTiksAZSi-Yo8yJv5ca9XWWvB3iVQhZOJtTs-F8gk@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Andreas Stricker <astricker@futurelab.ch>,
-	bolfo <boflor@gmail.com>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?Torsten_B=F6gershausen?= <tboegi@web.de>
-X-From: git-owner@vger.kernel.org Fri Jan 14 16:30:38 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Tor Arntsen <tor@spacetec.no>, JT Olds <jtolds@xnet5.com>,
+	Jeff King <peff@peff.net>, git@vger.kernel.org
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Fri Jan 14 16:42:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pdlbn-0001Y3-J2
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 16:30:35 +0100
+	id 1PdlnJ-0001mk-GU
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 16:42:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757680Ab1ANPaa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Jan 2011 10:30:30 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:44919 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757490Ab1ANPa3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jan 2011 10:30:29 -0500
-Received: by eye27 with SMTP id 27so1446595eye.19
-        for <git@vger.kernel.org>; Fri, 14 Jan 2011 07:30:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=QwJNX1h7IvHEPc854pca/RG9jIin+zG2LDFSxvvZT0o=;
-        b=uMgHMQqmGLU9LXbtYmqGp/ld6AJyPN6sj1x5Y9982CJTUItiSUW6M0TLAWnFEgmQrd
-         g9+JvY3hoBvt92fWqXe70x/NTlkSt4avOgRC5pfsH7gZEXw0eCYH9Z1ElYfS6QXXBpRa
-         vrSXag58J3XWt103I/Q/4lJW+aLESJh3ur2uI=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=GhAo/Svww7VOHrGcAAcEIB9wsnImEp0OD5CgBJubZkkDC6QEOlrPtb11ScMoJUj6eM
-         5eddKoG5DzcPWZAJMiCrhQMsI8rqbUlx3LkLy6tEuNc8uiZNV0/1HVAZbzvja2YWPlnl
-         Fnh3TsMgTZjIsxXgZd/pdhMZjfLohH8p6j1ck=
-Received: by 10.213.23.12 with SMTP id p12mr851483ebb.50.1295019027732;
-        Fri, 14 Jan 2011 07:30:27 -0800 (PST)
-Received: from birne.lan (h195n4fls31o954.telia.com [213.64.3.195])
-        by mx.google.com with ESMTPS id b52sm1027310eei.7.2011.01.14.07.30.25
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 14 Jan 2011 07:30:26 -0800 (PST)
-User-Agent: Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <4D303D5D.6090108@web.de>
+	id S1757582Ab1ANPmZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jan 2011 10:42:25 -0500
+Received: from smtp1.linux-foundation.org ([140.211.169.13]:42804 "EHLO
+	smtp1.linux-foundation.org" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751539Ab1ANPmX (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Jan 2011 10:42:23 -0500
+Received: from mail-iy0-f174.google.com (mail-iy0-f174.google.com [209.85.210.174])
+	(authenticated bits=0)
+	by smtp1.linux-foundation.org (8.14.2/8.13.5/Debian-3ubuntu1.1) with ESMTP id p0EFg48Z012377
+	(version=TLSv1/SSLv3 cipher=RC4-MD5 bits=128 verify=FAIL)
+	for <git@vger.kernel.org>; Fri, 14 Jan 2011 07:42:04 -0800
+Received: by iyj18 with SMTP id 18so2608141iyj.19
+        for <git@vger.kernel.org>; Fri, 14 Jan 2011 07:42:04 -0800 (PST)
+Received: by 10.231.35.204 with SMTP id q12mr800114ibd.191.1295019724227; Fri,
+ 14 Jan 2011 07:42:04 -0800 (PST)
+Received: by 10.231.31.72 with HTTP; Fri, 14 Jan 2011 07:41:43 -0800 (PST)
+In-Reply-To: <AANLkTiksAZSi-Yo8yJv5ca9XWWvB3iVQhZOJtTs-F8gk@mail.gmail.com>
+X-Spam-Status: No, hits=-2.194 required=5 tests=AWL,BAYES_20
+X-Spam-Checker-Version: SpamAssassin 3.2.4-osdl_revision__1.47__
+X-MIMEDefang-Filter: lf$Revision: 1.188 $
+X-Scanned-By: MIMEDefang 2.63 on 140.211.169.13
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165107>
 
-On 14.01.11 13:11, Torsten B=F6gershausen wrote:
-> On 07.01.11 10:17, Andreas Stricker wrote:
->> Am 04.01.11 14:04, schrieb bolfo:
->>> I first installed everything on my laptop, coded some stuff and the=
-n
->>> pushed
->>> to github. Apparently something went wrong because there was a new
->>> directory, while at first the directory was OurProjectsources, ther=
-e
->>> now was
->>> a new directory called OurProjectSources. Weird since my local
->>> directory has
->>> the s not capitalized.
->>
->>> I work on a windows PC while the original author works on a Mac,
->>> could this
->>> be the problem?
->>
->> Yes, Mac OSX HFS+ filesystem ignores the case by default (you'll nee=
-d
->> to reformat to change this). So OurProjectSources and OurProjectsour=
-ces
->> both refers to the same directory on Mac OS X. On Linux there are tw=
-o
->> different directories
->>
->> This frequently causes issues here too. An example:
->>
->> me@mac:t $ git init r
->> Initialized empty Git repository in /private/tmp/t/r/.git/
->> me@mac:r (master) $ mkdir OurProjectsources
->> me@mac:r (master) $ touch OurProjectsources/a
->> me@mac:r (master) $ git add OurProjectsources/a
->> me@mac:r (master) $ git commit -m "initial import"
->> [master (root-commit) c2cb2f3] initial import
->> 0 files changed, 0 insertions(+), 0 deletions(-)
->> create mode 100644 OurProjectsources/a
->> me@mac:r (master) $ mv OurProjectsources/ OurProjectSources
->> me@mac:r (master) $ touch OurProjectSources/b
->> me@mac:r (master) $ git add OurProjectSources/b
->> me@mac:r (master) $ git commit -m "added b"
->> [master 4de780c] added b
->> 0 files changed, 0 insertions(+), 0 deletions(-)
->> create mode 100644 OurProjectSources/b
->> me@mac:r (master) $ git stat
->> # On branch master
->> nothing to commit (working directory clean)
->> me@mac:r (master) $ scp -r .git linux:t.git
->> me@mac:r (master) $ ssh linux
->>
->> me@linux:~ $ git clone t.git/
->> Initialized empty Git repository in /home/me/t/.git/
->> me@linux:~ $ cd t
->> me@linux:~/t $ ls
->> OurProjectsources OurProjectSources
->> me@linux:~/t $ find *
->> OurProjectsources
->> OurProjectsources/a
->> OurProjectSources
->> OurProjectSources/b
->>
->> And there it is, our mess. The mac user accidentally created
->> two different directories but didn't see them.
->>
->> ~/Andy
->>
+On Fri, Jan 14, 2011 at 1:53 AM, Erik Faye-Lund <kusmabite@gmail.com> wrote:
 >
-> The following is on next from git.git:
-> (And more commits fixing more core.ignorecase issues)
-> You might give it a try.
-> HTH
-> /Torsten
->
->
->
-> commit 50906e04e8f48215b0b09841686709b92a2ab2e4
-> Author: Joshua Jensen <jjensen@workspacewhiz.com>
-> Date: Sun Oct 3 09:56:46 2010 +0000
->
-> Support case folding in git fast-import when core.ignorecase=3Dtrue
->
-> When core.ignorecase=3Dtrue, imported file paths will be folded to ma=
-tch
-> existing directory case.
->
-> Signed-off-by: Joshua Jensen <jjensen@workspacewhiz.com>
-> Signed-off-by: Johannes Sixt <j6t@kdbg.org>
-> Signed-off-by: Junio C Hamano <gitster@pobox.com>
->
->
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at http://vger.kernel.org/majordomo-info.html
-Hm,
-that didn't work.
+> Linus, you wrote sanity_check (from 2744b23). Do you remember if there
+> were any specific reason for the minimum length of 3 of an
+> author-name? It seems that in Sweden, legal names can be even a single
+> letter (see Tor's comment)...
 
-See the test on my linux box, after the clone:
+Even if the legal name would be a single letter, you'd still need to
+have a surname.
 
+The three-letter minimum is just a sanity check. If your name really
+is even just three letters, I suspect you're just lying. I don't know
+of anybody named "A B".
 
-config core.ignorecase true && rm -rf * && git reset --hard && ls && gi=
-t=20
-config core.ignorecase
-HEAD is now at 2dac314 Added b
-OurProjectsources  OurProjectSources
-true
+That thing is supposed to be a *NAME*. Not shorthand. Not your first
+name. Not your nickname. If you have a nickname, put it in quotes
+inside the real name.
 
+I've seen too many broken source control systems that just take your
+login as a name *cough*CVS*cough*, and then people think it's
+"convenient" and "cool" to have a short name.
 
-  git --version
-git version 1.7.2.1.105.g50906
+It's not convenient. It's not cool. It's just shorthand where
+shorthand doesn't help. Then you end up using it in a public setting,
+and suddenly your cool shorthand or nickname isn't even remotely
+unique.
 
-More work seems to be needed, sorry for the noise.
-/Torsten
+No, there is no uniquness "requirements" for the name, but come on.
+Look at shortlog output some day. We try to use just the name because
+it looks better. But if people don't use their full name, it just
+looks _stupid_
+
+                                    Linus
