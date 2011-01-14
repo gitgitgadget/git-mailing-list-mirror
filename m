@@ -1,64 +1,59 @@
-From: Guy Rouillier <guyr@burntmail.com>
-Subject: Re: cvsimport still not working with cvsnt
-Date: Fri, 14 Jan 2011 01:38:01 -0500
-Message-ID: <4D2FEF49.8070205@burntmail.com>
-References: <4D0ED5EC.9020402@burntmail.com>	<20101220213654.GA24628@burratino>	<4D112586.2060904@Freescale.com>	<4D119015.6020207@burntmail.com>	<4D2AB63D.7040803@burntmail.com> <AANLkTikreDJmUPfwNJ2ABivrafjvQNN6WrytNMAcse4A@mail.gmail.com>
+From: Joe Corneli <holtzermann17@gmail.com>
+Subject: Re: working with a large repository and git svn
+Date: Fri, 14 Jan 2011 07:43:19 +0000
+Message-ID: <AANLkTikCvjDqUpL-=srVKcMQx+NM6bV7FabmJ+4sPqD7@mail.gmail.com>
+References: <AANLkTimKbS3ECzOaGtNgvx7DThJGH_DkPmg4ehKXGtwc@mail.gmail.com>
+	<201101120830.47016.wjl@icecavern.net>
+	<20110113032300.GB9184@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Emil Medve <Emilian.Medve@freescale.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	git <git@vger.kernel.org>, Pascal Obry <pascal@obry.net>,
-	Clemens Buchacher <drizzd@aon.at>
-To: Martin Langhoff <martin@laptop.org>
-X-From: git-owner@vger.kernel.org Fri Jan 14 07:38:55 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Jan 14 08:43:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PddJG-00019f-QO
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 07:38:55 +0100
+	id 1PdeJk-0008TC-4A
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 08:43:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752116Ab1ANGiu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jan 2011 01:38:50 -0500
-Received: from mx02.burntmail.com ([70.87.63.122]:41329 "EHLO
-	mx02.burntmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751046Ab1ANGit (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jan 2011 01:38:49 -0500
-Received: from [173.79.59.45] (helo=[192.168.1.60])
-	by mx02.burntmail.com with esmtpa (Exim 4.63)
-	(envelope-from <guyr@burntmail.com>)
-	id 1PddIW-0001LL-ST; Fri, 14 Jan 2011 00:38:08 -0600
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <AANLkTikreDJmUPfwNJ2ABivrafjvQNN6WrytNMAcse4A@mail.gmail.com>
+	id S1752613Ab1ANHnV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jan 2011 02:43:21 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:64227 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750951Ab1ANHnT (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jan 2011 02:43:19 -0500
+Received: by iyj18 with SMTP id 18so2275852iyj.19
+        for <git@vger.kernel.org>; Thu, 13 Jan 2011 23:43:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:content-type;
+        bh=j4w5rqUJXCO5U+DeZwxbUsNEgOKMjCOrqYNhf3efH+U=;
+        b=sWmSYGLvJsrkd7HFubQmTtUIw/g9PMpkIXTtTheFxjjrvlVAYIWxHSvvwj9dxx9OF1
+         VSjg8lkZhh1sjluw2mouKDgj2gmBEAz50JydIMXSjATcb7YNoqrtYATvGO+fM21M0cnf
+         QStnXPvELHi1sybx3D55gc8HMGr+di8dfcL8c=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :content-type;
+        b=a1h7nO1fFSbt08nymYq6SuqoaaUZ+3Xci7OVxrnVQXyl1g0CQxYiaAm+Kg8Mr82lEE
+         t6JPirlN7dZAWvASEHNRDyzfDQgVFiblrii/e6uLruY4Hp9Vvx3tLzx91B37uye74iTS
+         /wfuOOLZMJs8++U350AlagLS12YzGASnGgbG0=
+Received: by 10.231.12.7 with SMTP id v7mr416331ibv.78.1294990999225; Thu, 13
+ Jan 2011 23:43:19 -0800 (PST)
+Received: by 10.231.85.146 with HTTP; Thu, 13 Jan 2011 23:43:19 -0800 (PST)
+In-Reply-To: <20110113032300.GB9184@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165075>
 
-On 1/10/2011 10:38 AM, Martin Langhoff wrote:
-> On Mon, Jan 10, 2011 at 2:33 AM, Guy Rouillier<guyr@burntmail.com>  wrote:
->> Here is my patch for accomplishing the above.  As this is my first time
->> submitting a patch, please let me know the correct procedure if
->> submitting a diff here is not appropriate.  Thanks.
->
-> The concept of what the patch is doing is good, but I'd recommend
->
-> @cvspasslocations = ($ENV{'HOME'}."/cvspass", $ENV{'HOME'}."/.cvs/cvspass")
->
-> foreach $cvspass (@cvspasslocations) {
->     open(...
->
-> and forgo the "matching" test.
->
+> I think the state of the art is currently git2svn
 
-Martin, thanks for the reply.  Have you had a chance to read the entire 
-thread?  The matching test was suggested by Emil.
+Thanks, that did indeed work, though, for the record it uses committer
+name and email in the log that it generates, not author name and
+email, but no worries!
 
-This is my first patch submission.  What is the process for reaching 
-consensus?
-
--- 
-Guy Rouillier
+Joe
