@@ -1,41 +1,51 @@
 From: "Tim Abell" <tim@timwise.co.uk>
-Subject: [PATCH] handle rename of case only, for windows
-Date: Fri, 14 Jan 2011 13:44:04 +0000
-Message-ID: <1295012644.7883.1415296115@webmail.messagingengine.com>
+Subject: [PATCH] handle rename of case only, for windows (resend)
+Date: Fri, 14 Jan 2011 13:54:14 +0000
+Message-ID: <1295013254.10785.1415297035@webmail.messagingengine.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: 7bit
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 14 14:44:13 2011
+X-From: git-owner@vger.kernel.org Fri Jan 14 14:54:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pdjwq-0003fz-6t
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 14:44:12 +0100
+	id 1Pdk6i-0001aV-74
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 14:54:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757468Ab1ANNoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jan 2011 08:44:07 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:47424 "EHLO
+	id S1757573Ab1ANNyQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jan 2011 08:54:16 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:42112 "EHLO
 	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1757071Ab1ANNoE (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 14 Jan 2011 08:44:04 -0500
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 854C520E21
-	for <git@vger.kernel.org>; Fri, 14 Jan 2011 08:44:04 -0500 (EST)
+	by vger.kernel.org with ESMTP id S1757286Ab1ANNyO (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Jan 2011 08:54:14 -0500
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 7410320C73
+	for <git@vger.kernel.org>; Fri, 14 Jan 2011 08:54:14 -0500 (EST)
 Received: from web3.messagingengine.com ([10.202.2.213])
-  by compute3.internal (MEProxy); Fri, 14 Jan 2011 08:44:04 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:from:to:mime-version:content-transfer-encoding:content-type:subject:date; s=smtpout; bh=pg0Q+MfNyqzCqNHKqhrwsZDmf+M=; b=OSeoieHvAGxhjMMuyUqYXhRjZxfYI3iz1sNr7ik54wX4GbPp9tIoQXYBbF0Gk/nP2HXQJNHVkwXBvpHnyjQQ8JV9isyehqZV1bFDbICL8HLEosAUGQv/V7Dle0mNSCH6XyTVnnKHU3J2fm3JgS6Jd7j8+qiqe03a6gXF4O+9URU=
+  by compute2.internal (MEProxy); Fri, 14 Jan 2011 08:54:14 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:from:to:mime-version:content-transfer-encoding:content-type:subject:date; s=smtpout; bh=qmvNgnBT3DPBnw8Vb+KqIY8vuRA=; b=Dpwt6QBeCEpZQA580ni54SXsSQy8/2jrR/OvJm7ioe8VSTTy3hu6uWvlzyYePxpYUxndRuVTXYLr9oIgeZ3beYd+bb//tf8YPDjAsc962XCoOp4XYz30NtcAg764srEQcUuL51icXersk7boNPI8xrTC/jkxykaEbGAPsL24ldo=
 Received: by web3.messagingengine.com (Postfix, from userid 99)
-	id 5AC958E0341; Fri, 14 Jan 2011 08:44:04 -0500 (EST)
-X-Sasl-Enc: tMfz7SIcFjxz1s12SQfV8BCrD7LTY4g67TcvnfLn+cmo 1295012644
+	id 48D7C543C3A; Fri, 14 Jan 2011 08:54:14 -0500 (EST)
+X-Sasl-Enc: GfyJnOXoQC9xRn5HtC3UtEx+q0iJA2qZoeOmwhaLSRUB 1295013254
 X-Mailer: MessagingEngine.com Webmail Interface
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165099>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165100>
+
+Sorry folks, resending because my mail client wrapped the lines in my
+patch on my first attempt.
+
+If there's any more problems with the way I've sent it you can grab a
+copy from http://is.gd/iWupI8
+
+Tim
+
+--------
 
 Hi folks,
 
