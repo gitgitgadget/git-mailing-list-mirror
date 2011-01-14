@@ -1,110 +1,213 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
 Subject: Re: [PATCH] handle rename of case only, for windows
-Date: Fri, 14 Jan 2011 21:17:27 +0700
-Message-ID: <AANLkTinbnYzTqP5-vA4hJqSgSBBjJrx8LCsq5G3nVmFW@mail.gmail.com>
-References: <1295012644.7883.1415296115@webmail.messagingengine.com>
+Date: Fri, 14 Jan 2011 15:22:43 +0100
+Message-ID: <AANLkTi=R0bkZgUjn01A0ZLZBad2ERGOfQneqBMEPTa4j@mail.gmail.com>
+References: <1295012461.7403.1415291765@webmail.messagingengine.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, msysGit <msysgit@googlegroups.com>
 To: Tim Abell <tim@timwise.co.uk>
-X-From: git-owner@vger.kernel.org Fri Jan 14 15:20:56 2011
+X-From: git-owner@vger.kernel.org Fri Jan 14 15:23:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PdkWN-000234-F9
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 15:20:55 +0100
+	id 1PdkYc-00043d-1u
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 15:23:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757902Ab1ANOUf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jan 2011 09:20:35 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:61046 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757849Ab1ANOTk (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jan 2011 09:19:40 -0500
-Received: by wyb28 with SMTP id 28so2865738wyb.19
-        for <git@vger.kernel.org>; Fri, 14 Jan 2011 06:19:39 -0800 (PST)
+	id S1752621Ab1ANOXI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Jan 2011 09:23:08 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:60736 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751611Ab1ANOXF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Jan 2011 09:23:05 -0500
+Received: by bwz15 with SMTP id 15so2555989bwz.19
+        for <git@vger.kernel.org>; Fri, 14 Jan 2011 06:23:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=GhSDIXDhQXGgrvMePW4avSz4NTuRxi7kDKxf8of+vD4=;
-        b=hCDQE2rb7viPUu+xXXZV0GFIK9iu7xCroD5VVHCY3kgAzD/00oxavtMtbGWiPKs9VR
-         snZvFI/g4UXp2SMk5Yme1b2nbvxQjWqV5HVv5+wbjWSAmjMuFoAVixY6oEb20Pt8uy7t
-         CJ2kjn8lBnTi9Q2F9Jfp3AFrnqcfIuC8pfJHs=
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Vyzo3B35+gYo8wwIABAz3l4RfiFMH41LolatalXX3bA=;
+        b=alHiqi7NahTNtTqvRLOJEiXsuQohXzbR7YKhspljd/kaq30nc3Fa3rrq8+4+P1Ybti
+         qTnjRmxzw7G8OLgg6pAXThdOvxu/8wXOG5lTJMKC6gvvG7+sfph87hc5lat36985l4Dy
+         XqSCDJ3SM7XtOFF+GUJTE8DdrmgisjzcV3pmU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=qV/Nw6mc7/SGR55D7iw6iymdq+JP9p8wmtHYagKlF0x7IxkMsAQUiKLjd3o7azq1WX
-         PA2F3hojatmCPPYMN4JssobTE32WYK/KsP2cp0xEawgJFzcP0VlYBHgcQxEMDES09qZG
-         6jZa7emgMns9YA3tHuId3RxJg4xWwBiOP81Pk=
-Received: by 10.216.52.134 with SMTP id e6mr635854wec.49.1295014779071; Fri,
- 14 Jan 2011 06:19:39 -0800 (PST)
-Received: by 10.216.63.14 with HTTP; Fri, 14 Jan 2011 06:17:27 -0800 (PST)
-In-Reply-To: <1295012644.7883.1415296115@webmail.messagingengine.com>
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=SMyxB6VuXolLbhntRx78HtxFQ4yBhg0pH+5FP3ty49NsehTv74IoOMMg9nmIJxXn3E
+         zIrgaMoCdtkrWoXV4aRMyHYW9UvZbSR6S55S5tKkouWOatGoxDuvnXBl9vaCmbt7U94/
+         mLhQMdVxNuKEBG6lQNj3Vtn+HvbCI3BwSbEvY=
+Received: by 10.204.101.83 with SMTP id b19mr645010bko.199.1295014984049; Fri,
+ 14 Jan 2011 06:23:04 -0800 (PST)
+Received: by 10.204.51.8 with HTTP; Fri, 14 Jan 2011 06:22:43 -0800 (PST)
+In-Reply-To: <1295012461.7403.1415291765@webmail.messagingengine.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165102>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165103>
 
-T24gRnJpLCBKYW4gMTQsIDIwMTEgYXQgODo0NCBQTSwgVGltIEFiZWxsIDx0aW1AdGltd2lzZS5j
-by51az4gd3JvdGU6Cj4gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqBlbHNlIGlmIChsc3RhdChkc3Qs
-ICZzdCkgPT0gMCkgewo+IC0gwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgYmFkID0g
-ImRlc3RpbmF0aW9uIGV4aXN0cyI7Cj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCBpZiAoZm9yY2UpIHsKPiAtIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIC8qCj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCogb25seSBmaWxlcyBjYW4gb3ZlcndyaXRlIGVhY2ggb3RoZXI6Cj4gLSDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCogY2hlY2sgYm90aCBzb3VyY2Ug
-YW5kIGRlc3RpbmF0aW9uCj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCovCj4gLSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCBpZiAoU19JU1JFRyhzdC5zdF9tb2RlKSB8fCBTX0lTTE5LKHN0LnN0X21vZGUpKSB7Cj4g
-LSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCB3YXJuaW5nKCIlczsgd2lsbCBvdmVyd3JpdGUhIiwgYmFkKTsKPiAtIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGJhZCA9IE5VTEw7Cj4g
-LSDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCB9IGVsc2UKPiAt
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IGJhZCA9ICJDYW5ub3Qgb3ZlcndyaXRlIjsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIC8qIElmIHdlIGFyZSBvbiBhIGNhc2UgaW5zZW5zaXRpdmUgZmlsZXM9IHN5c3RlbSAo
-d2luZG93cykgaHR0cDovL2lzLmdkL2t5eGdnCj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCogYW5kIHdlIGFyZSBvbmx5IGNoYW5naW5nIHRoZSBjYXNlIG9mIHRoZSBmaWxl
-IHRoZW4gbHN0YXQgZm9yIHRoZQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAqIGRlc3RpbmF0aW9uIHdpbGwgcmV0dXJuICE9IDAgYmVjYXVzZSBpdCBzZWVzIHRoZSBzb3Vy
-Y2UgZmlsZS4KPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgKiBUbyBwcmV2
-ZW50IHRoaXMgY2F1c2luZyBmYWlsdXJlLCBsc3RhdCBpcyB1c2VkIHRvIGdldCB0aGUgaW5vZGUg
-b2YgdGhlIHNyYwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAqIGFuZCBz
-ZWUgaWYgaXQncyBhY3R1YWxseSB0aGUgc2FtZSBmaWxlLgo+ICsgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAqLwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-bHN0YXQoc3JjLCAmc3JjX3N0KTsgLy9nZXQgZmlsZSBzZXJpYWwgbnVtYmVyIChpbm9kZSkgZm9y
-IHNvdXJjZQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgI3dhcm5pbmcoInNy
-YyBpbm9kZTogJXMsIGRzdCBpbm9kZTogJXMiLCBzcmNfc3Quc3RfaW5vLCBzdC5zdF9pbm8pOwo+
-ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgaWYgKHNyY19zdC5zdF9pbm8gIT0g
-c3Quc3RfaW5vKSB7Cj4gKyDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDCoCDC
-oCDCoCBiYWQgPSAiZGVzdGluYXRpb24gZXhpc3RzIjsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmIChmb3JjZSkgewo+ICsgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgLyoKPiArIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgKiBvbmx5
-IGZpbGVzIGNhbiBvdmVyd3JpdGUgZWFjaCBvdGhlcjoKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgKiBjaGVjayBib3RoIHNvdXJj
-ZSBhbmQgZGVzdGluYXRpb24KPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgKi8KPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIGlmIChTX0lTUkVHKHN0LnN0X21vZGUpIHx8
-IFNfSVNMTksoc3Quc3RfbW9kZSkpIHsKPiArIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIHdhcm5pbmcoIiVzOyB3aWxs
-IG92ZXJ3cml0ZSEiLCBiYWQpOwo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgYmFkID0gTlVMTDsKPiArIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgIH0gZWxz
-ZQo+ICsgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgYmFkID0gIkNhbm5vdCBvdmVyd3JpdGUiOwo+ICsgwqAgwqAgwqAg
-wqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgwqAgfQo+IMKgIMKgIMKgIMKgIMKgIMKg
-IMKgIMKgIMKgIMKgIMKgIMKgfQo+IMKgIMKgIMKgIMKgIMKgIMKgIMKgIMKgfSBlbHNlIGlmIChz
-dHJpbmdfbGlzdF9oYXNfc3RyaW5nKCZzcmNfZm9yX2RzdCwgZHN0KSkKPiDCoCDCoCDCoCDCoCDC
-oCDCoCDCoCDCoCDCoCDCoCDCoCDCoGJhZCA9ICJtdWx0aXBsZSBzb3VyY2VzIGZvciB0aGUgc2Ft
-ZSB0YXJnZXQiOwoKSSB3b25kZXIgaWYgd2UgY2FuIG1ha2UgbHN0YXRfY2FzZSgpIHRoYXQgd291
-bGQgb25seSByZXR1cm4gMCBpZiBpdAptYXRjaGVzIGV4YWN0bHkgdGhlIGZpbGVuYW1lLCBldmVu
-IG9uIEZBVC4gRmluZEZpcnN0RmlsZS9GaW5kTmV4dEZpbGUKc2hvdWxkIHJldHVybiB0cnVlIGZp
-bGUgbmFtZSwgSSB0aGluay4gSWYgbm90LCB3ZSBjYW4gbWFrZQpsc3RhdF9jYXNlKCkgdGFrZSB0
-d28gcGF0aHMgKHNyYyBhbmQgZHN0KSBhbmQgbW92ZSBhbGwgaW5vZGUKY29tcGFyaXNvbiBjb2Rl
-IGluIHRoZXJlLiBNdWNoIGNsZWFuZXIuCi0tIApEdXkK
+On Fri, Jan 14, 2011 at 2:41 PM, Tim Abell <tim@timwise.co.uk> wrote:
+> Hi folks,
+>
+> I've never contributed to git before so be gentle :-)
+>
+> Would someone have the time to help me get this patch into mailine gi=
+t?
+>
+
+=46irst of all, welcome!
+
+There are some problems with your patch that aren't directly related
+to the code:
+- It's become white-space damaged, most likely from when you e-mailed
+it. Perhaps you could try again with git-send-email?
+- There's no real commit-message. This e-mail description isn't really
+suited as a commit message as it is, IMO. It might just be a matter of
+snipping away some stuff, though.
+- The patch lacks a sign-off
+- Since this is a Windows-issue, it would be nice if you CC'ed
+msysgit@googlegroups.com as well. I've done that for now.
+
+I suggest you read through Documentation/SubmittingPatches to get to
+know the process.
+
+> I tripped over a failure to rename files on windows when only the cas=
+e
+> has changed. I've created a patch which fixes it for me and doesn't s=
+eem
+> to break on linux or windows. I also created a test to demonstrate th=
+e
+> issue (part of this patch). This test passes on linux and fails on
+> windows before my patch for mv.c is applied, and passes on both windo=
+ws
+> and linux for me after my patch is applied.
+>
+> The problem with changing the case of a file happens because git mv
+> checks if the destination filename exists before performing a
+> move/rename, and on windows lstat reports that the destination file
+> *does* already exist because it ignores case for this check and
+> semi-erroneously finds the source file.
+>
+<snip>
+> When using "git mv" it is possible to work around the error by using
+> --force.
+>
+
+Your reasoning seems to match what we've discussed on the msysGit
+mailing list. Good work, and a clear description.
+
+> The way I've attempted to fix it in my patch is by checking if the in=
+ode
+> of the source and destination are the same before deciding to fail wi=
+th
+> a "destination exists" error.
+>
+
+Hmm, not so good. st_ino is always 0 on Windows, so this would make
+false positives, no?
+
+> The fault exists in both the current cygwin git and the current msysg=
+it,
+> so I figured it would be good to get a patch to upstream (you) so tha=
+t
+> it could work everywhere.
+>
+
+It also affects MacOS X, AFAIK. So yes, it'd be good for upstream.
+
+> ---
+> =A0builtin/mv.c =A0| =A0 33 ++++++++++++++++++++++-----------
+> =A0t/t7001-mv.sh | =A0 =A09 +++++++++
+> =A02 files changed, 31 insertions(+), 11 deletions(-)
+>
+> diff --git a/builtin/mv.c b/builtin/mv.c
+> index 93e8995..6bb262e 100644
+> --- a/builtin/mv.c
+> +++ b/builtin/mv.c
+> @@ -63,6 +63,7 @@ int cmd_mv(int argc, const char **argv, const char
+> *prefix)
+> =A0 =A0 =A0 =A0const char **source, **destination, **dest_path;
+> =A0 =A0 =A0 =A0enum update_mode { BOTH =3D 0, WORKING_DIRECTORY, INDE=
+X } *modes;
+> =A0 =A0 =A0 =A0struct stat st;
+> + =A0 =A0 =A0 struct stat src_st;
+
+Couldn't this be moved inside the scope around "cache_name_pos"?
+That's the only scope it is valid inside anyway...
+
+And if not, perhaps you could piggy-back on the st-definition, like thi=
+s:
+-=A0 =A0 =A0 =A0struct stat st;
++ =A0 =A0 =A0 struct stat st, src_st;
+
+> =A0 =A0 =A0 =A0struct string_list src_for_dst =3D STRING_LIST_INIT_NO=
+DUP;
+>
+> =A0 =A0 =A0 =A0git_config(git_default_config, NULL);
+> @@ -165,17 +166,27 @@ int cmd_mv(int argc, const char **argv, const c=
+har
+> *prefix)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0} else if (cache_name_pos(src, length)=
+ < 0)
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0bad =3D "not under ver=
+sion control";
+> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0else if (lstat(dst, &st) =3D=3D 0) {
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 bad =3D "destination ex=
+ists";
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (force) {
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 /*
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0* on=
+ly files can overwrite each other:
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0* ch=
+eck both source and destination
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0*/
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (S_I=
+SREG(st.st_mode) ||
+> S_ISLNK(st.st_mode)) {
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0 warning("%s; will overwrite!",
+> bad);
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0 bad =3D NULL;
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 } else
+> - =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0=
+ =A0 =A0 bad =3D "Cannot overwrite";
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* If we are on a case =
+insensitive files=3D system
+> (windows) http://is.gd/kyxgg
+
+Perhaps you could use the full URL (and maybe put it in the commit
+message insted)? It'd be nice if we could reach this information even
+if is.gd disappears...
+
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0* and we are only ch=
+anging the case of the file
+> then lstat for the
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0* destination will r=
+eturn !=3D 0 because it sees
+> the source file.
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0* To prevent this ca=
+using failure, lstat is
+> used to get the inode of the src
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0* and see if it's ac=
+tually the same file.
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0*/
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 lstat(src, &src_st); //=
+get file serial number
+> (inode) for source
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 #warning("src inode: %s=
+, dst inode: %s",
+> src_st.st_ino, st.st_ino);
+
+Uhm, is this debug-leftovers? #warning is a preprocessor-construct,
+and it can't understand varaibles in c. Especially not formatted as
+strings. Can #warning even do varags? :P
+
+Blah, it's too tiresome to review this white-space broken version, and
+I seen now that you have re-posted a non-broken version. Thanks!
