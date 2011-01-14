@@ -1,59 +1,96 @@
-From: Michael Haggerty <mhagger@alum.mit.edu>
-Subject: Re: working with a large repository and git svn
-Date: Fri, 14 Jan 2011 10:23:59 +0100
-Message-ID: <4D30162F.5060408@alum.mit.edu>
-References: <AANLkTimKbS3ECzOaGtNgvx7DThJGH_DkPmg4ehKXGtwc@mail.gmail.com> <201101120830.47016.wjl@icecavern.net> <20110113032300.GB9184@burratino> <AANLkTikCvjDqUpL-=srVKcMQx+NM6bV7FabmJ+4sPqD7@mail.gmail.com> <20110114080554.GA1735@kytes> <20110114082931.GC11343@burratino>
+From: Tor Arntsen <tor@spacetec.no>
+Subject: Re: Git Rebase blows away GIT_AUTHOR_NAME
+Date: Fri, 14 Jan 2011 10:24:47 +0100
+Message-ID: <AANLkTi=PTgmOSC7pRLjujO5fi9Wdp69Jmj4zCkhGSYSz@mail.gmail.com>
+References: <AANLkTinMX0yEPvSc-c=96R42SbFZTjW5Mnveuxk3ZHS=@mail.gmail.com>
+	<20110112182150.GC31747@sigill.intra.peff.net>
+	<AANLkTimanDRHwoqSj7i9sVCZkze1L3Qp-zFYwTwHAOHX@mail.gmail.com>
+	<AANLkTimvK3p3M8kbGzLxyhchoFONiD4=FGPWxxs=i0GA@mail.gmail.com>
+	<AANLkTikqfX3jhSdP5xhFj=VktqW2S6AeGL_MF18g8ZA_@mail.gmail.com>
+	<AANLkTimf2rwKqyWwQbdj7cjS8YcQwCXYGRCvQbZ5HZ19@mail.gmail.com>
+	<AANLkTik15iV9SOv6rRL5+DQkAZ4JwBGTS+gqS3nXy2hN@mail.gmail.com>
+	<AANLkTikk7Xdiey76Dmy848_B4qNX2-Vbis7p=E8vtNL9@mail.gmail.com>
+	<AANLkTimONqL4=E4Unrsj9PU5u57KGXrmO6xWUOCLorgs@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Joe Corneli <holtzermann17@gmail.com>, git@vger.kernel.org,
-	=?ISO-8859-1?Q?Love_H=F6rnquist_=C5strand?= <lha@kth.se>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 14 10:24:17 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: JT Olds <jtolds@xnet5.com>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Fri Jan 14 10:25:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PdftF-0003XO-Tt
-	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 10:24:14 +0100
+	id 1Pdftw-0003uV-AB
+	for gcvg-git-2@lo.gmane.org; Fri, 14 Jan 2011 10:24:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753454Ab1ANJYJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jan 2011 04:24:09 -0500
-Received: from einhorn.in-berlin.de ([192.109.42.8]:48206 "EHLO
-	einhorn.in-berlin.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751335Ab1ANJYH (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jan 2011 04:24:07 -0500
-X-Envelope-From: mhagger@alum.mit.edu
-Received: from [192.168.100.152] (ssh.berlin.jpk.com [212.222.128.135])
-	(authenticated bits=0)
-	by einhorn.in-berlin.de (8.13.6/8.13.6/Debian-1) with ESMTP id p0E9NxUi027880
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 14 Jan 2011 10:23:59 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.13) Gecko/20101208 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <20110114082931.GC11343@burratino>
-X-Scanned-By: MIMEDefang_at_IN-Berlin_e.V. on 192.109.42.8
+	id S1753951Ab1ANJYw convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 14 Jan 2011 04:24:52 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:36847 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751335Ab1ANJYs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 14 Jan 2011 04:24:48 -0500
+Received: by qyk12 with SMTP id 12so3141142qyk.19
+        for <git@vger.kernel.org>; Fri, 14 Jan 2011 01:24:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=/+iSbuS6VWetC430dPlp1VK8zAOUW/cy9oqXnY7M630=;
+        b=HJNMME8Eu9NO9FbODG0+HMNb2l2rm1WFKT+mSgA+nSdaYZ/CFBWTOUKQoi/tPRI17y
+         XxbCu1JuHAMaVLokeIJLhm+FVXD6dEIQSwRXifXVuVMcqe2LFhLw20WzhHrCgvHyVaSV
+         aXkziVdzH7gAOqO2tLSOq6vgD8OYThWn65URw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=lqg+5dlVIitFynxY2FgCBSRqmMTPUiMc/lF6nuZuUw6gORVyBdmZtpTSFZ1U2TdgSW
+         CpOVwioNa2b6U+nPoEjYxCM8R+Rpso2eoGuNQFGg46tx6T8MIja+MZjK6Egze0OFX2WP
+         n0xUMWStMd3LEpK0ZZa+AgsUluKSsuuV6GcSA=
+Received: by 10.229.245.4 with SMTP id ls4mr471251qcb.208.1294997087938; Fri,
+ 14 Jan 2011 01:24:47 -0800 (PST)
+Received: by 10.229.84.202 with HTTP; Fri, 14 Jan 2011 01:24:47 -0800 (PST)
+In-Reply-To: <AANLkTimONqL4=E4Unrsj9PU5u57KGXrmO6xWUOCLorgs@mail.gmail.com>
+X-Google-Sender-Auth: O_IH67yQ566V6-QuU7IbzjGYNTc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165085>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165086>
 
-On 01/14/2011 09:29 AM, Jonathan Nieder wrote:
-> . Is svn okay with non-monotonic dates?  (If not, then the committer
->   date would need to be used.)
+On Fri, Jan 14, 2011 at 09:56, Erik Faye-Lund <kusmabite@gmail.com> wro=
+te:
+> On Fri, Jan 14, 2011 at 9:45 AM, Tor Arntsen <tor@spacetec.no> wrote:
+>> I think I've mentioned this before in another thread, but first/last
+>> name isn't universal, not even within countries where it's the commo=
+n
+>> form. When I was as student there was a fellow student from another
+>> scandinavian country and his legal, full name consisted of a single
+>> letter.
+>>
+>
+> I'm curious, what Scandinavian country was this? Because as a
+> Norwegian, I know a lot of people from all Scandinavian country, yet
+> I've never heard of such names. In Norway, I the shortest legal name
+> I've ever heard of was five characters.
 
-Subversion can tolerate non-monotonic dates with one caveat: it breaks
-the find-revision-by-date feature (e.g., "svn update -r '{2010-12-25}'")
-for the time intervals with non-monotonic dates.  This is a seldom-used
-feature and therefore its sacrifice is often accepted, for example when
-the history of the Subversion project itself was migrated into the
-Apache project's Subversion repository.
+Sweden (I'm Norwegian too - this guy was a Swede studying in Norway).
+Admittedly I have only that single example, and it was back in the
+late seventies. His name was accepted as legal by Statens L=E5nekasse
+(bank for students) and when the loans arrived his single-letter name
+would be found at the very end of the long lists of wide listing-paper
+printouts from the bank that was stiched up on the billboard wall
+outside the administration offices. The loans arrived a couple of
+times per year but we always had to go looking - the rest of us were
+just amazed that we could really find that single letter down there
+and he wasn't bs'ing the rest of us about his name.
 
-Michael
+I'm not sure why there's a 3-letter limit on git author names.. but I
+would suggest it should be set down to 1 letter minimum.. below that
+would, I think, be overdoing it..
 
--- 
-Michael Haggerty
-mhagger@alum.mit.edu
-http://softwareswirl.blogspot.com/
+-Tor
