@@ -1,66 +1,54 @@
-From: "J.H." <warthog9@eaglescrag.net>
-Subject: Re: [Bug] Gitweb corrupting files?
-Date: Wed, 12 Jan 2011 09:08:54 -0800
-Message-ID: <4D2DE026.4080109@eaglescrag.net>
-References: <AANLkTim84sSWr=WRgjiY=Y3Mq7Tgojv9CpLrNjQMJfHR@mail.gmail.com>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: multiple group access to update repo
+Date: Fri, 14 Jan 2011 22:53:28 -0600
+Message-ID: <igr99g$mca$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Severin Gehwolf <jerboaa@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 12 18:09:09 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 15 05:54:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pd4Bz-0001K0-Lv
-	for gcvg-git-2@lo.gmane.org; Wed, 12 Jan 2011 18:09:04 +0100
+	id 1Pdy9v-0002ca-Mi
+	for gcvg-git-2@lo.gmane.org; Sat, 15 Jan 2011 05:54:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754957Ab1ALRI7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 12 Jan 2011 12:08:59 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:33243 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753484Ab1ALRI5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 12 Jan 2011 12:08:57 -0500
-Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id p0CH8sMC022225
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Wed, 12 Jan 2011 09:08:54 -0800
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
-In-Reply-To: <AANLkTim84sSWr=WRgjiY=Y3Mq7Tgojv9CpLrNjQMJfHR@mail.gmail.com>
-X-Enigmail-Version: 1.0.1
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Wed, 12 Jan 2011 09:08:55 -0800 (PST)
+	id S1752570Ab1AOEyW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 14 Jan 2011 23:54:22 -0500
+Received: from lo.gmane.org ([80.91.229.12]:49291 "EHLO lo.gmane.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752483Ab1AOEyV (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 14 Jan 2011 23:54:21 -0500
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <gcvg-git-2@m.gmane.org>)
+	id 1Pdy9b-0002U8-6r
+	for git@vger.kernel.org; Sat, 15 Jan 2011 05:54:19 +0100
+Received: from 67.63.162.200 ([67.63.162.200])
+        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 15 Jan 2011 05:54:19 +0100
+Received: from nkreitzinger by 67.63.162.200 with local (Gmexim 0.1 (Debian))
+        id 1AlnuQ-0007hv-00
+        for <git@vger.kernel.org>; Sat, 15 Jan 2011 05:54:19 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 67.63.162.200
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165132>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165133>
 
-On 01/12/2011 08:05 AM, Severin Gehwolf wrote:
-> Hi,
-> 
-> It appears that Gitweb corrupts files when it is being used for
-> creating compressed tarballs of sources.
-> 
-> A more precise description of the behaviour I'm experiencing is here:
-> https://bugs.eclipse.org/bugs/show_bug.cgi?id=317882
-> 
-> Unfortunately I have no knowledge about the version in use at eclipse.org.
+How do I allow users from different linux group to cd to a common bare 
+mirror repo and also to a common non-bare cloned repo and perform 
+git-fetch and git pull --ff-only?  Currently, the non-owner group gets 
+this error:
 
-That's a fairly old version of gitweb running (1.6.6.4), and it looks
-like it's stock gitweb (I.E. not the caching version).  The file itself
-(the .bz2 anyway) is a valid, and complete .bz2, as well as the .tar
-file extracts cleanly.
+error: cannot open FETCH_HEAD: Permission denied
 
-That would indicate, that if there is corruption, it is happening in the
-git process itself that generates the tarball, and not in gitweb itself.
 
-Best plan would be to upgrade to the latest code of gitweb and git and
-see if the problem still persists, and if it does be able to get us a
-tarball and url that has the corruption.
-
-- John 'Warthog9' Hawley
+v/r,
+Neal
