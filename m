@@ -1,54 +1,62 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: multiple group access to update repo
-Date: Fri, 14 Jan 2011 22:53:28 -0600
-Message-ID: <igr99g$mca$1@dough.gmane.org>
+From: Phillip Susi <psusi@cfl.rr.com>
+Subject: Re: small downloads and immutable history (Re: clone breaks replace)
+Date: Sat, 15 Jan 2011 00:27:41 -0500
+Message-ID: <4D31304D.2000102@cfl.rr.com>
+References: <4D262D68.2050804@cfl.rr.com> <201101112048.57326.j6t@kdbg.org> <20110111195107.GA18714@sigill.intra.peff.net> <201101112100.32083.j6t@kdbg.org> <4D2CBC1A.9000302@cfl.rr.com> <20110111205043.GA19928@burratino> <4D2CFD0A.1060901@cfl.rr.com> <20110114205308.GA15286@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1; format=flowed
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 15 05:54:41 2011
+Cc: Johannes Sixt <j6t@kdbg.org>, Jeff King <peff@peff.net>,
+	git@vger.kernel.org, Christian Couder <chriscool@tuxfamily.org>,
+	Stephen Bash <bash@genarts.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 15 06:27:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pdy9v-0002ca-Mi
-	for gcvg-git-2@lo.gmane.org; Sat, 15 Jan 2011 05:54:40 +0100
+	id 1Pdyg3-00078x-Pn
+	for gcvg-git-2@lo.gmane.org; Sat, 15 Jan 2011 06:27:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752570Ab1AOEyW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 14 Jan 2011 23:54:22 -0500
-Received: from lo.gmane.org ([80.91.229.12]:49291 "EHLO lo.gmane.org"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752483Ab1AOEyV (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 14 Jan 2011 23:54:21 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Pdy9b-0002U8-6r
-	for git@vger.kernel.org; Sat, 15 Jan 2011 05:54:19 +0100
-Received: from 67.63.162.200 ([67.63.162.200])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 15 Jan 2011 05:54:19 +0100
-Received: from nkreitzinger by 67.63.162.200 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Sat, 15 Jan 2011 05:54:19 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 67.63.162.200
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+	id S1750813Ab1AOF1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Jan 2011 00:27:46 -0500
+Received: from cdptpa-omtalb.mail.rr.com ([75.180.132.120]:60847 "EHLO
+	cdptpa-omtalb.mail.rr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750739Ab1AOF1p (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Jan 2011 00:27:45 -0500
+X-Authority-Analysis: v=1.1 cv=pepdxKapwHuwCZNFD5uob2wvham6E+RljB0uXw08FdQ= c=1 sm=0 a=cwXoRqF8dMcA:10 a=8nJEP1OIZ-IA:10 a=JmtI77n5PKyEllQSDapvNg==:17 a=dX7TRuhO_G6B5jG2SnMA:9 a=aYkt-U_4jlsSHbbOZXf7OsF6VvYA:4 a=wPNLvfGTeEIA:10 a=JmtI77n5PKyEllQSDapvNg==:117
+X-Cloudmark-Score: 0
+X-Originating-IP: 184.91.189.177
+Received: from [184.91.189.177] ([184.91.189.177:38311] helo=[192.168.1.3])
+	by cdptpa-oedge03.mail.rr.com (envelope-from <psusi@cfl.rr.com>)
+	(ecelerity 2.2.3.46 r()) with ESMTP
+	id 32/9E-19545-D40313D4; Sat, 15 Jan 2011 05:27:44 +0000
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
+In-Reply-To: <20110114205308.GA15286@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165133>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165134>
 
-How do I allow users from different linux group to cd to a common bare 
-mirror repo and also to a common non-bare cloned repo and perform 
-git-fetch and git pull --ff-only?  Currently, the non-owner group gets 
-this error:
+On 01/14/2011 03:53 PM, Jonathan Nieder wrote:
+> Ah, I forgot the use case.  If you are using this to at long last get
+> past the limitations (e.g., inability to push) of "fetch --depth",
+> then yes, rewriting existing history is bad.
 
-error: cannot open FETCH_HEAD: Permission denied
+I'm not really talking about using --depth, but more of the project 
+deciding to truncate the history in the central repository.
 
+> So what's left is some way to make the "have" part of transport
+> negotiation make sense in this context.  I'll be happy if it happens.
 
-v/r,
-Neal
+Good point.  Whether local history is short because of --depth or 
+replace records, the same problem arises; the negotiation needs to be 
+able to exclude older objects that are not present locally, rather than 
+assuming that the client has the entire history if it has any at all. 
+It seems like this should just require sending the server and end point 
+in addition to a start point.  In other words, not just send ID of the 
+most recent commit, but also the oldest that it has on hand, so that the 
+server can be sure that it does not deltafy against objects prior to 
+that commit.
