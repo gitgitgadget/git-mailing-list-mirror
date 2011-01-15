@@ -1,86 +1,74 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 2/3] vcs-svn: Start working on the dumpfile producer
-Date: Sat, 15 Jan 2011 13:41:30 +0530
-Message-ID: <20110115081128.GB9277@kytes>
-References: <1295074272-19559-1-git-send-email-artagnon@gmail.com>
- <1295074272-19559-3-git-send-email-artagnon@gmail.com>
- <20110115073925.GA21744@m62s10.vlinux.de>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH] git-p4: Fixed handling of file names with spaces
+Date: Sat, 15 Jan 2011 09:35:32 -0500
+Message-ID: <20110115143532.GB31622@arf.padd.com>
+References: <AANLkTi=Cp=FCuJdthr7JfML6jdNzUiDAUPjrWpTQfWGk@mail.gmail.com>
+ <1294944715-5647-1-git-send-email-jerzy.kozera@gmail.com>
+ <m28vyncffu.fsf@igel.home>
+ <A0F152FE-C659-4F9B-9625-505AA5DAF942@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	David Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Peter Baumann <waste.manager@gmx.de>
-X-From: git-owner@vger.kernel.org Sat Jan 15 09:11:00 2011
+Cc: Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org,
+	gitster@pobox.com, msclrhd@googlemail.com
+To: Jerzy Kozera <jerzy.kozera@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 15 15:35:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pe1Dv-0007Q9-LX
-	for gcvg-git-2@lo.gmane.org; Sat, 15 Jan 2011 09:11:00 +0100
+	id 1Pe7EG-0003Or-4M
+	for gcvg-git-2@lo.gmane.org; Sat, 15 Jan 2011 15:35:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751885Ab1AOIKv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Jan 2011 03:10:51 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:51133 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751646Ab1AOIKn (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Jan 2011 03:10:43 -0500
-Received: by iwn9 with SMTP id 9so3236407iwn.19
-        for <git@vger.kernel.org>; Sat, 15 Jan 2011 00:10:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=cF3F1ibNv9prIYltKZ6C8l8av2FbDmbVAoxqluerk3c=;
-        b=kWqY9hcDYOoSUBmQfRrZqn6fK/IXlwZnvysr7lVCz8GmTDIcvan3AIfmePi6q28ILt
-         /lXh0y1H3o8juXTF291FyjJAdVzJ/dm/fTQ+aEVQJDdoPGzg9/eEJHbMKkrJDI6RtAMO
-         /lMPaGaKcakUHNPW0jyynBDq5A/ndqkSjMKdE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=noCkDKZNZNcmZu0geFv8oVgagqT23IfgkZcNYPpwwo3zt+PTyHVPqrGz3JjhrYToFg
-         FzVNwuiiblJP+W/OEyRLLdOsxg8V2MiINBaPGGTrHRi7UUO+nKbYLAsIKnwTvYP8jBs2
-         gwiHIF1Ay7bQzMOl+CiUm+25afoJZMJCnejwM=
-Received: by 10.42.170.199 with SMTP id g7mr1899050icz.149.1295079042934;
-        Sat, 15 Jan 2011 00:10:42 -0800 (PST)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id i16sm1720526ibl.0.2011.01.15.00.10.38
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 15 Jan 2011 00:10:41 -0800 (PST)
+	id S1752358Ab1AOOfh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Jan 2011 09:35:37 -0500
+Received: from honk.padd.com ([74.3.171.149]:50028 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750966Ab1AOOfg (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Jan 2011 09:35:36 -0500
+Received: from arf.padd.com (pool-71-111-208-86.rlghnc.dsl-w.verizon.net [71.111.208.86])
+	by honk.padd.com (Postfix) with ESMTPSA id A4F1E134;
+	Sat, 15 Jan 2011 06:35:34 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 7D5F631958; Sat, 15 Jan 2011 09:35:32 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <20110115073925.GA21744@m62s10.vlinux.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <A0F152FE-C659-4F9B-9625-505AA5DAF942@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165144>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165146>
 
-Hi Peter,
-
-Peter Baumann writes:
-> > +	while ((t = buffer_read_line(&input))) {
-> > +		val = strchr(t, ' ');
-> > +		if (!val) {
-> > +			if (!memcmp(t, "blob", 4))
-> > +				active_ctx = BLOB_CTX;
-> > +			else if (!memcmp(t, "deleteall", 9))
-> > +				;
-> > +			continue;
+jerzy.kozera@gmail.com wrote on Fri, 14 Jan 2011 22:45 +0000:
+> On 14 Jan 2011, at 22:01, Andreas Schwab wrote:
+> > Can those file names also include a double quote or a backquote or a
+> > dollar sign?
 > 
-> Having actually no idea what the input you are reading from might look like, but
-> seeing those two memcmp compares above makes me wonder if 't' might ever be smaller
-> than 4 (or 9 for the else part). Which obviously would lead to a SEGFAULT. 
-> In the code below there are also memcmp class which might step out of the
-> buffer.
+> 
+> Double quote and backquote get escaped by git so they are not a problem:
+> $ git diff-tree -r HEAD^ HEAD
+> :000000 100644 0000000000000000000000000000000000000000 e69de29bb2d1d6434b8b29ae775ad8c2e48c5391 A	"\" \\ $"
+> 
+> But as you can see above, the dollar sign remains intact, so it needs to be handled as well - patch below takes it into account.
+[..]
+> -    p4_system("reopen -t %s %s" % (p4Type, file))
+> +    p4_system("reopen -t %s \"%s\"" % (p4Type, file))
 
-Right. Silly mistake on my part. Thanks for pointing it out.
+These changes are important for correctness.  Thanks for fixing
+them.
 
-There are probably many more trivial mistakes- I was in a hurry to get
-/something/ working, and didn't have a chance to clean up the code.
+It is kind of ugly to have to do file escaping all over the
+source.  I'd rather see all the os.system() calls go away, in
+favor of subprocess.Popen().  You can use the latter without
+going through the shell at all, hence no escapes are needed.
+If you feel ambitious, this would be a nice fix.
 
--- Ram
+Spaces can happen in depot paths too.  That isn't handled
+current.  All the p4Cmd and p4CmdList calls that work on
+depotPaths should avoid going through the shell too.
+
+But at least what you have done already should go in.  If you
+feel adventurous, addressing these other space-related issues
+would be nice too.
+
+		-- Pete
