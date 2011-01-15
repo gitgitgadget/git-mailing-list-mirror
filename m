@@ -1,87 +1,108 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: [PATCH 1/3] date: Expose the time_to_tm function
-Date: Sat, 15 Jan 2011 12:21:10 +0530
-Message-ID: <1295074272-19559-2-git-send-email-artagnon@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [RFC PATCH 0/3] Towards a Git-to-SVN bridge
+Date: Sat, 15 Jan 2011 01:22:11 -0600
+Message-ID: <20110115072211.GB25253@burratino>
 References: <1295074272-19559-1-git-send-email-artagnon@gmail.com>
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
+Mime-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
 	David Barr <david.barr@cordelta.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>
-To: Git List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Jan 15 07:51:01 2011
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 15 08:22:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PdzyU-0006Ei-Bh
-	for gcvg-git-2@lo.gmane.org; Sat, 15 Jan 2011 07:50:58 +0100
+	id 1Pe0TJ-00038x-MS
+	for gcvg-git-2@lo.gmane.org; Sat, 15 Jan 2011 08:22:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750972Ab1AOGui (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Jan 2011 01:50:38 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:56481 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750900Ab1AOGuh (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Jan 2011 01:50:37 -0500
-Received: by mail-iw0-f174.google.com with SMTP id 9so3205802iwn.19
-        for <git@vger.kernel.org>; Fri, 14 Jan 2011 22:50:37 -0800 (PST)
+	id S1751347Ab1AOHW0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Jan 2011 02:22:26 -0500
+Received: from mail-yx0-f174.google.com ([209.85.213.174]:61855 "EHLO
+	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751258Ab1AOHWT (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Jan 2011 02:22:19 -0500
+Received: by yxt3 with SMTP id 3so1405494yxt.19
+        for <git@vger.kernel.org>; Fri, 14 Jan 2011 23:22:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=QjA1ukRL29p1Dw2bm/wMknfokEJcRgbkF4lm4qTFd5U=;
-        b=Vjs+i6QI/n3ahgVKMBg/K86sY9Gj9/cr5jJO7rFNoGTT3z1AmgEKFSOoJ/1SCMeugY
-         tKfQ31Y8nqeofr4+0FB8Qk/GZZ2rD41H9uMlOKqmhi30MkRnln7PsG08v7t6+vDSafGg
-         iPtzge00C2XBf2CXHv2ue5o/EnSnR8ij5aoFI=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=3cf+5b3pfZENkm5Wu4+FthCbKnI4VMM2y3LXQxqyqm0=;
+        b=o+1vlyCp0CUyZFNjPpdHuyUpjlmBDqOYNgivLJPktiSaNyxBER9hpzze6W7izrsBrT
+         6rWJ6610W9LP/JJrGzWLYIF1ObPZrNb/6GhboctJYZsh7+w4bJu0aKV5r6AKoYlLASgb
+         MjjbEoyLEu2gVDpn2bTx5m4x17T65K+/9YvN0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=poR+ehryyShn3YibY05XbUgfC6/9KdF6bxCQL6vvaBrr03Ut7T9jT23tYrlE77RhZX
-         W7woEL46Z9rvwLqEdadnMGox/xYGXQJ3IMLLNGmEpgp42Jjqo1yFF9G/j3yunBCiB75J
-         ua94x/vNh46Rse/gemFDVUs/+ZrYMJulxd7ro=
-Received: by 10.42.180.131 with SMTP id bu3mr1789431icb.366.1295074236581;
-        Fri, 14 Jan 2011 22:50:36 -0800 (PST)
-Received: from localhost.localdomain ([203.110.240.41])
-        by mx.google.com with ESMTPS id k38sm1484334ick.9.2011.01.14.22.50.33
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 14 Jan 2011 22:50:35 -0800 (PST)
-X-Mailer: git-send-email 1.7.4.rc1.7.g2cf08.dirty
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=g7421EMmJOyZWByfizPhlgjJeaHz76jX0XihkKItcR5Z4md0T4yKr7r2RUuYCgYGAJ
+         w2CbOMLHqzylKCTfexcplrjYygSBKKWzicVNzS3IMCWfMhrwSdfuFkbOoatuvJSX0Zai
+         cyADo2rvjhBvH97XKMLacnUGgNcD5fOCTOvv0=
+Received: by 10.91.8.20 with SMTP id l20mr2199724agi.147.1295076138803;
+        Fri, 14 Jan 2011 23:22:18 -0800 (PST)
+Received: from burratino (adsl-69-209-76-37.dsl.chcgil.sbcglobal.net [69.209.76.37])
+        by mx.google.com with ESMTPS id f10sm2443664anh.25.2011.01.14.23.22.16
+        (version=SSLv3 cipher=RC4-MD5);
+        Fri, 14 Jan 2011 23:22:17 -0800 (PST)
+Content-Disposition: inline
 In-Reply-To: <1295074272-19559-1-git-send-email-artagnon@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165139>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165140>
 
-Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
----
- cache.h |    1 +
- date.c  |    2 +-
- 2 files changed, 2 insertions(+), 1 deletions(-)
+Hi Ram,
 
-diff --git a/cache.h b/cache.h
-index d83d68c..95fea31 100644
---- a/cache.h
-+++ b/cache.h
-@@ -816,6 +816,7 @@ enum date_mode {
- 	DATE_RAW
- };
- 
-+struct tm *time_to_tm(unsigned long time, int tz);
- const char *show_date(unsigned long time, int timezone, enum date_mode mode);
- const char *show_date_relative(unsigned long time, int tz,
- 			       const struct timeval *now,
-diff --git a/date.c b/date.c
-index 00f9eb5..e601a50 100644
---- a/date.c
-+++ b/date.c
-@@ -54,7 +54,7 @@ static time_t gm_time_t(unsigned long time, int tz)
-  * thing, which means that tz -0100 is passed in as the integer -100,
-  * even though it means "sixty minutes off"
-  */
--static struct tm *time_to_tm(unsigned long time, int tz)
-+struct tm *time_to_tm(unsigned long time, int tz)
- {
- 	time_t t = gm_time_t(time, tz);
- 	return gmtime(&t);
--- 
-1.7.4.rc1.7.g2cf08.dirty
+Ramkumar Ramachandra wrote:
+
+> Over the last couple of days, I've been working on a parser that
+> converts a fast-import stream into a SVN dumpfile. So far, it's very
+> rough and works minimally for some common fast-import
+> commands.
+
+Some early questions:
+
+ - what are the design goals?  Is this meant to be super fast?
+   Robust?  Simple?  Why should I be excited about it?[1]
+
+ - what subset of fast-import commands is supported?  Is it well
+   enough defined to make a manpage?
+
+ - does this produce v2 or v3 dumpfiles?
+
+ - why would I use this instead of git2svn?  Does git2svn do anything
+   this will not eventually be able to do?  (Not a trick question ---
+   I don't have enough experience with git2svn to tell its strengths
+   and weaknesses.)
+
+> I've decided to try re-implementing fast-export
+> to eliminate blob marks
+
+Hopefully "re-implement" means "patch" here. :)
+
+I can comment on the code but it's probably better if I have a sense
+of the design first (in any event, thanks for sending it).
+
+Regards,
+Jonathan
+
+[1] I found the original svn-fe design interesting because
+ (1) it reused code from an existing svndump parser, at least in
+     spirit,
+ (2) the repo_tree data structure was well fitted to the design
+     constraints,
+ (3) the line_buffer input abstraction was oddly satisfying, even
+     though it does not buy anything obvious out of the box over
+     direct use of strbuf and stdio;
+ (4) speed; and, most importantly
+ (5) the command-line interface was easy to debug, very flexible,
+     and dead simple.
+
+I find the current svn-fe satisfying in a different way --- a sort of
+"line by line" translation between dump formats is becoming possible.
