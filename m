@@ -1,108 +1,73 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC PATCH 0/3] Towards a Git-to-SVN bridge
-Date: Sat, 15 Jan 2011 01:22:11 -0600
-Message-ID: <20110115072211.GB25253@burratino>
-References: <1295074272-19559-1-git-send-email-artagnon@gmail.com>
-Mime-Version: 1.0
+From: "Aaron S. Meurer" <asmeurer@gmail.com>
+Subject: git bisect problems/ideas
+Date: Sat, 15 Jan 2011 00:33:12 -0700
+Message-ID: <855249CA-A006-475C-8F96-EFD614795064@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1082)
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	David Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 15 08:22:52 2011
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 15 08:38:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pe0TJ-00038x-MS
-	for gcvg-git-2@lo.gmane.org; Sat, 15 Jan 2011 08:22:50 +0100
+	id 1Pe0iD-0001P5-7y
+	for gcvg-git-2@lo.gmane.org; Sat, 15 Jan 2011 08:38:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751347Ab1AOHW0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Jan 2011 02:22:26 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:61855 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751258Ab1AOHWT (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 15 Jan 2011 02:22:19 -0500
-Received: by yxt3 with SMTP id 3so1405494yxt.19
-        for <git@vger.kernel.org>; Fri, 14 Jan 2011 23:22:19 -0800 (PST)
+	id S1751106Ab1AOHdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Jan 2011 02:33:24 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:53377 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751043Ab1AOHdX convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 15 Jan 2011 02:33:23 -0500
+Received: by iwn9 with SMTP id 9so3221766iwn.19
+        for <git@vger.kernel.org>; Fri, 14 Jan 2011 23:33:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=3cf+5b3pfZENkm5Wu4+FthCbKnI4VMM2y3LXQxqyqm0=;
-        b=o+1vlyCp0CUyZFNjPpdHuyUpjlmBDqOYNgivLJPktiSaNyxBER9hpzze6W7izrsBrT
-         6rWJ6610W9LP/JJrGzWLYIF1ObPZrNb/6GhboctJYZsh7+w4bJu0aKV5r6AKoYlLASgb
-         MjjbEoyLEu2gVDpn2bTx5m4x17T65K+/9YvN0=
+        h=domainkey-signature:from:content-type:content-transfer-encoding
+         :subject:date:message-id:to:mime-version:x-mailer;
+        bh=lYViMHSMliUGc9eS94Nc8fsR+yY8Q8GIafOmEr7mNJU=;
+        b=anjfN++594KADbj2ryiclkvU2HD8nS5VQqh0BGjGA7o5drNcDyNdKWPZwmkfRueLEq
+         dEBWmsdEFIpwAU6094BkaQz6/lZI/3RVBOOLHxvZXxaZJB7d7AH2ibgM0gv3Hsi+XPrz
+         9dBl5Smb/Oyks+XTex/bKdZn/2Z9SHjxn5BAc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=g7421EMmJOyZWByfizPhlgjJeaHz76jX0XihkKItcR5Z4md0T4yKr7r2RUuYCgYGAJ
-         w2CbOMLHqzylKCTfexcplrjYygSBKKWzicVNzS3IMCWfMhrwSdfuFkbOoatuvJSX0Zai
-         cyADo2rvjhBvH97XKMLacnUGgNcD5fOCTOvv0=
-Received: by 10.91.8.20 with SMTP id l20mr2199724agi.147.1295076138803;
-        Fri, 14 Jan 2011 23:22:18 -0800 (PST)
-Received: from burratino (adsl-69-209-76-37.dsl.chcgil.sbcglobal.net [69.209.76.37])
-        by mx.google.com with ESMTPS id f10sm2443664anh.25.2011.01.14.23.22.16
-        (version=SSLv3 cipher=RC4-MD5);
-        Fri, 14 Jan 2011 23:22:17 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1295074272-19559-1-git-send-email-artagnon@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=from:content-type:content-transfer-encoding:subject:date:message-id
+         :to:mime-version:x-mailer;
+        b=HpyCfS45EzsQvVN/2odR9AW4o4lfYa/YtQnvqH7f4+2xQNy9htP0oZLFS15EQM5M6J
+         kJKxBAGVVPLuO+fc8HPvANc22earbyHJYgyCqjl38w29SCXVuUIjkyQpWoEq3pH8UGEF
+         xmJRuYObG+Ob/+HfSvygwxroCERjWpktcFv/w=
+Received: by 10.231.17.77 with SMTP id r13mr1697704iba.38.1295076802973;
+        Fri, 14 Jan 2011 23:33:22 -0800 (PST)
+Received: from [192.168.1.130] (c-68-42-39-41.hsd1.nm.comcast.net [68.42.39.41])
+        by mx.google.com with ESMTPS id gy41sm1683953ibb.5.2011.01.14.23.33.21
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 14 Jan 2011 23:33:22 -0800 (PST)
+X-Mailer: Apple Mail (2.1082)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165140>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165141>
 
-Hi Ram,
+First off, do you guys have an issue tracker?  I asked on IRC, and someone told me that he didn't think you did, and to just post here.  After searching your websites, as far as I can tell he was right, though this is amazing to me that you can handle a project like this without an issue tracker.  If you guys really do, then sorry.  I would rather post this there than here (though if you really do, please make it more findable!)
 
-Ramkumar Ramachandra wrote:
+I just noticed this error/bug:
 
-> Over the last couple of days, I've been working on a parser that
-> converts a fast-import stream into a SVN dumpfile. So far, it's very
-> rough and works minimally for some common fast-import
-> commands.
+git checkout test
+git bisect start 
+<do some bisecting>
+git branch -D test
+<finish bisecting>
+git bisect reset
 
-Some early questions:
+And it gives an error, because test has been deleted.  This is in 1.7.3.5.  Now, I looked through the log of the current master of git to see if anything has been done about this, and all I noticed was the commit 3bb8cf88247db5, which essentially improves the error message.  
 
- - what are the design goals?  Is this meant to be super fast?
-   Robust?  Simple?  Why should I be excited about it?[1]
+Now, this is good, because it seemed to me above that I was stuck bisecting until I recreated the test branch.  I did not realize the git bisect <commit> syntax until later.  
 
- - what subset of fast-import commands is supported?  Is it well
-   enough defined to make a manpage?
+But this has brought me to bother you guys about something that has been bugging me for a while. I hate git bisect reset.  90% of the time I do not want to go back to where I started bisecting.  I would much prefer to just have a git bisect stop command, which just stops the bisecting process, but leaves me where I am (like a shortcut to git bisect reset HEAD).  This would be much more symmetric with git bisect start.
 
- - does this produce v2 or v3 dumpfiles?
+While we are on the topic of bisecting, I have another issue.  Can we remove the restriction that a "bad" commit come after a "good" commit?  I'd say about 70% of the time I use bisect to find a commit that fixes a bug, not breaks it.  Whenever this happens, I have to bend my mind over backwards to remind myself that the good behavior is really "bad" and the bad behavior is really "good".  Is there a reason that git bisect can't just introspect from which comes earlier and which comes later to see which is "good" or "bad" (instead of just raising an error when they are in the "wrong" order)?
 
- - why would I use this instead of git2svn?  Does git2svn do anything
-   this will not eventually be able to do?  (Not a trick question ---
-   I don't have enough experience with git2svn to tell its strengths
-   and weaknesses.)
-
-> I've decided to try re-implementing fast-export
-> to eliminate blob marks
-
-Hopefully "re-implement" means "patch" here. :)
-
-I can comment on the code but it's probably better if I have a sense
-of the design first (in any event, thanks for sending it).
-
-Regards,
-Jonathan
-
-[1] I found the original svn-fe design interesting because
- (1) it reused code from an existing svndump parser, at least in
-     spirit,
- (2) the repo_tree data structure was well fitted to the design
-     constraints,
- (3) the line_buffer input abstraction was oddly satisfying, even
-     though it does not buy anything obvious out of the box over
-     direct use of strbuf and stdio;
- (4) speed; and, most importantly
- (5) the command-line interface was easy to debug, very flexible,
-     and dead simple.
-
-I find the current svn-fe satisfying in a different way --- a sort of
-"line by line" translation between dump formats is becoming possible.
+Aaron Meurer
