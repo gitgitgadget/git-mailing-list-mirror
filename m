@@ -1,100 +1,103 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: cannot fetch arm git tree
-Date: Sun, 16 Jan 2011 12:08:19 +0100
-Message-ID: <20110116110819.GG6917@pengutronix.de>
-References: <AANLkTikRrewCLGDTU7DjVssjpxz-EFK8AhRScAGPRumg@mail.gmail.com>
- <20110116092315.GA27542@n2100.arm.linux.org.uk>
+From: Manuel Doninger <manuel.doninger@googlemail.com>
+Subject: Re: multiple group access to update repo
+Date: Sun, 16 Jan 2011 13:27:48 +0100
+Message-ID: <AANLkTikGHEz4YknOAH2hFQKjYOhsYocdNfUYUZW_8GVd@mail.gmail.com>
+References: <igr99g$mca$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Russell King - ARM Linux <linux@arm.linux.org.uk>,
-	linux-arm-kernel@lists.infradead.org, git@vger.kernel.org
-To: Jello huang <ruifeihuang@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 16 12:08:31 2011
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 16 13:28:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PeQTH-0002ks-AM
-	for gcvg-git-2@lo.gmane.org; Sun, 16 Jan 2011 12:08:31 +0100
+	id 1PeRiT-0008TH-Qz
+	for gcvg-git-2@lo.gmane.org; Sun, 16 Jan 2011 13:28:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751918Ab1APLI0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Jan 2011 06:08:26 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:53789 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751839Ab1APLIZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 16 Jan 2011 06:08:25 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1PeQT6-0005L3-65; Sun, 16 Jan 2011 12:08:20 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1PeQT5-0004Tp-FE; Sun, 16 Jan 2011 12:08:19 +0100
-Content-Disposition: inline
-In-Reply-To: <20110116092315.GA27542@n2100.arm.linux.org.uk>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1752107Ab1APM2M convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Jan 2011 07:28:12 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:46245 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752098Ab1APM2L convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 16 Jan 2011 07:28:11 -0500
+Received: by iwn9 with SMTP id 9so3896054iwn.19
+        for <git@vger.kernel.org>; Sun, 16 Jan 2011 04:28:11 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:dkim-signature:domainkey-signature:mime-version
+         :in-reply-to:references:from:date:message-id:subject:to:cc
+         :content-type:content-transfer-encoding;
+        bh=yRP9Wc69x839K/LkhWjR4PvCIlPvxe3x214ac05qBVI=;
+        b=db1nOMwzbqk1J4jFtSFYm9nqsq2gaoIxHhoYFZr16aHxk05VQzKJkSq7o4MGpgOcv0
+         Gb9kt9dOkZxHQqxoygzIjETqz3gKmvDcibyOCMLLQZWH2hW8NkTNmDT2x9GKI0wZy60H
+         6a7u78oLz1RkwzH0I+LSYINMfzXW0ExTiudng=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=dkim-signature:domainkey-signature:mime-version:in-reply-to
+         :references:from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=UBxiALHgmNixbhcdM8D9a4ahgMMIxt88kv/rDcKlUUAvBaMNBbzcG88a0Bo0nmeIZB
+         E0leQwFB4kiayPuydmWadwptkZ7u3cyWcYooQz5merpNrUlFFhrLXyhUGWKMVbXaDF7v
+         NOEEgA9ZE9L5ub043ch1WqsKQXu9GMvHvPyyA=
+Received: by 10.231.15.8 with SMTP id i8mr2910023iba.125.1295180890517;
+        Sun, 16 Jan 2011 04:28:10 -0800 (PST)
+Received: from mail-iw0-f174.google.com (mail-iw0-f174.google.com [209.85.214.174])
+        by mx.google.com with ESMTPS id z4sm2988900ibg.7.2011.01.16.04.28.09
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 16 Jan 2011 04:28:09 -0800 (PST)
+Received: by iwn9 with SMTP id 9so3896048iwn.19
+        for <git@vger.kernel.org>; Sun, 16 Jan 2011 04:28:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=yRP9Wc69x839K/LkhWjR4PvCIlPvxe3x214ac05qBVI=;
+        b=ukR0FAonC3Ey6pSjRUmo1dOKQqYCzKdv8XUHDqjOLZEpZKkMxm+6z3ZT18inxnt6i1
+         E0ffPgCyPEmj30O9IdrAyHAJQ1XdXhjgGb5W2q7us00t9YDAnuSIQeO2ttMKsOqhXlRr
+         a68gYkyUUI3tW1UumyJPoRLwXSxiwgLpytkBs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=c6CKAdfF+owR2wbZyJzrXdLncAvLKa4bNlkTStDIIVRshZTlesGOoS1CooWpPb54Ub
+         G76le/6ipjPX6qfIJHaCXIH70d3XZdJyMvzlFdMNCXCiDvuTgyMyLFlB+CjcTAPibBs4
+         ElSsGr0nVbQ+6Iey7dPyY6x2dEFkum/YZEf1w=
+Received: by 10.231.16.68 with SMTP id n4mr2924834iba.94.1295180888559; Sun,
+ 16 Jan 2011 04:28:08 -0800 (PST)
+Received: by 10.231.19.6 with HTTP; Sun, 16 Jan 2011 04:27:48 -0800 (PST)
+In-Reply-To: <igr99g$mca$1@dough.gmane.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165161>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165162>
 
-Hello Jello,
+On Sat, Jan 15, 2011 at 05:53, Neal Kreitzinger <nkreitzinger@gmail.com=
+> wrote:
+> How do I allow users from different linux group to cd to a common bar=
+e
+> mirror repo and also to a common non-bare cloned repo and perform git=
+-fetch
+> and git pull --ff-only? =C2=A0Currently, the non-owner group gets thi=
+s error:
+>
+> error: cannot open FETCH_HEAD: Permission denied
+>
+>
+> v/r,
+> Neal
+>
 
-On Sun, Jan 16, 2011 at 09:23:15AM +0000, Russell King - ARM Linux wrot=
-e:
-> On Sun, Jan 16, 2011 at 10:28:55AM +0800, Jello huang wrote:
-> > Dear Russell,
-> >=20
-> > when i use git fetch,there arm some wrong with it.
-> >=20
-> > jello@jello-laptop:~/git/russell/linux-2.6-arm$git pull
-> > error: Unable to find 89e4d4b145bb7e73b4c45671a84b401a5d8694c1 unde=
-r
-> > http://ftp.arm.linux.org.uk/pub/armlinux/kernel/git-cur/linux-2.6-a=
-rm.git
-> > Cannot obtain needed blob 89e4d4b145bb7e73b4c45671a84b401a5d8694c1
-> > while processing commit eda2e5dcc914b4d70f665443efc9780e89a5e5c1.
-> > error: Fetch failed.
-> >=20
-> > What is the wrong?
->=20
-> No idea.  The tree has the object file in one of its pack files:
->=20
-> | rmk@ZenIV:[linux-2.6-arm.git]:<1020> GIT_DIR=3D. git cat-file -p 89=
-e4d4b145bb7e73b4c45671a84b401a5d8694c1|head
-> |=20
-> |         List of maintainers and how to submit kernel changes
-> |=20
-> | Please try to follow the guidelines below.  This will make things
-> | easier on the maintainers.  Not all of these guidelines matter for =
-every
-> | trivial patch so apply some common sense.
->=20
-> and the pack info file lists all the pack files.  Maybe you have a ha=
-sh
-> collision on a pack file with your repository?
-Probably you have a corrupted pack file.  Try renaming all packfiles
-listed in
-http://ftp.arm.linux.org.uk/pub/armlinux/kernel/git-cur/linux-2.6-arm.g=
-it/objects/info/packs
-(i.e.
-=2Egit/objects/pack/pack-74405a23171b6debd894d4791e06956d6387022a.pack
-etc.) and try refetching then.  This happend to me after Ctrl-Cing an
-earlier git-fetch.  Git doesn't seem to handle that case.
+In this case i would suggest to access the repository via SSH and do
+the access control with Gitolite. Then you can use for example a user
+"Git" and chmod the repositories to that user and group. Depending on
+the size of your team, it could need a bit of time to configure
+Gitolite, but it's very flexible to adjust it for later needs.
+If this doesn't fit your needs, then i think the only solution is to
+create a linux group only for that repository and assign all users,
+that need access to the repository, to that group.
 
-Best regards
-Uwe
-
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+Manuel
