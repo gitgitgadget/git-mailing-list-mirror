@@ -1,103 +1,76 @@
-From: Manuel Doninger <manuel.doninger@googlemail.com>
-Subject: Re: multiple group access to update repo
-Date: Sun, 16 Jan 2011 13:27:48 +0100
-Message-ID: <AANLkTikGHEz4YknOAH2hFQKjYOhsYocdNfUYUZW_8GVd@mail.gmail.com>
-References: <igr99g$mca$1@dough.gmane.org>
+From: Levend Sayar <levendsayar@gmail.com>
+Subject: panic recovery
+Date: Sun, 16 Jan 2011 14:33:34 +0200
+Message-ID: <AANLkTikBjWU_dm1a+2AQyP-bhdO_WtYJ8OdE7Zs3E=kV@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 16 13:28:20 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Eda Ercan <edaercan@gmail.com>
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 16 13:34:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PeRiT-0008TH-Qz
-	for gcvg-git-2@lo.gmane.org; Sun, 16 Jan 2011 13:28:18 +0100
+	id 1PeRoK-0002Mu-LV
+	for gcvg-git-2@lo.gmane.org; Sun, 16 Jan 2011 13:34:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752107Ab1APM2M convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 16 Jan 2011 07:28:12 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:46245 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752098Ab1APM2L convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 16 Jan 2011 07:28:11 -0500
-Received: by iwn9 with SMTP id 9so3896054iwn.19
-        for <git@vger.kernel.org>; Sun, 16 Jan 2011 04:28:11 -0800 (PST)
+	id S1752173Ab1APMeP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 16 Jan 2011 07:34:15 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:57368 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752161Ab1APMeP (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 16 Jan 2011 07:34:15 -0500
+Received: by qyj19 with SMTP id 19so1013769qyj.19
+        for <git@vger.kernel.org>; Sun, 16 Jan 2011 04:34:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:dkim-signature:domainkey-signature:mime-version
-         :in-reply-to:references:from:date:message-id:subject:to:cc
-         :content-type:content-transfer-encoding;
-        bh=yRP9Wc69x839K/LkhWjR4PvCIlPvxe3x214ac05qBVI=;
-        b=db1nOMwzbqk1J4jFtSFYm9nqsq2gaoIxHhoYFZr16aHxk05VQzKJkSq7o4MGpgOcv0
-         Gb9kt9dOkZxHQqxoygzIjETqz3gKmvDcibyOCMLLQZWH2hW8NkTNmDT2x9GKI0wZy60H
-         6a7u78oLz1RkwzH0I+LSYINMfzXW0ExTiudng=
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to:cc
+         :content-type;
+        bh=w9C1XMgzHthXm99Y2jECINnDDtmKgh6DM2DdhwCRRdg=;
+        b=oJZrMSvJT7yhBgCXsJBvLDkoDzCwyEfpbK4P5tU8sn8BFMj0NPOfK1yrLZQwrqBWlq
+         aUCU+FyXQxYxa0epB0zDvvmSmQnmMkr61KRgCwzZ2abl7gzmWW8Kw5xqv4HGhzcjXeLx
+         IqYUhjm/v5oCsikLEWLCZCGjhpe7yLVG/h63s=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=dkim-signature:domainkey-signature:mime-version:in-reply-to
-         :references:from:date:message-id:subject:to:cc:content-type
-         :content-transfer-encoding;
-        b=UBxiALHgmNixbhcdM8D9a4ahgMMIxt88kv/rDcKlUUAvBaMNBbzcG88a0Bo0nmeIZB
-         E0leQwFB4kiayPuydmWadwptkZ7u3cyWcYooQz5merpNrUlFFhrLXyhUGWKMVbXaDF7v
-         NOEEgA9ZE9L5ub043ch1WqsKQXu9GMvHvPyyA=
-Received: by 10.231.15.8 with SMTP id i8mr2910023iba.125.1295180890517;
-        Sun, 16 Jan 2011 04:28:10 -0800 (PST)
-Received: from mail-iw0-f174.google.com (mail-iw0-f174.google.com [209.85.214.174])
-        by mx.google.com with ESMTPS id z4sm2988900ibg.7.2011.01.16.04.28.09
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 16 Jan 2011 04:28:09 -0800 (PST)
-Received: by iwn9 with SMTP id 9so3896048iwn.19
-        for <git@vger.kernel.org>; Sun, 16 Jan 2011 04:28:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=googlemail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=yRP9Wc69x839K/LkhWjR4PvCIlPvxe3x214ac05qBVI=;
-        b=ukR0FAonC3Ey6pSjRUmo1dOKQqYCzKdv8XUHDqjOLZEpZKkMxm+6z3ZT18inxnt6i1
-         E0ffPgCyPEmj30O9IdrAyHAJQ1XdXhjgGb5W2q7us00t9YDAnuSIQeO2ttMKsOqhXlRr
-         a68gYkyUUI3tW1UumyJPoRLwXSxiwgLpytkBs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=googlemail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=c6CKAdfF+owR2wbZyJzrXdLncAvLKa4bNlkTStDIIVRshZTlesGOoS1CooWpPb54Ub
-         G76le/6ipjPX6qfIJHaCXIH70d3XZdJyMvzlFdMNCXCiDvuTgyMyLFlB+CjcTAPibBs4
-         ElSsGr0nVbQ+6Iey7dPyY6x2dEFkum/YZEf1w=
-Received: by 10.231.16.68 with SMTP id n4mr2924834iba.94.1295180888559; Sun,
- 16 Jan 2011 04:28:08 -0800 (PST)
-Received: by 10.231.19.6 with HTTP; Sun, 16 Jan 2011 04:27:48 -0800 (PST)
-In-Reply-To: <igr99g$mca$1@dough.gmane.org>
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        b=w4uWr0Ng0k/0iKK6L8sHqj810BmL0DP1BG0DfnX4EpONbn2G6UVsvpf44W6mFCPDQF
+         5eEryOf+fg9ie/Y6nku4zStreTHan8gvrBX6ozZONk2Ie0Bjwdcwa88noU0kIEngyQMI
+         NUhRjDxzUKF3bQNoPnI+RvVrMb9MWCDsGU+b8=
+Received: by 10.229.251.209 with SMTP id mt17mr2621154qcb.66.1295181254117;
+ Sun, 16 Jan 2011 04:34:14 -0800 (PST)
+Received: by 10.229.212.131 with HTTP; Sun, 16 Jan 2011 04:33:34 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165162>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165163>
 
-On Sat, Jan 15, 2011 at 05:53, Neal Kreitzinger <nkreitzinger@gmail.com=
-> wrote:
-> How do I allow users from different linux group to cd to a common bar=
-e
-> mirror repo and also to a common non-bare cloned repo and perform git=
--fetch
-> and git pull --ff-only? =C2=A0Currently, the non-owner group gets thi=
-s error:
->
-> error: cannot open FETCH_HEAD: Permission denied
->
->
-> v/r,
-> Neal
->
+Hi, all.
 
-In this case i would suggest to access the repository via SSH and do
-the access control with Gitolite. Then you can use for example a user
-"Git" and chmod the repositories to that user and group. Depending on
-the size of your team, it could need a bit of time to configure
-Gitolite, but it's very flexible to adjust it for later needs.
-If this doesn't fit your needs, then i think the only solution is to
-create a linux group only for that repository and assign all users,
-that need access to the repository, to that group.
+Yesterday one of my colleague tried to commit her two weeks of work.
+Nearly 10 source code files.
+After an unsuccessful am and apply commands, she tried rebase. And git
+bothered something like you have to finish your am first.
+Then I suggested to do
 
-Manuel
+git am --abort
+
+After that, we saw that all the sources she developed for two weeks
+are gone. We really got panic.But I know that git stores everthing as
+objects, namely commit,tree,blob and tag objects.
+
+We sorted every file according to modification time under .git/objects
+directory and use "git show" for every single object.
+After a cumbersome work, we found blob objects for our source codes
+that we lost and commit objects. Namely we rescued her work.
+
+Is there a better way to use in this kind of situations ?
+
+For example, to list every single objects under objects directory
+according to their types ?
+Or search a phrase in every blob obejcts to find the source code we
+are looking for ?
+
+_lvnd_
+(^_^)
