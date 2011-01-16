@@ -1,66 +1,114 @@
-From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
-Subject: Re: [PATCH] svndump.c: Fix a printf format compiler warning
-Date: Sat, 15 Jan 2011 18:06:27 +0000
-Message-ID: <4D31E223.3080001@ramsay1.demon.co.uk>
-References: <4D2C9EB1.2050100@ramsay1.demon.co.uk> <20110111183927.GF15133@burratino>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH v1.7.4-rc2] ll-merge: simplify opts == NULL case
+Date: Sat, 15 Jan 2011 19:08:42 -0600
+Message-ID: <20110116010841.GA18049@burratino>
+References: <20100823205915.GA4484@ns1.cockos.com>
+ <20100826054158.GB9708@burratino>
+ <20100826054953.GE9708@burratino>
+ <7vpqx5mipt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	GIT Mailing-list <git@vger.kernel.org>,
-	David Barr <david.barr@cordelta.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 15 19:15:37 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Justin Frankel <justin@cockos.com>,
+	Bert Wesarg <bert.wesarg@googlemail.com>, git@vger.kernel.org,
+	eyvind.bernhardsen@gmail.com, Avery Pennarun <apenwarr@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 16 02:09:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PeAf0-0006iP-Hb
-	for gcvg-git-2@lo.gmane.org; Sat, 15 Jan 2011 19:15:34 +0100
+	id 1PeH7O-0005ze-BZ
+	for gcvg-git-2@lo.gmane.org; Sun, 16 Jan 2011 02:09:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753303Ab1AOSHn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 15 Jan 2011 13:07:43 -0500
-Received: from lon1-post-3.mail.demon.net ([195.173.77.150]:49853 "EHLO
-	lon1-post-3.mail.demon.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752145Ab1AOSHm (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 15 Jan 2011 13:07:42 -0500
-Received: from ramsay1.demon.co.uk ([193.237.126.196])
-	by lon1-post-3.mail.demon.net with esmtp (Exim 4.69)
-	id 1PeAWv-0006lJ-fJ; Sat, 15 Jan 2011 18:07:41 +0000
-User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
-In-Reply-To: <20110111183927.GF15133@burratino>
+	id S1754280Ab1APBJC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 15 Jan 2011 20:09:02 -0500
+Received: from mail-yi0-f42.google.com ([209.85.218.42]:38550 "EHLO
+	mail-yi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754088Ab1APBJA (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 15 Jan 2011 20:09:00 -0500
+Received: by yia28 with SMTP id 28so2062080yia.1
+        for <git@vger.kernel.org>; Sat, 15 Jan 2011 17:09:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=vY7lKJQXcK3uhruT1beqZ/a/4Q9sck+Lavv4QwlKI6I=;
+        b=aLXsI/OG4kQJuVY0HNdqws6MetrAkxTdUi6WgzqOCXeOsu4P74xPhFfMi7bC52snMz
+         DwZ4lGMBUxN70x5i+vc3RTR3Y+PGeUn0IZ08Ew6k5NHs//k+UiUJHPXf3+4GLwOmIOgj
+         SXv+qOApdnCA1T+WjkhfVE1a8bE+SHY4FXtU4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=mmxZqxCMH3mOIk2GJ83p7/Dt/VzbLRJ9/7Ijs1WBbFH8So9XDTkuZgbasjwgofWVSR
+         9SkiKzplCrXxxgDf/S30PoDOWnBsjyD7EFxdTsd40u7iCByYw/oyV5XCtbJ5+eqj4BLX
+         luL14zHMk3QEBIiTlzILdM63Er13Q1liuUgAI=
+Received: by 10.150.216.3 with SMTP id o3mr2937896ybg.281.1295140139879;
+        Sat, 15 Jan 2011 17:08:59 -0800 (PST)
+Received: from burratino (adsl-69-209-76-37.dsl.chcgil.ameritech.net [69.209.76.37])
+        by mx.google.com with ESMTPS id q33sm1780925yba.19.2011.01.15.17.08.54
+        (version=SSLv3 cipher=RC4-MD5);
+        Sat, 15 Jan 2011 17:08:59 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vpqx5mipt.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165149>
 
-Jonathan Nieder wrote:
-> Ramsay Jones wrote:
-> 
->> --- a/vcs-svn/svndump.c
->> +++ b/vcs-svn/svndump.c
->> @@ -211,7 +211,7 @@ void svndump_read(const char *url)
->>  		if (key == keys.svn_fs_dump_format_version) {
->>  			dump_ctx.version = atoi(val);
->>  			if (dump_ctx.version > 2)
->> -				die("expected svn dump format version <= 2, found %d",
->> +				die("expected svn dump format version <= 2, found %"PRIu32,
->>  				    dump_ctx.version);
-> 
-> Acked-by: Jonathan Nieder <jrnieder@gmail.com>
+Junio C Hamano wrote:
+> Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Thanks!
+>> +	if (!opts) {
+>> +		struct ll_merge_options default_opts = {0};
+>> +		return ll_merge(result_buf, path, ancestor, ancestor_label,
+>> +				ours, our_label, theirs, their_label,
+>> +				&default_opts);
+>
+> Fun---expecting tail recursion elimination ;-)?
 
-> I think we should just use "int", but that is a wider sweeping change
-> for another time.  Thanks.
-> 
-> Does gcc or sparse provide a warning that could have caught this
-> mistake?
+Fun but not warranted.  Let's simplify.
 
-None that I know of, no ... :(
+-- 8< --
+Subject: ll-merge: simplify opts == NULL case
 
-ATB,
-Ramsay Jones
+As long as sizeof(struct ll_merge_options) is small, there is not
+much reason not to keep a copy of the default merge options in the BSS
+section.  In return, we get clearer code and one less stack frame in
+the opts == NULL case.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ ll-merge.c |    9 +++------
+ 1 files changed, 3 insertions(+), 6 deletions(-)
+
+diff --git a/ll-merge.c b/ll-merge.c
+index 007dd3e..6ce512e 100644
+--- a/ll-merge.c
++++ b/ll-merge.c
+@@ -351,16 +351,13 @@ int ll_merge(mmbuffer_t *result_buf,
+ 	     const struct ll_merge_options *opts)
+ {
+ 	static struct git_attr_check check[2];
++	static const struct ll_merge_options default_opts;
+ 	const char *ll_driver_name = NULL;
+ 	int marker_size = DEFAULT_CONFLICT_MARKER_SIZE;
+ 	const struct ll_merge_driver *driver;
+ 
+-	if (!opts) {
+-		struct ll_merge_options default_opts = {0};
+-		return ll_merge(result_buf, path, ancestor, ancestor_label,
+-				ours, our_label, theirs, their_label,
+-				&default_opts);
+-	}
++	if (!opts)
++		opts = &default_opts;
+ 
+ 	if (opts->renormalize) {
+ 		normalize_file(ancestor, path);
+-- 
+1.7.4.rc2
