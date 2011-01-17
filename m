@@ -1,102 +1,64 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git bisect problems/ideas
-Date: Mon, 17 Jan 2011 14:55:42 -0600
-Message-ID: <20110117205542.GA21507@burratino>
-References: <855249CA-A006-475C-8F96-EFD614795064@gmail.com>
- <AANLkTikNzpCwEieV8sXXctMm+DR69fkLfCF+F3xB6b-k@mail.gmail.com>
- <20110117115133.GA29207@burratino>
- <20110117133843.GA23625@neumann>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: [PATCH 0/3] git-gui: update russian translation
+Date: Mon, 17 Jan 2011 22:08:20 +0100
+Message-ID: <20110117210820.GA27029@blimp.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Christian Couder <christian.couder@gmail.com>,
-	"Aaron S. Meurer" <asmeurer@gmail.com>, git@vger.kernel.org
-To: SZEDER =?utf-8?B?R8OhYm9y?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Jan 17 21:56:06 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Serge Ziryukin <ftrvxmtrx@gmail.com>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Alexander Gavrilov <angavrilov@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 17 22:08:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pew7Q-0003NM-FK
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Jan 2011 21:56:04 +0100
+	id 1PewJT-0002g7-K4
+	for gcvg-git-2@lo.gmane.org; Mon, 17 Jan 2011 22:08:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751770Ab1AQUz4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Jan 2011 15:55:56 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:46655 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750993Ab1AQUz4 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Jan 2011 15:55:56 -0500
-Received: by vws16 with SMTP id 16so2175698vws.19
-        for <git@vger.kernel.org>; Mon, 17 Jan 2011 12:55:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=o7kqmnQxM5v9jjus/cpZCtihWXnwnLEz/5hQxDczsT4=;
-        b=RN0rfZUS02k6qPF2zxUwp8bXg9vRMzSLnI8cBsK5h516UFvQak1mBlFBuDqCFkhgT8
-         oAkHCXEF8WjiGTlXGfzQPoZ1G2+0XALB8ocjz8ijcwSN7i8w/t7Eq4z3BdD3RieMmFkO
-         Aku215oZ1HEGniwftL6c1SUz3K3YmEzQU85ik=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=XU8cDbzLuXoFTHuqe0qBVhXfqFUR/mkOgaFHG/2J0/mu78TmBfHQtOlPLlFFFL0SHt
-         G/MTpnyIObz3LVrciwkFtNZwHZXNPiAQAWSNOaYKwGugET2Uu1D5LdmeymlzJ89U23te
-         Dy8FlI4KZjWaLhh/A71tY18cvKDIQ3ONEPNH0=
-Received: by 10.220.200.135 with SMTP id ew7mr1534251vcb.37.1295297753340;
-        Mon, 17 Jan 2011 12:55:53 -0800 (PST)
-Received: from burratino (adsl-69-209-76-37.dsl.chcgil.sbcglobal.net [69.209.76.37])
-        by mx.google.com with ESMTPS id w26sm1350225vcf.21.2011.01.17.12.55.50
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 17 Jan 2011 12:55:51 -0800 (PST)
+	id S1752136Ab1AQVI0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 17 Jan 2011 16:08:26 -0500
+Received: from mout0.freenet.de ([195.4.92.90]:49218 "EHLO mout0.freenet.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750993Ab1AQVI0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 17 Jan 2011 16:08:26 -0500
+Received: from [195.4.92.17] (helo=7.mx.freenet.de)
+	by mout0.freenet.de with esmtpa (ID alexander.riesen@freenet.de) (port 25) (Exim 4.72 #3)
+	id 1PewJK-0006oP-Om; Mon, 17 Jan 2011 22:08:22 +0100
+Received: from krlh-5f7212ec.pool.mediaways.net ([95.114.18.236]:59876 helo=tigra.home)
+	by 7.mx.freenet.de with esmtpsa (ID alexander.riesen@freenet.de) (TLSv1:AES256-SHA:256) (port 25) (Exim 4.72 #3)
+	id 1PewJK-0003QO-Lt; Mon, 17 Jan 2011 22:08:22 +0100
+Received: from blimp.localdomain (unknown [192.168.0.94])
+	by tigra.home (Postfix) with ESMTP id 3D4E39FE26;
+	Mon, 17 Jan 2011 22:08:21 +0100 (CET)
+Received: by blimp.localdomain (Postfix, from userid 1000)
+	id BDBF536D28; Mon, 17 Jan 2011 22:08:20 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <20110117133843.GA23625@neumann>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+User-Agent: Mutt/1.5.18 (2008-05-17)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165179>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165180>
 
-SZEDER G=C3=A1bor wrote:
-> On Mon, Jan 17, 2011 at 05:51:33AM -0600, Jonathan Nieder wrote:
->> Christian Couder wrote:
+Thanks to Skip, who reminded me of the russian translation, here is a very
+small collection of still applicable patches I collected in mailing list
+archives. The ru.po is also updated.
 
->>> Yeah, many people find it difficult to reverse the meaning of "bad"
->>> and "good" when looking for a fix. There were some suggestions at s=
-ome
->>> points to do something about it. Some of the suggestions were to us=
-e
->>> some aliases for "good" and "bad", but there was no agreement. Othe=
-r
->>> suggestions had a patch attached but the patch was not good enough =
-or
->>> something.
->>
->> Any pointers to such a discussion or patch?  Maybe whatever small
->> detail caused it to be forgotten could be fixed...
->
-> http://thread.gmane.org/gmane.comp.version-control.git/86063
+Alex Riesen (1):
+  git-gui: update russian translation
 
-A better link for those who are thinking of picking up the topic might
-be [1].
+Serge Ziryukin (1):
+  fix git-gui russian translation typos
 
-The problems were:
+Skip (1):
+  git-gui: spelling fixes in russian translation
 
- - error messages refer to "good" and "bad" with the original,
-   unreversed meaning, which could be confusing (but see later in the
-   thread!).
- - "git bisect visualize" doesn't get the memo about the new worldview.
- - it seems that some people lost interest after a while.
+ po/ru.po |  623 ++++++++++++++++++++++++++++++++------------------------------
+ 1 files changed, 321 insertions(+), 302 deletions(-)
 
-None of these seems totally fatal --- as a new feature, it would not
-be breaking anyone's workflow, especially if the potentially confusing
-bits are clearly documented.
-
-Thanks.
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/86089/focus=3D=
-86161
+-- 
+1.7.3.4.643.g8fb2b
