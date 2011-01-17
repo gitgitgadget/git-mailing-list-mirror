@@ -1,136 +1,119 @@
-From: Christian Couder <christian.couder@gmail.com>
-Subject: Re: git bisect problems/ideas
-Date: Mon, 17 Jan 2011 10:38:05 +0100
-Message-ID: <AANLkTikNzpCwEieV8sXXctMm+DR69fkLfCF+F3xB6b-k@mail.gmail.com>
-References: <855249CA-A006-475C-8F96-EFD614795064@gmail.com>
+From: Stephen Kelly <steveire@gmail.com>
+Subject: Creating remote branch called HEAD corrupts remote clones
+Date: Mon, 17 Jan 2011 11:02:49 +0100
+Message-ID: <ih1449$ul6$1@dough.gmane.org>
+Reply-To: KDE PIM <kde-pim@kde.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: "Aaron S. Meurer" <asmeurer@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 17 10:38:15 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
-Received: from vger.kernel.org ([209.132.180.67])
-	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PelXT-0001E4-B8
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Jan 2011 10:38:15 +0100
-Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752677Ab1AQJiK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Jan 2011 04:38:10 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:58210 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751886Ab1AQJiH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 17 Jan 2011 04:38:07 -0500
-Received: by wwa36 with SMTP id 36so5201676wwa.1
-        for <git@vger.kernel.org>; Mon, 17 Jan 2011 01:38:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=yMO976COoJVxrsCNRxgc37BOUn9P4CCF+kyRyiOonC8=;
-        b=kG9dAU2A18RAdsf1ONid+vMd6/CWIBgZl6vNwqCTnfodyYk0n/hCTPM9eOh0IgnByG
-         g1rTEvPa1dduuHcEfWSrR9HIdQXtWMgAnSpAHFn3lHhANt1QwO02gFHTqMrczv+fzd5D
-         0Ogasd9+/3CgIY22lApHplV6Lslypquybe1/4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=ktd9I3QoC/D1JOJVtOiveGgtAFEpojr2BUm0wWgTjqpIUCspGk5dtO2UlD6QKoS96q
-         uvdmWgmyMwd//Ln7ggbBlo1d7ersyG4LrhhWZ2236zO0uthULifu+T/XZjB/syZI6g2R
-         35VHwTn9qzPLqw7hw6eAQJH6IcXsggh7R1iEg=
-Received: by 10.216.48.211 with SMTP id v61mr3098644web.35.1295257085552; Mon,
- 17 Jan 2011 01:38:05 -0800 (PST)
-Received: by 10.216.50.129 with HTTP; Mon, 17 Jan 2011 01:38:05 -0800 (PST)
-In-Reply-To: <855249CA-A006-475C-8F96-EFD614795064@gmail.com>
-Sender: git-owner@vger.kernel.org
-Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165170>
+To: kde-pim@kde.org
+X-From: kde-pim-bounces-+kde-kde-pim=m.gmane.org@kde.org Mon Jan 17 11:04:28 2011
+Return-path: <kde-pim-bounces-+kde-kde-pim=m.gmane.org@kde.org>
+Envelope-to: kde-kde-pim@lo.gmane.org
+Received: from ktown.kde.org ([131.246.120.250])
+	by lo.gmane.org with smtp (Exim 4.69)
+	(envelope-from <kde-pim-bounces-+kde-kde-pim=m.gmane.org@kde.org>)
+	id 1Pelwl-0005bn-Mm
+	for kde-kde-pim@lo.gmane.org; Mon, 17 Jan 2011 11:04:23 +0100
+Received: (qmail 23083 invoked by uid 72); 17 Jan 2011 10:04:15 -0000
+Received: (qmail 23073 invoked from network); 17 Jan 2011 10:04:12 -0000
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on ktown.kde.org
+Received: from unknown (HELO lo.gmane.org) (80.91.229.12)
+	by ktown.kde.org with SMTP; 17 Jan 2011 10:04:12 -0000
+Received: from list by lo.gmane.org with local (Exim 4.69)
+	(envelope-from <kde-kde-pim@m.gmane.org>) id 1Pelvn-0004vw-7d
+	for kde-pim@kde.org; Mon, 17 Jan 2011 11:03:23 +0100
+Received: from 188.111.54.34 ([188.111.54.34])
+	by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
+	id 1AlnuQ-0007hv-00
+	for <kde-pim@kde.org>; Mon, 17 Jan 2011 11:03:23 +0100
+Received: from steveire by 188.111.54.34 with local (Gmexim 0.1 (Debian))
+	id 1AlnuQ-0007hv-00
+	for <kde-pim@kde.org>; Mon, 17 Jan 2011 11:03:23 +0100
+X-Injected-Via-Gmane: http://gmane.org/
+Followup-To: gmane.comp.version-control.git
+X-Complaints-To: usenet@dough.gmane.org
+X-Gmane-NNTP-Posting-Host: 188.111.54.34
+User-Agent: KNode/4.4.6
+X-BeenThere: kde-pim@kde.org
+X-Mailman-Version: 2.1.9
+Precedence: list
+List-Id: KDE PIM <kde-pim.kde.org>
+List-Unsubscribe: <https://mail.kde.org/mailman/listinfo/kde-pim>,
+	<mailto:kde-pim-request@kde.org?subject=unsubscribe>
+List-Post: <mailto:kde-pim@kde.org>
+List-Help: <mailto:kde-pim-request@kde.org?subject=help>
+List-Subscribe: <https://mail.kde.org/mailman/listinfo/kde-pim>,
+	<mailto:kde-pim-request@kde.org?subject=subscribe>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165171>
+
 
 Hi,
 
-On Sat, Jan 15, 2011 at 8:33 AM, Aaron S. Meurer <asmeurer@gmail.com> w=
-rote:
-> First off, do you guys have an issue tracker?
+On Friday we had an issue where a developer pushed a branch called HEAD to 
+the remote server. The result was that other developers could not pull or 
+push. I have not been able to reproduce the exact issue locally, but this 
+script shows that the bob clone behaves oddly on each pull. That is a 
+symptom we saw on Friday. However, bob is still able to push, which we were 
+not able to. That point could be something to do with how the kde git 
+infrastructure is configured.
 
-No, we don't. We use the mailing list.
+mkdir remote
+cd remote/
+git init --bare
+cd ../
+git clone remote/ alice
+cd alice/
+echo test >> file
+git add file
+git commit -am w
+git push origin master
+echo test >> file
+git commit -am w
+git branch HEAD
+git push origin HEAD
+git push
+cd ..
+git clone remote bob
+cd bob/
+git pull --rebase
+echo test >> file
+git commit -am w
+git push
+git pull
+git pull
+git pull
 
->=A0I asked on IRC, and someone told me that he didn't think you did, a=
-nd to just post here. =A0After searching your websites, as far as I can=
- tell he was right, though this is amazing to me that you can handle a =
-project like this without an issue tracker. =A0If you guys really do, t=
-hen sorry. =A0I would rather post this there than here (though if you r=
-eally do, please make it more findable!)
->
-> I just noticed this error/bug:
->
-> git checkout test
-> git bisect start
-> <do some bisecting>
-> git branch -D test
-> <finish bisecting>
-> git bisect reset
->
-> And it gives an error, because test has been deleted. =A0This is in 1=
-=2E7.3.5. =A0Now, I looked through the log of the current master of git=
- to see if anything has been done about this, and all I noticed was the=
- commit 3bb8cf88247db5, which essentially improves the error message.
->
-> Now, this is good, because it seemed to me above that I was stuck bis=
-ecting until I recreated the test branch. =A0I did not realize the git =
-bisect <commit> syntax until later.
+There were also messages like this:
 
-You mean "git bisect reset <commit>".
+$ git pull
+remote: Counting objects: 5, done.
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Unpacking objects: 100% (3/3), done.
+From /home/kde-devel/dev/src/playground/git/tmp/remote
+ + 1434cd2...dd30974 HEAD       -> origin/HEAD  (forced update)
+error: Ref refs/remotes/origin/master is at 
+dd3097498a6c1c5bc73ad1f2ff3b7969a6f6d059 but expected 
+1434cd2bb9823d2d2b1548c75fdd4ff8b1feddc1
+ ! 1434cd2..2fb560d  master     -> origin/master  (unable to update local 
+ref)
 
-> But this has brought me to bother you guys about something that has b=
-een bugging me for a while. I hate git bisect reset. =A090% of the time=
- I do not want to go back to where I started bisecting. =A0I would much=
- prefer to just have a git bisect stop command, which just stops the bi=
-secting process, but leaves me where I am (like a shortcut to git bisec=
-t reset HEAD). =A0This would be much more symmetric with git bisect sta=
-rt.
+The HEAD branch was created accidentally and the issue was resolved by doing 
+a git push origin -f :refs/heads/HEAD. Again though, git push -f is not 
+something all developers are allowed to do on the kde git infrastructure, so 
+until that was done, the repo was corrupt for everyone.
 
-If more people want it, yeah, we can create such a shortcut. But you
-can also use a git alias for that.
+Shouldn't git forbit the creation of a branch called HEAD? Hopefully the 
+provided script can lead to the actual issue that caused the corruption of 
+our repo.
 
-> While we are on the topic of bisecting, I have another issue. =A0Can =
-we remove the restriction that a "bad" commit come after a "good" commi=
-t? =A0I'd say about 70% of the time I use bisect to find a commit that =
-fixes a bug, not breaks it. =A0Whenever this happens, I have to bend my=
- mind over backwards to remind myself that the good behavior is really =
-"bad" and the bad behavior is really "good". =A0Is there a reason that =
-git bisect can't just introspect from which comes earlier and which com=
-es later to see which is "good" or "bad" (instead of just raising an er=
-ror when they are in the "wrong" order)?
+Thanks,
 
-Yeah, many people find it difficult to reverse the meaning of "bad"
-and "good" when looking for a fix. There were some suggestions at some
-points to do something about it. Some of the suggestions were to use
-some aliases for "good" and "bad", but there was no agreement. Other
-suggestions had a patch attached but the patch was not good enough or
-something.
+Steve.
 
-Anyway, the restriction is that the "bad" commit cannot be an ancestor
-of a "good" commit. But the "good" commits need not be all ancestors
-of the "bad" commit. For example if you have a "master" branch and a
-"dev" branch that was forked from the "master" branch at one point,
-like that:
 
-A-B-C-D-E <-- master
-      \F-G <-- dev
-
-you can use one of the branch as "bad" and the other one as "good".
-And that means that in this case we cannot automatically reverse the
-meaning of "good" and "bad".
-
-So if we ever implement a "--reverse" mode, I think that the best we
-could do if we detect that a "bad" commit is an ancestor of a "good"
-commit is to suggest the use of this "--reverse" mode. Or we could ask
-and use this mode if the answer is yes.
-
-Best regards,
-Christian.
+_______________________________________________
+KDE PIM mailing list kde-pim@kde.org
+https://mail.kde.org/mailman/listinfo/kde-pim
+KDE PIM home page at http://pim.kde.org/
