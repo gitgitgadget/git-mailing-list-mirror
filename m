@@ -1,121 +1,135 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: gitk "find commit adding/removing string"/possible pickaxe bug?
-Date: Tue, 18 Jan 2011 13:50:28 -0500
-Message-ID: <20110118185027.GA10562@sigill.intra.peff.net>
-References: <514EB3AA-CD31-4BDB-B777-B7AAEEDF5663@sebastianhahn.net>
- <201101181744.18139.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 39/47] setup: limit get_git_work_tree()'s to explicit
+ setup case only
+Date: Tue, 18 Jan 2011 11:41:40 -0800
+Message-ID: <7v1v4aknij.fsf@alter.siamese.dyndns.org>
+References: <1290785563-15339-1-git-send-email-pclouds@gmail.com>
+ <1290785563-15339-40-git-send-email-pclouds@gmail.com>
+ <20110118074400.GA4185@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Sebastian Hahn <mail@sebastianhahn.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Tue Jan 18 19:50:45 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 18 20:42:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PfGdc-0001d9-Ds
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Jan 2011 19:50:40 +0100
+	id 1PfHRI-0005uJ-Pc
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Jan 2011 20:42:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752722Ab1ARSuf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jan 2011 13:50:35 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:54674 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752079Ab1ARSue (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jan 2011 13:50:34 -0500
-Received: (qmail 31190 invoked by uid 111); 18 Jan 2011 18:50:32 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 18 Jan 2011 18:50:32 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Jan 2011 13:50:28 -0500
-Content-Disposition: inline
-In-Reply-To: <201101181744.18139.trast@student.ethz.ch>
+	id S1752912Ab1ARTlx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jan 2011 14:41:53 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:54723 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752625Ab1ARTlx (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jan 2011 14:41:53 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id AC0963225;
+	Tue, 18 Jan 2011 14:42:35 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=ucB7r31qrDcAbU1Gpihf2tRhfRQ=; b=RVGuC5
+	xoUBjcu+mkvipgANHqZPWDb6r8Jbc2wMMkr+4KtGBGMFXnueVJqSKBG5hb8l5qk8
+	zO2ptlwQHzqqcN+wr3E9Z52ZrKzwwHtCpmTnjgM0sAd9hZ7trsOWNSNo6xjTiSNs
+	fVJ0RpS5vnhJoUhDa29Uq6oVyjXofO9CBTOxI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VRQguFRXOcy2sAsDNrMgF6J2PYBPuzG1
+	EvtXolU0kb/EstEJoG4ECezCXKgoY1rWKag4mkuSYbCv1UwR+rxEDVfrpoP6zuIK
+	kg2MwdZzUA10QJEEasX4hqSy8GqjNxywmNQV4CZgaeh0i1HZzOe7M69AcSozpPSA
+	fKfxTOUOpSQ=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7C8FB3223;
+	Tue, 18 Jan 2011 14:42:32 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 320FC321E; Tue, 18 Jan 2011
+ 14:42:27 -0500 (EST)
+In-Reply-To: <20110118074400.GA4185@burratino> (Jonathan Nieder's message of
+ "Tue\, 18 Jan 2011 01\:44\:00 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 177510D2-233B-11E0-B004-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165211>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165212>
 
-On Tue, Jan 18, 2011 at 05:44:17PM +0100, Thomas Rast wrote:
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-> In particular, in a history where
-> 
->   $ git show HEAD:foo
->   quux
->   $ git show HEAD^:foo
->   bar
->   $ git show HEAD^2:foo
->   baz
+> diff --git a/setup.c b/setup.c
+> index 3d73269..28b2fef 100644
+> --- a/setup.c
+> +++ b/setup.c
+> @@ -419,6 +419,11 @@ static const char *setup_discovered_git_dir(const char *gitdir,
+>  		return NULL;
+>  	}
+>  
+> +	if (getenv(GIT_WORK_TREE_ENVIRONMENT)) {
+> +		warning("GIT_WORK_TREE without explicit GIT_DIR is deprecated");
+> +		return setup_explicit_git_dir(gitdir, cwd, offset, nongit_ok);
+> +	}
+> +
 
-I created a similar repo with:
+My knee-jerk reaction is that calling this "deprecated" is probably
+confusing. git merely failed to notice misconfiguration so far and went
+ahead to produce a random result when GIT_DIR is not set (hence the usual
+rule is in effect to find out where the .git directory is, starting from
+the assumption that you _are_ somewhere _inside_ the work tree, _and_ the
+root of the work tree _is_ where that .git directory is found in) and at
+the same time GIT_WORK_TREE is pointing at a random other location.
 
-commit() {
-  echo $1 >file && git add file && git commit -m $1
-}
-mkdir repo && cd repo && git init
-commit base
-commit master
-git checkout -b other HEAD^
-commit other
-git merge master
-commit resolved
+Unless that location happens to match the parent directory of the
+discovered .git, this invalidates the assumption of the whole discovery
+logic (iow, how you found .git to begin with). In other words, it is my
+understanding that setting only GIT_WORK_TREE without setting GIT_DIR
+wasn't meant to be supported at all, because there is no sane logic to
+specify a consistent behaviour in such a case.
 
-which should be identical. But I get different results (see near the
-end):
+If "we first run discovery as if you were somewhere in your work tree to
+find .git directory, but you are allowed to say that your working tree is
+elsewhere, possibly completely unrelated to the tree hierarchy used to
+find .git directory to begin with; we could accomodate these conflicting
+wishes because hopefully the necessary set-up happens before we actually
+need to touch anything in the work tree" were a sane specification, this
+patch may start making sense. Not breaking existing scripts that rely on
+the behaviour is a nice bonus. The "hopefully" part makes me worried
+enough to keep me from saying that semantics is sane without thinking
+though.
 
-> the behaviour is:
-> 
->   git log -Squux                  # empty
->   git log -Squux -p               # empty
+I notice that git(1) manual page discusses --work-tree=<path> (and
+GIT_WORK_TREE) to a reasonable level of details (the most importantly, the
+rule to determine where the root of the working tree is when nothing is
+specified is given), but the corresponding description on --git-dir=<path>
+(and GIT_DIR) is too sketchy to tell how the discovery works when nothing
+is given. Perhaps that part needs to address what the semantics should be?
 
-All of which make sense to me. Pickaxe operates on diff filepairs, and
-git by default doesn't seem to do merge diffing at all (but see below).
-So those filepairs don't exist to consider.
+>  	/* #0, #1, #5, #8, #9, #12, #13 */
+>  	set_git_work_tree(".");
+>  	if (strcmp(gitdir, DEFAULT_GIT_DIR_ENVIRONMENT))
+> @@ -443,6 +448,11 @@ static const char *setup_bare_git_dir(char *cwd, int offset, int len, int *nongi
+>  	if (check_repository_format_gently(".", nongit_ok))
+>  		return NULL;
+>  
+> +	if (getenv(GIT_WORK_TREE_ENVIRONMENT)) {
+> +		warning("GIT_WORK_TREE without explicit GIT_DIR is deprecated");
+> +		return setup_explicit_git_dir(".", cwd, offset, nongit_ok);
+> +	}
+>  	inside_git_dir = 1;
+>  	inside_work_tree = 0;
 
->   git log -Squux --pickaxe-all    # empty
+This is for people who do "cd .git && GIT_WORK_TREE=.. git cmd". I have to
+wonder what happens to the pathspec given to the cmd---you are clearly
+outside of your working tree.
 
-This doesn't help. It just loosens the actual diff shown from "just the
-things that matched -S" to "everything in that commit". It doesn't
-add to the filepairs that make it to pickaxe.
+A tangent.
 
->   git log -Squux -c      	  # shows merge, but no diff
-
-This "-c" does what you want, because we start looking at merge
-filepairs. Although one thing leaves me confused. If I do:
-
-  git log -p
-
-I get no diff for the merge commit. But in git-diff(1), it says:
-
-  COMBINED DIFF FORMAT
-    "git-diff-tree", "git-diff-files" and "git-diff" can take -c or --cc
-    option to produce combined diff. For showing a merge commit with
-    "git log -p", this is the default format; you can force showing full
-    diff with the -m option.
-
-which implies to me that "-c" should be on by default if we selected
-"-p" (or presumably -S).
-
-I didn't bisect, but I wonder if the doc is wrong, or if we accidentally
-lost this default at some point.
-
->   git log -Squux --cc    	  # shows merge, but no diff
-
-Makes sense again, since you didn't ask for a patch, no patch.
-
->   git log -Squux -c -p   	  # shows merge, but no diff
-
-Weird.  Here I get a nice combined diff, which is what I expect.
-
->   git log -Squux -c --pickaxe-all # shows merge, but no diff
-
-Yep, no "-p" again.
-
->   git log -Squux --pickaxe-all -c -p  # shows merge & combined diff
-
-The pickaxe-all shouldn't impact anything, at least not in my test repo,
-as there is only one file. But of course I do get the diff, as I did
-above. Can you show the steps to create your repo? I'm wondering what is
-different.
-
--Peff
+Do we make sure that whatever GIT_WORK_TREE we end up with using is an
+ancestor directory of the $CWD when we require us to be inside the working
+tree? I think we should, as I don't think of a sane use case otherwise
+(unless you call "cd ../neigh; GIT_WORK_TREE=../work git diff ../work/foo"
+a sane way to futz with the file "foo" in the working tree "work" from a
+directory "neigh" that is unrelated to the repository).
