@@ -1,55 +1,78 @@
-From: Tuncer Ayaz <tuncer.ayaz@gmail.com>
-Subject: filter-branch --env-filter GIT_AUTHOR_DATE
-Date: Tue, 18 Jan 2011 17:43:40 +0100
-Message-ID: <AANLkTinx7cs6YTvSTTv-njHA+vk264u1EaJettSdBF9U@mail.gmail.com>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: gitk "find commit adding/removing string"/possible pickaxe bug?
+Date: Tue, 18 Jan 2011 17:44:17 +0100
+Message-ID: <201101181744.18139.trast@student.ethz.ch>
+References: <514EB3AA-CD31-4BDB-B777-B7AAEEDF5663@sebastianhahn.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 18 17:44:28 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Sebastian Hahn <mail@sebastianhahn.net>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Tue Jan 18 17:45:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PfEfS-0006Fz-FA
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Jan 2011 17:44:26 +0100
+	id 1PfEgA-0006gO-UL
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Jan 2011 17:45:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751530Ab1ARQoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jan 2011 11:44:21 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:37539 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750867Ab1ARQoU (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jan 2011 11:44:20 -0500
-Received: by pwj3 with SMTP id 3so1089660pwj.19
-        for <git@vger.kernel.org>; Tue, 18 Jan 2011 08:44:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=dTkerEt1ysIUjTOH1Wwobhqu2zlBPvK/FF521V2lMpo=;
-        b=mWa2i13/OE/7B2fUep2dWh71YFkJcb/Fz95KpIjVNW+mQmSWBImdXnfk45T8F0uMKf
-         4oYwYmJP+PPsPFZ6gOXoLYDwPPDI4HNPbhxiT+bxvutGGto1qDkSFgYi0MOtlO4/czsz
-         CuQVzCMf9L/YprrUMT617MK9C76PYoH3Hquq4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=JoQaZv9BOVPVyLIR47pRZyiz0oAHtg2bSO8XuKmAFhle8D4Kx5URnnB0b2GYcbCFia
-         QCs04rZlfaF893WnnK4UJs03QvydC3E364yJlLGOTihZHR1Be/t1AlO9tLZYDfuRPcZ+
-         C70asQ0lOrSsL4NHo3+Z50BhxULB7lTuTe1fE=
-Received: by 10.142.226.2 with SMTP id y2mr5355000wfg.136.1295369060371; Tue,
- 18 Jan 2011 08:44:20 -0800 (PST)
-Received: by 10.142.76.11 with HTTP; Tue, 18 Jan 2011 08:43:40 -0800 (PST)
+	id S1752356Ab1ARQpE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jan 2011 11:45:04 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:12888 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751210Ab1ARQpD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jan 2011 11:45:03 -0500
+Received: from CAS22.d.ethz.ch (172.31.51.112) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 18 Jan
+ 2011 17:44:42 +0100
+Received: from pctrast.inf.ethz.ch (129.132.211.99) by CAS22.d.ethz.ch
+ (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 18 Jan
+ 2011 17:45:00 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
+In-Reply-To: <514EB3AA-CD31-4BDB-B777-B7AAEEDF5663@sebastianhahn.net>
+X-Originating-IP: [129.132.211.99]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165206>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165207>
 
-To fix invalid timezone info in a repo I ran
-git filter-branch --env-filter '
-  GIT_AUTHOR_DATE=`echo ${GIT_AUTHOR_DATE}|sed s/+0000/-0800/`' HEAD
+Sebastian Hahn wrote:
+> 
+> I quite like gitk and am a fan of the ability to easily locate commits
+> where a specific string was added/removed. If the string in question
+> was added in a merge commit as part of a conflicted/otherwise
+> changed merge, gitk doesn't display it.
+[...]
+> I presented the issue to #git, and it was suggested that it is probably
+> a pickaxe bug
 
-This fixed the invalid entries but the new timezone is -0700
-instead of -0800. Is this expected?
+In particular, in a history where
 
-git version 1.7.4.rc2
+  $ git show HEAD:foo
+  quux
+  $ git show HEAD^:foo
+  bar
+  $ git show HEAD^2:foo
+  baz
+
+the behaviour is:
+
+  git log -Squux                  # empty
+  git log -Squux -p               # empty
+  git log -Squux --pickaxe-all    # empty
+
+  git log -Squux -c      	  # shows merge, but no diff
+  git log -Squux --cc    	  # shows merge, but no diff
+  git log -Squux -c -p   	  # shows merge, but no diff
+  git log -Squux -c --pickaxe-all # shows merge, but no diff
+
+  git log -Squux --pickaxe-all -c -p  # shows merge & combined diff
+
+So it only shows the diff with --pickaxe-all, even though the (only)
+hunk clearly introduced the string.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
