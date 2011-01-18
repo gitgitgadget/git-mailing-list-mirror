@@ -1,79 +1,71 @@
-From: Ilyes Gouta <ilyes.gouta@gmail.com>
-Subject: Manually turning a --bare local repository to a real mirror
- repository (--bare --mirror)
-Date: Tue, 18 Jan 2011 22:59:58 +0100
-Message-ID: <AANLkTikE-sDhzw8=ybKhYhHtTH84V8EEOptMaq8xxRHc@mail.gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: Manually turning a --bare local repository to a real mirror repository (--bare --mirror)
+Date: Tue, 18 Jan 2011 23:35:13 +0100
+Message-ID: <m2wrm13kny.fsf@igel.home>
+References: <AANLkTikE-sDhzw8=ybKhYhHtTH84V8EEOptMaq8xxRHc@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Jan 18 23:06:49 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Ilyes Gouta <ilyes.gouta@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Jan 18 23:35:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PfJhQ-0001t5-7n
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Jan 2011 23:06:48 +0100
+	id 1PfK95-0000xx-I2
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Jan 2011 23:35:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752052Ab1ARWGn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jan 2011 17:06:43 -0500
-Received: from mail-yi0-f42.google.com ([209.85.218.42]:57960 "EHLO
-	mail-yi0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751714Ab1ARWGn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jan 2011 17:06:43 -0500
-X-Greylist: delayed 384 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Jan 2011 17:06:43 EST
-Received: by yia28 with SMTP id 28so50766yia.1
-        for <git@vger.kernel.org>; Tue, 18 Jan 2011 14:06:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=MATpU3YURWjWvSsQ2njJKJ/Eq5PpaVp85HlP94dhZjo=;
-        b=ZlfjhDcarK4BL7Qwms6b4vF+qFx0MluH9eY4goQk/r+un2THGavH9BZuLxqIlEBSZr
-         11qkZrz6DokPF3injj8gvzG4WrEUIZYt9CuAeRrIjf8oc3HtyjBa1sFDOm6ULQSEE1AM
-         HKwvt76ZrI5GCj1zpLzOHvCMNVWo85w6GkpsY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=XLmnodXPaEcnjUAJ11hsWyUoTV9zZr1rnRq7ebWB3RlApyKELvFBSyZb2YiE6upGvv
-         nKT4n6yuXpHWS0Q3YEF4XKm8ykarHwTw2Qv43iGJytRcwivxbV8a1S6WoR2uRxtNScfK
-         Hoj59VlHtRwkuMEGMDlYbVT+Vm9UUJb/zvyco=
-Received: by 10.90.116.1 with SMTP id o1mr7024332agc.127.1295388018652; Tue,
- 18 Jan 2011 14:00:18 -0800 (PST)
-Received: by 10.90.235.10 with HTTP; Tue, 18 Jan 2011 13:59:58 -0800 (PST)
+	id S1752053Ab1ARWfR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jan 2011 17:35:17 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:35775 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751308Ab1ARWfQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jan 2011 17:35:16 -0500
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 035331C0F56B;
+	Tue, 18 Jan 2011 23:35:15 +0100 (CET)
+Received: from localhost (dynscan1.mnet-online.de [192.168.8.164])
+	by mail.m-online.net (Postfix) with ESMTP id F26F11C00333;
+	Tue, 18 Jan 2011 23:35:14 +0100 (CET)
+X-Virus-Scanned: amavisd-new at mnet-online.de
+Received: from mail.mnet-online.de ([192.168.8.180])
+	by localhost (dynscan1.mail.m-online.net [192.168.8.164]) (amavisd-new, port 10024)
+	with ESMTP id I+V44-ohynmd; Tue, 18 Jan 2011 23:35:14 +0100 (CET)
+Received: from igel.home (ppp-88-217-100-201.dynamic.mnet-online.de [88.217.100.201])
+	by mail.mnet-online.de (Postfix) with ESMTP;
+	Tue, 18 Jan 2011 23:35:14 +0100 (CET)
+Received: by igel.home (Postfix, from userid 501)
+	id C79C4CA2A0; Tue, 18 Jan 2011 23:35:13 +0100 (CET)
+X-Yow: - if it GLISTENS, gobble it!!
+In-Reply-To: <AANLkTikE-sDhzw8=ybKhYhHtTH84V8EEOptMaq8xxRHc@mail.gmail.com>
+	(Ilyes Gouta's message of "Tue, 18 Jan 2011 22:59:58 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.92 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165229>
 
-Hi,
+> My question: given that I don't have enough bandwidth and constant
+> Internet connectivity, I'd like to ask if it's possible to manually
+> turn a pure --bare local repository into a --bare --mirror one? If
+> yes, how to do that?
 
-I'm setting up a local git repo which should mirrors the branches of
-the original repo and at the same time hosts the local private
-developement branches of the team.
+An ordinary bare clone has no fetch configuration.  To turn the repo
+into a mirror you just have to add one:
 
-At first step I did create a local copy by issuing:
+$ git config remote.origin.fetch "+refs/*:refs/*"
 
-git clone --bare <original_git_repository>
+and set the mirror flag:
 
-I found out later that fetching the various refs lead the local master
-ref not automatically following the remote/master ref, after every git
-fetch --all. I found that I have to use:
+$ git config remote.origin.mirror true
 
-git clone --bare --mirror <original_git_repository>
+Then do a git fetch to fetch any missing refs.
 
-instead to get that effect. Now please keep in mind that I intend to
-also create local private branches where developers will push their
-custom code.
+Andreas.
 
-My question: given that I don't have enough bandwidth and constant
-Internet connectivity, I'd like to ask if it's possible to manually
-turn a pure --bare local repository into a --bare --mirror one? If
-yes, how to do that?
-
-Please CC me when replying, because I'm not registered to the mailing list.
-
-Thanks,
-
--Ilyes
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
