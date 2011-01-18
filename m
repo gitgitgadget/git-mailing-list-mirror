@@ -1,71 +1,55 @@
-From: Yaroslav Halchenko <debian@onerussian.com>
-Subject: Re: problem with cherry-picking a commit which comes before
- introducing a new submodule
-Date: Tue, 18 Jan 2011 11:20:23 -0500
-Message-ID: <20110118162022.GX27814@onerussian.com>
-References: <20110107172432.GA6040@onerussian.com>
- <20110107181501.GA28980@burratino>
- <20110107183226.GG6040@onerussian.com>
- <20110107230017.GA15495@burratino>
- <20110108000131.GR6040@onerussian.com>
- <20110111132710.GA14905@burratino>
- <20110118160222.GA23926@onerussian.com>
- <4D35BAE1.6090204@op5.se>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Elijah Newren <newren@gmail.com>
-To: Andreas Ericsson <ae@op5.se>
-X-From: git-owner@vger.kernel.org Tue Jan 18 17:20:30 2011
+From: Sebastian Hahn <mail@sebastianhahn.net>
+Subject: gitk "find commit adding/removing string"/possible pickaxe bug?
+Date: Tue, 18 Jan 2011 17:16:18 +0100
+Message-ID: <514EB3AA-CD31-4BDB-B777-B7AAEEDF5663@sebastianhahn.net>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 18 17:26:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PfEII-00081k-FV
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Jan 2011 17:20:30 +0100
+	id 1PfEOT-0003m8-4y
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Jan 2011 17:26:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752699Ab1ARQUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jan 2011 11:20:25 -0500
-Received: from washoe.dartmouth.edu ([129.170.30.229]:40036 "EHLO
-	smtp.onerussian.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752245Ab1ARQUY (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jan 2011 11:20:24 -0500
-Received: from smtp.onerussian.com ([192.168.100.6] helo=washoe.onerussian.com)
-	by smtp.onerussian.com with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
-	(Exim 4.69)
-	(envelope-from <yoh@onerussian.com>)
-	id 1PfEIB-0006cC-9K; Tue, 18 Jan 2011 11:20:23 -0500
-Received: from yoh by washoe.onerussian.com with local (Exim 4.69)
-	(envelope-from <yoh@onerussian.com>)
-	id 1PfEIB-0006c9-45; Tue, 18 Jan 2011 11:20:23 -0500
-Content-Disposition: inline
-In-Reply-To: <4D35BAE1.6090204@op5.se>
-X-URL: http://www.onerussian.com
-X-Image-Url: http://www.onerussian.com/img/yoh.png
-X-PGP-Key: http://www.onerussian.com/gpg-yoh.asc
-X-fingerprint: C5B9 05F0 E8D9 FD96 68FF  366F A2DE 2350 62DA 33FA
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: 192.168.100.6
-X-SA-Exim-Rcpt-To: ae@op5.se, git@vger.kernel.org, jrnieder@gmail.com, newren@gmail.com
-X-SA-Exim-Mail-From: yoh@onerussian.com
-X-SA-Exim-Scanned: No (on smtp.onerussian.com); SAEximRunCond expanded to false
+	id S1752428Ab1ARQ0s (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jan 2011 11:26:48 -0500
+Received: from sebastianhahn.net ([78.47.18.109]:41036 "EHLO sebastianhahn.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752326Ab1ARQ0r (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jan 2011 11:26:47 -0500
+X-Greylist: delayed 627 seconds by postgrey-1.27 at vger.kernel.org; Tue, 18 Jan 2011 11:26:47 EST
+Received: from [192.168.178.27] (port-92-194-203-88.dynamic.qsc.de [92.194.203.88])
+	by sebastianhahn.net (Postfix) with ESMTPSA id 0BD9714E4004
+	for <git@vger.kernel.org>; Tue, 18 Jan 2011 17:16:19 +0100 (CET)
+X-Mailer: Apple Mail (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165204>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165205>
 
+Hi,
 
-On Tue, 18 Jan 2011, Andreas Ericsson wrote:
-> > is there a way to memorize this issue somewhere (bug tracking/TODO/etc)
-> > where this issue could be recorded so it doesn't get forgotten? ;)
-> It will be stored in the hive-mind of the mailing list participants.
-> It's quite a bit better than it sounds actually.
+I quite like gitk and am a fan of the ability to easily locate commits
+where a specific string was added/removed. If the string in question
+was added in a merge commit as part of a conflicted/otherwise
+changed merge, gitk doesn't display it.
 
-ok -- offload completed then, I am cleaning up my memory bank
+(If you want to reproduce, the repository is git://git.torproject.org/ 
+tor,
+the string I'm looking for is "< DIGEST" and the first commit I hope to
+find is ed87738ede789fb).
 
--- 
-=------------------------------------------------------------------=
-Keep in touch                                     www.onerussian.com
-Yaroslav Halchenko                 www.ohloh.net/accounts/yarikoptic
+I presented the issue to #git, and it was suggested that it is probably
+a pickaxe bug in that it doesn't display changes in merge commits if
+they add strings that neither of their parents has.
+
+Do you agree that this is a bug, or am I missing anything here?
+
+Thanks for you consideration!
+
+Sebastian
