@@ -1,82 +1,83 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: core.whitespace space-in-indent feature request
-Date: Tue, 18 Jan 2011 12:31:00 -0800
-Message-ID: <7vwrm2j6nv.fsf@alter.siamese.dyndns.org>
-References: <AANLkTikiHXofGVg9QECg9a4U4r4VGD1tb6oMV21nzd9W@mail.gmail.com>
- <1295380297.3778.47.camel@drew-northup.unet.maine.edu>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: Re: gitk "find commit adding/removing string"/possible pickaxe bug?
+Date: Tue, 18 Jan 2011 21:39:28 +0100
+Message-ID: <201101182139.28808.trast@student.ethz.ch>
+References: <514EB3AA-CD31-4BDB-B777-B7AAEEDF5663@sebastianhahn.net> <201101181744.18139.trast@student.ethz.ch> <20110118185027.GA10562@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Victor Engmark <victor.engmark@gmail.com>, git@vger.kernel.org
-To: Drew Northup <drew.northup@maine.edu>
-X-From: git-owner@vger.kernel.org Tue Jan 18 21:31:31 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>, Sebastian Hahn <mail@sebastianhahn.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 18 21:39:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PfID9-0000rg-UN
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Jan 2011 21:31:28 +0100
+	id 1PfIL3-0005ZY-Bg
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Jan 2011 21:39:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753615Ab1ARUbN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jan 2011 15:31:13 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44152 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753586Ab1ARUbL (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jan 2011 15:31:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1650B38E1;
-	Tue, 18 Jan 2011 15:31:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=E/idS5GSXwVXfgHdA0ghDwXBFcE=; b=lQoqb4
-	MoIT/frbkoUEXfe8l9UqmvDJsb5fc4EGXv8abPM7M35p1sdIi9wgMwmaygNJF8Ga
-	LBHfAf8m3fJFTHa1qPp2+32slzR5tgwPFqZUTkwdBfUFVeBl8XCGdZjGCqXeHIRt
-	WqFU2OBwdlgr0SMqlmXMimj1V+ybMv7qaZmv0=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VmNBATWqk20q72P4TBF5fa1IyXCOEFXX
-	ULA388QEm1LLuQj75CVfWUCJ8AsCXOaTnguvsq6LZavqI9kAZeU5zd7g5eKyTYAs
-	VJYKJ28IqM5rqUmF4jWtVf9n8IZxw1KkaAhaUzQS4OejRu6MQjh6ashRr0g4ONt0
-	Jv35QwW5B4E=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D74F438DD;
-	Tue, 18 Jan 2011 15:31:52 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CB69F38DB; Tue, 18 Jan 2011
- 15:31:48 -0500 (EST)
-In-Reply-To: <1295380297.3778.47.camel@drew-northup.unet.maine.edu> (Drew
- Northup's message of "Tue\, 18 Jan 2011 14\:51\:37 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FBF9AE24-2341-11E0-B263-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
+	id S1753364Ab1ARUjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jan 2011 15:39:31 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:25066 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752780Ab1ARUjb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jan 2011 15:39:31 -0500
+Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 18 Jan
+ 2011 21:39:11 +0100
+Received: from pctrast.inf.ethz.ch (84.74.105.24) by CAS11.d.ethz.ch
+ (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 18 Jan
+ 2011 21:39:29 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
+In-Reply-To: <20110118185027.GA10562@sigill.intra.peff.net>
+X-Originating-IP: [84.74.105.24]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165215>
 
-Drew Northup <drew.northup@maine.edu> writes:
+Jeff King wrote:
+> commit() {
+>   echo $1 >file && git add file && git commit -m $1
+> }
+> mkdir repo && cd repo && git init
+> commit base
+> commit master
+> git checkout -b other HEAD^
+> commit other
+> git merge master
+> commit resolved
 
-> On Fri, 2011-01-14 at 13:40 +0100, Victor Engmark wrote:
->> Hi all,
->> 
->> I couldn't find this mentioned anywhere, but it would be useful for
->> languages where you typically want only tab characters in indentation,
->> like makefiles. Would be equivalent or similar to indent-with-non-tab
->> and tabwidth=1.
->
-> Victor,
-> What would the point of this be? Git doesn't change the layout of the
-> code when storing it--that's up to the thing between the chair and the
-> keyboard.
+Indeed, my history looks just like that.
 
-True, but I think Victor wants to be able to ask "diff --check" to
-complain and diff --color to highlight when it sees a line that begins
-with a SP (or a HT then SP) by setting:
+> >   git log -Squux -c -p          # shows merge, but no diff
+> 
+> Weird.  Here I get a nice combined diff, which is what I expect.
 
-	* whitespace=space-in-indent
+True, I managed to confuse myself between looking for the resolution and
+looking for one of the (deleted) merge sides.
 
-or something in the attributes file.
+So indeed
 
-As "equivalence" exists, not very much interested in coding it myself,
-though ;-)
+  git log -Squux -c -p
+
+gives a combined diff.  But OTOH
+
+  git log -Sbar -c -p
+
+doesn't; it only gives a diff for the commit that introduced 'bar'.  I
+guess this makes sense: -S notices that the number of 'bar's is
+actually the same as in *one* merge parent, hence the merge cannot be
+all that interesting.  OTOH it still shows the merge commit in the
+history, which is a bit strange.  --pickaxe-all does not make a
+difference either;
+
+   git log -Sbar --cc -p --pickaxe-all
+
+still shows the merge commit but no diff.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
