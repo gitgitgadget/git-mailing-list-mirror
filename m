@@ -1,85 +1,110 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: git diff
-Date: Mon, 17 Jan 2011 17:30:21 -0500
-Message-ID: <20110117223021.GA31045@sigill.intra.peff.net>
-References: <AANLkTi=ASvicFGaaDfqxjOxJELWPLKsQwvk7rEeT36Fh@mail.gmail.com>
- <AANLkTik7cfu_DS=GS5gz_Tu94NC=ZGi-eA8YXztyd9Ra@mail.gmail.com>
+From: JT Olds <jtolds@xnet5.com>
+Subject: Re: Git Rebase blows away GIT_AUTHOR_NAME
+Date: Mon, 17 Jan 2011 20:55:42 -0700
+Message-ID: <AANLkTinY1Wcirxi2bRUv+GuTG9eWczd-T1o0Mmx8VFdA@mail.gmail.com>
+References: <AANLkTikqfX3jhSdP5xhFj=VktqW2S6AeGL_MF18g8ZA_@mail.gmail.com>
+	<AANLkTimf2rwKqyWwQbdj7cjS8YcQwCXYGRCvQbZ5HZ19@mail.gmail.com>
+	<AANLkTik15iV9SOv6rRL5+DQkAZ4JwBGTS+gqS3nXy2hN@mail.gmail.com>
+	<AANLkTikk7Xdiey76Dmy848_B4qNX2-Vbis7p=E8vtNL9@mail.gmail.com>
+	<AANLkTimONqL4=E4Unrsj9PU5u57KGXrmO6xWUOCLorgs@mail.gmail.com>
+	<AANLkTi=PTgmOSC7pRLjujO5fi9Wdp69Jmj4zCkhGSYSz@mail.gmail.com>
+	<AANLkTiksAZSi-Yo8yJv5ca9XWWvB3iVQhZOJtTs-F8gk@mail.gmail.com>
+	<AANLkTi=Z6Dx6m68zi7Q1eRVxX3DXOyKj+Ff177UCQrAj@mail.gmail.com>
+	<AANLkTimZF+r2aNzrXsUuHVZR65N5wpOYLutFgGAGoci_@mail.gmail.com>
+	<20110114162144.GA867@sigill.intra.peff.net>
+	<20110117222128.GA30869@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Carter Lamb <carter.lamb@livetext.com>
-X-From: git-owner@vger.kernel.org Mon Jan 17 23:30:37 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Erik Faye-Lund <kusmabite@gmail.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Tor Arntsen <tor@spacetec.no>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Jan 18 04:55:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pexaq-0000uJ-LB
-	for gcvg-git-2@lo.gmane.org; Mon, 17 Jan 2011 23:30:32 +0100
+	id 1Pf2fd-0000xN-Th
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Jan 2011 04:55:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753040Ab1AQWaY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 17 Jan 2011 17:30:24 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:56385 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753008Ab1AQWaX (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 17 Jan 2011 17:30:23 -0500
-Received: (qmail 26295 invoked by uid 111); 17 Jan 2011 22:30:23 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 17 Jan 2011 22:30:23 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 17 Jan 2011 17:30:21 -0500
-Content-Disposition: inline
-In-Reply-To: <AANLkTik7cfu_DS=GS5gz_Tu94NC=ZGi-eA8YXztyd9Ra@mail.gmail.com>
+	id S1753531Ab1ARDzp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 17 Jan 2011 22:55:45 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:33185 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752884Ab1ARDzo convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 17 Jan 2011 22:55:44 -0500
+Received: by wyb28 with SMTP id 28so5704419wyb.19
+        for <git@vger.kernel.org>; Mon, 17 Jan 2011 19:55:43 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=a/CeNeSy92zOKtlLcjGHg+EPEpYWzVjL1UoLBj6Jk+Q=;
+        b=pBzeOKPz1K5c+6OJ0C+W2pMTk6JCJFReo0+KooE7CVay9LpYrLshJAlkYhbZkaV7Ej
+         EDmtuftqbJnNvdeZavjSg1bC0b7Df0nGFfhu5knWvZczv7Yj3ElUHoA0++IpD7aZw87V
+         bMFh0ewrcm8j/7CiQTZJhdVmp/F/L4Lgw6Ds4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        b=Mr3cDLVqFk/nn24Jm7rBvcL2v1qO2eO6CXqJUBiFmFLzYa16Yy2CW7gu81qXM1uLZI
+         VZedKI1eqoAiI5+iHxzMQmBM8eWG7YrTerUlKJPJQOHzd1Rt76I+jD9mgsZub8fymkC3
+         4Ppyg8CWgG78lgYUnLDzq+0x3Tj23YZPVLdxA=
+Received: by 10.216.48.211 with SMTP id v61mr4129636web.35.1295322942940; Mon,
+ 17 Jan 2011 19:55:42 -0800 (PST)
+Received: by 10.216.2.194 with HTTP; Mon, 17 Jan 2011 19:55:42 -0800 (PST)
+In-Reply-To: <20110117222128.GA30869@sigill.intra.peff.net>
+X-Google-Sender-Auth: MYXc4-Hpd5qGcKe_ECCTftnqJfM
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165188>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165190>
 
-On Thu, Jan 13, 2011 at 04:46:16PM -0600, Carter Lamb wrote:
+On Mon, Jan 17, 2011 at 3:21 PM, Jeff King <peff@peff.net> wrote:
+> On Fri, Jan 14, 2011 at 11:21:45AM -0500, Jeff King wrote:
+>
+>> So we should probably do one or both of:
+>>
+>> =A0 1. Make an --allow-any-name option to mailinfo, and use it when =
+we
+>> =A0 =A0 =A0invoke mailinfo internally for rebasing. That still doesn=
+'t solve
+>> =A0 =A0 =A0the emailed patch problem, but at least keeps purely inte=
+rnal
+>> =A0 =A0 =A0operations sane.
+>
+> So I wrote up a nice tidy patch series with mailinfo changes and test=
+s,
+> and then am/rebase changes and tests on top of that. And guess what I
+> noticed? My rebase tests didn't actually fail with stock git.
+>
+> I bisected to 43c2325 (am: use get_author_ident_from_commit instead o=
+f
+> mailinfo when rebasing, 2010-06-16), which was written to handle exac=
+tly
+> this sort of thing.
+>
+> That commit made it into v1.7.2. JT, which version of git are you
+> running? Do you still see any problems with v1.7.2 and above? I can't
+> replicate your issue with more recent versions.
+>
+> So unless we want to do any sort of commit-time warning, I don't thin=
+k
+> there is anything left to be done on this topic.
+>
+> -Peff
+>
 
-> I use git diff --summary --numstat <commit> to report the files
-> modified, created, and deleted between the current commit and some
-> prior commit. The --stat and --numstat options count the lines added
-> and deleted for each file. Is there a way to report the lines modified
-> for each file. For example:
+Oh ho! No, I am running 1.7.1. I was so pleased to find out what the
+root of the problem was, though, that I did go and add my last name
+and haven't had any trouble since.
 
-Not really, because it's not well defined. Consider your example:
+Thanks for all your help everyone.
 
-> Given content below for commit 1:
-> aaaaa
-> ccccc
-> 
-> Given content below for commit 2:
-> aaaaa
-> bbbbb
-> ccccc
-> 
-> Given content below for commit 3:
-> Aaaaa
-> Bbbbb
-> ccccc
-> ddddd
-
-How do we know that "Aaaaa" is a modification of line "aaaaa", and not
-simply the deletion of the old line and the addition of a new one? It's
-easy to come up with a case where that is more obvious:
-
-  -aaaaa
-  +ddddd
-
-but there are many shades of gray in between. Is:
-
-  -aaaaa
-  +Aaada
-
-the deletion of an old line and the introduction of a new one, or the
-modification of an existing line?  So fundamentally the diff format just
-deals with added and removed lines, and modifications are represented as
-a delete followed by an add.
-
-Which isn't to say you couldn't think of many clever algorithms for
-heuristically determining a modification, but git doesn't do that itself
-in numstat.
-
--Peff
+-JT
