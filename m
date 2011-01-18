@@ -1,82 +1,86 @@
-From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
-Subject: [RFC] Per-branch receive.* settings
-Date: Wed, 19 Jan 2011 00:07:37 +0100
-Message-ID: <AANLkTimt8BPKsiyVEO+7i+so8337LaUu4A4jpywvJ-Ar@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/3] t/t5400-send-pack.sh: add test_when_finished
+ commands
+Date: Tue, 18 Jan 2011 15:10:57 -0800
+Message-ID: <7vfwspkdtq.fsf@alter.siamese.dyndns.org>
+References: <1295386896-21828-1-git-send-email-avarab@gmail.com>
+ <1295386896-21828-2-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Jan 19 00:07:44 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 19 00:11:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PfKeO-0001qt-BW
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Jan 2011 00:07:44 +0100
+	id 1PfKhl-0003i1-MI
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Jan 2011 00:11:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751701Ab1ARXHj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jan 2011 18:07:39 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:60319 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751440Ab1ARXHi (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jan 2011 18:07:38 -0500
-Received: by fxm20 with SMTP id 20so210738fxm.19
-        for <git@vger.kernel.org>; Tue, 18 Jan 2011 15:07:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=IcEG9W0pYNtmk1aKgQcKLMHqKOHNIyD0mKOSNdXZwQk=;
-        b=LxSbrglNodaEkmgv1LdNE/mVoor18nTYgkkzmR6EOa75Sejn0z/eMoEM4Tz3Ikr2pe
-         GXF4J1uoHUnfKiv9pf0VJ1IAqH/j43Of7KjdaGpxLl3IVKGrfyr9e5iBJmQl0h6QQb8i
-         6Jgn2PuW1KLo2hyT0tYcNQfypuK3fyM1VKLUE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=ul9FDJs809QVmEliQwOninnx/1cmPgf61jVFcUBdKGIfGPMezKEw/TnmiX7+r1Cntq
-         dht45IrGgA9I32KGtO4+iVN0SGSpjOW81rjn/l5zD001GzAkSPiVNP91MH8lgB3PL+UD
-         7o8isbePk+3qFQwW4R5iGdLrOZo/JSdRyegng=
-Received: by 10.223.103.4 with SMTP id i4mr6745646fao.123.1295392057665; Tue,
- 18 Jan 2011 15:07:37 -0800 (PST)
-Received: by 10.223.95.201 with HTTP; Tue, 18 Jan 2011 15:07:37 -0800 (PST)
+	id S1752683Ab1ARXLI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Jan 2011 18:11:08 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:52894 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751714Ab1ARXLG convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 18 Jan 2011 18:11:06 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CA6B02ED3;
+	Tue, 18 Jan 2011 18:11:50 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=DU0JKmJqyOok
+	vC/ohkpmn6Jb+CM=; b=NfqaU3ykVkzmK06jSCEIIe16MNfwQyKA2/IW9JzrQV3z
+	qZwCx+qwXPnqYxxUSzD6FuOloU7+3f2YsRET+YrfkE7Wi26Hd7R8f6K600dK4DSW
+	9wmeNHsz2grwqOHtviwcetaqn94CCnhaU5kcCFky+ehk7+ltPWGlVk3cnjNK6wQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Aa+MO8
+	LFS8hs1bl05vgCj0SQsV4npwZ55YkKa5F5agvW0SpSh/IeAg3ewmPzaBd4NxyjHm
+	TUml8NE+0FSEyTvAyqTcUxMG73cHgZ8ZG5vhauqigg9H3Bd8SoRHJgPHRLz/IU3O
+	9moGk/H9ghl6i4/VyqhyNer1pBXchANmgTvxs=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A70A02ED1;
+	Tue, 18 Jan 2011 18:11:48 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B050B2ECF; Tue, 18 Jan 2011
+ 18:11:45 -0500 (EST)
+In-Reply-To: <1295386896-21828-2-git-send-email-avarab@gmail.com>
+ (=?utf-8?B?IsOGdmFyIEFybmZqw7Zyw7A=?= Bjarmason"'s message of "Tue\, 18 Jan
+ 2011 22\:41\:35 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 538504DE-2358-11E0-BA48-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165230>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165231>
 
-Currently you can do in your server's git config:
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 
-    [receive]
-        denyDeletes = true
-        denyNonFastForwards = true
+> diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+> index 656ab1a..0357610 100755
+> --- a/t/t5400-send-pack.sh
+> +++ b/t/t5400-send-pack.sh
+> @@ -90,7 +90,8 @@ test_expect_success 'refuse deleting push with deny=
+Deletes' '
+>  	    git config receive.denyDeletes true &&
+>  	    git branch extra master
+>  	) &&
+> -	test_must_fail git send-pack ./victim :extra master
+> +	test_must_fail git send-pack ./victim :extra master &&
+> +	test_when_finished "(cd victim && git config --unset receive.denyDe=
+letes)"
+>  '
 
-But for most servers that's not what you want, you actually want to
-deny those things to the master branch, but allow people to have their
-private topic branches that they can reset. So how about allowing:
+I agree that you are trying to do a good thing, but does this
+implementation work in practice?  If somebody breaks send-pack in such =
+a
+way that this push succeeds, doesn't the &&-chain will prevent your
+"when-finished" hook to be registered to begin with?  IOW, wouldn't you
+want to have when-finished as _early_ as possible, before any test that
+might fail to help us identify a new breakage?
 
-    [receive]
-        denyDeletes = false
-        denyNonFastForwards = false
-
-    [branch "master"]
-        denyDeletes = true
-        denyNonFastForwards = true
-
-I.e. have a per-branch setting that overrides the global setting?
-
-(Of course ideally this would be:
-    "branch.master.receive.{denyDeletes,denyNonFastForwards}"
-
-But the *.ini format can only have a depth of three, so it has to be:
-
-    "branch.master.{denyDeletes,denyNonFastForwards}"
-
-Or perhaps:
-
-    "branch.master.receive-{denyDeletes,denyNonFastForwards}"
-
-Anyway, I can code this up if there's interest in it. This could also
-be done with a .git/hooks/update hook, but IMO it's better to have
-this as a documented setting for the most common things you want to
-deny/allow.
+The same comment applies to other two hunks in the patch.
