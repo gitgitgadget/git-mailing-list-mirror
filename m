@@ -1,78 +1,92 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: gitk "find commit adding/removing string"/possible pickaxe bug?
-Date: Tue, 18 Jan 2011 16:33:09 -0500
-Message-ID: <20110118213309.GA933@sigill.intra.peff.net>
-References: <514EB3AA-CD31-4BDB-B777-B7AAEEDF5663@sebastianhahn.net>
- <201101181744.18139.trast@student.ethz.ch>
- <20110118185027.GA10562@sigill.intra.peff.net>
- <201101182139.28808.trast@student.ethz.ch>
- <20110118205040.GA20970@sigill.intra.peff.net>
- <7vsjwpkio8.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+Subject: [PATCH 1/3] t/t5400-send-pack.sh: use the canonical test_expect_success syntax
+Date: Tue, 18 Jan 2011 22:41:34 +0100
+Message-ID: <1295386896-21828-1-git-send-email-avarab@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Sebastian Hahn <mail@sebastianhahn.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Jan 18 22:33:18 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: gitster@pobox.com,
+	=?UTF-8?q?=C3=86var=20Arnfj=C3=B6r=C3=B0=20Bjarmason?= 
+	<avarab@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Jan 18 22:42:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PfJAz-0005FS-OB
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Jan 2011 22:33:18 +0100
+	id 1PfJJu-00031N-TY
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Jan 2011 22:42:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752736Ab1ARVdN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jan 2011 16:33:13 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:37489 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752406Ab1ARVdM (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jan 2011 16:33:12 -0500
-Received: (qmail 32467 invoked by uid 111); 18 Jan 2011 21:33:11 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 18 Jan 2011 21:33:11 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Jan 2011 16:33:09 -0500
-Content-Disposition: inline
-In-Reply-To: <7vsjwpkio8.fsf@alter.siamese.dyndns.org>
+	id S1752338Ab1ARVmZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 18 Jan 2011 16:42:25 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:46636 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751668Ab1ARVmY (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jan 2011 16:42:24 -0500
+Received: by eye27 with SMTP id 27so82442eye.19
+        for <git@vger.kernel.org>; Tue, 18 Jan 2011 13:42:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=HKKejk9DOrDd+OxkbtKezdlcdPEZNfbaEOd1Vafnso0=;
+        b=tRYVYqZ/lZOjxStRwLFEwUyKZXivo4UAPKxaMAMoo+YTl7y0klzN5nasTlpCdg9Xji
+         rzDlb9zQlpb76t8cK3eAItCl9PBqMAL43hmpiwos2IJUDAmM1+vpcoDeXagJz6rrWmLf
+         o/l8ugdWt1cwdJlJjxLN5nrHrFlrICQp6Iiyo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=jrRD8WLspewPaGnD3nwRqoYvYbCABV9BmQLvyTHat1nvA/ucgeFpM0svZzov1OdR3E
+         pszHTyJB66FUnjzl1+6R0mpVtzHWM4ZDZta3Eic3CvL9Fik6KHuOUJdBSd5jz0vQ4XGc
+         FyTktL6s/z3UmtLsb67U0NOWFgKA2AUSqTwac=
+Received: by 10.213.114.15 with SMTP id c15mr6273655ebq.52.1295386943409;
+        Tue, 18 Jan 2011 13:42:23 -0800 (PST)
+Received: from snth.ams7.corp.booking.com (212-182-132-170.ip.telfort.nl [212.182.132.170])
+        by mx.google.com with ESMTPS id t5sm4916974eeh.20.2011.01.18.13.42.21
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 18 Jan 2011 13:42:22 -0800 (PST)
+X-Mailer: git-send-email 1.7.2.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165222>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165223>
 
-On Tue, Jan 18, 2011 at 01:26:15PM -0800, Junio C Hamano wrote:
+Change t/t5400-send-pack.sh to use the usual test_expect_success
+syntax, i.e. change:
 
-> Honestly, my guess is that the interaction of -S with a merge commit is
-> "whatever the code happens to do", as I didn't think nor design how they
-> should interact with each other when I wrote -c/--cc nor when I wrote -S.
+    test_expect_success \
+        'description'
 
-That's kind of what I figured.
+To:
 
-> Having said that, I tend to agree with your latter expectation ("what I
-> want").
+    test_expect_success 'description'
 
-I'll take a look and see how painful it will be to do that. I'm not even
-sure how the merge filepairs are represented by the diff code (since
-they are not even pairs, but rather one child with many parents).
+Like the rest of the tests in t/t5400-send-pack.sh do.
 
-> By the way, you guys should really not be looking at the disused
-> plumbing-helper -S but instead be advocating its newer and more human
-> friendly cousin -G.  1.7.4 is coming ;-).
+Signed-off-by: =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com=
+>
+---
+ t/t5400-send-pack.sh |    3 +--
+ 1 files changed, 1 insertions(+), 2 deletions(-)
 
-It's _way_ slower for simple things:
-
-  $ time git log -Sfoo >/dev/null
-  real    0m11.550s
-  user    0m11.409s
-  sys     0m0.116s
-
-  $ time git log -Gfoo >/dev/null
-  real    0m25.722s
-  user    0m25.442s
-  sys     0m0.220s
-
-I for one really like the -S behavior, anyway, but I expect I am in the
-minority.
-
--Peff
+diff --git a/t/t5400-send-pack.sh b/t/t5400-send-pack.sh
+index b0b2684..656ab1a 100755
+--- a/t/t5400-send-pack.sh
++++ b/t/t5400-send-pack.sh
+@@ -76,8 +76,7 @@ test_expect_success 'refuse pushing rewound head with=
+out --force' '
+ 	test "$victim_head" =3D "$pushed_head"
+ '
+=20
+-test_expect_success \
+-        'push can be used to delete a ref' '
++test_expect_success 'push can be used to delete a ref' '
+ 	( cd victim && git branch extra master ) &&
+ 	git send-pack ./victim :extra master &&
+ 	( cd victim &&
+--=20
+1.7.2.3
