@@ -1,83 +1,73 @@
-From: Thomas Rast <trast@student.ethz.ch>
+From: Jeff King <peff@peff.net>
 Subject: Re: gitk "find commit adding/removing string"/possible pickaxe bug?
-Date: Tue, 18 Jan 2011 21:39:28 +0100
-Message-ID: <201101182139.28808.trast@student.ethz.ch>
-References: <514EB3AA-CD31-4BDB-B777-B7AAEEDF5663@sebastianhahn.net> <201101181744.18139.trast@student.ethz.ch> <20110118185027.GA10562@sigill.intra.peff.net>
+Date: Tue, 18 Jan 2011 15:50:40 -0500
+Message-ID: <20110118205040.GA20970@sigill.intra.peff.net>
+References: <514EB3AA-CD31-4BDB-B777-B7AAEEDF5663@sebastianhahn.net>
+ <201101181744.18139.trast@student.ethz.ch>
+ <20110118185027.GA10562@sigill.intra.peff.net>
+ <201101182139.28808.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, Sebastian Hahn <mail@sebastianhahn.net>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Jan 18 21:39:38 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Sebastian Hahn <mail@sebastianhahn.net>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Jan 18 21:51:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PfIL3-0005ZY-Bg
-	for gcvg-git-2@lo.gmane.org; Tue, 18 Jan 2011 21:39:37 +0100
+	id 1PfIW7-0004A0-Im
+	for gcvg-git-2@lo.gmane.org; Tue, 18 Jan 2011 21:51:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753364Ab1ARUjb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 18 Jan 2011 15:39:31 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:25066 "EHLO edge20.ethz.ch"
+	id S1753404Ab1ARUuo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 18 Jan 2011 15:50:44 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:54306 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752780Ab1ARUjb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 18 Jan 2011 15:39:31 -0500
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 18 Jan
- 2011 21:39:11 +0100
-Received: from pctrast.inf.ethz.ch (84.74.105.24) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.218.12; Tue, 18 Jan
- 2011 21:39:29 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
-In-Reply-To: <20110118185027.GA10562@sigill.intra.peff.net>
-X-Originating-IP: [84.74.105.24]
+	id S1753388Ab1ARUun (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 18 Jan 2011 15:50:43 -0500
+Received: (qmail 31996 invoked by uid 111); 18 Jan 2011 20:50:42 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 18 Jan 2011 20:50:42 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 18 Jan 2011 15:50:40 -0500
+Content-Disposition: inline
+In-Reply-To: <201101182139.28808.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165215>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165216>
 
-Jeff King wrote:
-> commit() {
->   echo $1 >file && git add file && git commit -m $1
-> }
-> mkdir repo && cd repo && git init
-> commit base
-> commit master
-> git checkout -b other HEAD^
-> commit other
-> git merge master
-> commit resolved
+On Tue, Jan 18, 2011 at 09:39:28PM +0100, Thomas Rast wrote:
 
-Indeed, my history looks just like that.
-
-> >   git log -Squux -c -p          # shows merge, but no diff
+> So indeed
 > 
-> Weird.  Here I get a nice combined diff, which is what I expect.
+>   git log -Squux -c -p
+> 
+> gives a combined diff.  But OTOH
+> 
+>   git log -Sbar -c -p
+> 
+> doesn't; it only gives a diff for the commit that introduced 'bar'.  I
+> guess this makes sense: -S notices that the number of 'bar's is
+> actually the same as in *one* merge parent, hence the merge cannot be
+> all that interesting.  OTOH it still shows the merge commit in the
+> history, which is a bit strange.  --pickaxe-all does not make a
+> difference either;
 
-True, I managed to confuse myself between looking for the resolution and
-looking for one of the (deleted) merge sides.
+Hrm. What I expected[1] to happen would be for the diff machinery to
+look at each filepair individually, one of them to trigger -S, which
+shows the commit, and then to fail to produce a combined diff because we
+threw away the other uninteresting filepair. But in that case,
+--pickaxe-all _should_ show something, as its point is to keep all of
+the filepairs.  And that's clearly not happening.
 
-So indeed
+So now I don't know what's going on. I'll try to trace through the diff
+machinery and see if that gives a clue.
 
-  git log -Squux -c -p
+-Peff
 
-gives a combined diff.  But OTOH
-
-  git log -Sbar -c -p
-
-doesn't; it only gives a diff for the commit that introduced 'bar'.  I
-guess this makes sense: -S notices that the number of 'bar's is
-actually the same as in *one* merge parent, hence the merge cannot be
-all that interesting.  OTOH it still shows the merge commit in the
-history, which is a bit strange.  --pickaxe-all does not make a
-difference either;
-
-   git log -Sbar --cc -p --pickaxe-all
-
-still shows the merge commit but no diff.
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+[1] That's what I expect, but not necessarily what I want. I think what
+I would want is for it to do a token count of the merge commit, and if
+it fails to match _every_ parent, then it it interesting. Otherwise, the
+content presumably came from that parent.
