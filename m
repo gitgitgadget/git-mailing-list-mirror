@@ -1,57 +1,82 @@
-From: Tuncer Ayaz <tuncer.ayaz@gmail.com>
-Subject: Re: filter-branch --env-filter GIT_AUTHOR_DATE
-Date: Wed, 19 Jan 2011 11:12:12 +0100
-Message-ID: <AANLkTik43suRRzcPdBZMKifxKx8cwi01H+zGvj5nnvWa@mail.gmail.com>
-References: <AANLkTinx7cs6YTvSTTv-njHA+vk264u1EaJettSdBF9U@mail.gmail.com>
- <4D368C49.3080105@viscovery.net> <AANLkTi=TAhYeWbyocag2myBXA2TfH7_r=hmam51YKbhm@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Wed Jan 19 11:12:58 2011
+From: Victor Engmark <victor.engmark@terreactive.ch>
+Subject: Re: core.whitespace space-in-indent feature request
+Date: Wed, 19 Jan 2011 10:42:27 +0100
+Message-ID: <09F2551C-40E6-40DC-BE97-8DCFF3601C8C@terreactive.ch>
+References: <AANLkTikiHXofGVg9QECg9a4U4r4VGD1tb6oMV21nzd9W@mail.gmail.com> <1295380297.3778.47.camel@drew-northup.unet.maine.edu> <20205598.46894.1295382705010.JavaMail.trustmail@mail1.terreactive.ch>
+Mime-Version: 1.0 (Apple Message framework v1081)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 19 11:15:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PfV2A-0001k0-1B
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Jan 2011 11:12:58 +0100
+	id 1PfV4t-0003MN-N8
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Jan 2011 11:15:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753868Ab1ASKMx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jan 2011 05:12:53 -0500
-Received: from mail-px0-f174.google.com ([209.85.212.174]:42148 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753824Ab1ASKMx (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jan 2011 05:12:53 -0500
-Received: by pxi15 with SMTP id 15so113483pxi.19
-        for <git@vger.kernel.org>; Wed, 19 Jan 2011 02:12:52 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=vkvbx5CrbgpVcIUV1IbaZgzuXHHVn3DOY2Oarq/CS5Q=;
-        b=vHMGjU7s6YK5GHzFWSbL3SrVsHAyusfYI7ZiImfqGZrR27RUu/9RPuK8om17BnqLwG
-         V02yCadFpMffq4SOQMuNF57M0vMNCdGClV+Zc977izqzv86bbwGU+3vvOAbliQPSrDg7
-         qKS7aJNVl98B+VFSUt25tpcz+WsuDiC7lZIGE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=En4eSgvCQkm8hyX4ccUlb7/qLC2EM/CYrFKqzZkjls0mmlLUKqhKkhhdp3RW6GEty7
-         WAy5d+OsXOrq+IIb7PWNvKb8FiVIygM0JWqaH5/BmXnb7cazw/0p/fRBrhBwZPMCVUOl
-         jg+XIFP9A6RuYsca+B3/PXkcisp/vBm+oC93s=
-Received: by 10.142.53.11 with SMTP id b11mr427855wfa.250.1295431972739; Wed,
- 19 Jan 2011 02:12:52 -0800 (PST)
-Received: by 10.142.76.11 with HTTP; Wed, 19 Jan 2011 02:12:12 -0800 (PST)
-In-Reply-To: <AANLkTi=TAhYeWbyocag2myBXA2TfH7_r=hmam51YKbhm@mail.gmail.com>
+	id S1754033Ab1ASKPn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jan 2011 05:15:43 -0500
+Received: from gate.terreactive.ch ([212.90.202.121]:50053 "EHLO
+	mail.terreactive.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753811Ab1ASKPm convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Jan 2011 05:15:42 -0500
+X-Greylist: delayed 1988 seconds by postgrey-1.27 at vger.kernel.org; Wed, 19 Jan 2011 05:15:42 EST
+In-Reply-To: <20205598.46894.1295382705010.JavaMail.trustmail@mail1.terreactive.ch>
+X-terreActive-From: victor.engmark@terreactive.ch
+X-Spam-Status: No
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165257>
 
-On Wed, Jan 19, 2011 at 11:08 AM, Tuncer Ayaz wrote:
-> git cat-file $REV
+On Jan 18, 2011, at 9:31 PM, Junio C Hamano wrote:
 
-To be correct:
-git cat-file -p $REV
+> Drew Northup <drew.northup@maine.edu> writes:
+> 
+>> On Fri, 2011-01-14 at 13:40 +0100, Victor Engmark wrote:
+>>> Hi all,
+>>> 
+>>> I couldn't find this mentioned anywhere, but it would be useful for
+>>> languages where you typically want only tab characters in indentation,
+>>> like makefiles. Would be equivalent or similar to indent-with-non-tab
+>>> and tabwidth=1.
+>> 
+>> Victor,
+>> What would the point of this be? Git doesn't change the layout of the
+>> code when storing it--that's up to the thing between the chair and the
+>> keyboard.
+> 
+> True, but I think Victor wants to be able to ask "diff --check" to
+> complain and diff --color to highlight when it sees a line that begins
+> with a SP (or a HT then SP) by setting:
+> 
+> 	* whitespace=space-in-indent
+> 
+> or something in the attributes file.
+> 
+> As "equivalence" exists, not very much interested in coding it myself,
+> though ;-)
+
+That's it, but it turns out the settings don't work the way I expected:
+
+$ git config --add core.whitespace 'indent-with-non-tab,tabwidth=1'
+$ touch whitespace.txt
+$ git add whitespace.txt
+[Add the following to the file]
+	HT
+SP
+	SP HT
+	 HT SP
+ 2 SP
+		2 HT
+       8 SP
+$ git diff --color
+
+Only the "SP HT" and "8 SP" indentations are colored; I expected "SP" and "2 SP" to also be colored, and I would expect space-in-indent to also trigger on "HT SP".
+
+Cheers,
+-- 
+Victor
