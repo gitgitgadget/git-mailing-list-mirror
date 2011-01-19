@@ -1,71 +1,116 @@
-From: Alex Riesen <raa.lkml@gmail.com>
-Subject: Re: [PATCH 3/3] git-gui: update russian translation
-Date: Wed, 19 Jan 2011 10:55:46 +0100
-Message-ID: <AANLkTimy6C=Ts3FZwm3EMhMssx605u6ubHyPXPfuO_0V@mail.gmail.com>
-References: <cover.1295295897.git.raa.lkml@gmail.com>
-	<1c96343bbf6fb30e7453c3df7b49ea31667e0469.1295295897.git.raa.lkml@gmail.com>
-	<eeaaba6d48de958b374cb06f1b12db3b8e0550ea.1295295897.git.raa.lkml@gmail.com>
-	<20110117210855.GD27029@blimp.localdomain>
-	<20110119001644.GB29212@dpotapov.dyndns.org>
+From: Libor Pechacek <lpechacek@suse.cz>
+Subject: Re: git-config does not check validity of variable names
+Date: Wed, 19 Jan 2011 11:01:05 +0100
+Message-ID: <20110119100105.GB8034@fm.suse.cz>
+References: <20110108144644.GA11019@localhost.suse.cz> <20110111055922.GD10094@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	Serge Ziryukin <ftrvxmtrx@gmail.com>,
-	Alexander Gavrilov <angavrilov@gmail.com>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 19 10:55:53 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Jan 19 11:01:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PfUlc-0001KE-T5
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Jan 2011 10:55:53 +0100
+	id 1PfUqp-0003zG-3o
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Jan 2011 11:01:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753905Ab1ASJzs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jan 2011 04:55:48 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:35361 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752954Ab1ASJzr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jan 2011 04:55:47 -0500
-Received: by fxm20 with SMTP id 20so664331fxm.19
-        for <git@vger.kernel.org>; Wed, 19 Jan 2011 01:55:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=8ad+mTTaX4la4TKKL0dbPwmRS1o/6yALn9aZV6GITHU=;
-        b=BnmCO66Gf7pBlDEfMWAoO3DoPZKp3oNs61Py1DkukYuxlrJfnCVfRGUlWfnEOPcFv6
-         1wBmmdHzSIOEh1eZZiUoqWxX3E6HOeWsuG5HVp0URDBv4Ph5rhXkzad6j9aIEqGY+YgB
-         up7/61yBmHhIW2AE/UBjg7obmr24LNsiYyTCE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=KgEaS+i021p/leT+A5RyeU8Zl+33pPBjJTc1o6IKdE97WUUMxLQg8xflrnFW+7073B
-         BKR5BzeevTcKMFcnl0QH/+d8RvDnpTbtQtpjIIA+xj1vZGoVnsu4Jy8jIav9/aRtD/9x
-         3/FN00kmH28D94ffVP2WmTfApF2Mvl6RvDrxg=
-Received: by 10.223.114.135 with SMTP id e7mr494743faq.78.1295430946179; Wed,
- 19 Jan 2011 01:55:46 -0800 (PST)
-Received: by 10.223.72.14 with HTTP; Wed, 19 Jan 2011 01:55:46 -0800 (PST)
-In-Reply-To: <20110119001644.GB29212@dpotapov.dyndns.org>
+	id S1753985Ab1ASKBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jan 2011 05:01:08 -0500
+Received: from cantor2.suse.de ([195.135.220.15]:56689 "EHLO mx2.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753644Ab1ASKBH (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jan 2011 05:01:07 -0500
+Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.221.2])
+	by mx2.suse.de (Postfix) with ESMTP id 207E2867E2;
+	Wed, 19 Jan 2011 11:01:05 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20110111055922.GD10094@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.18-muttng (2008-05-17-r1399)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165253>
 
-MjAxMS8xLzE5IERtaXRyeSBQb3RhcG92IDxkcG90YXBvdkBnbWFpbC5jb20+Ogo+IE9uIE1vbiwg
-SmFuIDE3LCAyMDExIGF0IDEwOjA4OjU1UE0gKzAxMDAsIEFsZXggUmllc2VuIHdyb3RlOgo+PiAt
-IzogZ2l0LWd1aS5zaDoxMzY3Cj4+ICsjOiBnaXQtZ3VpLnNoOjE0NTQKPj4gwqBtc2dpZCAiQ2Fs
-bGluZyBwcmVwYXJlLWNvbW1pdC1tc2cgaG9vay4uLiIKPj4gwqBtc2dzdHIgItCS0YvQt9C+0LIg
-0L/RgNC+0LPRgNCw0LzQvNGLINC/0L7QtNC00LXRgNC20LrQuCDRgNC10L/QvtC30LjRgtC+0YDQ
-uNGPIHByZXBhcmUtY29tbWl0LW1zZy4uLiIKPgo+ICdob29rJyBpcyB1c3VhbGx5IHRyYW5zbGF0
-ZWQgYXMgJ9C/0YDQvtCz0YDQsNC80LzQsCDQv9C10YDQtdGF0LLQsNGC0LAnCj4KCkR1bm5vLiBE
-b2VzIG5vdCBzb3VuZCByaWdodCBpbiB0aGlzIHBhcnRpY3VsYXIgY2FzZS4KVW5sZXNzIHNvbWVv
-bmUgZWxzZSBzcGVha3MgdXAgZm9yIHRoaXMgdHJhbnNsYXRpb24sIG9yCmNvbWVzIHVwIHdpdGgg
-YSBiZXR0ZXIgdHJhbnNsYXRpb24gb2YgdGhlIHdob2xlIG1lc3NhZ2UsCkkgc3VnZ2VzdCB3ZSBs
-ZWF2ZSBpdCBhcyBpcy4K
+Hi Jeff,
+
+On Tue 11-01-11 00:59:22, Jeff King wrote:
+> On Sat, Jan 08, 2011 at 03:46:44PM +0100, Libor Pechacek wrote:
+> 
+> > I've noticed that git-config accepts variable names in the form "a=b" for its
+> > "get" operation.  That means "git config a=b" does not write anything to its
+> > output and exists with status 1.
+> > 
+> > According to the man page only alphanumeric characters and - are allowed in
+> > variable names.  Would it make sense to spit out an error message when the user
+> > supplies an invalid variable name like the above?
+> 
+> Probably. The current behavior isn't all that terrible, in that it
+> simply tries to look up the key, which of course doesn't exist (because
+> it cannot syntactically), and does signal an error (with the exit code).
+> So it is in some ways no worse than a typo like "git config
+> color.dif.branch". And we probably don't want to start writing to stderr
+> in such a case, as scripts assume they can call git config to find out
+> whether the variable is defined without having to redirect stderr.
+
+I fully agree that there should be no extra output if the user searches for an
+undefined variable.  My idea is to warn the user when the variable name is
+clearly invalid.
+
+> That being said, I can see how the lack of a message could be confusing
+> for a user who mistakenly thinks "git config color.diff.branch=red"
+> should work. So I think a patch to make that better would get a
+> favorable response.
+> 
+> Note, though, that what you wrote above is not strictly true. The
+> manpage says variable names and section names must be alphanumeric. But
+> subsection names can contain any character except newline. So it is
+> valid syntactically to do:
+> 
+>   git config color.diff=red.branch
+> 
+> where the subsection contains the "=". Obviously this example is
+> nonsense, and in practice most such "a=b" forms will end up not being
+> syntactically valid (because the = will be part of the variable name,
+> not the subsection).
+
+That was new for me, so I had to learn the concept.  Thanks for thorough
+explanation.
+
+> But if you are going to write a patch, you need to
+> make sure not to accidentally disallow:
+> 
+>   git config 'diff.my custom diff driver.command'
+
+There is already a check in git_config_set_multivar to prevent the user from
+creating variables with invalid names.  That can probably be separated and
+reused in the "get value" path.  I'll have a look.
+
+
+In the course of reading the code I've spotted another trouble related to
+regexps.  Variable and section names are case insensitive, while subsection
+names are case sensitive.  How can regexp matching be made "partially case
+sensitive"?  That's a challenge.
+
+The current approach is to lowercase everything in the pattern from the
+beginning until the first dot and from the last dot till the end.  That has its
+limitations as regular expressions can be fairly complex.
+
+Just to illustrate the situation:
+$ git config --get-regexp '(CORE|USER)\.'
+user.email lpechacek@suse.cz
+core.repositoryformatversion 0
+core.filemode true
+
+$ git config --get-regexp '(COR.|USER)\.'
+core.repositoryformatversion 0
+core.filemode true
+
+Currently have no idea how to fix that apart from fixing the documentation. :) 
+
+Libor
+-- 
+Libor Pechacek
+SUSE L3 Team, Prague
