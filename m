@@ -1,70 +1,146 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git bisect problems/ideas
-Date: Wed, 19 Jan 2011 11:29:41 -0800
-Message-ID: <7vzkqwsndm.fsf@alter.siamese.dyndns.org>
-References: <855249CA-A006-475C-8F96-EFD614795064@gmail.com>
- <AANLkTikNzpCwEieV8sXXctMm+DR69fkLfCF+F3xB6b-k@mail.gmail.com>
- <54DED602-0BA7-4462-AC00-1DDEEF83068C@gmail.com>
- <AANLkTi=A2Twepg3Jo_VYxtvghkhx6ixcpRH3332BoRQo@mail.gmail.com>
- <7vd3nukqn8.fsf@alter.siamese.dyndns.org>
- <0F4E18EC-E67D-4C3E-BB5C-C8D8BA326C1D@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/3] setup: always honor GIT_WORK_TREE and core.worktree
+Date: Wed, 19 Jan 2011 13:31:16 -0600
+Message-ID: <20110119193116.GB30618@burratino>
+References: <1290785563-15339-1-git-send-email-pclouds@gmail.com>
+ <1290785563-15339-40-git-send-email-pclouds@gmail.com>
+ <20110118074400.GA4185@burratino>
+ <7v1v4aknij.fsf@alter.siamese.dyndns.org>
+ <20110119123732.GA23222@burratino>
+ <20110119124230.GD23222@burratino>
+ <AANLkTinE5gNZM_HDJq31qs5ARJn-DrO9HW66cszTayPa@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Christian Couder <christian.couder@gmail.com>, git@vger.kernel.org
-To: "Aaron S. Meurer" <asmeurer@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 19 20:29:57 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Maaartin <grajcar1@seznam.cz>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 19 20:31:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PfdjB-0006KF-0k
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Jan 2011 20:29:57 +0100
+	id 1Pfdkn-0007Jz-Ck
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Jan 2011 20:31:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752863Ab1AST3w (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jan 2011 14:29:52 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39567 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750984Ab1AST3u (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jan 2011 14:29:50 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D1F794C02;
-	Wed, 19 Jan 2011 14:30:35 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=vEO+xaZy4KF15bDJelj8Zqvl7bs=; b=FKWeX4
-	2svYjyDk9qNDcgeW/vKjK+OHTk9dyGQgIOMgS+iVq36wjeQacXPV9M54Zy2xQkHG
-	vCd79hGfv40Qnm2bVwpvCh06yAoZNlb8ZzeJl6sjAO41JN8/n63MkDTZb9IeRNsO
-	xDMjkWJClIWlyv/VwGM6Ok6jUrzwM2JVvys7M=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=myvfsKOT6RYDKQGwuHHuzdKPCN670giE
-	O5hKEMv/gBl9GnX4w48tbY+OsVph88iOixKs7cGvo319G+vjgRaGrUN0FLMhprmo
-	bQOj5x1yywACXPBbf6dLXf43TlOiSAE63/LFuytyNe9Ya7AXcsjmuiZ09mB6KQsW
-	sD2tnqNqqOE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9AB654C01;
-	Wed, 19 Jan 2011 14:30:32 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 738F64C00; Wed, 19 Jan 2011
- 14:30:28 -0500 (EST)
-In-Reply-To: <0F4E18EC-E67D-4C3E-BB5C-C8D8BA326C1D@gmail.com> (Aaron S.
- Meurer's message of "Wed\, 19 Jan 2011 12\:15\:15 -0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 94CA714A-2402-11E0-91CE-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
+	id S1753010Ab1ASTbc convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Jan 2011 14:31:32 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:50096 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750984Ab1ASTbb convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 19 Jan 2011 14:31:31 -0500
+Received: by eye27 with SMTP id 27so697510eye.19
+        for <git@vger.kernel.org>; Wed, 19 Jan 2011 11:31:30 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=4FPnMvSzx1V4KI8KlC71MFn4C0I/2rilPLFS3vr6TX0=;
+        b=A+GXi/9eMerZn2hWWij6//3VJwmxvT/0/GqA9PK2yBLDyesAQmZaV8ZtXRhwbZR92A
+         EsFB1yg09aFAAAIpnfQj+ixYrjQl92/oeSp0QeXl8soHU9dnhJ8e6vmpukKQosU6CkCu
+         vmOJKiM0hCJWofNH48nCHgpRw1asYZVPd37l4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=PkXO37AmsciyZmxPQwEI3mV+Sg3es+ZehfNatbqWwK2/HiwelzYUqtLD/Ii5PCUieA
+         TkgivXZVzPuqKKFX0i4GfgVgn/b/7uefobZ+y0tBstXxfsVJJUodKUw8B0h3Rf6+2GzI
+         zA2HnRvp7YQmzKgrhP2AyTfM1esJM0jb/T6o8=
+Received: by 10.227.141.77 with SMTP id l13mr1296093wbu.159.1295465489832;
+        Wed, 19 Jan 2011 11:31:29 -0800 (PST)
+Received: from burratino (adsl-69-209-76-37.dsl.chcgil.ameritech.net [69.209.76.37])
+        by mx.google.com with ESMTPS id 11sm5362632wbj.13.2011.01.19.11.31.27
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 19 Jan 2011 11:31:28 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTinE5gNZM_HDJq31qs5ARJn-DrO9HW66cszTayPa@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165281>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165282>
 
-"Aaron S. Meurer" <asmeurer@gmail.com> writes:
+Nguyen Thai Ngoc Duy wrote:
+> 2011/1/19 Jonathan Nieder <jrnieder@gmail.com>:
 
-> So if I care about this issue I should keep bumping it until it gets fixed?
+>> @@ -411,6 +411,16 @@ static const char *setup_discovered_git_dir(con=
+st char *gitdir,
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0if (check_repository_format_gently(gitdir=
+, nongit_ok))
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return NULL;
+>>
+>> + =C2=A0 =C2=A0 =C2=A0 /* Accept --work-tree to support old scripts =
+that played with fire. */
+>> + =C2=A0 =C2=A0 =C2=A0 if (getenv(GIT_WORK_TREE_ENVIRONMENT) || git_=
+work_tree_cfg) {
+>
+> Can we leave git_work_tree_cfg out? If this code is to support misuse=
+d
+> scripts, then $GIT_WORK_TREE alone ought to be enough.
 
-Depends on your definition of "bumping".  If it means "whining repeatedly
-without adding anything to help resolving the issue", then no.
+Sure, it would be easy to exclude git_work_tree_cfg here.  I guess the
+relevant question is
 
-I thought the previous discussion was stuck after a small step by Dscho in
-the right direction because nobody followed through?
+Maaartin wrote:
+> On 11-01-19 13:42, Jonathan Nieder wrote:
+
+>> Unfortunately the existence of GIT_WORK_TREE makes it tempting to
+>> use without setting GIT_DIR.
+>
+> Maybe I'm asking nonsense, but why should I always use both?
+
+That is, why do we want to discourage setting the work tree without
+GIT_DIR in the first place?
+
+The issues seem to be:
+
+1. Previously there was some confusion about what path the worktree
+   is relative to.  Now setup_explicit_git_dir makes it clear:
+   + GIT_WORK_TREE and --work-tree are relative to the original cwd;
+   + the "[core] worktree" setting is relative to the gitdir.
+
+2. Previously there was some confusion about the right order of
+   operations --- move to worktree first, or find the git dir?
+   Now the setup procedure is clearly "first find git dir, then
+   act on worktree".
+
+3. A global "[core] worktree" setting with relative path is
+   nonsensical since there is not necessarily a gitdir for it to be
+   relative to.
+
+4. Likewise, setting GIT_WORK_TREE when outside any git repository
+   has no clear meaning.
+
+5. The interaction with core.bare and implicit bareness are not
+   obvious.  Clearly core.bare should conflict with core.worktree,
+   but can GIT_WORK_TREE override that?  Maybe
+   check_repository_format_gently is the right place for this check
+   (rather than the setup procedure).
+
+(1) and (2) have been resolved by your work (nice!), (3) seems like
+a case of "don't do that, then", and (4) out to error out in
+setup_nongit (though my patch doesn't take care of that).  Given an
+answer to (5) we could wholeheartedly and consistently support
+worktree with implicit gitdir, as a new feature.
+
+Is that a fair summary?
+
+[...]
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (offset !=3D l=
+en && !is_absolute_path(gitdir))
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 gitdir =3D xstrdup(make_absolute_path(gitdir));
+>
+> The behavior regarding relative $GIT_WORK_TREE before nd/setup series
+> is inconsistent. If setup_git_directory() is used, work_tree is
+> relative to user's cwd. In other cases, when get_git_work_tree() is
+> called, work_tree is made absolute relative to _current_ cwd (usually
+> at discovered work_tree root). Which way do you want to keep?
+
+The former.  But this is worrisome: scripts using cd_to_toplevel are
+getting the latter behavior.  Maybe a warning for relative
+GIT_WORK_TREE is in order, like you hinted before.
