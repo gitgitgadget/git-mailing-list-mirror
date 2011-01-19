@@ -1,83 +1,52 @@
-From: Victor Engmark <victor.engmark@terreactive.ch>
+From: Johannes Sixt <j.sixt@viscovery.net>
 Subject: Re: core.whitespace space-in-indent feature request
-Date: Wed, 19 Jan 2011 11:53:17 +0100
-Message-ID: <4A1964D5-609C-418B-BDEF-F5B52EC98F95@terreactive.ch>
-References: <AANLkTikiHXofGVg9QECg9a4U4r4VGD1tb6oMV21nzd9W@mail.gmail.com> <1295380297.3778.47.camel@drew-northup.unet.maine.edu> <20205598.46894.1295382705010.JavaMail.trustmail@mail1.terreactive.ch> <3798749.47565.1295432145824.JavaMail.trustmail@mail1.terreactive.ch>
-Mime-Version: 1.0 (Apple Message framework v1081)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
+Date: Wed, 19 Jan 2011 12:09:53 +0100
+Message-ID: <4D36C681.7020400@viscovery.net>
+References: <AANLkTikiHXofGVg9QECg9a4U4r4VGD1tb6oMV21nzd9W@mail.gmail.com> <1295380297.3778.47.camel@drew-northup.unet.maine.edu> <20205598.46894.1295382705010.JavaMail.trustmail@mail1.terreactive.ch> <09F2551C-40E6-40DC-BE97-8DCFF3601C8C@terreactive.ch>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
 To: Victor Engmark <victor.engmark@terreactive.ch>
-X-From: git-owner@vger.kernel.org Wed Jan 19 11:53:31 2011
+X-From: git-owner@vger.kernel.org Wed Jan 19 12:10:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PfVfO-0006WM-9a
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Jan 2011 11:53:30 +0100
+	id 1PfVvN-0006QM-Px
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Jan 2011 12:10:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753909Ab1ASKxZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jan 2011 05:53:25 -0500
-Received: from gate.terreactive.ch ([212.90.202.121]:57722 "EHLO
-	mail.terreactive.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753738Ab1ASKxZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 19 Jan 2011 05:53:25 -0500
-In-Reply-To: <3798749.47565.1295432145824.JavaMail.trustmail@mail1.terreactive.ch>
-X-terreActive-From: victor.engmark@terreactive.ch
-X-Spam-Status: No
+	id S1754017Ab1ASLJ4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jan 2011 06:09:56 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:38595 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1753650Ab1ASLJ4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jan 2011 06:09:56 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1PfVvG-0007gy-4h; Wed, 19 Jan 2011 12:09:54 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id DA5221660F;
+	Wed, 19 Jan 2011 12:09:53 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <09F2551C-40E6-40DC-BE97-8DCFF3601C8C@terreactive.ch>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165261>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165262>
 
-On Jan 19, 2011, at 10:42 AM, Victor Engmark wrote:
-
-> On Jan 18, 2011, at 9:31 PM, Junio C Hamano wrote:
-> 
->> Drew Northup <drew.northup@maine.edu> writes:
->> 
->>> On Fri, 2011-01-14 at 13:40 +0100, Victor Engmark wrote:
->>>> Hi all,
->>>> 
->>>> I couldn't find this mentioned anywhere, but it would be useful for
->>>> languages where you typically want only tab characters in indentation,
->>>> like makefiles. Would be equivalent or similar to indent-with-non-tab
->>>> and tabwidth=1.
->>> 
->>> Victor,
->>> What would the point of this be? Git doesn't change the layout of the
->>> code when storing it--that's up to the thing between the chair and the
->>> keyboard.
->> 
->> True, but I think Victor wants to be able to ask "diff --check" to
->> complain and diff --color to highlight when it sees a line that begins
->> with a SP (or a HT then SP) by setting:
->> 
->> 	* whitespace=space-in-indent
->> 
->> or something in the attributes file.
->> 
->> As "equivalence" exists, not very much interested in coding it myself,
->> though ;-)
-> 
-> That's it, but it turns out the settings don't work the way I expected:
-> 
+Am 1/19/2011 10:42, schrieb Victor Engmark:
 > $ git config --add core.whitespace 'indent-with-non-tab,tabwidth=1'
-> $ touch whitespace.txt
-> $ git add whitespace.txt
-> [Add the following to the file]
-> 	HT
-> SP
-> 	SP HT
-> 	 HT SP
-> 2 SP
-> 		2 HT
->       8 SP
 
-Bloody OS X Mail - All those lines should of course be indented with the characters indicated at the end of the line.
+tabwidth= is not in any released version of git, yet.
 
-Cheers,
--- 
-Victor
+> Only the "SP HT" and "8 SP" indentations are colored; ...
+
+This is no surprise, unless you are using a version that has commit
+v1.7.4-rc0~52^2.
+
+-- Hannes
