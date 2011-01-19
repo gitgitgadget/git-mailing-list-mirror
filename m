@@ -1,66 +1,65 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
 Subject: Re: Noob question regarding git push
-Date: Wed, 19 Jan 2011 23:50:27 +0100
-Message-ID: <AANLkTik5QOoWNjUP8LvRE=AmiAtmchc8NND9aKDe2svR@mail.gmail.com>
+Date: Wed, 19 Jan 2011 14:56:41 -0800
+Message-ID: <7vlj2gsdsm.fsf@alter.siamese.dyndns.org>
 References: <AANLkTi=X8PURGSX5ODHpXACUWuA0oioTkeNEmRVnkx1D@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Harry Johnson <hjohnson@viasic.com>
-X-From: git-owner@vger.kernel.org Wed Jan 19 23:51:01 2011
+X-From: git-owner@vger.kernel.org Wed Jan 19 23:56:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pfgrg-0003Bv-D2
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Jan 2011 23:50:56 +0100
+	id 1PfgxT-00077S-Oy
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Jan 2011 23:56:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754936Ab1ASWuu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jan 2011 17:50:50 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:64648 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750710Ab1ASWut (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jan 2011 17:50:49 -0500
-Received: by yxt3 with SMTP id 3so611201yxt.19
-        for <git@vger.kernel.org>; Wed, 19 Jan 2011 14:50:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=EOJLAuDcCbk3Uf1i1ZAaZtQ6l2ZL2frhck/36kGFlWA=;
-        b=K20KISTE7yW5jxXC1EfdGpz+g6WvcJFhIm07se/HmHAZ91yT8FfJxxzCNwWAN4BKn7
-         3GYKDABduvkOX9FcXTovQ+RaQiX78ghsRcZhKLP1ni/8zSgqG6j+3AUhwX0LNUuSiOSW
-         WrcUwFdgsw9x3Si4geoquMofXtuDrbsiUZcSo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=ssaqK/ekfg02R3Mg4/XK6DbLb/6I95L1zvwwOMo9q9Io4llbqTiThaT/KD8BTbApJL
-         Ubbed1sjoA6NaMAS9X1NkL8TTpRKp60FBHQVHKGfJNYS8U7r2av8kXQT4z0uXBjF/7Sh
-         LKHrjYkZb68fefKhZo8LRCkDWFsLaF6aBIbMk=
-Received: by 10.151.78.10 with SMTP id f10mr1480917ybl.157.1295477448111; Wed,
- 19 Jan 2011 14:50:48 -0800 (PST)
-Received: by 10.151.6.10 with HTTP; Wed, 19 Jan 2011 14:50:27 -0800 (PST)
+	id S1754257Ab1ASW4u (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 19 Jan 2011 17:56:50 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56293 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753977Ab1ASW4t (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jan 2011 17:56:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D77A046F6;
+	Wed, 19 Jan 2011 17:57:33 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=pHxWYpoA+sH5XLrFc48+fwTb7pU=; b=B7iNlu
+	fo9EOf4Ye1z66DIuRNVk8eBKSlG3BQpqDtqucYPTTbYttcSiiakspllWNk9O+bJv
+	oI4z4qmrzCLTNlARWLVVPKF8PSaYe66Uqrh3XurMtiafHk4JaIKnfs9YcGO4nDuT
+	n6HYv81xk5//BJRc0Dy5jUwkSVc+SSX6Q/JVk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LjjsvzD0s35fUsVXQBlg5q2jiaseNpqt
+	tWsU3xX16+AgJxPO83Wj78Uh9xagdiUhAIZ4PG2P7qjg8ZwwRTCaOpaxh9D0FOkE
+	xaQzKgNEwHys4oAx8BuDF8XCTtiTnXFI0R3LqXfadrpyf+p0YrmijAGQ2OP9wpBG
+	reuAE2JjehM=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B339946F5;
+	Wed, 19 Jan 2011 17:57:31 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C6E9F46F4; Wed, 19 Jan 2011
+ 17:57:28 -0500 (EST)
 In-Reply-To: <AANLkTi=X8PURGSX5ODHpXACUWuA0oioTkeNEmRVnkx1D@mail.gmail.com>
+ (Harry Johnson's message of "Wed\, 19 Jan 2011 17\:30\:26 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 7F269CC0-241F-11E0-AB9C-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165299>
 
-Heya,
+Harry Johnson <hjohnson@viasic.com> writes:
 
-On Wed, Jan 19, 2011 at 23:30, Harry Johnson <hjohnson@viasic.com> wrote:
-> What's the proper technique for making sure you see the actual changes
-> that were pushed to a repo?
+> This seems to work and I can see my changes when doing a git log from
+> the build repo. However, the actual working files have not been
+> updated nor can I figure out any way to get them updated.
 
-I think this is the FAQ you want:
+This is a FAQ, isn't it?
 
 https://git.wiki.kernel.org/index.php/GitFaq#Why_won.27t_I_see_changes_in_the_remote_repo_after_.22git_push.22.3F
-
-
--- 
-Cheers,
-
-Sverre Rabbelier
