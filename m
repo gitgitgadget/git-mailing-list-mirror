@@ -1,80 +1,74 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: filter-branch --env-filter GIT_AUTHOR_DATE
-Date: Wed, 19 Jan 2011 11:32:57 +0100
-Message-ID: <4D36BDD9.4050108@viscovery.net>
-References: <AANLkTinx7cs6YTvSTTv-njHA+vk264u1EaJettSdBF9U@mail.gmail.com> <4D368C49.3080105@viscovery.net> <AANLkTi=TAhYeWbyocag2myBXA2TfH7_r=hmam51YKbhm@mail.gmail.com>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [PATCH 2/3] git-gui: spelling fixes in russian translation
+Date: Wed, 19 Jan 2011 13:48:56 +0300
+Message-ID: <20110119104856.GA5473@dpotapov.dyndns.org>
+References: <cover.1295295897.git.raa.lkml@gmail.com>
+ <1c96343bbf6fb30e7453c3df7b49ea31667e0469.1295295897.git.raa.lkml@gmail.com>
+ <20110117210828.GC27029@blimp.localdomain>
+ <loom.20110118T083048-91@post.gmane.org>
+ <20110119000735.GA29212@dpotapov.dyndns.org>
+ <loom.20110119T090252-99@post.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Tuncer Ayaz <tuncer.ayaz@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 19 11:33:11 2011
+Content-Type: text/plain; charset=koi8-r
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Alex Riesen <raa.lkml@gmail.com>
+To: Alexey Shumkin <zapped@mail.ru>
+X-From: git-owner@vger.kernel.org Wed Jan 19 11:49:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PfVLi-0003xp-6a
-	for gcvg-git-2@lo.gmane.org; Wed, 19 Jan 2011 11:33:10 +0100
+	id 1PfVbC-0004FX-9j
+	for gcvg-git-2@lo.gmane.org; Wed, 19 Jan 2011 11:49:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754056Ab1ASKdG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jan 2011 05:33:06 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:57275 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754046Ab1ASKdE (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jan 2011 05:33:04 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1PfVLW-00087G-P9; Wed, 19 Jan 2011 11:33:01 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 466911660F;
-	Wed, 19 Jan 2011 11:32:58 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <AANLkTi=TAhYeWbyocag2myBXA2TfH7_r=hmam51YKbhm@mail.gmail.com>
-X-Enigmail-Version: 1.1.1
-X-Spam-Score: -1.4 (-)
+	id S1752950Ab1ASKtD convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 19 Jan 2011 05:49:03 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:36082 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752651Ab1ASKtB (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 19 Jan 2011 05:49:01 -0500
+Received: by ewy5 with SMTP id 5so312854ewy.19
+        for <git@vger.kernel.org>; Wed, 19 Jan 2011 02:49:00 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=xivJJl2ApHt1DufhJWG8acSz6G21o8fK9pERkRdAQ7U=;
+        b=hgSnrUO5Xp4YyXhwaNDZRQ0G1gRsMwkGHjyul1uNGnTv9ZCNDjsKE9sHEwBz3ITlLE
+         stQYm3FMUDPCkyrB84MTeD0hEVdNDybr4cIqacO1Hgl+8y+KBMVfwRYSE9K4JUgrs6XB
+         w0qR/2BGipyT183rwF8+ZggDwfCt1pXRXY5l4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=iYbreJysNz+CFNc31kGWPBe5/yXWRP2bwUJTylcWpO4pKExTo4lFEbVYpqyFAvQCgP
+         nOUVwURhEPe7RlHW6Nwt83Y52tC3nc09IKGugqjc5XJAxdtpFY8YXwpoqga1kjEEyMUH
+         rdRS1D3FW+hHhb4n/oXnQIOXcmLsOXqH15tyI=
+Received: by 10.14.29.69 with SMTP id h45mr607031eea.25.1295434140430;
+        Wed, 19 Jan 2011 02:49:00 -0800 (PST)
+Received: from localhost (ppp22-69.pppoe.mtu-net.ru [81.195.22.69])
+        by mx.google.com with ESMTPS id t50sm5426662eeh.18.2011.01.19.02.48.58
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Wed, 19 Jan 2011 02:48:59 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <loom.20110119T090252-99@post.gmane.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165259>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165260>
 
-Am 1/19/2011 11:08, schrieb Tuncer Ayaz:
-> On Wed, Jan 19, 2011 at 8:01 AM, Johannes Sixt wrote:
->> Am 1/18/2011 17:43, schrieb Tuncer Ayaz:
->>> To fix invalid timezone info in a repo I ran
->>> git filter-branch --env-filter '
->>>   GIT_AUTHOR_DATE=`echo ${GIT_AUTHOR_DATE}|sed s/+0000/-0800/`' HEAD
->>>
->>> This fixed the invalid entries but the new timezone is -0700
->>> instead of -0800. Is this expected?
->>
->> Parse error. You fixed it, but it is not fixed? So what?
-> 
-> Fixed because it is not +0000 anymore. Surprised because the new
-> timezone is -0700 and not -0800.
-> 
->> What do you mean by "the new timezone is"? Do you mean "...is reported
->> as"? If so, reported by which tools?
-> 
-> git log
-> git cat-file $REV
+On Wed, Jan 19, 2011 at 08:36:32AM +0000, Alexey Shumkin wrote:
+> So, I agree sentence must rephrased but supposition must be retained.
+> Something like "=E6=C1=CA=CC %s, =D0=CF=C8=CF=D6=C5, =D3=CF=C4=C5=D2=D6=
+=C9=D4 =CE=C5=D2=C1=DA=D2=C5=DB=C5=CE=CE=D9=C5 =CB=CF=CE=C6=CC=C9=CB=D4=
+=D9"
 
-$ git filter-branch -f --env-filter 'echo; echo "$GIT_AUTHOR_DATE"; GIT_AUTHOR_DATE=`echo ${GIT_AUTHOR_DATE}|sed s/+0100/-0800/`; echo "$GIT_AUTHOR_DATE"' -- -1
-Rewrite 6fb5ec91707a4433628eae5d9d68153ca8b819fe (1/1)
-1292311163 +0100
-1292311163 -0800
+I like this one.
 
-Ref 'refs/heads/master' was rewritten
-$ git cat-file commit HEAD
-tree 43554f2216bbcfc96385db0641ae212409f26f21
-parent 942f54790453970cfffbfedf29e47ac27b9ba995
-author Johannes Sixt <j.sixt@viscovery.net> 1292311163 -0800
-committer Johannes Sixt <j.sixt@viscovery.net> 1292311163 +0100
-
-master
-
-*Shrug*
-
--- Hannes
+Thanks,
+Dmitry
