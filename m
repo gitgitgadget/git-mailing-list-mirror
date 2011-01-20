@@ -1,70 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 1/2 v2] rebase -i: clarify in-editor documentation of "exec"
-Date: Fri, 21 Jan 2011 11:43:40 +0100
-Message-ID: <vpqpqrqwn8j.fsf@bauges.imag.fr>
-References: <vpq62ziv788.fsf@bauges.imag.fr>
-	<1281453472-29835-1-git-send-email-Matthieu.Moy@imag.fr>
-	<20110116015941.GA28137@burratino> <20110116020132.GB28137@burratino>
-	<vpq39otrvmk.fsf@bauges.imag.fr> <20110120200949.GB11702@burratino>
-	<7vy66fqoji.fsf@alter.siamese.dyndns.org>
-	<20110121003624.GB23139@burratino> <vpqr5c6zqrh.fsf@bauges.imag.fr>
-	<20110121074700.GA26600@burratino>
+From: "To site ton ROMION   www.romioi.com" <wseas@mail.gr>
+Subject: Xekleidothikan ta scholia . Archise i dimosia sizitisi,  http://www.romioi.com
+Date: Thu, 20 Jan 2011 15:04:34 +0200
+Message-ID: <auto-000031372557@snd.edu.gr>
+Reply-To: "To site ton ROMION   www.romioi.com" <sfakaonline@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Kevin Ballard <kevin@sb.org>, Yann Dirson <dirson@bertin.fr>,
-	Eric Raible <raible@nextest.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 21 11:44:31 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 8bit
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Fri Jan 21 11:47:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PgETk-0001yn-Ab
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 11:44:28 +0100
+	id 1PgEX5-0003jU-MX
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 11:47:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754121Ab1AUKn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jan 2011 05:43:59 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:59735 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753834Ab1AUKn5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jan 2011 05:43:57 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p0LAheOq030856
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Fri, 21 Jan 2011 11:43:40 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PgESz-0006sQ-3I; Fri, 21 Jan 2011 11:43:41 +0100
-In-Reply-To: <20110121074700.GA26600@burratino> (Jonathan Nieder's message of "Fri\, 21 Jan 2011 01\:47\:00 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 21 Jan 2011 11:43:40 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p0LAheOq030856
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1296211420.96438@ILhzc2GKvjKFAGb3oZvqRw
+	id S1753869Ab1AUKrs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jan 2011 05:47:48 -0500
+Received: from blue.snd.edu.gr ([195.251.98.2]:48925 "EHLO snd.edu.gr"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1753656Ab1AUKrq (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jan 2011 05:47:46 -0500
+X-Greylist: delayed 50344 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Jan 2011 05:47:46 EST
+Received: from [195.251.98.32] (HELO 192.168.8.26)
+  by snd.edu.gr (CommuniGate Pro SMTP 5.2c4)
+  with SMTP id 31372557; Thu, 20 Jan 2011 15:04:45 +0200
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165364>
+X-Spam-Report: 5.9 points;
+ * -2.6 BAYES_00 BODY: Bayesian spam probability is 0 to 1%
+ *      [score: 0.0000]
+ *  1.5 RAZOR2_CF_RANGE_E8_51_100 Razor2 gives engine 8 confidence level
+ *      above 50%
+ *      [cf: 100]
+ *  1.0 RAZOR2_CHECK Listed in Razor2 (http://razor.sf.net/)
+ *  3.0 RAZOR2_CF_RANGE_51_100 Razor2 gives confidence level above 50%
+ *      [cf: 100]
+ *  2.0 URIBL_BLACK Contains an URL listed in the URIBL blacklist
+ *      [URIs: romioi.com]
+ *  1.1 URIBL_RHS_DOB Contains an URI of a new domain (Day Old Bread)
+ *      [URIs: romioi.com]
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165365>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+Filoi mou kaloi!
 
-> # Commands:
-> #  p, pick = use commit
-> #  r, reword = use commit, but edit the commit message
-> #  e, edit = use commit, but stop for amending
-> #  s, squash = use commit, but meld into previous commit
-> #  f, fixup = like "squash", but discard this commit's log message
-> #  x, exec = run command (the rest of the line) using shell
+Archise i dimosia sizitisi http://www.romioi.com
 
-I'm fine with that.
+Ola ta scholia xekleidothikan kai mporeite na anevazete ta scholia
+sas choris kamia logokrisia sto  http://www.romioi.com
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Neo sima kai neos Ymnos tis Neas Dimokratias
+http://www.romioi.com
+
+Polla scholia pairnoun:
+1) to giati o Kyrios Adrianopoulos torpillizei tin Ethniki Prospatheia diasosis tis
+Oikonomias
+http://www.romioi.com/2011/01/blog-post_424.html
+
+2) oi KOPRITES tou ... Pagkalou
+http://www.romioi.com/2011/01/wwwromioicom_18.html
+
+3) kai akoma  
+Mpes tora kai anevase AMESOS to scholio sou
+Scholiaste akoma
+to Post apo to KENTRI "Choris Praktiki axia oi allages sto Nomo peri euthynis
+Ypourgon"
+http://www.romioi.com
+----------------------------------------------
+PROSOCHI: Ean thelete na min xanalavete email ,tote  steilte ena email sto
+sfakaonline@gmail.com 
+me thema (Subject): AFAIRESE email1, email2, email3,...
+opou email1, email2, email3,... einai ta email sas
+p.h.
+AFAIRESE romioi@gmail.com, romioi@mail.gr
+
+I diadikasia einai automati. I lexi AFAIRESE prepei na graftei me latinika
+kai me kefalaia opos einai sto paradeigma
+-----------------------------------------------
