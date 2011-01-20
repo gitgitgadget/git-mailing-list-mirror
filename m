@@ -1,48 +1,75 @@
-From: Intland Software <info@intland.com>
-Subject: Tip for Eclipse users: how to make Git ~30 times faster in Eclipse
-Date: Thu, 20 Jan 2011 15:49:09 +0100
-Message-ID: <4D384B65.7020205@intland.com>
+From: Stephen Kelly <steveire@gmail.com>
+Subject: Re: Creating remote branch called HEAD corrupts remote clones
+Date: Thu, 20 Jan 2011 16:05:36 +0100
+Message-ID: <AANLkTinNNBupCi09_W60qdDGFc5CN-p=rKaf_FKW0kj1@mail.gmail.com>
+References: <ih1449$ul6$1@dough.gmane.org>
+	<ih95fg$62b$1@dough.gmane.org>
+	<201101201403.39174.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 20 15:49:20 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Thu Jan 20 16:05:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pfvp8-0006Aj-8Z
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Jan 2011 15:49:18 +0100
+	id 1Pfw54-0000be-7x
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Jan 2011 16:05:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755726Ab1ATOtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jan 2011 09:49:12 -0500
-Received: from mail01d.mail.t-online.hu ([84.2.42.6]:37601 "EHLO
-	mail01d.mail.t-online.hu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755688Ab1ATOtM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jan 2011 09:49:12 -0500
-Received: from [192.168.1.67] (catv91EC0523.pool.t-online.hu [145.236.5.35])
-	(using TLSv1 with cipher DHE-RSA-CAMELLIA256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail01d.mail.t-online.hu (Postfix) with ESMTPSA id 1BAD3758D47
-	for <git@vger.kernel.org>; Thu, 20 Jan 2011 15:49:09 +0100 (CET)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
+	id S1755835Ab1ATPFk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jan 2011 10:05:40 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:38141 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755807Ab1ATPFi (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jan 2011 10:05:38 -0500
+Received: by qwa26 with SMTP id 26so714904qwa.19
+        for <git@vger.kernel.org>; Thu, 20 Jan 2011 07:05:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=JidpLKCPgllc71Y5bivTBS4MkShiOj59l9u6fXQBiXw=;
+        b=FnTEuujBPs6e9dQuwc+EbHEpE1XXbsNzmBcaqBneVkImd/xAcaMoicWBzfFLUkkjr0
+         YF6CPVwB2emkn/IDFCafs+wtmQTBeIfmCVTTOv5GZXoBxFC6sDjTgB9vEHavrHZsOcqy
+         cpyP9qvoBhkDoz5EMhAsKK7sUdJPKs+BO0LZk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=tevrS2C8MORnoiO5LXya6bIAzZq+RO29bxNZYbRjrsy7ZxEbD63NQU+hzKOD3NzFiM
+         u76wKieRmwW8WjVmcjeXD8i3LzbN2aB2wD3x2tSvk0paWQQD4NQfr1JCZgX73RcZ/O3m
+         qVpld5fDCkXP5APz3SN3BLyHpjMkKDp4nt4lE=
+Received: by 10.229.218.197 with SMTP id hr5mr1926587qcb.14.1295535936417;
+ Thu, 20 Jan 2011 07:05:36 -0800 (PST)
+Received: by 10.229.80.84 with HTTP; Thu, 20 Jan 2011 07:05:36 -0800 (PST)
+In-Reply-To: <201101201403.39174.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165314>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165315>
 
-Dear Git users,
+Ok so there was some movement with the result that no one uses what was set up.
 
-A team here at Intland Software recently looked into EGit performance optimization opportunities, and managed to achieve 
-some impressive results. You might be interested to get our results before the next official EGit version gets released.
+Presumably because git developers don't want a bug tracker.
 
-In our optimized plugin version, the time required to synchronize a medium sized repo dropped from 10 minutes to 15 
-seconds. (It is 40 times faster now on that particular repository.)
-The Eclipse CDT team reported similar results: their synchronization time dropped from 32 minutes to 1.5 minutes 
-(roughly 20 times faster now).
+So how can I ensure that this particular issue doesn't get lost? Is
+there no way except hope that people get involved in fixing it
+straight away, and fix it straight away before they forget about it?
 
-Read here how: http://blogs.intland.com/main/entry/20110120
---
-Intland staff
+We worked around this on the KDE side by forbidding pushing any ref
+with the name HEAD to the remote, but it's still a git bug.
+
+On 1/20/11, Thomas Rast <trast@student.ethz.ch> wrote:
+> Stephen Kelly wrote:
+>> Why does git not have a bug tracker?
+>
+> http://thread.gmane.org/gmane.comp.version-control.git/136500
+>
+>
+> --
+> Thomas Rast
+> trast@{inf,student}.ethz.ch
+>
