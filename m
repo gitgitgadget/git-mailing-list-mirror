@@ -1,95 +1,81 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
-Subject: Re: [PATCH 4/5] fast-export: Introduce --inline-blobs
-Date: Thu, 20 Jan 2011 11:58:39 +0530
-Message-ID: <20110120062837.GA27624@kytes>
-References: <1295415899-1192-1-git-send-email-artagnon@gmail.com>
- <1295415899-1192-5-git-send-email-artagnon@gmail.com>
- <7vtyh4smer.fsf@alter.siamese.dyndns.org>
- <20110119214827.GA31733@burratino>
- <20110120045046.GB9493@kytes>
- <20110120054813.GB4770@burratino>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: EOL strangeness
+Date: Thu, 20 Jan 2011 09:54:43 +0100
+Message-ID: <4D37F853.1020805@lsrfire.ath.cx>
+References: <AANLkTiknxMh_OophKWsqkYO2C+PsfF0ZnNXKLbheM4wF@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Git List <git@vger.kernel.org>,
-	David Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 20 07:27:54 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Graham Sanderson <graham.sanderson@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Jan 20 09:55:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pfnzr-0002Gm-Hl
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Jan 2011 07:27:51 +0100
+	id 1PfqIO-0003SW-7n
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Jan 2011 09:55:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753888Ab1ATG1q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jan 2011 01:27:46 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:46130 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752239Ab1ATG1p (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jan 2011 01:27:45 -0500
-Received: by gxk9 with SMTP id 9so68959gxk.19
-        for <git@vger.kernel.org>; Wed, 19 Jan 2011 22:27:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=SnjybAHcxXEYhkwt/QC763Ge2T9L7QwyLgXQS5qvlo0=;
-        b=pMkc+UrgsMPDwGVftQZyRfm5ANmyJCyR0nglu7R12HMK6KEHZoVeQQ63QYa4J6VFhJ
-         FZLsvUG/AHRj0Cn2u5gW40sN2d5YElpaVP+Uy2wzdVnpqTtc80AtazBIRDMXY/qd19SD
-         Ieb2K9w1szOR/xS9Ux1tZdXQnwN/WMbkeTSQ8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=W1ulByNC77f+j9VTlNcTuKWYOiSzxcJREx3t2psI7NPvh9E+CLddQHVSDGHc6OfeAx
-         KYVSrmZ9YpSM5LhctBZ8jJsHFPhGe0USgS3hG1KjJkPxTqJKDdMq5q6jro1aWlKDYB/d
-         tLAxnvcRKSqkyd6sJcQu97Sb+xCnloDahtag0=
-Received: by 10.150.196.10 with SMTP id t10mr2049480ybf.82.1295504864574;
-        Wed, 19 Jan 2011 22:27:44 -0800 (PST)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id v8sm4969779yba.2.2011.01.19.22.27.40
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 19 Jan 2011 22:27:43 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110120054813.GB4770@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754160Ab1ATIy7 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 20 Jan 2011 03:54:59 -0500
+Received: from india601.server4you.de ([85.25.151.105]:37661 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751516Ab1ATIy7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jan 2011 03:54:59 -0500
+Received: from [192.168.2.104] (p4FFD8F15.dip.t-dialin.net [79.253.143.21])
+	by india601.server4you.de (Postfix) with ESMTPSA id 832E82F80A0;
+	Thu, 20 Jan 2011 09:54:57 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <AANLkTiknxMh_OophKWsqkYO2C+PsfF0ZnNXKLbheM4wF@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165306>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165307>
 
-Hi Jonathan,
+Am 17.01.2011 20:56, schrieb Graham Sanderson:
+> Apologies if someone has answered this before:
+>=20
+> So we have moved some big teams over to git (awesome thx), and have
+> been using the msysgit default core.autocrlf=3Dtrue on Windows, and
+> making sure text files are LF on other platforms
+>=20
+> However we do continue to have a few problems with people storing CRL=
+=46
+> in the repository (partly because of lack of understanding, and partl=
+y
+> it seems because of eGit on windows which ignores core.autocrlf).
+>=20
+> Anyway, this much is all fine, and we can fix; what I don't understan=
+d
+> is why for files stored as CRLF in the repository it seems
+> indeterminate when or if they show up locally modified (on my window
+> box with core.autocrlf =3D true) when I pull them from the repository=
+=2E I
+> assume the idea is that that they "would be" modified if I were to
+> check them in, since they would be converted to LF, however this only
+> happens sometimes and for a seemingly random subset of the files
+> stored incorrectly.
+>=20
+> It also seems to depend on the state of the local index, as recreatin=
+g
+> the local index often changes the set of files that are displayed thi=
+s
+> way (even without any changes to the files), and it also seems to be
+> different on different machines (perhaps based on when they happened
+> to pull code).
+>=20
+> If anyone can give me a quick mental picture of how this is supposed
+> to work (i.e. at what time the eol conversions are considered) then
+> that'd be great... otherwise I guess I'll go dig in the code.
 
-Jonathan Nieder writes:
-> Ramkumar Ramachandra wrote:
-> 
-> > The functionality to persist blobs that are refenced by
-> > marks probably shouldn't be in svn-fe at all.
-> 
-> Do you mean svn-fi?
+Perhaps this recent thread is of interest to you, even though it's on a
+slightly different topic and inconclusive:
 
-Yeah. Sorry about the typo. Just to make it clear:
+	http://thread.gmane.org/gmane.comp.version-control.git/163794
 
-svn-fi should only ever support inlined blobs. For older streams,
-there's an extra overhead- it'll have to be chained along with a
-helper program that transforms the stream to inline all the blobs.
+It would be nice to have the expectations in your case codified in a
+test script -- based on the documentation, if possible.
 
-> > This filter will need to persist every blob for the entire lifetime of
-> > the program.
-> 
-> Depending on the interface, couldn't it be possible to rely on svn for
-> the content of blobs that have already been exported?  If so, one
-> would only need a place to stash (1) a mapping from mark numbers to
-> (svn rev, path) pairs and (2) the full text of blobs that have not
-> been exported as part of a rev yet.
-
-Oh yes. We discussed this on IRC :) I'm just afraid that it won't be
-fast enough- my idea is to essentially use `svnrdump dump` to replay
-the blobs in a certain (path, revision); let me know if you think
-there's a quicker way.
-
--- Ram
+Ren=E9
