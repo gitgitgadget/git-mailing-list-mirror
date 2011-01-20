@@ -1,77 +1,92 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 2/2] Re: rebase -i: explain how to discard all commits
-Date: Thu, 20 Jan 2011 21:34:41 +0100
-Message-ID: <201101202134.41911.trast@student.ethz.ch>
-References: <vpq62ziv788.fsf@bauges.imag.fr> <20110120195726.GA11702@burratino> <20110120200827.GB14184@vidovic>
+From: Jeff King <peff@peff.net>
+Subject: Re: Creating remote branch called HEAD corrupts remote clones
+Date: Thu, 20 Jan 2011 15:38:40 -0500
+Message-ID: <20110120203840.GA11468@sigill.intra.peff.net>
+References: <ih1449$ul6$1@dough.gmane.org>
+ <7v62tjs66r.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Matthieu Moy <Matthieu.Moy@imag.fr>, <git@vger.kernel.org>,
-	<gitster@pobox.com>, Kevin Ballard <kevin@sb.org>,
-	Yann Dirson <dirson@bertin.fr>,
-	Eric Raible <raible@nextest.com>,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Thu Jan 20 21:35:07 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Stephen Kelly <steveire@gmail.com>,
+	KDE PIM <kde-pim@kde.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 20 21:38:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pg1Dn-0007IF-1n
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Jan 2011 21:35:07 +0100
+	id 1Pg1HN-00013p-Jh
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Jan 2011 21:38:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755218Ab1ATUeq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jan 2011 15:34:46 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:22594 "EHLO edge10.ethz.ch"
+	id S1753335Ab1ATUio (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jan 2011 15:38:44 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:43811 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755201Ab1ATUeo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jan 2011 15:34:44 -0500
-Received: from CAS22.d.ethz.ch (172.31.51.112) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.218.12; Thu, 20 Jan
- 2011 21:34:35 +0100
-Received: from pctrast.inf.ethz.ch (84.74.105.24) by CAS22.d.ethz.ch
- (172.31.51.112) with Microsoft SMTP Server (TLS) id 14.1.218.12; Thu, 20 Jan
- 2011 21:34:42 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
-In-Reply-To: <20110120200827.GB14184@vidovic>
-X-Originating-IP: [84.74.105.24]
+	id S1751209Ab1ATUio (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jan 2011 15:38:44 -0500
+Received: (qmail 13386 invoked by uid 111); 20 Jan 2011 20:38:43 -0000
+Received: from 99-189-169-83.lightspeed.snjsca.sbcglobal.net (HELO sigill.intra.peff.net) (99.189.169.83)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 20 Jan 2011 20:38:43 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jan 2011 15:38:40 -0500
+Content-Disposition: inline
+In-Reply-To: <7v62tjs66r.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165333>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165334>
 
-Nicolas Sebrecht wrote:
-> The 20/01/11, Jonathan Nieder wrote:
+On Thu, Jan 20, 2011 at 11:53:16AM -0800, Junio C Hamano wrote:
+
+> The refs/remotes/origin/HEAD in Bob's repository is supposed to be a
+> symbolic ref that points at the primary branch of the 'origin' remote
+> (typically its master), e.g. "ref: refs/remotes/origin/master".  But in
+> general, local 'refs/remotes/origin/X' for any value of X is to copy
+> 'refs/heads/X' from the 'origin'.
 > 
-> > if you
-> > have a single "noop" instruction, that means "I have discarded all the
-> > commits, but please rebase anyway".
-> 
-> Ok, I think I get it now. What about adding
-> 
->   Use "noop" with no other instruction to fallback to a non-interactive
->   rebase. If other instructions are present, "noop" has no effect.
-> 
-> ?
+> Oops.  If the origin repository has 'refs/heads/HEAD', these rules
+> obviously conflict with each other.
+>
+> [...]
+>
+> I personally think it is reasonable to forbid HEAD or anything all caps
+> that ends with "_HEAD" as branch names.  Opinions?
 
-No, that's quite wrong.
+Hmm. It seems like the symbolic ref is the culprit, not just HEAD. The
+HEAD thing is the most likely, of course, but I could do something like:
 
-The TODO list is the list of all commits that need to be rebased.  It
-does not contain commits that (according to patch-id) are already
-contained in the upstream (i.e., the base you are rebasing on).  If
-the list is empty after filtering out such commits, rebase puts 'noop'
-as the only command since "empty TODO" is already taken to mean
-"abort"
+  git symbolic-ref refs/remotes/origin/convenient-alias \
+                   refs/remotes/origin/some-name-you-dont-like
 
-If you then accept this 'noop' rebase, this effectively makes the
-rebased branch the same as the base branch, sort of like resetting.
+which is basically the same as the HEAD case (except that the
+"convenient alias" for HEAD is "origin" and not
+"origin/convenient-alias" due to the lookup table in dwim_ref).
 
-(I for one have never accepted such a rebase; if the TODO only
-consists of noop, that means I made a mistake.)
+Now imagine the remote creates a branch called convenient-alias. When I
+fetch, am I corrupting my local tracking branches by falsely equating
+the two? And/or when I push, am I then corrupting the remote?
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+So I wonder if the safety valve here should be about symbolic refs, and
+not about the special name HEAD. Maybe we should not follow symbolic
+refs during fetch. So if we are fetching the refspec "foo:bar", and the
+RHS "bar" is a symref, we should _not_ follow it, but instead just
+overwrite the symref with a regular ref.
+
+For pushing, one rule could be to allow pushing from a named symref, but
+not allow the matching rules to use a symref as a source. So I could do:
+
+  git push origin convenient-alias:new-name
+
+but
+
+  git push origin
+
+would never overwrite upstream's convenient-alias.
+
+I dunno. That's just off the top of my head, so maybe I'm missing some
+corner cases. I would be tempted to put the push rule into receive-pack,
+so it could look at the local refs, but I don't think receive-pack has
+any way of knowing what is a symref and what is not on the pushing end.
+
+-Peff
