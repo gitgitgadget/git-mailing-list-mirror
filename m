@@ -1,87 +1,83 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: Re: Creating remote branch called HEAD corrupts remote clones
-Date: Thu, 20 Jan 2011 19:32:40 +0200
-Message-ID: <AANLkTikvVaSTV8hVjDXLvOEEDv5qr19ybk3Cm--+bgWA@mail.gmail.com>
-References: <ih1449$ul6$1@dough.gmane.org>
-	<ih95fg$62b$1@dough.gmane.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Wish: make commiter email address configurable per-repo
+Date: Thu, 20 Jan 2011 10:44:09 -0800
+Message-ID: <7vfwsns9dy.fsf@alter.siamese.dyndns.org>
+References: <ig73o1$lbg$1@dough.gmane.org>
+ <201101071420.40570.trast@student.ethz.ch> <ig7449$lbg$2@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
 To: Stephen Kelly <steveire@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 20 18:33:38 2011
+X-From: git-owner@vger.kernel.org Thu Jan 20 19:44:36 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PfyO7-0003il-7r
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Jan 2011 18:33:35 +0100
+	id 1PfzUp-00010H-V9
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Jan 2011 19:44:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753003Ab1ATRd3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jan 2011 12:33:29 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:40677 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752988Ab1ATRd2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jan 2011 12:33:28 -0500
-Received: by bwz15 with SMTP id 15so770830bwz.19
-        for <git@vger.kernel.org>; Thu, 20 Jan 2011 09:33:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=MnyVP6cfLmVOAm0KQ6DCZvs6vsddMTpzZ5q/IqI/WF0=;
-        b=owr7sbOktB8L3Gk3sP17zDj6DjC62xAOXWLqcGoj7B6ps3WLtTcHkOFqkuma2FDgQn
-         gPlIpGJ9PGugwaFRX4lC8mV0KR1MxHbA/NQ3lp3yGn/gDi6zlnsRngpyz6Z83acvARZa
-         0A2ktNvbUM2amO4xwLVsFfYgDmBQM0E9ARqmo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=XPA3OiaRkvZjTsIyZ36MMc2LhiJ/9iVAAvF/M7FzMLS4pnc2LAR2pQlHBDn00CQqN5
-         OtLhidaNqyJSoE5aVIF/6jYKhTmyFf4hpnvhgCX/v2Xk1HxHqS43U8pWTDVyAis0KTTU
-         2LroHAPz4DPvYu9MlJM4HT8S2754BZ9FRmtus=
-Received: by 10.204.33.74 with SMTP id g10mr79366bkd.131.1295544760778; Thu,
- 20 Jan 2011 09:32:40 -0800 (PST)
-Received: by 10.204.157.4 with HTTP; Thu, 20 Jan 2011 09:32:40 -0800 (PST)
-In-Reply-To: <ih95fg$62b$1@dough.gmane.org>
+	id S1753582Ab1ATSoV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jan 2011 13:44:21 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45028 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752186Ab1ATSoU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jan 2011 13:44:20 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 66D88497D;
+	Thu, 20 Jan 2011 13:45:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=M+ibsZohCXofQfwlNOOEe9dcrEI=; b=Wi6/iY
+	2+juB2hBYlas1ZkKaVqkFgWJAaGjXhAm085FK0C8RicqR9nn5/YPCuPb3Nicwy/v
+	XlnEOmyS6F/ZFs6FRd/D0lG6saJDbU3EqfYg32NFlEGZpClrDYOpZTOiIfZ6Lna2
+	g6GpTxBlwgT8rUWbixieDnjGXf5lBvJYuMzBI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=RH8Ie0R1087XSfNMEVHdrlYCJA6C6REc
+	WaTvnVDswp/C5LQeDUPdR8Ag1yTgaj9dW+Utq+pZOPRRWyTct5i81dKy1lUSbGl2
+	IEzNiooEoZRK7iYstpRHAw04sWas0qKShfaidipOSkC294BjtkfW05ELtxHIJEfh
+	3NcNroyFa40=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3366C497C;
+	Thu, 20 Jan 2011 13:45:00 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 37F34497A; Thu, 20 Jan 2011
+ 13:44:56 -0500 (EST)
+In-Reply-To: <ig7449$lbg$2@dough.gmane.org> (Stephen Kelly's message of
+ "Fri\, 07 Jan 2011 14\:23\:21 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 628BCF76-24C5-11E0-A4B9-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165320>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165321>
 
-Hi,
+Stephen Kelly <steveire@gmail.com> writes:
 
-On Thu, Jan 20, 2011 at 1:14 PM, Stephen Kelly <steveire@gmail.com> wrote:
-> Stephen Kelly wrote:
->> On Friday we had an issue where a developer pushed a branch called HEAD to
->> the remote server. The result was that other developers could not pull or
->> push.
+> Thomas Rast wrote:
 >
-> Does anyone have any thoughts/response on this?
+>> Stephen Kelly wrote:
+>>> So for some git repos in KDE which I work on on work time, I'd like to
+>>> set a different committer address. I can't just set GIT_COMMITTER_EMAIL
+>>> or whatever in my bashrc, because in other repos I want to use a
+>>> different committer email, and don't want it set globally for all git
+>>> repos I work on.
+>>> 
+>>> This doesn't seem to be configurable in git config. Can that be changed?
+>> 
+>> See user.email in git-config(1).  Most people set it globally, as in
+>> 
+>>   git config --global user.email "author@example.com"
+>> 
+>> but there's nothing stopping you from doing
+>> 
+>>   git config user.email "alias@example.com"
+>> 
+>> to set it on a per-repo level.  (Or just edit .git/config, of course.)
+>
+> Doesn't this set both the author and the committer?
 
-Can you list a series of steps to reproduce this?
-
-> Why does git not have a bug tracker?
-
-Because it's not needed. If you have an issue, post the issue as you
-would file a bug:
- Which version of git?
- Which kind of network transport was used?
- Is this reproducible?
-
-Chances are, if this is reproducible in the latest version, someone
-would fix it soon enough. If not, and it's important to you, you would
-ping back. If other people find this issue, they would send another
-email.
-
-In fact, if you really want to help, you could clone the latest
-'master' to see if this still happening, narrow down the steps needed
-to reproduce this, write a test to trigger it and send a patch.
-Certainly, a test case that constantly fails would be a constant
-remainder that there is a bug.
-
-Cheers.
-
--- 
-Felipe Contreras
+And the reason why that is a bad thing is...?
