@@ -1,125 +1,110 @@
-From: Ramkumar Ramachandra <artagnon@gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
 Subject: Re: [PATCH 4/5] fast-export: Introduce --inline-blobs
-Date: Thu, 20 Jan 2011 10:20:48 +0530
-Message-ID: <20110120045046.GB9493@kytes>
+Date: Wed, 19 Jan 2011 23:41:26 -0600
+Message-ID: <20110120054126.GA4770@burratino>
 References: <1295415899-1192-1-git-send-email-artagnon@gmail.com>
  <1295415899-1192-5-git-send-email-artagnon@gmail.com>
  <7vtyh4smer.fsf@alter.siamese.dyndns.org>
- <20110119214827.GA31733@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
+Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
+	Git List <git@vger.kernel.org>,
 	David Barr <david.barr@cordelta.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 20 05:49:55 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 20 06:41:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PfmT5-0002qz-BR
-	for gcvg-git-2@lo.gmane.org; Thu, 20 Jan 2011 05:49:55 +0100
+	id 1PfnHL-0008NU-TD
+	for gcvg-git-2@lo.gmane.org; Thu, 20 Jan 2011 06:41:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755155Ab1ATEtu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 19 Jan 2011 23:49:50 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:38118 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755023Ab1ATEtt (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 19 Jan 2011 23:49:49 -0500
-Received: by yxt3 with SMTP id 3so52260yxt.19
-        for <git@vger.kernel.org>; Wed, 19 Jan 2011 20:49:49 -0800 (PST)
+	id S1755232Ab1ATFlr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jan 2011 00:41:47 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:51280 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753343Ab1ATFlp (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jan 2011 00:41:45 -0500
+Received: by ywl5 with SMTP id 5so60496ywl.19
+        for <git@vger.kernel.org>; Wed, 19 Jan 2011 21:41:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=hRKpE5pqoRGTeZnoA7SwTyHYCbWEFQ87KrLdKg15NE0=;
-        b=p/Sbrg98w8PhNsgYqjrWEgERdCKO2XO4wo4KMy5hP/eAUjJNSU/e2KT8PhCcMMkNyi
-         7GLH4swYrw0XFFBYYx0dmECvB+06mjstqc91nC1AYXhlyGBVvWYNfR2kfXG+AikY8Wue
-         1mluNT9KVOEspnwJkyRlkLhsnj/m+hvv1daTI=
+        bh=73fYtCEnHUQvLxH62eTS+eu867Id+ekSBcjAIKK/XRY=;
+        b=xmz49gQ96Oi5hSkqimqVdpeyBMfvbLc/wfJWoJHrlxUmpk9aFD2ryKFTKM+US6/7nh
+         avbGcEJBftaJMN2gSsMRoHN/0t9GaEPMnOXWtMzs3h2oNmbQ7yNaU8uO701lddgi0hpt
+         rWZi11Iz0+JKBD26GtDqdrLRQ4d4Up87xcngI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=WwI1CqNfuHT/AS6kQr1fSwFEX+NZgMrHKmAPMqKjztX066vBFNKieYQl/FHer8jFIr
-         tIwosk/m0x2DW9MsZNhdAuJK41f0OvrUMc3dL325v5kT2Iqwj3JqLmzE/71w/eFBV3ke
-         oO4l/iDwVy1FhhrcQ18hu7a7VvFO0TqgkgBMA=
-Received: by 10.90.72.14 with SMTP id u14mr1962563aga.195.1295498988957;
-        Wed, 19 Jan 2011 20:49:48 -0800 (PST)
-Received: from kytes ([203.110.240.41])
-        by mx.google.com with ESMTPS id c34sm9399536anc.30.2011.01.19.20.49.44
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 19 Jan 2011 20:49:48 -0800 (PST)
+        b=Zg4UU3ry0hGffSTh+yoXhAQCUVSNU1sqOS0jSV0zbvSAkBPqJ+93IS1fqGBdp7+v5s
+         hre/4Nza/zGXOVYlJjCI2XYRTLsPx7tgEAYFCsXLMMcUpNkq61m0TyjHsLX8B5mq7x/3
+         LKnGEds1p1B4Bp/r/19epazAGlANcbG5FFbvY=
+Received: by 10.150.137.5 with SMTP id k5mr1876633ybd.123.1295502105221;
+        Wed, 19 Jan 2011 21:41:45 -0800 (PST)
+Received: from burratino (adsl-69-209-76-37.dsl.chcgil.ameritech.net [69.209.76.37])
+        by mx.google.com with ESMTPS id v39sm1002361yba.7.2011.01.19.21.41.42
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 19 Jan 2011 21:41:44 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20110119214827.GA31733@burratino>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <7vtyh4smer.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165303>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165304>
 
-Hi,
+Junio C Hamano wrote:
 
-Jonathan Nieder writes:
-> Junio C Hamano wrote:
-> > Ramkumar Ramachandra <artagnon@gmail.com> writes:
-> 
-> >> Introduce a new command-line option --inline-blobs that always inlines
-> >> blobs instead of referring to them via marks or their original SHA-1
-> >> hash.
-> [...]
-> > Hmm, this smells somewhat fishy.
-> >
-> > Wasn't G-F-I designed to be a common stream format for other SCMs to
-> > generate streams, so that importers and exporters can be written once for
-> > each SCM to interoperate?
-> 
-> Here is one way to sell it:
-> 
-> 	With the inline blobs feature, fast-import backends have to
-> 	maintain less state.  Using it should speed up exporting.
-> 
-> 	This is made optional because ...
-> 
-> I haven't thought through whether it ought to be optional or measured
-> the effect on import performance.
+> Just thinking aloud, but is it possible to write a filter that converts an
+> arbitrary G-F-I stream with referenced blobs into a G-F-I stream without
+> referenced blobs by inlining all the blobs?
 
-It simplifies other fast-import backends greatly, because persisting
-blobs can be complicated and expensive. I was thinking of making
-svn-fe support both inlined blobs, and blobs referenced by marks. When
-it's possible to be cheap by optionally having inlined blobs, why not
-optionally have them? The filter we develop later can be used for
-older fast-import streams that don't have inlined blobs.
+A few details to watch out for:
 
-On a related note, does it make sense to version our fast-import
-stream format? It's certainly going to keep evolving with time, and we
-need backward compatibility.
+- A mark, as in
 
-> A separate question is what an svn fast-import backend should do with
-> all those blobs that are not ready to be written to dump.  As a hack
-> while prototyping, one can rely on the "current" fast-export output,
-> even though that is not flexible or futureproof.  Longer term, the
-> folllowing sounds very interesting
+	M 100644 :1 path/to/file
 
-Good point. The functionality to persist blobs that are refenced by
-marks probably shouldn't be in svn-fe at all.
+  can refer to a blob from a previous import.  A mark can even refer
+  to a manually prepared marks file.
 
-> > Just thinking aloud, but is it possible to write a filter that converts an
-> > arbitrary G-F-I stream with referenced blobs into a G-F-I stream without
-> > referenced blobs by inlining all the blobs?
-> 
-> to avoid complexity in the svn fast-import backend itself.
-> (Complicating detail: such a filter would presumably take responsibility
-> for --export-marks, so it might want a way to retrieve commit marks
-> from its downstream.)
+- The syntax
 
-This filter will need to persist every blob for the entire lifetime of
-the program. We can't possibly do it in-memory, so we have to find
-some way to persist them on-disk and retrieve them very
-quickly. Jonathan suggested using something like ToyoCabinet earlier-
-I'll start working and see what I come up with.
+	M 100644 0409ac9fd3f1ea36680189e07116e58b2630ccad path/to/file
 
--- Ram
+  refers to a blob that might not have been mentioned elsewhere in the
+  stream.  This is the variant used by "git fast-export --no-data" to
+  avoid transferring blob data.  (In general, non-git backends would
+  presumably use something other than git blob IDs if they use this
+  feature.  A filter of the kind we are describing would probably pass
+  them through.)
+
+  These datarefs can be acquired out of band (probably not a big deal)
+  or by using the "ls" command to copy from a previous revision:
+
+	> ls :3 "path/to/other/file"
+	100644 blob 0409ac9fd3f1ea36680189e07116e58b2630ccad	git.c
+	> M 100644 0409ac9fd3f1ea36680189e07116e58b2630ccad path/to/file
+
+- The cat-blob command ("cat-blob :1") allows frontends to request
+  the content of a previously imported blob (presumably in order to
+  apply a delta to it).
+
+So while something like the filter you describe seems possible, it
+cannot be as simple as
+
+	mkfifo replies &&
+	fast-export-frontend 3<replies |
+	inline-blobs |
+	fast-import-backend --cat-blob-fd=3 <args> 3>replies
+
+for general <frontend> and <backend>.  The frontend might try to cat
+blobs by mark number or to pick off where it left off in a previous
+run using a marks file.
