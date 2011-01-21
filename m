@@ -1,91 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH 1/2 v2] rebase -i: clarify in-editor documentation of
- "exec"
-Date: Fri, 21 Jan 2011 01:47:00 -0600
-Message-ID: <20110121074700.GA26600@burratino>
-References: <vpq62ziv788.fsf@bauges.imag.fr>
- <1281453472-29835-1-git-send-email-Matthieu.Moy@imag.fr>
- <20110116015941.GA28137@burratino>
- <20110116020132.GB28137@burratino>
- <vpq39otrvmk.fsf@bauges.imag.fr>
- <20110120200949.GB11702@burratino>
- <7vy66fqoji.fsf@alter.siamese.dyndns.org>
- <20110121003624.GB23139@burratino>
- <vpqr5c6zqrh.fsf@bauges.imag.fr>
+From: Libor Pechacek <lpechacek@suse.cz>
+Subject: Re: [PATCH] Sanity-ckeck config variable names
+Date: Fri, 21 Jan 2011 11:02:12 +0100
+Message-ID: <20110121100212.GE19715@fm.suse.cz>
+References: <20110111055922.GD10094@sigill.intra.peff.net> <20110119100105.GB8034@fm.suse.cz> <20110119141112.GD8034@fm.suse.cz> <20110120232232.GA9442@sigill.intra.peff.net> <20110121000629.GA7773@sigill.intra.peff.net> <20110108144644.GA11019@localhost.suse.cz> <20110111055922.GD10094@sigill.intra.peff.net> <20110119100105.GB8034@fm.suse.cz> <20110119141112.GD8034@fm.suse.cz> <20110120232232.GA9442@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Kevin Ballard <kevin@sb.org>, Yann Dirson <dirson@bertin.fr>,
-	Eric Raible <raible@nextest.com>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Fri Jan 21 08:47:28 2011
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 21 11:02:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PgBiQ-0001Aq-Aa
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 08:47:26 +0100
+	id 1PgDp0-00053D-Dh
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 11:02:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753076Ab1AUHrV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jan 2011 02:47:21 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:64836 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751532Ab1AUHrU (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jan 2011 02:47:20 -0500
-Received: by gwj20 with SMTP id 20so438044gwj.19
-        for <git@vger.kernel.org>; Thu, 20 Jan 2011 23:47:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=9HSprDburrhqjfHrtRldd0PryrW34WCaC7ZA9uUShXk=;
-        b=tJm7tIS8hxbNKYA5id8Q+3+TrsBFIlMaiVopWRtMGj+yovCj2WZYwpUqu1MjxU/seI
-         f+UwGq5NArRw985zKP7olqEnAlH9CvaUuIr5dO6LR4TtdH5/fRG8DvxMwpa0wY0NJBMe
-         rK74+vfR68KaIU7xCTnOuIHklCX1EyuLZyrqE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ECwhxu+wYbezVMeUcv2/WshDd/fl6y/b4WeWYLfv685H9iuLJPiibuYnMyf8jU02Ks
-         Fo5H/LMjnVJpYwGF0I/rvGSUpLEYPeRD8PuRF5rdzS7YvlRC8jy3AQPODHWlX5Q6i/4h
-         LiudqPEs2iCWv8eAHWZeQlCbQcqNNYn54IhUU=
-Received: by 10.101.1.15 with SMTP id d15mr240279ani.123.1295596039508;
-        Thu, 20 Jan 2011 23:47:19 -0800 (PST)
-Received: from burratino (adsl-69-209-76-37.dsl.chcgil.sbcglobal.net [69.209.76.37])
-        by mx.google.com with ESMTPS id z12sm11121559anp.19.2011.01.20.23.47.17
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 20 Jan 2011 23:47:18 -0800 (PST)
+	id S1753185Ab1AUKCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jan 2011 05:02:14 -0500
+Received: from cantor.suse.de ([195.135.220.2]:37466 "EHLO mx1.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752126Ab1AUKCN (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jan 2011 05:02:13 -0500
+Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.221.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id 7DB2C8E8CC;
+	Fri, 21 Jan 2011 11:02:12 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <vpqr5c6zqrh.fsf@bauges.imag.fr>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20110121000629.GA7773@sigill.intra.peff.net> <20110120232232.GA9442@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.18-muttng (2008-05-17-r1399)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165359>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165360>
 
-Matthieu Moy wrote:
-> Jonathan Nieder <jrnieder@gmail.com> writes:
+On Thu 20-01-11 18:22:32, Jeff King wrote:
+> > + * Returns 0 on success, 1 when there is an invalid character in the key and 2
+> > + * if there is no section name in the key.
+> 
+> Please switch these to -1 and -2, as we generally use negative integers
+> to indicate errors in library-ish function.
 
->> -#  x <cmd>, exec <cmd> = Run a shell command <cmd>, and stop if it fails
->> +#  x, exec = run command specified on the rest of the line
->
-> I don't think dropping "shell" is a good idea. In this context,
-> "command" could mean "one of pick/fixup/squash/...", a Git command,
-> and at last, an arbitrary line of shell.
+Done.
 
-Hmm.  I suppose
+> Other than that, the code looks OK to me. However, it does cause
+> t1300.85 to fail.
 
-# Commands:
-#  p, pick = use commit
-#  r, reword = use commit, but edit the commit message
-#  e, edit = use commit, but stop for amending
-#  s, squash = use commit, but meld into previous commit
-#  f, fixup = like "squash", but discard this commit's log message
-#  x, exec = run command (the rest of the line) using shell
+Thanks for catching it, added your changes to the patch and tested.  I didn't
+notice the test suite. :)
 
-would do?
+On Thu 20-01-11 19:06:29, Jeff King wrote:
+> Doesn't this hunk:
+> 
+> > @@ -168,10 +167,6 @@ static int get_value(const char *key_, const char *regex_)
+> >       }
+> >  
+> >       key = xstrdup(key_);
+> > -     for (tl=key+strlen(key)-1; tl >= key && *tl != '.'; --tl)
+> > -             *tl = tolower(*tl);
+> > -     for (tl=key; *tl && *tl != '.'; ++tl)
+> > -             *tl = tolower(*tl);
+> 
+> Mean that regexp keys no longer get downcased properly? I.e.,
+> 
+>   git config Foo.value true
+>   git config --get-regexp 'foo.*'
+>   git config --get-regexp 'Foo.*'
+> 
+> used to work for both lookups, but now fails for the second one?
 
-Sorry to take so long to get this right.
+After thinking about it I added the code back.  More on it in the
+"documentation fix" thread.
+
+Thanks for your kind guidance.
+
+Libor
+-- 
+Libor Pechacek
+SUSE L3 Team, Prague
