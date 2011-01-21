@@ -1,98 +1,115 @@
-From: Detlef Vollmann <dv@vollmann.ch>
+From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+	<u.kleine-koenig@pengutronix.de>
 Subject: Re: cannot fetch arm git tree
-Date: Fri, 21 Jan 2011 16:14:18 +0100
-Message-ID: <4D39A2CA.5030504@vollmann.ch>
+Date: Fri, 21 Jan 2011 16:25:44 +0100
+Message-ID: <20110121152544.GQ14956@pengutronix.de>
 References: <AANLkTikRrewCLGDTU7DjVssjpxz-EFK8AhRScAGPRumg@mail.gmail.com>
-	<20110116092315.GA27542@n2100.arm.linux.org.uk>
-	<20110116110819.GG6917@pengutronix.de>
-	<AANLkTinrZ0GnT71GCueUUpAXM5ckq+LBd0RjA51DMR-a@mail.gmail.com>
-	<20110116134248.GD27542@n2100.arm.linux.org.uk>
-	<4D398C43.1000306@vollmann.ch>
-	<20110121134728.GO14956@pengutronix.de>
-	<20110121135725.GR13235@n2100.arm.linux.org.uk>
-	<4D3997FE.5030109@vollmann.ch>
-	<20110121145025.GS13235@n2100.arm.linux.org.uk>
+ <20110116092315.GA27542@n2100.arm.linux.org.uk>
+ <20110116110819.GG6917@pengutronix.de>
+ <AANLkTinrZ0GnT71GCueUUpAXM5ckq+LBd0RjA51DMR-a@mail.gmail.com>
+ <20110116134248.GD27542@n2100.arm.linux.org.uk>
+ <4D398C43.1000306@vollmann.ch>
+ <20110121134728.GO14956@pengutronix.de>
+ <20110121135725.GR13235@n2100.arm.linux.org.uk>
+ <4D3997FE.5030109@vollmann.ch>
+ <20110121145025.GS13235@n2100.arm.linux.org.uk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"; Format="flowed"
-Content-Transfer-Encoding: base64
-Cc: linux-arm-kernel@lists.infradead.org, Jello huang <ruifeihuang@gmail.com>,
-	git@vger.kernel.org,
-	=?UTF-8?B?VXdlIEtsZWluZS1Lw7ZuaWc=?= <u.kleine-koenig@pengutronix.de>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Detlef Vollmann <dv@vollmann.ch>,
+	Jello huang <ruifeihuang@gmail.com>, git@vger.kernel.org,
+	linux-arm-kernel@lists.infradead.org
 To: Russell King - ARM Linux <linux@arm.linux.org.uk>
-X-From: linux-arm-kernel-bounces+linux-arm-kernel=m.gmane.org@lists.infradead.org Fri Jan 21 16:14:56 2011
-Return-path: <linux-arm-kernel-bounces+linux-arm-kernel=m.gmane.org@lists.infradead.org>
-Envelope-to: linux-arm-kernel@m.gmane.org
-Received: from canuck.infradead.org ([134.117.69.58])
+X-From: git-owner@vger.kernel.org Fri Jan 21 16:26:00 2011
+Return-path: <git-owner@vger.kernel.org>
+Envelope-to: gcvg-git-2@lo.gmane.org
+Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <linux-arm-kernel-bounces+linux-arm-kernel=m.gmane.org@lists.infradead.org>)
-	id 1PgIhP-0003Yl-Q4
-	for linux-arm-kernel@m.gmane.org; Fri, 21 Jan 2011 16:14:51 +0100
-Received: from localhost ([127.0.0.1] helo=canuck.infradead.org)
-	by canuck.infradead.org with esmtp (Exim 4.72 #1 (Red Hat Linux))
-	id 1PgIh5-0006HZ-R9; Fri, 21 Jan 2011 15:14:31 +0000
-Received: from mailrelay04.sunrise.ch ([194.158.229.47]
-	helo=smtp-be-02.be08.sunrise.ch)
-	by canuck.infradead.org with esmtps (Exim 4.72 #1 (Red Hat Linux))
-	id 1PgIh1-0006H3-BL for linux-arm-kernel@lists.infradead.org;
-	Fri, 21 Jan 2011 15:14:28 +0000
-Received: from [192.168.26.14] (212-98-43-140.static.adslpremium.ch
-	[212.98.43.140])
-	by smtp-be-02.be08.sunrise.ch (8.13.1/8.12.10) with ESMTP id
-	p0LFEI7U001549; Fri, 21 Jan 2011 16:14:18 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US;
-	rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
+	(envelope-from <git-owner@vger.kernel.org>)
+	id 1PgIsA-0002B3-MN
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 16:25:59 +0100
+Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
+	id S1753496Ab1AUPZx convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Jan 2011 10:25:53 -0500
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:45333 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753398Ab1AUPZw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jan 2011 10:25:52 -0500
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1PgIrz-0008Dv-QK; Fri, 21 Jan 2011 16:25:47 +0100
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1PgIrw-0002UB-UF; Fri, 21 Jan 2011 16:25:44 +0100
+Content-Disposition: inline
 In-Reply-To: <20110121145025.GS13235@n2100.arm.linux.org.uk>
-X-CRM114-Version: 20090807-BlameThorstenAndJenny ( TRE 0.7.6 (BSD) )
-	MR-646709E3 
-X-CRM114-CacheID: sfid-20110121_101427_670748_599CB782 
-X-CRM114-Status: GOOD (  13.59  )
-X-Spam-Score: 0.0 (/)
-X-Spam-Report: SpamAssassin version 3.3.1 on canuck.infradead.org summary:
-	Content analysis details:   (0.0 points)
-	pts rule name              description
-	---- ----------------------
-	--------------------------------------------------
-X-BeenThere: linux-arm-kernel@lists.infradead.org
-X-Mailman-Version: 2.1.12
-Precedence: list
-List-Id: <linux-arm-kernel.lists.infradead.org>
-List-Unsubscribe: <http://lists.infradead.org/mailman/options/linux-arm-kernel>, 
-	<mailto:linux-arm-kernel-request@lists.infradead.org?subject=unsubscribe>
-List-Archive: <http://lists.infradead.org/pipermail/linux-arm-kernel/>
-List-Post: <mailto:linux-arm-kernel@lists.infradead.org>
-List-Help: <mailto:linux-arm-kernel-request@lists.infradead.org?subject=help>
-List-Subscribe: <http://lists.infradead.org/mailman/listinfo/linux-arm-kernel>, 
-	<mailto:linux-arm-kernel-request@lists.infradead.org?subject=subscribe>
-Sender: linux-arm-kernel-bounces@lists.infradead.org
-Errors-To: linux-arm-kernel-bounces+linux-arm-kernel=m.gmane.org@lists.infradead.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165375>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
+Sender: git-owner@vger.kernel.org
+Precedence: bulk
+List-ID: <git.vger.kernel.org>
+X-Mailing-List: git@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165376>
 
-T24gMDEvMjEvMTEgMTU6NTAsIFJ1c3NlbGwgS2luZyAtIEFSTSBMaW51eCB3cm90ZToKPiBPbiBG
-cmksIEphbiAyMSwgMjAxMSBhdCAwMzoyODoxNFBNICswMTAwLCBEZXRsZWYgVm9sbG1hbm4gd3Jv
-dGU6Cj4+IEl0IHNlZW1zIHRvIGJlIGFuIGltcGxlbWVudGF0aW9uIG9mIHRoZSBnaXQgcHJvdG9j
-b2wgdXNpbmcKPj4gSFRUUCBhcyB0cmFuc3BvcnQuCj4+IFNvbWUgaW5mbyBvbiB0aGlzIGlzIGF0
-PGh0dHA6Ly9wcm9naXQub3JnLzIwMTAvMDMvMDQvc21hcnQtaHR0cC5odG1sPi4KPgo+IFNldHRp
-bmcgdXAgU21hcnQgSFRUUAo+Cj4gLi4uCj4gICAgIFRvIHNldCBpdCB1cCwgaXTilqBzIGJlc3Qg
-dG8gd2FsayB0aHJvdWdoIHRoZSBpbnN0cnVjdGlvbnMgb24gdGhlCj4gICAgIGBnaXQtaHR0cC1i
-YWNrZW5kYCBkb2N1bWVudGF0aW9uIHBhZ2UuIEJhc2ljYWxseSwgeW91IGhhdmUgdG8gaW5zdGFs
-bCBHaXQKPiAgICAgdjEuNi42IG9yIGhpZ2hlciBvbiBhIHNlcnZlciB3aXRoIGFuIEFwYWNoZSAy
-Lnggd2Vic2VydmVyIChpdCBoYXMgdG8gYmUKPiAgICAgQXBhY2hlLCBjdXJyZW50bHkgLSBvdGhl
-ciBDR0kgc2VydmVycyBkb27ilqB0IHdvcmssIGxhc3QgSSBjaGVja2VkKS4gVGhlbgo+ICAgICB5
-b3UgYWRkIHNvbWV0aGluZyBzaW1pbGFyIHRvIHRoaXMgdG8geW91ciBodHRwLmNvbmYgZmlsZToK
-Pgo+ICAgU2V0RW52IEdJVF9QUk9KRUNUX1JPT1QgL3Zhci93d3cvZ2l0Cj4gICBTZXRFbnYgR0lU
-X0hUVFBfRVhQT1JUX0FMTAo+ICAgU2NyaXB0QWxpYXMgL2dpdC8gL3Vzci9saWJleGVjL2dpdC1j
-b3JlL2dpdC1odHRwLWJhY2tlbmQvCj4KPiBHcmVhdC4gIERlY2lkaW5nIHRoYXQgaXQgd2lsbCBi
-ZSBodHRwOi8vc2VydmVybmFtZS5leGFtcGxlLmNvbS9naXQvIGlzCj4gcmVhbGx5IGRhbW5lZCBh
-bm5veWluZyBhcyB0aGF0J3MgdHJhZGl0aW9uYWxseSB3aGVyZSBnaXR3ZWIgbGl2ZXMsCj4gd2hp
-Y2ggcmVxdWlyZXMgYSBkaWZmZXJlbnQgc2NyaXB0IGFsaWFzLgo+Cj4gSXQgc2VlbXMgdGhhdCBk
-dWUgdG8gYSBsYWNrIG9mIGNvb3JkaW5hdGlvbiBiZXR3ZWVuIGRpZmZlcmVudCBnaXQKPiBkZXZl
-bG9wZXJzLCBwZW9wbGUgcnVubmluZyB3ZWJzZXJ2ZXJzIGhhdmUgYSBjaG9pY2UgYmV0d2VlbiBw
-cm92aWRpbmcKPiBnaXR3ZWIgb3IgdGhpcyBodHRwIGV4dGVuc2lvbi4KSHVoPwovZ2l0LyBpcyBq
-dXN0IHRoZSBleGFtcGxlIGhlcmUsIHlvdSBjYW4gdXNlIGFueSBuYW1lIHlvdSB3YW50LgpFLmcu
-IEkgdXNlIC9hdXRoLyBmb3IgYXV0aGVudGljYXRlZCB1c2VycywgYW5kIG90aGVycyB1c2UgL2dp
-dG1vYi8Kb3IgL2dpdGFub24vIGZvciBub24tYXV0aGVudGljYXRlZCB1c2Vycy4KQW5kIHlvdSBj
-YW4gdXNlIHNvbWV0aGluZyBsaWtlIGdpdHNtYXJ0LCBnaXRodHRwLCBvciB3aGF0ZXZlci4uLgoK
-ICAgRGV0bGVmCgoKX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19fX19f
-X18KbGludXgtYXJtLWtlcm5lbCBtYWlsaW5nIGxpc3QKbGludXgtYXJtLWtlcm5lbEBsaXN0cy5p
-bmZyYWRlYWQub3JnCmh0dHA6Ly9saXN0cy5pbmZyYWRlYWQub3JnL21haWxtYW4vbGlzdGluZm8v
-bGludXgtYXJtLWtlcm5lbAo=
+On Fri, Jan 21, 2011 at 02:50:26PM +0000, Russell King - ARM Linux wrot=
+e:
+> On Fri, Jan 21, 2011 at 03:28:14PM +0100, Detlef Vollmann wrote:
+> > It seems to be an implementation of the git protocol using
+> > HTTP as transport.
+> > Some info on this is at <http://progit.org/2010/03/04/smart-http.ht=
+ml>.
+>=20
+> Setting up Smart HTTP
+>=20
+> ...
+>    To set it up, it=E2=96=A0s best to walk through the instructions o=
+n the
+>    `git-http-backend` documentation page. Basically, you have to inst=
+all Git
+>    v1.6.6 or higher on a server with an Apache 2.x webserver (it has =
+to be
+>    Apache, currently - other CGI servers don=E2=96=A0t work, last I c=
+hecked). Then
+>    you add something similar to this to your http.conf file:
+>=20
+>  SetEnv GIT_PROJECT_ROOT /var/www/git
+>  SetEnv GIT_HTTP_EXPORT_ALL
+>  ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/
+>=20
+> Great.  Deciding that it will be http://servername.example.com/git/ i=
+s
+> really damned annoying as that's traditionally where gitweb lives,
+> which requires a different script alias.
+>=20
+> It seems that due to a lack of coordination between different git
+> developers, people running webservers have a choice between providing
+> gitweb or this http extension.
+>=20
+> I'm really not interested in working out how to bodge this into worki=
+ng
+> along side the existing gitweb setup by adding lots of rewrite rules,=
+ so
+> as gitweb got there first I think it has priority, that's what we hav=
+e
+> and we'll have to live without the smart http extensions.
+IIRC it's designed to live along side the http:// clone url.
+git-http-backend can still serve dumb http clients including a web
+browser.
+=20
+But note that as git-http-backend less info it has to calculate much
+more.  So the load it introduces should be comparable to running
+git-daemon as should be the times to fetch from it.  So AFAIK the only
+reason to run it is that more corporate users can access port 80.
+
+Best regards
+Uwe
+
+--=20
+Pengutronix e.K.                           | Uwe Kleine-K=C3=B6nig     =
+       |
+Industrial Linux Solutions                 | http://www.pengutronix.de/=
+  |
