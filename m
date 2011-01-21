@@ -1,79 +1,129 @@
-From: Sebastian Pipping <webmaster@hartwork.org>
-Subject: Re: Parameter --color-words not documented for "git show"
-Date: Fri, 21 Jan 2011 01:27:54 +0100
-Message-ID: <4D38D30A.3040707@hartwork.org>
-References: <4D3893EA.5090907@hartwork.org> <201101202127.39962.trast@student.ethz.ch> <4D389E69.608@hartwork.org> <7vk4hzqnbx.fsf@alter.siamese.dyndns.org> <20110120231649.GC14184@vidovic> <20110120233429.GB9442@sigill.intra.peff.net> <4D38CDC4.6010803@hartwork.org> <20110121002020.GA7874@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 1/2 v2] rebase -i: clarify in-editor documentation of "exec"
+Date: Thu, 20 Jan 2011 18:36:24 -0600
+Message-ID: <20110121003624.GB23139@burratino>
+References: <vpq62ziv788.fsf@bauges.imag.fr>
+ <1281453472-29835-1-git-send-email-Matthieu.Moy@imag.fr>
+ <20110116015941.GA28137@burratino>
+ <20110116020132.GB28137@burratino>
+ <vpq39otrvmk.fsf@bauges.imag.fr>
+ <20110120200949.GB11702@burratino>
+ <7vy66fqoji.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Git ML <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 21 01:28:05 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	Kevin Ballard <kevin@sb.org>, Yann Dirson <dirson@bertin.fr>,
+	Eric Raible <raible@nextest.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Jan 21 01:36:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pg4rC-0004ra-L1
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 01:28:02 +0100
+	id 1Pg4zg-00012G-4u
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 01:36:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753627Ab1AUA16 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jan 2011 19:27:58 -0500
-Received: from smtprelay03.ispgateway.de ([80.67.29.28]:50457 "EHLO
-	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752617Ab1AUA15 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jan 2011 19:27:57 -0500
-X-Greylist: delayed 15803 seconds by postgrey-1.27 at vger.kernel.org; Thu, 20 Jan 2011 19:27:57 EST
-Received: from [78.52.102.233] (helo=[192.168.0.2])
-	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <webmaster@hartwork.org>)
-	id 1Pg4r5-0007FQ-1d; Fri, 21 Jan 2011 01:27:55 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20110103 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <20110121002020.GA7874@sigill.intra.peff.net>
-X-Df-Sender: hartwork@binera.de
+	id S1753936Ab1AUAgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jan 2011 19:36:43 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:40348 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753799Ab1AUAgm (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jan 2011 19:36:42 -0500
+Received: by mail-vw0-f46.google.com with SMTP id 16so543098vws.19
+        for <git@vger.kernel.org>; Thu, 20 Jan 2011 16:36:41 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=bY10U3Q/FyaKaJy/2OXZR/KvoF9hkF8pX/qZ54fDU30=;
+        b=ZWtdXW1Jyh4oVa8PEJRncNm4PjDu+rcX0CaItCxKUdA+fxJPYIIzuwB78tBN6NU/eH
+         YDzE+5UFE9FA6uh0C+AdVLSRq+t2ahQw1QyyUmTYAf485u1KDQm4N4qXL+mBGrXEzvTK
+         4e40SQFQHO20BruxO9Re0cpAdw8LRrCaYHFiY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=xWrTaJ0S/e8G0hQT5DL3T6wx8qfWRA2wS9J/fbOofNClLsNSfZMrQkJwMDQSkc8YZ6
+         wsOeEGOB7PeUX1ORxVYvlOgow4ybJqhxqFcUAlJ7G6VQPhH13FDd5HVmfuxJxGePMOif
+         MgOjWOR7jULUm5SbAMsusatgRaDJq1Hm6y9QI=
+Received: by 10.220.182.137 with SMTP id cc9mr438760vcb.99.1295570201761;
+        Thu, 20 Jan 2011 16:36:41 -0800 (PST)
+Received: from burratino ([69.209.76.37])
+        by mx.google.com with ESMTPS id e18sm5300924vbm.5.2011.01.20.16.36.39
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 20 Jan 2011 16:36:41 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vy66fqoji.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165352>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165353>
 
-On 01/21/11 01:20, Jeff King wrote:
->> I agree with Thomas here.  (1) is the only option I find acceptable,
->> personally.  If you'd rather not do that, then at least know I now.
->> Great to have --color-words around btw.
-> 
-> I'm curious why (4) doesn't work for you. I assumed you came to the
-> problem by one of:
-> 
->   - you wanted to know which options "git show" had, so you looked in
->     the manpage. Nothing told you about "--color-words", nor referred
->     you to a list of diff options. With (4), you would find that it
->     accepted all diff options, and then go read the list of diff options
->     (if you weren't already familiar with it).
-> 
->   - you knew about --color-words, and wondered if "git show" supported
->     it. In the current case, searching the page turns up nothing. In
->     option (4), a search would find it (with a reference to diff options
->     if you wanted more details).
-> 
-> The downside is that you sometimes have to be referred. The upside to me
-> is that it becomes explicit that there is a concept of "diff options"
-> that you can look up easily and which we can refer to easily in other
-> parts of the manual. That helps establish a mental model of how git's
-> options work.
-> 
-> So is it just that being referred is annoying, or something else?
+The hints in the current "instruction sheet" template look like so:
 
-Actually that approach is perfect.  I misunderstood (4) on the first
-read somehow.  Really not my day today, sorry.  I would love to see you
-push (4) forward.
+ # Rebase 3f14246..a1d7e01 onto 3f14246
+ #
+ # Commands:
+ #  p, pick = use commit
+ #  r, reword = use commit, but edit the commit message
+ #  e, edit = use commit, but stop for amending
+ #  s, squash = use commit, but meld into previous commit
+ #  f, fixup = like "squash", but discard this commit's log message
+ #  x <cmd>, exec <cmd> = Run a shell command <cmd>, and stop if it fails
+ #
+ # If you remove a line here THAT COMMIT WILL BE LOST.
+ # However, if you remove everything, the rebase will be aborted.
+ #
 
-Best,
+This does not make it clear that the format of each line is
 
+	<insn> <commit id> <explanatory text that will be printed>
 
+but the reader will probably infer that from the automatically
+generated pick examples above it.
 
-Sebastian
+What about the "exec" instruction?  By analogy, I might imagine that
+the format of that line is "exec <command> <explanatory text>", and
+the "x <cmd>" hint does not address that question (at first I read it
+as taking an argument <cmd> that is the name of a shell).  Meanwhile,
+the mention of <cmd> makes the hints harder to scan as a table.
+
+So remove the <cmd> and add some words to remind the reader that
+"exec" runs a command named by the rest of the line.  To make room, it
+is left to the manpage to explain that that command is run using
+$SHELL and that nonzero status from that command will pause the
+rebase.
+
+Wording from Junio.
+
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Junio C Hamano wrote:
+
+> If we wanted to be more helpful, perhaps s/(see below)/specified on the
+> rest of the line/ should be sufficient without adding extra lines.
+
+Sounds good.
+
+ git-rebase--interactive.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index a5ffd9a..a18c9b1 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -1021,7 +1021,7 @@ first and then run 'git rebase --continue' again."
+ #  e, edit = use commit, but stop for amending
+ #  s, squash = use commit, but meld into previous commit
+ #  f, fixup = like "squash", but discard this commit's log message
+-#  x <cmd>, exec <cmd> = Run a shell command <cmd>, and stop if it fails
++#  x, exec = run command specified on the rest of the line
+ #
+ # If you remove a line here THAT COMMIT WILL BE LOST.
+ # However, if you remove everything, the rebase will be aborted.
+-- 
+1.7.4.rc2
