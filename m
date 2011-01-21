@@ -1,111 +1,105 @@
-From: Tilman Vogel <tilman.vogel@web.de>
-Subject: [PATCH] git-gui: add config value gui.diffopts for passing additional diff options
-Date: Fri, 21 Jan 2011 11:59:45 +0100
-Message-ID: <1295607585-15971-1-git-send-email-tilman.vogel@web.de>
-Cc: Tilman Vogel <tilman.vogel@web.de>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 21 12:00:12 2011
+From: Christian Couder <christian.couder@gmail.com>
+Subject: Re: git bisect problems/ideas
+Date: Fri, 21 Jan 2011 14:18:20 +0100
+Message-ID: <AANLkTikG6Ft3Y922Aaakf28cnYs26PcRHoq9GSNj04mu@mail.gmail.com>
+References: <855249CA-A006-475C-8F96-EFD614795064@gmail.com>
+	<AANLkTikNzpCwEieV8sXXctMm+DR69fkLfCF+F3xB6b-k@mail.gmail.com>
+	<54DED602-0BA7-4462-AC00-1DDEEF83068C@gmail.com>
+	<AANLkTi=A2Twepg3Jo_VYxtvghkhx6ixcpRH3332BoRQo@mail.gmail.com>
+	<0253BAE3-90F7-492C-ADF5-8B16DFFA1E44@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org,
+	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: "Aaron S. Meurer" <asmeurer@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 21 14:18:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PgEit-0002Z6-TV
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 12:00:08 +0100
+	id 1PgGsl-00086J-VX
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 14:18:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753908Ab1AULAA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jan 2011 06:00:00 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:56771 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753755Ab1AUK77 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jan 2011 05:59:59 -0500
-Received: by fxm20 with SMTP id 20so1625435fxm.19
-        for <git@vger.kernel.org>; Fri, 21 Jan 2011 02:59:58 -0800 (PST)
+	id S1754930Ab1AUNSX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Jan 2011 08:18:23 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:62425 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754864Ab1AUNSW convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Jan 2011 08:18:22 -0500
+Received: by wyb28 with SMTP id 28so1787762wyb.19
+        for <git@vger.kernel.org>; Fri, 21 Jan 2011 05:18:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:sender:from:to:cc:subject:date:message-id
-         :x-mailer;
-        bh=iK5HJAm/O84j2pbC9YkYyjs7ihbcltHmEZCHJHGmdxI=;
-        b=OuHi8vPALGf7mO6zSrtz0bLmV1Bg6psNjv75Wu2K0dRK8GCGKhR2m4G7gXpBmt319g
-         Wfs8IxC+3rwMLfryZG3gle3UHTzjmCoMwR8fLaRtkdDlqqeueITeHxFdyGghPZJAjt8S
-         guUOVuZMPQ6UiFD1eAfwuL+dzu3o3gnizKKoo=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=q/pRzrZtF3Qc2EIwO3nLaANfRoRTyunRVv7a1/6IWU8=;
+        b=sCfDX9e3M1bS0XklF7Akq/oaUwGSL1lF4CgqDe6xbyi5wRyO0m4drQX0XUZKK/xqcP
+         jiu/3Ku/5QwwgxkYlqoK2xKaAlkV2yvsA0225FYyEBKiISJ8tplE1cS0kwP7ND6g/ct0
+         cXYePyTVcJz2uxEB6jgEFjWk5ng2CNDwj11Nw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=sender:from:to:cc:subject:date:message-id:x-mailer;
-        b=EdCpMe0uzcZmH/ob3Bb3gV9R1T+DqJq0a3WixBtPYH/cBNUurXxpWRt8uNDmxU8Lv7
-         skhFE/VBMLz4u44rAp9zAIdy1lTwUqumXeSE3WyX/X4GqUV/e7alaTd9/+EpWfLIZkSO
-         p4mL/Ui9fbzEsltLP4bxP/QwqmDeBFjdH8RKw=
-Received: by 10.223.86.71 with SMTP id r7mr499272fal.137.1295607597984;
-        Fri, 21 Jan 2011 02:59:57 -0800 (PST)
-Received: from localhost.localdomain (e178197124.adsl.alicedsl.de [85.178.197.124])
-        by mx.google.com with ESMTPS id l3sm71503fan.0.2011.01.21.02.59.56
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 21 Jan 2011 02:59:57 -0800 (PST)
-X-Mailer: git-send-email 1.7.3.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=sAX3PuV2S8e4z8hDVx+J7qbmD/E44MUA08VZzz7d79OCKVegkX+J9itSd+xJBLhywR
+         npdTv22+tw7tBo9h+aTHTiPQYcVvFY75Z2Qhi3LBBL9Y8OaLK2Qis7pBL8qHXVKckvRO
+         u3S3ScloUDjV9yK0b3sFa+jjivW0u5CYSzF1I=
+Received: by 10.216.179.207 with SMTP id h57mr601334wem.20.1295615900728; Fri,
+ 21 Jan 2011 05:18:20 -0800 (PST)
+Received: by 10.216.30.65 with HTTP; Fri, 21 Jan 2011 05:18:20 -0800 (PST)
+In-Reply-To: <0253BAE3-90F7-492C-ADF5-8B16DFFA1E44@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165367>
 
-Signed-off-by: Tilman Vogel <tilman.vogel@web.de>
----
- Documentation/config.txt |    4 ++++
- git-gui/git-gui.sh       |    1 +
- git-gui/lib/diff.tcl     |    1 +
- git-gui/lib/option.tcl   |    1 +
- 4 files changed, 7 insertions(+), 0 deletions(-)
+On Wed, Jan 19, 2011 at 8:44 PM, Aaron S. Meurer <asmeurer@gmail.com> w=
+rote:
+>>>
+>>> I don't understand how this can only be one way? =A0Isn't this symm=
+etric? =A0In
+>>> other words, how is it different from
+>>>
+>>> A-B-C-D-E <-- dev
+>>> =A0 =A0\F-G <-- master
+>>>
+>>> as far as bisect is concerned? Or maybe I am not entirely clear on =
+what you
+>>> are saying.
+>>
+>> Yes, it is symmetric, so we cannot just automatically reverse the
+>> meanning because there is no "after" or "before" relationship betwee=
+n
+>> "dev" and "master".
+>
+> I think I understand. =A0What if something works in A, gets broken in=
+ C, stays broken in E, but gets fixed in G? =A0Should it maybe be impli=
+ed by whichever one is marked as good first, A or G, if you trying to f=
+ind the fix or the break?
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ff7c225..0ed7bcf 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -1100,6 +1100,10 @@ gui.diffcontext::
- 	Specifies how many context lines should be used in calls to diff
- 	made by the linkgit:git-gui[1]. The default is "5".
- 
-+gui.diffopts::
-+	Specifies additional parameters to pass to diff from 
-+	linkgit:git-gui[1]. The default is "".
-+
- gui.encoding::
- 	Specifies the default encoding to use for displaying of
- 	file contents in linkgit:git-gui[1] and linkgit:gitk[1].
-diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
-index d3acf0d..2a3aed5 100755
---- a/git-gui/git-gui.sh
-+++ b/git-gui/git-gui.sh
-@@ -823,6 +823,7 @@ set default_config(gui.fastcopyblame) false
- set default_config(gui.copyblamethreshold) 40
- set default_config(gui.blamehistoryctx) 7
- set default_config(gui.diffcontext) 5
-+set default_config(gui.diffopts) {}
- set default_config(gui.commitmsgwidth) 75
- set default_config(gui.newbranchtemplate) {}
- set default_config(gui.spellingdictionary) {}
-diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
-index dcf0711..de3827a 100644
---- a/git-gui/lib/diff.tcl
-+++ b/git-gui/lib/diff.tcl
-@@ -295,6 +295,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
- 
- 	lappend cmd -p
- 	lappend cmd --color
-+	set cmd [concat $cmd $repo_config(gui.diffopts)]
- 	if {$repo_config(gui.diffcontext) >= 1} {
- 		lappend cmd "-U$repo_config(gui.diffcontext)"
- 	}
-diff --git a/git-gui/lib/option.tcl b/git-gui/lib/option.tcl
-index 3807c8d..1e5d28c 100644
---- a/git-gui/lib/option.tcl
-+++ b/git-gui/lib/option.tcl
-@@ -153,6 +153,7 @@ proc do_options {} {
- 		{i-20..200 gui.copyblamethreshold {mc "Minimum Letters To Blame Copy On"}}
- 		{i-0..300 gui.blamehistoryctx {mc "Blame History Context Radius (days)"}}
- 		{i-1..99 gui.diffcontext {mc "Number of Diff Context Lines"}}
-+		{t gui.diffopts {mc "Additional Diff Parameters"}}
- 		{i-0..99 gui.commitmsgwidth {mc "Commit Message Text Width"}}
- 		{t gui.newbranchtemplate {mc "New Branch Name Template"}}
- 		{c gui.encoding {mc "Default File Contents Encoding"}}
--- 
-1.7.3.4
+In this case, if we are given "git bisect bad E" and "git bisect good
+A", yes, as A is before E, we must suppose that we are looking for the
+break.
+
+But if we are given "git bisect bad E" and "git bisect good G", we
+have to suppose that we are looking for the break too. There are many
+good reasons for that:
+
+- it's the logical default for bisect,
+- if what is wanted is the fix, there has been for a long time the
+possibility to just switch "bad" and "good",
+- the user might not even realize that E and G have no "after" or
+"before" relationship.
+
+> If no, I think --reverse is actually a suitable fix.
+
+Yeah, but I think that what Dscho started was probably better. The
+problem is just that it is not so simple to implement and no one yet
+has been interested enough or took enough time to finish it.
+
+Best regards,
+Christian.
