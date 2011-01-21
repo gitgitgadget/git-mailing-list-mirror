@@ -1,86 +1,74 @@
-From: Russell King - ARM Linux <linux@arm.linux.org.uk>
-Subject: Re: cannot fetch arm git tree
-Date: Fri, 21 Jan 2011 14:50:26 +0000
-Message-ID: <20110121145025.GS13235@n2100.arm.linux.org.uk>
-References: <AANLkTikRrewCLGDTU7DjVssjpxz-EFK8AhRScAGPRumg@mail.gmail.com> <20110116092315.GA27542@n2100.arm.linux.org.uk> <20110116110819.GG6917@pengutronix.de> <AANLkTinrZ0GnT71GCueUUpAXM5ckq+LBd0RjA51DMR-a@mail.gmail.com> <20110116134248.GD27542@n2100.arm.linux.org.uk> <4D398C43.1000306@vollmann.ch> <20110121134728.GO14956@pengutronix.de> <20110121135725.GR13235@n2100.arm.linux.org.uk> <4D3997FE.5030109@vollmann.ch>
+From: Patrick Doyle <wpdster@gmail.com>
+Subject: Move git-stash from one machine (or working copy) to another
+Date: Fri, 21 Jan 2011 09:54:50 -0500
+Message-ID: <AANLkTin2M+dLUOFnAKqNvYn04NumCmmQ331Yfb9ieW-D@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>,
-	Jello huang <ruifeihuang@gmail.com>, git@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-To: Detlef Vollmann <dv@vollmann.ch>
-X-From: git-owner@vger.kernel.org Fri Jan 21 15:51:05 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Fri Jan 21 15:55:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PgIKN-0005C5-5C
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 15:51:03 +0100
+	id 1PgIOY-0008Gm-3I
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 15:55:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753521Ab1AUOuw convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Jan 2011 09:50:52 -0500
-Received: from caramon.arm.linux.org.uk ([78.32.30.218]:45728 "EHLO
-	caramon.arm.linux.org.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753466Ab1AUOuw (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jan 2011 09:50:52 -0500
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=arm.linux.org.uk; s=caramon;
-	h=Sender:In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:References:Message-ID:Subject:Cc:To:From:Date; bh=PKxtvwFyEoN5tjV6rhZHrF34SwK0Bto9IU8mACBc4Ro=;
-	b=Ox9Bq4b7leN0dbyQvb1Oemgn9w3zYzCpGfMDJjPlQn5BHflHGVgxu47S66jsC+1p2hSzsAAyY51XlbdM+TbmjJhapDb3R3Z4qhjgQQ1CAOyq2ypQb5N/FGdYoFvJj+PN2wXPIwlirIRzfIHGe1Quti0uDVsFCn4vI0KfgarZlaU=;
-Received: from n2100.arm.linux.org.uk ([2002:4e20:1eda:1:214:fdff:fe10:4f86])
-	by caramon.arm.linux.org.uk with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.72)
-	(envelope-from <linux@arm.linux.org.uk>)
-	id 1PgIJn-0007QA-Nh; Fri, 21 Jan 2011 14:50:28 +0000
-Received: from linux by n2100.arm.linux.org.uk with local (Exim 4.72)
-	(envelope-from <linux@n2100.arm.linux.org.uk>)
-	id 1PgIJm-0005DL-Ck; Fri, 21 Jan 2011 14:50:26 +0000
-Content-Disposition: inline
-In-Reply-To: <4D3997FE.5030109@vollmann.ch>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1753318Ab1AUOzM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jan 2011 09:55:12 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:45009 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752143Ab1AUOzL (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jan 2011 09:55:11 -0500
+Received: by fxm20 with SMTP id 20so1849716fxm.19
+        for <git@vger.kernel.org>; Fri, 21 Jan 2011 06:55:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=KogtkiFXvFHSsldCaZVniqkrFMl9zjdyZcWuCykYtkU=;
+        b=C0Z8DLo1LvyPl8651D44clk/AslpfsfXHlClbOzJ0kn0yx1xLgQdc/47VnICQ97frQ
+         zn7ycqOyZeJ7ZVcmct4eQ3ZIVovveG/sbzthjgcYKzmcJOtRelY2r8296L8aVEDfAGnm
+         v+1SmgD4CHg/yW8e9TCh7K3wcv9GAAAop/wvg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=BoWmqX/nKu0wmbrLXhGGLjkK5HYlKcL088CcYeCpNnBn201eJgQWGVofM1sK0EoFx2
+         qW0ZJKpNOtA4HH5TCmKdMlx0CNvDRQaefeteNKigJ2tIhs0J6o02BBPpmWcdbNYlC0Zj
+         DdN4pgmNxfztYss7NBLMijhF2EpTp3FEHAiy4=
+Received: by 10.223.79.66 with SMTP id o2mr743828fak.80.1295621710358; Fri, 21
+ Jan 2011 06:55:10 -0800 (PST)
+Received: by 10.223.121.147 with HTTP; Fri, 21 Jan 2011 06:54:50 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165373>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165374>
 
-On Fri, Jan 21, 2011 at 03:28:14PM +0100, Detlef Vollmann wrote:
-> It seems to be an implementation of the git protocol using
-> HTTP as transport.
-> Some info on this is at <http://progit.org/2010/03/04/smart-http.html=
->.
+Is there an easy way to move work in progress from one machine to another?
 
-Setting up Smart HTTP
+One way to do it might be something like this:
 
-=2E..
-   To set it up, it=E2=96=A0s best to walk through the instructions on =
-the
-   `git-http-backend` documentation page. Basically, you have to instal=
-l Git
-   v1.6.6 or higher on a server with an Apache 2.x webserver (it has to=
- be
-   Apache, currently - other CGI servers don=E2=96=A0t work, last I che=
-cked). Then
-   you add something similar to this to your http.conf file:
+machine1$ git checkout -b movewip
+machine1$ git add .
+machine1$ git commit -m "Moving work in progress"
+machine1$ git push origin movewip:movewip
 
- SetEnv GIT_PROJECT_ROOT /var/www/git
- SetEnv GIT_HTTP_EXPORT_ALL
- ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/
+machine2$ git fetch origin movewip:movewip:
+machine2$ git checkout movewip
+machine2$ git reset HEAD^
+machine2$ git stash
+machine2$ git checkout master
+machine2$ git stash pop
 
-Great.  Deciding that it will be http://servername.example.com/git/ is
-really damned annoying as that's traditionally where gitweb lives,
-which requires a different script alias.
+# go through and delete movewip branches on machine1, machine2, and
+the origin server
 
-It seems that due to a lack of coordination between different git
-developers, people running webservers have a choice between providing
-gitweb or this http extension.
+Except for some possible typos, this seems like it would work, but
+seems to be awfully clumsy.  Is there a more elegant way to accomplish
+this?
 
-I'm really not interested in working out how to bodge this into working
-along side the existing gitweb setup by adding lots of rewrite rules, s=
-o
-as gitweb got there first I think it has priority, that's what we have
-and we'll have to live without the smart http extensions.
-
-It's really not that big a deal if you follow the advice I've given.
+It seems to me that if I could git-stash on machine1, take that stash
+with me (somehow) to machine2, and then pop it there, that would be
+easier.
+--wpd
