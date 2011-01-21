@@ -1,98 +1,70 @@
-From: Libor Pechacek <lpechacek@suse.cz>
-Subject: [PATCH v2] Documentation fixes in git-config
-Date: Fri, 21 Jan 2011 11:25:37 +0100
-Message-ID: <20110121102537.GH19715@fm.suse.cz>
-References: <20110108144644.GA11019@localhost.suse.cz> <20110111055922.GD10094@sigill.intra.peff.net> <20110119100105.GB8034@fm.suse.cz> <20110119141401.GE8034@fm.suse.cz> <20110121002716.GC9442@sigill.intra.peff.net> <20110121102048.GF19715@fm.suse.cz>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1/2 v2] rebase -i: clarify in-editor documentation of "exec"
+Date: Fri, 21 Jan 2011 11:43:40 +0100
+Message-ID: <vpqpqrqwn8j.fsf@bauges.imag.fr>
+References: <vpq62ziv788.fsf@bauges.imag.fr>
+	<1281453472-29835-1-git-send-email-Matthieu.Moy@imag.fr>
+	<20110116015941.GA28137@burratino> <20110116020132.GB28137@burratino>
+	<vpq39otrvmk.fsf@bauges.imag.fr> <20110120200949.GB11702@burratino>
+	<7vy66fqoji.fsf@alter.siamese.dyndns.org>
+	<20110121003624.GB23139@burratino> <vpqr5c6zqrh.fsf@bauges.imag.fr>
+	<20110121074700.GA26600@burratino>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 21 11:25:45 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Kevin Ballard <kevin@sb.org>, Yann Dirson <dirson@bertin.fr>,
+	Eric Raible <raible@nextest.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 21 11:44:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PgEBc-0000nw-G2
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 11:25:44 +0100
+	id 1PgETk-0001yn-Ab
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 11:44:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752207Ab1AUKZj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jan 2011 05:25:39 -0500
-Received: from cantor2.suse.de ([195.135.220.15]:50217 "EHLO mx2.suse.de"
+	id S1754121Ab1AUKn7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jan 2011 05:43:59 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:59735 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750810Ab1AUKZi (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jan 2011 05:25:38 -0500
-Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.221.2])
-	by mx2.suse.de (Postfix) with ESMTP id EE8C487104;
-	Fri, 21 Jan 2011 11:25:37 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20110121102048.GF19715@fm.suse.cz>
-User-Agent: Mutt/1.5.18-muttng (2008-05-17-r1399)
+	id S1753834Ab1AUKn5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jan 2011 05:43:57 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p0LAheOq030856
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Fri, 21 Jan 2011 11:43:40 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PgESz-0006sQ-3I; Fri, 21 Jan 2011 11:43:41 +0100
+In-Reply-To: <20110121074700.GA26600@burratino> (Jonathan Nieder's message of "Fri\, 21 Jan 2011 01\:47\:00 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Fri, 21 Jan 2011 11:43:40 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p0LAheOq030856
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1296211420.96438@ILhzc2GKvjKFAGb3oZvqRw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165363>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165364>
 
-Variable names must start with an alphabetic character, regexp config key
-matching has its limits.
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-Signed-off-by: Libor Pechacek <lpechacek@suse.cz>
-Cc: Jeff King <peff@peff.net>
----
- Documentation/config.txt     |   12 +++++++-----
- Documentation/git-config.txt |    9 +++++++--
- 2 files changed, 14 insertions(+), 7 deletions(-)
+> # Commands:
+> #  p, pick = use commit
+> #  r, reword = use commit, but edit the commit message
+> #  e, edit = use commit, but stop for amending
+> #  s, squash = use commit, but meld into previous commit
+> #  f, fixup = like "squash", but discard this commit's log message
+> #  x, exec = run command (the rest of the line) using shell
 
-diff --git a/Documentation/config.txt b/Documentation/config.txt
-index ff7c225..928ceda 100644
---- a/Documentation/config.txt
-+++ b/Documentation/config.txt
-@@ -12,8 +12,9 @@ The configuration variables are used by both the git plumbing
- and the porcelains. The variables are divided into sections, wherein
- the fully qualified variable name of the variable itself is the last
- dot-separated segment and the section name is everything before the last
--dot. The variable names are case-insensitive and only alphanumeric
--characters are allowed. Some variables may appear multiple times.
-+dot. The variable names are case-insensitive, allow only alphanumeric
-+characters and '-', and must start with an alphabetic character.  Some
-+variables may appear multiple times.
- 
- Syntax
- ~~~~~~
-@@ -53,9 +54,10 @@ All the other lines (and the remainder of the line after the section
- header) are recognized as setting variables, in the form
- 'name = value'.  If there is no equal sign on the line, the entire line
- is taken as 'name' and the variable is recognized as boolean "true".
--The variable names are case-insensitive and only alphanumeric
--characters and `-` are allowed.  There can be more than one value
--for a given variable; we say then that variable is multivalued.
-+The variable names are case-insensitive, allow only alphanumeric characters
-+and `-`, and must start with an alphabetic character.  There can be more
-+than one value for a given variable; we say then that variable is
-+multivalued.
- 
- Leading and trailing whitespace in a variable value is discarded.
- Internal whitespace within a variable value is retained verbatim.
-diff --git a/Documentation/git-config.txt b/Documentation/git-config.txt
-index 543dd64..31f4658 100644
---- a/Documentation/git-config.txt
-+++ b/Documentation/git-config.txt
-@@ -83,8 +83,13 @@ OPTIONS
- 	is not exactly one.
- 
- --get-regexp::
--	Like --get-all, but interprets the name as a regular expression.
--	Also outputs the key names.
-+	Like --get-all, but interprets the name as a regular expression and
-+	writes out the key names.  Regular expression matching is currently
-+	case-sensitive and done against a canonicalized version of the key
-+	in which section and variable names are lowercased, but subsection
-+	names are not.  Regular expressions are partially lower-cased
-+	before matching (everything before the first dot and after the last
-+	dot), which makes things like "Core.*' work.
- 
- --global::
- 	For writing options: write to global ~/.gitconfig file rather than
+I'm fine with that.
+
 -- 
-1.7.4.rc2.20.gdb1b81
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
