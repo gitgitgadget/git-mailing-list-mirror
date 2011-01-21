@@ -1,98 +1,93 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: Parameter --color-words not documented for "git show"
-Date: Thu, 20 Jan 2011 19:20:20 -0500
-Message-ID: <20110121002020.GA7874@sigill.intra.peff.net>
-References: <4D3893EA.5090907@hartwork.org>
- <201101202127.39962.trast@student.ethz.ch>
- <4D389E69.608@hartwork.org>
- <7vk4hzqnbx.fsf@alter.siamese.dyndns.org>
- <20110120231649.GC14184@vidovic>
- <20110120233429.GB9442@sigill.intra.peff.net>
- <4D38CDC4.6010803@hartwork.org>
+Subject: Re: [PATCH] Documentation fixes in git-config
+Date: Thu, 20 Jan 2011 19:27:16 -0500
+Message-ID: <20110121002716.GC9442@sigill.intra.peff.net>
+References: <20110108144644.GA11019@localhost.suse.cz>
+ <20110111055922.GD10094@sigill.intra.peff.net>
+ <20110119100105.GB8034@fm.suse.cz>
+ <20110119141401.GE8034@fm.suse.cz>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Git ML <git@vger.kernel.org>
-To: Sebastian Pipping <webmaster@hartwork.org>
-X-From: git-owner@vger.kernel.org Fri Jan 21 01:20:29 2011
+Cc: git@vger.kernel.org
+To: Libor Pechacek <lpechacek@suse.cz>
+X-From: git-owner@vger.kernel.org Fri Jan 21 01:27:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pg4jt-00013W-41
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 01:20:29 +0100
+	id 1Pg4qa-0004T5-Bv
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 01:27:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753623Ab1AUAUY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jan 2011 19:20:24 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:49468 "EHLO peff.net"
+	id S1753529Ab1AUA1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jan 2011 19:27:18 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:45301 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753532Ab1AUAUX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jan 2011 19:20:23 -0500
-Received: (qmail 15329 invoked by uid 111); 21 Jan 2011 00:20:22 -0000
+	id S1752617Ab1AUA1S (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jan 2011 19:27:18 -0500
+Received: (qmail 15404 invoked by uid 111); 21 Jan 2011 00:27:17 -0000
 Received: from 99-189-169-83.lightspeed.snjsca.sbcglobal.net (HELO sigill.intra.peff.net) (99.189.169.83)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 21 Jan 2011 00:20:22 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jan 2011 19:20:20 -0500
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 21 Jan 2011 00:27:17 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jan 2011 19:27:16 -0500
 Content-Disposition: inline
-In-Reply-To: <4D38CDC4.6010803@hartwork.org>
+In-Reply-To: <20110119141401.GE8034@fm.suse.cz>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165350>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165351>
 
-On Fri, Jan 21, 2011 at 01:05:24AM +0100, Sebastian Pipping wrote:
+On Wed, Jan 19, 2011 at 03:14:01PM +0100, Libor Pechacek wrote:
 
-> > The problem is that we have a bazillion diff options that appear in many
-> > manpages, so you are stuck with one of:
-> > 
-> >   1. repeat them all in each manpage (usually via some automagic
-> >      include), which dwarfs the original content, and makes it hard for
-> >      users to see subtle differences between commands
-> > 
-> >   2. Say "this describes only the most frequently used options", which
-> >      leaves the user wondering which infrequently used options exist.
-> > 
-> >   3. Say "we also take diff options, and you can find out more about
-> >      diff options in git-diff(1)." This at least points the user in the
-> >      right direction, but you can't search for "--color-words" in the
-> >      page.
-> > 
-> >   4. Do (3), but also list the all (or common) diff options in a succint
-> >      list without descriptions, and refer the user to git-diff(1). Then
-> >      they can grep if they like, and while they won't get the immediate
-> >      answer, they will get referred to the right place.
-> > 
-> > As you can probably guess, I favor option (4), though we already do (3)
-> > in some places.
-> 
-> I agree with Thomas here.  (1) is the only option I find acceptable,
-> personally.  If you'd rather not do that, then at least know I now.
-> Great to have --color-words around btw.
+> diff --git a/Documentation/config.txt b/Documentation/config.txt
+> index ff7c225..0f23bc7 100644
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -12,8 +12,9 @@ The configuration variables are used by both the git plumbing
+>  and the porcelains. The variables are divided into sections, wherein
+>  the fully qualified variable name of the variable itself is the last
+>  dot-separated segment and the section name is everything before the last
+> -dot. The variable names are case-insensitive and only alphanumeric
+> -characters are allowed. Some variables may appear multiple times.
+> +dot. The variable names are case-insensitive, only alphanumeric
+> +characters and '-' are allowed and must start with an alphabetic character.
+> +Some variables may appear multiple times.
 
-I'm curious why (4) doesn't work for you. I assumed you came to the
-problem by one of:
+The intent of the change looks fine, but your sentence doesn't quite
+parse to me (to be fair, the problem is in the one you are replacing,
+but adding the third clause makes it even more confusing). How about:
 
-  - you wanted to know which options "git show" had, so you looked in
-    the manpage. Nothing told you about "--color-words", nor referred
-    you to a list of diff options. With (4), you would find that it
-    accepted all diff options, and then go read the list of diff options
-    (if you weren't already familiar with it).
+  The variables names are case-insensitive, allow only alphanumeric
+  characters and '-', and must start with an alphabetic character.
 
-  - you knew about --color-words, and wondered if "git show" supported
-    it. In the current case, searching the page turns up nothing. In
-    option (4), a search would find it (with a reference to diff options
-    if you wanted more details).
+>  --get-regexp::
+>  	Like --get-all, but interprets the name as a regular expression.
+> -	Also outputs the key names.
+> +	Regular expression matching is case sensitive in all parts of the key,
+> +	therefore make sure your pattern matches lower case letters in section
+> +	and variable names.  Also outputs the key names.
 
-The downside is that you sometimes have to be referred. The upside to me
-is that it becomes explicit that there is a concept of "diff options"
-that you can look up easily and which we can refer to easily in other
-parts of the manual. That helps establish a mental model of how git's
-options work.
+That is only true because of the breakage in your first patch. Without
+your patch, both of these work:
 
-So is it just that being referred is annoying, or something else?
+  git config --get-regexp 'Foo.*'
+  git config --get-regexp 'foo.*'
+
+That being said, the downcasing is extremely naive for regexps, and you
+should try to match the canonical name. The current downcasing behavior
+should probably stay for historical reasons, but is not well thought-out
+(it may even be accidental). Perhaps we should therefore explain it in
+those terms:
+
+  Regular expression matching is case-sensitive and done against a
+  canonicalized version of the key in which section and variable names
+  are lowercased, but subsection names are not. For historical reasons,
+  some simple regular expressions are lower-cased before matching
+  (everything before the first dot and after the last dot), which makes
+  things like "Core.*' work.
+
+I dunno. Maybe we should just declare "Core.*' to be broken, and anybody
+who was relying on it is wrong.
 
 -Peff
