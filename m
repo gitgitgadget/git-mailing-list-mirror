@@ -1,129 +1,93 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 1/2 v2] rebase -i: clarify in-editor documentation of "exec"
-Date: Thu, 20 Jan 2011 18:36:24 -0600
-Message-ID: <20110121003624.GB23139@burratino>
-References: <vpq62ziv788.fsf@bauges.imag.fr>
- <1281453472-29835-1-git-send-email-Matthieu.Moy@imag.fr>
- <20110116015941.GA28137@burratino>
- <20110116020132.GB28137@burratino>
- <vpq39otrvmk.fsf@bauges.imag.fr>
- <20110120200949.GB11702@burratino>
- <7vy66fqoji.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Parameter --color-words not documented for "git show"
+Date: Thu, 20 Jan 2011 22:08:36 -0800
+Message-ID: <7vy66epz4r.fsf@alter.siamese.dyndns.org>
+References: <4D3893EA.5090907@hartwork.org>
+ <201101202127.39962.trast@student.ethz.ch> <4D389E69.608@hartwork.org>
+ <7vk4hzqnbx.fsf@alter.siamese.dyndns.org> <20110120231649.GC14184@vidovic>
+ <20110120233429.GB9442@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
-	Kevin Ballard <kevin@sb.org>, Yann Dirson <dirson@bertin.fr>,
-	Eric Raible <raible@nextest.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 21 01:36:50 2011
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Sebastian Pipping <webmaster@hartwork.org>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Git ML <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Jan 21 07:08:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pg4zg-00012G-4u
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 01:36:48 +0100
+	id 1PgAB7-0000K4-V5
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 07:08:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753936Ab1AUAgn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jan 2011 19:36:43 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:40348 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753799Ab1AUAgm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jan 2011 19:36:42 -0500
-Received: by mail-vw0-f46.google.com with SMTP id 16so543098vws.19
-        for <git@vger.kernel.org>; Thu, 20 Jan 2011 16:36:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=bY10U3Q/FyaKaJy/2OXZR/KvoF9hkF8pX/qZ54fDU30=;
-        b=ZWtdXW1Jyh4oVa8PEJRncNm4PjDu+rcX0CaItCxKUdA+fxJPYIIzuwB78tBN6NU/eH
-         YDzE+5UFE9FA6uh0C+AdVLSRq+t2ahQw1QyyUmTYAf485u1KDQm4N4qXL+mBGrXEzvTK
-         4e40SQFQHO20BruxO9Re0cpAdw8LRrCaYHFiY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=xWrTaJ0S/e8G0hQT5DL3T6wx8qfWRA2wS9J/fbOofNClLsNSfZMrQkJwMDQSkc8YZ6
-         wsOeEGOB7PeUX1ORxVYvlOgow4ybJqhxqFcUAlJ7G6VQPhH13FDd5HVmfuxJxGePMOif
-         MgOjWOR7jULUm5SbAMsusatgRaDJq1Hm6y9QI=
-Received: by 10.220.182.137 with SMTP id cc9mr438760vcb.99.1295570201761;
-        Thu, 20 Jan 2011 16:36:41 -0800 (PST)
-Received: from burratino ([69.209.76.37])
-        by mx.google.com with ESMTPS id e18sm5300924vbm.5.2011.01.20.16.36.39
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 20 Jan 2011 16:36:41 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7vy66fqoji.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1752175Ab1AUGIw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jan 2011 01:08:52 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61870 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751265Ab1AUGIw (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jan 2011 01:08:52 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3AE2F2306;
+	Fri, 21 Jan 2011 01:09:37 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=oxGrvzEiLI5Yo+U5epf6Q9SxYBo=; b=Sdr/S3uuMLibSx5PshiyMur
+	jUmb3oBs01d1bwqWfjlOHSQz2bOE6M5C23G/4So5LKdJxTR4hUUWcCyX3DRftNGW
+	FZq+rjyzFOn29xjVcM+LS/wtU74CYED8nTRh3iGGbyLXWoY28mTA78zyP8G1L6Dm
+	uSPLHMp99KREz7uE/TT0=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=blWydx29W5YXvgr2QlC+MGFq2p+78ZH0/1e1pN38UffWgTxKq
+	t7eF0PTyPSzebr/Udu9TrMtaizzDJwxtGkubVdcSc3f7+qhGgKb/zsurhEmrSy3R
+	DstcSF2S28SeicSNHQBwXD5BbSn/BwFh3LpH85pT29QtD/08YhcS1clxAE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DCBAB2303;
+	Fri, 21 Jan 2011 01:09:31 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 151802302; Fri, 21 Jan 2011
+ 01:09:24 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 03308CC8-2525-11E0-9143-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165353>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165354>
 
-The hints in the current "instruction sheet" template look like so:
+Jeff King <peff@peff.net> writes:
 
- # Rebase 3f14246..a1d7e01 onto 3f14246
- #
- # Commands:
- #  p, pick = use commit
- #  r, reword = use commit, but edit the commit message
- #  e, edit = use commit, but stop for amending
- #  s, squash = use commit, but meld into previous commit
- #  f, fixup = like "squash", but discard this commit's log message
- #  x <cmd>, exec <cmd> = Run a shell command <cmd>, and stop if it fails
- #
- # If you remove a line here THAT COMMIT WILL BE LOST.
- # However, if you remove everything, the rebase will be aborted.
- #
+> The problem is that we have a bazillion diff options that appear in many
+> manpages, so you are stuck with one of:
+>
+>   1. repeat them all in each manpage (usually via some automagic
+>      include), which dwarfs the original content, and makes it hard for
+>      users to see subtle differences between commands
+>
+>   2. Say "this describes only the most frequently used options", which
+>      leaves the user wondering which infrequently used options exist.
+>
+>   3. Say "we also take diff options, and you can find out more about
+>      diff options in git-diff(1)." This at least points the user in the
+>      right direction, but you can't search for "--color-words" in the
+>      page.
+>
+>   4. Do (3), but also list the all (or common) diff options in a succint
+>      list without descriptions, and refer the user to git-diff(1). Then
+>      they can grep if they like, and while they won't get the immediate
+>      answer, they will get referred to the right place.
+>
+> As you can probably guess, I favor option (4), though we already do (3)
+> in some places.
 
-This does not make it clear that the format of each line is
+We attempt to do 1 to solve it "nicely" in some manual pages, and indeed
+there are many "exclude this option from the command X's manpage" magic
+that causes the problem of subtle differences you mentioned (which I
+agree).
 
-	<insn> <commit id> <explanatory text that will be printed>
-
-but the reader will probably infer that from the automatically
-generated pick examples above it.
-
-What about the "exec" instruction?  By analogy, I might imagine that
-the format of that line is "exec <command> <explanatory text>", and
-the "x <cmd>" hint does not address that question (at first I read it
-as taking an argument <cmd> that is the name of a shell).  Meanwhile,
-the mention of <cmd> makes the hints harder to scan as a table.
-
-So remove the <cmd> and add some words to remind the reader that
-"exec" runs a command named by the rest of the line.  To make room, it
-is left to the manpage to explain that that command is run using
-$SHELL and that nonzero status from that command will pause the
-rebase.
-
-Wording from Junio.
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
-Junio C Hamano wrote:
-
-> If we wanted to be more helpful, perhaps s/(see below)/specified on the
-> rest of the line/ should be sufficient without adding extra lines.
-
-Sounds good.
-
- git-rebase--interactive.sh |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
-
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index a5ffd9a..a18c9b1 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -1021,7 +1021,7 @@ first and then run 'git rebase --continue' again."
- #  e, edit = use commit, but stop for amending
- #  s, squash = use commit, but meld into previous commit
- #  f, fixup = like "squash", but discard this commit's log message
--#  x <cmd>, exec <cmd> = Run a shell command <cmd>, and stop if it fails
-+#  x, exec = run command specified on the rest of the line
- #
- # If you remove a line here THAT COMMIT WILL BE LOST.
- # However, if you remove everything, the rebase will be aborted.
--- 
-1.7.4.rc2
+One complication in either 3 or 4 is that they sometimes need to be
+accompanied with "... except these diff options do not make sense in the
+context of this command, so they are no-op".  That is probably a price
+worth paying to be more helpful than 2 is.
