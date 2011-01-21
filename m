@@ -1,82 +1,65 @@
-From: Libor Pechacek <lpechacek@suse.cz>
-Subject: Re: [PATCH] Sanity-ckeck config variable names
-Date: Fri, 21 Jan 2011 11:02:12 +0100
-Message-ID: <20110121100212.GE19715@fm.suse.cz>
-References: <20110111055922.GD10094@sigill.intra.peff.net> <20110119100105.GB8034@fm.suse.cz> <20110119141112.GD8034@fm.suse.cz> <20110120232232.GA9442@sigill.intra.peff.net> <20110121000629.GA7773@sigill.intra.peff.net> <20110108144644.GA11019@localhost.suse.cz> <20110111055922.GD10094@sigill.intra.peff.net> <20110119100105.GB8034@fm.suse.cz> <20110119141112.GD8034@fm.suse.cz> <20110120232232.GA9442@sigill.intra.peff.net>
+From: Maaartin <grajcar1@seznam.cz>
+Subject: Re: Parameter --color-words not documented for "git show"
+Date: Fri, 21 Jan 2011 11:08:21 +0100
+Message-ID: <4D395B15.2040406@seznam.cz>
+References: <4D3893EA.5090907@hartwork.org> <201101202127.39962.trast@student.ethz.ch> <4D389E69.608@hartwork.org> <7vk4hzqnbx.fsf@alter.siamese.dyndns.org> <20110120231649.GC14184@vidovic> <20110120233429.GB9442@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sebastian Pipping <webmaster@hartwork.org>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Git ML <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 21 11:02:24 2011
+X-From: git-owner@vger.kernel.org Fri Jan 21 11:08:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PgDp0-00053D-Dh
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 11:02:22 +0100
+	id 1PgDuu-00085o-O0
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 11:08:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753185Ab1AUKCO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jan 2011 05:02:14 -0500
-Received: from cantor.suse.de ([195.135.220.2]:37466 "EHLO mx1.suse.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752126Ab1AUKCN (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jan 2011 05:02:13 -0500
-Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.221.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx1.suse.de (Postfix) with ESMTP id 7DB2C8E8CC;
-	Fri, 21 Jan 2011 11:02:12 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20110121000629.GA7773@sigill.intra.peff.net> <20110120232232.GA9442@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.18-muttng (2008-05-17-r1399)
+	id S1753275Ab1AUKIY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jan 2011 05:08:24 -0500
+Received: from cgc-instruments.com ([83.169.21.132]:54673 "EHLO
+	lvps83-169-21-132.dedicated.hosteurope.de" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752635Ab1AUKIX (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 21 Jan 2011 05:08:23 -0500
+Received: (qmail 12182 invoked from network); 21 Jan 2011 11:08:20 +0100
+Received: from 188-120-198-113.luckynet.cz (HELO ?10.0.3.100?) (188.120.198.113)
+  by cgc-instruments.com with SMTP; 21 Jan 2011 11:08:20 +0100
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <20110120233429.GB9442@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165360>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165361>
 
-On Thu 20-01-11 18:22:32, Jeff King wrote:
-> > + * Returns 0 on success, 1 when there is an invalid character in the key and 2
-> > + * if there is no section name in the key.
+On 11-01-21 00:34, Jeff King wrote:
+> On Fri, Jan 21, 2011 at 12:16:49AM +0100, Nicolas Sebrecht wrote:
+
+>   4. Do (3), but also list the all (or common) diff options in a succint
+>      list without descriptions, and refer the user to git-diff(1). Then
+>      they can grep if they like, and while they won't get the immediate
+>      answer, they will get referred to the right place.
 > 
-> Please switch these to -1 and -2, as we generally use negative integers
-> to indicate errors in library-ish function.
+> As you can probably guess, I favor option (4), though we already do (3)
+> in some places.
 
-Done.
+I also favor (4), for the following reasons:
 
-> Other than that, the code looks OK to me. However, it does cause
-> t1300.85 to fail.
+- sometimes you want to read the whole manpage, e.g., it's good for
+beginners to get feeling what is it all about.
 
-Thanks for catching it, added your changes to the patch and tested.  I didn't
-notice the test suite. :)
+- repeated information makes the page too long and reading too boring.
 
-On Thu 20-01-11 19:06:29, Jeff King wrote:
-> Doesn't this hunk:
-> 
-> > @@ -168,10 +167,6 @@ static int get_value(const char *key_, const char *regex_)
-> >       }
-> >  
-> >       key = xstrdup(key_);
-> > -     for (tl=key+strlen(key)-1; tl >= key && *tl != '.'; --tl)
-> > -             *tl = tolower(*tl);
-> > -     for (tl=key; *tl && *tl != '.'; ++tl)
-> > -             *tl = tolower(*tl);
-> 
-> Mean that regexp keys no longer get downcased properly? I.e.,
-> 
->   git config Foo.value true
->   git config --get-regexp 'foo.*'
->   git config --get-regexp 'Foo.*'
-> 
-> used to work for both lookups, but now fails for the second one?
+- too long manpages may scare beginners.
 
-After thinking about it I added the code back.  More on it in the
-"documentation fix" thread.
-
-Thanks for your kind guidance.
-
-Libor
--- 
-Libor Pechacek
-SUSE L3 Team, Prague
+Maybe there could be sort-of extended manpage, containing everything,
+but it would need some markup beyond the capabilities of a terminal (a
+grayed or collapsed area in html, or whatever). However, this could be a
+lot of additional work, and I don't claim it should be done, just an idea.
