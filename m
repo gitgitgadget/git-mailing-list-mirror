@@ -1,82 +1,71 @@
-From: Sebastian Pipping <webmaster@hartwork.org>
-Subject: Re: Parameter --color-words not documented for "git show"
-Date: Fri, 21 Jan 2011 01:05:24 +0100
-Message-ID: <4D38CDC4.6010803@hartwork.org>
-References: <4D3893EA.5090907@hartwork.org> <201101202127.39962.trast@student.ethz.ch> <4D389E69.608@hartwork.org> <7vk4hzqnbx.fsf@alter.siamese.dyndns.org> <20110120231649.GC14184@vidovic> <20110120233429.GB9442@sigill.intra.peff.net>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH] Sanity-ckeck config variable names
+Date: Thu, 20 Jan 2011 19:06:29 -0500
+Message-ID: <20110121000629.GA7773@sigill.intra.peff.net>
+References: <20110108144644.GA11019@localhost.suse.cz>
+ <20110111055922.GD10094@sigill.intra.peff.net>
+ <20110119100105.GB8034@fm.suse.cz>
+ <20110119141112.GD8034@fm.suse.cz>
+ <20110120232232.GA9442@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	Junio C Hamano <gitster@pobox.com>,
-	Thomas Rast <trast@student.ethz.ch>,
-	Git ML <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Fri Jan 21 01:05:51 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Libor Pechacek <lpechacek@suse.cz>
+X-From: git-owner@vger.kernel.org Fri Jan 21 01:06:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pg4Vi-0002Hj-Mj
-	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 01:05:51 +0100
+	id 1Pg4WT-0002dS-JZ
+	for gcvg-git-2@lo.gmane.org; Fri, 21 Jan 2011 01:06:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753205Ab1AUAFb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 20 Jan 2011 19:05:31 -0500
-Received: from smtprelay02.ispgateway.de ([80.67.31.25]:41063 "EHLO
-	smtprelay02.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752330Ab1AUAF3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 20 Jan 2011 19:05:29 -0500
-Received: from [78.52.102.233] (helo=[192.168.0.2])
-	by smtprelay02.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <webmaster@hartwork.org>)
-	id 1Pg4VI-0004Dj-Mv; Fri, 21 Jan 2011 01:05:24 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20110103 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <20110120233429.GB9442@sigill.intra.peff.net>
-X-Df-Sender: hartwork@binera.de
+	id S1752293Ab1AUAGc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 20 Jan 2011 19:06:32 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:54518 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1751913Ab1AUAGc (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 20 Jan 2011 19:06:32 -0500
+Received: (qmail 15177 invoked by uid 111); 21 Jan 2011 00:06:31 -0000
+Received: from 99-189-169-83.lightspeed.snjsca.sbcglobal.net (HELO sigill.intra.peff.net) (99.189.169.83)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 21 Jan 2011 00:06:31 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 20 Jan 2011 19:06:29 -0500
+Content-Disposition: inline
+In-Reply-To: <20110120232232.GA9442@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165348>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165349>
 
-On 01/21/11 00:34, Jeff King wrote:
->>> Yes; the alternative is to list everything.
->>
->> Would it be bad? I tend to think that a manual page is the good place to
->> list everything the program accepts as parameters and how to use them.
->> FMHO, Manual page is not where newcomers look to learn but it should
->> help everybody to find and understand all of the available options.
-> 
-> The problem is that we have a bazillion diff options that appear in many
-> manpages, so you are stuck with one of:
-> 
->   1. repeat them all in each manpage (usually via some automagic
->      include), which dwarfs the original content, and makes it hard for
->      users to see subtle differences between commands
-> 
->   2. Say "this describes only the most frequently used options", which
->      leaves the user wondering which infrequently used options exist.
-> 
->   3. Say "we also take diff options, and you can find out more about
->      diff options in git-diff(1)." This at least points the user in the
->      right direction, but you can't search for "--color-words" in the
->      page.
-> 
->   4. Do (3), but also list the all (or common) diff options in a succint
->      list without descriptions, and refer the user to git-diff(1). Then
->      they can grep if they like, and while they won't get the immediate
->      answer, they will get referred to the right place.
-> 
-> As you can probably guess, I favor option (4), though we already do (3)
-> in some places.
+On Thu, Jan 20, 2011 at 06:22:32PM -0500, Jeff King wrote:
 
-I agree with Thomas here.  (1) is the only option I find acceptable,
-personally.  If you'd rather not do that, then at least know I now.
-Great to have --color-words around btw.
+> Other than that, the code looks OK to me.
 
-Best,
+Actually, I take this back.
 
+Doesn't this hunk:
 
+> @@ -168,10 +167,6 @@ static int get_value(const char *key_, const char *regex_)
+>       }
+>  
+>       key = xstrdup(key_);
+> -     for (tl=key+strlen(key)-1; tl >= key && *tl != '.'; --tl)
+> -             *tl = tolower(*tl);
+> -     for (tl=key; *tl && *tl != '.'; ++tl)
+> -             *tl = tolower(*tl);
 
-Sebastian
+Mean that regexp keys no longer get downcased properly? I.e.,
+
+  git config Foo.value true
+  git config --get-regexp 'foo.*'
+  git config --get-regexp 'Foo.*'
+
+used to work for both lookups, but now fails for the second one?
+
+The problem is that your git_config_parse_key handles the downcasing for
+the non-regexp case, but it is not called (for obvious reasons) in the
+regexp case.
+
+-Peff
