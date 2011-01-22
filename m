@@ -1,66 +1,72 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 4/5] fast-export: Introduce --inline-blobs
-Date: Fri, 21 Jan 2011 16:30:34 -0800
-Message-ID: <7vvd1hn5jp.fsf@alter.siamese.dyndns.org>
-References: <1295415899-1192-1-git-send-email-artagnon@gmail.com>
- <1295415899-1192-5-git-send-email-artagnon@gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: Fwd: Git and Large Binaries: A Proposed Solution
+Date: Sat, 22 Jan 2011 04:05:03 +0100
+Message-ID: <AANLkTimurgnSFO=gR5Z-=GM27-QD00MCdXNc0x5Q-TQ4@mail.gmail.com>
+References: <AANLkTin=UySutWLS0Y7OmuvkE=T=+YB8G8aUCxLH=GKa@mail.gmail.com>
+ <AANLkTimPua_kz2w33BRPeTtOEWOKDCsJzf0sqxm=db68@mail.gmail.com>
+ <20110121222440.GA1837@sigill.intra.peff.net> <AANLkTinKNtDDy6Pi4Tn+hpTrVw_DBoYpTn3ihCfN_fUd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git List <git@vger.kernel.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	David Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Ramkumar Ramachandra <artagnon@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 22 01:30:55 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Joey Hess <joey@kitenet.net>
+To: Eric Montellese <emontellese@gmail.com>,
+	Avery Pennarun <apenwarr@gmail.com>,
+	Jonathan Leto <jaleto@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 22 04:05:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PgRNW-0000gY-Tr
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Jan 2011 01:30:55 +0100
+	id 1PgTn9-0007Ba-TN
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Jan 2011 04:05:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755047Ab1AVAas (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jan 2011 19:30:48 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34921 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754942Ab1AVAas (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jan 2011 19:30:48 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 209B63EAC;
-	Fri, 21 Jan 2011 19:31:34 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=O/R9JHdSFMf8ZEfQfWS24c5xH0w=; b=gbFKprMdGwnvBFXj9k8e3J+
-	5Qz1B4ApYqMxug0iauf0dD90msMVNDYtiYq26Pb/HnrlJC1EeOK/ViWGtEtntLYo
-	ddeaf8edTiaiz3uuBYaW+cqwa74u92cwf/NLJt+NVjpAEl1GFdJQjC4vAgn7Fa7B
-	WzakAqVhhO2kE126mmdQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=OJKY0UDBQCcwTttwxBocp0Zgvx8CPoj8Vltun1+MbW8e753Hj
-	k4UQWi2ZqP8V2ajNYkcy4jEOc9DMNnwi+JYKzG+nvRxzzy6DTvUrvgjZLIdXty5s
-	wKZZmDdgv7Bfd4tMePqFhrpoDme8xXxm0T3nObfOtH1all6gX/oKeZJPFs=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C685C3EA9;
-	Fri, 21 Jan 2011 19:31:28 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4C9D13EA6; Fri, 21 Jan 2011
- 19:31:22 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F3F07EAE-25BE-11E0-A934-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
+	id S1754738Ab1AVDFY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jan 2011 22:05:24 -0500
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:39888 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753443Ab1AVDFY (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jan 2011 22:05:24 -0500
+Received: by yib18 with SMTP id 18so730535yib.19
+        for <git@vger.kernel.org>; Fri, 21 Jan 2011 19:05:23 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=uUtxA6Yir4LcuQIMcXB49taOnvmBiyyX3E3I9m1OvXM=;
+        b=ZyZzBeqwho1sQdylic0GVA7EikT1b/Q4CU1rBW6aTm8X4ihBq73RC1DkBkF+X5cbrz
+         uSrbAMxb828kF/OYJOV3vOubyUOOkIg024oHNxL9zC/UeCwJH/EsQb2SE2zgpYfONAXx
+         7EnHl46EGWJ3X9CQF+jAtmzXkixm4Q26fcaaA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=kBhT03fZK5RZEI9Cdv5tguX4YVOjTBP2OPQoh5aNIanonyJXEeoE77CvkJV37LnJZs
+         cOsSxdRcJKxgTaeeJ6TplGRIyKyiVIw7K5KST4CkZ8fK4/hSG557IVVBS95hu6TVBk4F
+         SkPomz4QSAxv2NaujEyb0CzjYeLguEsrER4oo=
+Received: by 10.150.158.4 with SMTP id g4mr1578776ybe.214.1295665523186; Fri,
+ 21 Jan 2011 19:05:23 -0800 (PST)
+Received: by 10.151.6.10 with HTTP; Fri, 21 Jan 2011 19:05:03 -0800 (PST)
+In-Reply-To: <AANLkTinKNtDDy6Pi4Tn+hpTrVw_DBoYpTn3ihCfN_fUd@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165404>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165405>
 
-Ramkumar Ramachandra <artagnon@gmail.com> writes:
+Heya,
 
-> +				buf = read_sha1_file(spec->sha1, &type, &size);
-> +				if (!buf)
-> +					die ("Could not read blob %s",
-> +						sha1_to_hex(spec->sha1));
+[More or less separate from to the ongoing discussion, so no text quoted]
 
-Style; no SP after "die", as it is a function, not syntactic elements like
-if/switch/while (look everywhere).
+Eric, at the last GitTogether Avery presented his tool, bup, which
+implements a number of solutions to the problem of large binary files.
+I think I remember that Jonathan is also interested in the topic.
+Avery, Jonathan, you can read up on the ongoing conversation at [0] if
+you like :).
+
+[0] http://thread.gmane.org/gmane.comp.version-control.git/165389/focus=165401
+
+-- 
+Cheers,
+
+Sverre Rabbelier
