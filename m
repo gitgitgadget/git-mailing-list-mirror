@@ -1,315 +1,162 @@
-From: Eric Montellese <emontellese@gmail.com>
+From: Joey Hess <joey@kitenet.net>
 Subject: Re: Fwd: Git and Large Binaries: A Proposed Solution
-Date: Fri, 21 Jan 2011 18:15:37 -0500
-Message-ID: <AANLkTinKNtDDy6Pi4Tn+hpTrVw_DBoYpTn3ihCfN_fUd@mail.gmail.com>
+Date: Fri, 21 Jan 2011 20:07:12 -0400
+Message-ID: <20110122000712.GA7931@gnu.kitenet.net>
 References: <AANLkTin=UySutWLS0Y7OmuvkE=T=+YB8G8aUCxLH=GKa@mail.gmail.com>
- <AANLkTimPua_kz2w33BRPeTtOEWOKDCsJzf0sqxm=db68@mail.gmail.com> <20110121222440.GA1837@sigill.intra.peff.net>
+ <AANLkTimPua_kz2w33BRPeTtOEWOKDCsJzf0sqxm=db68@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Jan 22 00:16:06 2011
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="EeQfGwPcQSOJBaQU"
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 22 01:17:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PgQD6-0001rd-Fu
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Jan 2011 00:16:05 +0100
+	id 1PgRAE-0003q6-Dw
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Jan 2011 01:17:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754301Ab1AUXP7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 21 Jan 2011 18:15:59 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:52560 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753861Ab1AUXP7 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 21 Jan 2011 18:15:59 -0500
-Received: by bwz15 with SMTP id 15so2092787bwz.19
-        for <git@vger.kernel.org>; Fri, 21 Jan 2011 15:15:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=QR5Me9lXl0rlkSzNh0KOLvaqx0KPhkL19vaCcNuDSVw=;
-        b=lhhWrMdATI25pR4xOcv/eHVKwglou7jWiRD8JIHP5nbDkgjENvwPmGN8Q/b1j16+pl
-         w4YQtYREJXa/76DVM+bcl+jwFOg4PMr4mAJN/5gGDGRa0PWJruQGs2AiU39HaUfFk8N4
-         +S4C/ry4WTUvz/7+r0vwrXGlfE9246iPvrEQE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=QDTveeEMIlkWniD0mb4jUgoM980E58g37S0JhKE49vdMsvCC09eVRCZmcxvJqlKPYo
-         NLZm2oMD5bRmOEF1H+NapuzhSKKpot4GJ+zpGNfwZtNciq23RRlMpcC5FYkDjB+8U/mJ
-         XOGjihOjZ1U6eaqL1k4BY6tLHWXAunAq4vx/E=
-Received: by 10.204.56.3 with SMTP id w3mr1274033bkg.60.1295651757585; Fri, 21
- Jan 2011 15:15:57 -0800 (PST)
-Received: by 10.204.60.11 with HTTP; Fri, 21 Jan 2011 15:15:37 -0800 (PST)
-In-Reply-To: <20110121222440.GA1837@sigill.intra.peff.net>
+	id S1755153Ab1AVARE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jan 2011 19:17:04 -0500
+Received: from wren.kitenet.net ([80.68.85.49]:47477 "EHLO kitenet.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754894Ab1AVARC (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jan 2011 19:17:02 -0500
+X-Greylist: delayed 587 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Jan 2011 19:17:01 EST
+Received: from gnu.kitenet.net (unknown [206.74.132.139])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
+	by kitenet.net (Postfix) with ESMTPS id 933F21180A8
+	for <git@vger.kernel.org>; Fri, 21 Jan 2011 19:07:13 -0500 (EST)
+Received: by gnu.kitenet.net (Postfix, from userid 1000)
+	id 6203A466C9; Fri, 21 Jan 2011 19:07:12 -0500 (EST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTimPua_kz2w33BRPeTtOEWOKDCsJzf0sqxm=db68@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165401>
-
-Peff,
-
-Thanks for your insight -- this looks great.
-
-Once something like this is available and more polished, what's the
-process to request that it join the main line of git development?   (i
-know functionally there's "no main line" in git... but you know what I
-mean)
-
-Has there already been discussion to this effect?  I do think that a
-fix like this would improve git adoption among certain groups.  (I
-know I've heard the "big binaries" problem mentioned at least a few
-times)
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165402>
 
 
-I haven't dug around in git code yet, so while I can get the gist of
-your code, I'm unable to get the complete picture.  You wouldn't
-happen to have a git patch, or a public repo somewhere that I can take
-a look at?  Does there happen to be a git developers guide hidden away
-anywhere?  Though I have very limited time, I'd be happy to help out
-as much as I can.
+--EeQfGwPcQSOJBaQU
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+Hi, I wrote git-annex, and pristine-tar, and etckeeper. I enjoy making
+git do things that I'm told it shouldn't be used for. :) I should have
+probably talked more about git-annex here, before.
+
+Eric Montellese wrote:
+> 2. zipped tarballs of source code (that I will never need to modify)
+> -- I could unpack these and then use git to track the source code.
+> However, I prefer to track these deliverables as the tarballs
+> themselves because it makes my customer happier to see the exact
+> tarball that they delivered being used when I repackage updates.
+> (Let's not discuss problems with this model - I understand that this
+> is non-ideal).
+
+In this specific case, you can use pristine-tar to recreate the
+original, exact tarballs from unpacked source files that you check into
+git. It accomplishes this without the overhead of duplicating compressed
+data in tarballs. I feel in this case, this is a better approach than
+generic large file support, since it stores all the data in git, just in a
+much more compressed form, and so fits in nicely with standard git-based
+source code management.
+
+> The short version:
+> ***Don't track binaries in git. =A0Track their hashes.***
+
+That was my principle with git-annex. Although slightly generalized to:
+"Don't track large file contents in git. Track unique keys that
+an arbitrary backend can use to obtain the file contents."
+
+Now, you mention in a followup that git-annex does not default to keeping
+a local copy of every binary referenced by a file in master.
+This is true, for the simple reason that a copy of every file in some of
+my git repos master would sum to multiple terabytes of data. :) I think
+that practically, anything that supports large files in git needs to
+support partial checkouts too.
+
+But, git-annex can be run in eg, a post-merge hook, and asked to
+retrieve all current file contents, and drop outdated contents.
+
+> First the layout:
+> my_git_project/binrepo/
+> -- binaries/
+> -- hashes/
+> -- symlink_to_hashes_file
+> -- symlink_to_another_hashes_file
+> within the "binrepo" (binary repository) there is a subdirectory for
+> binaries, and a subdirectory for hashes. =A0In the root of the 'binrepo'
+> all of the files stored have a symlink to the current version of the
+> hash.
+
+Very similar to git-annex in the use of versioned symlinks here.
+It stores the binaries in .git/annex/objects to avoid needing to
+gitignore them.
+
+> 3. In my setup, all of the binary files are in a single "binrepo"
+> directory. =A0If done from within git, we would need a non-kludgey way
+> to allow large binaries to exist anywhere within the git tree.
+
+git-annex allows the symlinks to be mixed with regular git managed
+content throughout the repository. (This means that when symlinks
+are moved, they may need to be fixed, which is done at commit time.)
+
+> 5. Command to purge all binaries in your "binrepo" that are not needed
+> for the current revision (if you're running out of disk space
+> locally).
+
+Safely dropping data is really one of the complexities of this
+approach. Git-annex stores location tracking information in git,
+so it can know where it can retrieve file data *from*. I chose to make
+it very cautious about removing data, as location tracking data can=20
+fall out of date (if for example, a remote had the data, had dropped it,
+and has not pushed that information out). So it actively confirms that
+enough other copies of the data currently exist before dropping it.
+(Of course, these checks can be disabled.)
+
+> 6. Automatically upload new versions of files to the "binrepo" (rather
+> than needing to do this manually)
+
+In git-annex, data transfer is done using rsync, so that interrupted
+transfers of large files can be resumed. I recently added a git-annex-shell
+to support locked-down access, similar to git-shell.
 
 
-Eric
+BTW, I have been meaning to look into using smudge filters with git-annex.
+I'm a bit worried about some of the potential overhead associated with
+smudge filters, and I'm not sure how a partial checkout would work with
+them.
 
+--=20
+see shy jo
 
+--EeQfGwPcQSOJBaQU
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: Digital signature
+Content-Disposition: inline
 
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.10 (GNU/Linux)
 
+iQIVAwUBTTofrckQ2SIlEuPHAQgblg/9ECJt82Vh3zbmgQs8gJHnjjIz61UnHrfH
+uuxnNxC9JXUet1ahFEiUq6DLkMMl+nEly6paYE2bhDvQTOUwl0yxr+9TVgaRaK6c
+7fyIWCnm5OWMSVbA6kcnyQsJ0uL6OWics3Brezvvz8xV6on174mSzWQpfAwzAXBu
+2/EdYVK0qIK1QBaGmcGPVhOxDB8xRHWXxRtypePTA54ETKSr0qvAzROM27tWRIf8
+V0rkCzTY5W0NQepU/OWJi4qi4dGfp+s4ph2se/xnS9e36FrsgwSHajPLXfOxzuUP
+x1bD9St/9MyG3CxhCgZPducAJJU0sCgi9RcQy4u/9ybsA1ihHerPGR+iETEMxbEJ
+PXI5rHcyZFD/8tOwhpeb9wQ8YKpj6uS+YZ6AL9fPItC3A3UxmDxUjNni9Fi6deLq
+BeFtpk/jFTQo7isPGvKt7cq9xmE9A7YrVe+zK87MERMCpidYnlN5DcesLlDmjhf8
+LQ4maZlN7LG5EmwP6fDZ8FC0tVuFe+HoNxmzQfkm3QB4OVVyaN2SCxXH8ewPdZ0r
+HM5Q4b5o0wpd2QyTTpzM+ehB45E9/LbYqoDgjt4GA1nxN+ncOYVzalDU8AaJxfrh
+iUZX9pbhrDPmlprQA9SoExebTo4AYL658KXXOI25sIPZOWCyTzg9BxUZuYKF9+Rj
+IujT24RCGuY=
+=5CL0
+-----END PGP SIGNATURE-----
 
-
-
-On Fri, Jan 21, 2011 at 5:24 PM, Jeff King <peff@peff.net> wrote:
-> On Fri, Jan 21, 2011 at 01:57:21PM -0500, Eric Montellese wrote:
->
->> I did a search for this issue before posting, but if I am touching o=
-n
->> an old topic that already has a solution in progress, I apologize. =A0=
-As
->
-> It's been talked about a lot, but there is not exactly a solution in
-> progress. One promising direction is not very different from what you=
-'re
-> doing, though:
->
->> Solution:
->> The short version:
->> ***Don't track binaries in git. =A0Track their hashes.***
->
-> Yes, exactly. But what your solution lacks, I think, is more integrat=
-ion
-> into git. Specifically, using clean/smudge filters you can have git t=
-ake
-> care of tracking the file contents automatically.
->
-> At the very simplest, it would look like:
->
-> -- >8 --
-> cat >$HOME/local/bin/huge-clean <<'EOF'
-> #!/bin/sh
->
-> # In an ideal world, we could actually
-> # access the original file directly instead of
-> # having to cat it to a new file.
-> temp=3D"$(git rev-parse --git-dir)"/huge.$$
-> cat >"$temp"
-> sha1=3D`sha1sum "$temp" | cut -d' ' -f1`
->
-> # now move it to wherever your permanent storage is
-> # scp "$root/$sha1" host:/path/to/big_storage/$sha1
-> cp "$temp" /tmp/big_storage/$sha1
-> rm -f "$temp"
->
-> echo $sha1
-> EOF
->
-> cat >$HOME/local/bin/huge-smudge <<'EOF'
-> #!/bin/sh
->
-> # Get sha1 from stored blob via stdin
-> read sha1
->
-> # Now retrieve blob. We could optionally do some caching here.
-> # ssh host cat /path/to/big/storage/$sha1
-> cat /tmp/big_storage/$sha1
-> EOF
-> -- 8< --
->
-> Obviously our storage mechanism (throwing things in /tmp) is simplist=
-ic,
-> but obviously you could store and retrieve via ssh, http, s3, or
-> whatever.
->
-> You can try it out like this:
->
-> =A0# set up our filter config and fake storage area
-> =A0mkdir /tmp/big_storage
-> =A0git config --global filter.huge.clean huge-clean
-> =A0git config --global filter.huge.smudge huge-smudge
->
-> =A0# now make a repo, and make sure we mark *.bin files as huge
-> =A0mkdir repo && cd repo && git init
-> =A0echo '*.bin filter=3Dhuge' >.gitattributes
-> =A0git add .gitattributes
-> =A0git commit -m 'add attributes'
->
-> =A0# let's do a moderate 20M file
-> =A0perl -e 'print "foo\n" for (1 .. 5000000)' >foo.bin
-> =A0git add foo.bin
-> =A0git commit -m 'add huge file (foo)'
->
-> =A0# and then another revision
-> =A0perl -e 'print "bar\n" for (1 .. 5000000)' >foo.bin
-> =A0git commit -a -m 'revise huge file (bar)'
->
-> Notice that we just add and commit as normal. =A0And we can check tha=
-t the
-> space usage is what you expect:
->
-> =A0$ du -sh repo/.git
-> =A0196K =A0 =A0repo/.git
-> =A0$ du -sh /tmp/big_storage
-> =A039M =A0 =A0 /tmp/big_storage
->
-> Diffs obviously are going to be less interesting, as we just see the
-> hash:
->
-> =A0$ git log --oneline -p foo.bin
-> =A039e549c revise huge file (bar)
-> =A0diff --git a/foo.bin b/foo.bin
-> =A0index 281fd03..70874bd 100644
-> =A0--- a/foo.bin
-> =A0+++ b/foo.bin
-> =A0@@ -1 +1 @@
-> =A0-50a1ee265f4562721346566701fce1d06f54dd9e
-> =A0+bbc2f7f191ad398fe3fcb57d885e1feacb4eae4e
-> =A0845836e add huge file (foo)
-> =A0diff --git a/foo.bin b/foo.bin
-> =A0new file mode 100644
-> =A0index 0000000..281fd03
-> =A0--- /dev/null
-> =A0+++ b/foo.bin
-> =A0@@ -0,0 +1 @@
-> =A0+50a1ee265f4562721346566701fce1d06f54dd9e
->
-> but if you wanted to, you could write a custom diff driver that does
-> something more meaningful with your particular binary format (it woul=
-d
-> have to grab from big_storage, though).
->
-> Checking out other revisions works without extra action:
->
-> =A0$ head -n 1 foo.bin
-> =A0bar
-> =A0$ git checkout HEAD^
-> =A0HEAD is now at 845836e... add huge file (foo)
-> =A0$ head -n 1 foo.bin
-> =A0foo
->
-> And since you have the filter config in your ~/.gitconfig, clones wil=
-l
-> just work:
->
-> =A0$ git clone repo other
-> =A0$ du -sh other/.git
-> =A0204K =A0 =A0other/.git
-> =A0$ du -sh other/foo.bin
-> =A020M
->
-> So conceptually it's pretty similar to yours, but the filter integrat=
-ion
-> means that git takes care of putting the right files in place at the
-> right time.
->
-> It would probably benefit a lot from caching the large binary files
-> instead of hitting big_storage all the time. And probably the
-> putting/getting from storage should be factored out so you can plug i=
-n
-> different storage. And it should all be configurable. Different users=
- of
-> the same repo might want different caching policies, or to access the
-> binary assets by different mechanisms or URLs.
->
->> I imagine these features (among others):
->>
->> 1. In my current setup, each large binary file has a different name =
-(a
->> revision number). =A0This could be easily solved, however, by genera=
-ting
->> unique names under the hood and tracking this within git.
->
-> In the scheme above, we just index by their hash. So you can easily f=
-sck
-> your big_storage by making sure everything matches its hash (but you
-> can't know that you have _all_ of the blobs needed unless you
-> cross-reference with the history).
->
->> 2. A lot of the steps in my current setup are manual. =A0When I want=
- to
->> add a new binary file, I need to manually create the hash and manual=
-ly
->> upload the binary to the joint server. =A0If done within git, this w=
-ould
->> be automatic.
->
-> I think the scheme above takes care of the manual bits.
->
->> 3. In my setup, all of the binary files are in a single "binrepo"
->> directory. =A0If done from within git, we would need a non-kludgey w=
-ay
->> to allow large binaries to exist anywhere within the git tree. =A0If=
- git
->
-> Any scheme, whether it uses clean/smudge filters or not, should proba=
-bly
-> tie in via gitattributes.
->
->> 4. User option to download all versions of all binaries, or only the
->> version necessary for the position on the current branch. =A0If you =
-want
->> to be able to run all versions of the repository when offline, you c=
-an
->> download all versions of all binaries. =A0If you don't need to do th=
-is,
->> you can just download the versions you need. =A0Or perhaps have the
->> option to download all binaries smaller than X-bytes, but skip the b=
-ig
->> ones.
->
-> The scheme above will download on an as-needed basis. If caching were
-> implemented, you could just make the cache infinitely big and do a "g=
-it
-> log -p" which would download everything. :)
->
-> Probably you would also want the smudge filter to return "blob not
-> available" when operating in some kind of offline mode.
->
->> 5. Command to purge all binaries in your "binrepo" that are not need=
-ed
->> for the current revision (if you're running out of disk space
->> locally).
->
-> In my scheme, just rm your cache directory (once it exists).
->
->> 6. Automatically upload new versions of files to the "binrepo" (rath=
-er
->> than needing to do this manually)
->
-> Handled by the clean filter above.
->
->
-> So obviously this is not very complete. And there are a few changes t=
-o
-> git that could make it more efficient (e.g., letting the clean filter
-> touch the file directly instead of having to make a copy via stdin). =
-But
-> the general idea is there, and it just needs somebody to make a nice
-> polished script that is configurable, does caching, etc. I'll get to =
-it
-> eventually, but if you'd like to work on it, be my guest.
->
-> -Peff
->
+--EeQfGwPcQSOJBaQU--
