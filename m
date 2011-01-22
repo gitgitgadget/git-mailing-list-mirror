@@ -1,162 +1,298 @@
-From: Joey Hess <joey@kitenet.net>
-Subject: Re: Fwd: Git and Large Binaries: A Proposed Solution
-Date: Fri, 21 Jan 2011 20:07:12 -0400
-Message-ID: <20110122000712.GA7931@gnu.kitenet.net>
-References: <AANLkTin=UySutWLS0Y7OmuvkE=T=+YB8G8aUCxLH=GKa@mail.gmail.com>
- <AANLkTimPua_kz2w33BRPeTtOEWOKDCsJzf0sqxm=db68@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 2/5] vcs-svn: Start working on the dumpfile producer
+Date: Fri, 21 Jan 2011 16:30:18 -0800
+Message-ID: <7v39olok4l.fsf@alter.siamese.dyndns.org>
+References: <1295415899-1192-1-git-send-email-artagnon@gmail.com>
+ <1295415899-1192-3-git-send-email-artagnon@gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="EeQfGwPcQSOJBaQU"
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 22 01:17:13 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	David Barr <david.barr@cordelta.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 22 01:30:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PgRAE-0003q6-Dw
-	for gcvg-git-2@lo.gmane.org; Sat, 22 Jan 2011 01:17:10 +0100
+	id 1PgRNJ-0000ae-9H
+	for gcvg-git-2@lo.gmane.org; Sat, 22 Jan 2011 01:30:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755153Ab1AVARE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 21 Jan 2011 19:17:04 -0500
-Received: from wren.kitenet.net ([80.68.85.49]:47477 "EHLO kitenet.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754894Ab1AVARC (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 21 Jan 2011 19:17:02 -0500
-X-Greylist: delayed 587 seconds by postgrey-1.27 at vger.kernel.org; Fri, 21 Jan 2011 19:17:01 EST
-Received: from gnu.kitenet.net (unknown [206.74.132.139])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client CN "gnu", Issuer "Joey Hess" (verified OK))
-	by kitenet.net (Postfix) with ESMTPS id 933F21180A8
-	for <git@vger.kernel.org>; Fri, 21 Jan 2011 19:07:13 -0500 (EST)
-Received: by gnu.kitenet.net (Postfix, from userid 1000)
-	id 6203A466C9; Fri, 21 Jan 2011 19:07:12 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTimPua_kz2w33BRPeTtOEWOKDCsJzf0sqxm=db68@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755016Ab1AVAaf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 21 Jan 2011 19:30:35 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34655 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754933Ab1AVAae (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 21 Jan 2011 19:30:34 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 181203EA5;
+	Fri, 21 Jan 2011 19:31:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=tCD+i7LdlCTBFOWeR909K+CcJj4=; b=KKFAILLmnWCqxv0PLss11e6
+	OyD5pnWEEY3d++P0P59ElJq8QO41E1I/N8fI/gpI3WQ2/Tda0q/3dUHxqc1jTBY3
+	vb5YGim+WGnadL9o4pJeIYJ7L0P6ecNi/xGAcd/atrRSAYOxCS89w0BomqAAsV+x
+	r6deRqg/mhg+N4YD/h70=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=CTPYjiZtOU5buFMvvyHQngm8QVq8ssN6V2+W1voAiaEncaTcO
+	Ex+8EXAwpG/eXb5kkfBCk8BonIz3UE61AdVax4BLWlhmwGASF83pzIeZAbP/XzaQ
+	diLu23/mZYXmqzCKGAw6ob4mBEdK+hZMKPJiqBRPmWGD9KPxf1c9S3I0Tk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B9E643EA4;
+	Fri, 21 Jan 2011 19:31:13 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B94833EA3; Fri, 21 Jan 2011
+ 19:31:06 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: EAF7B3EE-25BE-11E0-BF00-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165403>
 
+Ramkumar Ramachandra <artagnon@gmail.com> writes:
 
---EeQfGwPcQSOJBaQU
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+> Start off with some broad design sketches. Compile succeeds, but
+> parser is incorrect. Include a Makefile rule to build it into
+> vcs-svn/lib.a.
+>
+> Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
 
-Hi, I wrote git-annex, and pristine-tar, and etckeeper. I enjoy making
-git do things that I'm told it shouldn't be used for. :) I should have
-probably talked more about git-annex here, before.
+I initially thought I should refrain from doing a usual picky review for
+contrib/ material, but realized this does not go to contrib/, so...
 
-Eric Montellese wrote:
-> 2. zipped tarballs of source code (that I will never need to modify)
-> -- I could unpack these and then use git to track the source code.
-> However, I prefer to track these deliverables as the tarballs
-> themselves because it makes my customer happier to see the exact
-> tarball that they delivered being used when I repackage updates.
-> (Let's not discuss problems with this model - I understand that this
-> is non-ideal).
+> diff --git a/vcs-svn/dump_export.c b/vcs-svn/dump_export.c
+> new file mode 100644
+> index 0000000..04ede06
+> --- /dev/null
+> +++ b/vcs-svn/dump_export.c
+> @@ -0,0 +1,73 @@
+> +/*
+> + * Licensed under a two-clause BSD-style license.
+> + * See LICENSE for details.
+> + */
+> +
+> +#include "git-compat-util.h"
+> +#include "strbuf.h"
+> +#include "line_buffer.h"
+> +#include "dump_export.h"
+> +
+> +void dump_export_begin_rev(int revision, const char *revprops,
+> +			int prop_len) {
 
-In this specific case, you can use pristine-tar to recreate the
-original, exact tarballs from unpacked source files that you check into
-git. It accomplishes this without the overhead of duplicating compressed
-data in tarballs. I feel in this case, this is a better approach than
-generic large file support, since it stores all the data in git, just in a
-much more compressed form, and so fits in nicely with standard git-based
-source code management.
+Style. "{" at the beginning of the next line (same everywhere).
 
-> The short version:
-> ***Don't track binaries in git. =A0Track their hashes.***
+> +void dump_export_node(const char *path, enum node_kind kind,
+> +		enum node_action action, unsigned long text_len,
+> +		unsigned long copyfrom_rev, const char *copyfrom_path) {
+> +	printf("Node-path: %s\n", path);
+> +	printf("Node-kind: ");
+> +	switch (action) {
+> +	case NODE_KIND_NORMAL:
+> +		printf("file\n");
+> +		break;
+> +	case NODE_KIND_EXECUTABLE:
+> +		printf("file\n");
+> +		break;
+> +	case NODE_KIND_SYMLINK:
+> +		printf("file\n");
+> +		break;
+> +	case NODE_KIND_GITLINK:
+> +		printf("file\n");
+> +		break;
+> +	case NODE_KIND_SUBDIR:
+> +		die("Unsupported: subdirectory");
+> +	default:
+> +		break;
+> +	}
 
-That was my principle with git-annex. Although slightly generalized to:
-"Don't track large file contents in git. Track unique keys that
-an arbitrary backend can use to obtain the file contents."
+Hmph, is it expected that the repertoire of node-kind stay the same, or
+will it be extended over time?  It might make sense to change the above
+switch a more table-driven one.  The same for node-action that follows
+this part of the code.
 
-Now, you mention in a followup that git-annex does not default to keeping
-a local copy of every binary referenced by a file in master.
-This is true, for the simple reason that a copy of every file in some of
-my git repos master would sum to multiple terabytes of data. :) I think
-that practically, anything that supports large files in git needs to
-support partial checkouts too.
+> diff --git a/vcs-svn/svnload.c b/vcs-svn/svnload.c
+> new file mode 100644
+> index 0000000..7043ae7
+> --- /dev/null
+> +++ b/vcs-svn/svnload.c
+> @@ -0,0 +1,294 @@
+> ...
+> +#define SVN_DATE_FORMAT "%Y-%m-%dT%H:%M:%S.000000Z"
+> +#define SVN_DATE_LEN 28
+> +#define LENGTH_UNKNOWN (~0)
+> +
+> +static struct line_buffer input = LINE_BUFFER_INIT;
+> +static struct strbuf blobs[100];
+> +	
 
-But, git-annex can be run in eg, a post-merge hook, and asked to
-retrieve all current file contents, and drop outdated contents.
+Is there a rationale for "100", or is it just a random number that can be
+tweakable at the source level?  Would we want to have a symbolic constant
+for it?
 
-> First the layout:
-> my_git_project/binrepo/
-> -- binaries/
-> -- hashes/
-> -- symlink_to_hashes_file
-> -- symlink_to_another_hashes_file
-> within the "binrepo" (binary repository) there is a subdirectory for
-> binaries, and a subdirectory for hashes. =A0In the root of the 'binrepo'
-> all of the files stored have a symlink to the current version of the
-> hash.
+The "blank" line has a trailing whitespace.
 
-Very similar to git-annex in the use of versioned symlinks here.
-It stores the binaries in .git/annex/objects to avoid needing to
-gitignore them.
+> +static struct {
+> +	unsigned long prop_len, text_len, copyfrom_rev, mark;
+> +	int text_delta, prop_delta; /* Boolean */
+> +	enum node_action action;
+> +	enum node_kind kind;
+> +	struct strbuf copyfrom_path, path;
+> +} node_ctx;
+> + ...
+> +static void reset_node_ctx(void)
+> +{
+> +	node_ctx.prop_len = LENGTH_UNKNOWN;
+> +	node_ctx.text_len = LENGTH_UNKNOWN;
+> +	node_ctx.mark = 0;
+> +	node_ctx.copyfrom_rev = 0;
+> +	node_ctx.text_delta = -1;
+> +	node_ctx.prop_delta = -1;
 
-> 3. In my setup, all of the binary files are in a single "binrepo"
-> directory. =A0If done from within git, we would need a non-kludgey way
-> to allow large binaries to exist anywhere within the git tree.
+Does your "Boolean" type take values 0 or -1?  Or is it perhaps a tristate
+false=0, true=1, unknown=-1?  If so, the comment on the type above needs
+to be fixed.
 
-git-annex allows the symlinks to be mixed with regular git managed
-content throughout the repository. (This means that when symlinks
-are moved, they may need to be fixed, which is done at commit time.)
+> +	strbuf_reset(&node_ctx.copyfrom_path);
+> +	strbuf_reset(&node_ctx.path);
+> +}
+> +
+> +static void populate_props(struct strbuf *props, const char *author,
+> +			const char *log, const char *date) {
 
-> 5. Command to purge all binaries in your "binrepo" that are not needed
-> for the current revision (if you're running out of disk space
-> locally).
+Style on "{" (look everywhere).
 
-Safely dropping data is really one of the complexities of this
-approach. Git-annex stores location tracking information in git,
-so it can know where it can retrieve file data *from*. I chose to make
-it very cautious about removing data, as location tracking data can=20
-fall out of date (if for example, a remote had the data, had dropped it,
-and has not pushed that information out). So it actively confirms that
-enough other copies of the data currently exist before dropping it.
-(Of course, these checks can be disabled.)
+> +	strbuf_reset(props);	
 
-> 6. Automatically upload new versions of files to the "binrepo" (rather
-> than needing to do this manually)
+Trailing whitespace.
 
-In git-annex, data transfer is done using rsync, so that interrupted
-transfers of large files can be resumed. I recently added a git-annex-shell
-to support locked-down access, similar to git-shell.
+> +static void parse_author_line(char *val, struct strbuf *name,
+> +			struct strbuf *email, struct strbuf *date) {
+> +	char *t, *tz_off;
+> +	char time_buf[SVN_DATE_LEN];
+> +	const struct tm *tm_time;
+> +
+> +	/* Simon Hausmann <shausman@trolltech.com> 1170199019 +0100 */
+> +	strbuf_reset(name);
+> +	strbuf_reset(email);
+> +	strbuf_reset(date);
+> +	tz_off = strrchr(val, ' ');
+> +	*tz_off++ = '\0';
+> +	t = strrchr(val, ' ');
+> +	*(t - 1) = '\0'; /* Ignore '>' from email */
+> +	t ++;
 
+Unwanted SP before "++" (look everywhere).
 
-BTW, I have been meaning to look into using smudge filters with git-annex.
-I'm a bit worried about some of the potential overhead associated with
-smudge filters, and I'm not sure how a partial checkout would work with
-them.
+> +	tm_time = time_to_tm(strtoul(t, NULL, 10), atoi(tz_off));
 
---=20
-see shy jo
+Has your caller already verified tz_off is a reasonable integer?
 
---EeQfGwPcQSOJBaQU
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: Digital signature
-Content-Disposition: inline
+> +void svnload_read(void) {
+> ...
+> +		switch (val - t - 1) {
+> +		case 1:
+> +			if (!memcmp(t, "D", 1)) {
+> +				node_ctx.action = NODE_ACTION_DELETE;
+> +			}
+> +			else if (!memcmp(t, "C", 1)) {
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
+Style: "} else if (...) {".
 
-iQIVAwUBTTofrckQ2SIlEuPHAQgblg/9ECJt82Vh3zbmgQs8gJHnjjIz61UnHrfH
-uuxnNxC9JXUet1ahFEiUq6DLkMMl+nEly6paYE2bhDvQTOUwl0yxr+9TVgaRaK6c
-7fyIWCnm5OWMSVbA6kcnyQsJ0uL6OWics3Brezvvz8xV6on174mSzWQpfAwzAXBu
-2/EdYVK0qIK1QBaGmcGPVhOxDB8xRHWXxRtypePTA54ETKSr0qvAzROM27tWRIf8
-V0rkCzTY5W0NQepU/OWJi4qi4dGfp+s4ph2se/xnS9e36FrsgwSHajPLXfOxzuUP
-x1bD9St/9MyG3CxhCgZPducAJJU0sCgi9RcQy4u/9ybsA1ihHerPGR+iETEMxbEJ
-PXI5rHcyZFD/8tOwhpeb9wQ8YKpj6uS+YZ6AL9fPItC3A3UxmDxUjNni9Fi6deLq
-BeFtpk/jFTQo7isPGvKt7cq9xmE9A7YrVe+zK87MERMCpidYnlN5DcesLlDmjhf8
-LQ4maZlN7LG5EmwP6fDZ8FC0tVuFe+HoNxmzQfkm3QB4OVVyaN2SCxXH8ewPdZ0r
-HM5Q4b5o0wpd2QyTTpzM+ehB45E9/LbYqoDgjt4GA1nxN+ncOYVzalDU8AaJxfrh
-iUZX9pbhrDPmlprQA9SoExebTo4AYL658KXXOI25sIPZOWCyTzg9BxUZuYKF9+Rj
-IujT24RCGuY=
-=5CL0
------END PGP SIGNATURE-----
+> +				node_ctx.action = NODE_ACTION_ADD;
+> +			}
+> +			else if (!memcmp(t, "R", 1)) {
+> +				node_ctx.action = NODE_ACTION_REPLACE;
+> +			}
+> +			else if (!memcmp(t, "M", 1)) {
+> +				node_ctx.action = NODE_ACTION_CHANGE;
+> +				mode_incr = 7;
+> +				if (!memcmp(val, "100644", 6))
+> +					node_ctx.kind = NODE_KIND_NORMAL;
+> +				else if (!memcmp(val, "100755", 6))
+> +					node_ctx.kind = NODE_KIND_EXECUTABLE;
+> +				else if (!memcmp(val, "120000", 6))
+> +					node_ctx.kind = NODE_KIND_SYMLINK;
+> +				else if (!memcmp(val, "160000", 6))
+> +					node_ctx.kind = NODE_KIND_GITLINK;
+> +				else if (!memcmp(val, "040000", 6))
 
---EeQfGwPcQSOJBaQU--
+Is <mode> guaranteed to be a 6-digit octal, padded with 0 to the left?
+
+The manual page of git-fast-import seems to hint that is the case, but I
+am double checking, as the leading zero is an error in the tree object.
+
+> +					node_ctx.kind = NODE_KIND_SUBDIR;
+> +				else {
+> +					if (!memcmp(val, "755", 3))
+> +						node_ctx.kind = NODE_KIND_EXECUTABLE;
+> +					else if(!memcmp(val, "644", 3))
+
+Style; missing SP after "if/switch" (look everywhere).
+
+> +						node_ctx.kind = NODE_KIND_NORMAL;
+> +					else
+> +						die("Unrecognized mode: %s", val);
+> +					mode_incr = 4;
+> +				}
+> +				val += mode_incr;
+
+Hmm, this whole thing is ugly.
+
+Perhaps a table-lookup, or at least a helper function that translates
+"val" to node-kind (while advancing val as the side effect) may make it
+easier to read?
+
+> +				t = strchr(val, ' ');
+> +				*t++ = '\0';
+> +				strbuf_reset(&node_ctx.path);
+> +				strbuf_add(&node_ctx.path, t, strlen(t));
+> +				if (!memcmp(val + 1, "inline", 6))
+> +					die("Unsupported dataref: inline");
+> +				else if (*val == ':')
+> +					to_dump = &blobs[strtoul(val + 1, NULL, 10)];
+
+Has anybody so far verified the decimal number at (val+1) is a reasonable
+value, or am I seeing a future CVE here?
+
+Do we care what follows the len of digits on this line?  Does a line in G-F-I
+stream allow trailing garbage (this question is not limited to this part
+of the code)?
+> +int svnload_init(const char *filename)
+> +{
+> +	int i;
+> +	if (buffer_init(&input, filename))
+> +		return error("cannot open %s: %s", filename, strerror(errno));
+> +	active_ctx = UNKNOWN_CTX;
+> +	strbuf_init(&rev_ctx.props, MAX_GITSVN_LINE_LEN);
+> +	...
+> +	strbuf_init(&node_ctx.copyfrom_path, MAX_GITSVN_LINE_LEN);
+> +	for (i = 0; i < 100; i ++)
+> +		strbuf_init(&blobs[i], 10000);
+> +	return 0;
+> +}
+> +
+> +void svnload_deinit(void)
+> +{
+> +	int i;
+> +	reset_rev_ctx(0);
+> +	reset_node_ctx();
+> +	strbuf_release(&rev_ctx.props);
+> +	...
+> +	strbuf_release(&node_ctx.copyfrom_path);
+> +	for (i = 0; i < 100; i ++)
+> +		strbuf_release(&blobs[i]);
+> +	if (buffer_deinit(&input))
+> +		fprintf(stderr, "Input error\n");
+> +	if (ferror(stdout))
+> +		fprintf(stderr, "Output error\n");
+> +}
+
+Whoever needs to add an element to rev_ctx must consistently touch reset,
+init and deinit.  Would it help him/her if you moved the code so that
+these functions are close together from the beginning?
