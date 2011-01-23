@@ -1,74 +1,58 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH] No color diff when redirecting to file
-Date: Sun, 23 Jan 2011 18:29:52 +0100
-Message-ID: <vpq39oj4jfz.fsf@bauges.imag.fr>
-References: <201101231410.48528.saschpe@gmx.de>
-	<201101231547.18529.j6t@kdbg.org>
+From: Libor Pechacek <lpechacek@suse.cz>
+Subject: Re: [PATCH v2] Documentation fixes in git-config
+Date: Sun, 23 Jan 2011 20:46:52 +0100
+Message-ID: <20110123194538.GA4372@localhost.suse.cz>
+References: <20110108144644.GA11019@localhost.suse.cz> <20110111055922.GD10094@sigill.intra.peff.net> <20110119100105.GB8034@fm.suse.cz> <20110119141401.GE8034@fm.suse.cz> <20110121002716.GC9442@sigill.intra.peff.net> <20110121102048.GF19715@fm.suse.cz> <20110121102537.GH19715@fm.suse.cz> <20110121162537.GD21840@sigill.intra.peff.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sascha Peilicke <saschpe@gmx.de>, git@vger.kernel.org
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Sun Jan 23 18:30:12 2011
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Jan 23 20:47:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ph3lO-0003Ig-81
-	for gcvg-git-2@lo.gmane.org; Sun, 23 Jan 2011 18:30:06 +0100
+	id 1Ph5ts-0005hO-Ih
+	for gcvg-git-2@lo.gmane.org; Sun, 23 Jan 2011 20:47:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751416Ab1AWR37 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Jan 2011 12:29:59 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:55010 "EHLO shiva.imag.fr"
+	id S1752338Ab1AWTqy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Jan 2011 14:46:54 -0500
+Received: from cantor2.suse.de ([195.135.220.15]:45393 "EHLO mx2.suse.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751306Ab1AWR36 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Jan 2011 12:29:58 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p0NHToYX019002
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 23 Jan 2011 18:29:50 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Ph3lA-00064w-Ci; Sun, 23 Jan 2011 18:29:52 +0100
-In-Reply-To: <201101231547.18529.j6t@kdbg.org> (Johannes Sixt's message of "Sun\, 23 Jan 2011 15\:47\:17 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 23 Jan 2011 18:29:51 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p0NHToYX019002
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1296408592.17348@a/nQMZ6Wg3xVY4GcdyEcGA
+	id S1752268Ab1AWTqy (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Jan 2011 14:46:54 -0500
+Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.221.2])
+	by mx2.suse.de (Postfix) with ESMTP id 71F0187567;
+	Sun, 23 Jan 2011 20:46:53 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <20110121162537.GD21840@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.17 (2007-11-01)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165427>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165428>
 
-Johannes Sixt <j6t@kdbg.org> writes:
+On Fri 21-01-11 11:25:37, Jeff King wrote:
+> I am half-tempted to mark the lowercasing of the regex as deprecated (or
+> at least discouraged).
 
-> That said, I cannot reproduce. Perhaps your configuration says 
-> color.ui=always? If so, then this is expected behavior and not a bug, IMO.
+That's actually side effect of
+http://git.kernel.org/?p=git/git.git;a=commitdiff;h=2fa9a0fb31cbf01e8318a02c3e222d7fd3fd0a83
+Don't see any intent to support "mixed-sensitivity" matching in it.
 
-I think you're right.
+> It's such a hack, and I don't think we will ever improve to make it work in
+> the general case, as regexes are simply too complex for us to handle all
+> possible inputs.
 
-I tested this (without the patch):
+As far as I understand git uses host library implementation of regcomp and
+regexec so we cannot fix that side.  Writing code to modify regexes is not
+worth the effort.
 
-git diff
-=> I get color, because I have color.ui = auto
+FWIW I'm in favor of deprecating this functionality.
 
-git diff | cat
-=> I don't get color
-
-git diff --color=auto | cat
-=> no color
-
-git diff --color=always | cat
-=> colors, because I've asked
-
-this seems to be just the right behavior.
-
+Libor
 -- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Libor Pechacek
+SUSE L3 Team, Prague
