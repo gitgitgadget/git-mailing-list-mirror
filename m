@@ -1,58 +1,72 @@
-From: Libor Pechacek <lpechacek@suse.cz>
-Subject: Re: [PATCH v2] Documentation fixes in git-config
-Date: Sun, 23 Jan 2011 20:46:52 +0100
-Message-ID: <20110123194538.GA4372@localhost.suse.cz>
-References: <20110108144644.GA11019@localhost.suse.cz> <20110111055922.GD10094@sigill.intra.peff.net> <20110119100105.GB8034@fm.suse.cz> <20110119141401.GE8034@fm.suse.cz> <20110121002716.GC9442@sigill.intra.peff.net> <20110121102048.GF19715@fm.suse.cz> <20110121102537.GH19715@fm.suse.cz> <20110121162537.GD21840@sigill.intra.peff.net>
+From: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Subject: Re: [PATCH 2/2] Re: rebase -i: explain how to discard all commits
+Date: Sun, 23 Jan 2011 21:10:40 +0100 (CET)
+Message-ID: <alpine.DEB.1.00.1101232109530.1541@bonsai2>
+References: <vpq62ziv788.fsf@bauges.imag.fr> <20110120195726.GA11702@burratino> <20110120200827.GB14184@vidovic> <201101202134.41911.trast@student.ethz.ch> <7vfwsnqn8c.fsf@alter.siamese.dyndns.org> <alpine.DEB.1.00.1101210801210.15247@pacific.mpi-cbg.de>
+ <7vsjwmp5cs.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sun Jan 23 20:47:01 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Matthieu Moy <Matthieu.Moy@imag.fr>, git@vger.kernel.org,
+	Kevin Ballard <kevin@sb.org>, Yann Dirson <dirson@bertin.fr>,
+	Eric Raible <raible@nextest.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 23 21:10:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Ph5ts-0005hO-Ih
-	for gcvg-git-2@lo.gmane.org; Sun, 23 Jan 2011 20:47:01 +0100
+	id 1Ph6H1-0001WF-Ra
+	for gcvg-git-2@lo.gmane.org; Sun, 23 Jan 2011 21:10:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752338Ab1AWTqy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Jan 2011 14:46:54 -0500
-Received: from cantor2.suse.de ([195.135.220.15]:45393 "EHLO mx2.suse.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752268Ab1AWTqy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Jan 2011 14:46:54 -0500
-Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.221.2])
-	by mx2.suse.de (Postfix) with ESMTP id 71F0187567;
-	Sun, 23 Jan 2011 20:46:53 +0100 (CET)
-Content-Disposition: inline
-In-Reply-To: <20110121162537.GD21840@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.17 (2007-11-01)
+	id S1752123Ab1AWUKr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Jan 2011 15:10:47 -0500
+Received: from mailout-de.gmx.net ([213.165.64.23]:42910 "HELO
+	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with SMTP id S1751791Ab1AWUKq (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Jan 2011 15:10:46 -0500
+Received: (qmail invoked by alias); 23 Jan 2011 20:10:44 -0000
+Received: from pD9EB0B0C.dip0.t-ipconnect.de (EHLO noname) [217.235.11.12]
+  by mail.gmx.net (mp067) with SMTP; 23 Jan 2011 21:10:44 +0100
+X-Authenticated: #1490710
+X-Provags-ID: V01U2FsdGVkX19MAep8845MuY5akx3CmHCi6Zu0UX3t2Wk6dSI4hs
+	uf1NtIKh1SDDbc
+X-X-Sender: gene099@bonsai2
+In-Reply-To: <7vsjwmp5cs.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 1.00 (DEB 882 2007-12-20)
+X-Y-GMX-Trusted: 0
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165428>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165429>
 
-On Fri 21-01-11 11:25:37, Jeff King wrote:
-> I am half-tempted to mark the lowercasing of the regex as deprecated (or
-> at least discouraged).
+Hi,
 
-That's actually side effect of
-http://git.kernel.org/?p=git/git.git;a=commitdiff;h=2fa9a0fb31cbf01e8318a02c3e222d7fd3fd0a83
-Don't see any intent to support "mixed-sensitivity" matching in it.
+On Fri, 21 Jan 2011, Junio C Hamano wrote:
 
-> It's such a hack, and I don't think we will ever improve to make it work in
-> the general case, as regexes are simply too complex for us to handle all
-> possible inputs.
+> Johannes Schindelin <Johannes.Schindelin@gmx.de> writes:
+> 
+> >> Wouldn't that suggest us that if we were to do anything to this 
+> >> message it would be a good idea to teach the user to "reset --hard" 
+> >> the branch if no commits truly needs to be replayed on top of the 
+> >> onto-commit?
+> >
+> > The important difference between rebase -i && noop on the one, and 
+> > reset --hard on the other hand is that the latter is completely 
+> > unsafe. I mean, utterly completely super-unsafe. And I say that 
+> > because _this here developer_ who is not exactly a Git noob lost stuff 
+> > that way.
+> 
+> I think "rebase" already checks that the index and the working tree is 
+> clean before starting, so referring to "reset --hard" when "rebase -i" 
+> notices there is absolutely nothing to do is _not_ unsafe, no?
 
-As far as I understand git uses host library implementation of regcomp and
-regexec so we cannot fix that side.  Writing code to modify regexes is not
-worth the effort.
+Oh, so you want to suggest using "reset --hard" but warn at the same time 
+that this command on its own is dangerous unless you run rebase first? :-)
 
-FWIW I'm in favor of deprecating this functionality.
-
-Libor
--- 
-Libor Pechacek
-SUSE L3 Team, Prague
+Ciao,
+Johannes
