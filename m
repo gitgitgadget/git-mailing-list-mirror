@@ -1,85 +1,106 @@
-From: Semyon Kirnosenko <semyon.kirnosenko@gmail.com>
-Subject: [BUG] difference of info from diff and blame again
-Date: Sun, 23 Jan 2011 13:33:58 +0300
-Message-ID: <4D3C0416.7000205@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Parameter --color-words not documented for "git show"
+Date: Sun, 23 Jan 2011 02:35:45 -0800 (PST)
+Message-ID: <m38vybc3id.fsf@localhost.localdomain>
+References: <4D3893EA.5090907@hartwork.org>
+	<201101202127.39962.trast@student.ethz.ch> <4D389E69.608@hartwork.org>
+	<7vk4hzqnbx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 23 11:34:02 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Sebastian Pipping <webmaster@hartwork.org>,
+	Thomas Rast <trast@student.ethz.ch>,
+	Git ML <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 23 11:35:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PgxGi-0003uv-NK
-	for gcvg-git-2@lo.gmane.org; Sun, 23 Jan 2011 11:34:01 +0100
+	id 1PgxIY-0004cq-8B
+	for gcvg-git-2@lo.gmane.org; Sun, 23 Jan 2011 11:35:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751447Ab1AWKd4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 23 Jan 2011 05:33:56 -0500
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:59355 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751379Ab1AWKdz (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 23 Jan 2011 05:33:55 -0500
-Received: by ewy5 with SMTP id 5so1514204ewy.19
-        for <git@vger.kernel.org>; Sun, 23 Jan 2011 02:33:54 -0800 (PST)
+	id S1751521Ab1AWKfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 23 Jan 2011 05:35:48 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:37658 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751416Ab1AWKfr (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 23 Jan 2011 05:35:47 -0500
+Received: by mail-ww0-f44.google.com with SMTP id 36so3367127wwa.1
+        for <git@vger.kernel.org>; Sun, 23 Jan 2011 02:35:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
-         :subject:content-type:content-transfer-encoding;
-        bh=INtQWz+tQL05aDsBq1F36Bp0DToZdSWz8uKnHI6xCbI=;
-        b=KieTwAN8oJWL1uRufPmbHcNgTamjEKayNsjLsU9Kx8u1YXwWc1spimZeN2x2qjtdM4
-         ElXNkNzFMd37f/MACr6vOmoBWNSDWo4fg8WmjBM1QkzUxUO9zZPl1KUidRoQqCDCqR4q
-         57sNglNfumj3oPyHHnMwu8ZXeb/5lXmKAOfxw=
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=BWa/6EGogZDlUCfIPEW2bvOwHtD5RWew9MSJEvfwW7k=;
+        b=ruGk3r1O86zNBgjnVuSG/cjVhC5oYRx8eXmBsg7s5E5dPwCU6QI3mAVnhIgL2SpEfA
+         vyiLgS3oNfTURgnRv3vMeo1u/vWjCe5GA5BcQ1zxjAXxGi5V+My5ye4cu+6sWQ2tWQti
+         qW8G9B70/rhDGm6K15b8s7mDGHVAfw+5TmR2I=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :content-type:content-transfer-encoding;
-        b=WO0Z1b0dLNaodfJK7PyQOVNpci+0qam/YHJoedM3MT6GrmAViKtYRf3bWDSv5wm/7E
-         9xT/6PjkJdxFAV+qmlKfnAoR/4LE8o0aBbNiODgH2RBafEyLTo4BWNnL+9ZwrSt6VkRX
-         n/TKaMUJwK77dKHMRemey7G1NGgYovmWFbSB8=
-Received: by 10.213.17.147 with SMTP id s19mr2437606eba.89.1295778832770;
-        Sun, 23 Jan 2011 02:33:52 -0800 (PST)
-Received: from [46.147.35.91] ([46.147.35.91])
-        by mx.google.com with ESMTPS id b52sm9145666eei.1.2011.01.23.02.33.51
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 23 Jan 2011 02:33:52 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; ru; rv:1.9.2.4) Gecko/20100608 Thunderbird/3.1
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=m14TnwjA4YzUjWTtWD8QeyFcTKwZK5sZ7jh7pFWuwedfCJsgHnRTcrQcyqLxT5OdIc
+         cG09BhSz4mbZXhaLaDlMOJKNQkSgENfo3jZPwrjUVjYKQva1bexBd4ZkJinqgKgo9rzk
+         /WLqdxlVecR4YtZDTHEVbiBv7CsiQwayGR7gQ=
+Received: by 10.216.25.202 with SMTP id z52mr1227971wez.14.1295778946852;
+        Sun, 23 Jan 2011 02:35:46 -0800 (PST)
+Received: from localhost.localdomain (abuz16.neoplus.adsl.tpnet.pl [83.8.197.16])
+        by mx.google.com with ESMTPS id n11sm5924481wej.19.2011.01.23.02.35.44
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 23 Jan 2011 02:35:45 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p0NAZ1FO007309;
+	Sun, 23 Jan 2011 11:35:12 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p0NAYYeP007304;
+	Sun, 23 Jan 2011 11:34:34 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <7vk4hzqnbx.fsf@alter.siamese.dyndns.org>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165423>
 
-Hi.
+Junio C Hamano <gitster@pobox.com> writes:
+> Sebastian Pipping <webmaster@hartwork.org> writes:
+>> On 01/20/11 21:27, Thomas Rast wrote:
+>>> Quote from the latter:
+>>> 
+>>>        This manual page describes only the most frequently used options.
+>>
+>> Okay.  Is that a good a idea?
+> 
+> Yes; the alternative is to list everything.
+> 
+>> Is --abbrev-commit really used more
+>> frequently with "git show" than --color-words is?
+> 
+> I see this as a not-so-helpful-but-still-interesting question.
+> 
+> It depends on who you are, and if one wants to pick the most often used
+> ones, that selection may or may not coincide with _your_ usage pattern nor
+> mine.  The original author apparently thought so, you seem to think
+> color-words is used a lot more often, and I personally think neither is
+> used often at all.  So should we swap them, keep things as-is, or remove
+> both?
+> 
+> We obviously cannot take a poll to update the list every time a new user
+> starts using git, but it might make sense to review them every once in a
+> while.
 
-I have to repost about diff and blame difference problem.
-The initial discussion ends here:
-http://permalink.gmane.org/gmane.comp.version-control.git/165012
+There is also additional problem, namely that because "git show" shows
+commit and can show diff, therefore it accepts same formatting options
+as "git log", and when set to display patch it accepts any diff family
+options.
 
-I have the same problem on git repo. The problem is some line is marked 
-in diff as added, but in blame it is marked as added in some older 
-revision. And vice versa line is not marked as added in diff but it is 
-marked in blame. And now it's about non-whitespace lines. Here are 
-several examples:
+Should we then list most common porcelanish diff options, or just
+refer to git-diff(1) manpage?
 
-revision: 711cf3a026a539f68ab647e012f145a03e12a5e7
-file: update-cache.c
-line: 127
-
-revision: 40469ee9c6a6f4c85df5520ef719bba3d38a64f0
-file: sha1_file.c
-line: 234
-
-Diff error in revision 198b0fb635ed8a007bac0c16eab112c5e2c7995c in file 
-date.c.
-Line 184: added in diff, but blame say otherwise.
-Line 215: added in diff, but blame say otherwise.
-Line 219: added in diff, but blame say otherwise.
-Line 259: added in diff, but blame say otherwise.
-Line 260: added in diff, but blame say otherwise.
-Line 193: not added in diff, but blame say otherwise.
-Line 212: not added in diff, but blame say otherwise.
-Line 222: not added in diff, but blame say otherwise.
-Line 300: not added in diff, but blame say otherwise.
-Line 315: not added in diff, but blame say otherwise.
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
