@@ -1,96 +1,76 @@
-From: Sascha Peilicke <saschpe@gmx.de>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [PATCH] No color diff when redirecting to file
-Date: Mon, 24 Jan 2011 09:59:02 +0100
-Message-ID: <201101240959.02852.saschpe@gmx.de>
-References: <201101231410.48528.saschpe@gmx.de> <201101231547.18529.j6t@kdbg.org> <vpq39oj4jfz.fsf@bauges.imag.fr>
+Date: Mon, 24 Jan 2011 10:38:05 +0100
+Message-ID: <vpqtygyhcaq.fsf@bauges.imag.fr>
+References: <201101231410.48528.saschpe@gmx.de>
+	<201101231547.18529.j6t@kdbg.org> <vpq39oj4jfz.fsf@bauges.imag.fr>
+	<201101240959.02852.saschpe@gmx.de>
 Mime-Version: 1.0
-Content-Type: multipart/signed;
-  boundary="nextPart1562656.AF6jn7qKtq";
-  protocol="application/pgp-signature";
-  micalg=pgp-sha1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 24 09:59:52 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Sascha Peilicke <saschpe@gmx.de>
+X-From: git-owner@vger.kernel.org Mon Jan 24 10:38:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PhIHA-0006uc-3y
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Jan 2011 09:59:52 +0100
+	id 1PhIsd-0005N4-1n
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Jan 2011 10:38:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751302Ab1AXI7q (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jan 2011 03:59:46 -0500
-Received: from mailout-de.gmx.net ([213.165.64.22]:45271 "HELO
-	mailout-de.gmx.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with SMTP id S1751214Ab1AXI7q (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jan 2011 03:59:46 -0500
-Received: (qmail invoked by alias); 24 Jan 2011 08:59:44 -0000
-Received: from charybdis-ext.suse.de (EHLO bort.localnet) [195.135.221.2]
-  by mail.gmx.net (mp064) with SMTP; 24 Jan 2011 09:59:44 +0100
-X-Authenticated: #30943063
-X-Provags-ID: V01U2FsdGVkX190u9QWXw10PxOSztBCoK08h0D/826qIF9jYtgiLj
-	X/jNtc0gQO+7kx
-User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.95; x86_64; ; )
-In-Reply-To: <vpq39oj4jfz.fsf@bauges.imag.fr>
-X-Y-GMX-Trusted: 0
+	id S1752421Ab1AXJiM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jan 2011 04:38:12 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:38857 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752389Ab1AXJiK (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jan 2011 04:38:10 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p0O9c5lp028862
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 24 Jan 2011 10:38:05 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PhIs9-0006wG-Qu; Mon, 24 Jan 2011 10:38:05 +0100
+In-Reply-To: <201101240959.02852.saschpe@gmx.de> (Sascha Peilicke's message of "Mon\, 24 Jan 2011 09\:59\:02 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 24 Jan 2011 10:38:05 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p0O9c5lp028862
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1296466686.63291@3iObvNwim3QFl83hE1UZnA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165441>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165442>
 
---nextPart1562656.AF6jn7qKtq
-Content-Type: Text/Plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+Sascha Peilicke <saschpe@gmx.de> writes:
 
-On Sunday 23 January 2011 18:29:52 you wrote:
-> Johannes Sixt <j6t@kdbg.org> writes:
-> > That said, I cannot reproduce. Perhaps your configuration says
-> > color.ui=3Dalways? If so, then this is expected behavior and not a bug,
-> > IMO.
->=20
-> I think you're right.
->=20
-> I tested this (without the patch):
->=20
-> git diff
-> =3D> I get color, because I have color.ui =3D auto
->=20
-> git diff | cat
-> =3D> I don't get color
->=20
-> git diff --color=3Dauto | cat
-> =3D> no color
->=20
-> git diff --color=3Dalways | cat
-> =3D> colors, because I've asked
->=20
-> this seems to be just the right behavior.
+> try the same with
+>
+> git diff > foo
 
-try the same with
+git diff > foo && cat foo
+=> no color.
 
-git diff > foo
+git diff --no-color > foo && cat foo
+=> no color either
 
-works when
+git diff --color=always > foo && cat foo
+=> colors.
 
-git diff --no-color > foo
-=2D-=20
-Mit freundlichen Gr=FC=DFen,
-Sascha Peilicke
-http://saschpe.wordpress.com
+Again, just the expected behavior.
 
---nextPart1562656.AF6jn7qKtq
-Content-Type: application/pgp-signature; name=signature.asc 
-Content-Description: This is a digitally signed message part.
+If it helps:
 
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v2.0.16 (GNU/Linux)
+$ uname -a
+Linux bauges 2.6.36-686 #1 SMP PREEMPT Fri Nov 5 10:35:38 CET 2010 i686 GNU/Linux
+$ git --version
+git version 1.7.4.rc1.17.ge7ece
 
-iEYEABECAAYFAk09P1YACgkQDq/ykSrZt1W2MgCfbdyzRQjxoMTp25wYZD3+fOyz
-SiYAni4GTadOUZwxvSrgVrRzJCBzLozc
-=CbeV
------END PGP SIGNATURE-----
-
---nextPart1562656.AF6jn7qKtq--
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
