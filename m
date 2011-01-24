@@ -1,54 +1,75 @@
-From: toltmanns <toltmanns@gmail.com>
-Subject: First time gitr - have some questions
-Date: Mon, 24 Jan 2011 10:20:45 -0800 (PST)
-Message-ID: <1295893245907-5956101.post@n2.nabble.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 7bit
+From: Jochen Schmitt <Jochen@herr-schmitt.de>
+Subject: [PATCH] Fix wrong xhtml option to highlight
+Date: Mon, 24 Jan 2011 20:44:58 +0100
+Message-ID: <1295898298-9794-1-git-send-email-Jochen@herr-schmitt.de>
+Cc: Jochen Schmitt <Jochen@herr-schmitt.de>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 24 19:20:53 2011
+X-From: git-owner@vger.kernel.org Mon Jan 24 20:45:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PhR25-00054x-63
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Jan 2011 19:20:53 +0100
+	id 1PhSLi-0008Mu-Cq
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Jan 2011 20:45:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754035Ab1AXSUr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jan 2011 13:20:47 -0500
-Received: from sam.nabble.com ([216.139.236.26]:44474 "EHLO sam.nabble.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753724Ab1AXSUq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jan 2011 13:20:46 -0500
-Received: from jim.nabble.com ([192.168.236.80])
-	by sam.nabble.com with esmtp (Exim 4.69)
-	(envelope-from <toltmanns@gmail.com>)
-	id 1PhR1x-0000zA-Ty
-	for git@vger.kernel.org; Mon, 24 Jan 2011 10:20:45 -0800
+	id S1751374Ab1AXTpF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jan 2011 14:45:05 -0500
+Received: from moutng.kundenserver.de ([212.227.126.187]:63237 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751216Ab1AXTpE (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jan 2011 14:45:04 -0500
+Received: from zeus.inet.herr-schmitt.de (p4FDD06D6.dip0.t-ipconnect.de [79.221.6.214])
+	by mrelayeu.kundenserver.de (node=mreu2) with ESMTP (Nemesis)
+	id 0LeQLR-1PzlRo3UtB-00pnD5; Mon, 24 Jan 2011 20:45:02 +0100
+Received: from zeus.inet.herr-schmitt.de (localhost [127.0.0.1])
+	by zeus.inet.herr-schmitt.de (8.14.4/8.14.4) with ESMTP id p0OJj3NK009937
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NO);
+	Mon, 24 Jan 2011 20:45:04 +0100
+Received: (from s4504kr@localhost)
+	by zeus.inet.herr-schmitt.de (8.14.4/8.14.4/Submit) id p0OJj3Ma009936;
+	Mon, 24 Jan 2011 20:45:03 +0100
+X-Mailer: git-send-email 1.7.3.4
+X-Provags-ID: V02:K0:lBP1IbyzVHdr5JMsNETecj2IzqtV1bG7DvORa/LvgmH
+ Kr0v07sSORzNPzBHLnGzOdKuXtT+luc0l0DukUQgrrDpzKw6C9
+ IuXok7CxmyQp9uu9FikgKBqRFd9q4mVvEvS3ahVYJUXNX1fjKq
+ t4oeGf2LPhqg77DEySkPvgBQvBRNwZfrHkm9BfYPkdqstSXTwV
+ OPQrrGPvbCVnyDdkYsJRhSIfc046GI4IzeVugExJN0=
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165452>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165453>
 
+---
+Hallo,
 
-First off, I may be in the wrong place, but I need a sanity check here.
+because I'm the maintainer of the highlight package in the
+Fedora Project I was notified, that highlight doesn't works
+properly with gitweb in BZ #672293.
 
-I've downloaded and am attempting to use the git bash app, trying to issue
-the following command and am getting fatal: Not a git repository
+So I have create the following simple patch to solve the 
+reported issue.
 
-git submodule add git@github.com:toltmanns/steal.git public/steal
+Best Regards
 
-I went through directions here -
-http://www.javascriptmvc.com/docs/getstarted.html#&who=install
+Jochen Schmitt
 
-Made it to creating the github account and forking the codesets needed.
+ gitweb/gitweb.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Am I missing something?
-
-Thanks in advance,
-Troy Oltmanns
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 1025c2f..b662420 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3468,7 +3468,7 @@ sub run_highlighter {
+ 	close $fd;
+ 	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
+ 	          quote_command($highlight_bin).
+-	          " --xhtml --fragment --syntax $syntax |"
++	          " -xhtml --fragment --syntax $syntax |"
+ 		or die_error(500, "Couldn't open file or run syntax highlighter");
+ 	return $fd;
+ }
 -- 
-View this message in context: http://git.661346.n2.nabble.com/First-time-gitr-have-some-questions-tp5956101p5956101.html
-Sent from the git mailing list archive at Nabble.com.
+1.7.3.4
