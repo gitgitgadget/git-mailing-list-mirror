@@ -1,58 +1,76 @@
-From: Andrew Keller <andrew@kellerfarm.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: First time gitr - have some questions
-Date: Mon, 24 Jan 2011 14:28:11 -0500
-Message-ID: <71753C67-F692-4CA6-A8BB-39B606D0CC76@kellerfarm.com>
+Date: Mon, 24 Jan 2011 21:55:14 +0100
+Message-ID: <vpq39oit425.fsf@bauges.imag.fr>
 References: <1295893245907-5956101.post@n2.nabble.com>
-Mime-Version: 1.0 (Apple Message framework v1082)
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
 Cc: git@vger.kernel.org
 To: toltmanns <toltmanns@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 24 21:40:40 2011
+X-From: git-owner@vger.kernel.org Mon Jan 24 21:55:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PhTDK-00032T-U9
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Jan 2011 21:40:39 +0100
+	id 1PhTRe-0003mI-CR
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Jan 2011 21:55:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752105Ab1AXUkd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jan 2011 15:40:33 -0500
-Received: from sanjose.tchmachines.com ([208.76.86.38]:38089 "EHLO
-	leia.tchmachines.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751344Ab1AXUkc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Jan 2011 15:40:32 -0500
-X-Greylist: delayed 4337 seconds by postgrey-1.27 at vger.kernel.org; Mon, 24 Jan 2011 15:40:32 EST
-Received: from public-67-55.emich.edu ([164.76.67.55])
-	by leia.tchmachines.com with esmtpsa (TLSv1:AES128-SHA:128)
-	(Exim 4.69)
-	(envelope-from <andrew@kellerfarm.com>)
-	id 1PhS5B-0007xc-2l; Mon, 24 Jan 2011 14:28:09 -0500
-In-Reply-To: <1295893245907-5956101.post@n2.nabble.com>
-X-Mailer: Apple Mail (2.1082)
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - leia.tchmachines.com
-X-AntiAbuse: Original Domain - vger.kernel.org
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - kellerfarm.com
+	id S1752683Ab1AXUzU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jan 2011 15:55:20 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:52769 "EHLO rominette.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752671Ab1AXUzU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jan 2011 15:55:20 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p0OKtCac020557
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 24 Jan 2011 21:55:12 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PhTRS-0005p7-D6; Mon, 24 Jan 2011 21:55:14 +0100
+In-Reply-To: <1295893245907-5956101.post@n2.nabble.com> (toltmanns@gmail.com's message of "Mon\, 24 Jan 2011 10\:20\:45 -0800 \(PST\)")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 24 Jan 2011 21:55:12 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p0OKtCac020557
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1296507315.17426@cU3Qo+TdIkgVAvcRKSdy2g
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165457>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165458>
 
-On Jan 24, 2011, at 1:20 PM, toltmanns wrote:
+toltmanns <toltmanns@gmail.com> writes:
 
 > First off, I may be in the wrong place, but I need a sanity check here.
-
-Communication is the most efficient way to implement a sanity check.
-
+>
 > I've downloaded and am attempting to use the git bash app, trying to issue
 > the following command and am getting fatal: Not a git repository
-> 
+>
 > git submodule add git@github.com:toltmanns/steal.git public/steal
 
-I like that error because of how few scenarios can cause it.  Your current working directory is not inside a repository.  'cd' into the repository and try again.
+> I went through directions here -
+> http://www.javascriptmvc.com/docs/getstarted.html#&who=install
 
-~ Andrew Keller
+That page says, just above the command you're trying:
+
+  "You want to fork each project and add it as a submodule to your
+   project"
+
+which you should read as
+
+  "At this point, you should have a Git project (i.e. repository) of
+  your own, and you can add our projects as subprojects of yours"
+
+which probably implies that you should read some Git tutorial to learn
+how to deal with your own project before trying to understand
+submodules ;-).
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
