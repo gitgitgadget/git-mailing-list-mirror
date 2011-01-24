@@ -1,108 +1,115 @@
-From: Dun Peal <dunpealer@gmail.com>
-Subject: Re: Why don't git-init and git-clone probe for core.ignorecase on
- Windows > XP?
-Date: Mon, 24 Jan 2011 15:15:30 -0600
-Message-ID: <AANLkTinGUR=ny7kg-2TUAn=p=VDs-XrVfOdYgm+uRvrP@mail.gmail.com>
-References: <AANLkTimqgCsmC96fkWQJ0yB+FuyC6Xkgn3UAfZrqMqK_@mail.gmail.com>
-	<7voc7s5uy3.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [ANNOUNCE] Git 1.7.4-rc3
+Date: Mon, 24 Jan 2011 14:36:16 -0800
+Message-ID: <7vzkqqkjz3.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Git ML <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 24 22:15:39 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Mon Jan 24 23:36:37 2011
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PhTlC-0008Bt-9u
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Jan 2011 22:15:38 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1PhV1Y-0006Zj-2p
+	for glk-linux-kernel-3@lo.gmane.org; Mon, 24 Jan 2011 23:36:36 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752586Ab1AXVPc convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Jan 2011 16:15:32 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:36778 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751687Ab1AXVPc convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Jan 2011 16:15:32 -0500
-Received: by qwa26 with SMTP id 26so4467309qwa.19
-        for <git@vger.kernel.org>; Mon, 24 Jan 2011 13:15:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=KR/aINFtM8Ph8C5qdsqXrPattOzBnni8oHofvshEp3g=;
-        b=OqjTxZLvQAk+ibzuiK0HAjRhWDzvcpwowtpb65OsDpRZVss8GI4wdvqGDtilLRF95h
-         AUXOlnh9CZC2selM2E2kxCbxQE8W0yLu+LF1uvsKVEskRIsbbGQKlUrBK+MelViJZLzX
-         XCXTK00hxMUzf7J47RGc4q8hhqddacdmPnqOg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=U67in5YjpX0gkHDqxJ4uCIy7g0BV9H7HsKnzgQHRfB7Y36xLorIoCw64jUMw9mH8Nz
-         Pgyy37EQ5deF3ee3WXmgUb4EkfjLuMyhaL3NRBtLSUbSU7bO4kvpNjBxey6ICh79S71y
-         Gp072Q7XHuM4jUZg2XDSh5vG3d8GjulvhnA80=
-Received: by 10.229.43.74 with SMTP id v10mr4155513qce.293.1295903730958; Mon,
- 24 Jan 2011 13:15:30 -0800 (PST)
-Received: by 10.220.191.66 with HTTP; Mon, 24 Jan 2011 13:15:30 -0800 (PST)
-In-Reply-To: <7voc7s5uy3.fsf@alter.siamese.dyndns.org>
-Sender: git-owner@vger.kernel.org
+	id S1752610Ab1AXWg3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Mon, 24 Jan 2011 17:36:29 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58756 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751527Ab1AXWg2 convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Mon, 24 Jan 2011 17:36:28 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 778122705;
+	Mon, 24 Jan 2011 17:37:15 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=veyAN+4taPorHJ/LO+TgN4e2j
+	6k=; b=sqWImu3oDf3SqzLCWgfsAJIWaCis5/ugL4OA+dLt3zwePbT75ImvGawh9
+	hfb7Bl97JtfN3Px0eKS2QaRkNEPWuZOjJkLja27QGkT0Wx1eIWCffpxUT2GClxWE
+	g+o6ghQDD9NQaK2dpeSxchH6G9tUW3ONJXORZLV99frAn4uU1Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=SuKXkvlrbQu2XYGiCBy
+	Ltx4L3lVlFIuZ9dJwf4Q0yh0DS+ywurZtlql0WDHxRZ0iheB2vI71Ujr4b/3Lsem
+	oUkNqCeng7VokuNXDocNwz/EWnSrluUBOUV8Yir5Gg/VXaqjrv0fXjEZnBYLDlyA
+	GJ50BLI7XKJBEz7yViNxsgNM=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 471462703;
+	Mon, 24 Jan 2011 17:37:12 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id AC8C826FC; Mon, 24 Jan 2011
+ 17:37:07 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 7C5F7DE2-280A-11E0-822C-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165459>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165460>
 
-Thanks Junio, this question was due to a misunderstanding on my part:
+A release candidate Git 1.7.4-rc3 is available at the usual places
+for testing:
 
-=46or some reason, I thought "probe" in the man meant asking the user
-whether core.ignorecase should be set. I vaguely recall there's
-another (also Windows-related) setting that is interactively queried
-like that.
+  http://www.kernel.org/pub/software/scm/git/
 
-=46ollowing your reply I tested with recent (1.7) installations of
-msysgit and core.ignorecase is set automatically to true in
-=2Egit/config for newly created / cloned repo on NTFS over Windows 7.
+  git-1.7.4.rc3.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.7.4.rc3.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.7.4.rc3.tar.{gz,bz2}		(preformatted docs)
 
-Thanks again and sorry for the misunderstanding, D.
+The RPM binary packages for a few architectures are found in:
 
-On Fri, Jan 7, 2011 at 2:18 PM, Junio C Hamano <gitster@pobox.com> wrot=
-e:
-> Dun Peal <dunpealer@gmail.com> writes:
->
->> The git-config manpage says about core.ignorecase:
->>
->> "The default is false, except git-clone(1) or git-init(1) will probe
->> and set core.ignorecase true if appropriate when the repository is
->> created."
->>
->> I assume this is happening when you clone or init on FAT, which is
->> explicitly mentioned earlier in that section. But apparently it
->> doesn't happen for either XP, Vista or 7. While those newer releases
->> use NTFS, which technically supports case-sensitivity, the operating
->> itself still apparently doesn't, so it would seem like git-clone and
->> git-init should probe regarding the core.ignorecase on any version o=
-f
->> Windows, no?
->
-> Sorry, but it is unclear if you are complaining that core.ignorecase =
-is
-> set (but you believe it shouldn't be) or it is not set (but you belie=
-ve it
-> should be) on NTFS from the description.
->
-> As far as I can tell from the code (I obviously only look at the plai=
-n
-> vanilla git, and msysgit might have some patch to this part, I dunno.=
- =A0Oh
-> by the way you didn't say which version you are complaining about,
-> either), we do the probing on all systems (including POSIX folks with=
- FAT
-> filesystem mounted) by first creating .git/config and then checking i=
-f a
-> file .git/CoNfIg which we know we never created can be accessed. =A0I=
-f we
-> can, that means the filesystem ignores case, iow, we cannot have two =
-files
-> config and CoNfIg at the same time, and set core.ignorecase to true.
->
+  testing/git-*-1.7.4.rc3-1.fc13.$arch.rpm	(RPM)
+
+Except for a regression fix to keep honoring "git --work-tree=3D/there/=
+ cmd"
+without specifying --git-dir (Thanks Jonathan), there isn't any excitin=
+g
+new thing to see here; which is exactly the way how I want an rc3 to be=
+=2E
+
+Hopefully we can tag the final by the end of the month.  Everybody, tha=
+nks
+in advance for testing this rc ;-).
+
+----------------------------------------------------------------
+
+Changes since v1.7.4-rc2 are as follows:
+
+Alexey Shumkin (1):
+      userdiff: match Pascal class methods
+
+Bj=C3=B6rn Steinbrink (1):
+      Correctly report corrupted objects
+
+Erik Faye-Lund (1):
+      exec_cmd: remove unused extern
+
+Johannes Sixt (2):
+      Fix expected values of setup tests on Windows
+      t/README: hint about using $(pwd) rather than $PWD in tests
+
+Jonathan Nieder (9):
+      ll-merge: simplify opts =3D=3D NULL case
+      Documentation/fast-import: capitalize beginning of sentence
+      remote-ext: do not segfault for blank lines
+      Documentation/fast-import: put explanation of M 040000 <dataref> =
+"" in context
+      tests: cosmetic improvements to the repo-setup test
+      tests: compress the setup tests
+      Documentation: do not treat reset --keep as a special case
+      Subject: setup: officially support --work-tree without --git-dir
+      t1510: fix typo in the comment of a test
+
+Junio C Hamano (2):
+      Documentation updates for 'GIT_WORK_TREE without GIT_DIR' histori=
+cal usecase
+      Git 1.7.4-rc3
+
+Ramsay Allan Jones (1):
+      svndump.c: Fix a printf format compiler warning
