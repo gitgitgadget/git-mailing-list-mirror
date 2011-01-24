@@ -1,110 +1,74 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [RFC] Add bad-branch-first option for git-bisect
-Date: Mon, 24 Jan 2011 12:04:01 -0800
-Message-ID: <7v8vyam5la.fsf@alter.siamese.dyndns.org>
-References: <4D3CDDF9.6080405@intel.com>
- <AANLkTimUkv9+g_+wFcyGhwMjE9zYAKjMn32GL-WOVmoe@mail.gmail.com>
- <4D3D54D3.7040801@intel.com> <4D3D5989.50903@viscovery.net>
- <4D3D5CE5.4050108@intel.com>
+From: Alex Riesen <raa.lkml@gmail.com>
+Subject: Re: [PATCH 2/3] git-gui: spelling fixes in russian translation
+Date: Mon, 24 Jan 2011 21:06:41 +0100
+Message-ID: <AANLkTinZCegWW-6uQ++uO9fGQ4SQ34=W4TJXW6ii5jXD@mail.gmail.com>
+References: <cover.1295295897.git.raa.lkml@gmail.com>
+	<1c96343bbf6fb30e7453c3df7b49ea31667e0469.1295295897.git.raa.lkml@gmail.com>
+	<20110117210828.GC27029@blimp.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j.sixt@viscovery.net>,
-	Christian Couder <christian.couder@gmail.com>,
-	"git\@vger.kernel.org" <git@vger.kernel.org>,
-	"apenwarr\@gmail.com" <apenwarr@gmail.com>
-To: Shuang He <shuang.he@intel.com>
-X-From: git-owner@vger.kernel.org Mon Jan 24 21:04:25 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: "Shawn O. Pearce" <spearce@spearce.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	Serge Ziryukin <ftrvxmtrx@gmail.com>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Alexander Gavrilov <angavrilov@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 24 21:06:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PhSeH-00018T-6r
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Jan 2011 21:04:25 +0100
+	id 1PhSgb-0002GV-BY
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Jan 2011 21:06:49 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751719Ab1AXUEU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jan 2011 15:04:20 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58314 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751426Ab1AXUET (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jan 2011 15:04:19 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 641D831BA;
-	Mon, 24 Jan 2011 15:05:04 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=jEv7wEKRn2l5HurCaH+L+9l1EWo=; b=fFANm7
-	tcSyGBs9v0bWFOE4FRcyTomVo9kRt/6ZCbVNSChAZwtDnOcgwQ9aKnrTAVXflD2x
-	CD3AOg41BAUhfmEeSHhbtukHYCIftibQj/BblH7Fy8Qa99o1NC0ctAuFCdmwpF1n
-	8RCQa75ME1KryQW0ZelZhL54dpuXIelBiGPb8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=hCvI8J7Acubomv04GxKeQFxqT5r+8X1t
-	pWmM8y/WkBh5pLlpaJNGOxcGSyTeJGyluc3sbWbOIwKItbfOv/2HWp1Wv/Bprsul
-	Mi2Lp1TUrAPcbMFjUCYSM+9zMiE6NQLWZQL7F/ajdlrvMZ8LLmCB8Xg5IA45SA3G
-	oBdH79TnyWY=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E2FA931B9;
-	Mon, 24 Jan 2011 15:04:58 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0016C31B5; Mon, 24 Jan 2011
- 15:04:51 -0500 (EST)
-In-Reply-To: <4D3D5CE5.4050108@intel.com> (Shuang He's message of "Mon\, 24
- Jan 2011 19\:05\:09 +0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3874C8D6-27F5-11E0-8507-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
+	id S1751448Ab1AXUGo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 24 Jan 2011 15:06:44 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:53514 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751321Ab1AXUGn convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 24 Jan 2011 15:06:43 -0500
+Received: by bwz15 with SMTP id 15so3931389bwz.19
+        for <git@vger.kernel.org>; Mon, 24 Jan 2011 12:06:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=QQLdubJKjX5lUrexiLmg+RO1uF/i59ph2L4FG0C2p7c=;
+        b=Ggf60GgC1tYi1GoQQwRj+WmwBakSSWSUoXXNVSNZAtgIU1NPBNSbtE/mqTyEErrqOf
+         PSrTzLukW/e7FumFgAVlgEhQVgP+WjGzsrAdmKsAprdGM7Jo29GxxT+q2Rfb7M07CT9S
+         FpWGNtUcuOTeNQJl2CNRke4mC7HqDxPnkMag0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=OvMHXPzRMAssiVjwJmcIHm5d1QSOrwMEBYC3iLFUKDwlFrBbuPG+hiywq1/brrkHYk
+         rts/ZW+asdN4Z02XWzyBKYrix0oWoPQqxYsjrc0flIKvRkXVcdqoxxupVzeO4z/8MEwj
+         oRUq/b4ByvHnKkOk3l//Yw3oomHDIAfmQY/cM=
+Received: by 10.204.118.138 with SMTP id v10mr4212009bkq.94.1295899601847;
+ Mon, 24 Jan 2011 12:06:41 -0800 (PST)
+Received: by 10.204.102.14 with HTTP; Mon, 24 Jan 2011 12:06:41 -0800 (PST)
+In-Reply-To: <20110117210828.GC27029@blimp.localdomain>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165454>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165455>
 
-Shuang He <shuang.he@intel.com> writes:
-
-> If A is bad commit, and C fixed it, and then F is bad again,
+2011/1/17 Alex Riesen <raa.lkml@gmail.com>:
+> =C2=A0po/ru.po | =C2=A0 24 ++++++++++++------------
+> =C2=A01 files changed, 12 insertions(+), 12 deletions(-)
 >
-> A ->  B ->  C ->  D ->  E ->  F ->  G ->  H   (master)
->   \                    \      /
->     a  ->  b... c ->  d ->  e->f  (feature 1)
->
-> Start with H as bad commit, and D as good commit, it's possible git-bisect would jump to c, and it will lead to wrong direction
->
-> If bad-branch-first is used, it would be:
-> 1. first round found F
-> 2. end
+> diff --git a/po/ru.po b/po/ru.po
+> index c15bdfa..304bb3a 100644
 
-It is unclear from the way you drew the picture if "F" is supposed to be a
-merge of "E" and "f", but I'd assume that it is.
+BTW, does anyone know what happens to git-gui development?
+In particular, the i18n patches. The old way of pushing
+to a mob branch seems to stopped working, and anyway, the
+branch is very out of date.
 
-So what you are saying in 1. is "skip from H until you hit a first merge
-(without testing any intermediate commit), find F and stop to check it,
-and find that it is broken".
-
-What makes you decide "2. end"?  The fact that both of its parents "E" and
-"f" are Ok?  IOW, it won't be "2. end" if one of the parents of the merge
-is broken?
-
-What if there is _no_ merge from a side branch but there were breakages in
-A (fixed in C) and then F in your original picture, i.e.
-
-  A---B---C---D---E---F---G---H (broken)
-  x       o           x       
-
-and you are hunting for the bug starting from H?  How does your algorithm
-help?  I grossed over the linear part by saying "skip from H until you hit
-a first merge", but in general, what is your plan to handle linear part of
-the history?
-
-A totally unacceptable answer is "It does not help linear case, but it
-helps when there are merges".  The a-thru-f side branch in your picture,
-or any "culprit side branch that was merged" your algorithm finds in
-general, would eventually have a linear segment, and having x-o-x in the
-history fundmentally breaks "bisect"---your band-aid will not help.
-
-The whole idea behind using "bisect" to gain efficiency in isolating the
-issue depends on "Once you see a Good commit, you do not have to search
-beyond its ancestors", as it is to look for a single breakage that
-persists to the "Bad" commit you give, and as far as "bisect" is
-concerned, the breakage at A in your example is an unrelated breakage that
-did not persist through the history to the "Bad" commit H.
+Is git gui development stalled? Should I perhaps send the
+i18n pull request directly to Junio?
