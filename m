@@ -1,87 +1,77 @@
-From: Shuang He <shuang.he@intel.com>
-Subject: Re: [RFC] Add bad-branch-first option for git-bisect
-Date: Mon, 24 Jan 2011 19:05:09 +0800
-Message-ID: <4D3D5CE5.4050108@intel.com>
-References: <4D3CDDF9.6080405@intel.com> <AANLkTimUkv9+g_+wFcyGhwMjE9zYAKjMn32GL-WOVmoe@mail.gmail.com> <4D3D54D3.7040801@intel.com> <4D3D5989.50903@viscovery.net>
+From: Mathieu Malaterre <mathieu.malaterre@gmail.com>
+Subject: merging branch
+Date: Mon, 24 Jan 2011 12:33:02 +0100
+Message-ID: <AANLkTinKt0pi_1NaEJY8-c1B3SKsWdxqEyTvJiGL-vYj@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Christian Couder <christian.couder@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>,
-	"apenwarr@gmail.com" <apenwarr@gmail.com>
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Jan 24 12:05:47 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 24 12:33:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PhKEz-0007SR-Rz
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Jan 2011 12:05:46 +0100
+	id 1PhKfp-0002gQ-3B
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Jan 2011 12:33:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751913Ab1AXLFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jan 2011 06:05:20 -0500
-Received: from mga03.intel.com ([143.182.124.21]:42746 "EHLO mga03.intel.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751526Ab1AXLFT (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jan 2011 06:05:19 -0500
-Received: from azsmga001.ch.intel.com ([10.2.17.19])
-  by azsmga101.ch.intel.com with ESMTP; 24 Jan 2011 03:05:18 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="4.60,369,1291622400"; 
-   d="scan'208";a="379010430"
-Received: from she4-mobl3.ccr.corp.intel.com (HELO [10.254.208.56]) ([10.254.208.56])
-  by azsmga001.ch.intel.com with ESMTP; 24 Jan 2011 03:05:13 -0800
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <4D3D5989.50903@viscovery.net>
+	id S1752487Ab1AXLdY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jan 2011 06:33:24 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:53950 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752357Ab1AXLdX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jan 2011 06:33:23 -0500
+Received: by ywe10 with SMTP id 10so848912ywe.19
+        for <git@vger.kernel.org>; Mon, 24 Jan 2011 03:33:22 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to
+         :content-type;
+        bh=hV9hUd+esUTtJVuIG2V4coNxebHZqrrXRJr+a9X19Ek=;
+        b=Fb5dvkXMoCG9xa/02NEzQD+Qsvl/Jk3TMxDSUtO/MHd5hDqJOQgWYpPGuhJRx/xDPV
+         GTPIVvc6j0F2Nkc0lpHxkuoN7UJULhE/ET5YSD5r/lKn5oqFctI/jLzo8hk9QVug6Q4p
+         tqGELjG9SJbOARgm3iUHO0Iod+11JelmXG1R8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:content-type;
+        b=G713Zc/0oEGS6iiGwSYuUXbw6S5FYSL35eobkV1Y/p95VQ50GfrV1vhVQ5zceZVGnO
+         Q87DxJYIUEfq0+gs/ZWGy8gErSMao10LM+WxVVdw4llpOuJL+rXrIy1M96rx5gc0TB0f
+         qbBkvLdJb5LkcfPzGU9wFEvK7pNcsSCx1xM+c=
+Received: by 10.90.71.2 with SMTP id t2mr4810349aga.106.1295868802674; Mon, 24
+ Jan 2011 03:33:22 -0800 (PST)
+Received: by 10.90.54.18 with HTTP; Mon, 24 Jan 2011 03:33:02 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165447>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165448>
 
-On 2011/1/24 18:50, Johannes Sixt wrote:
-> Am 1/24/2011 11:30, schrieb Shuang He:
->> It's recursively applying bad branch first algorithm, not just constantly
->> stick to first parent.
->> Given this condition:
->>      A ->  B ->  C ->  D ->  E ->  F ->  G ->  H   (master)
->>           \ a  ->  b ->  c ->  d ->  e /  (feature 1)
->>                \ x ->  y ->  z/      (feature 2)
->> start with H as bad commit, and A as good commit, if y is the target bad
->> commit. bad-branch-first algorithm will do it like this:
->>      1. In first round stick to master branch, so it will locate G as first
->> bad commit
->>      2. In second round stick to feature1 branch, then it will locate d as
->> first bad commit
->>      3. In third round stick to feature2 branch, then it will finally
->> locate y as first bad commit
->> So you could see, it's always sticking to branch where current bad commit sit
-> Ok, so you explain what your algorithm does.
->
-> But you did not illustrate your problem. The history above is ordinary,
-> somewhat branchy, has *ONE* commit that introduces a regression, and *NO*
-> commit that fixes the regression. But in your rationale you said something
-> about "feature1 is fixed just a moment later after feature2 branch is
-> created". How does this fit into the picture, where is the problem, and
-> how does your algorithm solve it?
->
-> -- Hannes
+Hi,
 
-If A is bad commit, and C fixed it, and then F is bad again,
+  I have the following branches:
 
-A ->  B ->  C ->  D ->  E ->  F ->  G ->  H   (master)
-   \                    \      /
-     a  ->  b... c ->  d ->  e->f  (feature 1)
+$ git branch
+* master
+  release
 
-Start with H as bad commit, and D as good commit, it's possible git-bisect would jump to c, and it will lead to wrong direction
+  I have messed up my 'release' branch by manually importing file one
+by one using: git checkout release && git checkout master my_file.cxx
 
-If bad-branch-first is used, it would be:
-1. first round found F
-2. end
+  So now I'd like to merge back release to master. I tried:
 
-Thanks
-	--Shuang
+$ git checkout master && git merge -s ours release
+$ git status
+# On branch master
+# Your branch is ahead of 'origin/master' by 27 commits.
+#
+nothing to commit (working directory clean)
+$ git diff origin/master..master
+-> return nothing
 
-Thanks
-	--Shuang
+Since most of those commits will be redundant, I need to 'git pull
+--rebase', right ? However I did not understand how to pass the
+--interactive option to git pull --rebase to split this set of 27
+commits (I'd like to discard at least one large one)
+
+Thanks !
+-- 
+Mathieu
