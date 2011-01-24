@@ -1,98 +1,164 @@
-From: "J.H." <warthog19@eaglescrag.net>
-Subject: Re: cannot fetch arm git tree
-Date: Sun, 23 Jan 2011 23:34:28 -0800
-Message-ID: <4D3D2B84.6090409@eaglescrag.net>
-References: <AANLkTikRrewCLGDTU7DjVssjpxz-EFK8AhRScAGPRumg@mail.gmail.com> <20110116092315.GA27542@n2100.arm.linux.org.uk> <20110116110819.GG6917@pengutronix.de> <AANLkTinrZ0GnT71GCueUUpAXM5ckq+LBd0RjA51DMR-a@mail.gmail.com> <20110116134248.GD27542@n2100.arm.linux.org.uk> <4D398C43.1000306@vollmann.ch> <20110121134728.GO14956@pengutronix.de> <20110121135725.GR13235@n2100.arm.linux.org.uk> <4D3997FE.5030109@vollmann.ch> <20110121145025.GS13235@n2100.arm.linux.org.uk> <4D3D2865.4020408@viscovery.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 3/3] setup: always honor GIT_WORK_TREE and core.worktree
+Date: Mon, 24 Jan 2011 02:45:53 -0600
+Message-ID: <20110124084552.GA17348@burratino>
+References: <20110118074400.GA4185@burratino>
+ <7v1v4aknij.fsf@alter.siamese.dyndns.org>
+ <20110119123732.GA23222@burratino>
+ <20110119124230.GD23222@burratino>
+ <AANLkTinE5gNZM_HDJq31qs5ARJn-DrO9HW66cszTayPa@mail.gmail.com>
+ <20110119193116.GB30618@burratino>
+ <7vpqrssl5d.fsf@alter.siamese.dyndns.org>
+ <7v39omotxg.fsf@alter.siamese.dyndns.org>
+ <AANLkTim_o9GGWbDFkeGb-va+4dP+StQE6GJyLpSMmV1H@mail.gmail.com>
+ <7vipxfmb9u.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Russell King - ARM Linux <linux@arm.linux.org.uk>,
-	Detlef Vollmann <dv@vollmann.ch>,
-	=?UTF-8?B?VXdlIEtsZWluZS1Lw7ZuaWc=?= 
-	<u.kleine-koenig@pengutronix.de>,
-	Jello huang <ruifeihuang@gmail.com>, git@vger.kernel.org,
-	linux-arm-kernel@lists.infradead.org
-To: Johannes Sixt <j.sixt@viscovery.net>
-X-From: git-owner@vger.kernel.org Mon Jan 24 08:35:58 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
+	Maaartin <grajcar1@seznam.cz>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 24 09:46:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PhGxx-0004gP-SH
-	for gcvg-git-2@lo.gmane.org; Mon, 24 Jan 2011 08:35:58 +0100
+	id 1PhI4I-0001yP-QH
+	for gcvg-git-2@lo.gmane.org; Mon, 24 Jan 2011 09:46:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752338Ab1AXHfk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jan 2011 02:35:40 -0500
-Received: from shards.monkeyblade.net ([198.137.202.13]:37753 "EHLO
-	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752292Ab1AXHfj (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 24 Jan 2011 02:35:39 -0500
-Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
-	(authenticated bits=0)
-	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id p0O7YSgb004699
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
-	Sun, 23 Jan 2011 23:34:29 -0800
-X-Virus-Status: Clean
-X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
-In-Reply-To: <4D3D2865.4020408@viscovery.net>
-X-Enigmail-Version: 1.0.1
-X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Sun, 23 Jan 2011 23:34:29 -0800 (PST)
+	id S1751298Ab1AXIq1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jan 2011 03:46:27 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:32940 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751181Ab1AXIq0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jan 2011 03:46:26 -0500
+Received: by gwj20 with SMTP id 20so1184786gwj.19
+        for <git@vger.kernel.org>; Mon, 24 Jan 2011 00:46:25 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=fvm59cT1J91+ENTyPI2FdwaJor+58SZrg4npZaQo9kA=;
+        b=vFoNvWztO3qeF6vHVmLHXdlutXP2uP7XbUJ6AI4MrSL/d0W2PRcbaJao0J49ynvOj7
+         pfHS9wRvRuftmQ/jH7VVnh/Z92Quf+jsMj8d/W3e2H1/2qbkicJVG7ThGsNLHdvAh6i2
+         FTb9APfCy5euVqANDL12wwJ4yXp9cKiP330tE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=K/H1gl+6M4QqAM1ogCtJ3Tx2/qHMxGL5/VGcGcw4ujsbRJFHU5rAXcuKeiM1gWTR56
+         iHd+f0KHV14ho+hCDaHupejU2t0BsW+847qshp+8gtT6bUhmlGJLY+5+UJItn3n7qmjC
+         qD90Uk/idnXuxFNs7EAhnqEGGDDJdVyXVjea8=
+Received: by 10.150.93.21 with SMTP id q21mr4190322ybb.356.1295858785457;
+        Mon, 24 Jan 2011 00:46:25 -0800 (PST)
+Received: from burratino (adsl-69-209-76-37.dsl.chcgil.ameritech.net [69.209.76.37])
+        by mx.google.com with ESMTPS id r41sm8457410yba.4.2011.01.24.00.46.22
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 24 Jan 2011 00:46:23 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <7vipxfmb9u.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165438>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165439>
 
-On 01/23/2011 11:21 PM, Johannes Sixt wrote:
-> Am 1/21/2011 15:50, schrieb Russell King - ARM Linux:
->>  SetEnv GIT_PROJECT_ROOT /var/www/git
->>  SetEnv GIT_HTTP_EXPORT_ALL
->>  ScriptAlias /git/ /usr/libexec/git-core/git-http-backend/
->>
->> Great.  Deciding that it will be http://servername.example.com/git/ is
->> really damned annoying as that's traditionally where gitweb lives,
->> which requires a different script alias.
->> ...
->> I'm really not interested in working out how to bodge this into working
->> along side the existing gitweb setup by adding lots of rewrite rules,...
-> 
-> It has been worked out for you already. It's just a single rule (although
-> a bit longish). Look for 'ScriptAliasMatch' in
-> http://www.kernel.org/pub/software/scm/git/docs/git-http-backend.html
+Junio C Hamano wrote:
 
-I was going to say, I have both gitweb and smart http support running in
-parallel, it's not terribly complicated.  The way I'm doing it is a bit
-older (mainly that long ScriptAliasMatch broken out more), but it's
-still only 11 lines to the apache config:
+> Something like this (on top of jn/setup-fixes branch queued in
+> next)?
 
-# Various environment setup, should be obvious
-SetEnv GIT_PROJECT_ROOT /path
-SetEnv GIT_HTTP_EXPORT_ALL 1
-SetEnv GIT_EXEC_PATH /usr/libexec/git-core/
+For what it's worth,
+ Acked-by: Jonathan Nieder <jrnieder@gmail.com>
 
-# Here so that we can do straight wget fetches for the objects files,
-# pack files and refs heads.
-# This isn't strictly neccisary, but if it's done we can use the inbuilt
-# sendfile() of apache for the sending of those files vs. funneling them
-# through the CGI
-AliasMatch ^/(.*/objects/[0-9a-f]{2}/[0-9a-f]{38})$		/path/$1
-AliasMatch ^/(.*/objects/pack/pack-[0-9a-f]{40}.(pack|idx))$	/path/$1
-AliasMatch ^/(.*/refs/heads/.*)$				/path/$1
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -317,17 +317,26 @@ false), while all other repositories are assumed to be bare (bare
+>  = true).
+>  
+>  core.worktree::
+> -	Set the path to the working tree.  The value will not be
+> -	used in combination with repositories found automatically in
+> -	a .git directory (i.e. $GIT_DIR is not set).
+> +	Set the path to the root of the work tree.
 
-# Meat of how to make this all work
-ScriptAliasMatch "^/(.*/HEAD)$"
-/usr/libexec/git-core/git-http-backend/path/$1
-ScriptAliasMatch "^/(.*/info/refs)$"
-/usr/libexec/git-core/git-http-backend/path/$1
-ScriptAliasMatch "^/(.*/objects/info/[^/]+)$"
-/usr/libexec/git-core/git-http-backend/path/$1
-ScriptAliasMatch "^/pub/scm/(.*/git-upload-pack)$"
-/usr/libexec/git-core/git-http-backend/path/$1
-ScriptAliasMatch "^/pub/scm/(.*/git-receive-pack)$"
-/usr/libexec/git-core/git-http-backend/path/$1
+Most manpages seem to stick to the phrase "working tree".  Not sure
+if that's worth worrying about --- maybe it would be good to allow or
+encourage usage to drift to the term "work tree" that gets used in
+many parts of the interface.
 
-Just an example anyway, the paths have been shortened to fit e-mail better.
+>  	This can be overridden by the GIT_WORK_TREE environment
+>  	variable and the '--work-tree' command line option. It can be
+> +	an absolute path or a relative path to the .git directory,
+> +	either specified by --git-dir or GIT_DIR, or automatically
+> +	discovered.
 
-- John 'Warthog9' Hawley
+Maybe:
+
+	The value can be an absolute path or relative to the path to
+	the .git directory, which is either specified by --git-dir or
+	GIT_DIR or automatically discovered.
+
+> -	an absolute path or relative path to the directory specified by
+> -	--git-dir or GIT_DIR.
+> -	Note: If --git-dir or GIT_DIR are specified but none of
+> +	If --git-dir or GIT_DIR are specified but none of
+>  	--work-tree, GIT_WORK_TREE and core.worktree is specified,
+> -	the current working directory is regarded as the top directory
+> +	the current working directory is regarded as the top level
+>  	of your working tree.
+
+Subject-verb agreement: "--git-dir or GIT_DIR is specified" (s/are/is/)
+
+> ++
+> +Note that this variable is honored even when set in a configuration
+> +file in a ".git" subdirectory of a directory, and its value differs
+> +from the latter directory (e.g. "/path/to/.git/config" has
+> +core.worktree set to "/different/path"), which is most likely a
+> +misconfiguration.
+
+I think it's clearer without the comma between "directory" and "and"
+(otherwise, it's too easy to parse as
+
+	Note that this variable is honored even when set ....
+	Its value differs from the latter directory, which is most
+	likely a misconfiguration.
+
+).
+
+> +                   Running git commands in "/path/to" directory will
+> +still use "/different/path" as the root of the work tree and can cause
+> +confusion, unless you know what you are doing (e.g. you are creating a
+> +read-only snapshot of the same index to a location different from the
+> +repository's usual working tree).
+
+Missing article: s,in "path/to" directory,in the "/path/to" directory,
+
+Comma usage: s/confusion, unless/confusion unless/ to avoid misparsing
+this as meaning "will use this work tree unless you know what you are
+doing".
+
+> --- a/Documentation/git.txt
+> +++ b/Documentation/git.txt
+> @@ -291,17 +291,12 @@ help ...`.
+>  	path or relative path to current working directory.
+>  
+>  --work-tree=<path>::
+> -	Set the path to the working tree.  The value will not be
+> -	used in combination with repositories found automatically in
+> -	a .git directory (i.e. $GIT_DIR is not set).
+> +	Set the path to the working tree. It can be an absolute path
+> +	or relative path to the current working directory.
+
+s/relative path to/path relative to/
+
+>  	This can also be controlled by setting the GIT_WORK_TREE
+>  	environment variable and the core.worktree configuration
+> +	variable (see core.worktree in linkgit:git-config[1] for a
+> +	more detailed discussion).
+> -	variable. It can be an absolute path or relative path to
+[...]
+
+Nice.
