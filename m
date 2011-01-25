@@ -1,119 +1,98 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH] git-gui: add config value gui.diffopts for passing additional diff options
-Date: Tue, 25 Jan 2011 00:25:48 +0000
-Message-ID: <87ipxdn81f.fsf@fox.patthoyts.tk>
-References: <1295607585-15971-1-git-send-email-tilman.vogel@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-gui: update russian translation
+Date: Mon, 24 Jan 2011 16:34:31 -0800
+Message-ID: <7vmxmplt2g.fsf@alter.siamese.dyndns.org>
+References: <20110119210131.GA8184@blimp.localdomain>
+ <87sjwhn9c3.fsf@fox.patthoyts.tk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tilman Vogel <tilman.vogel@web.de>
-X-From: git-owner@vger.kernel.org Tue Jan 25 01:26:24 2011
+Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Serge Ziryukin <ftrvxmtrx@gmail.com>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Alexander Gavrilov <angavrilov@gmail.com>
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Tue Jan 25 01:34:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PhWjo-0004pU-9A
-	for gcvg-git-2@lo.gmane.org; Tue, 25 Jan 2011 01:26:24 +0100
+	id 1PhWs3-0007p6-Ij
+	for gcvg-git-2@lo.gmane.org; Tue, 25 Jan 2011 01:34:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752807Ab1AYAZw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 24 Jan 2011 19:25:52 -0500
-Received: from smtp-out4.blueyonder.co.uk ([195.188.213.7]:45444 "EHLO
-	smtp-out4.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752799Ab1AYAZv (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 24 Jan 2011 19:25:51 -0500
-Received: from [172.23.170.142] (helo=anti-virus02-09)
-	by smtp-out4.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1PhWjG-0004rc-Fz; Tue, 25 Jan 2011 00:25:50 +0000
-Received: from [77.100.97.230] (helo=fox.patthoyts.tk)
-	by asmtp-out3.blueyonder.co.uk with esmtpa (Exim 4.72)
-	(envelope-from <patthoyts@users.sourceforge.net>)
-	id 1PhWjE-000773-Pl; Tue, 25 Jan 2011 00:25:48 +0000
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 87E1521E0E; Tue, 25 Jan 2011 00:25:48 +0000 (GMT)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <1295607585-15971-1-git-send-email-tilman.vogel@web.de> (Tilman
-	Vogel's message of "Fri, 21 Jan 2011 11:59:45 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1751855Ab1AYAeu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 24 Jan 2011 19:34:50 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63988 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751416Ab1AYAet (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 24 Jan 2011 19:34:49 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 64BAB3605;
+	Mon, 24 Jan 2011 19:35:38 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=L8sd8UJztmy2MJF3UQNZR8jSAUA=; b=MqByPI
+	W+i6sWQbxtNfsVW3RU84bZiyVs4D5ilsh2YkmbZznj2d+4nEBFwSoqQ1M14QFyec
+	s7F47UqNK8hUBoMdK1TCXlhpsZYV2oEFdi9TaCKdOP8bEwzHApPvsHLpV/eFBt2V
+	QKrPAi4wQROl6mPHSix7+4PeOsTTGi+y4npnA=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=KNlmnBwI5nR0xqd3UVYlEz3DXwCVFGx7
+	pM5O71OfWnkBWpvgWDv29UxqtakXUO3868AX9bje5WAbKP2V8rwb/63uvNkTM7Qt
+	E0pDTsLEbwu6QoGfpxOSxUJeffqy8F9aI5EJoBIDc7U6hc2Y7AT5r/p5P5O2POrB
+	BraAqujNPFg=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E561A3604;
+	Mon, 24 Jan 2011 19:35:30 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D10763601; Mon, 24 Jan 2011
+ 19:35:21 -0500 (EST)
+In-Reply-To: <87sjwhn9c3.fsf@fox.patthoyts.tk> (Pat Thoyts's message of
+ "Mon\, 24 Jan 2011 23\:57\:48 +0000")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 037F2EC0-281B-11E0-BB66-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165465>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165466>
 
-Tilman Vogel <tilman.vogel@web.de> writes:
+Pat Thoyts <patthoyts@users.sourceforge.net> writes:
 
->Signed-off-by: Tilman Vogel <tilman.vogel@web.de>
->---
-> Documentation/config.txt |    4 ++++
-> git-gui/git-gui.sh       |    1 +
-> git-gui/lib/diff.tcl     |    1 +
-> git-gui/lib/option.tcl   |    1 +
-> 4 files changed, 7 insertions(+), 0 deletions(-)
->
->diff --git a/Documentation/config.txt b/Documentation/config.txt
->index ff7c225..0ed7bcf 100644
->--- a/Documentation/config.txt
->+++ b/Documentation/config.txt
->@@ -1100,6 +1100,10 @@ gui.diffcontext::
-> 	Specifies how many context lines should be used in calls to diff
-> 	made by the linkgit:git-gui[1]. The default is "5".
-> 
->+gui.diffopts::
->+	Specifies additional parameters to pass to diff from 
->+	linkgit:git-gui[1]. The default is "".
->+
-> gui.encoding::
-> 	Specifies the default encoding to use for displaying of
-> 	file contents in linkgit:git-gui[1] and linkgit:gitk[1].
->diff --git a/git-gui/git-gui.sh b/git-gui/git-gui.sh
->index d3acf0d..2a3aed5 100755
->--- a/git-gui/git-gui.sh
->+++ b/git-gui/git-gui.sh
->@@ -823,6 +823,7 @@ set default_config(gui.fastcopyblame) false
-> set default_config(gui.copyblamethreshold) 40
-> set default_config(gui.blamehistoryctx) 7
-> set default_config(gui.diffcontext) 5
->+set default_config(gui.diffopts) {}
-> set default_config(gui.commitmsgwidth) 75
-> set default_config(gui.newbranchtemplate) {}
-> set default_config(gui.spellingdictionary) {}
->diff --git a/git-gui/lib/diff.tcl b/git-gui/lib/diff.tcl
->index dcf0711..de3827a 100644
->--- a/git-gui/lib/diff.tcl
->+++ b/git-gui/lib/diff.tcl
->@@ -295,6 +295,7 @@ proc start_show_diff {cont_info {add_opts {}}} {
-> 
-> 	lappend cmd -p
-> 	lappend cmd --color
->+	set cmd [concat $cmd $repo_config(gui.diffopts)]
-> 	if {$repo_config(gui.diffcontext) >= 1} {
-> 		lappend cmd "-U$repo_config(gui.diffcontext)"
-> 	}
->diff --git a/git-gui/lib/option.tcl b/git-gui/lib/option.tcl
->index 3807c8d..1e5d28c 100644
->--- a/git-gui/lib/option.tcl
->+++ b/git-gui/lib/option.tcl
->@@ -153,6 +153,7 @@ proc do_options {} {
-> 		{i-20..200 gui.copyblamethreshold {mc "Minimum Letters To Blame Copy On"}}
-> 		{i-0..300 gui.blamehistoryctx {mc "Blame History Context Radius (days)"}}
-> 		{i-1..99 gui.diffcontext {mc "Number of Diff Context Lines"}}
->+		{t gui.diffopts {mc "Additional Diff Parameters"}}
-> 		{i-0..99 gui.commitmsgwidth {mc "Commit Message Text Width"}}
-> 		{t gui.newbranchtemplate {mc "New Branch Name Template"}}
-> 		{c gui.encoding {mc "Default File Contents Encoding"}}
+> Thank you for the patches. I've applied the four patches and pushed them to
+> http://repo.or.cz/w/git-gui.git master.
 
-This seems ok but you don't say what it is for. Why do you want to be
-able to pass additional options to git diff?
+I see a few changes outside po/ru.po in this update:
 
-I can apply this to git-gui's repository. The Documentation change will
-need to be sent to git separately once this is merged from git-gui.
+ git-gui.sh      |   26 ++-
+ lib/browser.tcl |    2 +-
+ lib/diff.tcl    |   60 ++++--
+ po/ru.po        |  623 ++++++++++++++++++++++++++++---------------------------
+ 4 files changed, 381 insertions(+), 330 deletions(-)
 
--- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+Are they all good to go for 1.7.4 final?  My cursory look indicates that
+they are all minor bugfixes and look sane, but I rarely use git-gui
+myself, so I am just double checking.
+
+
+Alex Riesen (2):
+      git-gui: update russian translation
+      git-gui: update russian translation
+
+Bert Wesarg (5):
+      git-gui: fix ANSI-color parsing
+      git-gui: respect conflict marker size
+      git-gui: fix browsers [Up To Parent] in sub-sub-directories.
+      git-gui: Fix use of renamed tag.
+      git-gui: Fix use of hunk tag for non-hunk content.
+
+Serge Ziryukin (1):
+      git-gui: fix russian translation typos
+
+Skip (1):
+      git-gui: spelling fixes in russian translation
+
+Stefan Naewe (1):
+      git-gui: use --exclude-standard to check for untracked files
