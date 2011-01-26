@@ -1,91 +1,71 @@
-From: Francis Moreau <francis.moro@gmail.com>
-Subject: Re: Can't find the revelant commit with git-log
-Date: Wed, 26 Jan 2011 20:50:30 +0100
-Message-ID: <m2lj27zbp5.fsf@gmail.com>
-References: <m2ipxd2w78.fsf@gmail.com> <4D3EF650.20407@lsrfire.ath.cx>
-	<m2y668yr6k.fsf@gmail.com> <4D406A64.1000200@lsrfire.ath.cx>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: Re: Updating a submodule with a compatible version from another submodule
+ version using the parent meta-repository
+Date: Wed, 26 Jan 2011 21:31:24 +0100
+Message-ID: <4D40849C.2050903@web.de>
+References: <AANLkTinN1XVsAZXGLqkuhysrJ8-TCtGm4pOu2RfCEVVp@mail.gmail.com>	<AANLkTimvNaiieEw8-Y52xxDW6DQ6b16v9azCk+BDPxhe@mail.gmail.com>	<4D407099.4010805@web.de>	<AANLkTinMhvBNrBMJ8vQpJdYxP_NgJU2L7JEW0KhXGjhf@mail.gmail.com>	<4D407875.7080607@web.de> <AANLkTik-XdgGM20kFu8KZ5k9ynfNAo8fvL9t7kL_JhQg@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Wed Jan 26 20:50:58 2011
+To: Julian Ibarz <julian.ibarz@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 26 21:31:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PiBOI-0003MQ-8F
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 20:50:54 +0100
+	id 1PiC1b-0002JO-3m
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 21:31:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753880Ab1AZTuh convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Jan 2011 14:50:37 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:42715 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753867Ab1AZTug convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Jan 2011 14:50:36 -0500
-Received: by wwa36 with SMTP id 36so1357821wwa.1
-        for <git@vger.kernel.org>; Wed, 26 Jan 2011 11:50:35 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:references:mail-followup-to
-         :date:in-reply-to:message-id:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=/KpOKAQBSg2Z4G6bM/dXuLNOuo6CnZa7hiQZaOtJq8Q=;
-        b=SCK0Mxa9oenbquV7eNZCnJK1v73+2kuYY0H/QMv+UcJXnLkLk3oxrAML+mWMRh3GTU
-         fQSw64812rmJdNp3NmmgsCxqTg+AelNlHFE/oSw1FQururdRIGrWjJEqH9GbfbK2OGXC
-         w40OO0XkY03alk8VAiCNgikXvSASpPZS2nx2Y=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:references:mail-followup-to:date:in-reply-to
-         :message-id:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=mu834MU4nRSwmO75wktK962omtTKhlkan5hl2pScXfXaxrkghYnznUrUNzaAYA4z9c
-         VKDjB0vAmvsNjj2N37ogu7anVvMYHAcu+1ynr6NAis2kie6cGXwd92RhlOYHJaZHfieX
-         zmG/SCwIJ8MH09e6e0vdIOytLQfPfk0/qEUgs=
-Received: by 10.227.177.207 with SMTP id bj15mr1739953wbb.229.1296071435078;
-        Wed, 26 Jan 2011 11:50:35 -0800 (PST)
-Received: from localhost (au213-1-82-235-205-153.fbx.proxad.net [82.235.205.153])
-        by mx.google.com with ESMTPS id f35sm11206345wbf.8.2011.01.26.11.50.32
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 26 Jan 2011 11:50:33 -0800 (PST)
-Mail-Followup-To: =?iso-8859-1?Q?Ren=E9?= Scharfe
- <rene.scharfe@lsrfire.ath.cx>,
-	git@vger.kernel.org
-In-Reply-To: <4D406A64.1000200@lsrfire.ath.cx> (=?iso-8859-1?Q?=22Ren=E9?=
- Scharfe"'s message of
-	"Wed, 26 Jan 2011 19:39:32 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
+	id S1754016Ab1AZUb0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jan 2011 15:31:26 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:51063 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752732Ab1AZUbZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jan 2011 15:31:25 -0500
+Received: from smtp01.web.de  ( [172.20.0.243])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 57B9719415A97;
+	Wed, 26 Jan 2011 21:31:24 +0100 (CET)
+Received: from [93.246.34.225] (helo=[192.168.178.43])
+	by smtp01.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1PiC1U-000202-00; Wed, 26 Jan 2011 21:31:24 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <AANLkTik-XdgGM20kFu8KZ5k9ynfNAo8fvL9t7kL_JhQg@mail.gmail.com>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1+k56VW/JllKTYbqCL/mHFMwyjT280HPjLWB+cN
+	xj7yPVmTvmVGeao4XXK+JBAgUEy6cWo6leuM/cPm2qp5UHOaZ8
+	rnIzLdqopZi+No3+SDew==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165536>
 
-Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+Am 26.01.2011 20:48, schrieb Julian Ibarz:
+> Basically my feature would work like this:
+> 
+> in B:
+> git submodule checkout some_version
+> 
+> This will checkout B but also change A and C so that it is compatible
+> with some_version of B. Basically it will find the commit in A that
+> has the closest parent commit of some_version in B. When this is done
+> it just does git submodule udate on other submodules.
 
-> Am 26.01.2011 10:01, schrieb Francis Moreau:
+Thanks, now I understand what you are trying to achieve.
 
-[...]
+> I see in gitk that there is a feature that has a common implementation
+> for what I want to do:
+> 
+> For every commits you can see Follows and Precedes which lists the
+> closest label before this release and after. What I need is the same
+> thing: instead of finding a closest labeled commit, I need to find a
+> closest commit referenced by A that precedes current HEAD of B. When
+> this is done I know which commit A has to be and then just have to
+> call git submodule update in A (update every other submodules except
+> for B).
 
->>     error: The following untracked working tree files would be overw=
-ritten
->>     by checkout:
->>        arch/x86/es7000/Makefile
->>        arch/x86/es7000/es7000.h
->>        arch/x86/es7000/es7000plat.c
->>        drivers/pci/dma_remapping.h
->>     Please move or remove them before you can switch branches.
->
-> These are untracked files; your tree is not clean.  Either commit the=
-m,
-> stash them away or delete the files.  Or make a local clone just for
-> bisecting purposes.
->
-
-Hmm, I'm wondering how those files get there...
-
-Maybe they are some left from some git commands which failed, I dunno.
-
---=20
-=46rancis
+I am not aware of something like that in current Git, But I see that
+such functionality would be helpful. Care to share your implementation
+idea?
