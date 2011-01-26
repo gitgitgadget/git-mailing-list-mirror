@@ -1,88 +1,115 @@
-From: Julian Ibarz <julian.ibarz@gmail.com>
-Subject: Re: Updating a submodule with a compatible version from another
- submodule version using the parent meta-repository
-Date: Wed, 26 Jan 2011 15:45:38 -0500
-Message-ID: <AANLkTik8VrhbBSLwRq9gd39hofnmifk15zSqXVTsSzAp@mail.gmail.com>
-References: <AANLkTinN1XVsAZXGLqkuhysrJ8-TCtGm4pOu2RfCEVVp@mail.gmail.com>
-	<AANLkTimvNaiieEw8-Y52xxDW6DQ6b16v9azCk+BDPxhe@mail.gmail.com>
-	<4D407099.4010805@web.de>
-	<AANLkTinMhvBNrBMJ8vQpJdYxP_NgJU2L7JEW0KhXGjhf@mail.gmail.com>
-	<4D407875.7080607@web.de>
-	<AANLkTik-XdgGM20kFu8KZ5k9ynfNAo8fvL9t7kL_JhQg@mail.gmail.com>
-	<7v7hdrl7nw.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] fsck: drop unused parameter from traverse_one_object()
+Date: Wed, 26 Jan 2011 12:46:55 -0800
+Message-ID: <7vy667jsu8.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Jan 26 21:45:45 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 26 21:47:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PiCFN-0007MO-7U
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 21:45:45 +0100
+	id 1PiCGo-0000Hg-Dk
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 21:47:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754119Ab1AZUpl convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Jan 2011 15:45:41 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:37617 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753703Ab1AZUpk convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 26 Jan 2011 15:45:40 -0500
-Received: by wwa36 with SMTP id 36so1419800wwa.1
-        for <git@vger.kernel.org>; Wed, 26 Jan 2011 12:45:39 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=GqYGd9nY4QGcL9gGyuYq0EAN/46AVKrJqXHuv9bpIFI=;
-        b=afNGbSuYXr+KDCv9teqbNcck/2v7DOdT6VTfrJplOpLJFhSjSWaZr9loYkgdJnp2bN
-         kLYHM/OTcE4DQ6LWTX7tAplGmJ9IzOvOd7s7JjX2MBTkxGrnGqk9CRpZ608q6OecgYT7
-         HSyE/abRwMBblUnoUaVQFK9c6Qrmh1+THyK3k=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=fm1CLOSxb+2dDK1wDfHXPDeOVAjkWwVAEcPEd26iKUyGTzGwmK5vHYUngOTK4HW6oL
-         hiPyb7MYoNMUxlcrl8Ub9kU2rbUgkHTKeIIQopx/WyjF/li0y8iunPIGU8Uu6cqQCKAd
-         zyaZJN1oSR8TsCkh8eOHTc2PmE4U8Cf5T983E=
-Received: by 10.227.166.194 with SMTP id n2mr39732wby.172.1296074739016; Wed,
- 26 Jan 2011 12:45:39 -0800 (PST)
-Received: by 10.227.146.83 with HTTP; Wed, 26 Jan 2011 12:45:38 -0800 (PST)
-In-Reply-To: <7v7hdrl7nw.fsf@alter.siamese.dyndns.org>
+	id S1754209Ab1AZUrF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jan 2011 15:47:05 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36647 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752647Ab1AZUrE (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jan 2011 15:47:04 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 154FA355F;
+	Wed, 26 Jan 2011 15:47:52 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=vZU7
+	YOzWJrbIpVmvK846v8pvdqw=; b=WpUwb7s/6s4LTUORc1k7q+eUldAGSR1MADxw
+	xjkfTnVzdFdkEPNESHLL66aK0HIM5FBEFrAJHih821kyrRYbVOOKCMNb2KNovIiY
+	BWSKhqBfzF+W1xvyYS9CNn+TWI1FjzHzx0a4SwNhLMx6owUsHi1BVFGhZsPtcuz+
+	Bb5Zjxc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type; q=dns; s=sasl; b=T4w
+	upvckU8RFn31PMctTIp30Dvj40/d5TYX2nDxW+8CQOw9xnJnuLtyiMO6Iu5lqH6O
+	kTrUv0sy2tejLVViR75LZyZX2T4WRrG93P7SGyZns/vnjKFj2HX1JHVy4MEVymI5
+	4th3HcAr+vgEERmUOlzJuS5Kl+6jJlc7QWOeoHQE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DCD5A355E;
+	Wed, 26 Jan 2011 15:47:50 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id D35D0355B; Wed, 26 Jan 2011
+ 15:47:48 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 8A4E809A-298D-11E0-B2F7-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165542>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165543>
 
-On Wed, Jan 26, 2011 at 3:41 PM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Julian Ibarz <julian.ibarz@gmail.com> writes:
->
->>> Hmm, looks like I lost you here ... you want to bisect in B althoug=
-h
->>> you know what commit you want there? Care to explain a bit more?
->>
->> In B I have a feature to integrate in master branch. This feature is
->> in branch old_feature. But this branch is really old. To try this
->> feature I need to rebuild it at this version. To make the build
->> success I need also to revert back the submodule C because B is
->> dependent on it. But finding the good version of C that match
->> old_feature version is a pain... Is it clear?
->
-> That sounds like bisecting in C with a frozen checkout of B to see wh=
-ich
-> version in C works well with that target commit in B you know you wan=
-t to
-> use. =A0Why do you need to bisect in B???
->
+Also add comments to seemingly unsafe pointer dereferences, that
+are all safe.
 
-=46orget about bisect. This is a different use case where I need the
-feature I am talking about: checkout an old version in B and
-automatically having A and C switch to a compatible version (the cause
-can be because of a bisect or just because I want to try an old
-feature not yet integrated into master or whatever the reason I want
-to be on this old version).
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ builtin/fsck.c |   13 ++++++++++---
+ 1 files changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/builtin/fsck.c b/builtin/fsck.c
+index 6d5ebca..91409a0 100644
+--- a/builtin/fsck.c
++++ b/builtin/fsck.c
+@@ -74,7 +74,13 @@ static int mark_object(struct object *obj, int type, void *data)
+ {
+ 	struct object *parent = data;
+ 
++	/*
++	 * The only case data is NULL or type is OBJ_ANY is when
++	 * mark_object_reachable() calls us.  All the callers of
++	 * that function has non-NULL obj hence ...
++	 */
+ 	if (!obj) {
++		/* ... these references to parent->fld are safe here */
+ 		printf("broken link from %7s %s\n",
+ 			   typename(parent->type), sha1_to_hex(parent->sha1));
+ 		printf("broken link from %7s %s\n",
+@@ -84,6 +90,7 @@ static int mark_object(struct object *obj, int type, void *data)
+ 	}
+ 
+ 	if (type != OBJ_ANY && obj->type != type)
++		/* ... and the reference to parent is safe here */
+ 		objerror(parent, "wrong object type in link");
+ 
+ 	if (obj->flags & REACHABLE)
+@@ -109,7 +116,7 @@ static void mark_object_reachable(struct object *obj)
+ 	mark_object(obj, OBJ_ANY, NULL);
+ }
+ 
+-static int traverse_one_object(struct object *obj, struct object *parent)
++static int traverse_one_object(struct object *obj)
+ {
+ 	int result;
+ 	struct tree *tree = NULL;
+@@ -138,7 +145,7 @@ static int traverse_reachable(void)
+ 		entry = pending.objects + --pending.nr;
+ 		obj = entry->item;
+ 		parent = (struct object *) entry->name;
+-		result |= traverse_one_object(obj, parent);
++		result |= traverse_one_object(obj);
+ 	}
+ 	return !!result;
+ }
+@@ -556,8 +563,8 @@ static int fsck_cache_tree(struct cache_tree *it)
+ 			      sha1_to_hex(it->sha1));
+ 			return 1;
+ 		}
+-		mark_object_reachable(obj);
+ 		obj->used = 1;
++		mark_object_reachable(obj);
+ 		if (obj->type != OBJ_TREE)
+ 			err |= objerror(obj, "non-tree in cache-tree");
+ 	}
+-- 
+1.7.4.rc3.259.g12451
