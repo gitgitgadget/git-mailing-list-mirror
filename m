@@ -1,214 +1,113 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 1/3] setup: do not expose tracing code
-Date: Tue, 25 Jan 2011 18:55:30 -0600
-Message-ID: <20110126005530.GB11230@burratino>
-References: <1290785563-15339-1-git-send-email-pclouds@gmail.com>
- <1290785563-15339-2-git-send-email-pclouds@gmail.com>
- <20110126004915.GA11230@burratino>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: git filter-branch can "forget" directories on case insensitive filesystems
+Date: Wed, 26 Jan 2011 01:58:09 +0100
+Message-ID: <AANLkTikO+dSwRS-x0UUB35iSFK3iE9cMZ6ae6go=MHHY@mail.gmail.com>
+References: <AANLkTimOs9m==KaD3BNHcgkTTqNQF1yV0NLA_Ew+iS-N@mail.gmail.com>
+ <4D3F38E9.9060902@googlemail.com> <201101252256.03644.j6t@kdbg.org>
+ <4D3F5C42.4040300@googlemail.com> <AANLkTimvwNs9EkV1GweT7VCdzvcz5J5_0pCUA44urQYH@mail.gmail.com>
+ <4D3F69D2.800@googlemail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 26 01:55:45 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
+To: smaxein@googlemail.com
+X-From: git-owner@vger.kernel.org Wed Jan 26 01:58:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Phtfj-0002Lp-L1
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 01:55:44 +0100
+	id 1PhtiX-0003Ml-35
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 01:58:37 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751307Ab1AZAzh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 25 Jan 2011 19:55:37 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:60657 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750702Ab1AZAzh (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 25 Jan 2011 19:55:37 -0500
-Received: by qyj19 with SMTP id 19so5153366qyj.19
-        for <git@vger.kernel.org>; Tue, 25 Jan 2011 16:55:36 -0800 (PST)
+	id S1751571Ab1AZA6b convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Jan 2011 19:58:31 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:45584 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751379Ab1AZA6b convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 25 Jan 2011 19:58:31 -0500
+Received: by bwz15 with SMTP id 15so745324bwz.19
+        for <git@vger.kernel.org>; Tue, 25 Jan 2011 16:58:29 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=sN6gkESs+G+jSyYVVNWawhjryaWgd9YHTnsL4IhvBH8=;
-        b=FKhonIF07fspG79NAobfjMHUhREWKRTmIRXeLpTBZ/MA+Xaaa6+b9xcNwsBbh+XFM8
-         VUokvUJIBRSBFdL2auFPhM7N34B+HqAI/UGbyzl8KfWXbZ34CPtejfLP5QTO4JCHbSd3
-         FIaqDjAH7FTL3ouohxpVy3Vd6uPJbHnExnMa4=
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=8zEesjV9eGt4Dp5mf9qdASDOzmdmvqI7Gp6zKmPv054=;
+        b=uDThdPO/tfw61YMnwkDFMK27gTniAQ9ulhEEs8NfpD5NMgkYfER0XantjLN7Q7ARPn
+         UIHYAEQILU8Wy7VRP3XCUg3D+iDW4XrchAL4V8LE0d0z4rkF39MFcr3tKodLGjDWcWKB
+         JrfpBmlutVxfnHhkSvg67gIdbJn34nj43+v8k=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=VhXhEB3fKQ5j7N2WsYxbkCwPVoljEXvCrXI+NSG06H2T0y9iU+rAj0XfCbDzMz1C0S
-         NqJLRBqWpHDAY1vnnMi3mERi9NM5p/qk9WTeDflYRVTR0zpJsEaunOVNnvpWE/biWhVs
-         oF/pCbfuyWB5PAJH50Y89EDbFWHJ77vPZBcbE=
-Received: by 10.224.19.210 with SMTP id c18mr5805686qab.343.1296003336143;
-        Tue, 25 Jan 2011 16:55:36 -0800 (PST)
-Received: from burratino (adsl-69-209-75-28.dsl.chcgil.ameritech.net [69.209.75.28])
-        by mx.google.com with ESMTPS id l12sm10635253qcu.7.2011.01.25.16.55.34
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 25 Jan 2011 16:55:35 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110126004915.GA11230@burratino>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=oLubStzl3gfnFr5O1rk2PiFZF5u3byzl9z1hvHeTCyZngnZCI2XDs/zWbxQfiM357A
+         BCythRrf1c7k4WHGEcgnO8+yM8LojemqQNgVzRi+X1k989B9AUk7fUeId5HqL+Zln5KN
+         B8V4p+XiwuB4Qr/inWz03GTbNs7SrqIsEAU20=
+Received: by 10.204.63.211 with SMTP id c19mr5881846bki.21.1296003509564; Tue,
+ 25 Jan 2011 16:58:29 -0800 (PST)
+Received: by 10.204.120.197 with HTTP; Tue, 25 Jan 2011 16:58:09 -0800 (PST)
+In-Reply-To: <4D3F69D2.800@googlemail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165492>
 
-The trace_repo_setup function has only one caller (run_builtin)
-which lives in git.c.  Move the code there and stop advertising
-it in cache.h.
+On Wed, Jan 26, 2011 at 1:24 AM, Simeon Maxein <smaxein@googlemail.com>=
+ wrote:
+> Am 26.01.2011 00:31, schrieb Erik Faye-Lund:
+>> On Wed, Jan 26, 2011 at 12:26 AM, Simeon Maxein <smaxein@googlemail.=
+com> wrote:
+>>> Am 25.01.2011 22:56, schrieb Johannes Sixt:
+>>>> On Dienstag, 25. Januar 2011, Simeon Maxein wrote:
+>>>>> In my opinion this is a quite serious issue, because files are lo=
+st
+>>>>> without any indication to the user. As of git 1.7.3.1 (tested on
+>>>>> Windows/NTFS with msysGit this time), the problem still exists. P=
+lease
+>>>>> give it a look. Fullquote of the problem description / steps to
+>>>>> reproduce follows.
+>>>>>> mkdir testdir
+>>>>>> echo 'abc' >testdir/testfile
+>>>>>> git add testdir
+>>>>>> git commit -m foo
+>>>>>> git rm -r testdir
+>>>>>> mkdir testDir
+>>>>>> echo 'abc' >testDir/testfile
+>>>>>> git add testDir
+>>>>>> git commit -m bar
+>>>> Please retry with current release condidate of 1.7.4; it has some
+>>>> core.ignorecase improvements w.r.t. directories. It could well be =
+that your
+>>>> problem is fixed.
+>>>>
+>>>> -- Hannes
+>>> Thanks for the suggestion. The directory doesn't vanish anymore wit=
+h
+>>> 1.7.4, so a big Thank You to the developers for improving this. Whe=
+n
+>>> rewriting the second commit ls still prints testdir as lowercase th=
+ough.
+>>> More of a nitpick, but it would still be neat to have it right.
+>>>
+>> This part is correct behavior =A0- git's internal representation is =
+case
+>> sensitive. So git's record of the file is still 'testdir', even i
+>> you've deleted it and created a new called 'testDir'.
+> A normal checkout for those commits results in "testdir" for the firs=
+t
+> one and "testDir" for the second one, so git does store the name
+> difference. I would intuitively expect the trees prepared during
+> filter-branch to be consistent with the result of a checkout.
+>
 
-This means it is likely to remain safe to use startup_info within
-trace_repo_setup, since the trace_repo_setup function is only used
-when running builtins.  Do so and drop the "prefix" parameter.
+I'm sorry, I misread what you wrote (I read the 'git rm testDir' as
+'rm testDir').
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- cache.h |    1 -
- git.c   |   51 ++++++++++++++++++++++++++++++++++++++++++++++++++-
- trace.c |   49 -------------------------------------------------
- 3 files changed, 50 insertions(+), 51 deletions(-)
-
-diff --git a/cache.h b/cache.h
-index d83d68c..2eb3ccc 100644
---- a/cache.h
-+++ b/cache.h
-@@ -1067,7 +1067,6 @@ __attribute__((format (printf, 1, 2)))
- extern void trace_printf(const char *format, ...);
- __attribute__((format (printf, 2, 3)))
- extern void trace_argv_printf(const char **argv, const char *format, ...);
--extern void trace_repo_setup(const char *prefix);
- 
- /* convert.c */
- /* returns 1 if *dst was used */
-diff --git a/git.c b/git.c
-index 68334f6..d1b15f1 100644
---- a/git.c
-+++ b/git.c
-@@ -238,6 +238,55 @@ static int handle_alias(int *argcp, const char ***argv)
- 	return ret;
- }
- 
-+static const char *quote_crnl(const char *path)
-+{
-+	static char new_path[PATH_MAX];
-+	const char *p2 = path;
-+	char *p1 = new_path;
-+
-+	if (!path)
-+		return NULL;
-+
-+	while (*p2) {
-+		switch (*p2) {
-+		case '\\': *p1++ = '\\'; *p1++ = '\\'; break;
-+		case '\n': *p1++ = '\\'; *p1++ = 'n'; break;
-+		case '\r': *p1++ = '\\'; *p1++ = 'r'; break;
-+		default:
-+			*p1++ = *p2;
-+		}
-+		p2++;
-+	}
-+	*p1 = '\0';
-+	return new_path;
-+}
-+
-+static void trace_repo_setup(void)
-+{
-+	const char *git_work_tree;
-+	const char *prefix = startup_info->prefix;
-+	char cwd[PATH_MAX];
-+	char *trace = getenv("GIT_TRACE");
-+
-+	if (!trace || !strcmp(trace, "") ||
-+	    !strcmp(trace, "0") || !strcasecmp(trace, "false"))
-+		return;
-+
-+	if (!getcwd(cwd, PATH_MAX))
-+		die("Unable to get current working directory");
-+
-+	if (!(git_work_tree = get_git_work_tree()))
-+		git_work_tree = "(null)";
-+
-+	if (!prefix)
-+		prefix = "(null)";
-+
-+	trace_printf("setup: git_dir: %s\n", quote_crnl(get_git_dir()));
-+	trace_printf("setup: worktree: %s\n", quote_crnl(git_work_tree));
-+	trace_printf("setup: cwd: %s\n", quote_crnl(cwd));
-+	trace_printf("setup: prefix: %s\n", quote_crnl(prefix));
-+}
-+
- const char git_version_string[] = GIT_VERSION;
- 
- #define RUN_SETUP		(1<<0)
-@@ -278,7 +327,7 @@ static int run_builtin(struct cmd_struct *p, int argc, const char **argv)
- 
- 		if ((p->option & (RUN_SETUP | RUN_SETUP_GENTLY)) &&
- 		    startup_info->have_repository) /* get_git_dir() may set up repo, avoid that */
--			trace_repo_setup(prefix);
-+			trace_repo_setup();
- 	}
- 	commit_pager_choice();
- 
-diff --git a/trace.c b/trace.c
-index 35d388d..0fb2a2c 100644
---- a/trace.c
-+++ b/trace.c
-@@ -127,52 +127,3 @@ void trace_argv_printf(const char **argv, const char *fmt, ...)
- 	if (need_close)
- 		close(fd);
- }
--
--static const char *quote_crnl(const char *path)
--{
--	static char new_path[PATH_MAX];
--	const char *p2 = path;
--	char *p1 = new_path;
--
--	if (!path)
--		return NULL;
--
--	while (*p2) {
--		switch (*p2) {
--		case '\\': *p1++ = '\\'; *p1++ = '\\'; break;
--		case '\n': *p1++ = '\\'; *p1++ = 'n'; break;
--		case '\r': *p1++ = '\\'; *p1++ = 'r'; break;
--		default:
--			*p1++ = *p2;
--		}
--		p2++;
--	}
--	*p1 = '\0';
--	return new_path;
--}
--
--/* FIXME: move prefix to startup_info struct and get rid of this arg */
--void trace_repo_setup(const char *prefix)
--{
--	const char *git_work_tree;
--	char cwd[PATH_MAX];
--	char *trace = getenv("GIT_TRACE");
--
--	if (!trace || !strcmp(trace, "") ||
--	    !strcmp(trace, "0") || !strcasecmp(trace, "false"))
--		return;
--
--	if (!getcwd(cwd, PATH_MAX))
--		die("Unable to get current working directory");
--
--	if (!(git_work_tree = get_git_work_tree()))
--		git_work_tree = "(null)";
--
--	if (!prefix)
--		prefix = "(null)";
--
--	trace_printf("setup: git_dir: %s\n", quote_crnl(get_git_dir()));
--	trace_printf("setup: worktree: %s\n", quote_crnl(git_work_tree));
--	trace_printf("setup: cwd: %s\n", quote_crnl(cwd));
--	trace_printf("setup: prefix: %s\n", quote_crnl(prefix));
--}
--- 
-1.7.4.rc3
+The reason the old folder name is output appears to be that "git
+checkout-index -f -u -a" (called from git-filter-branch) doesn't
+change the directory name when the directory is already there. But to
+be honest, I'm not really sure if it should or not. I'm too tired to
+think it through right now ;)
