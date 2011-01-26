@@ -1,90 +1,86 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: Can't find the revelant commit with git-log
-Date: Wed, 26 Jan 2011 11:44:31 +0100
-Message-ID: <4D3FFB0F.9070700@viscovery.net>
-References: <m2ipxd2w78.fsf@gmail.com> <4D3EF650.20407@lsrfire.ath.cx>	<m2ipxc27zi.fsf@gmail.com> <m239og12pe.fsf@gmail.com>
+From: Mike Kelly <mike@piratehaven.org>
+Subject: Re: Confused about git filter-branch results
+Date: Wed, 26 Jan 2011 03:18:35 -0800
+Message-ID: <20110126111835.GA1765@skull.piratehaven.org>
+References: <20110125114840.GB9367@skull.piratehaven.org> <201101251732.40811.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-To: git@vger.kernel.org, Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 26 11:44:42 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Jan 26 12:18:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pi2rh-0006S1-Ov
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 11:44:42 +0100
+	id 1Pi3Od-0007RP-Cw
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 12:18:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752581Ab1AZKog (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jan 2011 05:44:36 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:10972 "EHLO
-	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751159Ab1AZKof (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jan 2011 05:44:35 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1Pi2rY-0006HD-9H; Wed, 26 Jan 2011 11:44:32 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 0AB061660F;
-	Wed, 26 Jan 2011 11:44:31 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <m239og12pe.fsf@gmail.com>
-X-Spam-Score: -1.4 (-)
+	id S1752134Ab1AZLSi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jan 2011 06:18:38 -0500
+Received: from dsl081-246-077.sfo1.dsl.speakeasy.net ([64.81.246.77]:52219
+	"EHLO piratehaven.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1751307Ab1AZLSh (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jan 2011 06:18:37 -0500
+Received: from skull.piratehaven.org (localhost.localdomain [127.0.0.1])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by piratehaven.org (Postfix) with ESMTP id A4195508051;
+	Wed, 26 Jan 2011 03:18:36 -0800 (PST)
+Received: (from mike@localhost)
+	by skull.piratehaven.org (8.13.8/8.13.8/Submit) id p0QBIZBH002270;
+	Wed, 26 Jan 2011 03:18:35 -0800
+Content-Disposition: inline
+In-Reply-To: <201101251732.40811.trast@student.ethz.ch>
+User-Agent: Mutt/1.4.2.2i
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165516>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165517>
 
-Please don't set Mail-Followup-To; it's disliked on this list.
-
-Am 1/26/2011 9:36, schrieb Francis Moreau:
-> I tried to reproduce something similar but with a far more simple repo:
+On Tue, Jan 25, 2011 at 05:32:40PM +0100, Thomas Rast wrote:
+> Before you read the explanations below, I recommend that you open
+> 'gitk --all' and use it to see whether I'm right.
 > 
+This was really useful for finding my problem.
+
+> Most likely you filtered all commits on your branch, but not master,
+> so master now points to an entirely disjoint set of commits.
 > 
-> <v2.6.28> 1.f o
->               |
->           1.e o (merge)
->               | \
->           1.d o  o 2.c (merge)
->               |  | \
->           1.c o  o  o 3.a "Remove blacklist_iommu()"
->               |  | /
->               |  o 2.a
->               | /
->           1.b o
->               |
-> <v2.6.27> 1.a o "Introduce blacklist_iommu()"
->               |
->               o Init
+Almost exactly correct.  The tree branched off at a really early point in
+development.
+
+> Assuming my "disjoint history" theory is correct, you should either
+> discard your rewrite along the lines of
 > 
-> Basically this repo 3 branches: master, 2, 3. Master branch introduces
-> the "blacklist_iommu()" function with commit 1.a, and branch "3" removes
-> it at commit 3.a.
-> ...
-> So in this case there's no need to pass the '-m' flag and git-log(1), by
-> default walks through all the commits:
+>   git branch -f foo refs/original/refs/heads/foo
+> 
+Done.  This cleaned up the mess.
 
-To reproduce the real history, you have to modify your example in three ways:
+> Confused yet? :-)
+> 
+Not at all, I found your explanation to be clear and straight forward.
+Thank you.
 
-1. 2.a must be forked off of Init, not 1.b; i.e., this commit does not
-contain "blacklist_iommu".
+At first I was grumbling to myself about git filter-branch rewriting every
+commit, but then I remembered that there were a few messages on stderr
+complaining that some commits were not in the correct encoding.  I guess
+that the tool decided to rewrite these commits for me (without asking),
+thus causing a fork.  Sorry for not mentioning these error messages before,
+I forgot about them in the ensuing panic.
 
-2. Drop the side branch that removes the word. (Drop at least the commit.)
+I just want to give a shout-out to all the git developers, I've used RCS,
+CVS, and SVN in the past, and they all had different ways of making life
+miserable.  Git is the first tool which I felt was working with me, not
+against me.  Keep up the good work!
 
-3. The merge 1.e (which resembles d847059) must be modified such that it
-takes the contents of 2.c rather than 1.d.
+Anyway, I'm back in business and have by branch under control again.
 
-IOW, "blacklist_iommu" is not removed explicitly by a commit, but rather
-by a merge of one branch that has it and another one that doesn't have it.
+Thanks again,
 
-Look closely at d847059: The commit message hints at a conflict in
-intel_iommu.c, and Ingo resolved the conflict by taking the contents of
-the file of one branch, namely the branch that does *not* contain
-"blacklist_iommu", ignoring entirely what happend on the other branch
-(that had added "blacklist_iommu" somewhere at or before v2.6.27).
+Mike
+(:
 
--- Hannes
+-- 
+--------Mike@PirateHaven.org-----------------------The_glass_is_too_big--------
