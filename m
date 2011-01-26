@@ -1,78 +1,73 @@
-From: Alan Sargent <alsarg72@gmail.com>
-Subject: fatal: protocol error: bad line length character: GET <<<<<
-Date: Wed, 26 Jan 2011 12:53:11 +0800
-Message-ID: <AANLkTimDbHdOwkPu6qihdgJFY0bS0XTVatLCriCmM1nX@mail.gmail.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: [PATCH/RFC 0/3] trace: omit noisy repository discovery report
+Date: Wed, 26 Jan 2011 00:07:15 -0500
+Message-ID: <20110126050715.GA2665@sigill.intra.peff.net>
+References: <1290785563-15339-1-git-send-email-pclouds@gmail.com>
+ <1290785563-15339-2-git-send-email-pclouds@gmail.com>
+ <20110126004915.GA11230@burratino>
+ <AANLkTimB0rJPLkwyrQEibngeRjgHLxhrntG5sMdQ9CW0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 26 05:53:41 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 26 06:07:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PhxNz-0005gs-KF
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 05:53:39 +0100
+	id 1PhxbK-00011e-H1
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 06:07:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752520Ab1AZExe convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 25 Jan 2011 23:53:34 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:60817 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751954Ab1AZExd convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 25 Jan 2011 23:53:33 -0500
-Received: by bwz15 with SMTP id 15so862136bwz.19
-        for <git@vger.kernel.org>; Tue, 25 Jan 2011 20:53:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:from:date
-         :x-google-sender-auth:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        bh=sM23vSOuI++sJNRuWN6l2vYz572g20DqtkHqkgE2GRU=;
-        b=eOWjVcIDMwnRJ6Ch3DKt08I3AWwpxw0lruzfSLwDblZRnPNrhqwR3j2AmWgwYuUnxn
-         umyX/I9e4Atsx6FgMhoG0kQFVIlAO04N7yuC5TFIi4fGgdFzZayAAdRdTBIVBz5/4caD
-         whAcDTUodirAPfyroDm2oDPM/v14A2mSSitFc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:from:date:x-google-sender-auth:message-id
-         :subject:to:content-type:content-transfer-encoding;
-        b=rRS9rxSd+G/g5aWJlekjr3P0JCpPZwP3t8CyRimvPW+fd5quYObyu+ioq1eENI+Lku
-         YpmB7sEPD23zrNLXhDDRgALbtzw6mVPltH45EVJNdYJjN8Li5+uVYu02uRcnRuX8zNtI
-         NVpYRqTj9SCPnacS9EuNmwY8tKik5oFpHcyNE=
-Received: by 10.204.71.141 with SMTP id h13mr5989860bkj.180.1296017612063;
- Tue, 25 Jan 2011 20:53:32 -0800 (PST)
-Received: by 10.204.100.205 with HTTP; Tue, 25 Jan 2011 20:53:11 -0800 (PST)
-X-Google-Sender-Auth: 8VtaJhWuFs20x2XGG2-UEPnyqng
+	id S1750877Ab1AZFHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jan 2011 00:07:21 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:58979 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1750773Ab1AZFHV (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jan 2011 00:07:21 -0500
+Received: (qmail 1673 invoked by uid 111); 26 Jan 2011 05:07:19 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 26 Jan 2011 05:07:19 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Jan 2011 00:07:15 -0500
+Content-Disposition: inline
+In-Reply-To: <AANLkTimB0rJPLkwyrQEibngeRjgHLxhrntG5sMdQ9CW0@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165501>
 
-Hello,
+On Wed, Jan 26, 2011 at 08:45:12AM +0700, Nguyen Thai Ngoc Duy wrote:
 
-The "fatal: protocol error: bad line length character" seems fairly
-common, but in the archive and the faq there isn't reference to this
-particular instances - GET.
+> > A few days ago I was tracing something or other and decided that these
+> > extra lines are annoying.
+> >
+> > Patch 1 moves this code from trace.c to git.c, to contain its impact
+> > to a single translation unit (that is, it let me experiment without
+> > touching cache.h after that).
+> >
+> > Patch 2 removes the repo-setup tracing code, introducing a
+> > test-repo-setup helper to take its place in the repo setup tests.
+> >
+> > Patch 3 does some cleaning up made possible by patch 2.
+> >
+> > Thoughts?
+> 
+> I'm fine with this. Although long term maybe we should support pattern
+> matching or category selection in GIT_TRACE.
 
-alan@toaster:~$ git init myrepo
-Initialized empty Git repository in /home/nev/myrepo/.git/
-alan@toaster:~$ cd myrepo
-alan@toaster:~/myrepo$ git daemon
-fatal: protocol error: bad line length character: GET=A0=A0<< just hitt=
-ing
-=465 in the browser
-fatal: protocol error: bad line length character: GET
-browser showing=A0Error 101 (net::ERR_CONNECTION_RESET): Unknown error.
-fatal: protocol error: bad line length character: GET
-fatal: protocol error: bad line length character: GET
-fatal: protocol error: bad line length character: GET
-fatal: protocol error: bad line length character: GET
-fatal: protocol error: bad line length character: GET
+Yeah. I recently was peeking at the git protocol, and I wrote some
+nice-ish packet-tracing support. I triggered it via:
 
-This is on Ubuntu, git installed fresh or built it from latest stable
-source. Same on a repo that has stuff in it.
+  GIT_TRACE=$whatever GIT_TRACE_PACKET=1 git push ...
 
-Anyone know why?
+So you have to turn on tracing (to whatever destination you want) and
+then turn on packet tracing with a bool. In retrospect, probably
+GIT_TRACE_* should take the same type of location parameter as
+GIT_TRACE, so you can get whatever subset of trace going to wherever you
+like. And then the repo setup code can just go into GIT_TRACE_SETUP or
+something.
 
-Cheers.
+-Peff
