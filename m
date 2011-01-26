@@ -1,85 +1,123 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: git: patch does not apply
-Date: Wed, 26 Jan 2011 09:43:35 -0800
-Message-ID: <7vei7zlfw8.fsf@alter.siamese.dyndns.org>
-References: <AANLkTi=ujfX53PXsfQXKf+1d5WQP=zMtzhKG-PSzT2_s@mail.gmail.com>
+From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Can't find the revelant commit with git-log
+Date: Wed, 26 Jan 2011 19:11:56 +0100
+Message-ID: <4D4063EC.7090509@lsrfire.ath.cx>
+References: <m2ipxd2w78.fsf@gmail.com> <4D3EF650.20407@lsrfire.ath.cx>	<m2ipxc27zi.fsf@gmail.com> <m239og12pe.fsf@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Dmitri Pissarenko <dmitri.pissarenko@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 26 18:43:55 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j6t@kdbg.org>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 26 19:12:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pi9PK-0004xA-Do
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 18:43:50 +0100
+	id 1Pi9rI-0001bN-Tw
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 19:12:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753599Ab1AZRno (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jan 2011 12:43:44 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:32833 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752700Ab1AZRnn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jan 2011 12:43:43 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 461873D01;
-	Wed, 26 Jan 2011 12:44:31 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=x9RcXBoWxapMI7ApGBJdPWmxNY0=; b=ivItBM
-	o/RZNy1C3kQMskGNq0WQQydEGpi17WaOThx1RCRwi9FLNQXuHq+Aqz4xsXoUhPDH
-	HimbYdg+FzTW04nlM3ko3v3jRWW8Mta48M9O4GqtLoz834XZDeaNAAAzt2uQGDC3
-	QklXtJux4o4L4Zb6MmxvrpuS/DxE2k0X3q1MU=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=TrtDLy1fpEeWLJLqCghiCOWruHZwRXvf
-	bxvgtUUHwT9VG7oWXaVOU8OgaCXR64/k/gtMiQWZZTJb0v58P6BEOTkE8Muhf7KQ
-	6nSDRqz1BiifbsxOxbXcxiA7a2C/JX8Qsrbapk1Be3IInHvDjmh3KlY32TuuX2tm
-	s5On1jIcumA=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 258413D00;
-	Wed, 26 Jan 2011 12:44:29 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1D8FA3CFF; Wed, 26 Jan 2011
- 12:44:25 -0500 (EST)
-In-Reply-To: <AANLkTi=ujfX53PXsfQXKf+1d5WQP=zMtzhKG-PSzT2_s@mail.gmail.com>
- (Dmitri Pissarenko's message of "Wed\, 26 Jan 2011 13\:41\:54 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: ECB2384A-2973-11E0-8CDB-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
+	id S1754037Ab1AZSMT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Jan 2011 13:12:19 -0500
+Received: from india601.server4you.de ([85.25.151.105]:47048 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754034Ab1AZSMS (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jan 2011 13:12:18 -0500
+Received: from [192.168.2.104] (p4FFDB6DB.dip.t-dialin.net [79.253.182.219])
+	by india601.server4you.de (Postfix) with ESMTPSA id 9BC1E2F8091;
+	Wed, 26 Jan 2011 19:12:16 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <m239og12pe.fsf@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165525>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165526>
 
-Dmitri Pissarenko <dmitri.pissarenko@gmail.com> writes:
+Am 26.01.2011 09:36, schrieb Francis Moreau:
+> Francis Moreau <francis.moro@gmail.com> writes:
+>=20
+>> Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+>>
+>>> Try -m (show full diff for merge commits), as the change you're loo=
+king
+>>> for seems to have been introduced by a merge, not a regular commit.
+>>>
+>>> 	$ opts=3D"--stat -Sblacklist_iommu -m --oneline"
+>>> 	$ revs=3D"v2.6.27..v2.6.28"
+>>>
+>>> 	$ git log $opts $revs -- drivers/pci/intel-iommu.c
+>>>
+>>> This returns nothing.  Hmm.  Let's try this instead:
+>>>
+>>> 	$ git log $opts $revs -- drivers/pci/
+>>> 	057316c (from 3e2dab9) Merge branch 'linus' into test
+>>> 	 drivers/pci/intel-iommu.c |  307 ++++++++++++++++++++------------=
+------------
+>>> 	 1 files changed, 140 insertions(+), 167 deletions(-)
+>>> 	6b2ada8 (from 3b7ecb5) Merge branches 'core/softlockup', 'core/sof=
+tirq', 'core/resources', 'core/printk' and 'core/misc' into core-v28-fo=
+r-linus
+>>> 	 drivers/pci/intel-iommu.c |  187 ++++++--------------------------=
+------------
+>>> 	 1 files changed, 26 insertions(+), 161 deletions(-)
+>>> 	d847059 (from 725c258) Merge branch 'x86/apic' into x86-v28-for-li=
+nus-phase4-B
+>>> 	 drivers/pci/intel-iommu.c |  185 ++++++--------------------------=
+-------------
+>>> 	 1 files changed, 25 insertions(+), 160 deletions(-)
+>>> 	725c258 (from 129d6ab) Merge branches 'core/iommu', 'x86/amd-iommu=
+' and 'x86/iommu' into x86-v28-for-linus-phase3-B
+>>> 	 drivers/pci/intel-iommu.c |   25 ++++++++++++++++++++++++-
+>>> 	 1 files changed, 24 insertions(+), 1 deletions(-)
+>>> 	6e03f99 (from 9821626) Merge branch 'linus' into x86/iommu
+>>> 	 drivers/pci/intel-iommu.c |   23 +++++++++++++++++++++++
+>>> 	 1 files changed, 23 insertions(+), 0 deletions(-)
+>>>
+>>> Strange, why did we need to remove the last path component to get t=
+hese
+>>> results which say that exactly the file we previously specified was=
+ changed?
+>>
+>> ah... I think I've been hit by this, since I tried '-m' too but see
+>> nothing and was not smart enough to remove the filename from the pat=
+h.
+>>
+>>> Also interesting, and matching the above results in that we see the=
+ need for
+>>> the -m flag confirmed:
+>=20
+> BTW, couldn't '-m' automatically set when '-S' is given ?
 
-> When I try to apply it, I get following message:
->
-> $ git apply --check my_pcc_branch.patch
-> warning: src/main/java/.../AbstractedPanel.java has type 100644, expected 100755
+I can't see a connection between the two options.  Merges are ignored b=
+y
+default (without -m) because they shouldn't contain any changes that
+aren't already present in one of the merged branches (by convention),
+and diffs with a single parent are easier to read.  This is true with o=
+r
+without -S.
 
-Whoever prepared the patch started off of the version of the file with
-executable bit dropped, while you still have a version with executable
-bit.  This is a warning and is not a cause for the patch not applying.
+So far we have two action items, I think:
 
-> error: patch failed: src/main/java/.../AbstractedPanel.java:13
-> error: src/main/java/.../AbstractedPanel.java: patch does not apply
+	- Make git grep report non-matching path specs (new feature).
 
-The tool looked at around line 13 of the APanel.java file because the
-input, my_pcc_branch.patch, wanted to change things around there, but
-couldn't find corresponding preimage.
+	- Find out why removing the last path component made a
+	  difference in the case above (looks like a bug, but I don't
+	  understand what's going on).
 
-> What does it mean?
+Taking into account what Johannes said regarding the disappearance of
+the function during a merge instead of as part of a regular commit, I
+don't think these changes would help you much with your use case,
+though.  You would still be looking at a complicated net of commits,
+with the action happening in non-obvious places (merges).
 
-That is what it means.
+Perhaps --graph can help a bit, see for yourself:
 
-> How can I fix this problem?
+	$ git log --graph -Sblacklist_iommu -m --oneline \
+	v2.6.27..v2.6.28 -- drivers/pci/
 
-Look at the patch (find lines that perhaps begin with "@@ -13,something"
-after "diff --git a/...APanel.java b/...APanel.java" appears), look at the
-APanel.java file at around line 13, and see how they differ.  Discern what
-the patch wanted to do, and make a corresponding edit to ...APanel.java
-file.
+If you start at v.2.6.26 instead -- e.g. to catch the commit that
+introduced the function -- then the graph gets a lot more colourful and
+too complicated, at least for me, though.
+
+Ren=E9
