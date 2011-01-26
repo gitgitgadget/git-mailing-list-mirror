@@ -1,73 +1,72 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [PATCH/RFC 0/3] trace: omit noisy repository discovery report
-Date: Wed, 26 Jan 2011 00:07:15 -0500
-Message-ID: <20110126050715.GA2665@sigill.intra.peff.net>
-References: <1290785563-15339-1-git-send-email-pclouds@gmail.com>
- <1290785563-15339-2-git-send-email-pclouds@gmail.com>
- <20110126004915.GA11230@burratino>
- <AANLkTimB0rJPLkwyrQEibngeRjgHLxhrntG5sMdQ9CW0@mail.gmail.com>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: fatal: protocol error: bad line length character: GET <<<<<
+Date: Wed, 26 Jan 2011 07:59:55 +0200
+Message-ID: <20110126055955.GA13304@LK-Perkele-VI.localdomain>
+References: <AANLkTimDbHdOwkPu6qihdgJFY0bS0XTVatLCriCmM1nX@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 26 06:07:29 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Alan Sargent <alsarg72@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 26 07:00:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PhxbK-00011e-H1
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 06:07:26 +0100
+	id 1PhyQa-0007gK-US
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 07:00:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750877Ab1AZFHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jan 2011 00:07:21 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:58979 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750773Ab1AZFHV (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jan 2011 00:07:21 -0500
-Received: (qmail 1673 invoked by uid 111); 26 Jan 2011 05:07:19 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 26 Jan 2011 05:07:19 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Jan 2011 00:07:15 -0500
+	id S1751480Ab1AZGAR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 26 Jan 2011 01:00:17 -0500
+Received: from emh04.mail.saunalahti.fi ([62.142.5.110]:33448 "EHLO
+	emh04.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751352Ab1AZGAQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 26 Jan 2011 01:00:16 -0500
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh04-2.mail.saunalahti.fi (Postfix) with SMTP id B2A1713B407;
+	Wed, 26 Jan 2011 08:00:14 +0200 (EET)
+Received: from emh05.mail.saunalahti.fi ([62.142.5.111])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A03B64ADD2D; Wed, 26 Jan 2011 08:00:14 +0200
+Received: from LK-Perkele-VI (a88-112-56-215.elisa-laajakaista.fi [88.112.56.215])
+	by emh05.mail.saunalahti.fi (Postfix) with ESMTP id A0DFD27D85;
+	Wed, 26 Jan 2011 08:00:12 +0200 (EET)
 Content-Disposition: inline
-In-Reply-To: <AANLkTimB0rJPLkwyrQEibngeRjgHLxhrntG5sMdQ9CW0@mail.gmail.com>
+In-Reply-To: <AANLkTimDbHdOwkPu6qihdgJFY0bS0XTVatLCriCmM1nX@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165501>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165502>
 
-On Wed, Jan 26, 2011 at 08:45:12AM +0700, Nguyen Thai Ngoc Duy wrote:
+On Wed, Jan 26, 2011 at 12:53:11PM +0800, Alan Sargent wrote:
+> Hello,
+>=20
+> The "fatal: protocol error: bad line length character" seems fairly
+> common, but in the archive and the faq there isn't reference to this
+> particular instances - GET.
+>=20
+> alan@toaster:~$ git init myrepo
+> Initialized empty Git repository in /home/nev/myrepo/.git/
+> alan@toaster:~$ cd myrepo
+> alan@toaster:~/myrepo$ git daemon
+> fatal: protocol error: bad line length character: GET=C2=A0=C2=A0<< j=
+ust hitting
+> F5 in the browser
+> fatal: protocol error: bad line length character: GET
+[...]
 
-> > A few days ago I was tracing something or other and decided that these
-> > extra lines are annoying.
-> >
-> > Patch 1 moves this code from trace.c to git.c, to contain its impact
-> > to a single translation unit (that is, it let me experiment without
-> > touching cache.h after that).
-> >
-> > Patch 2 removes the repo-setup tracing code, introducing a
-> > test-repo-setup helper to take its place in the repo setup tests.
-> >
-> > Patch 3 does some cleaning up made possible by patch 2.
-> >
-> > Thoughts?
-> 
-> I'm fine with this. Although long term maybe we should support pattern
-> matching or category selection in GIT_TRACE.
+Git daemon serves git:// protocol, not HTTP, you can't access it from
+web browser.
 
-Yeah. I recently was peeking at the git protocol, and I wrote some
-nice-ish packet-tracing support. I triggered it via:
+If you are looking for Git repository web interface, look at gitweb
+or cgit.
 
-  GIT_TRACE=$whatever GIT_TRACE_PACKET=1 git push ...
+The error is because HTTP begins the request with "GET " and git
+daemon is trying to interpret that as length of packet, failing
+and spitting out a fatal error.
 
-So you have to turn on tracing (to whatever destination you want) and
-then turn on packet tracing with a bool. In retrospect, probably
-GIT_TRACE_* should take the same type of location parameter as
-GIT_TRACE, so you can get whatever subset of trace going to wherever you
-like. And then the repo setup code can just go into GIT_TRACE_SETUP or
-something.
-
--Peff
+-Ilari
