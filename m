@@ -1,77 +1,82 @@
-From: Dmitri Pissarenko <dmitri.pissarenko@gmail.com>
-Subject: git: patch does not apply
-Date: Wed, 26 Jan 2011 13:41:54 +0100
-Message-ID: <AANLkTi=ujfX53PXsfQXKf+1d5WQP=zMtzhKG-PSzT2_s@mail.gmail.com>
+From: Daniel Stenberg <daniel@haxx.se>
+Subject: Re: [msysGit] Git unable to access https repositories due to
+ curl/OpenSSL 1.0.0 handshake issues
+Date: Wed, 26 Jan 2011 14:29:53 +0100 (CET)
+Message-ID: <alpine.DEB.2.00.1101261422550.20831@tvnag.unkk.fr>
+References: <0aa77107-bb31-4f74-90e2-02ce5155b0a0@l17g2000yqe.googlegroups.com> <AANLkTi=UQR3cEbTj4N0W_4CLG9T1F+rmkLEew+WO4w5f@mail.gmail.com> <AANLkTinGLMcRJ9EuZY_k4GoKyg+r7hxcgnq3z0=qOemA@mail.gmail.com>
+ <AANLkTimJznExH8N9fcgSC88HOPfaFDF7jFMTZUJauL9+@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Jan 26 13:42:05 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Cc: kusmabite@gmail.com, msysGit <msysgit@googlegroups.com>,
+	Git Mailing List <git@vger.kernel.org>
+To: Mika Fischer <mika.a.fischer@googlemail.com>
+X-From: git-owner@vger.kernel.org Wed Jan 26 14:30:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pi4hI-0003x5-4q
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 13:42:04 +0100
+	id 1Pi5Rj-0003Zs-30
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 14:30:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753224Ab1AZMl6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jan 2011 07:41:58 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:60388 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753187Ab1AZMl5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jan 2011 07:41:57 -0500
-Received: by iwn9 with SMTP id 9so824426iwn.19
-        for <git@vger.kernel.org>; Wed, 26 Jan 2011 04:41:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=ktiVd+2E5b2IP/B39PeSKXBx+8KDun2joaeBlFdQ7EY=;
-        b=Vb4Q1lN3y/Aa/5sC+lEfvLGyJQG1BuYu767ALmETUI+L+0AdXL4JKvbewzSLcvXwHA
-         3F7dJb63REI693PXPaLngEbmgC6SAsEfdI81G0DGogKg9Z2sos3i6wVS/z09oHtf4lt2
-         IHJh9WbWrmRrqpAdbyYwE5XCwFMp4vV3l6zkE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=c2Xmo8LeusDMOhW9uIctfnx2GP8ObGvk7o7CTel3VxWDqFBF98U4u/aUeNHapNz+CO
-         gAS/BG/EqKTRxvVKwQXhWim34NWx3B1URpvKIzry+IWO1hodf+qArHR1s0YGcC3/LKUw
-         C+p4E47opXK5RMrHQE1hvzzWbU+JVR0r+e/PA=
-Received: by 10.42.164.133 with SMTP id g5mr399339icy.134.1296045714529; Wed,
- 26 Jan 2011 04:41:54 -0800 (PST)
-Received: by 10.42.139.10 with HTTP; Wed, 26 Jan 2011 04:41:54 -0800 (PST)
+	id S1753184Ab1AZN34 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jan 2011 08:29:56 -0500
+Received: from giant.haxx.se ([80.67.6.50]:60262 "EHLO giant.haxx.se"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752927Ab1AZN3z (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jan 2011 08:29:55 -0500
+Received: from giant.haxx.se (giant.haxx.se [80.67.6.50])
+	by giant.haxx.se (8.14.3/8.14.3/Debian-9.1) with ESMTP id p0QDTrmC026034;
+	Wed, 26 Jan 2011 14:29:53 +0100
+X-X-Sender: dast@giant.haxx.se
+In-Reply-To: <AANLkTimJznExH8N9fcgSC88HOPfaFDF7jFMTZUJauL9+@mail.gmail.com>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+X-fromdanielhimself: yes
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165518>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165519>
 
-Hello!
+On Wed, 26 Jan 2011, Mika Fischer wrote:
 
-I have a certain patch called my_pcc_branch.patch.
+> But I noticed that the same problem occurs on OpenSuSE 11.2. So I compiled 
+> the latest version of curl on OpenSuSE 11.2 and the problem is still 
+> present...
 
-When I try to apply it, I get following message:
+Sorry, but I can't repeat this problem. I tried this:
 
-$ git apply --check my_pcc_branch.patch
-warning: src/main/java/.../AbstractedPanel.java has type 100644, expected 100755
-error: patch failed: src/main/java/.../AbstractedPanel.java:13
-error: src/main/java/.../AbstractedPanel.java: patch does not apply
+1. I got OpenSSL 1.0.0c, built it and installed it.
 
-What does it mean?
+2. I started OpenSSL's little HTTPS server with this version:
 
-How can I fix this problem?
+$ openssl s_server -HTTP -cert [PEM]
 
-Notes:
+(I verified, and this binary uses the lib statically so there's no funny lib 
+path issues here.)
 
-1) I posted this question on StackOverflow and tried out several
-things suggested there.
+3. I tried getting a file through this using curl 7.21.2 and my current dev 
+version of 7.21.4-DEV (see below for full details). Both managed to get it 
+fine.
 
-http://stackoverflow.com/questions/4770177/git-patch-does-not-apply
+>From this, I conclude that there's some additional factors necessary to make 
+this problem trigger. Can you figure out what?
 
-However, I don't have a working solution yet.
+The full curl -V outputs from my two test versions:
 
-2) I'm using git 1.7.3.1.mysgit.0 under Windows 7. The author of the
-patch uses Windows XP.
+curl 7.21.2 (i486-pc-linux-gnu) libcurl/7.21.2 OpenSSL/0.9.8o zlib/1.2.3.4 
+libidn/1.18 libssh2/1.2.6
+Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 
+pop3s rtsp scp sftp smtp smtps telnet tftp
+Features: GSS-Negotiate IDN IPv6 Largefile NTLM SSL libz
 
-Thanks in advance
+curl 7.21.4-DEV (i686-pc-linux-gnu) libcurl/7.21.4-DEV OpenSSL/1.0.0c 
+zlib/1.2.3.4 c-ares/1.7.5-DEV libidn/1.18 libssh2/1.2.8_DEV librtmp/2.2e
+Protocols: dict file ftp ftps gopher http https imap imaps ldap ldaps pop3 
+pop3s rtmp rtsp scp sftp smtp smtps telnet tftp
+Features: AsynchDNS Debug TrackMemory GSS-Negotiate IDN IPv6 Largefile NTLM 
+SSL libz
 
-Dmitri
+-- 
+
+  / daniel.haxx.se
