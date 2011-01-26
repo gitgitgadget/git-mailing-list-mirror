@@ -1,68 +1,96 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] tests: sanitize more git environment variables
-Date: Wed, 26 Jan 2011 12:43:25 -0800
-Message-ID: <7v39ofl7ki.fsf@alter.siamese.dyndns.org>
-References: <20110126203331.GA27478@sigill.intra.peff.net>
+From: Julian Ibarz <julian.ibarz@gmail.com>
+Subject: Re: Updating a submodule with a compatible version from another
+ submodule version using the parent meta-repository
+Date: Wed, 26 Jan 2011 15:43:38 -0500
+Message-ID: <AANLkTimtHL3gLXgfvmWDg82tFCjW24srUN5vW92bTSx5@mail.gmail.com>
+References: <AANLkTinN1XVsAZXGLqkuhysrJ8-TCtGm4pOu2RfCEVVp@mail.gmail.com>
+	<AANLkTimvNaiieEw8-Y52xxDW6DQ6b16v9azCk+BDPxhe@mail.gmail.com>
+	<4D407099.4010805@web.de>
+	<AANLkTinMhvBNrBMJ8vQpJdYxP_NgJU2L7JEW0KhXGjhf@mail.gmail.com>
+	<4D407875.7080607@web.de>
+	<AANLkTik-XdgGM20kFu8KZ5k9ynfNAo8fvL9t7kL_JhQg@mail.gmail.com>
+	<4D40849C.2050903@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=ISO-8859-1
 Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Jan 26 21:43:38 2011
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Wed Jan 26 21:43:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PiCDK-0005X9-00
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 21:43:38 +0100
+	id 1PiCDT-0005gC-07
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 21:43:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754014Ab1AZUnd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jan 2011 15:43:33 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:33134 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753967Ab1AZUnd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jan 2011 15:43:33 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2F21B34D4;
-	Wed, 26 Jan 2011 15:44:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=390v4VvJ/5RJnWRBFH5AHVSCo6k=; b=Sy8x0w
-	DY0bjBGssyYERWGCMeqc8DoxhCFc8RUM2SfnF4oFnHJUq/8l/QEz+gxZgliaep4X
-	kkCRF91fJXZxsWdSMmfwyBoMUEWkHp5Vtap1Fg9wGJuQGmMPjcEC2lB5BISxGP+V
-	/FBUwGiBMjEViNDCUrfbHKxjC1l/ccjaCUy/4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=S/p22kKPrIHgF4R06cLQUbsittuD6b+i
-	ayegeFAKKF8IOXpP9HDQDS3TpvaM+9KTM7LRjB2TImId5ppeoz+2tdzsufKS/Amg
-	oqmbsmMSe8OMeYaLTtKRlBpu+9o1rSwe1MqKfD0cu0S9q/T9OlDHNGWG5xd1ukji
-	3XQuVJxoW+E=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 04FE534D0;
-	Wed, 26 Jan 2011 15:44:19 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1174E34CE; Wed, 26 Jan 2011
- 15:44:15 -0500 (EST)
-In-Reply-To: <20110126203331.GA27478@sigill.intra.peff.net> (Jeff King's
- message of "Wed\, 26 Jan 2011 15\:33\:32 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 0C02A464-298D-11E0-B3DC-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
+	id S1754052Ab1AZUnl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jan 2011 15:43:41 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:32981 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753967Ab1AZUnk (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jan 2011 15:43:40 -0500
+Received: by wwa36 with SMTP id 36so1418004wwa.1
+        for <git@vger.kernel.org>; Wed, 26 Jan 2011 12:43:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=DGyQwv15/P9K9uLu9sWJ95TcYG1wR2pDHhfIjRJJYrs=;
+        b=ZhtbdGVevY1fLwYJcAfNeiFOTzcRmfPlH2RVjg/+UtnM5nXe4orzfHkb3qySFTF/+M
+         d+52Ajy/n/sOp61oILUjpAshJZ7BnBJswUNgh0UkiwEMh8FgZO3krY6w9KDrvLek0xgq
+         J1nEfPwDtvUEDp1k6d6lfHB633LRrviIoF+lE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=LorQQ3CGy70z3kCgh9DepFycfPYtFkZjrEQGPjaphczRkgTwmXXn2Rn/pQCjnTEri6
+         HKFuRpDRTn9ih1j1I3Lu+9uXMAumGIzRxN4gdShpj3dwSoJwY4Y6HI5QzB0nVLKCm83W
+         USVdZ3KCPzXhi8qJmiRPsTlfBAVDHg9PLiKEw=
+Received: by 10.227.166.194 with SMTP id n2mr37830wby.172.1296074618808; Wed,
+ 26 Jan 2011 12:43:38 -0800 (PST)
+Received: by 10.227.146.83 with HTTP; Wed, 26 Jan 2011 12:43:38 -0800 (PST)
+In-Reply-To: <4D40849C.2050903@web.de>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165540>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165541>
 
-Jeff King <peff@peff.net> writes:
-
-> These variables should generally not be set in one's
-> environment, but they do get set by rebase, which means
-> doing an interactive rebase like:
+> Am 26.01.2011 20:48, schrieb Julian Ibarz:
+>> Basically my feature would work like this:
+>>
+>> in B:
+>> git submodule checkout some_version
+>>
+>> This will checkout B but also change A and C so that it is compatible
+>> with some_version of B. Basically it will find the commit in A that
+>> has the closest parent commit of some_version in B. When this is done
+>> it just does git submodule udate on other submodules.
 >
->   pick abcd1234 foo
->   exec make test
+> Thanks, now I understand what you are trying to achieve.
 >
-> will cause false negatives in the test suite.
+>> I see in gitk that there is a feature that has a common implementation
+>> for what I want to do:
+>>
+>> For every commits you can see Follows and Precedes which lists the
+>> closest label before this release and after. What I need is the same
+>> thing: instead of finding a closest labeled commit, I need to find a
+>> closest commit referenced by A that precedes current HEAD of B. When
+>> this is done I know which commit A has to be and then just have to
+>> call git submodule update in A (update every other submodules except
+>> for B).
+>
+> I am not aware of something like that in current Git, But I see that
+> such functionality would be helpful. Care to share your implementation
+> idea?
 
-Cute.  Thanks.
+Well actually the paragraph just above is what is my implementation
+idea. I recognize it is really high level but it is still a start ;).
+Basically the "complex" part is to find the precedent commit in B that
+is referenced by A. Since gitk has this already but for labels, we
+just need to reuse/copy their function that does this but instead as
+input having a list of commit labels and find the closest precedent it
+is instead the list of commits referenced by A. By the way, anyone
+reading this knows where it is in the code of gitk? Or if there is
+something like that already in the git code? I never looked into both
+code projects.
