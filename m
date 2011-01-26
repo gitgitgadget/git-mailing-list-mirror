@@ -1,86 +1,77 @@
-From: Mike Kelly <mike@piratehaven.org>
-Subject: Re: Confused about git filter-branch results
-Date: Wed, 26 Jan 2011 03:18:35 -0800
-Message-ID: <20110126111835.GA1765@skull.piratehaven.org>
-References: <20110125114840.GB9367@skull.piratehaven.org> <201101251732.40811.trast@student.ethz.ch>
+From: Dmitri Pissarenko <dmitri.pissarenko@gmail.com>
+Subject: git: patch does not apply
+Date: Wed, 26 Jan 2011 13:41:54 +0100
+Message-ID: <AANLkTi=ujfX53PXsfQXKf+1d5WQP=zMtzhKG-PSzT2_s@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Jan 26 12:18:45 2011
+Content-Type: text/plain; charset=ISO-8859-1
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Jan 26 13:42:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pi3Od-0007RP-Cw
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 12:18:43 +0100
+	id 1Pi4hI-0003x5-4q
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 13:42:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752134Ab1AZLSi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jan 2011 06:18:38 -0500
-Received: from dsl081-246-077.sfo1.dsl.speakeasy.net ([64.81.246.77]:52219
-	"EHLO piratehaven.org" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-	with ESMTP id S1751307Ab1AZLSh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jan 2011 06:18:37 -0500
-Received: from skull.piratehaven.org (localhost.localdomain [127.0.0.1])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by piratehaven.org (Postfix) with ESMTP id A4195508051;
-	Wed, 26 Jan 2011 03:18:36 -0800 (PST)
-Received: (from mike@localhost)
-	by skull.piratehaven.org (8.13.8/8.13.8/Submit) id p0QBIZBH002270;
-	Wed, 26 Jan 2011 03:18:35 -0800
-Content-Disposition: inline
-In-Reply-To: <201101251732.40811.trast@student.ethz.ch>
-User-Agent: Mutt/1.4.2.2i
+	id S1753224Ab1AZMl6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jan 2011 07:41:58 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:60388 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753187Ab1AZMl5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jan 2011 07:41:57 -0500
+Received: by iwn9 with SMTP id 9so824426iwn.19
+        for <git@vger.kernel.org>; Wed, 26 Jan 2011 04:41:56 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type;
+        bh=ktiVd+2E5b2IP/B39PeSKXBx+8KDun2joaeBlFdQ7EY=;
+        b=Vb4Q1lN3y/Aa/5sC+lEfvLGyJQG1BuYu767ALmETUI+L+0AdXL4JKvbewzSLcvXwHA
+         3F7dJb63REI693PXPaLngEbmgC6SAsEfdI81G0DGogKg9Z2sos3i6wVS/z09oHtf4lt2
+         IHJh9WbWrmRrqpAdbyYwE5XCwFMp4vV3l6zkE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type;
+        b=c2Xmo8LeusDMOhW9uIctfnx2GP8ObGvk7o7CTel3VxWDqFBF98U4u/aUeNHapNz+CO
+         gAS/BG/EqKTRxvVKwQXhWim34NWx3B1URpvKIzry+IWO1hodf+qArHR1s0YGcC3/LKUw
+         C+p4E47opXK5RMrHQE1hvzzWbU+JVR0r+e/PA=
+Received: by 10.42.164.133 with SMTP id g5mr399339icy.134.1296045714529; Wed,
+ 26 Jan 2011 04:41:54 -0800 (PST)
+Received: by 10.42.139.10 with HTTP; Wed, 26 Jan 2011 04:41:54 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165517>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165518>
 
-On Tue, Jan 25, 2011 at 05:32:40PM +0100, Thomas Rast wrote:
-> Before you read the explanations below, I recommend that you open
-> 'gitk --all' and use it to see whether I'm right.
-> 
-This was really useful for finding my problem.
+Hello!
 
-> Most likely you filtered all commits on your branch, but not master,
-> so master now points to an entirely disjoint set of commits.
-> 
-Almost exactly correct.  The tree branched off at a really early point in
-development.
+I have a certain patch called my_pcc_branch.patch.
 
-> Assuming my "disjoint history" theory is correct, you should either
-> discard your rewrite along the lines of
-> 
->   git branch -f foo refs/original/refs/heads/foo
-> 
-Done.  This cleaned up the mess.
+When I try to apply it, I get following message:
 
-> Confused yet? :-)
-> 
-Not at all, I found your explanation to be clear and straight forward.
-Thank you.
+$ git apply --check my_pcc_branch.patch
+warning: src/main/java/.../AbstractedPanel.java has type 100644, expected 100755
+error: patch failed: src/main/java/.../AbstractedPanel.java:13
+error: src/main/java/.../AbstractedPanel.java: patch does not apply
 
-At first I was grumbling to myself about git filter-branch rewriting every
-commit, but then I remembered that there were a few messages on stderr
-complaining that some commits were not in the correct encoding.  I guess
-that the tool decided to rewrite these commits for me (without asking),
-thus causing a fork.  Sorry for not mentioning these error messages before,
-I forgot about them in the ensuing panic.
+What does it mean?
 
-I just want to give a shout-out to all the git developers, I've used RCS,
-CVS, and SVN in the past, and they all had different ways of making life
-miserable.  Git is the first tool which I felt was working with me, not
-against me.  Keep up the good work!
+How can I fix this problem?
 
-Anyway, I'm back in business and have by branch under control again.
+Notes:
 
-Thanks again,
+1) I posted this question on StackOverflow and tried out several
+things suggested there.
 
-Mike
-(:
+http://stackoverflow.com/questions/4770177/git-patch-does-not-apply
 
--- 
---------Mike@PirateHaven.org-----------------------The_glass_is_too_big--------
+However, I don't have a working solution yet.
+
+2) I'm using git 1.7.3.1.mysgit.0 under Windows 7. The author of the
+patch uses Windows XP.
+
+Thanks in advance
+
+Dmitri
