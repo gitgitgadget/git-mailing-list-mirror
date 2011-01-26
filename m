@@ -1,59 +1,69 @@
-From: Daniel Stenberg <daniel@haxx.se>
+From: Mika Fischer <mika.a.fischer@googlemail.com>
 Subject: Re: [msysGit] Git unable to access https repositories due to
  curl/OpenSSL 1.0.0 handshake issues
-Date: Wed, 26 Jan 2011 10:57:57 +0100 (CET)
-Message-ID: <alpine.DEB.2.00.1101261056570.5603@tvnag.unkk.fr>
-References: <0aa77107-bb31-4f74-90e2-02ce5155b0a0@l17g2000yqe.googlegroups.com> <AANLkTi=UQR3cEbTj4N0W_4CLG9T1F+rmkLEew+WO4w5f@mail.gmail.com> <AANLkTinGLMcRJ9EuZY_k4GoKyg+r7hxcgnq3z0=qOemA@mail.gmail.com>
- <AANLkTimJznExH8N9fcgSC88HOPfaFDF7jFMTZUJauL9+@mail.gmail.com>
+Date: Wed, 26 Jan 2011 11:04:45 +0100
+Message-ID: <AANLkTikmM8VzM0hKmr7h7mTUO_z8wqvNFYShw2Pe982m@mail.gmail.com>
+References: <0aa77107-bb31-4f74-90e2-02ce5155b0a0@l17g2000yqe.googlegroups.com>
+ <AANLkTi=UQR3cEbTj4N0W_4CLG9T1F+rmkLEew+WO4w5f@mail.gmail.com>
+ <AANLkTinGLMcRJ9EuZY_k4GoKyg+r7hxcgnq3z0=qOemA@mail.gmail.com>
+ <AANLkTimJznExH8N9fcgSC88HOPfaFDF7jFMTZUJauL9+@mail.gmail.com> <alpine.DEB.2.00.1101261056570.5603@tvnag.unkk.fr>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Cc: kusmabite@gmail.com, msysGit <msysgit@googlegroups.com>,
 	Git Mailing List <git@vger.kernel.org>
-To: Mika Fischer <mika.a.fischer@googlemail.com>
-X-From: git-owner@vger.kernel.org Wed Jan 26 11:04:19 2011
+To: Daniel Stenberg <daniel@haxx.se>
+X-From: git-owner@vger.kernel.org Wed Jan 26 11:05:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pi2Ed-0003eo-Fq
-	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 11:04:19 +0100
+	id 1Pi2FX-00045A-1L
+	for gcvg-git-2@lo.gmane.org; Wed, 26 Jan 2011 11:05:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752720Ab1AZKEJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jan 2011 05:04:09 -0500
-Received: from giant.haxx.se ([80.67.6.50]:43523 "EHLO giant.haxx.se"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751557Ab1AZKEI (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jan 2011 05:04:08 -0500
-X-Greylist: delayed 367 seconds by postgrey-1.27 at vger.kernel.org; Wed, 26 Jan 2011 05:04:07 EST
-Received: from giant.haxx.se (giant.haxx.se [80.67.6.50])
-	by giant.haxx.se (8.14.3/8.14.3/Debian-9.1) with ESMTP id p0Q9vv8n026065;
-	Wed, 26 Jan 2011 10:57:57 +0100
-X-X-Sender: dast@giant.haxx.se
-In-Reply-To: <AANLkTimJznExH8N9fcgSC88HOPfaFDF7jFMTZUJauL9+@mail.gmail.com>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
-X-fromdanielhimself: yes
+	id S1752735Ab1AZKFH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jan 2011 05:05:07 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:55036 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752259Ab1AZKFG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jan 2011 05:05:06 -0500
+Received: by iwn9 with SMTP id 9so706821iwn.19
+        for <git@vger.kernel.org>; Wed, 26 Jan 2011 02:05:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=Ego2f31QXkkqTDH1ggCsDZttAggruDmCzmOxhGhBU48=;
+        b=ToIKQkX81ps5PnDPgWLLzuh60d86lvlLplbHyFROfiUNh2W3sJ1BtzY/ZAB5Ks6o3m
+         XdvyaA5HqtfNpnaDfE/EryLILQCPAbS64SkL2nYF3V1X4JYUormbQKqEg5nd4CqM0YXD
+         IrjMVTbBJeKrIzRyHKsMZvpfta23KoKsFS2mw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=jYFITyrB3ueq6HhJp8q1idmcAOajzVqzXI/5aKX50ZriF5kP4D2EqgwkuKb9BUf6NL
+         ikvjOs4LcvvgYZsY5751s2NrFCdLCwgPehIUbQ7uHuSxbGXksIQOuQrTIme9AF/WT/8+
+         515AtQLbJGjmwuM1WXauejEKLGXSAO58BWYZo=
+Received: by 10.231.39.76 with SMTP id f12mr7898081ibe.126.1296036306001; Wed,
+ 26 Jan 2011 02:05:06 -0800 (PST)
+Received: by 10.231.8.215 with HTTP; Wed, 26 Jan 2011 02:04:45 -0800 (PST)
+In-Reply-To: <alpine.DEB.2.00.1101261056570.5603@tvnag.unkk.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165512>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165513>
 
-On Wed, 26 Jan 2011, Mika Fischer wrote:
+On Wed, Jan 26, 2011 at 10:57, Daniel Stenberg <daniel@haxx.se> wrote:
+> Are these clean builds of libcurl and OpenSSL from source?
 
->> I'll see if I can get a more current version of curl to compile under 
->> Windows.
->
-> I did not manage to do do this.
->
-> But I noticed that the same problem occurs on OpenSuSE 11.2. So I compiled 
-> the latest version of curl on OpenSuSE 11.2 and the problem is still 
-> present...
+I just compiled libcurl against the OpenSSL library of OpenSuSE 11.2 (0.9.8k).
 
-Are these clean builds of libcurl and OpenSSL from source?
+If you want me to test other combinations/versions etc. just let me know.
 
-I'll try to look into this.
+> I'll try to look into this.
 
--- 
+Thanks a lot!
 
-  / daniel.haxx.se
+Best,
+ Mika
