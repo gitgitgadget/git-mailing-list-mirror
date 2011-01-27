@@ -1,70 +1,102 @@
-From: Thomas Hauk <tom@shaggyfrog.com>
-Subject: Project- vs. Package-Level Branching in Git
-Date: Thu, 27 Jan 2011 11:38:21 -0800
-Message-ID: <14F4737F-E8E4-4E4E-A625-16CA63CF9EFF@shaggyfrog.com>
-Mime-Version: 1.0 (Apple Message framework v1082)
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v4] fast-import: treat filemodify with empty tree as
+ delete
+Date: Thu, 27 Jan 2011 13:48:45 -0600
+Message-ID: <20110127194844.GA20894@burratino>
+References: <1291286420-13591-1-git-send-email-david.barr@cordelta.com>
+ <20110103080130.GA8842@burratino>
+ <20110103082458.GC8842@burratino>
+ <20110126224104.GA20388@burratino>
+ <AANLkTimNWLFgTk0Bueiscw-WkAX53v0Xsepn9esXOt7+@mail.gmail.com>
+ <20110126230608.GA26787@burratino>
+ <7vd3nji54o.fsf@alter.siamese.dyndns.org>
+ <20110127060749.GA5586@burratino>
+ <20110127193353.GA19378@m62s10.vlinux.de>
+Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 27 20:45:17 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	David Barr <david.barr@cordelta.com>
+To: Peter Baumann <waste.manager@gmx.de>
+X-From: git-owner@vger.kernel.org Thu Jan 27 20:49:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PiXmM-0001OE-6i
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Jan 2011 20:45:14 +0100
+	id 1PiXq2-0003YV-2E
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Jan 2011 20:49:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752485Ab1A0TpE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Jan 2011 14:45:04 -0500
-Received: from p3plsmtpa01-02.prod.phx3.secureserver.net ([72.167.82.82]:46670
-	"HELO p3plsmtpa01-02.prod.phx3.secureserver.net" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with SMTP id S1751648Ab1A0TpE convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jan 2011 14:45:04 -0500
-X-Greylist: delayed 397 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Jan 2011 14:45:04 EST
-Received: (qmail 5380 invoked from network); 27 Jan 2011 19:38:23 -0000
-Received: from unknown (216.19.178.88)
-  by p3plsmtpa01-02.prod.phx3.secureserver.net (72.167.82.82) with ESMTP; 27 Jan 2011 19:38:23 -0000
-X-Mailer: Apple Mail (2.1082)
+	id S1752485Ab1A0Ts5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jan 2011 14:48:57 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:36499 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751648Ab1A0Ts4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jan 2011 14:48:56 -0500
+Received: by wwa36 with SMTP id 36so2554024wwa.1
+        for <git@vger.kernel.org>; Thu, 27 Jan 2011 11:48:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=USs9/C6s6SZH3R3qtuVgyD4iDLFzs1ERCVbpQpl2aBI=;
+        b=VllytmMaQCue7edfFIlwWyzCXnnTGYW1hlobd6DS2Cd9F7yqlMtMMIDX0S8/3ED8rP
+         aQ1ZMfYmeE75Ry5pj8kqfxB7ZLcXNvs3hBxR73bTWc3iRuf+ELTefbJJYlQE0s2q8Q5X
+         i6nPODzV+eXmjdrHpzgpypmfsjKswet3e4pj0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=dkZNmuH5ATlLMqlICAVlPQpQRRXg5ZLflUM30kSmUk0d01cflUDu7jU8UxgWgO/Avu
+         5ceEW/Ol+JafAQ2bGv91rMRmleELJN5LxNgAvbSif8wfAG6z8F2uvs0qpRRsurf6KW/n
+         6JxfNoA7QyZN9T1lrcSnsvkcJZ7XP47PRuNCk=
+Received: by 10.227.143.206 with SMTP id w14mr1607157wbu.66.1296157735205;
+        Thu, 27 Jan 2011 11:48:55 -0800 (PST)
+Received: from burratino (adsl-69-209-75-28.dsl.chcgil.ameritech.net [69.209.75.28])
+        by mx.google.com with ESMTPS id o6sm408169wbo.3.2011.01.27.11.48.52
+        (version=SSLv3 cipher=RC4-MD5);
+        Thu, 27 Jan 2011 11:48:53 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20110127193353.GA19378@m62s10.vlinux.de>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165586>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165587>
 
-Back when I worked at a large games company, we used Perforce, and our repo structure looked a little something like this:
+Peter Baumann wrote:
+> On Thu, Jan 27, 2011 at 12:07:49AM -0600, Jonathan Nieder wrote:
 
-/branches
-	/alpha
-	/beta
-/mainline
-	/packages
-		/external
-			/foolib
-				/1.0
-				/1.1
-				/2.0
-		/internal
-			/barlib
-				/dev
-				/1.0
-				/2.0
-			/bazlib
-				/2.34
-				/2.35
-			/qux
-				/dev
+>> +++ b/t/t9300-fast-import.sh
+>> @@ -818,6 +818,48 @@ test_expect_success \
+>>  	 compare_diff_raw expect actual'
+>>  
+>> +test_expect_success \
+>> +	'N: delete directory by copying' \
+>> +	'cat >expect <<-\EOF &&
+>> +	OBJID
+>> +	:100644 000000 OBJID OBJID D	foo/bar/qux
+>> +	OBJID
+>> +	:000000 100644 OBJID OBJID A	foo/bar/baz
+>> +	:000000 100644 OBJID OBJID A	foo/bar/qux
+>> +	EOF
+>> +	 empty_tree=$(git mktree </dev/null) &&
+>
+> [ Feel free to ignore me ... ]
+>
+> Just a (stupid?) suggestion: Why not put a $EMPTY_TREE definiton in test-lib.sh
+> (or any other global file sourced in the tests) so if another caller needs this
+> definition it won't waste cpu cycles doing the calculation via mktree < /dev/null
+> again?
 
-At the package level, we would split up packages/libraries into two groups based on if they were developed at the company or not (external/internal), and inside each one, we might have multiple versions. In the example above, the repo is for the "qux" game, which uses an internal "bazlib" library developed by another group, and the "barlib" library which was developed for use on "qux" and may be used simultaneously on other projects.
+Might be a good idea.  Note, though, that that would mean more cpu
+cycles used rather than less, unless we hardcode the object name
+(which I prefer not to do).
 
-Project-level branches took mainline as a base and branched into the /branches directory. Package-level branches would usually take the "dev" version (which represented the current development version, akin to "master" in Git) as a base and branch into the same parent directory but with an actual version name.
-
-I've successfully used this repo structure with several other projects over the years at other companies (who were mostly using Subversion). Now I'm trying to get into the Git swing of things, but it seems to be that Git only offers project-level branching, and doesn't allow for the kind of package-level branching I'm describing here.
-
-Am I incorrect or is there a way to accomplish with Git what I was doing before with P4 and SVN?
-
---
-Thomas Hauk
-Shaggy Frog Software
-www.shaggyfrog.com
+One possibility would be a lib-object-names.sh defining EMPTY_BLOB and
+EMPTY_TREE to be sourced by tests that need it.
