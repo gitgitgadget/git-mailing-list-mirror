@@ -1,89 +1,113 @@
-From: Kacper Kornet <kornet@camk.edu.pl>
-Subject: [PATCH] gitk: Preserve Entry class key bindings for SHA id
-Date: Thu, 27 Jan 2011 17:06:25 +0100
-Message-ID: <20110127160625.GC519@camk.edu.pl>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] Fix wrong xhtml option to highlight
+Date: Thu, 27 Jan 2011 11:00:53 -0800
+Message-ID: <7vvd1agoii.fsf@alter.siamese.dyndns.org>
+References: <1295898298-9794-1-git-send-email-Jochen@herr-schmitt.de>
+ <7vvd1dlxza.fsf@alter.siamese.dyndns.org>
+ <1296092646.23506.10.camel@drew-northup.unet.maine.edu>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Cc: git@vger.kernel.org
-To: Paul Mackerras <paulus@samba.org>
-X-From: git-owner@vger.kernel.org Thu Jan 27 17:38:12 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jochen Schmitt <Jochen@herr-schmitt.de>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Adam Tkac <atkac@redhat.com>, git@vger.kernel.org
+To: Drew Northup <drew.northup@maine.edu>
+X-From: git-owner@vger.kernel.org Thu Jan 27 20:01:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PiUrE-0008J2-0R
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Jan 2011 17:38:04 +0100
+	id 1PiX65-00062L-8W
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Jan 2011 20:01:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752004Ab1A0Qh6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Jan 2011 11:37:58 -0500
-Received: from moat.camk.edu.pl ([148.81.175.50]:35418 "EHLO moat.camk.edu.pl"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751423Ab1A0Qh5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jan 2011 11:37:57 -0500
-X-Greylist: delayed 1884 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Jan 2011 11:37:56 EST
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by moat.camk.edu.pl (Postfix) with ESMTP id 41F675F0048;
-	Thu, 27 Jan 2011 17:06:31 +0100 (CET)
-X-Virus-Scanned: amavisd-new at camk.edu.pl
-Received: from moat.camk.edu.pl ([127.0.0.1])
-	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id AKJF5i+Wcy8z; Thu, 27 Jan 2011 17:06:26 +0100 (CET)
-Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
-	by moat.camk.edu.pl (Postfix) with ESMTP id F0C0D5F0046;
-	Thu, 27 Jan 2011 17:06:25 +0100 (CET)
-Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
-	id D99D080F6C; Thu, 27 Jan 2011 17:06:25 +0100 (CET)
-Mail-Followup-To: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
-Content-Disposition: inline
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753276Ab1A0TBO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jan 2011 14:01:14 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42122 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752797Ab1A0TBN (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jan 2011 14:01:13 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CDE6E332D;
+	Thu, 27 Jan 2011 14:02:00 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=qWDojSEfiDJqRnWVrlEpFOl2+2s=; b=v3TQ5s
+	2UTaJ1+/rVt9V2H4+u9ipWODkG1Fcw4kbag+EFMVR5KZSJ8HBpG9O9SH8hCKQDFX
+	vYOAHJIhYz2QVLi3CuSfAg0ZsOpEdLJALlXRPmhr81iEfkbUuzdkgxgZrrzCIflJ
+	/BKYE97P6kqRE8JHgrk9h/xyh8phL3lHnuLb4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=wjwxqYJGJ9WTs2q36tK8EbA3jKYTPguE
+	MDU2E9b1k7KU1XrUo9d5nbtcdMx1dUXOul/KfIdFo5vjAUZ7n+w5r4b/Wi377gbM
+	7MoBcAtawDNnKayGELkOtvus3Z4w2FwZ3ePN29SyTctvbehf+YYCIUIUaSNGp+ov
+	0NuTFviP9Pw=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 7AA883329;
+	Thu, 27 Jan 2011 14:01:55 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C19E83327; Thu, 27 Jan 2011
+ 14:01:45 -0500 (EST)
+In-Reply-To: <1296092646.23506.10.camel@drew-northup.unet.maine.edu> (Drew
+ Northup's message of "Wed\, 26 Jan 2011 20\:44\:06 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E89AEA66-2A47-11E0-87DA-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165582>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165584>
 
-If bind is specified for key without any modifier, then any combination
-of modifiers may be present in the event. So bind $e $ev "$escript;
-break" breaks some useful bindings from Entry class (for example
-Ctrl+k).
+Drew Northup <drew.northup@maine.edu> writes:
 
-Signed-off-by: Kacper Kornet <kornet@camk.edu.pl>
----
- gitk |   10 +++++-----
- 1 files changed, 5 insertions(+), 5 deletions(-)
+>> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+>> > index 1025c2f..b662420 100755
+>> > --- a/gitweb/gitweb.perl
+>> > +++ b/gitweb/gitweb.perl
+>> > @@ -3468,7 +3468,7 @@ sub run_highlighter {
+>> >  	close $fd;
+>> >  	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
+>> >  	          quote_command($highlight_bin).
+>> > -	          " --xhtml --fragment --syntax $syntax |"
+>> > +	          " -xhtml --fragment --syntax $syntax |"
+>> 
+>> Curious.
+>> 
+>> Does the command take double-dash for the fragment and syntax options but
+>> a single dash for the xhtml option?  Really...
+>> 
+>> A few top hits returned by Google for "highlight manual page" tells me
+>> otherwise.
+>
+> Certainly appears to be the case that "--xhtml" is the option in Ubuntu
+> 10.04.1 LTS. 
+>
+> Jochen,
+> Did you mean "-X" (which sets the same option)?
 
-diff --git a/gitk b/gitk
-index 9cbc09d..71eebb2 100755
---- a/gitk
-+++ b/gitk
-@@ -2389,6 +2389,10 @@ proc makewindow {} {
-         }
-     }
- 
-+    foreach e $entries {
-+        bindtags $e [linsert [bindtags $e] 2 entrybind]
-+    }
-+
-     bind .pwbottom <Configure> {resizecdetpanes %W %w}
-     pack .ctop -fill both -expand 1
-     bindall <1> {selcanvline %W %x %y}
-@@ -2588,12 +2592,8 @@ proc scrollcanv {cscroll f0 f1} {
- proc bindkey {ev script} {
-     global entries
-     bind . $ev $script
--    set escript [bind Entry $ev]
--    if {$escript == {}} {
--	set escript [bind Entry <Key>]
--    }
-     foreach e $entries {
--	bind $e $ev "$escript; break"
-+	bind entrybind $ev "break"
-     }
- }
- 
--- 
-1.7.3.5
+The current proposal is to drop --xhtml and let highlight default to HTML.
 
--- 
-  Kacper Kornet
+Honestly speaking, I don't like the approach very much; it would have been
+much better if highlight had a single way that is supported throughout its
+versions to specify the output format.  But it appears that there isn't,
+and relying on and hoping for its default to stay HTML is the best we
+could do, if we plan to support highlight 2.4.something or older.
+
+The copy of U10.04 I have has highlight 2.12, and according to its manual
+pages, -X, --xhtml, and --out-format=xhtml mean the same thing.  HTML is
+the default.
+
+The change-log at www.andre-simon.de indicates that --out-format has
+become the preferred method and the short options like -X and -H are not
+supported in recent versions (3.0 beta and newer).
+
+But as Jakub mentioned, 2.4.5 did not have --output-format; it was only in
+3.0 beta that -O was redefined to mean --output-format and in old versions
+the short option meant something else.
+
+What a mess...
+
+The next time we introduce a new dependency, we really should try hard to
+assess the stability and maturity of that dependency.  In hindsight, I
+think "highlight" was probably a bit too premature to be depended upon.
