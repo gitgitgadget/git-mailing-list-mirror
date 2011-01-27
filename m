@@ -1,97 +1,89 @@
-From: Libor Pechacek <lpechacek@suse.cz>
-Subject: [PATCH] Disallow empty section and variable names
-Date: Thu, 27 Jan 2011 15:52:53 +0100
-Message-ID: <20110127145253.GD6312@fm.suse.cz>
+From: Kacper Kornet <kornet@camk.edu.pl>
+Subject: [PATCH] gitk: Preserve Entry class key bindings for SHA id
+Date: Thu, 27 Jan 2011 17:06:25 +0100
+Message-ID: <20110127160625.GC519@camk.edu.pl>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Jan 27 15:53:01 2011
+Content-Type: text/plain; charset=iso-8859-2
+Cc: git@vger.kernel.org
+To: Paul Mackerras <paulus@samba.org>
+X-From: git-owner@vger.kernel.org Thu Jan 27 17:38:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PiTDX-0000Lu-KL
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Jan 2011 15:52:59 +0100
+	id 1PiUrE-0008J2-0R
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Jan 2011 17:38:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751291Ab1A0Owy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Jan 2011 09:52:54 -0500
-Received: from cantor.suse.de ([195.135.220.2]:36789 "EHLO mx1.suse.de"
+	id S1752004Ab1A0Qh6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jan 2011 11:37:58 -0500
+Received: from moat.camk.edu.pl ([148.81.175.50]:35418 "EHLO moat.camk.edu.pl"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751042Ab1A0Owy (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 27 Jan 2011 09:52:54 -0500
-Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.221.2])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mx1.suse.de (Postfix) with ESMTP id 5954593EE3
-	for <git@vger.kernel.org>; Thu, 27 Jan 2011 15:52:53 +0100 (CET)
+	id S1751423Ab1A0Qh5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jan 2011 11:37:57 -0500
+X-Greylist: delayed 1884 seconds by postgrey-1.27 at vger.kernel.org; Thu, 27 Jan 2011 11:37:56 EST
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by moat.camk.edu.pl (Postfix) with ESMTP id 41F675F0048;
+	Thu, 27 Jan 2011 17:06:31 +0100 (CET)
+X-Virus-Scanned: amavisd-new at camk.edu.pl
+Received: from moat.camk.edu.pl ([127.0.0.1])
+	by localhost (liam.camk.edu.pl [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id AKJF5i+Wcy8z; Thu, 27 Jan 2011 17:06:26 +0100 (CET)
+Received: from gatekeeper.camk.edu.pl (gatekeeper.camk.edu.pl [192.168.1.23])
+	by moat.camk.edu.pl (Postfix) with ESMTP id F0C0D5F0046;
+	Thu, 27 Jan 2011 17:06:25 +0100 (CET)
+Received: by gatekeeper.camk.edu.pl (Postfix, from userid 1293)
+	id D99D080F6C; Thu, 27 Jan 2011 17:06:25 +0100 (CET)
+Mail-Followup-To: Paul Mackerras <paulus@samba.org>, git@vger.kernel.org
 Content-Disposition: inline
-User-Agent: Mutt/1.5.18-muttng (2008-05-17-r1399)
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165581>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165582>
 
-It is possible to break you repository config by creating an invalid config
-option.  The config parser in turn chokes on it.
+If bind is specified for key without any modifier, then any combination
+of modifiers may be present in the event. So bind $e $ev "$escript;
+break" breaks some useful bindings from Entry class (for example
+Ctrl+k).
 
-$ git init
-Initialized empty Git repository in /tmp/gittest/.git/
-$ git config .foo false
-$ git config .foo
-fatal: bad config file line 6 in .git/config
-
-This patch makes git-config reject keys which start or end with a dot.  The fix
-also revealed a typo in t5526-fetch-submodules, which is fixed by this patch as
-well.
-
-Signed-off-by: Libor Pechacek <lpechacek@suse.cz>
+Signed-off-by: Kacper Kornet <kornet@camk.edu.pl>
 ---
+ gitk |   10 +++++-----
+ 1 files changed, 5 insertions(+), 5 deletions(-)
 
-Applies on top "Sanity-check config variable names".
-
- config.c                    |    7 ++++++-
- t/t5526-fetch-submodules.sh |    2 +-
- 2 files changed, 7 insertions(+), 2 deletions(-)
-
-diff --git a/config.c b/config.c
-index c976544..81a0705 100644
---- a/config.c
-+++ b/config.c
-@@ -1119,7 +1119,7 @@ int git_config_parse_key(const char *key, char **store_key, int *baselen_)
- 	 * key name separated by a dot, we have to know where the dot is.
- 	 */
+diff --git a/gitk b/gitk
+index 9cbc09d..71eebb2 100755
+--- a/gitk
++++ b/gitk
+@@ -2389,6 +2389,10 @@ proc makewindow {} {
+         }
+     }
  
--	if (last_dot == NULL) {
-+	if (last_dot == NULL || *key == '.') {
- 		error("key does not contain a section: %s", key);
- 		return -2;
- 	}
-@@ -1156,6 +1156,11 @@ int git_config_parse_key(const char *key, char **store_key, int *baselen_)
- 	if (store_key)
- 		(*store_key)[i] = 0;
- 
-+	if (key[i-1] == '.') {
-+		error("key does not contain variable name: %s", key);
-+		goto out_free_ret_1;
-+	}
++    foreach e $entries {
++        bindtags $e [linsert [bindtags $e] 2 entrybind]
++    }
 +
- 	return 0;
+     bind .pwbottom <Configure> {resizecdetpanes %W %w}
+     pack .ctop -fill both -expand 1
+     bindall <1> {selcanvline %W %x %y}
+@@ -2588,12 +2592,8 @@ proc scrollcanv {cscroll f0 f1} {
+ proc bindkey {ev script} {
+     global entries
+     bind . $ev $script
+-    set escript [bind Entry $ev]
+-    if {$escript == {}} {
+-	set escript [bind Entry <Key>]
+-    }
+     foreach e $entries {
+-	bind $e $ev "$escript; break"
++	bind entrybind $ev "break"
+     }
+ }
  
- out_free_ret_1:
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 884a5e5..7106c6c 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -124,7 +124,7 @@ test_expect_success "--recurse-submodules overrides fetchRecurseSubmodules setti
- 	(
- 		cd downstream &&
- 		git fetch --recurse-submodules >../actual.out 2>../actual.err &&
--		git config -f --unset .gitmodules submodule.submodule.fetchRecurseSubmodules true &&
-+		git config -f .gitmodules --unset submodule.submodule.fetchRecurseSubmodules true &&
- 		git config --unset submodule.submodule.fetchRecurseSubmodules
- 	) &&
- 	test_cmp expect.out actual.out &&
 -- 
-1.7.4.rc3.3.g8b2bfe
+1.7.3.5
+
+-- 
+  Kacper Kornet
