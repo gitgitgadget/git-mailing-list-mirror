@@ -1,94 +1,68 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [PATCH] Fix wrong xhtml option to highlight
-Date: Wed, 26 Jan 2011 20:44:06 -0500
-Message-ID: <1296092646.23506.10.camel@drew-northup.unet.maine.edu>
-References: <1295898298-9794-1-git-send-email-Jochen@herr-schmitt.de>
-	 <7vvd1dlxza.fsf@alter.siamese.dyndns.org>
+From: David Borowitz <dave@bwitz.com>
+Subject: Re: HTTP push not respecting .netrc
+Date: Wed, 26 Jan 2011 18:47:56 -0800
+Message-ID: <AANLkTi=k5m+90wZPLMjah3cnL=4PjF5Skp2zkaTXyD09@mail.gmail.com>
+References: <AANLkTik84-zRwi+0dGGFoTUrj6Zr3bxO=fE9P_3MuZdZ@mail.gmail.com>
+ <AANLkTi=4cE711TtqE0E-05s9Pk72C8OymNf_-5NhrfXS@mail.gmail.com>
+ <7vy66p1vn3.fsf@alter.siamese.dyndns.org> <AANLkTikSV5OPrtbwq-X9SknNAEHQX_gHVFc8YZu0g4+N@mail.gmail.com>
+ <AANLkTin8cxi_5_Rx6s_C2NjgGWYhUX+kdV5E1A_FYc_j@mail.gmail.com> <AANLkTi=cqsvXb3eywTfxAg9hH9cigumSQjoHqq5bnJfM@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Jochen Schmitt <Jochen@herr-schmitt.de>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Tay Ray Chuan <rctay89@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 27 02:51:41 2011
+X-From: git-owner@vger.kernel.org Thu Jan 27 03:48:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PiH1P-0000qk-J9
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Jan 2011 02:51:39 +0100
+	id 1PiHuM-000491-OB
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Jan 2011 03:48:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754564Ab1A0Bvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jan 2011 20:51:33 -0500
-Received: from beryl.its.maine.edu ([130.111.32.94]:37452 "EHLO
-	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754413Ab1A0Bvc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jan 2011 20:51:32 -0500
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p0R1iDdU010574
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Wed, 26 Jan 2011 20:44:13 -0500
-In-Reply-To: <7vvd1dlxza.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p0R1iDdU010574
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1296697492.97056@ax4GMvTA7dE3UXHScfhZbA
+	id S1754529Ab1A0CsU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jan 2011 21:48:20 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:52760 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754438Ab1A0CsU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jan 2011 21:48:20 -0500
+Received: by wwa36 with SMTP id 36so1699391wwa.1
+        for <git@vger.kernel.org>; Wed, 26 Jan 2011 18:48:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:from
+         :date:x-google-sender-auth:message-id:subject:to:cc:content-type;
+        bh=/MyYhfVQ+xVunppPZ0Duf2CsbnGgKMqCgSQluEQcoQk=;
+        b=QzhWrmjMhdBsWcLbqLYAV42dFIc0HkG993OqOS8vTGzYndZ5CvqXoIa1esu/U4NGdM
+         P7Zhc9AF0QCG5fr+E6sLuBKj+EOOOZbCwuRbofSapdhW5nanZ/m1c1Qu/KeokGo3DtxC
+         IdXx8vIdpNe5jKGTn/103O7ilFRYK8KS4enE0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type;
+        b=vyvFGg4U9CQMOTaFQcOFAr2QgRx3uz8SM4UY9QbiKhkQzbl6J9ujv3ZhrIF9j7hEqU
+         IVRlD7oURDuFcWa8gI940m9ST5owmstl6ODuMaSFLX6cvrMp0oQPMkuBzKwc42HjFK6n
+         RtI7YP0ROUNKbshPEdvmhBJS/Rs8X799SRlRI=
+Received: by 10.216.13.194 with SMTP id b44mr1176594web.68.1296096498382; Wed,
+ 26 Jan 2011 18:48:18 -0800 (PST)
+Received: by 10.216.60.77 with HTTP; Wed, 26 Jan 2011 18:47:56 -0800 (PST)
+In-Reply-To: <AANLkTi=cqsvXb3eywTfxAg9hH9cigumSQjoHqq5bnJfM@mail.gmail.com>
+X-Google-Sender-Auth: YJihmnqWFIBAUCc8YBVh9pVqSJs
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165569>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165570>
 
+On Wed, Jan 26, 2011 at 18:00, David Borowitz <dave@bwitz.com> wrote:
+> But this raises further questions:
+> -Why does git/curl decide it's ok to retry with authentication in one
+> case, but not in the other?
 
-On Mon, 2011-01-24 at 14:48 -0800, Junio C Hamano wrote:
-> Jochen Schmitt <Jochen@herr-schmitt.de> writes:
-> 
-> > ---
-> > Hallo,
-> >
-> > because I'm the maintainer of the highlight package in the
-> > Fedora Project I was notified, that highlight doesn't works
-> > properly with gitweb in BZ #672293.
-> >
-> > So I have create the following simple patch to solve the 
-> > reported issue.
-> >
-> > Best Regards
-> >
-> > Jochen Schmitt
-> >
-> >  gitweb/gitweb.perl |    2 +-
-> >  1 files changed, 1 insertions(+), 1 deletions(-)
-> >
-> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
-> > index 1025c2f..b662420 100755
-> > --- a/gitweb/gitweb.perl
-> > +++ b/gitweb/gitweb.perl
-> > @@ -3468,7 +3468,7 @@ sub run_highlighter {
-> >  	close $fd;
-> >  	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
-> >  	          quote_command($highlight_bin).
-> > -	          " --xhtml --fragment --syntax $syntax |"
-> > +	          " -xhtml --fragment --syntax $syntax |"
-> 
-> Curious.
-> 
-> Does the command take double-dash for the fragment and syntax options but
-> a single dash for the xhtml option?  Really...
-> 
-> A few top hits returned by Google for "highlight manual page" tells me
-> otherwise.
+Poking further, it looks like curl is deciding not to retry because
+the ioctl callback is failing to rewind the post buffer when clearly
+it should be able to. So it's more likely a git bug than a curl issue
+(the following question notwithstanding).
 
-Certainly appears to be the case that "--xhtml" is the option in Ubuntu
-10.04.1 LTS. 
-
-Jochen,
-Did you mean "-X" (which sets the same option)?
-
--- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+> -Why does curl send the auth header before ever receiving a 401, while
+> git does not? (Would fixing this be as easy as setting another curl
+> option?)
