@@ -1,90 +1,93 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [RFC] fast-import: 'cat-blob' and 'ls' commands
-Date: Thu, 27 Jan 2011 09:46:29 +1000
-Message-ID: <4D40B255.4020403@vilain.net>
-References: <1291286420-13591-1-git-send-email-david.barr@cordelta.com> <20110103080130.GA8842@burratino> <20110126213922.GA19727@burratino>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH jn/fast-import-fix v3] fast-import: treat filemodify with
+ empty tree as delete
+Date: Wed, 26 Jan 2011 16:04:23 -0800
+Message-ID: <7vd3nji54o.fsf@alter.siamese.dyndns.org>
+References: <1291286420-13591-1-git-send-email-david.barr@cordelta.com>
+ <20110103080130.GA8842@burratino> <20110103082458.GC8842@burratino>
+ <20110126224104.GA20388@burratino>
+ <AANLkTimNWLFgTk0Bueiscw-WkAX53v0Xsepn9esXOt7+@mail.gmail.com>
+ <20110126230608.GA26787@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: vcs-fast-import-devs@lists.launchpad.net,
-	David Barr <david.barr@cordelta.com>,
+Content-Type: text/plain; charset=us-ascii
+Cc: Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
 	Git Mailing List <git@vger.kernel.org>,
 	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
 	"Shawn O. Pearce" <spearce@spearce.org>,
-	Tomas Carnecky <tom@dbservice.com>
+	David Barr <david.barr@cordelta.com>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 27 00:47:31 2011
+X-From: git-owner@vger.kernel.org Thu Jan 27 01:04:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PiF5G-00075i-L1
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Jan 2011 00:47:30 +0100
+	id 1PiFM4-0006Ts-Am
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Jan 2011 01:04:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754362Ab1AZXqn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jan 2011 18:46:43 -0500
-Received: from mx1.orcon.net.nz ([219.88.242.51]:40368 "EHLO mx1.orcon.net.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754164Ab1AZXqm (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jan 2011 18:46:42 -0500
-Received: from Debian-exim by mx1.orcon.net.nz with local (Exim 4.69)
-	(envelope-from <sam@vilain.net>)
-	id 1PiF4S-0001MC-Pd
-	for git@vger.kernel.org; Thu, 27 Jan 2011 12:46:40 +1300
-Received: from [60.234.254.246] (helo=mail.utsl.gen.nz)
-	by mx1.orcon.net.nz with esmtp (Exim 4.69)
-	(envelope-from <sam@vilain.net>)
-	id 1PiF4S-0001M4-K0
-	for git@vger.kernel.org; Thu, 27 Jan 2011 12:46:40 +1300
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 7AE782E023; Thu, 27 Jan 2011 12:46:40 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on naos.lan
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=unavailable version=3.3.1
-Received: from [169.222.8.180] (unknown [169.222.8.180])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 926252E021;
-	Thu, 27 Jan 2011 12:46:35 +1300 (NZDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
-In-Reply-To: <20110126213922.GA19727@burratino>
-X-Enigmail-Version: 1.1.2
-X-DSPAM-Check: by mx1.orcon.net.nz on Thu, 27 Jan 2011 12:46:40 +1300
-X-DSPAM-Result: Innocent
-X-DSPAM-Processed: Thu Jan 27 12:46:40 2011
-X-DSPAM-Confidence: 0.5546
-X-DSPAM-Probability: 0.0000
+	id S1754489Ab1A0AEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jan 2011 19:04:44 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51814 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754484Ab1A0AEn (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jan 2011 19:04:43 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3894E4D79;
+	Wed, 26 Jan 2011 19:05:32 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; s=
+	sasl; bh=FQBzco6MMdxCJ4yc/zOXZWEUAzw=; b=vHALHlmdZJoPe8dfF7ukHNt
+	1BOvahEBYD9KMiPTB+1RB8qMrI8l67Ip0WdCc+oT6XipwUsfQOSmXsNvAE1iiYuy
+	JUmO12bqV23kpmIbaLo/nVbEO0o16R1BYxkxXJtXf6F6wgzLa2d9ZUjafRPDCWUs
+	mZm6Wn1npBz49aLy9oIk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:message-id:mime-version:content-type; q=
+	dns; s=sasl; b=RO+JGoZmDEw4U3TBTcgcx2jCwz4mgyGo0Xht+EJLibTg0jkSM
+	XHx92hjH0pl5fEz2TFuWOhiZRWljjqo+r9XBA1Ux2r0LO/y4uOM3p5s986GybGQ3
+	Zy+k5baFIhwqG645W+yg9WyG2Y5H9b6ehDcUr7V2K21/vl2dvHRSntTHLA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 447104D77;
+	Wed, 26 Jan 2011 19:05:25 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3FC924D6D; Wed, 26 Jan 2011
+ 19:05:16 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 241132AC-29A9-11E0-8FEC-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165562>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165563>
 
-On 27/01/11 07:39, Jonathan Nieder wrote:
-> Hi fast importers,
+Jonathan Nieder <jrnieder@gmail.com> writes:
+
+> Sverre Rabbelier wrote:
 >
-> I would like your thoughts on a few developments in fast-import
-> protocol (thanks to David, Ram, Sverre, Tomas, and Sam for work so
-> far).  If they seem good, I'd be happy to help make patches to other
-> backends so these can be implemented widely.
+>> Should it go on maint now that it's factored out, since it shipped in
+>> 1.7.3, or just master?
 >
-> Contents: cat-blob command, filemodify (M) with trees, ls command.
+> Hmm.  I suppose on top of b2124125 (jn/fast-import-fix).
 
-Ok.  My first thoughts here are to be careful about the design: this
-fast-import protocol is fast becoming close to getting an RFC, having
-multiple interoperable implementations available, so do consider whether
-all syntax will be cleanly extensible to eventually support full basic
-plumbing requirements.
+Hmm, why not on top of v1.7.3-rc0~75^2 aka 334fba6 (Teach fast-import to
+import subtrees named by tree id, 2010-06-30) then?
 
-ie, using the command 'cat-blob' instead of a 'cat' command with 'blob'
-as an argument as git cat-file currently works seems to be an
-inflexibility and may eventually be considered legacy.
+> While applying it there I noticed that the change to t9300 includes an
+> unrelated change (residue of an old rebase).  Here's a fixed version.
 
-Otherwise it looks fine, seems to support all the file types etc. 
-Thanks for keeping the work up!
+> diff --git a/fast-import.c b/fast-import.c
+> index d881630..9cf26f1 100644
+> --- a/fast-import.c
+> +++ b/fast-import.c
+> @@ -2194,6 +2194,16 @@ static void file_change_m(struct branch *b)
+>  		p = uq.buf;
+>  	}
+>  
+> +	/*
+> +	 * Git does not track empty, non-toplevel directories.
+> +	 */
+> +	if (S_ISDIR(mode) &&
+> +	    !memcmp(sha1, (const unsigned char *) EMPTY_TREE_SHA1_BIN, 20) &&
 
-Cheers,
-Sam
+Do you need this cast?
