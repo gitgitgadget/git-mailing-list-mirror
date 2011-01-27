@@ -1,57 +1,94 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 2/2] rebase: give a better error message for bogus branch
-Date: Wed, 26 Jan 2011 17:27:19 -0800
-Message-ID: <7v39ofi1ag.fsf@alter.siamese.dyndns.org>
-References: <20110127002711.GB32711@sigill.intra.peff.net>
+From: Drew Northup <drew.northup@maine.edu>
+Subject: Re: [PATCH] Fix wrong xhtml option to highlight
+Date: Wed, 26 Jan 2011 20:44:06 -0500
+Message-ID: <1296092646.23506.10.camel@drew-northup.unet.maine.edu>
+References: <1295898298-9794-1-git-send-email-Jochen@herr-schmitt.de>
+	 <7vvd1dlxza.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Jan 27 02:27:34 2011
+Content-Type: text/plain
+Content-Transfer-Encoding: 7bit
+Cc: Jochen Schmitt <Jochen@herr-schmitt.de>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 27 02:51:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PiGe5-0007WM-En
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Jan 2011 02:27:33 +0100
+	id 1PiH1P-0000qk-J9
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Jan 2011 02:51:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754316Ab1A0B12 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jan 2011 20:27:28 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58981 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754005Ab1A0B11 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jan 2011 20:27:27 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BEA6037A5;
-	Wed, 26 Jan 2011 20:28:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=p5F5+bHL88gX8iEMewdDoeS+0+o=; b=Sd3OUv
-	UcMpgGoxIATA0b4WvFi/9AZbi/EqgxqPS97A7tvevgii501zOE15HOIGOxTAN68y
-	8FLl5JbPNuxNw4k8bi/lizA2TQqRNv9d4t7Wbbdy+9y0aX8CgmMKqKEkmI/+G+L2
-	drbq4r042udXyGQGUZVuN2fNTEV28htTq5eKM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=CUYXQxjzY+LTdlvS4NDedCPftSBmtdIY
-	6Is1cKyyH6k8Hc9MAMVRIBYztMwqQW2gDO15SEISbizjwgimXEU1Hdtd26YCndfD
-	m0XpuDrvTFa7itv/Buzi7Do8eAL3sE2Lt2xKrT/8N/IbGYAFxcKUpxHfDrHqdnlk
-	Bu8Rrdt+x6E=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9878C37A4;
-	Wed, 26 Jan 2011 20:28:14 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id ADD38379D; Wed, 26 Jan 2011
- 20:28:11 -0500 (EST)
-In-Reply-To: <20110127002711.GB32711@sigill.intra.peff.net> (Jeff King's
- message of "Wed\, 26 Jan 2011 19\:27\:11 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: B606DEB8-29B4-11E0-8363-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
+	id S1754564Ab1A0Bvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jan 2011 20:51:33 -0500
+Received: from beryl.its.maine.edu ([130.111.32.94]:37452 "EHLO
+	beryl.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754413Ab1A0Bvc (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jan 2011 20:51:32 -0500
+Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
+	by beryl.its.maine.edu (8.13.8/8.13.8) with ESMTP id p0R1iDdU010574
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 26 Jan 2011 20:44:13 -0500
+In-Reply-To: <7vvd1dlxza.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
+X-MailScanner-Information: Please contact the ISP for more information
+X-UmaineSystem-MailScanner-ID: p0R1iDdU010574
+X-MailScanner: Found to be clean
+X-MailScanner-From: drew.northup@maine.edu
+X-UmaineSystem-MailScanner-Watermark: 1296697492.97056@ax4GMvTA7dE3UXHScfhZbA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165568>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165569>
 
-Thanks, both patches look very sensible.
+
+On Mon, 2011-01-24 at 14:48 -0800, Junio C Hamano wrote:
+> Jochen Schmitt <Jochen@herr-schmitt.de> writes:
+> 
+> > ---
+> > Hallo,
+> >
+> > because I'm the maintainer of the highlight package in the
+> > Fedora Project I was notified, that highlight doesn't works
+> > properly with gitweb in BZ #672293.
+> >
+> > So I have create the following simple patch to solve the 
+> > reported issue.
+> >
+> > Best Regards
+> >
+> > Jochen Schmitt
+> >
+> >  gitweb/gitweb.perl |    2 +-
+> >  1 files changed, 1 insertions(+), 1 deletions(-)
+> >
+> > diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+> > index 1025c2f..b662420 100755
+> > --- a/gitweb/gitweb.perl
+> > +++ b/gitweb/gitweb.perl
+> > @@ -3468,7 +3468,7 @@ sub run_highlighter {
+> >  	close $fd;
+> >  	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
+> >  	          quote_command($highlight_bin).
+> > -	          " --xhtml --fragment --syntax $syntax |"
+> > +	          " -xhtml --fragment --syntax $syntax |"
+> 
+> Curious.
+> 
+> Does the command take double-dash for the fragment and syntax options but
+> a single dash for the xhtml option?  Really...
+> 
+> A few top hits returned by Google for "highlight manual page" tells me
+> otherwise.
+
+Certainly appears to be the case that "--xhtml" is the option in Ubuntu
+10.04.1 LTS. 
+
+Jochen,
+Did you mean "-X" (which sets the same option)?
+
+-- 
+-Drew Northup
+________________________________________________
+"As opposed to vegetable or mineral error?"
+-John Pescatore, SANS NewsBites Vol. 12 Num. 59
