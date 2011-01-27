@@ -1,104 +1,70 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
-Subject: Re: [PATCH] git-gui: update russian translation
-Date: Thu, 27 Jan 2011 11:39:04 +0000
-Message-ID: <87k4hqo9t3.fsf@fox.patthoyts.tk>
-References: <20110119210131.GA8184@blimp.localdomain>
-	<87sjwhn9c3.fsf@fox.patthoyts.tk>
-	<7vmxmplt2g.fsf@alter.siamese.dyndns.org>
+From: Adam Tkac <atkac@redhat.com>
+Subject: [PATCH] Don't pass "--xhtml" to hightlight in gitweb.perl script.
+Date: Thu, 27 Jan 2011 13:51:51 +0100
+Message-ID: <20110127125151.GA19072@traged.englab.brq.redhat.com>
+References: <20110126171118.GA867@traged.englab.brq.redhat.com>
+ <m339ofbb9t.fsf@localhost.localdomain>
+ <7vaainjq7f.fsf@alter.siamese.dyndns.org>
+ <20110127120323.GA3416@traged.englab.brq.redhat.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Alex Riesen <raa.lkml@gmail.com>, git@vger.kernel.org,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Serge Ziryukin <ftrvxmtrx@gmail.com>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Alexander Gavrilov <angavrilov@gmail.com>
+Cc: Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Jochen Schmitt <Jochen@herr-schmitt.de>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Jan 27 13:33:23 2011
+X-From: git-owner@vger.kernel.org Thu Jan 27 13:52:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PiR2F-00024c-7D
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Jan 2011 13:33:11 +0100
+	id 1PiRKz-0008B9-KE
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Jan 2011 13:52:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753631Ab1A0Mcm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 27 Jan 2011 07:32:42 -0500
-Received: from smtp-out3.blueyonder.co.uk ([195.188.213.6]:57918 "EHLO
-	smtp-out3.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754119Ab1A0Mck (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jan 2011 07:32:40 -0500
-Received: from [172.23.170.147] (helo=anti-virus03-10)
-	by smtp-out3.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1PiQC5-0007Yp-Et; Thu, 27 Jan 2011 11:39:17 +0000
-Received: from [77.100.97.230] (helo=fox.patthoyts.tk)
-	by asmtp-out4.blueyonder.co.uk with esmtpa (Exim 4.72)
-	(envelope-from <patthoyts@users.sourceforge.net>)
-	id 1PiQBs-0006zi-Bx; Thu, 27 Jan 2011 11:39:04 +0000
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 2E14F203E7; Thu, 27 Jan 2011 11:39:04 +0000 (GMT)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <7vmxmplt2g.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
-	message of "Mon, 24 Jan 2011 16:34:31 -0800")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1753224Ab1A0Mw2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jan 2011 07:52:28 -0500
+Received: from mx1.redhat.com ([209.132.183.28]:20728 "EHLO mx1.redhat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752725Ab1A0Mw2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jan 2011 07:52:28 -0500
+Received: from int-mx09.intmail.prod.int.phx2.redhat.com (int-mx09.intmail.prod.int.phx2.redhat.com [10.5.11.22])
+	by mx1.redhat.com (8.13.8/8.13.8) with ESMTP id p0RCprk3016689
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=OK);
+	Thu, 27 Jan 2011 07:51:53 -0500
+Received: from localhost (dhcp-25-165.brq.redhat.com [10.34.25.165])
+	by int-mx09.intmail.prod.int.phx2.redhat.com (8.14.4/8.14.4) with ESMTP id p0RCpqGT026697;
+	Thu, 27 Jan 2011 07:51:52 -0500
+Content-Disposition: inline
+In-Reply-To: <20110127120323.GA3416@traged.englab.brq.redhat.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Scanned-By: MIMEDefang 2.68 on 10.5.11.22
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165577>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165578>
 
-Junio C Hamano <gitster@pobox.com> writes:
+The "--xhtml" option is supported only in highlight < 3.0. There is no option
+to enforce (X)HTML output format compatible with both highlight < 3.0 and
+highlight >= 3.0. However default output format is HTML so we don't need to
+explicitly specify it.
 
->Pat Thoyts <patthoyts@users.sourceforge.net> writes:
->
->> Thank you for the patches. I've applied the four patches and pushed them to
->> http://repo.or.cz/w/git-gui.git master.
->
->I see a few changes outside po/ru.po in this update:
->
-> git-gui.sh      |   26 ++-
-> lib/browser.tcl |    2 +-
-> lib/diff.tcl    |   60 ++++--
-> po/ru.po        |  623 ++++++++++++++++++++++++++++---------------------------
-> 4 files changed, 381 insertions(+), 330 deletions(-)
->
->Are they all good to go for 1.7.4 final?  My cursory look indicates that
->they are all minor bugfixes and look sane, but I rarely use git-gui
->myself, so I am just double checking.
->
->
->Alex Riesen (2):
->      git-gui: update russian translation
->      git-gui: update russian translation
->
->Bert Wesarg (5):
->      git-gui: fix ANSI-color parsing
->      git-gui: respect conflict marker size
->      git-gui: fix browsers [Up To Parent] in sub-sub-directories.
->      git-gui: Fix use of renamed tag.
->      git-gui: Fix use of hunk tag for non-hunk content.
->
->Serge Ziryukin (1):
->      git-gui: fix russian translation typos
->
->Skip (1):
->      git-gui: spelling fixes in russian translation
->
->Stefan Naewe (1):
->      git-gui: use --exclude-standard to check for untracked files
->
+Signed-off-by: Adam Tkac <atkac@redhat.com>
+---
+ gitweb/gitweb.perl |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-Yes - these are good to go. Anything going onto master should be
-suitable for merging to git. Anything that is still being tested I would
-put onto pu if it got pushed at all.
-
-So please merge git://repo.or.cz/git-gui.git master
-
+diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
+index 1025c2f..0779f12 100755
+--- a/gitweb/gitweb.perl
++++ b/gitweb/gitweb.perl
+@@ -3468,7 +3468,7 @@ sub run_highlighter {
+ 	close $fd;
+ 	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
+ 	          quote_command($highlight_bin).
+-	          " --xhtml --fragment --syntax $syntax |"
++	          " --fragment --syntax $syntax |"
+ 		or die_error(500, "Couldn't open file or run syntax highlighter");
+ 	return $fd;
+ }
 -- 
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+1.7.3.5
