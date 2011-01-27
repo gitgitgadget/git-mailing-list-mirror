@@ -1,93 +1,95 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH jn/fast-import-fix v3] fast-import: treat filemodify with
- empty tree as delete
-Date: Wed, 26 Jan 2011 16:04:23 -0800
-Message-ID: <7vd3nji54o.fsf@alter.siamese.dyndns.org>
-References: <1291286420-13591-1-git-send-email-david.barr@cordelta.com>
- <20110103080130.GA8842@burratino> <20110103082458.GC8842@burratino>
- <20110126224104.GA20388@burratino>
- <AANLkTimNWLFgTk0Bueiscw-WkAX53v0Xsepn9esXOt7+@mail.gmail.com>
- <20110126230608.GA26787@burratino>
+From: Jeff King <peff@peff.net>
+Subject: [PATCH 1/2] rebase: use explicit "--" with checkout
+Date: Wed, 26 Jan 2011 19:26:59 -0500
+Message-ID: <20110127002658.GA32711@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	David Barr <david.barr@cordelta.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Jan 27 01:04:53 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Jan 27 01:27:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PiFM4-0006Ts-Am
-	for gcvg-git-2@lo.gmane.org; Thu, 27 Jan 2011 01:04:52 +0100
+	id 1PiFhe-0008Rf-PP
+	for gcvg-git-2@lo.gmane.org; Thu, 27 Jan 2011 01:27:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754489Ab1A0AEo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 26 Jan 2011 19:04:44 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51814 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754484Ab1A0AEn (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 26 Jan 2011 19:04:43 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3894E4D79;
-	Wed, 26 Jan 2011 19:05:32 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=FQBzco6MMdxCJ4yc/zOXZWEUAzw=; b=vHALHlmdZJoPe8dfF7ukHNt
-	1BOvahEBYD9KMiPTB+1RB8qMrI8l67Ip0WdCc+oT6XipwUsfQOSmXsNvAE1iiYuy
-	JUmO12bqV23kpmIbaLo/nVbEO0o16R1BYxkxXJtXf6F6wgzLa2d9ZUjafRPDCWUs
-	mZm6Wn1npBz49aLy9oIk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=RO+JGoZmDEw4U3TBTcgcx2jCwz4mgyGo0Xht+EJLibTg0jkSM
-	XHx92hjH0pl5fEz2TFuWOhiZRWljjqo+r9XBA1Ux2r0LO/y4uOM3p5s986GybGQ3
-	Zy+k5baFIhwqG645W+yg9WyG2Y5H9b6ehDcUr7V2K21/vl2dvHRSntTHLA=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 447104D77;
-	Wed, 26 Jan 2011 19:05:25 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 3FC924D6D; Wed, 26 Jan 2011
- 19:05:16 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 241132AC-29A9-11E0-8FEC-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
+	id S1754412Ab1A0A1A (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 26 Jan 2011 19:27:00 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:33080 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752504Ab1A0A07 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 26 Jan 2011 19:26:59 -0500
+Received: (qmail 10921 invoked by uid 111); 27 Jan 2011 00:26:57 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 27 Jan 2011 00:26:57 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 26 Jan 2011 19:26:59 -0500
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165563>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165564>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+In the case of a ref/pathname conflict, checkout will
+already do the right thing and checkout the ref. However,
+for a non-existant ref, this has two advantages:
 
-> Sverre Rabbelier wrote:
->
->> Should it go on maint now that it's factored out, since it shipped in
->> 1.7.3, or just master?
->
-> Hmm.  I suppose on top of b2124125 (jn/fast-import-fix).
+  1. If a file with that pathname exists, rebase will
+     refresh the file from the index and then rebase the
+     current branch instead of producing an error.
 
-Hmm, why not on top of v1.7.3-rc0~75^2 aka 334fba6 (Teach fast-import to
-import subtrees named by tree id, 2010-06-30) then?
+  2. If no such file exists, the error message using an
+     explicit "--" is better:
 
-> While applying it there I noticed that the change to t9300 includes an
-> unrelated change (residue of an old rebase).  Here's a fixed version.
+       # before
+       $ git rebase -i origin bogus
+       error: pathspec 'bogus' did not match any file(s) known to git.
+       Could not checkout bogus
 
-> diff --git a/fast-import.c b/fast-import.c
-> index d881630..9cf26f1 100644
-> --- a/fast-import.c
-> +++ b/fast-import.c
-> @@ -2194,6 +2194,16 @@ static void file_change_m(struct branch *b)
->  		p = uq.buf;
->  	}
->  
-> +	/*
-> +	 * Git does not track empty, non-toplevel directories.
-> +	 */
-> +	if (S_ISDIR(mode) &&
-> +	    !memcmp(sha1, (const unsigned char *) EMPTY_TREE_SHA1_BIN, 20) &&
+       # after
+       $ git rebase -i origin bogus
+       fatal: invalid reference: bogus
+       Could not checkout bogus
 
-Do you need this cast?
+The problems seem to be trigger-able only through "git
+rebase -i", as regular git-rebase checks the validity of the
+branch parameter as a ref very early on. However, it doesn't
+hurt to be defensive.
+
+Signed-off-by: Jeff King <peff@peff.net>
+---
+ git-rebase--interactive.sh |    2 +-
+ git-rebase.sh              |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index a5ffd9a..7bd5602 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -894,7 +894,7 @@ first and then run 'git rebase --continue' again."
+ 
+ 		if test ! -z "$1"
+ 		then
+-			output git checkout "$1" ||
++			output git checkout "$1" -- ||
+ 				die "Could not checkout $1"
+ 		fi
+ 
+diff --git a/git-rebase.sh b/git-rebase.sh
+index d8e1903..345b18c 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -513,7 +513,7 @@ then
+ 	if test -z "$force_rebase"
+ 	then
+ 		# Lazily switch to the target branch if needed...
+-		test -z "$switch_to" || git checkout "$switch_to"
++		test -z "$switch_to" || git checkout "$switch_to" --
+ 		say "Current branch $branch_name is up to date."
+ 		exit 0
+ 	else
+-- 
+1.7.4.rc3.5.g8354b
