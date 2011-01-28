@@ -1,54 +1,61 @@
-From: Victor Engmark <victor.engmark@terreactive.ch>
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
 Subject: Re: Permissions and authorisations in git repository
-Date: Fri, 28 Jan 2011 12:55:37 +0100
-Organization: terreActive AG
-Message-ID: <4D42AEB9.3020008@terreactive.ch>
-References: <10431381.57687.1296214887819.JavaMail.trustmail@mail1.terreactive.ch>
+Date: Fri, 28 Jan 2011 15:06:31 +0300
+Message-ID: <20110128150631.33be0a9d.kostix@domain007.com>
+References: <1296214884133-5969556.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 28 12:55:55 2011
+Cc: git@vger.kernel.org
+To: vikram2rhyme <vikram2rhyme@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 28 13:14:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pimvg-0002jH-KG
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 12:55:52 +0100
+	id 1PinDb-000309-0c
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 13:14:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753896Ab1A1Lzp (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Jan 2011 06:55:45 -0500
-Received: from gate.terreactive.ch ([212.90.202.121]:44918 "EHLO
-	mail.terreactive.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753404Ab1A1Lzo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jan 2011 06:55:44 -0500
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
-In-Reply-To: <10431381.57687.1296214887819.JavaMail.trustmail@mail1.terreactive.ch>
-X-terreActive-From: victor.engmark@terreactive.ch
-X-Spam-Status: No
+	id S1755111Ab1A1MN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Jan 2011 07:13:57 -0500
+Received: from mailhub.007spb.ru ([84.204.203.130]:39559 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755010Ab1A1MN5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jan 2011 07:13:57 -0500
+X-Greylist: delayed 441 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Jan 2011 07:13:56 EST
+Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id p0SC6WRc013959;
+	Fri, 28 Jan 2011 15:06:33 +0300
+In-Reply-To: <1296214884133-5969556.post@n2.nabble.com>
+X-Mailer: Sylpheed 3.0.0 (GTK+ 2.10.14; i686-pc-mingw32)
+X-Antivirus: Dr.Web (R) for Mail Servers on proxysrv host
+X-Antivirus-Code: 100000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165612>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165613>
 
-On 01/28/2011 12:41 PM, vikram2rhyme wrote:
->
-> Hello friends
-> I am wondering if there are any permission and authorization control over
-> git
-> repository. I have gone through git manual but there is no discussion on it.
-> On the internet i searched but hardy i found anything. Please help me if
-> there
-> is any permission control in distributed environment in git repository
+On Fri, 28 Jan 2011 03:41:24 -0800 (PST)
+vikram2rhyme <vikram2rhyme@gmail.com> wrote:
 
-Git is independent of access control mechanisms - You can use whatever 
-you want. For example, you could use the filesystem read/write 
-permissions on a directory to control local access, or SSH permissions 
-to allow remote access. See for example GitHub, which uses different 
-protocols for different levels of access.
+> I am wondering if there are any permission and authorization control
+> over git repository.
+[...]
 
-HTH,
--- 
-Victor Engmark
+In the simplest case -- r/w access via SSH -- those who know the
+login/password or possess the necessary private key have (full) access
+to the repository. The repository can also be made accessible for
+read-only via Git protocol (as a whole as well). This can be used for
+simple write/read access discrimination.
+If a more fine-grained control
+is needed, third-party tools exist: gitolite:
+https://github.com/sitaramc/gitolite gitosis: http://swik.net/gitosis
+
+Note that as Git does not suffer from a centralised VCS syndrome of
+having a single repository shared by everyone involved, the problem
+you're facing might not exist at all: every developer or a group of
+related developers maintains their own repository and a "central"
+repository (in whatever sense you're willing to put into it) is owned
+by a special person or a group of persons.
