@@ -1,103 +1,164 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 09/21] tree_entry_interesting(): support depth limit
-Date: Fri, 28 Jan 2011 12:40:21 -0800
-Message-ID: <7vd3ngdaoa.fsf@alter.siamese.dyndns.org>
-References: <1292425376-14550-1-git-send-email-pclouds@gmail.com>
- <1292425376-14550-10-git-send-email-pclouds@gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [RFC] Add --create-cache to repack
+Date: Fri, 28 Jan 2011 16:09:30 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1101281502170.8580@xanadu.home>
+References: <1296201984-24426-1-git-send-email-spearce@spearce.org>
+ <4D42878E.2020502@viscovery.net>
+ <AANLkTim+AUY9SdeAFfkny2_a3qQ9SCDLUHR3s9Q3M98u@mail.gmail.com>
+ <alpine.LFD.2.00.1101281304270.8580@xanadu.home>
+ <AANLkTikPcp5CUTWfhy6FYbCEkNG6epGBAMNT5vTfSbvy@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 28 21:40:44 2011
+Content-Type: multipart/mixed; boundary="Boundary_(ID_WSjNyqDHg6FxPYaeTsbDQg)"
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	John Hawley <warthog19@eaglescrag.net>
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jan 28 22:09:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Piv7b-0000Yy-JC
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 21:40:43 +0100
+	id 1PivZa-0000nm-AJ
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 22:09:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753721Ab1A1Ukb convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Jan 2011 15:40:31 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55917 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751278Ab1A1Uka convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Jan 2011 15:40:30 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 240BD408B;
-	Fri, 28 Jan 2011 15:41:18 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=0HvaKYOXypD9
-	U833YtQi590rkmQ=; b=fzj3klwWTtcbeREuDjMuh9M6FinRSu/6d8LRswisaEr7
-	LABClArTH52+YBScKzlvLnBHJ8gKJZzSzddXef0G+0aEGVpGGLnJDbK1UdzdYuPr
-	7k4JYI+jZbgoaaVrtw/Zl54WU0JdJOhYcMeebYXipvRcIb3WC3kWNCBYX3ai7/8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=yRxTr9
-	xlk8bAIbj8/1fUNEG7Ojmjvu91aTKnePCJJFHpqf9VUiq5DVW/7ldV/RN1zKvaMX
-	5ZbIHHBu1EPzaaVFSrGiXNZKPpmq1Rw9VqOnBRPgbca+7n1ryxBxY6UCTMk1brjl
-	w0XjgGOQv1OmPT6DYn/SfeBfSWZKmKM08mFBU=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E782E4085;
-	Fri, 28 Jan 2011 15:41:15 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id C79BA4082; Fri, 28 Jan 2011
- 15:41:12 -0500 (EST)
-In-Reply-To: <1292425376-14550-10-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Wed\, 15 Dec
- 2010 22\:02\:44 +0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F3B88728-2B1E-11E0-8325-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
+	id S1752387Ab1A1VJc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Jan 2011 16:09:32 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:26039 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752101Ab1A1VJb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jan 2011 16:09:31 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MRZ20.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0LFR002Z943I5KG0@VL-MR-MRZ20.ip.videotron.ca> for
+ git@vger.kernel.org; Fri, 28 Jan 2011 16:09:18 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <AANLkTikPcp5CUTWfhy6FYbCEkNG6epGBAMNT5vTfSbvy@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+Content-id: <alpine.LFD.2.00.1101281523430.8580@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165640>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165641>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
->  static const char *get_mode(const char *str, unsigned int *modep)
-> @@ -557,8 +558,13 @@ int tree_entry_interesting(const struct name_ent=
-ry *entry,
->  	int pathlen, baselen =3D base->len;
->  	int never_interesting =3D -1;
-> =20
-> -	if (!ps || !ps->nr)
-> -		return 1;
-> +	if (!ps->nr) {
-> +		if (!ps->recursive || ps->max_depth =3D=3D -1)
-> +			return 1;
-> +		return !!within_depth(base->buf, baselen,
-> +				      !!S_ISDIR(entry->mode),
-> +				      ps->max_depth);
-> +	}
+--Boundary_(ID_WSjNyqDHg6FxPYaeTsbDQg)
+Content-id: <alpine.LFD.2.00.1101281523431.8580@xanadu.home>
+Content-type: TEXT/PLAIN; CHARSET=ISO-8859-15
+Content-transfer-encoding: 8BIT
 
-Back in 1d848f6 (tree_entry_interesting(): allow it to say "everything =
-is
-interesting", 2007-03-21), a new return value "2" was introduced to all=
-ow
-this function to tell the caller that all the remaining entries in the
-tree object the caller is feeding the entries to this function _will_
-match.  This was to optimize away expensive pathspec matching done by t=
-his
-function.
+On Fri, 28 Jan 2011, Shawn Pearce wrote:
 
-In that version, "no pathspec" case wasn't changed to return 2 but stil=
-l
-returned 1 ("I tell you that this does not match; call me with the next
-entry").  We could have changed it to return 2, but the overhead was on=
-ly
-a call to a function that checks the number of pathspecs and was not so
-bad.
+> On Fri, Jan 28, 2011 at 10:46, Nicolas Pitre <nico@fluxnic.net> wrote:
+> > On Fri, 28 Jan 2011, Shawn Pearce wrote:
+> >
+> >> This started because I was looking for a way to speed up clones coming
+> >> from a JGit server.  Cloning the linux-2.6 repository is painful,
+> ...
+> >> Later I realized, we can get rid of that cached list of objects and
+> >> just use the pack itself.
+> ...
+> > Playing my old record again... I know.  But pack v4 should solve a big
+> > part of this enumeration cost.
+> 
+> I've said the same thing for years myself.  As much as it would be
+> nice to fix some of the decompression costs with pack v2/v3, v2/v3 is
+> very common in the wild, and a new pack encoding is going to be a
+> fairly complex thing to get added to C Git.  And pack v4 doesn't
+> eliminate the enumeration, it just makes it faster.
 
-But shouldn't we start returning 2 by now?  It is not that returning 1 =
-was
-a more correct thing to do to begin with.
+Well, you don't necessarily need pack v4 to be widely deployed for 
+people to benefit from it.  If it is available on servers such as 
+git.kernel.org then everybody will see their clone requests go faster.  
+Same principle as for the cache packs.
 
-When depth check is in effect, the result depends on the mode of the
-entry, so we cannot short-circuit by returning 2, but at least we shoul=
-d
-do so when (max_depth =3D=3D -1), no?
+And yes it doesn't eliminate the enumeration, but you can't eliminate it 
+entirely either as many other operations do require object enumeration 
+too, and those would be sped up as well.
+
+But this is in fact orthogonal to the cache pack concept indeed.
+
+> That's what I also liked about my --create-cache flag.  Its keeping
+> the same data we already have, in the same format we already have it
+> in.  We're just making a more explicit statement that everything in
+> some pack is about as tightly compressed as it ever would be for a
+> client, and it isn't going to change anytime soon.  Thus we might as
+> well tag it with .keep to prevent repack of mucking with it, and we
+> can take advantage of this to serve the pack to clients very fast.
+
+I do agree on that point.   And I like it too.  However I'd prefer if 
+the whole thing wasn't created "automatically".  It's probably best if 
+the repository administrator decides explicitly what should go in such 
+cached packs according to actual purpose and usage for good commit 
+thresholds and branches.  Only a human can make that decision.
+
+I'd also recommend _not_ using the ref namespace for that.  Let's not 
+mix up branching/tagging with what is effectively a storage 
+implementation issue. Linking the ref namespace with the actual packs 
+they refer to would be highly inelegant if the SHA1 of the pack has to 
+be part of the ref name.  Instead, I'd suggest simply listing all the 
+commit tips a cache pack contains in the .keep file directly instead.  
+That would make it much easier to use with the object alternates too as 
+the alternate mechanism points to the object store of a foreign repo and 
+not to its refs.
+
+> Over breakfast this morning I made the point to Junio that with the
+> cached pack and a slight network protocol change (enabled by a
+> capability of course) we could stop using pkt-line framing when
+> sending the cached pack part of the stream, and just send the pack
+> directly down the socket.  That changes the clone of a 400 MB project
+> like linux-2.6 from being a lot of user space stuff, to just being a
+> sendfile() call for the bulk of the content.  I think we can just hand
+> off the major streaming to the kernel. 
+
+While this might look like a good idea in theory, did you actually 
+profile it to see if that would make a noticeable difference?  The 
+pkt-line framing allows for asynchronous messages to be sent over a 
+sideband, which you wouldn't be able to do anymore until the full 400 MB 
+is received by the remote side.  Without concrete performance numbers 
+I'm not convinced it is worth the maintenance cost for creating a 
+deviation in the protocol like this.
+
+> (Part of the protocol change
+> is we would need to use multiple SHA-1 checksums in the stream, so we
+> don't have to re-checksum the existing cached pack.)
+
+?? I don't follow you here.
+
+> I love the idea of some of the concepts in pack v4.  I really do.  But
+> this sounds a lot simpler to implement, and it lets us completely
+> eliminate a massive amount of server processing (even under pack v4
+> you still have object enumeration), in exchange for what might be a
+> few extra MBs on the wire to the client due to slightly less good
+> deltas and the use of REF_DELTA in the thin pack used for the most
+> recent objects.
+
+I agree.  And what I personally like the most is the fact that this can 
+be made transparent to clients using the existing network protocol 
+unchanged.
+
+> Plus we can safely do byte range requests for resumable clone within
+> the cached pack part of the stream.
+
+That part I'm not sure of.  We are still facing the same old issues 
+here, as some mirrors might have the same commit edges for a cache pack 
+but not necessarily the same packing result, etc.  So I'd keep that out 
+of the picture for now.  The idea of being able to resume the transfer 
+of a cache pack is good, however I'd make it into a totally separate 
+service outside git-upload-pack where the issue of validating and 
+updating content on both sides can be done efficiently without impacting 
+the upload-pack protocol.  There would be more than just the cache pack 
+in play during a typical clone.
+
+> And when pack v4 comes along, we
+> can use this same strategy for an equally large pack v4 pack.
+
+Absolutely.
+
+
+Nicolas
+
+--Boundary_(ID_WSjNyqDHg6FxPYaeTsbDQg)--
