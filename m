@@ -1,153 +1,111 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
+From: in-gitvger@baka.org
 Subject: Re: Project- vs. Package-Level Branching in Git
-Date: Fri, 28 Jan 2011 11:20:01 -0500
-Message-ID: <4D42ECB1.9080300@xiplink.com>
-References: <14F4737F-E8E4-4E4E-A625-16CA63CF9EFF@shaggyfrog.com> <AANLkTinTRgzv0s9MTyM4TaOwVOmhwRckDqMfxrbsKVfm@mail.gmail.com> <15B7CA2E-C584-4563-B9E3-D80861CD9565@shaggyfrog.com>
+Date: Fri, 28 Jan 2011 11:39:35 -0500
+Message-ID: <201101281639.p0SGdZe1006900@no.baka.org>
+References: <14F4737F-E8E4-4E4E-A625-16CA63CF9EFF@shaggyfrog.com> <AANLkTinTRgzv0s9MTyM4TaOwVOmhwRckDqMfxrbsKVfm@mail.gmail.com>
+        <15B7CA2E-C584-4563-B9E3-D80861CD9565@shaggyfrog.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: TEXT/PLAIN; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?ISO-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
+Cc: =?iso-8859-1?Q?=C6var_Arnfj=F6r=F0_Bjarmason?= <avarab@gmail.com>,
 	git@vger.kernel.org
 To: Thomas Hauk <tom@shaggyfrog.com>
-X-From: git-owner@vger.kernel.org Fri Jan 28 17:19:26 2011
+X-From: git-owner@vger.kernel.org Fri Jan 28 17:39:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pir2i-0006WI-KS
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 17:19:24 +0100
+	id 1PirMS-0002bh-K9
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 17:39:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753718Ab1A1QTT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Jan 2011 11:19:19 -0500
-Received: from smtp182.iad.emailsrvr.com ([207.97.245.182]:35941 "EHLO
-	smtp182.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752793Ab1A1QTS (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jan 2011 11:19:18 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp38.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 52011348407;
-	Fri, 28 Jan 2011 11:19:18 -0500 (EST)
-X-Virus-Scanned: OK
-Received: by smtp38.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id E07A33480DA;
-	Fri, 28 Jan 2011 11:19:17 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
-In-Reply-To: <15B7CA2E-C584-4563-B9E3-D80861CD9565@shaggyfrog.com>
+	id S1754805Ab1A1Qjn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Jan 2011 11:39:43 -0500
+X-Warning: Original message contained 8-bit characters, however during
+	   the SMTP transport session the receiving system did not announce
+	   capability of receiving 8-bit SMTP (RFC 1651-1653), and as this
+	   message does not have MIME headers (RFC 2045-2049) to enable
+	   encoding change, we had very little choice.
+X-Warning: We ASSUME it is less harmful to add the MIME headers, and
+	   convert the text to Quoted-Printable, than not to do so,
+	   and to strip the message to 7-bits.. (RFC 1428 Appendix A)
+X-Warning: We don't know what character set the user used, thus we had to
+	   write these MIME-headers with our local system default value.
+Received: from tsutomu.baka.org ([66.114.72.182]:55166 "EHLO tsutomu.baka.org"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752793Ab1A1Qjm (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jan 2011 11:39:42 -0500
+Received: from no.baka.org (no.baka.org [IPv6:2001:470:88bb::2])
+	by tsutomu.baka.org (8.14.4/8.14.4) with ESMTP id p0SGdaWL030312
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Fri, 28 Jan 2011 11:39:36 -0500
+Received: from no.baka.org (localhost [127.0.0.1])
+	by no.baka.org (8.14.4/8.14.0) with ESMTP id p0SGdZe1006900;
+	Fri, 28 Jan 2011 11:39:35 -0500
+In-reply-to: <15B7CA2E-C584-4563-B9E3-D80861CD9565@shaggyfrog.com>
+Comments: In reply to a message from "Thomas Hauk <tom@shaggyfrog.com>" dated "Thu, 27 Jan 2011 15:22:09 -0800."
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165624>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165625>
 
-On 11-01-27 06:22 PM, Thomas Hauk wrote:
-> On Jan 27, 2011, at 12:53 PM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
->> You'll be much better off if you have project-specific repositories.
->=20
-> But how often do you have a project that has no external or internal
-> dependencies on any other packages or libraries? Any project I've eve=
-r
-> done, big or small, has relied on some existing codebase. Imagine a
-> project that uses liba and libb, which both reference libc. To use Gi=
-t,
-> I'd have to have copies of libc existing in three repositories, and c=
-opies
-> of liba and lib in two repositories each. What a nightmare... and tha=
-t's
-> only a trivial hypothetical example.
 
-Let me try to give you a more positive response...  :)
+In message <15B7CA2E-C584-4563-B9E3-D80861CD9565@shaggyfrog.com>, Thoma=
+s Hauk w
+rites:
 
-Where I work, our products rely on a vast amount of code from different
-sources, not just various internal and external libraries but also the =
-entire
-=46reeBSD tree as well as assorted forks of different Linux kernel vers=
-ions
-(because different customers have their own tweaked kernels that we nee=
-d to
-work with).
+    On Jan 27, 2011, at 12:53 PM, =C6var Arnfj=F6r=F0 Bjarmason wrote:
+    > You'll be much better off if you have project-specific repositori=
+es.
 
-We use git in a variety of ways to manage all this.  We rely a lot on g=
-it's
-submodule feature, but not exclusively.
+    But how often do you have a project that has no external or
+    internal dependencies on any other packages or libraries? Any
+    project I've ever done, big or small, has relied on some existing
+    codebase. Imagine a project that uses liba and libb, which both
+    reference libc. To use Git, I'd have to have copies of libc
+    existing in three repositories, and copies of liba and lib in two
+    repositories each. What a nightmare... and that's only a trivial
+    hypothetical example.
 
-=46or most external code, including the Linux kernel forks, we usually =
-set up
-an internal git mirror of whatever public repository the code has.  So =
-each
-external code base has its own git repository, and we attach those
-repositories to our main repo using submodules.
+Including libs in the superproject is the subtree merge method.  It
+certainly works and provides inband commit exploration (since one repo
+can see all commits), but it inconvenient to update and even harder to
+export changes back to share with other liba users.  It may also cause
+the repo to be inconveniently large.  Arranging for the correct
+commits to be on the differently named branches (between the
+subproject and the superproject) is also not convenient.
 
-This works fairly well, especially because we don't update the external
-sources very often.  Working with submodules takes a bit of getting use=
-d to,
-but it works nicely when the different pieces are reasonably independen=
-t, and
-this is usually the case for external libraries.
+git-submodule is the normal approach for the problem you have.  There
+is a strong binding from each commit in the superproject to commits in
+the subprojects.  What is inconvenient is managing what branch you
+need to check out on the subproject in order to get or make the right
+changes in the right place.  It is also annoying if you are performing
+active development on the subprojects since you continually have to
+update the superproject and then recheckout the correct branches on
+the subproject.
 
-=46or our internal libraries, we just keep them all in the main reposit=
-ory.
-Our internal code does have some inter-dependencies, so it's convenient=
- to
-track them all together.  Note that this doesn't prevent internal libra=
-ries
-from evolving independently -- even though a branch applies to the whol=
-e
-repo, the branch's _topic_ can just be about one specific library.  Any=
-one
-who needs to use the library's updated code can merge that branch into =
-their
-own, or base their work on that branch.  Eventually the library's branc=
-h gets
-merged back into the mainline branch and everyone gets to use the updat=
-ed code.
+Another solution is gitslave (http://gitslave.sf.net).  This provides
+a loose binding from the superproject to the subprojects which is very
+convenient if you are doing active development on all of the
+subprojects.  Specifically there is only a strong binding when you tag
+(since you tag the superproject and all subprojects at the same time).
+Generally, however, you check out the same branch/tag on all branches
+at the same time, which obviously does not match your preferred usage,
+except it gave me an idea.  Specifically, you could have your own
+local master bare repositories for those packages and an orthogonal
+naming scheme for branches and tags.  So the project foo would might
+have branch foo-2.0 and liba libb and libc would all have those
+branches as well.  When you want to update libb, a repo with the true
+master upstream and the local master upstream would fetch the true
+master and merge the changes from the correct branch into foo-2.0
+and then push to the local upstream master.  Everyone else would then j=
+ust
+`gits pull` and would get the changes.
 
-In addition to all that, we have a different way of working with the Fr=
-eeBSD
-code base.  This was put together a few years ago, and I would do it
-differently now, but I'll describe it to give you an idea of what else =
-is
-possible with git.
+Of course this concept for a local master would work for submodules as
+well, depending on whether you want the tight binding and
+update/change annoyance or the loose binding and easier
+update/changes.
 
-The FreeBSD code tree lives in a subdirectory of our main repo.  It's n=
-ot a
-submodule or anything fancy, it's just the code.  We've modified the Fr=
-eeBSD
-code quite a bit, but we also keep it up to date with changes the FreeB=
-SD
-guys make.  We put all of their changes in a separate branch in our mai=
-n
-repo, and a script keeps that branch up to date.  When we're ready, we =
-merge
-the FreeBSD changes into our mainline branch.
-
-Keeping that FreeBSD branch up to date is a bit involved.  The branch
-actually reflects a single branch in the FreeBSD public subversion
-repository.  We use "git svn" to maintain a git mirror of that subversi=
-on
-branch, and what our script does is compare the latest FreeBSD subversi=
-on
-revision number in our main repo to the one in the mirror ("git svn" re=
-cords
-the subversion revision numbers in the git commits it creates).  When t=
-he
-script finds that the main repo is out of date, it extracts the patches=
- for
-each individual subversion commit and applies them as git commits in ou=
-r main
-repo's FreeBSD branch.  (Any git veterans who've read this far are prob=
-ably
-cringing right now...)
-
-Anyway, my point is that git provides a lot of flexibility to let you w=
-ork
-with your code base in many different ways, but none of them are how
-subversion or perforce work.  Coming from those tools, you have to shif=
-t your
-mindset a bit to make the best use of git.  That can be frustrating, an=
-d I
-won't say that git's model is The One True Way, but I've found that wha=
-t feel
-like limitations from the perspective of other tools usually turn out t=
-o be
-relatively inconsequential.
-
-		M.
+					-Seth Robertson
