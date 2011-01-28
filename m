@@ -1,70 +1,62 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: Project- vs. Package-Level Branching in Git
-Date: Fri, 28 Jan 2011 03:30:54 -0500
-Message-ID: <AANLkTikLse9+CTwHo6W49=EHj6O4xLSWmNj70RFTpzzb@mail.gmail.com>
-References: <14F4737F-E8E4-4E4E-A625-16CA63CF9EFF@shaggyfrog.com>
- <AANLkTinTRgzv0s9MTyM4TaOwVOmhwRckDqMfxrbsKVfm@mail.gmail.com> <15B7CA2E-C584-4563-B9E3-D80861CD9565@shaggyfrog.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: Re: [RFC] Add --create-cache to repack
+Date: Fri, 28 Jan 2011 10:08:30 +0100
+Message-ID: <4D42878E.2020502@viscovery.net>
+References: <1296201984-24426-1-git-send-email-spearce@spearce.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Thomas Hauk <tom@shaggyfrog.com>
-X-From: git-owner@vger.kernel.org Fri Jan 28 09:31:48 2011
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	John Hawley <warthog19@eaglescrag.net>
+To: "Shawn O. Pearce" <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Fri Jan 28 10:08:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pijk9-0003Nd-Su
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 09:31:46 +0100
+	id 1PikJx-0003sL-23
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 10:08:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755107Ab1A1Ib1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Jan 2011 03:31:27 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:59938 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755099Ab1A1IbZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jan 2011 03:31:25 -0500
-Received: by iyj18 with SMTP id 18so2317466iyj.19
-        for <git@vger.kernel.org>; Fri, 28 Jan 2011 00:31:24 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=Bko+WPgiiTBoGE96bPU2O6fxaK/m6hyScelQYu4kr3w=;
-        b=Vw3boKhc8lfWEs0cHJUYEPJF22Qo9UJiZePg2pNslgWTsNA3Ka5AurYzD8q4SQuNEU
-         tnmMgqDTvwyMir61/bz0NnXKNiTCnqlpabl7fBcxG9ZZRShBwQfAcqeoZG71L0sSVSqn
-         orS4Ns6k99/65NN6IErlW9fEh4g9JmQ+0lEYs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=LXoDjq+Jmughiv4we9pXqhrrsmFmb9bUM07F2B7DYMmzjTZSjyQIR9U8UyE8VpcLKU
-         N+Kve5eca7z0SKwOwtj7cEzSDVsWbncdAkzeFk2MXr3h4oZYfSFqV74KycyDcr4J30Ve
-         P6LQCU1boI6LpL+66oB1qDLtWM5MNra805mzY=
-Received: by 10.231.85.137 with SMTP id o9mr2273008ibl.27.1296203484331; Fri,
- 28 Jan 2011 00:31:24 -0800 (PST)
-Received: by 10.231.30.65 with HTTP; Fri, 28 Jan 2011 00:30:54 -0800 (PST)
-In-Reply-To: <15B7CA2E-C584-4563-B9E3-D80861CD9565@shaggyfrog.com>
+	id S1755149Ab1A1JIj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 28 Jan 2011 04:08:39 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:43909 "EHLO
+	lilzmailso02.liwest.at" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+	with ESMTP id S1755132Ab1A1JIg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jan 2011 04:08:36 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso02.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1PikJi-0004Dn-TH; Fri, 28 Jan 2011 10:08:31 +0100
+Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id A1A5B1660F;
+	Fri, 28 Jan 2011 10:08:30 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <1296201984-24426-1-git-send-email-spearce@spearce.org>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165602>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165603>
 
-On Thu, Jan 27, 2011 at 6:22 PM, Thomas Hauk <tom@shaggyfrog.com> wrote:
-> Git just doesn't seem to scale when it comes to componentized projects.
+Am 1/28/2011 9:06, schrieb Shawn O. Pearce:
+> A cache pack is all objects reachable from a single commit that is
+> part of the project's stable history and won't disappear, and is
+> accessible to all readers of the repository.  By containing only that
+> commit and its contents, if the commit is reached from a reference we
+> know immediately that the entire pack is also reachable.  To help
+> ensure this is true, the --create-cache flag looks for a commit along
+> refs/heads and refs/tags that is at least 1 month old, working under
+> the assumption that a commit this old won't be rebased or pruned.
 
-With git the canonical approach, such that it is, is for each
-component to be its own repo. You then tie the repos together into a
-project using submodules:
+In one of my repositories, I have two stable branches and a good score of
+topic branches of various ages (a few hours up to two years 8). The topic
+branches will either be dropped eventually, or rebased.
 
-- http://progit.org/book/ch6-6.html
-- http://www.kernel.org/pub/software/scm/git/docs/git-submodule.html
+What are the odds that this choice of a tip commit picks one that is in a
+topic branch? Or is there no point in using --create-cache in a repository
+like this?
 
-However, submodules can be a challenge to work with, and so there have
-been other attempts at tying multiple repos together such as:
-
-- http://source.android.com/source/git-repo.html
-- https://github.com/apenwarr/git-subtree
-
-j.
+-- Hannes
