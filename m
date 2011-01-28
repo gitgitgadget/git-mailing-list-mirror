@@ -1,87 +1,99 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: [PATCH] git-p4: Corrected typo.
-Date: Thu, 27 Jan 2011 23:35:14 +0000
-Message-ID: <AANLkTimQhFzEXr=T9F8TJzTeWwKroTt_BG87RtQCLivv@mail.gmail.com>
-References: <1290130693-30855-2-git-send-email-vitor.hda@gmail.com> <1290648419-6107-1-git-send-email-vitor.hda@gmail.com>
+From: Tilman Vogel <tilman.vogel@web.de>
+Subject: Re: [PATCH] git-gui: add config value gui.diffopts for passing additional
+ diff options
+Date: Fri, 28 Jan 2011 01:19:33 +0100
+Message-ID: <4D420B95.2060509@web.de>
+References: <1295607585-15971-1-git-send-email-tilman.vogel@web.de> <87ipxdn81f.fsf@fox.patthoyts.tk>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Vitor Antunes <vitor.hda@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Jan 28 00:35:55 2011
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Fri Jan 28 01:19:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PibNW-00087b-Sj
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 00:35:51 +0100
+	id 1Pic41-0004xN-C1
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 01:19:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753974Ab1A0Xfq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 27 Jan 2011 18:35:46 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:46158 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753750Ab1A0Xfp convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 27 Jan 2011 18:35:45 -0500
-Received: by qyk12 with SMTP id 12so2943213qyk.19
-        for <git@vger.kernel.org>; Thu, 27 Jan 2011 15:35:44 -0800 (PST)
+	id S1752205Ab1A1ATj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 27 Jan 2011 19:19:39 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56384 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751487Ab1A1ATj (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 27 Jan 2011 19:19:39 -0500
+Received: by fxm20 with SMTP id 20so2771243fxm.19
+        for <git@vger.kernel.org>; Thu, 27 Jan 2011 16:19:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=QF/2TXVieC0XiEWxvjxrMRmyJ8RMY68lWrpNM69Y8Dg=;
-        b=FtEdedpt4E0me3de+pXEtgCSE/LyLR+0E2zRVM55NaDCGSNIxajf3djcgBb3nIQ78l
-         iiiZ+sxrKMCy1NK9zUQMA1jCrgeWnvOTEOvp0akOuMADO5zWFS76bashnWQhNj+SzFWT
-         wjkqn7TPxX1wtNI28sLvr9X4PibM/UqW3Rn/8=
+        h=domainkey-signature:sender:message-id:date:from:user-agent
+         :mime-version:cc:subject:references:in-reply-to:x-enigmail-version
+         :content-type:content-transfer-encoding;
+        bh=zYk9pBM1QfUssQMwmfNUJpACjFcXUGWDA+A/c7zYeGQ=;
+        b=D29adTucb7uOlX1y2rcxp8ylxlAb+PGs9HzcBTUqJhmOpc1DxWrNTK7D2nFbgxZP+A
+         pDxkEBuKUfXE2b8PQ+IPCD+M7vdlxiF2336WlUKgO5KY72ULLdmL40WihiGhhBVqQYOh
+         h+MleSPvkP5KfwINFLPrs60RB7etN5lCScfbA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=A9sOYfvOKGM7+XSjmeZ2W8h5Lteh2RKzCCzzx71ooP72utGcUbKM9aJn89Ug/W3rYv
-         /i3FMN6WvrjT0kt2fV3QjPu3GyfhqXllfqW0IA0qBdUs+DFMGOyHivYCeCMbqf7IFPCG
-         eldeqyM7r41q51KWuJXTwZQrSBc0vlV4l7Gg4=
-Received: by 10.229.229.83 with SMTP id jh19mr274655qcb.234.1296171344814;
- Thu, 27 Jan 2011 15:35:44 -0800 (PST)
-Received: by 10.220.192.8 with HTTP; Thu, 27 Jan 2011 15:35:14 -0800 (PST)
-In-Reply-To: <1290648419-6107-1-git-send-email-vitor.hda@gmail.com>
+        h=sender:message-id:date:from:user-agent:mime-version:cc:subject
+         :references:in-reply-to:x-enigmail-version:content-type
+         :content-transfer-encoding;
+        b=ZsYj5gDESZWHkX/zR545sRq3cLjgnsaIKKUpFnEpDBYZ76wUcp0JzFP1DuhveJUKW/
+         qdqcoywxRGXLnZfClxcmz/npH+vRl5XZlwLh4vHK1skGAlnnzsN7jLHODiwdXaY8tLlx
+         YDNaMPFxN7kXTNNXeFJWnOvxIimDaud0tuI3Y=
+Received: by 10.223.85.203 with SMTP id p11mr1631116fal.108.1296173977002;
+        Thu, 27 Jan 2011 16:19:37 -0800 (PST)
+Received: from atrium.lan (e178201102.adsl.alicedsl.de [85.178.201.102])
+        by mx.google.com with ESMTPS id o17sm6241666fal.25.2011.01.27.16.19.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 27 Jan 2011 16:19:35 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.11) Gecko/20101013 SUSE/3.1.5 Thunderbird/3.1.5
+In-Reply-To: <87ipxdn81f.fsf@fox.patthoyts.tk>
+X-Enigmail-Version: 1.1.2
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165597>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165599>
 
-Hi everyone,
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
 
-Could anyone comment the 3 patches I sent (being this the last one)?
+Hi!
 
-Thanks in advance,
-Vitor
+Am 25.01.2011 01:25, schrieb Pat Thoyts:
+> This seems ok but you don't say what it is for. Why do you want to be
+> able to pass additional options to git diff?
 
-On Thu, Nov 25, 2010 at 1:26 AM, Vitor Antunes <vitor.hda@gmail.com> wr=
-ote:
-> ---
-> =A0contrib/fast-import/git-p4 | =A0 =A02 +-
-> =A01 files changed, 1 insertions(+), 1 deletions(-)
->
-> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-> index 0ea3a44..a466847 100755
-> --- a/contrib/fast-import/git-p4
-> +++ b/contrib/fast-import/git-p4
-> @@ -618,7 +618,7 @@ class P4Submit(Command):
-> =A0 =A0 =A0 =A0 if len(detectRenames) > 0:
-> =A0 =A0 =A0 =A0 =A0 =A0 diffOpts =3D "-M%s" % detectRenames
-> =A0 =A0 =A0 =A0 else:
-> - =A0 =A0 =A0 =A0 =A0 =A0diffOpts =3D ("", "-M")[self.detectRenames]
-> + =A0 =A0 =A0 =A0 =A0 =A0diffOpts =3D ("", "-M")[self.detectRename]
->
-> =A0 =A0 =A0 =A0 detectCopies =3D gitConfig("git-p4.detectCopies")
-> =A0 =A0 =A0 =A0 if len(detectCopies) > 0:
-> --
-> 1.7.2.3
->
->
+Sorry, forgot to copy the motivation from
+<https://github.com/git/git/pull/8>:
 
+I want to be able to make diff ignore whitespace changes "-b". But maybe
+someone else wants "-w" or what not, so I think a generic option field
+is most versatile.
 
+If you feel, this switch should be easier to reach than through the
+options menu, I agree, but I am a Tcl/Tk newbie, so this was the easiest
+fix for me.
 
---=20
-Vitor Antunes
+> I can apply this to git-gui's repository. The Documentation change will
+> need to be sent to git separately once this is merged from git-gui.
+
+Sure, I would be happy. However, if you feel like coding up something
+that's easier to use, I'd be even happier. But maybe the generic field
+is still of use.
+
+Regards,
+
+Tilman
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v2.0.15 (GNU/Linux)
+Comment: Using GnuPG with SUSE - http://enigmail.mozdev.org/
+
+iEYEARECAAYFAk1CC5UACgkQ9ZPu6Yae8lknCwCfcEfBH8uSSZbB93IHpJiEivll
+zlwAoKgPswZGMf6fERRB8p24TsLCGA1r
+=uWHw
+-----END PGP SIGNATURE-----
