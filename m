@@ -1,61 +1,52 @@
-From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
-Subject: Re: Permissions and authorisations in git repository
-Date: Fri, 28 Jan 2011 15:06:31 +0300
-Message-ID: <20110128150631.33be0a9d.kostix@domain007.com>
-References: <1296214884133-5969556.post@n2.nabble.com>
+From: =?ISO-8859-1?Q?=22L=2E_Alberto_Gim=E9nez=22?= 
+	<agimenez@sysvalve.es>
+Subject: Re: Why git tags are there in git?
+Date: Fri, 28 Jan 2011 13:27:15 +0100
+Message-ID: <4D42B623.5060709@sysvalve.es>
+References: <1296214676536-5969544.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=ISO-8859-1;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: vikram2rhyme <vikram2rhyme@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 28 13:14:24 2011
+X-From: git-owner@vger.kernel.org Fri Jan 28 13:34:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PinDb-000309-0c
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 13:14:23 +0100
+	id 1PinX5-0004bx-FB
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 13:34:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755111Ab1A1MN5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Jan 2011 07:13:57 -0500
-Received: from mailhub.007spb.ru ([84.204.203.130]:39559 "EHLO
-	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755010Ab1A1MN5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jan 2011 07:13:57 -0500
-X-Greylist: delayed 441 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Jan 2011 07:13:56 EST
-Received: from programmer.Domain007.com (programmer.domain007.com [192.168.2.100])
-	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with SMTP id p0SC6WRc013959;
-	Fri, 28 Jan 2011 15:06:33 +0300
-In-Reply-To: <1296214884133-5969556.post@n2.nabble.com>
-X-Mailer: Sylpheed 3.0.0 (GTK+ 2.10.14; i686-pc-mingw32)
-X-Antivirus: Dr.Web (R) for Mail Servers on proxysrv host
-X-Antivirus-Code: 100000
+	id S1751654Ab1A1Me0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Jan 2011 07:34:26 -0500
+Received: from v020138.sys.capside.net ([81.25.117.138]:60687 "EHLO
+	n023010.sys.capside.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750982Ab1A1MeZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 28 Jan 2011 07:34:25 -0500
+X-Greylist: delayed 399 seconds by postgrey-1.27 at vger.kernel.org; Fri, 28 Jan 2011 07:34:24 EST
+Received: (qmail 11022 invoked by uid 89); 28 Jan 2011 12:27:42 -0000
+Received: from 89.140.141.10.static.user.ono.com (HELO [192.168.10.109]) (89.140.141.10)
+  (smtp-auth username lagimenez@capside.com, mechanism plain)
+  by n023010.sys.capside.net (NEVRiON/smtpd) with ESMTPA; Fri, 28 Jan 2011 13:27:42 +0100
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <1296214676536-5969544.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165613>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165614>
 
-On Fri, 28 Jan 2011 03:41:24 -0800 (PST)
-vikram2rhyme <vikram2rhyme@gmail.com> wrote:
+On 28/01/2011 12:37, vikram2rhyme wrote:
+>
+> Hello friends
+> I am wondering why the tags are there in git. As they are just pointe=
+r to
+> the commit
+> we can refer those commit by SHA sum only then why tagging?
 
-> I am wondering if there are any permission and authorization control
-> over git repository.
-[...]
+Hi, I tend to find easier "release-v1" than 2cff0e391ab127ae...
 
-In the simplest case -- r/w access via SSH -- those who know the
-login/password or possess the necessary private key have (full) access
-to the repository. The repository can also be made accessible for
-read-only via Git protocol (as a whole as well). This can be used for
-simple write/read access discrimination.
-If a more fine-grained control
-is needed, third-party tools exist: gitolite:
-https://github.com/sitaramc/gitolite gitosis: http://swik.net/gitosis
-
-Note that as Git does not suffer from a centralised VCS syndrome of
-having a single repository shared by everyone involved, the problem
-you're facing might not exist at all: every developer or a group of
-related developers maintains their own repository and a "central"
-repository (in whatever sense you're willing to put into it) is owned
-by a special person or a group of persons.
+Regards,
+L. Alberto Gim=E9nez
