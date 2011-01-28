@@ -1,135 +1,113 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH] Fix wrong xhtml option to highlight
-Date: Fri, 28 Jan 2011 13:35:40 +0100
-Message-ID: <201101281335.41554.jnareb@gmail.com>
-References: <1295898298-9794-1-git-send-email-Jochen@herr-schmitt.de> <1296092646.23506.10.camel@drew-northup.unet.maine.edu> <7vvd1agoii.fsf@alter.siamese.dyndns.org>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: [RFC] Add --create-cache to repack
+Date: Fri, 28 Jan 2011 06:37:22 -0800
+Message-ID: <AANLkTim+AUY9SdeAFfkny2_a3qQ9SCDLUHR3s9Q3M98u@mail.gmail.com>
+References: <1296201984-24426-1-git-send-email-spearce@spearce.org> <4D42878E.2020502@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-1"
-Content-Transfer-Encoding: 7bit
-Cc: Drew Northup <drew.northup@maine.edu>,
-	Jochen Schmitt <Jochen@herr-schmitt.de>,
-	Adam Tkac <atkac@redhat.com>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Jan 28 13:35:53 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@fluxnic.net>,
+	John Hawley <warthog19@eaglescrag.net>
+To: Johannes Sixt <j.sixt@viscovery.net>
+X-From: git-owner@vger.kernel.org Fri Jan 28 15:37:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PinYO-0005IX-Hm
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 13:35:52 +0100
+	id 1PipSR-0007Vf-06
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 15:37:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751874Ab1A1Mfs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Jan 2011 07:35:48 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:46726 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751149Ab1A1Mfr (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jan 2011 07:35:47 -0500
-Received: by wwa36 with SMTP id 36so3301033wwa.1
-        for <git@vger.kernel.org>; Fri, 28 Jan 2011 04:35:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=D7w6odZk443Z9ohCQjtFlj25NL7yPgz+vGQssabds5I=;
-        b=VNnkRIaLbqeLV04kMO44semcCO9PJTmaw6yJxJ0JiEgPX6kmFcQtfHvKJQg2fQFX6u
-         qO+TA1kavkpjC5xPja4776Yt3fgbgz280yhyPY6RRrPjoIIlu8qjVwNCNYmElCeMrU9J
-         9YZNKxkA6Tiw1FjgJKC6lSDMACzMEexfAMqPE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=hKyG5eTuy46a0i30aSDwZsYdts7KauAHWCl3qcA3M+DeIN2WdKp4T+HK664g8kuppP
-         56v/vMVVHkEBF+HhLx/9SDNJrUKh3alpsWIrmiMrIZwjZi12TUMXl9LmDT2zCx8t/3rC
-         srgQJeounfR2fo5EKe0IjvE1D8hGNCr5Q/QS0=
-Received: by 10.227.143.11 with SMTP id s11mr2605155wbu.21.1296218145892;
-        Fri, 28 Jan 2011 04:35:45 -0800 (PST)
-Received: from [192.168.1.13] (abwe231.neoplus.adsl.tpnet.pl [83.8.228.231])
-        by mx.google.com with ESMTPS id b30sm9005748wen.1.2011.01.28.04.35.42
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 28 Jan 2011 04:35:44 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vvd1agoii.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+	id S1754688Ab1A1Ohp convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Jan 2011 09:37:45 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:55683 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754518Ab1A1Oho convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Jan 2011 09:37:44 -0500
+Received: by fxm20 with SMTP id 20so3399564fxm.19
+        for <git@vger.kernel.org>; Fri, 28 Jan 2011 06:37:43 -0800 (PST)
+Received: by 10.223.120.193 with SMTP id e1mr2431202far.106.1296225462877;
+ Fri, 28 Jan 2011 06:37:42 -0800 (PST)
+Received: by 10.223.70.205 with HTTP; Fri, 28 Jan 2011 06:37:22 -0800 (PST)
+In-Reply-To: <4D42878E.2020502@viscovery.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165615>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165616>
 
-On Thu, 27 Jan 2011, Junio C Hamano wrote:
-> Drew Northup <drew.northup@maine.edu> writes:
-> 
->>>> diff --git a/gitweb/gitweb.perl b/gitweb/gitweb.perl
->>>> index 1025c2f..b662420 100755
->>>> --- a/gitweb/gitweb.perl
->>>> +++ b/gitweb/gitweb.perl
->>>> @@ -3468,7 +3468,7 @@ sub run_highlighter {
->>>>  	close $fd;
->>>>  	open $fd, quote_command(git_cmd(), "cat-file", "blob", $hash)." | ".
->>>>  	          quote_command($highlight_bin).
->>>> -	          " --xhtml --fragment --syntax $syntax |"
->>>> +	          " -xhtml --fragment --syntax $syntax |"
->>> 
->>> Curious.
->>> 
->>> Does the command take double-dash for the fragment and syntax options but
->>> a single dash for the xhtml option?  Really...
->>> 
->>> A few top hits returned by Google for "highlight manual page" tells me
->>> otherwise.
->>
->> Certainly appears to be the case that "--xhtml" is the option in Ubuntu
->> 10.04.1 LTS. 
->>
->> Jochen,
->> Did you mean "-X" (which sets the same option)?
-> 
-> The current proposal is to drop --xhtml and let highlight default to HTML.
-> 
-> Honestly speaking, I don't like the approach very much; it would have been
-> much better if highlight had a single way that is supported throughout its
-> versions to specify the output format.  But it appears that there isn't,
-> and relying on and hoping for its default to stay HTML is the best we
-> could do, if we plan to support highlight 2.4.something or older.
-> 
-> The copy of U10.04 I have has highlight 2.12, and according to its manual
-> pages, -X, --xhtml, and --out-format=xhtml mean the same thing.  HTML is
-> the default.
-> 
-> The change-log at www.andre-simon.de indicates that --out-format has
-> become the preferred method and the short options like -X and -H are not
-> supported in recent versions (3.0 beta and newer).
-> 
-> But as Jakub mentioned, 2.4.5 did not have --output-format; it was only in
-> 3.0 beta that -O was redefined to mean --output-format and in old versions
-> the short option meant something else.
+On Fri, Jan 28, 2011 at 01:08, Johannes Sixt <j.sixt@viscovery.net> wro=
+te:
+> Am 1/28/2011 9:06, schrieb Shawn O. Pearce:
+>> A cache pack is all objects reachable from a single commit that is
+>> part of the project's stable history and won't disappear, and is
+>> accessible to all readers of the repository. =A0By containing only t=
+hat
+>> commit and its contents, if the commit is reached from a reference w=
+e
+>> know immediately that the entire pack is also reachable. =A0To help
+>> ensure this is true, the --create-cache flag looks for a commit alon=
+g
+>> refs/heads and refs/tags that is at least 1 month old, working under
+>> the assumption that a commit this old won't be rebased or pruned.
+>
+> In one of my repositories, I have two stable branches and a good scor=
+e of
+> topic branches of various ages (a few hours up to two years 8). The t=
+opic
+> branches will either be dropped eventually, or rebased.
+>
+> What are the odds that this choice of a tip commit picks one that is =
+in a
+> topic branch? Or is there no point in using --create-cache in a repos=
+itory
+> like this?
 
-Well, we can always require highlight >= 2.12, or whatever version
-introduced --out-format option.
+Argh, you are right.  Its quite likely this would pick a topic
+branch... and that isn't really what is desired.
 
-> 
-> What a mess...
-> 
-> The next time we introduce a new dependency, we really should try hard to
-> assess the stability and maturity of that dependency.  In hindsight, I
-> think "highlight" was probably a bit too premature to be depended upon.
+My original concept here was for distribution point repositories,
+which are less likely to have these topic branches that will rebase
+and disappear.  Though git.git has one called "pu".  *sigh*
 
-By the way, the idea was to make it possible to configure other highlighter,
-but I went with what I known to work, i.e. with Andre Simon's "highlight". 
-I think it could be fairly easy to make it configurable via existing
-$highlight_bin and to be introduced @highlight_args gitweb configuration
-variables.
+A simple fix is to use --heads --tags by default like I do here, but
+make the actual parameters we feed to rev-list configurable.  A
+repository owner could select only the master branch as input to
+rev-list, making it less likely the topic branches would be
+considered.  Unfortunately that requires direct access to the
+repository.  It fails for a site like GitHub, where you don't manage
+the repository at all.
 
-There are three possible ways to do syntax highlighting in gitweb:
-filter, Perl module, or via JavaScript.  An alternative to "highlight"
-as a filter could be GNU source-highlight... if not for the fact that
-it doesn't seem to support equivalent of "highlight" --fragment option,
-i.e. exclude prolog and <pre><tt> wrappers.
+git.git also is problematic because of the man, html and todo
+branches.  Branches that are disconnected from the main history but
+are very small (e.g. todo) might be selected instead and create a
+nearly useless cache file.  Fortunately disconnected branches could
+each have their own cache file (with only the inode overhead of having
+an additional 3 files per disconnected branch), and pack-objects could
+concat all of those packs together when sending.  Its just a challenge
+to identify these branches and keep them from being used for that main
+project pack.
 
--- 
-Jakub Narebski
-Poland
+
+This started because I was looking for a way to speed up clones coming
+from a JGit server.  Cloning the linux-2.6 repository is painful, it
+takes a long time to enumerate the 1.8 million objects.  So I tried
+adding a cached list of objects reachable from a given commit, which
+speeds up the enumeration phase, but JGit still needs to allocate all
+of the working set to track those objects, then go find them in packs
+and slice out each compressed form and reformat the headers on the
+wire.  Its a lot of redundant work when your kernel repository has
+360MB of data that you know a client needs if they have asked for your
+master branch with no "have" set.
+
+Later I realized, we can get rid of that cached list of objects and
+just use the pack itself.  Its far cleaner, as there is no redundant
+cache.  But either way (object list or pack) its a bit of a challenge
+to automatically identify the right starting points to use.  Linus
+Torvalds' linux-2.6 repository is the perfect case for the RFC I
+posted, its one branch with all of the history, and it never rewinds.
+But maybe Linus is just very unique in this world.  :-)
+
+--=20
+Shawn.
