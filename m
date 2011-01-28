@@ -1,84 +1,108 @@
-From: Gabriel Filion <lelutin@gmail.com>
-Subject: Re: Why git tags are there in git?
-Date: Fri, 28 Jan 2011 10:03:22 -0500
-Message-ID: <4D42DABA.5060603@gmail.com>
-References: <1296214676536-5969544.post@n2.nabble.com> <4D42B623.5060709@sysvalve.es>
+From: Thomas Berg <merlin66b@gmail.com>
+Subject: Re: [PATCH] git-p4: Corrected typo.
+Date: Fri, 28 Jan 2011 16:19:33 +0100
+Message-ID: <AANLkTikeB724f_vE6qvu1h1o5JG150mcmaHVBjLkOEWP@mail.gmail.com>
+References: <1290130693-30855-2-git-send-email-vitor.hda@gmail.com>
+	<1290648419-6107-1-git-send-email-vitor.hda@gmail.com>
+	<AANLkTimQhFzEXr=T9F8TJzTeWwKroTt_BG87RtQCLivv@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: vikram2rhyme <vikram2rhyme@gmail.com>, git@vger.kernel.org
-To: =?ISO-8859-1?Q?=22L=2E_Alberto_Gim=E9nez=22?= 
-	<agimenez@sysvalve.es>
-X-From: git-owner@vger.kernel.org Fri Jan 28 16:03:35 2011
+Cc: git@vger.kernel.org
+To: Vitor Antunes <vitor.hda@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Jan 28 16:20:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PiprI-0006Ky-Py
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 16:03:33 +0100
+	id 1Piq7g-0000i4-QC
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 16:20:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752063Ab1A1PD1 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Jan 2011 10:03:27 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:33989 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751740Ab1A1PD1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jan 2011 10:03:27 -0500
-Received: by vws16 with SMTP id 16so1140955vws.19
-        for <git@vger.kernel.org>; Fri, 28 Jan 2011 07:03:26 -0800 (PST)
+	id S1752559Ab1A1PTf convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Jan 2011 10:19:35 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:45016 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750982Ab1A1PTf convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Jan 2011 10:19:35 -0500
+Received: by qyk12 with SMTP id 12so3714149qyk.19
+        for <git@vger.kernel.org>; Fri, 28 Jan 2011 07:19:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:x-enigmail-version:content-type
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=5M5ZrPFDw80XtGNvH2R3nZ4qjaHhd97Bv3QrIjdy6ek=;
-        b=l8zoJdrbSf3Br5qYBlGzgTmDripESJkE77d5OcHY1AfhvVhu+7OMsAnEHF/RK0/XOl
-         jLwwf0oEB3o/xO9wKj8HE7a8CK9CruEJlsC1TwAHNVdMMLajH4mYUlVmHPOd0T8avR8q
-         6atfT8eAcB5usFcYz+uputfh75ICKISuudDXg=
+        bh=NwpFr0rS77i6MVWJTpcYTc8PgmXowwcfXFEFoOR9fO4=;
+        b=Ri2UllYCNneYzwf3WwBfMp2QTdn5X805MYpO5Sg5gf7i7QkQgGnX9uE0K5f9ICibx5
+         Pq8PgCNo/ukDWmAMuRdv+mfeSOeopn8dvHzGJyVF3DsSxZrfGm1wXWLG4HqMdJ578i/n
+         JhIusaYjwMn8Eba3CChEIfg9z6Idfoy/RW+/4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:x-enigmail-version:content-type
-         :content-transfer-encoding;
-        b=vfPezeF6wVsm60xxgRPkci5TwOw16drvmuDE0La4j2l92ewP9RTTJrBYXaI9ktVVhH
-         nLyX9McC2dMq5Gs0JPO2oCH310NqNU9YIwlPqCZ9oxRPdB7lT4rVpAV6w15IqNDOeLx8
-         eYybx03gr+jJoVekEJZGIrW5sGI0KxBWOnk4o=
-Received: by 10.229.183.135 with SMTP id cg7mr996336qcb.210.1296227006301;
-        Fri, 28 Jan 2011 07:03:26 -0800 (PST)
-Received: from [192.168.2.203] (dsl-149-236.aei.ca [66.36.149.236])
-        by mx.google.com with ESMTPS id s10sm12687258qco.35.2011.01.28.07.03.24
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 28 Jan 2011 07:03:25 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Lightning/1.0b2 Thunderbird/3.1.7
-In-Reply-To: <4D42B623.5060709@sysvalve.es>
-X-Enigmail-Version: 1.1.2
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=SL8xi/2B10fkwmnX1qO2pQsZf8PyQr0GSlMYFqPT6U/T0k4l05JMZJ9MmkfE9Kn6bU
+         eKtHWmmknWPCPL0eC4NgfGllL3i5g/IB82D2C4NGnW/2aDUo1QVQJvhnsAwwY0ClTXYo
+         Z24Stu2aFFrwD37+c5hc1ZZNvxtotpeVtlgr8=
+Received: by 10.229.88.82 with SMTP id z18mr1030634qcl.221.1296227973944; Fri,
+ 28 Jan 2011 07:19:33 -0800 (PST)
+Received: by 10.229.223.131 with HTTP; Fri, 28 Jan 2011 07:19:33 -0800 (PST)
+In-Reply-To: <AANLkTimQhFzEXr=T9F8TJzTeWwKroTt_BG87RtQCLivv@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165619>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165620>
 
-On 11-01-28 07:27 AM, "L. Alberto Gim=E9nez" wrote:
-> On 28/01/2011 12:37, vikram2rhyme wrote:
+Hi,
+
+On Fri, Jan 28, 2011 at 12:35 AM, Vitor Antunes <vitor.hda@gmail.com> w=
+rote:
+> Hi everyone,
+>
+> Could anyone comment the 3 patches I sent (being this the last one)?
+>
+[...]
+> On Thu, Nov 25, 2010 at 1:26 AM, Vitor Antunes <vitor.hda@gmail.com> =
+wrote:
+>> ---
+>> =A0contrib/fast-import/git-p4 | =A0 =A02 +-
+>> =A01 files changed, 1 insertions(+), 1 deletions(-)
 >>
->> Hello friends
->> I am wondering why the tags are there in git. As they are just point=
-er to
->> the commit
->> we can refer those commit by SHA sum only then why tagging?
->=20
-> Hi, I tend to find easier "release-v1" than 2cff0e391ab127ae...
->=20
+>> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+>> index 0ea3a44..a466847 100755
+>> --- a/contrib/fast-import/git-p4
+>> +++ b/contrib/fast-import/git-p4
+>> @@ -618,7 +618,7 @@ class P4Submit(Command):
+>> =A0 =A0 =A0 =A0 if len(detectRenames) > 0:
+>> =A0 =A0 =A0 =A0 =A0 =A0 diffOpts =3D "-M%s" % detectRenames
+>> =A0 =A0 =A0 =A0 else:
+>> - =A0 =A0 =A0 =A0 =A0 =A0diffOpts =3D ("", "-M")[self.detectRenames]
+>> + =A0 =A0 =A0 =A0 =A0 =A0diffOpts =3D ("", "-M")[self.detectRename]
+>>
 
-In general, tags are used for marking a point in time. That marker won'=
-t
-move, whereas branches can move with time.
+This appears to me to be a bugfix for one of the other patches you
+sent, is that right?
 
-=46or example, in most projects tags are used to make it easier to refe=
-r
-to commits that mark official releases. In git.git (git's own
-repository), the tag v1.7.3.5 points to the release with the same numbe=
-r.
+If so, maybe you could squash it with the previous patch and re-send
+it all to the list?
 
---=20
-Gabriel Filion
+My other comments for now are:
+- you have forgotten to sign off on the patches
+- commit messages are normally in imperative rather than past tense
+(see Documentation/SubmittingPatches in git)
+
+- In your first patch you wrote:
+> The detectRenames option should be set to the desired threshold value=
+=2E
+I'm not sure what threshold value you refer to here, and what values
+you can set it to. Am I missing something?
+(I'm not very familiar with git rename detection options)
+
+I'm a git-p4 user, so I can test your changes and look a bit more at
+your code. Someone verifying it could help getting the patches
+applied.
+
+Thanks for improving git-p4!
+
+Cheers,
+Thomas Berg
