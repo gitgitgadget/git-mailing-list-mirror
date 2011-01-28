@@ -1,110 +1,96 @@
-From: Pat Thoyts <patthoyts@users.sourceforge.net>
+From: Bert Wesarg <bert.wesarg@googlemail.com>
 Subject: Re: [PATCH] git-gui: fix browser with initial path
-Date: Fri, 28 Jan 2011 10:42:15 +0000
-Message-ID: <87sjwdmhrs.fsf@fox.patthoyts.tk>
+Date: Fri, 28 Jan 2011 12:04:10 +0100
+Message-ID: <AANLkTi=9vwg9mvvyWax0jr1OmAr+JUn7TNt98=9MxR6G@mail.gmail.com>
 References: <1290497870-28673-1-git-send-email-bert.wesarg@googlemail.com>
 	<AANLkTim8BhN9czr6Jx5J28iNop4XdFDcNKbbjxddW9-i@mail.gmail.com>
+	<87sjwdmhrs.fsf@fox.patthoyts.tk>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Bert Wesarg <bert.wesarg@googlemail.com>
-X-From: git-owner@vger.kernel.org Fri Jan 28 11:43:04 2011
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Fri Jan 28 12:04:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PilnA-0000tW-LG
-	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 11:43:00 +0100
+	id 1Pim7q-00073p-2J
+	for gcvg-git-2@lo.gmane.org; Fri, 28 Jan 2011 12:04:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754028Ab1A1Kmy convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Jan 2011 05:42:54 -0500
-Received: from smtp-out5.blueyonder.co.uk ([195.188.213.8]:55150 "EHLO
-	smtp-out5.blueyonder.co.uk" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752885Ab1A1Kmy convert rfc822-to-8bit
-	(ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jan 2011 05:42:54 -0500
-Received: from [172.23.170.138] (helo=anti-virus01-09)
-	by smtp-out5.blueyonder.co.uk with smtp (Exim 4.52)
-	id 1Piln1-0003Fy-79; Fri, 28 Jan 2011 10:42:51 +0000
-Received: from [77.100.97.230] (helo=fox.patthoyts.tk)
-	by asmtp-out6.blueyonder.co.uk with esmtpa (Exim 4.72)
-	(envelope-from <patthoyts@users.sourceforge.net>)
-	id 1PilmS-00081m-25; Fri, 28 Jan 2011 10:42:16 +0000
-Received: by fox.patthoyts.tk (Postfix, from userid 1000)
-	id 2CFFA203FB; Fri, 28 Jan 2011 10:42:16 +0000 (GMT)
-X-Face: .`d#euqz@6H{";Ysmx2IVe_7M3vA+2w1X[QLk?ZO&QRauXQL{*L'$3getx}9+zK.-KWDx3.
- qrlR)76MFb`6bgoGvLpLtcQKB=X~;*<JKLtwLBM(IA'?rVjs1*tq\VHn?WMNsB,3XXWF@5.)4SRFa+
- '?a?.s#@hl7CiTo'F"O!fvbL0
-X-Url: http://www.patthoyts.tk/
-X-Home-Page: http://www.patthoyts.tk/
-X-Web: http://www.patthoyts.tk/
-In-Reply-To: <AANLkTim8BhN9czr6Jx5J28iNop4XdFDcNKbbjxddW9-i@mail.gmail.com>
-	(Bert Wesarg's message of "Fri, 10 Dec 2010 09:48:43 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1.91 (gnu/linux)
+	id S1753485Ab1A1LEQ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Jan 2011 06:04:16 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:52807 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752195Ab1A1LEP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Jan 2011 06:04:15 -0500
+Received: by wyb28 with SMTP id 28so3070031wyb.19
+        for <git@vger.kernel.org>; Fri, 28 Jan 2011 03:04:14 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Tycq2iJhgTOZz2J9IGykPb5MOOc0ZzjVhToRU4tnnT4=;
+        b=WHv90DVltB98NrPG7hRu1XaVjfdZOWs62ldH1t7S3SIQ+4s4oc6EeldGUSAgFlRsjP
+         Lk5jCxpZStvqFBxi6PGwdfexVoFPEXQGTuKT/YzOpIwvcw1LMWOLLW4VZwEu8aHIEqcA
+         y8prDfYu1OlNyMAMqvXtAAlNEDsOBi4fRzEaI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=googlemail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=LIKEJMgAGlnFLCuIpYT8QjqFWOv8yAuhWDms1S1Z+DLKRXrTJ63eQ2B2YvPvfoKydp
+         3rc0hBZsuFQ5//4FPAF7jOMowObzLwWVcTaR/XcQ3lOPbacmnpxIgY3e8k/UJKU54Vp5
+         Bv4iU8SZZE9yJbZy5hIbEIGE6pq3isnvUxPrE=
+Received: by 10.227.180.134 with SMTP id bu6mr2445053wbb.183.1296212653251;
+ Fri, 28 Jan 2011 03:04:13 -0800 (PST)
+Received: by 10.227.134.14 with HTTP; Fri, 28 Jan 2011 03:04:10 -0800 (PST)
+In-Reply-To: <87sjwdmhrs.fsf@fox.patthoyts.tk>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165609>
 
-Bert Wesarg <bert.wesarg@googlemail.com> writes:
-
->Ping.
+On Fri, Jan 28, 2011 at 11:42, Pat Thoyts
+<patthoyts@users.sourceforge.net> wrote:
+> The commit comment for this doesn't really reflect whats being
+> done. Commit 1ab8628 fixed the [Up To Parent] problem and this just
+> fixes the display on the browser title.
 >
->On Tue, Nov 23, 2010 at 08:37, Bert Wesarg <bert.wesarg@googlemail.com=
-> wrote:
->> The path given to the browser does not end in a slash, which results=
- in bad
->> path given to blame and broke [Up To Parent]. Also the path was not
->> escaped before displaying.
->>
->> Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
->>
->> ---
->> =A0git-gui/lib/browser.tcl | =A0 =A08 +++++++-
->> =A01 files changed, 7 insertions(+), 1 deletions(-)
->>
->> diff --git a/git-gui/lib/browser.tcl b/git-gui/lib/browser.tcl
->> index c241572..a88a68b 100644
->> --- a/git-gui/lib/browser.tcl
->> +++ b/git-gui/lib/browser.tcl
->> @@ -26,8 +26,14 @@ constructor new {commit {path {}}} {
->> =A0 =A0 =A0 =A0wm withdraw $top
->> =A0 =A0 =A0 =A0wm title $top [append "[appname] ([reponame]): " [mc =
-"File Browser"]]
->>
->> + =A0 =A0 =A0 if {$path ne {}} {
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if {[string index $path end] ne {/}} {
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 append path /
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 }
->> + =A0 =A0 =A0 }
->> +
->> =A0 =A0 =A0 =A0set browser_commit $commit
->> - =A0 =A0 =A0 set browser_path $browser_commit:$path
->> + =A0 =A0 =A0 set browser_path "$browser_commit:[escape_path $path]"
->>
->> =A0 =A0 =A0 =A0${NS}::label $w.path \
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0-textvariable @browser_path \
->> --
->> tg: (6f10c41..) bw/git-gui/fix-browser-up (depends on: master)
->>
+> So I plan to take this with the commit comment as:
 >
-The commit comment for this doesn't really reflect whats being
-done. Commit 1ab8628 fixed the [Up To Parent] problem and this just
-fixes the display on the browser title.
+> =C2=A0git-gui: fix display of path in browser title
+>
+> =C2=A0Ensure the browser path is shown on the title with a / suffix a=
+nd escape
+> =C2=A0any backslashes or newlines in path elements before display.
 
-So I plan to take this with the commit comment as:
+No, the main problem is, that the path does not end in a slash, but
+the browser code expect this, ie. it build sub pathes by just
+concatenating '$path' and '$file', or with '$dir/', without a slash
+inbetween. Its not only the visual part. Try this without the patch
+(int git.git):
 
- git-gui: fix display of path in browser title
+git gui browse git-gui/
 
- Ensure the browser path is shown on the title with a / suffix and esca=
-pe
- any backslashes or newlines in path elements before display.
+In the path line there should be now 'master:git-gui'. Than go into
+'lib'. You have 'master:git-guilib/'. And than double click about.tcl,
+The blame view will get the 'git-guilib/about.tcl'.
 
- Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+Because the browser is itself consistent in this behavior, the only
+problem was when the browser was a path given to start with. And this
+path needs have a trailing slash. And this patch ensures this.
 
---=20
-Pat Thoyts                            http://www.patthoyts.tk/
-PGP fingerprint 2C 6E 98 07 2C 59 C8 97  10 CE 11 E6 04 E0 B9 DD
+Bert
+
+>
+> =C2=A0Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
+>
+> --
+> Pat Thoyts =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0http://www.patthoyts.tk/
+> PGP fingerprint 2C 6E 98 07 2C 59 C8 97 =C2=A010 CE 11 E6 04 E0 B9 DD
+>
+>
