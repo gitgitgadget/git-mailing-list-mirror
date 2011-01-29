@@ -1,134 +1,210 @@
-From: David Aguilar <davvid@gmail.com>
-Subject: Re: Project- vs. Package-Level Branching in Git
-Date: Sat, 29 Jan 2011 15:28:50 -0800
-Message-ID: <20110129232848.GC7676@gmail.com>
-References: <14F4737F-E8E4-4E4E-A625-16CA63CF9EFF@shaggyfrog.com>
- <AANLkTinTRgzv0s9MTyM4TaOwVOmhwRckDqMfxrbsKVfm@mail.gmail.com>
- <15B7CA2E-C584-4563-B9E3-D80861CD9565@shaggyfrog.com>
- <m3tygt9xmn.fsf@localhost.localdomain>
- <20110129194258.GE602@nibiru.local>
+From: "Tim Abell" <tim@timwise.co.uk>
+Subject: [PATCH] Handle rename of case only, for Windows
+Date: Sat, 29 Jan 2011 23:45:17 +0000
+Message-ID: <1296344717.25999.1417928123@webmail.messagingengine.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Enrico Weigelt <weigelt@metux.de>, git@vger.kernel.org,
-	=?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>
-To: Thomas Hauk <tom@shaggyfrog.com>
-X-From: git-owner@vger.kernel.org Sun Jan 30 00:24:57 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: "Erik Faye-Lund" <kusmabite@gmail.com>,
+	"Nguyen Thai Ngoc Duy" <pclouds@gmail.com>,
+	"msysGit" <msysgit@googlegroups.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 30 00:45:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PjKA4-00029T-Ff
-	for gcvg-git-2@lo.gmane.org; Sun, 30 Jan 2011 00:24:56 +0100
+	id 1PjKTt-0000JL-1e
+	for gcvg-git-2@lo.gmane.org; Sun, 30 Jan 2011 00:45:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752416Ab1A2XYr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Jan 2011 18:24:47 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:39060 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751878Ab1A2XYq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Jan 2011 18:24:46 -0500
-Received: by iwn9 with SMTP id 9so4250709iwn.19
-        for <git@vger.kernel.org>; Sat, 29 Jan 2011 15:24:46 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=n44xYZ1LAQ4a/L8N7VUGsimDn8bh83Ol7OtxSJcp2ps=;
-        b=ZnilstDpecxL7BuH9ILPlhfwW/THC85oR2eiXOhoYe0WvWvbxMKUdVoT4Pi8uGr3zY
-         o4E0mOlyGyPjeWW2BSIWIvwTuJM8TvWjFVwKv9YMfVF6olDsxNCO00MBIuY0JYRGN21R
-         gLT6d4JOJJttnq3vDPQivrX6ERAiPu6AGlex8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=AwSNKlpZSmKQXWWn6BSSbvWcNQHWx97WTl3c/9D4YE9B0JbJzyMji0MNiKM6TXLW/F
-         5hgDjnPBaH7a4MeOygegDUqCGms1pX5m+Gfs6opnYVs9dBp7Q+c2PR+u9JHvTJOf9BiL
-         2SIjqaQpfkgZmENEXq2TXB7FKwM/y/lC71680=
-Received: by 10.42.178.135 with SMTP id bm7mr5858947icb.101.1296343486273;
-        Sat, 29 Jan 2011 15:24:46 -0800 (PST)
-Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
-        by mx.google.com with ESMTPS id i16sm16246614ibl.12.2011.01.29.15.24.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 29 Jan 2011 15:24:43 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110129194258.GE602@nibiru.local>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753168Ab1A2XpT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Jan 2011 18:45:19 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:36465 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751878Ab1A2XpS (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 29 Jan 2011 18:45:18 -0500
+Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 0E7BB20322;
+	Sat, 29 Jan 2011 18:45:18 -0500 (EST)
+Received: from web2.messagingengine.com ([10.202.2.212])
+  by compute3.internal (MEProxy); Sat, 29 Jan 2011 18:45:18 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:from:to:cc:mime-version:content-transfer-encoding:content-type:subject:date; s=smtpout; bh=Pu/JWAOVShUgzN3pPtWqeuiqQoo=; b=GdAdld/qR9AF0GBQQ8GUN9lH/m9cPX1rE4++YbL+7HK/RarDNI24BnuHfFpjVOLO2zlkkwwgVGBBge1UMKPVxcroCeIV7Sa/8ozDgw0tpRDbFisQ8cfxRk5ADqbAKYdUE8KO4BUY+RHHtlXqvQ2JONAavQMtlLrRcNVCdSPPGmA=
+Received: by web2.messagingengine.com (Postfix, from userid 99)
+	id DCA4DB3B5CC; Sat, 29 Jan 2011 18:45:17 -0500 (EST)
+X-Sasl-Enc: LSrTMSjOl6TVBsjcteTyQ/enVcGzS9AwtEFFv1xvFUd2 1296344717
+X-Mailer: MessagingEngine.com Webmail Interface
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165675>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165676>
 
-On Sat, Jan 29, 2011 at 08:42:59PM +0100, Enrico Weigelt wrote:
-> * Jakub Narebski <jnareb@gmail.com> wrote:
-> 
-> > That is only if lib{a,b,c} is _internal_ dependency.  In usual case
-> > project A might depend on library B *to be installed*, but it doesn't
-> > mean that source code of library B has to be in repository for project
-> > A.  And in usual case when project A depends on library B, it relies
-> > on library B public stable API (its build system might check if you
-> > have new enough library B installed).  If you depend on specific
-> > version of library, patched, that is your problem...
-> 
-> To make it more clear: 
-> 
-> At buildtime, a _package_ (not project!) "A" requires a already built
-> and installed package B in some sane place where the toolchain can find it.
-> On deployment of package "A", it has to be made sure that package "B"
-> is also deployed (eg. by a dependency-handling package manager).
-> 
-> These are two entirely separate stages in a software's lifecycle.
-> Buildtime and deployment dependencies may be different (even deployment
-> and runtime deps may differ).
+>From ddab003ede9f25d93f4e7eea833523a0aa29d16d Mon Sep 17 00:00:00 2001
+From: Tim Abell <tim@timwise.co.uk>
+Date: Thu, 27 Jan 2011 22:53:31 +0000
+Subject: [PATCH] Handle rename of case only, for Windows
 
-This is exactly how we do it at my workplace.  We have literally
-hundreds of individual git repositories.  Naturally, some
-packages depend on others and the only "trick" is building them
-in the correct dependency order.  A simple dependency tree
-handles this for us.
+Added test to show rename failing in windows.
+Added test to show that this patch doesn't break protection against overwriting
+an existing file, and another to show that "mv --force" still works.
 
-We use same-named branches across several repos when coordinating
-features across many projects.  e.g. we had an "el6" branch
-when we were gettings things ready for that platform.  It's a
-convention but it helps when writing helper scripts.
+Altered mv.c to check whether the source and destination file are actually
+the same file based on inode number before failing.
+If the inode is zero then the data is no use so old behaviour is maintained.
 
-We can clone and work on any subset of the entire tree by
-cloning just the repos we are interested in.  Setting
-$LD_LIBRARY_PATH and $PATH helps when testing builds in their
-sandboxes.  You still need to get the compiler/linker to
-construct paths into the sandboxes instead of the standard
-release area.
+A message from Linus on the subject:
+ http://kerneltrap.org/mailarchive/git/2008/3/21/1220814
+ (apparently he never got the energy :-)
 
-This is what the pkg-config command does.  It respects the
-$PKG_CONFIG_PATH environment variable which can be used to
-point to staged installs so that you don't have to deploy the
-package before building against it.  The idea is so simple
-that you could write an equivalent command in an afternoon and
-extend it to work however you need in the event that pkg-config
-does not fit.
+Signed-off-by: Tim Abell <tim@timwise.co.uk>
+---
 
-There's only two components that are needed to make this work:
+Hi folks, this is my second attempt at providing a useful patch for this issue.
+Thanks for all the great feedback from my first attempt. I've attempted to address the problems raised.
 
-1. a simple shell wrapper to aid in setting the env. variables
-   on the fly.  Let's call it "devo".  That way you can say
-   "devo foo bar baz" and it'll put
-   foo/linux-x64/lib64/pkgconfig and bar/linux-x64/lib64/pkgconfig
-   (assuming linux-x64 is the "make install"ed path)
-   at the front of the PKG_CONFIG_PATH, foo/linux-x86/bin in PATH,
-   etc.
+Hopefully my commit message is more like what is needed this time.
+I hadn't realised before that you can split the commit message from this bit with the "---".
 
-   You can do without a wrapper by either setting the variables
-   manually or by having a shell scriplet that you 'source'
-   whenever you want the settings.
+>Hmm, not so good. st_ino is always 0 on Windows, so this would make
+>false positives, no?
 
-2. the build must use the pkg-config command when constructing
-   include/library paths.
+I tested this on windows 7 under cygwin (which is what I have available) and st_ino reports real numbers for me, I also tested that attempting to overwrite another file without --force still fails and added a new test case for this scenario. I have now made sure that if zero is returned then git won't accidentally overwrite other files as I hadn't thought of this before. So this patch shouldn't be regressive even if other versions of windows or other filesystems don't provide valid inode data.
 
-As I mentioned, perhaps you don't want to use pkg-config.
-The idea ("overridable projects using a single env. variable")
-is the important part.  You can certainly write something
-tailored to your needs if you want something simpler.
+Adding the following line after "lstat(src, &src_st);" shows the inode numbers when calling git mv:
+ printf("src inode: %lu, dst inode: %lu", (unsigned long) src_st.st_ino, (unsigned long) st.st_ino);
+And here is my ouput showing it in action:
+
+$ git mv foo.txt bar.txt
+  fatal: destination exists, source=foo.txt, destination=bar.txt
+  src inode: 67064, dst inode: 229369
+$ git mv foo.txt Foo.txt
+  src inode: 67064, dst inode: 67064
+
+>I wonder if we can make lstat_case() that would only return 0 if it
+>matches exactly the filename, even on FAT. FindFirstFile/FindNextFile
+>should return true file name, I think. If not, we can make
+>lstat_case() take two paths (src and dst) and move all inode
+>comparison code in there. Much cleaner.
+
+I'm afraid this is a bit beyond me at the moment, but I'm fairly happy with the solution I have. Thanks for the feedback though.
+
+>Couldn't this be moved inside the scope around "cache_name_pos"?
+>That's the only scope it is valid inside anyway...
+
+Done. I wasn't sure about this initially as I'm not very experienced with C programming. Thanks for the pointer.
+
+>Perhaps you could use the full URL (and maybe put it in the commit
+>message insted)? It'd be nice if we could reach this information even
+>if is.gd disappears...
+
+Good point. I've put the full url in the commit message instead.
+
+>Uhm, is this debug-leftovers? #warning is a preprocessor-construct,
+>and it can't understand varaibles in c. Especially not formatted as
+>strings. Can #warning even do varags? :P
+
+Yes, it was a debug line. Doh! Complete chance that it compiled, I've been doing too much bash scripting recently it seems. I've stripped it out. A better version is available above should anyone want to see the inode numbers.
+
+Thanks all, I welcome any more feedback.
+
+Does this now look like something that anyone on the git project would like to pick up as a contribution?
+
+Yours
+
+Tim Abell
+
+
+ builtin/mv.c  |   32 +++++++++++++++++++++-----------
+ t/t7001-mv.sh |   35 +++++++++++++++++++++++++++++++++++
+ 2 files changed, 56 insertions(+), 11 deletions(-)
+
+diff --git a/builtin/mv.c b/builtin/mv.c
+index cdbb094..c2f726a 100644
+--- a/builtin/mv.c
++++ b/builtin/mv.c
+@@ -165,17 +165,27 @@ int cmd_mv(int argc, const char **argv, const char *prefix)
+ 		} else if (cache_name_pos(src, length) < 0)
+ 			bad = "not under version control";
+ 		else if (lstat(dst, &st) == 0) {
+-			bad = "destination exists";
+-			if (force) {
+-				/*
+-				 * only files can overwrite each other:
+-				 * check both source and destination
+-				 */
+-				if (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode)) {
+-					warning("%s; will overwrite!", bad);
+-					bad = NULL;
+-				} else
+-					bad = "Cannot overwrite";
++			/* If we are on a case insensitive file system (windows) and we are only
++			 * changing the case of the file then lstat for the destination will
++			 * return != 0 because it sees the source file.
++			 * To prevent this causing failure, lstat is used to get the inode of the src
++			 * and see if it's actually the same file as dst. If the inode == 0 then
++			 * we can't tell whether it is the same file so we fail regardless. */
++			struct stat src_st;
++			lstat(src, &src_st);
++			if (src_st.st_ino == 0 || src_st.st_ino != st.st_ino) {
++				bad = "destination exists";
++				if (force) {
++					/*
++					 * only files can overwrite each other:
++					 * check both source and destination
++					 */
++					if (S_ISREG(st.st_mode) || S_ISLNK(st.st_mode)) {
++						warning("%s; will overwrite!", bad);
++						bad = NULL;
++					} else
++						bad = "Cannot overwrite";
++				}
+ 			}
+ 		} else if (string_list_has_string(&src_for_dst, dst))
+ 			bad = "multiple sources for the same target";
+diff --git a/t/t7001-mv.sh b/t/t7001-mv.sh
+index 65a35d9..abaecb6 100755
+--- a/t/t7001-mv.sh
++++ b/t/t7001-mv.sh
+@@ -255,4 +255,39 @@ test_expect_success SYMLINKS 'git mv should overwrite file with a symlink' '
+ 
+ rm -f moved symlink
+ 
++test_expect_success 'git mv should not fail when only changing case' '
++
++	rm -fr .git &&
++	git init &&
++	>foo.txt &&
++	git add foo.txt &&
++	git mv foo.txt Foo.txt
++'
++
++rm *.txt
++
++test_expect_success 'git mv should not overwrite existing file' '
++
++	rm -fr .git &&
++	git init &&
++	>foo.txt &&
++	>bar.txt &&
++	git add foo.txt &&
++	test_must_fail git mv foo.txt bar.txt
++'
++
++rm *.txt
++
++test_expect_success 'git mv -f should overwrite existing file' '
++
++	rm -fr .git &&
++	git init &&
++	>foo.txt &&
++	>bar.txt &&
++	git add foo.txt &&
++	git mv -f foo.txt bar.txt
++'
++
++rm *.txt
++
+ test_done
 -- 
-		David
+1.7.3.5.3.g2b35a
