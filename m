@@ -1,222 +1,191 @@
-From: Nicolas Pitre <nico@fluxnic.net>
+From: Shawn Pearce <spearce@spearce.org>
 Subject: Re: [RFC] Add --create-cache to repack
-Date: Fri, 28 Jan 2011 23:08:23 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1101282055190.8580@xanadu.home>
+Date: Fri, 28 Jan 2011 20:35:48 -0800
+Message-ID: <AANLkTik01sVOKD+gW_BembUDN-LRbqJsPCCBBVyJJ11T@mail.gmail.com>
 References: <1296201984-24426-1-git-send-email-spearce@spearce.org>
- <4D42878E.2020502@viscovery.net>
- <AANLkTim+AUY9SdeAFfkny2_a3qQ9SCDLUHR3s9Q3M98u@mail.gmail.com>
- <alpine.LFD.2.00.1101281304270.8580@xanadu.home>
- <AANLkTikPcp5CUTWfhy6FYbCEkNG6epGBAMNT5vTfSbvy@mail.gmail.com>
- <alpine.LFD.2.00.1101281502170.8580@xanadu.home>
- <AANLkTi=U7qRRij=BQXC1Goqa9toDFfaVKT=+-8zYxCcc@mail.gmail.com>
+ <4D42878E.2020502@viscovery.net> <AANLkTim+AUY9SdeAFfkny2_a3qQ9SCDLUHR3s9Q3M98u@mail.gmail.com>
+ <alpine.LFD.2.00.1101281304270.8580@xanadu.home> <AANLkTikPcp5CUTWfhy6FYbCEkNG6epGBAMNT5vTfSbvy@mail.gmail.com>
+ <alpine.LFD.2.00.1101281502170.8580@xanadu.home> <AANLkTi=U7qRRij=BQXC1Goqa9toDFfaVKT=+-8zYxCcc@mail.gmail.com>
+ <alpine.LFD.2.00.1101282055190.8580@xanadu.home>
 Mime-Version: 1.0
-Content-Type: multipart/mixed; boundary="Boundary_(ID_22cLCt45GlrdiELlL/Za8w)"
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
 	Junio C Hamano <gitster@pobox.com>,
 	John Hawley <warthog19@eaglescrag.net>
-To: Shawn Pearce <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Jan 29 05:10:16 2011
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sat Jan 29 05:41:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pj28d-0000cn-FC
-	for gcvg-git-2@lo.gmane.org; Sat, 29 Jan 2011 05:10:16 +0100
+	id 1Pj2cq-0000YC-Hz
+	for gcvg-git-2@lo.gmane.org; Sat, 29 Jan 2011 05:41:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753199Ab1A2EIZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 28 Jan 2011 23:08:25 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:8919 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752495Ab1A2EIY (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 28 Jan 2011 23:08:24 -0500
-Received: from xanadu.home ([66.130.28.92]) by VL-MR-MRZ20.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0LFR00GRBNHN7MB0@VL-MR-MRZ20.ip.videotron.ca> for
- git@vger.kernel.org; Fri, 28 Jan 2011 23:08:11 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <AANLkTi=U7qRRij=BQXC1Goqa9toDFfaVKT=+-8zYxCcc@mail.gmail.com>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
-Content-id: <alpine.LFD.2.00.1101282111080.8580@xanadu.home>
+	id S1753264Ab1A2EgM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Jan 2011 23:36:12 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:37160 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752063Ab1A2EgK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Jan 2011 23:36:10 -0500
+Received: by fxm20 with SMTP id 20so4045277fxm.19
+        for <git@vger.kernel.org>; Fri, 28 Jan 2011 20:36:09 -0800 (PST)
+Received: by 10.102.244.18 with SMTP id r18mr1847058muh.5.1296275768948; Fri,
+ 28 Jan 2011 20:36:08 -0800 (PST)
+Received: by 10.103.1.2 with HTTP; Fri, 28 Jan 2011 20:35:48 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.1101282055190.8580@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165652>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165653>
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+On Fri, Jan 28, 2011 at 20:08, Nicolas Pitre <nico@fluxnic.net> wrote:
+>> pack is actually smaller 376.30 MiB vs. C Git's 380.59 MiB. =A0I poi=
+nt
+>> out this data because improvements made to JGit may show similar
+>> improvements to CGit given how close they are in running time.
+>
+> What are those improvements?
 
---Boundary_(ID_22cLCt45GlrdiELlL/Za8w)
-Content-id: <alpine.LFD.2.00.1101282111081.8580@xanadu.home>
-Content-type: TEXT/PLAIN; CHARSET=ISO-8859-15
-Content-transfer-encoding: 8BIT
+None right now.  JGit is similar to CGit algorithm-wise.  (Actually it
+looks like JGit has a faster diff implementation, but that's a
+different email.)
 
-On Fri, 28 Jan 2011, Shawn Pearce wrote:
+If you are asking about why JGit created a slightly smaller pack
+file... it splits the delta window during threaded delta search
+differently than CGit does, and we align our blocks slightly
+differently when comparing two objects to generate a delta sequence
+for them.  These two variations mean JGit produces different deltas
+than CGit does.  Sometimes we are smaller, sometimes we are larger.
+But its a small difference, on the order of 1-4 MiB for something like
+linux-2.6.  I don't think its worthwhile trying to analyze the
+specific differences in implementations and retrofit those differences
+into the other one.
 
-> On Fri, Jan 28, 2011 at 13:09, Nicolas Pitre <nico@fluxnic.net> wrote:
-> > On Fri, 28 Jan 2011, Shawn Pearce wrote:
-> >
-> >> On Fri, Jan 28, 2011 at 10:46, Nicolas Pitre <nico@fluxnic.net> wrote:
-> >> > On Fri, 28 Jan 2011, Shawn Pearce wrote:
-> >> >
-> >> >> This started because I was looking for a way to speed up clones coming
-> >> >> from a JGit server.  Cloning the linux-2.6 repository is painful,
-> 
-> Well, scratch the idea in this thread.  I think.
-> 
-> I retested JGit vs. CGit on an identical linux-2.6 repository.  The
-> repository was fully packed, but had two pack files.  362M and 57M,
-> and was created by packing a 1 month old master, marking it .keep, and
-> then repacking -a -d to get most recent last month into another pack.
-> This results in some files that should be delta compressed together
-> being stored whole in the two packs (obviously).
-> 
-> The two implementations take the same amount of time to generate the
-> clone.  3m28s / 3m22s for JGit, 3m23s for C Git.  The JGit created
-> pack is actually smaller 376.30 MiB vs. C Git's 380.59 MiB.  I point
-> out this data because improvements made to JGit may show similar
-> improvements to CGit given how close they are in running time.
+What I was trying to say was, _if_ we made a change to JGit and it
+dropped the running time, that same change in CGit should have _at
+least_ the same running time improvement, if not better.  I was
+pointing out that this cached-pack change dropped the running time by
+1 minute, so CGit should also see a similar improvement (if not
+better).  I would prefer to test against CGit for this sort of thing,
+but its been too long since I last poked pack-objects.c and the
+revision code in CGit, while the JGit equivalents are really fresh in
+my head.
 
-What are those improvements?
+> Now, the fact that JGit is so close to CGit must be because the actua=
+l
+> cost is outside of them such as within zlib, otherwise the C code sho=
+uld
+> normally always be faster, right?
 
-Now, the fact that JGit is so close to CGit must be because the actual 
-cost is outside of them such as within zlib, otherwise the C code should 
-normally always be faster, right?
+Yup, I mostly agree with this statement.  CGit does a lot of
+malloc/free activity when reading objects in.  JGit does too, but we
+often fit into the young generation for the GC, which sometimes can be
+faster to clean and recycle memory in.  We're not too far off from C
+code.
 
-Looking at the profile for "git rev-list --objects --all > /dev/null" 
-for the object enumeration phase, we have:
+But yes... our profile looks like this too:
 
-# Samples: 1814637
-#
-# Overhead          Command  Shared Object  Symbol
-# ........  ...............  .............  ......
-#
-    28.81%              git  /home/nico/bin/git  [.] lookup_object
-    12.21%              git  /lib64/libz.so.1.2.3  [.] inflate
-    10.49%              git  /lib64/libz.so.1.2.3  [.] inflate_fast
-     7.47%              git  /lib64/libz.so.1.2.3  [.] inflate_table
-     6.66%              git  /lib64/libc-2.11.2.so  [.] __GI_memcpy
-     5.66%              git  /home/nico/bin/git  [.] find_pack_entry_one
-     2.98%              git  /home/nico/bin/git  [.] decode_tree_entry
-     2.73%              git  /lib64/libc-2.11.2.so  [.] _int_malloc
-     2.71%              git  /lib64/libz.so.1.2.3  [.] adler32
-     2.63%              git  /home/nico/bin/git  [.] process_tree
-     1.58%              git  [kernel]       [k] 0xffffffff8112fc0c
-     1.44%              git  /lib64/libc-2.11.2.so  [.] __strlen_sse2
-     1.31%              git  /home/nico/bin/git  [.] tree_entry
-     1.10%              git  /lib64/libc-2.11.2.so  [.] _int_free
-     0.96%              git  /home/nico/bin/git  [.] patch_delta
-     0.92%              git  /lib64/libc-2.11.2.so  [.] malloc_consolidate
-     0.86%              git  /lib64/libc-2.11.2.so  [.] __GI_vfprintf
-     0.80%              git  /home/nico/bin/git  [.] create_object
-     0.80%              git  /home/nico/bin/git  [.] lookup_blob
-     0.63%              git  /home/nico/bin/git  [.] update_tree_entry
-[...]
+> Looking at the profile for "git rev-list --objects --all > /dev/null"
+> for the object enumeration phase, we have:
+>
+> # Samples: 1814637
+> #
+> # Overhead =A0 =A0 =A0 =A0 =A0Command =A0Shared Object =A0Symbol
+> # ........ =A0............... =A0............. =A0......
+> #
+> =A0 =A028.81% =A0 =A0 =A0 =A0 =A0 =A0 =A0git =A0/home/nico/bin/git =A0=
+[.] lookup_object
+> =A0 =A012.21% =A0 =A0 =A0 =A0 =A0 =A0 =A0git =A0/lib64/libz.so.1.2.3 =
+=A0[.] inflate
+> =A0 =A010.49% =A0 =A0 =A0 =A0 =A0 =A0 =A0git =A0/lib64/libz.so.1.2.3 =
+=A0[.] inflate_fast
+> =A0 =A0 7.47% =A0 =A0 =A0 =A0 =A0 =A0 =A0git =A0/lib64/libz.so.1.2.3 =
+=A0[.] inflate_table
+> =A0 =A0 6.66% =A0 =A0 =A0 =A0 =A0 =A0 =A0git =A0/lib64/libc-2.11.2.so=
+ =A0[.] __GI_memcpy
+> =A0 =A0 5.66% =A0 =A0 =A0 =A0 =A0 =A0 =A0git =A0/home/nico/bin/git =A0=
+[.] find_pack_entry_one
+> =A0 =A0 2.98% =A0 =A0 =A0 =A0 =A0 =A0 =A0git =A0/home/nico/bin/git =A0=
+[.] decode_tree_entry
+> [...]
+>
+> So we've got lookup_object() clearly at the top.
 
-So we've got lookup_object() clearly at the top.  I suspect the 
-hashcmp() in there, which probably gets inlined, is responsible for most 
-cycles.  There is certainly a better way here, and probably in JGit you 
-rely on some optimized facility provided by the language/library to 
-perform that lookup.  So there is probably some easy improvements that 
-can be made here.
+Isn't this the hash table lookup inside the revision pool, to see if
+the object has already been visited?  That seems horrible, 28% of the
+CPU is going to probing that table.
 
-Otherwise it is at least 12.21 + 10.49 + 7.47 + 2.71 = 32.88% spent 
-directly in the zlib code, making it the biggest cost.  This is rather 
-unavoidable unless the data structure is changed.  And pack v4 would 
-probably move things such as find_pack_entry_one, decode_tree_entry, 
-process_tree and tree_entry off the radar as well.
+> =A0I suspect the
+> hashcmp() in there, which probably gets inlined, is responsible for m=
+ost
+> cycles.
 
-The object writeout phase should pretty much be network bound.
+Probably true.  I know our hashcmp() is inlined, its actually written
+by hand as 5 word compares, and is marked final, so the JIT is rather
+likely to inline it.
 
-> I fully implemented the reuse of a cached pack behind a thin pack idea
-> I was trying to describe in this thread.  It saved 1m7s off the JGit
-> running time, but increased the data transfer by 25 MiB.  I didn't
-> expect this much of an increase, I honestly expected the thin pack
-> portion to be well, thinner.  The issue is the thin pack cannot delta
-> against all of the history, its only delta compressing against the tip
-> of the cached pack.  So long-lived side branches that forked off an
-> older part of the history aren't delta compressing well, or at all,
-> and that is significantly bloating the thin pack.  (Its also why that
-> "newer" pack is 57M, but should be 14M if correctly combined with the
-> cached pack.)  If I were to consider all of the objects in the cached
-> pack as potential delta base candidates for the thin pack, the entire
-> benefit of the cached pack disappears.
+> =A0There is certainly a better way here, and probably in JGit you
+> rely on some optimized facility provided by the language/library to
+> perform that lookup. =A0So there is probably some easy improvements t=
+hat
+> can be made here.
 
-Yeah... this sucks.
+Nope.  Actually we have to bend over backwards and work against the
+language to get anything even reasonably sane for performance.  Our
+"solution" in JGit has actually been used by Rob Pike to promote his
+Go programming language and why Java sucks as a language.  Its a great
+quote of mine that someone dragged up off the git@vger mailing list
+and started using to promote Go.
 
-> I'm not sure I like it so much anymore.  :-)
-> 
-> The idea was half-baked, and came at the end of a long day, and after
-> putting my cranky infant son down to sleep way past his normal bed
-> time.  I claim I was a sleep deprived new parent who wasn't thinking
-> things through enough before writing an email to git@vger.
+At least once I week I envy how easy it is to use hashcmp() and
+hashcpy() inside of CGit.  JGit's management of hashes is sh*t because
+we have to bend so hard around the language.
 
-Well, this is still valuable information to archive.
+> Otherwise it is at least 12.21 + 10.49 + 7.47 + 2.71 =3D 32.88% spent
+> directly in the zlib code, making it the biggest cost.
 
-And I wish I had been able to still write such quality emails when I was 
-a new parent.  ;-)
+Yea, that's what we have too, about 33% inside of zlib code... which
+is the same implementation that CGit uses.
 
-> >> sendfile() call for the bulk of the content.  I think we can just hand
-> >> off the major streaming to the kernel.
-> >
-> > While this might look like a good idea in theory, did you actually
-> > profile it to see if that would make a noticeable difference?  The
-> > pkt-line framing allows for asynchronous messages to be sent over a
-> > sideband,
-> 
-> No, of course not.  The pkt-line framing is pretty low overhead, but
-> copying kernel buffer to userspace back to kernel buffer sort of sucks
-> for 400 MiB of data.  sendfile() on 400 MiB to a network socket is
-> much easier when its all kernel space.
+> =A0This is rather
+> unavoidable unless the data structure is changed.
 
-Of course.  But still... If you save 0.5 second by avoiding the copy to 
-and from user space of that 400 MiB (based on my machine which can do 
-1670MB/s) that's pretty much insignificant compared to the total time 
-for the clone, and therefore the wrong thing to optimize given the 
-required protocol changes.
+We already knew this from our pack v4 experiments years ago.
 
-> I figured, if it all worked
-> out already to just dump the pack to the wire as-is, then we probably
-> should also try to go for broke and reduce the userspace copying.  It
-> might not matter to your desktop, but ask John Hawley (CC'd) about
-> kernel.org and the git traffic volume he is serving.  They are doing
-> more than 1 million git:// requests per day now.
+> =A0And pack v4 would
+> probably move things such as find_pack_entry_one, decode_tree_entry,
+> process_tree and tree_entry off the radar as well.
 
-Impressive.  However I suspect that the vast majority of those requests 
-are from clients making a connection just to realize they're up to date 
-already.  I don't think the user space copying is really a problem.
+This is hard to do inside of CGit if I recall... but yes, changing the
+way trees are handled would really improve things.
 
-Of course, if we could have used sendfile() freely in, say, 
-copy_pack_data() then we would have done so long ago.  But we are 
-checksuming the data we create on the fly with the data we reuse from 
-disk so this is not necessarily a gain.
+> The object writeout phase should pretty much be network bound.
 
-> >> Plus we can safely do byte range requests for resumable clone within
-> >> the cached pack part of the stream.
-> >
-> > That part I'm not sure of.  We are still facing the same old issues
-> > here, as some mirrors might have the same commit edges for a cache pack
-> > but not necessarily the same packing result, etc.  So I'd keep that out
-> > of the picture for now.
-> 
-> I don't think its that hard.  If we modify the transfer protocol to
-> allow the server to denote boundaries between packs, the server can
-> send the pack name (as in pack-$name.pack) and the pack SHA-1 trailer
-> to the client.  A client asking for resume of a cached pack presents
-> its original want list, these two SHA-1s, and the byte offset he wants
-> to restart from.  The server validates the want set is still
-> reachable, that the cached pack exists, and that the cached pack tips
-> are reachable from current refs.  If all of that is true, it validates
-> the trailing SHA-1 in the pack matches what the client gave it.  If
-> that matches, it should be OK to resume transfer from where the client
-> asked for.
+Yes.
 
-This is still an half solution.  If your network connection drops after 
-the first 52 MiB of transfer given the scenario you provided then you're 
-still screwed.
+>> I fully implemented the reuse of a cached pack behind a thin pack id=
+ea
+>> I was trying to describe in this thread. =A0It saved 1m7s off the JG=
+it
+>> running time, but increased the data transfer by 25 MiB.
+>
+> Yeah... this sucks.
 
+Very much.  :-(
 
-Nicolas
+But this is a fundamental issue with our incremental fetch support
+anyway.  In this exact case if the client was at that 1 month old
+commit, and fetched current master, he would pull 25 MiB of data.. but
+only needed about 4-6 MiB worth of deltas if it was properly delta
+compressed against the content we know he already has.  Our server
+side optimization of only pushing the immediate "have" list of the
+client into the delta search window limits how much we can compress
+the data we are sending.  If we were willing to push more in on the
+server side, we could shrink the incremental fetch more.  But that's a
+CPU problem on the server.
 
---Boundary_(ID_22cLCt45GlrdiELlL/Za8w)--
+--=20
+Shawn.
