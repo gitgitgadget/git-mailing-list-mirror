@@ -1,137 +1,101 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Can't find the revelant commit with git-log
-Date: Sat, 29 Jan 2011 21:26:12 +0100
-Message-ID: <4D4477E4.6020006@lsrfire.ath.cx>
-References: <m2ipxd2w78.fsf@gmail.com> <4D3EF650.20407@lsrfire.ath.cx> <m2ipxc27zi.fsf@gmail.com> <m239og12pe.fsf@gmail.com> <4D4063EC.7090509@lsrfire.ath.cx> <4D432735.8000208@lsrfire.ath.cx> <7v1v3wd1al.fsf@alter.siamese.dyndns.org> <4D437CA0.1070006@lsrfire.ath.cx> <7vsjwcb6rh.fsf@alter.siamese.dyndns.org>
+From: David Aguilar <davvid@gmail.com>
+Subject: Re: Is there a specific reason that git gui does not respect comment
+ lines added by a git hook?
+Date: Sat, 29 Jan 2011 14:45:30 -0800
+Message-ID: <20110129224528.GA7676@gmail.com>
+References: <AANLkTingTLM8MCEBdS_4OAE5DU1L4xndRzQMq_gdvKaL@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Francis Moreau <francis.moro@gmail.com>, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 29 21:27:01 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Git ML <git@vger.kernel.org>
+To: Wilbert van Dolleweerd <wilbert@arentheym.com>
+X-From: git-owner@vger.kernel.org Sat Jan 29 23:41:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PjHNp-0001Hh-Gw
-	for gcvg-git-2@lo.gmane.org; Sat, 29 Jan 2011 21:26:57 +0100
+	id 1PjJU6-0003Wa-KM
+	for gcvg-git-2@lo.gmane.org; Sat, 29 Jan 2011 23:41:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751448Ab1A2U0n convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Jan 2011 15:26:43 -0500
-Received: from india601.server4you.de ([85.25.151.105]:60703 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751214Ab1A2U0m (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Jan 2011 15:26:42 -0500
-Received: from [192.168.2.104] (p4FFDB056.dip.t-dialin.net [79.253.176.86])
-	by india601.server4you.de (Postfix) with ESMTPSA id CBF032F8091;
-	Sat, 29 Jan 2011 21:26:40 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <7vsjwcb6rh.fsf@alter.siamese.dyndns.org>
+	id S1755169Ab1A2Wl3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Jan 2011 17:41:29 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:41468 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755086Ab1A2Wl2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Jan 2011 17:41:28 -0500
+Received: by gxk9 with SMTP id 9so1538882gxk.19
+        for <git@vger.kernel.org>; Sat, 29 Jan 2011 14:41:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=GWNQsfJXSprlfHcIj/M2/aXpXuzknGBp0ES0jnnYxOk=;
+        b=KlRwXjO6WeRoEN1nTrRrTfRMYHCLKg8Qj7yLVlEM5hf5QNDOszO6eZpY6VvqdwbJVo
+         Pi7N3Jvdukc9TB++UgpOP3veazTqcsHVDvd4m4WtgFOAbo9fuWf34FahHZzZx8UpQN7M
+         3KMKgk2IaTkz1ZSrABemGPNVN9Vb03WeBG7gs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=S0/6GMj7bPZXDpBvUgFV8mak3gWhMMSDJTP8J5NHK5sK0RX7Yix8UqwKYA0s0nQgck
+         oChYjkx88vC/ygjbsctJAsA30Z9hZfE9ggGObjNXwYcKgrYh/KhI8TRWSs81KZSta6vM
+         +1H7aZb7n+fPC+s7oDY3Fj1/ywtrLANVCTe3k=
+Received: by 10.100.121.11 with SMTP id t11mr2781426anc.64.1296340886837;
+        Sat, 29 Jan 2011 14:41:26 -0800 (PST)
+Received: from gmail.com (208-106-56-2.static.dsltransport.net [208.106.56.2])
+        by mx.google.com with ESMTPS id b19sm23664021ana.27.2011.01.29.14.41.24
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 29 Jan 2011 14:41:26 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTingTLM8MCEBdS_4OAE5DU1L4xndRzQMq_gdvKaL@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165671>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165672>
 
-Am 29.01.2011 06:47, schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->=20
->> Perhaps we should check my underlying assumption first: is it
->> reasonable to expect a git log command to show the same commits
->> with and without a path spec that covers all changed files?
->=20
-> The simplest case would be "git log ." vs "git log" from the root
-> level of the repository, right?  Traditionally, the former is "please
-> show _one_ simplest history that can explain how the current commit
-> came to be" (i.e. with merge simplification), while the latter is
-> "please list everything that is behind the current commit" (i.e.
-> without), I think.
->=20
-> It feels unintuitive, but my understanding of the rationale behind
-> the design is that, the expectation Linus had when he first did the
-> pathspec limited traversal was that most of the time "git log $path"
-> is used to get an explanation.  It follows that having to say "git
-> log --simplify $path" would have been a nuisance, so "with pathspec,
-> we simplify" was thought to be a reasonable default.
+On Wed, Jan 26, 2011 at 11:14:28AM +0100, Wilbert van Dolleweerd wrote:
+> Hello,
+> 
+> I've written a prepare-commit-msg hook [...snip...]
+> I'm using comments in the commit message to give additional
+> information to the user. For example, when the Team Foundation Server
+> is not available, I add the following comment to the top of the commit
+> message.
 
-I think simplifying the history whenever a pathspec restricts the set o=
-f
-interesting commits makes sense.
+I have the impression that you're running into this behavior
+because this information is at the top of the commit message
+(line 1).  Users then fill in the actual message on the
+lines below this, I presume?
 
-I'm not so sure about "." vs. none, and it feels odd that the only way
-to turn off simplification is to not use pathspecs, as --full-history
-will still remove merges if tree_same in revision.c is true.
-Simplification by default (even without a pathspec) and --full-history
-reporting, well, the full history seems more intuitive to me.
+Try to see what happens if you set it up so that users fill
+in the commit message above the auto-generated comment.
+I have a feeling that it only strips out '#' lines after
+it's read in the commit message proper.
 
-So currently pickaxe can't be used reliable to search for strings that
-have been removed: either one has to refrain from using pathspecs, whic=
-h
-is prohibitively slow in the kernel repo, or git is free to take a
-short-cut through a branch of history that never contained the string a=
-t
-all.
+I haven't read the code so I'm not certain of this, but it seems
+like that is what's going on.  Also, "git gui" uses plumbing
+commands underneath the hood and does not actually call
+"git commit" directly.  That might help explain this subtle
+difference in behavior.
 
-Your patch extends --full-history coverage sufficiently to make pickaxe
-work in Francis' use case.  One just has to remember to specify this
-option if one hunts for removed strings using -S.  Below is an equivale=
-nt
-patch, only with the simplify_history test moved into the loop and the
-needed test script modification.
+> Because the line starts with a # sign, it is not added to the actual
+> commit message...when using git commit. If I use git gui, the above
+> comment appears in the git gui interface but *is* actually added to
+> the git commit message when committing.
+> 
+> Is there a specific reason that git gui is actually adding lines
+> starting with a # sign? I was expecting it to ignore those lines.
+> 
+> -- 
+> Kind regards,
+> 
+> Wilbert van Dolleweerd
+> Blog: http://walkingthestack.wordpress.com/
+> Twitter: http://www.twitter.com/wvandolleweerd
 
--- >8 --
-Subject: revision: let --full-history keep half-interesting merges
+-- 
 
-Don't simplify merges away that have at least one parent with changes i=
-n
-the interesting subset of files if --full-history has been specified.
-The previous behaviour hid merges with one uninteresting parent, which
-could lead to history that removed code to become undetectable.
-
-E.g., this command run against the Linux kernel repo only found one
-merge that brought the specified function in (and the regular commit
-which added it in the first place), but missed the 92 merges that
-removed it, as well as 67 other merges that added it back:
-
-	$ git log -m --full-history -Sblacklist_iommu \
-		v2.6.26..v2.6.29 -- drivers/pci/intel-iommu.c
-
-Reported-by: Francis Moreau <francis.moro@gmail.com>
-Signed-off-by: Rene Scharfe <rene.scharfe@lsrfire.ath.cx>
----
- revision.c                                 |    2 ++
- t/t6016-rev-list-graph-simplify-history.sh |    1 +
- 2 files changed, 3 insertions(+), 0 deletions(-)
-
-diff --git a/revision.c b/revision.c
-index 7b9eaef..84c231b 100644
---- a/revision.c
-+++ b/revision.c
-@@ -434,6 +434,8 @@ static void try_to_simplify_commit(struct rev_info =
-*revs, struct commit *commit)
- 		case REV_TREE_OLD:
- 		case REV_TREE_DIFFERENT:
- 			tree_changed =3D 1;
-+			if (!revs->simplify_history)
-+				return;
- 			pp =3D &parent->next;
- 			continue;
- 		}
-diff --git a/t/t6016-rev-list-graph-simplify-history.sh b/t/t6016-rev-l=
-ist-graph-simplify-history.sh
-index f7181d1..50ffcf4 100755
---- a/t/t6016-rev-list-graph-simplify-history.sh
-+++ b/t/t6016-rev-list-graph-simplify-history.sh
-@@ -168,6 +168,7 @@ test_expect_success '--graph --full-history --simpl=
-ify-merges -- bar.txt' '
- 	echo "|\\  " >> expected &&
- 	echo "| * $C4" >> expected &&
- 	echo "* | $A5" >> expected &&
-+	echo "* | $A4" >> expected &&
- 	echo "* | $A3" >> expected &&
- 	echo "|/  " >> expected &&
- 	echo "* $A2" >> expected &&
---=20
-1.7.3.4
+		David
