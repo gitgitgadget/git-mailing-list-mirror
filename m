@@ -1,79 +1,48 @@
-From: =?ISO-8859-1?Q?Ren=E9_Scharfe?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Can't find the revelant commit with git-log
-Date: Sat, 29 Jan 2011 16:17:58 +0100
-Message-ID: <4D442FA6.8000504@lsrfire.ath.cx>
-References: <m2ipxd2w78.fsf@gmail.com> <4D3EF650.20407@lsrfire.ath.cx>	<m2ipxc27zi.fsf@gmail.com> <m239og12pe.fsf@gmail.com>	<4D4063EC.7090509@lsrfire.ath.cx> <4D433CA7.9060200@lsrfire.ath.cx>	<m2sjwb6feo.fsf@gmail.com> <4D440FED.2010203@lsrfire.ath.cx> <m2k4hn6cek.fsf@gmail.com>
+From: Florian Weimer <fw@deneb.enyo.de>
+Subject: git svn clone stops after r2 for svn://mlton.org/mlton/trunk
+Date: Sat, 29 Jan 2011 16:55:24 +0100
+Message-ID: <87aaijso0j.fsf@mid.deneb.enyo.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Jan 29 16:23:20 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Jan 29 17:42:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PjCe0-0005sn-E5
-	for gcvg-git-2@lo.gmane.org; Sat, 29 Jan 2011 16:23:20 +0100
+	id 1PjDsQ-0006eu-0z
+	for gcvg-git-2@lo.gmane.org; Sat, 29 Jan 2011 17:42:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753199Ab1A2PS2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Jan 2011 10:18:28 -0500
-Received: from india601.server4you.de ([85.25.151.105]:35223 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752528Ab1A2PS1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Jan 2011 10:18:27 -0500
-Received: from [192.168.2.104] (p4FFDB056.dip.t-dialin.net [79.253.176.86])
-	by india601.server4you.de (Postfix) with ESMTPSA id 694BE2F8091;
-	Sat, 29 Jan 2011 16:18:26 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <m2k4hn6cek.fsf@gmail.com>
+	id S1754057Ab1A2QmM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Jan 2011 11:42:12 -0500
+Received: from ka.mail.enyo.de ([87.106.162.201]:56477 "EHLO ka.mail.enyo.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753708Ab1A2QmL (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Jan 2011 11:42:11 -0500
+X-Greylist: delayed 2805 seconds by postgrey-1.27 at vger.kernel.org; Sat, 29 Jan 2011 11:42:11 EST
+Received: from [172.17.135.4] (helo=deneb.enyo.de)
+	by ka.mail.enyo.de with esmtps (TLS1.0:RSA_AES_256_CBC_SHA1:32)
+	id 1PjD92-0001n0-PR
+	for git@vger.kernel.org; Sat, 29 Jan 2011 16:55:24 +0100
+Received: from fw by deneb.enyo.de with local (Exim 4.72)
+	(envelope-from <fw@deneb.enyo.de>)
+	id 1PjD92-0007Iu-Hp
+	for git@vger.kernel.org; Sat, 29 Jan 2011 16:55:24 +0100
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165660>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165661>
 
-Am 29.01.2011 14:57, schrieb Francis Moreau:
-> Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->=20
->> Am 29.01.2011 13:52, schrieb Francis Moreau:
->>> Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
->>>
->>>> Am 26.01.2011 19:11, schrieb Ren=E9 Scharfe:
->>
->>>>> - Make git grep report non-matching path specs (new feature).
->>>>
->>>> This is a bit complicated because grep can work on files, index en=
-tries
->>>> as well as versioned objects and supports wildcards,
->>>> so it's not that easy to tell if a path spec matches something or =
-is a
->>>> rather typo.  But it's not impossible either, of course.
->>>
->>> I don't understand this for the following use case:
->>>
->>>    $ cd ~/linux-2.6/drivers/pci/
->>>    $ git grep blacklist v2.6.27 -- drivers/pci/intel-iommu.c
->>>
->>> From what you said, it sounds that git grep is actually searching t=
-he
->>> string 'somewhere'. But where ?
->>
->> All files in the directory are looked at and checked if they match t=
-he
->> given path spec first.  Since none of them do, no actual text search=
- has
->> to take place.
->=20
-> and in this case, it is complicated to tell that the given path spec
-> match nothing. right ?
+There's something strange going on there:
 
-The specific case is easy to handle, but a complete solution would have
-to address files, index entries as well as versioned objects and suppor=
-t
-wildcards.  Presumably it would come on top of Duy's pathspec work
-that's in next now.
-
-Ren=E9
+$ git svn clone svn://mlton.org/mlton/trunk mlton 
+Initialized empty Git repository in /home/fw/src/mlton/.git/
+r2 = 61f0dd5ba401ece2ff4668bc7454b7742c60fa99 (refs/remotes/git-svn)
+Checked out HEAD:
+  svn://mlton.org/mlton/trunk r2
+$
+ 
+"git svn fetch" is able to continue, though, so this is only a very
+minor inconvenience.
