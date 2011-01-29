@@ -1,146 +1,154 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: Project- vs. Package-Level Branching in Git
-Date: Sat, 29 Jan 2011 20:08:06 +0100
-Message-ID: <20110129190806.GC602@nibiru.local>
-References: <14F4737F-E8E4-4E4E-A625-16CA63CF9EFF@shaggyfrog.com>
-Reply-To: weigelt@metux.de
+From: maximilian attems <max@stro.at>
+Subject: Re: [PATCH] am: Allow passing exclude and include args to apply
+Date: Sat, 29 Jan 2011 20:31:34 +0100
+Message-ID: <20110129193133.GC24622@stro.at>
+References: <1292775461-26762-1-git-send-email-max@stro.at>
+ <AANLkTik5-oJYsfEoeYjy8E9v4T4_7VBsoGnqg7oXwnbC@mail.gmail.com>
+ <20101219171313.GI17034@vostochny.stro.at>
+ <7v4oa9frmr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 29 20:17:10 2011
+Cc: Thiago Farina <tfransosi@gmail.com>, git@vger.kernel.org,
+	klibc@zytor.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Jan 29 20:31:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PjGIE-0006fb-D2
-	for gcvg-git-2@lo.gmane.org; Sat, 29 Jan 2011 20:17:06 +0100
+	id 1PjGWO-00049c-3F
+	for gcvg-git-2@lo.gmane.org; Sat, 29 Jan 2011 20:31:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754746Ab1A2TQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Jan 2011 14:16:57 -0500
-Received: from caprica.metux.de ([82.165.128.25]:37302 "EHLO
-	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1754520Ab1A2TQ4 (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Jan 2011 14:16:56 -0500
-Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
-	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p0TJDLZR029057
-	for <git@vger.kernel.org>; Sat, 29 Jan 2011 20:13:23 +0100
-Received: (from uucp@localhost)
-	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p0TJD3r2029041
-	for git@vger.kernel.org; Sat, 29 Jan 2011 20:13:03 +0100
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id p0TJ86ds029448
-	for git@vger.kernel.org; Sat, 29 Jan 2011 20:08:06 +0100
-Mail-Followup-To: git@vger.kernel.org
+	id S1754867Ab1A2Tbi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 29 Jan 2011 14:31:38 -0500
+Received: from vostochny.stro.at ([78.47.22.85]:44197 "EHLO vostochny.stro.at"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754736Ab1A2Tbh (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Jan 2011 14:31:37 -0500
+Received: from stro.at (77.116.68.104.wireless.dyn.drei.com [77.116.68.104])
+	by vostochny.stro.at (Postfix) with ESMTPA id 9FBAFC05D;
+	Sat, 29 Jan 2011 19:31:35 +0000 (UTC)
+Received: by stro.at (Postfix, from userid 1000)
+	id 34BEE2035E; Sat, 29 Jan 2011 20:31:34 +0100 (CET)
 Content-Disposition: inline
-In-Reply-To: <14F4737F-E8E4-4E4E-A625-16CA63CF9EFF@shaggyfrog.com>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
+In-Reply-To: <7v4oa9frmr.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165665>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165667>
 
-* Thomas Hauk <tom@shaggyfrog.com> wrote:
-> Back when I worked at a large games company, we used Perforce, and
-> our repo structure looked a little something like this:
+hello,
+
+sorry for the time it took to reply, but "things" went crazy
+around christmas.
+
+On Sun, 19 Dec 2010, Junio C Hamano wrote:
+
+> maximilian attems <max@stro.at> writes:
 > 
-> /branches
-> 	/alpha
-> 	/beta
-> /mainline
-> 	/packages
-> 		/external
-> 			/foolib
-> 				/1.0
-> 				/1.1
-> 				/2.0
-> 		/internal
-> 			/barlib
-> 				/dev
-> 				/1.0
-> 				/2.0
-> 			/bazlib
-> 				/2.34
-> 				/2.35
-> 			/qux
-> 				/dev
+> > ...
+> > when one wants to promote a specific new feature, it is much better to
+> > come up with it's use case, as burden is on Maintainer to keep it working.
+> 
+> You need to do that with test suite, not with the log message.  Otherwise
+> you are adding undue burden on the Maintainer to download klibc and dash
+> just to run regression testing whenever somebody else makes changes to
+> "am/apply" callchain down the road.
 
-Ah, you're conditioned by a VCS that mixes up directory copies and branches,
-just like SVN or TFS - those folks (VCS developers as well as their userbase)
-still don't get the idea that these are orthogonal concepts ;-o
-Needless to say that this makes working w/ branches quite hard (compared
-to git ;-p), not even to mention things like remote tracking, rebase, etc.
-(guess what: M$ itself recommends against branches or at least very beaurocratic
-planning and processes in their own official TFS papers ;-p)
+ok thanks for the point.
+ 
+> While I love patches that are backed by a strong "here is a real-world
+> problem we needed to solve, and this change made our life much easier by
+> doing so-and-so" statement, I also tend to think twice before considering
+> a change that could potentially encourage a bad version control
+> discipline.
 
-Just forget about that all, forget the whole idea of having dozens of
-packages in one fat tree. Develop and track each package saparately and
-use an separate dist build tool (eg. Briegel) to put things together.
+sure, one sees your careful planning.
+ 
+> Your use case description in the log message however lacks crucial
+> information to be useful when judging that aspect.  You said that the
+> directory structure is "different", but didn't say they are different in
+> what way.  In order to skip one mail exchange turnaround, I'd speculate.
 
-It'll take some time to get your head around this ideology, but it'll pay out
-if you do it consequently. (I've already been through this some years ago).
+sorry about that, will answer below.
+ 
+> If dash repository keeps (perhaps slightly stale version of) the same
+> files as klibc repository in its libc/ subdirectory, a patch to dash that
+> fixes its libc part may all have its pathnames prefixed with libc/.  In
+> order to apply such a patch to the klibc tree, you would need to give -p2
+> to strip one extra level (if you are going the other way, you would
+> instead give --directory=libc/ to deepen it).  But then I do not see a
+> need for --exclude to remove parts from the patch that touch outside of
+> libc/ tree.
+> 
+> If the dash patch you needed to deal with touched both inside libc/ and
+> outside, and if you are taking only libc/ part and discarding everything
+> else, I see two issues with respect to promoting pottentially bad version
+> control disciplines.
+> 
+>  - Should you be reusing the information in the commit without editing?  I
+>    am not worried about Signed-off-by which is about asserting the origin,
+>    and origin of the libc/ part is the same as the origin of the whole.
+>    But what about reviewers' and tester's assertion at the end?  Also the
+>    description of the change itself may need to be adjusted to the new
+>    context you are reusing the change for.
+> 
+>  - Why does the patch touch two unrelated parts in the first place, if its
+>    libc/ part can stand on its own?  This is not about the discipline of
+>    the user of "am", but of the originating project.
 
-> At the package level, we would split up packages/libraries into two groups
-> based on if they were developed at the company or not (external/internal),
+Life is simpler in effect, considering this usecase.
 
-Why exactly that split ? Why not having each package separately, independent
-on the supplier ? Each package should stand completely on its own (assuming
-dependencies resolved), or it isn't really a package but just a bunch of files.
+So the code lives in dash repo and from to time is ported to klibc.
+So dash has no klibc code on it's own it's only klibc, which is carrying
+a copy of dash in order to have an useful shell for early userspace.
 
-> and inside each one, we might have multiple versions. In the example above,
-> the repo is for the "qux" game, which uses an internal "bazlib" library
-> developed by another group, and the "barlib" library which was developed
-> for use on "qux" and may be used simultaneously on other projects.
+It is not a full copy of dash and some things are not their,
+that's the usage case for the exclude argument on the git am call.
+ 
+> Another thing that came to my mind around the vague "different directory
+> structure" is this question: what if directory A/ in "dash" corresponded
+> to directory B/ in "klibc" and you saw a patch to A/ (and some others) for
+> "dash" that you wanted to reuse in "klibc"?  Do we need more changes to
+> make it work, or do we already have enough support for this combination?
+> 
+> I would imagine that "git am --directory=B/ -p2 --exclude=\* --include=A/"
+> or something like that should work, but I didn't think it through nor I
+> didn't check the command line syntax, either.
 
-That qualifies an _separate_ (generic) package, which should be developed
-and deployed separately. If you need to tweak it for (potentially) each
-project (so, have per-project branches of it), you'll most likely have
-some serious architectural flaw.
+well mostly the current workflow looks like this:
 
-> I've successfully used this repo structure with several other projects
-> over the years at other companies (who were mostly using Subversion).
+1) Generate patches to import on dash git repository:
 
-My current customer also used such a model (previously in PVCS, not TFS),
-and they discuss hours over hours about how and when to branch and whether
-certain things could be merged back at all, instead of just doing the
-actual work.
+ git format-patch --keep-subject <changeset>..
 
-For the product I'm currently working on (imagine that: an embedded linux
-project that gets tracked via TFS ;-o) they always tried to do the projects
-(each on essentially the same codebase, but each job/project has some
-customer-specific changes) sequentially (and even mixed up with standard
-feature development), so they could lie to themselves that they would
-never need branches. In the end they had two completely separate 
-incompatible codebasis which now have to be "merged" together manually,
-consuming several man-month. (now I'm there to clean up the mess ;-o).
+ Path fixup:
+perl -i -pe 's#^([-+]{3} [ab]/)src/#$1#g' 00*patch
 
-> Now I'm trying to get into the Git swing of things, but it seems to be
-> that Git only offers project-level branching, and doesn't allow for the
-> kind of package-level branching I'm describing here.
+2) Import patches on by one
 
-On sourcetree-, not project-level. Projects and sourcetrees are
-completely different concepts. Another important point that many
-folks (especially IDE designers) never really understood.
-
-> Am I incorrect or is there a way to accomplish with Git what I was
-> doing before with P4 and SVN?
-
-Not really. Rethink your project organization and workflows.
+ git am --directory="usr/dash" --exclude="usr/dash/configure.ac" \
+ 	--exclude="usr/dash/ChangeLog" --exclude="usr/dash/dash.1" \
+	--exclude="usr/dash/Makefile.am" --exclude="usr/dash/mksignames.c" \
+	-i -s ../dash/000X-foo.patch
 
 
-cu
+the path fixup with perl is needed as dash code lives in
+"src/", but later it lands in "usr/dash/".
+
+I do not have a use case for --include, I only added it out of
+completness.
+
+Unless objection I'd repost the patch with exclude only and relevant
+testcase.
+
+Of course if you'd know of a trick that makes the perl path mangling
+useless I'd be more than happy to hear.
+
+thank you.
+
 -- 
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
-
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+maks
