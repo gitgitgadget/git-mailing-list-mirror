@@ -1,87 +1,84 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: Updating a submodule with a compatible version from
-	another submodule version using the parent meta-repository
-Date: Sat, 29 Jan 2011 12:08:08 +0100
-Message-ID: <20110129110807.GA21864@book.hvoigt.net>
-References: <AANLkTinN1XVsAZXGLqkuhysrJ8-TCtGm4pOu2RfCEVVp@mail.gmail.com> <AANLkTimvNaiieEw8-Y52xxDW6DQ6b16v9azCk+BDPxhe@mail.gmail.com> <4D407099.4010805@web.de> <AANLkTinMhvBNrBMJ8vQpJdYxP_NgJU2L7JEW0KhXGjhf@mail.gmail.com> <4D407875.7080607@web.de> <AANLkTik-XdgGM20kFu8KZ5k9ynfNAo8fvL9t7kL_JhQg@mail.gmail.com> <7v7hdrl7nw.fsf@alter.siamese.dyndns.org> <AANLkTik8VrhbBSLwRq9gd39hofnmifk15zSqXVTsSzAp@mail.gmail.com> <7v1v3zjp6w.fsf@alter.siamese.dyndns.org>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: Can't find the revelant commit with git-log
+Date: Sat, 29 Jan 2011 13:52:15 +0100
+Message-ID: <m2sjwb6feo.fsf@gmail.com>
+References: <m2ipxd2w78.fsf@gmail.com> <4D3EF650.20407@lsrfire.ath.cx>
+	<m2ipxc27zi.fsf@gmail.com> <m239og12pe.fsf@gmail.com>
+	<4D4063EC.7090509@lsrfire.ath.cx> <4D433CA7.9060200@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Julian Ibarz <julian.ibarz@gmail.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Jan 29 12:15:12 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Johannes Sixt <j6t@kdbg.org>
+To: =?iso-8859-1?Q?Ren=E9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Sat Jan 29 13:52:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pj8lr-00035d-RC
-	for gcvg-git-2@lo.gmane.org; Sat, 29 Jan 2011 12:15:12 +0100
+	id 1PjAHy-0008Du-Pv
+	for gcvg-git-2@lo.gmane.org; Sat, 29 Jan 2011 13:52:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751540Ab1A2LOv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Jan 2011 06:14:51 -0500
-Received: from darksea.de ([83.133.111.250]:36142 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750784Ab1A2LOu (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 29 Jan 2011 06:14:50 -0500
-X-Greylist: delayed 400 seconds by postgrey-1.27 at vger.kernel.org; Sat, 29 Jan 2011 06:14:50 EST
-Received: (qmail 14589 invoked from network); 29 Jan 2011 12:08:08 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 29 Jan 2011 12:08:08 +0100
-Content-Disposition: inline
-In-Reply-To: <7v1v3zjp6w.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1752626Ab1A2MwW convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Jan 2011 07:52:22 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:44218 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752516Ab1A2MwV convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 29 Jan 2011 07:52:21 -0500
+Received: by wwa36 with SMTP id 36so4312150wwa.1
+        for <git@vger.kernel.org>; Sat, 29 Jan 2011 04:52:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=uu3QPUQLVmKIbw1zl7oiRFs96DFYdr7WDRSM5oWz45o=;
+        b=cZ8evFcWHuSLlC+BhbeLzgzpNjnyawiDqarjjvyOvCqLmysjGFJcthwwxCJXTB2Fg8
+         T6A5ykGBK+L2uy5oFOwphd5RIA64AIy3DE6RbFfTDksk4LNJhd3nyFebo09asB7Bp8Hj
+         fQ2g4VKhfa+gjcF74kHuLAGMCyl0fxT58ZUHk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type:content-transfer-encoding;
+        b=PaVt5WrLPbyVsJPhrrZeAGfuEz9g8LSKqo16uekdt9ioviQOGJyRmHH1TQttkAQFVQ
+         hALYeSE7jVTw9dwsilIiicW/Mi3yOBXrqF2yksR1LYYuQGOAflt69PrQu2owwdUJfBV6
+         F5qnLEohXO3ACmp7SHMNZ02abdpQxplBkveDg=
+Received: by 10.227.68.201 with SMTP id w9mr3943099wbi.101.1296305539816;
+        Sat, 29 Jan 2011 04:52:19 -0800 (PST)
+Received: from localhost (au213-1-82-235-205-153.fbx.proxad.net [82.235.205.153])
+        by mx.google.com with ESMTPS id c54sm9615268wer.6.2011.01.29.04.52.16
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 29 Jan 2011 04:52:17 -0800 (PST)
+In-Reply-To: <4D433CA7.9060200@lsrfire.ath.cx> (=?iso-8859-1?Q?=22Ren=E9?=
+ Scharfe"'s message of
+	"Fri, 28 Jan 2011 23:01:11 +0100")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165656>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165657>
 
-Hi,
+Ren=E9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-On Wed, Jan 26, 2011 at 02:05:43PM -0800, Junio C Hamano wrote:
-> If that version of submodule B is explicitly bound to a commit in the
-> superproject A, you know which version of A and C were recorded, and the
-> problem is solved.
-> 
-[...]
-> 
-> If you are confident that you didn't introduce different kind of
-> dependency to other submodules while developing your "old_feature" branch
-> in submodule B, one strategy may be to find an ancestor, preferrably the
-> fork point, of your "old_feature" branch that is bound to the superproject
-> A.  Then at that point at least you know whoever made that commit in A
-> tested the combination of what was recorded in that commit, together with
-> the version of B and C, and you can go forward from there, replaying the
-> changes you made to the "old_feature" branch in submodule B.
+> Am 26.01.2011 19:11, schrieb Ren=E9 Scharfe:
+>> - Make git grep report non-matching path specs (new feature).
+>
+> This is a bit complicated because grep can work on files, index entri=
+es
+> as well as versioned objects and supports wildcards,
+> so it's not that easy to tell if a path spec matches something or is =
+a
+> rather typo.  But it's not impossible either, of course.
 
-Lets extend your explanation a little further and maybe demonstrate the problem
-Julian is having a little more. I think what Julian searches for is a tool in
-git that does the lookup for you which is AFAIK not that easy currently. It
-seems to be a quite useful feature. Here what I understand Julian wants:
+I don't understand this for the following use case:
 
-1. Find the most recent superproject commit X'' in A that records a submodule
-   commit X' in B which contains the commit X in B you are searching for.
+   $ cd ~/linux-2.6/drivers/pci/
+   $ git grep blacklist v2.6.27 -- drivers/pci/intel-iommu.c
 
-   For this we would need use something similar to git describe --contains
-   but instead of using the list of existing tags in B it should use the list
-   of commits in B which are recorded in A.
+=46rom what you said, it sounds that git grep is actually searching the
+string 'somewhere'. But where ?
 
-   Here a drawing to explain (linear history for simplicity):
-
-   superproject A:
-
-      O---O---X''---O
-               \
-   submodule B: \
-                 \
-      O---X---O---X'---O---O
-
-2. Look up the commit of C which is recorded in X'' of A and check it
-   out.
-
-Step 2 is easy but for Step 1 the lookup of X' is missing for the commandline.
-Is there already anything that implements git describe --contains for a defined
-list of commits instead of refs?
-
-Cheers Heiko
+Thanks
+--=20
+=46rancis
