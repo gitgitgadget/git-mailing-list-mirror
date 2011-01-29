@@ -1,102 +1,64 @@
-From: Enrico Weigelt <weigelt@metux.de>
-Subject: Re: Project- vs. Package-Level Branching in Git
-Date: Sat, 29 Jan 2011 20:42:59 +0100
-Message-ID: <20110129194258.GE602@nibiru.local>
-References: <14F4737F-E8E4-4E4E-A625-16CA63CF9EFF@shaggyfrog.com> <AANLkTinTRgzv0s9MTyM4TaOwVOmhwRckDqMfxrbsKVfm@mail.gmail.com> <15B7CA2E-C584-4563-B9E3-D80861CD9565@shaggyfrog.com> <m3tygt9xmn.fsf@localhost.localdomain>
-Reply-To: weigelt@metux.de
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Can't find the revelant commit with git-log
+Date: Sat, 29 Jan 2011 21:26:16 +0100
+Message-ID: <4D4477E8.8030703@lsrfire.ath.cx>
+References: <m2ipxd2w78.fsf@gmail.com> <4D3EF650.20407@lsrfire.ath.cx> <m2ipxc27zi.fsf@gmail.com> <m239og12pe.fsf@gmail.com> <4D4063EC.7090509@lsrfire.ath.cx> <4D432735.8000208@lsrfire.ath.cx> <7v1v3wd1al.fsf@alter.siamese.dyndns.org> <4D437CA0.1070006@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Jan 29 20:52:49 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Francis Moreau <francis.moro@gmail.com>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Sat Jan 29 21:26:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PjGqm-0003hS-T3
-	for gcvg-git-2@lo.gmane.org; Sat, 29 Jan 2011 20:52:49 +0100
+	id 1PjHNq-0001Hh-7F
+	for gcvg-git-2@lo.gmane.org; Sat, 29 Jan 2011 21:26:58 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754715Ab1A2Twf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 29 Jan 2011 14:52:35 -0500
-Received: from caprica.metux.de ([82.165.128.25]:56388 "EHLO
-	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
-	by vger.kernel.org with ESMTP id S1752634Ab1A2Twf (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 29 Jan 2011 14:52:35 -0500
-Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
-	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p0TJn1ch009439
-	for <git@vger.kernel.org>; Sat, 29 Jan 2011 20:49:01 +0100
-Received: (from uucp@localhost)
-	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p0TJmqfW009424
-	for git@vger.kernel.org; Sat, 29 Jan 2011 20:48:52 +0100
-Received: (from weigelt@localhost)
-	by nibiru.metux.de (8.12.10/8.12.10) id p0TJgxbj008865
-	for git@vger.kernel.org; Sat, 29 Jan 2011 20:42:59 +0100
-Mail-Followup-To: git@vger.kernel.org
-Content-Disposition: inline
-In-Reply-To: <m3tygt9xmn.fsf@localhost.localdomain>
-User-Agent: Mutt/1.4.1i
-X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
-X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
-X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
-X-Killer: 23, endloesung, Weltuntergang, 
-X-Doof: wer das liest ist doof
+	id S1751551Ab1A2U0s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 29 Jan 2011 15:26:48 -0500
+Received: from india601.server4you.de ([85.25.151.105]:60706 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751214Ab1A2U0r (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 29 Jan 2011 15:26:47 -0500
+Received: from [192.168.2.104] (p4FFDB056.dip.t-dialin.net [79.253.176.86])
+	by india601.server4you.de (Postfix) with ESMTPSA id B39ED2F80DC;
+	Sat, 29 Jan 2011 21:26:45 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <4D437CA0.1070006@lsrfire.ath.cx>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165669>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165670>
 
-* Jakub Narebski <jnareb@gmail.com> wrote:
+Am 29.01.2011 03:34, schrieb Ren=C3=A9 Scharfe:
+> Am 29.01.2011 01:02, schrieb Junio C Hamano:
+>> Let's look at the original code before your patch again.
+>>
+>>  1. If all the parents of a commit are the same, we will see (tree_s=
+ame &&
+>>     !tree_changed), so we get TREESAME.
+>>
+>>  2. If some but not all of the parents are the same, we will see (tr=
+ee_same
+>>     && tree_changed), and we end up getting TREESAME.
+>>
+>>  3. If none of the parents is the same, (!tree_same && tree_changed)=
+ holds
+>>     true, and we do not get TREESAME.
+>=20
+> For completeness, a fourth case (!tree_same && !tree_changed), which
+> would be triggered by commits whose parents are all classified as
+> REV_TREE_NEW.  That's another corner case for sure, but the old code
+> would mark it TREESAME and your patch changes that.
 
-> That is only if lib{a,b,c} is _internal_ dependency.  In usual case
-> project A might depend on library B *to be installed*, but it doesn't
-> mean that source code of library B has to be in repository for project
-> A.  And in usual case when project A depends on library B, it relies
-> on library B public stable API (its build system might check if you
-> have new enough library B installed).  If you depend on specific
-> version of library, patched, that is your problem...
+Ugh, forget this part, I failed to notice the /* fallthrough */ at the
+end of the REV_TREE_NEW case..
 
-To make it more clear: 
-
-At buildtime, a _package_ (not project!) "A" requires a already built
-and installed package B in some sane place where the toolchain can find it.
-On deployment of package "A", it has to be made sure that package "B"
-is also deployed (eg. by a dependency-handling package manager).
-
-These are two entirely separate stages in a software's lifecycle.
-Buildtime and deployment dependencies may be different (even deployment
-and runtime deps may differ).
-
-> In the case of internal dependency, where you co-develop both project
-> A and library B, it makes most sense to have separate repositories for
-> A and for B, and tie them up using submodules or subtree merge.
-
-I, personally, wouldn't use submodules - too complicated. Instead have
-just one tree per package(-variant) and keep these completely separate.
-
-> > I understand that Git was designed with a specific feature set in
-> > mind -- to manage Linux kernel development -- and as such isn't
-> > going to satisfy everyone. But I'm having trouble figuring out how
-> > to integrate it as the SCM in my projects, which aren't organized
-> > any differently than any other projects I've seen.
-> 
-> Well, you are braindamaged by your SCM ;-) ... just kidding.
-> 
-> Take a look how LibreOffice (Go-OOo), KDE, GNOME, GNU SourceMage Linux
-> distribution organize their repositories -- all of them are highly
-> modular / componentized.
-
-Well, I wouldn't say LO is really modularized, yet. (but we're
-working on that ...).
- 
-
-cu
--- 
-----------------------------------------------------------------------
- Enrico Weigelt, metux IT service -- http://www.metux.de/
-
- phone:  +49 36207 519931  email: weigelt@metux.de
- mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
-----------------------------------------------------------------------
- Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
-----------------------------------------------------------------------
+Ren=C3=A9
