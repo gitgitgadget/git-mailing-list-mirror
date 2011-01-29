@@ -1,86 +1,154 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [RFC] Add --create-cache to repack
-Date: Fri, 28 Jan 2011 18:34:13 -0800
-Message-ID: <AANLkTimuW-7D4YA2jeF+y4DPE=CdqtL713MQK+1Gtp-d@mail.gmail.com>
-References: <1296201984-24426-1-git-send-email-spearce@spearce.org>
- <4D42878E.2020502@viscovery.net> <AANLkTim+AUY9SdeAFfkny2_a3qQ9SCDLUHR3s9Q3M98u@mail.gmail.com>
- <alpine.LFD.2.00.1101281304270.8580@xanadu.home> <AANLkTikPcp5CUTWfhy6FYbCEkNG6epGBAMNT5vTfSbvy@mail.gmail.com>
- <alpine.LFD.2.00.1101281502170.8580@xanadu.home> <AANLkTi=U7qRRij=BQXC1Goqa9toDFfaVKT=+-8zYxCcc@mail.gmail.com>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: [PATCH] git-p4: Corrected typo.
+Date: Sat, 29 Jan 2011 02:41:49 +0000
+Message-ID: <AANLkTimLQxiB=dnd6=iB5uEpzOSfqks=FDJ=xORehuw8@mail.gmail.com>
+References: <1290130693-30855-2-git-send-email-vitor.hda@gmail.com>
+ <1290648419-6107-1-git-send-email-vitor.hda@gmail.com> <AANLkTimQhFzEXr=T9F8TJzTeWwKroTt_BG87RtQCLivv@mail.gmail.com>
+ <AANLkTikeB724f_vE6qvu1h1o5JG150mcmaHVBjLkOEWP@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=windows-1252
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	John Hawley <warthog19@eaglescrag.net>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Sat Jan 29 03:34:50 2011
+Cc: git@vger.kernel.org
+To: Thomas Berg <merlin66b@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Jan 29 03:42:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pj0eI-0000in-0n
-	for gcvg-git-2@lo.gmane.org; Sat, 29 Jan 2011 03:34:50 +0100
+	id 1Pj0m7-000372-TR
+	for gcvg-git-2@lo.gmane.org; Sat, 29 Jan 2011 03:42:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753999Ab1A2Cej convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Jan 2011 21:34:39 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:43033 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753452Ab1A2Cef convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 28 Jan 2011 21:34:35 -0500
-Received: by fxm20 with SMTP id 20so3998440fxm.19
-        for <git@vger.kernel.org>; Fri, 28 Jan 2011 18:34:34 -0800 (PST)
-Received: by 10.103.221.3 with SMTP id y3mr1842973muq.95.1296268474035; Fri,
- 28 Jan 2011 18:34:34 -0800 (PST)
-Received: by 10.103.1.2 with HTTP; Fri, 28 Jan 2011 18:34:13 -0800 (PST)
-In-Reply-To: <AANLkTi=U7qRRij=BQXC1Goqa9toDFfaVKT=+-8zYxCcc@mail.gmail.com>
+	id S1752634Ab1A2CmU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 28 Jan 2011 21:42:20 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:61055 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751648Ab1A2CmU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 28 Jan 2011 21:42:20 -0500
+Received: by qyk12 with SMTP id 12so4286558qyk.19
+        for <git@vger.kernel.org>; Fri, 28 Jan 2011 18:42:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=Y6dFC4OQgjRTLsONXKW/R2IkLmWt+2UxQJThxRvklEo=;
+        b=KIJr+aDJRJKVKWGepLT/ND/N1QmCKAjm8hVDpaZOEkg9RwMEgmXu0/QSYSYSW3udm/
+         KaWcEeMzAPJiFtq7C6we8npwp9P5tEgCeQO9kacAfPtwBNS3ZFeA2w/tx1Gk38aYBRbH
+         UCZerUk6Y83MvovRJg+nMOl0RzB1UgqsS+K28=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=whKndXU/T7yuBRrtDls7OMpgYVznZ41vRHxdmZA805Gb8Q//qHIdxHqRZzL26034Qo
+         1W+4ZEtg677MK9PYVXnKc2Vl6vjbyAcBc3f8D4bLYv6IYm5NKb1nv3eS5AD+2AqFfnvt
+         MHwqZtCf8EmOikpL3ScXy0rP1c/h2OShmpgiE=
+Received: by 10.229.213.13 with SMTP id gu13mr1565801qcb.196.1296268939123;
+ Fri, 28 Jan 2011 18:42:19 -0800 (PST)
+Received: by 10.220.192.8 with HTTP; Fri, 28 Jan 2011 18:41:49 -0800 (PST)
+In-Reply-To: <AANLkTikeB724f_vE6qvu1h1o5JG150mcmaHVBjLkOEWP@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165649>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165650>
 
-On Fri, Jan 28, 2011 at 17:32, Shawn Pearce <spearce@spearce.org> wrote=
-:
+Hi Thomas,
+
+=46irst of all I'd like to thank you on your feedback. It's my first tr=
+y
+on creating submitting a patch, so having someone's guidance helps a
+lot :)
+
+I'll rebase my patches against the head of the tree and squash the fix
+to avoid multiple commits. While I do that I'll also review my commit
+message and sign-off the patches according to what you said. Hopefully
+I will be able to do this during this weekend.
+
+=46rom git-diff-tree man page:
+
+"""
+-M[<n>]
+    Detect renames. If n is specified, it is a is a threshold on the
+similarity index (i.e. amount of addition/deletions compared to the
+file=92s
+    size). For example, -M90% means git should consider a delete/add
+pair to be a rename if more than 90% of the file hasn=92t changed.
+"""
+
+But from my latest tests I think that this option is ignored in
+diff-tree (I think it's only used in git log). With this in mind I'll
+need to add some code to implement the check of the score value of
+diff-tree output string. Again from its man page:
+
+"""
+Status letters C and R are always followed by a score (denoting the
+percentage of similarity between the source and target of the move or
+copy), and are the only ones to be so.
+"""
+
+Thanks,
+Vitor
+
+On Fri, Jan 28, 2011 at 3:19 PM, Thomas Berg <merlin66b@gmail.com> wrot=
+e:
+> Hi,
 >
-> Well, scratch the idea in this thread. =A0I think.
+> On Fri, Jan 28, 2011 at 12:35 AM, Vitor Antunes <vitor.hda@gmail.com>=
+ wrote:
+>> Hi everyone,
+>>
+>> Could anyone comment the 3 patches I sent (being this the last one)?
+>>
+> [...]
+>> On Thu, Nov 25, 2010 at 1:26 AM, Vitor Antunes <vitor.hda@gmail.com>=
+ wrote:
+>>> ---
+>>> =A0contrib/fast-import/git-p4 | =A0 =A02 +-
+>>> =A01 files changed, 1 insertions(+), 1 deletions(-)
+>>>
+>>> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p=
+4
+>>> index 0ea3a44..a466847 100755
+>>> --- a/contrib/fast-import/git-p4
+>>> +++ b/contrib/fast-import/git-p4
+>>> @@ -618,7 +618,7 @@ class P4Submit(Command):
+>>> =A0 =A0 =A0 =A0 if len(detectRenames) > 0:
+>>> =A0 =A0 =A0 =A0 =A0 =A0 diffOpts =3D "-M%s" % detectRenames
+>>> =A0 =A0 =A0 =A0 else:
+>>> - =A0 =A0 =A0 =A0 =A0 =A0diffOpts =3D ("", "-M")[self.detectRenames=
+]
+>>> + =A0 =A0 =A0 =A0 =A0 =A0diffOpts =3D ("", "-M")[self.detectRename]
+>>>
 >
-> I retested JGit vs. CGit on an identical linux-2.6 repository. =A0The
-> repository was fully packed, but had two pack files. =A0362M and 57M,
-> and was created by packing a 1 month old master, marking it .keep, an=
-d
-> then repacking -a -d to get most recent last month into another pack.
-> This results in some files that should be delta compressed together
-> being stored whole in the two packs (obviously).
+> This appears to me to be a bugfix for one of the other patches you
+> sent, is that right?
 >
-> The two implementations take the same amount of time to generate the
-> clone. =A03m28s / 3m22s for JGit, 3m23s for C Git. =A0The JGit create=
-d
-> pack is actually smaller 376.30 MiB vs. C Git's 380.59 MiB.
+> If so, maybe you could squash it with the previous patch and re-send
+> it all to the list?
+>
+> My other comments for now are:
+> - you have forgotten to sign off on the patches
+> - commit messages are normally in imperative rather than past tense
+> (see Documentation/SubmittingPatches in git)
+>
+> - In your first patch you wrote:
+>> The detectRenames option should be set to the desired threshold valu=
+e.
+> I'm not sure what threshold value you refer to here, and what values
+> you can set it to. Am I missing something?
+> (I'm not very familiar with git rename detection options)
+>
+> I'm a git-p4 user, so I can test your changes and look a bit more at
+> your code. Someone verifying it could help getting the patches
+> applied.
+>
+> Thanks for improving git-p4!
+>
+> Cheers,
+> Thomas Berg
+>
 
-I just tried caching only the object list of what is reachable from a
-particular commit.  The file is a small 20 byte header:
 
-  4 byte magic
-  4 byte version
-  4 byte number of commits (C)
-  4 byte number of trees (T)
-  4 byte number of blobs (B)
-
-Then C commit SHA-1s, followed by T tree SHA-1 + 4 byte path_hash,
-followed by B blob SHA-1 + 4 byte path_hash.  For any project the size
-is basically on par with the .idx file for the pack v1 format, so ~41
-MB for linux-2.6.  The file is stored as
-$GIT_OBJECT_DIRECTORY/cache/$COMMIT_SHA1.list, and is completely
-pack-independent.
-
-Using this for object enumeration shaves almost 1 minute off server
-packing time; the clone dropped from 3m28s to 2m29s.  That is close to
-what I was getting with the cached pack idea, but the network transfer
-stayed the small 376 MiB.  I think this supports your pack v4 work...
-if we can speed up object enumeration to be this simple (scan down a
-list of objects with their types declared inline, or implied by
-location), we can cut a full minute of CPU time off the server side.
 
 --=20
-Shawn.
+Vitor Antunes
