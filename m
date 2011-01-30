@@ -1,55 +1,94 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Status of dumb http transport?
-Date: Sun, 30 Jan 2011 07:57:21 -0700
-Message-ID: <AANLkTimTXOVcaRCW04GtHiJWGNBnFVE8Vg+tyqo5Bk4+@mail.gmail.com>
+From: =?UTF-8?Q?Jo=C3=A3o_Paulo_Melo_de_Sampaio?= <jpmelos@gmail.com>
+Subject: Remote branchs -- how can I check them out?
+Date: Sun, 30 Jan 2011 13:05:07 -0200
+Message-ID: <AANLkTin3Tfcf=WJHJdSA9TwhFXQfaMrnm5+YEWWjo=qj@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 30 15:57:51 2011
+To: GIT Mailing List <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Sun Jan 30 16:05:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PjYis-000570-NN
-	for gcvg-git-2@lo.gmane.org; Sun, 30 Jan 2011 15:57:51 +0100
+	id 1PjYqI-0008Pn-QL
+	for gcvg-git-2@lo.gmane.org; Sun, 30 Jan 2011 16:05:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754575Ab1A3O5p convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Jan 2011 09:57:45 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:60940 "EHLO
+	id S1754653Ab1A3PFL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Jan 2011 10:05:11 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:33396 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753834Ab1A3O5o convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 30 Jan 2011 09:57:44 -0500
-Received: by bwz15 with SMTP id 15so4567631bwz.19
-        for <git@vger.kernel.org>; Sun, 30 Jan 2011 06:57:43 -0800 (PST)
+	with ESMTP id S1753834Ab1A3PFK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 30 Jan 2011 10:05:10 -0500
+Received: by bwz15 with SMTP id 15so4570736bwz.19
+        for <git@vger.kernel.org>; Sun, 30 Jan 2011 07:05:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
          :content-type:content-transfer-encoding;
-        bh=A8jTByNLBEnJbUGaW1neSQyGnDKjb+2yxBsw5DYTFZE=;
-        b=Fj81G2jhARofRoYjVCe+0SwIW0HRiSErukWxShJ13EkBsOCggTRhSzXR6+jiweguPe
-         KiPp7/QihNyzwmBsfZdlxJHCEZ0phxJWc8g5/KJYAWK+YZxKU2vmMGDHwzvhnTvvhK1k
-         wANxwViHz8MpZeXJmT9enF7li9n4FtRJ9NNac=
+        bh=HJzmeKPYGLJ7zeITYhndKs2QtAK5AGbH/67gEs+Rrsg=;
+        b=Ya8E24uQOU0Mbqv/rUpyECiwqvjhA0DhyXgwy8LxSXUMV75FoSybrXIqR1+4OQVXzR
+         IuZ0XVtPZ11aT5krZASl4c0YtTjW3vgL97oCwm11X82PQlCuvBWgr6dOcAnzdEtH/hs4
+         SvX413uG3jjQfc1kAzXI6V3Ht0EjwfHwI1Zuc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type
+        h=mime-version:date:message-id:subject:from:to:content-type
          :content-transfer-encoding;
-        b=h9uBWBrIgF7u46NvXIMEDSSSgPxKztA6FmiIrmLb2BWjYr+4VyeieF2D/ZoGpi5xK7
-         Pbc3DpueDdg5KvwsxtAs88X6zbTdytHsdfWxvdlItMgIm7OoUk9APNfS2kHbSQBS2Zlj
-         h7cRMIqSNqdnM9qUC+DZcxQ+w8CFL/73IUhiI=
-Received: by 10.204.54.69 with SMTP id p5mr4371973bkg.82.1296399461769; Sun,
- 30 Jan 2011 06:57:41 -0800 (PST)
-Received: by 10.204.101.69 with HTTP; Sun, 30 Jan 2011 06:57:21 -0800 (PST)
+        b=vKZnlpzLUYB3HQyN08vuCxsJYHVlHOk4d1h/c470a3CcU3OOcaHpW145gALUBUZGiV
+         u3comt337xvprUO++XN293fFcY8FRiw8hGpW8oTs36K6Q81DSEdRwj7fQjo6hnEVKTYQ
+         IzEFTHxGpMtNR8Fx7igdGfQdPGtr/mDCBabOI=
+Received: by 10.204.81.72 with SMTP id w8mr2217548bkk.205.1296399907212; Sun,
+ 30 Jan 2011 07:05:07 -0800 (PST)
+Received: by 10.204.66.6 with HTTP; Sun, 30 Jan 2011 07:05:07 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165684>
+
+Hello, people.
+
+When I just cloned git using
+
+    git clone git://git.kernel.org/pub/scm/git/git.git
+
+and I type
+
+    git branch
+
+it shows me I have only the 'master' branch in my local repository
+
+    * master
+
+and when I type
+
+    git branch -a
+
+it shows that there's all these branches remotely
+
+    * master
+      remotes/origin/HEAD -> origin/master
+      remotes/origin/html
+      remotes/origin/maint
+      remotes/origin/man
+      remotes/origin/master
+      remotes/origin/next
+      remotes/origin/pu
+      remotes/origin/todo
+
+What do I have to do to be able to see what's in the 'maint', 'next'
+and 'todo' branches, for example?
+
+And by the way, what are those branches all about? Their names
+suggests they are maintenance branches (where you keep backward
+compatibility with an older version?), the next version of git (1.7.4
+version?) and future features under implementation (the to-do list?).
+
+Thank you for your time!
 
 --=20
-=A0martin.langhoff@gmail.com
-=A0martin@laptop.org -- Software Architect - OLPC
-=A0- ask interesting questions
-=A0- don't get distracted with shiny stuff=A0 - working code first
-=A0- http://wiki.laptop.org/go/User:Martinlanghoff
+Jo=C3=A3o Paulo Melo de Sampaio
+Computer Engineering Student @ UFSCar
+Website: http://www.jpmelos.com
+Twitter: twitter.com/jpmelos (@jpmelos)
