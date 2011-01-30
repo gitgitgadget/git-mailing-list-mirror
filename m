@@ -1,78 +1,110 @@
-From: Martin Langhoff <martin.langhoff@gmail.com>
-Subject: Status of dumb http transport?
-Date: Sun, 30 Jan 2011 08:07:52 -0700
-Message-ID: <AANLkTik99NNjNwLbj3-xEvVqiYUENiaREYAeJUC0bwVY@mail.gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: Re: Status of dumb http transport?
+Date: Sun, 30 Jan 2011 08:01:36 -0800 (PST)
+Message-ID: <m3pqre9y9y.fsf@localhost.localdomain>
+References: <AANLkTik99NNjNwLbj3-xEvVqiYUENiaREYAeJUC0bwVY@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 30 16:08:32 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Martin Langhoff <martin.langhoff@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 30 17:01:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PjYt3-0001xE-PD
-	for gcvg-git-2@lo.gmane.org; Sun, 30 Jan 2011 16:08:22 +0100
+	id 1PjZij-0000tH-UA
+	for gcvg-git-2@lo.gmane.org; Sun, 30 Jan 2011 17:01:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754986Ab1A3PIQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Jan 2011 10:08:16 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:62801 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754877Ab1A3PIP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 30 Jan 2011 10:08:15 -0500
-Received: by bwz15 with SMTP id 15so4572050bwz.19
-        for <git@vger.kernel.org>; Sun, 30 Jan 2011 07:08:14 -0800 (PST)
+	id S1750836Ab1A3QBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Jan 2011 11:01:40 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:54745 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750780Ab1A3QBj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Jan 2011 11:01:39 -0500
+Received: by wyb28 with SMTP id 28so4752448wyb.19
+        for <git@vger.kernel.org>; Sun, 30 Jan 2011 08:01:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        bh=x2R77ysYCN0mFWgdFTq7H9PIcwZgs4eK+r9xmfSW754=;
-        b=LpHYAdiYzznbxakuQqa2gYbyXS99zOt75RsRMggR9jabq6/pvYZg715rMu9tsmwVKX
-         FMJwXnhVWob4gIVmDsthdSFshn1xf5je74qGJ85tpSchGhS0bD/x6OoUgd8Dmrgkix8V
-         S15yS2KeGwXpOyp7F5dJwdb8By1MG4Qpdlj3I=
+        h=domainkey-signature:x-authentication-warning:to:cc:subject
+         :references:from:date:in-reply-to:message-id:lines:user-agent
+         :mime-version:content-type;
+        bh=AK+BO5owdNvtAOUsOWX6VAYJhXY2T+aLonZUQvRulaQ=;
+        b=l2oyJpGWy39eelKDfuUdFAXmmKn5jz+FwFm5mWsOgOAWOp4es6SpqWRK6yIoDPrusu
+         wCjon0MXvSnDIN1F6gsnc4gtcpxI/pOUPJCSCTdYHFLT/bMkYu0qXpNPlY2Ve8mtCyYq
+         kczEyWUEg9bYT97951HM4VHrJpwryritNz8Os=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type
-         :content-transfer-encoding;
-        b=I1/xyOmTGEhC9eWguO1Cdwsi4DCxm6PwKioPgGBxtqHnNs/oRS9I5GluoQzI0+GtAA
-         AQ5x6Ig8Xnso3+QXKpKpETDGrPvT3BIYkhuxhtEBF+cy78OAOvFA2aD1mTlZqSHdhgXg
-         hNOn5tn+61w97WJFnBUY76KjBS3ElEp0IX288=
-Received: by 10.204.103.132 with SMTP id k4mr4413935bko.28.1296400093076; Sun,
- 30 Jan 2011 07:08:13 -0800 (PST)
-Received: by 10.204.101.69 with HTTP; Sun, 30 Jan 2011 07:07:52 -0800 (PST)
+        h=x-authentication-warning:to:cc:subject:references:from:date
+         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
+        b=eV34yF7jI82rqpw89IBvfF4CAsPpF7aCIsqXVzPFQ0k2zT294piQoIBqYw2x1khZSQ
+         mTc94C0Vu0lZCO2tUugvYwF/T8sNoy543gGX536YlkFgHnXCn7YaOfLR8rqesbzdnG52
+         Uga6pZVbxXx5pdypJQYMWy5e7ugGdvEAbEBaE=
+Received: by 10.216.169.71 with SMTP id m49mr5235903wel.4.1296403298434;
+        Sun, 30 Jan 2011 08:01:38 -0800 (PST)
+Received: from localhost.localdomain (abvr78.neoplus.adsl.tpnet.pl [83.8.215.78])
+        by mx.google.com with ESMTPS id n1sm10245838weq.31.2011.01.30.08.01.35
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sun, 30 Jan 2011 08:01:36 -0800 (PST)
+Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
+	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p0UG18ek027398;
+	Sun, 30 Jan 2011 17:01:19 +0100
+Received: (from jnareb@localhost)
+	by localhost.localdomain (8.13.4/8.13.4/Submit) id p0UG0vDr027391;
+	Sun, 30 Jan 2011 17:00:58 +0100
+X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
+In-Reply-To: <AANLkTik99NNjNwLbj3-xEvVqiYUENiaREYAeJUC0bwVY@mail.gmail.com>
+User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165685>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165686>
 
-Hi List!
+Martin Langhoff <martin.langhoff@gmail.com> writes:
 
-What is the state of dumb http transport today, for fetching updates?
-Is the client code smart enough to fetch indexes and use range
-requests? If so, how does that fare for latency?
+> What is the state of dumb http transport today, for fetching updates?
+> Is the client code smart enough to fetch indexes and use range
+> requests? If so, how does that fare for latency?
 
-Background: I am looking at whether yum repositories' data (currently
-in sqlite & xml) could benefit from being a git (or very gittish)
-database -- with a bit of re-organizing to make it git-efficient of
-course.
+A good description of "dumb" http transport can be found in Pro Git
+book, in chapter 9.6 "Transfer Protocols", section "The Dumb Protocol"
+http://progit.org/book/ch9-6.html
+ 
+In short "dumb" http transport is realy dumb, it consults
+.git/info/refs to know where to start from, and
+.git/objects/info/packs to know what packfiles are available (both are
+generated by git-update-server-info, usually run from update hook).
 
-Not the data that would benefit, but rather, users pulling updates
-from fast-moving repos (updates, updates-testing, rawhide...).
+Starting from appropriate object, it tries to download loose object,
+if posible, and if not then it downloads index files to know which
+packfile to download.  It walks the chain down checking which objects
+it has, and if there is one missing it downloads it.  It always
+downloads _whole_ pack files.  It doesn't use range request... what's
+more, as far as I know it doesn't know how to resume partially
+downloaded packfile (hough it wouldn't re-download packfile it already
+got).
 
-One of the constraints is that this has to be http, and work well
-across a universe of mirrors (that won't install or configure
-software) and the good bad and ugly world of http proxies. Yum can be
-taught to use the git proto, but that won't gain widespread use
-quickly -- http is and will be the mainstay for a long time.
+> Background: I am looking at whether yum repositories' data (currently
+> in sqlite & xml) could benefit from being a git (or very gittish)
+> database -- with a bit of re-organizing to make it git-efficient of
+> course.
+> 
+> Not the data that would benefit, but rather, users pulling updates
+> from fast-moving repos (updates, updates-testing, rawhide...).
+> 
+> One of the constraints is that this has to be http, and work well
+> across a universe of mirrors (that won't install or configure
+> software) and the good bad and ugly world of http proxies. Yum can be
+> taught to use the git proto, but that won't gain widespread use
+> quickly -- http is and will be the mainstay for a long time.
 
+Note that from some time we have "smart" http protocol, which is
+almost git protocol proxied over http... with addition that http
+protocol is stateless.  Default git-http-backend CGI script falls back
+to "dumb" protocol if client doesn't support smart http transport.
 
-
-m
---=20
-=A0martin.langhoff@gmail.com
-=A0martin@laptop.org -- Software Architect - OLPC
-=A0- ask interesting questions
-=A0- don't get distracted with shiny stuff=A0 - working code first
-=A0- http://wiki.laptop.org/go/User:Martinlanghoff
+-- 
+Jakub Narebski
+Poland
+ShadeHawk on #git
