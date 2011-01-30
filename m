@@ -1,113 +1,120 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: [RFC] Add --create-cache to repack
-Date: Sun, 30 Jan 2011 11:43:22 -0800
-Message-ID: <AANLkTi=mbeBsR5tr4J7kQCL6YqiGfttK01VUN016aapC@mail.gmail.com>
-References: <1296201984-24426-1-git-send-email-spearce@spearce.org>
- <4D42878E.2020502@viscovery.net> <AANLkTim+AUY9SdeAFfkny2_a3qQ9SCDLUHR3s9Q3M98u@mail.gmail.com>
- <alpine.LFD.2.00.1101281304270.8580@xanadu.home> <AANLkTikPcp5CUTWfhy6FYbCEkNG6epGBAMNT5vTfSbvy@mail.gmail.com>
- <alpine.LFD.2.00.1101281502170.8580@xanadu.home> <AANLkTi=U7qRRij=BQXC1Goqa9toDFfaVKT=+-8zYxCcc@mail.gmail.com>
- <AANLkTimuW-7D4YA2jeF+y4DPE=CdqtL713MQK+1Gtp-d@mail.gmail.com> <7vk4hmbyuo.fsf@alter.siamese.dyndns.org>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: Project- vs. Package-Level Branching in Git
+Date: Sun, 30 Jan 2011 20:36:03 +0100
+Message-ID: <20110130193603.GA327@nibiru.local>
+References: <14F4737F-E8E4-4E4E-A625-16CA63CF9EFF@shaggyfrog.com> <AANLkTinTRgzv0s9MTyM4TaOwVOmhwRckDqMfxrbsKVfm@mail.gmail.com> <15B7CA2E-C584-4563-B9E3-D80861CD9565@shaggyfrog.com> <m3tygt9xmn.fsf@localhost.localdomain> <20110129194258.GE602@nibiru.local> <20110129232848.GC7676@gmail.com>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org,
-	John Hawley <warthog19@eaglescrag.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Jan 30 20:43:51 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Jan 30 20:45:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PjdBe-0006jW-8s
-	for gcvg-git-2@lo.gmane.org; Sun, 30 Jan 2011 20:43:50 +0100
+	id 1PjdDd-0007ao-T2
+	for gcvg-git-2@lo.gmane.org; Sun, 30 Jan 2011 20:45:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754160Ab1A3Tnp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Jan 2011 14:43:45 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:58957 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753972Ab1A3Tno convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 30 Jan 2011 14:43:44 -0500
-Received: by fxm20 with SMTP id 20so4954806fxm.19
-        for <git@vger.kernel.org>; Sun, 30 Jan 2011 11:43:43 -0800 (PST)
-Received: by 10.103.241.16 with SMTP id t16mr1760843mur.23.1296416623157; Sun,
- 30 Jan 2011 11:43:43 -0800 (PST)
-Received: by 10.103.1.2 with HTTP; Sun, 30 Jan 2011 11:43:22 -0800 (PST)
-In-Reply-To: <7vk4hmbyuo.fsf@alter.siamese.dyndns.org>
+	id S1754253Ab1A3Tpt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Jan 2011 14:45:49 -0500
+Received: from caprica.metux.de ([82.165.128.25]:46309 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1752867Ab1A3Tps (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 30 Jan 2011 14:45:48 -0500
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p0UJg16p007589
+	for <git@vger.kernel.org>; Sun, 30 Jan 2011 20:42:16 +0100
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p0UJfWt6007546
+	for git@vger.kernel.org; Sun, 30 Jan 2011 20:41:32 +0100
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id p0UJa38d023248
+	for git@vger.kernel.org; Sun, 30 Jan 2011 20:36:03 +0100
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <20110129232848.GC7676@gmail.com>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165694>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165695>
 
-On Sun, Jan 30, 2011 at 00:05, Junio C Hamano <gitster@pobox.com> wrote=
-:
-> Shawn Pearce <spearce@spearce.org> writes:
->
->> Using this for object enumeration shaves almost 1 minute off server
->> packing time; the clone dropped from 3m28s to 2m29s. =A0That is clos=
-e to
->> what I was getting with the cached pack idea, but the network transf=
-er
->> stayed the small 376 MiB.
->
-> I like this result.
+* David Aguilar <davvid@gmail.com> wrote:
 
-I'm really leaning towards putting this cached object list into JGit.
+Hi,
 
-I need to shave that 1 minute off server CPU time. I can afford the 41
-MiB disk (and kernel buffer cache), but I cannot really continue to
-pay the 1 minute of CPU on each clone request for large repositories.
-The object list of what is reachable from commit X isn't ever going to
-change, and the path hash function is reasonably stable.  With a
-version code in the file we can desupport old files if the path hash
-function changes.  10% more disk/kernel memory is cheap for some of my
-servers compared to 1 minute of CPU, and some explicit cache
-management by the server administrator to construct the file.
+> This is exactly how we do it at my workplace.  We have literally
+> hundreds of individual git repositories.  Naturally, some
+> packages depend on others and the only "trick" is building them
+> in the correct dependency order.  A simple dependency tree
+> handles this for us.
 
-> The amount of transfer being that small was something I didn't quite
-> expect, though. =A0Doesn't it indicate that our pathname based object
-> clustering heuristics is not as effective as we hoped?
+perhaps you'd like to have a look at my Briegel build tool:
 
-I'm not sure I follow your question.
+    git://pubgit.metux.de/projects/briegel.git
+    
+;-)
 
-I think the problem here is old side branches that got recently
-merged.  Their _best_ delta base was some old revision, possibly close
-to where they branched off from.  Using a newer version of the file
-for the delta base created a much larger delta.  E.g. consider a file
-where in more recent revisions a function was completely rewritten.
-If you have to delta compress against that new version, but you use
-the older definition of the function, you need to use insert
-instructions
-for the entire content of that old function.  But if you can delta
-compress against the version you branched from (or one much closer to
-it in time), your delta would be very small as that function is
-handled by the smaller copy instruction.
+> We use same-named branches across several repos when coordinating
+> features across many projects.  e.g. we had an "el6" branch
+> when we were gettings things ready for that platform.  It's a
+> convention but it helps when writing helper scripts.
 
-Our clustering heuristics work fine.
+Did you have these branches for all packages ?
 
-Our thin-pack selection of potential delta base candidates is not.  We
-are not very aggressive in loading the delta base window with
-potential candidates, which means we miss some really good compression
-opportunities.
+> We can clone and work on any subset of the entire tree by
+> cloning just the repos we are interested in.  Setting
+> $LD_LIBRARY_PATH and $PATH helps when testing builds in their
+> sandboxes.  You still need to get the compiler/linker to
+> construct paths into the sandboxes instead of the standard
+> release area.
+
+I'd suggest pushing everything through a sysroot'ed crosscompiler
+and only install the absolute required dependencies in the sysroot
+on each package build. This tends to show up a lot of programming
+errors that otherwise stay unnoticed for a long time.
+(Briegel goes exactly that way and handles it automatically ;-p)
+ 
+> This is what the pkg-config command does.  It respects the
+> $PKG_CONFIG_PATH environment variable which can be used to
+> point to staged installs so that you don't have to deploy the
+> package before building against it. 
+
+With sysroot, it's even a bit more cleaner, pkg-config can handle
+the path fixups automatically then.
+
+> The idea is so simple that you could write an equivalent command
+> in an afternoon and extend it to work however you need in the
+> event that pkg-config does not fit.
+
+Actually, I only know of rare cases where pkg-config doesn't
+really fit. Mostly due bad software design. Once thing I'm yet
+missing is something pkg-config alike which replaces most of
+the autofool-tests (eg. whether the target supports some
+syscall, stack directions, etc).
+
+> 2. the build must use the pkg-config command when constructing
+>    include/library paths.
+
+Still there're lots of packages which dont use pkg-config.
+Some of those I'm already fixing in my OSS-QM project.
+(Everybody's invited to join in ;-))
 
 
-Ooooh.
+cu
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
 
-I think my test was flawed.  I injected the cached pack's tip as the
-edge for the new stuff to delta compress against.  I should have
-injected all of the merge bases between the cached pack's tip and the
-new stuff.  Although the cached pack tip is one of the merge bases,
-its not all of them.  If we inject all of the merge bases, we can find
-the revision that this old side branch is based on, and possibly get a
-better delta candidate for it.
-
-IIRC, upload-pack would have walked backwards further and found the
-merge base for that side branch, and it would have been part of the
-delta base candidates.  I think I need to re-do my cached pack test.
-Good thing I have history of my source code saved in this fancy
-revision control thingy called "git".  :-)
-
---=20
-Shawn.
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
