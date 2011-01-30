@@ -1,50 +1,91 @@
-From: Luke Kenneth Casson Leighton <luke.leighton@gmail.com>
-Subject: https://github.com/github/dmca/blob/master/2011-01-27-sony.markdown
-Date: Sun, 30 Jan 2011 05:59:29 +0000
-Message-ID: <AANLkTi=n4JyL+TmLGVpGO=uVfH0+b_JX5jr3OQh4HoOs@mail.gmail.com>
+From: Guy Rouillier <guyr@burntmail.com>
+Subject: Re: cvsimport still not working with cvsnt
+Date: Sun, 30 Jan 2011 01:33:57 -0500
+Message-ID: <4D450655.5090501@burntmail.com>
+References: <4D0ED5EC.9020402@burntmail.com> <20101220213654.GA24628@burratino> <4D112586.2060904@Freescale.com> <4D119015.6020207@burntmail.com> <4D2AB63D.7040803@burntmail.com> <AANLkTikreDJmUPfwNJ2ABivrafjvQNN6WrytNMAcse4A@mail.gmail.com> <4D2FEF49.8070205@burntmail.com> <20110114074449.GA11175@burratino> <7v8vynnokt.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sun Jan 30 06:59:39 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Martin Langhoff <martin@laptop.org>,
+	Emil Medve <Emilian.Medve@freescale.com>,
+	git <git@vger.kernel.org>, Pascal Obry <pascal@obry.net>,
+	Clemens Buchacher <drizzd@aon.at>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Jan 30 07:34:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PjQK2-0000al-GF
-	for gcvg-git-2@lo.gmane.org; Sun, 30 Jan 2011 06:59:38 +0100
+	id 1PjQs0-00086V-9G
+	for gcvg-git-2@lo.gmane.org; Sun, 30 Jan 2011 07:34:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751272Ab1A3F7b (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Jan 2011 00:59:31 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:54762 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751165Ab1A3F7a (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Jan 2011 00:59:30 -0500
-Received: by vws16 with SMTP id 16so1641779vws.19
-        for <git@vger.kernel.org>; Sat, 29 Jan 2011 21:59:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=chP/9U35VI5jv3FbWbwkVkO3IROFCASQ5FwCDzJ1pO0=;
-        b=mLRZtztvIb3uZcU3xwtH8P83gtECtxed/iRfmfA4Qnmv1Ocphsw/mWpiPvZl9MgqeD
-         MfC0sjXf5hWWIbIc5DjS3dN7nzfV7Iv7ka/ze2EK4+tZU3z4+hmwlq5v6Upy03Q4MRUD
-         ch15L7msy3U7+1c3EpfENa6ynXylq7sCgPD34=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=suSapCS6E3g7TXyDZGYyr/D40WqLDZrq91hLG7uY8Q8hcm37xbLw1Q/N25OVsYGVJR
-         uazUPxLO4KlrAVfVQhACyoDcoe3jO7vxvl/TMB1SXwyx3FJRYZALllMB5/mZyBUeeRIT
-         6wdgwiS8wRuJNnquizHnHEmv+00USFS635rf8=
-Received: by 10.220.179.204 with SMTP id br12mr1221017vcb.7.1296367169927;
- Sat, 29 Jan 2011 21:59:29 -0800 (PST)
-Received: by 10.220.198.140 with HTTP; Sat, 29 Jan 2011 21:59:29 -0800 (PST)
+	id S1751286Ab1A3Gej (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Jan 2011 01:34:39 -0500
+Received: from mx02.burntmail.com ([70.87.63.122]:47325 "EHLO
+	mx02.burntmail.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751062Ab1A3Gej (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Jan 2011 01:34:39 -0500
+Received: from [108.18.101.164] (helo=[192.168.1.60])
+	by mx02.burntmail.com with esmtpa (Exim 4.63)
+	(envelope-from <guyr@burntmail.com>)
+	id 1PjQrG-00042f-RL; Sun, 30 Jan 2011 00:33:58 -0600
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
+In-Reply-To: <7v8vynnokt.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165678>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165679>
 
-oops.  anyone still think a truly peer-to-peer version of git is
-like... a waste of time?
-l.
+Sorry for the delay in following up, work has been busy.
+
+On 1/14/2011 4:49 PM, Junio C Hamano wrote:
+> As the general principle, in a "we see two, and we cannot tell which one
+> the user wants to use" situation like this, I tend to prefer erroring out
+> to _force_ the user to fix the configuration once and for all.
+
+That was my original inclination.  As no other opinions have been posted 
+since your message, here is my amended patch, incorporating Martin's 
+ideas and dieing if the script finds both CVS and CVSNT password files.
+I don't know why diff got tripped up on brace indentation; I used only
+tabs and everything looks fine in vi.
+
+--- git-cvsimport.org   2011-01-09 03:52:39.000000000 -0500
++++ git-cvsimport.perl  2011-01-30 00:59:29.000000000 -0500
+@@ -260,19 +260,27 @@
+                if ($pass) {
+                        $pass = $self->_scramble($pass);
+                } else {
+-                       open(H,$ENV{'HOME'}."/.cvspass") and do {
++                       my @cvspasslocations = ($ENV{'HOME'}."/.cvspass", $ENV{'HOME'}."/.cvs/cvspass");
++                       my $filecount = 0;
++                       foreach my $cvspass (@cvspasslocations) {
++
++                               open(H, $cvspass) and do {
+                                # :pserver:cvs@mea.tmt.tele.fi:/cvsroot/zmailer Ah<Z
++                                       $filecount++;
+                                while (<H>) {
+                                        chomp;
+                                        s/^\/\d+\s+//;
+-                                       my ($w,$p) = split(/\s/,$_,2);
++                                               my ($w,$p) = split(/[\s=]/,$_,2);
+                                        if ($w eq $rr or $w eq $rr2) {
+                                                $pass = $p;
+                                                last;
+                                        }
+                                }
+                        };
+-                       $pass = "A" unless $pass;
++                       }
++                       
++                       die("Two CVS password files found: @cvspasslocations, please remove one") if $filecount > 1;
++                       die("Password not found for CVSROOT: $opt_d\n") unless $pass;
+                }
+
+                my ($s, $rep);
+
+
+-- 
+Guy Rouillier
