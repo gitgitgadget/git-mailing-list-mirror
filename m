@@ -1,110 +1,91 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Status of dumb http transport?
-Date: Sun, 30 Jan 2011 08:01:36 -0800 (PST)
-Message-ID: <m3pqre9y9y.fsf@localhost.localdomain>
-References: <AANLkTik99NNjNwLbj3-xEvVqiYUENiaREYAeJUC0bwVY@mail.gmail.com>
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+Subject: Re: Remote branchs -- how can I check them out?
+Date: Sun, 30 Jan 2011 19:05:57 +0300
+Message-ID: <20110130160556.GI5713@localhost.localdomain>
+References: <AANLkTin3Tfcf=WJHJdSA9TwhFXQfaMrnm5+YEWWjo=qj@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Martin Langhoff <martin.langhoff@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Jan 30 17:01:52 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: GIT Mailing List <git@vger.kernel.org>
+To: =?iso-8859-1?Q?Jo=E3o?= Paulo Melo de Sampaio <jpmelos@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Jan 30 17:06:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PjZij-0000tH-UA
-	for gcvg-git-2@lo.gmane.org; Sun, 30 Jan 2011 17:01:46 +0100
+	id 1PjZn2-0002kP-Aj
+	for gcvg-git-2@lo.gmane.org; Sun, 30 Jan 2011 17:06:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750836Ab1A3QBk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Jan 2011 11:01:40 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:54745 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750780Ab1A3QBj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Jan 2011 11:01:39 -0500
-Received: by wyb28 with SMTP id 28so4752448wyb.19
-        for <git@vger.kernel.org>; Sun, 30 Jan 2011 08:01:38 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type;
-        bh=AK+BO5owdNvtAOUsOWX6VAYJhXY2T+aLonZUQvRulaQ=;
-        b=l2oyJpGWy39eelKDfuUdFAXmmKn5jz+FwFm5mWsOgOAWOp4es6SpqWRK6yIoDPrusu
-         wCjon0MXvSnDIN1F6gsnc4gtcpxI/pOUPJCSCTdYHFLT/bMkYu0qXpNPlY2Ve8mtCyYq
-         kczEyWUEg9bYT97951HM4VHrJpwryritNz8Os=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=eV34yF7jI82rqpw89IBvfF4CAsPpF7aCIsqXVzPFQ0k2zT294piQoIBqYw2x1khZSQ
-         mTc94C0Vu0lZCO2tUugvYwF/T8sNoy543gGX536YlkFgHnXCn7YaOfLR8rqesbzdnG52
-         Uga6pZVbxXx5pdypJQYMWy5e7ugGdvEAbEBaE=
-Received: by 10.216.169.71 with SMTP id m49mr5235903wel.4.1296403298434;
-        Sun, 30 Jan 2011 08:01:38 -0800 (PST)
-Received: from localhost.localdomain (abvr78.neoplus.adsl.tpnet.pl [83.8.215.78])
-        by mx.google.com with ESMTPS id n1sm10245838weq.31.2011.01.30.08.01.35
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 30 Jan 2011 08:01:36 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p0UG18ek027398;
-	Sun, 30 Jan 2011 17:01:19 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p0UG0vDr027391;
-	Sun, 30 Jan 2011 17:00:58 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <AANLkTik99NNjNwLbj3-xEvVqiYUENiaREYAeJUC0bwVY@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+	id S1750942Ab1A3QGF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 30 Jan 2011 11:06:05 -0500
+Received: from mailhub.007spb.ru ([84.204.203.130]:45338 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750780Ab1A3QGE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Jan 2011 11:06:04 -0500
+Received: from proxysrv.domain007.com ([10.8.0.42])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p0UG5weU029650;
+	Sun, 30 Jan 2011 19:05:59 +0300
+Received: by proxysrv.domain007.com (Postfix, from userid 1000)
+	id D8CABB22EEF; Sun, 30 Jan 2011 19:05:57 +0300 (MSK)
+Content-Disposition: inline
+In-Reply-To: <AANLkTin3Tfcf=WJHJdSA9TwhFXQfaMrnm5+YEWWjo=qj@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: Dr.Web (R) for Mail Servers on proxysrv host
+X-Antivirus-Code: 100000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165686>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165687>
 
-Martin Langhoff <martin.langhoff@gmail.com> writes:
+On Sun, Jan 30, 2011 at 01:05:07PM -0200, Jo=E3o Paulo Melo de Sampaio =
+wrote:
 
-> What is the state of dumb http transport today, for fetching updates?
-> Is the client code smart enough to fetch indexes and use range
-> requests? If so, how does that fare for latency?
+> When I just cloned git using
+>=20
+>     git clone git://git.kernel.org/pub/scm/git/git.git
+>=20
+> and I type
+>=20
+>     git branch
+>=20
+> it shows me I have only the 'master' branch in my local repository
+>=20
+>     * master
+>=20
+> and when I type
+>=20
+>     git branch -a
+>=20
+> it shows that there's all these branches remotely
+>=20
+>     * master
+>       remotes/origin/HEAD -> origin/master
+>       remotes/origin/html
+>       remotes/origin/maint
+>       remotes/origin/man
+>       remotes/origin/master
+>       remotes/origin/next
+>       remotes/origin/pu
+>       remotes/origin/todo
+>=20
+> What do I have to do to be able to see what's in the 'maint', 'next'
+> and 'todo' branches, for example?
+These branches are local to your repository. They are "remote" in the
+sense you're not supposed to modify them directly.
+So to inspect such a branch just use its full name ("origin/next" for
+instance) when working with commands like git-log.
 
-A good description of "dumb" http transport can be found in Pro Git
-book, in chapter 9.6 "Transfer Protocols", section "The Dumb Protocol"
-http://progit.org/book/ch9-6.html
- 
-In short "dumb" http transport is realy dumb, it consults
-.git/info/refs to know where to start from, and
-.git/objects/info/packs to know what packfiles are available (both are
-generated by git-update-server-info, usually run from update hook).
+See [1], [2] for more info.
 
-Starting from appropriate object, it tries to download loose object,
-if posible, and if not then it downloads index files to know which
-packfile to download.  It walks the chain down checking which objects
-it has, and if there is one missing it downloads it.  It always
-downloads _whole_ pack files.  It doesn't use range request... what's
-more, as far as I know it doesn't know how to resume partially
-downloaded packfile (hough it wouldn't re-download packfile it already
-got).
+Also your question appears to be quite basic which hints at that you di=
+d
+not read a good book on Git before using it.  So starting at [3] is
+recommended -- it mentions a bunch of good books and manuals (some of
+which are available freely).
 
-> Background: I am looking at whether yum repositories' data (currently
-> in sqlite & xml) could benefit from being a git (or very gittish)
-> database -- with a bit of re-organizing to make it git-efficient of
-> course.
-> 
-> Not the data that would benefit, but rather, users pulling updates
-> from fast-moving repos (updates, updates-testing, rawhide...).
-> 
-> One of the constraints is that this has to be http, and work well
-> across a universe of mirrors (that won't install or configure
-> software) and the good bad and ugly world of http proxies. Yum can be
-> taught to use the git proto, but that won't gain widespread use
-> quickly -- http is and will be the mainstay for a long time.
-
-Note that from some time we have "smart" http protocol, which is
-almost git protocol proxied over http... with addition that http
-protocol is stateless.  Default git-http-backend CGI script falls back
-to "dumb" protocol if client doesn't support smart http transport.
-
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+1. http://www.kernel.org/pub/software/scm/git/docs/user-manual.html#exa=
+mining-remote-branches
+2. http://progit.org/book/ch3-5.html
+3. http://git-scm.com/documentation
