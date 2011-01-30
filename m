@@ -1,113 +1,86 @@
-From: Libor Pechacek <lpechacek@suse.cz>
-Subject: [PATCH v2] Disallow empty section and variable names
-Date: Sun, 30 Jan 2011 21:34:45 +0100
-Message-ID: <20110130203445.GA9689@fm.suse.cz>
-References: <20110108144644.GA11019@localhost.suse.cz> <20110127145253.GD6312@fm.suse.cz>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [RFC/PATCH 0/2] Re: Remote branchs -- how can I check them out?
+Date: Sun, 30 Jan 2011 15:32:58 -0600
+Message-ID: <20110130213258.GA10039@burratino>
+References: <AANLkTin3Tfcf=WJHJdSA9TwhFXQfaMrnm5+YEWWjo=qj@mail.gmail.com>
+ <20110130160556.GI5713@localhost.localdomain>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Jan 30 21:34:53 2011
+Cc: =?utf-8?B?Sm/Do28=?= Paulo Melo de Sampaio <jpmelos@gmail.com>,
+	GIT Mailing List <git@vger.kernel.org>,
+	Jakub Narebski <jnareb@gmail.com>
+To: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Sun Jan 30 22:33:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pjdz2-0005VW-Ef
-	for gcvg-git-2@lo.gmane.org; Sun, 30 Jan 2011 21:34:52 +0100
+	id 1Pjety-0006mz-Iq
+	for gcvg-git-2@lo.gmane.org; Sun, 30 Jan 2011 22:33:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754160Ab1A3Uer (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 30 Jan 2011 15:34:47 -0500
-Received: from cantor2.suse.de ([195.135.220.15]:35670 "EHLO mx2.suse.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752683Ab1A3Ueq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 30 Jan 2011 15:34:46 -0500
-Received: from relay1.suse.de (charybdis-ext.suse.de [195.135.221.2])
-	by mx2.suse.de (Postfix) with ESMTP id 5E0BE8BB22
-	for <git@vger.kernel.org>; Sun, 30 Jan 2011 21:34:45 +0100 (CET)
+	id S1754344Ab1A3VdN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 30 Jan 2011 16:33:13 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:32776 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754159Ab1A3VdM (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 30 Jan 2011 16:33:12 -0500
+Received: by ywe10 with SMTP id 10so1730460ywe.19
+        for <git@vger.kernel.org>; Sun, 30 Jan 2011 13:33:12 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=Xma6rOtwSvxDHwDhwfSDoN1fzyFCm1egKIwGFn1yAR8=;
+        b=oyTbl+YACj8CvJkdKvQW07n+hjrCUFSwU6h0XD/25KMC/i4chsoo8ynDVo9Q1b97JH
+         7NaZoOoNL3tvaWnVf2Wj0/o1Y31xF7HHoMgRCuEnJMtG3VyKJaKFDdIRhxr1C++sX1yL
+         m8BZJCLfdVczUrKEeFaWcawgSAZLKYB19Hbjc=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=kEbcmGvq2AuY6FXQ6N8gW1bb/zEg9t28O46s5TTFPAprKtWpluFQeiTa+J07drjHP7
+         rfJah1Mh5zZS2PMCwPqYr15VwydABj1KmztG/10ZgLINC16dwZC/kwjXQzgXQUnf80sm
+         RoHdm+c+RsDG9YAqGSI/+Z8iuHKrlcy+xgQIk=
+Received: by 10.151.20.5 with SMTP id x5mr6825043ybi.382.1296423191959;
+        Sun, 30 Jan 2011 13:33:11 -0800 (PST)
+Received: from burratino (adsl-69-209-75-28.dsl.chcgil.ameritech.net [69.209.75.28])
+        by mx.google.com with ESMTPS id q33sm13031749yba.19.2011.01.30.13.33.09
+        (version=SSLv3 cipher=RC4-MD5);
+        Sun, 30 Jan 2011 13:33:10 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <20110127145253.GD6312@fm.suse.cz>
-User-Agent: Mutt/1.5.18-muttng (2008-05-17-r1399)
+In-Reply-To: <20110130160556.GI5713@localhost.localdomain>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165700>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165701>
 
-It is possible to break your repository config by creating an invalid key.  The
-config parser in turn chokes on it.
+Konstantin Khomoutov wrote:
 
-$ git init
-Initialized empty Git repository in /tmp/gittest/.git/
-$ git config .foo false
-$ git config .foo
-fatal: bad config file line 6 in .git/config
+> These branches are local to your repository. They are "remote" in the
+> sense you're not supposed to modify them directly.
+> So to inspect such a branch just use its full name ("origin/next" for
+> instance) when working with commands like git-log.
+>
+> See [1], [2] for more info.
+>
+> Also your question appears to be quite basic which hints at that you did
+> not read a good book on Git before using it.  So starting at [3] is
+> recommended -- it mentions a bunch of good books and manuals
 
-This patch makes git-config reject keys which start or end with a dot, adds
-tests for these cases and also fixes a typo in t5526-fetch-submodules, which
-was exposed by the new check.
+Pointing to good references is a valuable thing --- thank you for that.
+But I also want to point out that if you need to read a book before Git
+becomes usable then we are doing something wrong. :)
 
-Signed-off-by: Libor Pechacek <lpechacek@suse.cz>
----
+In this example, perhaps the "git branch" manual page needs some
+improvement?
 
-Added tests for the cases checked, made git_config_parse_key consistently
-return -2 when the key is invalid.  Applies on top "Sanity-check config
-variable names".
+Jonathan Nieder (2):
+  Documentation/branch: split description into subsections
+  Documentation/branch: briefly explain what a branch is
 
- config.c                    |    8 +++++++-
- t/t1300-repo-config.sh      |    4 ++++
- t/t5526-fetch-submodules.sh |    2 +-
- 3 files changed, 12 insertions(+), 2 deletions(-)
-
-diff --git a/config.c b/config.c
-index fde91f5..e27a39f 100644
---- a/config.c
-+++ b/config.c
-@@ -1120,11 +1120,17 @@ int git_config_parse_key(const char *key, char **store_key, int *baselen_)
- 	 * key name separated by a dot, we have to know where the dot is.
- 	 */
- 
--	if (last_dot == NULL) {
-+	if (last_dot == NULL || *key == '.') {
- 		error("key does not contain a section: %s", key);
- 		return -2;
- 	}
- 
-+	i = strlen(key);
-+	if (i && key[i-1] == '.') {
-+		error("key does not contain variable name: %s", key);
-+		return -2;
-+	}
-+
- 	baselen = last_dot - key;
- 	if (baselen_)
- 		*baselen_ = baselen;
-diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
-index c3d91d1..568d51d 100755
---- a/t/t1300-repo-config.sh
-+++ b/t/t1300-repo-config.sh
-@@ -889,6 +889,10 @@ test_expect_success 'key sanity-checking' '
- 	test_must_fail git config foo.1bar &&
- 	test_must_fail git config foo."ba
- 				z".bar &&
-+	test_must_fail git config . &&
-+	test_must_fail git config .foo &&
-+	test_must_fail git config foo. &&
-+	test_must_fail git config .foo. &&
- 	git config foo.bar true &&
- 	git config foo."ba =z".bar false
- '
-diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
-index 884a5e5..7106c6c 100755
---- a/t/t5526-fetch-submodules.sh
-+++ b/t/t5526-fetch-submodules.sh
-@@ -124,7 +124,7 @@ test_expect_success "--recurse-submodules overrides fetchRecurseSubmodules setti
- 	(
- 		cd downstream &&
- 		git fetch --recurse-submodules >../actual.out 2>../actual.err &&
--		git config -f --unset .gitmodules submodule.submodule.fetchRecurseSubmodules true &&
-+		git config -f .gitmodules --unset submodule.submodule.fetchRecurseSubmodules true &&
- 		git config --unset submodule.submodule.fetchRecurseSubmodules
- 	) &&
- 	test_cmp expect.out actual.out &&
--- 
-1.7.4.rc3.11.g54760
+ Documentation/git-branch.txt |   62 +++++++++++++++++++++++++-----------------
+ 1 files changed, 37 insertions(+), 25 deletions(-)
