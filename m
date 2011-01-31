@@ -1,124 +1,102 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: [PATCH] git-p4: Corrected typo.
-Date: Mon, 31 Jan 2011 13:39:27 +0000
-Message-ID: <AANLkTinKQRfwaMpGQiDCkh1RerQ_MrakwvNLAqgmbF9A@mail.gmail.com>
-References: <1290130693-30855-2-git-send-email-vitor.hda@gmail.com>
- <1290648419-6107-1-git-send-email-vitor.hda@gmail.com> <AANLkTimQhFzEXr=T9F8TJzTeWwKroTt_BG87RtQCLivv@mail.gmail.com>
- <AANLkTikeB724f_vE6qvu1h1o5JG150mcmaHVBjLkOEWP@mail.gmail.com>
- <AANLkTimLQxiB=dnd6=iB5uEpzOSfqks=FDJ=xORehuw8@mail.gmail.com>
- <AANLkTi=PPN69uuJmUBDHKtmn59DzUbdk=Qu4Ug-kok89@mail.gmail.com>
- <AANLkTi=kmcWn9WWbhA4bMZ5bEo1imacEugT0BcOU9jry@mail.gmail.com>
- <AANLkTinCL6+oTAbh4WpsWHx8cZ8cxZvQxSO9EX_xsHh0@mail.gmail.com> <AANLkTinrALdy9w7K50r=k-oMV9V5+7+LKvui_DSmJ6nK@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: What's cooking in git.git (Jan 2011, #06; Sun, 30)
+Date: Mon, 31 Jan 2011 16:08:09 +0100
+Message-ID: <AANLkTik4jZWLt6T-SwMgK94FJ77ujyUC4-oFD46-eqN=@mail.gmail.com>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Thomas Berg <merlin66b@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 31 14:41:22 2011
+To: Junio C Hamano <gitster@pobox.com>,
+	=?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 31 16:09:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pju0P-00064H-Nk
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 14:41:22 +0100
+	id 1PjvNP-0004wy-DZ
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 16:09:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752192Ab1AaNlQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Jan 2011 08:41:16 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:47454 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752037Ab1AaNlP (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jan 2011 08:41:15 -0500
-Received: by qwa26 with SMTP id 26so5472607qwa.19
-        for <git@vger.kernel.org>; Mon, 31 Jan 2011 05:41:14 -0800 (PST)
+	id S1755996Ab1AaPIu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Jan 2011 10:08:50 -0500
+Received: from mail-yi0-f46.google.com ([209.85.218.46]:42683 "EHLO
+	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752746Ab1AaPIu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Jan 2011 10:08:50 -0500
+Received: by yib18 with SMTP id 18so1990465yib.19
+        for <git@vger.kernel.org>; Mon, 31 Jan 2011 07:08:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=0EGeLMs22MoMzT0Pa0kx9HlwOGDEo1S1E3oAZAaa5yY=;
-        b=ECjl1d2YlmAt6/1mzYIUvJnBqhgSod3mza7wPz9Wv7tmKeJM+5iImMSW3ohTjrulUD
-         XRrZnKOxldAUw8cR+rBjPB0+3akKB8jEBwO92P3Jk/QmNwhFJ1Sj+fIoSNk8ovP9/Ko2
-         JZdLXWLONEM7KeHtNIPp0b7hG7yRInevEf3Ts=
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=edAuRA1rbxzhAMWMUpDPKH3rwggtr9a5YS+eK/5yzLw=;
+        b=CIclZiQ8DMpuQh9jG2V9KNxAPs2Q9hUJxVG05bvxETxLqYXB4/PwOaSjVdvjjLdyHe
+         Y6bRDNK2SJYK/b2zc7HRVoDpmGhBemCVxi0Ey2kUf5g0CpBy1nverVjlf/qlZOy+SXaq
+         asQTYQ/yP828uTuBO+hTZ8MZAiGbCYQdAseMo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=JQRJu79UPxMlwxO1FJAvG2Q9reDgSc46Ncx3Q/UqXb75K9DTPi3jSAIL3nQs5bfTl8
-         Cbbtprx/t+ULOftVS1j2Gzd4MTLDqoAuHxrV8h2YQr4UDZbNS7/hMwHt+x+X4vIgR1/f
-         U0RGWX5SNolnffoOvAw46Yj7FjcYEGo5mO5vM=
-Received: by 10.224.6.149 with SMTP id 21mr6350582qaz.321.1296481229908; Mon,
- 31 Jan 2011 05:40:29 -0800 (PST)
-Received: by 10.220.192.8 with HTTP; Mon, 31 Jan 2011 05:39:27 -0800 (PST)
-In-Reply-To: <AANLkTinrALdy9w7K50r=k-oMV9V5+7+LKvui_DSmJ6nK@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        b=uTq0k25LFz907yT1hf6U+9ges/Mn6k42s4jDtWNrKyULN4aVztfr1m4ffTpC/sSND0
+         80Cf5rzqhNRMIe/uNHW+JykUqufMJN4xFRHQDScJJNuFciIyyyLPmlYjFMJj/OD2j4Fo
+         v9jsis4UGKT7JHZ0R1/6oCqn/0gTF6OV0cZZ8=
+Received: by 10.150.58.2 with SMTP id g2mr3310416yba.397.1296486529208; Mon,
+ 31 Jan 2011 07:08:49 -0800 (PST)
+Received: by 10.150.51.6 with HTTP; Mon, 31 Jan 2011 07:08:09 -0800 (PST)
+In-Reply-To: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165729>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165731>
 
-Hi Thomas,
+Heya,
 
-On Mon, Jan 31, 2011 at 12:51 PM, Thomas Berg <merlin66b@gmail.com> wrote:
->> Maybe I'm not seeing some obvious limitation, but I can't imagine a
->> branching structure that can't be imported into git. Could please you
->> give me an example?
+On Mon, Jan 31, 2011 at 06:53, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> 1.7.4 is out. I'd like to stop and calm the tree down for a few days
+> so that we can catch any brown-paper-bag bugs before moving things
+> forward, and then open the floodgate for the next cycle, which I am
+> inclined to designate as "We would have done these differently if we
+> were creating git from scratch with the experience we have and wisdom
+> we have gained" cycle, allowing minor backward incompatibilities,
+> somewhat like 1.6.0 but not so drastic. =C2=A0The result would probab=
+ly
+> be called 1.8.0--the details in a separate message.
+
+Nice, is this based on the topics that are currently cooking, or on
+people having indicated an intent to submit such patches?
+
+
+
+Now that we're past 1.7.4., perhaps it's time to resurrect a dead
+thread. From a past "What's cooking":
+
+On Tue, Dec 14, 2010 at 03:20, Junio C Hamano <gitster@pobox.com> wrote=
+:
+> =C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason <avarab@gmail.com> writes:
 >
-> Here I was thinking of the fact that git-p4 (last time I checked the
-> implementation ) uses the list of branch specs in Perforce for
-> figuring out the parent of a branch. Our branch specs have changed
-> over time (they are used for different integration purposes), so they
-> are no longer usable for this purpose.
+>> On Mon, Dec 13, 2010 at 09:34, Junio C Hamano <gitster@pobox.com> wr=
+ote:
+>>
+>>> Needs a bit more minor work to get the basic code structure right.
+>>
+>> And I'm still not sure (see earlier replies to "What's Cooking" post=
+s)
+>> what needs to be done to make it better.
+>
+> One open question was why you do not want to move 'LIB_OBJS +=3D gett=
+ext.o'
+> away from the LIB_OBJS section down to the configuration evaluation
+> section, i.e., why gettext.o would be different from block-sha1/sha1.=
+o.
 
-My personal git-p4 script uses a configuration option to define the
-list of branches. I also added an option to get the list of branches
-filtered by user (p4 branches -u), which avoids waiting for the server
-since I don't have any branches defined.
+=C3=86var, you didn't respond to that message. Junio, do I understand
+correctly that if this problem is addressed the topic is ready to be
+merged to next?
 
-> I also discovered bugs in git-p4: in some cases, if the first submit
-> to a new branch in Perforce is not identical to the branch it derives
-> from, the import was not correct.
+--=20
+Cheers,
 
-Another thing that I modified was the following lines:
-
-1559                         for (prev, cur) in
-zip(self.previousDepotPaths, depotPaths):
-1560                             for i in range(0, min(len(cur), len(prev))):
-1561                                 if cur[i] <> prev[i]:
-1562                                     i = i - 1
-1563                                     break
-
-This tries to find the root directory of all branches, but does that
-comparing char by char. So, if you have something like:
-
-//depot/branches/branch
-//depot/branches/branch_test1
-//depot/branches/branch_test2
-
-It will assume that your root branch is //depot/branches/branch, which is wrong.
-I've modified this to split the string by "/" and compare those items,
-making sure it will detect //depot/branches as the root directory.
-
-> One other issue with Perforce, CVS and many other systems is that they
-> branch per file. Therefore Perforce can represent partial merges
-> between two branches, which git cannot. Because of this, translating
-> merges in Perforce to merges in git is not always possible or
-> desirable:
-> - if you integrate just one file from one branch to another in
-> Perforce, and leave the rest unmerged, you probably want to represent
-> it as a normal git commit (not a merge)
-> - if you merge almost everything, but leave out a file for some
-> reason, you may still want to represent it as a merge in git
-
-Yes, merge detection is something that is working. I never tried to
-look into this because I don't find it too important for my work flow.
-
-> The git-p4raw tool has excellent handling of merges, see details in
-> this file around line 4300:
-> https://github.com/samv/git-p4raw/blob/master/git-p4raw
-> It supports several algorithms for automatic merge detection, as well
-> as manually changing it after the import is done.
-
-I'll have to look into this later :)
-
-Bye,
--- 
-Vitor Antunes
+Sverre Rabbelier
