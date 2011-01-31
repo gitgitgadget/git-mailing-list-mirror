@@ -1,88 +1,120 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [1.8.0] Unify "pathspec" semantics
-Date: Mon, 31 Jan 2011 09:07:14 -0800
-Message-ID: <7voc6x57el.fsf_-_@alter.siamese.dyndns.org>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
- <7vwrll57ha.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [RFC] fast-import: notemodify (N) command
+Date: Mon, 31 Jan 2011 12:33:50 -0600
+Message-ID: <20110131183350.GB31826@burratino>
+References: <1255083738-23263-1-git-send-email-johan@herland.net>
+ <1255083738-23263-8-git-send-email-johan@herland.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 31 18:07:26 2011
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	gitster@pobox.com, Johannes.Schindelin@gmx.de,
+	trast@student.ethz.ch, tavestbo@trolltech.com,
+	git@drmicha.warpmail.net, chriscool@tuxfamily.org,
+	spearce@spearce.org, sam@vilain.net
+To: vcs-fast-import-devs@lists.launchpad.net
+X-From: git-owner@vger.kernel.org Mon Jan 31 19:34:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PjxDq-0007oH-2p
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 18:07:26 +0100
+	id 1PjyZq-0003kA-Gr
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 19:34:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753815Ab1AaRHV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Jan 2011 12:07:21 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44333 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752227Ab1AaRHU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jan 2011 12:07:20 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 06E174187;
-	Mon, 31 Jan 2011 12:08:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=gAEdAn+mHMivWdpnpZt35vS7MyQ=; b=uAymJR
-	LBfKA2p6/VPVSpUKhQaEudaNlHowG8zBXyzElJNV07Rda2BogtNumkR2QK9aiSbK
-	dqLm8m9ZUblqThgdKDNCtXrJVM+t0pC4fzB5tOWV3MLMXHS6hV5DNYm80kCevM1C
-	aSfEzkPRF5MkfISLHwxbWo7MbPZE7jMpVjQgg=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=eNGjisZGjFFCXVGbXZVWmBTeqsNZOez+
-	x9xvC30LX98ClnyJOD5CpQ+HX6Z+9ZGcsLWiqE4jJ1on3QKJtKjhUy7/oxS+us6J
-	rzF7Ad4unpGqAWC6a+B4c51xZfQXR9HS9kT4P/E3rnvHdEZtlw6sEMiFBr9XHF/3
-	M1HPQdabAEo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E94984186;
-	Mon, 31 Jan 2011 12:08:11 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 329574185; Mon, 31 Jan 2011
- 12:08:08 -0500 (EST)
-In-Reply-To: <7vwrll57ha.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Mon\, 31 Jan 2011 09\:05\:37 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: AF1BC914-2D5C-11E0-B4E1-BC4EF3E828EC-77302942!a-pb-sasl-sd.pobox.com
+	id S1753322Ab1AaSeJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Jan 2011 13:34:09 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:63859 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751663Ab1AaSeI (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jan 2011 13:34:08 -0500
+Received: by fxm20 with SMTP id 20so5907054fxm.19
+        for <git@vger.kernel.org>; Mon, 31 Jan 2011 10:34:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=0QhWFwWCSqZV6k0AQlyqvgufNBxT+/LkrkqxRfnmKF0=;
+        b=VhAh2JuohIk8A416yy0sbkj+zoiX5eqk6nDFV8HVmfn5Hi2qWHhqiNd29C5+LG18nG
+         S0PheMvVFLeb89GA+nksIiTTQUozHy/a6UMXIZsbyXOfqo2nMd5ddSdszv1GVW8uRZPR
+         70uK3+92BfxjXNN+TjQeM/O11sK7V2deq15v4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=NPBhCiuoCk/ZIyIZYHJOi1P9liqwZbhkhVPPXXqgW15Gk1iraWlmzxor6MOXTUJjNY
+         q60ZixUPVjLVPRWI8IzBaHV/uPwJIr/KDlmYuuoA/2OjZF2E/3byAr8GpPAf1Vwcltu8
+         llUXm/kG9X0gniqfzWJEzC1aWHwiB4uaeRehM=
+Received: by 10.223.118.136 with SMTP id v8mr6340127faq.90.1296498845897;
+        Mon, 31 Jan 2011 10:34:05 -0800 (PST)
+Received: from burratino (adsl-69-209-75-28.dsl.chcgil.ameritech.net [69.209.75.28])
+        by mx.google.com with ESMTPS id c11sm7501050fav.2.2011.01.31.10.34.02
+        (version=SSLv3 cipher=RC4-MD5);
+        Mon, 31 Jan 2011 10:34:04 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1255083738-23263-8-git-send-email-johan@herland.net>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165738>
 
-Proposal:
+Dear fast importers,
 
-Traditionally, Git had two distinct semantics for pathspecs.  Anything
-based on tree-diff (i.e. "log" family of commands when limiting the
-history by paths or "diff" family of commands limiting the output) used
-"leading paths match" without globbing support.  All others (e.g. "grep",
-"ls-files") supported globbing.  This resulted in subtly inconsistent
-behaviour when one part of the program collected paths from the index and
-the working tree while another part of the program used differences
-between the index and the HEAD, e.g. "git add".  Unify "pathspec"
-semantics to make all of them learn the globbing.
+Another week, another fast-import protocol extension.
 
-Risks:
+Most DVCSes do not allow one to non-disruptively change the log
+message for a commit.  But sometimes people want to attach information to a
+commit after the fact:
 
-If coded poorly, performance bugs can be introduced to the tree-diff
-codepath, making it inefficient.
+ - whether it was tested and worked correctly
+ - who liked or disliked the commit (Acked-by, Reviewed-by)
+ - corresponding revision number after export to another version
+   control system
+ - bug number
+ - corresponding compiled binary
 
-Some projects may track a file whose name is asterisk (e.g. "foo/*") and
-output from "git log 'foo/*'" would look different.  Before the change,
-only commits that touch that exact path would be shown, but after the
-change, any commit that touch a path underneath "foo/" directory will be
-shown.  This is a backward incompatible change.
+The N command allows such notes to be attached to commits, like so:
 
-Migration plan:
+ 1. first the commit is imported as usual (let's say it's ":1").
+ 2. commit annotations are added separately, like so:
 
-We could conditionally enable globbing support when implementing unified
-pathspec API, default to the traditional and inconsisntent behaviour
-during the 1.7.x series, and flip the default to accept globs everwhere in
-the 1.8.0 release.  Practically, however, nobody sane would track paths
-that have shell metacharacters in them, so we may not need to do the usual
-"introduce as an opt-in, warn about incompatibility, and flip the default"
-migration.
+	commit refs/notes/commits
+	committer A. U. Thor <author@example.com> Mon, 31 Jan 2011 12:15:59 -0600
+	data <<END
+	Notes after review.
+	END
+
+	N inline :1
+	data <<END
+	Acked-by: me
+	END
+
+Details:
+
+ - there can be multiple categories of notes: "refs/notes/commits"
+   contains ordinary addenda to the commit message, but one might also
+   see refs/notes/bugzilla, refs/notes/svn-commit, and so on.
+
+ - each commit gets at most one blob of notes in each category.  Later
+   notemodify (N) commands overwrite the effect from earlier ones.
+
+ - the syntax of a notemodify command is as follows:
+
+	'N' sp <dataref> sp <committish> lf
+
+   The <dataref> represents a blob with the annotations to be used
+   ("inline" is allowed, too, just like with filemodify).  The
+   <committish> can be any expression allowed in a 'from' command
+   (branch name, mark reference :<idnum>, other commit name) and
+   represents the commit that is to be annotated.
+
+ - this has been supported in git since v1.6.6.  There is no
+   "feature" for it --- I don't think the feature declaration
+   facility existed yet.
+
+Do other DVCSes support something like this?  Should it get a
+feature name?
+
+Jonathan
