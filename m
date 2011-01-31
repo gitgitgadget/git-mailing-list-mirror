@@ -1,82 +1,73 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [RFC] fast-import: notemodify (N) command
-Date: Mon, 31 Jan 2011 22:19:14 +0100
-Message-ID: <AANLkTikxFSa1CSujk2zgh4K8SWCuKHRrDRFVNt9JPGo0@mail.gmail.com>
-References: <1255083738-23263-1-git-send-email-johan@herland.net>
- <1255083738-23263-8-git-send-email-johan@herland.net> <20110131183350.GB31826@burratino>
- <AANLkTi=3P0xc3mJj5Tsg_P26SAXmgVfCk1VeYQ=k2UtT@mail.gmail.com> <20110131190128.GC32374@burratino>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: [1.8.0] make two-argument fetch update remote branches
+Date: Mon, 31 Jan 2011 22:44:09 +0100
+Message-ID: <201101312244.10047.trast@student.ethz.ch>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: vcs-fast-import-devs@lists.launchpad.net, git@drmicha.warpmail.net,
-	chriscool@tuxfamily.org, sam@vilain.net,
-	Johannes.Schindelin@gmx.de, trast@student.ethz.ch,
-	Johan Herland <johan@herland.net>, gitster@pobox.com,
-	git@vger.kernel.org, Augie Fackler <durin42@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 31 22:36:01 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 31 22:44:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pk1Pl-00051I-2X
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 22:36:01 +0100
+	id 1Pk1Xn-0001JH-GC
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 22:44:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756432Ab1AaVfz convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Jan 2011 16:35:55 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:42358 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752303Ab1AaVfy convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Jan 2011 16:35:54 -0500
-Received: by yxt3 with SMTP id 3so2176369yxt.19
-        for <git@vger.kernel.org>; Mon, 31 Jan 2011 13:35:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=CHXeqlZtRq2V4pDcCjbBUugYZ+i7nOtNoj70KjiHBhM=;
-        b=VLL0S51G5BEJDKsyzOvgKmlJX6COnodrWAdlyMzkdRKIvCKPyhMYGX2ELr2tsjP7qf
-         Ikl1hrufIvEmR9IoqSh+ejMBCbHGAmggZ/1BJbzhbI0Jd25dcSiqesfM3zVoaCdgwbAL
-         DaXmUbn+BPj/YtsIyetndS6N7swa6Irt6pXt0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=w9UHIlAEVs7MQLFaC0tbY4GqU8aoqtHCqJKxOUA7CMdG5WhAHCyI5Zxr7vnz4gfrTw
-         sA1rzW4msaZKDsvGHEtgimSUSaPf2EqvgMM1CAvzf8weRsX8iigyabWy+VCrtdTmqWiA
-         tafcT9+QTnBZLxjY4NZHrlaH3if/O2rR/r8z8=
-Received: by 10.150.229.16 with SMTP id b16mr1422639ybh.226.1296509753822;
- Mon, 31 Jan 2011 13:35:53 -0800 (PST)
-Received: by 10.150.51.6 with HTTP; Mon, 31 Jan 2011 13:19:14 -0800 (PST)
-In-Reply-To: <20110131190128.GC32374@burratino>
+	id S1756494Ab1AaVoN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Jan 2011 16:44:13 -0500
+Received: from edge10.ethz.ch ([82.130.75.186]:37611 "EHLO edge10.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756230Ab1AaVoN (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jan 2011 16:44:13 -0500
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
+ (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.270.1; Mon, 31 Jan
+ 2011 22:44:07 +0100
+Received: from pctrast.inf.ethz.ch (84.74.105.24) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.270.1; Mon, 31 Jan
+ 2011 22:44:11 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
+In-Reply-To: <7vwrll57ha.fsf@alter.siamese.dyndns.org>
+X-Originating-IP: [84.74.105.24]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165757>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165758>
 
-Heya,
+Proposal:
 
-On Mon, Jan 31, 2011 at 20:01, Jonathan Nieder <jrnieder@gmail.com> wro=
-te:
-> Thanks, good to know. =C2=A0I suppose this definitely needs a feature=
- name,
-> then (I'll send a patch to make it "feature notes").
+Running "git fetch origin master" only updates FETCH_HEAD, not
+origin/master, which turns out to be quite confusing for newcomers
+especially after running 'git pull origin master'.
 
-SGTM.
+Since the remote branches in some sense reflect the "last known state"
+of the remote, it would make sense to also update them to whatever a
+two-argument fetch got.
 
-> [Aside: I suspect part of the reason "git notes" adoption is not so
-> great is the lack of git notes fetch/git notes push. =C2=A0Sample siz=
-e
-> of 1: I use notes heavily as a consumer, to dig up mailing list
-> threads[1], but have put off sharing my own annotations until I can
-> figure out how to make it convenient for others to use.]
+Risks:
 
-That's another thing Augie mentioned that he (and I guess the hg
-community at large) dislikes, the fact that they're not propagated.
+Scripts might rely on the current behaviour.  The most likely case I
+can think of would be to go along the lines of
 
---=20
-Cheers,
+  git fetch origin master
+  git rev-list origin/master...FETCH_HEAD | do_something
 
-Sverre Rabbelier
+to avoid relying on reflogs to get the same result.  Seems a bit
+arcane to me though.  Such usage would see the updated state, i.e.,
+process an empty range.
+
+Migration plan:
+
+Add a fetch.updateRemoteNamespace (or so) configuration variable that
+defaults to false.  When enabled, it turns on the auto-updating
+behaviour.
+
+In 1.8.0, flip the default.
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
