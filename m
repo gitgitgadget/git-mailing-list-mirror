@@ -1,98 +1,132 @@
-From: Thomas Berg <merlin66b@gmail.com>
-Subject: Re: [PATCH] git-p4: Corrected typo.
-Date: Mon, 31 Jan 2011 13:51:07 +0100
-Message-ID: <AANLkTinrALdy9w7K50r=k-oMV9V5+7+LKvui_DSmJ6nK@mail.gmail.com>
-References: <1290130693-30855-2-git-send-email-vitor.hda@gmail.com>
-	<1290648419-6107-1-git-send-email-vitor.hda@gmail.com>
-	<AANLkTimQhFzEXr=T9F8TJzTeWwKroTt_BG87RtQCLivv@mail.gmail.com>
-	<AANLkTikeB724f_vE6qvu1h1o5JG150mcmaHVBjLkOEWP@mail.gmail.com>
-	<AANLkTimLQxiB=dnd6=iB5uEpzOSfqks=FDJ=xORehuw8@mail.gmail.com>
-	<AANLkTi=PPN69uuJmUBDHKtmn59DzUbdk=Qu4Ug-kok89@mail.gmail.com>
-	<AANLkTi=kmcWn9WWbhA4bMZ5bEo1imacEugT0BcOU9jry@mail.gmail.com>
-	<AANLkTinCL6+oTAbh4WpsWHx8cZ8cxZvQxSO9EX_xsHh0@mail.gmail.com>
+From: Libor Pechacek <lpechacek@suse.cz>
+Subject: [PATCH v3] Disallow empty section and variable names
+Date: Mon, 31 Jan 2011 14:08:56 +0100
+Message-ID: <20110131130855.GC24297@fm.suse.cz>
+References: <20110108144644.GA11019@localhost.suse.cz> <20110127145253.GD6312@fm.suse.cz> <20110130203445.GA9689@fm.suse.cz> <4D46694F.5070208@viscovery.net> <20110131091728.GB24297@fm.suse.cz> <4D468109.8020409@viscovery.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: git@vger.kernel.org
-To: Vitor Antunes <vitor.hda@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 31 13:51:25 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Johannes Sixt <j.sixt@viscovery.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 31 14:09:05 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PjtDz-0005nB-RK
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 13:51:20 +0100
+	id 1PjtV9-0006jo-5r
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 14:09:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755646Ab1AaMvK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Jan 2011 07:51:10 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:47112 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755536Ab1AaMvJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jan 2011 07:51:09 -0500
-Received: by qyj19 with SMTP id 19so3373859qyj.19
-        for <git@vger.kernel.org>; Mon, 31 Jan 2011 04:51:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=AtOKhOVhhsttvwYVI4G+YW6l3Xsl7sjwhhuBSm3dHZs=;
-        b=x/LKlycOL28DqHBNMRfkKdKjIk7VHoCsvIQtqdwWmClhfsgXk/u/K/74J1ip6wFpXK
-         JEc586QnBA40zpwbaVSP17azAKtkhTHX4y2djK1UxX5QEEaU17L3vAdsFlJfepGLc0zJ
-         i8ge7Tx0KSS7lBN3itOxkcI3LltIiqPRXImIc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=HJqHxsEjbMxD22/WUpAtAN7z0/jB0DjFrBGurdJCKnVhpLNdPzh7FxdAGsTxA7Q8To
-         6nsDXMW4BgflXfAtrqSLOe9UKasD7uxAH859tz+LdK+F6GouxRyYOLHsVAmCpfXeIu6/
-         T1/R8YQNNQONtML1WJr2lPuScfYU6f+7Wf++Q=
-Received: by 10.229.183.193 with SMTP id ch1mr4061301qcb.107.1296478267714;
- Mon, 31 Jan 2011 04:51:07 -0800 (PST)
-Received: by 10.229.223.131 with HTTP; Mon, 31 Jan 2011 04:51:07 -0800 (PST)
-In-Reply-To: <AANLkTinCL6+oTAbh4WpsWHx8cZ8cxZvQxSO9EX_xsHh0@mail.gmail.com>
+	id S1755536Ab1AaNI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Jan 2011 08:08:58 -0500
+Received: from cantor.suse.de ([195.135.220.2]:51475 "EHLO mx1.suse.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755448Ab1AaNI5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jan 2011 08:08:57 -0500
+Received: from relay2.suse.de (charybdis-ext.suse.de [195.135.221.2])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mx1.suse.de (Postfix) with ESMTP id 4805493F19;
+	Mon, 31 Jan 2011 14:08:56 +0100 (CET)
+Content-Disposition: inline
+In-Reply-To: <4D468109.8020409@viscovery.net>
+User-Agent: Mutt/1.5.18-muttng (2008-05-17-r1399)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165726>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165728>
 
-Hi Vitor,
+It is possible to break your repository config by creating an invalid key.  The
+config parser in turn chokes on it.
 
-On Mon, Jan 31, 2011 at 12:25 PM, Vitor Antunes <vitor.hda@gmail.com> wrote:
->> No, the Perforce repo I work with is so non-standard that the only
->> solution has been to import all the branches separately and graft the
->> history together. This covers all my needs at the moment.
->
-> Maybe I'm not seeing some obvious limitation, but I can't imagine a
-> branching structure that can't be imported into git. Could please you
-> give me an example?
+$ git init
+Initialized empty Git repository in /tmp/gittest/.git/
+$ git config .foo false
+$ git config core.bare
+fatal: bad config file line 6 in .git/config
 
-Here I was thinking of the fact that git-p4 (last time I checked the
-implementation ) uses the list of branch specs in Perforce for
-figuring out the parent of a branch. Our branch specs have changed
-over time (they are used for different integration purposes), so they
-are no longer usable for this purpose.
+This patch makes git-config reject keys which start or end with a dot, adds
+tests for these cases and also fixes a typo in t5526-fetch-submodules, which
+was exposed by the new check.
 
-I also discovered bugs in git-p4: in some cases, if the first submit
-to a new branch in Perforce is not identical to the branch it derives
-from, the import was not correct.
+Signed-off-by: Libor Pechacek <lpechacek@suse.cz>
+Cc: Johannes Sixt <j.sixt@viscovery.net>
+---
 
-One other issue with Perforce, CVS and many other systems is that they
-branch per file. Therefore Perforce can represent partial merges
-between two branches, which git cannot. Because of this, translating
-merges in Perforce to merges in git is not always possible or
-desirable:
-- if you integrate just one file from one branch to another in
-Perforce, and leave the rest unmerged, you probably want to represent
-it as a normal git commit (not a merge)
-- if you merge almost everything, but leave out a file for some
-reason, you may still want to represent it as a merge in git
+Incoporated feedback from Johannes, introduced keylen local variable to improve
+readability of the code.  Applies on top "Sanity-check config variable names".
 
-The git-p4raw tool has excellent handling of merges, see details in
-this file around line 4300:
-https://github.com/samv/git-p4raw/blob/master/git-p4raw
-It supports several algorithms for automatic merge detection, as well
-as manually changing it after the import is done.
+ config.c                    |   10 ++++++++--
+ t/t1300-repo-config.sh      |    4 ++++
+ t/t5526-fetch-submodules.sh |    2 +-
+ 3 files changed, 13 insertions(+), 3 deletions(-)
 
-Cheers,
-Thomas
+diff --git a/config.c b/config.c
+index fde91f5..5eb89a7 100644
+--- a/config.c
++++ b/config.c
+@@ -1113,6 +1113,7 @@ int git_config_set(const char *key, const char *value)
+ int git_config_parse_key(const char *key, char **store_key, int *baselen_)
+ {
+ 	int i, dot, baselen;
++	int keylen = strlen(key);
+ 	const char *last_dot = strrchr(key, '.');
+ 
+ 	/*
+@@ -1120,11 +1121,16 @@ int git_config_parse_key(const char *key, char **store_key, int *baselen_)
+ 	 * key name separated by a dot, we have to know where the dot is.
+ 	 */
+ 
+-	if (last_dot == NULL) {
++	if (last_dot == NULL || *key == '.') {
+ 		error("key does not contain a section: %s", key);
+ 		return -2;
+ 	}
+ 
++	if (keylen && key[keylen-1] == '.') {
++		error("key does not contain variable name: %s", key);
++		return -2;
++	}
++
+ 	baselen = last_dot - key;
+ 	if (baselen_)
+ 		*baselen_ = baselen;
+@@ -1132,7 +1138,7 @@ int git_config_parse_key(const char *key, char **store_key, int *baselen_)
+ 	/*
+ 	 * Validate the key and while at it, lower case it for matching.
+ 	 */
+-	*store_key = xmalloc(strlen(key) + 1);
++	*store_key = xmalloc(keylen + 1);
+ 
+ 	dot = 0;
+ 	for (i = 0; key[i]; i++) {
+diff --git a/t/t1300-repo-config.sh b/t/t1300-repo-config.sh
+index c3d91d1..53fb822 100755
+--- a/t/t1300-repo-config.sh
++++ b/t/t1300-repo-config.sh
+@@ -889,6 +889,10 @@ test_expect_success 'key sanity-checking' '
+ 	test_must_fail git config foo.1bar &&
+ 	test_must_fail git config foo."ba
+ 				z".bar &&
++	test_must_fail git config . false &&
++	test_must_fail git config .foo false &&
++	test_must_fail git config foo. false &&
++	test_must_fail git config .foo. false &&
+ 	git config foo.bar true &&
+ 	git config foo."ba =z".bar false
+ '
+diff --git a/t/t5526-fetch-submodules.sh b/t/t5526-fetch-submodules.sh
+index 884a5e5..7106c6c 100755
+--- a/t/t5526-fetch-submodules.sh
++++ b/t/t5526-fetch-submodules.sh
+@@ -124,7 +124,7 @@ test_expect_success "--recurse-submodules overrides fetchRecurseSubmodules setti
+ 	(
+ 		cd downstream &&
+ 		git fetch --recurse-submodules >../actual.out 2>../actual.err &&
+-		git config -f --unset .gitmodules submodule.submodule.fetchRecurseSubmodules true &&
++		git config -f .gitmodules --unset submodule.submodule.fetchRecurseSubmodules true &&
+ 		git config --unset submodule.submodule.fetchRecurseSubmodules
+ 	) &&
+ 	test_cmp expect.out actual.out &&
+-- 
+1.7.4.rc3.11.g863f7
