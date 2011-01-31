@@ -1,84 +1,89 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [RFC] fast-import: notemodify (N) command
-Date: Tue, 01 Feb 2011 11:37:41 +1300
-Message-ID: <4D4739B5.6080103@vilain.net>
-References: <1255083738-23263-1-git-send-email-johan@herland.net> <1255083738-23263-8-git-send-email-johan@herland.net> <20110131183350.GB31826@burratino> <AANLkTi=3P0xc3mJj5Tsg_P26SAXmgVfCk1VeYQ=k2UtT@mail.gmail.com> <20110131190128.GC32374@burratino> <AANLkTikxFSa1CSujk2zgh4K8SWCuKHRrDRFVNt9JPGo0@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [1.8.0] forbid full fetchspecs in git-pull
+Date: Mon, 31 Jan 2011 14:38:07 -0800
+Message-ID: <7vhbco4s34.fsf@alter.siamese.dyndns.org>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
+ <7vwrll57ha.fsf@alter.siamese.dyndns.org>
+ <201101312255.59841.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	vcs-fast-import-devs@lists.launchpad.net, git@drmicha.warpmail.net,
-	chriscool@tuxfamily.org, Johannes.Schindelin@gmx.de,
-	trast@student.ethz.ch, Johan Herland <johan@herland.net>,
-	gitster@pobox.com, git@vger.kernel.org,
-	Augie Fackler <durin42@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 31 23:37:56 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: <git@vger.kernel.org>, Sean Estabrooks <seanlkml@sympatico.ca>,
+	=?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Mon Jan 31 23:38:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pk2Ne-0005Fb-PE
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 23:37:55 +0100
+	id 1Pk2OB-0005Tp-Kp
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 23:38:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756537Ab1AaWhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Jan 2011 17:37:50 -0500
-Received: from mx3.orcon.net.nz ([219.88.242.53]:50610 "EHLO mx3.orcon.net.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1756354Ab1AaWht (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jan 2011 17:37:49 -0500
-Received: from Debian-exim by mx3.orcon.net.nz with local (Exim 4.69)
-	(envelope-from <sam@vilain.net>)
-	id 1Pk2NX-0004Id-RR
-	for git@vger.kernel.org; Tue, 01 Feb 2011 11:37:47 +1300
-Received: from [60.234.254.246] (helo=mail.utsl.gen.nz)
-	by mx3.orcon.net.nz with esmtp (Exim 4.69)
-	(envelope-from <sam@vilain.net>)
-	id 1Pk2NX-0004IS-Jk
-	for git@vger.kernel.org; Tue, 01 Feb 2011 11:37:47 +1300
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 7D6EC2E023; Tue,  1 Feb 2011 11:37:47 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on naos.lan
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=unavailable version=3.3.1
-Received: from [192.168.1.54] (arcturus.lan [192.168.1.54])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 0BC322E021;
-	Tue,  1 Feb 2011 11:37:42 +1300 (NZDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
-In-Reply-To: <AANLkTikxFSa1CSujk2zgh4K8SWCuKHRrDRFVNt9JPGo0@mail.gmail.com>
-X-Enigmail-Version: 1.1.2
-X-DSPAM-Check: by mx3.orcon.net.nz on Tue, 01 Feb 2011 11:37:47 +1300
-X-DSPAM-Result: Innocent
-X-DSPAM-Processed: Tue Feb  1 11:37:47 2011
-X-DSPAM-Confidence: 0.5564
-X-DSPAM-Probability: 0.0000
+	id S1756660Ab1AaWiV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Jan 2011 17:38:21 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:64074 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756529Ab1AaWiU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jan 2011 17:38:20 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9EBDC4F3D;
+	Mon, 31 Jan 2011 17:39:11 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=BSaSF3Yswfgo1n0fEDccciFDH2k=; b=r+8x0y
+	Zlb1VTa4o4B29HwJW6cVB+nMRSITLvhPQh+FPRC+ftFS3VIEYGURlytIVCosoDJn
+	mf4pofuLjCoCJwrQpbEB4/jBd8Zm81qdBjHPaE2WrFg+UsTJD1Aoi6umS9qX1gX5
+	3Skq3xxIZkshpbVj21FryOO7VQtGZcllqzA4Q=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=pzWDEXMy81xy9J2m/sbKx2bZ/e42G4aV
+	djXZ7zNNQkE6lQ8AUA6jkUNyWY48kc3R2XAJfhwovK8sJ6LoG/bW411B65S2wzvE
+	G2GCBNKT/btvnY2IRqEgc7OC2gN+66DAx4jl603htBRdLvb8/Lp2Qoy7mv4P624e
+	BuK3NXZSgRs=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5E4FB4F3C;
+	Mon, 31 Jan 2011 17:39:07 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CC5C24F3B; Mon, 31 Jan 2011
+ 17:39:01 -0500 (EST)
+In-Reply-To: <201101312255.59841.trast@student.ethz.ch> (Thomas Rast's
+ message of "Mon\, 31 Jan 2011 22\:55\:59 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: E9DD0B7A-2D8A-11E0-8FFE-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165769>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165770>
 
-On 01/02/11 10:19, Sverre Rabbelier wrote:
-> That's another thing Augie mentioned that he (and I guess the hg
-> community at large) dislikes, the fact that they're not propagated.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-This is not a "fact".
+> Proposal:
+>
+> git-pull inherits the full fetchspec invocation syntax from git-fetch,
+> so that you can do e.g.
+>
+>   git pull origin master:master
+>
+> usually shooting yourself in the foot in the process.  See e.g.
+>
+>   http://thread.gmane.org/gmane.comp.version-control.git/130819/focus=130879 [item 1]
+>
+> Prohibit this invocation, i.e., disallow any second argument to
+> git-pull that contains ':'.
+>
+> History:
+>
+> I submitted a patch ages ago:
+>
+>   http://article.gmane.org/gmane.comp.version-control.git/130822
+>
+> Sean seemed to be the only one in favour of the old behaviour, but I
+> was too lazy to push it past him.  (There were some issues with the
+> test as well.)
 
-If you add configuration in your git config to fetch and push the refs,
-then they are propagated.
-
-Just because you disagree with the current interface or defaults doesn't
-mean the design is wrong.  I hear the same arguments against submodules,
-which is a shame because the message isn't getting through to people
-that the porcelain can and should be extended to make people's lives
-easier.  It's just that instead of second-guessing what shape they
-should take, the design and plumbing are written so that people can
-write scripts to make it work.
-
-It's a slower path, but you end up with a better tool at the end of it.
-
-Sam
+As I summarized in $gmane/135813 I don't think there was any objection
+against forbidding "git pull" with refspec with colon.  There indeed was
+an interesting tangent topic that was about valid use cases of "git fetch"
+with such refspec, but I think this is orthogonal to that issue.
