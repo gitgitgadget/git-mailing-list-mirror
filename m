@@ -1,178 +1,87 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: [PATCH] t6004: add pathspec globbing test for log family
-Date: Mon, 31 Jan 2011 12:09:53 -0800
-Message-ID: <7vei7s6dim.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [1.8.0] default "git merge" without argument to "git merge @{u}"
+Date: Mon, 31 Jan 2011 15:14:19 -0500
+Message-ID: <20110131201419.GA9070@sigill.intra.peff.net>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
+ <7vwrll57ha.fsf@alter.siamese.dyndns.org>
+ <7vsjw957fq.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Jan 31 21:10:43 2011
+Content-Type: text/plain; charset=utf-8
+Cc: git@vger.kernel.org, Miles Bader <miles@gnu.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 31 21:14:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pk05C-0000Jd-3o
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 21:10:42 +0100
+	id 1Pk08s-0002T8-9r
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 21:14:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755955Ab1AaUKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Jan 2011 15:10:19 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53879 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753734Ab1AaUKD (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jan 2011 15:10:03 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 85CB43B72;
-	Mon, 31 Jan 2011 15:10:53 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=MYu/
-	0FGvzw0AlU4aVJwaDmJU7Dk=; b=qg9P+tbZ+3y5UvTHm26BrbG31t9MqnV+YIJ3
-	QwQ0dft8L7XeiI+TNcOhRZTv9vrAvo2zxfyr7lZy0MmTHZGBR0p0xvH06UB0cXt5
-	hleYgp5IOdz9DvUG0q+HvZjYa3VmhtQxLVUBf6D5oN5vNc2CUFcPDE+y9rd7J+uo
-	dQGvSAk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:from:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
-	pwT+Tkd+h9I+kJRDSSIbZ+uD2u2iiGT1M5IyPDUm0GMiOk6W/kfRxVm5ZQkD2BX3
-	n0bEGL13uO03g8AryweQGL0Swt4ypR25tK7PRWIwkEgzby1HwcCsvWS7XiPalULZ
-	m7z+3YzRndRNCnLvTmZf8GuUYybfOt01h9QBj/b6RPo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 646843B71;
-	Mon, 31 Jan 2011 15:10:51 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1F9EC3B70; Mon, 31 Jan 2011
- 15:10:47 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 3373BEEC-2D76-11E0-85CD-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
+	id S1756160Ab1AaUOY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Jan 2011 15:14:24 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:57151 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753553Ab1AaUOX (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jan 2011 15:14:23 -0500
+Received: (qmail 13121 invoked by uid 111); 31 Jan 2011 20:14:22 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 31 Jan 2011 20:14:22 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 31 Jan 2011 15:14:19 -0500
+Content-Disposition: inline
+In-Reply-To: <7vsjw957fq.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165744>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165745>
 
-Earlier e10cb0f (tree_entry_interesting(): support wildcard matching,
-2010-12-15) and b3d4b34 (tree_entry_interesting(): optimize wildcard
-matching when base is matched, 2010-12-15) added tests for globbing
-support for diff-tree plumbing.  This is a follow-up to update the test
-for revision traversal and path pruning machinery for the same topic.
+On Mon, Jan 31, 2011 at 09:06:33AM -0800, Junio C Hamano wrote:
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- t/t6004-rev-list-path-optim.sh |   69 +++++++++++++++++++++++++++++++++-------
- 1 files changed, 57 insertions(+), 12 deletions(-)
+> Existing scripts may prepare what to merge in an array (e.g. in Bourne,
+> accumulating them in "$@" by repeatedly doing 'set "$@" "$newbranch"') and
+> call 'git merge "$@"', relying on the current behaviour that zero argument
+> means no-op.  Such scripts will be broken by this change.  Driving "git
+> merge" with xargs without --no-run-if-empty (not POSIX), feeding the
+> branches to merge in an Octopus, will be broken the same way.
 
-diff --git a/t/t6004-rev-list-path-optim.sh b/t/t6004-rev-list-path-optim.sh
-index 5dabf1c..3e8c42e 100755
---- a/t/t6004-rev-list-path-optim.sh
-+++ b/t/t6004-rev-list-path-optim.sh
-@@ -1,51 +1,96 @@
- #!/bin/sh
- 
--test_description='git rev-list trivial path optimization test'
-+test_description='git rev-list trivial path optimization test
-+
-+   d/z1
-+   b0                             b1
-+   o------------------------*----o master
-+  /                        /
-+ o---------o----o----o----o side
-+ a0        c0   c1   a1   c2
-+ d/f0      d/f1
-+ d/z0
-+
-+'
- 
- . ./test-lib.sh
- 
- test_expect_success setup '
--echo Hello > a &&
--git add a &&
--git commit -m "Initial commit" a &&
--initial=$(git rev-parse --verify HEAD)
-+	echo Hello >a &&
-+	mkdir d &&
-+	echo World >d/f &&
-+	echo World >d/z &&
-+	git add a d &&
-+	test_tick &&
-+	git commit -m "Initial commit" &&
-+	git rev-parse --verify HEAD &&
-+	git tag initial
- '
- 
- test_expect_success path-optimization '
--    commit=$(echo "Unchanged tree" | git commit-tree "HEAD^{tree}" -p HEAD) &&
--    test $(git rev-list $commit | wc -l) = 2 &&
--    test $(git rev-list $commit -- . | wc -l) = 1
-+	test_tick &&
-+	commit=$(echo "Unchanged tree" | git commit-tree "HEAD^{tree}" -p HEAD) &&
-+	test $(git rev-list $commit | wc -l) = 2 &&
-+	test $(git rev-list $commit -- . | wc -l) = 1
- '
- 
- test_expect_success 'further setup' '
- 	git checkout -b side &&
- 	echo Irrelevant >c &&
--	git add c &&
-+	echo Irrelevant >d/f &&
-+	git add c d/f &&
-+	test_tick &&
- 	git commit -m "Side makes an irrelevant commit" &&
-+	git tag side_c0 &&
- 	echo "More Irrelevancy" >c &&
- 	git add c &&
-+	test_tick &&
- 	git commit -m "Side makes another irrelevant commit" &&
- 	echo Bye >a &&
- 	git add a &&
-+	test_tick &&
- 	git commit -m "Side touches a" &&
--	side=$(git rev-parse --verify HEAD) &&
-+	git tag side_a1 &&
- 	echo "Yet more Irrelevancy" >c &&
- 	git add c &&
-+	test_tick &&
- 	git commit -m "Side makes yet another irrelevant commit" &&
- 	git checkout master &&
- 	echo Another >b &&
--	git add b &&
-+	echo Munged >d/z &&
-+	git add b d/z &&
-+	test_tick &&
- 	git commit -m "Master touches b" &&
-+	git tag master_b0 &&
- 	git merge side &&
- 	echo Touched >b &&
- 	git add b &&
-+	test_tick &&
- 	git commit -m "Master touches b again"
- '
- 
- test_expect_success 'path optimization 2' '
--	( echo "$side"; echo "$initial" ) >expected &&
-+	git rev-parse side_a1 initial >expected &&
- 	git rev-list HEAD -- a >actual &&
- 	test_cmp expected actual
- '
- 
-+test_expect_success 'pathspec with leading path' '
-+	git rev-parse master^ master_b0 side_c0 initial >expected &&
-+	git rev-list HEAD -- d >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'pathspec with glob (1)' '
-+	git rev-parse master^ master_b0 side_c0 initial >expected &&
-+	git rev-list HEAD -- "d/*" >actual &&
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'pathspec with glob (2)' '
-+	git rev-parse side_c0 initial >expected &&
-+	git rev-list HEAD -- "d/[a-m]*" >actual &&
-+	test_cmp expected actual
-+'
-+
- test_done
--- 
-1.7.4.261.g705f2
+I am not sure these things are not already broken. "git merge" without
+arguments right now is not a no-op. It is an error that spews usage to
+stderr and exits 129. Yes, there can be scripts which stupidly do not
+bother to see if the merge succeeded, but I'm not sure how much we
+should care about such poorly written junk.
+
+> Migration plan:
+> 
+> Add merge.defaultUpstream configuration variable, which defaults to false
+> when unconfigured.  Change "git merge" so that when this configuration is
+> set and the command is run without the commit to merge to use the
+> configured upstream of the current branch (or error out if there isn't
+> one).  Merge this change in the next 1.7.x series.
+
+One nit: upon reading the name of the variable, I assumed it would be
+"the default upstream to merge". Perhaps "merge.defaultToUpstream" is a
+more descriptive name?
+
+> One release before 1.8.0, issue a warning when "git merge" is run without
+> the commit to merge and this configuration variable is not explicitly set
+> either way, and notify the user of upcoming incompatibility.
+
+Don't we already issue a giant warning when "git merge" is run without a
+commit, namely:
+
+  usage: git merge [options] <remote>...
+  ... etc ...
+
+? If people are already not paying attention to that (either because
+they are throwing away stderr and exit code indiscriminately, or because
+the no-arguments case is a simply an obscure corner that their script
+doesn't usually exercise), why would they pay attention to a new
+warning?
+
+> In 1.8.0, flip the default for merge.defaultUpstream to true.
+
+Other than that, I think the proposal and migration plan are fine.
+
+-Peff
