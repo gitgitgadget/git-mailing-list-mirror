@@ -1,70 +1,79 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
-Subject: Re: [PATCH v2] Disallow empty section and variable names
-Date: Mon, 31 Jan 2011 08:48:31 +0100
-Message-ID: <4D46694F.5070208@viscovery.net>
-References: <20110108144644.GA11019@localhost.suse.cz> <20110127145253.GD6312@fm.suse.cz> <20110130203445.GA9689@fm.suse.cz>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: Project- vs. Package-Level Branching in Git
+Date: Mon, 31 Jan 2011 09:56:47 +0100
+Message-ID: <20110131085647.GA16990@nibiru.local>
+References: <14F4737F-E8E4-4E4E-A625-16CA63CF9EFF@shaggyfrog.com> <AANLkTinTRgzv0s9MTyM4TaOwVOmhwRckDqMfxrbsKVfm@mail.gmail.com> <15B7CA2E-C584-4563-B9E3-D80861CD9565@shaggyfrog.com> <m3tygt9xmn.fsf@localhost.localdomain> <20110129194258.GE602@nibiru.local> <20110129232848.GC7676@gmail.com> <20110130193603.GA327@nibiru.local> <m3hbcpaozx.fsf@localhost.localdomain>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Libor Pechacek <lpechacek@suse.cz>
-X-From: git-owner@vger.kernel.org Mon Jan 31 08:48:42 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 31 10:05:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PjoV7-0005ni-Bj
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 08:48:41 +0100
+	id 1PjphJ-00089U-CS
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 10:05:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754943Ab1AaHsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Jan 2011 02:48:36 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:50263 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751954Ab1AaHsf (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jan 2011 02:48:35 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1PjoUx-000430-R9; Mon, 31 Jan 2011 08:48:31 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 7DF911660F;
-	Mon, 31 Jan 2011 08:48:31 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <20110130203445.GA9689@fm.suse.cz>
-X-Spam-Score: -1.4 (-)
+	id S1755205Ab1AaJFN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Jan 2011 04:05:13 -0500
+Received: from caprica.metux.de ([82.165.128.25]:51583 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1755176Ab1AaJFM (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Jan 2011 04:05:12 -0500
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p0V91dwx016539
+	for <git@vger.kernel.org>; Mon, 31 Jan 2011 10:01:41 +0100
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p0V91TRc016514
+	for git@vger.kernel.org; Mon, 31 Jan 2011 10:01:29 +0100
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id p0V8ulh3018915
+	for git@vger.kernel.org; Mon, 31 Jan 2011 09:56:47 +0100
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <m3hbcpaozx.fsf@localhost.localdomain>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165721>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165722>
 
-Am 1/30/2011 21:34, schrieb Libor Pechacek:
-> It is possible to break your repository config by creating an invalid key.  The
-> config parser in turn chokes on it.
+* Jakub Narebski <jnareb@gmail.com> wrote:
+
+> > perhaps you'd like to have a look at my Briegel build tool:
+> > 
+> >     git://pubgit.metux.de/projects/briegel.git
+> >     
+> > ;-)
 > 
-> $ git init
-> Initialized empty Git repository in /tmp/gittest/.git/
-> $ git config .foo false
-> $ git config .foo
-> fatal: bad config file line 6 in .git/config
+> Is it Git-specific build tool?  If it is so, perhaps it would be good
+> to add it to
+>  
+>   https://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools
+> 
+> page on Git Wiki?
 
-Just a nit: Your example is misleading because it "only" shows that if you
-shove in junk, and ask for junk, you get breakage. However, the breakage
-is much more serious, and you could have demonstrated it, if you had
-written your example like this:
+Not really, it just happens to use git extensively, eg. it can
+pull sources and sysroot images directly from git repos (Tarballs
+and textbased patches are still supported, but I dont use them
+anymore for years).
 
-$ git config .foo false
-$ git config user.email
-fatal: bad config file line 6 in .git/config
 
-> +	test_must_fail git config . &&
-> +	test_must_fail git config .foo &&
-> +	test_must_fail git config foo. &&
-> +	test_must_fail git config .foo. &&
+cu
+-- 
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
 
-Not a nit: These tests only show that 'git config' cannot be asked for
-junk, but they do not show that you cannot insert junk into the config
-file anymore using 'git config'.
-
--- Hannes
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
