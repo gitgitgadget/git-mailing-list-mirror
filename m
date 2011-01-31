@@ -1,86 +1,79 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [RFC] fast-import: notemodify (N) command
-Date: Mon, 31 Jan 2011 13:01:28 -0600
-Message-ID: <20110131190128.GC32374@burratino>
-References: <1255083738-23263-1-git-send-email-johan@herland.net>
- <1255083738-23263-8-git-send-email-johan@herland.net>
- <20110131183350.GB31826@burratino>
- <AANLkTi=3P0xc3mJj5Tsg_P26SAXmgVfCk1VeYQ=k2UtT@mail.gmail.com>
+From: Fabian Keil <fk@fabiankeil.de>
+Subject: [PATCH] git-cvsimport.perl: Bail out right away when reading from
+ the server fails
+Date: Mon, 31 Jan 2011 20:29:46 +0100
+Message-ID: <20110131202946.0a3162b3@r500.local>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: vcs-fast-import-devs@lists.launchpad.net, git@drmicha.warpmail.net,
-	chriscool@tuxfamily.org, sam@vilain.net,
-	Johannes.Schindelin@gmx.de, trast@student.ethz.ch,
-	Johan Herland <johan@herland.net>, gitster@pobox.com,
-	git@vger.kernel.org, Augie Fackler <durin42@gmail.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Jan 31 20:01:55 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 31 20:43:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pjz0c-0004xm-4k
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 20:01:54 +0100
+	id 1Pjzel-0002du-67
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 20:43:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754978Ab1AaTBt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Jan 2011 14:01:49 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:42715 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753327Ab1AaTBs (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jan 2011 14:01:48 -0500
-Received: by vws16 with SMTP id 16so2082175vws.19
-        for <git@vger.kernel.org>; Mon, 31 Jan 2011 11:01:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=6OSWjaBAvU6lbzBEDbmzelyq1gVSJe2J/dd0zswBJQ0=;
-        b=u3yKFBiectfEv9rJat1+UV+l/KUqArIVouQqYOdUeNc6K7oaLXHKZoFDdibszNOTSI
-         d8n8Go7xPdpQj1P51eIFpiVxxUoe9x/sxiVHqG9oQk0XDA3nMViVHGFDnvdAxApYf3uU
-         Dg9sDekGr9aqLaoPx30l8/z6BeOf2BDnmFNmM=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=RB1PixSvv8Yp7Uw8lY1q9iGrjPfyyg/yqXt/u9mfAdf06PZA0TmKwi8oaWxe/bwHvt
-         FeY8OMIkYZG7j8OwZbB/FjE63Fl2QCBl0TnIQsHQ5FfIEhu4CP0WV38ng5vwVon6eGpT
-         H/LBwt5WyxE38cVba5kCybBwJnYRLjHIAX74Y=
-Received: by 10.220.199.77 with SMTP id er13mr1789376vcb.44.1296500505241;
-        Mon, 31 Jan 2011 11:01:45 -0800 (PST)
-Received: from burratino (adsl-69-209-75-28.dsl.chcgil.ameritech.net [69.209.75.28])
-        by mx.google.com with ESMTPS id y15sm7154724vch.29.2011.01.31.11.01.41
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 31 Jan 2011 11:01:43 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=3P0xc3mJj5Tsg_P26SAXmgVfCk1VeYQ=k2UtT@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1753936Ab1AaTnQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Jan 2011 14:43:16 -0500
+Received: from smtprelay04.ispgateway.de ([80.67.31.27]:33419 "EHLO
+	smtprelay04.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753514Ab1AaTnQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jan 2011 14:43:16 -0500
+X-Greylist: delayed 497 seconds by postgrey-1.27 at vger.kernel.org; Mon, 31 Jan 2011 14:43:16 EST
+Received: from [78.34.172.116] (helo=r500.local)
+	by smtprelay04.ispgateway.de with esmtpsa (TLSv1:AES128-SHA:128)
+	(Exim 4.68)
+	(envelope-from <fk@fabiankeil.de>)
+	id 1PjzWb-000558-Ab
+	for git@vger.kernel.org; Mon, 31 Jan 2011 20:34:57 +0100
+X-Mailer: Claws Mail 3.7.8 (GTK+ 2.22.1; amd64-portbld-freebsd9.0)
+X-PGP-KEY-URL: http://www.fabiankeil.de/gpg-keys/fk-2008-08-18.asc
+X-Df-Sender: 180909
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165741>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165742>
 
-Sverre Rabbelier wrote:
-> I talked with Augie Fackler (from hg) about this on IM and he says:
+If the CVS server is down, this reduced the git-cvsimport output from:
 
->> We don't support anything like that at present (no demand, when we check
->> nobody really seems to use git notes for anything)
->> so it doesn't seem relevant in fast-export
->
-> So at least HG doesn't (currently) have any functionality that they
-> could use to implement the importing of such a stream.
+ssh: connect to host ijbswa.cvs.sourceforge.net port 22: Connection refused
+Use of uninitialized value $rep in scalar chomp at /usr/local/libexec/git-core/git-cvsimport line 369.
+Use of uninitialized value $rep in substitution (s///) at /usr/local/libexec/git-core/git-cvsimport line 370.
+Expected Valid-requests from server, but got: <unknown>
 
-Thanks, good to know.  I suppose this definitely needs a feature name,
-then (I'll send a patch to make it "feature notes").
+to the less noisy:
 
-Jonathan
+ssh: connect to host ijbswa.cvs.sourceforge.net port 22: Connection refused
+Failed to read from server at /usr/local/libexec/git-core/git-cvsimport line 370.
 
-[Aside: I suspect part of the reason "git notes" adoption is not so
-great is the lack of git notes fetch/git notes push.  Sample size
-of 1: I use notes heavily as a consumer, to dig up mailing list
-threads[1], but have put off sharing my own annotations until I can
-figure out how to make it convenient for others to use.]
+In this case a silent exit() instead of the die() would probably do,
+but I assume that there could be cases where the connection attempt
+succeeds, but reading from the server fails for other reasons.
 
-[1] http://thread.gmane.org/gmane.comp.version-control.git/109074/focus=109542
+Signed-off-by: Fabian Keil <fk@fabiankeil.de>
+---
+ git-cvsimport.perl |    4 +++-
+ 1 files changed, 3 insertions(+), 1 deletions(-)
+
+1d8b7c2be2b7dd281a0799735d00c8111404260f
+diff --git a/git-cvsimport.perl b/git-cvsimport.perl
+index 8e683e5..2a76d9e 100755
+--- a/git-cvsimport.perl
++++ b/git-cvsimport.perl
+@@ -366,7 +366,9 @@ sub conn {
+ 	$self->{'socketo'}->write("valid-requests\n");
+ 	$self->{'socketo'}->flush();
+ 
+-	chomp(my $rep=$self->readline());
++	my $rep=$self->readline();
++	die "Failed to read from server" unless defined $rep;
++	chomp($rep);
+ 	if ($rep !~ s/^Valid-requests\s*//) {
+ 		$rep="<unknown>" unless $rep;
+ 		die "Expected Valid-requests from server, but got: $rep\n";
+-- 
+1.7.3.5
