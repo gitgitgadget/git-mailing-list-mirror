@@ -1,68 +1,80 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [1.8.0] make two-argument fetch update remote branches
-Date: Mon, 31 Jan 2011 15:06:53 -0800
-Message-ID: <7vd3nc4qr6.fsf@alter.siamese.dyndns.org>
+From: Jeff King <peff@peff.net>
+Subject: Re: [1.8.0] reorganize the mess that the source tree has become
+Date: Mon, 31 Jan 2011 18:12:11 -0500
+Message-ID: <20110131231210.GD14419@sigill.intra.peff.net>
 References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
  <7vwrll57ha.fsf@alter.siamese.dyndns.org>
- <201101312244.10047.trast@student.ethz.ch>
- <AANLkTin2kTW85UC1r_1LUDVLiexcVDvt--9ndnXZ2ARS@mail.gmail.com>
+ <alpine.LFD.2.00.1101311459000.8580@xanadu.home>
+ <20110131210045.GB14419@sigill.intra.peff.net>
+ <alpine.LFD.2.00.1101311621150.8580@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Eugene Sajine <euguess@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 01 00:07:15 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Tue Feb 01 00:12:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pk2q1-0003kb-HS
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 00:07:13 +0100
+	id 1Pk2v3-0007Es-G4
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 00:12:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756264Ab1AaXHG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Jan 2011 18:07:06 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44123 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754262Ab1AaXHF (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jan 2011 18:07:05 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2C67C4291;
-	Mon, 31 Jan 2011 18:07:55 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=0yygbSnPxUz4CySoWCEHMb00ibQ=; b=Vw4HTg
-	JbmJ1Ks5R17+SkG989BXbM4nH+xuSjcGe9+yfFCVcQ09A/spb28hIB17hHSncBFf
-	T7YUL/E/cudCvcgFq+nEqcLvJqXJds//aZsbic77bDZDEB89YmZIEX+TU4kL8LId
-	17S6UXv2/b0IWz+ly2bYXQ8Hv6YwTvEw+6Wy4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ScDsxbWtTgWym/L5FOHxLDji8X0eQcT1
-	CY1JEpQ1+SZzpXVv1PwRWe6gB1YaNS6ZRaMMS/9K9IofnFua1IHbudGwxCw/SOtD
-	ae5IGbLemOiLFrzgPtG4Zag/Njo+s1KkiNyA6jApEIBYzMebG1EFlMN8rtoiGvyL
-	/Y/dbFDDnAE=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EF3AF4290;
-	Mon, 31 Jan 2011 18:07:51 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id DEA53428F; Mon, 31 Jan 2011
- 18:07:47 -0500 (EST)
-In-Reply-To: <AANLkTin2kTW85UC1r_1LUDVLiexcVDvt--9ndnXZ2ARS@mail.gmail.com>
- (Eugene Sajine's message of "Mon\, 31 Jan 2011 17\:27\:17 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: EDCDA768-2D8E-11E0-A8A9-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
+	id S1754302Ab1AaXMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Jan 2011 18:12:17 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:50012 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752824Ab1AaXMQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jan 2011 18:12:16 -0500
+Received: (qmail 14610 invoked by uid 111); 31 Jan 2011 23:12:15 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 31 Jan 2011 23:12:15 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 31 Jan 2011 18:12:11 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.1101311621150.8580@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165772>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165773>
 
-Eugene Sajine <euguess@gmail.com> writes:
+On Mon, Jan 31, 2011 at 04:28:49PM -0500, Nicolas Pitre wrote:
 
-> IMHO there is no need to introduce the variable. If it will start
-> update both FETCH_HEAD and the remote-tracking branches since 1.8 it
-> will not break any code, because it is added functionality...
+> > Besides being just one more directory to go up and down, it does make 
+> > history browsing more annoying. As much as I love git's "don't record 
+> > renames" philosophy, our handling of renames on the viewing side is 
+> > often annoying. I already get annoyed sometimes following stuff across 
+> > the s!builtin-!builtin/! change. This would be like that but more so.
+> 
+> So... we do suck at something?  So why not take this opportunity to 
+> shake yourself out of this easy comfort and improve Git as a result on 
+> both front?  :-)
 
-Then you didn't understand the risks section, did you?  Thomas clearly
-illustrated with an example where the script _expects_ origin/master to
-stay the same after "git fetch origin master".
+Yes, we do suck at rename following. The problem is that it is partially
+an implementation issue, and partially a fundamental issue. Obviously
+--follow sucks pretty hard right now, and that could be fixed. Namely it
+follows only a single file, and it interacts very badly with history
+simplification.
+
+But even with those things fixed, there will still be annoyances.
+
+It will still be _slower_ to turn it on all the time, for one[1]. And
+that's due to fundamental design decisions of the git data structure.
+And I'm not knocking those decisions; I think they made the right
+tradeoff. But that doesn't mean we don't pay the cost for that tradeoff.
+
+And no matter what your model, renames can be annoying. On-going topics
+will have a painful rebase or merge. And people looking at history will
+have to deal with the code-base having different names at different
+points. Yeah, you can say it's all just "content", but the filenames we
+put things in are actually useful.
+
+So I don't think it's wrong to say "renames are a pain, and so should
+not be done lightly". I do think it's wrong to say "renames can't be
+done"; I just the cost needs to be considered.
+
+-Peff
+
+[1] I'd be interested to see how much we can get around that slowness
+using a notes-cache.
