@@ -1,139 +1,178 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: gitk "find commit adding/removing string"/possible pickaxe bug?
-Date: Mon, 31 Jan 2011 15:00:03 -0500
-Message-ID: <20110131200002.GA7859@sigill.intra.peff.net>
-References: <514EB3AA-CD31-4BDB-B777-B7AAEEDF5663@sebastianhahn.net>
- <201101181744.18139.trast@student.ethz.ch>
- <20110118185027.GA10562@sigill.intra.peff.net>
- <201101182139.28808.trast@student.ethz.ch>
- <20110118205040.GA20970@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: [PATCH] t6004: add pathspec globbing test for log family
+Date: Mon, 31 Jan 2011 12:09:53 -0800
+Message-ID: <7vei7s6dim.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org, Sebastian Hahn <mail@sebastianhahn.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Mon Jan 31 21:00:18 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Jan 31 21:10:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pjzv7-0003DD-BW
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 21:00:17 +0100
+	id 1Pk05C-0000Jd-3o
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 21:10:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753581Ab1AaUAK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Jan 2011 15:00:10 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:46757 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753253Ab1AaUAJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jan 2011 15:00:09 -0500
-Received: (qmail 12378 invoked by uid 111); 31 Jan 2011 20:00:07 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 31 Jan 2011 20:00:07 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 31 Jan 2011 15:00:03 -0500
-Content-Disposition: inline
-In-Reply-To: <20110118205040.GA20970@sigill.intra.peff.net>
+	id S1755955Ab1AaUKT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Jan 2011 15:10:19 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53879 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753734Ab1AaUKD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jan 2011 15:10:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 85CB43B72;
+	Mon, 31 Jan 2011 15:10:53 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=MYu/
+	0FGvzw0AlU4aVJwaDmJU7Dk=; b=qg9P+tbZ+3y5UvTHm26BrbG31t9MqnV+YIJ3
+	QwQ0dft8L7XeiI+TNcOhRZTv9vrAvo2zxfyr7lZy0MmTHZGBR0p0xvH06UB0cXt5
+	hleYgp5IOdz9DvUG0q+HvZjYa3VmhtQxLVUBf6D5oN5vNc2CUFcPDE+y9rd7J+uo
+	dQGvSAk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:from:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
+	pwT+Tkd+h9I+kJRDSSIbZ+uD2u2iiGT1M5IyPDUm0GMiOk6W/kfRxVm5ZQkD2BX3
+	n0bEGL13uO03g8AryweQGL0Swt4ypR25tK7PRWIwkEgzby1HwcCsvWS7XiPalULZ
+	m7z+3YzRndRNCnLvTmZf8GuUYybfOt01h9QBj/b6RPo=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 646843B71;
+	Mon, 31 Jan 2011 15:10:51 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1F9EC3B70; Mon, 31 Jan 2011
+ 15:10:47 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 3373BEEC-2D76-11E0-85CD-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165743>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165744>
 
-On Tue, Jan 18, 2011 at 03:50:40PM -0500, Jeff King wrote:
+Earlier e10cb0f (tree_entry_interesting(): support wildcard matching,
+2010-12-15) and b3d4b34 (tree_entry_interesting(): optimize wildcard
+matching when base is matched, 2010-12-15) added tests for globbing
+support for diff-tree plumbing.  This is a follow-up to update the test
+for revision traversal and path pruning machinery for the same topic.
 
-> > doesn't; it only gives a diff for the commit that introduced 'bar'.  I
-> > guess this makes sense: -S notices that the number of 'bar's is
-> > actually the same as in *one* merge parent, hence the merge cannot be
-> > all that interesting.  OTOH it still shows the merge commit in the
-> > history, which is a bit strange.  --pickaxe-all does not make a
-> > difference either;
-> 
-> Hrm. What I expected[1] to happen would be for the diff machinery to
-> look at each filepair individually, one of them to trigger -S, which
-> shows the commit, and then to fail to produce a combined diff because we
-> threw away the other uninteresting filepair. But in that case,
-> --pickaxe-all _should_ show something, as its point is to keep all of
-> the filepairs.  And that's clearly not happening.
-> 
-> So now I don't know what's going on. I'll try to trace through the diff
-> machinery and see if that gives a clue.
-> 
-> -Peff
-> 
-> [1] That's what I expect, but not necessarily what I want. I think what
-> I would want is for it to do a token count of the merge commit, and if
-> it fails to match _every_ parent, then it it interesting. Otherwise, the
-> content presumably came from that parent.
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+---
+ t/t6004-rev-list-path-optim.sh |   69 +++++++++++++++++++++++++++++++++-------
+ 1 files changed, 57 insertions(+), 12 deletions(-)
 
-I looked into this, and sadly the "wanted" behavior I described above is
-not easy to do. It turns out that we never actually see the whole 3-way
-diff as a single unit in diffcore-pickaxe. Instead, log-tree calls into
-diff_tree_combined, which diffs each parent _individually_, including
-running diffcore magic on it. And then if one of those appears
-interesting, we show the merge.
-
-So diffcore-pickaxe never even knows that we are doing a combined diff.
-It just sees the difference between M and M^, and then separately the
-difference between M and M^2. This works OK in my example:
-
-  commit() {
-    echo $1 >file && git add file && git commit -m $1
-  }
-  commit base
-  commit master
-  git checkout -b other HEAD^
-  commit other
-  git merge master
-  commit resolved
-
-as doing "git log -Sother -c" will show both the commit "other" _and_
-the merge commit (since it removed "other" in favor of "resolved"). But
-you could also construct a case where it isn't true. For example,
-consider a case where two sides add the same token, and the resolution
-is to keep both. E.g.:
-
-  echo base >file && git add file && git commit -m base
-  echo foo bar >file && git commit -a -m master
-  git checkout -b other HEAD^
-  echo foo baz >file && git commit -a -m other
-  git merge master
-  (echo foo bar; echo foo baz) >file && git commit -a -m resolved
-
-That shows the merge commit, even though it didn't actually introduce or
-delete that token at all. OTOH, it is part of a conflict region, so it
-is really difficult to say whether it is interesting or not. I dunno
-what the right semantics are (and note that the definition I gave in the
-above email would also trigger on this case).
-
-I have the nagging feeling there is another less ambiguous corner case
-that is wrong, but I'm having trouble constructing one.
-
-
-Anyway, the real point is that we can't do anything special to pickaxe
-merge commits at the diffcore level without some pretty major diff
-surgery. So where does that leave us? You can still get pretty
-reasonable results from turning on "-c". I was curious what the CPU cost
-was of turning "-c" on by default, and was very surprised by the
-results (in git.git):
-
-  $ time git log -Sfoo >/dev/null
-  real    0m11.532s
-  user    0m11.273s
-  sys     0m0.116s
-
-  $ time git log -c -Sfoo >/dev/null
-  real    3m7.530s
-  user    3m3.991s
-  sys     0m2.948s
-
-A 1700% slowdown? Wow. There are ~20000 non-merge commits in git.git and
-~4500 merge commits. Each merge commit has two parents (since we don't
-tend to octopus merge), each of which is diffed individually. So I'd
-expect it to add about 9000 diffs, or roughly 50% on top of the
-11-second case.
-
-My guess is that the subtree merges from gitk and git-gui are very
-expensive to look at, since from one parent's perspective we will have
-created the entire git project from scratch. On every merge. Yikes.
-
--Peff
+diff --git a/t/t6004-rev-list-path-optim.sh b/t/t6004-rev-list-path-optim.sh
+index 5dabf1c..3e8c42e 100755
+--- a/t/t6004-rev-list-path-optim.sh
++++ b/t/t6004-rev-list-path-optim.sh
+@@ -1,51 +1,96 @@
+ #!/bin/sh
+ 
+-test_description='git rev-list trivial path optimization test'
++test_description='git rev-list trivial path optimization test
++
++   d/z1
++   b0                             b1
++   o------------------------*----o master
++  /                        /
++ o---------o----o----o----o side
++ a0        c0   c1   a1   c2
++ d/f0      d/f1
++ d/z0
++
++'
+ 
+ . ./test-lib.sh
+ 
+ test_expect_success setup '
+-echo Hello > a &&
+-git add a &&
+-git commit -m "Initial commit" a &&
+-initial=$(git rev-parse --verify HEAD)
++	echo Hello >a &&
++	mkdir d &&
++	echo World >d/f &&
++	echo World >d/z &&
++	git add a d &&
++	test_tick &&
++	git commit -m "Initial commit" &&
++	git rev-parse --verify HEAD &&
++	git tag initial
+ '
+ 
+ test_expect_success path-optimization '
+-    commit=$(echo "Unchanged tree" | git commit-tree "HEAD^{tree}" -p HEAD) &&
+-    test $(git rev-list $commit | wc -l) = 2 &&
+-    test $(git rev-list $commit -- . | wc -l) = 1
++	test_tick &&
++	commit=$(echo "Unchanged tree" | git commit-tree "HEAD^{tree}" -p HEAD) &&
++	test $(git rev-list $commit | wc -l) = 2 &&
++	test $(git rev-list $commit -- . | wc -l) = 1
+ '
+ 
+ test_expect_success 'further setup' '
+ 	git checkout -b side &&
+ 	echo Irrelevant >c &&
+-	git add c &&
++	echo Irrelevant >d/f &&
++	git add c d/f &&
++	test_tick &&
+ 	git commit -m "Side makes an irrelevant commit" &&
++	git tag side_c0 &&
+ 	echo "More Irrelevancy" >c &&
+ 	git add c &&
++	test_tick &&
+ 	git commit -m "Side makes another irrelevant commit" &&
+ 	echo Bye >a &&
+ 	git add a &&
++	test_tick &&
+ 	git commit -m "Side touches a" &&
+-	side=$(git rev-parse --verify HEAD) &&
++	git tag side_a1 &&
+ 	echo "Yet more Irrelevancy" >c &&
+ 	git add c &&
++	test_tick &&
+ 	git commit -m "Side makes yet another irrelevant commit" &&
+ 	git checkout master &&
+ 	echo Another >b &&
+-	git add b &&
++	echo Munged >d/z &&
++	git add b d/z &&
++	test_tick &&
+ 	git commit -m "Master touches b" &&
++	git tag master_b0 &&
+ 	git merge side &&
+ 	echo Touched >b &&
+ 	git add b &&
++	test_tick &&
+ 	git commit -m "Master touches b again"
+ '
+ 
+ test_expect_success 'path optimization 2' '
+-	( echo "$side"; echo "$initial" ) >expected &&
++	git rev-parse side_a1 initial >expected &&
+ 	git rev-list HEAD -- a >actual &&
+ 	test_cmp expected actual
+ '
+ 
++test_expect_success 'pathspec with leading path' '
++	git rev-parse master^ master_b0 side_c0 initial >expected &&
++	git rev-list HEAD -- d >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'pathspec with glob (1)' '
++	git rev-parse master^ master_b0 side_c0 initial >expected &&
++	git rev-list HEAD -- "d/*" >actual &&
++	test_cmp expected actual
++'
++
++test_expect_success 'pathspec with glob (2)' '
++	git rev-parse side_c0 initial >expected &&
++	git rev-list HEAD -- "d/[a-m]*" >actual &&
++	test_cmp expected actual
++'
++
+ test_done
+-- 
+1.7.4.261.g705f2
