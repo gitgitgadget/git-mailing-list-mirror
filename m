@@ -1,68 +1,80 @@
-From: Jeff King <peff@peff.net>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
 Subject: Re: [1.8.0] reorganize the mess that the source tree has become
-Date: Mon, 31 Jan 2011 16:00:45 -0500
-Message-ID: <20110131210045.GB14419@sigill.intra.peff.net>
+Date: Mon, 31 Jan 2011 22:08:59 +0100
+Message-ID: <vpqwrlkg4r8.fsf@bauges.imag.fr>
 References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
- <7vwrll57ha.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1101311459000.8580@xanadu.home>
+	<7vwrll57ha.fsf@alter.siamese.dyndns.org>
+	<alpine.LFD.2.00.1101311459000.8580@xanadu.home>
+	<7vvd144wrl.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Mon Jan 31 22:00:56 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Nicolas Pitre <nico@fluxnic.net>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Jan 31 22:09:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pk0rn-0005jV-Gh
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 22:00:55 +0100
+	id 1Pk0zz-0002ZU-V6
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 22:09:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756238Ab1AaVAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Jan 2011 16:00:49 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:58094 "EHLO peff.net"
+	id S1753559Ab1AaVJT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Jan 2011 16:09:19 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:57592 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754062Ab1AaVAt (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jan 2011 16:00:49 -0500
-Received: (qmail 13538 invoked by uid 111); 31 Jan 2011 21:00:48 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 31 Jan 2011 21:00:48 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 31 Jan 2011 16:00:45 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1101311459000.8580@xanadu.home>
+	id S1753178Ab1AaVJS (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jan 2011 16:09:18 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p0VL8vLA030557
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 31 Jan 2011 22:08:57 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Pk0zc-0003Lr-0S; Mon, 31 Jan 2011 22:09:00 +0100
+In-Reply-To: <7vvd144wrl.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Mon\, 31 Jan 2011 12\:57\:02 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Mon, 31 Jan 2011 22:08:58 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p0VL8vLA030557
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1297112940.46096@q1OvtrJBvwSGhiZq8tpHNw
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165752>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165753>
 
-On Mon, Jan 31, 2011 at 03:28:37PM -0500, Nicolas Pitre wrote:
+Junio C Hamano <gitster@pobox.com> writes:
 
-> We do have subdirectories for documentation, tests, contributions, etc.  
-> But a sizeable part of the tree is just a big splat of source files 
-> dumped right in the root of the tree.
-> 
-> So I'd suggest doing the following:
-> 
-> 1) Create a src/ directory and move *.c, *.h, *.sh, *.perl, *.py and 
->    the builtin directory from the root directory to it.
+> Knee-jerk reaction: not very motivated to make the top-level directory
+> just a skeleton that holds various directories with a handful of
+> administrative files like Makefile, README, etc.  Under your proposal, the
+> bulk of the current content at the top would simply move to another single
+> directory anyway, so I don't immediately see much point of such a move,
 
-Wouldn't this just be the same giant splat of source files, but in a
-different tree? I don't really see the advantage, and it seems like an
-extra annoyance. Besides being just one more directory to go up and
-down, it does make history browsing more annoying. As much as I love
-git's "don't record renames" philosophy, our handling of renames on the
-viewing side is often annoying. I already get annoyed sometimes
-following stuff across the s!builtin-!builtin/! change. This would be
-like that but more so.
+There would be at least one obvious benefit: currently, we have this
 
-Or maybe it is a good thing for that reason, as we will eat our own
-rename dogfood. :)
+git$ ls | wc -l
+623
 
-> 5) Rename t/ to testsuite/ so this doesn't look like some garbage 
->    leftover.
+(that's after a build)
 
-Ugh, more typing. :P
+It's a bit hard to find the interesting bits (README, Documentation/,
+contrib/ for example) in the output of "ls".
 
--Peff
+> other than adding merge burden on me and rebase burden on others, that
+> is.
+
+That can be seen as a test of how good Git is at bulk rename
+management ;-).
+
+All that said, I cannot really say whether the benefit is higher than
+the cost.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
