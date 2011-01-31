@@ -1,80 +1,88 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [1.8.0] reorganize the mess that the source tree has become
-Date: Mon, 31 Jan 2011 18:12:11 -0500
-Message-ID: <20110131231210.GD14419@sigill.intra.peff.net>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [1.8.0] forbid full fetchspecs in git-pull
+Date: Tue, 1 Feb 2011 02:15:39 +0300
+Message-ID: <AANLkTikxcd+gzeuJsQX1V5Wses8xWMnshdrOnYTvXgTq@mail.gmail.com>
 References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
- <7vwrll57ha.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1101311459000.8580@xanadu.home>
- <20110131210045.GB14419@sigill.intra.peff.net>
- <alpine.LFD.2.00.1101311621150.8580@xanadu.home>
+	<7vwrll57ha.fsf@alter.siamese.dyndns.org>
+	<201101312255.59841.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Tue Feb 01 00:12:48 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Sean Estabrooks <seanlkml@sympatico.ca>,
+	=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Feb 01 00:15:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pk2v3-0007Es-G4
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 00:12:25 +0100
+	id 1Pk2yH-00018P-Vp
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 00:15:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754302Ab1AaXMR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Jan 2011 18:12:17 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:50012 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752824Ab1AaXMQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jan 2011 18:12:16 -0500
-Received: (qmail 14610 invoked by uid 111); 31 Jan 2011 23:12:15 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 31 Jan 2011 23:12:15 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 31 Jan 2011 18:12:11 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1101311621150.8580@xanadu.home>
+	id S1754249Ab1AaXPl convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Jan 2011 18:15:41 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:55504 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752824Ab1AaXPk convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 31 Jan 2011 18:15:40 -0500
+Received: by qwa26 with SMTP id 26so6050838qwa.19
+        for <git@vger.kernel.org>; Mon, 31 Jan 2011 15:15:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Ldlj6CekhY8miV43Ig3RmOmx4BdZymo79b5kI4/C2Uo=;
+        b=I9eEmdMlsZwgqP4JiYjas2jByUnJfYVilGXdwP+4l/2nJJXog8f4CaycRMAlyxIqcz
+         ceyfqkzs52UBuSbi4EsvXFEj2hfw3buxQNrJMnv4NdPwXDiJE+BLe6SR4No+TnB9R2Km
+         EFeViaDJRzslShMvgJWrtgWEqD2JfwnC+uens=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=nVZmr5jpRbzGoUOfMTildIC7uyXueYmiLbKuBeuDqlvA5x7tsoY61istweUk0lpQ7A
+         SGuQG2YyDYnQqdYU8FqDFwxeeXWZnnnJn1rUsNrng0nG7nUzklWpww+RaSEBMNCQ92k7
+         MsSb6RVHrGdBQlV+YKY5T9+ke0y/y8l06dSSk=
+Received: by 10.229.192.15 with SMTP id do15mr6306608qcb.155.1296515739528;
+ Mon, 31 Jan 2011 15:15:39 -0800 (PST)
+Received: by 10.229.213.4 with HTTP; Mon, 31 Jan 2011 15:15:39 -0800 (PST)
+In-Reply-To: <201101312255.59841.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165773>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165774>
 
-On Mon, Jan 31, 2011 at 04:28:49PM -0500, Nicolas Pitre wrote:
+On Mon, Jan 31, 2011 at 10:55:59PM +0100, Thomas Rast wrote:
+> Proposal:
+>
+> git-pull inherits the full fetchspec invocation syntax from git-fetch=
+,
+> so that you can do e.g.
+>
+> =A0git pull origin master:master
+>
+> usually shooting yourself in the foot in the process. =A0See e.g.
+>
+> =A0http://thread.gmane.org/gmane.comp.version-control.git/130819/focu=
+s=3D130879 [item 1]
+>
+> Prohibit this invocation, i.e., disallow any second argument to
+> git-pull that contains ':'.
 
-> > Besides being just one more directory to go up and down, it does make 
-> > history browsing more annoying. As much as I love git's "don't record 
-> > renames" philosophy, our handling of renames on the viewing side is 
-> > often annoying. I already get annoyed sometimes following stuff across 
-> > the s!builtin-!builtin/! change. This would be like that but more so.
-> 
-> So... we do suck at something?  So why not take this opportunity to 
-> shake yourself out of this easy comfort and improve Git as a result on 
-> both front?  :-)
+Hmm... I have always thought about "git pull repo refspec" as
+"git fetch repo refspec && git merge FETCH_HEAD"
+and "git fetch" refuses to fetch into the current branch of a non-bare
+repository, so I expected "git merge" to fail in this case too, but it
+succeeded though with some warning that fetch updated the current
+branch head. I think it is inconsistent and should be fixed, and that
+will fix the mentioned confusion as well.
 
-Yes, we do suck at rename following. The problem is that it is partially
-an implementation issue, and partially a fundamental issue. Obviously
---follow sucks pretty hard right now, and that could be fixed. Namely it
-follows only a single file, and it interacts very badly with history
-simplification.
+As to disallowing ':' in refspec completely, I am not so sure... Not
+that I think it is very useful, but also I don't see how it can hurt
+someone provided that the target branch cannot be the current branch.
 
-But even with those things fixed, there will still be annoyances.
 
-It will still be _slower_ to turn it on all the time, for one[1]. And
-that's due to fundamental design decisions of the git data structure.
-And I'm not knocking those decisions; I think they made the right
-tradeoff. But that doesn't mean we don't pay the cost for that tradeoff.
-
-And no matter what your model, renames can be annoying. On-going topics
-will have a painful rebase or merge. And people looking at history will
-have to deal with the code-base having different names at different
-points. Yeah, you can say it's all just "content", but the filenames we
-put things in are actually useful.
-
-So I don't think it's wrong to say "renames are a pain, and so should
-not be done lightly". I do think it's wrong to say "renames can't be
-done"; I just the cost needs to be considered.
-
--Peff
-
-[1] I'd be interested to see how much we can get around that slowness
-using a notes-cache.
+Dmitry
