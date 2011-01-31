@@ -1,60 +1,84 @@
-From: Nicolas Pitre <nico@fluxnic.net>
-Subject: Re: [1.8.0] reorganize the mess that the source tree has become
-Date: Mon, 31 Jan 2011 17:37:23 -0500 (EST)
-Message-ID: <alpine.LFD.2.00.1101311734140.8580@xanadu.home>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
- <7vwrll57ha.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1101311459000.8580@xanadu.home>
- <20110131210045.GB14419@sigill.intra.peff.net>
- <alpine.LFD.2.00.1101311621150.8580@xanadu.home>
- <7vpqrc4t1s.fsf@alter.siamese.dyndns.org>
+From: Sam Vilain <sam@vilain.net>
+Subject: Re: [RFC] fast-import: notemodify (N) command
+Date: Tue, 01 Feb 2011 11:37:41 +1300
+Message-ID: <4D4739B5.6080103@vilain.net>
+References: <1255083738-23263-1-git-send-email-johan@herland.net> <1255083738-23263-8-git-send-email-johan@herland.net> <20110131183350.GB31826@burratino> <AANLkTi=3P0xc3mJj5Tsg_P26SAXmgVfCk1VeYQ=k2UtT@mail.gmail.com> <20110131190128.GC32374@burratino> <AANLkTikxFSa1CSujk2zgh4K8SWCuKHRrDRFVNt9JPGo0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Jan 31 23:37:32 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	vcs-fast-import-devs@lists.launchpad.net, git@drmicha.warpmail.net,
+	chriscool@tuxfamily.org, Johannes.Schindelin@gmx.de,
+	trast@student.ethz.ch, Johan Herland <johan@herland.net>,
+	gitster@pobox.com, git@vger.kernel.org,
+	Augie Fackler <durin42@gmail.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Jan 31 23:37:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pk2NI-00054o-4R
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 23:37:32 +0100
+	id 1Pk2Ne-0005Fb-PE
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 23:37:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756562Ab1AaWh0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Jan 2011 17:37:26 -0500
-Received: from relais.videotron.ca ([24.201.245.36]:53366 "EHLO
-	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754328Ab1AaWhZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jan 2011 17:37:25 -0500
-Received: from xanadu.home ([66.130.28.92]) by vl-mh-mrz21.ip.videotron.ca
- (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
- with ESMTP id <0LFW0011HS5O2M10@vl-mh-mrz21.ip.videotron.ca> for
- git@vger.kernel.org; Mon, 31 Jan 2011 17:37:00 -0500 (EST)
-X-X-Sender: nico@xanadu.home
-In-reply-to: <7vpqrc4t1s.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
+	id S1756537Ab1AaWhu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Jan 2011 17:37:50 -0500
+Received: from mx3.orcon.net.nz ([219.88.242.53]:50610 "EHLO mx3.orcon.net.nz"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756354Ab1AaWht (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jan 2011 17:37:49 -0500
+Received: from Debian-exim by mx3.orcon.net.nz with local (Exim 4.69)
+	(envelope-from <sam@vilain.net>)
+	id 1Pk2NX-0004Id-RR
+	for git@vger.kernel.org; Tue, 01 Feb 2011 11:37:47 +1300
+Received: from [60.234.254.246] (helo=mail.utsl.gen.nz)
+	by mx3.orcon.net.nz with esmtp (Exim 4.69)
+	(envelope-from <sam@vilain.net>)
+	id 1Pk2NX-0004IS-Jk
+	for git@vger.kernel.org; Tue, 01 Feb 2011 11:37:47 +1300
+Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
+	id 7D6EC2E023; Tue,  1 Feb 2011 11:37:47 +1300 (NZDT)
+X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on naos.lan
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
+	autolearn=unavailable version=3.3.1
+Received: from [192.168.1.54] (arcturus.lan [192.168.1.54])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(No client certificate requested)
+	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 0BC322E021;
+	Tue,  1 Feb 2011 11:37:42 +1300 (NZDT)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
+In-Reply-To: <AANLkTikxFSa1CSujk2zgh4K8SWCuKHRrDRFVNt9JPGo0@mail.gmail.com>
+X-Enigmail-Version: 1.1.2
+X-DSPAM-Check: by mx3.orcon.net.nz on Tue, 01 Feb 2011 11:37:47 +1300
+X-DSPAM-Result: Innocent
+X-DSPAM-Processed: Tue Feb  1 11:37:47 2011
+X-DSPAM-Confidence: 0.5564
+X-DSPAM-Probability: 0.0000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165768>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165769>
 
-On Mon, 31 Jan 2011, Junio C Hamano wrote:
+On 01/02/11 10:19, Sverre Rabbelier wrote:
+> That's another thing Augie mentioned that he (and I guess the hg
+> community at large) dislikes, the fact that they're not propagated.
 
-> If we make the top-level directory lean enough, we probably can tab
-> complete after typing just "cd t" to go to testsuite/ or tests/ or
-> whatever you come up with, so "more typing" is not a huge issue to me
-> personally.
-> 
-> I however think the directory name "t/" is not our invention but what we
-> took from somebody else (perhaps Perl?), and I suspect some people expect
-> to find tests under there since we have had them there for a long time.
+This is not a "fact".
 
-If those people are not able to figure out that "testsuite" means where 
-tests are, especially within a lean top directory, then we might 
-question the reliability of the tests they might contribute.
+If you add configuration in your git config to fetch and push the refs,
+then they are propagated.
 
+Just because you disagree with the current interface or defaults doesn't
+mean the design is wrong.  I hear the same arguments against submodules,
+which is a shame because the message isn't getting through to people
+that the porcelain can and should be extended to make people's lives
+easier.  It's just that instead of second-guessing what shape they
+should take, the design and plumbing are written so that people can
+write scripts to make it work.
 
-Nicolas
+It's a slower path, but you end up with a better tool at the end of it.
+
+Sam
