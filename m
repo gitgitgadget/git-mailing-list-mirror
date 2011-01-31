@@ -1,81 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
+From: Jeff King <peff@peff.net>
 Subject: Re: [1.8.0] reorganize the mess that the source tree has become
-Date: Mon, 31 Jan 2011 12:57:02 -0800
-Message-ID: <7vvd144wrl.fsf@alter.siamese.dyndns.org>
+Date: Mon, 31 Jan 2011 16:00:45 -0500
+Message-ID: <20110131210045.GB14419@sigill.intra.peff.net>
 References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
  <7vwrll57ha.fsf@alter.siamese.dyndns.org>
  <alpine.LFD.2.00.1101311459000.8580@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
 To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Mon Jan 31 21:57:20 2011
+X-From: git-owner@vger.kernel.org Mon Jan 31 22:00:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pk0oH-0003do-7I
-	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 21:57:17 +0100
+	id 1Pk0rn-0005jV-Gh
+	for gcvg-git-2@lo.gmane.org; Mon, 31 Jan 2011 22:00:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755994Ab1AaU5M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Jan 2011 15:57:12 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:56230 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753746Ab1AaU5L (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jan 2011 15:57:11 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 431C541B4;
-	Mon, 31 Jan 2011 15:58:03 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=Ey0PB0EW+CIrt6AVdkQfa9pUWhQ=; b=TvXD5R
-	mdllNMYizJ1zAYX122V3ta5NrfoZyMKOfk32+uLwNu/3CRCIaJN34cjEyFGbNr4/
-	t4Kgil+cH/LOGnRLZ8OH+FhPhCueoZm4i3dgx42zyBFw8ktt5OCegJ5oq3w9jmJS
-	UwT9GT8WDYAm/LQWLlUroQHoUmvtgEWnoS1Xk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=V90Tuu+M6dWFlHcfPuD2o7gAYwJtD+jr
-	l+3Q0sAYmCUFJVPS74viAwnxtAYeIvR9Uw+Ha3NzOl39YD+mMXVs9ZfhgVXsGz8h
-	j5VNo4dMoXUOJEyq7O8fc4srwDUWSaWQZipI0VfSu1h0rLeXcQVgp1BGKp+pWyw+
-	B2x1DPw/nbk=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1CE2041B2;
-	Mon, 31 Jan 2011 15:58:01 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id EA71941AE; Mon, 31 Jan 2011
- 15:57:56 -0500 (EST)
-In-Reply-To: <alpine.LFD.2.00.1101311459000.8580@xanadu.home> (Nicolas
- Pitre's message of "Mon\, 31 Jan 2011 15\:28\:37 -0500 \(EST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CA155A80-2D7C-11E0-B985-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
+	id S1756238Ab1AaVAt (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Jan 2011 16:00:49 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:58094 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754062Ab1AaVAt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jan 2011 16:00:49 -0500
+Received: (qmail 13538 invoked by uid 111); 31 Jan 2011 21:00:48 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 31 Jan 2011 21:00:48 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 31 Jan 2011 16:00:45 -0500
+Content-Disposition: inline
+In-Reply-To: <alpine.LFD.2.00.1101311459000.8580@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165751>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165752>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
+On Mon, Jan 31, 2011 at 03:28:37PM -0500, Nicolas Pitre wrote:
 
+> We do have subdirectories for documentation, tests, contributions, etc.  
+> But a sizeable part of the tree is just a big splat of source files 
+> dumped right in the root of the tree.
+> 
+> So I'd suggest doing the following:
+> 
 > 1) Create a src/ directory and move *.c, *.h, *.sh, *.perl, *.py and 
 >    the builtin directory from the root directory to it.
->
-> 2) Create a build/ directory, or bin/ if prefered, to hold the result of 
->    the build.
->...
-> 6) And fix up all the Makefiles to cope with the above movements.
->
-> What do you think?
 
-Knee-jerk reaction: not very motivated to make the top-level directory
-just a skeleton that holds various directories with a handful of
-administrative files like Makefile, README, etc.  Under your proposal, the
-bulk of the current content at the top would simply move to another single
-directory anyway, so I don't immediately see much point of such a move,
-other than adding merge burden on me and rebase burden on others, that
-is.
+Wouldn't this just be the same giant splat of source files, but in a
+different tree? I don't really see the advantage, and it seems like an
+extra annoyance. Besides being just one more directory to go up and
+down, it does make history browsing more annoying. As much as I love
+git's "don't record renames" philosophy, our handling of renames on the
+viewing side is often annoying. I already get annoyed sometimes
+following stuff across the s!builtin-!builtin/! change. This would be
+like that but more so.
 
-But that is just a knee-jerk reaction, just to fill the "Risks:" section
-you didn't fill.  Your missing "Migration Plans" section might outline a
-clever approach to lessen the interim hurt while merging in-flight topics.
+Or maybe it is a good thing for that reason, as we will eat our own
+rename dogfood. :)
+
+> 5) Rename t/ to testsuite/ so this doesn't look like some garbage 
+>    leftover.
+
+Ugh, more typing. :P
+
+-Peff
