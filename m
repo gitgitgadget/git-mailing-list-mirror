@@ -1,94 +1,106 @@
 From: Jakub Narebski <jnareb@gmail.com>
-Subject: [1.8.0] split largest remaining scripts, gitk and gitweb
-Date: Tue, 01 Feb 2011 10:26:08 -0800 (PST)
-Message-ID: <m38vxzaa03.fsf_-_@localhost.localdomain>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
-	<7vwrll57ha.fsf@alter.siamese.dyndns.org>
-	<alpine.LFD.2.00.1101311459000.8580@xanadu.home>
+Subject: Re: Tracking empty directories
+Date: Tue, 1 Feb 2011 19:31:38 +0100
+Message-ID: <201102011931.40559.jnareb@gmail.com>
+References: <AANLkTi=gf9_618iojpYJgN_msAe-FBq-Jao=sj76VQak@mail.gmail.com> <AANLkTi=u6=mhOd9LFYRy48y41xRcXmYDtktOKoBjjMgO@mail.gmail.com> <20110201181509.GA2370@LK-Perkele-VI.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Tue Feb 01 19:26:18 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"Dmitry S. Kravtsov" <idkravitz@gmail.com>, git@vger.kernel.org,
+	Shawn Pearce <spearce@spearce.org>
+To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Tue Feb 01 19:31:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkKvi-0002L9-2o
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 19:26:18 +0100
+	id 1PkL1A-0006Dh-JX
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 19:31:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752693Ab1BAS0M (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Feb 2011 13:26:12 -0500
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:39592 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752077Ab1BAS0L (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Feb 2011 13:26:11 -0500
-Received: by ewy5 with SMTP id 5so3313111ewy.19
-        for <git@vger.kernel.org>; Tue, 01 Feb 2011 10:26:10 -0800 (PST)
+	id S1755988Ab1BASbv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 13:31:51 -0500
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:56412 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753361Ab1BASbu (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Feb 2011 13:31:50 -0500
+Received: by wwi17 with SMTP id 17so5086882wwi.1
+        for <git@vger.kernel.org>; Tue, 01 Feb 2011 10:31:49 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type;
-        bh=iVsCzGNCyhXc309iV8VwwgOYjP80Y7JSTomQDy1B3M4=;
-        b=N5+VAODco9Gy+9CG5FVlleYYKDAmXw8n6RnWJq2h25UwRgqX3G5fSd9VAjpSMPw6sk
-         UTrvCslBV4NUXW+ElqR2SwKkINl+UNf4kQ0OK+ZfVPUiIqC8GkwGb9OtJpXAD5DBKm8E
-         0eMhNYf98NFSiBHZEb47TLekgquQgRb4KgA5E=
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=o7S/nUyC5fTHIDEcBFkfvrNvu/HXOdg3kRGkjcS4PPY=;
+        b=uU8VeVvSFdLwEogsCEiYRLVGV+3X4glPpiT0BCWAIs/4khVjMJ6REXE2yR9+MRcXAJ
+         5JDEzIh1WaAladbOysk4DuTJUKqzUtAh6U/cRSVJm+4Q2pG0j9rdkAwrCVEXNhLFeZ2K
+         MDh8Dk9XvkX1WsBq3DwWBFpwNCMlMRQ+ml8sI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=Fu7yQUIswIepVu2vLJDNNc0isYTXLwy+82CmY4ybkBvH7z6EzDqmtC9AJchsjsN1/D
-         mlIfVZ0ZfvklDzMdcVuHK+ZDjfh/3zHyu8NnUGGP6R1aDNOy7kjGwx2h1Simtj7THN+d
-         4jqou/GNZ2kQHpbWXETYGrLxQaLdNMcWfJY8o=
-Received: by 10.216.150.129 with SMTP id z1mr7375320wej.113.1296584769909;
-        Tue, 01 Feb 2011 10:26:09 -0800 (PST)
-Received: from localhost.localdomain (abuz232.neoplus.adsl.tpnet.pl [83.8.197.232])
-        by mx.google.com with ESMTPS id o19sm11606051wee.26.2011.02.01.10.25.57
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=R9Gr/4C+91BaIUJYaUtfFMuzjCkOIg+xfuGWx6esP+Pv5qXe4zt34xT6Lp1ECk7u8h
+         X7IaW0zBUtogjTELodI2hznFVtJy5PjdgRIpHWAOjSY7M31maQsf1pKyFEtGr/fEzNIx
+         F5V9FjfBVXuAW0AIVqJyWlkdEH1ArPl8udJlg=
+Received: by 10.216.46.193 with SMTP id r43mr1025298web.20.1296585109196;
+        Tue, 01 Feb 2011 10:31:49 -0800 (PST)
+Received: from [192.168.1.13] (abuz232.neoplus.adsl.tpnet.pl [83.8.197.232])
+        by mx.google.com with ESMTPS id o33sm11605980wej.13.2011.02.01.10.31.46
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Feb 2011 10:26:08 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p11IP6GV014021;
-	Tue, 1 Feb 2011 19:25:17 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p11IOT1b014016;
-	Tue, 1 Feb 2011 19:24:29 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <alpine.LFD.2.00.1101311459000.8580@xanadu.home>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Tue, 01 Feb 2011 10:31:48 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <20110201181509.GA2370@LK-Perkele-VI.localdomain>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165839>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165840>
 
-Two largest files in git repository are gitk and gitweb, see the
-output of the following command
+Dnia wtorek 1. lutego 2011 19:15, Ilari Liusvaara napisa=C5=82:
+> On Wed, Feb 02, 2011 at 12:54:35AM +0700, Nguyen Thai Ngoc Duy wrote:
+> > On Wed, Feb 2, 2011 at 12:28 AM, Jonathan Nieder <jrnieder@gmail.co=
+m> wrote:
+> >=20
+> > Could it be done with an index extension? Interesting.
+> >=20
+> > > Certainly one ought to register an extension name or bump the ver=
+sion
+> > > number to avoid confusing gits that don't know about the feature.
+> >=20
+> > Index extension with lowercase name are "necessary for correct
+> > operation". Older git will abort on unknown required extensions. If
+> > you add to the main part of the index, better bump version number.
+>=20
+> Worse problem than the index: Tree entries. Those are actually transf=
+erable
+> and IIRC older (current?) git versions don't handle empty subdirector=
+ies
+> (pointing entry of type directory to empty tree hash) all too well...
 
-  $ git ls-tree --abbrev -r -t -l v1.7.4 | sort -k4,4 -n | tail
+What did you mean by "don't handle" here?  The following entry
 
-I can't say much about splitting gitk, besides the fact that git-gui
-which was of comparable size IIRC got split into smaller files; I
-guess similar thing could be done for gitk.
+  040000 tree 22d5826c087c4b9dcc72e2131c2cfb061403f7eb	empty
 
+should be not a problem; empty tree is hardcoded and also shouldn't the=
+re
+be a problem with such object.  Is the problem when checking out such t=
+ree
+(writing to index and/or working area)?
 
-There was an attempt (ultimately failed) on splitting gitweb during
-Google Summer of Code 2010.  At least providing infrastructure for
-multiple gitweb modules is very much required for adding
-code-intensive new features, like gitweb output caching.
+> Worse yet, there isn't easy way to break the tree parser to avoid cur=
+rent
+> git versions from screwing things up (IIRC, when I tested, invalid oc=
+tal
+> numbers finally broke it, invalid file types didn't do the trick)...
 
-On the other hand this might make gitweb harder to install...
+Well, then 1.8.0 version could be good place to break backwards=20
+compatibility; we did similar thing when introducing submodule entries,
+isn't it?
 
-
-Next in size is compat/nedmalloc/malloc.c.h (I don't know if it can be
-reduced in size), and git-svn.  I think we could separate core
-functionality into Git::Svn module or something, and make git-svn
-smaller (perhaps reusing some code in/from svn remote helper).
-
-
-What do you think?
--- 
+--=20
 Jakub Narebski
 Poland
-ShadeHawk on #git
