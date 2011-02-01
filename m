@@ -1,61 +1,89 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Features from GitSurvey 2010
-Date: Tue, 01 Feb 2011 21:23:08 +0100
-Message-ID: <vpqzkqfbj2r.fsf@bauges.imag.fr>
-References: <AANLkTi=gf9_618iojpYJgN_msAe-FBq-Jao=sj76VQak@mail.gmail.com>
-	<20110129231310.GA11088@burratino> <vpq62t3ejje.fsf@bauges.imag.fr>
-	<20110201184213.GF3771@burratino>
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [1.8.0] forbid full fetchspecs in git-pull
+Date: Tue, 1 Feb 2011 23:23:47 +0300
+Message-ID: <AANLkTi=YsYXTHT-3RgaFF38hwK7O6mt+Ba0bZvEHPEWM@mail.gmail.com>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
+	<201101312255.59841.trast@student.ethz.ch>
+	<AANLkTikxcd+gzeuJsQX1V5Wses8xWMnshdrOnYTvXgTq@mail.gmail.com>
+	<201102011614.57366.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Dmitry S. Kravtsov" <idkravitz@gmail.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 01 21:23:21 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Sean Estabrooks <seanlkml@sympatico.ca>,
+	=?ISO-8859-1?Q?Bj=F6rn_Steinbrink?= <B.Steinbrink@gmx.de>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Tue Feb 01 21:23:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkMkx-0007KF-Lq
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 21:23:20 +0100
+	id 1PkMlW-0007db-Gn
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 21:23:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751829Ab1BAUXO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Feb 2011 15:23:14 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:59599 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751503Ab1BAUXN (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Feb 2011 15:23:13 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p11KN6Zs019788
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 1 Feb 2011 21:23:06 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PkMkm-0008V0-FI; Tue, 01 Feb 2011 21:23:08 +0100
-In-Reply-To: <20110201184213.GF3771@burratino> (Jonathan Nieder's message of "Tue\, 1 Feb 2011 12\:42\:13 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Tue, 01 Feb 2011 21:23:06 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p11KN6Zs019788
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1297196589.67851@K9lnU/zF6ZV8LRjsDhkT5Q
+	id S1751942Ab1BAUXs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Feb 2011 15:23:48 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:44870 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751837Ab1BAUXs (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Feb 2011 15:23:48 -0500
+Received: by qyk12 with SMTP id 12so7913553qyk.19
+        for <git@vger.kernel.org>; Tue, 01 Feb 2011 12:23:47 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=s9wElTMGV+Ttz+siY24EbQa9wUjMqDpG62NMJhZm94Y=;
+        b=TimsYR34XVL10SfV8MmhKVK0A5MWLD+XxXwdR8CLjuA0dTwgbiMMdHN5Ruh2pEmyrI
+         2BHjw6VWR9Y8XL4k+bEu/scf7XLntfRfg73ueUw3dt6oiFhfaD0eyoOhylEWaR6od2At
+         cA8Bo03dCmuzkZloCXj3m8z9MJn2+oDTecGmw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=A1dVbqoNfzWPRg8zCM8Mdy3eaRK1auu1nO9V2EeQ/YEZw6FFEQE0agfSbxr6BfF4VY
+         3cN9Wpvfdsh/lrIGgZLops7YjIt2wae5e4OxAOZmnlmj+1FIOWNs3GqGWPaSI2P92oRP
+         EcOn1V9oSZxixtpWB2a3s3rkk5s7niD99gSqA=
+Received: by 10.229.189.20 with SMTP id dc20mr5572681qcb.231.1296591827361;
+ Tue, 01 Feb 2011 12:23:47 -0800 (PST)
+Received: by 10.229.213.4 with HTTP; Tue, 1 Feb 2011 12:23:47 -0800 (PST)
+In-Reply-To: <201102011614.57366.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165852>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165853>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Tue, Feb 01, 2011 at 04:14:57PM +0100, Thomas Rast wrote:
+> Dmitry Potapov wrote:
+> > As to disallowing ':' in refspec completely, I am not so sure... Not
+> > that I think it is very useful, but also I don't see how it can hurt
+> > someone provided that the target branch cannot be the current branch.
+>_
+> IRC experience shows that people, while on some topic branch, run
+>_
+>   git pull origin master:master
+>_
+> expecting it to "pull master into master" (or even worse with three
+> different branch names).  So no, the current branch safeguard does
+> not prevent the fundamental mistake.
 
-> An rcs-style workflow (lockable files absent from worktree until
-> locked) on top of git sounds fun.
+I am not sure what you mean by three different branches names. You
+referred to item 1, and I agree it is confusing, but it can be prevented
+by the current branch safeguard.
 
-They need not be absent, they can just be read-only (and lock would do
-a chmod u+w on the file).
+and the current semantic of "git pull" is very clear:
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+"git pull repo refspec" = "git fetch repo refspec && git merge FETCH_HEAD"
+
+IMHO, the full confusion was caused by incorrect information on github,
+which was corrected a long time ago. Have you heard about any new
+users who are confused by git-pull?
+
+And if we really want to disallow ':' in git pull refspec then the
+documentation should be corrected too. For instance, if there are
+options to git fetch that make no sense if you cannot specify lbranch.
+Also description of refspec should be corrected in git pull man page.
+
+
+Dmitry
