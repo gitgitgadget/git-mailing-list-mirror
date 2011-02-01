@@ -1,98 +1,80 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Porting JGit HistogramDiff
-Date: Mon, 31 Jan 2011 21:02:50 -0800
-Message-ID: <AANLkTimisConBkVqCxYjd-HKL0=grFtVT5=fbqakA59O@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: [1.8.0] Change branch --set-uptream to take an argument
+Date: Tue, 1 Feb 2011 01:57:03 -0500
+Message-ID: <AANLkTinUn2SMijphe3EmPMVOOwBjPB5ffFwwqZVxQmW0@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 01 06:03:23 2011
+X-From: git-owner@vger.kernel.org Tue Feb 01 07:57:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pk8Og-0007zX-GI
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 06:03:22 +0100
+	id 1PkABK-0005eM-EJ
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 07:57:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750859Ab1BAFDO convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 00:03:14 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:56912 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750804Ab1BAFDN convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Feb 2011 00:03:13 -0500
-Received: by fxm20 with SMTP id 20so6406431fxm.19
-        for <git@vger.kernel.org>; Mon, 31 Jan 2011 21:03:12 -0800 (PST)
-Received: by 10.103.238.3 with SMTP id p3mr2785615mur.59.1296536590310; Mon,
- 31 Jan 2011 21:03:10 -0800 (PST)
-Received: by 10.103.1.2 with HTTP; Mon, 31 Jan 2011 21:02:50 -0800 (PST)
+	id S1751248Ab1BAG5f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Feb 2011 01:57:35 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:53259 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750859Ab1BAG5e (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Feb 2011 01:57:34 -0500
+Received: by iwn9 with SMTP id 9so6192250iwn.19
+        for <git@vger.kernel.org>; Mon, 31 Jan 2011 22:57:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to:cc
+         :content-type;
+        bh=VDY2zztF6gEc31GE3cSjLzK4Smh3PXyarsEiqf5WJ4A=;
+        b=iMrfEgCao2VJkohoQAujz7bPeEwHhbs+wPXp8u1NjC2gKNyYrBEohUpryLnRa9cznx
+         15YMbAnRSUUaYe77990Y0Y/YIomHQtn3ypwCNNzIEiPFtH5SQZrGYz7DNf2jkYEfioXQ
+         8WC2gmGh6XQ8JXTX+8V67C7XUIKrbwLGgwnZk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        b=HH9h6dvDlYO6H3qJvS6cn2CF9k6i3zOb/Edz++U4P5ecQhvM6lkMSH9iZdCkJCCFMr
+         aLFyOS4fOii0I4u2a/JAeLXOXVXN7cGlEoRTPERrCQ7UfgUud54wAgJ2uWfjgTwZYFho
+         8tCmzwv8kWDsYGn+/K43x9vEbCMI/4Dfe5+9c=
+Received: by 10.231.207.71 with SMTP id fx7mr7749276ibb.127.1296543453806;
+ Mon, 31 Jan 2011 22:57:33 -0800 (PST)
+Received: by 10.231.30.65 with HTTP; Mon, 31 Jan 2011 22:57:03 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165793>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165794>
 
-On Mon, Jan 31, 2011 at 09:05, Junio C Hamano <gitster@pobox.com> wrote=
-:
->
-> =A0* Shawn Pearce says that the diff implementation JGit uses (histog=
-ram
-> =A0 diff) performs way better than the xdiff implementation we use by
-> =A0 default. It would be great if somebody can spend time taking a lo=
-ok at
-> =A0 it and possibly port it back to C-git.
+Proposal:
 
-The idea that JGit's HistogramDiff is faster came from Robin Rosenburg =
-in [1]:
+Currently it is very easy to misinvoke --set-upstream if you assume it
+takes an argument:
 
-> $ time jgit log -M -p >jgit.txt
->
-> real	0m3.880s
-> user	0m7.137s
-> sys	0m0.807s
->
-> $ time git log -M -p >cgit.txt
->
-> real	0m16.420s
-> user	0m14.936s
-> sys	0m0.899s
->
-> Seems JGit beats the pants off C Git. A quick scans implies both vers=
-ion
-> produce correct diffs, but don't post this to the Git ML list just ye=
-t :)
+e.g.
 
+  (master)$ git branch --set-upstream origin/master
+  Branch origin/master set up to track local branch master.
 
-HistogramDiff is a variation of Patience Difference[2].  Within JGit
-it is implemented as two classes:
+In order to make its usage unambiguous, and to allow it to be used w/o
+specifying the current branch, require it to take an argument like so:
 
-  HistogramDiff[3] - the top level driver
+  (master)$ git branch --set-upstream=origin/master
 
-  HistogramDiffIndex[4] - the hash table used to count and match occurr=
-ences
+(I've misinvoked it so often, I've had to train myself to always
+invoke it this way: git branch master --set-upstream origin/master)
 
+Risks:
 
-Because its based on a hash table, the hash function for lines matters
-a lot.  xdiff's hash is crap, it generates too many collisions on the
-linux-2.6 repository's source files.  We use djb's hash function,
-which you can find in our RawTextComparator class[5].  We actually
-tested a number of hash functions using a test program [6].
+Hands which have become trained to use it as it currently is, scripts, etc.
 
-I may try to port this myself, but it would be great if someone else
-beat me to it.  :-)
+Migration plan:
 
+Introduce the new syntax to the man page and git branch for 1.7.x and
+emit a warning whenever the current syntax is used. In 1.8, break the
+current syntax.
 
-[1]  http://dev.eclipse.org/mhonarc/lists/jgit-dev/msg00897.html
-[2]  http://bramcohen.livejournal.com/73318.html
-[3]  http://egit.eclipse.org/w/?p=3Djgit.git;a=3Dblob;f=3Dorg.eclipse.j=
-git/src/org/eclipse/jgit/diff/HistogramDiff.java;hb=3DHEAD
-[4]  http://egit.eclipse.org/w/?p=3Djgit.git;a=3Dblob;f=3Dorg.eclipse.j=
-git/src/org/eclipse/jgit/diff/HistogramDiffIndex.java;hb=3DHEAD
-[5]  http://egit.eclipse.org/w/?p=3Djgit.git;a=3Dblob;f=3Dorg.eclipse.j=
-git/src/org/eclipse/jgit/diff/RawTextComparator.java;hb=3DHEAD
-[6]  http://egit.eclipse.org/w/?p=3Djgit.git;a=3Dblob;f=3Dorg.eclipse.j=
-git.pgm/src/org/eclipse/jgit/pgm/debug/TextHashFunctions.java;hb=3DHEAD
+(Though I'm not sure whether the options parser allows for both
+--set-upstream and --set-upstream=<arg>)
 
---=20
-Shawn.
+j.
