@@ -1,100 +1,75 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Tracking empty directories
-Date: Wed, 2 Feb 2011 00:54:35 +0700
-Message-ID: <AANLkTi=u6=mhOd9LFYRy48y41xRcXmYDtktOKoBjjMgO@mail.gmail.com>
-References: <AANLkTi=gf9_618iojpYJgN_msAe-FBq-Jao=sj76VQak@mail.gmail.com>
- <20110129231310.GA11088@burratino> <201102011451.17456.jnareb@gmail.com> <20110201172835.GA3771@burratino>
+From: Jeff King <peff@peff.net>
+Subject: Re: [1.8.0] Remote tag namespace
+Date: Tue, 1 Feb 2011 13:14:29 -0500
+Message-ID: <20110201181428.GA6579@sigill.intra.peff.net>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	"Dmitry S. Kravtsov" <idkravitz@gmail.com>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 01 18:55:16 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 01 19:14:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkKRf-0008Mz-J1
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 18:55:15 +0100
+	id 1PkKkQ-0003P3-3E
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 19:14:38 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755990Ab1BARzK convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 12:55:10 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:56384 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755980Ab1BARzH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Feb 2011 12:55:07 -0500
-Received: by wwa36 with SMTP id 36so7306617wwa.1
-        for <git@vger.kernel.org>; Tue, 01 Feb 2011 09:55:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=RSvpSvo3Qu0ac2pSzqG7hRidjb5NJxkI2wk1/pbOEj8=;
-        b=eQauD7G3BBYKffyDbgA8Ys2EzI92O3El/rQAkTilBpRVsR/lsEbjxKan0omIDM7p7Z
-         yrE40SRk7fkvbbA9mmmmNDnIgQGnxUwO0UlmsCq+eCSGFgJ3V1Rn2AsU769vSXA0GYx1
-         gjnIx63V6fPMEQgS+Td3T7q41KlW9h5KAXDAY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=VX4r3Pb2v23XEu4cmRzxvmFMDiHodZ8VH/LFVLvabj5FmJ5h/LgSwbujtiVnPOIOmY
-         VuhbemgHpfSRisUaGg6MizP/YC4YyqpRAoJc+HL4Fhl6+428STWJIdrziml1XviBH+FF
-         mCDgVA2Li5DHx2RzZYetO6MwM9ST6kAgW/rqc=
-Received: by 10.216.52.134 with SMTP id e6mr1657576wec.49.1296582905927; Tue,
- 01 Feb 2011 09:55:05 -0800 (PST)
-Received: by 10.216.63.14 with HTTP; Tue, 1 Feb 2011 09:54:35 -0800 (PST)
-In-Reply-To: <20110201172835.GA3771@burratino>
+	id S1755715Ab1BASOc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Feb 2011 13:14:32 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:45573 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755515Ab1BASOb (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Feb 2011 13:14:31 -0500
+Received: (qmail 21076 invoked by uid 111); 1 Feb 2011 18:14:30 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 01 Feb 2011 18:14:30 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Feb 2011 13:14:29 -0500
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165836>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165837>
 
-On Wed, Feb 2, 2011 at 12:28 AM, Jonathan Nieder <jrnieder@gmail.com> w=
-rote:
-> Jakub Narebski wrote:
->
->> Also one needs to remember that this would require adding extension
->> to git index, because currently it tracks only files, and not
->> directories. =C2=A0Explicitly tracking directories in the index coul=
-d be
->> useful for other purposes...
->>
->> The major difficulty of this is IMHO not the UI, but tracking all th=
-ose
->> tricky corner cases (like directory/file conflict, etc.).
->
-> I have ideas about how to resolve those tricky corner cases, but not
-> about what the UI should look like. =C2=A0How does one go about addin=
-g a
-> directory? =C2=A0Does it ever get implicitly removed?
+On Tue, Feb 01, 2011 at 05:44:50PM +0700, Nguyen Thai Ngoc Duy wrote:
 
-I suppose a special command for it is appropriate (git-keepdir?). Many
-index-related commands are recursive by default and hard to change.
+> OK I'm not familiar with tag code, but I can try.
+> 
+> Proposal:
+> 
+> Reserve refs/remote-tags namespace to store tags from remotes. Its
+> structure is the same as in refs/remotes. When pulling tags, put them
+> in refs/remote-tags/<remote> instead of refs/tags.
+> Tag dereference code will be taught about refs/remote-tags with
+> similar deref order as in remote branches.
 
-Yes I think it should be automatically removed from index when a file
-is added inside tracked directories. Removing those files will also
-remove the containing directory though.
+There are similar questions around remote notes refs. Should there also
+be a refs/remote-notes? And there was some discussion recently about
+fetching remote replace refs.
 
-> Would this actually require an index extension, strictly speaking?
+Should we perhaps be massaging refs/remotes into a structure to handle
+all of these things? Like:
 
-Could it be done with an index extension? Interesting.
+  refs/remotes/origin/HEAD (-> refs/remotes/origin/heads/master)
+  refs/remotes/origin/heads/master
+  refs/remotes/origin/tags/v1.7.4
+  refs/remotes/origin/notes/commit
+  refs/remotes/origin/replace/f67e92af477a2255b64a1ece33d9d126e763fe9b
 
-> Certainly one ought to register an extension name or bump the version
-> number to avoid confusing gits that don't know about the feature.
+i.e., make refs/remotes/* an actual mirror of selected parts of the
+remote's refs/ hierarchy. And then figure out sane rules for merging
+those namespaces into the ref lookup procedure. For heads and tags,
+probably some tweaking of the lookup rules in dwim_ref; for
+replacements, probably you would want to manually say "I am interested
+in this replace" and copy or symref-link it into your refs/ hierarchy.
+And probably something similar with notes.
 
-Index extension with lowercase name are "necessary for correct
-operation". Older git will abort on unknown required extensions. If
-you add to the main part of the index, better bump version number.
+Obviously I haven't thought it all the way through, but it just seems a
+shame not to deal with other similar issues when looking at tags.
 
-> But after that, couldn't we (e.g.) allow the directory name (ending
-> with '/') as index entry?
-
-You could. You also need to strip '/' sometimes because certain part
-of git does not expect '/' to be there (traverse_trees or
-unpack_trees, I don't remember).
---=20
-Duy
+-Peff
