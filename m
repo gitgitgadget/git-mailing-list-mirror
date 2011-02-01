@@ -1,106 +1,93 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: Tracking empty directories
-Date: Tue, 1 Feb 2011 19:31:38 +0100
-Message-ID: <201102011931.40559.jnareb@gmail.com>
-References: <AANLkTi=gf9_618iojpYJgN_msAe-FBq-Jao=sj76VQak@mail.gmail.com> <AANLkTi=u6=mhOd9LFYRy48y41xRcXmYDtktOKoBjjMgO@mail.gmail.com> <20110201181509.GA2370@LK-Perkele-VI.localdomain>
+From: Scott Chacon <schacon@gmail.com>
+Subject: Re: [1.8.0] (v2) default "git merge" without argument to "git merge @{u}"
+Date: Tue, 1 Feb 2011 10:34:24 -0800
+Message-ID: <AANLkTimHCp_JKUw1keJoA4zD_q7Sci+rOwPeAs_T=7xH@mail.gmail.com>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
+	<7vwrll57ha.fsf@alter.siamese.dyndns.org>
+	<7vsjw957fq.fsf_-_@alter.siamese.dyndns.org>
+	<7vzkqg4x2h.fsf_-_@alter.siamese.dyndns.org>
+	<20110131225529.GC14419@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"Dmitry S. Kravtsov" <idkravitz@gmail.com>, git@vger.kernel.org,
-	Shawn Pearce <spearce@spearce.org>
-To: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Tue Feb 01 19:31:57 2011
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
+	Miles Bader <miles@gnu.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 01 19:34:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkL1A-0006Dh-JX
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 19:31:56 +0100
+	id 1PkL3g-0007ql-26
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 19:34:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755988Ab1BASbv convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 13:31:51 -0500
-Received: from mail-ww0-f42.google.com ([74.125.82.42]:56412 "EHLO
-	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753361Ab1BASbu (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Feb 2011 13:31:50 -0500
-Received: by wwi17 with SMTP id 17so5086882wwi.1
-        for <git@vger.kernel.org>; Tue, 01 Feb 2011 10:31:49 -0800 (PST)
+	id S1752607Ab1BASe0 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 13:34:26 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:33598 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752165Ab1BASe0 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Feb 2011 13:34:26 -0500
+Received: by wyb28 with SMTP id 28so6986360wyb.19
+        for <git@vger.kernel.org>; Tue, 01 Feb 2011 10:34:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=o7S/nUyC5fTHIDEcBFkfvrNvu/HXOdg3kRGkjcS4PPY=;
-        b=uU8VeVvSFdLwEogsCEiYRLVGV+3X4glPpiT0BCWAIs/4khVjMJ6REXE2yR9+MRcXAJ
-         5JDEzIh1WaAladbOysk4DuTJUKqzUtAh6U/cRSVJm+4Q2pG0j9rdkAwrCVEXNhLFeZ2K
-         MDh8Dk9XvkX1WsBq3DwWBFpwNCMlMRQ+ml8sI=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=yabWEbunf3sgV1zuex+aTVPfd0ywpS9WdFJLpi4KySc=;
+        b=GVfjjSBsoUrTwbMe0VRQutqJN7nbejEJp37PLffTwpZbyR1iJbhF0aP2knhmmihb6y
+         BhBp+LcNTecQoFQGrOwFUdBEkeZg9bpZJMWFTBLopV+p4hB0ZXk4mzI96MgmqPRHwFoe
+         gx4WGxyGIbBfhqqV9xpoclm6zz2EwI/KrXJzE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=R9Gr/4C+91BaIUJYaUtfFMuzjCkOIg+xfuGWx6esP+Pv5qXe4zt34xT6Lp1ECk7u8h
-         X7IaW0zBUtogjTELodI2hznFVtJy5PjdgRIpHWAOjSY7M31maQsf1pKyFEtGr/fEzNIx
-         F5V9FjfBVXuAW0AIVqJyWlkdEH1ArPl8udJlg=
-Received: by 10.216.46.193 with SMTP id r43mr1025298web.20.1296585109196;
-        Tue, 01 Feb 2011 10:31:49 -0800 (PST)
-Received: from [192.168.1.13] (abuz232.neoplus.adsl.tpnet.pl [83.8.197.232])
-        by mx.google.com with ESMTPS id o33sm11605980wej.13.2011.02.01.10.31.46
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Feb 2011 10:31:48 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <20110201181509.GA2370@LK-Perkele-VI.localdomain>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=E0ntyjFzmf8CC+FEyCjvz4PN+xLjrpZnoiBaKfDub5fYpIZCcRhUwsoxImCCMQ6Mry
+         sVVtaP+Wl5nDSBicpnXmVMyTVLqkPxM2mQiowp7VqLysORsV1wKgO3ji84ugkvB0uVOS
+         Xi1WhquZrcU4WR1rHXR/WXNRQeM+QFVJh7+eI=
+Received: by 10.216.150.134 with SMTP id z6mr7687361wej.27.1296585264733; Tue,
+ 01 Feb 2011 10:34:24 -0800 (PST)
+Received: by 10.216.239.135 with HTTP; Tue, 1 Feb 2011 10:34:24 -0800 (PST)
+In-Reply-To: <20110131225529.GC14419@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165840>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165841>
 
-Dnia wtorek 1. lutego 2011 19:15, Ilari Liusvaara napisa=C5=82:
-> On Wed, Feb 02, 2011 at 12:54:35AM +0700, Nguyen Thai Ngoc Duy wrote:
-> > On Wed, Feb 2, 2011 at 12:28 AM, Jonathan Nieder <jrnieder@gmail.co=
-m> wrote:
-> >=20
-> > Could it be done with an index extension? Interesting.
-> >=20
-> > > Certainly one ought to register an extension name or bump the ver=
-sion
-> > > number to avoid confusing gits that don't know about the feature.
-> >=20
-> > Index extension with lowercase name are "necessary for correct
-> > operation". Older git will abort on unknown required extensions. If
-> > you add to the main part of the index, better bump version number.
->=20
-> Worse problem than the index: Tree entries. Those are actually transf=
-erable
-> and IIRC older (current?) git versions don't handle empty subdirector=
-ies
-> (pointing entry of type directory to empty tree hash) all too well...
+Hey,
 
-What did you mean by "don't handle" here?  The following entry
+On Mon, Jan 31, 2011 at 2:55 PM, Jeff King <peff@peff.net> wrote:
+> On Mon, Jan 31, 2011 at 12:50:30PM -0800, Junio C Hamano wrote:
+>
+>> Perhaps I should start a new directory in todo branch (say, 1.8.0), =
+accept
+>> patches from people? =C2=A0I'd grudgingly admit that using Wiki on k=
+=2Eorg may be
+>> less burdensome (I hate editing inside the browser myself), but I'd =
+want
+>> to keep the mailing list the center of discussion and am afraid that
+>> forcing people to go to Wiki would fragment the discussion.
+>
+> I really wish we had a git-backed wiki. I also hate using the browser
+> for such things (though browser extensions to edit textareas in a Rea=
+l
+> Editor at least make it tolerable, it still ends up clunky).
+>
+> GitHub's wiki gets this right. I'm not saying we should host our wiki
+> there (well, it _would_ make setting it up pretty damn easy). But the=
+ir
+> wiki system (gollum) is open-source, albeit in ruby. And surely there
+> are other git-backed alternatives (it's been a while since I've looke=
+d).
 
-  040000 tree 22d5826c087c4b9dcc72e2131c2cfb061403f7eb	empty
+If you want to use the wiki on the git/git repo on GitHub that is
+being mirrored from the canonical repository, I've added Junio and
+peff to the account.  If you want to use that wiki, anyone with a
+github account can edit wiki pages on the site or clone and edit it
+locally and push changes up.  You can also turn off site edits so
+people have to send Junio a patch instead.  It's up to you guys, but
+the access is there now if you want.
 
-should be not a problem; empty tree is hardcoded and also shouldn't the=
-re
-be a problem with such object.  Is the problem when checking out such t=
-ree
-(writing to index and/or working area)?
-
-> Worse yet, there isn't easy way to break the tree parser to avoid cur=
-rent
-> git versions from screwing things up (IIRC, when I tested, invalid oc=
-tal
-> numbers finally broke it, invalid file types didn't do the trick)...
-
-Well, then 1.8.0 version could be good place to break backwards=20
-compatibility; we did similar thing when introducing submodule entries,
-isn't it?
-
---=20
-Jakub Narebski
-Poland
+Scott
