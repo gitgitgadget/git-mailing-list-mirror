@@ -1,87 +1,102 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Tracking empty directories
-Date: Tue, 1 Feb 2011 11:28:35 -0600
-Message-ID: <20110201172835.GA3771@burratino>
+From: Shawn Pearce <spearce@spearce.org>
+Subject: Re: Features from GitSurvey 2010
+Date: Tue, 1 Feb 2011 09:34:40 -0800
+Message-ID: <AANLkTi=KUpYJBRMp9ti0h+g6a0iTw4D113rTgfTpR8C4@mail.gmail.com>
 References: <AANLkTi=gf9_618iojpYJgN_msAe-FBq-Jao=sj76VQak@mail.gmail.com>
- <20110129231310.GA11088@burratino>
- <201102011451.17456.jnareb@gmail.com>
+ <20110129231310.GA11088@burratino> <201102011451.17456.jnareb@gmail.com>
+ <AANLkTinPAL2rEUMe-tRGFxSQ0-gfAJvSO7WW+f+2Fd2u@mail.gmail.com> <AANLkTi=_DPSp2P3MuFOPgua2nH7U+RUt4AfAHSyPVv-G@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Dmitry S. Kravtsov" <idkravitz@gmail.com>, git@vger.kernel.org,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 01 18:28:55 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"Dmitry S. Kravtsov" <idkravitz@gmail.com>, git@vger.kernel.org
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 01 18:35:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkK29-0007Ci-4h
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 18:28:53 +0100
+	id 1PkK8J-0002Ug-Sg
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 18:35:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754041Ab1BAR2p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Feb 2011 12:28:45 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:63976 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752654Ab1BAR2o (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Feb 2011 12:28:44 -0500
-Received: by qwa26 with SMTP id 26so6932220qwa.19
-        for <git@vger.kernel.org>; Tue, 01 Feb 2011 09:28:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=lFkpSZe7xBYArv0l78X85umF2Bd0RDIFmsG3k6l4LVU=;
-        b=Qr4NjmKYpEcmfzX7wmd2qwxpyv5rDsK1VXaCp1ozKu1MZfy+zJ5OvRYw0ylu293v9e
-         hwMCYcJCmv0TucSPGGCMLBYvG/auEQeCzeNTWxEtGHJ6UBNc8PrLZlUaq9zG0/6mv1Uf
-         tn1G5nJL+TSrnxPl+uBncQzTrugfoPlVa7Dr4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=mW1TjpbcZjf5JLpYSoZF10cocZkUvFzk7txYb/4dUOMQ8we8iNamVGpmO4B/MZCasn
-         biV31dN7zuEadXyLOvp5FvDOqHGLRBvGACs9f1kVL89N/AXHKfTAOSSSjn2yBh5+hr9y
-         hS4hLYXbTmuvcHDFstcycwiHGc99PknJ7r2Xk=
-Received: by 10.224.20.67 with SMTP id e3mr2114182qab.183.1296581324262;
-        Tue, 01 Feb 2011 09:28:44 -0800 (PST)
-Received: from burratino (adsl-69-209-75-28.dsl.chcgil.ameritech.net [69.209.75.28])
-        by mx.google.com with ESMTPS id y17sm15783346qci.33.2011.02.01.09.28.41
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 01 Feb 2011 09:28:42 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <201102011451.17456.jnareb@gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1755795Ab1BARfE convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 12:35:04 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:44809 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752059Ab1BARfC convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Feb 2011 12:35:02 -0500
+Received: by gxk9 with SMTP id 9so2586136gxk.19
+        for <git@vger.kernel.org>; Tue, 01 Feb 2011 09:35:01 -0800 (PST)
+Received: by 10.103.246.14 with SMTP id y14mr3363610mur.77.1296581700884; Tue,
+ 01 Feb 2011 09:35:00 -0800 (PST)
+Received: by 10.103.1.2 with HTTP; Tue, 1 Feb 2011 09:34:40 -0800 (PST)
+In-Reply-To: <AANLkTi=_DPSp2P3MuFOPgua2nH7U+RUt4AfAHSyPVv-G@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165831>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165832>
 
-Jakub Narebski wrote:
-
-> Also one needs to remember that this would require adding extension
-> to git index, because currently it tracks only files, and not 
-> directories.  Explicitly tracking directories in the index could be 
-> useful for other purposes...
+On Tue, Feb 1, 2011 at 09:11, Nguyen Thai Ngoc Duy <pclouds@gmail.com> =
+wrote:
+> On Tue, Feb 1, 2011 at 11:27 PM, Shawn Pearce <spearce@spearce.org> w=
+rote:
+>> On Tue, Feb 1, 2011 at 05:51, Jakub Narebski <jnareb@gmail.com> wrot=
+e:
+>>>
+>>>> > resumable clone/fetch (and other remote operations)
+>>>>
+>>>> Jakub Narebski seems to be interested in this and Nicolas Pitre ha=
+s
+>>>> given some good advice about it. =A0You can get something usable t=
+oday
+>>>> by putting up a git bundle for download over HTTP or rsync, so it =
+is
+>>>> possible that this just involves some UI (porcelain) and documenta=
+tion
+>>>> work to become standard practice.
+>>>
+>>> I wouldn't say that: it is Nicolas Pitre (IIRC) who was doing the w=
+ork;
+>>> I was only interested party posting comments, but no code.
+>>>
+>>> Again, this feature is not very easy to implement, and would requir=
+e
+>>> knowledge of git internals including "smart" git transport ("Pro Gi=
+t"
+>>> book can help there).
+>>
+>> I think Nico and I have mostly solved this with the pack caching ide=
+a.
+>> =A0If we cache the pack file, we can resume anywhere in about 97% of=
+ the
+>> transfer. =A0The first 3% cannot be resumed easily, its back to the =
+old
+>> "git cannot be resumed" issue. =A0Fixing that last 3% is incredibly
 >
-> The major difficulty of this is IMHO not the UI, but tracking all those
-> tricky corner cases (like directory/file conflict, etc.).
+> I thought the cached pack contained anything and for initial clone, w=
+e
+> simply send the pack. What is this 3%? Commit list? Initial commit?
 
-I have ideas about how to resolve those tricky corner cases, but not
-about what the UI should look like.  How does one go about adding a
-directory?  Does it ever get implicitly removed?
+Its the recent changes.  If the cached pack starts from the tip of
+master, its probably 0%.  But if the repository owner pushes new
+changes since the cached pack was created, these are sent as a thin
+pack in front of the cached pack... and make up that ~3% guess.  For
+linux-2.6 I tested a 2 week period when the merge window as open right
+after a release, and the new delta was about 3% of the overall
+repository size.
 
-Would this actually require an index extension, strictly speaking?
-Certainly one ought to register an extension name or bump the version
-number to avoid confusing gits that don't know about the feature.
-But after that, couldn't we (e.g.) allow the directory name (ending
-with '/') as index entry?
+> Narrow/Subtree clone is still just an idea, but can pack cache suppor=
+t
+> be made to resumable initial narrow clone too?
 
-A related question is backward compatibility (both for alternative git
-implementations and for scripts that did not know that "git ls-files"
-might mention an empty directory) which somehow seems less
-daunting. ;-)
+This would be very hard to do.  We could do cached packs for a popular
+set of path specifications (e.g. Documentation/ if documentation only
+editing is common), but once we start getting random requests for path
+specifications that we cannot predict in advance and pre-pack we'd
+have to fall back to the normal enumerate code path.
 
-Jonathan
+--=20
+Shawn.
