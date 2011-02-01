@@ -1,70 +1,107 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 3/3] vcs-svn: Refactor dump_export code into dispatch
- table
-Date: Tue, 01 Feb 2011 13:29:08 -0800
-Message-ID: <7vd3nbzbob.fsf@alter.siamese.dyndns.org>
-References: <1296570403-9082-1-git-send-email-artagnon@gmail.com>
- <1296570403-9082-4-git-send-email-artagnon@gmail.com>
- <20110201174241.GB3771@burratino>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: Features from GitSurvey 2010
+Date: Tue, 01 Feb 2011 16:36:53 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1102011542190.8580@xanadu.home>
+References: <AANLkTi=gf9_618iojpYJgN_msAe-FBq-Jao=sj76VQak@mail.gmail.com>
+ <20110129231310.GA11088@burratino> <201102011451.17456.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Ramkumar Ramachandra <artagnon@gmail.com>,
-	Git List <git@vger.kernel.org>,
-	David Barr <david.barr@cordelta.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 01 22:29:48 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	"Dmitry S. Kravtsov" <idkravitz@gmail.com>, git@vger.kernel.org
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 01 22:37:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkNnI-0005zu-5a
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 22:29:48 +0100
+	id 1PkNuO-0001UU-8u
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 22:37:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753191Ab1BAV3W (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Feb 2011 16:29:22 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:53014 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752534Ab1BAV3W (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Feb 2011 16:29:22 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 85B2A45E6;
-	Tue,  1 Feb 2011 16:30:13 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; s=
-	sasl; bh=Pnuu+P943a9j4NsdokJW5EqjzUw=; b=wXnwtASQjMid88c22+W9nRc
-	i1SSAOKbskIkn6fcaZlM2kokhAKC0Mpmh7YpDCIIgNhHtdBmeEWGfPS8ijJCpeMZ
-	/elWlENy06z56/x5JlVdWD3Prxh/KaeZMJgKnyDxLA+GEalNzl+m+gjn22X9BVPI
-	O5d627yMfZNMvSvuhYDc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:message-id:mime-version:content-type; q=
-	dns; s=sasl; b=UauQ0CEF15cU/nxVX2B3/yT3+eWeBXsxZ/MUmIRvjaKDKrRDn
-	z45I5FJb8zHUruzxBfYtg1dLpmWnK+w5XMMPTa2vgy4ExDzc/DVPzKLkav5K2rjI
-	yHouD1qqmiBqL5oeX2mAHfcu3ZSHqyD451RAlUTUSYvj4+mY/CN6L4IS8A=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 356C145E4;
-	Tue,  1 Feb 2011 16:30:08 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9207D45E0; Tue,  1 Feb 2011
- 16:30:01 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 71249980-2E4A-11E0-A04D-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
+	id S1751989Ab1BAVgy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Feb 2011 16:36:54 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:18910 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753283Ab1BAVgy (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Feb 2011 16:36:54 -0500
+Received: from xanadu.home ([66.130.28.92]) by vl-mh-mrz21.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0LFY00JINK0V79E0@vl-mh-mrz21.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 01 Feb 2011 16:36:31 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <201102011451.17456.jnareb@gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165861>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165862>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+On Tue, 1 Feb 2011, Jakub Narebski wrote:
+> On Sun, 30 Jan 2011, Jonathan Nieder wrote:
+> > Dmitry S. Kravtsov wrote:
+> > 
+> > > resumable clone/fetch (and other remote operations)
+> > 
+> > Jakub Narebski seems to be interested in this and Nicolas Pitre has
+> > given some good advice about it.  You can get something usable today
+> > by putting up a git bundle for download over HTTP or rsync, so it is
+> > possible that this just involves some UI (porcelain) and documentation
+> > work to become standard practice.
+> 
+> I wouldn't say that: it is Nicolas Pitre (IIRC) who was doing the work;
+> I was only interested party posting comments, but no code.
 
-> Heh.  I think that Junio was suggesting making the _parser_
-> table-driven, meaning something like
->
-> 	... node_kinds[] = {
-> 		{ "100644", sizeof("100644"), "file" },
-> ...
-> 	};
+No, I'm not working on that.  I provided suggestions on how to go about 
+it in the past:
 
-Yes, and thanks.
+1) The git-archive based solution:
+   http://article.gmane.org/gmane.comp.version-control.git/126431
+   Relatively simple to implement, with questionable efficiency if you 
+   care about the full history, but perfectly suited for shallow clones 
+   which is what people with flaky connections should aim for anyway.
+
+2) The bundle based solution:
+   http://article.gmane.org/gmane.comp.version-control.git/164699
+   (see towards the end of the message)
+   This was about BitTorrent distribution, but any resumable transport 
+   can be applied to the bundle.
+   Extremely simple to implement, as this all can be scripted on top of 
+   existing tools.  Good for the bulk of history, but there is always a 
+   risk for problems during the update of the repository from the 
+   bundle's state up to the most recent commits which has to fall back 
+   to the non resumable smart Git protocol.
+
+There is also some possibility that the cache pack work might be 
+leveraged to provide a resumable clone solution similar to #2 above, but 
+that would of course share the same flaws.
+
+> Again, this feature is not very easy to implement, and would require 
+> knowledge of git internals including "smart" git transport ("Pro Git"
+> book can help there).
+
+The two proposed solutions above require no prior knowledge of the smart 
+Git protocol, and they should be pretty simple to implement. Certainly 
+in the reach of a GSOC student.
+
+> > > GitTorrent Protocol, or git-mirror
+> > 
+> > Sam Vilain and Jonas Fonseca did some good work on this, but it's
+> > stalled.
+> 
+> There was some recent discussion on this on git mailing llist, but
+> without any code.
+> 
+> One would need to know similar areas as for "resumable clone" feature.
+> Plus some knowledge on P2P transport in GitTorrent case.
+
+Again, please see 
+
+http://article.gmane.org/gmane.comp.version-control.git/164699
+
+This is simple, and with guaranteed results.  Why no one was interested 
+in implementing that yet I don't know.
+
+
+Nicolas
