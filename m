@@ -1,94 +1,75 @@
-From: Marc Branchaud <marcnarc@xiplink.com>
-Subject: [1.8.0] Tag namespaces
-Date: Tue, 01 Feb 2011 09:54:24 -0500
-Message-ID: <4D481EA0.9090802@xiplink.com>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org> <AANLkTikeqsg+qJ0z4iQ6ZmKL=_HB8YX_z20L=dFFApmA@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [1.8.0] Unify "pathspec" semantics
+Date: Tue, 1 Feb 2011 21:56:06 +0700
+Message-ID: <AANLkTinQBQaL0zE+EYAADPBhroi71sgKAcprCjLy_SKB@mail.gmail.com>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org>
+ <7voc6x57el.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 01 15:55:05 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 01 15:57:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkHdJ-0000tr-G1
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 15:55:05 +0100
+	id 1PkHfE-00025C-CJ
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 15:57:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757327Ab1BAOy2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Feb 2011 09:54:28 -0500
-Received: from smtp132.iad.emailsrvr.com ([207.97.245.132]:48626 "EHLO
-	smtp132.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757324Ab1BAOy0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Feb 2011 09:54:26 -0500
-Received: from localhost (localhost.localdomain [127.0.0.1])
-	by smtp53.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 7F6B958669;
-	Tue,  1 Feb 2011 09:54:25 -0500 (EST)
-X-Virus-Scanned: OK
-Received: by smtp53.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 07F07586AB;
-	Tue,  1 Feb 2011 09:54:21 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
-In-Reply-To: <AANLkTikeqsg+qJ0z4iQ6ZmKL=_HB8YX_z20L=dFFApmA@mail.gmail.com>
+	id S1757319Ab1BAO4j convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 09:56:39 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:62260 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755999Ab1BAO4i convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Feb 2011 09:56:38 -0500
+Received: by wyb28 with SMTP id 28so6767800wyb.19
+        for <git@vger.kernel.org>; Tue, 01 Feb 2011 06:56:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=Ii3feHDa3B9z8NLUPs1noUO103lRlhBqBJ+hNppI0dc=;
+        b=sA9zvA5qcQGgFCA7B3uiTt32ay9mZWSLxrzBaylRrZy/ii/CDbJ77SqkWx9oD0bu/8
+         saHzoRef87lkQRwpNpoYvRChIrX4PofOUMKwIk7nHeFNeZjChpblGnPUkYnT8N1RWIRU
+         a16e6dPB5JtxQgGzHYm4zh4bt7pcofRRA9Vbo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=DUDn34grWmBBvY9HTBSV7DX56zyW6Y2XAEEjmYOkcxaPYRNk/0EMonoUK3xDojM4cg
+         pRisUjz67iR/92NZtTLBAeU15XXY/RSt8hEqhgInf1jzV82INKiiRj9Pps+8lDoG7viW
+         eh81oxP2DtteDmOotOqwCBsGIR8B9T66nMRpA=
+Received: by 10.216.169.71 with SMTP id m49mr7541762wel.4.1296572196812; Tue,
+ 01 Feb 2011 06:56:36 -0800 (PST)
+Received: by 10.216.63.14 with HTTP; Tue, 1 Feb 2011 06:56:06 -0800 (PST)
+In-Reply-To: <7voc6x57el.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165813>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165814>
 
-On 11-01-31 10:20 PM, Nguyen Thai Ngoc Duy wrote:
-> On Tue, Feb 1, 2011 at 12:05 AM, Junio C Hamano <gitster@pobox.com> wrote:
->> Now the 1.7.4 release is out, I'd like people to help thinking about the
->> next cycle(s).
->>
->> As a discussion-starter, here are my random wishes.  Even though this does
->> not attempt to be exhaustive, keeping the number of goals manageably small
->> may help us focus.
-> 
-> Another random wish, which does not come with a proposal. How about
-> tag namespace (ie. tags from a remote stay in remote namespace)?
+On Tue, Feb 1, 2011 at 12:07 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Some projects may track a file whose name is asterisk (e.g. "foo/*") =
+and
+> output from "git log 'foo/*'" would look different. =C2=A0Before the =
+change,
+> only commits that touch that exact path would be shown, but after the
+> change, any commit that touch a path underneath "foo/" directory will=
+ be
+> shown. =C2=A0This is a backward incompatible change.
 
-I had just started writing up such a proposal yesterday.  What I have so far
-is pretty preliminary:
+Can we support quoting wildcards? I can imagine a file name such as
+'***DO NOT DO IT***'. People who wish to match exactly that file would
+have hard time ahead without a way to tell git those stars are
+literal.
 
-
-Proposal:
-
-Change tag refspecs to distinguish between remote and local tags.  An
-unadorned tag "foo" could point to different commits in different
-repositories.  A remote could move/edit it's "foo" tag and have that update
-smoothly propagated to clones.
-
-I believe this was last brought up in November while discussing the refs base
-for notes:
-
-http://thread.gmane.org/gmane.comp.version-control.git/160503/focus=160655
-
-
-Risks:
-
-I think the main risk lies in breaking plain <tagname> refs, as they would
-become "origin/<tagname>" refs instead.  But I think that can be mitagated
-against (see below).
-
-The other risk folks might raise, though I disagree, is breaking the
-immutability assumption for tags.  I'm willing to debate this, though (see
-the above-linked thread).
-
-Another "risk" is that this change might be too much of an earthquake.  It
-may be something more suitable to a major release, like 2.0.
-
-
-Migration plan:
-
-Add a "tags.relative" (name TBD) configuration variable which defaults to
-false.  When tags.relative is true, "git fetch" puts any received tags under
-(location TBD) refs/remotes/<remote>/tags/.  In 1.8.0 we flip tags.realtive's
-default value.
-
-To help mitigate the risk of breaking plain "<tagname>" refs, "git rev-parse"
-can look for plain names (i.e. ones without a /) in the remote tags location.
-
-
-		M.
+A prefix/special leading symbol or cmdline option to indicate the
+given pathspec is literal is fine too (e.g "!literal:***hey***" or
+--literal "***hey***"). In fact I can extend that to support negative
+pathspecs.
+--=20
+Duy
