@@ -1,101 +1,147 @@
-From: Shawn Pearce <spearce@spearce.org>
-Subject: Re: Features from GitSurvey 2010
-Date: Tue, 1 Feb 2011 08:27:31 -0800
-Message-ID: <AANLkTinPAL2rEUMe-tRGFxSQ0-gfAJvSO7WW+f+2Fd2u@mail.gmail.com>
-References: <AANLkTi=gf9_618iojpYJgN_msAe-FBq-Jao=sj76VQak@mail.gmail.com>
- <20110129231310.GA11088@burratino> <201102011451.17456.jnareb@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	"Dmitry S. Kravtsov" <idkravitz@gmail.com>, git@vger.kernel.org
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 01 17:44:50 2011
+From: Jakub Narebski <jnareb@gmail.com>
+Subject: [PATCH 0/2] gitweb: Begin splitting gitweb
+Date: Tue,  1 Feb 2011 17:50:12 +0100
+Message-ID: <1296579016-13356-1-git-send-email-jnareb@gmail.com>
+Cc: John 'Warthog9' Hawley <warthog9@kernel.org>,
+	John 'Warthog9' Hawley <warthog9@eaglescrag.net>,
+	Jakub Narebski <jnareb@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 01 17:50:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkJLJ-00035x-Sb
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 17:44:38 +0100
+	id 1PkJRG-0007Hk-KJ
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 17:50:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751895Ab1BAQoa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 11:44:30 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:60538 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751521Ab1BAQoa convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Feb 2011 11:44:30 -0500
-Received: by gxk9 with SMTP id 9so2558671gxk.19
-        for <git@vger.kernel.org>; Tue, 01 Feb 2011 08:44:29 -0800 (PST)
-Received: by 10.103.233.7 with SMTP id k7mr3285786mur.131.1296578668557; Tue,
- 01 Feb 2011 08:44:28 -0800 (PST)
-Received: by 10.103.1.2 with HTTP; Tue, 1 Feb 2011 08:27:31 -0800 (PST)
-In-Reply-To: <201102011451.17456.jnareb@gmail.com>
+	id S1753902Ab1BAQul (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Feb 2011 11:50:41 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:41376 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751640Ab1BAQul (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Feb 2011 11:50:41 -0500
+Received: by bwz15 with SMTP id 15so6510232bwz.19
+        for <git@vger.kernel.org>; Tue, 01 Feb 2011 08:50:39 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=8vibC/PdfmMPyus9Ai8jK2IIosDdjvXs9+uao294EYY=;
+        b=Stnpm13atpX0Byg8mnAkthjmgXxBpBUnY2JI+KI5KBZIz15s31Di4tio/vZDKWe70l
+         vYzE/zXoWO9PFI3QVk5SKtkerJfNpzi7Y+a5P1fzX1VuOy1fFgHBWxKuAr979lSceU9m
+         SfLejH8cotnJi0nXv097onma4RL4k24oRdRjk=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=UgW6Y4PFyeCLxKva2sl2lxIH4yTRKLjl4GdWUIiUWdc7eDWqVObTvOVvQV5tZFO+wN
+         Za+D7YVHZOPbTgLo6xIyQ8UdIXp9pDaKcM7FDseKI1p3q1T1nWnv/SqCvD00DE1HpKmk
+         GDWmmMOSkaEsP/i++hxjAzpKJ/jnEYq8JcEbE=
+Received: by 10.204.82.32 with SMTP id z32mr6968674bkk.158.1296579039592;
+        Tue, 01 Feb 2011 08:50:39 -0800 (PST)
+Received: from localhost.localdomain (abuz232.neoplus.adsl.tpnet.pl [83.8.197.232])
+        by mx.google.com with ESMTPS id z18sm8881027bkf.20.2011.02.01.08.50.36
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 01 Feb 2011 08:50:38 -0800 (PST)
+X-Mailer: git-send-email 1.7.3
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165823>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165824>
 
-On Tue, Feb 1, 2011 at 05:51, Jakub Narebski <jnareb@gmail.com> wrote:
->
->> > resumable clone/fetch (and other remote operations)
->>
->> Jakub Narebski seems to be interested in this and Nicolas Pitre has
->> given some good advice about it. =C2=A0You can get something usable =
-today
->> by putting up a git bundle for download over HTTP or rsync, so it is
->> possible that this just involves some UI (porcelain) and documentati=
-on
->> work to become standard practice.
->
-> I wouldn't say that: it is Nicolas Pitre (IIRC) who was doing the wor=
-k;
-> I was only interested party posting comments, but no code.
->
-> Again, this feature is not very easy to implement, and would require
-> knowledge of git internals including "smart" git transport ("Pro Git"
-> book can help there).
+Gitweb is currently next to largest file (after gitk) in git sources,
+more than 220K with more than 25,000 lines.  Therefore adding any
+large feature that would require large amount of code added, like
+gitweb caching by J.H. and my rewrite of it, or "gitweb admin/write"
+[failed] GSoC 2010 project by Pavan Kumar Sunkara require for new code
+to be added as a separate module or module.  Otherwise gitweb would
+fast become unmaintainable.
 
-I think Nico and I have mostly solved this with the pack caching idea.
- If we cache the pack file, we can resume anywhere in about 97% of the
-transfer.  The first 3% cannot be resumed easily, its back to the old
-"git cannot be resumed" issue.  Fixing that last 3% is incredibly
-difficult... but resuming within the remaining 97% is a pretty simple
-extension of the protocol.  The hard part is the client side
-infrastructure to remember where we left off and restart.
+Not in all cases it would require splitting gitweb upfront.  At least
+in the case of gitweb caching it doesn't.  What must be done however
+is preparing the infrastructure for modular gitweb sources; to
+properly test such infrastructure we need at least one split gitweb
+module.
 
->> > GitTorrent Protocol, or git-mirror
->>
->> Sam Vilain and Jonas Fonseca did some good work on this, but it's
->> stalled.
->
-> There was some recent discussion on this on git mailing llist, but
-> without any code.
->
-> One would need to know similar areas as for "resumable clone" feature=
-=2E
-> Plus some knowledge on P2P transport in GitTorrent case.
 
-I think this is very similar to resumable clone.  With the cached
-pack, clients could use torrent to find it.  But right now Nico and I
-are sort of expecting a cached pack to live for about the release
-cycle of a project... e.g. only a couple of months.  I don't know if
-that can be seeded fast enough on P2P networks to make it useful to
-torrent the ~97% of the project that is the cached pack during an
-initial clone request.
+This series is intended to bring such infrastructure to gitweb, to
+prepare way for adding output caching to gitweb. Alternatively it can
+be thought as beginning of splitting gitweb into smaller submodules,
+for better maintability.
 
->> > subtree clone
->>
->> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy and Elijah Newren have don=
-e some design and
->> prototyping work.
->
-> Git mailing list archives should contain proof of concept / RFC patch=
-es
-> for this feature. =C2=A0Quite interesting.
 
-I think Junio has already started thinking about this one.
+Table of contents:
+~~~~~~~~~~~~~~~~~~
+* [PATCH (version A) 1/2] gitweb: Prepare for splitting gitweb
 
---=20
-Shawn.
+    sub __DIR__ () {
+    	File::Spec->rel2abs(join '', (File::Spec->splitpath(__FILE__))[0, 1]);
+    }
+    use lib __DIR__ . '/lib';
+
+  Advantages:
+  - no changes to t/gitweb-lib.sh, ability to run source version
+    of gitweb without any changes
+  
+  Disadvantages:
+  - supports only modules installed either alongside gitweb, or in one
+    of PERL5LIB directories; no support for installing modules not
+    alongside gitweb
+  - because we cannot rely on FindBin::again being available nor on
+    having Dir::Self installed, __DIR__ must be defined -- more code.
+ 
+* [PATCH (version B) 1/2] gitweb: Prepare for splitting gitweb
+
+    use lib $ENV{'GITWEBLIBDIR'} || "++GITWEBLIBDIR++";
+
+  Advantages:
+  - supports relocating gitweb modules (to gitweblibdir)
+  - shortest code of all the cases
+
+  Disadvantages:
+  - required changes to t/gitweb-lib.sh to pick up gitweb modules
+    by source version of gitweb
+
+* [PATCH (version C) 1/2] gitweb: Prepare for splitting gitweb
+
+    sub __DIR__ () {
+    	File::Spec->rel2abs(join '', (File::Spec->splitpath(__FILE__))[0, 1]);
+    }
+    use lib __DIR__ . '/lib';
+    use lib "++GITWEBLIBDIR++";
+
+  Advantages:
+  - can run source version of gitweb (gitweb/gitweb.perl) as a script simply
+  - supports relocating gitweb modules (to gitweblibdir)
+
+  Disadvantages:
+  - most complicated code of all cases
+
+
+* [PATCH (proof of concept) 2/2] gitweb: Create Gitweb::Util module
+
+  Something to actually test previous patch(es) with... and I guess
+  good start to splitting gitweb into smaller modules.
+
+  All versions pass "make -C gitweb test" and "make -C gitweb test-installed"
+  after "make -C gitweb install" / "make install-gitweb".
+
+
+Shortlog:
+~~~~~~~~~
+Jakub Narebski (1):
+  gitweb: Prepare for splitting gitweb
+
+Pavan Kumar Sunkara (1):
+  gitweb: Create Gitweb::Util module
+
+Diffstat (for version C):
+~~~~~~~~~~~~~~~~~~~~~~~~~
+ gitweb/Makefile           |   22 +++++-
+ gitweb/gitweb.perl        |  150 ++++-----------------------------------
+ gitweb/lib/Gitweb/Util.pm |  177 +++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 210 insertions(+), 139 deletions(-)
+ create mode 100644 gitweb/lib/Gitweb/Util.pm
+
+-- 
+1.7.3
