@@ -1,75 +1,71 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: [1.8.0] Remote tag namespace
-Date: Tue, 1 Feb 2011 13:14:29 -0500
-Message-ID: <20110201181428.GA6579@sigill.intra.peff.net>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+From: Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+Subject: Re: Tracking empty directories
+Date: Tue, 1 Feb 2011 20:15:09 +0200
+Message-ID: <20110201181509.GA2370@LK-Perkele-VI.localdomain>
+References: <AANLkTi=gf9_618iojpYJgN_msAe-FBq-Jao=sj76VQak@mail.gmail.com>
+ <20110129231310.GA11088@burratino>
+ <201102011451.17456.jnareb@gmail.com>
+ <20110201172835.GA3771@burratino>
+ <AANLkTi=u6=mhOd9LFYRy48y41xRcXmYDtktOKoBjjMgO@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Cc: Git Mailing List <git@vger.kernel.org>,
-	Nicolas Pitre <nico@fluxnic.net>
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	"Dmitry S. Kravtsov" <idkravitz@gmail.com>, git@vger.kernel.org,
+	Shawn Pearce <spearce@spearce.org>
 To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 01 19:14:39 2011
+X-From: git-owner@vger.kernel.org Tue Feb 01 19:15:40 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkKkQ-0003P3-3E
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 19:14:38 +0100
+	id 1PkKlK-00042A-PK
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 19:15:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755715Ab1BASOc (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Feb 2011 13:14:32 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:45573 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755515Ab1BASOb (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Feb 2011 13:14:31 -0500
-Received: (qmail 21076 invoked by uid 111); 1 Feb 2011 18:14:30 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Tue, 01 Feb 2011 18:14:30 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Tue, 01 Feb 2011 13:14:29 -0500
+	id S1752692Ab1BASPa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Feb 2011 13:15:30 -0500
+Received: from emh01.mail.saunalahti.fi ([62.142.5.107]:55669 "EHLO
+	emh01.mail.saunalahti.fi" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751950Ab1BASP3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Feb 2011 13:15:29 -0500
+Received: from saunalahti-vams (vs3-11.mail.saunalahti.fi [62.142.5.95])
+	by emh01-2.mail.saunalahti.fi (Postfix) with SMTP id 037158C97D;
+	Tue,  1 Feb 2011 20:15:28 +0200 (EET)
+Received: from emh06.mail.saunalahti.fi ([62.142.5.116])
+	by vs3-11.mail.saunalahti.fi ([62.142.5.95])
+	with SMTP (gateway) id A05B57F3838; Tue, 01 Feb 2011 20:15:27 +0200
+Received: from LK-Perkele-VI (a88-112-56-215.elisa-laajakaista.fi [88.112.56.215])
+	by emh06.mail.saunalahti.fi (Postfix) with ESMTP id B92DFE51A3;
+	Tue,  1 Feb 2011 20:15:21 +0200 (EET)
 Content-Disposition: inline
-In-Reply-To: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+In-Reply-To: <AANLkTi=u6=mhOd9LFYRy48y41xRcXmYDtktOKoBjjMgO@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: VAMS
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165837>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165838>
 
-On Tue, Feb 01, 2011 at 05:44:50PM +0700, Nguyen Thai Ngoc Duy wrote:
-
-> OK I'm not familiar with tag code, but I can try.
+On Wed, Feb 02, 2011 at 12:54:35AM +0700, Nguyen Thai Ngoc Duy wrote:
+> On Wed, Feb 2, 2011 at 12:28 AM, Jonathan Nieder <jrnieder@gmail.com> wrote:
 > 
-> Proposal:
+> Could it be done with an index extension? Interesting.
 > 
-> Reserve refs/remote-tags namespace to store tags from remotes. Its
-> structure is the same as in refs/remotes. When pulling tags, put them
-> in refs/remote-tags/<remote> instead of refs/tags.
-> Tag dereference code will be taught about refs/remote-tags with
-> similar deref order as in remote branches.
+> > Certainly one ought to register an extension name or bump the version
+> > number to avoid confusing gits that don't know about the feature.
+> 
+> Index extension with lowercase name are "necessary for correct
+> operation". Older git will abort on unknown required extensions. If
+> you add to the main part of the index, better bump version number.
 
-There are similar questions around remote notes refs. Should there also
-be a refs/remote-notes? And there was some discussion recently about
-fetching remote replace refs.
+Worse problem than the index: Tree entries. Those are actually transferable
+and IIRC older (current?) git versions don't handle empty subdirectories
+(pointing entry of type directory to empty tree hash) all too well...
 
-Should we perhaps be massaging refs/remotes into a structure to handle
-all of these things? Like:
+Worse yet, there isn't easy way to break the tree parser to avoid current
+git versions from screwing things up (IIRC, when I tested, invalid octal
+numbers finally broke it, invalid file types didn't do the trick)...
 
-  refs/remotes/origin/HEAD (-> refs/remotes/origin/heads/master)
-  refs/remotes/origin/heads/master
-  refs/remotes/origin/tags/v1.7.4
-  refs/remotes/origin/notes/commit
-  refs/remotes/origin/replace/f67e92af477a2255b64a1ece33d9d126e763fe9b
-
-i.e., make refs/remotes/* an actual mirror of selected parts of the
-remote's refs/ hierarchy. And then figure out sane rules for merging
-those namespaces into the ref lookup procedure. For heads and tags,
-probably some tweaking of the lookup rules in dwim_ref; for
-replacements, probably you would want to manually say "I am interested
-in this replace" and copy or symref-link it into your refs/ hierarchy.
-And probably something similar with notes.
-
-Obviously I haven't thought it all the way through, but it just seems a
-shame not to deal with other similar issues when looking at tags.
-
--Peff
+-Ilari
