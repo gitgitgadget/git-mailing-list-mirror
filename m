@@ -1,93 +1,106 @@
-From: Scott Chacon <schacon@gmail.com>
-Subject: Re: [1.8.0] (v2) default "git merge" without argument to "git merge @{u}"
-Date: Tue, 1 Feb 2011 10:34:24 -0800
-Message-ID: <AANLkTimHCp_JKUw1keJoA4zD_q7Sci+rOwPeAs_T=7xH@mail.gmail.com>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
-	<7vwrll57ha.fsf@alter.siamese.dyndns.org>
-	<7vsjw957fq.fsf_-_@alter.siamese.dyndns.org>
-	<7vzkqg4x2h.fsf_-_@alter.siamese.dyndns.org>
-	<20110131225529.GC14419@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Tracking empty directories
+Date: Tue, 1 Feb 2011 12:35:08 -0600
+Message-ID: <20110201183508.GE3771@burratino>
+References: <AANLkTi=gf9_618iojpYJgN_msAe-FBq-Jao=sj76VQak@mail.gmail.com>
+ <20110129231310.GA11088@burratino>
+ <201102011451.17456.jnareb@gmail.com>
+ <20110201172835.GA3771@burratino>
+ <AANLkTi=u6=mhOd9LFYRy48y41xRcXmYDtktOKoBjjMgO@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org,
-	Miles Bader <miles@gnu.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 01 19:34:32 2011
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	"Dmitry S. Kravtsov" <idkravitz@gmail.com>, git@vger.kernel.org,
+	Shawn Pearce <spearce@spearce.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 01 19:35:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkL3g-0007ql-26
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 19:34:32 +0100
+	id 1PkL4W-0008TO-G6
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 19:35:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752607Ab1BASe0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 13:34:26 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:33598 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752165Ab1BASe0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Feb 2011 13:34:26 -0500
-Received: by wyb28 with SMTP id 28so6986360wyb.19
-        for <git@vger.kernel.org>; Tue, 01 Feb 2011 10:34:24 -0800 (PST)
+	id S1753361Ab1BASfR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 13:35:17 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:52883 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752664Ab1BASfQ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Feb 2011 13:35:16 -0500
+Received: by qwa26 with SMTP id 26so6999461qwa.19
+        for <git@vger.kernel.org>; Tue, 01 Feb 2011 10:35:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=yabWEbunf3sgV1zuex+aTVPfd0ywpS9WdFJLpi4KySc=;
-        b=GVfjjSBsoUrTwbMe0VRQutqJN7nbejEJp37PLffTwpZbyR1iJbhF0aP2knhmmihb6y
-         BhBp+LcNTecQoFQGrOwFUdBEkeZg9bpZJMWFTBLopV+p4hB0ZXk4mzI96MgmqPRHwFoe
-         gx4WGxyGIbBfhqqV9xpoclm6zz2EwI/KrXJzE=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=2m4rxz3buR6RCAG3gVGizF1oNT3nTg59DOEp7Ftr8cU=;
+        b=rH2VQYshurIzrVJUdVduPcLsp3jqoXmYJ3XHIk3drzwCw9NjfbnMNezfS5QY17z1GS
+         kogpVXUflBg/hW/rOQUjhVerguPaXxrIoIan959biEHBqflTAjycCr5KKSOZ0OQjSqNS
+         sTWWL1jEp1pCVEyvXt69jgIfOUxfDMoradwII=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=E0ntyjFzmf8CC+FEyCjvz4PN+xLjrpZnoiBaKfDub5fYpIZCcRhUwsoxImCCMQ6Mry
-         sVVtaP+Wl5nDSBicpnXmVMyTVLqkPxM2mQiowp7VqLysORsV1wKgO3ji84ugkvB0uVOS
-         Xi1WhquZrcU4WR1rHXR/WXNRQeM+QFVJh7+eI=
-Received: by 10.216.150.134 with SMTP id z6mr7687361wej.27.1296585264733; Tue,
- 01 Feb 2011 10:34:24 -0800 (PST)
-Received: by 10.216.239.135 with HTTP; Tue, 1 Feb 2011 10:34:24 -0800 (PST)
-In-Reply-To: <20110131225529.GC14419@sigill.intra.peff.net>
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=joafJn8nPdDiXwlIK+WcEXQcoWITO5xfJ+2qNv5ZLHRnUL9e0xOjPGupJ0Hw1sU/t1
+         6XgLnDvEJgWfsyFgRoaTzN20gjTx6m1pPhiSgRzjkHzwtS0pFfbRKUIen43JMH757aJK
+         3Utxy0lWuVRMVsfTcnQpsJbtFt7cnMykJAhDo=
+Received: by 10.229.85.207 with SMTP id p15mr7288027qcl.167.1296585315601;
+        Tue, 01 Feb 2011 10:35:15 -0800 (PST)
+Received: from burratino ([69.209.75.28])
+        by mx.google.com with ESMTPS id y17sm15832516qci.33.2011.02.01.10.35.13
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 01 Feb 2011 10:35:14 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=u6=mhOd9LFYRy48y41xRcXmYDtktOKoBjjMgO@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165841>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165842>
 
-Hey,
+Nguyen Thai Ngoc Duy wrote:
+> On Wed, Feb 2, 2011 at 12:28 AM, Jonathan Nieder <jrnieder@gmail.com>=
+ wrote:
 
-On Mon, Jan 31, 2011 at 2:55 PM, Jeff King <peff@peff.net> wrote:
-> On Mon, Jan 31, 2011 at 12:50:30PM -0800, Junio C Hamano wrote:
+>> I have ideas about how to resolve those tricky corner cases, but not
+>> about what the UI should look like. =C2=A0How does one go about addi=
+ng a
+>> directory? =C2=A0Does it ever get implicitly removed?
 >
->> Perhaps I should start a new directory in todo branch (say, 1.8.0), =
-accept
->> patches from people? =C2=A0I'd grudgingly admit that using Wiki on k=
-=2Eorg may be
->> less burdensome (I hate editing inside the browser myself), but I'd =
-want
->> to keep the mailing list the center of discussion and am afraid that
->> forcing people to go to Wiki would fragment the discussion.
+> I suppose a special command for it is appropriate (git-keepdir?). Man=
+y
+> index-related commands are recursive by default and hard to change.
 >
-> I really wish we had a git-backed wiki. I also hate using the browser
-> for such things (though browser extensions to edit textareas in a Rea=
-l
-> Editor at least make it tolerable, it still ends up clunky).
->
-> GitHub's wiki gets this right. I'm not saying we should host our wiki
-> there (well, it _would_ make setting it up pretty damn easy). But the=
-ir
-> wiki system (gollum) is open-source, albeit in ruby. And surely there
-> are other git-backed alternatives (it's been a while since I've looke=
-d).
+> Yes I think it should be automatically removed from index when a file
+> is added inside tracked directories. Removing those files will also
+> remove the containing directory though.
 
-If you want to use the wiki on the git/git repo on GitHub that is
-being mirrored from the canonical repository, I've added Junio and
-peff to the account.  If you want to use that wiki, anyone with a
-github account can edit wiki pages on the site or clone and edit it
-locally and push changes up.  You can also turn off site edits so
-people have to send Junio a patch instead.  It's up to you guys, but
-the access is there now if you want.
+Okay, I'm convinced.  This fits a "worse is better" point of view
+nicely.
 
-Scott
+To add, one would use "git update-index --add".  The magic disappears
+when you register a file within that directory; to tell git you want
+to keep it, one would mkdir and "git update-index --add" again.  Once
+it's working, we can think about if there is a need for making that
+last step automatic after all (my guess: "no"). ;-)
+
+Use case: [1]
+Nice starting point: [2]
+Motivational word of wisdom: [3]
+
+This treatment leaves out the backward compatibility detail.  I still
+think that's the easy part (at worst, we can always implement read
+support, wait a year, and then turn on write support).
+
+Jonathan
+
+[1] http://thread.gmane.org/gmane.comp.version-control.git/46947/focus=3D=
+47278
+[2] http://thread.gmane.org/gmane.comp.version-control.git/52813/focus=3D=
+52908
+[3] http://thread.gmane.org/gmane.comp.version-control.git/53494
