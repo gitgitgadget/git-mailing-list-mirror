@@ -1,85 +1,87 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [1.8.0] split largest remaining scripts, gitk and gitweb
-Date: Wed, 2 Feb 2011 00:20:28 +0100
-Message-ID: <201102020020.30622.jnareb@gmail.com>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <m38vxzaa03.fsf_-_@localhost.localdomain> <7vsjw7xuy3.fsf@alter.siamese.dyndns.org>
+From: A Large Angry SCM <gitzilla@gmail.com>
+Subject: Re: [1.8.0] make two-argument fetch update remote branches
+Date: Tue, 01 Feb 2011 18:25:24 -0500
+Message-ID: <4D489664.1020005@gmail.com>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <201101312244.10047.trast@student.ethz.ch> <4D4875B2.4070008@gmail.com> <201102012339.31684.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-2
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Nicolas Pitre <nico@fluxnic.net>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 02 00:20:49 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Feb 02 00:25:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkPWj-0004yV-06
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 00:20:49 +0100
+	id 1PkPbJ-0007Du-L7
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 00:25:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751522Ab1BAXUo convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 18:20:44 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:34206 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751307Ab1BAXUn (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Feb 2011 18:20:43 -0500
-Received: by wwa36 with SMTP id 36so7631647wwa.1
-        for <git@vger.kernel.org>; Tue, 01 Feb 2011 15:20:42 -0800 (PST)
+	id S1751422Ab1BAXZ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Feb 2011 18:25:28 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:53578 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751052Ab1BAXZ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Feb 2011 18:25:27 -0500
+Received: by vws16 with SMTP id 16so2614084vws.19
+        for <git@vger.kernel.org>; Tue, 01 Feb 2011 15:25:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=29RzZeNkUg9ssnF0GjZGqA/9nxh1cDXtWxll8027Vbc=;
-        b=Xv64PNVvr+76cUoeUDCAFDV7UHc+wTS9FY/Zp6TdYkaSGALDyDhxDFoJEkghDCyNya
-         ByJiXvPnuD9a5tlg7NS5LlOLrw2ihiHinbJKtFDqEh2jvJZNzJIpDrtCRUChy51SPFmQ
-         Uk21GFmcbNbrezB1/MsdOMUXlwKytDa3YKELs=
+        h=domainkey-signature:message-id:disposition-notification-to:date
+         :from:user-agent:mime-version:to:cc:subject:references:in-reply-to
+         :content-type:content-transfer-encoding;
+        bh=L86n10BOf+Du+/ZlvO1bdLH4Ijf3nI1aQY9itpg8ixk=;
+        b=jkj4MqiYjiLrNTqJ4Uink3tEDyq5mhzUunt+jkg60GQhXMuVLPXbFS4O+OeqU1/fvh
+         /K/PWATZcc+XWSAZuGvpJsS5UFfAGo/4RNqnKl1NOos3IY+uCet5CoQy6PzGrJ23j+E8
+         tJ3YqOlSBxh0GMbydwRwsTSzlmtpCmALva504=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=LLpvkdaYNPdsot9Qo81ZmplD+XoPIw+0tnJKwa6WzeLrjdLYoUDWD6I8sdlTDgzNOq
-         BVeoqLeujgGhzxdBVBVAtEvOPEt0yXDfPtJSYkgfAnOHNGnbevW9DYXNB19PJyskqwta
-         vuGfYBeuS/8sPBy4u65NbTU1LpkvwZOtamLCs=
-Received: by 10.227.141.67 with SMTP id l3mr8503746wbu.104.1296602441491;
-        Tue, 01 Feb 2011 15:20:41 -0800 (PST)
-Received: from [192.168.1.13] (abuz232.neoplus.adsl.tpnet.pl [83.8.197.232])
-        by mx.google.com with ESMTPS id o6sm4842715wbo.3.2011.02.01.15.20.39
+        h=message-id:disposition-notification-to:date:from:user-agent
+         :mime-version:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        b=G4yDtxdUwXEt5gbzG46BxGxnCmys6VY6lhA6FdrUbi45VpT+W5faGa1ruVp9FbZ+at
+         hbHaLPmUQRfjP4Tdx1HzZWH0f2gFTAVrqI3I6A2lfID+My1BRi4lpKEyTwMdMsLwmsW/
+         qY408CcJncqjQ+4M5anDTJuSnlBIw9lPerwq4=
+Received: by 10.220.175.130 with SMTP id ba2mr2168651vcb.24.1296602726744;
+        Tue, 01 Feb 2011 15:25:26 -0800 (PST)
+Received: from [10.0.1.130] (cpe-67-248-185-165.nycap.res.rr.com [67.248.185.165])
+        by mx.google.com with ESMTPS id e18sm14454379vbm.5.2011.02.01.15.25.25
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Feb 2011 15:20:40 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <7vsjw7xuy3.fsf@alter.siamese.dyndns.org>
-Content-Disposition: inline
+        Tue, 01 Feb 2011 15:25:25 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.16) Gecko/20101226 Icedove/3.0.11
+In-Reply-To: <201102012339.31684.trast@student.ethz.ch>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165878>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165879>
 
-Dnia wtorek 1. lutego 2011 23:15, Junio C Hamano napisa=B3:
-> Jakub Narebski <jnareb@gmail.com> writes:
->=20
-> > Two largest files in git repository are gitk and gitweb, see the
-> > ...
-> > What do you think?
->=20
-> What does this have to do anything with 1.8.0?  Isn't this all intern=
-al
-> implementation that can be brought in without affecting end users?
+On 02/01/2011 05:39 PM, Thomas Rast wrote:
+> A Large Angry SCM wrote:
+>> On 01/31/2011 04:44 PM, Thomas Rast wrote:
+>>>
+>>> Since the remote branches in some sense reflect the "last known state"
+>>> of the remote, it would make sense to also update them to whatever a
+>>> two-argument fetch got.
+>>
+>> If this is proposing to break:
+>>
+>> 	get-fetch ${REPO} ${SRC_REF}:${DST_REF}
+>>
+>> then I am against this since that form _is_ used and *is* plumbing.
+>
+> You're mixing up the two proposals.  This one is to teach
+>
+>    git fetch repo foo
+>
+> to update refs/remotes/repo/foo with the new value (maybe we should
+> also have it update in the foo:bar case, but I haven't thought that
+> through).
+>
+> The other one is to forbid 'git pull repo foo:bar' and would not
+> change git-fetch at all.
+>
 
-In the case of gitk we have "prior art" i.e. git-gui, which got split.
-In the case of gitweb I am not sure if there having multiple files to
-install wouldn't be inconvenient for users (though with "install-gitweb=
-"
-target...)
-
-Anyway, I have posted this in subthread of
-
-  [1.8.0] reorganize the mess that the source tree has become
-
-because it is also code reorganization.
-
---=20
-Jakub Narebski
-Poland
+I'm not concerned about the pull proposal (I haven't really thought 
+about it, yet) but I am concerned that your proposal may break (as in 
+change the behavior of) the case I identified above.
