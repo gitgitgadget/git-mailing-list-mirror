@@ -1,127 +1,111 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [1.8.0] Tag namespaces
-Date: Tue, 1 Feb 2011 22:21:32 +0700
-Message-ID: <AANLkTi=kwU+-UxfnCnDj0dD2NLPovTTsCPbSf-RQ3L5P@mail.gmail.com>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org>
- <AANLkTikeqsg+qJ0z4iQ6ZmKL=_HB8YX_z20L=dFFApmA@mail.gmail.com> <4D481EA0.9090802@xiplink.com>
+Subject: Re: [1.8.0] Remote tag namespace
+Date: Tue, 1 Feb 2011 22:35:46 +0700
+Message-ID: <AANLkTim4qOiF=3GMixZuWJs=cqcAtawtgkKzLiVdBhuZ@mail.gmail.com>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com> <4D48219D.8060603@xiplink.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@fluxnic.net>
 To: Marc Branchaud <marcnarc@xiplink.com>
-X-From: git-owner@vger.kernel.org Tue Feb 01 16:22:20 2011
+X-From: git-owner@vger.kernel.org Tue Feb 01 16:36:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkI3c-0000kO-KT
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 16:22:16 +0100
+	id 1PkIHo-0001Gu-6s
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 16:36:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752143Ab1BAPWG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 10:22:06 -0500
-Received: from mail-ew0-f46.google.com ([209.85.215.46]:64797 "EHLO
-	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751579Ab1BAPWE convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Feb 2011 10:22:04 -0500
-Received: by ewy5 with SMTP id 5so3142234ewy.19
-        for <git@vger.kernel.org>; Tue, 01 Feb 2011 07:22:03 -0800 (PST)
+	id S1751703Ab1BAPgs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 10:36:48 -0500
+Received: from mail-ey0-f174.google.com ([209.85.215.174]:51755 "EHLO
+	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751276Ab1BAPgr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Feb 2011 10:36:47 -0500
+Received: by eye27 with SMTP id 27so3184096eye.19
+        for <git@vger.kernel.org>; Tue, 01 Feb 2011 07:36:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:from:date
          :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=sUbdEam39cdIMM6nDh8/BkHuvQzojYNtKlz62S7hJVY=;
-        b=T/djCALzVOnT4Siu72atC4t2StVbEWrZIplQychRd+G9D7q4llUoQQF2Afi/ZTFWmb
-         J96n2n5kreq3zLuI3w2P0jpVHXvl9RR4LOf9Fwhfh7TooRt4VnskYwlWVmkx0Sk0NpnH
-         BCUNvKHDELfgc4s1NIBK9MAYo/tKDfOjpxffQ=
+        bh=w4xDdQZy0UKUWQkcsNAtjHE1gku0AZ1UjbvYIDV1hY8=;
+        b=QlHJxXXiobNG+EQddM/TM5LD/W9vAh3hHLehlnlninkVhfc5NrsCzwstp9X91PFVzN
+         UeSdYv7y1PI8pgn7G4Ver67OMkGBdzbzYYJMzJzNCgDCfixemBlSi/hZTY+LaOvhsegC
+         Ec/0j/bb9uQkwz0YCDY669ir1TUYZDrqnlDSk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type:content-transfer-encoding;
-        b=NNByJ/vHzGkqTycXsgiDv1L9XHXSE4Fdwk7nwEnpSWyEop/zhtf04wz34Qq0j9/wkK
-         Ifvko+Pd0PrWlni2dHnEs6O27Lwe3pwaACxwTM3S44zDjJKgejSLoaEFCeTT6wSyhnCW
-         GTEuZCXNnsUVT9UCqCNWXMYn9H5sPXvMSoWng=
-Received: by 10.216.176.201 with SMTP id b51mr777252wem.34.1296573722337; Tue,
- 01 Feb 2011 07:22:02 -0800 (PST)
-Received: by 10.216.63.14 with HTTP; Tue, 1 Feb 2011 07:21:32 -0800 (PST)
-In-Reply-To: <4D481EA0.9090802@xiplink.com>
+        b=l0ATlSZmD7Ut8xPshbwc8AUQTMHpfOSc85RlOb2HM1sE0sghksv6lFXzJhnWkIopMG
+         LqQ8u6NobTVeiRtbYW104tvy9MeSifVXNpaIkUSRmV8TjDQBlENJU3iz0s8Govi/sokA
+         webneAPa0eMSZIin38alTZFR0UWN2Oyb8817A=
+Received: by 10.216.162.70 with SMTP id x48mr804573wek.4.1296574576415; Tue,
+ 01 Feb 2011 07:36:16 -0800 (PST)
+Received: by 10.216.63.14 with HTTP; Tue, 1 Feb 2011 07:35:46 -0800 (PST)
+In-Reply-To: <4D48219D.8060603@xiplink.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165817>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165818>
 
-On Tue, Feb 1, 2011 at 9:54 PM, Marc Branchaud <marcnarc@xiplink.com> w=
-rote:
-> On 11-01-31 10:20 PM, Nguyen Thai Ngoc Duy wrote:
->> On Tue, Feb 1, 2011 at 12:05 AM, Junio C Hamano <gitster@pobox.com> =
+On Tue, Feb 1, 2011 at 10:07 PM, Marc Branchaud <marcnarc@xiplink.com> =
 wrote:
->>> Now the 1.7.4 release is out, I'd like people to help thinking abou=
-t the
->>> next cycle(s).
->>>
->>> As a discussion-starter, here are my random wishes. =C2=A0Even thou=
-gh this does
->>> not attempt to be exhaustive, keeping the number of goals manageabl=
-y small
->>> may help us focus.
+>> Config branch.*.globalTags (perhaps takes a pattern?) may be defined
+>> to create refs/tags/* in addition to refs/remote-tags/<remote>/* whe=
+n
+>> fetching tags.
+>
+> I may be getting into the weeds prematurely here, but why put the con=
+fig item
+> under branch.* ? =C2=A0Or did you mean remote.*.globalTags? =C2=A0Per=
+sonally, I don't
+> see a need for this. =C2=A0I'd rather have the rev-parse machinery se=
+arch in
+> remote tag namespaces if it can't find anything local.
+
+Ahh.. yeah it's remote.*.globalTags. I don't know, some people might
+find current behavior useful. So instead of dropping it entirely, I'd
+limit it to certain remotes.
+
+>
+>> Migration plan:
 >>
->> Another random wish, which does not come with a proposal. How about
->> tag namespace (ie. tags from a remote stay in remote namespace)?
+>> refs/remote-tags will be used to store new tags unconditionally, whi=
+ch
+>> means there will be duplicates with the already-fetched tags in glob=
+al
+>> namespace. Perhaps we can check if they point to the same sha-1, the=
+n
+>> choose not to annoy users with ambiguous tag messages?
 >
-> I had just started writing up such a proposal yesterday. =C2=A0What I=
- have so far
-> is pretty preliminary:
+> (Again with the weeds...) =C2=A0I don't think we could do that. =C2=A0=
+I'd want to be
+> able to have my own (local) tags that refer to the same commits as on=
+e or
+> more remote tags, and I'd want to see them all.
 
-Thanks. I wrote another proposal (should we have more or less standard
-"Git Enhancement Proposal" process like Python's PEP or Scheme's SRFI
-to keep track of these over time?) but it's good to see others look at
-it too.
+=46or listing tags (I forgot this) I think we just follow how git-branc=
+h
+does it: show only local tags unless -r (or some other option) is
+given. What I meant in the above paragraph is "some-ref" can refer to
+refs/tags/some-ref or refs/remotes/foo/tags/some-ref, but I was wrong
+on this. The latter can only be referred by foo/some-ref or with
+migration support in your proposal.
 
-> Proposal:
 >
-> Change tag refspecs to distinguish between remote and local tags. =C2=
-=A0An
-> unadorned tag "foo" could point to different commits in different
-> repositories. =C2=A0A remote could move/edit it's "foo" tag and have =
-that update
-> smoothly propagated to clones.
->
-> I believe this was last brought up in November while discussing the r=
-efs base
-> for notes:
->
-> http://thread.gmane.org/gmane.comp.version-control.git/160503/focus=3D=
-160655
+> Better for "git tag" to learn scoping options like "git branch": -a a=
+nd -r.
+> (Hmm, maybe git-tag's current -a could become -A...)
 
-One problem with the proposed ref layout is that it breaks current
-layout (remotes/<remote>/head -> remotes/<remote>/heads/head). Some
-sort of migration support is needed. On the other hand, new layout is
-cleaner than my proposal (remote-tags/<remote>/tag).
+When tags are put in remote namespace (wherever it actually is),
+git-tag must learn -r like git-branch. I think option name change for
+-a is too late though. When "git-ng" rewrite project comes (that is
+after libgit2 replaces git core), we may have everything consistent
+again.
 
-> Risks:
->
-> I think the main risk lies in breaking plain <tagname> refs, as they =
-would
-> become "origin/<tagname>" refs instead. =C2=A0But I think that can be=
- mitagated
-> against (see below).
-> ...
-> To help mitigate the risk of breaking plain "<tagname>" refs, "git re=
-v-parse"
-> can look for plain names (i.e. ones without a /) in the remote tags l=
-ocation.
-
-Hmm I thought "a-ref" would check "refs/tags/a-ref" and
-"refs/remotes/*/a-ref". But you are right. Maybe "tags.relative" can
-take three values instead of boolean (names TBD):
-
- - deprecated (current behavior)
- - migrating (fetch tags to refs/remotes, but tag lookup will look in
-refs/tags as well as refs/remotes/*/tags)
- - migrated (fetch tags to refs/remotes, look up in order)
-
-We may slowly turn default value step by step until it becomes "migrate=
-d".
+PS. I bet git-ng would start after Wine 2.0 is released.
 --=20
 Duy
