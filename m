@@ -1,67 +1,73 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [1.8.0] make two-argument fetch update remote branches
-Date: Tue, 1 Feb 2011 23:39:31 +0100
-Message-ID: <201102012339.31684.trast@student.ethz.ch>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <201101312244.10047.trast@student.ethz.ch> <4D4875B2.4070008@gmail.com>
+From: "J.H." <warthog19@eaglescrag.net>
+Subject: Re: moving to a git-backed wiki
+Date: Tue, 01 Feb 2011 14:48:45 -0800
+Message-ID: <4D488DCD.3080305@eaglescrag.net>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org> <7vsjw957fq.fsf_-_@alter.siamese.dyndns.org> <7vzkqg4x2h.fsf_-_@alter.siamese.dyndns.org> <20110131225529.GC14419@sigill.intra.peff.net> <AANLkTimHCp_JKUw1keJoA4zD_q7Sci+rOwPeAs_T=7xH@mail.gmail.com> <20110201201144.GA16003@sigill.intra.peff.net> <AANLkTikfzzELUaN3B+20rh9D51St8mUYs4p-WYjp8JVV@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
-To: A Large Angry SCM <gitzilla@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 01 23:39:47 2011
+Cc: Jeff King <peff@peff.net>, Scott Chacon <schacon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jay Soffian <jaysoffian@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 01 23:49:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkOsy-000292-Pr
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 23:39:45 +0100
+	id 1PkP2I-0007F2-5c
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 23:49:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751414Ab1BAWje (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Feb 2011 17:39:34 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:56684 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751221Ab1BAWje (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Feb 2011 17:39:34 -0500
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.270.1; Tue, 1 Feb
- 2011 23:39:25 +0100
-Received: from pctrast.inf.ethz.ch (84.74.105.24) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.270.1; Tue, 1 Feb
- 2011 23:39:32 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
-In-Reply-To: <4D4875B2.4070008@gmail.com>
-X-Originating-IP: [84.74.105.24]
+	id S1751835Ab1BAWtP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Feb 2011 17:49:15 -0500
+Received: from shards.monkeyblade.net ([198.137.202.13]:55039 "EHLO
+	shards.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751824Ab1BAWtP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Feb 2011 17:49:15 -0500
+Received: from voot-cruiser.eaglescrag.net (c-71-202-185-40.hsd1.ca.comcast.net [71.202.185.40])
+	(authenticated bits=0)
+	by shards.monkeyblade.net (8.14.4/8.14.3) with ESMTP id p11Mmk0d007455
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NO);
+	Tue, 1 Feb 2011 14:48:47 -0800
+X-Virus-Status: Clean
+X-Virus-Scanned: clamav-milter 0.95.3 at shards.monkeyblade.net
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.1.15) Gecko/20101027 Fedora/3.0.10-1.fc12 Lightning/1.0b2pre Thunderbird/3.0.10
+In-Reply-To: <AANLkTikfzzELUaN3B+20rh9D51St8mUYs4p-WYjp8JVV@mail.gmail.com>
+X-Enigmail-Version: 1.0.1
+X-Greylist: Sender succeeded SMTP AUTH, not delayed by milter-greylist-4.2.3 (shards.monkeyblade.net [198.137.202.13]); Tue, 01 Feb 2011 14:48:47 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165872>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165873>
 
-A Large Angry SCM wrote:
-> On 01/31/2011 04:44 PM, Thomas Rast wrote:
-> >
-> > Since the remote branches in some sense reflect the "last known state"
-> > of the remote, it would make sense to also update them to whatever a
-> > two-argument fetch got.
+On 02/01/2011 02:36 PM, Jay Soffian wrote:
+> On Tue, Feb 1, 2011 at 3:11 PM, Jeff King <peff@peff.net> wrote:
+>>  https://github.com/peff/foo/wiki
 > 
-> If this is proposing to break:
-> 
-> 	get-fetch ${REPO} ${SRC_REF}:${DST_REF}
-> 
-> then I am against this since that form _is_ used and *is* plumbing.
+> A git-backed git wiki would be great. As a related matter, the hosting
+> infrastructure for https://git.wiki.kernel.org/index.php/Main_Page
+> seems overloaded. About half the time I try to access it, it's either
+> down completely or very slow to respond. If the wiki were git-backed I
+> could get to it even if the central site were down. :-)
 
-You're mixing up the two proposals.  This one is to teach
+The wiki will almost universally have a "central site" no matter what
+the backend.  Personally I see little advantage to having a git backed
+wiki myself.
 
-  git fetch repo foo
+Speaking to the slowness, it's caused by at least 2 different kernel
+related bugs on the two boxes that run the wikis that I haven't had
+enough time to track down to nail to specific developers to fix.  I have
+20u of equipment sitting in my apartment that is heading to Portland in
+the next two weeks to eliminate the bits I'm pretty sure are the root
+cause of the problems.
 
-to update refs/remotes/repo/foo with the new value (maybe we should
-also have it update in the foo:bar case, but I haven't thought that
-through).
+Trust me when I say it's not only been a thorn in my side, and something
+I've been rather angry at several people about, but it's something that
+has kept me up at night trying to get fixed.
 
-The other one is to forbid 'git pull repo foo:bar' and would not
-change git-fetch at all.
+> That said, didn't the wiki just migrate to Mediawiki recently?
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+It did.
+
+- John 'Warthog9' Hawley
