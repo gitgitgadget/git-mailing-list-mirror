@@ -1,75 +1,103 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [1.8.0] Unify "pathspec" semantics
-Date: Tue, 1 Feb 2011 21:56:06 +0700
-Message-ID: <AANLkTinQBQaL0zE+EYAADPBhroi71sgKAcprCjLy_SKB@mail.gmail.com>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org>
- <7voc6x57el.fsf_-_@alter.siamese.dyndns.org>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [1.8.0] Remote tag namespace
+Date: Tue, 01 Feb 2011 10:07:09 -0500
+Message-ID: <4D48219D.8060603@xiplink.com>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Tue Feb 01 15:57:07 2011
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 01 16:07:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkHfE-00025C-CJ
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 15:57:04 +0100
+	id 1PkHp1-000076-4J
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 16:07:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757319Ab1BAO4j convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 09:56:39 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:62260 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755999Ab1BAO4i convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Feb 2011 09:56:38 -0500
-Received: by wyb28 with SMTP id 28so6767800wyb.19
-        for <git@vger.kernel.org>; Tue, 01 Feb 2011 06:56:37 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=Ii3feHDa3B9z8NLUPs1noUO103lRlhBqBJ+hNppI0dc=;
-        b=sA9zvA5qcQGgFCA7B3uiTt32ay9mZWSLxrzBaylRrZy/ii/CDbJ77SqkWx9oD0bu/8
-         saHzoRef87lkQRwpNpoYvRChIrX4PofOUMKwIk7nHeFNeZjChpblGnPUkYnT8N1RWIRU
-         a16e6dPB5JtxQgGzHYm4zh4bt7pcofRRA9Vbo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=DUDn34grWmBBvY9HTBSV7DX56zyW6Y2XAEEjmYOkcxaPYRNk/0EMonoUK3xDojM4cg
-         pRisUjz67iR/92NZtTLBAeU15XXY/RSt8hEqhgInf1jzV82INKiiRj9Pps+8lDoG7viW
-         eh81oxP2DtteDmOotOqwCBsGIR8B9T66nMRpA=
-Received: by 10.216.169.71 with SMTP id m49mr7541762wel.4.1296572196812; Tue,
- 01 Feb 2011 06:56:36 -0800 (PST)
-Received: by 10.216.63.14 with HTTP; Tue, 1 Feb 2011 06:56:06 -0800 (PST)
-In-Reply-To: <7voc6x57el.fsf_-_@alter.siamese.dyndns.org>
+	id S1756852Ab1BAPHE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Feb 2011 10:07:04 -0500
+Received: from smtp132.iad.emailsrvr.com ([207.97.245.132]:47432 "EHLO
+	smtp132.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752949Ab1BAPHD (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Feb 2011 10:07:03 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp53.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id 01D5758669;
+	Tue,  1 Feb 2011 10:07:02 -0500 (EST)
+X-Virus-Scanned: OK
+Received: by smtp53.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id C1EDA582B0;
+	Tue,  1 Feb 2011 10:07:01 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
+In-Reply-To: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165814>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165815>
 
-On Tue, Feb 1, 2011 at 12:07 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Some projects may track a file whose name is asterisk (e.g. "foo/*") =
-and
-> output from "git log 'foo/*'" would look different. =C2=A0Before the =
-change,
-> only commits that touch that exact path would be shown, but after the
-> change, any commit that touch a path underneath "foo/" directory will=
- be
-> shown. =C2=A0This is a backward incompatible change.
+On 11-02-01 05:44 AM, Nguyen Thai Ngoc Duy wrote:
+> On Tue, Feb 1, 2011 at 11:16 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
+>> On Tue, 1 Feb 2011, Nguyen Thai Ngoc Duy wrote:
+>>> Another random wish, which does not come with a proposal. How about
+>>> tag namespace (ie. tags from a remote stay in remote namespace)?
+>>
+>> Please make this into a proper proposal.  this would be indeed a huge
+>> improvement.
+> 
+> OK I'm not familiar with tag code, but I can try.
 
-Can we support quoting wildcards? I can imagine a file name such as
-'***DO NOT DO IT***'. People who wish to match exactly that file would
-have hard time ahead without a way to tell git those stars are
-literal.
+OK, that teaches me to read through _all_ the unread messages before posting!
 
-A prefix/special leading symbol or cmdline option to indicate the
-given pathspec is literal is fine too (e.g "!literal:***hey***" or
---literal "***hey***"). In fact I can extend that to support negative
-pathspecs.
---=20
-Duy
+Needless to say, I support this proposal.
+
+> Proposal:
+> 
+> Reserve refs/remote-tags namespace to store tags from remotes. Its
+> structure is the same as in refs/remotes. When pulling tags, put them
+> in refs/remote-tags/<remote> instead of refs/tags.
+> Tag dereference code will be taught about refs/remote-tags with
+> similar deref order as in remote branches.
+
+I suggested a different home for the tags, but I don't have any insight into
+what makes the most sense.  I'll defer to wiser folk on this.
+
+> Config branch.*.globalTags (perhaps takes a pattern?) may be defined
+> to create refs/tags/* in addition to refs/remote-tags/<remote>/* when
+> fetching tags.
+
+I may be getting into the weeds prematurely here, but why put the config item
+under branch.* ?  Or did you mean remote.*.globalTags?  Personally, I don't
+see a need for this.  I'd rather have the rev-parse machinery search in
+remote tag namespaces if it can't find anything local.
+
+> Migration plan:
+> 
+> refs/remote-tags will be used to store new tags unconditionally, which
+> means there will be duplicates with the already-fetched tags in global
+> namespace. Perhaps we can check if they point to the same sha-1, then
+> choose not to annoy users with ambiguous tag messages?
+
+(Again with the weeds...)  I don't think we could do that.  I'd want to be
+able to have my own (local) tags that refer to the same commits as one or
+more remote tags, and I'd want to see them all.
+
+Better for "git tag" to learn scoping options like "git branch": -a and -r.
+(Hmm, maybe git-tag's current -a could become -A...)
+
+> I suggest to add config compatibility.remoteTagNamespace, default to
+> false, which retains current behavior (i.e. also create tags in global
+> namespace in addition to refs/remote-tags). After 1.8.0 (or a few more
+> cycles) the default value becomes true. Users who wish to keep old
+> behavior can put "false" in their ~/.gitconfig.
+> 
+> After a few years, remove support for the config key. Unrecognized
+> compatibility.* keys will abort program. Users are forced to new
+> behavior. I don't know, we may want to start annoy users that have the
+> config key set a few cycles before we drop support.
+
+Sounds good.  I'd vote for a faster transition, but that's just me.  :)
+
+		M.
