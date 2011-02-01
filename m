@@ -1,67 +1,78 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: Planning for 1.7.5 and 1.8.0
-Date: Tue, 1 Feb 2011 10:20:43 +0700
-Message-ID: <AANLkTikeqsg+qJ0z4iQ6ZmKL=_HB8YX_z20L=dFFApmA@mail.gmail.com>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [1.8.0] reorganize the mess that the source tree has become
+Date: Mon, 31 Jan 2011 23:05:36 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1101312238170.8580@xanadu.home>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
+ <7vwrll57ha.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1101311459000.8580@xanadu.home>
+ <20110131210045.GB14419@sigill.intra.peff.net>
+ <alpine.LFD.2.00.1101311621150.8580@xanadu.home>
+ <20110131231210.GD14419@sigill.intra.peff.net>
+ <alpine.LFD.2.00.1101311903320.8580@xanadu.home>
+ <20110201014807.GA2722@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 01 04:21:22 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 01 05:05:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pk6nx-0005Ti-HL
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 04:21:21 +0100
+	id 1Pk7Uu-0005Dq-5b
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 05:05:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753719Ab1BADVQ convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 31 Jan 2011 22:21:16 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:60677 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752759Ab1BADVP convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 31 Jan 2011 22:21:15 -0500
-Received: by wyb28 with SMTP id 28so6244121wyb.19
-        for <git@vger.kernel.org>; Mon, 31 Jan 2011 19:21:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:content-type:content-transfer-encoding;
-        bh=S6knvcaz73X/1otM9g4mL71iiL86Px3iyjh7iyrZ0E8=;
-        b=FTrVThXoPmkOV+DYthbaIYW5brD6680h7YkYSHz+ZNh87I5i1DIAxlP1kEV+DNGGO5
-         zia6vJ7KHxwIqW2nJpaiOwj5cZSOGXj+h2pcmTjPaOs5SuKKTYRcGuda0vTNLsHFDoCw
-         ioDXGlocYq6in6TifB0kTTIpSCo2FV3ZQUnFg=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :content-type:content-transfer-encoding;
-        b=SmldA8mNx3FyTjbXyF3TLxipEPVG7zXxVUfuvjtcMMfY5SSrMQyji889u4xgSsyvXh
-         0G6su72tpFvOpdUL2mb9sPTwlxu1dXqVyTSlFGhyvfSBALL8kPxaWo+R7rGAjFCmNeYo
-         qunSxAC5vAOcjvNVJyHQ+CuB/PtAB2UX4TITE=
-Received: by 10.216.177.9 with SMTP id c9mr6816330wem.34.1296530474022; Mon,
- 31 Jan 2011 19:21:14 -0800 (PST)
-Received: by 10.216.63.14 with HTTP; Mon, 31 Jan 2011 19:20:43 -0800 (PST)
-In-Reply-To: <7vwrll57ha.fsf@alter.siamese.dyndns.org>
+	id S1753664Ab1BAEFj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Jan 2011 23:05:39 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:9579 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752520Ab1BAEFi (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jan 2011 23:05:38 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MRZ22.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0LFX006MJ7DCBRV0@VL-MR-MRZ22.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 31 Jan 2011 23:05:36 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20110201014807.GA2722@sigill.intra.peff.net>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165790>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165791>
 
-On Tue, Feb 1, 2011 at 12:05 AM, Junio C Hamano <gitster@pobox.com> wro=
-te:
-> Now the 1.7.4 release is out, I'd like people to help thinking about =
-the
-> next cycle(s).
->
-> As a discussion-starter, here are my random wishes. =C2=A0Even though=
- this does
-> not attempt to be exhaustive, keeping the number of goals manageably =
-small
-> may help us focus.
+On Mon, 31 Jan 2011, Jeff King wrote:
 
-Another random wish, which does not come with a proposal. How about
-tag namespace (ie. tags from a remote stay in remote namespace)?
---=20
-Duy
+> On Mon, Jan 31, 2011 at 07:29:54PM -0500, Nicolas Pitre wrote:
+> 
+> > This is no excuse not to do proper source tree reorganization.
+> 
+> I think this is the crux of our disagreement. I don't agree that your
+> proposal is any way more "proper" than what is there now. Leaving the
+> rename issue aside (i.e., if we were starting a new project), I would
+> still be slightly against a src/ directory. I find them annoying.
+
+Let's agree to disagree then.  What I see in the root of the Git source 
+tree is a huge clutter of source files, binary files, scripts, and 
+subdirectories all mixed together.  If you know by hart where things are 
+because you've been hacking on them for the last 5 years then of course 
+you might not see the point.  But since I didn't work much on Git 
+lately, things are not as obvious to me as they used to be.  Looking 
+back at it now with some distance, this tree looks like a mess and it is 
+really annoying to work with.
+
+> But I don't care _that_ much, and I would rather not waste either of our
+> time debating it more. I would much rather you spend your time on
+> pack v4. :)
+
+I wish... I wish.  But I have a plan which might involve taking some 
+vacation from $day_job in the Caribbeans with $wife and no kids, where 
+$wife is going to do scuba diving with her club mates while I'll be 
+alone with a laptop and no net connection and therefore nothing else to 
+do for a week.  I've been craving for such free time for quite a while 
+now.
+
+
+Nicolas
