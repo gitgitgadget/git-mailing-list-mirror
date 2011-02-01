@@ -1,69 +1,82 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [1.8.0] reorganize the mess that the source tree has become
-Date: Tue, 1 Feb 2011 02:00:05 +0100
-Message-ID: <AANLkTi=boNXZbryTGFth5igZ771BbTmEKmh7LOxko+T-@mail.gmail.com>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org>
- <alpine.LFD.2.00.1101311459000.8580@xanadu.home> <20110131210045.GB14419@sigill.intra.peff.net>
- <alpine.LFD.2.00.1101311621150.8580@xanadu.home> <20110131231210.GD14419@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [1.8.0] make two-argument fetch update remote branches
+Date: Mon, 31 Jan 2011 17:13:59 -0800
+Message-ID: <7v8vy04kvc.fsf@alter.siamese.dyndns.org>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
+ <7vwrll57ha.fsf@alter.siamese.dyndns.org>
+ <201101312244.10047.trast@student.ethz.ch>
+ <AANLkTin2kTW85UC1r_1LUDVLiexcVDvt--9ndnXZ2ARS@mail.gmail.com>
+ <7vd3nc4qr6.fsf@alter.siamese.dyndns.org>
+ <AANLkTinRo5KxC9OQWyZMnqQP4WHi0sR5qqw6byr4V+3a@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 01 02:00:54 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
+To: Eugene Sajine <euguess@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 01 02:14:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pk4bz-0001Sq-L3
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 02:00:51 +0100
+	id 1Pk4oz-0006xx-Ds
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 02:14:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756535Ab1BABAr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 31 Jan 2011 20:00:47 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:64954 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754272Ab1BABAq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 31 Jan 2011 20:00:46 -0500
-Received: by gyb11 with SMTP id 11so2243581gyb.19
-        for <git@vger.kernel.org>; Mon, 31 Jan 2011 17:00:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=IcY2I51+ht6RyriVXuGyVw9seyUKd3JG+oi47Dq1wKE=;
-        b=L2zQuVDm1EZ4W2iktgLUi/oWjQPRaTNOdBNb6QH0DpRu7R1yKgeIi2hcHQsRYnRqFQ
-         whva5FrAPqbbKex0+VqvEGuLuSQYbJCtTyzWEiIkLTl+rcYTDMXPj/diGzz+9JR2Ny5R
-         l1cYGyB8pNIiBR4nI89me3AkSNlRb5hjBBOY4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=EpoQTAl0sshSnLOdsrAd8hb6xsVAgz20zp8o8POAhFvRlMx1PZyatxXb51FgicVd3L
-         jjTP2wsVXvk9xPX+rctGxG7QpQdsJY+H4jfJabfA1kJUCHFoBSz32a+zl9ZJfHoLNRfj
-         bk5ymFlmjamzTRDUvUI/eyIAQ4f5PyM3MzAdc=
-Received: by 10.151.45.17 with SMTP id x17mr8466906ybj.304.1296522045780; Mon,
- 31 Jan 2011 17:00:45 -0800 (PST)
-Received: by 10.150.51.6 with HTTP; Mon, 31 Jan 2011 17:00:05 -0800 (PST)
-In-Reply-To: <20110131231210.GD14419@sigill.intra.peff.net>
+	id S1754104Ab1BABOM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 31 Jan 2011 20:14:12 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:47093 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753693Ab1BABOL (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 31 Jan 2011 20:14:11 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1BCB04EDC;
+	Mon, 31 Jan 2011 20:15:01 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=2nIyTQolwUtCwD6vPJzeEwnTzmQ=; b=i3nktY
+	o2GeAd7IVAs0f0MRYNeQ8zfMioyF4jsO1E2JgQHUFGrcMS6uFSmllCa2Ur90u6jj
+	CU2N+DJLgmBU8FAt0mAFXpG548CYgML30E936Uy8y6WJiTYaVEPhGR4yWC54FaGC
+	UoF2Wd9CMz5OnahVGKABook5WDfEU8u/Vi1Pk=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=rVed0bO7zzHmDxMCoz+swLpfzcG65wuB
+	CfUvt/TUQqCKbuoHGA2Qz4LsrQD9exvD40P/vp3023/0ToRHo07z4Z+WGe3jK2Xq
+	1g9QQ2QQQOQhEC79p9ZW2awJReHkKyqWt44vjMwRoK7OBTsXZleTMUUAuP5utOCZ
+	fdSp0uU9gl8=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id CAF8F4EDB;
+	Mon, 31 Jan 2011 20:14:57 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B29B14ED7; Mon, 31 Jan 2011
+ 20:14:53 -0500 (EST)
+In-Reply-To: <AANLkTinRo5KxC9OQWyZMnqQP4WHi0sR5qqw6byr4V+3a@mail.gmail.com>
+ (Eugene Sajine's message of "Mon\, 31 Jan 2011 18\:39\:19 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: AF2A6B74-2DA0-11E0-AB9B-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165784>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165785>
 
-Heya,
+Eugene Sajine <euguess@gmail.com> writes:
 
-On Tue, Feb 1, 2011 at 00:12, Jeff King <peff@peff.net> wrote:
-> [1] I'd be interested to see how much we can get around that slowness
-> using a notes-cache.
+> I did understand what Thomas illustrated. I'm just thinking that the
+> range origin/master...FETCH_HEAD seems to be useful but in fact is
+> pretty useless, because you cannot guarantee the state of the
+> origin/master _before_ the fetch and therefore you cannot rely on the
+> results of range selections involving it.
 
-Do you mean something like a refs/notes/renames namespace in which we
-stick notes on commits indicating that a rename indicated at that
-commit, with an option of the user, after-the-fact, adding this
-information manually?
+With the current system, origin/master is what I _used to_ have before
+running this fetch, iow, what I have been looking at as a reference
+material while I did my own work so far.  The current "when fetching refs
+explicitly, do not touch tracking branches" behaviour guarantees that.
 
--- 
-Cheers,
-
-Sverre Rabbelier
+The range above shows what I already knew about the work the other people
+did, and what is new on both sides, to help me decide what I want to do
+next with the fetched result.  At least that is the workflow the "when
+fetching refs explicitly, do not touch tracking branches" behaviour allows
+us to support (I am not recommending that the workflow in particular, by
+the way).  The next action after seeing what they added is sane may be to
+run "git pull" (no arguments), which would fast-forward my view of the
+other side to whatever I reviewed this round.
