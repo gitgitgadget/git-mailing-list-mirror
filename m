@@ -1,76 +1,68 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [1.8.0] Remove deprecated commands
-Date: Tue, 01 Feb 2011 14:16:18 -0800
-Message-ID: <7voc6vxux9.fsf@alter.siamese.dyndns.org>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
- <7vwrll57ha.fsf@alter.siamese.dyndns.org> <4D4852EE.6080605@lsrfire.ath.cx>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: moving to a git-backed wiki
+Date: Tue, 1 Feb 2011 17:36:49 -0500
+Message-ID: <AANLkTikfzzELUaN3B+20rh9D51St8mUYs4p-WYjp8JVV@mail.gmail.com>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org>
+ <7vsjw957fq.fsf_-_@alter.siamese.dyndns.org> <7vzkqg4x2h.fsf_-_@alter.siamese.dyndns.org>
+ <20110131225529.GC14419@sigill.intra.peff.net> <AANLkTimHCp_JKUw1keJoA4zD_q7Sci+rOwPeAs_T=7xH@mail.gmail.com>
+ <20110201201144.GA16003@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Tue Feb 01 23:16:31 2011
+Cc: Scott Chacon <schacon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 01 23:37:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkOWU-0006dl-UV
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 23:16:31 +0100
+	id 1PkOqk-00016r-44
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 23:37:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752062Ab1BAWQ0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 17:16:26 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40514 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751703Ab1BAWQZ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Feb 2011 17:16:25 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E58814C40;
-	Tue,  1 Feb 2011 17:17:16 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=eOyFguf+L8wQ
-	KFFOyA2Mo+U53e8=; b=ihKs6cpnPjma9hJTHdf5KbgdRLoO0FwMhgz6djxULbls
-	T5QsZEnjSwp+KMoemoweQHA+04SCtX8F3rIf/xkP1yB191imGTgYA3x3ykmlbfn3
-	G0OpaAYx1eV3HMabZxU9hVRZbn15b4lfmLBnSGOearSR+5IQVHAC2eXCTfETHGc=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=UKY62H
-	080RQwuu2ePWkqMp2lIewri3ZRfGlj2NCHwo2Ek7imYYZCw+iiO/muLlC/SK+qu4
-	P54tKJxFT68S/zGEFjxqoUo5H8x8DPd94keUkR3YhLC3fgYGUZ+ztAQuxtv50W22
-	YjaGWLmOgZCWuhzokzrYuccPiLP6uQAShHz54=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C299B4C37;
-	Tue,  1 Feb 2011 17:17:14 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CEC0B4C32; Tue,  1 Feb 2011
- 17:17:11 -0500 (EST)
-In-Reply-To: <4D4852EE.6080605@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
- Scharfe"'s message of "Tue\, 01 Feb 2011 19\:37\:34 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 05EA4A46-2E51-11E0-9BCC-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
+	id S1751322Ab1BAWhV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 17:37:21 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:53219 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751221Ab1BAWhU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Feb 2011 17:37:20 -0500
+Received: by iwn9 with SMTP id 9so6998904iwn.19
+        for <git@vger.kernel.org>; Tue, 01 Feb 2011 14:37:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=Z+WnG/AMpv7NmT1Ua4CFxJMVdZ7phiSjHrl7V7Re+7k=;
+        b=KyI7hRe2JPaTJV8Z3G1YvH+/rCVRUz0CflW8VU5lGtIvCplOuF5FVq73/p0KZ36INM
+         O1I7qzX87cQUlYlJfKlMT52GDJJmgoucPMKjC1ISn8g7DXdWsIBHK0pkKh+4dP7BB1Wl
+         rJsFFWjRenY80S/1fG5rpjzClkLStXWagYj1s=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=QCETVutI9Llm9MkJMknnAy/9ReG3+6MfzhWVVwOViVD2uatplfoC743IlnL/OFL321
+         OGMH4Gl8JK4V0x3aszQMQt5a50l5azyS0FV7TUSJJtSE7jDToKI8OpNC+0QCxJ/Lskmz
+         I5W9av7DHGiQuGmZnrM/An/iFilP/BRfhcATI=
+Received: by 10.231.173.12 with SMTP id n12mr9006904ibz.77.1296599839105; Tue,
+ 01 Feb 2011 14:37:19 -0800 (PST)
+Received: by 10.231.30.65 with HTTP; Tue, 1 Feb 2011 14:36:49 -0800 (PST)
+In-Reply-To: <20110201201144.GA16003@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165869>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165870>
 
-Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
+On Tue, Feb 1, 2011 at 3:11 PM, Jeff King <peff@peff.net> wrote:
+> =C2=A0https://github.com/peff/foo/wiki
 
-> The following four commands have been marked as deprecated in
-> command-list.txt for quite some time[*]:
->
->    command          deprecated since replaced by
->    ---------------- ---------------- ---------------------
->    git-lost-found   2007-11-08       git fsck --lost-found
->    git-peek-remote  2007-11-24       git ls-remote
->    git-repo-config  2008-01-17       git config
->    git-tar-tree     2007-11-08       git archive
->
-> Let's just remove them.  There's a risk that someone is still using t=
-he
-> old commands, of course, but they have been deprecated long enough no=
-w.
+A git-backed git wiki would be great. As a related matter, the hosting
+infrastructure for https://git.wiki.kernel.org/index.php/Main_Page
+seems overloaded. About half the time I try to access it, it's either
+down completely or very slow to respond. If the wiki were git-backed I
+could get to it even if the central site were down. :-)
 
-Sounds fine.
+That said, didn't the wiki just migrate to Mediawiki recently?
+
+j.
