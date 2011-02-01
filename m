@@ -1,79 +1,100 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Features from GitSurvey 2010
-Date: Tue, 01 Feb 2011 18:44:53 +0100
-Message-ID: <vpq62t3ejje.fsf@bauges.imag.fr>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: Tracking empty directories
+Date: Wed, 2 Feb 2011 00:54:35 +0700
+Message-ID: <AANLkTi=u6=mhOd9LFYRy48y41xRcXmYDtktOKoBjjMgO@mail.gmail.com>
 References: <AANLkTi=gf9_618iojpYJgN_msAe-FBq-Jao=sj76VQak@mail.gmail.com>
-	<20110129231310.GA11088@burratino>
+ <20110129231310.GA11088@burratino> <201102011451.17456.jnareb@gmail.com> <20110201172835.GA3771@burratino>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Dmitry S. Kravtsov" <idkravitz@gmail.com>, git@vger.kernel.org,
-	Jakub Narebski <jnareb@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	"Dmitry S. Kravtsov" <idkravitz@gmail.com>, git@vger.kernel.org,
+	Shawn Pearce <spearce@spearce.org>
 To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 01 18:45:12 2011
+X-From: git-owner@vger.kernel.org Tue Feb 01 18:55:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkKHq-0000af-LH
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 18:45:07 +0100
+	id 1PkKRf-0008Mz-J1
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 18:55:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755724Ab1BARo6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Feb 2011 12:44:58 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:52788 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755154Ab1BARo6 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Feb 2011 12:44:58 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p11Hiq6x028972
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Tue, 1 Feb 2011 18:44:52 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PkKHe-0006aN-9s; Tue, 01 Feb 2011 18:44:54 +0100
-In-Reply-To: <20110129231310.GA11088@burratino> (Jonathan Nieder's message of "Sat\, 29 Jan 2011 17\:13\:10 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Tue, 01 Feb 2011 18:44:52 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p11Hiq6x028972
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1297187093.71666@iiTn5yVWPmgZB250x0RH/Q
+	id S1755990Ab1BARzK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 12:55:10 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:56384 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755980Ab1BARzH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Feb 2011 12:55:07 -0500
+Received: by wwa36 with SMTP id 36so7306617wwa.1
+        for <git@vger.kernel.org>; Tue, 01 Feb 2011 09:55:06 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=RSvpSvo3Qu0ac2pSzqG7hRidjb5NJxkI2wk1/pbOEj8=;
+        b=eQauD7G3BBYKffyDbgA8Ys2EzI92O3El/rQAkTilBpRVsR/lsEbjxKan0omIDM7p7Z
+         yrE40SRk7fkvbbA9mmmmNDnIgQGnxUwO0UlmsCq+eCSGFgJ3V1Rn2AsU769vSXA0GYx1
+         gjnIx63V6fPMEQgS+Td3T7q41KlW9h5KAXDAY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=VX4r3Pb2v23XEu4cmRzxvmFMDiHodZ8VH/LFVLvabj5FmJ5h/LgSwbujtiVnPOIOmY
+         VuhbemgHpfSRisUaGg6MizP/YC4YyqpRAoJc+HL4Fhl6+428STWJIdrziml1XviBH+FF
+         mCDgVA2Li5DHx2RzZYetO6MwM9ST6kAgW/rqc=
+Received: by 10.216.52.134 with SMTP id e6mr1657576wec.49.1296582905927; Tue,
+ 01 Feb 2011 09:55:05 -0800 (PST)
+Received: by 10.216.63.14 with HTTP; Tue, 1 Feb 2011 09:54:35 -0800 (PST)
+In-Reply-To: <20110201172835.GA3771@burratino>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165835>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165836>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
->> support for tracking empty directories
+On Wed, Feb 2, 2011 at 12:28 AM, Jonathan Nieder <jrnieder@gmail.com> w=
+rote:
+> Jakub Narebski wrote:
 >
-> Tricky to get the UI right.  I am interested in and would be glad to
-> help with this one.
-
-A starting point, with some proposed (broken) patches:
-
-http://thread.gmane.org/gmane.comp.version-control.git/56310/focus=56348
-
->> advisory locking / "this file is being edited"
+>> Also one needs to remember that this would require adding extension
+>> to git index, because currently it tracks only files, and not
+>> directories. =C2=A0Explicitly tracking directories in the index coul=
+d be
+>> useful for other purposes...
+>>
+>> The major difficulty of this is IMHO not the UI, but tracking all th=
+ose
+>> tricky corner cases (like directory/file conflict, etc.).
 >
-> Probably better to implement out of band (using hooks?).  I don't
-> know of any work or documentation in that direction.
+> I have ideas about how to resolve those tricky corner cases, but not
+> about what the UI should look like. =C2=A0How does one go about addin=
+g a
+> directory? =C2=A0Does it ever get implicitly removed?
 
-File locking and distributed tool are conflicting interests. A
-file-locking tool for git should be able to use a centralized locks
-database (for example, one can imagine a simple PHP script hosted
-somewhere independantly of the Git repo, keeping a list of locked
-files up to date).
+I suppose a special command for it is appropriate (git-keepdir?). Many
+index-related commands are recursive by default and hard to change.
 
-That needs to be integrated with Git, but it should probably still
-remain out of the Git core, because different users would want
-different locking databases. Hooks and git-* commands in the $PATH are
-probably sufficient.
+Yes I think it should be automatically removed from index when a file
+is added inside tracked directories. Removing those files will also
+remove the containing directory though.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+> Would this actually require an index extension, strictly speaking?
+
+Could it be done with an index extension? Interesting.
+
+> Certainly one ought to register an extension name or bump the version
+> number to avoid confusing gits that don't know about the feature.
+
+Index extension with lowercase name are "necessary for correct
+operation". Older git will abort on unknown required extensions. If
+you add to the main part of the index, better bump version number.
+
+> But after that, couldn't we (e.g.) allow the directory name (ending
+> with '/') as index entry?
+
+You could. You also need to strip '/' sometimes because certain part
+of git does not expect '/' to be there (traverse_trees or
+unpack_trees, I don't remember).
+--=20
+Duy
