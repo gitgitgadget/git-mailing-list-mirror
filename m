@@ -1,147 +1,219 @@
-From: Andreas Ericsson <ae@op5.se>
-Subject: Re: [1.8.0] reorganize the mess that the source tree has become
-Date: Tue, 01 Feb 2011 15:42:12 +0100
-Message-ID: <4D481BC4.2050104@op5.se>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1101311459000.8580@xanadu.home> <20110131210045.GB14419@sigill.intra.peff.net> <alpine.LFD.2.00.1101311621150.8580@xanadu.home>
+From: Erik Faye-Lund <kusmabite@gmail.com>
+Subject: Re: [PATCH 1/3] vcs-svn: Introduce svnload, a dumpfile producer
+Date: Tue, 1 Feb 2011 15:46:25 +0100
+Message-ID: <AANLkTikUUojgj_H0r0L=XBi7H714xUvAS=vPsgMRNNjr@mail.gmail.com>
+References: <1296570403-9082-1-git-send-email-artagnon@gmail.com> <1296570403-9082-2-git-send-email-artagnon@gmail.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Tue Feb 01 15:42:26 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	David Barr <david.barr@cordelta.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Tue Feb 01 15:46:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkHR3-00013Q-7T
-	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 15:42:25 +0100
+	id 1PkHVN-0003tZ-8W
+	for gcvg-git-2@lo.gmane.org; Tue, 01 Feb 2011 15:46:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754665Ab1BAOmR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Feb 2011 09:42:17 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:33665 "EHLO
+	id S1751923Ab1BAOqs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 09:46:48 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:55559 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752005Ab1BAOmQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Feb 2011 09:42:16 -0500
-Received: by fxm20 with SMTP id 20so6871134fxm.19
-        for <git@vger.kernel.org>; Tue, 01 Feb 2011 06:42:15 -0800 (PST)
-Received: by 10.223.103.8 with SMTP id i8mr7502709fao.47.1296571335014;
-        Tue, 01 Feb 2011 06:42:15 -0800 (PST)
-Received: from [192.168.1.186] (sth-vpn1.op5.com [193.201.96.49])
-        by mx.google.com with ESMTPS id n3sm7881302faa.5.2011.02.01.06.42.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 01 Feb 2011 06:42:13 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Thunderbird/3.1.7 ThunderGit/0.1a
-In-Reply-To: <alpine.LFD.2.00.1101311621150.8580@xanadu.home>
+	with ESMTP id S1751167Ab1BAOqr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 1 Feb 2011 09:46:47 -0500
+Received: by fxm20 with SMTP id 20so6876081fxm.19
+        for <git@vger.kernel.org>; Tue, 01 Feb 2011 06:46:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=Xey/R5reoKoyKBHsoRS79rrwIQtuA5/1JaCbxh8KSJw=;
+        b=hZr3SSQrpbdBki2W9frTFCFUr7Z1UIeFQy8LQID2CR4vI9woEzbf/ve08/9criLAcG
+         YKlBlfw5IJTILVe5weMyjNkMAJ68ACs6hJ9XMF3DXD/wxGeGn4yYCWHWn/UCgsD2yRUH
+         fwx4A9XbXl2CxhZbyYLIOLO2Ws9Aj4TrQAypQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=me+gacWiSs4f/zFmWjRHz7JmUsPMbqBLMEcnoaHSNmN1j8R+oFtJKRoonC7qZ7psBn
+         GN68K5DkX5R2q1ToYyOLRPD6tyTCahaJB0BELCqK84YaYliPBUKqr6QPDKTzOXV5xW7O
+         0DDQlEUXw5AGB7ul1Zfbm62XQrKsfzpkGvkuI=
+Received: by 10.223.118.136 with SMTP id v8mr7528918faq.90.1296571605975; Tue,
+ 01 Feb 2011 06:46:45 -0800 (PST)
+Received: by 10.223.116.210 with HTTP; Tue, 1 Feb 2011 06:46:25 -0800 (PST)
+In-Reply-To: <1296570403-9082-2-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165810>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165811>
 
-On 01/31/2011 10:28 PM, Nicolas Pitre wrote:
-> On Mon, 31 Jan 2011, Jeff King wrote:
-> 
->> On Mon, Jan 31, 2011 at 03:28:37PM -0500, Nicolas Pitre wrote:
->>
->>> We do have subdirectories for documentation, tests, contributions, etc.
->>> But a sizeable part of the tree is just a big splat of source files
->>> dumped right in the root of the tree.
->>>
->>> So I'd suggest doing the following:
->>>
->>> 1) Create a src/ directory and move *.c, *.h, *.sh, *.perl, *.py and
->>>     the builtin directory from the root directory to it.
->>
->> Wouldn't this just be the same giant splat of source files, but in a
->> different tree? I don't really see the advantage, and it seems like an
->> extra annoyance.
-> 
-> Like I said to Junio, if you don't see the advantage, there's nothing I
-> can do for you.  To me this is simple good source code hygiene.
-> 
->> Besides being just one more directory to go up and down, it does make
->> history browsing more annoying. As much as I love git's "don't record
->> renames" philosophy, our handling of renames on the viewing side is
->> often annoying. I already get annoyed sometimes following stuff across
->> the s!builtin-!builtin/! change. This would be like that but more so.
-> 
-> So... we do suck at something?  So why not take this opportunity to
-> shake yourself out of this easy comfort and improve Git as a result on
-> both front?  :-)
-> 
->> Or maybe it is a good thing for that reason, as we will eat our own
->> rename dogfood. :)
-> 
-> Exactly!  And maybe we'll make Git even more useful in the process.
-> 
->>> 5) Rename t/ to testsuite/ so this doesn't look like some garbage
->>>     leftover.
->>
->> Ugh, more typing. :P
-> 
-> Come on!  You sound like an old fart now!  ;-)
-> 
+A very superficial review, because I don't have much time, and don't
+know the surrounding code well. Sorry about that.
 
-Personally, I kinda like the capital D in Documentation for tab
-completion reasons. Keeping frequently used files and directories
-with short unique prefixes makes perfect sense from a typing point
-of view. Using longer mnemonic names makes perfect sense from a
-regex search/replace point of view.
+On Tue, Feb 1, 2011 at 3:26 PM, Ramkumar Ramachandra <artagnon@gmail.co=
+m> wrote:
+> diff --git a/vcs-svn/dir_cache.c b/vcs-svn/dir_cache.c
+> new file mode 100644
+> index 0000000..9a608ce
+> --- /dev/null
+> +++ b/vcs-svn/dir_cache.c
+> @@ -0,0 +1,40 @@
+> +/*
+> + * Licensed under a two-clause BSD-style license.
+> + * See LICENSE for details.
+> + */
+> +
+> +#include "git-compat-util.h"
+> +#include "string-list.h"
+> +#include "line_buffer.h"
+> +#include "dump_export.h"
+> +
+> +static struct string_list dirents =3D STRING_LIST_INIT_DUP;
+> +static struct string_list_item *dir =3D NULL;
+> +
+> +void dir_cache_add(const char *path, enum node_kind kind) {
 
-I'm kinda with Junio on the ./*.[ch] -> src/*.[ch] move though, but
-perhaps that's just because I hate autoconf projects which generate
-a ton of cruft in the root before one can even start building it.
+Style: we put the opening bracket of functions on the next line.
 
-It would probably help matters along if buildproducts ended up in
-their own directory though. That way .gitignore won't have so many
-extra commits when new source files are added, and 'make clean'
-gets easier to maintain.
+> + =A0 =A0 =A0 dir =3D string_list_insert(&dirents, path);
+> + =A0 =A0 =A0 dir->util =3D malloc(sizeof(enum node_kind));
+> + =A0 =A0 =A0 *((enum node_kind *)(dir->util)) =3D kind;
 
-So to sum up what I'm for;
+Unchecked malloc; perhaps you should use xmalloc instead?
 
-t/ -> Test/ (or Testsuite, but some more mnemonic name anyways
-with a short unique prefix for tab completion). This would also
-exercise our rename machinery quite a bit, altohugh not to the
-point where people get annoyed if it gets sort-of-broken.
+> +}
+> +
+> +void dir_cache_remove(const char *path) {
 
-buildproducts to Build/ (capital B to avoid completing against
-builtin*). This also has the benefit that %.o: %.c rules makes
-tab completion work better when object files are already built,
-and "git add git-foo.*" doesn't throw the "git-foo.o is ignored"
-error and forces one to re-type it as "git-foo.[ch]"
+Same style-violation as above.
 
-The ppc stuff I don't really care about and it wouldn't be hard
-to resurrect if we remove it and people complain. Everything
-will also still work if we do, although with possibly a slight
-decrease in performance.
+> + =A0 =A0 =A0 dir =3D string_list_lookup(&dirents, path);
+> + =A0 =A0 =A0 if (dir)
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 *((enum node_kind *)(dir->util)) =3D NO=
+DE_KIND_UNKNOWN;
+> +}
+> +
+> +enum node_kind dir_cache_lookup(const char *path) {
+> + =A0 =A0 =A0 dir =3D string_list_lookup(&dirents, path);
+> + =A0 =A0 =A0 if (dir)
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 return *((enum node_kind *)(dir->util))=
+;
+> + =A0 =A0 =A0 else
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 return NODE_KIND_UNKNOWN;
+> +}
+> +
+> +void dir_cache_init() {
+> + =A0 =A0 =A0 return;
+> +}
+> +
+> +void dir_cache_deinit() {
+> + =A0 =A0 =A0 string_list_clear(&dirents, 1);
+> +}
 
-Bulk of source-files stay as ./*.[ch]. I see absolutely no
-benefit to moving them, but two potential drawbacks. One is that
-it'll cause more typing for those of us who use console-based
-editors and run 'make' manually (yes, we do exist). The afore-
-mentioned merge+rebase hell is also a considerable drawback,
-even though that's primarily an issue for maint releases.
+Three more.
 
-Risks: Well... dunno about that really. Mucking up the build and
-test systems, I suppose, but it's easy enough to test.
+> +static void populate_revprops(struct strbuf *props, size_t author_le=
+n,
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 const char *author, siz=
+e_t log_len, const char *log,
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 size_t date_len, const =
+char *date)
+> +{
+> + =A0 =A0 =A0 strbuf_reset(props);
+> + =A0 =A0 =A0 strbuf_addf(props, "K 10\nsvn:author\nV %lu\n%s\n", aut=
+hor_len, author);
+> + =A0 =A0 =A0 strbuf_addf(props, "K 7\nsvn:log\nV %lu\n%s\n", log_len=
+, log);
+> + =A0 =A0 =A0 if (date_len)
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 /* SVN doesn't like an empty svn:date v=
+alue */
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 strbuf_addf(props, "K 8\nsvn:date\nV %l=
+u\n%s\n", date_len, date);
 
-Cons: Rebasing and merging stuff to the Makefile and test-stuff
-will suck a bit, but as has been pointed out that's not only a
-bad thing.
+Perhaps a scope around here will make this a bit easier to read. At
+first glance it looked like a missing scope to me, due to the indented
+comment...
 
-Pros: Less typing all-round. Simpler "make clean" rules. Fewer
-tacked-on .gitignore patches for new commands. We (well, Junio)
-get to experience first-hand the problems of directory renames
-across releases but on a smaller scale than moving *everything*
-around in one go.
+> + =A0 =A0 =A0 if (!val) die("Malformed author line");
+> + =A0 =A0 =A0 if (!(tz_off =3D strrchr(val, ' '))) goto error;
+> + =A0 =A0 =A0 *tz_off++ =3D '\0';
+> + =A0 =A0 =A0 if (!(t =3D strrchr(val, ' '))) goto error;
 
--- 
-Andreas Ericsson                   andreas.ericsson@op5.se
-OP5 AB                             www.op5.se
-Tel: +46 8-230225                  Fax: +46 8-230231
+style: use
+"if (x)
+	do_stuff();"
+instead of
+"if (x) do_stuff();"
 
-Considering the successes of the wars on alcohol, poverty, drugs and
-terror, I think we should give some serious thought to declaring war
-on peace.
+
+> + =A0 =A0 =A0 *(t - 1) =3D '\0'; /* Ignore '>' from email */
+> + =A0 =A0 =A0 t++;
+> + =A0 =A0 =A0 tz_off_buf =3D atoi(tz_off);
+> + =A0 =A0 =A0 if (tz_off_buf > 1200 || tz_off_buf =A0< -1200) goto er=
+ror;
+
+same
+
+> + =A0 =A0 =A0 tm_time =3D time_to_tm(strtoul(t, NULL, 10), tz_off_buf=
+);
+> + =A0 =A0 =A0 strftime(time_buf, SVN_DATE_LEN + 1, SVN_DATE_FORMAT, t=
+m_time);
+> + =A0 =A0 =A0 strbuf_add(date, time_buf, SVN_DATE_LEN);
+> + =A0 =A0 =A0 if (!(t =3D strchr(val, '<'))) goto error;
+
+same
+
+> +int parse_filemodify_mode(char *val)
+> +{
+> + =A0 =A0 =A0 char *t;
+> +
+> + =A0 =A0 =A0 if (!(t =3D strchr(val, ' '))) goto error;
+
+same
+
+> +void svnload_read(void)
+> +{
+> + =A0 =A0 =A0 char *t, *val;
+> + =A0 =A0 =A0 int len;
+> +
+> + =A0 =A0 =A0 while ((t =3D buffer_read_line(&input))) {
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 if ((val =3D strchr(t, ' ')))
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 *val++ =3D '\0';
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 len =3D (val ? val - t - 1 : strlen(t))=
+;
+> +
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 switch (len) {
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 case 1:
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (!memcmp(t, "D", 1))=
+ {
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 node_ct=
+x.action =3D NODE_ACTION_DELETE;
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 } else if (!memcmp(t, "=
+C", 1)) {
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 node_ct=
+x.action =3D NODE_ACTION_ADD;
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 } else if (!memcmp(t, "=
+R", 1)) {
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 node_ct=
+x.action =3D NODE_ACTION_REPLACE;
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 } else if (!memcmp(t, "=
+M", 1)) {
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (!va=
+l) goto error;
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 node_ct=
+x.action =3D NODE_ACTION_CHANGE;
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 val +=3D=
+ parse_filemodify_mode(val);
+> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 if (!(t=
+ =3D strchr(val, ' '))) goto error;
+
+same
