@@ -1,93 +1,107 @@
-From: David Aguilar <davvid@gmail.com>
+From: Jakub Narebski <jnareb@gmail.com>
 Subject: Re: [1.8.0] Tracking empty directories
-Date: Wed, 2 Feb 2011 15:33:09 -0800
-Message-ID: <4928FF12-E593-4CDB-AC68-B4078CC5920E@gmail.com>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org> <m3zkqe8xc8.fsf_-_@localhost.localdomain> <AANLkTi=bK7mFS3eWVMWXqZSnv73tafL9AGazk4jPLddp@mail.gmail.com>
-Mime-Version: 1.0 (iPhone Mail 7D11)
-Content-Type: text/plain;
-	charset=us-ascii;
-	format=flowed;
-	delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>,
+Date: Thu, 3 Feb 2011 00:52:43 +0100
+Message-ID: <201102030052.44940.jnareb@gmail.com>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <AANLkTi=bK7mFS3eWVMWXqZSnv73tafL9AGazk4jPLddp@mail.gmail.com> <4928FF12-E593-4CDB-AC68-B4078CC5920E@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-2
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jay Soffian <jaysoffian@gmail.com>,
 	"git@vger.kernel.org" <git@vger.kernel.org>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 03 00:34:27 2011
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 03 00:53:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkmDI-0002aV-Tq
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 00:34:17 +0100
+	id 1PkmVP-0003LG-Mr
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 00:53:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755754Ab1BBXd3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Feb 2011 18:33:29 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:59855 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755748Ab1BBXd0 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Feb 2011 18:33:26 -0500
-Received: by iyj18 with SMTP id 18so504748iyj.19
-        for <git@vger.kernel.org>; Wed, 02 Feb 2011 15:33:26 -0800 (PST)
+	id S1755492Ab1BBXwz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Feb 2011 18:52:55 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:34110 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754475Ab1BBXwy (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Feb 2011 18:52:54 -0500
+Received: by wyb28 with SMTP id 28so609265wyb.19
+        for <git@vger.kernel.org>; Wed, 02 Feb 2011 15:52:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:references:message-id:from:to:in-reply-to
-         :content-type:content-transfer-encoding:x-mailer:mime-version
-         :subject:date:cc;
-        bh=6XBgW5e/vYjDiFhc6FYZNP9xgh88362OI81sOvQqClY=;
-        b=Pd31WA0eoIlCRzykBe0TSf6gcVdovvQr+gPCrttHUnxydIPJS4mxhOojpsiOLEnGlx
-         yGctHeuldwt7vbeCVQk+uXl0U0ZmmBRoLgKvBbFMI+Caw+MasZip1U/VnGKnywrC6pYm
-         3mqF+9iyk+tvGfXNJ3U+nzp6aeDEin8+dvTrI=
+        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
+         :in-reply-to:mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        bh=EMr7HSMvVKRKpD1WgPxrffF/1rLgDgyDA6x4/CMBrHg=;
+        b=R7N2t53NR+XaGpgUp2WP4vRHm2BezxncsQUxqoUVWx2wuOQnnVFJs6jqToArVrFUQk
+         GXS0/IvWA+IFG+WhN+7iP1hIxw++GBVDA3PYk5RFphwNcUtbSFe4Uf8JqI/ew6Ph7/z+
+         gmJeFwJxeJknytoZWu5ii5779jnjaEm8aIVnY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=references:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:x-mailer:mime-version:subject:date:cc;
-        b=q9iamTTB2XLyg/BTc3q88x3A78F1CQaTUZCDHIw/9HgWiQNjnv969c6XL3ov2syfRd
-         kwjz/v7wcjr5v6ZKtOztyu5AAXpc94yqjVQzxfQc0s1hp84FkxjJYSGp3lpvyFkGhY4j
-         8qbdkqM7D2cWkqAuhrMLvRBde5W199e8DoXF0=
-Received: by 10.42.177.8 with SMTP id bg8mr11984397icb.216.1296689606068;
-        Wed, 02 Feb 2011 15:33:26 -0800 (PST)
-Received: from [10.76.245.151] ([166.205.136.152])
-        by mx.google.com with ESMTPS id jv9sm100288icb.1.2011.02.02.15.33.22
+        h=from:to:subject:date:user-agent:cc:references:in-reply-to
+         :mime-version:content-type:content-transfer-encoding
+         :content-disposition:message-id;
+        b=hJOdGu/9c1Y1MHzvQTNNFCeTU+kn0iTWx2O6DMZ3XzQVa/B2W+K9VSNYn3xo+H5Fz3
+         5zyj7X3dmBEpDtS3Gj+KUD2wBGWb5E+n926YBGOOyLxVBUHZATbtZxVWohuboKTWMjO0
+         jHisOX1I9EYW3x2CNqqTMNTAKcNDklzkSEmwc=
+Received: by 10.227.156.137 with SMTP id x9mr8322978wbw.108.1296690773077;
+        Wed, 02 Feb 2011 15:52:53 -0800 (PST)
+Received: from [192.168.1.13] (abvv233.neoplus.adsl.tpnet.pl [83.8.219.233])
+        by mx.google.com with ESMTPS id n11sm112419wej.19.2011.02.02.15.52.50
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 02 Feb 2011 15:33:24 -0800 (PST)
-In-Reply-To: <AANLkTi=bK7mFS3eWVMWXqZSnv73tafL9AGazk4jPLddp@mail.gmail.com>
-X-Mailer: iPhone Mail (7D11)
+        Wed, 02 Feb 2011 15:52:51 -0800 (PST)
+User-Agent: KMail/1.9.3
+In-Reply-To: <4928FF12-E593-4CDB-AC68-B4078CC5920E@gmail.com>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165940>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165941>
 
-On Feb 2, 2011, at 3:23 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
+Dnia czwartek 3. lutego 2011 00:33, David Aguilar napisa=B3:
+> On Feb 2, 2011, at 3:23 PM, Jay Soffian <jaysoffian@gmail.com> wrote:
+>> On Wed, Feb 2, 2011 at 6:56 AM, Jakub Narebski <jnareb@gmail.com> wr=
+ote:
+>>>
+>>> The problem with backward compatibility is twofold.  First and more
+>>> important is while git supports empty tree object (it has it =20
+>>> hardcoded
+>>> for some time, as it is necessary e.g. for initial diff, or merging
+>>> unrelated branches without common ancestor), and there is no proble=
+m
+>>> with entry for empty tree in a tree object
+>>>
+>>>  040000 tree 22d5826c087c4b9dcc72e2131c2cfb061403f7eb  empty
+>>>
+>>> there is (supposedly) problem when checking out such tree (see emai=
+l
+>>> referenced above) with an old git.
+>>>
+>>> Second is that tracking empty directories would require extension =20
+>>> to the
+>>> git index (storing trees in index, like we store submodules)... but=
+ =20
+>>> that
+>>> is purely local matter.
+>>
+>> Instead of using an empty tree, construct a tree containing a single
+>> sentinel file whose contents are a suitable warning not to delete/ed=
+it
+>> said file using pre-1.8.0 git. Meanwhile git-1.8.0 never writes the
+>> file to the filesystem. Too ugly?
 
-> On Wed, Feb 2, 2011 at 6:56 AM, Jakub Narebski <jnareb@gmail.com>  
-> wrote:
->> The problem with backward compatibility is twofold.  First and more
->> important is while git supports empty tree object (it has it  
->> hardcoded
->> for some time, as it is necessary e.g. for initial diff, or merging
->> unrelated branches without common ancestor), and there is no problem
->> with entry for empty tree in a tree object
->>
->>  040000 tree 22d5826c087c4b9dcc72e2131c2cfb061403f7eb  empty
->>
->> there is (supposedly) problem when checking out such tree (see email
->> referenced above) with an old git.
->>
->> Second is that tracking empty directories would require extension  
->> to the
->> git index (storing trees in index, like we store submodules)... but  
->> that
->> is purely local matter.
->
-> Instead of using an empty tree, construct a tree containing a single
-> sentinel file whose contents are a suitable warning not to delete/edit
-> said file using pre-1.8.0 git. Meanwhile git-1.8.0 never writes the
-> file to the filesystem. Too ugly?
->
-> j.
+Too ugly.
 
-I don't like where this is going. Users are not always right.  
-Touch .gitignore and be done with it.   This is a big change with  
-negligible benefits.  I don't understand why this is needed.
+> I don't like where this is going. Users are not always right. =20
+> Touch .gitignore and be done with it.   This is a big change with =20
+> negligible benefits.  I don't understand why this is needed.
+
+Two issues: first is interaction with other SCM which keep empty files
+(or keep empty files when requested).  Second is skeleton of directory
+structure automatically generated by some git-unaware tool.
+
+I've never felt the need but more than 50% of Git User's Survey 2010
+responders did.
+--=20
+Jakub Narebski
+Poland
