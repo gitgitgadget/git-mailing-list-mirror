@@ -1,76 +1,82 @@
-From: Pascal Obry <pascal@obry.net>
-Subject: Re: git svn clone stops after r2 for svn://mlton.org/mlton/trunk
-Date: Wed, 02 Feb 2011 21:19:11 +0100
-Organization: Home - http://www.obry.net
-Message-ID: <4D49BC3F.5080902@obry.net>
-References: <87aaijso0j.fsf@mid.deneb.enyo.de>
-Reply-To: pascal@obry.net
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Q: does index-pack work in place on windows?
+Date: Wed, 02 Feb 2011 12:21:05 -0800
+Message-ID: <7v39o6xk5q.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Florian Weimer <fw@deneb.enyo.de>
-X-From: git-owner@vger.kernel.org Wed Feb 02 21:19:20 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Feb 02 21:21:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkjAe-0002nM-A8
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 21:19:20 +0100
+	id 1PkjCg-0003yi-LP
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 21:21:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752393Ab1BBUTO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Feb 2011 15:19:14 -0500
-Received: from smtp05.smtpout.orange.fr ([80.12.242.127]:50050 "EHLO
-	smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751679Ab1BBUTO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Feb 2011 15:19:14 -0500
-Received: from [192.168.0.100] ([82.124.203.119])
-	by mwinf5d09 with ME
-	id 38KB1g0132b4kYJ038KBNk; Wed, 02 Feb 2011 21:19:12 +0100
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; fr-FR; rv:1.8.1.22) Gecko/20090605 Thunderbird/2.0.0.22 Mnenhy/0.7.5.0
-In-Reply-To: <87aaijso0j.fsf@mid.deneb.enyo.de>
-X-Enigmail-Version: 1.0.1
+	id S1752561Ab1BBUVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Feb 2011 15:21:20 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58077 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751585Ab1BBUVU (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Feb 2011 15:21:20 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6A2203594;
+	Wed,  2 Feb 2011 15:22:11 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:from:date:message-id:mime-version:content-type; s=sasl; bh=CUY4
+	0JMV1TlQelxopcyg888gYLs=; b=pZTeAXayCybs9bbQru24EqsD5hslSKN70HyE
+	mwn6F4NtyqxtIHA/zrpbEKcJoj2K/+hQOqs/PR1TWia8hYtQX06y8UfVokiVX+Sd
+	4Td2/YdT12Oez4pBetzT9OeS+e4K7jMNwB7B4koW7WUsl6QmvSEY6CedHcKBSauP
+	WZVKlPQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:from:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
+	JQyLqUILh9j8ZH3dy/Ss0djZcatAOOUI4vvpKqHCYIkJiispxr72xx67XLiBd3+N
+	bwrQhcbUIR0gU+/nMNgsW/T67oNBwFDIdGG7YWoQfajduWlfHE+59kwKU4YIfgwR
+	Iy1magdtrBzQfEFmQ+b2JATjLj5TjmKnq+sptRB8WLc=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 38B3F3593;
+	Wed,  2 Feb 2011 15:22:08 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4F4EF358C; Wed,  2 Feb 2011
+ 15:22:00 -0500 (EST)
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 1BB160DA-2F0A-11E0-98C3-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165933>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165934>
 
+... or any other (operating / file) system where you cannot unlink a file
+that is open?
 
-Florian,
+When you run
 
-> There's something strange going on there:
-> 
-> $ git svn clone svn://mlton.org/mlton/trunk mlton 
-> Initialized empty Git repository in /home/fw/src/mlton/.git/
-> r2 = 61f0dd5ba401ece2ff4668bc7454b7742c60fa99 (refs/remotes/git-svn)
-> Checked out HEAD:
->   svn://mlton.org/mlton/trunk r2
+    $ git clone git://some.where/repo/sitory.git local
+    $ cd local
+    $ git index-pack .git/objects/pack/pack-*.pack
 
-This is probably because the first revision in trunk is r2 and there is
-no r0 nor a r1. This repository has been converted from CVS (see r2). In
-such a case you can convert properly using:
+there is a call to write_idx_file() in builtin/index-pack.c, that feeds
+the correct (and existing) name of the corresponding pack idx file.
 
-   $ git svn clone -s -r3:7500 svn://mlton.org/mlton mlton
+The callee in pack-write.c, after sorting the list of objects contained in
+the pack, does this:
 
-r3 is the first actual revision, all see can be seen using:
-
-   $ svn://mlton.org/mlton/trunk mlton
-
-Note that I have used -s as this repository is using a standard svn layout.
-
-Hope this helps.
-
-Pascal.
-
--- 
-
---|------------------------------------------------------
---| Pascal Obry                           Team-Ada Member
---| 45, rue Gabriel Peri - 78114 Magny Les Hameaux FRANCE
---|------------------------------------------------------
---|    http://www.obry.net  -  http://v2p.fr.eu.org
---| "The best way to travel is by means of imagination"
---|
---| gpg --keyserver keys.gnupg.net --recv-key F949BD3B
+	if (!index_name) {
+		static char tmpfile[PATH_MAX];
+		fd = odb_mkstemp(tmpfile, sizeof(tmpfile), "pack/tmp_idx_XXXXXX");
+		index_name = xstrdup(tmpfile);
+	} else {
+		unlink(index_name);
+		fd = open(index_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
+	}
+ 
+and then writes out the pack index to the file descriptor.  But index-pack
+uses the usual has_sha1_file() and read_sha1_file() interface to validate
+the "existing" objects, and is likely to have mmapped the .idx file when
+it called use_pack_window().  Which makes me suspect that this unlink (or
+the open that immediately follows) may fail on systems that do not allow
+unlink on inode that has still users.
