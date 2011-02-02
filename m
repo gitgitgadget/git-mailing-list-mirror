@@ -1,214 +1,103 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Q on "index-pack: smarter memory usage during delta resolution,
- 2008-10-17"
-Date: Wed, 02 Feb 2011 10:11:26 -0800
-Message-ID: <7vfws6xq5t.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [1.8.0] git-stash invocation changes
+Date: Wed, 02 Feb 2011 19:15:37 +0100
+Message-ID: <vpqtygmwbee.fsf@bauges.imag.fr>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
+	<7vwrll57ha.fsf@alter.siamese.dyndns.org>
+	<201102021823.19559.trast@student.ethz.ch>
+	<AANLkTimu=drR+4v+B_aB+Y4jVqzaBghh1XYSZoACsBry@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Wed Feb 02 19:11:46 2011
+Content-Type: text/plain; charset=iso-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Thomas Rast <trast@student.ethz.ch>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Feb 02 19:16:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkhBA-0001i1-JJ
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 19:11:44 +0100
+	id 1PkhFb-0004kf-5F
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 19:16:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754814Ab1BBSLi (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Feb 2011 13:11:38 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44791 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754637Ab1BBSLh (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Feb 2011 13:11:37 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 59B6024F1;
-	Wed,  2 Feb 2011 13:12:29 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=bDAc
-	6W9sJfMsd/Oo8MtkmaN3/Ho=; b=Zx3XCFbKJ5CEW7iUbH7j6tC//e1Ncaq7nJO+
-	/5LP/CugdhN1fu8sJ07clKGBAZdykHpG/5r4BMmkY8y/ACJL+v40aS9F9MvtC7qU
-	+5VDJZAIx28UikItkOU8Is8UzgbwdCgP+EEqfxaH9Ocud157tV7+BnCk7LW3TbkI
-	Pwn+0zw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:from:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
-	UbxeRo7xKN2NvZEcEtnNx/MivtfnQDJNbPDeh4e9jq3EVSk3s3z8uhWXHXsDG3N0
-	fBEdOsjL5J6mUtvC3FIyMFRNHhfzDIYO4+w43kv+KRFDSS4ntdLvdahiTgvzS+nI
-	EWlqQmNYS1oOAlt+i9wiNCUJ0Xv0kle7wxrAptFJKM8=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 29C6A24F0;
-	Wed,  2 Feb 2011 13:12:26 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id B05A324EF; Wed,  2 Feb 2011
- 13:12:21 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: FD39AD9A-2EF7-11E0-8987-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
+	id S1754854Ab1BBSQK convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Feb 2011 13:16:10 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:57228 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754851Ab1BBSQJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Feb 2011 13:16:09 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p12IFZ2Y021902
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 2 Feb 2011 19:15:35 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PkhEv-0004db-Ae; Wed, 02 Feb 2011 19:15:37 +0100
+In-Reply-To: <AANLkTimu=drR+4v+B_aB+Y4jVqzaBghh1XYSZoACsBry@mail.gmail.com> (Shawn Pearce's message of "Wed\, 2 Feb 2011 09\:35\:52 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Wed, 02 Feb 2011 19:15:35 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p12IFZ2Y021902
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1297275335.93682@5u95Fzk3rO0x+F1TkntkhA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165922>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165923>
 
-In find_unresolved_deltas(), there are two loops that walk the range of deltas[]
-array that potentially share the same base object.  One loop for ref-delta
-looks like this:
+Shawn Pearce <spearce@spearce.org> writes:
 
-	for (i = ref_first; i <= ref_last; i++) {
-		struct object_entry *child = objects + deltas[i].obj_no;
-		if (child->real_type == OBJ_REF_DELTA) {
-			struct base_data result;
-			resolve_delta(child, base, &result);
-			if (i == ref_last && ofs_last == -1)
-				free_base_data(base);
-			find_unresolved_deltas(&result, base);
-		}
-	}
+> On Wed, Feb 2, 2011 at 09:23, Thomas Rast <trast@student.ethz.ch> wro=
+te:
+>> Proposal:
+>>
+>> 1. Change 'git stash <not-a-stash-command>' to give a usage message
+>> =A0 instead of using <not-a-stash-command> as the stash message.
+>
+> Oh please, yes, please do this.  We should have done this long, long
+> ago.  Its easy enough to train your fingers or fix your scripts to sa=
+y
+> `git stash save list` rather than `git stash lsit` once stash errors
+> out and gives you a usage message once.
 
-I was wondering what happens when the entry at ref_last was a false match
-(i.e. the "union delta_base" happened to have the same 20-byte pattern but
-was of a wrong kind).
+Err, hasn't this been fixed long ago already?
 
-The other loop for ofs-delta has the same "if (i == ofs_last)" condition.
+$ git stash not-a-stash-command
+Usage: git stash list [<options>]
+   or: git stash show [<stash>]
+   or: git stash drop [-q|--quiet] [<stash>]
+   or: git stash ( pop | apply ) [--index] [-q|--quiet] [<stash>]
+   or: git stash branch <branchname> [<stash>]
+   or: git stash [save [--patch] [-k|--[no-]keep-index] [-q|--quiet] [<=
+message>]]
+   or: git stash clear
+$ git stash save --no-such-option
+error: unknown option for 'stash save': --no-such-option
+       To provide a message, use git stash save -- '--no-such-option'
+Usage: [...]
 
-Admittedly this is rather hard to trigger (you have to find an object
-as a ofs-delta base object, and then come up with another object whose
-object name is the same as the offset of the first base object followed
-by bunch of '\0' and use it as a ref-delta base), and even if it did, it
-will only retain the memory for slightly longer time in the function.
+Only this could be seen as a problem:
 
-Is a patch along the following line worth doing, I wonder.
+$ git stash save this-is-not-a-stash-name
+Saved working directory and index state On master: this-is-not-a-stash-=
+name
 
--- >8 --
-Subject: index-pack: group the delta-base array entries also by type
+in particular, it is wrt:
 
-Entries in the delta_base array are only grouped by the bytepattern in
-the delta_base union, some of which have 20-byte object name of the base
-object (i.e. base for REF_DELTA objects), while others have sizeof(off_t)
-bytes followed by enough NULs to fill 20-byte.  The loops to iterate
-through a range inside this array still needs to inspect the type of the
-delta, and skip over false hits.
+Thomas Rast <trast@student.ethz.ch> writes:
 
-Group the entries also by type to eliminate the potential of false hits.
+> 2. Change 'git stash -p <args>' to treat the <args> as filename
+>    arguments similar to add -p.  Possibly add a -m option that lets
+>    you specify a message anyway, if desired.
 
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
----
- builtin/index-pack.c |   61 ++++++++++++++++++++++++++++++++-----------------
- 1 files changed, 40 insertions(+), 21 deletions(-)
+I'm not a user of "stash with messages" myself, so I can't say how
+annoying the migration would be, but -m "message" sounds good to me.
 
-diff --git a/builtin/index-pack.c b/builtin/index-pack.c
-index 8dc5c0b..1b5d83a 100644
---- a/builtin/index-pack.c
-+++ b/builtin/index-pack.c
-@@ -391,7 +391,18 @@ static void *get_data_from_pack(struct object_entry *obj)
- 	return data;
- }
- 
--static int find_delta(const union delta_base *base)
-+static int compare_delta_bases(const union delta_base *base1,
-+			       const union delta_base *base2,
-+			       enum object_type type1,
-+			       enum object_type type2)
-+{
-+	int cmp = type1 - type2;
-+	if (cmp)
-+		return cmp;
-+	return memcmp(base1, base2, UNION_BASE_SZ);
-+}
-+
-+static int find_delta(const union delta_base *base, enum object_type type)
- {
- 	int first = 0, last = nr_deltas;
- 
-@@ -400,7 +411,8 @@ static int find_delta(const union delta_base *base)
-                 struct delta_entry *delta = &deltas[next];
-                 int cmp;
- 
--                cmp = memcmp(base, &delta->base, UNION_BASE_SZ);
-+		cmp = compare_delta_bases(base, &delta->base,
-+					  type, objects[delta->obj_no].type);
-                 if (!cmp)
-                         return next;
-                 if (cmp < 0) {
-@@ -413,9 +425,10 @@ static int find_delta(const union delta_base *base)
- }
- 
- static void find_delta_children(const union delta_base *base,
--				int *first_index, int *last_index)
-+				int *first_index, int *last_index,
-+				enum object_type type)
- {
--	int first = find_delta(base);
-+	int first = find_delta(base, type);
- 	int last = first;
- 	int end = nr_deltas - 1;
- 
-@@ -543,11 +556,13 @@ static void find_unresolved_deltas(struct base_data *base,
- 		union delta_base base_spec;
- 
- 		hashcpy(base_spec.sha1, base->obj->idx.sha1);
--		find_delta_children(&base_spec, &ref_first, &ref_last);
-+		find_delta_children(&base_spec,
-+				    &ref_first, &ref_last, OBJ_REF_DELTA);
- 
- 		memset(&base_spec, 0, sizeof(base_spec));
- 		base_spec.offset = base->obj->idx.offset;
--		find_delta_children(&base_spec, &ofs_first, &ofs_last);
-+		find_delta_children(&base_spec,
-+				    &ofs_first, &ofs_last, OBJ_OFS_DELTA);
- 	}
- 
- 	if (ref_last == -1 && ofs_last == -1) {
-@@ -559,24 +574,24 @@ static void find_unresolved_deltas(struct base_data *base,
- 
- 	for (i = ref_first; i <= ref_last; i++) {
- 		struct object_entry *child = objects + deltas[i].obj_no;
--		if (child->real_type == OBJ_REF_DELTA) {
--			struct base_data result;
--			resolve_delta(child, base, &result);
--			if (i == ref_last && ofs_last == -1)
--				free_base_data(base);
--			find_unresolved_deltas(&result, base);
--		}
-+		struct base_data result;
-+
-+		assert(child->real_type == OBJ_REF_DELTA);
-+		resolve_delta(child, base, &result);
-+		if (i == ref_last && ofs_last == -1)
-+			free_base_data(base);
-+		find_unresolved_deltas(&result, base);
- 	}
- 
- 	for (i = ofs_first; i <= ofs_last; i++) {
- 		struct object_entry *child = objects + deltas[i].obj_no;
--		if (child->real_type == OBJ_OFS_DELTA) {
--			struct base_data result;
--			resolve_delta(child, base, &result);
--			if (i == ofs_last)
--				free_base_data(base);
--			find_unresolved_deltas(&result, base);
--		}
-+		struct base_data result;
-+
-+		assert(child->real_type == OBJ_OFS_DELTA);
-+		resolve_delta(child, base, &result);
-+		if (i == ofs_last)
-+			free_base_data(base);
-+		find_unresolved_deltas(&result, base);
- 	}
- 
- 	unlink_base_data(base);
-@@ -586,7 +601,11 @@ static int compare_delta_entry(const void *a, const void *b)
- {
- 	const struct delta_entry *delta_a = a;
- 	const struct delta_entry *delta_b = b;
--	return memcmp(&delta_a->base, &delta_b->base, UNION_BASE_SZ);
-+
-+	/* group by type (ref vs ofs) and then by value (sha-1 or offset) */
-+	return compare_delta_bases(&delta_a->base, &delta_b->base,
-+				   objects[delta_a->obj_no].type,
-+				   objects[delta_b->obj_no].type);
- }
- 
- /* Parse all objects and return the pack content SHA1 hash */
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
