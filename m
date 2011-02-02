@@ -1,65 +1,87 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [1.8.0] git-stash invocation changes
-Date: Wed, 2 Feb 2011 19:51:31 +0100
-Message-ID: <201102021951.31883.trast@student.ethz.ch>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <AANLkTimu=drR+4v+B_aB+Y4jVqzaBghh1XYSZoACsBry@mail.gmail.com> <vpqtygmwbee.fsf@bauges.imag.fr>
+From: =?UTF-8?B?IkFsZWphbmRybyBSLiBTZWRlw7FvIg==?= <asedeno@MIT.EDU>
+Subject: Re: [PATCH (version C) 1/2] gitweb: Prepare for splitting gitweb
+Date: Wed, 02 Feb 2011 14:08:12 -0500
+Message-ID: <4D49AB9C.2050307@mit.edu>
+References: <1296579016-13356-1-git-send-email-jnareb@gmail.com> <1296579016-13356-4-git-send-email-jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Cc: Shawn Pearce <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>, <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Wed Feb 02 19:51:39 2011
+Cc: git@vger.kernel.org,
+	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
+	"John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 02 20:08:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pkhnm-0001SN-SG
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 19:51:39 +0100
+	id 1Pki44-0002aL-5P
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 20:08:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754951Ab1BBSvd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Feb 2011 13:51:33 -0500
-Received: from edge20.ethz.ch ([82.130.99.26]:5137 "EHLO edge20.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754928Ab1BBSvd (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Feb 2011 13:51:33 -0500
-Received: from CAS11.d.ethz.ch (172.31.38.211) by edge20.ethz.ch
- (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.270.1; Wed, 2 Feb
- 2011 19:51:24 +0100
-Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS11.d.ethz.ch
- (172.31.38.211) with Microsoft SMTP Server (TLS) id 14.1.270.1; Wed, 2 Feb
- 2011 19:51:30 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
-In-Reply-To: <vpqtygmwbee.fsf@bauges.imag.fr>
-X-Originating-IP: [129.132.153.233]
+	id S1754924Ab1BBTIX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Feb 2011 14:08:23 -0500
+Received: from DMZ-MAILSEC-SCANNER-3.MIT.EDU ([18.9.25.14]:45982 "EHLO
+	dmz-mailsec-scanner-3.mit.edu" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754637Ab1BBTIW (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 2 Feb 2011 14:08:22 -0500
+X-AuditID: 1209190e-b7b3bae000000a71-36-4d49aba536bc
+Received: from mailhub-auth-4.mit.edu ( [18.7.62.39])
+	by dmz-mailsec-scanner-3.mit.edu (Symantec Brightmail Gateway) with SMTP id 3C.58.02673.5ABA94D4; Wed,  2 Feb 2011 14:08:21 -0500 (EST)
+Received: from outgoing.mit.edu (OUTGOING-AUTH.MIT.EDU [18.7.22.103])
+	by mailhub-auth-4.mit.edu (8.13.8/8.9.2) with ESMTP id p12J8LUx007777;
+	Wed, 2 Feb 2011 14:08:21 -0500
+Received: from darkmatter.mit.edu (DARKMATTER.MIT.EDU [18.238.2.175])
+	(authenticated bits=0)
+        (User authenticated as smtp/darkmatter.mit.edu@ATHENA.MIT.EDU)
+	by outgoing.mit.edu (8.13.6/8.12.4) with ESMTP id p12J8J5b007563
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Wed, 2 Feb 2011 14:08:20 -0500 (EST)
+Received: by darkmatter.mit.edu (Postfix, from userid 108)
+	id 41CD314C013; Wed,  2 Feb 2011 14:08:19 -0500 (EST)
+Received: from [18.238.2.136] (JABUN.MIT.EDU [18.238.2.136])
+	by darkmatter.mit.edu (Postfix) with ESMTPSA id 220C214C012;
+	Wed,  2 Feb 2011 14:08:19 -0500 (EST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <1296579016-13356-4-git-send-email-jnareb@gmail.com>
+X-Enigmail-Version: 1.1.1
+X-Brightmail-Tracker: AAAAAA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165925>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165926>
 
-Matthieu Moy wrote:
-> Shawn Pearce <spearce@spearce.org> writes:
+On 2/1/2011 11:50 AM, Jakub Narebski wrote:
+> Prepare gitweb for being split into modules that would be installed
+> in gitweblibdir, by default alongside gitweb in 'lib/' subdirectory.
 > 
-> > On Wed, Feb 2, 2011 at 09:23, Thomas Rast <trast@student.ethz.ch> wrote:
-> >> Proposal:
-> >>
-> >> 1. Change 'git stash <not-a-stash-command>' to give a usage message
-> >>   instead of using <not-a-stash-command> as the stash message.
-> >
-> > Oh please, yes, please do this.  We should have done this long, long
-> > ago.  Its easy enough to train your fingers or fix your scripts to say
-> > `git stash save list` rather than `git stash lsit` once stash errors
-> > out and gives you a usage message once.
+> Gitweb would search first in 'lib/' subdirectory from where it is
+> installed, via
 > 
-> Err, hasn't this been fixed long ago already?
+>   use lib __DIR__.'/lib';
+> 
+> (This allow for tests to work with source version of gitweb without
+> changes.)  Then it searches in $(gitweblibdir) directory (set during
+> build time), by default "$(gitwebdir)/lib", via
+> 
+>   use lib "++GITWEBLIBDIR++";
+> 
+> "++GITWEBLIBDIR++" is set to appropriate value during build time
+> (generating gitweb.cgi).  This allows to select where to install
+> gitweb modules via 'gitweblibdir' build time configuration variable
 
-Oh, you're actually right.  I have totally missed this, and should
-obviously have tested first.
+I would personally prefer to see this path taken, as it seems the most
+flexible and would fulfill a use case I have.
 
-Still, I think the change to 'git stash -p' is also worthwhile.
+I maintain a build of git in an AFS volume at MIT. One of its uses is
+symlinking to the current gitweb.cgi to instantly deploy a gitweb in a
+shared hosting environment (example: http://git.scripts.mit.edu/).
 
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+__DIR__ would point to the directory containing a user symlink to
+gitweb, which would allow users to add their own libraries, while
+++GITWEBLIBDIR++ would allow the standard gitweb libraries to be hosted
+at a common path without placing additional burdens on the user at
+upgrade time.
+
+-Alejandro
