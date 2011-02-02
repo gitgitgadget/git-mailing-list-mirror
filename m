@@ -1,82 +1,73 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Q: does index-pack work in place on windows?
-Date: Wed, 02 Feb 2011 12:21:05 -0800
-Message-ID: <7v39o6xk5q.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH 2/2] fast-import: introduce "feature notes" command
+Date: Wed, 2 Feb 2011 14:22:59 -0600
+Message-ID: <20110202202259.GA21138@elie>
+References: <20110202045826.GC15285@elie>
+ <20110202050735.GE15285@elie>
+ <201102022047.55152.trast@student.ethz.ch>
+ <AANLkTi=bEi6J3wcex8JCowU6PRt3BKix5v67v8Ds-MN2@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, "Shawn O. Pearce" <spearce@spearce.org>
-To: Johannes Sixt <j6t@kdbg.org>
-X-From: git-owner@vger.kernel.org Wed Feb 02 21:21:28 2011
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Johan Herland <johan@herland.net>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Sam Vilain <sam@vilain.net>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 02 21:23:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkjCg-0003yi-LP
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 21:21:26 +0100
+	id 1PkjEk-0005EU-NM
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 21:23:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752561Ab1BBUVU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Feb 2011 15:21:20 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58077 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751585Ab1BBUVU (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Feb 2011 15:21:20 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6A2203594;
-	Wed,  2 Feb 2011 15:22:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:from:date:message-id:mime-version:content-type; s=sasl; bh=CUY4
-	0JMV1TlQelxopcyg888gYLs=; b=pZTeAXayCybs9bbQru24EqsD5hslSKN70HyE
-	mwn6F4NtyqxtIHA/zrpbEKcJoj2K/+hQOqs/PR1TWia8hYtQX06y8UfVokiVX+Sd
-	4Td2/YdT12Oez4pBetzT9OeS+e4K7jMNwB7B4koW7WUsl6QmvSEY6CedHcKBSauP
-	WZVKlPQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:from:date:message-id:mime-version:content-type; q=dns; s=sasl; b=
-	JQyLqUILh9j8ZH3dy/Ss0djZcatAOOUI4vvpKqHCYIkJiispxr72xx67XLiBd3+N
-	bwrQhcbUIR0gU+/nMNgsW/T67oNBwFDIdGG7YWoQfajduWlfHE+59kwKU4YIfgwR
-	Iy1magdtrBzQfEFmQ+b2JATjLj5TjmKnq+sptRB8WLc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 38B3F3593;
-	Wed,  2 Feb 2011 15:22:08 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4F4EF358C; Wed,  2 Feb 2011
- 15:22:00 -0500 (EST)
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 1BB160DA-2F0A-11E0-98C3-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
+	id S1752592Ab1BBUX3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Feb 2011 15:23:29 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:48870 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751377Ab1BBUX3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Feb 2011 15:23:29 -0500
+Received: by qwa26 with SMTP id 26so373983qwa.19
+        for <git@vger.kernel.org>; Wed, 02 Feb 2011 12:23:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=TicGwjThfAJJw3XKpJxCDOc1hUGTdCvHxEuF//L/Nos=;
+        b=EBFOSH8jSXQgNQvjuPRT8HEyjHdh+CvXXA544Uq0nnZi5zF2DcYAJYO8e4rEpznlT0
+         b8VQWtvDG58EituO5kIpIxKjsMn9IziN5IflltwTriqEVHjBYpx9T5T0Wv97jPeXvVtI
+         W8Bm/KmPPbKEeW9e99vmCCjPXyM0oDUxaleb0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=fq+gpF8SG+maPlkD0li88WS3TzfiyEBENAdqPOk117H/9LeettYeM539WVuLlYvkeS
+         mp05TNaNTiMl188kbXn4M0tVGy1IBKzWzZEhZCqBBdraNGiJ5x96iXsWHBDGsT3sTkvG
+         Qg5L8o5v+G9Ps5mSox9D3MMhH8kQ9Jdwi2WnI=
+Received: by 10.229.250.9 with SMTP id mm9mr6665099qcb.264.1296678208512;
+        Wed, 02 Feb 2011 12:23:28 -0800 (PST)
+Received: from elie (adsl-76-206-235-233.dsl.chcgil.sbcglobal.net [76.206.235.233])
+        by mx.google.com with ESMTPS id e29sm4842qck.15.2011.02.02.12.23.25
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 02 Feb 2011 12:23:27 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <AANLkTi=bEi6J3wcex8JCowU6PRt3BKix5v67v8Ds-MN2@mail.gmail.com>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165934>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165935>
 
-... or any other (operating / file) system where you cannot unlink a file
-that is open?
+Sverre Rabbelier wrote:
 
-When you run
+> Perhaps we can submit a patch to maint to have it (the
+> oldest git that supports the 'feature' command) recognize 'feature
+> notes' though?
 
-    $ git clone git://some.where/repo/sitory.git local
-    $ cd local
-    $ git index-pack .git/objects/pack/pack-*.pack
+Smart idea.  My concerns would evaporate.
 
-there is a call to write_idx_file() in builtin/index-pack.c, that feeds
-the correct (and existing) name of the corresponding pack idx file.
-
-The callee in pack-write.c, after sorting the list of objects contained in
-the pack, does this:
-
-	if (!index_name) {
-		static char tmpfile[PATH_MAX];
-		fd = odb_mkstemp(tmpfile, sizeof(tmpfile), "pack/tmp_idx_XXXXXX");
-		index_name = xstrdup(tmpfile);
-	} else {
-		unlink(index_name);
-		fd = open(index_name, O_CREAT|O_EXCL|O_WRONLY, 0600);
-	}
- 
-and then writes out the pack index to the file descriptor.  But index-pack
-uses the usual has_sha1_file() and read_sha1_file() interface to validate
-the "existing" objects, and is likely to have mmapped the .idx file when
-it called use_pack_window().  Which makes me suspect that this unlink (or
-the open that immediately follows) may fail on systems that do not allow
-unlink on inode that has still users.
+[v1.7.0-rc0~95^2~4 (2009-12-04) is the relevant git.]
