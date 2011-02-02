@@ -1,70 +1,79 @@
-From: Jay Soffian <jaysoffian@gmail.com>
-Subject: Re: [1.8.0] Change branch --set-uptream to take an argument
-Date: Tue, 1 Feb 2011 23:18:31 -0500
-Message-ID: <AANLkTi=qn-Jf32iOHsaFwwcwp4_UWxcwG+t1VepO0FrC@mail.gmail.com>
-References: <AANLkTinUn2SMijphe3EmPMVOOwBjPB5ffFwwqZVxQmW0@mail.gmail.com>
- <7v7hdj1mo7.fsf@alter.siamese.dyndns.org> <AANLkTi=gvVwh-H9FiGz6SQeJYwxmnnViYsDQX=RYRjb6@mail.gmail.com>
- <buohbcn3wp5.fsf@dhlpc061.dev.necel.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH/RFC 0/2] fast-import: introduce "feature notes" command
+Date: Tue, 1 Feb 2011 22:58:26 -0600
+Message-ID: <20110202045826.GC15285@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Wed Feb 02 05:19:10 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Johan Herland <johan@herland.net>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Sam Vilain <sam@vilain.net>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 02 05:58:50 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkUBS-0001kZ-CM
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 05:19:10 +0100
+	id 1PkUnq-0006Ft-1d
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 05:58:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753691Ab1BBETE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 1 Feb 2011 23:19:04 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:57982 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753482Ab1BBETC (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 1 Feb 2011 23:19:02 -0500
-Received: by iyj18 with SMTP id 18so6670119iyj.19
-        for <git@vger.kernel.org>; Tue, 01 Feb 2011 20:19:02 -0800 (PST)
+	id S1751333Ab1BBE6c (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Feb 2011 23:58:32 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:51422 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750771Ab1BBE6b (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Feb 2011 23:58:31 -0500
+Received: by gxk9 with SMTP id 9so2818651gxk.19
+        for <git@vger.kernel.org>; Tue, 01 Feb 2011 20:58:31 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=B9oBp0nohcpDw3kyI1XvtgeOVwORcNy276xT99B8eI8=;
-        b=AgzySAVt+dpX4rhDjW27MGvTUfZLL6SPkvP5nW+fqNcwJtQ7Z0bXim7sTOGDWhKSFz
-         Byud8mP7+igJB/HRtNbcW59CPTgjUmHoNdkU4PG6cWTnmA8N1lKW2RhW8dVM+6ftF+2T
-         5W3bgHFD4PWbgWWUKeSA3Xt31DLxcA807lnt4=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:mime-version
+         :content-type:content-disposition:user-agent;
+        bh=TK1YI/mINdc3DMDFCLAxRlYACs6yqTgWoJiBLlxgJUE=;
+        b=bhI13tAc1GWAgTboRBBZ6Jrn3lG7tChwWAQLbLrA/e48cy41p03ZqV2HV2LOOyXDcp
+         gRgAT9CfnTxo4zQztiQRfLgHOA1qwSsDgv6r80pl2VTb9fheTaPOPKpBkgkOT2CCHbqm
+         M/mpCJ10cVq5SBrwtFVDfLqW0/mlwgY8VXzFk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=sCF+gUzfgyPbA9QcTGgv1Cbuko3YXV/o8/URU1d58+BIhxuWGwnYIh+zCEo/U3vocF
-         DewJfHqrg2p++W6Vi54rRwn2/cSXb4OHNVDDrSsUJFHav5lsXr7Hx0HbnhdCJcTE4Ne+
-         QhdWaTkh1yGGCyOdmlIbf06iKGgLOpudoSL2w=
-Received: by 10.231.12.132 with SMTP id x4mr9296790ibx.177.1296620342155; Tue,
- 01 Feb 2011 20:19:02 -0800 (PST)
-Received: by 10.231.30.65 with HTTP; Tue, 1 Feb 2011 20:18:31 -0800 (PST)
-In-Reply-To: <buohbcn3wp5.fsf@dhlpc061.dev.necel.com>
+        h=date:from:to:cc:subject:message-id:mime-version:content-type
+         :content-disposition:user-agent;
+        b=h9JUvEs8po0ESrjY/t8OQTuIESbTIrojb8NMnjBxO9GyVF2bKfcx2kO7JrPWZ/k96a
+         vjasxj83Yz9MLCaN4qGajuucF2Vg+JiUBtinaj49/nupoQZHpFD0qzQzLLpsMh3aztJp
+         I+ThffXSTtloyDv+cvwxmcQo6m89qBWP6uxZY=
+Received: by 10.150.95.15 with SMTP id s15mr1319963ybb.50.1296622710839;
+        Tue, 01 Feb 2011 20:58:30 -0800 (PST)
+Received: from elie (adsl-69-209-75-28.dsl.chcgil.ameritech.net [69.209.75.28])
+        by mx.google.com with ESMTPS id v8sm14695253yba.2.2011.02.01.20.58.28
+        (version=SSLv3 cipher=RC4-MD5);
+        Tue, 01 Feb 2011 20:58:29 -0800 (PST)
+Content-Disposition: inline
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165894>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165895>
 
-On Tue, Feb 1, 2011 at 11:08 PM, Miles Bader <miles@gnu.org> wrote:
-> Jay Soffian <jaysoffian@gmail.com> writes:
->> Okay, our emails criss-crossed. I agree with that, but my other email
->> proposes adding -u <name> with correct behavior and just deprecating
->> --set-upstream. I suppose we could instead (or in addition) just fix
->> --set-upstream.
->
-> BTW, you're just talking about "git branch", right?
->
-> ['cause the way "--set-upstream" works with "git push" is perfect, and
-> shouldn't be changed...]
+Hi,
 
-I was talking about git-branch and git-checkout. I didn't realize
-git-push even had --set-upstream. Interestingly, -u is an alias for
---set-upstream with git-push, but not with git-branch.
+As promised, here is a "feature" command for streams to use to require
+support for the notemodify (N) command.
 
-j.
+Patch 1 explains how to delete notes.  On first reading, I had thought
+that feature was missing.
+
+Patch 2 is the title feature.  The relevant message explains why
+this is an rfc.
+
+Thoughts welcome, as always.
+
+Jonathan Nieder (2):
+  Documentation/fast-import: explain how to delete a note
+  fast-import: introduce "feature notes" command
+
+ Documentation/git-fast-import.txt |   18 ++++++++++--------
+ fast-import.c                     |    6 ++++--
+ t/t9301-fast-import-notes.sh      |    1 +
+ 3 files changed, 15 insertions(+), 10 deletions(-)
