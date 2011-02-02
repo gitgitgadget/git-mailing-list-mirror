@@ -1,73 +1,65 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 2/2] fast-import: introduce "feature notes" command
-Date: Wed, 2 Feb 2011 20:57:02 +0100
-Message-ID: <AANLkTi=bEi6J3wcex8JCowU6PRt3BKix5v67v8Ds-MN2@mail.gmail.com>
-References: <20110202045826.GC15285@elie> <20110202050735.GE15285@elie> <201102022047.55152.trast@student.ethz.ch>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: untracked symlinks are less precious than untracked files?
+Date: Wed, 02 Feb 2011 12:03:39 -0800
+Message-ID: <7v7hdixkys.fsf@alter.siamese.dyndns.org>
+References: <201102022025.06140.j6t@kdbg.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Johan Herland <johan@herland.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Sam Vilain <sam@vilain.net>
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Feb 02 20:57:51 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Wed Feb 02 21:03:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pkipq-00076X-GS
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 20:57:50 +0100
+	id 1Pkivh-00026k-8b
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 21:03:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752231Ab1BBT5n convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Feb 2011 14:57:43 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:40434 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751835Ab1BBT5n convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Feb 2011 14:57:43 -0500
-Received: by ywe10 with SMTP id 10so167866ywe.19
-        for <git@vger.kernel.org>; Wed, 02 Feb 2011 11:57:42 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=iov/i8JVdcMGh1uO6w1szZnDkB86jJcJn4OMtVeTKT0=;
-        b=KiA7Vi2xK4W1lFR+HQHOW5zZRzPP355JPwb+ncgu2gQeicIPTEYJwfgx2AAZWeT/SL
-         WjN6cnHUUUVSjI4rB8WRHd36Xrl2ZXsla7Wcy8Y33GNsy/rSZ0k2ZPGL2XZK5BhinHTo
-         r38B7ndo1gOsXn3aopJXK0pY0zMIylUMzI3p0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=TQQ9xZxEARx5ia8S/q4HX45ZNsMo7K5Wlx+1VTgf5QW93nAibmAtP5i1IgwyKQ7fSX
-         T5hQdXHFZu/x93JOAej56+KDn8Cc1RRoOk/cjnB2n7uReJmdW5+YVA2PvvsrYq21KZPD
-         1S/gbE2t2jvalDY0ylb08GkL8KP70LQsA/D/s=
-Received: by 10.150.138.16 with SMTP id l16mr2285683ybd.283.1296676662339;
- Wed, 02 Feb 2011 11:57:42 -0800 (PST)
-Received: by 10.150.51.6 with HTTP; Wed, 2 Feb 2011 11:57:02 -0800 (PST)
-In-Reply-To: <201102022047.55152.trast@student.ethz.ch>
+	id S1752116Ab1BBUDs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Feb 2011 15:03:48 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39457 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752035Ab1BBUDr (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Feb 2011 15:03:47 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9DB1D33CE;
+	Wed,  2 Feb 2011 15:04:39 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sailYMsEFok1PPwJaUKAWn1APVg=; b=KZ1zqe
+	WFdQWMNsPW1/iTHFQ5wnDvDeyUmalyMbCE/zeamJfLcn7HvhmK1rMPnwV/jkze6Z
+	Oclsx6ywP++x81KgqM0Fs9/m4nJ8gm83SgaQ+hkJCZTMprbD4LkpWckeC2oIufYc
+	hJE7T1m1HxFABi4CJxKUmXh1zGJTd1ocydQvw=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hJFantnluJcQXuHGKk3kcROF1KrSiPaD
+	bT4b7weSMIiHAlXzhtFEnOUwntXBEYnaN3efLD4a1IhRfJTGV6/EiGfqLLgIjd/V
+	C7cRFWZaFGrLswbDg/8eipFwFH4+9AzQlCcmz/FXRaUI1QXVxrmEqnRNSYAW4ugc
+	OwzMIGbjZaY=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 78F7833CD;
+	Wed,  2 Feb 2011 15:04:37 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 9EF4333CA; Wed,  2 Feb 2011
+ 15:04:34 -0500 (EST)
+In-Reply-To: <201102022025.06140.j6t@kdbg.org> (Johannes Sixt's message of
+ "Wed\, 2 Feb 2011 20\:25\:05 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: A96802EC-2F07-11E0-81B3-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165930>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165931>
 
-Heya,
+Johannes Sixt <j6t@kdbg.org> writes:
 
-On Wed, Feb 2, 2011 at 20:47, Thomas Rast <trast@student.ethz.ch> wrote=
-:
-> to test, and use notes depending on success. =C2=A0In both cases old =
-gits
-> will be regarded as incompatible. =C2=A0Or am I missing something?
+> Is it by design that symlinks are less precious than files, or is it an 
+> oversight?
 
-I agree, old gits breaking on "feature notes", is/should be intended
-behavior. Perhaps we can submit a patch to maint to have it (the
-oldest git that supports the 'feature' command) recognize 'feature
-notes' though?
-
---=20
-Cheers,
-
-Sverre Rabbelier
+I don't recall making conscious distinction between symmlinks and regular
+files, so it is likely to be just a bug. Perhaps using stat() where
+lstat() should be used and mistaking an error return as missing, or
+something silly like that?
