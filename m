@@ -1,110 +1,86 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [1.8.0] Remove deprecated commands
-Date: Tue, 1 Feb 2011 18:57:48 -0600
-Message-ID: <20110202005748.GA13803@elie>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
- <7vwrll57ha.fsf@alter.siamese.dyndns.org>
- <4D4852EE.6080605@lsrfire.ath.cx>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: Features from GitSurvey 2010
+Date: Tue, 01 Feb 2011 21:11:37 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1102012110320.8580@xanadu.home>
+References: <AANLkTi=gf9_618iojpYJgN_msAe-FBq-Jao=sj76VQak@mail.gmail.com>
+ <20110129231310.GA11088@burratino> <201102011451.17456.jnareb@gmail.com>
+ <AANLkTinPAL2rEUMe-tRGFxSQ0-gfAJvSO7WW+f+2Fd2u@mail.gmail.com>
+ <AANLkTi=_DPSp2P3MuFOPgua2nH7U+RUt4AfAHSyPVv-G@mail.gmail.com>
+ <AANLkTi=KUpYJBRMp9ti0h+g6a0iTw4D113rTgfTpR8C4@mail.gmail.com>
+ <alpine.LFD.2.00.1102011647000.8580@xanadu.home>
+ <AANLkTikaztSn+xQ3xT7d-3-Yghk69qXXN1DRg9h+kEHx@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: =?utf-8?B?UmVuw6k=?= Scharfe <rene.scharfe@lsrfire.ath.cx>
-X-From: git-owner@vger.kernel.org Wed Feb 02 01:58:46 2011
+Content-Type: multipart/mixed; boundary="Boundary_(ID_Q1bQXMK9bLGtowVEDPVRPQ)"
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"Dmitry S. Kravtsov" <idkravitz@gmail.com>, git@vger.kernel.org
+To: Shawn Pearce <spearce@spearce.org>
+X-From: git-owner@vger.kernel.org Wed Feb 02 03:12:07 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkR3H-0003bT-I0
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 01:58:31 +0100
+	id 1PkSCT-0006JZ-Gp
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 03:12:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753764Ab1BBA6I convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 1 Feb 2011 19:58:08 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:42851 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753617Ab1BBA6E convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 1 Feb 2011 19:58:04 -0500
-Received: by qyj19 with SMTP id 19so5451646qyj.19
-        for <git@vger.kernel.org>; Tue, 01 Feb 2011 16:58:02 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=LhuKnoNAvr/hTW8aXcgb3oBeyXF7yeatr1CUnMmq5BI=;
-        b=AQdvlKC675q8JF8bb/LTBAC2Dm11OD9v2zezEU7M5ACodvuYDxrHTYuAdjzmMWX1l9
-         eVEMADq6WSyBY7qeGoS6jQYD2I5k8sknADVR9jeAWnEJolKFCtHtemwdbo3TYMxdiiOy
-         ZzcvrFv9UN0+v2hhw7AQpb2ubyN+Bw6IRjE8w=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=dLEywxt+H8bW7CenuuvHqb9R/km069pib27oBo3bj58Zqapr8R92KskuwI+XFssoDJ
-         2XXe3lXTYFZTE2BFM3/tvtkpituvKjWWi0DtVpHCth9GqgdHkpJCu83+ZHFijPdRvT9D
-         qFFOEdZ5r576UNtKVvD2sq7uwrKX48d36qkmU=
-Received: by 10.224.28.74 with SMTP id l10mr8106060qac.275.1296608281870;
-        Tue, 01 Feb 2011 16:58:01 -0800 (PST)
-Received: from elie (adsl-69-209-75-28.dsl.chcgil.sbcglobal.net [69.209.75.28])
-        by mx.google.com with ESMTPS id t7sm16097164qcs.4.2011.02.01.16.57.59
-        (version=SSLv3 cipher=RC4-MD5);
-        Tue, 01 Feb 2011 16:58:00 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4D4852EE.6080605@lsrfire.ath.cx>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1752177Ab1BBCL5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 1 Feb 2011 21:11:57 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:38539 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752104Ab1BBCL5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 1 Feb 2011 21:11:57 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MRZ20.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0LFY00EPZWR1RE00@VL-MR-MRZ20.ip.videotron.ca> for
+ git@vger.kernel.org; Tue, 01 Feb 2011 21:11:25 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <AANLkTikaztSn+xQ3xT7d-3-Yghk69qXXN1DRg9h+kEHx@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165883>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165884>
 
-Hi,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Ren=C3=A9 Scharfe wrote:
+--Boundary_(ID_Q1bQXMK9bLGtowVEDPVRPQ)
+Content-type: TEXT/PLAIN; charset=ISO-8859-1
+Content-transfer-encoding: 8BIT
 
->    command          deprecated since replaced by
->    ---------------- ---------------- ---------------------
+On Tue, 1 Feb 2011, Shawn Pearce wrote:
 
-Some quick thoughts based on a code search:
+> On Tue, Feb 1, 2011 at 13:51, Nicolas Pitre <nico@fluxnic.net> wrote:
+> > On Tue, 1 Feb 2011, Shawn Pearce wrote:
+> >
+> >> On Tue, Feb 1, 2011 at 09:11, Nguyen Thai Ngoc Duy <pclouds@gmail.com> wrote:
+> >> > Narrow/Subtree clone is still just an idea, but can pack cache support
+> >> > be made to resumable initial narrow clone too?
+> >>
+> >> This would be very hard to do.  We could do cached packs for a popular
+> >> set of path specifications (e.g. Documentation/ if documentation only
+> >> editing is common), but once we start getting random requests for path
+> >> specifications that we cannot predict in advance and pre-pack we'd
+> >> have to fall back to the normal enumerate code path.
+> >
+> > Also... people interested in Narrow clones are likely to be shallow
+> > clone users too, right?
+> 
+> I think that depends.  Some users might want the full history of the
+> files they are working on.  Others wouldn't care and just want the tip
+> revision so they can make changes.  Obviously a shallow clone of depth
+> 1 is very cheap to implement on the server; there really isn't any
+> caching required.
+> 
+> Probably 50% want full history, 50% want shallow clone.  So I doubt we
+> can assume that narrow implies shallow and thus is cheap.  :-(
 
- - removing lost-found seems safe
- - removing peek-remote seems safe
- - repo-config should probably warn before it is removed
- - removing tar-tree will probably break "make dist" for old
-   projects.  I still am tempted to say removing it should be
-   okay.
+Let's see what happens when this gets used in the wild.
 
->    git-lost-found   2007-11-08       git fsck --lost-found
 
-It can stay in contrib/examples for inspiration.
+Nicolas
 
->    git-peek-remote  2007-11-24       git ls-remote
-
-No one seems to be using it
-(github.com/gitpan/App-GitHub-FindRepository.git uses it as a fallback
-when ls-remote is not present).
-
->    git-repo-config  2008-01-17       git config
-
-giggle[1] still uses it --- see libgiggle-git/giggle-git-config-read.c
-and giggle-git-config-write.c.
-
-Likewise darcs2git[2] and the stgit testsuite.
-
-webkit's VCSUtils.pm only uses repo-config as a fallback when git
-config is not present.
-
->    git-tar-tree     2007-11-08       git archive
-
-Already prints a deprecation notice.  WWW::PkgFind from CPAN uses it
-but doesn't seem to be maintained.
-
-pilgrim[3] uses tar-tree in its "make dist" target.  I wouldn't be
-surprised if some other projects use it in a similar way.
-
-Jonathan
-
-[1] git://git.gnome.org/giggle.git
-[2] git://repo.or.cz/darcs2git.git
-[3] git://git.fedorahosted.org/pilgrim.git
+--Boundary_(ID_Q1bQXMK9bLGtowVEDPVRPQ)--
