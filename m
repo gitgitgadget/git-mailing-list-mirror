@@ -1,52 +1,64 @@
-From: Maaartin <grajcar1@seznam.cz>
-Subject: Marking file as non-binary
-Date: Wed, 02 Feb 2011 15:57:21 +0100
-Message-ID: <iibrce$a8g$1@dough.gmane.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: Marking file as non-binary
+Date: Wed, 02 Feb 2011 16:05:11 +0100
+Message-ID: <vpqtygm8ok8.fsf@bauges.imag.fr>
+References: <iibrce$a8g$1@dough.gmane.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 02 15:57:48 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Maaartin <grajcar1@seznam.cz>
+X-From: git-owner@vger.kernel.org Wed Feb 02 16:05:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pke9S-0008VF-5X
-	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 15:57:46 +0100
+	id 1PkeGu-0004N7-JN
+	for gcvg-git-2@lo.gmane.org; Wed, 02 Feb 2011 16:05:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754065Ab1BBO5j (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Feb 2011 09:57:39 -0500
-Received: from lo.gmane.org ([80.91.229.12]:45662 "EHLO lo.gmane.org"
+	id S1754143Ab1BBPFX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Feb 2011 10:05:23 -0500
+Received: from mx2.imag.fr ([129.88.30.17]:49763 "EHLO rominette.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754026Ab1BBO5i (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Feb 2011 09:57:38 -0500
-Received: from list by lo.gmane.org with local (Exim 4.69)
-	(envelope-from <gcvg-git-2@m.gmane.org>)
-	id 1Pke9E-0008Ll-ME
-	for git@vger.kernel.org; Wed, 02 Feb 2011 15:57:32 +0100
-Received: from 188.120.198.24 ([188.120.198.24])
-        by main.gmane.org with esmtp (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 02 Feb 2011 15:57:32 +0100
-Received: from grajcar1 by 188.120.198.24 with local (Gmexim 0.1 (Debian))
-        id 1AlnuQ-0007hv-00
-        for <git@vger.kernel.org>; Wed, 02 Feb 2011 15:57:32 +0100
-X-Injected-Via-Gmane: http://gmane.org/
-X-Complaints-To: usenet@dough.gmane.org
-X-Gmane-NNTP-Posting-Host: 188.120.198.24
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.2; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+	id S1754028Ab1BBPFX (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Feb 2011 10:05:23 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p12F5Ad2005699
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Wed, 2 Feb 2011 16:05:10 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PkeGd-0000Tv-J3; Wed, 02 Feb 2011 16:05:11 +0100
+In-Reply-To: <iibrce$a8g$1@dough.gmane.org> (Maaartin's message of "Wed\, 02 Feb 2011 15\:57\:21 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Wed, 02 Feb 2011 16:05:10 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p12F5Ad2005699
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1297263913.92815@SQtU2S3nC/6IclHXS3D3Tg
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165913>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165914>
 
-For whatever reason, git claims that my foo.cpp (c++ source) is binary,
-which means I see no diff when doing git log -p. I already tried putting
+Maaartin <grajcar1@seznam.cz> writes:
 
-*.cpp diff=true text=true
+> For whatever reason, git claims that my foo.cpp (c++ source) is
+> binary,
 
-in .gitattributes in maybe 20 different variations, but it doesn't help
-at all. I've checked the filename for typos, etc. Today is a day when
-really nothing works here.
+There is probably a null character in your source ('\0'). You usually
+don't want that, regardless of Git.
+
+> *.cpp diff=true text=true
+
+*.cpp diff
+
+works for me. Otherwise, "git log -p -a".
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
