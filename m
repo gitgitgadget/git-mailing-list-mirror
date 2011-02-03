@@ -1,86 +1,79 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: [PATCH] gitweb: Mention optional Perl modules in INSTALL
-Date: Fri, 04 Feb 2011 00:20:48 +0100
-Message-ID: <20110203232048.29709.14506.stgit@localhost.localdomain>
+From: Eugene Sajine <euguess@gmail.com>
+Subject: Re: [FEATURE REQUEST] - extend git request-pull to send email
+Date: Thu, 3 Feb 2011 18:30:57 -0500
+Message-ID: <AANLkTikmOvCXqcCSvOgyxVoh8Gvk1KOhcLng68PvdVwy@mail.gmail.com>
+References: <AANLkTi=kXJF_rYGMyh1gj49J7fh-ZxD7Bo8o_ELHb-2M@mail.gmail.com>
+	<7vpqr8zpux.fsf@alter.siamese.dyndns.org>
+	<7vlj1wzpiq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Cc: Jakub Narebski <jnareb@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 04 00:21:26 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 04 00:31:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pl8UL-0001aC-Pc
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 00:21:22 +0100
+	id 1Pl8dr-0006qu-Rb
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 00:31:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754126Ab1BCXVR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Feb 2011 18:21:17 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:61062 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752644Ab1BCXVQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Feb 2011 18:21:16 -0500
-Received: by wwa36 with SMTP id 36so1780260wwa.1
-        for <git@vger.kernel.org>; Thu, 03 Feb 2011 15:21:15 -0800 (PST)
+	id S1752644Ab1BCXa7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Feb 2011 18:30:59 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:46981 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752227Ab1BCXa6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Feb 2011 18:30:58 -0500
+Received: by gwj20 with SMTP id 20so704235gwj.19
+        for <git@vger.kernel.org>; Thu, 03 Feb 2011 15:30:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:subject:to:cc:date:message-id:user-agent
-         :mime-version:content-type:content-transfer-encoding;
-        bh=JH3ELY87aCQUD21GBC+42enaP8W7YdxVPy/OcANSQkU=;
-        b=IDyizFrf150RcxIgRmDhuw1pjq5wcHITUDg9nWOm+Ro7laj7altFB9P4+NDzKMbkfk
-         UuFgzNyBjPrdFPYlHihtAi8DyQwRqh11GF2PvKUqEi0BvQTgAgs74CebEcCZPqq5MWw7
-         ZrTmvi3D2nnEM8NhtbG3Wyp9zoXI4njF6tBQY=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=SUWbcSyK0VqUmwJOpzmmNddByfGh4Q/MnoRTOhV69xE=;
+        b=GtRY//4X3ZI+0X7zLkbx3ByaSo/N35VlSkrzxgiVU9qwq1AZ02gAhwgHl79KPPChhE
+         Ue/L7eitAV5lPGgPgZFexF6uzJrFscdVTlBnaj3xNPH1RTWPuGPotLabEfDEWLZpvOSz
+         oIfmZi+i7f9vcdmf7u3WE7OEY2swyiSX0NAZs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:subject:to:cc:date:message-id:user-agent:mime-version
-         :content-type:content-transfer-encoding;
-        b=uFHFukfrgJ4ItlczFDrF1mxQR/vyAvZQu0aR131/ZzuOk+b7hl6sKR9JHefUvx6wUd
-         N4ggocoBOfmnpWmERqFZkfGS2jKsaSS0a9UvPgv1aZ561uImiV/3UuyWycj1oRHLl/jJ
-         ox6co52p/0iff9M9SstzHL12+gFz1jsFn/YY4=
-Received: by 10.216.166.2 with SMTP id f2mr29769wel.24.1296775274925;
-        Thu, 03 Feb 2011 15:21:14 -0800 (PST)
-Received: from localhost.localdomain (abwe108.neoplus.adsl.tpnet.pl [83.8.228.108])
-        by mx.google.com with ESMTPS id m50sm35847wek.32.2011.02.03.15.21.13
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Thu, 03 Feb 2011 15:21:14 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p13NKm1F029737;
-	Fri, 4 Feb 2011 00:20:59 +0100
-User-Agent: StGIT/0.14.3
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=weiP1WFq1997C38X9Aj8Wfh5yOYjEdgPkFJ4WuX4O4/utC2cv1Tl3qJonpelH+J5z8
+         GCDGxesOIo+vfpTKNv4/PDcA2Ydp60zPbYUq1X/4L1Eqvca+6m81N8uh69/WUHBQ/1C8
+         /aNVdqefsl6Rbqd9c5Eo8GuvnFbIo6VhZH7wQ=
+Received: by 10.150.58.2 with SMTP id g2mr280906yba.397.1296775857699; Thu, 03
+ Feb 2011 15:30:57 -0800 (PST)
+Received: by 10.146.168.5 with HTTP; Thu, 3 Feb 2011 15:30:57 -0800 (PST)
+In-Reply-To: <7vlj1wzpiq.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166008>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166009>
 
+On Thu, Feb 3, 2011 at 6:06 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Junio C Hamano <gitster@pobox.com> writes:
+>
+>>> What do you think?
+>>
+>> Horrible ;-).
+>
+> Just a quick note.
+>
+> Please take this with a huge grain of salt, considering that the comment
+> is coming from somebody who thinks --compose and format-patch integration
+> to git-send-email was also a bad idea.
+>
 
+;) Anyway thanks for prompt answer;))
 
-Some optional additional Perl modules are required for some of extra
-features.  Mention those in gitweb/INSTALL.
+Well, it is of course pretty cool that you can pipe the output to mail
+but there are at least three problems that i currently see with this:
 
-Signed-off-by: Jakub Narebski <jnareb@gmail.com>
----
+1. it is not cross-platform solution
+2. By default subject gets empty;)
+3. I probably would like the from address to be the one that I'm using
+in git configuration...
 
- gitweb/INSTALL |    6 ++++++
- 1 files changed, 6 insertions(+), 0 deletions(-)
-
-
-diff --git a/gitweb/INSTALL b/gitweb/INSTALL
-index 8230531..4964a67 100644
---- a/gitweb/INSTALL
-+++ b/gitweb/INSTALL
-@@ -237,6 +237,12 @@ Requirements
-  - Perl modules: CGI, Encode, Fcntl, File::Find, File::Basename.
-  - web server
- 
-+The following optional Perl modules are required for extra features
-+ - Digest::MD5 - for gravatar support
-+ - CGI::Fast and FCGI - for running gitweb as FastCGI script
-+ - HTML::TagCloud - for fancy tag cloud in project list view
-+ - HTTP::Date or Time::ParseDate - to support If-Modified-Since for feeds
-+
- 
- Example web server configuration
- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Thanks,
+Eugene
