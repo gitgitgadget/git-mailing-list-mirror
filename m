@@ -1,83 +1,79 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [1.8.0] Support quoting in .gitattributes, .gitignore
-Date: Thu, 03 Feb 2011 11:03:26 -0800
-Message-ID: <7vbp2t0wld.fsf@alter.siamese.dyndns.org>
-References: <AANLkTikHNKmcapVWBAcufq8ONVWOWHbnL-H8Nf2WmKM5@mail.gmail.com>
+From: Endre Czirbesz <endre@czirbesz.hu>
+Subject: Re: git to p4 conversion
+Date: Thu, 3 Feb 2011 19:50:28 +0000
+Message-ID: <AANLkTikW_sU8oCmU9wN5q1OPPJrQbS2YZAvS0C_nBQbD@mail.gmail.com>
+References: <AANLkTi=0TSD6p7WtsVzx=pq8=GVu+jHUdxt1bnC++CT+@mail.gmail.com>
+	<4D4AF29E.7070509@vmware.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 03 20:03:43 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: "git@vger.kernel.org" <git@vger.kernel.org>
+To: Ian Wienand <ianw@vmware.com>
+X-From: git-owner@vger.kernel.org Thu Feb 03 20:50:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pl4T0-0002Al-M2
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 20:03:43 +0100
+	id 1Pl5CM-0006VD-CY
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 20:50:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932453Ab1BCTDh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Feb 2011 14:03:37 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50500 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932437Ab1BCTDg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Feb 2011 14:03:36 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3977F4619;
-	Thu,  3 Feb 2011 14:04:27 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=uKyapAWUsYTkOQrVJn15KlFpr08=; b=IFFNBi
-	ACxqXNg/aY/PlczaSl4zrKjbF3YsRoPBIC7/zahB4M2mjKONsPARehNksS+s4pKH
-	58sknx33kunIB6Tjth+PzK+Wctuq6/GMy/Vfqb8brXSF8S9FJ9Y0tXt/IMDSBMmJ
-	97Uuumn21tgcU6UB9f/DkQQ1yF//W+gTx5vLI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=AnUKhxmlYwliBFVhfvGOyy4kQlVY6y+L
-	K+/G4Z0BxiDIk4wW2A+KLy9xuowphTh9EeUGL5iShUVcQRIsBJ+2GK4ZkNgfOWg8
-	oy2NpRqC5GUcL5FbdzBiSb5z2Tpm1sSdJ/yJSJAHV+C5LZDUS2KysuCkpXBGzafF
-	/xogrpoZyVg=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 18B164616;
-	Thu,  3 Feb 2011 14:04:25 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 33D0C4611; Thu,  3 Feb 2011
- 14:04:21 -0500 (EST)
-In-Reply-To: <AANLkTikHNKmcapVWBAcufq8ONVWOWHbnL-H8Nf2WmKM5@mail.gmail.com>
- (Nguyen Thai Ngoc Duy's message of "Thu\, 3 Feb 2011 18\:51\:18 +0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6AAA3A54-2FC8-11E0-8B5F-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
+	id S1756631Ab1BCTu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Feb 2011 14:50:29 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:53007 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756588Ab1BCTu2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Feb 2011 14:50:28 -0500
+Received: by qwa26 with SMTP id 26so1250137qwa.19
+        for <git@vger.kernel.org>; Thu, 03 Feb 2011 11:50:28 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        bh=jx8cOchLKEGOikYw3xjOiShglqYfOdwxCCAKSX+Wa38=;
+        b=bR0jR6ZFCiEs+sFQ5Q3s+H1+aVEttR8HJ8q3FPHKxcntiop6wvfI0etJjYrguWFwR6
+         YafLdJ1iryG8ff5JUT4e5r2LOG4MCNLSNJgv01woafdlVBX1zbCRPzpvZXrxczSUWQj/
+         eJvKjKL6W+UwMWTos7I4Q93k0lIOKqs+SsKW4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
+        b=rkEWIjtbCCu7eHUCveYDLp8+l6FM52vcgAZXX+9ezuywepkUiobDCmpPu9u+46D27b
+         IOwQbil5piFwqJZR1sk7yoFaPeEg3u43sQWSh8VE3UKIQuwb2nUMfz5jz25+LrUQwmRO
+         boZ5B2CbtXUFYm/FWcd/kcF+J2AteNPvZt9Kc=
+Received: by 10.229.90.196 with SMTP id j4mr9452116qcm.144.1296762628208; Thu,
+ 03 Feb 2011 11:50:28 -0800 (PST)
+Received: by 10.229.67.26 with HTTP; Thu, 3 Feb 2011 11:50:28 -0800 (PST)
+In-Reply-To: <4D4AF29E.7070509@vmware.com>
+X-Google-Sender-Auth: 9lWV3UtlOWuSUthTE8J7j2_ImK8
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165990>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165991>
 
-Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+Hello Ian,
 
-> Migration plan:
->
-> I think a release note mentioning this is enough. No migration needed.
->
-> But to be safe, we can make post-1.7.5 warn users about patterns with
-> leading double quote. By 1.8.0, the new behavior will be used.
+Thanks for your reply.
 
-That's obviously not a migration plan, and it is worse than not having the
-warning at all.  People with paths that begin with dq (which I suspect
-would be an empty set) will get wraning every time they do anything with
-git, and until 1.8.0 there is no way to turn that warnings off without
-breaking their pattern (like removing the entry from the attributes file),
-and when 1.8.0 comes their patterns will break.
+2011/2/3 Ian Wienand <ianw@vmware.com>:
+> What exactly did you try?
+I am not at my work computer now, but as I remember:
 
-How about introducing a new feature in .gitattributes file so that the
-parser can tell if the file is (1) written pre-1.7.5 that depends on the
-old behaviour, (2) written post-1.7.5 by a person who is aware of the dq
-convention, but still relying on the old behaviour, (3) written post-1.7.5
-to take advantage of the new behaviour?  E.g., you can explicitly mark
-your .gitattributes file by putting "# feature: no-cq-pattern" as the
-first line that the patterns in the file relies on the traditional
-behaviour, or "# feature: cq-pattern" to cause the parser to interpret
-cquoted patterns, and the last 1.7.x will warn if a file does not have
-this explicit marking, but has a pattern that would change the behaviour.
-Then 1.8.0 would flip the default.
+cd workdir
+git-p4 clone //depot/projectdir/...@all .
+git clone myprojectrepo .
+
+(Everything went fine till this point.)
+
+git-p4 sync
+git-p4 submit
+Fatal error...
+
+I don't remember the exact message, but it tried to reach a
+non-existing git commit (HEAD~xx, where xx was count of my commits, so
+it tried to refer to a commit before my initial commit).
+I tried to change the order of the clone steps, but the result was the same.
+
+Rgds,
+
+Endre
