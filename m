@@ -1,122 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [1.8.0] Tracking empty directories
-Date: Wed, 2 Feb 2011 23:53:59 -0600
-Message-ID: <20110203055359.GA23220@elie>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
- <AANLkTi=bK7mFS3eWVMWXqZSnv73tafL9AGazk4jPLddp@mail.gmail.com>
- <4928FF12-E593-4CDB-AC68-B4078CC5920E@gmail.com>
- <201102021921.53755.wjl@icecavern.net>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [1.8.0] reorganize the mess that the source tree has become
+Date: Thu, 03 Feb 2011 01:16:10 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1102030036420.12104@xanadu.home>
+References: <20110202022909.30644.qmail@science.horizon.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: David Aguilar <davvid@gmail.com>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	"git@vger.kernel.org" <git@vger.kernel.org>
-To: "Wesley J. Landaker" <wjl@icecavern.net>
-X-From: git-owner@vger.kernel.org Thu Feb 03 06:54:16 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org
+To: George Spelvin <linux@horizon.com>
+X-From: git-owner@vger.kernel.org Thu Feb 03 07:16:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pks91-0000T1-0v
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 06:54:15 +0100
+	id 1PksUK-0006cR-FG
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 07:16:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751552Ab1BCFyJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Feb 2011 00:54:09 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:47102 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751396Ab1BCFyH (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Feb 2011 00:54:07 -0500
-Received: by yxt3 with SMTP id 3so338028yxt.19
-        for <git@vger.kernel.org>; Wed, 02 Feb 2011 21:54:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=K3bga+V8k/E06TrOU9zGe0gmOj35ATh94CIwhjSSzOE=;
-        b=jON9xn+dFdtZKMUGPe8ZfFAVAxRV448KEmA0w04wboAZ6zLhBPTtY9JZA3rvtp/KSJ
-         jXY2azXq6DbHHN452lJIsv/5YyyziVfUn3dEvgzXeBR71gdkUj3j3ws2YW3mZ33y2Y2I
-         ypSX2EUozQ/lF1UPQZEHf+dbQARzli281zk/8=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=d3ZRm9CPXrvUxGRneH+a5NnjqoP8Y9RLPEoU+Iuk3k6TwNmyr/QCRtL8bqvyUhonwK
-         Sq9YxiHS6XkCKUSJUFMRPy4wF+LigQiOl9ry2wKwUBKntcAOoPzjyQJkH4Cbn49AjTuM
-         2rLRYg8T1lERo6M9I+iUUsbw2cjTmhF/x3hL8=
-Received: by 10.100.216.11 with SMTP id o11mr6348846ang.117.1296712446973;
-        Wed, 02 Feb 2011 21:54:06 -0800 (PST)
-Received: from elie (adsl-76-206-235-233.dsl.chcgil.sbcglobal.net [76.206.235.233])
-        by mx.google.com with ESMTPS id 17sm555823anx.33.2011.02.02.21.54.04
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 02 Feb 2011 21:54:04 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <201102021921.53755.wjl@icecavern.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1751982Ab1BCGQM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Feb 2011 01:16:12 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:19052 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752013Ab1BCGQL (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Feb 2011 01:16:11 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MRZ22.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0LG100GCC2QY3W90@VL-MR-MRZ22.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 03 Feb 2011 01:16:10 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <20110202022909.30644.qmail@science.horizon.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165957>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165960>
 
-Wesley J. Landaker wrote:
+On Tue, 1 Feb 2011, George Spelvin wrote:
 
->   1) Why WOULDN'T you want to track empty directories? We track empty files: 
-> isn't that just as pointless?
+> For what it's worth, I don't see the "cleanup".
+> 
+> If it significantly reduced the size of the largest directory,
+> that would be a win.  But moving everything into src/ doesn't
+> do that.
+> 
+> If there's a way to divide the source into cohesive subunits, that
+> would be great.  A programmer could ignore whole subdirectories
+> when working on something.
+> 
+> But just moving the whole existing pile into a subdirectory "because
+> everyone else does it" is not a reason; that's superstition.
 
-See http://thread.gmane.org/gmane.comp.version-control.git/52875
+There is no superstition here, simply basic elegance.
 
->   2) One of git's best strengths is that it's so easy to interact with other 
-> SCM software, primarily because git's features are a SUPERSET of other SCMs. 
+When you pick up a book from a shelf, do you see the actual content of 
+the book printed right from the inside of the cover page, and the table 
+of content tossed in the margin?  Would you construct a book yourself 
+that way?
 
-Not really.  For example, many other SCMs can store per-file comments,
-arbitrary revision properties, a detailed provenance of a file, and
-detailed permissions for each directory entry.
+A nice source tree should be organized with a minimum of hierarchical 
+structure.  To a newbie wanting to contribute to Git, it is rather 
+frightening to cd into the git directory and see that ls generates more 
+than 280 entries.  That simply looks sloppy.  And this gets much worse 
+after a make.
 
-What might make git nice as an interoperability tool is that it tracks
-the _relevant_ information for the history of a software project.
-Example of what is not relevant information and why that matters:
+The top directory should make different things stand out much more 
+clearly, like a preface and a table of content.  You have the 
+documentation here, the source there, the tests there, a clearly visible 
+README file, etc.  If the src directory has about the same relative 
+number of files after a move that's fine.  At least you should expect 
+_only_ source files in there (and possibly their by-products), and not 
+other types of data buried into the mix.
 
- http://thread.gmane.org/gmane.comp.version-control.git/53494
+> Having to type "src/" a lot more often is definitely a downside.
 
-All that said, I do want support for explicitly[1] tracking empty
-directories, mostly for the sake of the ability to clone an svn repo
-with empty directories in a simple way.
+Come on.  This is a rather egocentric argument without much substance.
 
-The aforementioned "share a project skeleton" use case is just a nice
-bonus.
+> Heck, that's one thing I actively dislike about GNU autoconf conventions.
 
-Hope that helps,
-Jonathan
+This has _nothing_ about any autoconf convention.  GNU autoconf requires 
+stupid things like having a bunch of files such as CREDITS, INSTALL, 
+CHANGELOG, and other whatnots even if you have nothing to put in them, 
+in which case they still have to be there but empty.  It also dictates 
+the exact name your directories must have, etc.
 
-[1] Part of the value of the "explicitly" is to make it explicit that
-early adopters are asking for trouble. :)  FWIW I imagine a transition
-like this:
+I'm not proposing a tree reorganization because GNU autoconf commands 
+it, but rather because this is a sensible thing to do.
 
- 1. Teach "git read-tree" and "git checkout-index" to honor empty
-    directories (but not "git update-index" or "git write-tree").
+> If there's a compelling reason to change, could someone please describe it?
 
- 2. Teach "git write-tree" to accept empty directories.
+It's about the third time I'm putting forward arguments for this.  
+Please see the list archive.
 
- 3. Teach "git update-index" to accept empty directories if a
-    configuration item indicates so.  That configuration would
-    default to false.
+P.S. the netiquette on busy mailing lists recommends that you preserve 
+all the email addresses that were listed as recipients on the message 
+you reply to.  That would be highly appreciated.
 
- 4. (Maybe) add porcelain support for tracking of empty directories.
-    Also teach "git diff-tree" and "git apply" about empty
-    directories.
 
- 5. Change the default to true.
-
-An orthogonal question is how the empty directories would be stored.
-I do not like the idea of a ".empty-directory" file, since what
-happens when you try to import a repository with a genuine
-".empty-directory" file?
-
-Based on a quick test, currently read-tree _ignores_ empty tree
-entries.  Would it be okay to say that anyone who turns on the switch
-from step (3) has declared he is willing to write tree objects that
-git fsck versions before v1.5.5-rc0~63 (fsck.c: fix bogus "empty tree"
-check, 2008-03-04) will reject and current git might mishandle?
+Nicolas
