@@ -1,187 +1,244 @@
-From: Julian Ibarz <julian.ibarz@gmail.com>
-Subject: Re: Re: Updating a submodule with a compatible version from another
- submodule version using the parent meta-repository
-Date: Wed, 2 Feb 2011 23:31:40 -0500
-Message-ID: <AANLkTim2G0kF+omPZ1_fk0P6oGDaKDWd79XNR5GXUkWG@mail.gmail.com>
-References: <AANLkTinN1XVsAZXGLqkuhysrJ8-TCtGm4pOu2RfCEVVp@mail.gmail.com>
-	<AANLkTimvNaiieEw8-Y52xxDW6DQ6b16v9azCk+BDPxhe@mail.gmail.com>
-	<4D407099.4010805@web.de>
-	<AANLkTinMhvBNrBMJ8vQpJdYxP_NgJU2L7JEW0KhXGjhf@mail.gmail.com>
-	<4D407875.7080607@web.de>
-	<AANLkTik-XdgGM20kFu8KZ5k9ynfNAo8fvL9t7kL_JhQg@mail.gmail.com>
-	<7v7hdrl7nw.fsf@alter.siamese.dyndns.org>
-	<AANLkTik8VrhbBSLwRq9gd39hofnmifk15zSqXVTsSzAp@mail.gmail.com>
-	<7v1v3zjp6w.fsf@alter.siamese.dyndns.org>
-	<20110129110807.GA21864@book.hvoigt.net>
-	<AANLkTimBCeSnR270eWMcrgCVj6rmiRkJizOxQPAPOAnn@mail.gmail.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: Q on
+ "index-pack: smarter memory usage during delta resolution, 2008-10-17"
+Date: Thu, 03 Feb 2011 00:22:56 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1102022330330.12104@xanadu.home>
+References: <7vfws6xq5t.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Thu Feb 03 05:33:24 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 03 06:23:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pkqsl-0003bI-G9
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 05:33:23 +0100
+	id 1Pkrep-0000z1-9L
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 06:23:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755567Ab1BCEdH convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 2 Feb 2011 23:33:07 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:37608 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755455Ab1BCEdF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 2 Feb 2011 23:33:05 -0500
-Received: by iyj18 with SMTP id 18so692789iyj.19
-        for <git@vger.kernel.org>; Wed, 02 Feb 2011 20:33:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ekTExbuESYB/KvoeI4MkDzYYiYx8wW2VHTCWZeDmz9A=;
-        b=djRwfTraBEdN4DdgGpnYy31CJ8kmahzDVKGRjsErupt3SvCEUV8IYcJYLVUGt4uiJR
-         p6ce9XjN8kVEGulvl41IPlDwxdhg6V3XhWQx8dgLeVpmg1MByrAkjotGFRp51pllPxb9
-         R69dqJTxMOV3rYAkEoQ3w7B4d3GM2ujwrrahc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=U5cjGE+0sfhxzIcVcj1TLaRypcCFpXNJJRtcESMxnvoVvz5g46thb+6mgNDHZED7Gm
-         hTaHcag7MPf9sLvm8sZVmhQrv5g6+C6y+OP7cRrO3iJNaajRisYTd8RZLe/Qi6K2hmaZ
-         I9GC3A32eL39e8CjGhPicFdrI3c8CNNkOM9FI=
-Received: by 10.42.177.74 with SMTP id bh10mr12162525icb.148.1296707500642;
- Wed, 02 Feb 2011 20:31:40 -0800 (PST)
-Received: by 10.42.213.71 with HTTP; Wed, 2 Feb 2011 20:31:40 -0800 (PST)
-In-Reply-To: <AANLkTimBCeSnR270eWMcrgCVj6rmiRkJizOxQPAPOAnn@mail.gmail.com>
+	id S1751082Ab1BCFW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Feb 2011 00:22:57 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:17540 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750756Ab1BCFW5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Feb 2011 00:22:57 -0500
+Received: from xanadu.home ([66.130.28.92]) by vl-mh-mrz25.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0LG100LZA08JS6B0@vl-mh-mrz25.ip.videotron.ca> for
+ git@vger.kernel.org; Thu, 03 Feb 2011 00:21:56 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7vfws6xq5t.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165949>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165950>
 
-Hi,
+On Wed, 2 Feb 2011, Junio C Hamano wrote:
 
-After a couple of hours, I have finally succeeded to go through the
-entire history of a repository and I can detect the submodules in a
-tree of a commit. For those interested here is the source code:
+> In find_unresolved_deltas(), there are two loops that walk the range of deltas[]
+> array that potentially share the same base object.  One loop for ref-delta
+> looks like this:
+> 
+> 	for (i = ref_first; i <= ref_last; i++) {
+> 		struct object_entry *child = objects + deltas[i].obj_no;
+> 		if (child->real_type == OBJ_REF_DELTA) {
+> 			struct base_data result;
+> 			resolve_delta(child, base, &result);
+> 			if (i == ref_last && ofs_last == -1)
+> 				free_base_data(base);
+> 			find_unresolved_deltas(&result, base);
+> 		}
+> 	}
+> 
+> I was wondering what happens when the entry at ref_last was a false match
+> (i.e. the "union delta_base" happened to have the same 20-byte pattern but
+> was of a wrong kind).
 
-http://gitorious.org/julian_ibarz_git/julian_ibarz_git/blobs/submodule_=
-checkout/builtin/submodulecheckout.c
+I've never seen that in practice.  You'd need at least one object with a 
+SHA1 made of 12 trailing zero bytes out of 20 to start with. I'm 
+challenging you to find such an object.  ;-)  But let's pretend this may 
+happen in theory, and that's why the test is there.
 
-Next time I will build the list of commits of a submodule in the
-entire history. Then I will need to find the distance of each commit
-in the list compared to the current  commit of a submodule and keep
-the closest one (which has to be a parent so an algebric distance
-would be good to have).
+> The other loop for ofs-delta has the same "if (i == ofs_last)" condition.
 
-So now my two questions that could save me some time are:
-- is there a function that gives the distance between two commits? I'm
-sure there is something like this coded somewhere but I didn't find it
-yet
-- is the struct decorate a hash map and if yes could someone explain
-me how to use it or point me to a location where it is used?
+No, it is not exactly the same.  The first loop walk the deltas list in 
+the range of deltas requiring the current object for base by SHA1 
+reference.  Once it is done resolving all those deltas it may free this 
+base object's memory, but _only_ if it is _not_ also required by the 
+second loop.  That is expressed by ofs_last == -1 meaning that the ofs 
+range is empty.
 
-Except from that I think I have all the information I need.
+The second loop does the same, but in the range of deltas requiring this 
+base by offset reference.  Once it is over with it then it may free the 
+base right away.
 
-Best regards,
-Julian Ibarz
+Of course, in practice only one of those 2 loops will actually be 
+entered, as only one between the SHA1 ref range or the offset ref range 
+will possibly be non empty.
 
-On Sun, Jan 30, 2011 at 4:44 AM, Julian Ibarz <julian.ibarz@gmail.com> =
-wrote:
-> Today I have started to implement a proof of concept in C (I know a
-> script would be better but I am really not good in sh so...). I
-> struggle with the manipulation of the git API. I have pushed my work
-> here:
->
-> http://gitorious.org/julian_ibarz_git/julian_ibarz_git
->
-> in branch submodule_checkout
->
-> My work is in:
->
-> builtin/submodulecheckout.c
->
-> And my questions are prepended by the keyword QUESTION (two questions
-> for now only).
->
-> Any help is welcome.
->
-> Thanks,
->
-> Julian Ibarz
->
-> On Sat, Jan 29, 2011 at 6:08 AM, Heiko Voigt <hvoigt@hvoigt.net> wrot=
-e:
->> Hi,
->>
->> On Wed, Jan 26, 2011 at 02:05:43PM -0800, Junio C Hamano wrote:
->>> If that version of submodule B is explicitly bound to a commit in t=
-he
->>> superproject A, you know which version of A and C were recorded, an=
-d the
->>> problem is solved.
->>>
->> [...]
->>>
->>> If you are confident that you didn't introduce different kind of
->>> dependency to other submodules while developing your "old_feature" =
-branch
->>> in submodule B, one strategy may be to find an ancestor, preferrabl=
-y the
->>> fork point, of your "old_feature" branch that is bound to the super=
-project
->>> A. =A0Then at that point at least you know whoever made that commit=
- in A
->>> tested the combination of what was recorded in that commit, togethe=
-r with
->>> the version of B and C, and you can go forward from there, replayin=
-g the
->>> changes you made to the "old_feature" branch in submodule B.
->>
->> Lets extend your explanation a little further and maybe demonstrate =
-the problem
->> Julian is having a little more. I think what Julian searches for is =
-a tool in
->> git that does the lookup for you which is AFAIK not that easy curren=
-tly. It
->> seems to be a quite useful feature. Here what I understand Julian wa=
-nts:
->>
->> 1. Find the most recent superproject commit X'' in A that records a =
-submodule
->> =A0 commit X' in B which contains the commit X in B you are searchin=
-g for.
->>
->> =A0 For this we would need use something similar to git describe --c=
-ontains
->> =A0 but instead of using the list of existing tags in B it should us=
-e the list
->> =A0 of commits in B which are recorded in A.
->>
->> =A0 Here a drawing to explain (linear history for simplicity):
->>
->> =A0 superproject A:
->>
->> =A0 =A0 =A0O---O---X''---O
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 \
->> =A0 submodule B: \
->> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 \
->> =A0 =A0 =A0O---X---O---X'---O---O
->>
->> 2. Look up the commit of C which is recorded in X'' of A and check i=
-t
->> =A0 out.
->>
->> Step 2 is easy but for Step 1 the lookup of X' is missing for the co=
-mmandline.
->> Is there already anything that implements git describe --contains fo=
-r a defined
->> list of commits instead of refs?
->>
->> Cheers Heiko
->>
->
+> Admittedly this is rather hard to trigger (you have to find an object
+> as a ofs-delta base object, and then come up with another object whose
+> object name is the same as the offset of the first base object followed
+> by bunch of '\0' and use it as a ref-delta base), and even if it did, it
+> will only retain the memory for slightly longer time in the function.
+
+Right.  If you ever manage to create such a condition you're probably up 
+for cracking SHA1 entirely.  But for all purposes this is probably never 
+going to happen.
+
+> Is a patch along the following line worth doing, I wonder.
+> 
+> -- >8 --
+> Subject: index-pack: group the delta-base array entries also by type
+> 
+> Entries in the delta_base array are only grouped by the bytepattern in
+> the delta_base union, some of which have 20-byte object name of the base
+> object (i.e. base for REF_DELTA objects), while others have sizeof(off_t)
+> bytes followed by enough NULs to fill 20-byte.  The loops to iterate
+> through a range inside this array still needs to inspect the type of the
+> delta, and skip over false hits.
+> 
+> Group the entries also by type to eliminate the potential of false hits.
+> 
+> Signed-off-by: Junio C Hamano <gitster@pobox.com>
+
+If the goal here is to eliminate the cost of the inner test on the 
+object type in the loop then I don't think you actually gain anything.  
+The same test is moved elsewhere instead (the assertion notwitstanding), 
+but in a more costly form as the sort will test that condition more 
+often than a linear walk, plus the extra argument passing in a couple 
+places.
+
+If instead the goal was to ensure that no delta gets wrongly unresolved 
+for whatever reason then this is already covered once at the end with:
+
+                if (nr_deltas != nr_resolved_deltas)
+                        die("pack has %d unresolved deltas",
+                            nr_deltas - nr_resolved_deltas);
+
+So no, I don't think this patch brings any advantages.
+
+> ---
+>  builtin/index-pack.c |   61 ++++++++++++++++++++++++++++++++-----------------
+>  1 files changed, 40 insertions(+), 21 deletions(-)
+> 
+> diff --git a/builtin/index-pack.c b/builtin/index-pack.c
+> index 8dc5c0b..1b5d83a 100644
+> --- a/builtin/index-pack.c
+> +++ b/builtin/index-pack.c
+> @@ -391,7 +391,18 @@ static void *get_data_from_pack(struct object_entry *obj)
+>  	return data;
+>  }
+>  
+> -static int find_delta(const union delta_base *base)
+> +static int compare_delta_bases(const union delta_base *base1,
+> +			       const union delta_base *base2,
+> +			       enum object_type type1,
+> +			       enum object_type type2)
+> +{
+> +	int cmp = type1 - type2;
+> +	if (cmp)
+> +		return cmp;
+> +	return memcmp(base1, base2, UNION_BASE_SZ);
+> +}
+> +
+> +static int find_delta(const union delta_base *base, enum object_type type)
+>  {
+>  	int first = 0, last = nr_deltas;
+>  
+> @@ -400,7 +411,8 @@ static int find_delta(const union delta_base *base)
+>                  struct delta_entry *delta = &deltas[next];
+>                  int cmp;
+>  
+> -                cmp = memcmp(base, &delta->base, UNION_BASE_SZ);
+> +		cmp = compare_delta_bases(base, &delta->base,
+> +					  type, objects[delta->obj_no].type);
+>                  if (!cmp)
+>                          return next;
+>                  if (cmp < 0) {
+> @@ -413,9 +425,10 @@ static int find_delta(const union delta_base *base)
+>  }
+>  
+>  static void find_delta_children(const union delta_base *base,
+> -				int *first_index, int *last_index)
+> +				int *first_index, int *last_index,
+> +				enum object_type type)
+>  {
+> -	int first = find_delta(base);
+> +	int first = find_delta(base, type);
+>  	int last = first;
+>  	int end = nr_deltas - 1;
+>  
+> @@ -543,11 +556,13 @@ static void find_unresolved_deltas(struct base_data *base,
+>  		union delta_base base_spec;
+>  
+>  		hashcpy(base_spec.sha1, base->obj->idx.sha1);
+> -		find_delta_children(&base_spec, &ref_first, &ref_last);
+> +		find_delta_children(&base_spec,
+> +				    &ref_first, &ref_last, OBJ_REF_DELTA);
+>  
+>  		memset(&base_spec, 0, sizeof(base_spec));
+>  		base_spec.offset = base->obj->idx.offset;
+> -		find_delta_children(&base_spec, &ofs_first, &ofs_last);
+> +		find_delta_children(&base_spec,
+> +				    &ofs_first, &ofs_last, OBJ_OFS_DELTA);
+>  	}
+>  
+>  	if (ref_last == -1 && ofs_last == -1) {
+> @@ -559,24 +574,24 @@ static void find_unresolved_deltas(struct base_data *base,
+>  
+>  	for (i = ref_first; i <= ref_last; i++) {
+>  		struct object_entry *child = objects + deltas[i].obj_no;
+> -		if (child->real_type == OBJ_REF_DELTA) {
+> -			struct base_data result;
+> -			resolve_delta(child, base, &result);
+> -			if (i == ref_last && ofs_last == -1)
+> -				free_base_data(base);
+> -			find_unresolved_deltas(&result, base);
+> -		}
+> +		struct base_data result;
+> +
+> +		assert(child->real_type == OBJ_REF_DELTA);
+> +		resolve_delta(child, base, &result);
+> +		if (i == ref_last && ofs_last == -1)
+> +			free_base_data(base);
+> +		find_unresolved_deltas(&result, base);
+>  	}
+>  
+>  	for (i = ofs_first; i <= ofs_last; i++) {
+>  		struct object_entry *child = objects + deltas[i].obj_no;
+> -		if (child->real_type == OBJ_OFS_DELTA) {
+> -			struct base_data result;
+> -			resolve_delta(child, base, &result);
+> -			if (i == ofs_last)
+> -				free_base_data(base);
+> -			find_unresolved_deltas(&result, base);
+> -		}
+> +		struct base_data result;
+> +
+> +		assert(child->real_type == OBJ_OFS_DELTA);
+> +		resolve_delta(child, base, &result);
+> +		if (i == ofs_last)
+> +			free_base_data(base);
+> +		find_unresolved_deltas(&result, base);
+>  	}
+>  
+>  	unlink_base_data(base);
+> @@ -586,7 +601,11 @@ static int compare_delta_entry(const void *a, const void *b)
+>  {
+>  	const struct delta_entry *delta_a = a;
+>  	const struct delta_entry *delta_b = b;
+> -	return memcmp(&delta_a->base, &delta_b->base, UNION_BASE_SZ);
+> +
+> +	/* group by type (ref vs ofs) and then by value (sha-1 or offset) */
+> +	return compare_delta_bases(&delta_a->base, &delta_b->base,
+> +				   objects[delta_a->obj_no].type,
+> +				   objects[delta_b->obj_no].type);
+>  }
+>  
+>  /* Parse all objects and return the pack content SHA1 hash */
+> 
