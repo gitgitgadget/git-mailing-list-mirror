@@ -1,78 +1,95 @@
-From: Miles Bader <miles@gnu.org>
-Subject: Re: [1.8.0] reorganize the mess that the source tree has become
-Date: Thu, 03 Feb 2011 17:09:00 +0900
-Message-ID: <buo39o535gj.fsf@dhlpc061.dev.necel.com>
-References: <20110202022909.30644.qmail@science.horizon.com>
-	<alpine.LFD.2.00.1102030036420.12104@xanadu.home>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [1.8.0] Provide proper remote ref namespaces
+Date: Thu, 03 Feb 2011 09:46:00 +0100
+Message-ID: <201102030946.01086.johan@herland.net>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+ <201102020322.00171.johan@herland.net>
+ <AANLkTi=tMq18mKqr0cp9rXqtDApKu3P_AZGyX6fA3hsx@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-Cc: George Spelvin <linux@horizon.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Feb 03 09:09:22 2011
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>, Nicolas Pitre <nico@fluxnic.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 03 09:46:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkuFj-0000kX-CN
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 09:09:19 +0100
+	id 1PkupV-0008GH-Dr
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 09:46:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754087Ab1BCIJO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Feb 2011 03:09:14 -0500
-Received: from TYO202.gate.nec.co.jp ([202.32.8.206]:53876 "EHLO
-	tyo202.gate.nec.co.jp" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753992Ab1BCIJN (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Feb 2011 03:09:13 -0500
-Received: from mailgate3.nec.co.jp ([10.7.69.197])
-	by tyo202.gate.nec.co.jp (8.13.8/8.13.4) with ESMTP id p13892iQ029688;
-	Thu, 3 Feb 2011 17:09:02 +0900 (JST)
-Received: (from root@localhost) by mailgate3.nec.co.jp (8.11.7/3.7W-MAILGATE-NEC)
-	id p13892L05926; Thu, 3 Feb 2011 17:09:02 +0900 (JST)
-Received: from relay31.aps.necel.com ([10.29.19.54])
-	by vgate01.nec.co.jp (8.14.4/8.14.4) with ESMTP id p1388DL7000446;
-	Thu, 3 Feb 2011 17:09:02 +0900 (JST)
-Received: from relay41.aps.necel.com ([10.29.19.24] [10.29.19.24]) by relay31.aps.necel.com with ESMTP; Thu, 3 Feb 2011 17:09:01 +0900
-Received: from dhlpc061 ([10.114.98.26] [10.114.98.26]) by relay41.aps.necel.com with ESMTP; Thu, 3 Feb 2011 17:09:01 +0900
-Received: by dhlpc061 (Postfix, from userid 31295)
-	id 6ECD052E1D4; Thu,  3 Feb 2011 17:09:01 +0900 (JST)
-System-Type: x86_64-unknown-linux-gnu
-Blat: Foop
-In-Reply-To: <alpine.LFD.2.00.1102030036420.12104@xanadu.home> (Nicolas
-	Pitre's message of "Thu, 03 Feb 2011 01:16:10 -0500 (EST)")
+	id S1755360Ab1BCIqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Feb 2011 03:46:09 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:63128 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752002Ab1BCIqI (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Feb 2011 03:46:08 -0500
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LG100KMQ9ORCP60@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 03 Feb 2011 09:46:04 +0100 (MET)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id D71291EA5678_D4A6B4BB	for <git@vger.kernel.org>; Thu,
+ 03 Feb 2011 08:46:03 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 1EED11EA2A5F_D4A6B4AF	for <git@vger.kernel.org>; Thu,
+ 03 Feb 2011 08:46:02 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LG100DC39OPB900@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Thu, 03 Feb 2011 09:46:02 +0100 (MET)
+User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.0; x86_64; ; )
+In-reply-to: <AANLkTi=tMq18mKqr0cp9rXqtDApKu3P_AZGyX6fA3hsx@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165964>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165965>
 
-Nicolas Pitre <nico@fluxnic.net> writes:
->> But just moving the whole existing pile into a subdirectory "because
->> everyone else does it" is not a reason; that's superstition.
->
-> There is no superstition here, simply basic elegance.
+On Thursday 03 February 2011, Nguyen Thai Ngoc Duy wrote:
+> On Wed, Feb 2, 2011 at 9:21 AM, Johan Herland <johan@herland.net> wrote:
+> > Migration plan:
+> > ...
+> > In v1.8.0, we should default to the new default refspecs when creating
+> > new remotes. However, existing remotes (created pre-v1.8.0) must
+> > continue to work as before, so we cannot simply remove the implicit
+> > refspecs (or tag auto-following). Instead we need to make sure that
+> > the implicit refspecs is NOT applied to the new-style remotes.
+> > Identifying new-style vs. old-style remotes can be done by looking at
+> > the refspec itself (old-style: "refs/remotes/$remote/*", new-style:
+> > "refs/remotes/$remote/heads/*"), or (worst case) by introducing a
+> > config variable specifying the desired behavior (defaulting to
+> > old-style).
+> 
+> How about convert old style remotes to new style? Should it be done
+> automatically when new git detects old style remotes, or done by
+> command, or manually?
 
-"basic elegance" is hardly well-defined, and although there are probably
-issues on which there's general agreement, this doesn't appear to be one
-of them.
+I don't think we want to mess with existing remote refs without the user's 
+consent, especially since the user might have all kinds of repo-specific 
+practices tied to the old layout of remote refs.
 
->> Having to type "src/" a lot more often is definitely a downside.
->
-> Come on.  This is a rather egocentric argument without much substance.
+Providing a command to do it (git remote renew?) is a much better way to go 
+about it, IMHO. Still, it is vitally important that new git keeps working 
+with old-style remotes.
 
-It certainly has more substance than hand-waving like "basic elegance"
-though...
+Another issue is whether we should automatically make the old-style implicit 
+refspecs into _explicit_ (but still old-style) refspecs. I.e. when 
+encountering an old-style remote, new git could automatically add the 
+following refspecs to the remote:
 
-Some slightly more concrete arguments have been:
+	+HEAD:refs/remotes/origin/HEAD
+    ~refs/tags/*:refs/tags/*
 
-  Pro-src:  Big top-level dir scares newbs
-  Anti-src: Extra typing is annoying
 
-I'm not really against a "src/" subdir, but it seems mostly a matter of
-taste, and I've seen plenty of projects where the src/ directory seemed
-pretty pointless...
-
--Miles
+...Johan
 
 -- 
-Politics, n. A strife of interests masquerading as a contest of
-principles. The conduct of public affairs for private advantage.
+Johan Herland, <johan@herland.net>
+www.herland.net
