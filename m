@@ -1,156 +1,83 @@
-From: Eugene Sajine <euguess@gmail.com>
-Subject: Re: [1.8.0] reorganize the mess that the source tree has become
-Date: Thu, 3 Feb 2011 13:46:03 -0500
-Message-ID: <AANLkTimnMDuAX-Ctc5K3mt=b2bz2FTsb_P7Fs8RzVwpd@mail.gmail.com>
-References: <20110202022909.30644.qmail@science.horizon.com>
-	<alpine.LFD.2.00.1102030036420.12104@xanadu.home>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [1.8.0] Support quoting in .gitattributes, .gitignore
+Date: Thu, 03 Feb 2011 11:03:26 -0800
+Message-ID: <7vbp2t0wld.fsf@alter.siamese.dyndns.org>
+References: <AANLkTikHNKmcapVWBAcufq8ONVWOWHbnL-H8Nf2WmKM5@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: George Spelvin <linux@horizon.com>, git@vger.kernel.org
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Thu Feb 03 19:46:17 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Git Mailing List <git@vger.kernel.org>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 03 20:03:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pl4C5-0000Za-2k
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 19:46:13 +0100
+	id 1Pl4T0-0002Al-M2
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 20:03:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932397Ab1BCSqG convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Feb 2011 13:46:06 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:55035 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932381Ab1BCSqF convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 3 Feb 2011 13:46:05 -0500
-Received: by yxt3 with SMTP id 3so605865yxt.19
-        for <git@vger.kernel.org>; Thu, 03 Feb 2011 10:46:03 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=JmkHpLXdHTXmG/OOP9/E+Bj08QBoc+PT7UrNt9xxsyY=;
-        b=qmLB53hyKrvfqPPhsThvumYYgD7X3vdj5agxGRfrwKdXZT6JL2+daTerrVUvjKYSvA
-         qQXQoNdItjF8LzMZV4kPfse1EGbMlTsIsLXWnbzb5PYVtaenaIhzJ2aFgsXQEDFMHo9u
-         qK/Zga5QYpSIGDW7zcryV8RuDB0cyCoq2xyVc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=hkstWafv8al0FKAJCNVIciJ1/NeCwfIKs0JCqgKEfwKUvOS8UKO+mZ6z7DPxZ856Dy
-         /jdTfvi+tr4egjXLdPrVCZeIZLyMfHKELX4y+wnIAN94lvsqCCZTI7Gq7EZHV2Sxcqsq
-         4TwDBngclsTG4r8GiOgnwEAJ/RO4sgBf/L21w=
-Received: by 10.146.167.16 with SMTP id p16mr175652yae.6.1296758763724; Thu,
- 03 Feb 2011 10:46:03 -0800 (PST)
-Received: by 10.146.168.5 with HTTP; Thu, 3 Feb 2011 10:46:03 -0800 (PST)
-In-Reply-To: <alpine.LFD.2.00.1102030036420.12104@xanadu.home>
+	id S932453Ab1BCTDh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Feb 2011 14:03:37 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50500 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932437Ab1BCTDg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Feb 2011 14:03:36 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3977F4619;
+	Thu,  3 Feb 2011 14:04:27 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uKyapAWUsYTkOQrVJn15KlFpr08=; b=IFFNBi
+	ACxqXNg/aY/PlczaSl4zrKjbF3YsRoPBIC7/zahB4M2mjKONsPARehNksS+s4pKH
+	58sknx33kunIB6Tjth+PzK+Wctuq6/GMy/Vfqb8brXSF8S9FJ9Y0tXt/IMDSBMmJ
+	97Uuumn21tgcU6UB9f/DkQQ1yF//W+gTx5vLI=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=AnUKhxmlYwliBFVhfvGOyy4kQlVY6y+L
+	K+/G4Z0BxiDIk4wW2A+KLy9xuowphTh9EeUGL5iShUVcQRIsBJ+2GK4ZkNgfOWg8
+	oy2NpRqC5GUcL5FbdzBiSb5z2Tpm1sSdJ/yJSJAHV+C5LZDUS2KysuCkpXBGzafF
+	/xogrpoZyVg=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 18B164616;
+	Thu,  3 Feb 2011 14:04:25 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 33D0C4611; Thu,  3 Feb 2011
+ 14:04:21 -0500 (EST)
+In-Reply-To: <AANLkTikHNKmcapVWBAcufq8ONVWOWHbnL-H8Nf2WmKM5@mail.gmail.com>
+ (Nguyen Thai Ngoc Duy's message of "Thu\, 3 Feb 2011 18\:51\:18 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 6AAA3A54-2FC8-11E0-8B5F-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165989>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165990>
 
-On Thu, Feb 3, 2011 at 1:16 AM, Nicolas Pitre <nico@fluxnic.net> wrote:
-> On Tue, 1 Feb 2011, George Spelvin wrote:
->
->> For what it's worth, I don't see the "cleanup".
->>
->> If it significantly reduced the size of the largest directory,
->> that would be a win. =C2=A0But moving everything into src/ doesn't
->> do that.
->>
->> If there's a way to divide the source into cohesive subunits, that
->> would be great. =C2=A0A programmer could ignore whole subdirectories
->> when working on something.
->>
->> But just moving the whole existing pile into a subdirectory "because
->> everyone else does it" is not a reason; that's superstition.
->
-> There is no superstition here, simply basic elegance.
->
-> When you pick up a book from a shelf, do you see the actual content o=
-f
-> the book printed right from the inside of the cover page, and the tab=
-le
-> of content tossed in the margin? =C2=A0Would you construct a book you=
-rself
-> that way?
->
-> A nice source tree should be organized with a minimum of hierarchical
-> structure. =C2=A0To a newbie wanting to contribute to Git, it is rath=
-er
-> frightening to cd into the git directory and see that ls generates mo=
-re
-> than 280 entries. =C2=A0That simply looks sloppy. =C2=A0And this gets=
- much worse
-> after a make.
->
-> The top directory should make different things stand out much more
-> clearly, like a preface and a table of content. =C2=A0You have the
-> documentation here, the source there, the tests there, a clearly visi=
-ble
-> README file, etc. =C2=A0If the src directory has about the same relat=
-ive
-> number of files after a move that's fine. =C2=A0At least you should e=
-xpect
-> _only_ source files in there (and possibly their by-products), and no=
-t
-> other types of data buried into the mix.
->
->> Having to type "src/" a lot more often is definitely a downside.
->
-> Come on. =C2=A0This is a rather egocentric argument without much subs=
-tance.
->
->> Heck, that's one thing I actively dislike about GNU autoconf convent=
-ions.
->
-> This has _nothing_ about any autoconf convention. =C2=A0GNU autoconf =
-requires
-> stupid things like having a bunch of files such as CREDITS, INSTALL,
-> CHANGELOG, and other whatnots even if you have nothing to put in them=
-,
-> in which case they still have to be there but empty. =C2=A0It also di=
-ctates
-> the exact name your directories must have, etc.
->
-> I'm not proposing a tree reorganization because GNU autoconf commands
-> it, but rather because this is a sensible thing to do.
->
->> If there's a compelling reason to change, could someone please descr=
-ibe it?
->
-> It's about the third time I'm putting forward arguments for this.
-> Please see the list archive.
->
-> P.S. the netiquette on busy mailing lists recommends that you preserv=
-e
-> all the email addresses that were listed as recipients on the message
-> you reply to. =C2=A0That would be highly appreciated.
->
->
-> Nicolas
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
 
-I'm not a hacker, but a user who had sometimes peeked into the git
-sources. Unbelievable mess... Impossible to see the structure in
-command line interface.
-I totally agree with Nicolas here.
-=46olders were invented for a reason.
+> Migration plan:
+>
+> I think a release note mentioning this is enough. No migration needed.
+>
+> But to be safe, we can make post-1.7.5 warn users about patterns with
+> leading double quote. By 1.8.0, the new behavior will be used.
 
-IMHO
-src for source code
-build for build by-products
-tests for tests
+That's obviously not a migration plan, and it is worse than not having the
+warning at all.  People with paths that begin with dq (which I suspect
+would be an empty set) will get wraning every time they do anything with
+git, and until 1.8.0 there is no way to turn that warnings off without
+breaking their pattern (like removing the entry from the attributes file),
+and when 1.8.0 comes their patterns will break.
 
-Come on, give us some love, please!;)
-
-Thanks,
-Eugene
+How about introducing a new feature in .gitattributes file so that the
+parser can tell if the file is (1) written pre-1.7.5 that depends on the
+old behaviour, (2) written post-1.7.5 by a person who is aware of the dq
+convention, but still relying on the old behaviour, (3) written post-1.7.5
+to take advantage of the new behaviour?  E.g., you can explicitly mark
+your .gitattributes file by putting "# feature: no-cq-pattern" as the
+first line that the patterns in the file relies on the traditional
+behaviour, or "# feature: cq-pattern" to cause the parser to interpret
+cquoted patterns, and the last 1.7.x will warn if a file does not have
+this explicit marking, but has a pattern that would change the behaviour.
+Then 1.8.0 would flip the default.
