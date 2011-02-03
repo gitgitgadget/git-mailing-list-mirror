@@ -1,79 +1,60 @@
-From: Endre Czirbesz <endre@czirbesz.hu>
-Subject: Re: git to p4 conversion
-Date: Thu, 3 Feb 2011 19:50:28 +0000
-Message-ID: <AANLkTikW_sU8oCmU9wN5q1OPPJrQbS2YZAvS0C_nBQbD@mail.gmail.com>
-References: <AANLkTi=0TSD6p7WtsVzx=pq8=GVu+jHUdxt1bnC++CT+@mail.gmail.com>
-	<4D4AF29E.7070509@vmware.com>
+From: Johannes Sixt <j6t@kdbg.org>
+Subject: Re: [msysGit] [PATCH 4/4] t5526: avoid dependency on submodule order
+Date: Thu, 3 Feb 2011 21:08:54 +0100
+Message-ID: <201102032108.54811.j6t@kdbg.org>
+References: <1296747105-1663-1-git-send-email-patthoyts@users.sourceforge.net> <1296747105-1663-5-git-send-email-patthoyts@users.sourceforge.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "git@vger.kernel.org" <git@vger.kernel.org>
-To: Ian Wienand <ianw@vmware.com>
-X-From: git-owner@vger.kernel.org Thu Feb 03 20:50:35 2011
+Content-Type: text/plain;
+  charset="iso-8859-15"
+Content-Transfer-Encoding: 7bit
+Cc: msysgit@googlegroups.com, Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Pat Thoyts <patthoyts@users.sourceforge.net>
+X-From: git-owner@vger.kernel.org Thu Feb 03 21:09:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pl5CM-0006VD-CY
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 20:50:34 +0100
+	id 1Pl5UG-00008H-4P
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 21:09:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756631Ab1BCTu3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Feb 2011 14:50:29 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:53007 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756588Ab1BCTu2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Feb 2011 14:50:28 -0500
-Received: by qwa26 with SMTP id 26so1250137qwa.19
-        for <git@vger.kernel.org>; Thu, 03 Feb 2011 11:50:28 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=jx8cOchLKEGOikYw3xjOiShglqYfOdwxCCAKSX+Wa38=;
-        b=bR0jR6ZFCiEs+sFQ5Q3s+H1+aVEttR8HJ8q3FPHKxcntiop6wvfI0etJjYrguWFwR6
-         YafLdJ1iryG8ff5JUT4e5r2LOG4MCNLSNJgv01woafdlVBX1zbCRPzpvZXrxczSUWQj/
-         eJvKjKL6W+UwMWTos7I4Q93k0lIOKqs+SsKW4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        b=rkEWIjtbCCu7eHUCveYDLp8+l6FM52vcgAZXX+9ezuywepkUiobDCmpPu9u+46D27b
-         IOwQbil5piFwqJZR1sk7yoFaPeEg3u43sQWSh8VE3UKIQuwb2nUMfz5jz25+LrUQwmRO
-         boZ5B2CbtXUFYm/FWcd/kcF+J2AteNPvZt9Kc=
-Received: by 10.229.90.196 with SMTP id j4mr9452116qcm.144.1296762628208; Thu,
- 03 Feb 2011 11:50:28 -0800 (PST)
-Received: by 10.229.67.26 with HTTP; Thu, 3 Feb 2011 11:50:28 -0800 (PST)
-In-Reply-To: <4D4AF29E.7070509@vmware.com>
-X-Google-Sender-Auth: 9lWV3UtlOWuSUthTE8J7j2_ImK8
+	id S1756733Ab1BCUI6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Feb 2011 15:08:58 -0500
+Received: from bsmtp2.bon.at ([213.33.87.16]:19655 "EHLO bsmtp.bon.at"
+	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+	id S1756342Ab1BCUI5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Feb 2011 15:08:57 -0500
+Received: from dx.sixt.local (unknown [93.83.142.38])
+	by bsmtp.bon.at (Postfix) with ESMTP id 4E111130053;
+	Thu,  3 Feb 2011 21:08:55 +0100 (CET)
+Received: from localhost (localhost [IPv6:::1])
+	by dx.sixt.local (Postfix) with ESMTP id 2013319F5F2;
+	Thu,  3 Feb 2011 21:08:55 +0100 (CET)
+User-Agent: KMail/1.9.10
+In-Reply-To: <1296747105-1663-5-git-send-email-patthoyts@users.sourceforge.net>
+Content-Disposition: inline
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165991>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165992>
 
-Hello Ian,
+On Donnerstag, 3. Februar 2011, Pat Thoyts wrote:
+> +test_cmp_unordered() {
+> +	grep --line-regexp -f "$@" >&3
+> +}
 
-Thanks for your reply.
+I don't think that this is sufficiently portable.
 
-2011/2/3 Ian Wienand <ianw@vmware.com>:
-> What exactly did you try?
-I am not at my work computer now, but as I remember:
+Furthermore, just like Dscho, I'd rather prefer to know why the output is not 
+ordered as expected.
 
-cd workdir
-git-p4 clone //depot/projectdir/...@all .
-git clone myprojectrepo .
+I'm fine with the other patches as well.
 
-(Everything went fine till this point.)
+A side note regarding SYMLINKS: It's actually possible to remove 70 of the 130 
+SYMLINKS checks from the test suite:
 
-git-p4 sync
-git-p4 submit
-Fatal error...
+http://repo.or.cz/w/git/mingw/j6t.git/shortlog/refs/heads/war-on-symlinks
 
-I don't remember the exact message, but it tried to reach a
-non-existing git commit (HEAD~xx, where xx was count of my commits, so
-it tried to refer to a commit before my initial commit).
-I tried to change the order of the clone steps, but the result was the same.
-
-Rgds,
-
-Endre
+-- Hannes
