@@ -1,79 +1,85 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: [1.8.0] Support quoting in .gitattributes, .gitignore
-Date: Thu, 3 Feb 2011 18:51:18 +0700
-Message-ID: <AANLkTikHNKmcapVWBAcufq8ONVWOWHbnL-H8Nf2WmKM5@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [1.8.0] Provide proper remote ref namespaces
+Date: Thu, 3 Feb 2011 14:10:58 +0100
+Message-ID: <201102031410.58623.johan@herland.net>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com> <201102020322.00171.johan@herland.net> <AANLkTinrqCaD_vg7Ah4Tjgoa-njEBEmiYt15ojtsazKw@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Thu Feb 03 12:51:58 2011
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>, Nicolas Pitre <nico@fluxnic.net>
+To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 03 14:11:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkxjA-0008Tw-0S
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 12:51:56 +0100
+	id 1Pkyxx-0007Bk-NK
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 14:11:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756321Ab1BCLvv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Feb 2011 06:51:51 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:54483 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756250Ab1BCLvu (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Feb 2011 06:51:50 -0500
-Received: by wyb28 with SMTP id 28so1052116wyb.19
-        for <git@vger.kernel.org>; Thu, 03 Feb 2011 03:51:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=NiikQox+/DDWU0utGj99GsAi3MznAmVC4XF1Lpwc6l0=;
-        b=GuuETknXZEL70PNMW3YiFt95H+tIqP9ioRrwFfTZNqyqpgtVZuWkvnjvFlMFQT+mu4
-         sa5v9EYnTYsuyekjwqtAz7rfX8xdX1zhtPwM+0GKs5PFpfZl78Cq8LXLDM8qlsNg6jnX
-         F+irGGFgdOoHnkAPKMSWFjlbG7+zpilnjuF7g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=S4wzVQDAHDLHKYCCl2wAcF0r16EON6PcjAvahGMOlY2rSfK1RnBaZWxwmkH8sytjNE
-         JUD4LzES8XTV8eSLJyFjaWdhjjnvQrewmHEk7VIZdw9BDqWGFgUdokbXMQCA9UzO9tyy
-         /p8Mf6weFsULRudcQ61yZzOW9UAyN3bFu2Pho=
-Received: by 10.216.186.144 with SMTP id w16mr9760745wem.13.1296733909176;
- Thu, 03 Feb 2011 03:51:49 -0800 (PST)
-Received: by 10.216.66.144 with HTTP; Thu, 3 Feb 2011 03:51:18 -0800 (PST)
+	id S932092Ab1BCNLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Feb 2011 08:11:10 -0500
+Received: from smtp.opera.com ([213.236.208.81]:51464 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756392Ab1BCNLJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Feb 2011 08:11:09 -0500
+Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p13DAw0n025848
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Thu, 3 Feb 2011 13:10:59 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <AANLkTinrqCaD_vg7Ah4Tjgoa-njEBEmiYt15ojtsazKw@mail.gmail.com>
+Content-Disposition: inline
+X-Scanned-By: MIMEDefang 2.64 on 213.236.208.81
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165970>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165971>
 
-Proposal:
+On Thursday 03 February 2011, Nguyen Thai Ngoc Duy wrote:
+> On Wed, Feb 2, 2011 at 9:21 AM, Johan Herland <johan@herland.net> 
+wrote:
+> > Migration plan:
+> > ...
+> > In v1.8.0, we should default to the new default refspecs when
+> > creating new remotes. However, existing remotes (created
+> > pre-v1.8.0) must continue to work as before, so we cannot simply
+> > remove the implicit refspecs (or tag auto-following). Instead we
+> > need to make sure that the implicit refspecs is NOT applied to the
+> > new-style remotes. Identifying new-style vs. old-style remotes can
+> > be done by looking at the refspec itself (old-style:
+> > "refs/remotes/$remote/*", new-style:
+> > "refs/remotes/$remote/heads/*"), or (worst case) by introducing a
+> > config variable specifying the desired behavior (defaulting to
+> > old-style).
+>
+> I'd prefer config var (remote.*.implicitRules, maybe). We don't
+> reserve heads, tags... in remote namespace for ourselves. Some users
+> might have already have branches heads/ant, heads/bee... making new
+> style detection unreliable.
+>
+> So I propose add remote.*.implicitRules = false since 1.8.0 for new
+> remotes as a way to detect new/old style. The default value would be
+> true.
+>
+> But I don't want to keep adding remote.*.implicitRules on new remotes
+> forever. I suppose one year after 1.8.0, the new behavior is
+> widespread enough. We can then annoy users to add
+> remote.*.implicitRules for all old remotes. There should be no more
+> default value after 1-2 years. We then flip the default value and
+> won't automatically add remote.*.implicitRules = false on new
+> remotes.
 
-There's already a patch for .gitattributes [1].
+I don't have a problem with this, other than bikeshedding over the 
+variable name: I find remote.*.implicitFetchRefspecs more descriptive.
 
-To summarize: .gitattributes separates pattern and attributes by
-spaces, therefore spaces could not be present in patterns. There are
-tricks to overcome (e.g. substitute spaces with dots) but it's well..
-tricky. The patch adds support for quoting full patterns.
 
-While .gitignore does not have the same problem, it'd be nice to
-support quoting too for a few reasons:
+...Johan
 
- - Keep differences between gitattr and gitignore to minimum. A
-hero(ine) might come and unify them some day. Don't make his/her work
-harder.
- - Is ability to put \n in patterns counted as a good point?
-
-Risks:
-
-Current patterns with leading double quote mark will be
-misinterpreted. Though chances are really small.
-
-Migration plan:
-
-I think a release note mentioning this is enough. No migration needed.
-
-But to be safe, we can make post-1.7.5 warn users about patterns with
-leading double quote. By 1.8.0, the new behavior will be used.
-
-[1] http://article.gmane.org/gmane.comp.version-control.git/160867
 -- 
-Duy
+Johan Herland, <johan@herland.net>
+www.herland.net
