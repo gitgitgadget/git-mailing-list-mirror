@@ -1,62 +1,73 @@
-From: Dun Peal <dunpealer@gmail.com>
-Subject: Potential problems with rebasing branch foo onto master, if master
- was previously merged into foo?
-Date: Fri, 4 Feb 2011 12:28:33 -0600
-Message-ID: <AANLkTina+mXQ0dx+Xx300vcETgsEtHj-Jx0-OfzxywKC@mail.gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: moving to a git-backed wiki
+Date: Thu, 3 Feb 2011 20:06:34 +0100
+Message-ID: <AANLkTikshY8qHoFvghSu8q21j5Unp==Hf583OE2tkNrS@mail.gmail.com>
+References: <7vwrll57ha.fsf@alter.siamese.dyndns.org> <7vsjw957fq.fsf_-_@alter.siamese.dyndns.org>
+ <7vzkqg4x2h.fsf_-_@alter.siamese.dyndns.org> <20110131225529.GC14419@sigill.intra.peff.net>
+ <AANLkTimHCp_JKUw1keJoA4zD_q7Sci+rOwPeAs_T=7xH@mail.gmail.com>
+ <20110201201144.GA16003@sigill.intra.peff.net> <AANLkTikfzzELUaN3B+20rh9D51St8mUYs4p-WYjp8JVV@mail.gmail.com>
+ <4D488DCD.3080305@eaglescrag.net> <4D4929F4.3020805@snarc.org>
+ <4D4A11D7.4040103@eaglescrag.net> <20110203174518.GA14871@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: Git ML <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Fri Feb 04 19:28:46 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: "J.H." <warthog19@eaglescrag.net>, Vincent Hanquez <tab@snarc.org>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 03 20:07:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PlQOd-00035m-JX
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 19:28:40 +0100
+	id 1Pl4We-0004Wv-9B
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 20:07:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751222Ab1BDS2e (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Feb 2011 13:28:34 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:33404 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751161Ab1BDS2d (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Feb 2011 13:28:33 -0500
-Received: by ywo7 with SMTP id 7so775289ywo.19
-        for <git@vger.kernel.org>; Fri, 04 Feb 2011 10:28:33 -0800 (PST)
+	id S932506Ab1BCTHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Feb 2011 14:07:18 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:43904 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932430Ab1BCTHR (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Feb 2011 14:07:17 -0500
+Received: by gwj20 with SMTP id 20so608920gwj.19
+        for <git@vger.kernel.org>; Thu, 03 Feb 2011 11:07:16 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:date:message-id:subject:from:to
-         :content-type;
-        bh=tVGD8y/x8peMbH4c3o2HX2kZGSQ4CHu7nYrzFWuy5Eg=;
-        b=MnTxXqW7oIKl54ejD+KCuberV2jPPekQSqEQ3XLtFy8ALwB7ej6aq9ZbRoPoupgnBu
-         +qkGEQtTfB1iq/JSiX134t7x+wui7K7EFQfKzEj4mvLZHZ7ot9wVPopyC2GiRR/ilOMc
-         Gvzk+4kU8Imh6YLI2Tj+IF7qSsljVTUQsMTGk=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=ra5X4a+seoc2zdsa1GYuMeeYlAU5yIyPhAfLVzhNr3U=;
+        b=WJK3wDDethdHPC5PYrGQTZGn9D9RvK3b+YlflcbzFV8qrSIynu0xULblE8wY8Tv4AP
+         Snp6KUjJoEofLL4padf+K8KLVo8rx/1IgyuH3UxHTxAHIOxmzrL5RTxGld46a4auW1EM
+         PNS2MFdOJG25FpT8hrXosG8tBSnQp63n+X678=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:date:message-id:subject:from:to:content-type;
-        b=FKetrLU2J27JwjgFPvsEIN1pO8nB26AL4HbuIc1RJY6rPdtorOJ+vJhXBouvmjPlu1
-         XVY7GS6uD0AjrkGiNpE9UkQj7DH4LY9H2cfWDzqReUIN6CNiVNohg/fT63pNoiNggCo/
-         ybVyQ1tyPxTKxRuz612QU4fg2RCLYWu5ieMHY=
-Received: by 10.146.86.6 with SMTP id j6mr187734yab.31.1296844113056; Fri, 04
- Feb 2011 10:28:33 -0800 (PST)
-Received: by 10.146.167.20 with HTTP; Fri, 4 Feb 2011 10:28:33 -0800 (PST)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=uCRv1z7Bmqcv81nzDplC0VbEm3dNsMNoGioQgXOO2R8EeSQkDSWomFAgPoZVo94M6d
+         e+p6I/2qHW/Z1qoQReQ+wQudvhxaieDtKgjDH/x0eywH6TW2i775jffkD8KTqRywQdPG
+         xAiErsc8IzYdkMsm6IUJrx+1BSFdbLUZV9CnI=
+Received: by 10.150.58.2 with SMTP id g2mr8598391yba.397.1296760035993; Thu,
+ 03 Feb 2011 11:07:15 -0800 (PST)
+Received: by 10.150.51.6 with HTTP; Thu, 3 Feb 2011 11:06:34 -0800 (PST)
+In-Reply-To: <20110203174518.GA14871@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166053>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166054>
 
-I'm designing a workflow for a long-lived feature branch `foo`. This
-branch will have `master` merged into about once day. About once a
-week, we rebase `foo` back into `master`.
+Heya,
 
-Are there any problems to be expected in this workflow?  I have a
-hunch the rebase back into `master` might be subject to potential
-problems that I can't foresee.
+On Thu, Feb 3, 2011 at 18:45, Jeff King <peff@peff.net> wrote:
+> Most of us don't really care if git is the ultimate storage mechanism. I
+> could even build the git interface as a purely client thing on top of
+> the CGI interface; the problem is that scraping the wiki pages for new
+> versions over the net would be horribly inefficient.
 
-I should mention that over 70 developers will be collaborating on
-`foo`, spread across multiple, widely diverging timezones; any state
-that requires all of these developers to coordinate / synchronize will
-be prohibitively expensive for us.
+Note that MediaWiki has a stable API that you could use instead :).
 
-Thanks, D
+-- 
+Cheers,
+
+Sverre Rabbelier
