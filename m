@@ -1,80 +1,175 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: Narrow clone (Re: features from GitSurvey 2010)
-Date: Thu, 3 Feb 2011 15:38:30 -0600
-Message-ID: <20110203213830.GE16391@elie>
-References: <AANLkTi=gf9_618iojpYJgN_msAe-FBq-Jao=sj76VQak@mail.gmail.com>
- <20110129231310.GA11088@burratino>
- <201102011451.17456.jnareb@gmail.com>
- <AANLkTinPAL2rEUMe-tRGFxSQ0-gfAJvSO7WW+f+2Fd2u@mail.gmail.com>
- <AANLkTi=_DPSp2P3MuFOPgua2nH7U+RUt4AfAHSyPVv-G@mail.gmail.com>
- <AANLkTi=KUpYJBRMp9ti0h+g6a0iTw4D113rTgfTpR8C4@mail.gmail.com>
- <alpine.LFD.2.00.1102011647000.8580@xanadu.home>
- <FE2BDD68-9CFA-4CBB-9F66-32BE6CF3E174@adacore.com>
- <20110203173835.GC30341@elie>
- <5E0364BF-35CD-4797-BBAF-98A54D1F7F6E@adacore.com>
+From: Hilco Wijbenga <hilco.wijbenga@gmail.com>
+Subject: Re: [1.8.0] reorganize the mess that the source tree has become
+Date: Thu, 3 Feb 2011 13:42:27 -0800
+Message-ID: <AANLkTikhPRGZ9DxCWbWvBiac_DYiXYsnEdHVOnbHUdU4@mail.gmail.com>
+References: <20110202022909.30644.qmail@science.horizon.com>
+	<alpine.LFD.2.00.1102030036420.12104@xanadu.home>
+	<AANLkTimnMDuAX-Ctc5K3mt=b2bz2FTsb_P7Fs8RzVwpd@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Shawn Pearce <spearce@spearce.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	"Dmitry S. Kravtsov" <idkravitz@gmail.com>, git@vger.kernel.org
-To: Geert Bosch <bosch@adacore.com>
-X-From: git-owner@vger.kernel.org Thu Feb 03 22:38:43 2011
+	George Spelvin <linux@horizon.com>,
+	Eugene Sajine <euguess@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 03 22:42:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pl6t0-0003c3-Mj
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 22:38:43 +0100
+	id 1Pl6wk-00062g-AO
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 22:42:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753451Ab1BCVih (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Feb 2011 16:38:37 -0500
-Received: from mail-ey0-f174.google.com ([209.85.215.174]:42870 "EHLO
-	mail-ey0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753301Ab1BCVig (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Feb 2011 16:38:36 -0500
-Received: by eye27 with SMTP id 27so993606eye.19
-        for <git@vger.kernel.org>; Thu, 03 Feb 2011 13:38:35 -0800 (PST)
+	id S1753213Ab1BCVm3 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 3 Feb 2011 16:42:29 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:43480 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753165Ab1BCVm2 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 3 Feb 2011 16:42:28 -0500
+Received: by qwa26 with SMTP id 26so1327489qwa.19
+        for <git@vger.kernel.org>; Thu, 03 Feb 2011 13:42:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=SNxrK7bPgWsoh8G6hIdNtSYOc6DW3hOKadan0/AF6Nw=;
-        b=bUEKCm4cNUI/8oqOYPN5g94UKk/FPaq6uh/QEWe3LFoeJI3OhOzXB5ujF3OPIv2uSv
-         vzSh0cwlWkXHZqrNBLcY3N7/be06izm/soO4H0EhLYsjpT/q/LdbHTWnFZRiXHTqJiWV
-         Fw0xtEqdRCrYzGsxDyZ0KHU9tkOPOsnYtCBp8=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=BOni0aKryc95RyBh0MNxLFtsUYAFETD4AItvoS+Zkfo=;
+        b=JSEPxVEj2LyBlN1k43/KIhipi0iXNDX4Y36DPEXSJa0CxIMJFGJJbsy5jyOJOUsfCk
+         WwiPuR+nk3rr9Bp5sU6xjjgl4krLejlbU4/DYURHKoCqYzKrJyAtEkUzyU0w8o4eTj/Y
+         F1rmqE+KZkytyDxEqLEYWEThYzn1J59tg0C0w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=C3C9ucnCyekQbsG8clPFiJg3as57TjBnXUKqM8BHaXep57eex5sG0JKNUgfNQeK2Hk
-         AAaAt0WJCi9vPf3NAJS7IYhTIELXqh3fh0g9RPeE3noPxg6Gywia7mNqZ19a2Ymo7Jwj
-         pElFH3b0+mUNzTUlK6Os685m+ciP8xZfcduPM=
-Received: by 10.213.105.80 with SMTP id s16mr9155532ebo.18.1296769115653;
-        Thu, 03 Feb 2011 13:38:35 -0800 (PST)
-Received: from elie (adsl-76-206-235-233.dsl.chcgil.sbcglobal.net [76.206.235.233])
-        by mx.google.com with ESMTPS id b52sm992958eei.7.2011.02.03.13.38.33
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 03 Feb 2011 13:38:35 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <5E0364BF-35CD-4797-BBAF-98A54D1F7F6E@adacore.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=rvHnk99V1cydu092wjmegkFFiTjbpxXLLMvDCjzgE3aWiXTya7LFy5ryV+XEWqVGV8
+         6T0OADiKBDaMNOtgajIMfZrDHQIbDZxmlsIYlXbLsU7huC8pj5yhpGkF+tx4oay2zXVI
+         wHgl8jEXlEgiTtG9GKNFW9WoELLTj6HC/GZa8=
+Received: by 10.229.98.193 with SMTP id r1mr9861146qcn.22.1296769347260; Thu,
+ 03 Feb 2011 13:42:27 -0800 (PST)
+Received: by 10.229.94.7 with HTTP; Thu, 3 Feb 2011 13:42:27 -0800 (PST)
+In-Reply-To: <AANLkTimnMDuAX-Ctc5K3mt=b2bz2FTsb_P7Fs8RzVwpd@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166002>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166003>
 
-Geert Bosch wrote:
+On 3 February 2011 10:46, Eugene Sajine <euguess@gmail.com> wrote:
+> On Thu, Feb 3, 2011 at 1:16 AM, Nicolas Pitre <nico@fluxnic.net> wrot=
+e:
+>> On Tue, 1 Feb 2011, George Spelvin wrote:
+>>
+>>> For what it's worth, I don't see the "cleanup".
+>>>
+>>> If it significantly reduced the size of the largest directory,
+>>> that would be a win. =C2=A0But moving everything into src/ doesn't
+>>> do that.
+>>>
+>>> If there's a way to divide the source into cohesive subunits, that
+>>> would be great. =C2=A0A programmer could ignore whole subdirectorie=
+s
+>>> when working on something.
+>>>
+>>> But just moving the whole existing pile into a subdirectory "becaus=
+e
+>>> everyone else does it" is not a reason; that's superstition.
+>>
+>> There is no superstition here, simply basic elegance.
+>>
+>> When you pick up a book from a shelf, do you see the actual content =
+of
+>> the book printed right from the inside of the cover page, and the ta=
+ble
+>> of content tossed in the margin? =C2=A0Would you construct a book yo=
+urself
+>> that way?
+>>
+>> A nice source tree should be organized with a minimum of hierarchica=
+l
+>> structure. =C2=A0To a newbie wanting to contribute to Git, it is rat=
+her
+>> frightening to cd into the git directory and see that ls generates m=
+ore
+>> than 280 entries. =C2=A0That simply looks sloppy. =C2=A0And this get=
+s much worse
+>> after a make.
+>>
+>> The top directory should make different things stand out much more
+>> clearly, like a preface and a table of content. =C2=A0You have the
+>> documentation here, the source there, the tests there, a clearly vis=
+ible
+>> README file, etc. =C2=A0If the src directory has about the same rela=
+tive
+>> number of files after a move that's fine. =C2=A0At least you should =
+expect
+>> _only_ source files in there (and possibly their by-products), and n=
+ot
+>> other types of data buried into the mix.
+>>
+>>> Having to type "src/" a lot more often is definitely a downside.
+>>
+>> Come on. =C2=A0This is a rather egocentric argument without much sub=
+stance.
+>>
+>>> Heck, that's one thing I actively dislike about GNU autoconf conven=
+tions.
+>>
+>> This has _nothing_ about any autoconf convention. =C2=A0GNU autoconf=
+ requires
+>> stupid things like having a bunch of files such as CREDITS, INSTALL,
+>> CHANGELOG, and other whatnots even if you have nothing to put in the=
+m,
+>> in which case they still have to be there but empty. =C2=A0It also d=
+ictates
+>> the exact name your directories must have, etc.
+>>
+>> I'm not proposing a tree reorganization because GNU autoconf command=
+s
+>> it, but rather because this is a sensible thing to do.
+>>
+>>> If there's a compelling reason to change, could someone please desc=
+ribe it?
+>>
+>> It's about the third time I'm putting forward arguments for this.
+>> Please see the list archive.
+>>
+>> P.S. the netiquette on busy mailing lists recommends that you preser=
+ve
+>> all the email addresses that were listed as recipients on the messag=
+e
+>> you reply to. =C2=A0That would be highly appreciated.
+>>
+>>
+>> Nicolas
+>> --
+>> To unsubscribe from this list: send the line "unsubscribe git" in
+>> the body of a message to majordomo@vger.kernel.org
+>> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.h=
+tml
+>>
+>
+> I'm not a hacker, but a user who had sometimes peeked into the git
+> sources. Unbelievable mess... Impossible to see the structure in
+> command line interface.
+> I totally agree with Nicolas here.
+> Folders were invented for a reason.
+>
+> IMHO
+> src for source code
+> build for build by-products
+> tests for tests
+>
+> Come on, give us some love, please!;)
 
-> Of course the resulting git repository will be less than useful.
-> And that's where the narrow clone comes in handy...
+Another one from the peanut gallery. :-) I wholeheartedly agree with
+both Nicolas and Eugene.
 
-Side note: while clearly I don't consider this particular use case to
-be a strong motivation, there are other use cases that do strongly
-motivate the feature.  And if this particular use case happens to
-motivate someone to work on it, I'd be happy for it still.  I just
-hope the documentation does not encourage people to do such things.
+Quite frankly, I'm surprised there are (presumably experienced)
+developers who do not immediately see the value of a little
+organization. Surely, given the use of code conventions, formatting
+rules, etcetera, the obvious one step further is to also organize
+where the files go?
+
+(Given that I'm just a lurker I promise to leave it at this. I just
+wanted to show Nicolas a little support.)
