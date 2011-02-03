@@ -1,95 +1,85 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [1.8.0] Provide proper remote ref namespaces
-Date: Thu, 03 Feb 2011 09:46:00 +0100
-Message-ID: <201102030946.01086.johan@herland.net>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
- <201102020322.00171.johan@herland.net>
- <AANLkTi=tMq18mKqr0cp9rXqtDApKu3P_AZGyX6fA3hsx@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [1.8.0] Tracking empty directories
+Date: Thu, 03 Feb 2011 11:07:50 +0100
+Message-ID: <vpqbp2tqvm1.fsf@bauges.imag.fr>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
+	<AANLkTi=bK7mFS3eWVMWXqZSnv73tafL9AGazk4jPLddp@mail.gmail.com>
+	<4928FF12-E593-4CDB-AC68-B4078CC5920E@gmail.com>
+	<201102021921.53755.wjl@icecavern.net>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>, Nicolas Pitre <nico@fluxnic.net>
-To: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 03 09:46:18 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: David Aguilar <davvid@gmail.com>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	"git\@vger.kernel.org" <git@vger.kernel.org>
+To: "Wesley J. Landaker" <wjl@icecavern.net>
+X-From: git-owner@vger.kernel.org Thu Feb 03 11:08:04 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkupV-0008GH-Dr
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 09:46:17 +0100
+	id 1Pkw6e-0001os-2w
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 11:08:04 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755360Ab1BCIqJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Feb 2011 03:46:09 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:63128 "EHLO smtp.getmail.no"
+	id S1756062Ab1BCKH6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Feb 2011 05:07:58 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:46475 "EHLO shiva.imag.fr"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752002Ab1BCIqI (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Feb 2011 03:46:08 -0500
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LG100KMQ9ORCP60@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Thu, 03 Feb 2011 09:46:04 +0100 (MET)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id D71291EA5678_D4A6B4BB	for <git@vger.kernel.org>; Thu,
- 03 Feb 2011 08:46:03 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 1EED11EA2A5F_D4A6B4AF	for <git@vger.kernel.org>; Thu,
- 03 Feb 2011 08:46:02 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LG100DC39OPB900@get-mta-in01.get.basefarm.net> for
- git@vger.kernel.org; Thu, 03 Feb 2011 09:46:02 +0100 (MET)
-User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.0; x86_64; ; )
-In-reply-to: <AANLkTi=tMq18mKqr0cp9rXqtDApKu3P_AZGyX6fA3hsx@mail.gmail.com>
+	id S1755397Ab1BCKH5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Feb 2011 05:07:57 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p13A7o17001107
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Thu, 3 Feb 2011 11:07:50 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1Pkw6R-00081Q-8i; Thu, 03 Feb 2011 11:07:51 +0100
+In-Reply-To: <201102021921.53755.wjl@icecavern.net> (Wesley J. Landaker's message of "Wed\, 2 Feb 2011 19\:21\:53 -0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Thu, 03 Feb 2011 11:07:50 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p13A7o17001107
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1297332470.92831@i3QzRiKv1w0OZNA+oYvCJA
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165965>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165966>
 
-On Thursday 03 February 2011, Nguyen Thai Ngoc Duy wrote:
-> On Wed, Feb 2, 2011 at 9:21 AM, Johan Herland <johan@herland.net> wrote:
-> > Migration plan:
-> > ...
-> > In v1.8.0, we should default to the new default refspecs when creating
-> > new remotes. However, existing remotes (created pre-v1.8.0) must
-> > continue to work as before, so we cannot simply remove the implicit
-> > refspecs (or tag auto-following). Instead we need to make sure that
-> > the implicit refspecs is NOT applied to the new-style remotes.
-> > Identifying new-style vs. old-style remotes can be done by looking at
-> > the refspec itself (old-style: "refs/remotes/$remote/*", new-style:
-> > "refs/remotes/$remote/heads/*"), or (worst case) by introducing a
-> > config variable specifying the desired behavior (defaulting to
-> > old-style).
-> 
-> How about convert old style remotes to new style? Should it be done
-> automatically when new git detects old style remotes, or done by
-> command, or manually?
+"Wesley J. Landaker" <wjl@icecavern.net> writes:
 
-I don't think we want to mess with existing remote refs without the user's 
-consent, especially since the user might have all kinds of repo-specific 
-practices tied to the old layout of remote refs.
+>   2) One of git's best strengths is that it's so easy to interact with other 
+> SCM software, primarily because git's features are a SUPERSET of other SCMs. 
+> However, almost every other SCM can track empty directories, except
+> git, 
+[...]
+>   4) On many projects I work on with a huge number of people, the workflow 
+> is to create a very, very intricate directory hierarchy skeleton, so that 
+> it's clear to everyone where everything goes and how it is organized, even 
+> before any work is started.
 
-Providing a command to do it (git remote renew?) is a much better way to go 
-about it, IMHO. Still, it is vitally important that new git keeps working 
-with old-style remotes.
+Just adding my 2 cents: my first clash with Git's non-management of
+empty directories was a combination of both. A colleague created an
+SVN project with several empty directories, along the lines of "Here
+it is. Now, put your stuff in there".
 
-Another issue is whether we should automatically make the old-style implicit 
-refspecs into _explicit_ (but still old-style) refspecs. I.e. when 
-encountering an old-style remote, new git could automatically add the 
-following refspecs to the remote:
+git-svn didn't import these empty directories (I think I actually
+could have worked around this with "git svn mkdirs"). Adding
+.gitignore files would have been a really dirty workaround since I
+didn't want to put Git stuff in the SVN repo.
 
-	+HEAD:refs/remotes/origin/HEAD
-    ~refs/tags/*:refs/tags/*
+I don't think my colleague did anything wrong, I did want to use Git,
+and that was still frustrating to see such a simple scenario not
+managed by my favorite tool.
 
-
-...Johan
+So, yes, I can clearly leave without empty directory support, but that
+would be a nice addition to Git.
 
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
