@@ -1,70 +1,75 @@
-From: =?ISO-8859-1?Q?Santi_B=E9jar?= <santi@agolina.net>
-Subject: Re: [1.8.0] Provide proper remote ref namespaces
-Date: Thu, 3 Feb 2011 15:10:19 +0100
-Message-ID: <AANLkTindnAFix+u3HKW0V-ArkzjyrDhpmN6gf9PSj0_G@mail.gmail.com>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
- <201102020322.00171.johan@herland.net> <AANLkTinrqCaD_vg7Ah4Tjgoa-njEBEmiYt15ojtsazKw@mail.gmail.com>
- <201102031410.58623.johan@herland.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>, Nicolas Pitre <nico@fluxnic.net>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Thu Feb 03 15:10:55 2011
+From: Geert Bosch <bosch@adacore.com>
+Subject: Re: Features from GitSurvey 2010
+Date: Thu, 3 Feb 2011 09:38:27 -0500
+Message-ID: <FE2BDD68-9CFA-4CBB-9F66-32BE6CF3E174@adacore.com>
+References: <AANLkTi=gf9_618iojpYJgN_msAe-FBq-Jao=sj76VQak@mail.gmail.com> <20110129231310.GA11088@burratino> <201102011451.17456.jnareb@gmail.com> <AANLkTinPAL2rEUMe-tRGFxSQ0-gfAJvSO7WW+f+2Fd2u@mail.gmail.com> <AANLkTi=_DPSp2P3MuFOPgua2nH7U+RUt4AfAHSyPVv-G@mail.gmail.com> <AANLkTi=KUpYJBRMp9ti0h+g6a0iTw4D113rTgfTpR8C4@mail.gmail.com> <alpine.LFD.2.00.1102011647000.8580@xanadu.home>
+Mime-Version: 1.0 (Apple Message framework v1082)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 7bit
+Cc: Shawn Pearce <spearce@spearce.org>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"Dmitry S. Kravtsov" <idkravitz@gmail.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Thu Feb 03 15:49:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pkzte-0005Jr-Nl
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 15:10:55 +0100
+	id 1Pl0UV-0003hs-Jj
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 15:48:59 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932171Ab1BCOKm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Feb 2011 09:10:42 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:61354 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932113Ab1BCOKm (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Feb 2011 09:10:42 -0500
-Received: by qwa26 with SMTP id 26so948056qwa.19
-        for <git@vger.kernel.org>; Thu, 03 Feb 2011 06:10:41 -0800 (PST)
-Received: by 10.224.176.67 with SMTP id bd3mr10256823qab.110.1296742241049;
- Thu, 03 Feb 2011 06:10:41 -0800 (PST)
-Received: by 10.229.215.129 with HTTP; Thu, 3 Feb 2011 06:10:19 -0800 (PST)
-In-Reply-To: <201102031410.58623.johan@herland.net>
+	id S1755945Ab1BCOsg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Feb 2011 09:48:36 -0500
+Received: from rock.gnat.com ([205.232.38.15]:48381 "EHLO rock.gnat.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755883Ab1BCOse (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Feb 2011 09:48:34 -0500
+X-Greylist: delayed 606 seconds by postgrey-1.27 at vger.kernel.org; Thu, 03 Feb 2011 09:48:34 EST
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by filtered-rock.gnat.com (Postfix) with ESMTP id D4A4C2BACAC;
+	Thu,  3 Feb 2011 09:38:27 -0500 (EST)
+X-Virus-Scanned: Debian amavisd-new at gnat.com
+Received: from rock.gnat.com ([127.0.0.1])
+	by localhost (rock.gnat.com [127.0.0.1]) (amavisd-new, port 10024)
+	with LMTP id H4XGNCzzNNwq; Thu,  3 Feb 2011 09:38:27 -0500 (EST)
+Received: from potomac.gnat.com (potomac.gnat.com [205.232.38.115])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by rock.gnat.com (Postfix) with ESMTPSA id C08452BACA8;
+	Thu,  3 Feb 2011 09:38:27 -0500 (EST)
+In-Reply-To: <alpine.LFD.2.00.1102011647000.8580@xanadu.home>
+X-Mailer: Apple Mail (2.1082)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165973>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165974>
 
-> On Thursday 03 February 2011, Nguyen Thai Ngoc Duy wrote:
->> On Wed, Feb 2, 2011 at 9:21 AM, Johan Herland <johan@herland.net>
-> wrote:
->> > Migration plan:
->> > ...
->> > In v1.8.0, we should default to the new default refspecs when
->> > creating new remotes. However, existing remotes (created
->> > pre-v1.8.0) must continue to work as before, so we cannot simply
->> > remove the implicit refspecs (or tag auto-following). Instead we
->> > need to make sure that the implicit refspecs is NOT applied to the
->> > new-style remotes. Identifying new-style vs. old-style remotes can
->> > be done by looking at the refspec itself (old-style:
->> > "refs/remotes/$remote/*", new-style:
->> > "refs/remotes/$remote/heads/*"), or (worst case) by introducing a
->> > config variable specifying the desired behavior (defaulting to
->> > old-style).
->>
->> I'd prefer config var (remote.*.implicitRules, maybe). We don't
->> reserve heads, tags... in remote namespace for ourselves. Some users
->> might have already have branches heads/ant, heads/bee... making new
->> style detection unreliable.
 
-I don't quite follow the argument. For me the question is how likely
-an old-time user has modified the refspec to read
-"refs/remotes/$remote/heads/* (new-style). I think this is very, very
-unlikely and thus the "heuristic" to detect old/new style works most
-of the time and there is no need for a new config/compatibility key.
+On Feb 1, 2011, at 16:51, Nicolas Pitre wrote:
 
-HTH,
-Santi
+> Also... people interested in Narrow clones are likely to be shallow 
+> clone users too, right?
+
+Not necessarily. Many corporate repositories are huge (caused by
+the concept of 1 central repository with everything in it) and have
+tons of crud (like marketing materials, media-heavy powerpoint
+presentations).  Here you really want a narrow clone (such as the
+sources of the project you're working on), but don't mind having
+the whole history.
+
+Looking at it from another angle: typically the whole history of a
+project is not much bigger than a check out, so it is fine to have
+a deep history. On the other hand, for these monster repositories
+one would typically do a narrow clone of only a single subdirectory
+that may be more than an order of magnitude smaller.
+
+These narrow clones are especially important for imports of unwieldy
+svn repositories where there is a large amount of unstructured
+branching.
+
+Regards,
+   -Geert
