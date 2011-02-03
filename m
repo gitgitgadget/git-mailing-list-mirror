@@ -1,81 +1,122 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Narrow clone (Re: features from GitSurvey 2010)
-Date: Thu, 3 Feb 2011 11:39:09 -0600
-Message-ID: <20110203173835.GC30341@elie>
-References: <AANLkTi=gf9_618iojpYJgN_msAe-FBq-Jao=sj76VQak@mail.gmail.com>
- <20110129231310.GA11088@burratino>
- <201102011451.17456.jnareb@gmail.com>
- <AANLkTinPAL2rEUMe-tRGFxSQ0-gfAJvSO7WW+f+2Fd2u@mail.gmail.com>
- <AANLkTi=_DPSp2P3MuFOPgua2nH7U+RUt4AfAHSyPVv-G@mail.gmail.com>
- <AANLkTi=KUpYJBRMp9ti0h+g6a0iTw4D113rTgfTpR8C4@mail.gmail.com>
- <alpine.LFD.2.00.1102011647000.8580@xanadu.home>
- <FE2BDD68-9CFA-4CBB-9F66-32BE6CF3E174@adacore.com>
+From: Jeff King <peff@peff.net>
+Subject: Re: moving to a git-backed wiki
+Date: Thu, 3 Feb 2011 12:45:18 -0500
+Message-ID: <20110203174518.GA14871@sigill.intra.peff.net>
+References: <7vwrll57ha.fsf@alter.siamese.dyndns.org>
+ <7vsjw957fq.fsf_-_@alter.siamese.dyndns.org>
+ <7vzkqg4x2h.fsf_-_@alter.siamese.dyndns.org>
+ <20110131225529.GC14419@sigill.intra.peff.net>
+ <AANLkTimHCp_JKUw1keJoA4zD_q7Sci+rOwPeAs_T=7xH@mail.gmail.com>
+ <20110201201144.GA16003@sigill.intra.peff.net>
+ <AANLkTikfzzELUaN3B+20rh9D51St8mUYs4p-WYjp8JVV@mail.gmail.com>
+ <4D488DCD.3080305@eaglescrag.net>
+ <4D4929F4.3020805@snarc.org>
+ <4D4A11D7.4040103@eaglescrag.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Shawn Pearce <spearce@spearce.org>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>,
-	"Dmitry S. Kravtsov" <idkravitz@gmail.com>, git@vger.kernel.org
-To: Geert Bosch <bosch@adacore.com>
-X-From: git-owner@vger.kernel.org Thu Feb 03 18:39:40 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Vincent Hanquez <tab@snarc.org>,
+	Jay Soffian <jaysoffian@gmail.com>,
+	Scott Chacon <schacon@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: "J.H." <warthog19@eaglescrag.net>
+X-From: git-owner@vger.kernel.org Thu Feb 03 18:45:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pl39e-0002Se-Jr
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 18:39:39 +0100
+	id 1Pl3FL-00069M-FL
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 18:45:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756663Ab1BCRjY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Feb 2011 12:39:24 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:48910 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756441Ab1BCRjX (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Feb 2011 12:39:23 -0500
-Received: by fxm20 with SMTP id 20so1456890fxm.19
-        for <git@vger.kernel.org>; Thu, 03 Feb 2011 09:39:22 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=CJhHFrAIV5IPbjMnKO8l0ikOmruYAyfhIwswuj14sBk=;
-        b=J8PkQC3zF9OkKgb1UGEZgGS5Uj1w1QdJIzEXRTar9aRDtOkMKfH9LmcevqtDwJOOwt
-         02AiJmccBQZd1YlpYdeBgWZPJcBg6ZKDLkLEup5zxkNCZLjE3sU2TtB1nOAiSyBpZ2Yn
-         PxenqB/3i6P3kS8aCDbPov3kaooEhA2UxGvFU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=dRxQnOLR8Osqo/4d4CTHFHm5oewuoi3jAP1Z8dUvGABtaqpwGnxwk6NazDhk0YaYUQ
-         wdDgqCS1xCgEDaH2emhzaEtV7OVfm/q5xDzROSiIN4Ge8ZN/ihIQQkq3kmpM6QUHh90n
-         eucptxNfket4rahmSjELExzbIKIsEQtSznEQM=
-Received: by 10.223.98.200 with SMTP id r8mr3045745fan.30.1296754762280;
-        Thu, 03 Feb 2011 09:39:22 -0800 (PST)
-Received: from elie (adsl-76-206-235-233.dsl.chcgil.sbcglobal.net [76.206.235.233])
-        by mx.google.com with ESMTPS id 5sm392993fak.47.2011.02.03.09.39.13
-        (version=SSLv3 cipher=RC4-MD5);
-        Thu, 03 Feb 2011 09:39:16 -0800 (PST)
+	id S1756662Ab1BCRp0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 3 Feb 2011 12:45:26 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:43276 "EHLO peff.net"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1756441Ab1BCRpW (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 3 Feb 2011 12:45:22 -0500
+Received: (qmail 2401 invoked by uid 111); 3 Feb 2011 17:45:21 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 03 Feb 2011 17:45:21 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 03 Feb 2011 12:45:18 -0500
 Content-Disposition: inline
-In-Reply-To: <FE2BDD68-9CFA-4CBB-9F66-32BE6CF3E174@adacore.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <4D4A11D7.4040103@eaglescrag.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165985>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165986>
 
-Geert Bosch wrote:
+On Wed, Feb 02, 2011 at 06:24:23PM -0800, J.H. wrote:
 
-> These narrow clones are especially important for imports of unwieldy
-> svn repositories where there is a large amount of unstructured
-> branching.
+> On 02/02/2011 01:55 AM, Vincent Hanquez wrote:
+> >  On 01/02/11 22:48, J.H. wrote:
+> >> The wiki will almost universally have a "central site" no matter what
+> >> the backend.  Personally I see little advantage to having a git backed
+> >> wiki myself.
+> > with git based wiki, you can clone the whole wiki on your local machine,
+> > and read/edit/commit on it locally using standard editor tool (i.e.
+> > $EDITOR). and the history/revision/diff is completely built-in.
+> 
+> That would be fine for things like source code or documentation, but you
+> end up with a single person who would need to merge / push things to a
+> central location, a-la git.wiki.kernel.org.  You are now taking
+> something, that is already editable by anyone, and making it only
+> editable by a single person.
 
-Wouldn't a more careful import be a better solution to that problem?
-Practically speaking, I'd rather work with an enormous svn repo like
-that by using git-svn to extract subsets than with a botched import
-that treats it as one huge (git-managed) project.
+I don't think it makes sense to use the same workflow for the wiki as
+git.git itself uses. The point of having a wiki is to keep the barrier
+to editing extremely low; the point of source code control is to keep
+the quality of contributions high.
 
-svn-all-fast-import, for example, has a fairly simple configuration
-syntax allowing to extract whatever subrepositories are needed.
+But that doesn't mean they can't be accessed by the same tool.
+
+Forget about a git-backed wiki for a moment, and imagine a regular old
+Mediawiki. What are the operations you can perform? You can look at
+the current or any past version of a page, you can do diffs between
+versions of pages, and you can create a new version of a page. All
+through some CGI forms.
+
+So what stops us from replacing the CGI interface with a git one (or
+adding it alongside)? Given the ability to retrieve current and past
+versions of all pages, I could surely build a git repository of the
+whole wiki (and update it incrementally as new edits were made).  And
+pushing a set of commits is just a sequential series of page edits, no?
+
+And I think that would be enough for the purposes of this discussion.
+Most of us don't really care if git is the ultimate storage mechanism. I
+could even build the git interface as a purely client thing on top of
+the CGI interface; the problem is that scraping the wiki pages for new
+versions over the net would be horribly inefficient.
+
+But the point is that accessing the wiki via git is not about changing
+the wiki workflow. It's about providing a richer set of tools for doing
+those page views, diffs, and edits.
+
+Getting back to git as the actual backend:
+
+> You also have a scalability problem.  Git is *VERY* memory and i/o
+> intensive.  While you basically have a cache of data that is static (the
+> basic pages you are viewing) things like the history, edits, etc can be
+> quite expensive to generate.
+
+Sure. But is that any worse than running gitweb, which you already do?
+Or a site like GitHub, which basically is just running git constantly on
+a bunch of repos? Or how much worse is it than running regular wiki
+software? I mean, Foswiki is backed by RCS, for god's sake. Surely git
+is more efficient than that. ;)
+
+If it sounds like I'm handwaving away scalability problems, I am. I'd be
+curious to see some performance numbers for gollum or ikiwiki versus
+more traditional wiki formats.
+
+> Think about a site, we'll use git.wiki.kernel.org, where it's not
+> running on a single machine, but a cluster of machines (how many web
+> infrastructures, including git.wiki.kernel.org run) and now you have a
+> problem of an edit happens and commits on node3, a different conflicting
+> edit happens on node9 and when those try to merge - you get conflicts.
+
+Don't you have the same problem with a regular wiki? Or with stock git
+repos, for that matter? You need database consistency.
+
+-Peff
