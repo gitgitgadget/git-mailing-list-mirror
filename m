@@ -1,72 +1,126 @@
 From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: [PATCH] git-p4 : Small improvement patches
-Date: Thu,  3 Feb 2011 01:01:52 +0000
-Message-ID: <1296694913-7844-1-git-send-email-vitor.hda@gmail.com>
+Subject: [PATCH] git-p4: Improve branch support.
+Date: Thu,  3 Feb 2011 01:01:53 +0000
+Message-ID: <1296694913-7844-2-git-send-email-vitor.hda@gmail.com>
+References: <1296694913-7844-1-git-send-email-vitor.hda@gmail.com>
 Cc: Thomas Berg <merlin66b@gmail.com>,
 	Vitor Antunes <vitor.hda@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 03 02:02:34 2011
+X-From: git-owner@vger.kernel.org Thu Feb 03 02:02:45 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pknai-00062w-5R
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 02:02:32 +0100
+	id 1Pknat-00066V-OY
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 02:02:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755345Ab1BCBC0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Feb 2011 20:02:26 -0500
+	id S1755371Ab1BCBCb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Feb 2011 20:02:31 -0500
 Received: from mail-ww0-f44.google.com ([74.125.82.44]:48957 "EHLO
 	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754474Ab1BCBCZ (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Feb 2011 20:02:25 -0500
-Received: by wwa36 with SMTP id 36so667822wwa.1
-        for <git@vger.kernel.org>; Wed, 02 Feb 2011 17:02:24 -0800 (PST)
+	with ESMTP id S1754474Ab1BCBCa (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Feb 2011 20:02:30 -0500
+Received: by mail-ww0-f44.google.com with SMTP id 36so667822wwa.1
+        for <git@vger.kernel.org>; Wed, 02 Feb 2011 17:02:30 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=vOqtDZSQTa9D+A7BZYNcpcboecVwIRwILCZwz6MOSHw=;
-        b=epkfLdBFdy9mYiNtEMJfTktnWVcu2SQMdZbkt/HGhG/ftUH0svYsDwMFi6ipsx6Y1Y
-         OG4YASq8W7L6dd4GTA4dgDh+si5ZH1cuuE+eyUEdompW4rkx2waE4QC9Wxwlva9JFArB
-         4IG8gNMGk2AoRIZtKe/++gLRZcVATsKIl3dKE=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references;
+        bh=onA/YxzKivbUyuEHkAd1Iq9Jcn6FOgKzSdZcWZEnO8k=;
+        b=YEIVkFdaCsd/qVvTCTyhDkrnwbeQ4UCGVYkJ+h5CNDujKF+z6GDvNoPFw5ASllY7An
+         hxOy77ISfRCDBcYpyxXs8Lp98eDKxa085jZiOYC9cJHk7BZEng71NYjKcaTF+nfDK/UZ
+         jqs7ow0qt1HGf6/d5RDG53J0t22VX/DV27VHA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=htcD0T8bi040wzUrXvl8FIwOMeSxm25YkWnvKqAuBkEyEw+2+Uui7kY6FowRTw4suf
-         fp8F20508nXNQWUdJVRO86rkqao80f3Qf7+2vyurc1eRtt/UJAhnc5jBaalEoflMjiM0
-         l5If/nm3edlCsqjMCxdrUF/qICAvdyi7jXsPU=
-Received: by 10.227.183.203 with SMTP id ch11mr9925285wbb.214.1296694944130;
-        Wed, 02 Feb 2011 17:02:24 -0800 (PST)
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=jbqjfTUPHjzNu3EEUsxgYJcvgx8BG2QURgWBQ89Up4ddX2H/AQqWKpNJtKSo6pYXx6
+         LS5jkB1113YicvAZUICEDeTSzMglKwiaSdbvmQeY5blpAVtzws4irwojy0FRitdbT6aS
+         Ss93IJczgBlOnoNLmhLwtaXhXDj5/tGpXH/ww=
+Received: by 10.227.144.200 with SMTP id a8mr9949015wbv.217.1296694950046;
+        Wed, 02 Feb 2011 17:02:30 -0800 (PST)
 Received: from localhost.localdomain (111.216.54.77.rev.vodafone.pt [77.54.216.111])
-        by mx.google.com with ESMTPS id f35sm171094wbf.20.2011.02.02.17.02.21
+        by mx.google.com with ESMTPS id f35sm171094wbf.20.2011.02.02.17.02.28
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 02 Feb 2011 17:02:22 -0800 (PST)
+        Wed, 02 Feb 2011 17:02:29 -0800 (PST)
 X-Mailer: git-send-email 1.7.2.3
+In-Reply-To: <1296694913-7844-1-git-send-email-vitor.hda@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165944>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165945>
 
-This patch finishes all the changes that I've done to git-p4 script and that
-I've been using in my daily work. Although most of the changes are trivial, it
-would be nice if someone could test these updates and provide feedback.
+Add new config option branchUser to allow filtering P4 branch list by user.
+Allow defining the branch list through branchList config option.
+Correct base branch directory detection to use '/' as the split character.
 
-The script, as it is, still has one limitation: when it detects a new branch it
-will base it on the last commit of the origin branch. This may not be true,
-because the branch may have been created from an old change list. My idea would
-be to find a commit to which the new branch would have a null diff... but I
-don't know what would be the best way to do something like this through git
-commands. Suggestions are welcome on this point :)
-
-Thank in advance,
-Vitor
-
-Vitor Antunes (1):
-  git-p4: Improve branch support.
-
+Signed-off-by: Vitor Antunes <vitor.hda@gmail.com>
+---
  contrib/fast-import/git-p4 |   27 +++++++++++++++++++++++----
  1 files changed, 23 insertions(+), 4 deletions(-)
 
+diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+index 9b67ae2..af1ba43 100755
+--- a/contrib/fast-import/git-p4
++++ b/contrib/fast-import/git-p4
+@@ -338,6 +338,11 @@ def gitConfig(key):
+         _gitConfig[key] = read_pipe("git config %s" % key, ignore_error=True).strip()
+     return _gitConfig[key]
+ 
++def gitConfigList(key):
++    if not _gitConfig.has_key(key):
++        _gitConfig[key] = read_pipe("git config --get-all %s" % key, ignore_error=True).strip().split(os.linesep)
++    return _gitConfig[key]
++
+ def p4BranchesInGit(branchesAreInRemotes = True):
+     branches = {}
+ 
+@@ -1253,7 +1258,13 @@ class P4Sync(Command):
+     def getBranchMapping(self):
+         lostAndFoundBranches = set()
+ 
+-        for info in p4CmdList("branches"):
++        user = gitConfig("git-p4.branchUser")
++        if len(user) > 0:
++            command = "branches -u %s" % user
++        else:
++            command = "branches"
++
++        for info in p4CmdList(command):
+             details = p4Cmd("branch -o %s" % info["branch"])
+             viewIdx = 0
+             while details.has_key("View%s" % viewIdx):
+@@ -1286,6 +1297,12 @@ class P4Sync(Command):
+         for branch in lostAndFoundBranches:
+             self.knownBranches[branch] = branch
+ 
++        configBranches = gitConfigList("git-p4.branchList")
++        for branch in configBranches:
++            if branch:
++                (source, destination) = branch.split(":")
++                self.knownBranches[destination] = source
++
+     def getBranchMappingFromGitBranches(self):
+         branches = p4BranchesInGit(self.importIntoRemotes)
+         for branch in branches.keys():
+@@ -1581,12 +1598,14 @@ class P4Sync(Command):
+                     else:
+                         paths = []
+                         for (prev, cur) in zip(self.previousDepotPaths, depotPaths):
+-                            for i in range(0, min(len(cur), len(prev))):
+-                                if cur[i] <> prev[i]:
++                            prev_list = prev.split("/")
++                            cur_list = cur.split("/")
++                            for i in range(0, min(len(cur_list), len(prev_list))):
++                                if cur_list[i] <> prev_list[i]:
+                                     i = i - 1
+                                     break
+ 
+-                            paths.append (cur[:i + 1])
++                            paths.append ("/".join(cur_list[:i + 1]))
+ 
+                         self.previousDepotPaths = paths
+ 
 -- 
 1.7.2.3
