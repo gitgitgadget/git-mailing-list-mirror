@@ -1,78 +1,75 @@
-From: Sam Vilain <sam@vilain.net>
-Subject: Re: [1.8.0] 't/' is standard name for directory with tests
-Date: Thu, 03 Feb 2011 12:55:46 +1300
-Message-ID: <4D49EF02.1050201@vilain.net>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1101311459000.8580@xanadu.home> <m3d3ncag7r.fsf_-_@localhost.localdomain> <alpine.LFD.2.00.1101311728180.8580@xanadu.home> <AANLkTi=uOhgnKxRpA0Vm2uSe+uznPwjRB-=2e81VTf-f@mail.gmail.com> <alpine.LFD.2.00.1101311930280.8580@xanadu.home> <7v4o8o4kt7.fsf@alter.siamese.dyndns.org>
+From: Sitaram Chamarty <sitaramc@gmail.com>
+Subject: Re: [PATCH] post-receive-email: suppress error if description file missing
+Date: Thu, 3 Feb 2011 06:30:32 +0530
+Message-ID: <20110203010032.GA30329@atcmail.atc.tcs.com>
+References: <20110202174242.GA12470@atcmail.atc.tcs.com> <7vbp2uxozo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Nicolas Pitre <nico@fluxnic.net>,
-	Alex Budovski <abudovski@gmail.com>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=us-ascii
+Cc: Ralf Hemmecke <hemmecke@gmail.com>, git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 03 00:56:00 2011
+X-From: git-owner@vger.kernel.org Thu Feb 03 02:01:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PkmYG-0004vc-Rr
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 00:55:57 +0100
+	id 1PknZM-0005d4-Ec
+	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 02:01:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755405Ab1BBXzv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 2 Feb 2011 18:55:51 -0500
-Received: from mx6.orcon.net.nz ([219.88.242.56]:35975 "EHLO mx6.orcon.net.nz"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754475Ab1BBXzu (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 2 Feb 2011 18:55:50 -0500
-Received: from Debian-exim by mx6.orcon.net.nz with local (Exim 4.69)
-	(envelope-from <sam@vilain.net>)
-	id 1PkmY8-0007lA-UI
-	for git@vger.kernel.org; Thu, 03 Feb 2011 12:55:49 +1300
-Received: from [60.234.254.246] (helo=mail.utsl.gen.nz)
-	by mx6.orcon.net.nz with esmtp (Exim 4.69)
-	(envelope-from <sam@vilain.net>)
-	id 1PkmY8-0007kp-Kd
-	for git@vger.kernel.org; Thu, 03 Feb 2011 12:55:48 +1300
-Received: by mail.utsl.gen.nz (Postfix, from userid 1004)
-	id 806BD2E023; Thu,  3 Feb 2011 12:55:48 +1300 (NZDT)
-X-Spam-Checker-Version: SpamAssassin 3.3.1 (2010-03-16) on naos.lan
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=5.0 tests=ALL_TRUSTED,BAYES_00
-	autolearn=unavailable version=3.3.1
-Received: from [192.168.1.54] (arcturus.lan [192.168.1.54])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.utsl.gen.nz (Postfix) with ESMTPSA id 7838A2E021;
-	Thu,  3 Feb 2011 12:55:46 +1300 (NZDT)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.12) Gecko/20101027 Thunderbird/3.1.6
-In-Reply-To: <7v4o8o4kt7.fsf@alter.siamese.dyndns.org>
-X-Enigmail-Version: 1.1.2
-X-DSPAM-Check: by mx6.orcon.net.nz on Thu, 03 Feb 2011 12:55:48 +1300
-X-DSPAM-Result: Innocent
-X-DSPAM-Processed: Thu Feb  3 12:55:48 2011
-X-DSPAM-Confidence: 0.5406
-X-DSPAM-Probability: 0.0000
+	id S1755319Ab1BCBBA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 2 Feb 2011 20:01:00 -0500
+Received: from atcmail.atc.tcs.co.in ([203.200.212.145]:32825 "EHLO
+	atcmail.atc.tcs.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754474Ab1BCBBA (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 2 Feb 2011 20:01:00 -0500
+Received: from atcmail.atc.tcs.com (atcmail.atc.tcs.com [127.0.0.1])
+	by atcmail.atc.tcs.com (8.13.8/8.13.8) with ESMTP id p1310dYC030915;
+	Thu, 3 Feb 2011 06:30:39 +0530
+Received: (from sitaram@localhost)
+	by atcmail.atc.tcs.com (8.13.8/8.13.8/Submit) id p1310WRJ030904;
+	Thu, 3 Feb 2011 06:30:32 +0530
+Content-Disposition: inline
+In-Reply-To: <7vbp2uxozo.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.4.2.2i
+X-Spam-Status: No, score=-4.4 required=5.0 tests=ALL_TRUSTED,AWL,BAYES_00
+	autolearn=ham version=3.2.5
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on atcmail.atc.tcs.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165942>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/165943>
 
-On 01/02/11 14:15, Junio C Hamano wrote:
-> I am fine with "tests/", by the way.
+Signed-off-by: Sitaram Chamarty <sitaramc@gmail.com>
+---
 
-FWIW, CCAN and Rubygems both use plain "test".
+On Wed, Feb 02, 2011 at 10:36:43AM -0800, Junio C Hamano wrote:
 
-"t/" is a long standing convention for many projects, dating back to at
-least 1987 with Perl 1.0.  As far as I know it was unusual at the time
-for being a very test-driven development and inventing the TAP (Test
-Anything Protocol).  It is something of a mark of respect to the
-heritage of TDD to have it there, but that doesn't mean that "test"
-might be better for the project now.
+> I suspect that you would want to have the redirection outside the dq pair,
+> but other than that, well spotted.
 
-I'd also think about removing the "t" from the front of all the test
-script names, those are a PITA :-).  And possibly allowing the scripts
-to be broken into subdirectories.
+doh!  Thanks for catching the stupid error -- I shouldn't attempt even a
+simple patch when half-asleep I guess :)
 
-Sam
+> You forgot to sign-off, though ;-)
+
+done!
+
+ contrib/hooks/post-receive-email |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/contrib/hooks/post-receive-email b/contrib/hooks/post-receive-email
+index f99ea95..21989fc 100755
+--- a/contrib/hooks/post-receive-email
++++ b/contrib/hooks/post-receive-email
+@@ -709,7 +709,7 @@ if [ -z "$GIT_DIR" ]; then
+ 	exit 1
+ fi
+ 
+-projectdesc=$(sed -ne '1p' "$GIT_DIR/description")
++projectdesc=$(sed -ne '1p' "$GIT_DIR/description" 2>/dev/null)
+ # Check if the description is unchanged from it's default, and shorten it to
+ # a more manageable length if it is
+ if expr "$projectdesc" : "Unnamed repository.*$" >/dev/null
+-- 
+1.7.3.4
