@@ -1,109 +1,148 @@
-From: Drew Northup <drew.northup@maine.edu>
-Subject: Re: [1.8.0] Re: reorganize the mess that the source tree has become
-Date: Fri, 04 Feb 2011 17:47:40 -0500
-Message-ID: <1296859660.1255.49.camel@drew-northup.unet.maine.edu>
-References: <20110202022909.30644.qmail@science.horizon.com>
-	 <alpine.LFD.2.00.1102030036420.12104@xanadu.home>
-	 <AANLkTimnMDuAX-Ctc5K3mt=b2bz2FTsb_P7Fs8RzVwpd@mail.gmail.com>
-	 <AANLkTikhPRGZ9DxCWbWvBiac_DYiXYsnEdHVOnbHUdU4@mail.gmail.com>
-	 <87bp2sy2mf.fsf@catnip.gol.com>  <20110204181550.GA14173@vidovic>
-Mime-Version: 1.0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
-Cc: Miles Bader <miles@gnu.org>,
-	Hilco Wijbenga <hilco.wijbenga@gmail.com>, git@vger.kernel.org,
-	Nicolas Pitre <nico@fluxnic.net>,
-	George Spelvin <linux@horizon.com>,
-	Eugene Sajine <euguess@gmail.com>
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>
-X-From: git-owner@vger.kernel.org Fri Feb 04 23:50:03 2011
+From: Jared Hance <jaredhance@gmail.com>
+Subject: [PATCH/RFC] Add support for merging from upstream by default.
+Date: Fri,  4 Feb 2011 18:01:19 -0500
+Message-ID: <1296860479-17517-1-git-send-email-jaredhance@gmail.com>
+References: <7vsjw957fq.fsf_-_@alter.siamese.dyndns.org>
+Cc: Jared Hance <jaredhance@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 05 00:01:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PlUTZ-0003jJ-NN
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 23:50:02 +0100
+	id 1PlUes-0001LA-UR
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 00:01:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752075Ab1BDWty (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Feb 2011 17:49:54 -0500
-Received: from basalt.its.maine.edu ([130.111.32.66]:59575 "EHLO
-	basalt.its.maine.edu" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751911Ab1BDWty (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Feb 2011 17:49:54 -0500
-Received: from [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e] (drew-northup.unet.maine.edu [IPv6:2610:48:100:827:211:43ff:fe9f:cb7e])
-	by basalt.its.maine.edu (8.13.8/8.13.8) with ESMTP id p14MlkPc023817
-	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
-	Fri, 4 Feb 2011 17:47:51 -0500
-In-Reply-To: <20110204181550.GA14173@vidovic>
-X-Mailer: Evolution 2.12.3 (2.12.3-8.el5_2.3) 
-X-DCC-UniversityOfMaineSystem-Metrics: basalt.its.maine.edu 1003; Body=7
-	Fuz1=7 Fuz2=7
-X-MailScanner-Information: Please contact the ISP for more information
-X-UmaineSystem-MailScanner-ID: p14MlkPc023817
-X-MailScanner: Found to be clean
-X-MailScanner-From: drew.northup@maine.edu
-X-UmaineSystem-MailScanner-Watermark: 1297464536.32092@o5Xi8cf//uzqDgQgL7DKPA
+	id S1752641Ab1BDXBh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Feb 2011 18:01:37 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:36154 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752479Ab1BDXBg (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Feb 2011 18:01:36 -0500
+Received: by vws16 with SMTP id 16so1814489vws.19
+        for <git@vger.kernel.org>; Fri, 04 Feb 2011 15:01:35 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references;
+        bh=98rG6LVTka1s+OFenuLnwgzcLACVSSKl44XvrpdZJR8=;
+        b=Bo+n8a7J4CaQxfITjWx0lqSVT4zTXVGjOWRLLbK0G2EP3CRXdImbHxess0r2uqUIi/
+         rocXU5k3YVIDOABoe9Hsq0FhgjqyN77nxLYLENNqDHQ3+aKtUPkRpJA+qEOQcGc8VcRM
+         7KbOv36tkyONN+A8GPNorWIev6EYaLDRCEOXU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=iWjyg4qwP9niPdgEL+94y2OLhLLfcEdQmzq/IrFU5mqV/cH2MVlRjKBqm/QcuOS1D7
+         330oBZPxMXvwdRfxG31sYbVSPONawLBsryFLRDDXwJhsHhtM+k/3IntyH92OI+6Pj43m
+         3b1/hxRD9tF8/YpOUIr+ZbX4x8NPk8T3+jpaQ=
+Received: by 10.220.186.66 with SMTP id cr2mr3212532vcb.65.1296860495370;
+        Fri, 04 Feb 2011 15:01:35 -0800 (PST)
+Received: from localhost.localdomain (cpe-75-186-7-248.cinci.res.rr.com [75.186.7.248])
+        by mx.google.com with ESMTPS id i1sm929113vby.1.2011.02.04.15.01.34
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 04 Feb 2011 15:01:34 -0800 (PST)
+X-Mailer: git-send-email 1.7.4
+In-Reply-To: <7vsjw957fq.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166063>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166064>
 
+Adds the option merge.defaultupstream to add support for merging from the
+upstream branch by default. The upstream branch is found using
+branch.[name].upstream.
+---
 
-On Fri, 2011-02-04 at 19:15 +0100, Nicolas Sebrecht wrote:
-> The 04/02/11, Miles Bader wrote:
-> > Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
-> > > Quite frankly, I'm surprised there are (presumably experienced)
-> > > developers who do not immediately see the value of a little
-> > > organization. Surely, given the use of code conventions, formatting
-> > > rules, etcetera, the obvious one step further is to also organize
-> > > where the files go?
-> > 
-> > I think one of the problems is that what's been suggested seems like
-> > window-dressing.  Moving everything into src/ and calling it "organized"
-> > doesn't actually accomplish much other than perhaps making the README
-> > file more visible to newbs; things are _still_ a mess, just a mess with
-> > four more letters...
-> 
-> So it would be an ordered mess, at least. The current amount of files in
-> the root directory do make things harder for people not already familiar
-> with the content. FMHO, moving the source files into a subdirectory
-> could be only a first step to the good direction.
+This is just testing code; it works but I'm not yet sure if it breaks other
+things. I tried to code it so it doesn't.
 
-Nicolas,
-Having once upon a time (in CVS days) taken over a project that was
-neatly organized into tons of folders I can say that more folders is not
-always better.
-If you are organizing things into modules by folders, and those things
-are mutually exclusive pre-compilation then doing so may make sense. If
-the folders ADD value to the project by adding organization--as opposed
-to hiding disorganization--then they may have value.
->From my meager hacking thus far (working on making utf-16 a more
-user-friendly experience out-of-the-box) I have found that none of this
-is true (thus far) with the git codebase. In fact the one thing that
-would have been useful is more in-code--and/or separate
-API-ish--documentation (it took me waaaay too long to figure out how git
-add, aka git-add, works), but I am too much of a realist to expect that
-to change much. I most certainly DO NOT recommend that a mess of patches
-be submitted to Junio to fix it (document what you are working on as you
-see fit; I work on too many things to not document fairly extensively).
-I approach codebase reorganization the same way. I have seen the
-destructive things it can do to a project when it becomes an end unto
-itself separate from the primary focus. In fact, what killed that first
-project I mentioned was an argument about something that was not part of
-the primary purpose of the project which exploded with a fury resembling
-a religious confrontation. I do not want to see that happen to Git. I
-didn't want to see that project die either, but when you exasperate
-enough of the core developers that's what happens. 
+Note: First time using git send-email; I hope I set it up correctly with the
+In-reply-to and Cc's and such.
 
-(My first job as project leader was to get it off of our CVS host, the
-second was to find it a nice grave over at nongnu.org. I never did get
-CVS import to work. I never did convince any of the core developers that
-it was still worth working on.)
+ builtin/merge.c |   41 +++++++++++++++++++++++++++++++++++------
+ 1 files changed, 35 insertions(+), 6 deletions(-)
 
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 42fff38..a69b69f 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -37,6 +37,7 @@ struct strategy {
+ };
+ 
+ static const char * const builtin_merge_usage[] = {
++        "git merge",
+ 	"git merge [options] <remote>...",
+ 	"git merge [options] <msg> HEAD <remote>",
+ 	NULL
+@@ -58,6 +59,8 @@ static int option_renormalize;
+ static int verbosity;
+ static int allow_rerere_auto;
+ static int abort_current_merge;
++static int default_upstream;
++static const char *upstream_branch;
+ 
+ static struct strategy all_strategy[] = {
+ 	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
+@@ -519,8 +522,15 @@ static int git_merge_config(const char *k, const char *v, void *cb)
+ 			      builtin_merge_usage, 0);
+ 		free(buf);
+ 	}
+-
+-	if (!strcmp(k, "merge.diffstat") || !strcmp(k, "merge.stat"))
++        else if(branch && !prefixcmp(k, "branch.") &&
++                !prefixcmp(k + 7, branch) &&
++                !strcmp(k + 7 + strlen(branch), ".upstream")) {
++                return git_config_string(&upstream_branch, k, v);
++        }
++
++        if (!strcmp(k, "merge.defaultupstream"))
++                default_upstream = git_config_bool(k, v);
++        else if (!strcmp(k, "merge.diffstat") || !strcmp(k, "merge.stat"))
+ 		show_diffstat = git_config_bool(k, v);
+ 	else if (!strcmp(k, "pull.twohead"))
+ 		return git_config_string(&pull_twohead, k, v);
+@@ -983,9 +993,28 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	if (!allow_fast_forward && fast_forward_only)
+ 		die("You cannot combine --no-ff with --ff-only.");
+ 
+-	if (!argc)
+-		usage_with_options(builtin_merge_usage,
+-			builtin_merge_options);
++	if (!argc) {
++                if(default_upstream && upstream_branch) {
++		        struct object *o;
++                        struct commit *commit;
++
++                        o = peel_to_type(upstream_branch, 0, NULL, OBJ_COMMIT);
++                        if (!o)
++                            die("%s - not something we can merge", argv[i]);
++                        commit = lookup_commit(o->sha1);
++                        commit->util = (void *)upstream_branch;
++                        remotes = &commit_list_insert(commit, remotes)->next;
++
++                        strbuf_addf(&buf, "GITHEAD_%s", sha1_to_hex(o->sha1));
++                        setenv(buf.buf, upstream_branch, 1);
++                        strbuf_reset(&buf);
++                }
++                else {
++		        usage_with_options(builtin_merge_usage,
++			        builtin_merge_options);
++
++                }
++        }
+ 
+ 	/*
+ 	 * This could be traditional "merge <msg> HEAD <commit>..."  and
+@@ -1048,7 +1077,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
+ 
+-	if (head_invalid || !argc)
++	if (head_invalid || (!argc && !(default_upstream && upstream_branch)))
+ 		usage_with_options(builtin_merge_usage,
+ 			builtin_merge_options);
+ 
 -- 
--Drew Northup
-________________________________________________
-"As opposed to vegetable or mineral error?"
--John Pescatore, SANS NewsBites Vol. 12 Num. 59
+1.7.4
