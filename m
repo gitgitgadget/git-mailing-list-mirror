@@ -1,7 +1,7 @@
 From: Jeff King <peff@peff.net>
 Subject: Re: moving to a git-backed wiki
-Date: Fri, 4 Feb 2011 01:03:06 -0500
-Message-ID: <20110204060306.GA2455@sigill.intra.peff.net>
+Date: Fri, 4 Feb 2011 01:16:22 -0500
+Message-ID: <20110204061622.GB2455@sigill.intra.peff.net>
 References: <7vzkqg4x2h.fsf_-_@alter.siamese.dyndns.org>
  <20110131225529.GC14419@sigill.intra.peff.net>
  <AANLkTimHCp_JKUw1keJoA4zD_q7Sci+rOwPeAs_T=7xH@mail.gmail.com>
@@ -11,89 +11,107 @@ References: <7vzkqg4x2h.fsf_-_@alter.siamese.dyndns.org>
  <4D4929F4.3020805@snarc.org>
  <4D4A11D7.4040103@eaglescrag.net>
  <20110203174518.GA14871@sigill.intra.peff.net>
- <AANLkTikshY8qHoFvghSu8q21j5Unp==Hf583OE2tkNrS@mail.gmail.com>
+ <AANLkTi=qR5xYBg3NKRASuyatnEm1k3fVNc-i5VOwszpM@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: "J.H." <warthog19@eaglescrag.net>, Vincent Hanquez <tab@snarc.org>,
 	Jay Soffian <jaysoffian@gmail.com>,
 	Scott Chacon <schacon@gmail.com>,
 	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 04 07:03:23 2011
+To: Felipe Contreras <felipe.contreras@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 04 07:24:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PlElP-0003yH-2Y
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 07:03:23 +0100
+	id 1PlF5g-00027O-5q
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 07:24:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752073Ab1BDGDP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Feb 2011 01:03:15 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:44797 "EHLO peff.net"
+	id S1752026Ab1BDGQ1 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Feb 2011 01:16:27 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:52617 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751195Ab1BDGDO (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Feb 2011 01:03:14 -0500
-Received: (qmail 5660 invoked by uid 111); 4 Feb 2011 06:03:10 -0000
+	id S1751712Ab1BDGQ0 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Feb 2011 01:16:26 -0500
+Received: (qmail 5711 invoked by uid 111); 4 Feb 2011 06:16:25 -0000
 Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 04 Feb 2011 06:03:10 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Feb 2011 01:03:06 -0500
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 04 Feb 2011 06:16:25 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 04 Feb 2011 01:16:22 -0500
 Content-Disposition: inline
-In-Reply-To: <AANLkTikshY8qHoFvghSu8q21j5Unp==Hf583OE2tkNrS@mail.gmail.com>
+In-Reply-To: <AANLkTi=qR5xYBg3NKRASuyatnEm1k3fVNc-i5VOwszpM@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166022>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166023>
 
-On Thu, Feb 03, 2011 at 08:06:34PM +0100, Sverre Rabbelier wrote:
+On Thu, Feb 03, 2011 at 10:34:38PM +0200, Felipe Contreras wrote:
 
-> On Thu, Feb 3, 2011 at 18:45, Jeff King <peff@peff.net> wrote:
-> > Most of us don't really care if git is the ultimate storage mechanism. I
-> > could even build the git interface as a purely client thing on top of
-> > the CGI interface; the problem is that scraping the wiki pages for new
-> > versions over the net would be horribly inefficient.
+> > Forget about a git-backed wiki for a moment, and imagine a regular old
+> > Mediawiki. What are the operations you can perform? You can look at
+> > the current or any past version of a page, you can do diffs between
+> > versions of pages, and you can create a new version of a page. All
+> > through some CGI forms.
 > 
-> Note that MediaWiki has a stable API that you could use instead :).
+> Howe about these?
 
-The initial import is still pretty painful over the network, but at
-least I know I am getting accurate data from the API now. And I can
-share the git repository, and just use the RecentChanges API to get
-updates.
+I've never really used a wiki in any in-depth way, so be gentle if my
+utter cluelessness about these features shows through.
 
-The result is at:
+> 1) Support for discussion; since changes can be controversial.
 
-  https://github.com/peff/wikitest/wiki
+Doesn't this just happen on special Talk: pages? Couldn't these just be
+pages with special names?
 
-You can see an example of the full history:
+> 2) Support for article move; so everything is kept organized.
 
-  https://github.com/peff/wikitest/wiki/_history
+Isn't that even simpler in a git-backed wiki? You just move the files.
+Obviously you would want to update links, too, and presumably the wiki
+software helps with that. But that is outside the scope of data storage.
+In a git-backed wiki, you would get one atomic commit with the move and
+link updating.
 
-or a page history:
+> 3) Support for "who is linking here". Also helps reorganization.
 
-  https://github.com/peff/wikitest/wiki/GitFaq/_history
+Again, is that a fundamental storage issue? It seems like you could
+implement that easily on top of basic storage with a grep (and some
+caching if you are going to let people do it a lot via the web).
 
-Or download the repository for yourself:
+> 4) Support for categories. Ditto.
 
-  git://github.com/peff/wikitest.wiki.git
+I have no idea how categories work. Special page naming and/or
+directories?
 
-The whole git wiki is about a 4M git repository (and at least some of
-that is spam that's deleted but still in the history).
+> 5) Support for watchlist, e-mail notifications. So that you are
+> up-to-date with the changes.
 
-This is has been a cute exercise, but I'm not sure mirroring it in a
-gollum wiki really makes sense. It's cool that gollum understands
-MediaWiki enough to actually render the pages at all, but there are
-obviously lots of corner cases that it just doesn't get (formatting
-issues, missing images, some redirect naming issues).
+Post-receive hook?
 
-Still, it's useful as a local repo doing diffs. I just wrote the initial
-importer (which I'm happy to share if somebody wants to see some ugly
-code), but to act as a useful client, it still needs:
+> 6) Support for contribution backtracking. So that it's easy to know who's who.
 
-  1. Incremental updating from the RecentChanges API.
+git log? git blame? :)
 
-  2. Push support (or more likely something similar to "git svn
-     dcommit") to push edits back.
+> 7) Personal wiki pages (with discussion). So you can put information
+> about yourself, and general notes.
+
+Specially named pages for people?
+
+
+Obviously I'm just filling in these features off the top of my head.
+MediaWiki is a mature system, and I doubt that either ikiwiki or gollum
+has nearly the same featureset. But that was never my point. In the bit
+you quoted, my point was that a git-interface to a wiki was useful and
+feasible. And I stand by that.
+
+Even with just the basic functionality of fetch/diff/push, that still
+makes it a useful interface into an existing wiki for a large number of
+users who just want to do simple stuff (or power users who happen to be
+doing simple stuff at the moment).
+
+I also happen to think you could put all of those features into a
+git-backed wiki, and build the web features on _top_ of git access. But
+I'm not volunteering to work on that.
 
 -Peff
