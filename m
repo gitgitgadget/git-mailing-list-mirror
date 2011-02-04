@@ -1,111 +1,83 @@
-From: Jakub Narebski <jnareb@gmail.com>
+From: Erik Faye-Lund <kusmabite@gmail.com>
 Subject: Re: [1.8.0] reorganize the mess that the source tree has become
-Date: Fri, 04 Feb 2011 02:49:32 -0800 (PST)
-Message-ID: <m3r5bo848w.fsf@localhost.localdomain>
+Date: Fri, 4 Feb 2011 12:17:50 +0100
+Message-ID: <AANLkTinFHs=sgcPSAdPMrCORpzTO7no-6CqUi_9AFzXQ@mail.gmail.com>
 References: <20110202022909.30644.qmail@science.horizon.com>
-	<alpine.LFD.2.00.1102030036420.12104@xanadu.home>
-	<AANLkTimnMDuAX-Ctc5K3mt=b2bz2FTsb_P7Fs8RzVwpd@mail.gmail.com>
-	<AANLkTikhPRGZ9DxCWbWvBiac_DYiXYsnEdHVOnbHUdU4@mail.gmail.com>
-	<87bp2sy2mf.fsf@catnip.gol.com>
-	<AANLkTinQ13b9c1=SmMSC5ThjXcsSuMO2irwW04E+K=xY@mail.gmail.com>
+ <alpine.LFD.2.00.1102030036420.12104@xanadu.home> <AANLkTimnMDuAX-Ctc5K3mt=b2bz2FTsb_P7Fs8RzVwpd@mail.gmail.com>
+ <AANLkTikhPRGZ9DxCWbWvBiac_DYiXYsnEdHVOnbHUdU4@mail.gmail.com> <87bp2sy2mf.fsf@catnip.gol.com>
+Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-15
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Miles Bader <miles@gnu.org>,
-	Hilco Wijbenga <hilco.wijbenga@gmail.com>, git@vger.kernel.org,
+Cc: Hilco Wijbenga <hilco.wijbenga@gmail.com>, git@vger.kernel.org,
 	Nicolas Pitre <nico@fluxnic.net>,
 	George Spelvin <linux@horizon.com>,
 	Eugene Sajine <euguess@gmail.com>
-To: Tor Arntsen <tor@spacetec.no>
-X-From: git-owner@vger.kernel.org Fri Feb 04 11:50:03 2011
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Fri Feb 04 12:18:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PlJEo-00077W-QJ
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 11:50:03 +0100
+	id 1PlJgA-0006Rf-3m
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 12:18:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751948Ab1BDKtj convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Feb 2011 05:49:39 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:43377 "EHLO
+	id S1751700Ab1BDLSM convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Feb 2011 06:18:12 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:56452 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751600Ab1BDKte convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Feb 2011 05:49:34 -0500
-Received: by fxm20 with SMTP id 20so2249818fxm.19
-        for <git@vger.kernel.org>; Fri, 04 Feb 2011 02:49:33 -0800 (PST)
+	with ESMTP id S1751548Ab1BDLSL convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Feb 2011 06:18:11 -0500
+Received: by fxm20 with SMTP id 20so2277583fxm.19
+        for <git@vger.kernel.org>; Fri, 04 Feb 2011 03:18:10 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type:content-transfer-encoding;
-        bh=S924GDrPZkkFJN61KdnGIdOLDzuh/wyi1m0xkiWyL4c=;
-        b=RNpl6exqVW2ym5N2dJAfSlUskitDRKaGd+QfRRQgnD93/1luwuyuw7feOquBQIqC0p
-         E5Atv5ApG3UNnrqpVh7YLOk5FbWsq3sgcZmFNOVfN9UhDlk71uFdBAh7lEXNNVzh1XYY
-         3VipAI091q0c9oMVGojDkqsKveA/zuuV54TkU=
+        h=domainkey-signature:mime-version:reply-to:in-reply-to:references
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=TdFV/WXtKI5uygA0OXlPjtkbyRrLFBeyrVmVgj/j9oc=;
+        b=xBbI6avNtQmdkeCEpW7zDWxwOhEEid60gs3U/s+I30tJF/UfEqS+0mk6GljTwhSN5i
+         QHXce/t9ZYf9zSJqBTa1P0writRSQwv83sAEln6WIF243kKHMKzKBdrxPE3/lcOsK9qz
+         6OlFWd1v3yxB/ON9QGcxpa+1XuQ95VFrW6SZU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=NiufwHcQkdGS4XTl22766+vNApppDyxdkeQGDhmP/WwWIxVoITqz6s5Tj5+Xmbjm6k
-         eEuQZsjbwK3UbuqY/MB0V0uMD/BHGg0+ASXki2gcz6izeKXNBoQX5u8592YezDtQKX+p
-         +0UcFZtqkK3GAwNNSmaeTBmOEBrylmCMu1Iss=
-Received: by 10.223.103.16 with SMTP id i16mr2016095fao.40.1296816573397;
-        Fri, 04 Feb 2011 02:49:33 -0800 (PST)
-Received: from localhost.localdomain (abvp12.neoplus.adsl.tpnet.pl [83.8.213.12])
-        by mx.google.com with ESMTPS id j12sm159358fax.33.2011.02.04.02.49.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 04 Feb 2011 02:49:32 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p14AnLGV002398;
-	Fri, 4 Feb 2011 11:49:31 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p14AmVee002360;
-	Fri, 4 Feb 2011 11:48:31 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <AANLkTinQ13b9c1=SmMSC5ThjXcsSuMO2irwW04E+K=xY@mail.gmail.com>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        h=mime-version:reply-to:in-reply-to:references:from:date:message-id
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=hLXoUUs9qtj6k6VYv9c3uwlT30KSG4PAfODkXvN36rdavZ74Q1HhpI01CVuY2b09Lm
+         dleOXrskYbEhnOuStHp3rIiAq3q5WWjMYH1CLImyeu20Ogu8PHx2Lvfwy40n/txzgaXg
+         2vSLQ1Hi/fjPXwUg3DXl4CBSnFYelwoSoQg6k=
+Received: by 10.223.112.1 with SMTP id u1mr91889fap.109.1296818290141; Fri, 04
+ Feb 2011 03:18:10 -0800 (PST)
+Received: by 10.223.116.210 with HTTP; Fri, 4 Feb 2011 03:17:50 -0800 (PST)
+In-Reply-To: <87bp2sy2mf.fsf@catnip.gol.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166035>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166036>
 
-Tor Arntsen <tor@spacetec.no> writes:
-> On Fri, Feb 4, 2011 at 03:06, Miles Bader <miles@gnu.org> wrote:
-> > Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
->>>
->>> Quite frankly, I'm surprised there are (presumably experienced)
->>> developers who do not immediately see the value of a little
->>> organization. Surely, given the use of code conventions, formatting
->>> rules, etcetera, the obvious one step further is to also organize
->>> where the files go?
->>
->> I think one of the problems is that what's been suggested seems like
->> window-dressing. =A0Moving everything into src/ and calling it "orga=
-nized"
->> doesn't actually accomplish much other than perhaps making the READM=
-E
->> file more visible to newbs; things are _still_ a mess, just a mess w=
-ith
->> four more letters...
->=20
-> What Miles says is my feeling as well. And having a 'bin/' as was sug=
-gested
-> in one post doesn't make much sense to me either - if you want your c=
-ompiled
-> output to go elsewhere than the source directory then the normal way =
-of doing
-> that is to do and out-of-tree build (so if that's not working - I hav=
-e
-> not checked - then that's something which would be worth looking into=
-=2E)
+On Fri, Feb 4, 2011 at 3:06 AM, Miles Bader <miles@gnu.org> wrote:
+> Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
+>> Quite frankly, I'm surprised there are (presumably experienced)
+>> developers who do not immediately see the value of a little
+>> organization. Surely, given the use of code conventions, formatting
+>> rules, etcetera, the obvious one step further is to also organize
+>> where the files go?
+>
+> I think one of the problems is that what's been suggested seems like
+> window-dressing. =A0Moving everything into src/ and calling it "organ=
+ized"
+> doesn't actually accomplish much other than perhaps making the README
+> file more visible to newbs; things are _still_ a mess, just a mess wi=
+th
+> four more letters...
 
-It is about supporting 'srcdir', isn't it?
+=46WIW, I don't quite see what's wrong with "window dressing" here.
+Making those files more visible is a good thing, IMO.
 
-BTW. what about using 'lib/' directory?
---=20
-Jakub Narebski
-Poland
-ShadeHawk on #git
+But I'm not so sure I agree that the rest of the source tree is such a
+mess that everyone makes it out to be. OK, there's a lot of
+source-files on the top-level (which would be the src-level with this
+change), but why is that such a bad thing? And if this is a big deal,
+perhaps moving libgit-sources to a separate folder would help?
