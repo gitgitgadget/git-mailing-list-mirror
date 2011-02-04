@@ -1,87 +1,91 @@
-From: Anders Kaseorg <andersk@ksplice.com>
-Subject: Re: git log --summary outputs extra newlines inconsistently
-Date: Fri, 4 Feb 2011 13:57:29 -0500 (EST)
-Message-ID: <alpine.DEB.2.02.1102041351490.32500@dr-wily.mit.edu>
-References: <alpine.DEB.2.02.1102021842550.12561@dr-wily.mit.edu> <AANLkTinX6igafGkEv+k97Tm+V-8kEJK0rZs-K0iUGyes@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH] git pull: Remove option handling done by fetch
+Date: Fri, 04 Feb 2011 21:17:00 +0100
+Message-ID: <4D4C5EBC.2090100@web.de>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-15
+Content-Transfer-Encoding: 7bit
+Cc: Git Mailing List <git@vger.kernel.org>
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 04 19:57:46 2011
+X-From: git-owner@vger.kernel.org Fri Feb 04 21:17:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PlQqn-00062J-GJ
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 19:57:45 +0100
+	id 1PlS5j-0007aF-0Y
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 21:17:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751339Ab1BDS5e convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Feb 2011 13:57:34 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:54432 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751212Ab1BDS5d convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Feb 2011 13:57:33 -0500
-Received: by vxb37 with SMTP id 37so812096vxb.19
-        for <git@vger.kernel.org>; Fri, 04 Feb 2011 10:57:32 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ksplice.com; s=google;
-        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
-         :message-id:references:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        bh=xCtP7M9FW8+HjLB1EJg0ps0bAFDGfNeeSEGjFAXTons=;
-        b=arI2ljfA2KSmqBWVvyfjdmOidQLdCBUwbPynGU+kj4w5NWhsSnwGDuV7obHIIkhzuR
-         2UhXCV6+og4aKaSgA6u/ZxHp+rcSl2AFMOcUhw9sjt6IZwYJ7B3VicWJNaBWykSAbPmg
-         RX2TkIWFB2iJKRKLdovTAACzOTzUWQXDKFZDQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=ksplice.com; s=google;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type
-         :content-transfer-encoding;
-        b=FcVvQZCL947EhzJdjC/ZFzWaPWTYS/bsFjsSj/0ZqVHpO9faGo09t8VQdin0x469QD
-         S9d5dM3HFOB2p5LqdaMwFga7FoH23geFwSDJKwpn6pBnR3LYLrLoT1UaDUzwjqJHh8is
-         74afpz3LIDhKKJwzA+BwQx2rZYP+i9s9MncHc=
-Received: by 10.220.183.5 with SMTP id ce5mr416145vcb.66.1296845852158;
-        Fri, 04 Feb 2011 10:57:32 -0800 (PST)
-Received: from localhost (DR-WILY.MIT.EDU [18.181.0.233])
-        by mx.google.com with ESMTPS id e18sm775988vbm.15.2011.02.04.10.57.30
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 04 Feb 2011 10:57:31 -0800 (PST)
-X-X-Sender: andersk@dr-wily.mit.edu
-In-Reply-To: <AANLkTinX6igafGkEv+k97Tm+V-8kEJK0rZs-K0iUGyes@mail.gmail.com>
-User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
+	id S1752590Ab1BDURH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Feb 2011 15:17:07 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:60880 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752479Ab1BDURG (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Feb 2011 15:17:06 -0500
+Received: from smtp07.web.de  ( [172.20.5.215])
+	by fmmailgate01.web.de (Postfix) with ESMTP id C8F311875AAED;
+	Fri,  4 Feb 2011 21:17:04 +0100 (CET)
+Received: from [93.240.99.67] (helo=[192.168.178.43])
+	by smtp07.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1PlS5Y-0002EX-00; Fri, 04 Feb 2011 21:17:04 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX1/tkiHSAr+LTmxmAkslrn/IgqhbhExHL6Hg3nqR
+	+UHg3oQeTwER4OK9Wr6xGzCLHOR3L4NZwc7znrn/m2OyDWtPZl
+	385IF3R7mg0dniRU5yOA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166055>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166057>
 
-On Fri, 4 Feb 2011, Junio C Hamano wrote:
-> > =E2=80=98git log --summary=E2=80=99 seems to output a newline after=
- every non-merge
-> > commit.
->=20
-> I suspect you want tformat.
+In commits be254a0ea9 and 7dce19d374 the handling of the new fetch options
+"--[no-]recurse-submodules" had been added to git-pull.sh. This was not
+necessary because all options to "git fetch" are passed to it and handled
+there, so lets remove them.
 
-Same problem.
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
+---
 
-  $ git log --summary --pretty=3Dtformat:'%h %s'
-  3c0eee3 Linux 2.6.37
+I noticed this while implementing the on-demand recursive fetch.
 
-  65f4288 Merge git://git.kernel.org/pub/scm/linux/kernel/git/davem/net=
--2.6
-  9fc3bbb ipv4/route.c: respect prefsrc for local routes
+ git-pull.sh |   10 ++--------
+ 1 files changed, 2 insertions(+), 8 deletions(-)
 
-  8a87694 remove trim_fs method from Documentation/filesystems/Locking
+diff --git a/git-pull.sh b/git-pull.sh
+index eb87f49..20a3bbe 100755
+--- a/git-pull.sh
++++ b/git-pull.sh
+@@ -38,7 +38,7 @@ test -z "$(git ls-files -u)" || die_conflict
+ test -f "$GIT_DIR/MERGE_HEAD" && die_merge
 
-  989d873 Merge master.kernel.org:/home/rmk/linux-2.6-arm
-  d9a1abe arch/mn10300/kernel/irq.c: fix build
+ strategy_args= diffstat= no_commit= squash= no_ff= ff_only=
+-log_arg= verbosity= progress= recurse_submodules=
++log_arg= verbosity= progress=
+ merge_args=
+ curr_branch=$(git symbolic-ref -q HEAD)
+ curr_branch_short="${curr_branch#refs/heads/}"
+@@ -105,12 +105,6 @@ do
+ 	--no-r|--no-re|--no-reb|--no-reba|--no-rebas|--no-rebase)
+ 		rebase=false
+ 		;;
+-	--recurse-submodules)
+-		recurse_submodules=--recurse-submodules
+-		;;
+-	--no-recurse-submodules)
+-		recurse_submodules=--no-recurse-submodules
+-		;;
+ 	--d|--dr|--dry|--dry-|--dry-r|--dry-ru|--dry-run)
+ 		dry_run=--dry-run
+ 		;;
+@@ -223,7 +217,7 @@ test true = "$rebase" && {
+ 	done
+ }
+ orig_head=$(git rev-parse -q --verify HEAD)
+-git fetch $verbosity $progress $dry_run $recurse_submodules --update-head-ok "$@" || exit 1
++git fetch $verbosity $progress $dry_run --update-head-ok "$@" || exit 1
+ test -z "$dry_run" || exit 0
 
-  867c202 ima: fix add LSM rule bug
-
-Also, tformat doesn=E2=80=99t seem to work at all with -z (it gives ide=
-ntical=20
-results with and without -z).
-
-Anders
+ curr_head=$(git rev-parse -q --verify HEAD)
+-- 
+1.7.4.31.g5ae186
