@@ -1,89 +1,86 @@
-From: Tor Arntsen <tor@spacetec.no>
-Subject: Re: [1.8.0] reorganize the mess that the source tree has become
-Date: Fri, 4 Feb 2011 09:30:10 +0100
-Message-ID: <AANLkTinQ13b9c1=SmMSC5ThjXcsSuMO2irwW04E+K=xY@mail.gmail.com>
-References: <20110202022909.30644.qmail@science.horizon.com>
-	<alpine.LFD.2.00.1102030036420.12104@xanadu.home>
-	<AANLkTimnMDuAX-Ctc5K3mt=b2bz2FTsb_P7Fs8RzVwpd@mail.gmail.com>
-	<AANLkTikhPRGZ9DxCWbWvBiac_DYiXYsnEdHVOnbHUdU4@mail.gmail.com>
-	<87bp2sy2mf.fsf@catnip.gol.com>
+From: Johannes Sixt <j.sixt@viscovery.net>
+Subject: [PATCH maint] start_command: flush buffers in the WIN32 code path
+ as well
+Date: Fri, 04 Feb 2011 09:41:58 +0100
+Message-ID: <4D4BBBD6.7010100@viscovery.net>
+References: <1296747105-1663-1-git-send-email-patthoyts@users.sourceforge.net> <1296747105-1663-5-git-send-email-patthoyts@users.sourceforge.net> <201102032108.54811.j6t@kdbg.org> <alpine.DEB.1.00.1102031426110.1541@bonsai2>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Hilco Wijbenga <hilco.wijbenga@gmail.com>, git@vger.kernel.org,
-	Nicolas Pitre <nico@fluxnic.net>,
-	George Spelvin <linux@horizon.com>,
-	Eugene Sajine <euguess@gmail.com>
-To: Miles Bader <miles@gnu.org>
-X-From: git-owner@vger.kernel.org Fri Feb 04 09:30:17 2011
+Content-Transfer-Encoding: 7bit
+Cc: Pat Thoyts <patthoyts@users.sourceforge.net>,
+	msysgit@googlegroups.com, Git Mailing List <git@vger.kernel.org>,
+	Junio C Hamano <gitster@pobox.com>
+To: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+X-From: git-owner@vger.kernel.org Fri Feb 04 09:42:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PlH3Z-0001yH-7f
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 09:30:17 +0100
+	id 1PlHF6-00072L-GW
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 09:42:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752750Ab1BDIaM convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Feb 2011 03:30:12 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:56830 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752429Ab1BDIaL convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Feb 2011 03:30:11 -0500
-Received: by qyk12 with SMTP id 12so1756802qyk.19
-        for <git@vger.kernel.org>; Fri, 04 Feb 2011 00:30:10 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=Z9DRO3R527oUW3uqYDwGuV1sxZUA6kpo7ikK744+w44=;
-        b=nH6XunnMrXYGwapnarlQZte18XfQUi+VhZ7bBJayWMcm/EwORgeRduSKxDnLglM2Xe
-         quLaP4FGjipZelbiazkRmsxw/2eDzKtwFx49AxI8uy0mlzNZ9eoL8zg8l9dUhFprFwVL
-         3ZNcQYoD2m9lEP/BkMDSJDvHpX70nITsXhjBs=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        b=QtISY32H6O9GXJVITSKhGhdRO/Tw5CoLGAPtonz66UKIBmHCBWF5JCspqyElNv0VqO
-         r9lZVRkRub0x/o6JGtOgGJL3Rhi933Ohjyd/7HLUfy8xySsmC2fvYdltn8cBmvCXLHHT
-         m7/YQg2xQQ0FaCfsvX5f2bm0x/RplsO5hRUH4=
-Received: by 10.229.185.210 with SMTP id cp18mr9399901qcb.187.1296808210210;
- Fri, 04 Feb 2011 00:30:10 -0800 (PST)
-Received: by 10.229.100.66 with HTTP; Fri, 4 Feb 2011 00:30:10 -0800 (PST)
-In-Reply-To: <87bp2sy2mf.fsf@catnip.gol.com>
-X-Google-Sender-Auth: g_tibvi-OtQMyTmkoyF5n9s9wCk
+	id S1753012Ab1BDImI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Feb 2011 03:42:08 -0500
+Received: from lilzmailso01.liwest.at ([212.33.55.23]:34243 "EHLO
+	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752777Ab1BDImF (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Feb 2011 03:42:05 -0500
+Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
+	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
+	(envelope-from <j.sixt@viscovery.net>)
+	id 1PlHEt-0002yT-7z; Fri, 04 Feb 2011 09:41:59 +0100
+Received: from [192.168.1.95] (J6T.linz.viscovery [192.168.1.95])
+	by theia.linz.viscovery (Postfix) with ESMTP id 0222F1660F;
+	Fri,  4 Feb 2011 09:41:58 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <alpine.DEB.1.00.1102031426110.1541@bonsai2>
+X-Spam-Score: -1.4 (-)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166025>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166026>
 
-On Fri, Feb 4, 2011 at 03:06, Miles Bader <miles@gnu.org> wrote:
-> Hilco Wijbenga <hilco.wijbenga@gmail.com> writes:
->> Quite frankly, I'm surprised there are (presumably experienced)
->> developers who do not immediately see the value of a little
->> organization. Surely, given the use of code conventions, formatting
->> rules, etcetera, the obvious one step further is to also organize
->> where the files go?
->
-> I think one of the problems is that what's been suggested seems like
-> window-dressing. =A0Moving everything into src/ and calling it "organ=
-ized"
-> doesn't actually accomplish much other than perhaps making the README
-> file more visible to newbs; things are _still_ a mess, just a mess wi=
-th
-> four more letters...
+From: Johannes Sixt <j6t@kdbg.org>
 
-What Miles says is my feeling as well. And having a 'bin/' as was sugge=
-sted
-in one post doesn't make much sense to me either - if you want your com=
-piled
-output to go elsewhere than the source directory then the normal way of=
- doing
-that is to do and out-of-tree build (so if that's not working - I have
-not checked -
-then that's something which would be worth looking into.)
+The POSIX code path did The Right Thing already, but we have to do the same
+on Windows.
 
--Tor
+This bug caused failures in t5526-fetch-submodules, where the output of
+'git fetch --recurse-submodules' was in the wrong order.
+
+Debugged-by: Johannes Schindelin <Johannes.Schindelin@gmx.de>
+Signed-off-by: Johannes Sixt <j6t@kdbg.org>
+---
+Am 2/3/2011 21:26, schrieb Johannes Schindelin:
+> Have you seen my response where I proved that it is a fflush() issue, most 
+> likely with mingw_spawn()?
+
+I think this is the correct fix.
+
+ run-command.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/run-command.c b/run-command.c
+index 2a1041e..f91e446 100644
+--- a/run-command.c
++++ b/run-command.c
+@@ -194,6 +194,7 @@ fail_pipe:
+ 	}
+ 
+ 	trace_argv_printf(cmd->argv, "trace: run_command:");
++	fflush(NULL);
+ 
+ #ifndef WIN32
+ {
+@@ -201,7 +202,6 @@ fail_pipe:
+ 	if (pipe(notify_pipe))
+ 		notify_pipe[0] = notify_pipe[1] = -1;
+ 
+-	fflush(NULL);
+ 	cmd->pid = fork();
+ 	if (!cmd->pid) {
+ 		/*
+-- 
+1.7.4.1253.g00c7
