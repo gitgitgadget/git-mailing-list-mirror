@@ -1,104 +1,111 @@
-From: Johannes Sixt <j6t@kdbg.org>
-Subject: Re: [PATCH] git pull: Remove option handling done by fetch
-Date: Fri, 4 Feb 2011 23:26:07 +0100
-Message-ID: <201102042326.08607.j6t@kdbg.org>
-References: <4D4C5EBC.2090100@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [1.8.0] Provide proper remote ref namespaces
+Date: Fri, 04 Feb 2011 14:39:08 -0800
+Message-ID: <7vpqr7xw4z.fsf@alter.siamese.dyndns.org>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+ <20110201181428.GA6579@sigill.intra.peff.net>
+ <AANLkTimtU56BAnWU-2pY1npdkPdKEBq_CMCGwXUK+E=H@mail.gmail.com>
+ <201102020322.00171.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain;
-  charset="iso-8859-15"
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Fri Feb 04 23:26:37 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Fri Feb 04 23:39:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PlU6t-0008UW-Vc
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 23:26:36 +0100
+	id 1PlUJR-0006bO-DC
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 23:39:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751555Ab1BDW0a (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Feb 2011 17:26:30 -0500
-Received: from bsmtp3.bon.at ([213.33.87.17]:46136 "EHLO lbmfmo03.bon.at"
-	rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-	id S1751098Ab1BDW0a (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Feb 2011 17:26:30 -0500
-Received: from bsmtp.bon.at (unknown [10.232.130.106])
-	by lbmfmo03.bon.at (Postfix) with ESMTP id 082EBCDFC3
-	for <git@vger.kernel.org>; Fri,  4 Feb 2011 23:26:28 +0100 (CET)
-Received: from dx.sixt.local (unknown [93.83.142.38])
-	by bsmtp.bon.at (Postfix) with ESMTP id 9571D1000B;
-	Fri,  4 Feb 2011 23:26:08 +0100 (CET)
-Received: from localhost (localhost [IPv6:::1])
-	by dx.sixt.local (Postfix) with ESMTP id C6A8819F5BF;
-	Fri,  4 Feb 2011 23:26:08 +0100 (CET)
-User-Agent: KMail/1.9.10
-In-Reply-To: <4D4C5EBC.2090100@web.de>
-Content-Disposition: inline
+	id S1752085Ab1BDWj2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Feb 2011 17:39:28 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:46692 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751911Ab1BDWj1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Feb 2011 17:39:27 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A38C94ACB;
+	Fri,  4 Feb 2011 17:40:19 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=6lTEUACbqnwHHyZvRYYrNpW8GPE=; b=jiSwj/
+	hg1vxvZAd++O3p6xX8E4t3eVj3fG5kKhK8S8cPn/3Zm4EACJAjF8+q8IccFssy1L
+	fZ0LKC5XAqfs8lisYMXZL2f3z2SPvoLHqcKbTrhHEDE6wAXFW7tXQGfrmLS1oJxL
+	u3Tw/mzKgNNdQvIH/fAroUemAyVi1q29QhVhE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=hIz/qAgOMuK5pmqB426Mqfc8VeRfG7vr
+	2XRJHGeyXqPGg70+FPrBwGEJ1at2sU9R0yF73WOsHA1+DCSOGpWc9bBH9210geOI
+	xJojOj8ktx9JdTrIig+Qi4dHnCnPPLDBfi1kOGqD6PoD/HlnXhsBU+zolwpt6SlY
+	M8OzDGufbic=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 4148D4ACA;
+	Fri,  4 Feb 2011 17:40:13 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 5119A4AC2; Fri,  4 Feb 2011
+ 17:40:05 -0500 (EST)
+In-Reply-To: <201102020322.00171.johan@herland.net> (Johan Herland's message
+ of "Wed\, 02 Feb 2011 03\:21\:59 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: BAC8DD32-30AF-11E0-869E-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166061>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166062>
 
-On Freitag, 4. Februar 2011, Jens Lehmann wrote:
-> In commits be254a0ea9 and 7dce19d374 the handling of the new fetch options
-> "--[no-]recurse-submodules" had been added to git-pull.sh. This was not
-> necessary because all options to "git fetch" are passed to it and handled
-> there, so lets remove them.
->
-> Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
-> ---
->
-> I noticed this while implementing the on-demand recursive fetch.
->
->  git-pull.sh |   10 ++--------
->  1 files changed, 2 insertions(+), 8 deletions(-)
->
-> diff --git a/git-pull.sh b/git-pull.sh
-> index eb87f49..20a3bbe 100755
-> --- a/git-pull.sh
-> +++ b/git-pull.sh
-> @@ -38,7 +38,7 @@ test -z "$(git ls-files -u)" || die_conflict
->  test -f "$GIT_DIR/MERGE_HEAD" && die_merge
->
->  strategy_args= diffstat= no_commit= squash= no_ff= ff_only=
-> -log_arg= verbosity= progress= recurse_submodules=
-> +log_arg= verbosity= progress=
->  merge_args=
->  curr_branch=$(git symbolic-ref -q HEAD)
->  curr_branch_short="${curr_branch#refs/heads/}"
-> @@ -105,12 +105,6 @@ do
->  	--no-r|--no-re|--no-reb|--no-reba|--no-rebas|--no-rebase)
->  		rebase=false
->  		;;
-> -	--recurse-submodules)
-> -		recurse_submodules=--recurse-submodules
-> -		;;
-> -	--no-recurse-submodules)
-> -		recurse_submodules=--no-recurse-submodules
-> -		;;
->  	--d|--dr|--dry|--dry-|--dry-r|--dry-ru|--dry-run)
->  		dry_run=--dry-run
->  		;;
-> @@ -223,7 +217,7 @@ test true = "$rebase" && {
->  	done
->  }
->  orig_head=$(git rev-parse -q --verify HEAD)
->  -git fetch $verbosity $progress $dry_run $recurse_submodules 
-> --update-head-ok "$@" || exit 1
->> +git fetch $verbosity $progress $dry_run 
-> --update-head-ok "$@" || exit 1 test -z "$dry_run" || exit 0
->
->  curr_head=$(git rev-parse -q --verify HEAD)
+Johan Herland <johan@herland.net> writes:
 
-Huh? What will, for example,
+> - Remote tags are now stored separate from local tags. When looking up a 
+> shorthand tag name (e.g. v1.7.4), we should consult local tags 
+> (refs/tags/v1.7.4) before remote tags (refs/remotes/*/tags/v1.7.4 [1]). See 
+> [2] for more details.
 
-   git pull --recurse-submodules --no-ff origin
+> - Remote heads have moved into refs/remotes/$remote/heads/*, hence 
+> invalidating shorthand remote head names, like "origin/master". We should 
+> change the lookup code, so that a shorthand ref of the form "$remote/$head" 
+> where "$remote" happens to match a configured remote is eventually expanded 
+> into lookup for "refs/remotes/$remote/heads/$head" [3].
 
-do before and after your patch? Doesn't your patch force users to 
-write --[no-]recurse-submodules last?
+Keeping 'origin/next' usable is a _must_, _if_ we were to go this route.
 
--- Hannes
+> - We might want to generalize the handling of "$remote/$head" into allowing 
+> shorthands like "$remote/$tag", "$remote/$replace" and "$remote/$note" as 
+> well (provided, of course, that they match unambiguously).
+>
+> - All fetch refspecs should be given explicitly.
+
+What do you mean by this?
+
+> Sub-proposal: While we are changing the default refspecs, we should also 
+> consider whether we want to keep the auto-following behavior that Git 
+> currently does for tags (don't fetch tags that refer to objects not 
+> otherwise fetched by another refspec). If we simply make an explicit 
+> "+refs/tags/*:refs/remotes/$remote/tags/*" refspec, we will lose the auto-
+> following behavior. If we do want to keep the auto-following behavior, we 
+> could for example add a "~" prefix to the refspec to trigger auto-following 
+> behavior (i.e. this refspec only applies to refs that happen to point at 
+> objects fetched by way of a different refspec). See 
+> http://thread.gmane.org/gmane.comp.version-control.git/160503/focus=160795 
+> for more details.
+
+You seem to envision "auto-follow" to slurp remote tags in remotes/origin/$tag
+namespace.  What should "git fetch --tags $from_there" do?
+
+For some reason, many people seem to be enthused about splitting the tag
+namespace, but I am not sure if that is a good thing in general.  Branches
+are moving pointers for people to flip around in their local repositories,
+and it makes sense to say "My master is a bit ahead of the public one",
+but what would we gain by making it _easier_ to add and exchange many tags
+with the same name (e.g. refs/remotes/*/tags/v1.7.4 vs refs/tags/v1.7.4),
+other than the extra confusion?
+
+While you are talking about drastic reorganization (and rewriting the ref
+code to support it), another possible Sub-proposal we may want to consider
+is to allow "next" and "next/foo" at the same time.
