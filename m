@@ -1,73 +1,87 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: moving to a git-backed wiki
-Date: Thu, 3 Feb 2011 20:06:34 +0100
-Message-ID: <AANLkTikshY8qHoFvghSu8q21j5Unp==Hf583OE2tkNrS@mail.gmail.com>
-References: <7vwrll57ha.fsf@alter.siamese.dyndns.org> <7vsjw957fq.fsf_-_@alter.siamese.dyndns.org>
- <7vzkqg4x2h.fsf_-_@alter.siamese.dyndns.org> <20110131225529.GC14419@sigill.intra.peff.net>
- <AANLkTimHCp_JKUw1keJoA4zD_q7Sci+rOwPeAs_T=7xH@mail.gmail.com>
- <20110201201144.GA16003@sigill.intra.peff.net> <AANLkTikfzzELUaN3B+20rh9D51St8mUYs4p-WYjp8JVV@mail.gmail.com>
- <4D488DCD.3080305@eaglescrag.net> <4D4929F4.3020805@snarc.org>
- <4D4A11D7.4040103@eaglescrag.net> <20110203174518.GA14871@sigill.intra.peff.net>
+From: Anders Kaseorg <andersk@ksplice.com>
+Subject: Re: git log --summary outputs extra newlines inconsistently
+Date: Fri, 4 Feb 2011 13:57:29 -0500 (EST)
+Message-ID: <alpine.DEB.2.02.1102041351490.32500@dr-wily.mit.edu>
+References: <alpine.DEB.2.02.1102021842550.12561@dr-wily.mit.edu> <AANLkTinX6igafGkEv+k97Tm+V-8kEJK0rZs-K0iUGyes@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: "J.H." <warthog19@eaglescrag.net>, Vincent Hanquez <tab@snarc.org>,
-	Jay Soffian <jaysoffian@gmail.com>,
-	Scott Chacon <schacon@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 03 20:07:33 2011
+Content-Type: TEXT/PLAIN; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 04 19:57:46 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pl4We-0004Wv-9B
-	for gcvg-git-2@lo.gmane.org; Thu, 03 Feb 2011 20:07:28 +0100
+	id 1PlQqn-00062J-GJ
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 19:57:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932506Ab1BCTHS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 3 Feb 2011 14:07:18 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:43904 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932430Ab1BCTHR (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 3 Feb 2011 14:07:17 -0500
-Received: by gwj20 with SMTP id 20so608920gwj.19
-        for <git@vger.kernel.org>; Thu, 03 Feb 2011 11:07:16 -0800 (PST)
+	id S1751339Ab1BDS5e convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Feb 2011 13:57:34 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:54432 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751212Ab1BDS5d convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Feb 2011 13:57:33 -0500
+Received: by vxb37 with SMTP id 37so812096vxb.19
+        for <git@vger.kernel.org>; Fri, 04 Feb 2011 10:57:32 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=ra5X4a+seoc2zdsa1GYuMeeYlAU5yIyPhAfLVzhNr3U=;
-        b=WJK3wDDethdHPC5PYrGQTZGn9D9RvK3b+YlflcbzFV8qrSIynu0xULblE8wY8Tv4AP
-         Snp6KUjJoEofLL4padf+K8KLVo8rx/1IgyuH3UxHTxAHIOxmzrL5RTxGld46a4auW1EM
-         PNS2MFdOJG25FpT8hrXosG8tBSnQp63n+X678=
+        d=ksplice.com; s=google;
+        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
+         :message-id:references:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        bh=xCtP7M9FW8+HjLB1EJg0ps0bAFDGfNeeSEGjFAXTons=;
+        b=arI2ljfA2KSmqBWVvyfjdmOidQLdCBUwbPynGU+kj4w5NWhsSnwGDuV7obHIIkhzuR
+         2UhXCV6+og4aKaSgA6u/ZxHp+rcSl2AFMOcUhw9sjt6IZwYJ7B3VicWJNaBWykSAbPmg
+         RX2TkIWFB2iJKRKLdovTAACzOTzUWQXDKFZDQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=uCRv1z7Bmqcv81nzDplC0VbEm3dNsMNoGioQgXOO2R8EeSQkDSWomFAgPoZVo94M6d
-         e+p6I/2qHW/Z1qoQReQ+wQudvhxaieDtKgjDH/x0eywH6TW2i775jffkD8KTqRywQdPG
-         xAiErsc8IzYdkMsm6IUJrx+1BSFdbLUZV9CnI=
-Received: by 10.150.58.2 with SMTP id g2mr8598391yba.397.1296760035993; Thu,
- 03 Feb 2011 11:07:15 -0800 (PST)
-Received: by 10.150.51.6 with HTTP; Thu, 3 Feb 2011 11:06:34 -0800 (PST)
-In-Reply-To: <20110203174518.GA14871@sigill.intra.peff.net>
+        d=ksplice.com; s=google;
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type
+         :content-transfer-encoding;
+        b=FcVvQZCL947EhzJdjC/ZFzWaPWTYS/bsFjsSj/0ZqVHpO9faGo09t8VQdin0x469QD
+         S9d5dM3HFOB2p5LqdaMwFga7FoH23geFwSDJKwpn6pBnR3LYLrLoT1UaDUzwjqJHh8is
+         74afpz3LIDhKKJwzA+BwQx2rZYP+i9s9MncHc=
+Received: by 10.220.183.5 with SMTP id ce5mr416145vcb.66.1296845852158;
+        Fri, 04 Feb 2011 10:57:32 -0800 (PST)
+Received: from localhost (DR-WILY.MIT.EDU [18.181.0.233])
+        by mx.google.com with ESMTPS id e18sm775988vbm.15.2011.02.04.10.57.30
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 04 Feb 2011 10:57:31 -0800 (PST)
+X-X-Sender: andersk@dr-wily.mit.edu
+In-Reply-To: <AANLkTinX6igafGkEv+k97Tm+V-8kEJK0rZs-K0iUGyes@mail.gmail.com>
+User-Agent: Alpine 2.02 (DEB 1266 2009-07-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166054>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166055>
 
-Heya,
+On Fri, 4 Feb 2011, Junio C Hamano wrote:
+> > =E2=80=98git log --summary=E2=80=99 seems to output a newline after=
+ every non-merge
+> > commit.
+>=20
+> I suspect you want tformat.
 
-On Thu, Feb 3, 2011 at 18:45, Jeff King <peff@peff.net> wrote:
-> Most of us don't really care if git is the ultimate storage mechanism. I
-> could even build the git interface as a purely client thing on top of
-> the CGI interface; the problem is that scraping the wiki pages for new
-> versions over the net would be horribly inefficient.
+Same problem.
 
-Note that MediaWiki has a stable API that you could use instead :).
+  $ git log --summary --pretty=3Dtformat:'%h %s'
+  3c0eee3 Linux 2.6.37
 
--- 
-Cheers,
+  65f4288 Merge git://git.kernel.org/pub/scm/linux/kernel/git/davem/net=
+-2.6
+  9fc3bbb ipv4/route.c: respect prefsrc for local routes
 
-Sverre Rabbelier
+  8a87694 remove trim_fs method from Documentation/filesystems/Locking
+
+  989d873 Merge master.kernel.org:/home/rmk/linux-2.6-arm
+  d9a1abe arch/mn10300/kernel/irq.c: fix build
+
+  867c202 ima: fix add LSM rule bug
+
+Also, tformat doesn=E2=80=99t seem to work at all with -z (it gives ide=
+ntical=20
+results with and without -z).
+
+Anders
