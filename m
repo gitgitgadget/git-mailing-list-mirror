@@ -1,91 +1,102 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH] git pull: Remove option handling done by fetch
-Date: Fri, 04 Feb 2011 21:17:00 +0100
-Message-ID: <4D4C5EBC.2090100@web.de>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: Git Mailing List <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 04 21:17:15 2011
+From: Ken Brownfield <krb@irridia.com>
+Subject: Re: Performance issue exposed by git-filter-branch
+Date: Fri, 4 Feb 2011 13:17:10 -0800
+Message-ID: <010EA68F-6122-47C7-B761-7D786F37B0C6@irridia.com>
+References: <41C1B4AC-8427-4D62-BEB6-689A4BE4EE5B@irridia.com> <201012170254.13005.trast@student.ethz.ch> <9A686258-A504-4CBB-9993-048B45B5EE6A@irridia.com> <20101217030855.GB7003@burratino> <AANLkTi=-0Sj9c5b778jchn+pgw26xCbioQ2K4tNgtm_G@mail.gmail.com>
+Mime-Version: 1.0 (Apple Message framework v1082)
+Content-Type: text/plain; charset=us-ascii
+Content-Transfer-Encoding: 8BIT
+To: git@vger.kernel.org, Elijah Newren <newren@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 04 22:27:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PlS5j-0007aF-0Y
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 21:17:15 +0100
+	id 1PlTBJ-00075E-GZ
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 22:27:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752590Ab1BDURH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Feb 2011 15:17:07 -0500
-Received: from fmmailgate01.web.de ([217.72.192.221]:60880 "EHLO
-	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752479Ab1BDURG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Feb 2011 15:17:06 -0500
-Received: from smtp07.web.de  ( [172.20.5.215])
-	by fmmailgate01.web.de (Postfix) with ESMTP id C8F311875AAED;
-	Fri,  4 Feb 2011 21:17:04 +0100 (CET)
-Received: from [93.240.99.67] (helo=[192.168.178.43])
-	by smtp07.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1PlS5Y-0002EX-00; Fri, 04 Feb 2011 21:17:04 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX1/tkiHSAr+LTmxmAkslrn/IgqhbhExHL6Hg3nqR
-	+UHg3oQeTwER4OK9Wr6xGzCLHOR3L4NZwc7znrn/m2OyDWtPZl
-	385IF3R7mg0dniRU5yOA==
+	id S1752754Ab1BDV07 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Feb 2011 16:26:59 -0500
+Received: from endymion.irridia.com ([184.105.192.220]:19439 "EHLO
+	endymion.irridia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752536Ab1BDV06 convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 4 Feb 2011 16:26:58 -0500
+X-Greylist: delayed 587 seconds by postgrey-1.27 at vger.kernel.org; Fri, 04 Feb 2011 16:26:58 EST
+Received: from shrike2.sfo.corp.google.com (unknown [72.14.229.84])
+	(using TLSv1 with cipher AES128-SHA (128/128 bits))
+	(No client certificate requested)
+	by endymion.irridia.com (Postfix) with ESMTPSA id 9E1EE145672;
+	Fri,  4 Feb 2011 13:17:10 -0800 (PST)
+In-Reply-To: <AANLkTi=-0Sj9c5b778jchn+pgw26xCbioQ2K4tNgtm_G@mail.gmail.com>
+X-Mailer: Apple Mail (2.1082)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166057>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166058>
 
-In commits be254a0ea9 and 7dce19d374 the handling of the new fetch options
-"--[no-]recurse-submodules" had been added to git-pull.sh. This was not
-necessary because all options to "git fetch" are passed to it and handled
-there, so lets remove them.
+Thanks for the feedback on git_fast_filter.  It takes 11.5 hours on our repository instead of 6.5 days, so that's a significant improvement. :-)  I have a couple of observations:
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+1) You said that your repo would have taken 2-3 months to filter with git-filter-branch, and the time was reduced to ~1hr.  I'm surprised our reduction was not quite as dramatic, although I presume the variability of repo contents are the explanation.
 
-I noticed this while implementing the on-demand recursive fetch.
+2) The resulting repository pack files are actually much larger.  A garbage collection reduces the size below the original, but only slightly.  I'm concerned that the recreated repository has redundant or inefficiently stored information, but I'm not sure how to verify what objects are taking up what space.
 
- git-pull.sh |   10 ++--------
- 1 files changed, 2 insertions(+), 8 deletions(-)
+3) git_fast_filter doesn't currently support remote submodules.  When it tries to parse a submodule line, the regex fails and the code aborts:
 
-diff --git a/git-pull.sh b/git-pull.sh
-index eb87f49..20a3bbe 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -38,7 +38,7 @@ test -z "$(git ls-files -u)" || die_conflict
- test -f "$GIT_DIR/MERGE_HEAD" && die_merge
+Expected:
+	M 100644 :433236 foo/bar/bletch
+Received, something like:
+	M 100644 cd821b4c0ea8e9493069ff43712a0b09 foo/bar/bletch
 
- strategy_args= diffstat= no_commit= squash= no_ff= ff_only=
--log_arg= verbosity= progress= recurse_submodules=
-+log_arg= verbosity= progress=
- merge_args=
- curr_branch=$(git symbolic-ref -q HEAD)
- curr_branch_short="${curr_branch#refs/heads/}"
-@@ -105,12 +105,6 @@ do
- 	--no-r|--no-re|--no-reb|--no-reba|--no-rebas|--no-rebase)
- 		rebase=false
- 		;;
--	--recurse-submodules)
--		recurse_submodules=--recurse-submodules
--		;;
--	--no-recurse-submodules)
--		recurse_submodules=--no-recurse-submodules
--		;;
- 	--d|--dr|--dry|--dry-|--dry-r|--dry-ru|--dry-run)
- 		dry_run=--dry-run
- 		;;
-@@ -223,7 +217,7 @@ test true = "$rebase" && {
- 	done
- }
- orig_head=$(git rev-parse -q --verify HEAD)
--git fetch $verbosity $progress $dry_run $recurse_submodules --update-head-ok "$@" || exit 1
-+git fetch $verbosity $progress $dry_run --update-head-ok "$@" || exit 1
- test -z "$dry_run" || exit 0
+To correct the issue, I modified git_fast_filter to simply skip these.  While we no longer utilize remote submodules, I would prefer not to have them removed.
 
- curr_head=$(git rev-parse -q --verify HEAD)
+Any feedback on what the proper behavior would be in the submodule case?  Perhaps this is covered in your internal version?
+
+Thanks,
 -- 
-1.7.4.31.g5ae186
+Ken
+
+On Dec 16, 2010, at 9:39 PM, Elijah Newren wrote:
+
+> On Thu, Dec 16, 2010 at 8:08 PM, Jonathan Nieder <jrnieder@gmail.com> wrote:
+>> Ken Brownfield wrote:
+>> 
+>>> I had considered this approach (and the one mentioned by Jonathan)
+>>> but there are no git tools to actually perform the filter I wanted
+>>> on the export in this form.
+>> 
+>> Keep in mind that the two suggestions were subtly different from one
+>> another.
+>> 
+>> For the "filter fast-import stream" technique, apparently there is a
+>> tool called reposurgeon[1] to do that.  git_fast_filter[2] has the
+>> same purpose, too, if I remember correctly.
+> 
+> Yes, git_fast_filter was written precisely because git-filter-branch
+> took waaaaaay too long.  IIRC, git-filter-branch would have taken
+> about 2-3 months for our use case (there's no way we could have shut
+> down the repositories for that long), whereas git_fast_filter (serving
+> along with fast-export and fast-import) allowed us to drop that to
+> about an hour (we couldn't use --index-filter with filter-branch as we
+> needed to do a number of operations on the actual file contents as
+> well).
+> 
+> All git_fast_filter really does is parse the fast-export output into
+> some basic python data structures, making it easy for you to modify
+> those structures as necessary (assuming basic python skills, though if
+> you only need to do what one of the examples shows then you could even
+> get away without that), and then pipes the results back out in the
+> format fast-import expects.  It has a few examples with it; removing
+> existing files is one of the simple examples.
+> 
+> I haven't really bothered keeping the public repository up-to-date
+> since there hasn't been any prior external interest in it, but we
+> haven't modified it much internally either, and most of those
+> modifications are likely for niche stuff that you wouldn't need.
+> 
+> Elijah
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at  http://vger.kernel.org/majordomo-info.html
