@@ -1,85 +1,154 @@
-From: =?utf-8?Q?David_K=C3=A5gedal?= <davidk@lysator.liu.se>
-Subject: Re: git-blame.el: does not show one-line summary in echo area
-Date: Fri, 04 Feb 2011 11:15:40 +0100
-Message-ID: <87r5bom7g3.fsf@krank.kagedal.org>
-References: <87vdgm3e1k.fsf@osv.gnss.ru> <20110204014315.GB28525@elie>
-	<87tygkm8h7.fsf@krank.kagedal.org>
-	<201102041103.10770.jnareb@gmail.com>
+From: Tor Arvid Lund <torarvid@gmail.com>
+Subject: Re: git-p4 - workflow suggestions
+Date: Fri, 4 Feb 2011 11:26:49 +0100
+Message-ID: <AANLkTik7Gv6vOgYNyuz-TCD6SAPV5G8f7RujEpfEYU3Q@mail.gmail.com>
+References: <AANLkTik3iFXZE6KSvSSgka3rJyCQbPXpUrTWRGyonfT=@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Sergei Organov <osv@javad.com>,
-	Andreas Schwab <schwab@linux-m68k.org>, git@vger.kernel.org,
-	Kevin Ryde <user42@zip.com.au>,
-	Martin Nordholts <enselic@gmail.com>,
-	Alexandre Julliard <julliard@winehq.org>,
-	Xavier Maillard <zedek@gnu.org>,
-	Jonathan Nieder <jrnieder@gmail.com>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 04 11:15:50 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git@vger.kernel.org
+To: "Kaizer H. Sogiawala" <kaizers@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 04 11:26:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PlIhi-00077O-BC
-	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 11:15:50 +0100
+	id 1PlIsT-0004Zg-6E
+	for gcvg-git-2@lo.gmane.org; Fri, 04 Feb 2011 11:26:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755307Ab1BDKPq convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Feb 2011 05:15:46 -0500
-Received: from mail.lysator.liu.se ([130.236.254.3]:51336 "EHLO
-	mail.lysator.liu.se" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754836Ab1BDKPp (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Feb 2011 05:15:45 -0500
-Received: from mail.lysator.liu.se (localhost [127.0.0.1])
-	by mail.lysator.liu.se (Postfix) with ESMTP id 668EF4000A;
-	Fri,  4 Feb 2011 11:15:44 +0100 (CET)
-Received: by mail.lysator.liu.se (Postfix, from userid 1674)
-	id 582BF4000C; Fri,  4 Feb 2011 11:15:44 +0100 (CET)
-X-Spam-Checker-Version: SpamAssassin 3.1.7-deb3 (2006-10-05) on 
-	bernadotte.lysator.liu.se
-X-Spam-Level: 
-X-Spam-Status: No, score=-0.1 required=5.0 tests=AWL autolearn=disabled 
-	version=3.1.7-deb3
-Received: from krank (unknown [62.20.90.206])
-	(using TLSv1 with cipher ADH-AES256-SHA (256/256 bits))
-	(No client certificate requested)
-	by mail.lysator.liu.se (Postfix) with ESMTP id 4E5B54000A;
-	Fri,  4 Feb 2011 11:15:43 +0100 (CET)
-Received: by krank (Postfix, from userid 1000)
-	id 05D8A61403; Fri,  4 Feb 2011 11:15:40 +0100 (CET)
-In-Reply-To: <201102041103.10770.jnareb@gmail.com> (Jakub Narebski's message
-	of "Fri, 4 Feb 2011 11:03:09 +0100")
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.1 (gnu/linux)
-X-Virus-Scanned: ClamAV using ClamSMTP
+	id S1755373Ab1BDK0v (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Feb 2011 05:26:51 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:39892 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754303Ab1BDK0u (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Feb 2011 05:26:50 -0500
+Received: by gwj20 with SMTP id 20so856155gwj.19
+        for <git@vger.kernel.org>; Fri, 04 Feb 2011 02:26:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=bONioL57jCkFSXwpIxF9tLvE/Rh3O+vvNduKu5CcNbw=;
+        b=AjjU0FbXcwmc8QQwQ7zE2PD7KPWPRv1AQckeES7i3DfaRztP72Wva4o1I7I7XebBhk
+         2vadN6LQkHEJ3Uam4Ibp4+QkDISE/CCLlzS0RbUOHQwDK3LkwsGz1K/C5hsrtvSliiTu
+         1tcKS3iaVYZPKfYoldp+aSbBPEB69ViWC7rCQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=RqHZPDM1wLp5jjJT0T9kDBNsLBNf2qeMyRlnChNinnJtCMEh2rFTwyvyjLcCH1Km7Y
+         HLzM1BbenMmULx31GjXUwHqDSSsTA3FXqOzhHIfcTXRNRt9O8Q6EUnNpZMKK6uykwY5J
+         fjtoDXdweYNHG7fqPvC+QKuz+N+Kqt7BgwTT0=
+Received: by 10.100.251.19 with SMTP id y19mr1836967anh.182.1296815209193;
+ Fri, 04 Feb 2011 02:26:49 -0800 (PST)
+Received: by 10.101.1.19 with HTTP; Fri, 4 Feb 2011 02:26:49 -0800 (PST)
+In-Reply-To: <AANLkTik3iFXZE6KSvSSgka3rJyCQbPXpUrTWRGyonfT=@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166032>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166033>
 
-Jakub Narebski <jnareb@gmail.com> writes:
-
-> Dnia pi=C4=85tek 4. lutego 2011 10:53, David K=C3=A5gedal napisa=C5=82=
-:
+On Fri, Feb 4, 2011 at 1:23 AM, Kaizer H. Sogiawala <kaizers@gmail.com> wrote:
+> Hi,
 >
->> 3) Showing when you move to a different blame chunk, by showing a
->>    one-line summary in the echo area.
+> We are primarily a Perforce shop. I am looking for a git-p4 workflow
+> that will alllow a sub-team (2-20 developers) to use git as their
+> primary source control repository. This sub-team is tasked with
+> refactoring and will need heavy-duty branch/merge support. The
+> main/central source code repository (and branch) is in Perforce.
 >
-> There is even some prior art for this to borrow from, namely cperl-mo=
-de
-> shows information about syntax at given point in echo area (minibuffe=
-r
-> area) after some delay.  Just FYI.
+> I am looking at approaches that will allow me to "git-p4 clone" from
+> Perforce (a branch in perforce, say trunk) into a bare/shared git
+> repository. This repository is then cloned by each developer of the
+> git-sub-team to perform regular development/push/pull/merge/rebase
+> activities.
 
-Sure, there are a number of those (eldoc comes to mind). I think the
-hardest part is figuring out what to show. A 40-charater hash is
-probably not very useful. The problem is that the committer information=
-,
-date, and commit message first line takes up a lot of space. But we can
-of course let the echo area grow to two lines, or even three.
+Hey! Yes, this should be possible - at least to some extent. What I
+did personally, was to keep things as simple as possible, and decide
+early on that I wouldn't hope to be able to do *everything* with
+git-p4/perforce that I *could* do in git. [branch/merge tradeoff
+details will follow]
 
-I don't think I'll have time to cook something up right now, though.
+> Periodically, a gatekeeper would pull changes from Perforce to git and
+> push changes from git to Perforce. Can this be done?
 
---=20
-David K=C3=A5gedal
+I think I did kind of what you describe... I had one "blessed" git-p4
+repo. That repo would be setup by:
+
+git p4 clone --import-local //depot/path@all myproject
+
+(The "--import-local" makes sure that the p4 branch is placed in
+refs/heads/ instead of refs/remotes. Better when the actual users
+clone the git repo later...)
+
+Then I made a simple script that would loop through all my git-p4
+projects... basically just 'cd' into the dir and do 'git p4 sync'.
+This script would be run by a cron job every <whatever> minutes so it
+would always be reasonably up-to-date.
+
+> So far, I have looked at the:
+> - git-p4 documentation
+> - Version Control with Git book By: Jon Loeliger (particularly the
+> git-svn section)
+> - Mailing list (particularly following thread answered by Tor Arvid Lund)
+> - googl'n around this topic
+>
+> Most discussion is around how to use git-p4 as a sync mechanism for a
+> single user. When I attempt to git-p4 clone (import) and then create a
+> shared/bare repository out of it and emulating multiple user, the
+> git-p4 sync mechanism breaks down after couple of merges. The git-p4
+> sync/rebase/submit will try to reapply duplicate changes and trip
+> pretty early in the cycle.
+>
+> If you have a working model of making available a p4 branch for a
+> sub-team using git-p4, I would really appreciate a writeup or blog.
+> Thanks in advance.
+
+Ok, so to make things practical, I made some simple 'rules' for myself:
+
+* The blessed git repo would be "pull-only" for the git users. That is
+- no one pushes to that repo. It reads from p4, and the users do 'git
+fetch/pull' from that. Nothing more, nothing less...
+
+* When preparing commits for upload to perforce, *always* rebase them
+on top of the latest git-p4 tip.
+
+I never tried to do merges in git, and then try to turn that into
+'integrates' in perforce. So I always kept the perforce-things
+'linear' so that the communication between git and perforce should be
+easy. IOW I always did the "official" branching and integrate'ing
+using the perforce client.
+
+We did 'git p4 submit' directly from the users' git repos (which would
+be synced by the blessed git repo, and from there to the other git
+users). If you want another layer in-between [we use gerrit
+code-review... You may have something else, or an integration manager
+etc], you could push to another <some-project-manager-repo> and do all
+git-p4 submits from there, I guess...
+
+
+Of course, these branch/merge limitations only apply to my git history
+at the point where I want to push to perforce. In all my daily work, I
+create topic branches, rebase, reorder commits... all of the git
+goodness. I simply "linearize" things when I want to push...
+
+
+In your use-case, if you are going to do work that will result in many
+perforce integrates, you may have a harder time with git-p4 than I
+did, but it should be worth a try so that you can delight in daily git
+usage instead of cursing the awfulness that is perforce.
+
+And yes, git-p4 does rewrite every commit after you submit it. This is
+because of the quite simple design that was used to help git-p4 "know"
+what had been synced from perforce to git. Commit messages get the
+appended "[git-p4: depot-paths = ... change = 12345]" line. If git-p4
+had been written today, this could have maybe been solved using
+git-notes instead of rewriting commit msgs. I'm just saying... :)
+
+Otherwise, you will have to get around the fact that it rewrites
+everything. For me, I have used git rebase a *lot* :)
+
+Good luck!
+
+    -- Tor Arvid
