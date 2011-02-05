@@ -1,61 +1,78 @@
-From: redstun <redstun@gmail.com>
-Subject: [idea] separate .git dir and the working tree
-Date: Sat, 5 Feb 2011 10:53:58 +0800
-Message-ID: <AANLkTik4MjnpOzPdGy7ZDiH0in4e1DpjrhQFOHjUiEEE@mail.gmail.com>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [1.8.0] reorganize the mess that the source tree has become
+Date: Fri, 4 Feb 2011 22:21:01 -0500 (EST)
+Message-ID: <alpine.DEB.1.10.1102042152070.14767@debian>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1101311459000.8580@xanadu.home>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 05 03:54:48 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sat Feb 05 04:21:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PlYIP-0002h6-Pi
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 03:54:46 +0100
+	id 1PlYi3-00029F-Qo
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 04:21:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752815Ab1BECyk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Feb 2011 21:54:40 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:38548 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752764Ab1BECyj (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Feb 2011 21:54:39 -0500
-Received: by fxm20 with SMTP id 20so3089099fxm.19
-        for <git@vger.kernel.org>; Fri, 04 Feb 2011 18:54:38 -0800 (PST)
+	id S1753088Ab1BEDVK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Feb 2011 22:21:10 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:57495 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753034Ab1BEDVJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Feb 2011 22:21:09 -0500
+Received: by qwa26 with SMTP id 26so2287201qwa.19
+        for <git@vger.kernel.org>; Fri, 04 Feb 2011 19:21:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:from:date:message-id:subject:to
-         :content-type;
-        bh=VinA8i9eji9LiOfDhAiPRhutg8CYzwZaPsIoTqx6aMk=;
-        b=nneq31xvzNkO75Q2zqWxtw0eQT71+SEtop3nhOxP5EtFua5PbGzslXWZ7Nnpj5x7D3
-         Ien6LyUwLBWelP+d/HbI+o7Oax1osZwwoQFdiakQ548jMHGP4fGkyjrEnYoA0qonjkVR
-         uCI7KEpDgEg9blQ9NaTkxI/QZU3F9Nmyu/e8s=
+        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
+         :message-id:references:user-agent:mime-version:content-type;
+        bh=OfwnQy8ixo2KJP2Ze2cxHbGDYY9HOHphH80vKWlGVYY=;
+        b=Y1dBmKFI11O1Pe+wdADHCWCO7mEIUi9BK797E8R6WMnBF0aBXccqbLMWeKkVwQCDpD
+         PnI1HO/I7ESmNxldL59+kgJ0z5/3ywthqX7666p83k2/zIijCnfLMPoFSqM2bB8s/YYS
+         fKc6gDIVgncM2C2tTZhbEWMXqBbzQRuxd5TOI=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:from:date:message-id:subject:to:content-type;
-        b=CJG3UcF0EPCuoEMPksgs4hra2aUfOWxHYJyOxuM+g86XTwPyJRFO/o1ouzyaKdFtkD
-         O9XR3LHcbWdLRryLXWp2GBgMvggn8GiMTL+whWKr0TPv8cCFWbfvrzlfQlQgt0JjB8pF
-         DXoWHwCfo8ESL0KGb+kJ5TezcSFKiyKsOj3ik=
-Received: by 10.102.244.3 with SMTP id r3mr8338061muh.128.1296874478381; Fri,
- 04 Feb 2011 18:54:38 -0800 (PST)
-Received: by 10.103.212.19 with HTTP; Fri, 4 Feb 2011 18:53:58 -0800 (PST)
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        b=X0N/yqK5VHqZr9P2tZJEEnaNWW0byaooj2kh+lnfc3v4PM8aEH6EEbkbV62+3ie7PN
+         MTcztQGleILhfyu4STATKE5Rls1p43Z7JD5sNY3j5+AWnd88SDaa2v03BiH2KUA0i0dx
+         aix+qWsx0y0Tnm0Q9CSl2j3GwylTjB/y4cww0=
+Received: by 10.229.98.131 with SMTP id q3mr385495qcn.236.1296876068384;
+        Fri, 04 Feb 2011 19:21:08 -0800 (PST)
+Received: from [192.168.1.104] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id q12sm994654qcu.6.2011.02.04.19.21.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Fri, 04 Feb 2011 19:21:06 -0800 (PST)
+X-X-Sender: martin@debian
+In-Reply-To: <alpine.LFD.2.00.1101311459000.8580@xanadu.home>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166071>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166072>
 
-First please shout if this is a known feature :-)
+On Mon, 31 Jan 2011, Nicolas Pitre wrote:
 
-I think separating the .git directory from its working tree could
-increase the safety of the data to one more level higher.
+> 2) Create a build/ directory, or bin/ if prefered, to hold the result of 
+>    the build.
 
-We might have a git variable set to specify (a shared place) where to
-put the .git directories (or the data inside it), then use
-"/path/to/working/tree" as (or the seed to calculate) a hash key to
-map from the (.git directory in the) shared place to the working tree
-directory.
+I don't care much about the other items on the list, but I do agree
+with this one. The biggest reason I like this is because it makes it
+easier to tab complete. In all the cases so far that I have tab
+completed "git-rebase--i" to open it in an editor or to run some git
+command on it, I have wanted "git-rebase--interactive.sh"; I have
+never wanted the build result.
 
-Or we may have just a few data (that can be re-created) stored in the
-.git directory along with the working tree, and most of the revision
-history stored in the shared place.
+It is also nice to have one less file to edit (.gitignore) when you
+add a new source file, but that is of course much less important.
+
+Are there any arguments against this part of Nicolas's proposal?
+
+Btw, this is not really related to 1.8.0, is it? It seems to me like
+it could be done at any time...
+
+
+/Martin
