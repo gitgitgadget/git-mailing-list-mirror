@@ -1,70 +1,122 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] Add case insensitive support in matching pathspec
-Date: Sat, 5 Feb 2011 14:44:54 +0700
-Message-ID: <AANLkTi=F3KYEJK6UuvUvqmwEx7kiyd_WP20rUvir2K=b@mail.gmail.com>
-References: <1296751106-15316-1-git-send-email-pclouds@gmail.com> <7vwrlgzryj.fsf@alter.siamese.dyndns.org>
+From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+Subject: [PATCH] cache-tree: do not cache empty trees
+Date: Sat,  5 Feb 2011 15:30:11 +0700
+Message-ID: <1296894611-29398-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 05 08:45:37 2011
+Cc: Jakub Narebski <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"Dmitry S. Kravtsov" <idkravitz@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>,
+	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
+	<pclouds@gmail.com>
+To: git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
+X-From: git-owner@vger.kernel.org Sat Feb 05 09:31:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Plcpn-00044E-CH
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 08:45:31 +0100
+	id 1PldYg-0002mI-4u
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 09:31:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1750970Ab1BEHp0 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Feb 2011 02:45:26 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:43012 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750914Ab1BEHp0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Feb 2011 02:45:26 -0500
-Received: by wwa36 with SMTP id 36so3147710wwa.1
-        for <git@vger.kernel.org>; Fri, 04 Feb 2011 23:45:24 -0800 (PST)
+	id S1751308Ab1BEIbo convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Feb 2011 03:31:44 -0500
+Received: from mail-pz0-f46.google.com ([209.85.210.46]:41982 "EHLO
+	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751105Ab1BEIbl (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Feb 2011 03:31:41 -0500
+Received: by pzk35 with SMTP id 35so554761pzk.19
+        for <git@vger.kernel.org>; Sat, 05 Feb 2011 00:31:41 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=cYSAHXrF0PYYvv0cE/p/ofvZGNubcijSAiddxTfoyTY=;
-        b=haatTanVFUw8tQIuc2bYPWOE3/hQuvS6eQWPM8Mi027NELzkhpTuKTyezRfHwWjodN
-         MNSZTGDIlzvOHMceqaWhvbGzhR7E0FM+mm1ef0tsSlXsE4MU1+DISQhVv0tD2dRj36vw
-         y9SHEcP01u94IP5jaQlYA/IATIKNnI5los7Nc=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :mime-version:content-type:content-transfer-encoding;
+        bh=Thb/nvk94d83Tq2mJfPvpN2TPCxmutd2H9WEkS9JOao=;
+        b=nqwX/A1QgcZiORjFe90lRkwMsZQwTWNraK+mZ5zH1XeD4Y166+LhDvhxIYbbYKT1iv
+         yo47DwOAen4KAPoTASqlv0f/vNYhfqO0K+rPN7znLYX3MvohLUl7WEGupTiiLcbn4veT
+         exyoQ3zLYeusM3haX6T0GtT0yn+WdmNwaacBY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=VQX+qQSo/I37W1AYQZUvmQd3n8FgTf/NAojmZRdff7Tym5zM1Arl1aw6ZbFSVCFk1f
-         6SXyUUZBFkstEabZ0q5La4XNP+vez8h9kdBARowj7bYK1IwXob3bROZLW6LjEEVAsRKt
-         tM037ODFSNB31+l4k7NUK5qB3+3iTz08k26cI=
-Received: by 10.216.186.144 with SMTP id w16mr12027037wem.13.1296891924524;
- Fri, 04 Feb 2011 23:45:24 -0800 (PST)
-Received: by 10.216.66.144 with HTTP; Fri, 4 Feb 2011 23:44:54 -0800 (PST)
-In-Reply-To: <7vwrlgzryj.fsf@alter.siamese.dyndns.org>
+        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
+         :content-type:content-transfer-encoding;
+        b=elGR7GXn1DUZLwcwhZHgqo/1CjnydarAZxl4cI/hbErj5/C+Ger/vju0qcId+8nmpK
+         J9aFlbIGVqEHUN5QFX4QZBJdz83fvQNKy5agphm0so6/WkpkJyMMMgOOE1JJZ2KUzXiR
+         VN1c9jETazk+trkkzepzrqd3Gefj7rcSCXPFI=
+Received: by 10.142.156.8 with SMTP id d8mr12734985wfe.337.1296894701182;
+        Sat, 05 Feb 2011 00:31:41 -0800 (PST)
+Received: from pclouds@gmail.com ([115.73.232.10])
+        by mx.google.com with ESMTPS id y42sm2204859wfd.22.2011.02.05.00.31.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 05 Feb 2011 00:31:40 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 05 Feb 2011 15:30:13 +0700
+X-Mailer: git-send-email 1.7.3.4.878.g439c7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166079>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166080>
 
-2011/2/4 Junio C Hamano <gitster@pobox.com>:
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
-rites:
->
->> =C2=A0On top of nd/struct-pathspec, but requires jj/icase-directory.=
- I can
->> =C2=A0rebase the series on top of master if it causes too many confl=
-icts.
->
-> I am in the middle of rewinding 'next' and have already rebased the t=
-opic;
-> I will queue the result in 'pu' so could you check the result when it=
- is
-> pushed out later?
+Current index does not support empty trees. But users can construct
+empty trees directly using plumbing. When empty trees are checked out,
+things become inconsistent:
 
-Checked. Looks good to me.
+ - If cache-tree somehow is invalidated, when a tree is read to index,
+   empty trees disappear. When we write trees back, empty trees will
+   be gone.
+
+ - If cache-tree is generated by read-tree and remains valid by the
+   time trees are written back, empty trees remain.
+
+Let's do it in a consistent way, always disregard empty trees in
+index. If users choose to create empty trees their own way, they
+should not use index at all.
+
+Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
+=2Ecom>
+---
+ On Wed, Feb 2, 2011 at 2:09 AM, Ilari Liusvaara <ilari.liusvaara@elisa=
+net.fi> wrote:
+ > Yes, writing to index/working area. IIRC, having such entry in tree =
+causes
+ > a "ghost directory". I don't exactly recall what such thing broke, b=
+ut I
+ > remember that it broke something (merging?)...
+ >
+ > Those ghosts also had annoying tendency to persist between commits. =
+Commits
+ > didn't kill them. Rm didn't work. You had to create something on top=
+/inside to
+ > get rid of them.
+
+ That's probably because of cache-tree. Empty trees can't exist in
+ index so an operation "trees -> index -> trees" will remove empty
+ trees.
+
+ But read-tree can preserve the exact structure of original trees
+ (including empty trees) so if that particular path is untouched,
+ empty trees will remain.
+
+ Perhaps a patch like this for pre-1.8.0?
+
+ cache-tree.c |    2 ++
+ 1 files changed, 2 insertions(+), 0 deletions(-)
+
+diff --git a/cache-tree.c b/cache-tree.c
+index f755590..f717793 100644
+--- a/cache-tree.c
++++ b/cache-tree.c
+@@ -621,6 +621,8 @@ static void prime_cache_tree_rec(struct cache_tree =
+*it, struct tree *tree)
+ 			struct tree *subtree =3D lookup_tree(entry.sha1);
+ 			if (!subtree->object.parsed)
+ 				parse_tree(subtree);
++			if (!hashcmp(entry.sha1, (unsigned char *)EMPTY_TREE_SHA1_BIN))
++				continue;
+ 			sub =3D cache_tree_sub(it, entry.path);
+ 			sub->cache_tree =3D cache_tree();
+ 			prime_cache_tree_rec(sub->cache_tree, subtree);
 --=20
-Duy
+1.7.3.4.878.g439c7
