@@ -1,68 +1,81 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: GIT - cloning torvalds/linux-2.6.git repository trouble.
-Date: Sat, 5 Feb 2011 20:10:41 +0100
-Message-ID: <AANLkTim996+Ho_=xjkzOrGx65-6ajtObLVLwD5E0v4MW@mail.gmail.com>
-References: <AANLkTikiKagzJMh_xuOSzfA4c-qxOHhVeU2jhmbaDHji@mail.gmail.com>
- <AANLkTi=FAWh9T3HaocdKB7V4osRPsehTo=hTP0U-JbfR@mail.gmail.com>
- <AANLkTi=E3gWG2-3nLBW6JP+Wks2=4oUWSNSpk0=qEaU-@mail.gmail.com> <AANLkTikYPHhVaKYsQpZ2FhjxAdLetPgkPFQ-b-VtkBTJ@mail.gmail.com>
+From: Rafael Kitover <rkitover@io.com>
+Subject: Re: ignoring file modes completely
+Date: Sat, 05 Feb 2011 14:28:01 -0500
+Organization: CPAN
+Message-ID: <4D4DA4C1.5050501@io.com>
+References: <4D4D6BC2.90101@io.com> <1296921829.5467.1.camel@localhost.localdomain> <4D4D7636.7090608@io.com> <4D4D81C9.5080002@op5.se>
+Reply-To: rkitover@io.com
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-15; format=flowed
+Content-Transfer-Encoding: 7bit
 Cc: git@vger.kernel.org
-To: Valentin QUEQUET <valentin.quequet@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 05 20:11:29 2011
+To: unlisted-recipients:; (no To-header on input)
+X-From: git-owner@vger.kernel.org Sat Feb 05 20:28:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PlnXb-0004ud-R0
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 20:11:28 +0100
+	id 1Plno7-0004r0-Hd
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 20:28:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753436Ab1BETLX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Feb 2011 14:11:23 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:38324 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753273Ab1BETLW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Feb 2011 14:11:22 -0500
-Received: by iwn9 with SMTP id 9so3280357iwn.19
-        for <git@vger.kernel.org>; Sat, 05 Feb 2011 11:11:21 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=VGPIsCbOITe798//vF9hbQ2gHG/1ZXLfFTTVW/cJDpA=;
-        b=ApM7+QVsVrXxERubrqqJqmWMjpwM4C/7mdNvDzHo0JhdjyMK6A5bwedJB6bsJK4cl1
-         0pq1HunKI6NLQ1Sw6iv/ocodM7fQJwqU7W5XfHzbmwl8LcvWLjZscD8a1t3FtXjspCom
-         9yQpCEjPtENSbT7zyXjVDv3MMfwmSHpfMgHp0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=SqK9+sVxWQODfFd9wMw4hXpb3UWh0Im7hrbNkPNvNKm5yniAWdTAxHECoN8x+2Rby5
-         82B4aWpaJTJEmKrI3MKakuJ6gisujuJ0gEdtLB+QGpOHwAmTo3wbZImnb+d0B4kt4xDU
-         HWQJKCHzzxb0TrM3stbhnjLKPH6Vh9eG3ajOA=
-Received: by 10.231.207.71 with SMTP id fx7mr14782821ibb.127.1296933081850;
- Sat, 05 Feb 2011 11:11:21 -0800 (PST)
-Received: by 10.231.39.140 with HTTP; Sat, 5 Feb 2011 11:10:41 -0800 (PST)
-In-Reply-To: <AANLkTikYPHhVaKYsQpZ2FhjxAdLetPgkPFQ-b-VtkBTJ@mail.gmail.com>
+	id S1753517Ab1BET20 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Feb 2011 14:28:26 -0500
+Received: from smtp.prismnet.com ([209.198.128.91]:60511 "EHLO
+	smtp.prismnet.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753273Ab1BET20 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Feb 2011 14:28:26 -0500
+Received: from [127.0.0.1] (c-76-98-235-160.hsd1.pa.comcast.net [76.98.235.160])
+	(authenticated bits=0)
+	by smtp.prismnet.com (8.14.4/8.14.4) with ESMTP id p15JSOaI010847
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-CAMELLIA256-SHA bits=256 verify=NOT)
+	for <git@vger.kernel.org>; Sat, 5 Feb 2011 13:28:25 -0600 (CST)
+	(envelope-from rkitover@io.com)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <4D4D81C9.5080002@op5.se>
+X-Spam-Status: No, score=1.9 required=10.0 tests=MISSING_HEADERS,RDNS_DYNAMIC
+	autolearn=disabled version=3.2.5
+X-Spam-Level: *
+X-Spam-Checker-Version: SpamAssassin 3.2.5 (2008-06-10) on smtp.prismnet.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166114>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166115>
 
-Heya,
+On 2/5/2011 11:58 AM, Andreas Ericsson wrote:
+> On 02/05/2011 05:09 PM, Rafael Kitover wrote:
+>> On 2/5/2011 11:03 AM, Jared Hance wrote:
+>>> On Sat, 2011-02-05 at 10:24 -0500, Rafael Kitover wrote:
+>>>> Hello,
+>>>>
+>>>> I found the core.filemode option, which ignores executable bits, but I
+>>>> need an option to ignore all mode differences, and such an option does
+>>>> not seem to exist.
+>>>
+>>> The only mode tracked by Git is the executable bit, so this shouldn't
+>>> even be an issue. Are you sure the executable bit isn't the problem?
+>>>
+>> $ git config --global core.filemode
+>> false
+>>
+>> Output of "git diff HEAD" :
+>>
+>> diff --git a/Makefile.PL b/Makefile.PL
+>> old mode 100755
+>> new mode 100644
+>> diff --git a/t/02ads.t b/t/02ads.t
+>> old mode 100755
+>> new mode 100644
+>> diff --git a/t/02cxn.t b/t/02cxn.t
+>> old mode 100755
+>> new mode 100644
+>> diff --git a/t/04os.t b/t/04os.t
+>> old mode 100755
+>> new mode 100644
+>
+> Those are all executable bit diffs.
+>
 
-On Sat, Feb 5, 2011 at 20:08, Valentin QUEQUET
-<valentin.quequet@gmail.com> wrote:
-> This was one of the 1st things I tried in order to get a
-> fully-functional repository.
-
-Ok, so what happened when you tried? What did 'git fsck' tell you? If
-it doesn't error out, try running 'git repack' followed by 'git
-checkout -t origin/master'?
-
--- 
-Cheers,
-
-Sverre Rabbelier
+Ok, but I have core.filemode set to "false" as I showed, why does this 
+happen then?
