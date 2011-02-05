@@ -1,101 +1,197 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: git to p4 conversion
-Date: Sat, 5 Feb 2011 01:11:06 +0000
-Message-ID: <AANLkTimV1aRiEMa2z-H2bOvRa9H6YAyET1=hn+_O0-0u@mail.gmail.com>
-References: <AANLkTi=0TSD6p7WtsVzx=pq8=GVu+jHUdxt1bnC++CT+@mail.gmail.com>
- <4D4AF29E.7070509@vmware.com> <AANLkTikW_sU8oCmU9wN5q1OPPJrQbS2YZAvS0C_nBQbD@mail.gmail.com>
- <loom.20110204T004658-497@post.gmane.org> <AANLkTikfGapDfZtD9H10797Ted_Av78WD8M7XrACOCpW@mail.gmail.com>
- <AANLkTimrwUxNOAnfxgvReGN+-h4_0jhZ731y22TB6u1K@mail.gmail.com>
- <AANLkTi=_spLE-KMnou-2LLQjwq4FUZxNr9pk7D9C=4PK@mail.gmail.com>
- <AANLkTi=dZdSqcNckyU7Lb2Zj-khfj=Xiyzbv7LSC+zT2@mail.gmail.com>
- <AANLkTimGaPQ=hRp+2pvw-hAOg+wp50nvc_sv9jNTay=n@mail.gmail.com>
- <AANLkTimJm81V0D8_j3OfZTcEkyn_jd6_QB2nv8T69JBY@mail.gmail.com> <AANLkTi=onuZtGWPTYvw_-rKsR6t-R2UquAUPLHAm-TVV@mail.gmail.com>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [1.8.0] Provide proper remote ref namespaces
+Date: Sat, 05 Feb 2011 02:18:44 +0100
+Message-ID: <201102050218.44325.johan@herland.net>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+ <201102020322.00171.johan@herland.net>
+ <7vpqr7xw4z.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Endre Czirbesz <endre@czirbesz.hu>, git@vger.kernel.org,
-	Ian Wienand <ianw@vmware.com>
-To: Tor Arvid Lund <torarvid@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 05 02:11:47 2011
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 05 02:19:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PlWgh-0000bt-Dw
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 02:11:43 +0100
+	id 1PlWnx-0003u3-7a
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 02:19:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752262Ab1BEBLi convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 4 Feb 2011 20:11:38 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:47387 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751278Ab1BEBLh convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Fri, 4 Feb 2011 20:11:37 -0500
-Received: by vxb37 with SMTP id 37so932466vxb.19
-        for <git@vger.kernel.org>; Fri, 04 Feb 2011 17:11:36 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=MiRszo14/PVwKX7Ife7ZyruGOEw3DEWcqzVPdJS5tnY=;
-        b=GgtqDjVkUf4VkCufUF0vk1svF2nPae1ZPSuFYq9+Rf/TyPm2Kdtp3Zo0HfjkLv26DF
-         4a3Fhw4AC2/7kWbCVXtItX1cXkkopCBaPjFTPwbq4vdW2/XBE4uuYbez4ZysvoHxMgSS
-         /Rd7EUWEneV+YkJbvOOkSrbDUUYLZ0cwu/yFc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=XsVTvxScobGOO93JoexV2x3qugXQ7uaW9qoeSs3dm0nXqnpNfT6wrF15jj5KDjoAJp
-         gKr0f5Dh9mD/lTwZ9ZG6tFYprWYvaRjVB3rAYtAbk0Lys41eSr4x3TIGEMupqjjZoPQ9
-         vPO+qOCg1SbDx5YycYooty1jMqGOtoi/9T3OY=
-Received: by 10.220.198.196 with SMTP id ep4mr3416678vcb.110.1296868296660;
- Fri, 04 Feb 2011 17:11:36 -0800 (PST)
-Received: by 10.220.184.75 with HTTP; Fri, 4 Feb 2011 17:11:06 -0800 (PST)
-In-Reply-To: <AANLkTi=onuZtGWPTYvw_-rKsR6t-R2UquAUPLHAm-TVV@mail.gmail.com>
+	id S1752878Ab1BEBTA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Feb 2011 20:19:00 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:57410 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752795Ab1BEBSt (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Feb 2011 20:18:49 -0500
+Received: from get-mta-scan04.get.basefarm.net ([10.5.16.4])
+ by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LG400KKGEBAV730@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 05 Feb 2011 02:18:46 +0100 (MET)
+Received: from get-mta-scan04.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 278221EF014C_D4CA576B	for <git@vger.kernel.org>; Sat,
+ 05 Feb 2011 01:18:46 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan04.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id AA1761EF0150_D4CA574F	for <git@vger.kernel.org>; Sat,
+ 05 Feb 2011 01:18:44 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LG400C6NEB8Q610@get-mta-in02.get.basefarm.net> for
+ git@vger.kernel.org; Sat, 05 Feb 2011 02:18:44 +0100 (MET)
+User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.0; x86_64; ; )
+In-reply-to: <7vpqr7xw4z.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166069>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166070>
 
-Hi Tor,
+On Friday 04 February 2011, Junio C Hamano wrote:
+> Johan Herland <johan@herland.net> writes:
+> > - Remote heads have moved into refs/remotes/$remote/heads/*, hence
+> > invalidating shorthand remote head names, like "origin/master". We
+> > should change the lookup code, so that a shorthand ref of the form
+> > "$remote/$head" where "$remote" happens to match a configured remote
+> > is eventually expanded into lookup for
+> > "refs/remotes/$remote/heads/$head" [3].
+> 
+> Keeping 'origin/next' usable is a _must_, _if_ we were to go this route.
 
-On Sat, Feb 5, 2011 at 12:53 AM, Tor Arvid Lund <torarvid@gmail.com> wr=
-ote:
-> I... wonder if we're maybe talking past one another here...
->
-> Let's take a few things from the top, just in case... If we think
-> about the perforce setup (before we start doing any git stuff)... You
-> have a perforce workspace/client-spec, right? That is - a setup that
-> tells perforce where you want the files to be placed on your hard
-> drive when you do a standard "p4 sync". Let's call it ~/p4root/ and
-> let us say that your project will then be synced by perforce to
-> ~/p4root/myproj/
->
-> When you want to do a git-p4 clone, you should definitely be *outside=
-*
-> of ~/p4root/ . Let's say we have a ~/gitroot/ as well. So do cd
-> ~/gitroot/ so that the git-p4 clone will be under ~/gitroot/myproj/ ;
-> and then do all the git-p4 stuff (clone, add remote, fetch, rebase,
-> sync, submit).
->
-> I think Vitors point was that before you do git-p4 submit, you should
-> clean - not ~/gitroot/myproj - but ~/p4root/myproj/.
->
-> This is probably not something that you need to do everytime you want
-> to submit back to perforce, but since we have had some rounds with
-> trial-and-error with this, we have probably placed some dirty files
-> inside the perforce folders... Make sure that you don't have files
-> opened in perforce before you sync.
->
-> Clearer? More confused? Best of luck anyway :)
->
-> =A0 =A0-- Tor Arvid
->
+Of course.
 
-Yeah, I think we're in sync here. I'm almost sure your (much more
-detailed) instructions will solve Endre's problem :)
+> > - All fetch refspecs should be given explicitly.
+> 
+> What do you mean by this?
 
-Kind regards,
---=20
-Vitor Antunes
+Today, when you fetch from a remote, the config typically says
+
+[remote "origin"]
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        url = ...
+
+But this fetch refspec does not tell the full story. In addition to mapping 
+origin's refs/heads/* into refs/remotes/origin/*, it also fetches origin's  
+HEAD into refs/remotes/origin/HEAD, and anything in origin's refs/tags/* 
+that happen to point to a fetched object is fetched into refs/tags/* (aka. 
+auto-following tags). These other fetches are not explicitly specified in 
+the config, but "magically" happen anyway. Instead of having such implicit 
+refspecs, I'd rather have all fetch refspecs listed explicitly in the 
+config, like this (for replicating current layout):
+
+[remote "origin"]
+        fetch = +HEAD:refs/remotes/origin/HEAD
+        fetch = +refs/heads/*:refs/remotes/origin/*
+        fetch = ~refs/tags/*:refs/tags/*
+        url = ...
+
+or this (in the proposed new layout):
+
+[remote "origin"]
+        fetch = +HEAD:refs/remotes/origin/HEAD
+        fetch = +refs/heads/*:refs/remotes/origin/heads*
+        fetch = +refs/tags/*:refs/remotes/origin/tags/*
+        url = ...
+
+> > Sub-proposal: While we are changing the default refspecs, we should
+> > also consider whether we want to keep the auto-following behavior that
+> > Git currently does for tags (don't fetch tags that refer to objects
+> > not otherwise fetched by another refspec). If we simply make an
+> > explicit "+refs/tags/*:refs/remotes/$remote/tags/*" refspec, we will
+> > lose the auto- following behavior. If we do want to keep the
+> > auto-following behavior, we could for example add a "~" prefix to the
+> > refspec to trigger auto-following behavior (i.e. this refspec only
+> > applies to refs that happen to point at objects fetched by way of a
+> > different refspec). See
+> > http://thread.gmane.org/gmane.comp.version-control.git/160503/focus=160
+> > 795 for more details.
+> 
+> You seem to envision "auto-follow" to slurp remote tags in
+> remotes/origin/$tag namespace. What should "git fetch --tags $from_there"
+> do?
+
+I would propose that "git fetch --tags $from_there" follows these steps:
+
+1. Enumerate the (implicit or explicit) fetch refspecs for the given remote.
+
+2. Map "refs/tags/*" through the refspecs to find where the remote tags 
+should be stored in the local repo.
+
+3. If the matching refspec starts with "~" (auto-following), disregard the 
+"~" (since --tags disables auto-following).
+
+4. Slurp remote tags into the location found in step #2.
+
+Since we map through the refspec, the remote tags end up where the user 
+expect to find them: in refs/tags/* for old-style remotes, or in 
+refs/remotes/$from_there/tags/* for new-style remotes.
+
+> For some reason, many people seem to be enthused about splitting the tag
+> namespace, but I am not sure if that is a good thing in general. 
+> Branches are moving pointers for people to flip around in their local
+> repositories, and it makes sense to say "My master is a bit ahead of the
+> public one", but what would we gain by making it _easier_ to add and
+> exchange many tags with the same name (e.g. refs/remotes/*/tags/v1.7.4
+> vs refs/tags/v1.7.4), other than the extra confusion?
+
+First, I should state that making tags into moving pointers is not something 
+I support, nor is it part of this proposal. Tags should still very much 
+refuse to be moved (except when forced).
+
+Having said that, there are real situations where users encounter collisions 
+in the shared tag namespace. A rare (but plausible) scenario arise when two 
+developers create (and publish) conflicting tags in their repos. A more 
+common scenario that I have encountered at $dayjob, is where two parallel 
+(semi-related) projects are developed in separate repos (with different 
+versioning because of separate release schedules), and I need to interface 
+with both repos from a single local repo. Each of the remote repos have 
+their own "v1.0" tag, but my repo can only hold one such tag. Which of those 
+tags end up "winning" in my local repo depends on my fetch order.
+
+Git already has code to discover ambiguous ref names, and we have powerful 
+tools for inspecting the history and diffs between local and remote 
+branches. But because we conflate tags into a single namespace, we cannot 
+easily use these tools when circumstances conspire to produce conflicting 
+tags.
+
+Putting remote tags into separate namespaces allows us to use the same tools 
+that we use on remote branches, to discover and inspect conflicting tags 
+when (if only rarely) they do happen.
+
+Another advantage of splitting tags into separate namespaces is that the 
+"source" or "domain" of a tag becomes slightly less foggy: Consider a tag 
+"foo" that may exist as refs/remotes/origin/tags/foo (remote/public) and/or 
+as refs/tags/foo (local/private). If it exists only locally, it may be a 
+hint that this is a "private" tag (not intended for public consumption). If 
+it exists only remotely, it's obviously a public tag. If it exists both 
+locally and remotely (without conflict), it may indicate that this is a 
+public tag that was originally created in this repo.
+
+> While you are talking about drastic reorganization (and rewriting the ref
+> code to support it), another possible Sub-proposal we may want to
+> consider is to allow "next" and "next/foo" at the same time.
+
+Interesting. I haven't followed this discussion lately (if there has been 
+any), but I guess we need to find a new way to organize loose refs that 
+doesn't cause file vs. directory problems. Obviously, the packed-refs format 
+should have no inherent problem with these refs, but I guess we can't drop 
+loose ref support completely.
+
+One sort-of-workaround could be to detect when "next" vs. "next/foo" 
+happens, and simply force one of them to be a packed ref.
+
+
+Have fun! :)
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
