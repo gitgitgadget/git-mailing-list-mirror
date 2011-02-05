@@ -1,97 +1,98 @@
-From: "George V. Reilly" <george@reilly.org>
-Subject: Re: git-svn bug: Could not unmemoize function `lookup_svn_merge' ...
-Date: Sat, 5 Feb 2011 10:32:20 -0800
-Message-ID: <AANLkTikW2jgPfO_tsdzuD6pZJAJMQPezMr7ZQvgWtkFY@mail.gmail.com>
-References: <AANLkTi=14DKGzotpZT66dG93uWHhpCa526C8F7Zk_REa@mail.gmail.com>
-	<AANLkTi=QrGK_-iJAnuKONs5WkjtKorg3wPBKdw+qWjTU@mail.gmail.com>
+From: Clemens Buchacher <drizzd@aon.at>
+Subject: Re: [PATCH] Demonstrate breakage: checkout overwrites untracked
+ symlink with directory
+Date: Sat, 5 Feb 2011 19:33:51 +0100
+Message-ID: <20110205183351.GA25717@localhost>
+References: <201102022025.06140.j6t@kdbg.org>
+ <7v7hdixkys.fsf@alter.siamese.dyndns.org>
+ <201102022324.22123.j6t@kdbg.org>
+ <201102051918.44848.j6t@kdbg.org>
+Reply-To: Clemens Buchacher <drizzd@aon.at>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: Git Mailing List <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Sat Feb 05 19:32:33 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
+To: Johannes Sixt <j6t@kdbg.org>
+X-From: git-owner@vger.kernel.org Sat Feb 05 19:32:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Plmvw-0001LL-Sh
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 19:32:33 +0100
+	id 1PlmwJ-0001a5-Rv
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 19:32:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753490Ab1BEScY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Feb 2011 13:32:24 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:37323 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753468Ab1BEScW convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Feb 2011 13:32:22 -0500
-Received: by yxt3 with SMTP id 3so1299924yxt.19
-        for <git@vger.kernel.org>; Sat, 05 Feb 2011 10:32:21 -0800 (PST)
+	id S1753282Ab1BEScl (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Feb 2011 13:32:41 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:46778 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753271Ab1BESck (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Feb 2011 13:32:40 -0500
+Received: by bwz15 with SMTP id 15so3741346bwz.19
+        for <git@vger.kernel.org>; Sat, 05 Feb 2011 10:32:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        bh=l9E0gVFVkPGJsncksrHnE+rROV3CtIxDTTiYx5KD/IY=;
-        b=wFnH8ZNKrqfyTBQK8tFnnaN4ntvu9zD3pdSRS8kefw2uIg0P8ahHWtun6TBMvygZVB
-         gd5B2q1lrmJ87F2QevDNoIti2CYdEn6DbrSAxRY3rWqF9WTQ0dJyu2I3gAZzGNW9MqvA
-         4vv3Un9KfZLLXoSLvA+tM/LJmFDxXz8P9LSwI=
+        d=googlemail.com; s=gamma;
+        h=domainkey-signature:sender:date:from:to:cc:subject:message-id
+         :reply-to:references:mime-version:content-type:content-disposition
+         :in-reply-to:user-agent;
+        bh=p3U7Fo36NCln8QrmWmFXfSIz6q2Rvka9tK45hcmJwP0=;
+        b=ua+n6zQhpxuoYgca84ISG6WeULYuv2WculQt2mGCiBrB17qbPsIb6bMjEKB0rF4QUi
+         onsU3TX62e+T7MM1B7jHQUU26htBfBoFLiruk4j7gy+PECQ36dAFfVvEwRajjs7E/1l1
+         tTMG39lsyrrlFq+MtOWclzh/PQEojOwEs/7uk=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:content-type
-         :content-transfer-encoding;
-        b=xIZofhl+h5sLoa1T2Ie0GmpBkdksKxNEsknXqLQ4De4b2rsK2zKp73tlJPckV2RT6S
-         ohZti6P5BHHRITdul6Sib1Gyosl4X+kqd/10UMGbnXo7Q+NDdtHosHFOLCpCRLOTJLV1
-         Rvknhil6Sr0kMozFg8UU9jjye3Y00aYE+NAyI=
-Received: by 10.100.255.7 with SMTP id c7mr597672ani.146.1296930740963; Sat,
- 05 Feb 2011 10:32:20 -0800 (PST)
-Received: by 10.100.14.5 with HTTP; Sat, 5 Feb 2011 10:32:20 -0800 (PST)
-In-Reply-To: <AANLkTi=QrGK_-iJAnuKONs5WkjtKorg3wPBKdw+qWjTU@mail.gmail.com>
-X-Google-Sender-Auth: 5-mug7ahuGBFtH3pFeLW9jhr9Wo
+        d=googlemail.com; s=gamma;
+        h=sender:date:from:to:cc:subject:message-id:reply-to:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        b=KRwY6Q5Tkg6ltxfLONrq785rw2IJ8rfM/JOQy/QTY4hq2wFqdxFswYiwiLInKMxg5i
+         cfu0464CmalmpOMgFOJHUQh2+dtDQ0HjTtBtxzlaIWjrhlWt5/SfqMCaIT/ov7Cx1ucu
+         RWUK2yWhIbnc7ukPY8nYaksK3O3ysSJFfTyik=
+Received: by 10.204.72.148 with SMTP id m20mr998734bkj.69.1296930758858;
+        Sat, 05 Feb 2011 10:32:38 -0800 (PST)
+Received: from darc.lan (p5B22E480.dip.t-dialin.net [91.34.228.128])
+        by mx.google.com with ESMTPS id q18sm1091155bka.15.2011.02.05.10.32.36
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Sat, 05 Feb 2011 10:32:37 -0800 (PST)
+Received: from drizzd by darc.lan with local (Exim 4.71)
+	(envelope-from <drizzd@localhost>)
+	id 1PlmxD-0006in-Jx; Sat, 05 Feb 2011 19:33:51 +0100
+Content-Disposition: inline
+In-Reply-To: <201102051918.44848.j6t@kdbg.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166106>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166107>
 
-On Mon, Dec 27, 2010 at 9:37 PM, George V. Reilly <george@reilly.org> w=
-rote:
-> Using git version 1.7.3.2 on OS X 10.6.5 against the Subversion
-> repository at work, I got
->
-> =C2=A0 =C2=A0georger@George-Reillys-MacBook-Pro-17:~/src/wc-git$ git =
-svn rebase
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0M =C2=A0 =C2=A0 =C2=A0 CoBranding/Resource=
-s/USA7/Resources.resx
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0M =C2=A0 =C2=A0 =C2=A0 CoBranding/Resource=
-s/Resources.csproj
-> =C2=A0 =C2=A0Byte order is not compatible at ../../lib/Storable.pm (a=
-utosplit
-> into ../../lib/auto/Storable/_retrieve.al) line 380, at
-> /System/Library/Perl/5.10.0/Memoize/Storable.pm line 21
->
-> =C2=A0 =C2=A0Could not unmemoize function `lookup_svn_merge', because=
- it was
-> not memoized to begin with at /usr/local/git/libexec/git-core/git-svn
-> line 3194
-> =C2=A0 =C2=A0END failed--call queue aborted at
-> /usr/local/git/libexec/git-core/git-svn line 39.
->
-> The error was repeatable.
->
-> I managed to get past it by using the git-svn Perl script from Git 1.=
-6.5.7,
-> per http://kerneltrap.org/mailarchive/git/2010/1/13/20137, and invoki=
-ng it thus:
->
-> =C2=A0 =C2=A0$ perl -I /usr/local/git/lib/perl5/site_perl/ ~/temp/git=
--svn.pl rebase
+Hi Hannes,
 
-After being absent for a month, the problem recurred. I upgraded to Git=
- 1.7.4,
-but it still occurs, albeit at line 3197 of git-svn.
+On Sat, Feb 05, 2011 at 07:18:44PM +0100, Johannes Sixt wrote:
+>
+> This adds tests where an untracked file and an untracked symlink are in the
+> way where a directory should be created by 'git checkout'. Commit b1735b1a
+> (do not overwrite files in leading path, 2010-12-14) fixed the case where
+> a file is in the way, but the untracked symlink is still removed silently.
 
-Once again, the git-svn 1.6.5.7 works past it.
---
-/George V. Reilly=C2=A0=C2=A0george@reilly.org=C2=A0 Twitter: @georgevr=
-eilly
-http://www.georgevreilly.com/blog=C2=A0=C2=A0http://blogs.cozi.com/tech
+Indeed. It was my impression from reading the code that this
+behavior is intentional. To protect symlinks from being overwritten
+as well, I believe we simply have to remove FL_SYMLINK from the
+following line in check_leading_path().
+
+diff --git a/symlinks.c b/symlinks.c
+index 3cacebd..034943b 100644
+--- a/symlinks.c
++++ b/symlinks.c
+@@ -223,7 +223,7 @@ int check_leading_path(const char *name, int len)
+        int flags;
+        int match_len = lstat_cache_matchlen(cache, name, len, &flags,
+                           FL_SYMLINK|FL_NOENT|FL_DIR, USE_ONLY_LSTAT);
+-       if (flags & (FL_SYMLINK|FL_NOENT))
++       if (flags & FL_NOENT)
+                return 0;
+        else if (flags & FL_DIR)
+                return -1;
+
+It does fix your testcase, but it may break others and I will have
+to review the code to be sure.
+
+Clemens
