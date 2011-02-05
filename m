@@ -1,81 +1,68 @@
-From: Valentin QUEQUET <valentin.quequet@gmail.com>
+From: Sverre Rabbelier <srabbelier@gmail.com>
 Subject: Re: GIT - cloning torvalds/linux-2.6.git repository trouble.
-Date: Sat, 5 Feb 2011 19:08:32 +0000
-Message-ID: <AANLkTikYPHhVaKYsQpZ2FhjxAdLetPgkPFQ-b-VtkBTJ@mail.gmail.com>
+Date: Sat, 5 Feb 2011 20:10:41 +0100
+Message-ID: <AANLkTim996+Ho_=xjkzOrGx65-6ajtObLVLwD5E0v4MW@mail.gmail.com>
 References: <AANLkTikiKagzJMh_xuOSzfA4c-qxOHhVeU2jhmbaDHji@mail.gmail.com>
-	<AANLkTi=FAWh9T3HaocdKB7V4osRPsehTo=hTP0U-JbfR@mail.gmail.com>
-	<AANLkTi=E3gWG2-3nLBW6JP+Wks2=4oUWSNSpk0=qEaU-@mail.gmail.com>
+ <AANLkTi=FAWh9T3HaocdKB7V4osRPsehTo=hTP0U-JbfR@mail.gmail.com>
+ <AANLkTi=E3gWG2-3nLBW6JP+Wks2=4oUWSNSpk0=qEaU-@mail.gmail.com> <AANLkTikYPHhVaKYsQpZ2FhjxAdLetPgkPFQ-b-VtkBTJ@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 05 20:08:40 2011
+To: Valentin QUEQUET <valentin.quequet@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 05 20:11:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PlnUs-0003aA-RS
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 20:08:39 +0100
+	id 1PlnXb-0004ud-R0
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 20:11:28 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753403Ab1BETId (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Feb 2011 14:08:33 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:64540 "EHLO
+	id S1753436Ab1BETLX (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Feb 2011 14:11:23 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:38324 "EHLO
 	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752948Ab1BETIc (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Feb 2011 14:08:32 -0500
-Received: by iwn9 with SMTP id 9so3278829iwn.19
-        for <git@vger.kernel.org>; Sat, 05 Feb 2011 11:08:32 -0800 (PST)
+	with ESMTP id S1753273Ab1BETLW (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Feb 2011 14:11:22 -0500
+Received: by iwn9 with SMTP id 9so3280357iwn.19
+        for <git@vger.kernel.org>; Sat, 05 Feb 2011 11:11:21 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=Yuyp3HWsgWpndIbP+grc7eqTxLr6a2iEznbU9DF96qI=;
-        b=l1JARQjMQZv0wwr81IGiGHUfo5OCPaE+1936uRg3OilwYir7BiS35eW7bxr58KFFsy
-         k2btzBC3NEwdcxKohZoRP5V9GLmhlgYwqopJMZiQ537zXLNvJAp0L8y+7wQvuC36/8h3
-         lN8xuJBUMgOssv5VIflr4ddWcqmBrAC6kfjXU=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=VGPIsCbOITe798//vF9hbQ2gHG/1ZXLfFTTVW/cJDpA=;
+        b=ApM7+QVsVrXxERubrqqJqmWMjpwM4C/7mdNvDzHo0JhdjyMK6A5bwedJB6bsJK4cl1
+         0pq1HunKI6NLQ1Sw6iv/ocodM7fQJwqU7W5XfHzbmwl8LcvWLjZscD8a1t3FtXjspCom
+         9yQpCEjPtENSbT7zyXjVDv3MMfwmSHpfMgHp0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
          :cc:content-type;
-        b=H2i967e/Ai2F5dZb5KVUR96OY0Cn6bD2QIsT4Y19mF4xvGONrWIF33riCU3lnqXSLp
-         eGyP3DG0F/qJqBmtTz56GkdwoAEVsag2q9g3hKOP9hwMc7t69/aSkiWnEzp6Ivc5eSuX
-         hjq7wNutKy6LIEeTP/sQFkOeka2IjMfeHHxh8=
-Received: by 10.42.229.129 with SMTP id ji1mr2678218icb.343.1296932912362;
- Sat, 05 Feb 2011 11:08:32 -0800 (PST)
-Received: by 10.42.135.7 with HTTP; Sat, 5 Feb 2011 11:08:32 -0800 (PST)
-In-Reply-To: <AANLkTi=E3gWG2-3nLBW6JP+Wks2=4oUWSNSpk0=qEaU-@mail.gmail.com>
+        b=SqK9+sVxWQODfFd9wMw4hXpb3UWh0Im7hrbNkPNvNKm5yniAWdTAxHECoN8x+2Rby5
+         82B4aWpaJTJEmKrI3MKakuJ6gisujuJ0gEdtLB+QGpOHwAmTo3wbZImnb+d0B4kt4xDU
+         HWQJKCHzzxb0TrM3stbhnjLKPH6Vh9eG3ajOA=
+Received: by 10.231.207.71 with SMTP id fx7mr14782821ibb.127.1296933081850;
+ Sat, 05 Feb 2011 11:11:21 -0800 (PST)
+Received: by 10.231.39.140 with HTTP; Sat, 5 Feb 2011 11:10:41 -0800 (PST)
+In-Reply-To: <AANLkTikYPHhVaKYsQpZ2FhjxAdLetPgkPFQ-b-VtkBTJ@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166113>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166114>
 
-2011/2/5, Sverre Rabbelier <srabbelier@gmail.com>:
-[...]
-> What happens if you lay out your repo like the urls? I.e. without the
-> "http://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git"
-> prefix?
+Heya,
 
-I 1st want to thank you for this suggestion.
+On Sat, Feb 5, 2011 at 20:08, Valentin QUEQUET
+<valentin.quequet@gmail.com> wrote:
+> This was one of the 1st things I tried in order to get a
+> fully-functional repository.
 
-However,
+Ok, so what happened when you tried? What did 'git fsck' tell you? If
+it doesn't error out, try running 'git repack' followed by 'git
+checkout -t origin/master'?
 
-This was one of the 1st things I tried in order to get a
-fully-functional repository.
+-- 
+Cheers,
 
-I think that I should be able to re-construct the whole repository from
-this set of a few .pack files (450MiB) I just downloaded.
-    ( .idx files are only there for optimization purpose )
-
-How can I do that ?
-
-    ! THAT'S THE QUESTION !
-
-Yet,
-
-I thank you for your answer.
-
-Sincerely,
-
-Valentin
+Sverre Rabbelier
