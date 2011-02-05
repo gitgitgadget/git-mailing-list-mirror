@@ -1,72 +1,64 @@
 From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] Add case insensitive support in matching pathspec
-Date: Sat, 5 Feb 2011 11:14:58 +0700
-Message-ID: <AANLkTi=5j1kjAjY6ek6YXTs24DO9J7X0QQjTB4qrZ_g3@mail.gmail.com>
-References: <1296751106-15316-1-git-send-email-pclouds@gmail.com>
- <201102032117.32745.j6t@kdbg.org> <AANLkTi=8-NibvV0NMCpA_KN6+x3GNa0mDr87jtWki_-S@mail.gmail.com>
- <7vei7nxuw5.fsf@alter.siamese.dyndns.org>
+Subject: nesting refs (Re: [1.8.0] Provide proper remote ref namespaces)
+Date: Sat, 5 Feb 2011 11:30:25 +0700
+Message-ID: <AANLkTin+VLTf62NHSdAb61qEckrsLMg+s-hnWHb0HLna@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Cc: Johannes Sixt <j6t@kdbg.org>, git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>,
-	Joshua Jensen <jjensen@workspacewhiz.com>
-X-From: git-owner@vger.kernel.org Sat Feb 05 05:15:37 2011
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>, Nicolas Pitre <nico@fluxnic.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 05 05:31:15 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PlZYe-0001OH-T7
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 05:15:37 +0100
+	id 1PlZnj-00068r-JS
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 05:31:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753291Ab1BEEP3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Feb 2011 23:15:29 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:59525 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753082Ab1BEEP3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Feb 2011 23:15:29 -0500
-Received: by ywo7 with SMTP id 7so913032ywo.19
-        for <git@vger.kernel.org>; Fri, 04 Feb 2011 20:15:28 -0800 (PST)
+	id S1753291Ab1BEEa5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Feb 2011 23:30:57 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:37958 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753116Ab1BEEa4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Feb 2011 23:30:56 -0500
+Received: by gxk9 with SMTP id 9so1178003gxk.19
+        for <git@vger.kernel.org>; Fri, 04 Feb 2011 20:30:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=HkgDs70kNUYRY3rphS7IZqCC+H7FH5aLe84MJAAAjb0=;
-        b=gC4GIiwn5W6am3/zho15Tl9T7gfTZfK7Gtc2tMYS8NOc4xgUbpjJ6dsW8zUBEK1LIr
-         ubiG3gC/yb+ruTLJTwjfIE6mM0B/xsL+rYA/GZlcYdD6DUFpbiKg4LBXB22Zv9XyI9cm
-         o9VkeBrNwpWyOmqP0w0kiukKZ2cu4lvdkuxws=
+        h=domainkey-signature:mime-version:from:date:message-id:subject:to:cc
+         :content-type;
+        bh=+woVMVDXcf94dIxsN11uoAaIfQ+dmQbm4PKDPt1UwBQ=;
+        b=bkmP6UCqyvjoB3x3Ey+IqDG2psCsRU2/FVZD9Se3K5MViVOLAgYEbNXgKh2rExKwDS
+         xbq8rTYsz2UWsUDvpWvduLrzOoB/T0yy90YP4NMkkNRTP02mtCRdjy79UmQVcDdyJzwe
+         9wVdjvsiThcKtxxVIEr/VJr0m+sSL9K91YrWw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=R0KCq7Ul3qmIncvHvs0qN8y5v5nqvdsz18an+k1QAfauZtKmBXNSTE2k/w6MA3nCfI
-         2qBHlXplHeb0wgqfG7nctKgbL8zxCaUrYsHjoNZGOW5+kFEGy65e6hC6jLaiFm/UM9LM
-         2v44JsJHLDWHgEcXwbchdOnB4kjdaNXaMsr3Y=
-Received: by 10.236.103.11 with SMTP id e11mr6401748yhg.43.1296879328252; Fri,
- 04 Feb 2011 20:15:28 -0800 (PST)
-Received: by 10.151.145.12 with HTTP; Fri, 4 Feb 2011 20:14:58 -0800 (PST)
-In-Reply-To: <7vei7nxuw5.fsf@alter.siamese.dyndns.org>
+        h=mime-version:from:date:message-id:subject:to:cc:content-type;
+        b=UOAjShTiuFKyk6yLxA4qMY65ZkSpg0JdOrTnU3K5G3GiwHjLk2G7x35nTJhVNfH3Ed
+         Rdudbff/FqwWVlA5WhxLde6819axRcV7zwvlfjTTzh1fRTUi3Yw2I1hXnLllLczrBvVV
+         73GQr5q5jI1JHsxtngsN8M5fM1wetuYHYldQY=
+Received: by 10.91.55.8 with SMTP id h8mr16264906agk.145.1296880256125; Fri,
+ 04 Feb 2011 20:30:56 -0800 (PST)
+Received: by 10.151.145.12 with HTTP; Fri, 4 Feb 2011 20:30:25 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166074>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166076>
 
-On Sat, Feb 5, 2011 at 6:06 AM, Junio C Hamano <gitster@pobox.com> wrote:
-> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
->
->>> core.ignorecase should be honored only when files on the filesystem are
->>> matched, IMO.
->>
->> Names in index, just as same as match_pathspec().
->
-> If the matched entities are names in the index, they should already be
-> canonical and we shouldn't be matching with icase, no?
+On Sat, Feb 5, 2011 at 5:39 AM, Junio C Hamano <gitster@pobox.com> wrote:
+> While you are talking about drastic reorganization (and rewriting the ref
+> code to support it), another possible Sub-proposal we may want to consider
+> is to allow "next" and "next/foo" at the same time.
 
-The patterns are case-insensitive. The example given in 21444f is "git
-ls-files mydir" should also match MyDir/* in index. Although by
-modifying match_one(), it affects more than just git-ls-files. I'm not
-the original author, so Joshua, was that patch to fix git-ls-files
-only?
+Oh yeah.. how about "next/.ref" and "next/foo/.ref"? Ref search code
+can be modified to check both "next" and "next/.ref" when "next" is
+requested. Old git basically won't work with new ref style, so there's
+not much compatibility issue.
+
+We can also add "next/.summary" to save a brief description of a ref.
+But then it would be lost in packed-refs, hm..
 -- 
 Duy
