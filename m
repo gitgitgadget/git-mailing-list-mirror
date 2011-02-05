@@ -1,98 +1,132 @@
-From: redstun <redstun@gmail.com>
-Subject: Re: [idea] separate .git dir and the working tree
-Date: Sat, 5 Feb 2011 22:24:25 +0800
-Message-ID: <AANLkTinYMuXSvKjgtpSCbJPuo=PHDGR_OgOkwtV4Azmz@mail.gmail.com>
-References: <AANLkTik4MjnpOzPdGy7ZDiH0in4e1DpjrhQFOHjUiEEE@mail.gmail.com>
- <20110205032339.GA15303@mg1> <20110205132708.GA18391@elie>
+From: Elijah Newren <newren@gmail.com>
+Subject: Re: Performance issue exposed by git-filter-branch
+Date: Sat, 5 Feb 2011 07:21:23 -0700
+Message-ID: <AANLkTi=J+oTE6RoVgziGfwNzkqgRe0yNJB0RVqdWegyc@mail.gmail.com>
+References: <41C1B4AC-8427-4D62-BEB6-689A4BE4EE5B@irridia.com>
+	<201012170254.13005.trast@student.ethz.ch>
+	<9A686258-A504-4CBB-9993-048B45B5EE6A@irridia.com>
+	<20101217030855.GB7003@burratino>
+	<AANLkTi=-0Sj9c5b778jchn+pgw26xCbioQ2K4tNgtm_G@mail.gmail.com>
+	<010EA68F-6122-47C7-B761-7D786F37B0C6@irridia.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Mike Gant <mike@gantsfort.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 05 15:26:24 2011
+Cc: git@vger.kernel.org
+To: Ken Brownfield <krb@irridia.com>
+X-From: git-owner@vger.kernel.org Sat Feb 05 15:31:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Plj5j-00046l-8V
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 15:26:23 +0100
+	id 1PljAN-0006DO-RX
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 15:31:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753566Ab1BEOZI convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Feb 2011 09:25:08 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:45341 "EHLO
+	id S1752602Ab1BEOav convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Feb 2011 09:30:51 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:47998 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753371Ab1BEOZH convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Feb 2011 09:25:07 -0500
-Received: by fxm20 with SMTP id 20so3394864fxm.19
-        for <git@vger.kernel.org>; Sat, 05 Feb 2011 06:25:05 -0800 (PST)
+	with ESMTP id S1752466Ab1BEOVZ convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Feb 2011 09:21:25 -0500
+Received: by fxm20 with SMTP id 20so3392919fxm.19
+        for <git@vger.kernel.org>; Sat, 05 Feb 2011 06:21:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=hsOfX0IJwjvhRUzg8t/BHqQA1bOLbiRzVSRSTpQUpr0=;
-        b=CTXs8p9icd/jfMDyBJThDIXcPWoy6fSvrQ4aQRwBPJueLB+S/m95tR4gtQLt0UhqYB
-         MQjsmmjjjI7vXfvu8pKCA40Feg1VE4hd4vyGiwBFiIu2NOnRpNSpFuYBh1YMT1OnjnH3
-         L8kemZYGQ6dkVM3+jnQNcFa+dK0WJpZyyrjZc=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=j9MM+5mcCVr8oAfoVq660tzBCCBVjjlIF2F9zVw7eeo=;
+        b=wVw/A3u0hiBZwYsF/x7HWkSmBp/wevlREUdNv7KFXmyI6I9WBAVmU8AWhk63HPrVU8
+         tN/FUPBUtGNFC2+d8gw/wN90vCq8qOIjCOJXc/IpjFputSLC0U04TF7Z/pJvTYFtkDBW
+         kBI/A7ioC3CRIPscam+fdbyiNP+suSDlnaTuE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=UDwo221citY4d9ASPe4GUWUsONSoPJwtA6+ELqtuX+dCQ1EgCMbqoi0sjNeTWlhW1o
-         LV8S9n2pyAFR7BTU+183wlpQ59EznnryxYbKPd8b46muk82RAwz8zz3E5pQwjsSW9oNX
-         Kkc4AYFAzHmtk0PdoEORVXDTL/rX5qmQwtVvo=
-Received: by 10.103.220.8 with SMTP id x8mr8764229muq.92.1296915905715; Sat,
- 05 Feb 2011 06:25:05 -0800 (PST)
-Received: by 10.103.212.19 with HTTP; Sat, 5 Feb 2011 06:24:25 -0800 (PST)
-In-Reply-To: <20110205132708.GA18391@elie>
+        b=DKOx0iYxMrfTBPz8spA3vXrKS5E+qVN0J1ixsDsfO1uMZF3zkY7lGbhNYsDJY4mEbJ
+         jKyYTW8XASF6364DQmN0cmqYz67u5nwhxvevlpN+cRA0VH3ZhLPriCnNWaVzytBIcFJx
+         CFQzeK4jb3323DBVx9f2CZ6EeFlC3DRNK68W8=
+Received: by 10.223.87.78 with SMTP id v14mr6190425fal.80.1296915683670; Sat,
+ 05 Feb 2011 06:21:23 -0800 (PST)
+Received: by 10.223.134.65 with HTTP; Sat, 5 Feb 2011 06:21:23 -0800 (PST)
+In-Reply-To: <010EA68F-6122-47C7-B761-7D786F37B0C6@irridia.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166095>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166096>
 
-Making .git a symbol link is nice.
+Hi,
 
-Regarding the GIT_DIR variable, looks like it needs to be paired with
-the GIT_WORK_TREE variable, does this mean that I can only have one
-local git repository?
+On Fri, Feb 4, 2011 at 2:17 PM, Ken Brownfield <krb@irridia.com> wrote:
+> Thanks for the feedback on git_fast_filter. =C2=A0It takes 11.5 hours=
+ on our repository instead of 6.5 days, so that's a significant improve=
+ment. :-) =C2=A0I have a couple of observations:
+>
+> 1) You said that your repo would have taken 2-3 months to filter with=
+ git-filter-branch, and the time was reduced to ~1hr. =C2=A0I'm surpris=
+ed our reduction was not quite as dramatic, although I presume the vari=
+ability of repo contents are the explanation.
 
-what I wanted is, I may have multiple git working tree in my $HOME, lik=
-e:
-$HOME/proj1
-$HOME/proj2,
+Variability of the repo certainly would account for some differences,
+though I suspect more of the differences come from what kind of
+filtering we were doing.  For example, the advantage of
+git_fast_filter over filter-branch's --index-filter will be much less
+than its advantage over filter-branch's --tree-filter.  Further, in my
+case, I was parsing and potentially editing the contents of all files,
+which becomes much more painful with filter-branch as you'll need to
+re-edit the exact same contents in as many revisions of history as the
+file remains unchanged in (in other words, duplicating the same work
+hundreds or thousands of times).  With git_fast_filter, I only needed
+to parse/edit a given version of some file exactly once.  That's what
+really helped in my case.
 
-I then wanted their .git directories respectively located at
-/safe/disk/.git_proj1
-/safe/disk/.git_proj2
+> 2) The resulting repository pack files are actually much larger. =C2=A0=
+A garbage collection reduces the size below the original, but only slig=
+htly. =C2=A0I'm concerned that the recreated repository has redundant o=
+r inefficiently stored information, but I'm not sure how to verify what=
+ objects are taking up what space.
 
-How can I get this? I tried to read the doc but didn't have much luck.
+You may want to use packinfo.pl from under contrib/stats/ in the git
+repository to find out what objects take up how much space.  From my
+notes on using it for this purpose:
 
-Thanks
+  git verify-pack -v .git/objects/pack/pack-<sha1sum>.idx |
+packinfo.pl -tree -filenames > tree-info.txt
+  sort -k 4 -n tree-info.txt | grep -v ^$ | less
 
-On Sat, Feb 5, 2011 at 9:27 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
-ote:
-> (restoring cc list; please do not cull cc's)
+> 3) git_fast_filter doesn't currently support remote submodules. =C2=A0=
+When it tries to parse a submodule line, the regex fails and the code a=
+borts:
 >
-> Mike Gant wrote:
->> On Sat, Feb 05, 2011 at 10:53:58AM +0800, redstun wrote:
+> Expected:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0M 100644 :433236 foo/bar/bletch
+> Received, something like:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0M 100644 cd821b4c0ea8e9493069ff43712a0b09 =
+foo/bar/bletch
 >
->>> I think separating the .git directory from its working tree could
->>> increase the safety of the data to one more level higher.
-> [...]
->> GIT_DIR and GIT_WORK_TREE might be what you are looking for. Explana=
-tion
->> of usage in 'man git'
+> To correct the issue, I modified git_fast_filter to simply skip these=
+=2E =C2=A0While we no longer utilize remote submodules, I would prefer =
+not to have them removed.
 >
-> The .git directory is allowed to be a symlink. =C2=A0Or a file like s=
-o
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0gitdir: /path/to/git/repo
->
-> for symlink-challenged operating systems. =C2=A0See gitrepository-lay=
-out(7)
-> for details.
->
-> Cheers,
-> Jonathan
->
+> Any feedback on what the proper behavior would be in the submodule ca=
+se? =C2=A0Perhaps this is covered in your internal version?
+
+git_fast_filter would need to be modified to handle this kind of
+input, create an appropriate object type, and that object type would
+need to be able to appropriately output itself later.  Since
+submodules haven't really been relevant for me, I've never bothered
+implementing this[*].  The assumption that git-fast-export will
+produce numeric ids (i.e. that submodules are not present) is somewhat
+hardwired in, so it'd take a little bit of refactoring, though
+probably not to bad.
+
+
+Elijah
+
+[*] Well, actually we did hit it once somewhat recently when someone
+created a commit containing a submodule...and then also immediately
+reverted it.  Since we don't want to use submodules, I simply put in a
+hack that would recognize them and unconditionally strip them out on
+the input parsing end, which sounds like the same thing you did.
+That's obviously not what you're asking for.
