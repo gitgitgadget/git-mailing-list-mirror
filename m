@@ -1,118 +1,170 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [1.8.0] Provide proper remote ref namespaces
-Date: Sun, 06 Feb 2011 00:39:57 +0100
-Message-ID: <201102060039.57588.johan@herland.net>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
- <20110205193708.GA2192@sigill.intra.peff.net>
- <alpine.LFD.2.00.1102051449420.12104@xanadu.home>
+From: Joe Perches <joe@perches.com>
+Subject: [PATCH] git-send-email.perl: Add --suppress-to
+Date: Sat, 05 Feb 2011 15:40:08 -0800
+Message-ID: <1296949208.4133.66.camel@Joe-Laptop>
+References: <1290272809.27951.30.camel@Joe-Laptop>
+	 <m2mxp3zr88.fsf@igel.home> <1290286877.31117.15.camel@Joe-Laptop>
+	 <4CE84FF3.2070906@pcharlan.com> <1290294365.31117.40.camel@Joe-Laptop>
+	 <7vmxowq6gz.fsf@alter.siamese.dyndns.org>
+	 <1290807268.11971.310.camel@Joe-Laptop>
+	 <7vk4jzpq8h.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Nicolas Pitre <nico@fluxnic.net>, Jeff King <peff@peff.net>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 06 00:40:18 2011
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+Cc: git <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 06 00:40:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Plrjm-0003AR-3A
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 00:40:18 +0100
+	id 1Plrjm-0003AR-Q2
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 00:40:19 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753942Ab1BEXkF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Feb 2011 18:40:05 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:42773 "EHLO smtp.getmail.no"
+	id S1753946Ab1BEXkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Feb 2011 18:40:13 -0500
+Received: from mail.perches.com ([173.55.12.10]:3608 "EHLO mail.perches.com"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753936Ab1BEXkD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Feb 2011 18:40:03 -0500
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LG600L6X4EOOT40@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Sun, 06 Feb 2011 00:40:00 +0100 (MET)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id D3CEA1EA5680_D4DDFD0B	for <git@vger.kernel.org>; Sat,
- 05 Feb 2011 23:40:00 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id E893B1EA28FB_D4DDFCFF	for <git@vger.kernel.org>; Sat,
- 05 Feb 2011 23:39:59 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LG600HCR4ENBC30@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Sun, 06 Feb 2011 00:39:59 +0100 (MET)
-User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.0; x86_64; ; )
-In-reply-to: <alpine.LFD.2.00.1102051449420.12104@xanadu.home>
+	id S1753936Ab1BEXkJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Feb 2011 18:40:09 -0500
+Received: from [192.168.1.162] (unknown [192.168.1.162])
+	by mail.perches.com (Postfix) with ESMTP id D888A24368;
+	Sat,  5 Feb 2011 15:40:05 -0800 (PST)
+In-Reply-To: <7vk4jzpq8h.fsf@alter.siamese.dyndns.org>
+X-Mailer: Evolution 2.30.3 
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166129>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166130>
 
-On Saturday 05 February 2011, Nicolas Pitre wrote:
-> On Sat, 5 Feb 2011, Jeff King wrote:
-> > On Sat, Feb 05, 2011 at 01:39:57PM -0500, Nicolas Pitre wrote:
-> > > So that's what has to be fixed.  If you get duplicated tag names then
-> > > just warn the user and give priority to the local one, or error out
-> > > with a "ambiguous tag specification" if no local but multiple remote
-> > > tags with the same name are found (the user would have to be more
-> > > precise in the tag scope in that case).
-> > 
-> > The latter seems like a regression for the common case of fetching from
-> > two upstreams. E.g., I usually pull from Junio, getting
-> > remotes/origin/v1.7.0.  One day Shawn is the interim maintainer, and I
-> > pull from him, getting remotes/spearce/v1.7.0, which he previously
-> > fetched from Junio. Under the current code, I can still do "git show
-> > v1.7.0"; under the scheme described above I now have to say
-> > "origin/v1.7.0" to disambiguate.
-> 
-> Let's suppose that both tags are identical, as in your scenario above
-> they would be, then there is no need to call for any ambiguity in that
-> case.
-> 
-> > The real issue, I think, is that we are claiming ambiguity even though
-> > those tags almost certainly point to the same sha1. When handling
-> > ambiguous tags, should we perhaps check to see if all of the
-> > ambiguities point to the same sha1, and in that case, just pick one at
-> > random?
-> 
-> If they're identical then there is no randomness.  If they refer to
-> different tag objects, even if those tag objects do refer to the same
-> commit object, then I'd say there is an ambiguity only if the tag object
-> content matters i.e. when displaying the tag content.
-> 
-> > In the case of resolving a ref to a sha1, then by definition they are
-> > all equivalent to pick. For things that care (e.g., "git checkout") we
-> > should probably still complain (although many of those commands have
-> > their own disambiguation code to prefer refs/heads/ or whatever
-> > anyway).
-> 
-> We are probably more or less saying the same thing.
+Add an equivalent command line option to suppress-cc.
 
-Yes, I believe this was all covered by a footnote in my proposal. Quote:
+Signed-off-by: Joe Perches <joe@perches.com>
+---
+ Documentation/git-send-email.txt |   17 +++++++++++++++++
+ git-send-email.perl              |   33 +++++++++++++++++++++++++++++++--
+ 2 files changed, 48 insertions(+), 2 deletions(-)
 
-[2]: When looking up a shorthand tag name (e.g. v1.7.4): If a local tag 
-(refs/tags/v1.7.4) is found, then we have an unambiguous match. If no local 
-tag is found, we look up the tag name in all configured remotes (using the 
-method described in [1]). If the tag name exists in one or more remotes, and 
-those remotes all agree on its ultimate object name (after applying e.g. 
-^{commit} or whatever is appropriate in the context of the lookup), then we 
-also have an unambiguous match. However, if the tag name exists in multiple 
-remotes, and they do NOT all agree on its ultimate object name, then the 
-shorthand tag name is ambiguous and the lookup fails. The user can always 
-resolve this ambiguity by creating a local tag (refs/tags/v1.7.4) pointing 
-to the desired object.
-
-
-Have fun! :)
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
+index 7ec9dab..69e03e8 100644
+--- a/Documentation/git-send-email.txt
++++ b/Documentation/git-send-email.txt
+@@ -232,6 +232,23 @@ Automating
+ 	cc list. Default is the value of 'sendemail.signedoffbycc' configuration
+ 	value; if that is unspecified, default to --signed-off-by-cc.
+ 
++--suppress-to=<category>::
++	Specify an additional category of recipients to suppress the
++	auto-to of:
+++
++--
++- 'author' will avoid including the patch author
++- 'self' will avoid including the sender
++- 'tocmd' will avoid running the --to-cmd
++- 'bodyto' will avoid including anyone mentioned in To lines in the
++   patch body (commit message) except for self (use 'self' for that)
++- 'all' will suppress all auto to values.
++--
+++
++Default is the value of 'sendemail.suppressto' configuration value; if
++that is unspecified, default to 'self' if --suppress-from is
++specified.
++
+ --suppress-cc=<category>::
+ 	Specify an additional category of recipients to suppress the
+ 	auto-cc of:
+diff --git a/git-send-email.perl b/git-send-email.perl
+index 76565de..0365c29 100755
+--- a/git-send-email.perl
++++ b/git-send-email.perl
+@@ -74,6 +74,7 @@ git send-email [options] <file | directory | rev-list options >
+   Automating:
+     --identity              <str>  * Use the sendemail.<id> options.
+     --to-cmd                <str>  * Email To: via `<str> \$patch_path`
++    --suppress-to           <str>  * author, self, tocmd, bodyto, all.
+     --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path`
+     --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, all.
+     --[no-]signed-off-by-cc        * Send to Signed-off-by: addresses. Default on.
+@@ -196,6 +197,7 @@ my ($smtp_server, $smtp_server_port, @smtp_server_options);
+ my ($smtp_authuser, $smtp_encryption);
+ my ($identity, $aliasfiletype, @alias_files, $smtp_domain);
+ my ($validate, $confirm);
++my (@suppress_to);
+ my (@suppress_cc);
+ my ($auto_8bit_encoding);
+ 
+@@ -226,6 +228,7 @@ my %config_settings = (
+     "aliasfiletype" => \$aliasfiletype,
+     "bcc" => \@bcclist,
+     "aliasesfile" => \@alias_files,
++    "suppressto" => \@suppress_to,
+     "suppresscc" => \@suppress_cc,
+     "envelopesender" => \$envelope_sender,
+     "multiedit" => \$multiedit,
+@@ -301,6 +304,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
+ 		    "quiet" => \$quiet,
+ 		    "cc-cmd=s" => \$cc_cmd,
+ 		    "suppress-from!" => \$suppress_from,
++		    "suppress-to=s" => \@suppress_to,
+ 		    "suppress-cc=s" => \@suppress_cc,
+ 		    "signed-off-cc|signed-off-by-cc!" => \$signed_off_by_cc,
+ 		    "confirm=s" => \$confirm,
+@@ -369,6 +373,24 @@ foreach my $setting (values %config_bool_settings) {
+ # 'default' encryption is none -- this only prevents a warning
+ $smtp_encryption = '' unless (defined $smtp_encryption);
+ 
++# Set TO suppressions
++my(%suppress_to);
++if (@suppress_to) {
++	foreach my $entry (@suppress_to) {
++		die "Unknown --suppress-to field: '$entry'\n"
++			unless $entry =~ /^(?:all|author|self|tocmd|bodyto)$/;
++		$suppress_to{$entry} = 1;
++	}
++}
++
++if ($suppress_to{'all'}) {
++	foreach my $entry (qw (author self tocmd bodyto)) {
++		$suppress_to{$entry} = 1;
++	}
++	delete $suppress_to{'all'};
++}
++$suppress_to{'self'} = $suppress_from if defined $suppress_from;
++
+ # Set CC suppressions
+ my(%suppress_cc);
+ if (@suppress_cc) {
+@@ -407,7 +429,11 @@ die "Unknown --confirm setting: '$confirm'\n"
+ 
+ # Debugging, print out the suppressions.
+ if (0) {
+-	print "suppressions:\n";
++	print "To suppressions:\n";
++	foreach my $entry (keys %suppress_to) {
++		printf "  %-5s -> $suppress_to{$entry}\n", $entry;
++	}
++	print "Cc suppressions:\n";
+ 	foreach my $entry (keys %suppress_cc) {
+ 		printf "  %-5s -> $suppress_cc{$entry}\n", $entry;
+ 	}
+@@ -1201,6 +1227,9 @@ foreach my $t (@files) {
+ 			}
+ 			elsif (/^To:\s+(.*)$/) {
+ 				foreach my $addr (parse_address_line($1)) {
++
++				    next if $suppress_to{'author'};
++				    next if $suppress_to{'self'} and $author eq $sender;
+ 					printf("(mbox) Adding to: %s from line '%s'\n",
+ 						$addr, $_) unless $quiet;
+ 					push @to, sanitize_address($addr);
+@@ -1269,7 +1298,7 @@ foreach my $t (@files) {
+ 	close $fh;
+ 
+ 	push @to, recipients_cmd("to-cmd", "to", $to_cmd, $t)
+-		if defined $to_cmd;
++		if defined $to_cmd && !$suppress_to{'tocmd'};
+ 	push @cc, recipients_cmd("cc-cmd", "cc", $cc_cmd, $t)
+ 		if defined $cc_cmd && !$suppress_cc{'cccmd'};
+ 
