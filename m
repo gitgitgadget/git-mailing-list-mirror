@@ -1,79 +1,80 @@
-From: david@lang.hm
-Subject: Re: moving to a git-backed wiki
-Date: Fri, 4 Feb 2011 23:00:16 -0800 (PST)
-Message-ID: <alpine.DEB.2.00.1102042259520.8162@asgard.lang.hm>
-References: <7vsjw957fq.fsf_-_@alter.siamese.dyndns.org> <7vzkqg4x2h.fsf_-_@alter.siamese.dyndns.org> <20110131225529.GC14419@sigill.intra.peff.net> <AANLkTimHCp_JKUw1keJoA4zD_q7Sci+rOwPeAs_T=7xH@mail.gmail.com> <20110201201144.GA16003@sigill.intra.peff.net>
- <AANLkTikfzzELUaN3B+20rh9D51St8mUYs4p-WYjp8JVV@mail.gmail.com> <4D488DCD.3080305@eaglescrag.net> <4D4929F4.3020805@snarc.org> <4D4A11D7.4040103@eaglescrag.net> <20110203174518.GA14871@sigill.intra.peff.net> <20110204143421.GA6449@gnu.kitenet.net>
+From: Pete Harlan <pgit@pcharlan.com>
+Subject: Re: [1.8.0] Tracking empty directories
+Date: Fri, 04 Feb 2011 23:43:48 -0800
+Message-ID: <4D4CFFB4.2040508@pcharlan.com>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org> <m3zkqe8xc8.fsf_-_@localhost.localdomain> <AANLkTi=bK7mFS3eWVMWXqZSnv73tafL9AGazk4jPLddp@mail.gmail.com> <4928FF12-E593-4CDB-AC68-B4078CC5920E@gmail.com>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII; format=flowed
-Cc: git@vger.kernel.org
-To: Joey Hess <joey@kitenet.net>
-X-From: git-owner@vger.kernel.org Sat Feb 05 08:00:34 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jay Soffian <jaysoffian@gmail.com>,
+	Jakub Narebski <jnareb@gmail.com>,
+	"git@vger.kernel.org" <git@vger.kernel.org>
+To: David Aguilar <davvid@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 05 08:44:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Plc8H-0007So-Bp
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 08:00:33 +0100
+	id 1Plcop-0003kF-VD
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 08:44:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751229Ab1BEHAW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Feb 2011 02:00:22 -0500
-Received: from mail.lang.hm ([64.81.33.126]:40330 "EHLO bifrost.lang.hm"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751056Ab1BEHAU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Feb 2011 02:00:20 -0500
-Received: from asgard.lang.hm (asgard.lang.hm [10.0.0.100])
-	by bifrost.lang.hm (8.13.4/8.13.4/Debian-3) with ESMTP id p1570Gvl011259;
-	Fri, 4 Feb 2011 23:00:16 -0800
-X-X-Sender: dlang@asgard.lang.hm
-In-Reply-To: <20110204143421.GA6449@gnu.kitenet.net>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1750974Ab1BEHoT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Feb 2011 02:44:19 -0500
+Received: from hapkido.dreamhost.com ([66.33.216.122]:58707 "EHLO
+	hapkido.dreamhost.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750914Ab1BEHoS (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Feb 2011 02:44:18 -0500
+Received: from homiemail-a42.g.dreamhost.com (caibbdcaaaaf.dreamhost.com [208.113.200.5])
+	by hapkido.dreamhost.com (Postfix) with ESMTP id 0238017A5AF
+	for <git@vger.kernel.org>; Fri,  4 Feb 2011 23:44:18 -0800 (PST)
+Received: from homiemail-a42.g.dreamhost.com (localhost [127.0.0.1])
+	by homiemail-a42.g.dreamhost.com (Postfix) with ESMTP id 4F8EF68C05D;
+	Fri,  4 Feb 2011 23:43:49 -0800 (PST)
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pcharlan.com; h=message-id:date
+	:from:mime-version:to:cc:subject:references:in-reply-to
+	:content-type:content-transfer-encoding; q=dns; s=pcharlan.com;
+	 b=BLOUuQyBQECyLXZgfmXIxsBogLej3jVTdHOuxyre+fp9fbCY67jEup8/4U96l
+	IfbEpVO8qpJI+dhMi+GWTDeJXu8MQ1HZsWkiqS8gVqKDD3aQhbH9/AYNqGCtl/OV
+	8Sw9AzDNDDSGxXLBBC6azbp4quGZrNQ4jkK21aLnpeR2+8=
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pcharlan.com; h=message-id
+	:date:from:mime-version:to:cc:subject:references:in-reply-to
+	:content-type:content-transfer-encoding; s=pcharlan.com; bh=SLQc
+	CvwKqYL/Zx0KLjybRY29lbU=; b=kdWG4UK7wVO2FJE5PLdeNAtBmZF3SZJt6fYf
+	JvhJTvbE06MFAXhFJlXWKmbPGwIzz+ldkCxtjEBHPoI50LUNFtnhqpUJKCCXUgRB
+	KSPyQvreop8SG7daOHts3LpiXw5R79G1JziPZ7RKWveB0qpbepsHs6RMTSZo81up
+	SVjzLDc=
+Received: from [192.168.0.101] (185.132-78-65.ftth.swbr.surewest.net [65.78.132.185])
+	(Authenticated sender: pete@tento.net)
+	by homiemail-a42.g.dreamhost.com (Postfix) with ESMTPA id 2C8E968C05B;
+	Fri,  4 Feb 2011 23:43:49 -0800 (PST)
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
+In-Reply-To: <4928FF12-E593-4CDB-AC68-B4078CC5920E@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166077>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166078>
 
-On Fri, 4 Feb 2011, Joey Hess wrote:
+On 02/02/2011 03:33 PM, David Aguilar wrote:
+> I don't like where this is going. Users are not always right. Touch
+> .gitignore and be done with it.  This is a big change with
+> negligible benefits.  I don't understand why this is needed.
 
-> Jeff King wrote:
->> If it sounds like I'm handwaving away scalability problems, I am. I'd be
->> curious to see some performance numbers for gollum or ikiwiki versus
->> more traditional wiki formats.
->
-> Ikiwiki builds static pages, this tends to mean it doesn't have
-> performance, because there is little more to perform than
-> httpd < file > network :)
-> So I've routinely had ikiwiki sites slashdotted, and not noticed.
+I worked for a huge company that was converting a large project to
+Git.  They had a wiki about the conversion.  There was a section
+titled "Git Gotchas" that had one entry: Git Doesn't Track Empty
+Directories.
 
-I think you mean it doesn't have performance _problems_ ;-)
+This has come up as something to be worked around in each of the
+conversions to Git I've been part of.
 
-David Lang
+And unlike other things Git doesn't track, such as permissions or
+modification times, I can't argue that Git's behavior here is superior
+to what they were expecting.  I'd love to see this feature in Git if
+only to make the issue go away.  And I don't think it's a slippery
+slope, that once this is in then they'll be clamoring for resource
+forks and ACLs.  Developers know some things aren't handled by SCMs,
+they just don't think that includes directories.
 
-> Ikiwiki is not enormously fast in the rare cases when it does have to
-> run as a CGI, but little of that has to do with git. About the worst
-> case is that saving a page edit leads to a git commit -- if git
-> decides to gc the repository right then, it could make the save stall
-> for a while. There are easy ways to avoid that. (ie, git gc in cron job)
-> In general, though ikiwiki as a CGI is fast enough to not be annoying --
-> although it won't scale to a site the size of wikipedia.
->
-> Since I'm lazy, ikiwiki does not include a history or diff viewer. It
-> just points off to gitweb or a similar tool. As you say, gitweb can be
-> fast enough, and really most wiki users do read their current content,
-> or maybe make an edit; digging in the history is comparatively rare.
-> And once users realize the wiki is in git, they can use gitk to dig in
-> the history without using any server resources. :)
->
-> The feature I like best with using git for a wiki (besides ease of
-> branching) is that it can actually make a legitimate use of the
-> woefully underused git push over git:// feature. Ikiwiki can be
-> configured to check such pushes, running via the pre-receive hook. This
-> allows it to limit the changes that can be pushed anonymously to changes
-> that could be made using the web interface. So if you've chosen to lock
-> some pages, or virus filter attachments, or whatever, in the web side of
-> the wiki, that all applies to the anonymous git pushes too. Details at
-> <http://ikiwiki.info/tips/untrusted_git_push/>
->
->
+--Pete
