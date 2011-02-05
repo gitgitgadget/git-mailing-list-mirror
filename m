@@ -1,130 +1,102 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
 Subject: Re: [PATCH] cache-tree: do not cache empty trees
-Date: Sat, 5 Feb 2011 04:14:12 -0600
-Message-ID: <20110205101412.GB1685@elie>
+Date: Sat, 5 Feb 2011 17:32:05 +0700
+Message-ID: <AANLkTingZB_+3W-PBATCVywjR31ft_AH+e0Z+4rsUR45@mail.gmail.com>
 References: <1296894611-29398-1-git-send-email-pclouds@gmail.com>
- <1296899427-1394-1-git-send-email-pclouds@gmail.com>
+ <1296899427-1394-1-git-send-email-pclouds@gmail.com> <20110205101412.GB1685@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
 	Jakub Narebski <jnareb@gmail.com>,
 	"Dmitry S. Kravtsov" <idkravitz@gmail.com>,
 	Shawn Pearce <spearce@spearce.org>
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 05 11:14:25 2011
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 05 11:32:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Plf9t-0007rZ-0a
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 11:14:25 +0100
+	id 1PlfRb-00078f-Pm
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 11:32:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752100Ab1BEKOS convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Feb 2011 05:14:18 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:33286 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751943Ab1BEKOS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 5 Feb 2011 05:14:18 -0500
-Received: by iyj8 with SMTP id 8so539951iyj.19
-        for <git@vger.kernel.org>; Sat, 05 Feb 2011 02:14:17 -0800 (PST)
+	id S1752168Ab1BEKch convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Feb 2011 05:32:37 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:52484 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752103Ab1BEKcg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Feb 2011 05:32:36 -0500
+Received: by wwa36 with SMTP id 36so3219657wwa.1
+        for <git@vger.kernel.org>; Sat, 05 Feb 2011 02:32:35 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=1aAj1jof5aVBV/jXt2DQhz2nt9HbpjCgrO8U6k5aFCE=;
-        b=M0pjitojK0Cd7FSGTw244J1OhM+N95dP2pW7Ib3ePyVqohJee9r/WK+OB/ilBrLxJM
-         bPJIpwWxUFVJLsqokW3yrI9cBvSpu3pr8Ub+4xe2FGFKZCwDBpq2i9YIbh14BPOmhHhk
-         RNyzWxtFLkR8F7nPx8nzSW9sk8H+1+tqgGQVI=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=jhr8k3h8gihYDXDXPSsVjuwuerq6l+4eSu+2opDIQjM=;
+        b=AQFErejtkgs3IAPP/yE/mb9vOUNIhOyKvZ4z0jvJvQeZnUdgOIMFsKV7fv5uC0SgXP
+         q69BNavM9buWdtafnePmY+ZwoTzghXWuDzRF0Z7VxKyshP+EJOdPMh4zFbNZhgWDSno2
+         fRZbfgXc66/UHcNMtO4dXvE5tmHO+PuRCPS9M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=kkQfrWdsuyCesEQvWspYz5+pSCETcm25gLMN9Q4VC/gfjZYIHBygFKRinxSVd1LHnl
-         YCNqkMfda1z8PIH3eAsVXiJLzMUah9QFnQPyFZIxZ5RCZdRZZBzuF5VspTn869ZOqBjI
-         HE8/jHYQOu25qGvlsojT0oOYMmdVyquedB/Qg=
-Received: by 10.42.226.66 with SMTP id iv2mr1572519icb.78.1296900857358;
-        Sat, 05 Feb 2011 02:14:17 -0800 (PST)
-Received: from elie (adsl-76-206-235-233.dsl.chcgil.sbcglobal.net [76.206.235.233])
-        by mx.google.com with ESMTPS id i16sm1499875ibl.18.2011.02.05.02.14.15
-        (version=SSLv3 cipher=RC4-MD5);
-        Sat, 05 Feb 2011 02:14:16 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <1296899427-1394-1-git-send-email-pclouds@gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=aHmOypzQdm3D4R4zWVErd05YDUG/EYf4w+b2MUjPDdcaAGoXB5KPCxRLXRdgfTMfad
+         Hj2fVtWwoO6mtO0sio7tVoc9F7jzJmC1rP3PP46pcHMjoa5Y/UicocUbvXIBT57eQSyC
+         R11dcP7xmeGqntZn1v4gJcieUyBjHQDwEVcCM=
+Received: by 10.216.24.135 with SMTP id x7mr286520wex.43.1296901955135; Sat,
+ 05 Feb 2011 02:32:35 -0800 (PST)
+Received: by 10.216.66.144 with HTTP; Sat, 5 Feb 2011 02:32:05 -0800 (PST)
+In-Reply-To: <20110205101412.GB1685@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166084>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166085>
 
-Hi,
+2011/2/5 Jonathan Nieder <jrnieder@gmail.com>:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>> +
+>> +T1=3Df4ec99e8174c01eab488469b4c2680500bbb18da
+>> +T2=3D4b825dc642cb6eb9a060e54bf8d69288fbee4904
+>
+> What are these trees? =C2=A0Do they need to be hardcoded?
 
-Some quick nits to save myself time.  The basic idea of the patch
-seems sound.
+I have uneasy feeling constructing a tree manually. Hardcoding it (or
+less automatic check) makes me feel better. I'm cooking a patch to
+make hash-object reject malformed trees/commits/tags. Then I'll remove
+these SHA-1.
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>> +
+>> +test_expect_success 'setup' '
+>> + =C2=A0 =C2=A0 printf "40000 empty\0\x4b\x82\x5d\xc6\x42\xcb\x6e\xb=
+9\xa0\x60\xe5\x4b\xf8\xd6\x92\x88\xfb\xee\x49\x04" >newtree &&
+>
+> printf '\xab' is unfortunately unportable. =C2=A0I suppose
+> this should rather say something like
+>
+> =C2=A0test_unequal () {
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0printf '%s\n' "$1" >bad &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0printf '%s\n' "$2" >actual &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0! test_cmp bad actual
+> =C2=A0}
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0empty_tree=3D$(git mktree </dev/null) &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0tree_with_empty_subtree=3D$(
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0echo "040000 t=
+ree $empty_tree =C2=A0 empty" |
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0git mktree
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0) &&
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_unequal "$empty_tree" "$tree_with_emp=
+ty_subtree"
 
-> --- /dev/null
-> +++ b/t/t1013-read-tree-empty.sh
-> @@ -0,0 +1,38 @@
-> +#!/bin/sh
-> +
-> +test_description=3D'read-tree with empty trees'
-> +
-> +. ./test-lib.sh
-> +
-> +T1=3Df4ec99e8174c01eab488469b4c2680500bbb18da
-> +T2=3D4b825dc642cb6eb9a060e54bf8d69288fbee4904
+Hah! Was wondering how the heck they could create trees manually. So
+it's mktree. Thanks!
 
-What are these trees?  Do they need to be hardcoded?
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0...
+>
+> Sane?
 
-> +
-> +test_expect_success 'setup' '
-> +	printf "40000 empty\0\x4b\x82\x5d\xc6\x42\xcb\x6e\xb9\xa0\x60\xe5\x=
-4b\xf8\xd6\x92\x88\xfb\xee\x49\x04" >newtree &&
-
-printf '\xab' is unfortunately unportable.  I suppose
-this should rather say something like
-
- test_unequal () {
-	printf '%s\n' "$1" >bad &&
-	printf '%s\n' "$2" >actual &&
-	! test_cmp bad actual
- }
-
-	empty_tree=3D$(git mktree </dev/null) &&
-	tree_with_empty_subtree=3D$(
-		echo "040000 tree $empty_tree	empty" |
-		git mktree
-	) &&
-	test_unequal "$empty_tree" "$tree_with_empty_subtree"
-
-> +test_expect_success 'ls-tree T1 (with empty tree)' '
-> +	git ls-tree $T1 >actual &&
-> +	cat <<EOF >expected &&
-> +040000 tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904	empty
-> +EOF
-> +	test_cmp expected actual
-> +'
-
-	echo "040000 tree $empty_tree	empty" >expect &&
-	git ls-tree "$tree_with_empty_subtree" >actual &&
-	test_cmp expect actual
-
-> +
-> +test_expect_success 'write-tree removes empty tree' '
-> +	git read-tree "$T1" &&
-> +	git write-tree >actual
-> +	echo $T2 >expected
-> +	test_cmp expected actual
-> +'
-
-	git read-tree "$tree_with_empty_subtree" &&
-	...
-
-Sane?
-Jonathan
+Don't know. But it's definitely saner than my version.
+--=20
+Duy
