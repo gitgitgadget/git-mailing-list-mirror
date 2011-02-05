@@ -1,144 +1,106 @@
-From: Jared Hance <jaredhance@gmail.com>
-Subject: [PATCH] Add support for merging from upstream by default.
-Date: Fri,  4 Feb 2011 19:45:21 -0500
-Message-ID: <1296866721-27818-1-git-send-email-jaredhance@gmail.com>
-Cc: Jared Hance <jaredhance@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 05 01:46:10 2011
+From: Tor Arvid Lund <torarvid@gmail.com>
+Subject: Re: git to p4 conversion
+Date: Sat, 5 Feb 2011 01:53:08 +0100
+Message-ID: <AANLkTi=onuZtGWPTYvw_-rKsR6t-R2UquAUPLHAm-TVV@mail.gmail.com>
+References: <AANLkTi=0TSD6p7WtsVzx=pq8=GVu+jHUdxt1bnC++CT+@mail.gmail.com>
+	<4D4AF29E.7070509@vmware.com>
+	<AANLkTikW_sU8oCmU9wN5q1OPPJrQbS2YZAvS0C_nBQbD@mail.gmail.com>
+	<loom.20110204T004658-497@post.gmane.org>
+	<AANLkTikfGapDfZtD9H10797Ted_Av78WD8M7XrACOCpW@mail.gmail.com>
+	<AANLkTimrwUxNOAnfxgvReGN+-h4_0jhZ731y22TB6u1K@mail.gmail.com>
+	<AANLkTi=_spLE-KMnou-2LLQjwq4FUZxNr9pk7D9C=4PK@mail.gmail.com>
+	<AANLkTi=dZdSqcNckyU7Lb2Zj-khfj=Xiyzbv7LSC+zT2@mail.gmail.com>
+	<AANLkTimGaPQ=hRp+2pvw-hAOg+wp50nvc_sv9jNTay=n@mail.gmail.com>
+	<AANLkTimJm81V0D8_j3OfZTcEkyn_jd6_QB2nv8T69JBY@mail.gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Cc: Vitor Antunes <vitor.hda@gmail.com>, git@vger.kernel.org,
+	Ian Wienand <ianw@vmware.com>
+To: Endre Czirbesz <endre@czirbesz.hu>
+X-From: git-owner@vger.kernel.org Sat Feb 05 01:55:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PlWHx-0007XC-AI
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 01:46:09 +0100
+	id 1PlWR3-0002jN-GQ
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 01:55:33 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752277Ab1BEApo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 4 Feb 2011 19:45:44 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:65247 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752085Ab1BEApo (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 4 Feb 2011 19:45:44 -0500
-Received: by vxb37 with SMTP id 37so926663vxb.19
-        for <git@vger.kernel.org>; Fri, 04 Feb 2011 16:45:43 -0800 (PST)
+	id S1752075Ab1BEAxK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 4 Feb 2011 19:53:10 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:50000 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751085Ab1BEAxJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 4 Feb 2011 19:53:09 -0500
+Received: by gxk9 with SMTP id 9so1145438gxk.19
+        for <git@vger.kernel.org>; Fri, 04 Feb 2011 16:53:08 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=Ynil4xnIks3iCpl1HUuZYyTb1BeUoBuf8YapfwCZVnQ=;
-        b=UEAguSRBr/DEcNjfQhB7A6NB5bE3Oz+cGPBC+z5GIzMDI0Wq92dEGt3pK8voJI6obg
-         vv39scaeCwW2DQcQ1YXzsZRoWT4xY+2u7ShYD87Ysam0lfm3vfDoKaRpXUihpSXEKkws
-         DFR3mGaom1nPwWw1OPAUUc3hPc2+lxe24zubA=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=imSxWvlmtHhNIRbxGzQ4yZo8cjV9UIS3Bb0f0zq2mos=;
+        b=Nvdxywhtw6wR969gK+etEWio1Qed7a5YpmAToyZ0OZlUcglLzSd7ot8dop44MXrh79
+         p8/aZTDl8fOWLIl68+sRcPTt8Qr3vQ+ViYT9lHXGV7KVLGevatIE8LBdu/qCn4VbWCix
+         L/6LmgFpk+EFTR5L7j9vaqUsfOgLI41l1b2BQ=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=OqQTYssJfd+zPrTRYZg3XswQ7dTJnae7SF076fs3ZRafutiiw7nVi568UsaYkXRbBH
-         NxA/zEruCW2IFrywfp1ouMorxzAFu0kApDqxuAPa/KeNqFZz8i7WH9IsbybvBVBhot3n
-         kRS7ejnFDqU5RqNZGY4CNoh7lNO9vuPXNPZkA=
-Received: by 10.220.186.139 with SMTP id cs11mr392106vcb.46.1296866743038;
-        Fri, 04 Feb 2011 16:45:43 -0800 (PST)
-Received: from localhost.localdomain (cpe-75-186-7-248.cinci.res.rr.com [75.186.7.248])
-        by mx.google.com with ESMTPS id o6sm580746vcr.27.2011.02.04.16.45.41
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Fri, 04 Feb 2011 16:45:42 -0800 (PST)
-X-Mailer: git-send-email 1.7.4
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=Tlt0pjP1EfyGTK9PhZph1Kj4CawLf5SNBIW1w1oWyaAOVjcDy3lIUmA1oMjGGTDcrs
+         D2+7wi8l6yaFYN5eaONtOYmMyuoWNjDSHvvSw33/HTwfpBTtvAtwIQ/kOzRBzx7yX5ae
+         aoTBITCS3TVz/85LGw/NEWQZ0Z0QWs6KYURr4=
+Received: by 10.100.229.17 with SMTP id b17mr3177258anh.80.1296867188572; Fri,
+ 04 Feb 2011 16:53:08 -0800 (PST)
+Received: by 10.101.1.19 with HTTP; Fri, 4 Feb 2011 16:53:08 -0800 (PST)
+In-Reply-To: <AANLkTimJm81V0D8_j3OfZTcEkyn_jd6_QB2nv8T69JBY@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166067>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166068>
 
-Adds the option merge.defaultupstream to add support for merging from the
-upstream branch by default. The upstream branch is found using
-branch.[name].upstream.
----
+On Fri, Feb 4, 2011 at 5:52 PM, Endre Czirbesz <endre@czirbesz.hu> wrote:
+> Hi Vitor,
+>
+> 2011/2/4 Vitor Antunes <vitor.hda@gmail.com>:
+>>> I dropped the whole directory, and then recreated it, I do not know
+>>> any better 'cleanup'. :)
+>>
+>> Which directory did you drop? Was is the git repository or the P4 workspace?
+>> You need to clean up the later. Basically, a "rm -rf
+>> path/to/p4_workspace" and a "p4 sync -f" should do the trick :)
+>
+> It is almost the same in my case. :)
+> My p4 client root is ~/work/, my project dir is ~/work/projdir (and at
+> the moment this is the only directory within ~/work/), and I dropped
+> the latter.
+> And then it was created again by git-p4 clone.
 
-So it turns out that the old code _did_ work with options; I had thought it
-hadn't because I relied on !argc == 0, but since argc is decreased after parsing
-options anyway, it isn't a problem. This update fixes the usage as Junio
-suggested, since it does support options.
+I... wonder if we're maybe talking past one another here...
 
- builtin/merge.c |   41 +++++++++++++++++++++++++++++++++++------
- 1 files changed, 35 insertions(+), 6 deletions(-)
+Let's take a few things from the top, just in case... If we think
+about the perforce setup (before we start doing any git stuff)... You
+have a perforce workspace/client-spec, right? That is - a setup that
+tells perforce where you want the files to be placed on your hard
+drive when you do a standard "p4 sync". Let's call it ~/p4root/ and
+let us say that your project will then be synced by perforce to
+~/p4root/myproj/
 
-diff --git a/builtin/merge.c b/builtin/merge.c
-index 42fff38..a69b69f 100644
---- a/builtin/merge.c
-+++ b/builtin/merge.c
-@@ -37,6 +37,7 @@ struct strategy {
- };
- 
- static const char * const builtin_merge_usage[] = {
-+        "git merge",
- 	"git merge [options] <remote>...",
- 	"git merge [options] <msg> HEAD <remote>",
- 	NULL
-@@ -58,6 +59,8 @@ static int option_renormalize;
- static int verbosity;
- static int allow_rerere_auto;
- static int abort_current_merge;
-+static int default_upstream;
-+static const char *upstream_branch;
- 
- static struct strategy all_strategy[] = {
- 	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
-@@ -519,8 +522,15 @@ static int git_merge_config(const char *k, const char *v, void *cb)
- 			      builtin_merge_usage, 0);
- 		free(buf);
- 	}
--
--	if (!strcmp(k, "merge.diffstat") || !strcmp(k, "merge.stat"))
-+        else if(branch && !prefixcmp(k, "branch.") &&
-+                !prefixcmp(k + 7, branch) &&
-+                !strcmp(k + 7 + strlen(branch), ".upstream")) {
-+                return git_config_string(&upstream_branch, k, v);
-+        }
-+
-+        if (!strcmp(k, "merge.defaultupstream"))
-+                default_upstream = git_config_bool(k, v);
-+        else if (!strcmp(k, "merge.diffstat") || !strcmp(k, "merge.stat"))
- 		show_diffstat = git_config_bool(k, v);
- 	else if (!strcmp(k, "pull.twohead"))
- 		return git_config_string(&pull_twohead, k, v);
-@@ -983,9 +993,28 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 	if (!allow_fast_forward && fast_forward_only)
- 		die("You cannot combine --no-ff with --ff-only.");
- 
--	if (!argc)
--		usage_with_options(builtin_merge_usage,
--			builtin_merge_options);
-+	if (!argc) {
-+                if(default_upstream && upstream_branch) {
-+		        struct object *o;
-+                        struct commit *commit;
-+
-+                        o = peel_to_type(upstream_branch, 0, NULL, OBJ_COMMIT);
-+                        if (!o)
-+                            die("%s - not something we can merge", argv[i]);
-+                        commit = lookup_commit(o->sha1);
-+                        commit->util = (void *)upstream_branch;
-+                        remotes = &commit_list_insert(commit, remotes)->next;
-+
-+                        strbuf_addf(&buf, "GITHEAD_%s", sha1_to_hex(o->sha1));
-+                        setenv(buf.buf, upstream_branch, 1);
-+                        strbuf_reset(&buf);
-+                }
-+                else {
-+		        usage_with_options(builtin_merge_usage,
-+			        builtin_merge_options);
-+
-+                }
-+        }
- 
- 	/*
- 	 * This could be traditional "merge <msg> HEAD <commit>..."  and
-@@ -1048,7 +1077,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
- 		}
- 	}
- 
--	if (head_invalid || !argc)
-+	if (head_invalid || (!argc && !(default_upstream && upstream_branch)))
- 		usage_with_options(builtin_merge_usage,
- 			builtin_merge_options);
- 
--- 
-1.7.4
+When you want to do a git-p4 clone, you should definitely be *outside*
+of ~/p4root/ . Let's say we have a ~/gitroot/ as well. So do cd
+~/gitroot/ so that the git-p4 clone will be under ~/gitroot/myproj/ ;
+and then do all the git-p4 stuff (clone, add remote, fetch, rebase,
+sync, submit).
+
+I think Vitors point was that before you do git-p4 submit, you should
+clean - not ~/gitroot/myproj - but ~/p4root/myproj/.
+
+This is probably not something that you need to do everytime you want
+to submit back to perforce, but since we have had some rounds with
+trial-and-error with this, we have probably placed some dirty files
+inside the perforce folders... Make sure that you don't have files
+opened in perforce before you sync.
+
+Clearer? More confused? Best of luck anyway :)
+
+    -- Tor Arvid
