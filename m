@@ -1,161 +1,69 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] cache-tree: do not cache empty trees
-Date: Sat,  5 Feb 2011 16:50:27 +0700
-Message-ID: <1296899427-1394-1-git-send-email-pclouds@gmail.com>
-References: <1296894611-29398-1-git-send-email-pclouds@gmail.com>
+From: Andreas Schwab <schwab@linux-m68k.org>
+Subject: Re: [PATCH] Add support for merging from upstream by default.
+Date: Sat, 05 Feb 2011 11:03:09 +0100
+Message-ID: <m2k4he23z6.fsf@whitebox.home>
+References: <1296866721-27818-1-git-send-email-jaredhance@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"Dmitry S. Kravtsov" <idkravitz@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Sat Feb 05 10:52:07 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jared Hance <jaredhance@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 05 11:03:22 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PleoH-0007oN-Io
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 10:52:05 +0100
+	id 1PlezB-0003aw-N2
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 11:03:22 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751279Ab1BEJv7 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Feb 2011 04:51:59 -0500
-Received: from mail-pw0-f46.google.com ([209.85.160.46]:55126 "EHLO
-	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750970Ab1BEJv5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Feb 2011 04:51:57 -0500
-Received: by pwj3 with SMTP id 3so590439pwj.19
-        for <git@vger.kernel.org>; Sat, 05 Feb 2011 01:51:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=dDw6mpm9UDQjbuzrNTxPBytA04fqO3BEICmUdD7zOVE=;
-        b=wbW9JWL0EsYsHlEqlGGQY5Zh4zH316UdnG2oOAVfcE3qxPQ5X9Jew5lvwpsK4sZxw0
-         mFdukuPXg5SDXXozbJVLT7/m7UaIarChiV/vonJkItruC7cFRYh2JEXuOkHG2clpDma8
-         iOMRXONP+G7QWbHWNIzuQhjM4d7Oy9aHyoXlA=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=rQfffAfVkz0cLqgusQPuaDT7UpKKwHaZ7PUg+/JiIdFJZkzQQhBUJXyfjiFwD394Lq
-         mUn1L53tazxNogOEpESaj+w5yW/L0GsrP4WXwq6nDuXHyKbN1zDfziM3S2ytejWBDkqP
-         GTJX9bSRDFA37hy0q+l6jFjrTJWfvLDQp0bho=
-Received: by 10.142.133.11 with SMTP id g11mr12977066wfd.103.1296899517360;
-        Sat, 05 Feb 2011 01:51:57 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.232.10])
-        by mx.google.com with ESMTPS id w14sm2311325wfd.6.2011.02.05.01.51.52
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 05 Feb 2011 01:51:56 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 05 Feb 2011 16:50:28 +0700
-X-Mailer: git-send-email 1.7.3.4.878.g439c7
-In-Reply-To: <1296894611-29398-1-git-send-email-pclouds@gmail.com>
+	id S1751657Ab1BEKDK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Feb 2011 05:03:10 -0500
+Received: from mail-out.m-online.net ([212.18.0.9]:59088 "EHLO
+	mail-out.m-online.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751136Ab1BEKDJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Feb 2011 05:03:09 -0500
+Received: from frontend1.mail.m-online.net (unknown [192.168.8.180])
+	by mail-out.m-online.net (Postfix) with ESMTP id 79A9D1C0F593;
+	Sat,  5 Feb 2011 11:03:07 +0100 (CET)
+X-Auth-Info: 6N11I1q3Y62mQWK0pifoAWlHAbD24mCqiLi86AWnKIs=
+Received: from linux.local (ppp-88-217-112-144.dynamic.mnet-online.de [88.217.112.144])
+	by mail.mnet-online.de (Postfix) with ESMTPA id 6ECDA1C00203;
+	Sat,  5 Feb 2011 11:03:07 +0100 (CET)
+Received: by linux.local (Postfix, from userid 501)
+	id 8A4BB1E5434; Sat,  5 Feb 2011 11:03:09 +0100 (CET)
+X-Yow: FROZEN ENTREES may be flung by members of opposing SWANSON SECTS..
+In-Reply-To: <1296866721-27818-1-git-send-email-jaredhance@gmail.com> (Jared
+	Hance's message of "Fri, 4 Feb 2011 19:45:21 -0500")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2.93 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166082>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166083>
 
-Current index does not support empty trees. But users can construct
-empty trees directly using plumbing. When empty trees are checked out,
-things become inconsistent:
+Jared Hance <jaredhance@gmail.com> writes:
 
- - If cache-tree somehow is invalidated, when a tree is read to index,
-   empty trees disappear. When we write trees back, empty trees will
-   be gone.
+> diff --git a/builtin/merge.c b/builtin/merge.c
+> index 42fff38..a69b69f 100644
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -37,6 +37,7 @@ struct strategy {
+>  };
+>  
+>  static const char * const builtin_merge_usage[] = {
+> +        "git merge",
 
- - If cache-tree is generated by read-tree and remains valid by the
-   time trees are written back, empty trees remain.
+Doesn't that form take options as well?
 
-Let's do it in a consistent way, always disregard empty trees in
-index. If users choose to create empty trees their own way, they
-should not use index at all.
+>  	"git merge [options] <remote>...",
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Scratch the first version. This one actually works.
+IOW, how about changing that to
 
- cache-tree.c               |    9 +++++++++
- t/t1013-read-tree-empty.sh |   38 ++++++++++++++++++++++++++++++++++++=
-++
- 2 files changed, 47 insertions(+), 0 deletions(-)
- create mode 100755 t/t1013-read-tree-empty.sh
+  	"git merge [options] [<remote>...]",
 
-diff --git a/cache-tree.c b/cache-tree.c
-index f755590..03732ad 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -621,9 +621,18 @@ static void prime_cache_tree_rec(struct cache_tree=
- *it, struct tree *tree)
- 			struct tree *subtree =3D lookup_tree(entry.sha1);
- 			if (!subtree->object.parsed)
- 				parse_tree(subtree);
-+			if (!hashcmp(entry.sha1, (unsigned char *)EMPTY_TREE_SHA1_BIN)) {
-+				warning("empty tree detected! Will be removed from new commits");
-+				cnt =3D -1;
-+				break;
-+			}
- 			sub =3D cache_tree_sub(it, entry.path);
- 			sub->cache_tree =3D cache_tree();
- 			prime_cache_tree_rec(sub->cache_tree, subtree);
-+			if (sub->cache_tree->entry_count =3D=3D -1) {
-+				cnt =3D -1;
-+				break;
-+			}
- 			cnt +=3D sub->cache_tree->entry_count;
- 		}
- 	}
-diff --git a/t/t1013-read-tree-empty.sh b/t/t1013-read-tree-empty.sh
-new file mode 100755
-index 0000000..a9279f0
---- /dev/null
-+++ b/t/t1013-read-tree-empty.sh
-@@ -0,0 +1,38 @@
-+#!/bin/sh
-+
-+test_description=3D'read-tree with empty trees'
-+
-+. ./test-lib.sh
-+
-+T1=3Df4ec99e8174c01eab488469b4c2680500bbb18da
-+T2=3D4b825dc642cb6eb9a060e54bf8d69288fbee4904
-+
-+test_expect_success 'setup' '
-+	printf "40000 empty\0\x4b\x82\x5d\xc6\x42\xcb\x6e\xb9\xa0\x60\xe5\x4b=
-\xf8\xd6\x92\x88\xfb\xee\x49\x04" >newtree &&
-+	git hash-object -w -t tree newtree >actual &&
-+	echo $T1 >expected
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'ls-tree T1 (with empty tree)' '
-+	git ls-tree $T1 >actual &&
-+	cat <<EOF >expected &&
-+040000 tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904	empty
-+EOF
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'write-tree removes empty tree' '
-+	git read-tree "$T1" &&
-+	git write-tree >actual
-+	echo $T2 >expected
-+	test_cmp expected actual
-+'
-+
-+test_expect_success 'ls-tree T2 (without empty tree)' '
-+	git ls-tree $T2 >actual &&
-+	: >expected &&
-+	test_cmp expected actual
-+'
-+
-+test_done
---=20
-1.7.3.4.878.g439c7
+Andreas.
+
+-- 
+Andreas Schwab, schwab@linux-m68k.org
+GPG Key fingerprint = 58CA 54C7 6D53 942B 1756  01D3 44D5 214B 8276 4ED5
+"And now for something completely different."
