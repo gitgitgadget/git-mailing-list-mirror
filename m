@@ -1,145 +1,98 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH] cache-tree: do not cache empty trees
-Date: Sat,  5 Feb 2011 21:07:15 +0700
-Message-ID: <1296914835-808-1-git-send-email-pclouds@gmail.com>
-References: <1296899427-1394-1-git-send-email-pclouds@gmail.com>
+From: redstun <redstun@gmail.com>
+Subject: Re: [idea] separate .git dir and the working tree
+Date: Sat, 5 Feb 2011 22:24:25 +0800
+Message-ID: <AANLkTinYMuXSvKjgtpSCbJPuo=PHDGR_OgOkwtV4Azmz@mail.gmail.com>
+References: <AANLkTik4MjnpOzPdGy7ZDiH0in4e1DpjrhQFOHjUiEEE@mail.gmail.com>
+ <20110205032339.GA15303@mg1> <20110205132708.GA18391@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	"Dmitry S. Kravtsov" <idkravitz@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>,
-	=?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-X-From: git-owner@vger.kernel.org Sat Feb 05 15:08:53 2011
+Cc: git@vger.kernel.org, Mike Gant <mike@gantsfort.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 05 15:26:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pliom-0004NY-RS
-	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 15:08:53 +0100
+	id 1Plj5j-00046l-8V
+	for gcvg-git-2@lo.gmane.org; Sat, 05 Feb 2011 15:26:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751907Ab1BEOIr convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Feb 2011 09:08:47 -0500
-Received: from mail-px0-f174.google.com ([209.85.212.174]:35695 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750792Ab1BEOIq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Feb 2011 09:08:46 -0500
-Received: by pxi15 with SMTP id 15so586611pxi.19
-        for <git@vger.kernel.org>; Sat, 05 Feb 2011 06:08:45 -0800 (PST)
+	id S1753566Ab1BEOZI convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 5 Feb 2011 09:25:08 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:45341 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753371Ab1BEOZH convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 5 Feb 2011 09:25:07 -0500
+Received: by fxm20 with SMTP id 20so3394864fxm.19
+        for <git@vger.kernel.org>; Sat, 05 Feb 2011 06:25:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references:mime-version:content-type
-         :content-transfer-encoding;
-        bh=A7QxJw5JbcaoGpMv34bBLgQrDofJq+jxPrMdM/GUwtQ=;
-        b=o00ZNvoyOYNaAFYP6IDOd2tECiPo5FLPd8HRSmCDysXSyyiMDaTDgBz8ApeBw3R4jr
-         grrTsZCu0XrGSbuppvpFw1KRWFfyI/CTj5K9qF8ey9TzD+i2GPc6GSALRLoRaEzeYqMX
-         vdJqid3vZ7UOPcgT9qgHgE9d5bcA9aFXfwaTU=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=hsOfX0IJwjvhRUzg8t/BHqQA1bOLbiRzVSRSTpQUpr0=;
+        b=CTXs8p9icd/jfMDyBJThDIXcPWoy6fSvrQ4aQRwBPJueLB+S/m95tR4gtQLt0UhqYB
+         MQjsmmjjjI7vXfvu8pKCA40Feg1VE4hd4vyGiwBFiIu2NOnRpNSpFuYBh1YMT1OnjnH3
+         L8kemZYGQ6dkVM3+jnQNcFa+dK0WJpZyyrjZc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
-         :mime-version:content-type:content-transfer-encoding;
-        b=ZMCxHDnla83rtMXxTF9IfAZdjghfgeVr0VoxC6EajgdStdh3d83Exj4C+0Cw0ft9ei
-         uxJIuisIysQyTEs+iXhfn20VlA37/vGtVJ4xanNMWBB63IvHauOtK6mo1eynTAtvGKYG
-         ci3kkG5WEtpk+dpzx3jbeU7eb5QaNaHgIrBV8=
-Received: by 10.142.241.7 with SMTP id o7mr13113011wfh.265.1296914924323;
-        Sat, 05 Feb 2011 06:08:44 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.232.10])
-        by mx.google.com with ESMTPS id q13sm2618338wfc.17.2011.02.05.06.08.39
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sat, 05 Feb 2011 06:08:43 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Sat, 05 Feb 2011 21:07:16 +0700
-X-Mailer: git-send-email 1.7.3.4.878.g439c7
-In-Reply-To: <1296899427-1394-1-git-send-email-pclouds@gmail.com>
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=UDwo221citY4d9ASPe4GUWUsONSoPJwtA6+ELqtuX+dCQ1EgCMbqoi0sjNeTWlhW1o
+         LV8S9n2pyAFR7BTU+183wlpQ59EznnryxYbKPd8b46muk82RAwz8zz3E5pQwjsSW9oNX
+         Kkc4AYFAzHmtk0PdoEORVXDTL/rX5qmQwtVvo=
+Received: by 10.103.220.8 with SMTP id x8mr8764229muq.92.1296915905715; Sat,
+ 05 Feb 2011 06:25:05 -0800 (PST)
+Received: by 10.103.212.19 with HTTP; Sat, 5 Feb 2011 06:24:25 -0800 (PST)
+In-Reply-To: <20110205132708.GA18391@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166094>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166095>
 
-Current index does not support empty trees. But users can construct
-empty trees directly using plumbing. When empty trees are checked out,
-things become inconsistent:
+Making .git a symbol link is nice.
 
- - If cache-tree somehow is invalidated, when a tree is read to index,
-   empty trees disappear. When we write trees back, empty trees will
-   be gone.
+Regarding the GIT_DIR variable, looks like it needs to be paired with
+the GIT_WORK_TREE variable, does this mean that I can only have one
+local git repository?
 
- - If cache-tree is generated by read-tree and remains valid by the
-   time trees are written back, empty trees remain.
+what I wanted is, I may have multiple git working tree in my $HOME, lik=
+e:
+$HOME/proj1
+$HOME/proj2,
 
-Let's do it in a consistent way, always disregard empty trees in
-index. If users choose to create empty trees their own way, they
-should not use index at all.
+I then wanted their .git directories respectively located at
+/safe/disk/.git_proj1
+/safe/disk/.git_proj2
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- Third version. Cleaned up t1013. Also needs [1] for mktree to work
- with empty trees.
+How can I get this? I tried to read the doc but didn't have much luck.
 
- [1] http://mid.gmane.org/1296914582-619-1-git-send-email-pclouds@gmail=
-=2Ecom
+Thanks
 
- cache-tree.c               |    9 +++++++++
- t/t1013-read-tree-empty.sh |   20 ++++++++++++++++++++
- 2 files changed, 29 insertions(+), 0 deletions(-)
- create mode 100755 t/t1013-read-tree-empty.sh
-
-diff --git a/cache-tree.c b/cache-tree.c
-index f755590..03732ad 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -621,9 +621,18 @@ static void prime_cache_tree_rec(struct cache_tree=
- *it, struct tree *tree)
- 			struct tree *subtree =3D lookup_tree(entry.sha1);
- 			if (!subtree->object.parsed)
- 				parse_tree(subtree);
-+			if (!hashcmp(entry.sha1, (unsigned char *)EMPTY_TREE_SHA1_BIN)) {
-+				warning("empty tree detected! Will be removed in new commits");
-+				cnt =3D -1;
-+				break;
-+			}
- 			sub =3D cache_tree_sub(it, entry.path);
- 			sub->cache_tree =3D cache_tree();
- 			prime_cache_tree_rec(sub->cache_tree, subtree);
-+			if (sub->cache_tree->entry_count =3D=3D -1) {
-+				cnt =3D -1;
-+				break;
-+			}
- 			cnt +=3D sub->cache_tree->entry_count;
- 		}
- 	}
-diff --git a/t/t1013-read-tree-empty.sh b/t/t1013-read-tree-empty.sh
-new file mode 100755
-index 0000000..8d2ab97
---- /dev/null
-+++ b/t/t1013-read-tree-empty.sh
-@@ -0,0 +1,20 @@
-+#!/bin/sh
-+
-+test_description=3D'read-tree with empty trees'
-+
-+. ./test-lib.sh
-+
-+EMPTY_TREE=3D4b825dc642cb6eb9a060e54bf8d69288fbee4904
-+
-+test_expect_success 'setup' '
-+	echo "040000 tree $EMPTY_TREE	empty" | git mktree >tree
-+'
-+
-+test_expect_success 'write-tree removes empty tree' '
-+	git read-tree `cat tree` &&
-+	git write-tree >actual
-+	echo $EMPTY_TREE >expected
-+	test_cmp expected actual
-+'
-+
-+test_done
---=20
-1.7.3.4.878.g439c7
+On Sat, Feb 5, 2011 at 9:27 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
+ote:
+> (restoring cc list; please do not cull cc's)
+>
+> Mike Gant wrote:
+>> On Sat, Feb 05, 2011 at 10:53:58AM +0800, redstun wrote:
+>
+>>> I think separating the .git directory from its working tree could
+>>> increase the safety of the data to one more level higher.
+> [...]
+>> GIT_DIR and GIT_WORK_TREE might be what you are looking for. Explana=
+tion
+>> of usage in 'man git'
+>
+> The .git directory is allowed to be a symlink. =C2=A0Or a file like s=
+o
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0gitdir: /path/to/git/repo
+>
+> for symlink-challenged operating systems. =C2=A0See gitrepository-lay=
+out(7)
+> for details.
+>
+> Cheers,
+> Jonathan
+>
