@@ -1,66 +1,75 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [1.8.0] Tracking empty directories
-Date: Sun, 6 Feb 2011 21:46:34 +0100
-Message-ID: <AANLkTimo44R_=CLqZ=+TZmtctAnBXbxEakEBdgUVeY1L@mail.gmail.com>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org>
- <m3zkqe8xc8.fsf_-_@localhost.localdomain> <201102051931.10979.thomas@koch.ro>
- <AANLkTikX5Y=TrXayXj-MCaR5p0=Tokc_5ihGqHFL9CQx@mail.gmail.com> <7vmxm8x5dx.fsf@alter.siamese.dyndns.org>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: "git add -u" broken in git 1.7.4?
+Date: Sun, 06 Feb 2011 21:48:48 +0100
+Message-ID: <vpq1v3kopn3.fsf@bauges.imag.fr>
+References: <4D4DEDC4.4080708@hartwork.org>
+	<20110206051333.GA3458@sigill.intra.peff.net>
+	<4D4EF7E4.7050303@hartwork.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: thomas@koch.ro, Jakub Narebski <jnareb@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 06 21:47:24 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jeff King <peff@peff.net>, Git ML <git@vger.kernel.org>
+To: Sebastian Pipping <webmaster@hartwork.org>
+X-From: git-owner@vger.kernel.org Sun Feb 06 21:49:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmBVz-0005ew-9O
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 21:47:23 +0100
+	id 1PmBXc-0006KY-Ne
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 21:49:05 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754012Ab1BFUrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Feb 2011 15:47:17 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:42758 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753960Ab1BFUrQ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Feb 2011 15:47:16 -0500
-Received: by iwn9 with SMTP id 9so3966425iwn.19
-        for <git@vger.kernel.org>; Sun, 06 Feb 2011 12:47:15 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=y4i1OYdjn8vJNFeqeNO2nA2ugJDGue1T2PmAk+yuGTI=;
-        b=hxcbPK/RZrzTskWPWXUsdyS751o1wzmhcEmolnqiC1wZlVv3gpb5/l2dzLEpxhrK7X
-         Z1FSHrBR/eajWKIrXl+WJS8CJs5iFiqP8m/wrVTLbq7N+7yxwv6wUaGEURuKtIGHqqRw
-         fF/ZVDh8wzawjJUcSt9IeWzbi4LQGRKmFBkIQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=nww+2hvl6vyTPrDjqQuHZwtieHe2/+ThAAMZ1Y03iP8Ip5XTQb+Y31iw6IPgHrVW98
-         ihQ7DKHURArUFtPZSjiZMDX7LIMie93bO/sl4Q5/v6FaigZ3WS28IjmpW2JI9wRe+h/I
-         e+oUyswpYTTIGh8LKtAuq/KjSNHabrVW62VfY=
-Received: by 10.231.147.149 with SMTP id l21mr16110586ibv.152.1297025235117;
- Sun, 06 Feb 2011 12:47:15 -0800 (PST)
-Received: by 10.231.39.140 with HTTP; Sun, 6 Feb 2011 12:46:34 -0800 (PST)
-In-Reply-To: <7vmxm8x5dx.fsf@alter.siamese.dyndns.org>
+	id S1754031Ab1BFUs5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Feb 2011 15:48:57 -0500
+Received: from mx1.imag.fr ([129.88.30.5]:54775 "EHLO shiva.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753960Ab1BFUs5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Feb 2011 15:48:57 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p16KmkWb012931
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Sun, 6 Feb 2011 21:48:46 +0100
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PmBXM-0000U4-PM; Sun, 06 Feb 2011 21:48:48 +0100
+In-Reply-To: <4D4EF7E4.7050303@hartwork.org> (Sebastian Pipping's message of "Sun\, 06 Feb 2011 20\:35\:00 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 06 Feb 2011 21:48:46 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
+X-MailScanner-ID: p16KmkWb012931
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+MailScanner-NULL-Check: 1297630128.65056@tjmuZkYc7f+Q3SER8v3xvQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166202>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166203>
 
-Heya,
+Sebastian Pipping <webmaster@hartwork.org> writes:
 
-On Sun, Feb 6, 2011 at 21:41, Junio C Hamano <gitster@pobox.com> wrote:
-> Huh?
+> I was and I can confirm the different behaviour with 1.7.4 over here: it
+> does work on the root directory of the repo as you supposed.
 
-To teach the plumbing to handle empty directories first, and then in a
-later release add porcelain?
+What do you mean by "it does not work"?
+
+"git add -u" adds files under the current directory, and it always
+did.
+
+> Is that behavior needed to be as is or could you change it to work from
+> everywhere?
+
+I consider it as a design bug that "add -u" is not tree-wide, but it's
+not easy to change the existing behavior without breaking expectations
+of people used to the current behavior.
+
+> Could it be it has been working from anywhere before?
+
+Can you post an example where Git 1.7.4 and a previous version behave
+differently? Up to now, I see difference between your expectations and
+what Git does, but not between new and old versions.
 
 -- 
-Cheers,
-
-Sverre Rabbelier
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
