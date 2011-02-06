@@ -1,7 +1,7 @@
 From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH v2 02/31] rebase: refactor reading of state
-Date: Sun,  6 Feb 2011 13:43:31 -0500
-Message-ID: <1297017841-20678-3-git-send-email-martin.von.zweigbergk@gmail.com>
+Subject: [PATCH v2 07/31] rebase: stricter check of standalone sub command
+Date: Sun,  6 Feb 2011 13:43:36 -0500
+Message-ID: <1297017841-20678-8-git-send-email-martin.von.zweigbergk@gmail.com>
 References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com>
  <1297017841-20678-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -17,203 +17,146 @@ Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pm9e6-0005ZO-FF
+	id 1Pm9e7-0005ZO-Fc
 	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 19:47:39 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753505Ab1BFSps (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Feb 2011 13:45:48 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:58585 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753428Ab1BFSpr (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Feb 2011 13:45:47 -0500
-Received: by qwa26 with SMTP id 26so3014077qwa.19
-        for <git@vger.kernel.org>; Sun, 06 Feb 2011 10:45:47 -0800 (PST)
+	id S1753599Ab1BFSp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Feb 2011 13:45:59 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:48348 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753580Ab1BFSp5 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Feb 2011 13:45:57 -0500
+Received: by mail-qy0-f174.google.com with SMTP id 19so1045841qyj.19
+        for <git@vger.kernel.org>; Sun, 06 Feb 2011 10:45:57 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=TppFb3uXedZpcijvo++cKPM2dBkFrgWyS+iy5xgPzgQ=;
-        b=pfFUJbb/15QYMztx5N2csQ0TGWb4zfGCOPnoduQzUFHCUMOvq/mC1oK5z9p+cYguUC
-         eyrwxtk/rQMJeKi1cDhoiQYrtcxArV6QHmBw96OOqYKfvG3YZbeMZtOcjyp25wStFDTa
-         bytC22xmjcwmMgwAQpHfNze4FFutvl4+3+Fm4=
+        bh=56ZDbiJ2C3vdtWHkO8IG3xjDT5P+AZUpe4zA1zGGYoM=;
+        b=eJHbp83KptzRzeiAEzhxcEjUVwbK/1aj+0b1KvWhJagng7CKuCXP7J/emlZFWJCbq8
+         WUzCIVqGXV6oexCR0fxc4tW6nZWaVnDDaRA4u5toYT7GV/G6r1oc2GCg0HYhQP8zRYvy
+         7mDw8bLFuavXkI3LiiAuHPxef13il7DuKCg1Y=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=GpDjoG9sA+2wOXlmT2qK4uJ+nXYRJnWi0CWILM5m+FbNw8HP8/SWI9uvwuzWdEPtGq
-         W6XAbq59dr33SJkrybzM9vwdLQDSrCuF7Psq1tWMhrxTrkONefxGJ5yT8D+1fA9FN4zh
-         9kCvKX/pKoUNJN2kbVl7FvgndCipO1gLPQiYM=
-Received: by 10.224.45.143 with SMTP id e15mr4310304qaf.32.1297017946767;
-        Sun, 06 Feb 2011 10:45:46 -0800 (PST)
+        b=PMoVwz8nN8XuEGoPCYBIs4c08rrP8nlVTfprFn1kUBM07YktGa38sIs3/tzcgrs3vx
+         ngQsa2KmouNKnb6qEL8PkRWqyAwPNa6OMH6wpaL2kO+EVX06a3uWsLgd6iR8IolmEeyA
+         vC6JLnjoZEvBOKtgX7s7SHcys93taNJLflQuU=
+Received: by 10.224.80.147 with SMTP id t19mr7509015qak.38.1297017957243;
+        Sun, 06 Feb 2011 10:45:57 -0800 (PST)
 Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id h20sm2174330qck.24.2011.02.06.10.45.44
+        by mx.google.com with ESMTPS id h20sm2174330qck.24.2011.02.06.10.45.55
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Feb 2011 10:45:45 -0800 (PST)
+        Sun, 06 Feb 2011 10:45:56 -0800 (PST)
 X-Mailer: git-send-email 1.7.4.rc2.33.g8a14f
 In-Reply-To: <1297017841-20678-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166170>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166171>
 
-The code reading the state saved in $merge_dir or $rebase_dir is
-currently spread out in many places, making it harder to read and to
-introduce additional state. Extract this code into one method that
-reads the state. Only extract the code associated with the state that
-is written when the rebase is initiated. Leave the state that changes
-for each commmit, at least for now.
+The sub commands '--continue', '--skip' or '--abort' may only be used
+standalone according to the documentation. Other options following the
+sub command are currently not accepted, but options preceeding them
+are. For example, 'git rebase --continue -v' is not accepted, while
+'git rebase -v --continue' is. Tighten up the check and allow no other
+options when one of these sub commands are used.
 
-Currently, when resuming a merge-based rebase using --continue or
---skip, move_to_original_branch (via finish_rb_merge) will be called
-without head_name and orig_head set. These variables are then lazily
-read in move_to_original_branch if head_name is not set (together with
-onto, which is unnecessarily read again). Change this by always
-eagerly reading the state, for both am-based and merge-based rebase,
-in the --continue and --skip cases. Note that this does not change the
-behavior for am-based rebase, which read the state eagerly even before
-this commit.
+Only check that it is standalone for non-interactive rebase for
+now. Once the command line processing for interactive rebase has been
+replaced by the command line processing in git-rebase.sh, this check
+will also apply to interactive rebase.
 
-Reading the state eagerly means that part of the state will sometimes
-be read unnecessarily. One example is when the rebase is continued,
-but stops again at another merge conflict. Another example is when the
-rebase is aborted. However, since both of these cases involve user
-interaction, the delay is hopefully not noticeable. The
-call_merge/continue_merge loop is not affected.
-
-Helped-by: Junio C Hamano <gitster@pobox.com>
 Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 ---
- git-rebase.sh |   53 +++++++++++++++++++++++------------------------------
- 1 files changed, 23 insertions(+), 30 deletions(-)
+Is this too simplistic? Do we forsee that we want to support passing
+options when resuming a rebase? Is it better to check for each other
+option that it is not passed (i.e. no '-v', no '-s' etc.)?
+
+Might some users be depending on the current behavior, even though it
+is undocumented?
+
+
+ git-rebase.sh              |    4 ++--
+ t/t3403-rebase-skip.sh     |    5 +++++
+ t/t3407-rebase-abort.sh    |   10 ++++++++++
+ t/t3418-rebase-continue.sh |    5 +++++
+ 4 files changed, 22 insertions(+), 2 deletions(-)
 
 diff --git a/git-rebase.sh b/git-rebase.sh
-index 72696bf..63b5683 100755
+index e3fd001..d689aad 100755
 --- a/git-rebase.sh
 +++ b/git-rebase.sh
-@@ -57,6 +57,22 @@ rebase_root=
- force_rebase=
- allow_rerere_autoupdate=
+@@ -229,6 +229,7 @@ then
+ fi
+ test -n "$type" && in_progress=t
  
-+read_state () {
-+	if test -d "$merge_dir"
-+	then
-+		state_dir="$merge_dir"
-+		prev_head=$(cat "$merge_dir"/prev_head) &&
-+		end=$(cat "$merge_dir"/end) &&
-+		msgnum=$(cat "$merge_dir"/msgnum)
-+	else
-+		state_dir="$apply_dir"
-+	fi &&
-+	head_name=$(cat "$state_dir"/head-name) &&
-+	onto=$(cat "$state_dir"/onto) &&
-+	orig_head=$(cat "$state_dir"/orig-head) &&
-+	GIT_QUIET=$(cat "$state_dir"/quiet)
-+}
-+
- continue_merge () {
- 	test -n "$prev_head" || die "prev_head must be defined"
- 	test -d "$merge_dir" || die "$merge_dir directory does not exist"
-@@ -138,10 +154,6 @@ call_merge () {
- }
- 
- move_to_original_branch () {
--	test -z "$head_name" &&
--		head_name="$(cat "$merge_dir"/head-name)" &&
--		onto="$(cat "$merge_dir"/onto)" &&
--		orig_head="$(cat "$merge_dir"/orig-head)"
- 	case "$head_name" in
- 	refs/*)
- 		message="rebase finished: $head_name onto $onto"
-@@ -220,13 +232,9 @@ do
- 			echo "mark them as resolved using git add"
- 			exit 1
- 		}
-+		read_state
- 		if test -d "$merge_dir"
- 		then
--			prev_head=$(cat "$merge_dir/prev_head")
--			end=$(cat "$merge_dir/end")
--			msgnum=$(cat "$merge_dir/msgnum")
--			onto=$(cat "$merge_dir/onto")
--			GIT_QUIET=$(cat "$merge_dir/quiet")
- 			continue_merge
- 			while test "$msgnum" -le "$end"
- 			do
-@@ -236,10 +244,6 @@ do
- 			finish_rb_merge
- 			exit
- 		fi
--		head_name=$(cat "$apply_dir"/head-name) &&
--		onto=$(cat "$apply_dir"/onto) &&
--		orig_head=$(cat "$apply_dir"/orig-head) &&
--		GIT_QUIET=$(cat "$apply_dir"/quiet)
- 		git am --resolved --3way --resolvemsg="$RESOLVEMSG" &&
- 		move_to_original_branch
- 		exit
-@@ -249,15 +253,11 @@ do
- 			die "No rebase in progress?"
- 
- 		git reset --hard HEAD || exit $?
-+		read_state
- 		if test -d "$merge_dir"
- 		then
- 			git rerere clear
--			prev_head=$(cat "$merge_dir/prev_head")
--			end=$(cat "$merge_dir/end")
--			msgnum=$(cat "$merge_dir/msgnum")
- 			msgnum=$(($msgnum + 1))
--			onto=$(cat "$merge_dir/onto")
--			GIT_QUIET=$(cat "$merge_dir/quiet")
- 			while test "$msgnum" -le "$end"
- 			do
- 				call_merge "$msgnum"
-@@ -266,10 +266,6 @@ do
- 			finish_rb_merge
- 			exit
- 		fi
--		head_name=$(cat "$apply_dir"/head-name) &&
--		onto=$(cat "$apply_dir"/onto) &&
--		orig_head=$(cat "$apply_dir"/orig-head) &&
--		GIT_QUIET=$(cat "$apply_dir"/quiet)
- 		git am -3 --skip --resolvemsg="$RESOLVEMSG" &&
- 		move_to_original_branch
- 		exit
-@@ -279,18 +275,15 @@ do
- 			die "No rebase in progress?"
- 
- 		git rerere clear
--
--		test -d "$merge_dir" || merge_dir="$apply_dir"
--
--		head_name="$(cat "$merge_dir"/head-name)" &&
-+		read_state
- 		case "$head_name" in
- 		refs/*)
- 			git symbolic-ref HEAD $head_name ||
- 			die "Could not move back to $head_name"
- 			;;
- 		esac
--		git reset --hard $(cat "$merge_dir/orig-head")
--		rm -r "$merge_dir"
-+		git reset --hard $orig_head
-+		rm -r "$state_dir"
- 		exit
++total_argc=$#
+ while test $# != 0
+ do
+ 	case "$1" in
+@@ -239,9 +240,8 @@ do
+ 		OK_TO_SKIP_PRE_REBASE=
+ 		;;
+ 	--continue|--skip|--abort)
++		test $total_argc -eq 1 || usage
+ 		action=${1##--}
+-		shift
+-		break
  		;;
  	--onto)
-@@ -574,12 +567,12 @@ fi
- # this is rename-aware if the recursive (default) strategy is used
+ 		test 2 -le "$#" || usage
+diff --git a/t/t3403-rebase-skip.sh b/t/t3403-rebase-skip.sh
+index 64446e3..826500b 100755
+--- a/t/t3403-rebase-skip.sh
++++ b/t/t3403-rebase-skip.sh
+@@ -35,6 +35,11 @@ test_expect_success 'rebase with git am -3 (default)' '
+ 	test_must_fail git rebase master
+ '
  
- mkdir -p "$merge_dir"
--echo "$onto" > "$merge_dir/onto"
- echo "$onto_name" > "$merge_dir/onto_name"
- prev_head=$orig_head
- echo "$prev_head" > "$merge_dir/prev_head"
--echo "$orig_head" > "$merge_dir/orig-head"
- echo "$head_name" > "$merge_dir/head-name"
-+echo "$onto" > "$merge_dir/onto"
-+echo "$orig_head" > "$merge_dir/orig-head"
- echo "$GIT_QUIET" > "$merge_dir/quiet"
++test_expect_success 'rebase --skip can not be used with other options' '
++	test_must_fail git rebase -v --skip &&
++	test_must_fail git rebase --skip -v
++'
++
+ test_expect_success 'rebase --skip with am -3' '
+ 	git rebase --skip
+ 	'
+diff --git a/t/t3407-rebase-abort.sh b/t/t3407-rebase-abort.sh
+index e573dc8..a6a6c40 100755
+--- a/t/t3407-rebase-abort.sh
++++ b/t/t3407-rebase-abort.sh
+@@ -84,6 +84,16 @@ testrebase() {
+ 		test_cmp reflog_before reflog_after &&
+ 		rm reflog_before reflog_after
+ 	'
++
++	test_expect_success 'rebase --abort can not be used with other options' '
++		cd "$work_dir" &&
++		# Clean up the state from the previous one
++		git reset --hard pre-rebase &&
++		test_must_fail git rebase$type master &&
++		test_must_fail git rebase -v --abort &&
++		test_must_fail git rebase --abort -v &&
++		git rebase --abort
++	'
+ }
  
- msgnum=0
+ testrebase "" .git/rebase-apply
+diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+index 3b0d273..1d90191 100755
+--- a/t/t3418-rebase-continue.sh
++++ b/t/t3418-rebase-continue.sh
+@@ -40,4 +40,9 @@ test_expect_success 'non-interactive rebase --continue works with touched file'
+ 	git rebase --continue
+ '
+ 
++test_expect_success 'rebase --continue can not be used with other options' '
++	test_must_fail git rebase -v --continue &&
++	test_must_fail git rebase --continue -v
++'
++
+ test_done
 -- 
 1.7.4.rc2.33.g8a14f
