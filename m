@@ -1,7 +1,7 @@
 From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH v2 05/31] rebase: improve detection of rebase in progress
-Date: Sun,  6 Feb 2011 13:43:34 -0500
-Message-ID: <1297017841-20678-6-git-send-email-martin.von.zweigbergk@gmail.com>
+Subject: [PATCH v2 06/31] rebase: act on command line outside parsing loop
+Date: Sun,  6 Feb 2011 13:43:35 -0500
+Message-ID: <1297017841-20678-7-git-send-email-martin.von.zweigbergk@gmail.com>
 References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com>
  <1297017841-20678-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -11,213 +11,546 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Thomas Rast <trast@student.ethz.ch>,
 	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 06 19:46:10 2011
+X-From: git-owner@vger.kernel.org Sun Feb 06 19:46:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pm9cf-0004j0-Ag
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 19:46:09 +0100
+	id 1Pm9cg-0004j0-8k
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 19:46:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753572Ab1BFSpz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	id S1753606Ab1BFSqA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Feb 2011 13:46:00 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:58585 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753496Ab1BFSpz (ORCPT <rfc822;git@vger.kernel.org>);
 	Sun, 6 Feb 2011 13:45:55 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:58927 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753551Ab1BFSpx (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Feb 2011 13:45:53 -0500
-Received: by mail-qy0-f181.google.com with SMTP id 12so3422584qyk.19
-        for <git@vger.kernel.org>; Sun, 06 Feb 2011 10:45:53 -0800 (PST)
+Received: by mail-qw0-f46.google.com with SMTP id 26so3014077qwa.19
+        for <git@vger.kernel.org>; Sun, 06 Feb 2011 10:45:55 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=Rx6HCncTtWS2w3p8VYoD1AgCBTDwbiXENUsfkYzT1Fc=;
-        b=FkiynF1+JLq33xq50k9JN1KP8ylWljRZE4AtAtm7dhyIlTaBvWH0K7w7aPLCwjGFUA
-         zzTjpFtcE6795gKGzHrdxNYoSZb7GSkFBeU1e35Fh1quRGAiOIvDeW2vmh/GVq98PqVn
-         GSLWTD60y7iYgW7THsYvCT/g3QVYhCY13Zhuo=
+        bh=j/ER1/fWs6XubRG6OxprPCrmvTRbQ4Coeg+yDH9L+Ug=;
+        b=XXt/ddDyEi1qLP9y9fOzto8wf2o4bEGupV1pEB9kVYrFrqEC9ok01j2Co4f9Y23AeN
+         TWUOzXVw3x2qvxhWWaCdCGiIBSEOpEZq8dT/KsNVA/FySxfhnDhKHnnt3eCc6qokiQuR
+         XjtDmw/OpUo4J8nGCWAnOp3QiC7e5CWHzw9Ls=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=orXoKkgJCs9B0FaMcxc7Zwy1Z19deCpKFG1JZ5XHaL+8mrWkBaRT1/AFxMwhhr0K2k
-         RQaRDJuBgndWZzG24AuLIJ9p+H8KfcoZ14TX7i5W/6iuq8UThbv+ocab0s4kpLVoD6Yu
-         6Uhd37Lr1Hwks36hzktIoNDU699Q/mVMl6Vc8=
-Received: by 10.229.241.196 with SMTP id lf4mr12040149qcb.284.1297017953008;
-        Sun, 06 Feb 2011 10:45:53 -0800 (PST)
+        b=ZAdGcYnClBHz/mO+r9wIgJh6Inuz9jA0ThsyPw/+GD0FvGzse6ZjBuUKptEyrBseEg
+         ew6jXRZB/kW8wiInQcVY6Cq9FErKZt7PGQSA9ofkZXwzPA7ecjPgKautp+B0fEYFgzJi
+         lLUcJHmar8CU2uucDMr6rh5QwH5DcLpHtAglg=
+Received: by 10.229.235.2 with SMTP id ke2mr12069427qcb.285.1297017954996;
+        Sun, 06 Feb 2011 10:45:54 -0800 (PST)
 Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id h20sm2174330qck.24.2011.02.06.10.45.51
+        by mx.google.com with ESMTPS id h20sm2174330qck.24.2011.02.06.10.45.53
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Feb 2011 10:45:51 -0800 (PST)
+        Sun, 06 Feb 2011 10:45:54 -0800 (PST)
 X-Mailer: git-send-email 1.7.4.rc2.33.g8a14f
 In-Reply-To: <1297017841-20678-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166165>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166166>
 
-Detect early on if a rebase is in progress and what type of rebase it
-is (interactive, merge-based or am-based). This prepares for further
-refactoring where am-based rebase will be dispatched to
-git-rebase--am.sh and merge-based rebase will be dispatched to
-git-rebase--merge.sh.
-
-The idea is to use the same variables whether the type of rebase was
-detected from rebase-apply/ or rebase-merge/ directories or from the
-command line options. This will make the code more readable and will
-later also make it easier to dispatch to the type-specific scripts.
-
-Also show a consistent error message independent of the type of rebase
-that was in progress and remove the obsolete wording about being in
-the middle of a 'patch application', since that (an existing
-"$GIT_DIR"/rebase-apply/applying) aborts 'git rebase' at an earlier
-stage.
+To later be able to use the command line processing in git-rebase.sh
+for both interactive and non-interactive rebases, move anything that
+is specific to non-interactive rebase outside of the parsing
+loop. Keep only parsing and validation of command line options in the
+loop.
 
 Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 ---
-Currently, the existence of rebase-merge/ is tested with 'test -d',
-while the existence of rebase-apply/ is tested by creating the
-directory and then deleting it again. Any good reason for this?
+May want to view this patch with --ignore-all-space.
 
-There were some discussions on the above subject in the first round,
-but nothing conclusive, so I have left it the way it was for now.
+ git-rebase--interactive.sh |  300 ++++++++++++++++++++++----------------------
+ git-rebase.sh              |  126 ++++++++++---------
+ 2 files changed, 217 insertions(+), 209 deletions(-)
 
- git-rebase.sh |   80 +++++++++++++++++++++++++++++---------------------------
- 1 files changed, 41 insertions(+), 39 deletions(-)
-
+diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
+index 5873ba4..824f4f3 100755
+--- a/git-rebase--interactive.sh
++++ b/git-rebase--interactive.sh
+@@ -866,152 +866,158 @@ first and then run 'git rebase --continue' again."
+ 		;;
+ 	--)
+ 		shift
+-		test -z "$REBASE_ROOT" -a $# -ge 1 -a $# -le 2 ||
+-		test ! -z "$REBASE_ROOT" -a $# -le 1 || usage
+-		test -d "$DOTEST" &&
+-			die "Interactive rebase already started"
+-
+-		git var GIT_COMMITTER_IDENT >/dev/null ||
+-			die "You need to set your committer info first"
+-
+-		if test -z "$REBASE_ROOT"
+-		then
+-			UPSTREAM_ARG="$1"
+-			UPSTREAM=$(git rev-parse --verify "$1") || die "Invalid base"
+-			test -z "$ONTO" && ONTO=$UPSTREAM
+-			shift
+-		else
+-			UPSTREAM=
+-			UPSTREAM_ARG=--root
+-			test -z "$ONTO" &&
+-				die "You must specify --onto when using --root"
+-		fi
+-		run_pre_rebase_hook "$UPSTREAM_ARG" "$@"
+-
+-		comment_for_reflog start
+-
+-		require_clean_work_tree "rebase" "Please commit or stash them."
+-
+-		if test ! -z "$1"
+-		then
+-			output git checkout "$1" -- ||
+-				die "Could not checkout $1"
+-		fi
++		break
++		;;
++	esac
++	shift
++done
+ 
+-		HEAD=$(git rev-parse --verify HEAD) || die "No HEAD?"
+-		mkdir "$DOTEST" || die "Could not create temporary $DOTEST"
++test -z "$REBASE_ROOT" -a $# -ge 1 -a $# -le 2 ||
++test ! -z "$REBASE_ROOT" -a $# -le 1 || usage
++test -d "$DOTEST" &&
++	die "Interactive rebase already started"
+ 
+-		: > "$DOTEST"/interactive || die "Could not mark as interactive"
+-		git symbolic-ref HEAD > "$DOTEST"/head-name 2> /dev/null ||
+-			echo "detached HEAD" > "$DOTEST"/head-name
++git var GIT_COMMITTER_IDENT >/dev/null ||
++	die "You need to set your committer info first"
+ 
+-		echo $HEAD > "$DOTEST"/head
+-		case "$REBASE_ROOT" in
+-		'')
+-			rm -f "$DOTEST"/rebase-root ;;
+-		*)
+-			: >"$DOTEST"/rebase-root ;;
+-		esac
+-		echo $ONTO > "$DOTEST"/onto
+-		test -z "$STRATEGY" || echo "$STRATEGY" > "$DOTEST"/strategy
+-		test t = "$VERBOSE" && : > "$DOTEST"/verbose
+-		if test t = "$PRESERVE_MERGES"
+-		then
+-			if test -z "$REBASE_ROOT"
+-			then
+-				mkdir "$REWRITTEN" &&
+-				for c in $(git merge-base --all $HEAD $UPSTREAM)
+-				do
+-					echo $ONTO > "$REWRITTEN"/$c ||
+-						die "Could not init rewritten commits"
+-				done
+-			else
+-				mkdir "$REWRITTEN" &&
+-				echo $ONTO > "$REWRITTEN"/root ||
+-					die "Could not init rewritten commits"
+-			fi
+-			# No cherry-pick because our first pass is to determine
+-			# parents to rewrite and skipping dropped commits would
+-			# prematurely end our probe
+-			MERGES_OPTION=
+-			first_after_upstream="$(git rev-list --reverse --first-parent $UPSTREAM..$HEAD | head -n 1)"
+-		else
+-			MERGES_OPTION="--no-merges --cherry-pick"
+-		fi
+-
+-		SHORTHEAD=$(git rev-parse --short $HEAD)
+-		SHORTONTO=$(git rev-parse --short $ONTO)
+-		if test -z "$REBASE_ROOT"
+-			# this is now equivalent to ! -z "$UPSTREAM"
+-		then
+-			SHORTUPSTREAM=$(git rev-parse --short $UPSTREAM)
+-			REVISIONS=$UPSTREAM...$HEAD
+-			SHORTREVISIONS=$SHORTUPSTREAM..$SHORTHEAD
+-		else
+-			REVISIONS=$ONTO...$HEAD
+-			SHORTREVISIONS=$SHORTHEAD
+-		fi
+-		git rev-list $MERGES_OPTION --pretty=oneline --abbrev-commit \
+-			--abbrev=7 --reverse --left-right --topo-order \
+-			$REVISIONS | \
+-			sed -n "s/^>//p" |
+-		while read -r shortsha1 rest
++if test -z "$REBASE_ROOT"
++then
++	UPSTREAM_ARG="$1"
++	UPSTREAM=$(git rev-parse --verify "$1") || die "Invalid base"
++	test -z "$ONTO" && ONTO=$UPSTREAM
++	shift
++else
++	UPSTREAM=
++	UPSTREAM_ARG=--root
++	test -z "$ONTO" &&
++	die "You must specify --onto when using --root"
++fi
++run_pre_rebase_hook "$UPSTREAM_ARG" "$@"
++
++comment_for_reflog start
++
++require_clean_work_tree "rebase" "Please commit or stash them."
++
++if test ! -z "$1"
++then
++	output git checkout "$1" -- ||
++		die "Could not checkout $1"
++fi
++
++HEAD=$(git rev-parse --verify HEAD) || die "No HEAD?"
++mkdir "$DOTEST" || die "Could not create temporary $DOTEST"
++
++: > "$DOTEST"/interactive || die "Could not mark as interactive"
++git symbolic-ref HEAD > "$DOTEST"/head-name 2> /dev/null ||
++	echo "detached HEAD" > "$DOTEST"/head-name
++
++echo $HEAD > "$DOTEST"/head
++case "$REBASE_ROOT" in
++'')
++	rm -f "$DOTEST"/rebase-root ;;
++*)
++	: >"$DOTEST"/rebase-root ;;
++esac
++echo $ONTO > "$DOTEST"/onto
++test -z "$STRATEGY" || echo "$STRATEGY" > "$DOTEST"/strategy
++test t = "$VERBOSE" && : > "$DOTEST"/verbose
++if test t = "$PRESERVE_MERGES"
++then
++	if test -z "$REBASE_ROOT"
++	then
++		mkdir "$REWRITTEN" &&
++		for c in $(git merge-base --all $HEAD $UPSTREAM)
+ 		do
+-			if test t != "$PRESERVE_MERGES"
+-			then
+-				printf '%s\n' "pick $shortsha1 $rest" >> "$TODO"
+-			else
+-				sha1=$(git rev-parse $shortsha1)
+-				if test -z "$REBASE_ROOT"
+-				then
+-					preserve=t
+-					for p in $(git rev-list --parents -1 $sha1 | cut -d' ' -s -f2-)
+-					do
+-						if test -f "$REWRITTEN"/$p -a \( $p != $ONTO -o $sha1 = $first_after_upstream \)
+-						then
+-							preserve=f
+-						fi
+-					done
+-				else
+-					preserve=f
+-				fi
+-				if test f = "$preserve"
+-				then
+-					touch "$REWRITTEN"/$sha1
+-					printf '%s\n' "pick $shortsha1 $rest" >> "$TODO"
+-				fi
+-			fi
++			echo $ONTO > "$REWRITTEN"/$c ||
++				die "Could not init rewritten commits"
+ 		done
+-
+-		# Watch for commits that been dropped by --cherry-pick
+-		if test t = "$PRESERVE_MERGES"
++	else
++		mkdir "$REWRITTEN" &&
++		echo $ONTO > "$REWRITTEN"/root ||
++			die "Could not init rewritten commits"
++	fi
++	# No cherry-pick because our first pass is to determine
++	# parents to rewrite and skipping dropped commits would
++	# prematurely end our probe
++	MERGES_OPTION=
++	first_after_upstream="$(git rev-list --reverse --first-parent $UPSTREAM..$HEAD | head -n 1)"
++else
++	MERGES_OPTION="--no-merges --cherry-pick"
++fi
++
++SHORTHEAD=$(git rev-parse --short $HEAD)
++SHORTONTO=$(git rev-parse --short $ONTO)
++if test -z "$REBASE_ROOT"
++	# this is now equivalent to ! -z "$UPSTREAM"
++then
++	SHORTUPSTREAM=$(git rev-parse --short $UPSTREAM)
++	REVISIONS=$UPSTREAM...$HEAD
++	SHORTREVISIONS=$SHORTUPSTREAM..$SHORTHEAD
++else
++	REVISIONS=$ONTO...$HEAD
++	SHORTREVISIONS=$SHORTHEAD
++fi
++git rev-list $MERGES_OPTION --pretty=oneline --abbrev-commit \
++	--abbrev=7 --reverse --left-right --topo-order \
++	$REVISIONS | \
++	sed -n "s/^>//p" |
++while read -r shortsha1 rest
++do
++	if test t != "$PRESERVE_MERGES"
++	then
++		printf '%s\n' "pick $shortsha1 $rest" >> "$TODO"
++	else
++		sha1=$(git rev-parse $shortsha1)
++		if test -z "$REBASE_ROOT"
+ 		then
+-			mkdir "$DROPPED"
+-			# Save all non-cherry-picked changes
+-			git rev-list $REVISIONS --left-right --cherry-pick | \
+-				sed -n "s/^>//p" > "$DOTEST"/not-cherry-picks
+-			# Now all commits and note which ones are missing in
+-			# not-cherry-picks and hence being dropped
+-			git rev-list $REVISIONS |
+-			while read rev
++			preserve=t
++			for p in $(git rev-list --parents -1 $sha1 | cut -d' ' -s -f2-)
+ 			do
+-				if test -f "$REWRITTEN"/$rev -a "$(sane_grep "$rev" "$DOTEST"/not-cherry-picks)" = ""
++				if test -f "$REWRITTEN"/$p -a \( $p != $ONTO -o $sha1 = $first_after_upstream \)
+ 				then
+-					# Use -f2 because if rev-list is telling us this commit is
+-					# not worthwhile, we don't want to track its multiple heads,
+-					# just the history of its first-parent for others that will
+-					# be rebasing on top of it
+-					git rev-list --parents -1 $rev | cut -d' ' -s -f2 > "$DROPPED"/$rev
+-					short=$(git rev-list -1 --abbrev-commit --abbrev=7 $rev)
+-					sane_grep -v "^[a-z][a-z]* $short" <"$TODO" > "${TODO}2" ; mv "${TODO}2" "$TODO"
+-					rm "$REWRITTEN"/$rev
++					preserve=f
+ 				fi
+ 			done
++		else
++			preserve=f
++		fi
++		if test f = "$preserve"
++		then
++			touch "$REWRITTEN"/$sha1
++			printf '%s\n' "pick $shortsha1 $rest" >> "$TODO"
+ 		fi
++	fi
++done
+ 
+-		test -s "$TODO" || echo noop >> "$TODO"
+-		test -n "$AUTOSQUASH" && rearrange_squash "$TODO"
+-		cat >> "$TODO" << EOF
++# Watch for commits that been dropped by --cherry-pick
++if test t = "$PRESERVE_MERGES"
++then
++	mkdir "$DROPPED"
++	# Save all non-cherry-picked changes
++	git rev-list $REVISIONS --left-right --cherry-pick | \
++		sed -n "s/^>//p" > "$DOTEST"/not-cherry-picks
++	# Now all commits and note which ones are missing in
++	# not-cherry-picks and hence being dropped
++	git rev-list $REVISIONS |
++	while read rev
++	do
++		if test -f "$REWRITTEN"/$rev -a "$(sane_grep "$rev" "$DOTEST"/not-cherry-picks)" = ""
++		then
++			# Use -f2 because if rev-list is telling us this commit is
++			# not worthwhile, we don't want to track its multiple heads,
++			# just the history of its first-parent for others that will
++			# be rebasing on top of it
++			git rev-list --parents -1 $rev | cut -d' ' -s -f2 > "$DROPPED"/$rev
++			short=$(git rev-list -1 --abbrev-commit --abbrev=7 $rev)
++			sane_grep -v "^[a-z][a-z]* $short" <"$TODO" > "${TODO}2" ; mv "${TODO}2" "$TODO"
++			rm "$REWRITTEN"/$rev
++		fi
++	done
++fi
++
++test -s "$TODO" || echo noop >> "$TODO"
++test -n "$AUTOSQUASH" && rearrange_squash "$TODO"
++cat >> "$TODO" << EOF
+ 
+ # Rebase $SHORTREVISIONS onto $SHORTONTO
+ #
+@@ -1028,22 +1034,18 @@ first and then run 'git rebase --continue' again."
+ #
+ EOF
+ 
+-		has_action "$TODO" ||
+-			die_abort "Nothing to do"
++has_action "$TODO" ||
++	die_abort "Nothing to do"
+ 
+-		cp "$TODO" "$TODO".backup
+-		git_editor "$TODO" ||
+-			die_abort "Could not execute editor"
++cp "$TODO" "$TODO".backup
++git_editor "$TODO" ||
++	die_abort "Could not execute editor"
+ 
+-		has_action "$TODO" ||
+-			die_abort "Nothing to do"
++has_action "$TODO" ||
++	die_abort "Nothing to do"
+ 
+-		test -d "$REWRITTEN" || test -n "$NEVER_FF" || skip_unnecessary_picks
++test -d "$REWRITTEN" || test -n "$NEVER_FF" || skip_unnecessary_picks
+ 
+-		output git checkout $ONTO || die_abort "could not detach HEAD"
+-		git update-ref ORIG_HEAD $HEAD
+-		do_rest
+-		;;
+-	esac
+-	shift
+-done
++output git checkout $ONTO || die_abort "could not detach HEAD"
++git update-ref ORIG_HEAD $HEAD
++do_rest
 diff --git a/git-rebase.sh b/git-rebase.sh
-index 8c1c4ed..1d34d43 100755
+index 1d34d43..e3fd001 100755
 --- a/git-rebase.sh
 +++ b/git-rebase.sh
-@@ -56,16 +56,19 @@ git_am_opt=
- rebase_root=
- force_rebase=
- allow_rerere_autoupdate=
-+# Non-empty if a rebase was in progress when 'git rebase' was invoked
-+in_progress=
-+# One of {am, merge, interactive}
-+type=
-+# One of {"$GIT_DIR"/rebase-apply, "$GIT_DIR"/rebase-merge}
-+state_dir=
+@@ -62,6 +62,8 @@ in_progress=
+ type=
+ # One of {"$GIT_DIR"/rebase-apply, "$GIT_DIR"/rebase-merge}
+ state_dir=
++# One of {'', continue, skip, abort}, as parsed from command line
++action=
  
  read_state () {
--	if test -d "$merge_dir"
-+	if test "$type" = merge
- 	then
--		state_dir="$merge_dir"
--		onto_name=$(cat "$merge_dir"/onto_name) &&
--		end=$(cat "$merge_dir"/end) &&
--		msgnum=$(cat "$merge_dir"/msgnum)
--	else
--		state_dir="$apply_dir"
-+		onto_name=$(cat "$state_dir"/onto_name) &&
-+		end=$(cat "$state_dir"/end) &&
-+		msgnum=$(cat "$state_dir"/msgnum)
- 	fi &&
- 	head_name=$(cat "$state_dir"/head-name) &&
- 	onto=$(cat "$state_dir"/onto) &&
-@@ -207,6 +210,23 @@ test -f "$apply_dir"/applying &&
- 
- is_interactive "$@" && exec git-rebase--interactive "$@"
- 
-+if test -d "$apply_dir"
-+then
-+	type=am
-+	state_dir="$apply_dir"
-+elif test -d "$merge_dir"
-+then
-+	if test -f "$merge_dir"/interactive
-+	then
-+		type=interactive
-+		interactive_rebase=explicit
-+	else
-+		type=merge
-+	fi
-+	state_dir="$merge_dir"
-+fi
-+test -n "$type" && in_progress=t
-+
- while test $# != 0
- do
- 	case "$1" in
-@@ -217,8 +237,7 @@ do
+ 	if test "$type" = merge
+@@ -236,66 +238,10 @@ do
+ 	--verify)
  		OK_TO_SKIP_PRE_REBASE=
  		;;
- 	--continue)
--		test -d "$merge_dir" -o -d "$apply_dir" ||
--			die "No rebase in progress?"
-+		test -z "$in_progress" && die "No rebase in progress?"
- 
- 		git update-index --ignore-submodules --refresh &&
- 		git diff-files --quiet --ignore-submodules || {
-@@ -243,8 +262,7 @@ do
- 		exit
+-	--continue)
+-		test -z "$in_progress" && die "No rebase in progress?"
+-
+-		git update-index --ignore-submodules --refresh &&
+-		git diff-files --quiet --ignore-submodules || {
+-			echo "You must edit all merge conflicts and then"
+-			echo "mark them as resolved using git add"
+-			exit 1
+-		}
+-		read_state
+-		if test -d "$merge_dir"
+-		then
+-			continue_merge
+-			while test "$msgnum" -le "$end"
+-			do
+-				call_merge "$msgnum"
+-				continue_merge
+-			done
+-			finish_rb_merge
+-			exit
+-		fi
+-		git am --resolved --3way --resolvemsg="$RESOLVEMSG" &&
+-		move_to_original_branch
+-		exit
+-		;;
+-	--skip)
+-		test -z "$in_progress" && die "No rebase in progress?"
+-
+-		git reset --hard HEAD || exit $?
+-		read_state
+-		if test -d "$merge_dir"
+-		then
+-			git rerere clear
+-			msgnum=$(($msgnum + 1))
+-			while test "$msgnum" -le "$end"
+-			do
+-				call_merge "$msgnum"
+-				continue_merge
+-			done
+-			finish_rb_merge
+-			exit
+-		fi
+-		git am -3 --skip --resolvemsg="$RESOLVEMSG" &&
+-		move_to_original_branch
+-		exit
+-		;;
+-	--abort)
+-		test -z "$in_progress" && die "No rebase in progress?"
+-
+-		git rerere clear
+-		read_state
+-		case "$head_name" in
+-		refs/*)
+-			git symbolic-ref HEAD $head_name ||
+-			die "Could not move back to $head_name"
+-			;;
+-		esac
+-		git reset --hard $orig_head
+-		rm -r "$state_dir"
+-		exit
++	--continue|--skip|--abort)
++		action=${1##--}
++		shift
++		break
  		;;
- 	--skip)
--		test -d "$merge_dir" -o -d "$apply_dir" ||
--			die "No rebase in progress?"
-+		test -z "$in_progress" && die "No rebase in progress?"
- 
- 		git reset --hard HEAD || exit $?
- 		read_state
-@@ -265,8 +283,7 @@ do
- 		exit
- 		;;
- 	--abort)
--		test -d "$merge_dir" -o -d "$apply_dir" ||
--			die "No rebase in progress?"
-+		test -z "$in_progress" && die "No rebase in progress?"
- 
- 		git rerere clear
- 		read_state
-@@ -374,37 +391,22 @@ do
+ 	--onto)
+ 		test 2 -le "$#" || usage
+@@ -391,6 +337,66 @@ do
  done
  test $# -gt 2 && usage
  
--if test $# -eq 0 && test -z "$rebase_root"
-+# Make sure no rebase is in progress
-+if test -n "$in_progress"
- then
--	test -d "$merge_dir" -o -d "$apply_dir" || usage
--	test -d "$merge_dir" -o -f "$apply_dir"/rebasing &&
--		die 'A rebase is in progress, try --continue, --skip or --abort.'
--fi
--
--# Make sure we do not have $apply_dir or $merge_dir
--if test -z "$do_merge"
--then
--	if mkdir "$apply_dir" 2>/dev/null
--	then
--		rmdir "$apply_dir"
--	else
--		echo >&2 '
--It seems that I cannot create a rebase-apply directory, and
--I wonder if you are in the middle of patch application or another
--rebase.  If that is not the case, please
--	rm -fr '"$apply_dir"'
-+	die '
-+It seems that there is already a '"${state_dir##*/}"' directory, and
-+I wonder if you are in the middle of another rebase.  If that is the
-+case, please try
-+	git rebase (--continue | --abort | --skip)
-+If that is not the case, please
-+	rm -fr '"$state_dir"'
- and run me again.  I am stopping in case you still have something
- valuable there.'
--		exit 1
--	fi
--else
--	if test -d "$merge_dir"
--	then
--		die "previous rebase directory $merge_dir still exists." \
--			'Try git rebase (--continue | --abort | --skip)'
--	fi
- fi
- 
-+test $# -eq 0 && test -z "$rebase_root" && usage
++test -n "$action" && test -z "$in_progress" && die "No rebase in progress?"
 +
- require_clean_work_tree "rebase" "Please commit or stash them."
- 
- if test -z "$rebase_root"
++case "$action" in
++continue)
++	git update-index --ignore-submodules --refresh &&
++	git diff-files --quiet --ignore-submodules || {
++		echo "You must edit all merge conflicts and then"
++		echo "mark them as resolved using git add"
++		exit 1
++	}
++	read_state
++	if test -d "$merge_dir"
++	then
++		continue_merge
++		while test "$msgnum" -le "$end"
++		do
++			call_merge "$msgnum"
++			continue_merge
++		done
++		finish_rb_merge
++		exit
++	fi
++	git am --resolved --3way --resolvemsg="$RESOLVEMSG" &&
++	move_to_original_branch
++	exit
++	;;
++skip)
++	git reset --hard HEAD || exit $?
++	read_state
++	if test -d "$merge_dir"
++	then
++		git rerere clear
++		msgnum=$(($msgnum + 1))
++		while test "$msgnum" -le "$end"
++		do
++			call_merge "$msgnum"
++			continue_merge
++		done
++		finish_rb_merge
++		exit
++	fi
++	git am -3 --skip --resolvemsg="$RESOLVEMSG" &&
++	move_to_original_branch
++	exit
++	;;
++abort)
++	git rerere clear
++	read_state
++	case "$head_name" in
++	refs/*)
++		git symbolic-ref HEAD $head_name ||
++		die "Could not move back to $head_name"
++		;;
++	esac
++	git reset --hard $orig_head
++	rm -r "$state_dir"
++	exit
++	;;
++esac
++
+ # Make sure no rebase is in progress
+ if test -n "$in_progress"
+ then
 -- 
 1.7.4.rc2.33.g8a14f
