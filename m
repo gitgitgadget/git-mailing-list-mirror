@@ -1,74 +1,56 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: "git add -u" broken in git 1.7.4?
-Date: Sun, 6 Feb 2011 00:13:33 -0500
-Message-ID: <20110206051333.GA3458@sigill.intra.peff.net>
-References: <4D4DEDC4.4080708@hartwork.org>
+From: Konstantin Khomoutov <flatworm@users.sourceforge.net>
+Subject: Re: [idea] separate .git dir and the working tree
+Date: Sun, 6 Feb 2011 13:49:53 +0300
+Message-ID: <20110206104952.GD20056@localhost.localdomain>
+References: <AANLkTik4MjnpOzPdGy7ZDiH0in4e1DpjrhQFOHjUiEEE@mail.gmail.com>
+ <20110205032339.GA15303@mg1>
+ <20110205132708.GA18391@elie>
+ <20110206002009.GA13594@mg1>
+ <20110206004013.GB13594@mg1>
+ <1296954015.4048.0.camel@localhost.localdomain>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Git ML <git@vger.kernel.org>
-To: Sebastian Pipping <webmaster@hartwork.org>
-X-From: git-owner@vger.kernel.org Sun Feb 06 06:13:45 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Mike Gant <mike@gantsfort.com>, git@vger.kernel.org,
+	redstun <redstun@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>
+To: Jared Hance <jaredhance@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 06 11:50:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PlwwS-0004lk-JM
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 06:13:44 +0100
+	id 1Pm2CF-0002Dl-UK
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 11:50:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751380Ab1BFFNj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Feb 2011 00:13:39 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:33158 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750964Ab1BFFNj (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Feb 2011 00:13:39 -0500
-Received: (qmail 19085 invoked by uid 111); 6 Feb 2011 05:13:37 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 06 Feb 2011 05:13:37 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 06 Feb 2011 00:13:33 -0500
+	id S1752185Ab1BFKuG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Feb 2011 05:50:06 -0500
+Received: from mailhub.007spb.ru ([84.204.203.130]:56488 "EHLO
+	mailhub.007spb.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752300Ab1BFKuE (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Feb 2011 05:50:04 -0500
+Received: from proxysrv.domain007.com ([10.8.0.42])
+	by mailhub.007spb.ru (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p16AnrUC002984;
+	Sun, 6 Feb 2011 13:49:55 +0300
+Received: by proxysrv.domain007.com (Postfix, from userid 1000)
+	id 6092BB22EF5; Sun,  6 Feb 2011 13:49:53 +0300 (MSK)
 Content-Disposition: inline
-In-Reply-To: <4D4DEDC4.4080708@hartwork.org>
+In-Reply-To: <1296954015.4048.0.camel@localhost.localdomain>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Antivirus: Dr.Web (R) for Mail Servers on proxysrv host
+X-Antivirus-Code: 100000
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166141>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166142>
 
-On Sun, Feb 06, 2011 at 01:39:32AM +0100, Sebastian Pipping wrote:
+On Sat, Feb 05, 2011 at 08:00:15PM -0500, Jared Hance wrote:
 
-> I just ran into case where
-> 
->   git add -u
-> 
-> repetedly did not update the index.  In contrast, picking stuff using
-> 
->   git add -p
-> 
-> works just fine.
-> 
-> Could it be "git add -u" is broken in git 1.7.4?
-
-It could be. However, I can think of one such case where you might see
-that behavior. "git add -u" operates from the current subdirectory,
-whereas "git add -p" operates from the top of the project tree (yes,
-this inconsistency confusing, but it's not as serious as "git add -u
-doesn't work").
-
-You can demonstrate it with:
-
-  mkdir repo && cd repo && git init
-  mkdir subdir && echo content >file
-  git add . && git commit -m base
-  echo more >>file
-
-  mkdir subdir && cd subdir
-  git add -u
-  git status ;# still not staged for commit
-
-  git add -p ;# finds it
-
-Might you have been in a subdirectory of the project when you saw this
-behavior?
-
--Peff
+> > > My apologies, but I didn't see a cc list in the original. Please
+> > > explain.
+> > Never mind, I think I understand.
+> > So does anyone use Mutt? And do they know a recipe to move the sender
+> > address to the cc list? If not, I'll figure it out.
+> When I used Mutt, if I remember correctly, L did the job (list reply).
+Also "g" is "group reply" -- it simply replies to all e-mails mentioned
+in the mail which is being replied to.
