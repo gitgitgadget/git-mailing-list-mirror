@@ -1,170 +1,109 @@
-From: Joe Perches <joe@perches.com>
-Subject: [PATCH] git-send-email.perl: Add --suppress-to
-Date: Sat, 05 Feb 2011 15:40:08 -0800
-Message-ID: <1296949208.4133.66.camel@Joe-Laptop>
-References: <1290272809.27951.30.camel@Joe-Laptop>
-	 <m2mxp3zr88.fsf@igel.home> <1290286877.31117.15.camel@Joe-Laptop>
-	 <4CE84FF3.2070906@pcharlan.com> <1290294365.31117.40.camel@Joe-Laptop>
-	 <7vmxowq6gz.fsf@alter.siamese.dyndns.org>
-	 <1290807268.11971.310.camel@Joe-Laptop>
-	 <7vk4jzpq8h.fsf@alter.siamese.dyndns.org>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [1.8.0] Provide proper remote ref namespaces
+Date: Sun, 06 Feb 2011 01:04:36 +0100
+Message-ID: <201102060104.37146.johan@herland.net>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+ <201102050218.44325.johan@herland.net>
+ <20110205214045.GA15668@dpotapov.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sun Feb 06 00:40:21 2011
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 06 01:04:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Plrjm-0003AR-Q2
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 00:40:19 +0100
+	id 1Pls7b-0004pW-DY
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 01:04:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753946Ab1BEXkN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 5 Feb 2011 18:40:13 -0500
-Received: from mail.perches.com ([173.55.12.10]:3608 "EHLO mail.perches.com"
+	id S1751622Ab1BFAEn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 5 Feb 2011 19:04:43 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:49595 "EHLO smtp.getmail.no"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753936Ab1BEXkJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 5 Feb 2011 18:40:09 -0500
-Received: from [192.168.1.162] (unknown [192.168.1.162])
-	by mail.perches.com (Postfix) with ESMTP id D888A24368;
-	Sat,  5 Feb 2011 15:40:05 -0800 (PST)
-In-Reply-To: <7vk4jzpq8h.fsf@alter.siamese.dyndns.org>
-X-Mailer: Evolution 2.30.3 
+	id S1751530Ab1BFAEm (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 5 Feb 2011 19:04:42 -0500
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LG600LUJ5JSOT40@get-mta-out01.get.basefarm.net> for
+ git@vger.kernel.org; Sun, 06 Feb 2011 01:04:40 +0100 (MET)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 661811EA57B6_D4DE598B	for <git@vger.kernel.org>; Sun,
+ 06 Feb 2011 00:04:40 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 425B41EA321C_D4DE598F	for <git@vger.kernel.org>; Sun,
+ 06 Feb 2011 00:04:40 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LG6004RH5JQQJ10@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Sun, 06 Feb 2011 01:04:40 +0100 (MET)
+User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.0; x86_64; ; )
+In-reply-to: <20110205214045.GA15668@dpotapov.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166130>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166131>
 
-Add an equivalent command line option to suppress-cc.
+On Saturday 05 February 2011, Dmitry Potapov wrote:
+> On Sat, Feb 05, 2011 at 02:18:44AM +0100, Johan Herland wrote:
+> > Having said that, there are real situations where users encounter
+> > collisions in the shared tag namespace. A rare (but plausible)
+> > scenario arise when two developers create (and publish) conflicting
+> > tags in their repos. A more common scenario that I have encountered at
+> > $dayjob, is where two parallel (semi-related) projects are developed
+> > in separate repos (with different versioning because of separate
+> > release schedules), and I need to interface with both repos from a
+> > single local repo. Each of the remote repos have their own "v1.0" tag,
+> > but my repo can only hold one such tag. Which of those tags end up
+> > "winning" in my local repo depends on my fetch order.
+> 
+> Well, I agree that this situation requires a better diagnostic, but I
+> don't think that having separate namespaces is the right solution in
+> general. For your case, where you work on semi-related projects, it is
+> could be the right thing to do, but if you work on the same project and
+> have more than one source to fetch, then having multiple namespaces can
+> lead only to confusion, because tag names must be unique globally to
+> make sense to everyone. Actually, even if you have two semi-related
+> projects in the same repository, but you have more than one URL per
+> project, you want to group tags based on their relation to the project
+> and not based on the URL.
 
-Signed-off-by: Joe Perches <joe@perches.com>
----
- Documentation/git-send-email.txt |   17 +++++++++++++++++
- git-send-email.perl              |   33 +++++++++++++++++++++++++++++++--
- 2 files changed, 48 insertions(+), 2 deletions(-)
+I'm not sure what problem you're describing here. Let's assume that my repo 
+has multiple remotes (URLs), but they're all fundamentally part of the same 
+project. If there is a tag "foo" in one remote/namespace, and a tag "foo" in 
+a different remote/namespace, they (in the common case) point to the same 
+object, since they - as you say - "must be unique globally to make sense to 
+everyone".
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 7ec9dab..69e03e8 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -232,6 +232,23 @@ Automating
- 	cc list. Default is the value of 'sendemail.signedoffbycc' configuration
- 	value; if that is unspecified, default to --signed-off-by-cc.
- 
-+--suppress-to=<category>::
-+	Specify an additional category of recipients to suppress the
-+	auto-to of:
-++
-+--
-+- 'author' will avoid including the patch author
-+- 'self' will avoid including the sender
-+- 'tocmd' will avoid running the --to-cmd
-+- 'bodyto' will avoid including anyone mentioned in To lines in the
-+   patch body (commit message) except for self (use 'self' for that)
-+- 'all' will suppress all auto to values.
-+--
-++
-+Default is the value of 'sendemail.suppressto' configuration value; if
-+that is unspecified, default to 'self' if --suppress-from is
-+specified.
-+
- --suppress-cc=<category>::
- 	Specify an additional category of recipients to suppress the
- 	auto-cc of:
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 76565de..0365c29 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -74,6 +74,7 @@ git send-email [options] <file | directory | rev-list options >
-   Automating:
-     --identity              <str>  * Use the sendemail.<id> options.
-     --to-cmd                <str>  * Email To: via `<str> \$patch_path`
-+    --suppress-to           <str>  * author, self, tocmd, bodyto, all.
-     --cc-cmd                <str>  * Email Cc: via `<str> \$patch_path`
-     --suppress-cc           <str>  * author, self, sob, cc, cccmd, body, bodycc, all.
-     --[no-]signed-off-by-cc        * Send to Signed-off-by: addresses. Default on.
-@@ -196,6 +197,7 @@ my ($smtp_server, $smtp_server_port, @smtp_server_options);
- my ($smtp_authuser, $smtp_encryption);
- my ($identity, $aliasfiletype, @alias_files, $smtp_domain);
- my ($validate, $confirm);
-+my (@suppress_to);
- my (@suppress_cc);
- my ($auto_8bit_encoding);
- 
-@@ -226,6 +228,7 @@ my %config_settings = (
-     "aliasfiletype" => \$aliasfiletype,
-     "bcc" => \@bcclist,
-     "aliasesfile" => \@alias_files,
-+    "suppressto" => \@suppress_to,
-     "suppresscc" => \@suppress_cc,
-     "envelopesender" => \$envelope_sender,
-     "multiedit" => \$multiedit,
-@@ -301,6 +304,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
- 		    "quiet" => \$quiet,
- 		    "cc-cmd=s" => \$cc_cmd,
- 		    "suppress-from!" => \$suppress_from,
-+		    "suppress-to=s" => \@suppress_to,
- 		    "suppress-cc=s" => \@suppress_cc,
- 		    "signed-off-cc|signed-off-by-cc!" => \$signed_off_by_cc,
- 		    "confirm=s" => \$confirm,
-@@ -369,6 +373,24 @@ foreach my $setting (values %config_bool_settings) {
- # 'default' encryption is none -- this only prevents a warning
- $smtp_encryption = '' unless (defined $smtp_encryption);
- 
-+# Set TO suppressions
-+my(%suppress_to);
-+if (@suppress_to) {
-+	foreach my $entry (@suppress_to) {
-+		die "Unknown --suppress-to field: '$entry'\n"
-+			unless $entry =~ /^(?:all|author|self|tocmd|bodyto)$/;
-+		$suppress_to{$entry} = 1;
-+	}
-+}
-+
-+if ($suppress_to{'all'}) {
-+	foreach my $entry (qw (author self tocmd bodyto)) {
-+		$suppress_to{$entry} = 1;
-+	}
-+	delete $suppress_to{'all'};
-+}
-+$suppress_to{'self'} = $suppress_from if defined $suppress_from;
-+
- # Set CC suppressions
- my(%suppress_cc);
- if (@suppress_cc) {
-@@ -407,7 +429,11 @@ die "Unknown --confirm setting: '$confirm'\n"
- 
- # Debugging, print out the suppressions.
- if (0) {
--	print "suppressions:\n";
-+	print "To suppressions:\n";
-+	foreach my $entry (keys %suppress_to) {
-+		printf "  %-5s -> $suppress_to{$entry}\n", $entry;
-+	}
-+	print "Cc suppressions:\n";
- 	foreach my $entry (keys %suppress_cc) {
- 		printf "  %-5s -> $suppress_cc{$entry}\n", $entry;
- 	}
-@@ -1201,6 +1227,9 @@ foreach my $t (@files) {
- 			}
- 			elsif (/^To:\s+(.*)$/) {
- 				foreach my $addr (parse_address_line($1)) {
-+
-+				    next if $suppress_to{'author'};
-+				    next if $suppress_to{'self'} and $author eq $sender;
- 					printf("(mbox) Adding to: %s from line '%s'\n",
- 						$addr, $_) unless $quiet;
- 					push @to, sanitize_address($addr);
-@@ -1269,7 +1298,7 @@ foreach my $t (@files) {
- 	close $fh;
- 
- 	push @to, recipients_cmd("to-cmd", "to", $to_cmd, $t)
--		if defined $to_cmd;
-+		if defined $to_cmd && !$suppress_to{'tocmd'};
- 	push @cc, recipients_cmd("cc-cmd", "cc", $cc_cmd, $t)
- 		if defined $cc_cmd && !$suppress_cc{'cccmd'};
- 
+As long as they point to the same object, there's no ambiguity, and when you 
+simply refer to tag "foo" (without specifying namespace) it all works, like 
+today. (Read footnote [2] of my proposal for more details on handling 
+ambiguity in tag names.)
+
+However, when the remote tags point to different objects (i.e. the uncommon 
+case), there is an ambiguity, and we should deal with that ambiguity 
+properly, instead of silently adopting one of them arbitrarily.
+
+I don't see how the separate namespaces cause problems here. Also, I don't 
+know what you're proposing instead, or indeed what other organization of 
+tags would lead to less confusion.
+
+
+Have fun! :)
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
