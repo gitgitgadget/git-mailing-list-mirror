@@ -1,7 +1,7 @@
 From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH v2 26/31] rebase: remember strategy and strategy options
-Date: Sun,  6 Feb 2011 13:43:55 -0500
-Message-ID: <1297017841-20678-27-git-send-email-martin.von.zweigbergk@gmail.com>
+Subject: [PATCH v2 19/31] rebase: extract am code to new source file
+Date: Sun,  6 Feb 2011 13:43:48 -0500
+Message-ID: <1297017841-20678-20-git-send-email-martin.von.zweigbergk@gmail.com>
 References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com>
  <1297017841-20678-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>,
@@ -11,151 +11,197 @@ Cc: Junio C Hamano <gitster@pobox.com>,
 	Thomas Rast <trast@student.ethz.ch>,
 	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 06 19:47:56 2011
+X-From: git-owner@vger.kernel.org Sun Feb 06 19:47:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pm9eG-0005ZO-58
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 19:47:48 +0100
+	id 1Pm9eM-0005ZO-Cd
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 19:47:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753778Ab1BFSqf (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Feb 2011 13:46:35 -0500
+	id S1753860Ab1BFSrB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Feb 2011 13:47:01 -0500
 Received: from mail-qw0-f46.google.com ([209.85.216.46]:58585 "EHLO
 	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753764Ab1BFSqd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Feb 2011 13:46:33 -0500
+	with ESMTP id S1753695Ab1BFSqU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Feb 2011 13:46:20 -0500
 Received: by mail-qw0-f46.google.com with SMTP id 26so3014077qwa.19
-        for <git@vger.kernel.org>; Sun, 06 Feb 2011 10:46:32 -0800 (PST)
+        for <git@vger.kernel.org>; Sun, 06 Feb 2011 10:46:20 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=ii7RQ4DzypGnqTPoXmAg59L7umsmog7Wu3rE4cDtaVE=;
-        b=vtsppxr0TP3iJEuZDP/iW0H+2Dxha0INvr087JXQaFv0fXYJCGLWuE8KsbL8Nl6S3j
-         xVu/wfnrszcJMkWpsxlT4zHUKx1lh3t6yCB18JNSRIA8jvjvbMAiJbSgUcKBcTdipN7y
-         lN/3Hjm+DgDoVY0pG10GFUGIAF2CAVO8cY9NU=
+        bh=Au56Nwkc4pQETXIDZbMg0qPR+zOPXkN1qj+/FjJIhKU=;
+        b=SYDNaAdz/ElPuhlWcbohQnL9j6tstXBb5ZGBDvW67k/Xh0O026ksGijZKirGaLY7nw
+         EiNXWcnqrc0jTwZCtjUt0G8OjQBhus/DGE3k04NqScYiw72Yl8NQRK6fWk8r5L0IVoer
+         B//1LJWd3wIU7LdIyF2GG5cxhbvEpyu0cpET0=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=uXpAWnqDtVLt9y9zCLdMsb7GAOP6sDkgNZxeonC8S05dC+7hXoj6sx4uI+damSMwCo
-         D2qjZURXmcYLhJSnNEApS874pjAI6YxHZIaXWme0uDX+wtY1fKeVTMcvcEwovUIXLMaP
-         /ybVoWQIW+SjkD10GuXC/oHVkEWzV7A7e5Tzo=
-Received: by 10.229.248.198 with SMTP id mh6mr12330495qcb.5.1297017992702;
-        Sun, 06 Feb 2011 10:46:32 -0800 (PST)
+        b=mCZWL8FITka04xbBYI7VGk4+4YohKXRae6N1PGIosk1zS0a7eGPwMUkKcS0RZXAF2l
+         kKKgTwf9/3iw2v+3BibshZ0XIi2J90ohTrw1z/yt8VIJQAC1fFgCZM4aCE0cd1HZAyVy
+         Lh5kcNOheL4+1Ib/ecU16oac6MDWXhcWJXTUQ=
+Received: by 10.224.67.136 with SMTP id r8mr13587880qai.63.1297017980165;
+        Sun, 06 Feb 2011 10:46:20 -0800 (PST)
 Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id h20sm2174330qck.24.2011.02.06.10.46.31
+        by mx.google.com with ESMTPS id h20sm2174330qck.24.2011.02.06.10.46.18
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Feb 2011 10:46:32 -0800 (PST)
+        Sun, 06 Feb 2011 10:46:19 -0800 (PST)
 X-Mailer: git-send-email 1.7.4.rc2.33.g8a14f
 In-Reply-To: <1297017841-20678-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166189>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166190>
 
-When a rebase is resumed, interactive rebase remembers any merge
-strategy passed when the rebase was initated. Make non-interactive
-rebase remember any merge strategy as well. Also make non-interactive
-rebase remember any merge strategy options.
+Extract the code for am-based rebase to git-rebase--am.sh.
 
-To be able to resume a rebase that was initiated with an older version
-of git (older than this commit), make sure not to expect the saved
-option files to exist.
-
-Test case idea taken from Junio's 71fc224 (t3402: test "rebase
--s<strategy> -X<opt>", 2010-11-11).
-
+Suggested-by: Johannes Sixt <j6t@kdbg.org>
 Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 ---
- git-rebase--interactive.sh |    2 --
- git-rebase.sh              |    6 ++++++
- t/t3418-rebase-continue.sh |   29 +++++++++++++++++++++++++++++
- 3 files changed, 35 insertions(+), 2 deletions(-)
+ .gitignore        |    1 +
+ Makefile          |    1 +
+ git-rebase--am.sh |   34 ++++++++++++++++++++++++++++++++++
+ git-rebase.sh     |   31 ++-----------------------------
+ 4 files changed, 38 insertions(+), 29 deletions(-)
+ create mode 100644 git-rebase--am.sh
 
-diff --git a/git-rebase--interactive.sh b/git-rebase--interactive.sh
-index f076a6e..5773b75 100755
---- a/git-rebase--interactive.sh
-+++ b/git-rebase--interactive.sh
-@@ -584,7 +584,6 @@ skip_unnecessary_picks () {
- 
- get_saved_options () {
- 	test -d "$rewritten" && preserve_merges=t
--	test -f "$state_dir"/strategy && strategy="$(cat "$state_dir"/strategy)"
- 	test -f "$state_dir"/rebase-root && rebase_root=t
- }
- 
-@@ -713,7 +712,6 @@ case "$rebase_root" in
- *)
- 	: >"$state_dir"/rebase-root ;;
- esac
--test -z "$strategy" || echo "$strategy" > "$state_dir"/strategy
- if test t = "$preserve_merges"
- then
- 	if test -z "$rebase_root"
+diff --git a/.gitignore b/.gitignore
+index a8b98b4..7aaf5c7 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -102,6 +102,7 @@
+ /git-quiltimport
+ /git-read-tree
+ /git-rebase
++/git-rebase--am
+ /git-rebase--interactive
+ /git-rebase--merge
+ /git-receive-pack
+diff --git a/Makefile b/Makefile
+index f47550f..3cc60cb 100644
+--- a/Makefile
++++ b/Makefile
+@@ -369,6 +369,7 @@ SCRIPT_SH += git-merge-resolve.sh
+ SCRIPT_SH += git-mergetool.sh
+ SCRIPT_SH += git-pull.sh
+ SCRIPT_SH += git-quiltimport.sh
++SCRIPT_SH += git-rebase--am.sh
+ SCRIPT_SH += git-rebase--interactive.sh
+ SCRIPT_SH += git-rebase--merge.sh
+ SCRIPT_SH += git-rebase.sh
+diff --git a/git-rebase--am.sh b/git-rebase--am.sh
+new file mode 100644
+index 0000000..263987c
+--- /dev/null
++++ b/git-rebase--am.sh
+@@ -0,0 +1,34 @@
++#!/bin/sh
++#
++# Copyright (c) 2010 Junio C Hamano.
++#
++
++. git-sh-setup
++
++case "$action" in
++continue)
++	git am --resolved --3way --resolvemsg="$resolvemsg" &&
++	move_to_original_branch
++	exit
++	;;
++skip)
++	git am --skip -3 --resolvemsg="$resolvemsg" &&
++	move_to_original_branch
++	exit
++	;;
++esac
++
++test -n "$rebase_root" && root_flag=--root
++
++git format-patch -k --stdout --full-index --ignore-if-in-upstream \
++	--src-prefix=a/ --dst-prefix=b/ \
++	--no-renames $root_flag "$revisions" |
++git am $git_am_opt --rebasing --resolvemsg="$resolvemsg" &&
++move_to_original_branch
++ret=$?
++test 0 != $ret -a -d "$state_dir" &&
++	echo $head_name > "$state_dir/head-name" &&
++	echo $onto > "$state_dir/onto" &&
++	echo $orig_head > "$state_dir/orig-head" &&
++	echo "$GIT_QUIET" > "$state_dir/quiet"
++exit $ret
 diff --git a/git-rebase.sh b/git-rebase.sh
-index 8a36e7a..f4ad7c1 100755
+index 44e169f..c60221b 100755
 --- a/git-rebase.sh
 +++ b/git-rebase.sh
-@@ -81,6 +81,9 @@ read_basic_state () {
- 	fi &&
- 	GIT_QUIET=$(cat "$state_dir"/quiet) &&
- 	test -f "$state_dir"/verbose && verbose=t
-+	test -f "$state_dir"/strategy && strategy="$(cat "$state_dir"/strategy)"
-+	test -f "$state_dir"/strategy_opts &&
-+		strategy_opts="$(cat "$state_dir"/strategy_opts)"
+@@ -91,7 +91,7 @@ run_specific_rebase () {
+ 		GIT_EDITOR=:
+ 		export GIT_EDITOR
+ 	fi
+-	test "$type" != am && . git-rebase--$type
++	. git-rebase--$type
  }
  
- write_basic_state () {
-@@ -89,6 +92,9 @@ write_basic_state () {
- 	echo "$orig_head" > "$state_dir"/orig-head &&
- 	echo "$GIT_QUIET" > "$state_dir"/quiet &&
- 	test t = "$verbose" && : > "$state_dir"/verbose
-+	test -n "$strategy" && echo "$strategy" > "$state_dir"/strategy
-+	test -n "$strategy_opts" && echo "$strategy_opts" > \
-+		"$state_dir"/strategy_opts
- }
+ run_pre_rebase_hook () {
+@@ -261,17 +261,11 @@ continue)
+ 	}
+ 	read_basic_state
+ 	run_specific_rebase
+-	git am --resolved --3way --resolvemsg="$resolvemsg" &&
+-	move_to_original_branch
+-	exit
+ 	;;
+ skip)
+ 	git reset --hard HEAD || exit $?
+ 	read_basic_state
+ 	run_specific_rebase
+-	git am -3 --skip --resolvemsg="$resolvemsg" &&
+-	move_to_original_branch
+-	exit
+ 	;;
+ abort)
+ 	git rerere clear
+@@ -324,14 +318,12 @@ then
+ 	shift
+ 	upstream=`git rev-parse --verify "${upstream_name}^0"` ||
+ 	die "invalid upstream $upstream_name"
+-	unset root_flag
+ 	upstream_arg="$upstream_name"
+ else
+ 	test -z "$onto" && die "You must specify --onto when using --root"
+ 	unset upstream_name
+ 	unset upstream
+-	root_flag="--root"
+-	upstream_arg="$root_flag"
++	upstream_arg=--root
+ fi
  
- output () {
-diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
-index 1d90191..5469546 100755
---- a/t/t3418-rebase-continue.sh
-+++ b/t/t3418-rebase-continue.sh
-@@ -45,4 +45,33 @@ test_expect_success 'rebase --continue can not be used with other options' '
- 	test_must_fail git rebase --continue -v
- '
+ # Make sure the branch to rebase onto is valid.
+@@ -457,23 +449,4 @@ else
+ 	revisions="$upstream..$orig_head"
+ fi
  
-+test_expect_success 'rebase --continue remembers merge strategy and options' '
-+	rm -fr .git/rebase-* &&
-+	git reset --hard commit-new-file-F2-on-topic-branch &&
-+	test_commit "commit-new-file-F3-on-topic-branch" F3 32 &&
-+	test_when_finished "rm -fr test-bin funny.was.run" &&
-+	mkdir test-bin &&
-+	cat >test-bin/git-merge-funny <<-EOF
-+	#!$SHELL_PATH
-+	case "\$1" in --opt) ;; *) exit 2 ;; esac
-+	shift &&
-+	>funny.was.run &&
-+	exec git merge-recursive "\$@"
-+	EOF
-+	chmod +x test-bin/git-merge-funny &&
-+	(
-+		PATH=./test-bin:$PATH
-+		test_must_fail git rebase -s funny -Xopt master topic
-+	) &&
-+	test -f funny.was.run &&
-+	rm funny.was.run &&
-+	echo "Resolved" >F2 &&
-+	git add F2 &&
-+	(
-+		PATH=./test-bin:$PATH
-+		git rebase --continue
-+	) &&
-+	test -f funny.was.run
-+'
-+
- test_done
+-if test -z "$do_merge"
+-then
+-	git format-patch -k --stdout --full-index --ignore-if-in-upstream \
+-		--src-prefix=a/ --dst-prefix=b/ \
+-		--no-renames $root_flag "$revisions" |
+-	git am $git_am_opt --rebasing --resolvemsg="$resolvemsg" &&
+-	move_to_original_branch
+-	ret=$?
+-	test 0 != $ret -a -d "$apply_dir" &&
+-		echo $head_name > "$apply_dir/head-name" &&
+-		echo $onto > "$apply_dir/onto" &&
+-		echo $orig_head > "$apply_dir/orig-head" &&
+-		echo "$GIT_QUIET" > "$apply_dir/quiet"
+-	exit $ret
+-fi
+-
+-# start doing a rebase with git-merge
+-# this is rename-aware if the recursive (default) strategy is used
+-
+ run_specific_rebase
 -- 
 1.7.4.rc2.33.g8a14f
