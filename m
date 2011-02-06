@@ -1,149 +1,93 @@
-From: Felipe Contreras <felipe.contreras@gmail.com>
-Subject: [PATCH] send-email: add 'specify-author' option
-Date: Sun,  6 Feb 2011 16:44:05 +0200
-Message-ID: <1297003445-23652-1-git-send-email-felipe.contreras@gmail.com>
-Cc: Felipe Contreras <felipe.contreras@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 06 15:44:27 2011
+From: Dmitry Potapov <dpotapov@gmail.com>
+Subject: Re: [1.8.0] Provide proper remote ref namespaces
+Date: Sun, 6 Feb 2011 18:17:07 +0300
+Message-ID: <AANLkTinDmCZH95jidJ1NYFRd8X_xNehyrhA8hBcx5=SR@mail.gmail.com>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+	<201102050218.44325.johan@herland.net>
+	<20110205214045.GA15668@dpotapov.dyndns.org>
+	<201102060104.37146.johan@herland.net>
+	<AANLkTikmD8qZOE+hi1=aeeVJx2qQpzdm0tV1mLsx1tfB@mail.gmail.com>
+	<alpine.LFD.2.00.1102060900570.12104@xanadu.home>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Nicolas Pitre <nico@fluxnic.net>
+X-From: git-owner@vger.kernel.org Sun Feb 06 16:17:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pm5qk-00016V-Af
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 15:44:26 +0100
+	id 1Pm6MX-0007Dl-5w
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 16:17:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752748Ab1BFOoU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Feb 2011 09:44:20 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:61693 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752677Ab1BFOoU (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Feb 2011 09:44:20 -0500
-Received: by fxm20 with SMTP id 20so4033116fxm.19
-        for <git@vger.kernel.org>; Sun, 06 Feb 2011 06:44:18 -0800 (PST)
+	id S1752859Ab1BFPRJ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Feb 2011 10:17:09 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:44459 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752164Ab1BFPRI (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Feb 2011 10:17:08 -0500
+Received: by qyj19 with SMTP id 19so953857qyj.19
+        for <git@vger.kernel.org>; Sun, 06 Feb 2011 07:17:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=4dGZOoppVl58xipk0kjXRfeWRM4A8jQMTXCUGBwWW34=;
-        b=oNblvhAZUnuSiL/zGqOug5fEQFStgWVt7eMLAtIbz1Tbr/FNzeuXR2swieChTOXoTI
-         4gYHGw1rtgsoRzQpiUlCdF/aIRaqNb/r+cV+1pHWy4S9kQQaea0z2cFofj2g1F3k8iMi
-         hty7r11BULFN7f/CptGTBlQdDvenic94nPfq0=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=vk1AF+TQe3EWLzq+RRdSX2sCZLiMJo6RkCe9HH6wLts=;
+        b=h+2uBI0djKPdrYcF2G6fRhHeXMjjWfaLm2NorNFUm/ntm6l4B/Hd2Y8oBU6Rozejy7
+         QoNclzBObIs/7nsllAye8YlXaALYa+kKEI3rOSfDS0B9xuLD09W099bc0XOOOh/uUSsZ
+         bdnDt/oCXKy1UG3+Q+U6GyuvbBpevQwLG9A/M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=iOvBAO/OBzn7AraQoJHzQDW+L6S9zkWUfASxJOddE9uDYv8y5B1vf8eyFYB2aO9lsf
-         i3xcM6DYZRBKR5Jo90y/xDmgiqwBeoV0i4egJXxEX8ZbzovaYEICMq8vO8aRiYAU3uoE
-         Vr4NSseIL45/LG4aBra/rXPZlXiyOQXexXdzY=
-Received: by 10.223.98.198 with SMTP id r6mr73762fan.42.1297003458757;
-        Sun, 06 Feb 2011 06:44:18 -0800 (PST)
-Received: from localhost (a91-153-253-80.elisa-laajakaista.fi [91.153.253.80])
-        by mx.google.com with ESMTPS id o17sm856343fal.25.2011.02.06.06.44.17
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Feb 2011 06:44:18 -0800 (PST)
-X-Mailer: git-send-email 1.7.4.1.gf4271.dirty
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=e7NPuBMamJpzVnF822OqKJQjO3M5+BMi4Esbg86pRKqU2Q2gPlO3Qe6w7ngXdzjBWM
+         RJM4elzHsGUtyESQQG7Oxp7wIVT8C657EosO1Xg2cChVEQRKp8sj9pYsbicPXpwZVDoV
+         t1HP39bUoZiK7MB5sFW3qW0FnzFWnKcwyBfcg=
+Received: by 10.229.220.133 with SMTP id hy5mr11966843qcb.269.1297005427296;
+ Sun, 06 Feb 2011 07:17:07 -0800 (PST)
+Received: by 10.229.213.4 with HTTP; Sun, 6 Feb 2011 07:17:07 -0800 (PST)
+In-Reply-To: <alpine.LFD.2.00.1102060900570.12104@xanadu.home>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166148>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166149>
 
-From: Felipe Contreras <felipe.contreras@gmail.com>
+On Sun, Feb 06, 2011 at 09:09:26AM -0500, Nicolas Pitre wrote:
+> On Sun, 6 Feb 2011, Dmitry Potapov wrote:
+>_
+> > To me, the proper handling ambiguity means that when I do "git fetch" I
+> > immediately see warning about tag clashes.
+>_
+> Fair enough.
+>_
+> > So, I agree with you that
+> > current behavior is not good, but I disagree with you about having many
+> > namespaces, because it postpones detection of the conflict until I try
+> > to use.
+>_
+> No.  The later does not prevent the former.
 
-Always specify the author of the commit in the body of the message, even
-if the committer is the author.
+But what if I really have two semi-related projects that I want to fetch
+into the same repository as Johan suggested? In this case, I want to
+have separate namespaces and no warning when I fetch.
 
-This is useful if the 'From' header is mangled by some mail server.
+>_
+> Of course there is a reason.  What if your fetch brings in hundreds of_
+> tags (this is common for some projects) and then you want to remove that_
+> fetched branch from your repository?  How do you determine which tag_
+> came from that remote repository and which tags are to be kept?  Without_
+> a separate namespace this is practically impossible.
 
-Signed-off-by: Felipe Contreras <felipe.contreras@gmail.com>
----
- Documentation/git-send-email.txt |    4 ++++
- git-send-email.perl              |    7 ++++++-
- t/t9001-send-email.sh            |   12 ++++++++++++
- 3 files changed, 22 insertions(+), 1 deletions(-)
+Well, I see your use case now. Maybe the right solution is add an option
+that will tell whether to fetch tags into separate namespace or not, and
+later based on experiences, we can decide whether we want to change the
+default to have separate namespaces for tags.
 
-diff --git a/Documentation/git-send-email.txt b/Documentation/git-send-email.txt
-index 7ec9dab..5895835 100644
---- a/Documentation/git-send-email.txt
-+++ b/Documentation/git-send-email.txt
-@@ -125,6 +125,10 @@ The --to option must be repeated for each user you want on the to list.
- +
- Note that no attempts whatsoever are made to validate the encoding.
- 
-+--specify-author::
-+	Always specify the author of the commit in the body of the message,
-+	even if the committer is the author. This is useful if the 'From'
-+	header is mangled by some mail server.
- 
- Sending
- ~~~~~~~
-diff --git a/git-send-email.perl b/git-send-email.perl
-index 76565de..30f27ff 100755
---- a/git-send-email.perl
-+++ b/git-send-email.perl
-@@ -57,6 +57,8 @@ git send-email [options] <file | directory | rev-list options >
-     --annotate                     * Review each patch that will be sent in an editor.
-     --compose                      * Open an editor for introduction.
-     --8bit-encoding         <str>  * Encoding to assume 8bit mails if undeclared
-+    --specify-author               * Always specify the author of the commit in
-+			             the body of the message.
- 
-   Sending:
-     --envelope-sender       <str>  * Email envelope sender.
-@@ -198,6 +200,7 @@ my ($identity, $aliasfiletype, @alias_files, $smtp_domain);
- my ($validate, $confirm);
- my (@suppress_cc);
- my ($auto_8bit_encoding);
-+my ($specify_author);
- 
- my ($debug_net_smtp) = 0;		# Net::SMTP, see send_message()
- 
-@@ -210,6 +213,7 @@ my %config_bool_settings = (
-     "signedoffbycc" => [\$signed_off_by_cc, undef],
-     "signedoffcc" => [\$signed_off_by_cc, undef],      # Deprecated
-     "validate" => [\$validate, 1],
-+    "specifyauthor" => [\$specify_author, undef],
- );
- 
- my %config_settings = (
-@@ -311,6 +315,7 @@ my $rc = GetOptions("sender|from=s" => \$sender,
- 		    "format-patch!" => \$format_patch,
- 		    "8bit-encoding=s" => \$auto_8bit_encoding,
- 		    "force" => \$force,
-+		    "specify-author!" => \$specify_author,
- 	 );
- 
- unless ($rc) {
-@@ -1285,7 +1290,7 @@ foreach my $t (@files) {
- 		$subject = quote_rfc2047($subject, $auto_8bit_encoding);
- 	}
- 
--	if (defined $author and $author ne $sender) {
-+	if (defined $author and ($author ne $sender or $specify_author)) {
- 		$message = "From: $author\n\n$message";
- 		if (defined $author_encoding) {
- 			if ($has_content_type) {
-diff --git a/t/t9001-send-email.sh b/t/t9001-send-email.sh
-index 579ddb7..66d2541 100755
---- a/t/t9001-send-email.sh
-+++ b/t/t9001-send-email.sh
-@@ -280,6 +280,18 @@ test_expect_success $PREREQ 'Author From: not in message body' '
- 	! grep "From: A <author@example.com>" msgbody1
- '
- 
-+test_expect_success $PREREQ 'Author From: in message body (forced)' '
-+	clean_fake_sendmail &&
-+	git send-email \
-+		--from="A <author@example.com>" \
-+		--to=nobody@example.com \
-+		--smtp-server="$(pwd)/fake.sendmail" \
-+		--specify-author \
-+		$patches &&
-+	sed "1,/^\$/d" < msgtxt1 > msgbody1 &&
-+	grep "From: A <author@example.com>" msgbody1
-+'
-+
- test_expect_success $PREREQ 'allow long lines with --no-validate' '
- 	git send-email \
- 		--from="Example <nobody@example.com>" \
--- 
-1.7.4.1.gf4271.dirty
+
+Dmitry
