@@ -1,67 +1,66 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git pull: Remove option handling done by fetch
-Date: Sun, 06 Feb 2011 12:45:48 -0800
-Message-ID: <7vipwwx56r.fsf@alter.siamese.dyndns.org>
-References: <4D4C5EBC.2090100@web.de> <201102042326.08607.j6t@kdbg.org>
- <4D4D33E7.4000303@web.de>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [1.8.0] Tracking empty directories
+Date: Sun, 6 Feb 2011 21:46:34 +0100
+Message-ID: <AANLkTimo44R_=CLqZ=+TZmtctAnBXbxEakEBdgUVeY1L@mail.gmail.com>
+References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org>
+ <m3zkqe8xc8.fsf_-_@localhost.localdomain> <201102051931.10979.thomas@koch.ro>
+ <AANLkTikX5Y=TrXayXj-MCaR5p0=Tokc_5ihGqHFL9CQx@mail.gmail.com> <7vmxm8x5dx.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Feb 06 21:46:07 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: thomas@koch.ro, Jakub Narebski <jnareb@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sun Feb 06 21:47:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmBUi-0004wO-IV
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 21:46:05 +0100
+	id 1PmBVz-0005ew-9O
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 21:47:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754015Ab1BFUp7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Feb 2011 15:45:59 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45637 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753896Ab1BFUp7 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Feb 2011 15:45:59 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8F4973402;
-	Sun,  6 Feb 2011 15:46:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=i7qoVvN93+ScX1FJdomnn6SiFSI=; b=Ts/+Wd
-	zje3sbXOHbbugtQSE8nRV+syXYB59Tgbcs/HwU4egNgsmXynPxsQX9sEaiKe4z3d
-	JqwHGnxs8iwjt/ypDXbNU+m2/4KUNiy7bi7umCqchIdOENPqjM42rk3eneN4EO/3
-	0e3KMQfECx+VofibcubJfeDt01oMJEAFOOB1w=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ZzvJy39BJ0dV0khJmMewaGCCn041Se/5
-	aFhlqrXpNFJ4DqwUIlvMDBfJkUKqdgDMcRLVzuMABRbNDqfR3lhAHmm1W1wFhlJz
-	atG9phkbFqyD9ury4fLlR276W6Z4DRohjMgppieS9/RezOyIIjwE74Q2+tnR0IEG
-	T0qwci+gMrk=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5CA7033FD;
-	Sun,  6 Feb 2011 15:46:52 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4DB2133F6; Sun,  6 Feb 2011
- 15:46:48 -0500 (EST)
-In-Reply-To: <4D4D33E7.4000303@web.de> (Jens Lehmann's message of "Sat\, 05
- Feb 2011 12\:26\:31 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 39F242F0-3232-11E0-B6A7-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
+	id S1754012Ab1BFUrR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Feb 2011 15:47:17 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:42758 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753960Ab1BFUrQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Feb 2011 15:47:16 -0500
+Received: by iwn9 with SMTP id 9so3966425iwn.19
+        for <git@vger.kernel.org>; Sun, 06 Feb 2011 12:47:15 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=y4i1OYdjn8vJNFeqeNO2nA2ugJDGue1T2PmAk+yuGTI=;
+        b=hxcbPK/RZrzTskWPWXUsdyS751o1wzmhcEmolnqiC1wZlVv3gpb5/l2dzLEpxhrK7X
+         Z1FSHrBR/eajWKIrXl+WJS8CJs5iFiqP8m/wrVTLbq7N+7yxwv6wUaGEURuKtIGHqqRw
+         fF/ZVDh8wzawjJUcSt9IeWzbi4LQGRKmFBkIQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=nww+2hvl6vyTPrDjqQuHZwtieHe2/+ThAAMZ1Y03iP8Ip5XTQb+Y31iw6IPgHrVW98
+         ihQ7DKHURArUFtPZSjiZMDX7LIMie93bO/sl4Q5/v6FaigZ3WS28IjmpW2JI9wRe+h/I
+         e+oUyswpYTTIGh8LKtAuq/KjSNHabrVW62VfY=
+Received: by 10.231.147.149 with SMTP id l21mr16110586ibv.152.1297025235117;
+ Sun, 06 Feb 2011 12:47:15 -0800 (PST)
+Received: by 10.231.39.140 with HTTP; Sun, 6 Feb 2011 12:46:34 -0800 (PST)
+In-Reply-To: <7vmxm8x5dx.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166201>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166202>
 
-Jens Lehmann <Jens.Lehmann@web.de> writes:
+Heya,
 
-> Yes, but isn't that exactly what the pull man-page says? Quote:
-> "Options meant for git pull itself and the underlying git merge
-> must be given before the options meant for git fetch."
+On Sun, Feb 6, 2011 at 21:41, Junio C Hamano <gitster@pobox.com> wrote:
+> Huh?
 
-Yes, it says that, and I think that was a weasely way to say "the command
-line parser in git-pull is broken".  The lines you are removing was from
-the patch that fixed that breakage, aren't they?
+To teach the plumbing to handle empty directories first, and then in a
+later release add porcelain?
+
+-- 
+Cheers,
+
+Sverre Rabbelier
