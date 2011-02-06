@@ -1,75 +1,92 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: "git add -u" broken in git 1.7.4?
-Date: Sun, 06 Feb 2011 21:48:48 +0100
-Message-ID: <vpq1v3kopn3.fsf@bauges.imag.fr>
-References: <4D4DEDC4.4080708@hartwork.org>
-	<20110206051333.GA3458@sigill.intra.peff.net>
-	<4D4EF7E4.7050303@hartwork.org>
+From: Conrad Irwin <conrad.irwin@gmail.com>
+Subject: Re: [PATCH v2] git-commit --patch
+Date: Sun, 6 Feb 2011 13:06:31 -0800
+Message-ID: <AANLkTimCS0Tj7KosZ7RJK8Q9ucxw-0qr-aV-KrbqHMHU@mail.gmail.com>
+References: <1296710732-12493-1-git-send-email-conrad.irwin@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, Git ML <git@vger.kernel.org>
-To: Sebastian Pipping <webmaster@hartwork.org>
-X-From: git-owner@vger.kernel.org Sun Feb 06 21:49:08 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: conrad.irwin@gmail.com
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 06 22:06:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmBXc-0006KY-Ne
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 21:49:05 +0100
+	id 1PmBog-0005rD-OM
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 22:06:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754031Ab1BFUs5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Feb 2011 15:48:57 -0500
-Received: from mx1.imag.fr ([129.88.30.5]:54775 "EHLO shiva.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753960Ab1BFUs5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Feb 2011 15:48:57 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by shiva.imag.fr (8.13.8/8.13.8) with ESMTP id p16KmkWb012931
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Sun, 6 Feb 2011 21:48:46 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PmBXM-0000U4-PM; Sun, 06 Feb 2011 21:48:48 +0100
-In-Reply-To: <4D4EF7E4.7050303@hartwork.org> (Sebastian Pipping's message of "Sun\, 06 Feb 2011 20\:35\:00 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.0.1 (shiva.imag.fr [129.88.30.5]); Sun, 06 Feb 2011 21:48:46 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p16KmkWb012931
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1297630128.65056@tjmuZkYc7f+Q3SER8v3xvQ
+	id S1753994Ab1BFVGd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Feb 2011 16:06:33 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:35967 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753775Ab1BFVGc convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Feb 2011 16:06:32 -0500
+Received: by gyb11 with SMTP id 11so1506266gyb.19
+        for <git@vger.kernel.org>; Sun, 06 Feb 2011 13:06:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=XPY6BhxASayO8Vi+EOuZh+6biBPRwGSZ0VXEybm9Y0M=;
+        b=DcVfbSeCp2WDAOV4d8UtBtJ6ZJWuRH/QUggU2ew0vtpXySB2Ho3bhBQh+Y7NRC/s2b
+         kGoCkJxnqs9JewPTMeMUOGw0B+NwEb6/VpyQN3qG0fFPKr5pzauQrijiy/VgoqEJyQnO
+         OtgV63jxxFZlqSHbG7+3s/kZxOW1sW6LS9GbQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=eVDJiuh7PAcAre5lU6/N2R4rYPuI2TVGXv9AFZrXJ3U7XmXEfSzbi/9Af9uh2PsQc7
+         v8LK/qOfunYthAP8WWMEZ1HMigX7jtzoUEOGGh8t0gpnLYKu+kxX4K+hUK7CYi/SRXrd
+         Qqbg7AdL8DC7fz3/SdjlX1r17qElsaFpDi0v4=
+Received: by 10.236.108.7 with SMTP id p7mr29360562yhg.33.1297026391855; Sun,
+ 06 Feb 2011 13:06:31 -0800 (PST)
+Received: by 10.236.109.147 with HTTP; Sun, 6 Feb 2011 13:06:31 -0800 (PST)
+In-Reply-To: <1296710732-12493-1-git-send-email-conrad.irwin@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166203>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166204>
 
-Sebastian Pipping <webmaster@hartwork.org> writes:
+Is there a recommended way of stirring up attention for patchsets like
+this, or did I just miss the replies?
 
-> I was and I can confirm the different behaviour with 1.7.4 over here: it
-> does work on the root directory of the repo as you supposed.
+Conrad
 
-What do you mean by "it does not work"?
-
-"git add -u" adds files under the current directory, and it always
-did.
-
-> Is that behavior needed to be as is or could you change it to work from
-> everywhere?
-
-I consider it as a design bug that "add -u" is not tree-wide, but it's
-not easy to change the existing behavior without breaking expectations
-of people used to the current behavior.
-
-> Could it be it has been working from anywhere before?
-
-Can you post an example where Git 1.7.4 and a previous version behave
-differently? Up to now, I see difference between your expectations and
-what Git does, but not between new and old versions.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+On 2 February 2011 21:25, Conrad Irwin <conrad.irwin@gmail.com> wrote:
+> This patch-set adds support for git-commit --patch, and tidies up som=
+e of the
+> rough edges of git commit --interactive.
+>
+> The motivation is to support my current workflow, which goes somethin=
+g like:
+>
+> 1. Hack out the basic structure of the feature that I'm working on, u=
+ntil I have
+> =A0 something that looks like it will work.
+> 2. Split this into several commits with a more logical flow (i.e. som=
+e that add
+> =A0 support for the techniques I want to use for the actual feature, =
+then the
+> =A0 feature itself).
+> 3. Start fleshing out the implementation, and bug-fixing, with lots o=
+f
+> =A0 git-commit --fixup so that the changes end up in the right commit=
+=2E
+> 4. At the end of the day, a big rebase -i to make the history readabl=
+e.
+>
+> This is just about doable with git-add -p, or git-commit --interactiv=
+e, but
+> it's very inefficient. I take the presence of git commit --fixup to i=
+mply that
+> other people are doing similar, if less extreme things, so assume tha=
+t they
+> would like a git-commit -p too.
+>
+> Conrad
+>
+>
