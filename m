@@ -1,89 +1,82 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: ignoring file modes completely
-Date: Sun, 06 Feb 2011 14:14:20 +0100
-Message-ID: <4D4E9EAC.4030508@drmicha.warpmail.net>
-References: <4D4D6BC2.90101@io.com> <1296921829.5467.1.camel@localhost.localdomain> <4D4D7636.7090608@io.com> <4D4D81C9.5080002@op5.se> <4D4DA4C1.5050501@io.com>
+From: Nicolas Pitre <nico@fluxnic.net>
+Subject: Re: [1.8.0] Provide proper remote ref namespaces
+Date: Sun, 06 Feb 2011 09:09:26 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1102060900570.12104@xanadu.home>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+ <201102050218.44325.johan@herland.net>
+ <20110205214045.GA15668@dpotapov.dyndns.org>
+ <201102060104.37146.johan@herland.net>
+ <AANLkTikmD8qZOE+hi1=aeeVJx2qQpzdm0tV1mLsx1tfB@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org, Andreas Ericsson <ae@op5.se>,
-	jaredhance@gmail.com
-To: rkitover@io.com
-X-From: git-owner@vger.kernel.org Sun Feb 06 14:13:30 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 06 15:09:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pm4Qi-0000yu-0x
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 14:13:28 +0100
+	id 1Pm5J0-0002j5-9F
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 15:09:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752565Ab1BFNNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Feb 2011 08:13:22 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:50224 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752397Ab1BFNNW (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 6 Feb 2011 08:13:22 -0500
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id D0F52207D7;
-	Sun,  6 Feb 2011 08:13:20 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute3.internal (MEProxy); Sun, 06 Feb 2011 08:13:20 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=8dAf8k1GQgw4RnRKiHvCxQnOEeU=; b=NjPouG/rMu3rGBgdOI0COVTEBeBRRdofOWro2u/08GFWDXUE03PFnKYG1R76hMLd6oP+bEf4LiETWluVLczair/tlfY/ZJeBbZ1bsyrhtyYEY0NCl/Gj6w+if7KVmzBwJJ9jV69wgUAYMSnhi8ISUvvufqF+/AckgNFh043CSpo=
-X-Sasl-enc: n1oofdfw1pGmL3KaBcWL02CkNReKsQoN28mtfC8GV+Cx 1296998000
-Received: from localhost.localdomain (p54858388.dip0.t-ipconnect.de [84.133.131.136])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 7C66A4034EB;
-	Sun,  6 Feb 2011 08:13:19 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <4D4DA4C1.5050501@io.com>
+	id S1752697Ab1BFOJ2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Feb 2011 09:09:28 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:64813 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752633Ab1BFOJ1 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Feb 2011 09:09:27 -0500
+Received: from xanadu.home ([66.130.28.92]) by VL-MR-MRZ22.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0LG7009BS8NQSY70@VL-MR-MRZ22.ip.videotron.ca> for
+ git@vger.kernel.org; Sun, 06 Feb 2011 09:09:27 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <AANLkTikmD8qZOE+hi1=aeeVJx2qQpzdm0tV1mLsx1tfB@mail.gmail.com>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166145>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166146>
 
-Rafael Kitover venit, vidit, dixit 05.02.2011 20:28:
-> On 2/5/2011 11:58 AM, Andreas Ericsson wrote:
->> On 02/05/2011 05:09 PM, Rafael Kitover wrote:
->>> On 2/5/2011 11:03 AM, Jared Hance wrote:
->>>> On Sat, 2011-02-05 at 10:24 -0500, Rafael Kitover wrote:
->>>>> Hello,
->>>>>
->>>>> I found the core.filemode option, which ignores executable bits, but I
->>>>> need an option to ignore all mode differences, and such an option does
->>>>> not seem to exist.
->>>>
->>>> The only mode tracked by Git is the executable bit, so this shouldn't
->>>> even be an issue. Are you sure the executable bit isn't the problem?
->>>>
->>> $ git config --global core.filemode
->>> false
->>>
->>> Output of "git diff HEAD" :
->>>
->>> diff --git a/Makefile.PL b/Makefile.PL
->>> old mode 100755
->>> new mode 100644
->>> diff --git a/t/02ads.t b/t/02ads.t
->>> old mode 100755
->>> new mode 100644
->>> diff --git a/t/02cxn.t b/t/02cxn.t
->>> old mode 100755
->>> new mode 100644
->>> diff --git a/t/04os.t b/t/04os.t
->>> old mode 100755
->>> new mode 100644
->>
->> Those are all executable bit diffs.
->>
-> 
-> Ok, but I have core.filemode set to "false" as I showed, why does this 
-> happen then?
+On Sun, 6 Feb 2011, Dmitry Potapov wrote:
 
-I can't confirm this on linux with current git. What are your versions?
-Do you have a minimal example (starting from git init)?
+> To me, the proper handling ambiguity means that when I do "git fetch" I
+> immediately see warning about tag clashes.
 
-Michael
+Fair enough.
 
-BTW: Leaving out helpful folks from cc does not help... I should not
-have to re-add them by hand.
+> So, I agree with you that
+> current behavior is not good, but I disagree with you about having many
+> namespaces, because it postpones detection of the conflict until I try
+> to use.
+
+No.  The later does not prevent the former.
+
+> And well, git may detect ambiguity when I say "git show v1.0",
+> but if I look at my branch in gitk and see "v1.0" and may say to someone
+> that I use "v1.0" but that person looks at his tree and sees "v1.0" as
+> something different.
+
+If gitk is smart enough to see that two tags have the same name then it 
+should scope them so they are not ambiguous anymore, unless of course 
+they are referring to the same thing in which case they are not 
+ambiguous from the start.
+
+> So, if there is two different tags with the same name, it is better to
+> report the problem as soon as possible, i.e. during "git fetch", and
+> then there is no reason to have separate namespaces for tags.
+
+Of course there is a reason.  What if your fetch brings in hundreds of 
+tags (this is common for some projects) and then you want to remove that 
+fetched branch from your repository?  How do you determine which tag 
+came from that remote repository and which tags are to be kept?  Without 
+a separate namespace this is practically impossible.
+
+
+Nicolas
