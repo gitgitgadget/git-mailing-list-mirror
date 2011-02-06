@@ -1,86 +1,144 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [PATCH] git pull: Remove option handling done by fetch
-Date: Sun, 6 Feb 2011 16:09:39 -0600
-Message-ID: <20110206220939.GC17210@elie>
-References: <4D4C5EBC.2090100@web.de>
- <201102042326.08607.j6t@kdbg.org>
- <4D4D33E7.4000303@web.de>
- <7vipwwx56r.fsf@alter.siamese.dyndns.org>
- <4D4F19D0.2000408@web.de>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [1.8.0] Provide proper remote ref namespaces
+Date: Sun, 06 Feb 2011 23:12:51 +0100
+Message-ID: <201102062312.51655.johan@herland.net>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+ <201102061711.45460.johan@herland.net>
+ <AANLkTi=gd5iu0i=ggqJC++N_rL+nU6RO9PNw=jMpT0NH@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jens Lehmann <Jens.Lehmann@web.de>
-X-From: git-owner@vger.kernel.org Sun Feb 06 23:09:52 2011
+Content-Type: Text/Plain; charset=iso-8859-1
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Dmitry Potapov <dpotapov@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 06 23:13:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmCnn-00014s-OH
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 23:09:52 +0100
+	id 1PmCqx-0002bw-DM
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 23:13:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753378Ab1BFWJq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Feb 2011 17:09:46 -0500
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:61760 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753263Ab1BFWJq (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Feb 2011 17:09:46 -0500
-Received: by yib18 with SMTP id 18so1517258yib.19
-        for <git@vger.kernel.org>; Sun, 06 Feb 2011 14:09:45 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=ChgeqlTF8R8ViAjfyXJ9UvbB30mMfn64E5E+okUqd90=;
-        b=sp//dNCdqw2D0CYVl4OQKj7xfSBi/HduXpCdzjtEPSbf+IuafvgAUQKRw6scnCf3Hk
-         KpgGp3uC52MWnImCQ95mwP7cUoyHfs+3/FX0/YyTdg0YZDpw0LwuYXN/XdXj02/u+gSG
-         Kzu5xZHMNyZjEV0G5xbW5FZ+xNodmiF3yOD8I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=ZH8he8o86ZuZ9I7fmvdnlsSRlYBSt/2NmS8AY1WxXIqwFgXz1RD0kQI7wJl6/+dLL6
-         AZHaYFTpEG8BgNYvxVg292NKCNaJAAr6QOG18aKosXnv/iTO0jt8cQ+bl37sVeETVuM1
-         KpcVYB/5QO/rAnBm6bJsuTILlM5KBBP+SkyB4=
-Received: by 10.147.170.7 with SMTP id x7mr3665161yao.23.1297030184857;
-        Sun, 06 Feb 2011 14:09:44 -0800 (PST)
-Received: from elie (adsl-76-206-235-233.dsl.chcgil.sbcglobal.net [76.206.235.233])
-        by mx.google.com with ESMTPS id f13sm2334199yhf.33.2011.02.06.14.09.43
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 06 Feb 2011 14:09:44 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <4D4F19D0.2000408@web.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753468Ab1BFWM7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Feb 2011 17:12:59 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:48917 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753263Ab1BFWM6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Feb 2011 17:12:58 -0500
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LG700925V1HEH80@get-mta-out03.get.basefarm.net> for
+ git@vger.kernel.org; Sun, 06 Feb 2011 23:12:53 +0100 (MET)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 9CE801EA57CA_D4F1CE5B	for <git@vger.kernel.org>; Sun,
+ 06 Feb 2011 22:12:53 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 645F81EA33C9_D4F1CE5F	for <git@vger.kernel.org>; Sun,
+ 06 Feb 2011 22:12:53 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in01.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LG700LBOV1G0Y10@get-mta-in01.get.basefarm.net> for
+ git@vger.kernel.org; Sun, 06 Feb 2011 23:12:53 +0100 (MET)
+User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.0; x86_64; ; )
+In-reply-to: <AANLkTi=gd5iu0i=ggqJC++N_rL+nU6RO9PNw=jMpT0NH@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166207>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166208>
 
-Jens Lehmann wrote:
-> Am 06.02.2011 21:45, schrieb Junio C Hamano:
->> Jens Lehmann <Jens.Lehmann@web.de> writes:
+On Sunday 06 February 2011, Dmitry Potapov wrote:
+> On Sun, Feb 06, 2011 at 05:11:45PM +0100, Johan Herland wrote:
+> > In practice, there is almost always one namespace (i.e. your repo
+> > belongs to_ only one project with project-wide unique tags). However,
+> > in any distributed_ system, the only-one-namespace is fundamentally a
+> > myth.
+> 
+> By your logic git 1.7.4 is a myth, because I have not specified from
+> what repository I pull it.
 
->>> Yes, but isn't that exactly what the pull man-page says? Quote:
->>> "Options meant for git pull itself and the underlying git merge
->>> must be given before the options meant for git fetch."
->> 
->> Yes, it says that, and I think that was a weasely way to say "the command
->> line parser in git-pull is broken".
-[...]
-> (CCed Jonathan, as he is the author of the lines I quoted)
+Yes, technically git 1.7.4 is a myth. However, by convention, we all agree 
+what "v1.7.4" points to, and nobody seriously believe they can get away with 
+pointing "v1.7.4" somewhere else.
 
-They're from Junio. :)  See v1.5.4.5~26 (git-pull documentation: warn
-about the option order, 2008-03-10).
+The core of this discussion is where we want to place Git in the space 
+between "technically correct" and "socially conventional", where the former 
+means owning up to the fact that each repo really is its own namespace, and 
+there's no way around that in a proper DVCS, and the latter means building 
+social convention into our tools, thereby making it harder to deal with the 
+few unconventional cases (like my two semi-related repos case).
 
-I also agree that (1) it would be very nice to find a way to fix this
-and (2) until then, it seems best as a general principle not to
-regress in those odd cases where we sort of fixed it.
+AFAICS, my proposal does not harm the common case (unambiguous tags are 
+still interpreted unambiguously, even if they may exist in multiple 
+namespaces), while it _does_ help the uncommon case (by allowing ambiguous 
+tags to co-exist in the same repo).
 
-In other words, if we were adding --recurse-submodules today, I'd
-agree that it should be treated like other fetch options, but we
-already added the option and some people/scripts might be used to
-the added flexibility, no?
+Granted, if we leave all tags in a single namespace, I can still work around 
+this by manually futzing with the configured refspecs to create ad hoc 
+namespaces. But I _really_ hate it when I'm forced to hack around the tool, 
+because the tool thinks it "knows better".
+
+> But, IMHO, it is a myth that having different
+> namespaces solves the problem, because in _most_ cases, you really want
+> to have a single namespace _semantically_, so you can communicate with
+> other people using this tag name.
+
+My proposal tries very hard to present a single namespace _semantically_ to 
+the user in the common case (when tags are unambiguous). I'd even go as far 
+as proposing that "git tag -l" should by default list only a single 
+shortened tag name in the cases where there are multiple unambiguous 
+alternatives.
+
+Alternatively, I'd suggest a compromise (already mentioned elsewhere in this 
+thread) where we add a config variable tags.preferredRemote (defaults to 
+"origin") which allows you to directly select which namespace you consider 
+official. You could even implement this as physically copying 
+refs/remotes/${tag.preferredRemote}/tags/* into refs/tags/*.
+
+> > In that case it would be wrong of gitk to display "v1.0". Instead it
+> > should_ display a longer, unambiguous name, e.g. "origin/v1.0".
+> 
+> But it is still ambiguous because my "origin" may be different from
+> yours origin. It is only unambiguous when it look at it _locally_ but
+> that makes it completely useless for communication with other people.
+> One project should have only one version with the same tag regardless
+> where it came from.
+
+Again, you are setting "technical correctness" up against "social 
+convention". Technically, _any_ ref name whatsoever is repo-specific and 
+"completely useless for communication with other people". The only thing we 
+can communicate unambiguously is SHA-1 object names. However, social 
+conventions compel us to name our refs unambiguously and to use common sense 
+when communicating, so that - in practice - everybody in the project knows 
+exactly what is meant by "v1.0".
+
+It seems our opinions differ on whether Git should try to _force_ this 
+social convention on you, or rather stick to technical correctness (with a 
+bias towards conventional behavior as long as there no ambiguities).
+
+> I agree in your use case of semi-related projects you need separate
+> namespaces. But I don't think it is how most people use git. It may
+> be nice to have an option that will make tag namespace separate, but
+> I do not think it should be default. Not until, it is widely tested.
+
+Well, this _is_ the thread for discussing things "we would have done 
+differently if we were writing Git from scratch". ;)
+
+Still, you have yet to convince me exactly _what_ will in practice be 
+horribly and user-visibly broken by this proposal. AFAICS, all the common 
+use cases today will still work well with this proposal.
+
+
+...Johan
+
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
