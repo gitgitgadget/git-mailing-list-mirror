@@ -1,84 +1,87 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git-new-workdir for filesystems without links (e.g. FAT32)?
-Date: Sun, 6 Feb 2011 13:14:59 -0600
-Message-ID: <20110206191459.GA17939@elie>
-References: <loom.20110206T151206-851@post.gmane.org>
+From: Sebastian Pipping <webmaster@hartwork.org>
+Subject: Re: "git add -u" broken in git 1.7.4?
+Date: Sun, 06 Feb 2011 20:35:00 +0100
+Message-ID: <4D4EF7E4.7050303@hartwork.org>
+References: <4D4DEDC4.4080708@hartwork.org> <20110206051333.GA3458@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Pierre Habouzit <madcoder@debian.org>
-To: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 06 20:15:15 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Git ML <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sun Feb 06 20:34:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmA4p-0002HW-0k
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 20:15:15 +0100
+	id 1PmANq-0003bh-6D
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 20:34:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753415Ab1BFTPH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Feb 2011 14:15:07 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:58144 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753303Ab1BFTPG (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Feb 2011 14:15:06 -0500
-Received: by ywo7 with SMTP id 7so1223221ywo.19
-        for <git@vger.kernel.org>; Sun, 06 Feb 2011 11:15:05 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=2PPPfz0+fL/Z1cY7ivtl4+1qee4qZ3/E0djnUSvCUN8=;
-        b=IAnl8rFoHYKLFEEgw/SFGhUMFFBQm2sEywISsHuMKBJNmKv5QQnisKDjveZZAG8K4+
-         xyBr2CCCJ7A6dPGRe3KzgohnZARwANcfy7cDOJoDQtwEiw2tqqpdaIciNPNWChw4mQGg
-         nX6B5Hr9B6Hg22Z9ygBM8P2pOygDwMXDwZcrE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=YdYl9wHSZuwQ+h5erMx9LpD+8vuVx7n3dHqbB38g2bnr8N8rFRV3dogf6wMwOtk4Ab
-         Fyz/nv8R07BlkJXAsnAKWfpDHpNhsIMVBfvUA9KPWoeakLua6Tr7aA2dfa5t3Hy4sHee
-         6lOWXzdQib9vUE4VPSRbfWaYetQD++Pn4kXZU=
-Received: by 10.147.171.3 with SMTP id y3mr3454275yao.34.1297019704610;
-        Sun, 06 Feb 2011 11:15:04 -0800 (PST)
-Received: from elie ([76.206.235.233])
-        by mx.google.com with ESMTPS id 50sm2217721yhl.29.2011.02.06.11.15.03
-        (version=SSLv3 cipher=RC4-MD5);
-        Sun, 06 Feb 2011 11:15:03 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <loom.20110206T151206-851@post.gmane.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1753851Ab1BFTev (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Feb 2011 14:34:51 -0500
+Received: from smtprelay03.ispgateway.de ([80.67.31.30]:42424 "EHLO
+	smtprelay03.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753652Ab1BFTev (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Feb 2011 14:34:51 -0500
+Received: from [85.177.91.128] (helo=[192.168.0.3])
+	by smtprelay03.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
+	(Exim 4.68)
+	(envelope-from <webmaster@hartwork.org>)
+	id 1PmANk-0004ri-KW; Sun, 06 Feb 2011 20:34:48 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20110109 Thunderbird/3.1.7
+In-Reply-To: <20110206051333.GA3458@sigill.intra.peff.net>
+X-Df-Sender: 874396
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166194>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166195>
 
-Hi Piotr,
+On 02/06/11 06:13, Jeff King wrote:
+> On Sun, Feb 06, 2011 at 01:39:32AM +0100, Sebastian Pipping wrote:
+> 
+>> I just ran into case where
+>>
+>>   git add -u
+>>
+>> repetedly did not update the index.  In contrast, picking stuff using
+>>
+>>   git add -p
+>>
+>> works just fine.
+>>
+>> Could it be "git add -u" is broken in git 1.7.4?
+> 
+> It could be. However, I can think of one such case where you might see
+> that behavior. "git add -u" operates from the current subdirectory,
+> whereas "git add -p" operates from the top of the project tree (yes,
+> this inconsistency confusing, but it's not as serious as "git add -u
+> doesn't work").
+> 
+> You can demonstrate it with:
+> 
+>   mkdir repo && cd repo && git init
+>   mkdir subdir && echo content >file
+>   git add . && git commit -m base
+>   echo more >>file
+> 
+>   mkdir subdir && cd subdir
+>   git add -u
+>   git status ;# still not staged for commit
+> 
+>   git add -p ;# finds it
+> 
+> Might you have been in a subdirectory of the project when you saw this
+> behavior?
 
-Piotr Krukowiecki wrote:
+I was and I can confirm the different behaviour with 1.7.4 over here: it
+does work on the root directory of the repo as you supposed.
 
-> git-new-workdir requires soft links to work, so obviously it will fail if file 
-> system does not support them. Is there any other way for having multiple working 
-> dirs with one repository?
+Is that behavior needed to be as is or could you change it to work from
+everywhere?  Could it be it has been working from anywhere before?
 
-I assume you mean a way to share refs between repositories without
-using symlinks?  Then alas, that is not implemented, though there
-is some interest.  See [1] for details.
+Best,
 
-It should not be impossible, I think --- something for refs analagous
-to the ".git file" mechanism might make perfect sense (see
-v1.5.6-rc0~93^2~3, Add platform-independent .git "symlink", 2008-02-20
-and "git log --grep='git file'" to see development since then).  The
-main distinction here is that the target of a refs "symlink" should
-also be aware of it, to avoid garbage collecting the shared objects.
 
-If on the other hand you just want to share objects (not refs) between
-repositories, the GIT_OBJECT_DIRECTORY environment variable might
-help.
 
-Good luck,
-Jonathan
-
-[1] http://thread.gmane.org/gmane.comp.version-control.git/150559/focus=150693
+Sebastian
