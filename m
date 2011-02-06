@@ -1,59 +1,103 @@
 From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH] git-gui: scroll down to default selection for push dialog
-Date: Sun, 6 Feb 2011 18:04:27 +0100
-Message-ID: <20110206170426.GB47941@book.hvoigt.net>
+Subject: [PATCH] git-gui: instead of defaulting to home directory use
+	working directory
+Date: Sun, 6 Feb 2011 18:22:46 +0100
+Message-ID: <20110206172244.GC47941@book.hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: Jens Lehmann <jens.lehmann@web.de>, git@vger.kernel.org
 To: Pat Thoyts <patthoyts@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 06 18:04:36 2011
+X-From: git-owner@vger.kernel.org Sun Feb 06 18:22:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pm82N-0006bO-8j
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 18:04:35 +0100
+	id 1Pm8K7-00070e-LA
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 18:22:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753295Ab1BFREa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Feb 2011 12:04:30 -0500
-Received: from darksea.de ([83.133.111.250]:39965 "HELO darksea.de"
+	id S1753316Ab1BFRWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Feb 2011 12:22:50 -0500
+Received: from darksea.de ([83.133.111.250]:58124 "HELO darksea.de"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1753016Ab1BFRE3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Feb 2011 12:04:29 -0500
-Received: (qmail 7947 invoked from network); 6 Feb 2011 18:04:28 +0100
+	id S1752744Ab1BFRWt (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Feb 2011 12:22:49 -0500
+Received: (qmail 7990 invoked from network); 6 Feb 2011 18:22:47 +0100
 Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 6 Feb 2011 18:04:28 +0100
+  by localhost with SMTP; 6 Feb 2011 18:22:47 +0100
 Content-Disposition: inline
 User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166154>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166155>
 
-If the list of remote/local branches is very long its inconvenient
-to scroll down and find the selected branch. This patch makes the
-widget automatically scroll down so its shown on the top.
+When starting git gui in a non-git directory it presents the user a
+dialog which asks to create, clone or open a repository. The filedialogs
+used to choose the path(s) would always default to the home directory of
+the user. This patch changes this behavior and uses the current working
+directory in which git gui was started as default.
+
+This is useful in various cases. First being that the user starts the
+gui in some directory and can go search to create, open or clone a
+repository from there. Another use case is that tools like filemanager
+context menues can transport a natural default when selected from a
+folder.
+
+Users who like to have their home folder as a default can fall back on
+starting git gui with its working directory set to the home folder.
 
 Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
 ---
-Note: Please also apply with 'git am -p2'
+ lib/choose_repository.tcl |   14 +++-----------
+ 1 files changed, 3 insertions(+), 11 deletions(-)
 
- git-gui/lib/transport.tcl |    1 +
- 1 files changed, 1 insertions(+), 0 deletions(-)
-
-diff --git a/git-gui/lib/transport.tcl b/git-gui/lib/transport.tcl
-index e4e1add..6478efa 100644
---- a/git-gui/lib/transport.tcl
-+++ b/git-gui/lib/transport.tcl
-@@ -211,6 +211,7 @@ proc do_push_anywhere {} {
- 		$w.source.l insert end $h
- 		if {$h eq $current_branch} {
- 			$w.source.l select set end
-+			$w.source.l yview end
- 		}
+diff --git a/lib/choose_repository.tcl b/lib/choose_repository.tcl
+index fae1192..657f7d5 100644
+--- a/lib/choose_repository.tcl
++++ b/lib/choose_repository.tcl
+@@ -214,14 +214,6 @@ constructor pick {} {
  	}
- 	pack $w.source.l -side left -fill both -expand 1
+ }
+ 
+-proc _home {} {
+-	if {[catch {set h $::env(HOME)}]
+-		|| ![file isdirectory $h]} {
+-		set h .
+-	}
+-	return $h
+-}
+-
+ method _center {} {
+ 	set nx [winfo reqwidth $top]
+ 	set ny [winfo reqheight $top]
+@@ -420,7 +412,7 @@ method _new_local_path {} {
+ 	if {$local_path ne {}} {
+ 		set p [file dirname $local_path]
+ 	} else {
+-		set p [_home]
++		set p [pwd]
+ 	}
+ 
+ 	set p [tk_chooseDirectory \
+@@ -541,7 +533,7 @@ method _open_origin {} {
+ 	if {$origin_url ne {} && [file isdirectory $origin_url]} {
+ 		set p $origin_url
+ 	} else {
+-		set p [_home]
++		set p [pwd]
+ 	}
+ 
+ 	set p [tk_chooseDirectory \
+@@ -1042,7 +1034,7 @@ method _open_local_path {} {
+ 	if {$local_path ne {}} {
+ 		set p $local_path
+ 	} else {
+-		set p [_home]
++		set p [pwd]
+ 	}
+ 
+ 	set p [tk_chooseDirectory \
 -- 
 1.7.4.34.gd2cb1
