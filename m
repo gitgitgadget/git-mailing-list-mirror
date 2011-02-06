@@ -1,103 +1,73 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: [PATCH] git-gui: instead of defaulting to home directory use
-	working directory
-Date: Sun, 6 Feb 2011 18:22:46 +0100
-Message-ID: <20110206172244.GC47941@book.hvoigt.net>
+From: Vitor Antunes <vitor.hda@gmail.com>
+Subject: Re: [PATCH 2/2] git-p4: Add copy detection support
+Date: Sun, 6 Feb 2011 17:25:54 +0000
+Message-ID: <AANLkTi=Awi6d77QcbbZ2rDTv6LpP+qjsReJ5=4NyhUBz@mail.gmail.com>
+References: <1296429563-18390-1-git-send-email-vitor.hda@gmail.com>
+ <1296429563-18390-2-git-send-email-vitor.hda@gmail.com> <20110206002547.GB31245@arf.padd.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jens Lehmann <jens.lehmann@web.de>, git@vger.kernel.org
-To: Pat Thoyts <patthoyts@googlemail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 06 18:22:57 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: git@vger.kernel.org
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Sun Feb 06 18:26:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pm8K7-00070e-LA
-	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 18:22:56 +0100
+	id 1Pm8Nb-0000JS-9y
+	for gcvg-git-2@lo.gmane.org; Sun, 06 Feb 2011 18:26:31 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753316Ab1BFRWu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Feb 2011 12:22:50 -0500
-Received: from darksea.de ([83.133.111.250]:58124 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1752744Ab1BFRWt (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Feb 2011 12:22:49 -0500
-Received: (qmail 7990 invoked from network); 6 Feb 2011 18:22:47 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 6 Feb 2011 18:22:47 +0100
-Content-Disposition: inline
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1753333Ab1BFR00 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Feb 2011 12:26:26 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:44332 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752744Ab1BFR0Z (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Feb 2011 12:26:25 -0500
+Received: by vws16 with SMTP id 16so2472994vws.19
+        for <git@vger.kernel.org>; Sun, 06 Feb 2011 09:26:24 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=p2uwHv3QVq+zgkqGel8G6m5xCcZJ/xg49zTPro8v//M=;
+        b=LhKi6F8+uBAK59qP0vxNjPm9bM/BFAMIAe5Z+W0Cmu7g7Ya9UlJW1g5gxqHiOQeSG+
+         I5binlP/msYS+CApbXlXsZcn0NMVTwR59WCIyOSv91iS2JfHATvVl5BNAnp2mblEn7/t
+         XBD04KwYMkTztWHWC/Sa38Wr66FBWiQcsUOno=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=Axj+UwCNwZRFSXfOSDDgiWG2tojrwUTbAEQ7/7RIv6YG1UjBHl04JGbZRJGXKGlNPT
+         lHq03rU/JcbA1Yx/8D4+vdg/hqyIan6JTLYlRnoPnpPyyVX0F17CeO/o5CAtbT7CZ4rd
+         G20ogcHhSUpU9ofpIcvhfDzxyfoDg2JH0Eow0=
+Received: by 10.220.198.196 with SMTP id ep4mr3991033vcb.110.1297013184811;
+ Sun, 06 Feb 2011 09:26:24 -0800 (PST)
+Received: by 10.220.184.75 with HTTP; Sun, 6 Feb 2011 09:25:54 -0800 (PST)
+In-Reply-To: <20110206002547.GB31245@arf.padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166155>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166156>
 
-When starting git gui in a non-git directory it presents the user a
-dialog which asks to create, clone or open a repository. The filedialogs
-used to choose the path(s) would always default to the home directory of
-the user. This patch changes this behavior and uses the current working
-directory in which git gui was started as default.
+Hi Pete,
 
-This is useful in various cases. First being that the user starts the
-gui in some directory and can go search to create, open or clone a
-repository from there. Another use case is that tools like filemanager
-context menues can transport a natural default when selected from a
-folder.
+On Sun, Feb 6, 2011 at 12:25 AM, Pete Wyckoff <pw@padd.com> wrote:
+> You can use integrate -t to force the filetype even if the file
+> already existed, and skip the whole execbit change.
 
-Users who like to have their home folder as a default can fall back on
-starting git gui with its working directory set to the home folder.
+(Copying help text:
+	The -t flag makes the source file's filetype propagate to the target
+	file.  Normally, the target file retains its previous filetype.
+	Newly branched files always use the source file's filetype.  The
+	filetype can still be changed before 'p4 submit' with 'p4 reopen'.
+)
 
-Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
----
- lib/choose_repository.tcl |   14 +++-----------
- 1 files changed, 3 insertions(+), 11 deletions(-)
+Since in git we're only considering newly branched files, I think in
+this case "-t" will not add anything. In fact, what is being done here
+is detecting exec bit changes from source to target files - we're not
+trying to force P4 to use the source's exec bit. Do you agree?
 
-diff --git a/lib/choose_repository.tcl b/lib/choose_repository.tcl
-index fae1192..657f7d5 100644
---- a/lib/choose_repository.tcl
-+++ b/lib/choose_repository.tcl
-@@ -214,14 +214,6 @@ constructor pick {} {
- 	}
- }
- 
--proc _home {} {
--	if {[catch {set h $::env(HOME)}]
--		|| ![file isdirectory $h]} {
--		set h .
--	}
--	return $h
--}
--
- method _center {} {
- 	set nx [winfo reqwidth $top]
- 	set ny [winfo reqheight $top]
-@@ -420,7 +412,7 @@ method _new_local_path {} {
- 	if {$local_path ne {}} {
- 		set p [file dirname $local_path]
- 	} else {
--		set p [_home]
-+		set p [pwd]
- 	}
- 
- 	set p [tk_chooseDirectory \
-@@ -541,7 +533,7 @@ method _open_origin {} {
- 	if {$origin_url ne {} && [file isdirectory $origin_url]} {
- 		set p $origin_url
- 	} else {
--		set p [_home]
-+		set p [pwd]
- 	}
- 
- 	set p [tk_chooseDirectory \
-@@ -1042,7 +1034,7 @@ method _open_local_path {} {
- 	if {$local_path ne {}} {
- 		set p $local_path
- 	} else {
--		set p [_home]
-+		set p [pwd]
- 	}
- 
- 	set p [tk_chooseDirectory \
+Kind regards,
 -- 
-1.7.4.34.gd2cb1
+Vitor Antunes
