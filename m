@@ -1,68 +1,97 @@
-From: Sebastian Pipping <webmaster@hartwork.org>
-Subject: Re: "git add -u" broken in git 1.7.4?
-Date: Mon, 07 Feb 2011 00:49:55 +0100
-Message-ID: <4D4F33A3.7060002@hartwork.org>
-References: <4D4DEDC4.4080708@hartwork.org>	<20110206051333.GA3458@sigill.intra.peff.net>	<4D4EF7E4.7050303@hartwork.org> <vpq1v3kopn3.fsf@bauges.imag.fr> <20110206231914.GA8147@neumann>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [1.8.0] Provide proper remote ref namespaces
+Date: Mon, 07 Feb 2011 00:51:01 +0100
+Message-ID: <vpqtyggk9i2.fsf@bauges.imag.fr>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+	<201102060104.37146.johan@herland.net>
+	<vpqaai8oqkc.fsf@bauges.imag.fr>
+	<201102070022.51403.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Jeff King <peff@peff.net>, Git ML <git@vger.kernel.org>
-To: =?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>
-X-From: git-owner@vger.kernel.org Mon Feb 07 00:50:13 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Dmitry Potapov <dpotapov@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Jeff King <peff@peff.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Feb 07 00:54:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmEMt-0001uS-G6
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 00:50:11 +0100
+	id 1PmEQl-0003Vl-8U
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 00:54:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754189Ab1BFXuD convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Feb 2011 18:50:03 -0500
-Received: from smtprelay01.ispgateway.de ([80.67.31.24]:44312 "EHLO
-	smtprelay01.ispgateway.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754149Ab1BFXuB (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Feb 2011 18:50:01 -0500
-Received: from [85.177.91.128] (helo=[192.168.0.2])
-	by smtprelay01.ispgateway.de with esmtpsa (TLSv1:AES256-SHA:256)
-	(Exim 4.68)
-	(envelope-from <webmaster@hartwork.org>)
-	id 1PmEMd-00072x-H2; Mon, 07 Feb 2011 00:49:55 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20110103 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <20110206231914.GA8147@neumann>
-X-Df-Sender: hartwork@binera.de
+	id S1754231Ab1BFXyG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 6 Feb 2011 18:54:06 -0500
+Received: from imag.imag.fr ([129.88.30.1]:62307 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1754015Ab1BFXyF (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 6 Feb 2011 18:54:05 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id p16Np1r5008066
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 7 Feb 2011 00:51:02 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PmENh-000217-Ro; Mon, 07 Feb 2011 00:51:01 +0100
+In-Reply-To: <201102070022.51403.johan@herland.net> (Johan Herland's message of "Mon\, 07 Feb 2011 00\:22\:51 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 07 Feb 2011 00:51:02 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166214>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166215>
 
-On 02/07/11 00:19, SZEDER G=E1bor wrote:
-> And others are bitten by it every once in a while.  Yes, myself
-> included ;)  Maybe this is also one of those things that might be
-> reconsidered for 1.8.0?
->=20
->>> Could it be it has been working from anywhere before?
->>
->> Can you post an example where Git 1.7.4 and a previous version behav=
-e
->> differently? Up to now, I see difference between your expectations a=
-nd
->> what Git does, but not between new and old versions.
->=20
-> git add -u was tree-wide when it was introduced in dfdac5d (git-add
-> -u: match the index with working tree., 2007-04-20), but 2ed2c22
-> (git-add -u paths... now works from subdirectory, 2007-08-16) broke i=
-t
-> while fixing something related.
+Johan Herland <johan@herland.net> writes:
 
-So my memory didn't fool me.  Thanks for digging this out.
+>> For tags, it's clearly different. If I have origin/v1.7.4, I don't see
+>> much reason to have _also_ v1.7.4 as a local tag. And if I have only
+>> origin/v1.7.4 and push it as origin/v1.7.4, then someone pulling from
+>> it will get origin/origin/v1.7.4, and so on.
+>
+> Wrong. If you have origin/v1.7.4, it's because v1.7.4 already exists in the 
+> origin remote, so there's no point in trying to push it back. On the other 
+> hand, if you have v1.7.4 locally (but not origin/v1.7.4), you should 
+> (assuming this is intended to be a public tag) consider pushing it to the 
+> "origin" remote, thus causing origin/v1.7.4 to appear in your repo.
 
-Can we have tree-wide "git add -u" back, please?
+(I made a bad choice by repeating "origin" several times)
 
-Thanks,
+What happens if I pull from "remoteA" and then push to "remoteB"?
 
+With branches, I'd create a local "master" from remoteA/master, and
+then push my local "master" as "master" on remoteB. People looking at
+my repository remoteB won't notice where it's comming from because it
+had to be local for me at some point.
 
+With tags, we probably don't want to force people to explicitely
+create local tags to be able to push them.
 
-Sebastian
+Take the example of the interim maintainer cited somewhere else in
+this thread. If Shawn fetches from Junio, he'll get a junio/v1.7.4
+tag, and on my side, I do not want to end up having
+shawn/junio/v1.7.4, especially if this means that people fetching from
+me would end up with a me/shawn/junio/v1.7.4 ...
+
+> As Nicolas mentioned elsewhere in the thread, having separate tag namespaces 
+> does not prevent us from also warning about ambiguous tag names on
+> fetch. 
+
+It does not "prevent", but I think it makes it a mis-feature. Distinct
+namespaces (as opposed to warning/errors on duplicate at fetch time)
+are useful when the same short name can refer to several things (like
+v1.7.4 Vs gitgui-v1.7.4 (which doesn't exist yet), and then it's not
+a problem to have twice the same short name.
+
+-- 
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
