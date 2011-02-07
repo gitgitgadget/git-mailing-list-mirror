@@ -1,111 +1,86 @@
-From: Vitor Antunes <vitor.hda@gmail.com>
-Subject: Re: [PATCH 2/2] git-p4: Add copy detection support
-Date: Mon, 7 Feb 2011 11:11:24 +0000
-Message-ID: <AANLkTikO4=froHvYN-JCOMZF7zgGHaD4J=nbN1ij_RjW@mail.gmail.com>
-References: <1296429563-18390-1-git-send-email-vitor.hda@gmail.com>
- <1296429563-18390-2-git-send-email-vitor.hda@gmail.com> <20110206002547.GB31245@arf.padd.com>
- <AANLkTi=Awi6d77QcbbZ2rDTv6LpP+qjsReJ5=4NyhUBz@mail.gmail.com> <20110206220546.GA9024@mew.padd.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: "git add -u" broken in git 1.7.4?
+Date: Mon, 7 Feb 2011 12:15:06 +0100
+Message-ID: <20110207111505.GA10281@neumann>
+References: <4D4DEDC4.4080708@hartwork.org>
+	<20110206051333.GA3458@sigill.intra.peff.net>
+	<4D4EF7E4.7050303@hartwork.org> <vpq1v3kopn3.fsf@bauges.imag.fr>
+	<7vwrlcv1ea.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Mon Feb 07 12:12:02 2011
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Sebastian Pipping <webmaster@hartwork.org>,
+	Jeff King <peff@peff.net>, Git ML <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 07 12:15:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmP0j-0003sg-Ts
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 12:12:02 +0100
+	id 1PmP40-0005YO-Cg
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 12:15:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753514Ab1BGLL4 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Feb 2011 06:11:56 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:37489 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752127Ab1BGLLz convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Feb 2011 06:11:55 -0500
-Received: by vxb37 with SMTP id 37so1501879vxb.19
-        for <git@vger.kernel.org>; Mon, 07 Feb 2011 03:11:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=Hzt8TdxHD0M6nyjjT8nh9aJJUYHCXh1GaOPsHdhAYWo=;
-        b=NTeIwOX0l969gtsYks+yXb72o2L1lKCP/yMnH2iH81/sBccr6UxfKnyyd3sfQUQLI7
-         GySRB5OlmEfEoG9vlQAFkIbZJujJPusK9celRsghi2F+uIZk9PAyL0A/4h9LLWaZZUHh
-         EcNJqQGifdztNA3Ic/ZoxEpxOGpZo3RLR2FYE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=HACsTbQi+hp91qHTTV3MKUC+9yTT71461l9xS2RyDmhBc4fL5uZSXeyLdn6hTf9Mzd
-         xhQE2+y7VDkh3AJMzbBX8NoXekDg3NKiCpICfb62xD/BPjN3OwVbAtU5IUFPWpDPCnbN
-         Mcuo9vdA3t5R4nHTXaLEiBYJB4N61jX5x39TU=
-Received: by 10.220.195.138 with SMTP id ec10mr2951164vcb.40.1297077114837;
- Mon, 07 Feb 2011 03:11:54 -0800 (PST)
-Received: by 10.220.184.75 with HTTP; Mon, 7 Feb 2011 03:11:24 -0800 (PST)
-In-Reply-To: <20110206220546.GA9024@mew.padd.com>
+	id S1753275Ab1BGLPS convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Feb 2011 06:15:18 -0500
+Received: from moutng.kundenserver.de ([212.227.126.186]:60609 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752127Ab1BGLPQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Feb 2011 06:15:16 -0500
+Received: from localhost6.localdomain6 (p5B130FC1.dip0.t-ipconnect.de [91.19.15.193])
+	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
+	id 0LrZV7-1Q93pv2VdF-013NRV; Mon, 07 Feb 2011 12:15:07 +0100
+Content-Disposition: inline
+In-Reply-To: <7vwrlcv1ea.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:m2hPReU30KLd53NBi9A2u1KOPT9NpDvaA7dexu5L3rM
+ tvHuB7bbOKUcjtKW5YzjkMvchS8CXwejAJVF/8D0EvlclnKrVw
+ Wdb6AbNFiTUM4+/aiKclcBKGYDB9cHA6liUITb9uY2QXJZr1ws
+ gFWfkoIR0yt8m3XnUD7nSf6xh5UFSEtB9Yu2kl19aodjJm2AL5
+ yRsqoZq6wp4nPbKa4zqMA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166252>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166253>
 
-Hi Pete,
+Hi,
 
-On Sun, Feb 6, 2011 at 10:05 PM, Pete Wyckoff <pw@padd.com> wrote:
->> (Copying help text:
->> =A0 =A0 =A0 The -t flag makes the source file's filetype propagate t=
-o the target
->> =A0 =A0 =A0 file. =A0Normally, the target file retains its previous =
-filetype.
->> =A0 =A0 =A0 Newly branched files always use the source file's filety=
-pe. =A0The
->> =A0 =A0 =A0 filetype can still be changed before 'p4 submit' with 'p=
-4 reopen'.
->> )
->>
->> Since in git we're only considering newly branched files, I think in
->> this case "-t" will not add anything. In fact, what is being done he=
-re
->> is detecting exec bit changes from source to target files - we're no=
-t
->> trying to force P4 to use the source's exec bit. Do you agree?
->
-> That sounds fine to me. =A0The code seemed to indicate that
-> sometimes the destination file exists.
 
-I've basically copied the code from the rename detection part and
-adapted it to copying. Nevertheless, even if git detects a copy to a
-already existing file I think that the integrate command should behave
-correctly. I should create a test case for this, though.
+On Sun, Feb 06, 2011 at 09:50:37PM -0800, Junio C Hamano wrote:
+> Matthieu Moy <Matthieu.Moy@grenoble-inp.fr> writes:
+>=20
+> > Sebastian Pipping <webmaster@hartwork.org> writes:
+> >
+> >> I was and I can confirm the different behaviour with 1.7.4 over he=
+re: it
+> >> does work on the root directory of the repo as you supposed.
+> >
+> > What do you mean by "it does not work"?
+> >
+> > "git add -u" adds files under the current directory, and it always
+> > did.
+>=20
+> As it takes pathspecs (think "git add -u this-file"), it fundamentall=
+y
+> shouldn't be tree-wide.  I think the original implementation didn't t=
+ake
+> pathspecs and was mistakenly done as tree-wide operation, but I think=
+ it
+> was fixed rather quickly.
 
->> + =A0 =A0 =A0 =A0 =A0 =A0elif modifier =3D=3D "C":
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0src, dest =3D diff['src'], diff['ds=
-t']
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0p4_system("integrate -Dt \"%s\" \"%=
-s\"" % (src, dest))
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if diff['src_sha1'] !=3D diff['dst_=
-sha1']:
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0p4_system("edit \"%s\"" % (=
-dest))
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0if isModeExecChanged(diff['src_mode=
-'], diff['dst_mode']):
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0filesToChangeExecBit[dest] =
-=3D diff['dst_mode']
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0os.unlink(dest)
->> + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0editedFiles.add(dest)
->
-> If you're happy the dest never exists, you may be able to get rid
-> of the edit step and the mode-change check entirely. =A0As long as
-> you've tested this, you're the expert here. =A0The change makes
-> sense overall.
+Interesting, when I brought up this issue about one and a half years
+ago, you of all people proposed that this change might be worth
+addressing in 1.8.0.
 
-I'm not that happy with this... and I'm no expert! I will really need
-to test this possibility. Just need to understand how I can make git
-detect a copy to an existing file... :)
+  Message-ID: <7veiql1etz.fsf@alter.siamese.dyndns.org>
+  http://thread.gmane.org/gmane.comp.version-control.git/127593/focus=3D=
+127594
 
-Thanks for your feedback,
---=20
-Vitor Antunes
+There was a longish discussion back then with arguments both for and
+against tree-wide operation.
+
+
+Best,
+G=E1bor
