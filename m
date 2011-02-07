@@ -1,165 +1,110 @@
-From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-Subject: [PATCH 1.8.0] add: make "add -u" update full tree without pathspec
-Date: Mon,  7 Feb 2011 09:27:23 +0700
-Message-ID: <1297045643-26697-1-git-send-email-pclouds@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH] cache-tree: do not cache empty trees
+Date: Mon, 7 Feb 2011 09:36:37 +0700
+Message-ID: <AANLkTinCyOq4rmb-tf4B91bK97GWca-4DyC715tUv+zx@mail.gmail.com>
+References: <1296899427-1394-1-git-send-email-pclouds@gmail.com>
+ <1296914835-808-1-git-send-email-pclouds@gmail.com> <7v62swwq7s.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
-	<pclouds@gmail.com>
-To: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sebastian Pipping <webmaster@hartwork.org>,
-	=?UTF-8?q?SZEDER=20G=C3=A1bor?= <szeder@ira.uka.de>,
-	Matthieu Moy <Matthieu.Moy@gr
-X-From: git-owner@vger.kernel.org Mon Feb 07 03:29:01 2011
+Cc: git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
+	Jakub Narebski <jnareb@gmail.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	"Dmitry S. Kravtsov" <idkravitz@gmail.com>,
+	Shawn Pearce <spearce@spearce.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 07 03:37:18 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmGqa-0007Ac-Po
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 03:29:01 +0100
+	id 1PmGyZ-0001Uf-SS
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 03:37:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754362Ab1BGC24 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Feb 2011 21:28:56 -0500
-Received: from mail-pv0-f174.google.com ([74.125.83.174]:62906 "EHLO
-	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754305Ab1BGC2z (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Feb 2011 21:28:55 -0500
-Received: by pva4 with SMTP id 4so800930pva.19
-        for <git@vger.kernel.org>; Sun, 06 Feb 2011 18:28:54 -0800 (PST)
+	id S1754433Ab1BGChJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sun, 6 Feb 2011 21:37:09 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:64964 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754375Ab1BGChI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sun, 6 Feb 2011 21:37:08 -0500
+Received: by wyb28 with SMTP id 28so4113581wyb.19
+        for <git@vger.kernel.org>; Sun, 06 Feb 2011 18:37:07 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :mime-version:content-type:content-transfer-encoding;
-        bh=yTmyNv9v1UN20cnSQJT23P8m/skqk5wU3XonZsEKWYA=;
-        b=fY2G8NeaRb1DcisMkrFUwHd6xqPdFzKX14/4RgYP1xf480D6n9ogkKxN5wEJrJ7gKV
-         CX3AVAZjpVJ8nKZWs5Mu4sZPirVwPb6fCMEZg6r0c0TImJlyjnRAb8ugMxCOkRRV1rI1
-         1Dmt3u4ZyLHM1lX/gwPL+Kh9KKAbJdaCQFTNQ=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=oxmB7zoeHK/XfkBp+LH8Qz43jvzckj7wtmOU7pKOp+0=;
+        b=a+VudDkCYv/mUHttb7pxb3E3HRUlZby7q1Fwmfi/9t0jHLaN/hCfrHxLjC+r6Wue5k
+         x41SoXmSWDk2HVnUV0ltlZ9lpFMOJIVqEeiYd7ziCBoW4IWNMGJdPPKGkhL1XG0xgK4l
+         MXnZy3Wyu1LEB9yUnBSQKESkc61x9wPUN8ya8=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:mime-version
-         :content-type:content-transfer-encoding;
-        b=Zp3XhalZStprRGTpKTCsMc/l+/kPYhSjEpVKm50KfkNOX3PLLVKA276vfIDRtfc6eT
-         v2t/f3WB2U1valM+9Asj2ypEROkqziPg7aRhiC8vfiPt9ZI6fDZcCuBT257Up7v7Bc2a
-         Xh6KRhuIOArcRdMG5A51ZDnU6Qx1lw1jW5oj0=
-Received: by 10.142.50.5 with SMTP id x5mr14808837wfx.228.1297045734730;
-        Sun, 06 Feb 2011 18:28:54 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.232.10])
-        by mx.google.com with ESMTPS id b11sm5238786wff.9.2011.02.06.18.28.50
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Sun, 06 Feb 2011 18:28:53 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 07 Feb 2011 09:27:25 +0700
-X-Mailer: git-send-email 1.7.3.4.878.g439c7
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=TGhiSDAiPAS+g7jdoPuNvcp4uzfBRJpJlOqj+4dfouCntIBHHmlQ/ykk0jBmmEHBo6
+         ijnfygFQYXnADp1S3NIK1JvnuDOKoK9Q9347fO+DUvu4VgbeTie7xiQVuE+vRR3PyVum
+         YGmXyiZBzFextXIB37Gil1SYB+KC0p0y2iV+g=
+Received: by 10.216.186.144 with SMTP id w16mr13655619wem.13.1297046227260;
+ Sun, 06 Feb 2011 18:37:07 -0800 (PST)
+Received: by 10.216.66.144 with HTTP; Sun, 6 Feb 2011 18:36:37 -0800 (PST)
+In-Reply-To: <7v62swwq7s.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166223>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166224>
 
-When -u was introduced in dfdac5d (git-add -u: match the index with
-working tree., 2007-04-20), "add -u" (without pathspec) added
-everything. Shortly after, 2ed2c22 (git-add -u paths... now works from
-subdirectory, 2007-08-16) broke it while fixing something related.
+2011/2/7 Junio C Hamano <gitster@pobox.com>:
+>> diff --git a/cache-tree.c b/cache-tree.c
+>> index f755590..03732ad 100644
+>> --- a/cache-tree.c
+>> +++ b/cache-tree.c
+>> @@ -621,9 +621,18 @@ static void prime_cache_tree_rec(struct cache_t=
+ree *it, struct tree *tree)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 struct tree *subtree =3D lookup_tree(entry.sha1);
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 if (!subtree->object.parsed)
+>> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 parse_tree(subtree);
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 if (!hashcmp(entry.sha1, (unsigned char *)EMPTY_TREE_SHA1_BIN)) {
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 warning("empty tree detected! Will be r=
+emoved in new commits");
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cnt =3D -1;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;
+>> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 }
+>
+> You shouldn't need the cast (if you did, then hashcmp() macro should =
+be
+> fixed so that you don't need to).
 
-This makes -u (and -A) inconsistent with some other options, namely -p.
-It's been four years since the unintentional breakage and people are
-probably used to "git add -u" updating only current directory. Perhaps
-it's time to bring the original behavior back? Current behavior can
-always be achieved with "git add -u ."
+Or perhaps EMPTY_TREE_SHA1_BIN should be casted to const unsigned char
+*. That would eliminate 4 typecastings elsewhere.
 
-Migration plan:
+> I don't think warning() is warranted for an operation you introduced =
+to
+> keep the internal data structure consistent.
 
-I'm bad at this. Can we start with a patch that warns users to do "git
-add -u ." when they do "git add -u"? Hopefully they would have their
-fingers retraied by the time the behavior is changed in 1.8.0.
+Worse. I don't think users know an empty tree is added or removed.
+diff-tree does not show it (or should not, I haven't tested).
 
-PS. What about -A?
+> Should this comparison done after we parsed the subtree, or should we=
+ be
+> doing that before it?
+>
+> If you are adding this new check to a point where we have already par=
+sed
+> the subtree object, don't you have a better and cheaper way to detect=
+ if
+> the subtree is empty than the 20-byte comparision, namely, perhaps by
+> looking at subtree->size?
 
-Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
-=2Ecom>
----
- 2011/2/7 Sebastian Pipping <webmaster@hartwork.org>:
- >> git add -u was tree-wide when it was introduced in dfdac5d (git-add
- >> -u: match the index with working tree., 2007-04-20), but 2ed2c22
- >> (git-add -u paths... now works from subdirectory, 2007-08-16) broke=
- it
- >> while fixing something related.
- >
- > So my memory didn't fool me.  Thanks for digging this out.
- >
- > Can we have tree-wide "git add -u" back, please?
-
- Yup yup I like it too (and wanted the original behavior sometimes, eve=
-n
- though I didn't know it was original behavior).
-
- Pulling Junio in for -A. It seems closely related to -u. In fact I rev=
-ert
- one line from 1e5f764 (builtin-add.c: optimize -A option and "git add =
-=2E"
- - 2008-07-22) but not fully understand why it was changed.
-
- builtin/add.c         |    7 +++++--
- t/t2200-add-update.sh |   13 +++++++------
- 2 files changed, 12 insertions(+), 8 deletions(-)
-
-diff --git a/builtin/add.c b/builtin/add.c
-index 12b964e..f1f8b5a 100644
---- a/builtin/add.c
-+++ b/builtin/add.c
-@@ -389,7 +389,7 @@ int cmd_add(int argc, const char **argv, const char=
- *prefix)
- 		die("-A and -u are mutually incompatible");
- 	if (!show_only && ignore_missing)
- 		die("Option --ignore-missing can only be used together with --dry-ru=
-n");
--	if ((addremove || take_worktree_changes) && !argc) {
-+	if (addremove && !argc) {
- 		static const char *here[2] =3D { ".", NULL };
- 		argc =3D 1;
- 		argv =3D here;
-@@ -412,7 +412,10 @@ int cmd_add(int argc, const char **argv, const cha=
-r *prefix)
- 		fprintf(stderr, "Maybe you wanted to say 'git add .'?\n");
- 		return 0;
- 	}
--	pathspec =3D validate_pathspec(argc, argv, prefix);
-+	if (take_worktree_changes && !argc)
-+		pathspec =3D NULL;
-+	else
-+		pathspec =3D validate_pathspec(argc, argv, prefix);
-=20
- 	if (read_cache() < 0)
- 		die("index file corrupt");
-diff --git a/t/t2200-add-update.sh b/t/t2200-add-update.sh
-index 0692427..2201242 100755
---- a/t/t2200-add-update.sh
-+++ b/t/t2200-add-update.sh
-@@ -69,15 +69,16 @@ test_expect_success 'cache tree has not been corrup=
-ted' '
- test_expect_success 'update from a subdirectory' '
- 	(
- 		cd dir1 &&
--		echo more >sub2 &&
-+		echo more >>sub2 &&
- 		git add -u sub2
--	)
--'
--
--test_expect_success 'change gets noticed' '
--
-+	) &&
- 	test "$(git diff-files --name-status dir1)" =3D ""
-+'
-=20
-+test_expect_success 'update without args from subdir' '
-+	echo more >>top &&
-+	( cd dir1 && git add -u ) &&
-+	test "$(git diff-files --name-status top)" =3D ""
- '
-=20
- test_expect_success SYMLINKS 'replace a file with a symlink' '
+OK before is better.
 --=20
-1.7.3.4.878.g439c7
+Duy
