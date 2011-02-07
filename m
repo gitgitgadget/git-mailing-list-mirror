@@ -1,80 +1,88 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [PATCH 1.8.0] add: make "add -u" update full tree without pathspec
-Date: Mon, 07 Feb 2011 13:09:19 +0100
-Message-ID: <vpq1v3kf3m8.fsf@bauges.imag.fr>
-References: <1297045643-26697-1-git-send-email-pclouds@gmail.com>
-	<7vsjw0v11p.fsf@alter.siamese.dyndns.org>
+From: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>
+Subject: Re: git-new-workdir for filesystems without links (e.g. FAT32)?
+Date: Mon, 7 Feb 2011 13:19:46 +0100
+Message-ID: <AANLkTik-P6o954FTH8sUWbnDekT+rcnvk1z8iQ0SXU-i@mail.gmail.com>
+References: <loom.20110206T151206-851@post.gmane.org>
+	<20110206191459.GA17939@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Sebastian Pipping <webmaster@hartwork.org>,
-	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 07 13:12:57 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 07 13:19:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmPxe-0002ce-05
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 13:12:54 +0100
+	id 1PmQ4P-0005y4-HE
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 13:19:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754062Ab1BGMMs convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Feb 2011 07:12:48 -0500
-Received: from imag.imag.fr ([129.88.30.1]:42914 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753902Ab1BGMMr convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Feb 2011 07:12:47 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id p17C9K5U021907
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 7 Feb 2011 13:09:20 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PmPuB-0004eA-Um; Mon, 07 Feb 2011 13:09:19 +0100
-In-Reply-To: <7vsjw0v11p.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Sun\, 06 Feb 2011 21\:58\:10 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 07 Feb 2011 13:09:20 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1751106Ab1BGMTr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Feb 2011 07:19:47 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:63216 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750785Ab1BGMTr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Feb 2011 07:19:47 -0500
+Received: by vws16 with SMTP id 16so2849776vws.19
+        for <git@vger.kernel.org>; Mon, 07 Feb 2011 04:19:46 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        bh=aNdBSTfLgB2/jZYDdJ/OAXvBr6WW/BDoJWDH71IT3gI=;
+        b=gI4cZZA37Eud98pUbHsvgjSQ9mr6VwjJ4yim106eimlmsv0D2nAjung726hOJPIiRB
+         OdN7f1sK62qvEpUpROsnkGxRjLaXYhreXRdb58UqPGHdgZE2Jn45dlu/y+4NzX+M3aTe
+         vRqRNK/hU7999l0ttKfA+HjuKBARFw7D01WKE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:date
+         :x-google-sender-auth:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=sEe758Xz4+NKSm9p7lOWn+SH5eFsVEVFrJzwoGnZS7bm3oSt/jm5RzEbvKJU0W7ilF
+         IqYmUsuhDDlQRlaWUqNaWfuqW+t3jp0+D9dzs1tmFmCVR30Bv2BkMxugx8dQVqmW7A91
+         DfJD1XjzwyuJMmgOlInxiJeQyV1ComF0OrTG0=
+Received: by 10.220.177.76 with SMTP id bh12mr4593890vcb.106.1297081186148;
+ Mon, 07 Feb 2011 04:19:46 -0800 (PST)
+Received: by 10.220.195.132 with HTTP; Mon, 7 Feb 2011 04:19:46 -0800 (PST)
+In-Reply-To: <20110206191459.GA17939@elie>
+X-Google-Sender-Auth: r7XGA7LP7KamvgZv-QHNwPxvfUc
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166256>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166257>
 
-[ Your mailer did something strange with my name and email ]
-
-Junio C Hamano <gitster@pobox.com> writes:
-
-> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
-:
+On Sun, Feb 6, 2011 at 8:14 PM, Jonathan Nieder <jrnieder@gmail.com> wr=
+ote:
+> Hi Piotr,
 >
->> When -u was introduced in dfdac5d (git-add -u: match the index with
->> working tree., 2007-04-20), "add -u" (without pathspec) added
->> everything. Shortly after, 2ed2c22 (git-add -u paths... now works fr=
-om
->> subdirectory, 2007-08-16) broke it while fixing something related.
+> Piotr Krukowiecki wrote:
 >
-> As long as the command takes pathspecs, it should never be tree-wide.
-> Making it tree-wide when there is no pathspec is even worse.
+>> git-new-workdir requires soft links to work, so obviously it will fa=
+il if file
+>> system does not support them. Is there any other way for having mult=
+iple working
+>> dirs with one repository?
+>
+> I assume you mean a way to share refs between repositories without
+> using symlinks? =A0Then alas, that is not implemented, though there
+> is some interest. =A0See [1] for details.
+[...]
+> If on the other hand you just want to share objects (not refs) betwee=
+n
+> repositories, the GIT_OBJECT_DIRECTORY environment variable might
+> help.
 
-This is against the common use in Git. As I mentionned in the other
-thread, pretty much any git command taking an optional pathspec is
-still tree-wide when called without argument. "git add -u" is the
-exception.
+I need several working directories (for different branches). I wanted
+to use git-new-workdir because, as I understand, I could do 'git svn
+fetch' only once and then 'git rebase' for each working dir. So the
+only reason was performance (network and disk).
 
-> If "add -p" does not limit operation to the current directory, probab=
-ly
-> that is the inconsistency bug to be fixed.
+I don't know if sharing objects is enough. If I understand correctly,
+if a fetch introduces e.g. new branches, then only one working
+directory will have information about them?
 
-Add "git log", "git status", "git commit", "git show", "git diff", and
-a few others I've missed to the list of "exceptions" ...
 
 --=20
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Piotrek
