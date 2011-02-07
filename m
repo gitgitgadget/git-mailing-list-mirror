@@ -1,80 +1,92 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH 1/8] git-p4: test script
-Date: Mon, 7 Feb 2011 17:26:23 -0500
-Message-ID: <20110207222623.GB19851@arf.padd.com>
-References: <20110205224848.GA30963@arf.padd.com>
- <20110205225105.GB30963@arf.padd.com>
- <7v1v3kwpm9.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Can't find the revelant commit with git-log
+Date: Mon, 07 Feb 2011 14:51:52 -0800
+Message-ID: <7vk4hbsbjr.fsf@alter.siamese.dyndns.org>
+References: <m2ipxd2w78.fsf@gmail.com> <4D3EF650.20407@lsrfire.ath.cx>
+ <m2ipxc27zi.fsf@gmail.com> <m239og12pe.fsf@gmail.com>
+ <4D4063EC.7090509@lsrfire.ath.cx> <4D432735.8000208@lsrfire.ath.cx>
+ <7v1v3wd1al.fsf@alter.siamese.dyndns.org> <4D437CA0.1070006@lsrfire.ath.cx>
+ <7vsjwcb6rh.fsf@alter.siamese.dyndns.org> <4D4477E4.6020006@lsrfire.ath.cx>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 07 23:26:50 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Francis Moreau <francis.moro@gmail.com>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>
+To: =?utf-8?Q?Ren=C3=A9?= Scharfe <rene.scharfe@lsrfire.ath.cx>
+X-From: git-owner@vger.kernel.org Mon Feb 07 23:52:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmZXk-0006aI-JO
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 23:26:49 +0100
+	id 1PmZwL-0003dU-7L
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 23:52:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755181Ab1BGW02 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 17:26:28 -0500
-Received: from honk.padd.com ([74.3.171.149]:34700 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755068Ab1BGW01 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 17:26:27 -0500
-Received: from arf.padd.com (pool-71-111-208-86.rlghnc.dsl-w.verizon.net [71.111.208.86])
-	by honk.padd.com (Postfix) with ESMTPSA id 784A91F95;
-	Mon,  7 Feb 2011 14:26:26 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 59A7C31ADE; Mon,  7 Feb 2011 17:26:23 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <7v1v3kwpm9.fsf@alter.siamese.dyndns.org>
+	id S1755033Ab1BGWwG convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Feb 2011 17:52:06 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:55085 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754790Ab1BGWwF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Feb 2011 17:52:05 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DDDF03156;
+	Mon,  7 Feb 2011 17:53:00 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=VhTPS/aP1rJU
+	Lryn/DZkozXryok=; b=lvDdVMqcyLMiYvRJlFmZvRM854GHipJODxYj5+5NjKzl
+	HjOjLN0IxgWqLqRjWvjlIbNscJJa3L0awKwL14BPAm1C7KrzK/JyclqkDPEhtSVm
+	yvzGEo75LBybS3s5CyrojExPxWh6Ew8nT/q8dunengh/SvRulLfgMgY5TkY43EU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=Sqo/7m
+	OHHh3zureCLz7rKYgfKTxGA2Ony8UlG53dZA55f27g/vdi+g+hogX2/pNmv3EBMC
+	HH1cYQgWLlkXwFFNX/dRhrOR+oFC/LXFPT745MaZS/hH+92vPDD1bOxg/63uCHzD
+	R+lzVTuxBApHjq9JDiBHF2z4hceWusCTXZ4Bo=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 997153153;
+	Mon,  7 Feb 2011 17:52:56 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 42E063148; Mon,  7 Feb 2011
+ 17:52:51 -0500 (EST)
+In-Reply-To: <4D4477E4.6020006@lsrfire.ath.cx> (=?utf-8?Q?=22Ren=C3=A9?=
+ Scharfe"'s message of "Sat\, 29 Jan 2011 21\:26\:12 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 01065EC8-330D-11E0-A52B-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166307>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166308>
 
-gitster@pobox.com wrote on Sun, 06 Feb 2011 18:22 -0800:
-> Pete Wyckoff <pw@padd.com> writes:
-[..]
-> Use of two global variables with short names makes me feel "yeek!".
-> 
-> 	(p4 -h && p4d -h) >/dev/null 2>/dev/null ||
-> 	{
-> 		...
->                 test_done
-> 	}
+Ren=C3=A9 Scharfe <rene.scharfe@lsrfire.ath.cx> writes:
 
-Much nicer.  Thanks.
+> diff --git a/t/t6016-rev-list-graph-simplify-history.sh b/t/t6016-rev=
+-list-graph-simplify-history.sh
+> index f7181d1..50ffcf4 100755
+> --- a/t/t6016-rev-list-graph-simplify-history.sh
+> +++ b/t/t6016-rev-list-graph-simplify-history.sh
+> @@ -168,6 +168,7 @@ test_expect_success '--graph --full-history --sim=
+plify-merges -- bar.txt' '
+>  	echo "|\\  " >> expected &&
+>  	echo "| * $C4" >> expected &&
+>  	echo "* | $A5" >> expected &&
+> +	echo "* | $A4" >> expected &&
+>  	echo "* | $A3" >> expected &&
+>  	echo "|/  " >> expected &&
+>  	echo "* $A2" >> expected &&
 
-> > +	p4d -q -d -r "$db" -p $P4DPORT &&
-> > +	# wait for it to finish its initialization
-> > +	sleep 1 &&
-> 
-> Is there a guarantee that "1" is sufficiently long for everybody?
-> 
-> Otherwise this will be a flaky test that sometimes passes and sometimes
-> doesn't, which we try to avoid.
-> 
-> If the answer is "empirically 1 second is sufficient for 99.9% of people",
-> then I would have to guess that it is 0.8 second too long for majority of
-> people, in which case I would like to see us try harder to make it both
-> reliable and efficient.
-> 
-> Isn't there a "noop" command a client can issue against a working server
-> that fails when the server is not ready (or waits until the server becomes
-> ready)?
+Thanks for a patch with a test; I am not sure if this is quite correct,
+though.
 
-There is a noop ("p4 info") that I can use to test.  But turns
-out I was wrong in even needing to sleep or wait for the "info"
-test to complete.  In trying to get it to race, I found that p4d
-is well-behaved.  Strace confirms that it does bind/listen before
-daemonizing.  So that sleep can be removed.
+A4 has three parents, C2, A3 and B2, and does not introduce any change
+with respect to bar.txt.  A6 has bar.txt identical to that of A5, but w=
+e
+cannot omit it because we are showing its two parents (A5 and C4), and
+that is why we show it.  A4 isn't even gets shown as a merge, so I don'=
+t
+understand why we need to show it?
 
-I'll wait a while in case other comments come in, then send the
-updated series to you.
-
-		-- Pete
+Don't we need to also adjust the simplify-merges codepath to take this
+change into account, or something?
