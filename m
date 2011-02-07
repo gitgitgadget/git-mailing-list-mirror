@@ -1,155 +1,97 @@
-From: Masatake Osanai <unpush@gmail.com>
-Subject: [PATCH] perl: Fix command_bidi_pipe() don't care about repository path
-Date: Tue,  8 Feb 2011 00:09:20 +0900
-Message-ID: <1297091360-11409-1-git-send-email-unpush@gmail.com>
-Cc: Masatake Osanai <unpush@gmail.com>
-To: git@vger.kernel.org, gitster@pobox.com
-X-From: git-owner@vger.kernel.org Mon Feb 07 16:11:34 2011
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [1.8.0] Provide proper remote ref namespaces
+Date: Mon, 07 Feb 2011 11:10:43 -0500
+Message-ID: <4D501983.5060508@xiplink.com>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com> <20110201181428.GA6579@sigill.intra.peff.net> <AANLkTimtU56BAnWU-2pY1npdkPdKEBq_CMCGwXUK+E=H@mail.gmail.com> <201102020322.00171.johan@herland.net> <7vpqr7xw4z.fsf@alter.siamese.dyndns.org> <alpine.LFD.2.00.1102051330270.12104@xanadu.home> <20110205193708.GA2192@sigill.intra.peff.net> <alpine.LFD.2.00.1102051449420.12104@xanadu.home> <7vvd0xvsjc.fsf@alter.siamese.dyndns.org>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Nicolas Pitre <nico@fluxnic.net>, Jeff King <peff@peff.net>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 07 17:10:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmSkW-0006w9-DO
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 16:11:32 +0100
+	id 1PmTfN-0007Rh-8N
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 17:10:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753806Ab1BGPLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 10:11:10 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:64301 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753788Ab1BGPLH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 10:11:07 -0500
-Received: by qyj19 with SMTP id 19so1629752qyj.19
-        for <git@vger.kernel.org>; Mon, 07 Feb 2011 07:11:06 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
-        bh=xpiHggVwzxsCMFmapR+K3alC6CGjbaIe67BDdatPMDA=;
-        b=VXqyTdAiWwR0XMPo3THUasFRIRTzBUT8llA2GLpMhgJNRVoKaMf/edriWfkGTjm08L
-         MbVZMWLJkOX7x43dZKwInS7K/QL6jLoeXftXJGv3w/M3EVCdldgoY3ycpjifpu6/vdFE
-         5LnaKz1v622BarfU8zbLhTk972BZmI1UVnPV4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer;
-        b=BmEKl+lCD+xiyN82IGifnd3wM0wu7GTBtZUokxf3mNI5eIGem/o9NW2P3ccKtx63rw
-         H7ZQSErs3hFftukh49nnwkb53I62MJOzzWS7bBt4lZIXlar2khAMhOzVr5Dpz8crpNzB
-         8Ajq2SKxIJH7V2Y8+G0MCyTztwPlvHcqkncsc=
-Received: by 10.224.90.20 with SMTP id g20mr14182425qam.276.1297091466523;
-        Mon, 07 Feb 2011 07:11:06 -0800 (PST)
-Received: from localhost.localdomain (ns.unpush.net [202.171.147.44])
-        by mx.google.com with ESMTPS id g32sm2909646qck.34.2011.02.07.07.11.05
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 07 Feb 2011 07:11:06 -0800 (PST)
-X-Mailer: git-send-email 1.7.4
+	id S1753913Ab1BGQJu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Feb 2011 11:09:50 -0500
+Received: from smtp132.iad.emailsrvr.com ([207.97.245.132]:33579 "EHLO
+	smtp132.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753879Ab1BGQJt (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Feb 2011 11:09:49 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp53.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id BDEB45852F;
+	Mon,  7 Feb 2011 11:09:47 -0500 (EST)
+X-Virus-Scanned: OK
+Received: by smtp53.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 7424758240;
+	Mon,  7 Feb 2011 11:09:47 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
+In-Reply-To: <7vvd0xvsjc.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166265>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166266>
 
-command_bidi_pipe must care about repo_path() in case of repository
-instance.
-This also fixes error on cat_blob() and hash_and_insert_object()
-in case of using outside of working tree.
+On 11-02-06 03:04 PM, Junio C Hamano wrote:
+> Nicolas Pitre <nico@fluxnic.net> writes:
+> 
+>>> The latter seems like a regression for the common case of fetching from
+>>> two upstreams. E.g., I usually pull from Junio, getting
+>>> remotes/origin/v1.7.0.  One day Shawn is the interim maintainer, and I
+>>> pull from him, getting remotes/spearce/v1.7.0, which he previously
+>>> fetched from Junio. Under the current code, I can still do "git show
+>>> v1.7.0"; under the scheme described above I now have to say
+>>> "origin/v1.7.0" to disambiguate.
+>>
+>> Let's suppose that both tags are identical, as in your scenario above 
+>> they would be, then there is no need to call for any ambiguity in that 
+>> case.
+> 
+> I agree that we do not want refs/remotes/tags/*/that-tag-people-agree-on
+> in that case.  We want to store a single copy and find it there, and that
+> single copy has traditionally been found in refs/tags hierarchy.
+> 
+> I think the real issue is not necessarily that the location is shared with
+> local tag namespace, but is the lack of a convenient way (or just BCP) to
+> segregate what are local and what are official when transferring tags out
+> of your repository.  That is what discourages people from using tags for
+> their personal and ephemeral use, marking some points in their own work
+> with personal tags that are never intended to be published.
 
-Signed-off-by: Masatake Osanai <unpush@gmail.com>
----
- perl/Git.pm     |   25 ++++++++++++++++++++-----
- t/t9700/test.pl |   10 ++++++++++
- 2 files changed, 30 insertions(+), 5 deletions(-)
+That may be an issue, but I don't think it's the issue in this thread.
+Recall what Nicolas said:
 
-diff --git a/perl/Git.pm b/perl/Git.pm
-index 205e48a..7b2aa46 100644
---- a/perl/Git.pm
-+++ b/perl/Git.pm
-@@ -99,7 +99,7 @@ increase notwithstanding).
- 
- use Carp qw(carp croak); # but croak is bad - throw instead
- use Error qw(:try);
--use Cwd qw(abs_path);
-+use Cwd qw(abs_path cwd);
- use IPC::Open2 qw(open2);
- use Fcntl qw(SEEK_SET SEEK_CUR);
- }
-@@ -396,7 +396,16 @@ See C<command_close_bidi_pipe()> for details.
- 
- sub command_bidi_pipe {
- 	my ($pid, $in, $out);
-+	my($self) = _maybe_self(@_);
-+	local %ENV = %ENV;
-+	my $cwd_save = undef;
-+	if ($self) {
-+		shift;
-+		$cwd_save = cwd();
-+		_setup_git_cmd_env($self);
-+	}
- 	$pid = open2($in, $out, 'git', @_);
-+	chdir($cwd_save) if $cwd_save;
- 	return ($pid, $in, $out, join(' ', @_));
- }
- 
-@@ -843,7 +852,7 @@ sub _open_hash_and_insert_object_if_needed {
- 
- 	($self->{hash_object_pid}, $self->{hash_object_in},
- 	 $self->{hash_object_out}, $self->{hash_object_ctx}) =
--		command_bidi_pipe(qw(hash-object -w --stdin-paths --no-filters));
-+		$self->command_bidi_pipe(qw(hash-object -w --stdin-paths --no-filters));
- }
- 
- sub _close_hash_and_insert_object {
-@@ -932,7 +941,7 @@ sub _open_cat_blob_if_needed {
- 
- 	($self->{cat_blob_pid}, $self->{cat_blob_in},
- 	 $self->{cat_blob_out}, $self->{cat_blob_ctx}) =
--		command_bidi_pipe(qw(cat-file --batch));
-+		$self->command_bidi_pipe(qw(cat-file --batch));
- }
- 
- sub _close_cat_blob {
-@@ -1279,6 +1288,14 @@ sub _command_common_pipe {
- # for the given repository and execute the git command.
- sub _cmd_exec {
- 	my ($self, @args) = @_;
-+	_setup_git_cmd_env($self);
-+	_execv_git_cmd(@args);
-+	die qq[exec "@args" failed: $!];
-+}
-+
-+# set up the appropriate state for git command
-+sub _setup_git_cmd_env {
-+	my $self = shift;
- 	if ($self) {
- 		$self->repo_path() and $ENV{'GIT_DIR'} = $self->repo_path();
- 		$self->repo_path() and $self->wc_path()
-@@ -1286,8 +1303,6 @@ sub _cmd_exec {
- 		$self->wc_path() and chdir($self->wc_path());
- 		$self->wc_subdir() and chdir($self->wc_subdir());
- 	}
--	_execv_git_cmd(@args);
--	die qq[exec "@args" failed: $!];
- }
- 
- # Execute the given Git command ($_[0]) with arguments ($_[1..])
-diff --git a/t/t9700/test.pl b/t/t9700/test.pl
-index c15ca2d..13ba96e 100755
---- a/t/t9700/test.pl
-+++ b/t/t9700/test.pl
-@@ -113,6 +113,16 @@ like($last_commit, qr/^[0-9a-fA-F]{40}$/, 'rev-parse returned hash');
- my $dir_commit = $r2->command_oneline('log', '-n1', '--pretty=format:%H', '.');
- isnt($last_commit, $dir_commit, 'log . does not show last commit');
- 
-+# commands outside working tree
-+chdir($abs_repo_dir . '/..');
-+my $r3 = Git->repository(Directory => $abs_repo_dir);
-+my $tmpfile3 = "$abs_repo_dir/file3.tmp";
-+open TEMPFILE3, "+>$tmpfile3" or die "Can't open $tmpfile3: $!";
-+is($r3->cat_blob($file1hash, \*TEMPFILE3), 15, "cat_blob(outside): size");
-+close TEMPFILE3;
-+unlink $tmpfile3;
-+chdir($abs_repo_dir);
-+
- printf "1..%d\n", Test::More->builder->current_test;
- 
- my $is_passing = eval { Test::More->is_passing };
--- 
-1.7.4
+	The extraordinary misfeature of the tag namespace at the
+	moment comes from the fact that whenever you add a remote
+	repo to fetch, and do fetch it, then your flat tag
+	namespace gets polluted with all the tags the remote might
+	have.  If you decide to delete some of those remote branches,
+	the tags that came with it are still there and indistinguishable
+	from other tags making it a real pain to sort out.
+
+Those tags can all be properly "official" and still the problem exists.
+
+In the "interim maintainer" case, I suggest it's not really a question of
+private-vs-official tags.  Folks who clone directly from the maintainer
+should understand that some tags are works-in-progress.  As the maintainer
+role gets passed from person to person (and repo to repo), it seems more
+useful to be able to distinguish work-in-progress tag vX.Y.Z as coming from
+maintainer A or B, i.e. tags A/vX.Y.Z and B/vX.Y.Z.  If the tags point to the
+same commit then just "vX.Y.Z" resolves fine.  But if the two maintainers
+have different ideas of what vX.Y.Z should be, then the fully-qualified names
+help to identify the differences.
+
+Tags don't become "official" until they're published according to the
+project's process.  For us git users, that means the tag appears in
+git.kernel.org/pub/scm/git/git.git.  A tag that appears somewhere else can
+have all sorts of meanings, but I don't think "official" could be one of them.
+
+		M.
