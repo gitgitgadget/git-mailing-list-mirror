@@ -1,75 +1,155 @@
-From: Endre Czirbesz <endre@czirbesz.hu>
-Subject: Re: git to p4 conversion
-Date: Mon, 7 Feb 2011 15:07:45 +0000
-Message-ID: <AANLkTi=9vzPH2zrGTvmCLYjgvQJQs=Y+W40Jz8g5FyTS@mail.gmail.com>
-References: <AANLkTi=0TSD6p7WtsVzx=pq8=GVu+jHUdxt1bnC++CT+@mail.gmail.com>
-	<4D4AF29E.7070509@vmware.com>
-	<AANLkTikW_sU8oCmU9wN5q1OPPJrQbS2YZAvS0C_nBQbD@mail.gmail.com>
-	<loom.20110204T004658-497@post.gmane.org>
-	<AANLkTikfGapDfZtD9H10797Ted_Av78WD8M7XrACOCpW@mail.gmail.com>
-	<AANLkTimrwUxNOAnfxgvReGN+-h4_0jhZ731y22TB6u1K@mail.gmail.com>
-	<AANLkTi=_spLE-KMnou-2LLQjwq4FUZxNr9pk7D9C=4PK@mail.gmail.com>
-	<AANLkTi=dZdSqcNckyU7Lb2Zj-khfj=Xiyzbv7LSC+zT2@mail.gmail.com>
-	<AANLkTimGaPQ=hRp+2pvw-hAOg+wp50nvc_sv9jNTay=n@mail.gmail.com>
-	<AANLkTimJm81V0D8_j3OfZTcEkyn_jd6_QB2nv8T69JBY@mail.gmail.com>
-	<AANLkTi=onuZtGWPTYvw_-rKsR6t-R2UquAUPLHAm-TVV@mail.gmail.com>
-	<AANLkTimV1aRiEMa2z-H2bOvRa9H6YAyET1=hn+_O0-0u@mail.gmail.com>
-	<AANLkTimP81rVPwvpaCSgBJiZ2Jm131+Q9E-Fkj0-jZfd@mail.gmail.com>
-	<AANLkTikCVNoxyNezHVM=8gg6wZNzhV2eOytL952SSP3s@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Vitor Antunes <vitor.hda@gmail.com>, git@vger.kernel.org,
-	Ian Wienand <ianw@vmware.com>
-To: Tor Arvid Lund <torarvid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 07 16:08:01 2011
+From: Masatake Osanai <unpush@gmail.com>
+Subject: [PATCH] perl: Fix command_bidi_pipe() don't care about repository path
+Date: Tue,  8 Feb 2011 00:09:20 +0900
+Message-ID: <1297091360-11409-1-git-send-email-unpush@gmail.com>
+Cc: Masatake Osanai <unpush@gmail.com>
+To: git@vger.kernel.org, gitster@pobox.com
+X-From: git-owner@vger.kernel.org Mon Feb 07 16:11:34 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmSh6-00052E-43
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 16:08:00 +0100
+	id 1PmSkW-0006w9-DO
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 16:11:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753868Ab1BGPHr (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 10:07:47 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:54365 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753762Ab1BGPHq (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 10:07:46 -0500
-Received: by vxb37 with SMTP id 37so1604321vxb.19
-        for <git@vger.kernel.org>; Mon, 07 Feb 2011 07:07:46 -0800 (PST)
+	id S1753806Ab1BGPLK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Feb 2011 10:11:10 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:64301 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753788Ab1BGPLH (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Feb 2011 10:11:07 -0500
+Received: by qyj19 with SMTP id 19so1629752qyj.19
+        for <git@vger.kernel.org>; Mon, 07 Feb 2011 07:11:06 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        bh=ojCo37UMkebdq/QpR5kZN9DhYOOPTHOkXGdstakE2tY=;
-        b=NtdubNF81lMf5/ifdANbxYq91c5xSJ6FWzirW57OGJEsdcpeKFBjcGb+fejnmZXx6F
-         bBJqFVmLr5l6qm23HSuhNyh5C7/9kHJ/8/X6F8g6mpm7/z5N2hzSvlBbTMrHBj9efeps
-         kZOJXmxwlwwajENntrna+Fh51ThrSwmVuJbiw=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=xpiHggVwzxsCMFmapR+K3alC6CGjbaIe67BDdatPMDA=;
+        b=VXqyTdAiWwR0XMPo3THUasFRIRTzBUT8llA2GLpMhgJNRVoKaMf/edriWfkGTjm08L
+         MbVZMWLJkOX7x43dZKwInS7K/QL6jLoeXftXJGv3w/M3EVCdldgoY3ycpjifpu6/vdFE
+         5LnaKz1v622BarfU8zbLhTk972BZmI1UVnPV4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:sender:in-reply-to:references:date
-         :x-google-sender-auth:message-id:subject:from:to:cc:content-type;
-        b=MnT0L5PzKaFhV9cQEnX8ElhZwYfEQE+NqNAlbjKN1P4lw43YoI+G1w+GWq89bS4Pki
-         93C025VNtwGBqsqPDHiiuKRP/3zcc/Zvxd7O1YK5D91q8M3IUtwIpE1fHynpYwHsiUEo
-         O5ScYBerUE+EL0ErMhevasnvGQ2ctyO4btJlo=
-Received: by 10.220.201.195 with SMTP id fb3mr1415520vcb.80.1297091265827;
- Mon, 07 Feb 2011 07:07:45 -0800 (PST)
-Received: by 10.220.161.21 with HTTP; Mon, 7 Feb 2011 07:07:45 -0800 (PST)
-In-Reply-To: <AANLkTikCVNoxyNezHVM=8gg6wZNzhV2eOytL952SSP3s@mail.gmail.com>
-X-Google-Sender-Auth: -5tNkMsdubrk0ZJxnWhLRFM2XC0
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=BmEKl+lCD+xiyN82IGifnd3wM0wu7GTBtZUokxf3mNI5eIGem/o9NW2P3ccKtx63rw
+         H7ZQSErs3hFftukh49nnwkb53I62MJOzzWS7bBt4lZIXlar2khAMhOzVr5Dpz8crpNzB
+         8Ajq2SKxIJH7V2Y8+G0MCyTztwPlvHcqkncsc=
+Received: by 10.224.90.20 with SMTP id g20mr14182425qam.276.1297091466523;
+        Mon, 07 Feb 2011 07:11:06 -0800 (PST)
+Received: from localhost.localdomain (ns.unpush.net [202.171.147.44])
+        by mx.google.com with ESMTPS id g32sm2909646qck.34.2011.02.07.07.11.05
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 07 Feb 2011 07:11:06 -0800 (PST)
+X-Mailer: git-send-email 1.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166264>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166265>
 
-2011/2/7 Tor Arvid Lund <torarvid@gmail.com>:
-> Maybe you could run "git p4 submit --verbose"? (the 'verbose' option
-> might give you a clue as to what the underlying problem is)
-I did that actually, just did not want to send the whole output. :)
+command_bidi_pipe must care about repo_path() in case of repository
+instance.
+This also fixes error on cat_blob() and hash_and_insert_object()
+in case of using outside of working tree.
 
-I will investigate it further, but my boss gave a new highest priority
-task for me... :(
+Signed-off-by: Masatake Osanai <unpush@gmail.com>
+---
+ perl/Git.pm     |   25 ++++++++++++++++++++-----
+ t/t9700/test.pl |   10 ++++++++++
+ 2 files changed, 30 insertions(+), 5 deletions(-)
 
-Endre
+diff --git a/perl/Git.pm b/perl/Git.pm
+index 205e48a..7b2aa46 100644
+--- a/perl/Git.pm
++++ b/perl/Git.pm
+@@ -99,7 +99,7 @@ increase notwithstanding).
+ 
+ use Carp qw(carp croak); # but croak is bad - throw instead
+ use Error qw(:try);
+-use Cwd qw(abs_path);
++use Cwd qw(abs_path cwd);
+ use IPC::Open2 qw(open2);
+ use Fcntl qw(SEEK_SET SEEK_CUR);
+ }
+@@ -396,7 +396,16 @@ See C<command_close_bidi_pipe()> for details.
+ 
+ sub command_bidi_pipe {
+ 	my ($pid, $in, $out);
++	my($self) = _maybe_self(@_);
++	local %ENV = %ENV;
++	my $cwd_save = undef;
++	if ($self) {
++		shift;
++		$cwd_save = cwd();
++		_setup_git_cmd_env($self);
++	}
+ 	$pid = open2($in, $out, 'git', @_);
++	chdir($cwd_save) if $cwd_save;
+ 	return ($pid, $in, $out, join(' ', @_));
+ }
+ 
+@@ -843,7 +852,7 @@ sub _open_hash_and_insert_object_if_needed {
+ 
+ 	($self->{hash_object_pid}, $self->{hash_object_in},
+ 	 $self->{hash_object_out}, $self->{hash_object_ctx}) =
+-		command_bidi_pipe(qw(hash-object -w --stdin-paths --no-filters));
++		$self->command_bidi_pipe(qw(hash-object -w --stdin-paths --no-filters));
+ }
+ 
+ sub _close_hash_and_insert_object {
+@@ -932,7 +941,7 @@ sub _open_cat_blob_if_needed {
+ 
+ 	($self->{cat_blob_pid}, $self->{cat_blob_in},
+ 	 $self->{cat_blob_out}, $self->{cat_blob_ctx}) =
+-		command_bidi_pipe(qw(cat-file --batch));
++		$self->command_bidi_pipe(qw(cat-file --batch));
+ }
+ 
+ sub _close_cat_blob {
+@@ -1279,6 +1288,14 @@ sub _command_common_pipe {
+ # for the given repository and execute the git command.
+ sub _cmd_exec {
+ 	my ($self, @args) = @_;
++	_setup_git_cmd_env($self);
++	_execv_git_cmd(@args);
++	die qq[exec "@args" failed: $!];
++}
++
++# set up the appropriate state for git command
++sub _setup_git_cmd_env {
++	my $self = shift;
+ 	if ($self) {
+ 		$self->repo_path() and $ENV{'GIT_DIR'} = $self->repo_path();
+ 		$self->repo_path() and $self->wc_path()
+@@ -1286,8 +1303,6 @@ sub _cmd_exec {
+ 		$self->wc_path() and chdir($self->wc_path());
+ 		$self->wc_subdir() and chdir($self->wc_subdir());
+ 	}
+-	_execv_git_cmd(@args);
+-	die qq[exec "@args" failed: $!];
+ }
+ 
+ # Execute the given Git command ($_[0]) with arguments ($_[1..])
+diff --git a/t/t9700/test.pl b/t/t9700/test.pl
+index c15ca2d..13ba96e 100755
+--- a/t/t9700/test.pl
++++ b/t/t9700/test.pl
+@@ -113,6 +113,16 @@ like($last_commit, qr/^[0-9a-fA-F]{40}$/, 'rev-parse returned hash');
+ my $dir_commit = $r2->command_oneline('log', '-n1', '--pretty=format:%H', '.');
+ isnt($last_commit, $dir_commit, 'log . does not show last commit');
+ 
++# commands outside working tree
++chdir($abs_repo_dir . '/..');
++my $r3 = Git->repository(Directory => $abs_repo_dir);
++my $tmpfile3 = "$abs_repo_dir/file3.tmp";
++open TEMPFILE3, "+>$tmpfile3" or die "Can't open $tmpfile3: $!";
++is($r3->cat_blob($file1hash, \*TEMPFILE3), 15, "cat_blob(outside): size");
++close TEMPFILE3;
++unlink $tmpfile3;
++chdir($abs_repo_dir);
++
+ printf "1..%d\n", Test::More->builder->current_test;
+ 
+ my $is_passing = eval { Test::More->is_passing };
+-- 
+1.7.4
