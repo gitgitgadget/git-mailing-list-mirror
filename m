@@ -1,75 +1,77 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH 1.8.0] add: make "add -u" update full tree without
- pathspec
-Date: Sun, 06 Feb 2011 21:58:10 -0800
-Message-ID: <7vsjw0v11p.fsf@alter.siamese.dyndns.org>
-References: <1297045643-26697-1-git-send-email-pclouds@gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 1.8.0] add: make "add -u" update full tree without pathspec
+Date: Mon, 7 Feb 2011 13:14:36 +0700
+Message-ID: <AANLkTimG6s5vSCnisJCt-EXkcJGXfY4Y3WtdB_netU08@mail.gmail.com>
+References: <1297045643-26697-1-git-send-email-pclouds@gmail.com> <7vsjw0v11p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sebastian Pipping <webmaster@hartwork.org>,
-	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	Matthieu@a-pb-sasl-sd.pobox.com, "Moy <Matthieu.Moy"@gr.pobox.com
-To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 07 06:58:32 2011
+Cc: git@vger.kernel.org, Sebastian Pipping <webmaster@hartwork.org>,
+	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
+	Matthieu@a-pb-sasl-sd.pobox.com, Matthieu.Moy@gr.pobox.com
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 07 07:15:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmK7M-0003Y7-0Y
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 06:58:32 +0100
+	id 1PmKNY-0008JJ-Rh
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 07:15:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752022Ab1BGF60 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Feb 2011 00:58:26 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:60326 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751854Ab1BGF60 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Feb 2011 00:58:26 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 959462259;
-	Mon,  7 Feb 2011 00:59:22 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=ehYtvY+h5Dao
-	p0GKhNkvQUplYNM=; b=h5WAeJ9aTKjae8s1F+N2xI70ljZquGNppQTjDMsZxcAE
-	Q5Ld3qpQGJbVqVr/Sdc92Jh+VuKwD5VB4mxAoVW/rTxyUxHh09PqttzsJPhc8bDm
-	wBUqpTvaEAlnHqqjAuHusVBDebuBHwb8bsHmgc2Q4904z88YsDwqHMF+qwOyyYk=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=TU7oJE
-	3jRsdo81gaVJqne8Q/9vWInPmwPBQHJ00UQ9R7uVckM8/iWTOOnhsiucI3iO2CY/
-	A9hHwdFvlv+fGTqpMPuZk0JHFA8rJI7qTlgdj1S2QgguUp38XhpEX0Sljh+FMyy1
-	aar5sNSBqphIe9ae1+eU/XLD3PRwIWObYXlYo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3CDF52258;
-	Mon,  7 Feb 2011 00:59:17 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 738A62256; Mon,  7 Feb 2011
- 00:59:09 -0500 (EST)
-In-Reply-To: <1297045643-26697-1-git-send-email-pclouds@gmail.com>
- (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Mon\,  7 Feb
- 2011 09\:27\:23 +0700")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 65D90BD6-327F-11E0-BC28-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
+	id S1752147Ab1BGGPJ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Feb 2011 01:15:09 -0500
+Received: from mail-ww0-f42.google.com ([74.125.82.42]:54468 "EHLO
+	mail-ww0-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752133Ab1BGGPI convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Feb 2011 01:15:08 -0500
+Received: by wwi17 with SMTP id 17so2527592wwi.1
+        for <git@vger.kernel.org>; Sun, 06 Feb 2011 22:15:07 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=oU6Cn79CilTPVpe+/vDBCb5xjqFXZ+H7bM5cuPrCQo0=;
+        b=n4+2K8Aq2vEj3Mzzw+poEaQ2XFhE0p7M2iXDFXYyNtKbvx7dO7pmPrWmuBR3PwS7HD
+         RlW48p7xX83heRaXK4ZM4hIuEFZrUsWmur+xjQxSBZm3cxpWBHaAh4IL+k6qLtCHBGzy
+         MfZmsIFzvJnlmoIsCKo4KIgF83GASK73+tkqg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=WcgdJgoRFhLTk3ZY3qJDs3uSBxwM49rNf4s9kxghFD5H0C8ysVC8IlYtEIj3x9aLLB
+         uFWpoExygC4GjNAQcVB4B7EBwA9Zn2FuNJyVR+K6Xa/WkMofQ0vIn0JbHjboMbOujh3i
+         YQAvUmw1CAvUAgGOSkaMa+R67zZLTQRgh9YYc=
+Received: by 10.216.87.130 with SMTP id y2mr13691566wee.58.1297059306720; Sun,
+ 06 Feb 2011 22:15:06 -0800 (PST)
+Received: by 10.216.66.144 with HTTP; Sun, 6 Feb 2011 22:14:36 -0800 (PST)
+In-Reply-To: <7vsjw0v11p.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166233>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166234>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
+On Mon, Feb 7, 2011 at 12:58 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy =C2=A0<pclouds@gmail.com> w=
+rites:
+>
+>> When -u was introduced in dfdac5d (git-add -u: match the index with
+>> working tree., 2007-04-20), "add -u" (without pathspec) added
+>> everything. Shortly after, 2ed2c22 (git-add -u paths... now works fr=
+om
+>> subdirectory, 2007-08-16) broke it while fixing something related.
+>
+> As long as the command takes pathspecs, it should never be tree-wide.
+> Making it tree-wide when there is no pathspec is even worse.
 
-> When -u was introduced in dfdac5d (git-add -u: match the index with
-> working tree., 2007-04-20), "add -u" (without pathspec) added
-> everything. Shortly after, 2ed2c22 (git-add -u paths... now works fro=
-m
-> subdirectory, 2007-08-16) broke it while fixing something related.
+git log -p and diff family all can take pathspecs. All default to
+tree-wide without pathspecs. This is what I'm doing all the time:
 
-As long as the command takes pathspecs, it should never be tree-wide.
-Making it tree-wide when there is no pathspec is even worse.
-
-If "add -p" does not limit operation to the current directory, probably
-that is the inconsistency bug to be fixed.
+git diff
+# checking, ok, looks good
+git add -u
+# ack, need to come to root dir first
+--=20
+Duy
