@@ -1,93 +1,122 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: "git add -u" broken in git 1.7.4?
-Date: Mon, 07 Feb 2011 09:27:14 +0100
-Message-ID: <4D4FACE2.4060206@drmicha.warpmail.net>
-References: <4D4DEDC4.4080708@hartwork.org>	<20110206051333.GA3458@sigill.intra.peff.net>	<4D4EF7E4.7050303@hartwork.org> <vpq1v3kopn3.fsf@bauges.imag.fr>	<7vwrlcv1ea.fsf@alter.siamese.dyndns.org>	<20110207055314.GA5511@sigill.intra.peff.net> <vpqbp2ojq5x.fsf@bauges.imag.fr>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [1.8.0] Provide proper remote ref namespaces
+Date: Mon, 07 Feb 2011 09:58:11 +0100
+Message-ID: <201102070958.11551.johan@herland.net>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+ <201102070451.37370.johan@herland.net>
+ <20110207051123.GA4748@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Jeff King <peff@peff.net>, Junio C Hamano <gitster@pobox.com>,
-	Sebastian Pipping <webmaster@hartwork.org>,
-	Git ML <git@vger.kernel.org>
-To: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-X-From: git-owner@vger.kernel.org Mon Feb 07 09:30:39 2011
+Content-Type: Text/Plain; charset=utf-8
+Content-Transfer-Encoding: 7BIT
+Cc: git@vger.kernel.org, Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Mon Feb 07 09:58:21 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmMUL-000492-FS
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 09:30:25 +0100
+	id 1PmMvM-0007le-70
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 09:58:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752928Ab1BGIaT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 03:30:19 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:46478 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1752694Ab1BGIaS (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 7 Feb 2011 03:30:18 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id C54B820AAE;
-	Mon,  7 Feb 2011 03:30:17 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute1.internal (MEProxy); Mon, 07 Feb 2011 03:30:17 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=Ni9nuqV8psHPBlLNX4pU8GaAptE=; b=iTe/ZNKi64pUZlZibmWf6j+e3DnD0ktJT3vo/XSnuFRtsfsgLzqtj9dsBOfczqQT6anSuwHYn9AMmucEJHwsrtX4Q6DMOgGMXu3msB3z4jmlYtRukC9yiNZL38GgYD2We2bZ6CHJE9EMQlTVPvuAmA1+sz+nZ3/B1GYGq3Ada/U=
-X-Sasl-enc: cCLvE74cSAi1t9OuYKSQjkN0570whpzldqkQlpo5spsf 1297067417
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 0396544858C;
-	Mon,  7 Feb 2011 03:30:16 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <vpqbp2ojq5x.fsf@bauges.imag.fr>
+	id S1753171Ab1BGI6P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Feb 2011 03:58:15 -0500
+Received: from smtp.getmail.no ([84.208.15.66]:37878 "EHLO smtp.getmail.no"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753064Ab1BGI6O (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Feb 2011 03:58:14 -0500
+Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
+ by get-mta-out02.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LG800IUHOX1YL90@get-mta-out02.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 07 Feb 2011 09:58:13 +0100 (MET)
+Received: from get-mta-scan02.get.basefarm.net
+ (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
+ with SMTP id 0BC621EA55E2_D4FB425B	for <git@vger.kernel.org>; Mon,
+ 07 Feb 2011 08:58:13 +0000 (GMT)
+Received: from smtp.getmail.no (unknown [10.5.16.4])
+	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
+ with ESMTP id 831721EA2A49_D4FB424F	for <git@vger.kernel.org>; Mon,
+ 07 Feb 2011 08:58:12 +0000 (GMT)
+Received: from alpha.localnet ([84.215.68.234])
+ by get-mta-in03.get.basefarm.net
+ (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
+ with ESMTP id <0LG800FRCOX0Y510@get-mta-in03.get.basefarm.net> for
+ git@vger.kernel.org; Mon, 07 Feb 2011 09:58:12 +0100 (MET)
+User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.0; x86_64; ; )
+In-reply-to: <20110207051123.GA4748@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166241>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166242>
 
-Matthieu Moy venit, vidit, dixit 07.02.2011 07:48:
-> Jeff King <peff@peff.net> writes:
+On Monday 07 February 2011, Jeff King wrote:
+> On Mon, Feb 07, 2011 at 04:51:37AM +0100, Johan Herland wrote:
+> > > Take the example of the interim maintainer cited somewhere else in
+> > > this thread. If Shawn fetches from Junio, he'll get a junio/v1.7.4
+> > > tag, and on my side, I do not want to end up having
+> > > shawn/junio/v1.7.4, especially if this means that people fetching
+> > > from me would end up with a me/shawn/junio/v1.7.4 ...
+> > 
+> > You won't end up with "shawn/junio/v1.7.4". When Shawn fetches from
+> > Junio, what he actually gets is "refs/remotes/junio/tags/v1.7.4"
+> > ("junio/v1.7.4" is a shorthand; "v1.7.4" is an even better shorthand).
 > 
->> On Sun, Feb 06, 2011 at 09:50:37PM -0800, Junio C Hamano wrote:
->>
->>> As it takes pathspecs (think "git add -u this-file"), it fundamentally
->>> shouldn't be tree-wide.  I think the original implementation didn't take
->>> pathspecs and was mistakenly done as tree-wide operation, but I think it
->>> was fixed rather quickly.
->>
->> Is "git add -p" broken, then? It takes pathspecs relative to the current
->> directory, but "git add -p" without arguments operates from the root,
->> not from the current subdirectory.
+> But keep in mind that this proposal will have to live alongside repos
+> that are using older versions of git. So Shawn might very well have
+> refs/tags/v1.7.4 from Junio if he is using (or has ever used) pre-1.8.0
+> git.
+
+Yes, but since they point to the same object, there's no ambiguity.
+
+I'm also starting to wonder whether we should, in existing repos with 
+existing remotes, keep using the old-style refspecs by default, thereby 
+making new-style refspecs the default only for _new_ repos. It seems mixing 
+the two styles in one repo would cause confusion. Another alternative would 
+be to transform old-style remotes into new-style remotes, but I believe that 
+was shot down elsewhere in this thread.
+
+> No, that won't give you me/shawn/junio/v1.7.4, but it does mean we have
+> to gracefully handle the case of ambiguous duplicate tags (that happen
+> to point to the same thing).
+
+Whoa, we use the "ambiguous" term differently here. In this whole thread I 
+have used "ambiguous" exclusively about when the same (shorthand) tag name 
+point to _different_ things. As long as they point to the same thing, there 
+is no ambiguity, IMHO.
+
+> Which I think you are implying here:
+> > Next, you should never pull from Shawn's work repo, but rather from the
+> > repo he has published. In that repo he will typically have pushed the
+> > "v1.7.4" tag (as described above). When you pull from Shawn's public
+> > repo, you will get the "v1.7.4" tag at
+> > "refs/remotes/shawn/tags/v1.7.4" (but "v1.7.4" is an unambigious
+> > shorthand).
 > 
-> It's not just "git add -p". Take "git log", "git status", "git
-> commit", "git diff" ... well, most Git commands taking pathspecs
-> optionally:
-> 
-> git foo   => tree-wide
-> git foo . => the . acts as a path limiter
-> 
-> and this is the right thing to do. Making "git foo" equivalent to "git
-> foo ." makes it hard to recover the tree-wide behavior from a
-> subdirectory (git foo ../../../).
-> 
+> But I wanted to point it out explicitly.
 
-First of all, I'd vote for having this work the same way across all
-commands - as Junio explained, the destinction we currently have is not
-easy to grasp, and is violated by add -p.
+Yes, over its lifetime a tag name ("v1.7.4") might appear in several 
+namespaces (refs/tags, refs/remotes/*/tags), but it's always identifiable 
+with the shorthand "v1.7.4" name (assuming no other "v1.7.4" name point to a 
+different object).
 
-Second, we have an established, natural syntax for "base on cwd", namely
-".", but we do not have any for "base on worktree root". (I think we
-discussed and discarded "/" at some point.)
+This is the same technique we use when talking about branch names: On this 
+mailing list, nobody is confused when I refer to 'maint', 'master', 'next' 
+and 'pu'. Still, in our own work repos (at least in mine), these branches 
+are actually called "refs/remotes/origin/<name>" (commonly referred to by 
+their shorthands "origin/<name>"). Here we are, juggling the same kind of 
+namespaces that I propose for tags, and it seems to work well without 
+causing much confusion.
 
-So, if we go for "relative to cwd by default" we would need a simple way
-to specify the root - and by simple I mean taking at most 2 chars in the
-pathspec, not a long option!
 
-In summary, I think going for "relative to worktree root by default" is
-more in line with git's overall philosophy (so it teaches the right
-concept), something the user is exposed to already in most places (but
-not all), and limiting to "." already works in most (all?) places, even
-with "status" and "status -s". We would only need to change the few
-places where we still default to cwd, and make sure they accept "." when
-we change their default to repo root.
+...Johan
 
-Cheers,
-Michael
+-- 
+Johan Herland, <johan@herland.net>
+www.herland.net
