@@ -1,67 +1,102 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [1.8.0] git checkout refs/heads/foo checks out branch foo
-Date: Mon, 7 Feb 2011 22:36:36 +0100
-Message-ID: <AANLkTinmqTi4cYbR6PtSxt6itCvFQDuT_sE1tjx45a3h@mail.gmail.com>
-References: <alpine.DEB.1.10.1102062234010.3788@debian> <20110207205934.GD13461@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] pull: Document the "--[no-]recurse-submodules"
+ options
+Date: Mon, 07 Feb 2011 13:42:31 -0800
+Message-ID: <7vsjvzttbs.fsf@alter.siamese.dyndns.org>
+References: <4D4C5EBC.2090100@web.de> <201102042326.08607.j6t@kdbg.org>
+ <4D4D33E7.4000303@web.de> <7vipwwx56r.fsf@alter.siamese.dyndns.org>
+ <4D4F19D0.2000408@web.de> <20110206220939.GC17210@elie>
+ <4D4F273C.8030003@web.de> <20110207074157.GA2736@elie>
+ <4D5047BD.6030304@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Mon Feb 07 22:37:26 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Jens Lehmann <Jens.Lehmann@web.de>
+X-From: git-owner@vger.kernel.org Mon Feb 07 22:42:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmYlx-00045A-3k
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 22:37:25 +0100
+	id 1PmYrH-0007Yc-UC
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 22:42:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754940Ab1BGVhS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 16:37:18 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:37288 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754917Ab1BGVhR (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 16:37:17 -0500
-Received: by ywo7 with SMTP id 7so1657880ywo.19
-        for <git@vger.kernel.org>; Mon, 07 Feb 2011 13:37:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=PoxY48sV2gy+uTMGEy3nEMaXsLhsJdo5xr4BVqT8DY4=;
-        b=c0oJk+t3o2rWQm1tOyXzKfyEygBFi+HK5Hy/ugndeleLZPprgU4wLizHQvcP4z0UIl
-         nWGL2swnXwYaR3yrUTcE9jCEFegN1/eZkvl49zvE4cYRidAJMJwnJvpxoXuIJBiCSUCH
-         fR2pC8n+r9MBEW0wNKLh2eBoUf2+BcwzkxBYc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=dOBDTyRS1rPo6cQbRDucXGeexQtfQ/QPozz+UmEVIXb60dLdrMpebgIsHjp0nzcKty
-         LN9SFjq+zjX4zcmTlWPX7bsAVvZEPKAQ+zl7bagQZigqzAvOQpKky1M+DvegRnkgA0Ud
-         /mpF7uhLEm7BiSN0MVcmiCVhC6ndRfgfsTkS8=
-Received: by 10.150.54.20 with SMTP id c20mr358154yba.55.1297114636291; Mon,
- 07 Feb 2011 13:37:16 -0800 (PST)
-Received: by 10.150.51.6 with HTTP; Mon, 7 Feb 2011 13:36:36 -0800 (PST)
-In-Reply-To: <20110207205934.GD13461@sigill.intra.peff.net>
+	id S1754958Ab1BGVms (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Feb 2011 16:42:48 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:40930 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750929Ab1BGVmr (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Feb 2011 16:42:47 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 881B547D4;
+	Mon,  7 Feb 2011 16:43:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=sl8fJ7sSdP4RPWUYaGyWawz4zTo=; b=EWaCxy
+	mYCzl8B/4Retx/B3lSZFHNjsc2NBxLp4NInGGKydmNdEPHsLqw6cJ3xmo7wa25LF
+	Lt9sPdRLi+kuiQYIjF86hshJ7qswhEE6Y9wfdQxGZDI2Sj79+ygEp+6ALeWSrjQ8
+	94G3sFLhB00zomrLO5MNV3ftJ+YsGyPllZJ84=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=tZPmMUVPW82/FS3FEWZxGOylKHKVryMK
+	O2IIlushC5M0B4sQT8cyb6ME3XzkmNT9XloQ7Yei7b0ceae8V7LJt7PzXQQmmpAr
+	hckK8ZY3bnDV1Nut3ez0EKbZfeTffk9Al2JlySktISSA/EsDYOB28oY8nJPQJLXM
+	zGk6CaFWBGM=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 43B2647CE;
+	Mon,  7 Feb 2011 16:43:37 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 71E5E47CA; Mon,  7 Feb 2011
+ 16:43:31 -0500 (EST)
+In-Reply-To: <4D5047BD.6030304@web.de> (Jens Lehmann's message of "Mon\, 07
+ Feb 2011 20\:27\:57 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 51DA697A-3303-11E0-88C3-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166300>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166301>
 
-Heya,
+Jens Lehmann <Jens.Lehmann@web.de> writes:
 
-On Mon, Feb 7, 2011 at 21:59, Jeff King <peff@peff.net> wrote:
-> As cool and clever as the foo^0 behavior is once you understand it, I
-> think it is a horribly confusing thing for non-experts. As part of this
-> proposal, should we perhaps offer "git checkout --detach" as the
-> easy-on-the-eyes way of intentionally detaching?
+> diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+> index 695696d..ab0dbfc 100644
+> --- a/Documentation/fetch-options.txt
+> +++ b/Documentation/fetch-options.txt
+> @@ -64,11 +64,11 @@ ifndef::git-pull[]
+>  	downloaded. The default behavior for a remote may be
+>  	specified with the remote.<name>.tagopt setting. See
+>  	linkgit:git-config[1].
+> -endif::git-pull[]
+>
+>  --[no-]recurse-submodules::
+>  	This option controls if new commits of all populated submodules should
+>  	be fetched too (see linkgit:git-config[1] and linkgit:gitmodules[5]).
+> +endif::git-pull[]
+>
+>  ifndef::git-pull[]
+>  --submodule-prefix=<path>::
 
-Now _that_ is an excellent usability improvement, assuming we want to
-encourage detaching HEAD... do we?
+Hmph, why not enclose the three of them inside a single ifndef here?
 
--- 
-Cheers,
+> diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+> index 3046691..b33e6be 100644
+> --- a/Documentation/git-pull.txt
+> +++ b/Documentation/git-pull.txt
+> @@ -84,6 +84,15 @@ must be given before the options meant for 'git fetch'.
+>  --verbose::
+>  	Pass --verbose to git-fetch and git-merge.
+>
+> +--[no-]recurse-submodules::
+> +	This option controls if new commits of all populated submodules should
+> +	be fetched too (see linkgit:git-config[1] and linkgit:gitmodules[5]).
+> +	That might be necessary to get the data needed for merging submodule
+> +	commits, a feature git learned in 1.7.3. Notice that the result of a
+> +	merge will not be checked out in the submodule, "git submodule update"
+> +	has to be called afterwards to bring the work tree up to date with the
+> +	merge result.
 
-Sverre Rabbelier
+Ok.
