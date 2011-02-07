@@ -1,135 +1,72 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH] cache-tree: do not cache empty trees
-Date: Mon, 7 Feb 2011 16:57:13 +0700
-Message-ID: <20110207095713.GA19653@do>
-References: <1296899427-1394-1-git-send-email-pclouds@gmail.com>
- <1296914835-808-1-git-send-email-pclouds@gmail.com>
- <20110207091740.GA5391@elie>
+From: Johan Herland <johan@herland.net>
+Subject: Re: [1.8.0] Provide proper remote ref namespaces
+Date: Mon, 7 Feb 2011 11:06:16 +0100
+Message-ID: <201102071106.17269.johan@herland.net>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com> <201102070958.11551.johan@herland.net> <AANLkTiksUqVnWeZOm-9XN3BbfVcjc6fWdwPcPJ-PLb88@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Jakub Narebski <jnareb@gmail.com>,
-	"Dmitry S. Kravtsov" <idkravitz@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 07 10:58:48 2011
+Content-Type: text/plain;
+  charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 07 11:06:44 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmNrq-0000zI-TA
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 10:58:47 +0100
+	id 1PmNzX-0005iL-23
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 11:06:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751732Ab1BGJ6m (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 04:58:42 -0500
-Received: from mail-px0-f174.google.com ([209.85.212.174]:34062 "EHLO
-	mail-px0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751512Ab1BGJ6l (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 04:58:41 -0500
-Received: by pxi15 with SMTP id 15so847808pxi.19
-        for <git@vger.kernel.org>; Mon, 07 Feb 2011 01:58:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=l5jXV6mbutp3qtm1dhtgVb9fbh3x7E71oFSDzc8Z8Bk=;
-        b=UwtqfxE9ZuHANd5LidewI9Bq/FmUMROmvvuXlNBmljRsnVt6bkdzygDr47FUIQf3+t
-         Q5W/XHdaGu1QryHrAKppdCpUfF2lvgUP8PXjIvkHWTFHK3uHhkoU5fi70SVYpNj9So5g
-         gR33jDnMbMppsbABXVB4kH5h75Iz3A2Yn3hZQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=EwGBowsgh1qc0ECpLNZugzeO6NfBEGwa8KtRLDv4ZYXhxrTHUpOHU015ya9Xk+Z0qp
-         +MxxIU84M8Ee9YoTVWSpzq7ci04vHOEZvNtpk3tEH8cGoJXslQoc04P3hqFGzuFMaMi1
-         CNuMVp9JtpCym9sPxsRKsP85grPaqjWr0mEs4=
-Received: by 10.142.47.2 with SMTP id u2mr15160511wfu.63.1297072721099;
-        Mon, 07 Feb 2011 01:58:41 -0800 (PST)
-Received: from pclouds@gmail.com ([115.73.232.10])
-        by mx.google.com with ESMTPS id x18sm5717336wfa.23.2011.02.07.01.58.36
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 07 Feb 2011 01:58:39 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Mon, 07 Feb 2011 16:57:13 +0700
+	id S1752630Ab1BGKGh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Feb 2011 05:06:37 -0500
+Received: from smtp.opera.com ([213.236.208.81]:50116 "EHLO smtp.opera.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752054Ab1BGKGd (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Feb 2011 05:06:33 -0500
+Received: from johanh.eng.oslo.osa (pat-tdc.opera.com [213.236.208.22])
+	(authenticated bits=0)
+	by smtp.opera.com (8.14.3/8.14.3/Debian-5+lenny1) with ESMTP id p17A6HaZ019280
+	(version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-SHA bits=256 verify=NOT);
+	Mon, 7 Feb 2011 10:06:17 GMT
+User-Agent: KMail/1.9.9
+In-Reply-To: <AANLkTiksUqVnWeZOm-9XN3BbfVcjc6fWdwPcPJ-PLb88@mail.gmail.com>
 Content-Disposition: inline
-In-Reply-To: <20110207091740.GA5391@elie>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+X-Scanned-By: MIMEDefang 2.64 on 213.236.208.81
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166247>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166248>
 
-On Mon, Feb 07, 2011 at 03:17:40AM -0600, Jonathan Nieder wrote:
-> While this violates some seeming invariants, like
-> 
-> 1.
-> 	git reset --hard
-> 	git commit --allow-empty
-> 	git rev-parse HEAD^^{tree} >expect
-> 	git rev-parse HEAD^{tree} >actual
-> 	test_cmp expect actual
-> 
-> 2.
-> 	git reset --hard
-> 	git revert HEAD
-> 	if git rev-parse HEAD~2
-> 	then
-> 		git rev-parse HEAD~2^{tree} >expect
-> 		git rev-parse HEAD^{tree} >actual
-> 		test_cmp expect actual
-> 	fi
-> 
-> , I think it's a good change.  Malformed modes in trees already break
-> those false invariants iiuc.
+On Monday 07 February 2011, Sverre Rabbelier wrote:
+> On Mon, Feb 7, 2011 at 09:58, Johan Herland <johan@herland.net> wrote:
+> > This is the same technique we use when talking about branch names:
+> > On this mailing list, nobody is confused when I refer to 'maint',
+> > 'master', 'next' and 'pu'. Still, in our own work repos (at least
+> > in mine), these branches are actually called
+> > "refs/remotes/origin/<name>" (commonly referred to by their
+> > shorthands "origin/<name>"). Here we are, juggling the same kind of
+> > namespaces that I propose for tags, and it seems to work well
+> > without causing much confusion.
+>
+> With the difference that you can't refer to "maint" as just "maint"
+> unless you've created "refs/heads/maint" iff it is unambiguous.
 
-Perhaps it's not a good approach after all. What I wanted was to make
-pre-1.8.0 tolerate empty trees created by 1.8.0. Perhaps it's better
-to just let pre-1.8.0 refuse to work with empty trees, forcing users
-to upgrade to 1.8.0?
+Except that with 'git checkout', you can:
 
-The (untested) patch below would make git refuse to create an index
-from a tree that contains empty trees. Hmm?
+$ git clone git://git.kernel.org/pub/scm/git/git.git
+$ cd git/
+$ git checkout maint
 
-diff --git a/cache-tree.c b/cache-tree.c
-index f755590..e33998a 100644
---- a/cache-tree.c
-+++ b/cache-tree.c
-@@ -619,6 +619,8 @@ static void prime_cache_tree_rec(struct cache_tree *it, struct tree *tree)
- 		else {
- 			struct cache_tree_sub *sub;
- 			struct tree *subtree = lookup_tree(entry.sha1);
-+			if (!hashcmp(entry.sha1, EMPTY_TREE_SHA1_BIN))
-+				die("empty tree .../%s detected!", entry.path);
- 			if (!subtree->object.parsed)
- 				parse_tree(subtree);
- 			sub = cache_tree_sub(it, entry.path);
-diff --git a/unpack-trees.c b/unpack-trees.c
-index 1ca41b1..0e6738e 100644
---- a/unpack-trees.c
-+++ b/unpack-trees.c
-@@ -434,6 +434,7 @@ static int traverse_trees_recursive(int n, unsigned long dirmask, unsigned long
- 	void *buf[MAX_UNPACK_TREES];
- 	struct traverse_info newinfo;
- 	struct name_entry *p;
-+	struct unpack_trees_options *o = info->data;
- 
- 	p = names;
- 	while (!p->mode)
-@@ -447,8 +448,11 @@ static int traverse_trees_recursive(int n, unsigned long dirmask, unsigned long
- 
- 	for (i = 0; i < n; i++, dirmask >>= 1) {
- 		const unsigned char *sha1 = NULL;
--		if (dirmask & 1)
-+		if (dirmask & 1) {
- 			sha1 = names[i].sha1;
-+			if (o->merge && !hashcmp(sha1, EMPTY_TREE_SHA1_BIN))
-+				return error("empty tree .../%s detected!", p->path);
-+		}
- 		buf[i] = fill_tree_descriptor(t+i, sha1);
- 	}
- 
+
+...Johan
 
 -- 
-Duy
+Johan Herland, <johan@herland.net>
+www.herland.net
