@@ -1,64 +1,77 @@
-From: "Mike Gant" <mike@gantsfort.com>
-Subject: Re: [idea] Re: separate .git dir and the working tree
-Date: Sun, 6 Feb 2011 21:57:57 -0700
-Message-ID: <20110207045757.GC13594@mg1>
-References: <AANLkTik4MjnpOzPdGy7ZDiH0in4e1DpjrhQFOHjUiEEE@mail.gmail.com>
- <20110205032339.GA15303@mg1>
- <20110205132708.GA18391@elie>
- <20110206002009.GA13594@mg1>
- <20110206004013.GB13594@mg1>
- <20110206105510.GA14195@vidovic>
+From: Jeff King <peff@peff.net>
+Subject: Re: [1.8.0] Provide proper remote ref namespaces
+Date: Mon, 7 Feb 2011 00:11:23 -0500
+Message-ID: <20110207051123.GA4748@sigill.intra.peff.net>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+ <201102070022.51403.johan@herland.net>
+ <vpqtyggk9i2.fsf@bauges.imag.fr>
+ <201102070451.37370.johan@herland.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: redstun <redstun@gmail.com>, Jonathan Nieder <jrnieder@gmail.com>
-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 07 05:58:19 2011
+Content-Type: text/plain; charset=utf-8
+Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>, git@vger.kernel.org,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Johan Herland <johan@herland.net>
+X-From: git-owner@vger.kernel.org Mon Feb 07 06:12:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmJB4-00033q-6e
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 05:58:18 +0100
+	id 1PmJOa-0006yt-Rt
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 06:12:17 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751937Ab1BGE6B (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 6 Feb 2011 23:58:01 -0500
-Received: from gantsfort.com ([64.66.245.199]:57891 "EHLO mail.gantsfort.com"
+	id S1750856Ab1BGFLa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Feb 2011 00:11:30 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:38565 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751745Ab1BGE6A (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 6 Feb 2011 23:58:00 -0500
-Received: from mg1 (mg1.gantsfort.com [192.168.0.10])
-	by mail.gantsfort.com (Postfix) with SMTP id F3A5417E0C;
-	Sun,  6 Feb 2011 21:57:57 -0700 (MST)
-Received: by mg1 (sSMTP sendmail emulation); Sun, 06 Feb 2011 21:57:57 -0700
-Mail-Followup-To: Nicolas Sebrecht <nicolas.s.dev@gmx.fr>,
-	git@vger.kernel.org, redstun <redstun@gmail.com>,
-	Jonathan Nieder <jrnieder@gmail.com>
+	id S1750758Ab1BGFL3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Feb 2011 00:11:29 -0500
+Received: (qmail 25246 invoked by uid 111); 7 Feb 2011 05:11:27 -0000
+Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
+  (smtp-auth username relayok, mechanism cram-md5)
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 07 Feb 2011 05:11:27 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Feb 2011 00:11:23 -0500
 Content-Disposition: inline
-In-Reply-To: <20110206105510.GA14195@vidovic>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <201102070451.37370.johan@herland.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166228>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166229>
 
-On Sun, Feb 06, 2011 at 11:55:10AM +0100, Nicolas Sebrecht wrote:
-> The 05/02/11, Mike Gant wrote:
+On Mon, Feb 07, 2011 at 04:51:37AM +0100, Johan Herland wrote:
+
+> > Take the example of the interim maintainer cited somewhere else in
+> > this thread. If Shawn fetches from Junio, he'll get a junio/v1.7.4
+> > tag, and on my side, I do not want to end up having
+> > shawn/junio/v1.7.4, especially if this means that people fetching from
+> > me would end up with a me/shawn/junio/v1.7.4 ...
 > 
-> > So does anyone use Mutt? And do they know a recipe to move the sender
-> > address to the cc list? If not, I'll figure it out.
-> 
-> g (group answer).
-> 
+> You won't end up with "shawn/junio/v1.7.4". When Shawn fetches from Junio, 
+> what he actually gets is "refs/remotes/junio/tags/v1.7.4" ("junio/v1.7.4" is 
+> a shorthand; "v1.7.4" is an even better shorthand).
 
-Thanks. I knew about L (list reply) and g (group reply). L only replies
-to the list address, git@vger.kernel.org, in this case. Certainly, g is
-the closest behavior as long as it is acceptable to have the sender name
-in the To: header along with the list address (as in this response).
+But keep in mind that this proposal will have to live alongside repos
+that are using older versions of git. So Shawn might very well have
+refs/tags/v1.7.4 from Junio if he is using (or has ever used) pre-1.8.0
+git.
 
-On the other hand, if it is only acceptable to have the list address in
-the To: header and all others in the cc list then I don't know of any
-command to do that.
+No, that won't give you me/shawn/junio/v1.7.4, but it does mean we have
+to gracefully handle the case of ambiguous duplicate tags (that happen
+to point to the same thing).
 
--Mike
+Which I think you are implying here:
+
+> Next, you should never pull from Shawn's work repo, but rather from the repo 
+> he has published. In that repo he will typically have pushed the "v1.7.4" 
+> tag (as described above). When you pull from Shawn's public repo, you will 
+> get the "v1.7.4" tag at "refs/remotes/shawn/tags/v1.7.4" (but "v1.7.4" is an 
+> unambigious shorthand).
+
+But I wanted to point it out explicitly.
+
+-Peff
