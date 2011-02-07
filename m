@@ -1,7 +1,7 @@
-From: Jeff King <peff@peff.net>
+From: Nicolas Pitre <nico@fluxnic.net>
 Subject: Re: [1.8.0] Provide proper remote ref namespaces
-Date: Mon, 7 Feb 2011 15:25:51 -0500
-Message-ID: <20110207202551.GC13461@sigill.intra.peff.net>
+Date: Mon, 07 Feb 2011 15:37:38 -0500 (EST)
+Message-ID: <alpine.LFD.2.00.1102071517070.14920@xanadu.home>
 References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
  <20110201181428.GA6579@sigill.intra.peff.net>
  <AANLkTimtU56BAnWU-2pY1npdkPdKEBq_CMCGwXUK+E=H@mail.gmail.com>
@@ -10,85 +10,81 @@ References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
  <alpine.LFD.2.00.1102051330270.12104@xanadu.home>
  <20110205193708.GA2192@sigill.intra.peff.net>
  <alpine.LFD.2.00.1102051449420.12104@xanadu.home>
- <20110207051834.GB4748@sigill.intra.peff.net>
- <alpine.LFD.2.00.1102070936530.14920@xanadu.home>
+ <7vvd0xvsjc.fsf@alter.siamese.dyndns.org> <4D501983.5060508@xiplink.com>
+ <7v62svvdjo.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Junio C Hamano <gitster@pobox.com>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Content-Transfer-Encoding: 7BIT
+Cc: Marc Branchaud <marcnarc@xiplink.com>, Jeff King <peff@peff.net>,
 	Johan Herland <johan@herland.net>, git@vger.kernel.org,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-To: Nicolas Pitre <nico@fluxnic.net>
-X-From: git-owner@vger.kernel.org Mon Feb 07 21:26:01 2011
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 07 21:37:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmXeq-0006J9-KU
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 21:26:01 +0100
+	id 1PmXqI-0004Hj-6r
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 21:37:50 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751945Ab1BGUZz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 15:25:55 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:41091 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751325Ab1BGUZz (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 15:25:55 -0500
-Received: (qmail 29902 invoked by uid 111); 7 Feb 2011 20:25:54 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Mon, 07 Feb 2011 20:25:54 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Mon, 07 Feb 2011 15:25:51 -0500
-Content-Disposition: inline
-In-Reply-To: <alpine.LFD.2.00.1102070936530.14920@xanadu.home>
+	id S1752358Ab1BGUhk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Feb 2011 15:37:40 -0500
+Received: from relais.videotron.ca ([24.201.245.36]:8238 "EHLO
+	relais.videotron.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752038Ab1BGUhj (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Feb 2011 15:37:39 -0500
+Received: from xanadu.home ([66.130.28.92]) by vl-mh-mrz25.ip.videotron.ca
+ (Sun Java(tm) System Messaging Server 6.3-8.01 (built Dec 16 2008; 32bit))
+ with ESMTP id <0LG9009FTL902J70@vl-mh-mrz25.ip.videotron.ca> for
+ git@vger.kernel.org; Mon, 07 Feb 2011 15:36:36 -0500 (EST)
+X-X-Sender: nico@xanadu.home
+In-reply-to: <7v62svvdjo.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (LFD 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166279>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166280>
 
-On Mon, Feb 07, 2011 at 09:53:29AM -0500, Nicolas Pitre wrote:
+On Mon, 7 Feb 2011, Junio C Hamano wrote:
 
-> > But more importantly, don't we sometimes care where the ref came from?
-> 
-> Not at the moment.  Certainly not with the current flat namespace used 
-> for tags.
+> As I said in my message, it feels awkward to use refs/private-tags for
+> tags everybody uses for his or her own purpose, so by swapping the roles
+> of namespaces around, we would be able to use refs/tags for private ones,
+> and refs/remotes/origin/tags for the ones that came from upstream.  But
+> then if you fetch/pull from a third party (including the "interim
+> maintainer"), it feels wasteful to get full set of tags that you have in
+> the origin namespace anyway replicated in refs/remotes/interim/tags.
 
-I'm not sure I was clear. I didn't mean "which remote the ref came from"
-but rather "when choosing between two refs, don't we sometimes care
-about the actual name of the ref?". But see below.
+Why so?  At least you get to know if that particular remote has a 
+particular tag that may also exist elsewhere.  And if you decide to drop 
+one remote source with all its tags from your local repository, then the 
+remaining one(s) still have relevant tags available.
 
-> > If I say "git push remote v1.7.4" we do some automagic on the
-> > destination side of the refspec based on the fact that the source ref
-> > was found in the refs/tags hierarchy. In the case we're talking about,
-> > all of the ambiguous refs would presumably also be coming from
-> > refs/remotes/*/tags/, so they would be functionally equivalent. But I
-> > wanted to point it out because:
-> > 
-> >   1. It is an additional equivalent requirement for two refs to not be
-> >      ambiguous. They must have the same sha1, _and_ they must have the
-> >      same "type".
-> 
-> How can this matter?  The same automagic on the destination ref may 
-> still take place.  Semantically you want to push v1.7.4 so nothing has 
-> to change there, irrespective of the namespace the v1.7.4 tag comes 
-> from.  This doesn't matter today, so why would this particular case need 
-> to change?
+> And that is what bothers me---not the waste itself, but I have this
+> nagging feeling that the wasteful duplication is an indication of
+> something else designed wrong.
 
-I guess the problem is that I'm not clear on exactly what the new lookup
-/ ambiguity rules are proposed to be. Clearly something will need to go
-in the dwim_ref level. And I think it's obvious that if "refs/tags/foo"
-and "refs/remotes/*/tags/foo" point to the same sha1, they will not be
-considered ambiguous.
+We do have "wasteful" duplicated references all over the place, such as 
+when two directories (tree objects) contain the same file content (refer 
+to the same blob object).  But no one feels like this is wasted 
+duplication as those two directories end up using the same single blob 
+object even if in the working directory you get twice the content.
 
-Will the same apply to refs/heads/foo versus refs/remotes/*/foo? Will it
-also apply to refs/heads/foo versus refs/remotes/*/tags/foo? In the
-final case, that does matter to "git push" (should the destination be in
-the head or tag namespace?). So the actual names of the ref can matter,
-and should probably be taken into account when deciding what is
-ambiguous.
+Here this is the same thing.  You have multiple handles to the same tag 
+which are distributed across different remote repositoryes you are 
+tracking.  The name on the tag may be found in many places, and even 
+under different names.  But there is still only one actual tag object.
 
-Maybe that was obvious to everybody and it was an implicit part of the
-proposal, but it wasn't clear to me.
+If you have 3 remotes sharing the same tag then you know that the tag 
+cannot be garbage collected until all three remotes have been removed 
+from your repository.
 
--Peff
+Simply storing snapshots of the tag state per remote repository is 
+simple and allow for smarter processing on top, which is in agreement 
+with the design philosophy for the rest of Git.
+
+
+Nicolas
