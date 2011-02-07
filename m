@@ -1,81 +1,102 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [1.8.0] git checkout refs/heads/foo checks out branch foo
-Date: Mon, 07 Feb 2011 12:53:11 -0800
-Message-ID: <7vwrlbtvm0.fsf@alter.siamese.dyndns.org>
-References: <alpine.DEB.1.10.1102062234010.3788@debian>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: [PATCH v4 5/5] mingw_rmdir: set errno=ENOTEMPTY when appropriate
+Date: Mon, 7 Feb 2011 21:54:01 +0100
+Message-ID: <20110207205400.GF63976@book.hvoigt.net>
+References: <20101214220604.GA4084@sandbox> <AANLkTiks1drfpu9eR6S7KQ9X2MgVy91QAfKs-SRF_voG@mail.gmail.com> <7vmxo6pxyi.fsf@alter.siamese.dyndns.org> <20110207204818.GA63976@book.hvoigt.net>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 07 21:53:24 2011
+Cc: kusmabite@gmail.com, Johannes Sixt <j6t@kdbg.org>,
+	Pat Thoyts <patthoyts@users.sourceforge.net>,
+	msysgit@googlegroups.com, git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 07 21:54:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmY5L-0004VC-NW
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 21:53:24 +0100
+	id 1PmY65-0004xA-SS
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 21:54:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754239Ab1BGUxT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 15:53:19 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39705 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754174Ab1BGUxS (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 15:53:18 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 77014416B;
-	Mon,  7 Feb 2011 15:54:15 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=FYGo0ZXQYFEGehtaepHQx7R9bh0=; b=aaqQI/
-	d0q1wYGaDTI/mqMxtt07j5tXyLoAxhHn2fH4z9ueFXt3ctNMwGbAAIUSsCchauc1
-	C+488bNTlNDj91uZRvFuXZsrsl1YsuBGpTo18Rvvo+pbqys6AxYg92ArYZAi+S0w
-	FJmznR6+OxFjqEzk+izocWKy/2g0/3AgjtpB8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=fP0EE/ppRDmg2UcSR6s2b/zJyvZByrgX
-	70vGTmTF13Pv5Cl4Mk4ftuZp+dzSzuTy+2iIqPGXOsPOKshjVYbCDanUCeof44E9
-	rGUlTX33VI8FCqCUDerXjg7NI1KlCJWQczJQ8j2sdxt9FLc2TTOU0JBXBbAn2A63
-	uVQeJxJHPFQ=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 564A4416A;
-	Mon,  7 Feb 2011 15:54:13 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 4093D4169; Mon,  7 Feb 2011
- 15:54:09 -0500 (EST)
-In-Reply-To: <alpine.DEB.1.10.1102062234010.3788@debian> (Martin von
- Zweigbergk's message of "Mon\, 7 Feb 2011 06\:01\:51 -0500 \(EST\)")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 6B377F18-32FC-11E0-936B-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
+	id S1753554Ab1BGUyE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Feb 2011 15:54:04 -0500
+Received: from darksea.de ([83.133.111.250]:41706 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751798Ab1BGUyD (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Feb 2011 15:54:03 -0500
+Received: (qmail 11787 invoked from network); 7 Feb 2011 21:54:00 +0100
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 7 Feb 2011 21:54:00 +0100
+Content-Disposition: inline
+In-Reply-To: <20110207204818.GA63976@book.hvoigt.net>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166288>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166289>
 
-Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
+From: Johannes Schindelin <johannes.schindelin@gmx.de>
 
-> Proposal:
->
-> 'git checkout refs/heads/foo' (or 'git checkout heads/foo' for that
-> matter) does not check out the branch, but instead detaches HEAD at
-> foo.
+On Windows, EACCES overrules ENOTEMPTY when calling rmdir(). But if the
+directory is busy, we only want to retry deleting the directory if it
+is empty, so test specifically for that case and set ENOTEMPTY rather
+than EACCES.
 
-Yes, and it is deliberately so as it is a guaranteed-sure way for scripts
-to work around potential ref ambiguity when talking about the branch
-called 'foo' to spell it out with leading refs/heads/.
+Noticed by Greg Hazel.
 
-As long as you do not break scripts that guard against breakage you are
-proposing by saying "refs/heads/foo^0", we are Ok with the proposal, I
-think.
+Signed-off-by: Johannes Schindelin <johannes.schindelin@gmx.de>
+Signed-off-by: Heiko Voigt <hvoigt@hvoigt.net>
+---
+ compat/mingw.c |   28 ++++++++++++++++++++++++++++
+ 1 files changed, 28 insertions(+), 0 deletions(-)
 
-> Migration plan:
->
-> Make 'git checkout refs/head/foo' emit a warning in the next 1.7.x
-> explaining that its semantics will change in 1.8.0. Then change the
-> behavior in 1.8.0 and remove the warning.
-
-Reasonable.
-
-Thanks.
+diff --git a/compat/mingw.c b/compat/mingw.c
+index 68cc79f..368edf2 100644
+--- a/compat/mingw.c
++++ b/compat/mingw.c
+@@ -225,6 +225,30 @@ int mingw_unlink(const char *pathname)
+ 	return ret;
+ }
+ 
++static int is_dir_empty(const char *path)
++{
++	struct strbuf buf = STRBUF_INIT;
++	WIN32_FIND_DATAA findbuf;
++	HANDLE handle;
++
++	strbuf_addf(&buf, "%s\\*", path);
++	handle = FindFirstFileA(buf.buf, &findbuf);
++	if (handle == INVALID_HANDLE_VALUE) {
++		strbuf_release(&buf);
++		return GetLastError() == ERROR_NO_MORE_FILES;
++	}
++
++	while (!strcmp(findbuf.cFileName, ".") ||
++			!strcmp(findbuf.cFileName, ".."))
++		if (!FindNextFile(handle, &findbuf)) {
++			strbuf_release(&buf);
++			return GetLastError() == ERROR_NO_MORE_FILES;
++		}
++	FindClose(handle);
++	strbuf_release(&buf);
++	return 0;
++}
++
+ #undef rmdir
+ int mingw_rmdir(const char *pathname)
+ {
+@@ -233,6 +257,10 @@ int mingw_rmdir(const char *pathname)
+ 	while ((ret = rmdir(pathname)) == -1 && tries < ARRAY_SIZE(delay)) {
+ 		if (!is_file_in_use_error(GetLastError()))
+ 			break;
++		if (!is_dir_empty(pathname)) {
++			errno = ENOTEMPTY;
++			break;
++		}
+ 		/*
+ 		 * We assume that some other process had the source or
+ 		 * destination file open at the wrong moment and retry.
+-- 
+1.7.4.34.gd2cb1
