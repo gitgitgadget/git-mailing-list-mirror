@@ -1,88 +1,174 @@
 From: Erik Faye-Lund <kusmabite@gmail.com>
-Subject: Re: [msysGit] Re: [PATCH v4 5/5] mingw_rmdir: set errno=ENOTEMPTY
- when appropriate
-Date: Mon, 7 Feb 2011 22:23:24 +0100
-Message-ID: <AANLkTi=ntgYOW58pPnt-azMw6rFZfJjDW3OaCgLsvJp6@mail.gmail.com>
-References: <20101214220604.GA4084@sandbox> <AANLkTiks1drfpu9eR6S7KQ9X2MgVy91QAfKs-SRF_voG@mail.gmail.com>
- <7vmxo6pxyi.fsf@alter.siamese.dyndns.org> <20110207204818.GA63976@book.hvoigt.net>
- <20110207205400.GF63976@book.hvoigt.net> <AANLkTin6A-HVKvM9_5ggMezpM--tt1qUwSXF+CEaXg7J@mail.gmail.com>
- <20110207211844.GH63976@book.hvoigt.net>
+Subject: Re: [PATCH v2] commit: fix memory-leak
+Date: Mon, 7 Feb 2011 22:31:14 +0100
+Message-ID: <AANLkTimvgDjiLon-2BAwxcYOQGVE9UZPNr637o93-9HQ@mail.gmail.com>
+References: <AANLkTikKZ+2qUMF1T5pP60cUd9Ya3n2mfhTkX6L32zmn@mail.gmail.com>
+ <1297110111-7620-1-git-send-email-kusmabite@gmail.com> <AANLkTikr2+OVRU6n+0tA752_x80ir9dQh65RjUp3BxPR@mail.gmail.com>
 Reply-To: kusmabite@gmail.com
 Mime-Version: 1.0
 Content-Type: text/plain; charset=ISO-8859-1
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	Pat Thoyts <patthoyts@users.sourceforge.net>,
-	msysgit@googlegroups.com, git@vger.kernel.org,
-	Johannes Schindelin <Johannes.Schindelin@gmx.de>
-To: Heiko Voigt <hvoigt@hvoigt.net>
-X-From: git-owner@vger.kernel.org Mon Feb 07 22:23:53 2011
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: matthieu.moy@grenoble-inp.fr, msysgit@googlegroups.com,
+	blees@dcon.de
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Mon Feb 07 22:31:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmYYp-0004r4-8m
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 22:23:51 +0100
+	id 1PmYgU-00014c-F2
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 22:31:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754830Ab1BGVXq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 16:23:46 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:34246 "EHLO
+	id S1754876Ab1BGVbh convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Feb 2011 16:31:37 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:50066 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754577Ab1BGVXp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 16:23:45 -0500
-Received: by fxm20 with SMTP id 20so5363258fxm.19
-        for <git@vger.kernel.org>; Mon, 07 Feb 2011 13:23:44 -0800 (PST)
+	with ESMTP id S1751992Ab1BGVbg convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Feb 2011 16:31:36 -0500
+Received: by fxm20 with SMTP id 20so5370802fxm.19
+        for <git@vger.kernel.org>; Mon, 07 Feb 2011 13:31:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:reply-to:in-reply-to:references
-         :from:date:message-id:subject:to:cc:content-type;
-        bh=i9vuSspZ65r1sOnTxpkPWEb11eNXNB/920TVTLnUbzU=;
-        b=vfM9yNT9lrLZI8uXu8f/c2NrZt8yUHgETEjEYVc5/OZrnbSYMX45sI4s71tBaApWUZ
-         9vkh541e5WUqvafP++V3Bx+lBUdNL0G8gOgd4YqIIMf+N2WDosIKNXvW+lvCzpnd0J9/
-         S/k2PzRIXt8YHBGoRVnJXHLJa1L9+E/Gy/7Z0=
+         :from:date:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=AzRZBN6o5cQj414/sKcOosSYdH7E3GEwhsY9NlNQHGw=;
+        b=kGJ7vxTiffLHjHDLRQwtRRd/7EAuLrNAML/q2C0udwkaMZB6si4lHxJkyb5wtYfCSg
+         1vVPyV1jEvppljWNtwRQK64hkeoyeWp4fJITlEapnKD7XfNQ2weLqB0SdXDJAPi8U/L2
+         p4CeqYmvAP31233ewwzsQfGIaJgw+PVzXlnrA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:reply-to:in-reply-to:references:from:date:message-id
-         :subject:to:cc:content-type;
-        b=piZ5rH+N7QN8TgzLJ3D5DQvmZMZExyNrsCpvkZ83807V/YeKjaDDuWFLj7zRSqRSSO
-         NnxOihqC5oVRkzuJ/uClzyoXsVa1eZbD+A362ztMojjkP1ZBucrvrFcX6U6iWCIIqrNt
-         zxdv95an0xbJ0Zb2E69TTPUMo4L5IeHwb5VoM=
-Received: by 10.223.86.193 with SMTP id t1mr10523070fal.147.1297113824596;
- Mon, 07 Feb 2011 13:23:44 -0800 (PST)
-Received: by 10.223.116.210 with HTTP; Mon, 7 Feb 2011 13:23:24 -0800 (PST)
-In-Reply-To: <20110207211844.GH63976@book.hvoigt.net>
+         :subject:to:cc:content-type:content-transfer-encoding;
+        b=nVm2sickRcxQFBn/rGeLhBkwVdWG9RsXCycOtwaswv7KoNcOtf6EcQLwT+2rlEi6IG
+         UUvuGVcSf3s7sHjQKFGxmDrBxAPsq8Q4RXg44cJEchN/zewsU0Nn+iAzjcR0q2wdLgY5
+         bWhet8dMSP1Ok7/viU9659HR1A5U3GdMkuFVs=
+Received: by 10.223.96.68 with SMTP id g4mr1744094fan.33.1297114294627; Mon,
+ 07 Feb 2011 13:31:34 -0800 (PST)
+Received: by 10.223.116.210 with HTTP; Mon, 7 Feb 2011 13:31:14 -0800 (PST)
+In-Reply-To: <AANLkTikr2+OVRU6n+0tA752_x80ir9dQh65RjUp3BxPR@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166298>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166299>
 
-On Mon, Feb 7, 2011 at 10:18 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
-> On Mon, Feb 07, 2011 at 10:07:10PM +0100, Erik Faye-Lund wrote:
->> On Mon, Feb 7, 2011 at 9:54 PM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
->> > From: Johannes Schindelin <johannes.schindelin@gmx.de>
->> >
->> > On Windows, EACCES overrules ENOTEMPTY when calling rmdir(). But if the
->> > directory is busy, we only want to retry deleting the directory if it
->> > is empty, so test specifically for that case and set ENOTEMPTY rather
->> > than EACCES.
->> >
+On Mon, Feb 7, 2011 at 10:12 PM, Erik Faye-Lund <kusmabite@gmail.com> w=
+rote:
+> On Mon, Feb 7, 2011 at 9:21 PM, Erik Faye-Lund <kusmabite@gmail.com> =
+wrote:
+>> The name, email and date strings are some times allocated on the
+>> heap, but not free'd. Fix this by making sure they are allways
+>> heap-allocated, so we can safely free the memory.
 >>
->> I'm sorry, I don't quite understand. rmdir on Windows/MinGW fails with
->> errno=ENOTEMPTY if a directory isn't empty:
+>> At the same time, this fixes a problem with strict-POSIX getenv
+>> implementations. POSIX says "The return value from getenv() may
+>> point to static data which may be overwritten by subsequent calls
+>> to getenv()", so not duplicating the strings is a potential bug.
+>>
+>> Signed-off-by: Erik Faye-Lund <kusmabite@gmail.com>
+>> ---
+>> Fixed typo in commit message, as pointed out by Matthieu Moy.
+>>
+>> =A0builtin/commit.c =A0| =A0 =A09 ++++++---
+>> =A0git-compat-util.h | =A0 =A01 +
+>> =A0wrapper.c =A0 =A0 =A0 =A0 | =A0 =A06 ++++++
+>> =A03 files changed, 13 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/builtin/commit.c b/builtin/commit.c
+>> index 03cff5a..e5a649e 100644
+>> --- a/builtin/commit.c
+>> +++ b/builtin/commit.c
+>> @@ -465,9 +465,9 @@ static void determine_author_info(struct strbuf =
+*author_ident)
+>> =A0{
+>> =A0 =A0 =A0 =A0char *name, *email, *date;
+>>
+>> - =A0 =A0 =A0 name =3D getenv("GIT_AUTHOR_NAME");
+>> - =A0 =A0 =A0 email =3D getenv("GIT_AUTHOR_EMAIL");
+>> - =A0 =A0 =A0 date =3D getenv("GIT_AUTHOR_DATE");
+>> + =A0 =A0 =A0 name =3D xgetenv("GIT_AUTHOR_NAME");
+>> + =A0 =A0 =A0 email =3D xgetenv("GIT_AUTHOR_EMAIL");
+>> + =A0 =A0 =A0 date =3D xgetenv("GIT_AUTHOR_DATE");
+>>
+>> =A0 =A0 =A0 =A0if (use_message && !renew_authorship) {
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0const char *a, *lb, *rb, *eol;
+>> @@ -507,6 +507,9 @@ static void determine_author_info(struct strbuf =
+*author_ident)
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0date =3D force_date;
+>> =A0 =A0 =A0 =A0strbuf_addstr(author_ident, fmt_ident(name, email, da=
+te,
+>> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =
+=A0 =A0 =A0 =A0 =A0 =A0IDENT_ERROR_ON_NO_NAME));
+>> + =A0 =A0 =A0 free(name);
+>> + =A0 =A0 =A0 free(email);
+>> + =A0 =A0 =A0 free(date);
 >
-> I think Johannes was referring to the case when a directory is busy.
-> E.g. a process is running that has its working directory inside that
-> directory. In that case ENOTEMPTY was not returned even though the
-> directory is not empty. Thats what I read from the patch.
+> Hmm, but I'm getting a crash here on Linux. Guess I need to debug a b=
+it...
 >
 
-I don't think that's the case either:
-$ echo "int main() { while (1); }" | gcc -x c - -o foo/bin.exe
-[kusma@HUE-PC:/git@work/xgetenv]
-$ foo/bin.exe &
-[2] 3188
-[kusma@HUE-PC:/git@work/xgetenv]
-$ ./a.exe
-rmdir: Directory not empty
-errno: 41 (expected 41)
+Ah, it was the force_date-assignment:
+---8<---
+diff --git a/builtin/commit.c b/builtin/commit.c
+index e5a649e..1416c13 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -504,7 +504,7 @@ static void determine_author_info(struct strbuf
+*author_ident)
+ 	}
+
+ 	if (force_date)
+-		date =3D force_date;
++		date =3D xstrdup(force_date);
+ 	strbuf_addstr(author_ident, fmt_ident(name, email, date,
+ 					      IDENT_ERROR_ON_NO_NAME));
+ 	free(name);
+
+---8<---
+
+But now I see that I was temporarily(?) struck with insanity:
+overwriting a heap-allocated pointer with another heap-allocated
+pointer doesn't fix a memory-leak. So let's add some more calls to
+free:
+
+diff --git a/builtin/commit.c b/builtin/commit.c
+index e5a649e..bdd0cfb 100644
+--- a/builtin/commit.c
++++ b/builtin/commit.c
+@@ -482,6 +482,10 @@ static void determine_author_info(struct strbuf
+*author_ident)
+ 		if (!*lb || !*rb || !*eol)
+ 			die("invalid commit: %s", use_message);
+
++		free(name);
++		free(email);
++		free(date);
++
+ 		if (lb =3D=3D a + strlen("\nauthor "))
+ 			/* \nauthor <foo@example.com> */
+ 			name =3D xcalloc(1, 1);
+@@ -497,14 +501,19 @@ static void determine_author_info(struct strbuf
+*author_ident)
+ 		const char *lb =3D strstr(force_author, " <");
+ 		const char *rb =3D strchr(force_author, '>');
+
++		free(name);
++		free(email);
++
+ 		if (!lb || !rb)
+ 			die("malformed --author parameter");
+ 		name =3D xstrndup(force_author, lb - force_author);
+ 		email =3D xstrndup(lb + 2, rb - (lb + 2));
+ 	}
+
+-	if (force_date)
+-		date =3D force_date;
++	if (force_date) {
++		free(date);
++		date =3D xstrdup(force_date);
++	}
+ 	strbuf_addstr(author_ident, fmt_ident(name, email, date,
+ 					      IDENT_ERROR_ON_NO_NAME));
+ 	free(name);
