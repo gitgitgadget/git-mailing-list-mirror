@@ -1,164 +1,93 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH] correct type of EMPTY_TREE_SHA1_BIN
-Date: Mon, 7 Feb 2011 02:17:27 -0600
-Message-ID: <20110207081727.GB2736@elie>
-References: <1296899427-1394-1-git-send-email-pclouds@gmail.com>
- <1296914835-808-1-git-send-email-pclouds@gmail.com>
- <7v62swwq7s.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [1.8.0] Provide proper remote ref namespaces
+Date: Mon, 07 Feb 2011 11:40:27 -0800
+Message-ID: <7v62svvdjo.fsf@alter.siamese.dyndns.org>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+ <20110201181428.GA6579@sigill.intra.peff.net>
+ <AANLkTimtU56BAnWU-2pY1npdkPdKEBq_CMCGwXUK+E=H@mail.gmail.com>
+ <201102020322.00171.johan@herland.net>
+ <7vpqr7xw4z.fsf@alter.siamese.dyndns.org>
+ <alpine.LFD.2.00.1102051330270.12104@xanadu.home>
+ <20110205193708.GA2192@sigill.intra.peff.net>
+ <alpine.LFD.2.00.1102051449420.12104@xanadu.home>
+ <7vvd0xvsjc.fsf@alter.siamese.dyndns.org> <4D501983.5060508@xiplink.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
-	git@vger.kernel.org, Ilari Liusvaara <ilari.liusvaara@elisanet.fi>,
-	Jakub Narebski <jnareb@gmail.com>,
-	"Dmitry S. Kravtsov" <idkravitz@gmail.com>,
-	Shawn Pearce <spearce@spearce.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 07 09:17:50 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Nicolas Pitre <nico@fluxnic.net>, Jeff King <peff@peff.net>,
+	Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+To: Marc Branchaud <marcnarc@xiplink.com>
+X-From: git-owner@vger.kernel.org Mon Feb 07 20:41:06 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmMI7-0006e1-TL
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 09:17:48 +0100
+	id 1PmWxJ-0005v6-GC
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 20:41:01 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752835Ab1BGIRm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 03:17:42 -0500
-Received: from mail-gw0-f46.google.com ([74.125.83.46]:45435 "EHLO
-	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752594Ab1BGIRl (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 03:17:41 -0500
-Received: by gwj20 with SMTP id 20so1601959gwj.19
-        for <git@vger.kernel.org>; Mon, 07 Feb 2011 00:17:41 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=SxllaBzthDGERnQmds7y05nrLICWy5yg8q9ohaBGmSY=;
-        b=ktGIr0kmOTOdV0UwXLoVEuJQ7Wk/ARZI+yCNa90aixI1IJnycPdsRJsbIljOCfjM9G
-         5frGIy71cYlyNMRBhMrNEmPNu4bBiUmKe3Fd8xGBeuK6rDyIeLy2lj9b9Qqevnt0Ut4M
-         uZ22uo3YPRomgmsQ/3hZQlgO+5JzBeZL48Opc=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=SH1+lo0X0XOGQlyCKRkVeQLrdNAsMwOQhIwFGo9Lodqk6KEPNsTAqB/9kPPKmGOsf/
-         VEyVWO36vlvfBe9NFi13ZJzZgbwgV+xPl89I3d3+llizuF6xK/FndpLYXQUHsfvci+Qw
-         /EIpY4g4SzDcnInb0+DaHU3K2aREvplS/FZMo=
-Received: by 10.236.109.146 with SMTP id s18mr30160252yhg.28.1297066661287;
-        Mon, 07 Feb 2011 00:17:41 -0800 (PST)
-Received: from elie (adsl-76-206-235-233.dsl.chcgil.sbcglobal.net [76.206.235.233])
-        by mx.google.com with ESMTPS id g14sm2721387yhd.5.2011.02.07.00.17.35
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 07 Feb 2011 00:17:40 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <7v62swwq7s.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1754871Ab1BGTku (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Feb 2011 14:40:50 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63719 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754866Ab1BGTks (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Feb 2011 14:40:48 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2C8C03731;
+	Mon,  7 Feb 2011 14:41:45 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=T1TQQVKMy6wCCQfKtOnCISTcZkM=; b=V2ZP8x
+	t6CkzzblQYB5qX4JklFudTwvPLfM5buCMuMDQ75szyIUdQnhDCrJTjWUsPVf5PVf
+	ALFOTKLrJsg57q15QLzCKTzftgO6tIo2qMJx09/h7BKm3G03/kJL1URD5aIO9uKV
+	1E5/VFJuBw4g+Az21n2U60grwhH4eVSS7PWXo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=uuAWf/0irDEWVtHrFL+hvBPm2am+UoJO
+	VopsIlbbXw2Lj2jasMO0xKz0/B7V1auL5JtZMgZsLM4WfVRO9kwvg2qhtktAd4fE
+	ZR1bfmiqB68j/aNlJ8jO6n4yhICqOKYS+CMBm5b6NJcgS/XN0mfKfhmNaAOnLD3r
+	GJOY6f8/TsA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id ABB3B3727;
+	Mon,  7 Feb 2011 14:41:37 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 03822371E; Mon,  7 Feb 2011
+ 14:41:26 -0500 (EST)
+In-Reply-To: <4D501983.5060508@xiplink.com> (Marc Branchaud's message of
+ "Mon\, 07 Feb 2011 11\:10\:43 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 470C334A-32F2-11E0-9B33-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167257>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/167258>
 
-Junio C Hamano wrote:
+Marc Branchaud <marcnarc@xiplink.com> writes:
 
->> --- a/cache-tree.c
->> +++ b/cache-tree.c
->> @@ -621,9 +621,18 @@ static void prime_cache_tree_rec(struct cache_tree *it, struct tree *tree)
->>  			struct tree *subtree = lookup_tree(entry.sha1);
->>  			if (!subtree->object.parsed)
->>  				parse_tree(subtree);
->> +			if (!hashcmp(entry.sha1, (unsigned char *)EMPTY_TREE_SHA1_BIN)) {
->> +				warning("empty tree detected! Will be removed in new commits");
->> +				cnt = -1;
->> +				break;
->> +			}
->
-> You shouldn't need the cast (if you did, then hashcmp() macro should be
-> fixed so that you don't need to).
+> Tags don't become "official" until they're published according to the
+> project's process.  For us git users, that means the tag appears in
+> git.kernel.org/pub/scm/git/git.git.  A tag that appears somewhere else can
+> have all sorts of meanings, but I don't think "official" could be one of them.
 
-Isn't this a bug in the definition of EMPTY_TREE_SHA1_BIN rather than
-the signature of hashcmp?
+I think you are essentially saying the same thing.
 
--- 8< --
-Subject: correct type of EMPTY_TREE_SHA1_BIN
+Think of hiding the unofficial tags to refs/private-tags by "interim
+maintainer" (or public at large for that matter); they won't be published
+automatically, unless the publisher decides to publish "according to the
+project's process."
 
-Functions such as hashcmp that expect a binary SHA-1 value take
-parameters of type "unsigned char *" to avoid accepting a textual
-SHA-1 passed by mistake.  Unfortunately, this means passing the string
-literal EMPTY_TREE_SHA1_BIN requires an ugly cast.  Tweak the
-definition of EMPTY_TREE_SHA1_BIN to produce a value of more
-convenient type.
+As I said in my message, it feels awkward to use refs/private-tags for
+tags everybody uses for his or her own purpose, so by swapping the roles
+of namespaces around, we would be able to use refs/tags for private ones,
+and refs/remotes/origin/tags for the ones that came from upstream.  But
+then if you fetch/pull from a third party (including the "interim
+maintainer"), it feels wasteful to get full set of tags that you have in
+the origin namespace anyway replicated in refs/remotes/interim/tags.
 
-In the future the definition might change to
-
-	extern const unsigned char empty_tree_sha1_bin[20];
-	#define EMPTY_TREE_SHA1_BIN empty_tree_sha1_bin
-
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
----
- builtin/checkout.c |    2 +-
- cache.h            |    4 +++-
- notes-merge.c      |    2 +-
- sha1_file.c        |    2 +-
- 4 files changed, 6 insertions(+), 4 deletions(-)
-
-diff --git a/builtin/checkout.c b/builtin/checkout.c
-index 757f9a0..cd7f56e 100644
---- a/builtin/checkout.c
-+++ b/builtin/checkout.c
-@@ -404,7 +404,7 @@ static int merge_working_tree(struct checkout_opts *opts,
- 		topts.dir->exclude_per_dir = ".gitignore";
- 		tree = parse_tree_indirect(old->commit ?
- 					   old->commit->object.sha1 :
--					   (unsigned char *)EMPTY_TREE_SHA1_BIN);
-+					   EMPTY_TREE_SHA1_BIN);
- 		init_tree_desc(&trees[0], tree->buffer, tree->size);
- 		tree = parse_tree_indirect(new->commit->object.sha1);
- 		init_tree_desc(&trees[1], tree->buffer, tree->size);
-diff --git a/cache.h b/cache.h
-index d83d68c..3abf895 100644
---- a/cache.h
-+++ b/cache.h
-@@ -676,9 +676,11 @@ static inline void hashclr(unsigned char *hash)
- 
- #define EMPTY_TREE_SHA1_HEX \
- 	"4b825dc642cb6eb9a060e54bf8d69288fbee4904"
--#define EMPTY_TREE_SHA1_BIN \
-+#define EMPTY_TREE_SHA1_BIN_LITERAL \
- 	 "\x4b\x82\x5d\xc6\x42\xcb\x6e\xb9\xa0\x60" \
- 	 "\xe5\x4b\xf8\xd6\x92\x88\xfb\xee\x49\x04"
-+#define EMPTY_TREE_SHA1_BIN \
-+	 ((const unsigned char *) EMPTY_TREE_SHA1_BIN_LITERAL)
- 
- int git_mkstemp(char *path, size_t n, const char *template);
- 
-diff --git a/notes-merge.c b/notes-merge.c
-index 71c4d45..1467ad3 100644
---- a/notes-merge.c
-+++ b/notes-merge.c
-@@ -615,7 +615,7 @@ int notes_merge(struct notes_merge_options *o,
- 	bases = get_merge_bases(local, remote, 1);
- 	if (!bases) {
- 		base_sha1 = null_sha1;
--		base_tree_sha1 = (unsigned char *)EMPTY_TREE_SHA1_BIN;
-+		base_tree_sha1 = EMPTY_TREE_SHA1_BIN;
- 		OUTPUT(o, 4, "No merge base found; doing history-less merge");
- 	} else if (!bases->next) {
- 		base_sha1 = bases->item->object.sha1;
-diff --git a/sha1_file.c b/sha1_file.c
-index d86a8db..b44fc95 100644
---- a/sha1_file.c
-+++ b/sha1_file.c
-@@ -2048,7 +2048,7 @@ static struct cached_object {
- static int cached_object_nr, cached_object_alloc;
- 
- static struct cached_object empty_tree = {
--	EMPTY_TREE_SHA1_BIN,
-+	EMPTY_TREE_SHA1_BIN_LITERAL,
- 	OBJ_TREE,
- 	"",
- 	0
--- 
-1.7.4
+And that is what bothers me---not the waste itself, but I have this
+nagging feeling that the wasteful duplication is an indication of
+something else designed wrong.
