@@ -1,121 +1,80 @@
-From: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>
-Subject: git-svn problems with cloning
-Date: Mon, 7 Feb 2011 12:58:33 +0100
-Message-ID: <AANLkTinHmE-_JFeZP1AQ9yKh0ZN3+oqug=+j+5JcFHcm@mail.gmail.com>
+From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
+Subject: Re: [PATCH 1.8.0] add: make "add -u" update full tree without pathspec
+Date: Mon, 07 Feb 2011 13:09:19 +0100
+Message-ID: <vpq1v3kf3m8.fsf@bauges.imag.fr>
+References: <1297045643-26697-1-git-send-email-pclouds@gmail.com>
+	<7vsjw0v11p.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 07 12:58:50 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>,
+	git@vger.kernel.org, Sebastian Pipping <webmaster@hartwork.org>,
+	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 07 13:12:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmPjs-0004C4-5e
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 12:58:40 +0100
+	id 1PmPxe-0002ce-05
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 13:12:54 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753989Ab1BGL6f (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 06:58:35 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:55633 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751934Ab1BGL6e (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 06:58:34 -0500
-Received: by vws16 with SMTP id 16so2837553vws.19
-        for <git@vger.kernel.org>; Mon, 07 Feb 2011 03:58:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:sender:date:x-google-sender-auth
-         :message-id:subject:from:to:content-type;
-        bh=lmj7ynyA+1PVWBJdchjHvvta9NqPOoiWZhOJh10CCFU=;
-        b=grwAqwOB1h6r3lynAvTvDh7PpRqWWcvq9p/057dPza/rVNdC/lHlZWvAxFDjYLJHTO
-         cZs0x0LBQ9tUTg3EinfQoCCSw3PjUBi3ljWneKiYjnl/uuj/N6fDpIU9axem+oqJBVX0
-         2stZn5su3oqwIo8MUTwPIqxMiDeVy5JPxiVSU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:sender:date:x-google-sender-auth:message-id:subject
-         :from:to:content-type;
-        b=QkfYjv3V/70Zkwx6ADi/Vnff80AXn4L5+vsWor4ECdT6QuXXPeVT7Ce1yGoeqk9Lhv
-         YM3rxoigZH5ygwAwXLDDUND15lfMfjNhClts6DcQ9JeycWFa3rv43eSe5Nw3Nb6jzpak
-         TnlClQMuM4ir0eMZx/WAZ/ujVmKqlNSZuVAcE=
-Received: by 10.220.188.74 with SMTP id cz10mr4597636vcb.71.1297079913946;
- Mon, 07 Feb 2011 03:58:33 -0800 (PST)
-Received: by 10.220.195.132 with HTTP; Mon, 7 Feb 2011 03:58:33 -0800 (PST)
-X-Google-Sender-Auth: Tc1oxSTMownZrh1CGFxT5kTZPSs
+	id S1754062Ab1BGMMs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Feb 2011 07:12:48 -0500
+Received: from imag.imag.fr ([129.88.30.1]:42914 "EHLO imag.imag.fr"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1753902Ab1BGMMr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Feb 2011 07:12:47 -0500
+Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
+	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id p17C9K5U021907
+	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
+	Mon, 7 Feb 2011 13:09:20 +0100 (CET)
+Received: from bauges.imag.fr ([129.88.43.5])
+	by mail-veri.imag.fr with esmtp (Exim 4.69)
+	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
+	id 1PmPuB-0004eA-Um; Mon, 07 Feb 2011 13:09:19 +0100
+In-Reply-To: <7vsjw0v11p.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's message of "Sun\, 06 Feb 2011 21\:58\:10 -0800")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
+X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 07 Feb 2011 13:09:20 +0100 (CET)
+X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
+X-IMAG-MailScanner: Found to be clean
+X-IMAG-MailScanner-SpamCheck: 
+X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166255>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166256>
 
-Hi,
+[ Your mailer did something strange with my name and email ]
 
-I'm trying to git-svn clone repository. I have encountered two
-problems. For the the first one I have a workaround, but I'm lost with
-the second.
+Junio C Hamano <gitster@pobox.com> writes:
 
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes=
+:
+>
+>> When -u was introduced in dfdac5d (git-add -u: match the index with
+>> working tree., 2007-04-20), "add -u" (without pathspec) added
+>> everything. Shortly after, 2ed2c22 (git-add -u paths... now works fr=
+om
+>> subdirectory, 2007-08-16) broke it while fixing something related.
+>
+> As long as the command takes pathspecs, it should never be tree-wide.
+> Making it tree-wide when there is no pathspec is even worse.
 
-1. I have a problem with one commit which tries to create a file name
-which is not acceptable by file system (fat32). I tried to ignore this
-files by using --ignore-paths, but it does not work. Am I using
-ignore-paths incorrectly or do I have to find a different workaround?
-(I'm thinking about using specific revisions or using filter-branch).
+This is against the common use in Git. As I mentionned in the other
+thread, pretty much any git command taking an optional pathspec is
+still tree-wide when called without argument. "git add -u" is the
+exception.
 
-Here's what's happening:
+> If "add -p" does not limit operation to the current directory, probab=
+ly
+> that is the inconsistency bug to be fixed.
 
-$ git svn clone -s -r164508 '--ignore-paths=.*https:.*' <url>
-Initialized empty Git repository in <path>/.git/
-Using higher level of URL: <url> => <url>
-mkdir .git/svn/refs/remotes/tags/https:: Invalid argument at
-/usr/local/stow/git-1.7.4/libexec/git-core/git-svn line 3856
+Add "git log", "git status", "git commit", "git show", "git diff", and
+a few others I've missed to the list of "exceptions" ...
 
-$ svn log -v -r164508 <url>
-[...]
-   A /<project>/tags/https:/blahblah
-
-$ mkdir https:
-mkdir: cannot create directory `https:': Invalid argument
-
-
-2. I have specified revision that do not have invalid file names in it
-and it worker, but git reported error later on, I suppose due to
---ignore-paths:
-
-$ git svn clone -s '--ignore-paths=^/branches/<list of branches>'
-'--ignore-paths=^/tags/<list of tags>' -r164510:HEAD <url>
-[...]
-r166131 = 86085ee643d1b8ecb60f6ec3212904a24dd4d71a
-(refs/remotes/<ignored branch 1>
-)
-[...]
-r167889 = 1fdb8124d72e1bc417f7fe06051a5280675dc73b
-(refs/remotes/<ignored branch 2>)
-
-	M	[...]	
-Found merge parent (svn:mergeinfo prop):
-1fdb8124d72e1bc417f7fe06051a5280675dc73b
-
-[...]
-W: Cannot find common ancestor between
-689e9a85f91eb71e37ccd79063e0a5aaa37d1b74 and
-5d04d29ab3c76835facade1859aed30129abecf4. Ignoring merge info.
-
-Found merge parent (svn:mergeinfo prop):
-039125717428084cdf4d38b8a98f431a9b656f1c
-
-Couldn't find revmap for <url>/<ignored branch 3>/path
-fatal: ambiguous argument
-'86085ee643d1b8ecb60f6ec3212904a24dd4d71a^..1fdb8124d72e1bc417f7fe06051a5280675dc73b':
-unknown revision or path not in the working tree.
-
-Use '--' to separate paths from revisions
-
-rev-list 86085ee643d1b8ecb60f6ec3212904a24dd4d71a^..1fdb8124d72e1bc417f7fe06051a5280675dc73b:
-command returned error: 128
-
-
-
-I'm not sure how to deal with this...
-
-
--- 
-Piotrek
+--=20
+Matthieu Moy
+http://www-verimag.imag.fr/~moy/
