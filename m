@@ -1,132 +1,100 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: [1.8.0] git checkout refs/heads/foo checks out branch foo
-Date: Mon, 7 Feb 2011 16:00:30 -0600
-Message-ID: <20110207220030.GA19357@elie>
-References: <alpine.DEB.1.10.1102062234010.3788@debian>
- <20110207205934.GD13461@sigill.intra.peff.net>
- <AANLkTinmqTi4cYbR6PtSxt6itCvFQDuT_sE1tjx45a3h@mail.gmail.com>
+From: Jens Lehmann <Jens.Lehmann@web.de>
+Subject: [PATCH v3] pull: Document the "--[no-]recurse-submodules" options
+Date: Mon, 07 Feb 2011 23:24:54 +0100
+Message-ID: <4D507136.2030505@web.de>
+References: <4D4C5EBC.2090100@web.de> <201102042326.08607.j6t@kdbg.org> <4D4D33E7.4000303@web.de> <7vipwwx56r.fsf@alter.siamese.dyndns.org> <4D4F19D0.2000408@web.de> <20110206220939.GC17210@elie> <4D4F273C.8030003@web.de> <20110207074157.GA2736@elie> <4D5047BD.6030304@web.de> <7vsjvzttbs.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 07 23:00:58 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: Jonathan Nieder <jrnieder@gmail.com>, Johannes Sixt <j6t@kdbg.org>,
+	Git Mailing List <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 07 23:25:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmZ8e-0000S5-NL
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 23:00:53 +0100
+	id 1PmZWk-0005xT-Pm
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 23:25:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755087Ab1BGWAq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 17:00:46 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:51066 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755037Ab1BGWAp (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 17:00:45 -0500
-Received: by fxm20 with SMTP id 20so5397824fxm.19
-        for <git@vger.kernel.org>; Mon, 07 Feb 2011 14:00:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=gMxuXafZm8Ru4HgT8jugOfnj/KKowJA4yf5Jor64l4I=;
-        b=CgKixPJmox7yGUMWbwcdgLCR9xb8ogz+1sP3yQ12HdpqdWwdRa1UVC1y8tp+hwMG1Z
-         oyvC5mSOPmlPELC+0adMKDO2XeGkxtx9EnJgiV57NU26P5+OHts66Kevj4hiWdUQ4eVl
-         EtSyCOj3CUlWNwrxQnIc+3neAJPtuHsO8XjaY=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=dUMnd15ExDQmUQFs0IHUchSkIEDKybGrXd0zSnFPKTv27laPeC1tU/Xo55pbcfaQzH
-         sXZD11WyDUHiz8rqjEwPP+euBiHdfdrCDS/oHn2nODWbXWm/zl/DUfKCvpM7KtW5+lEy
-         K85HdvOUrHv5QZ6zHqQONOEHDxKt3e/HC8FV8=
-Received: by 10.223.85.203 with SMTP id p11mr15497630fal.108.1297116043838;
-        Mon, 07 Feb 2011 14:00:43 -0800 (PST)
-Received: from elie (adsl-76-206-235-233.dsl.chcgil.sbcglobal.net [76.206.235.233])
-        by mx.google.com with ESMTPS id 11sm1451515faw.20.2011.02.07.14.00.40
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 07 Feb 2011 14:00:43 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTinmqTi4cYbR6PtSxt6itCvFQDuT_sE1tjx45a3h@mail.gmail.com>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+	id S1755227Ab1BGWY6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Feb 2011 17:24:58 -0500
+Received: from fmmailgate01.web.de ([217.72.192.221]:57887 "EHLO
+	fmmailgate01.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755210Ab1BGWY4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Feb 2011 17:24:56 -0500
+Received: from smtp06.web.de  ( [172.20.5.172])
+	by fmmailgate01.web.de (Postfix) with ESMTP id 2BA4E187862C9;
+	Mon,  7 Feb 2011 23:24:55 +0100 (CET)
+Received: from [93.246.61.132] (helo=[192.168.178.43])
+	by smtp06.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1PmZVv-0001oy-00; Mon, 07 Feb 2011 23:24:55 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <7vsjvzttbs.fsf@alter.siamese.dyndns.org>
+X-Sender: Jens.Lehmann@web.de
+X-Provags-ID: V01U2FsdGVkX19CIaaYW/RoDdWlWL1WVvwOVwar1iRx5IAc8l7V
+	dpyDJdstbY3otdnwUg5pl7jTZq0fe2x1wNNzrOWEh3sEVZtInT
+	t1RiWHqmdZaMCduac8nA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166305>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166306>
 
-Sverre Rabbelier wrote:
+In commits be254a0ea9 and 7dce19d374 the handling of the new fetch options
+"--[no-]recurse-submodules" had been added to git-pull.sh. But they were
+not documented as the pull options they now are, so let's fix that.
 
-> Now _that_ is an excellent usability improvement, assuming we want to
-> encourage detaching HEAD... do we?
-
-Yes.
-
--- 8<
-Subject: commit: document --detach synonym for "git checkout foo^{commit}"
-
-For example, one might use this when making a temporary merge to test
-that two topics work well together.
-
-This patch just documents the option.  It is not meant for application
-without an implementation and tests for the option.
-
-Suggested-by: Jeff King <peff@peff.net>
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
 ---
- Documentation/git-checkout.txt |   13 +++++++++++--
- 1 files changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/git-checkout.txt b/Documentation/git-checkout.txt
-index 880763d..698ae6c 100644
---- a/Documentation/git-checkout.txt
-+++ b/Documentation/git-checkout.txt
-@@ -9,6 +9,7 @@ SYNOPSIS
- --------
- [verse]
- 'git checkout' [-q] [-f] [-m] [<branch>]
-+'git checkout' [-q] [-f] [-n] [--detach] [<commit>]
- 'git checkout' [-q] [-f] [-m] [[-b|-B|--orphan] <new_branch>] [<start_point>]
- 'git checkout' [-f|--ours|--theirs|-m|--conflict=<style>] [<tree-ish>] [--] <paths>...
- 'git checkout' --patch [<tree-ish>] [--] [<paths>...]
-@@ -22,9 +23,10 @@ branch.
- 
- 'git checkout' [<branch>]::
- 'git checkout' -b|-B <new_branch> [<start point>]::
-+'git checkout' [--detach] [<commit>]::
- 
- 	This form switches branches by updating the index, working
--	tree, and HEAD to reflect the specified branch.
-+	tree, and HEAD to reflect the specified branch or commit.
- +
- If `-b` is given, a new branch is created as if linkgit:git-branch[1]
- were called and then checked out; in this case you can
-@@ -115,6 +117,13 @@ explicitly give a name with '-b' in such a case.
- 	Create the new branch's reflog; see linkgit:git-branch[1] for
- 	details.
- 
-+--detach::
-+	Rather than checking out a branch to work on it, check out a
-+	commit for inspection and discardable experiments.
-+	This is the default behavior of "git checkout <commit>" when
-+	<commit> is not a branch name.  See the "DETACHED HEAD" section
-+	below for details.
+Am 07.02.2011 22:42, schrieb Junio C Hamano:
+> Hmph, why not enclose the three of them inside a single ifndef here?
+
+Sure!
+
+ Documentation/fetch-options.txt |    2 --
+ Documentation/git-pull.txt      |    9 +++++++++
+ 2 files changed, 9 insertions(+), 2 deletions(-)
+
+diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
+index 695696d..f37276e 100644
+--- a/Documentation/fetch-options.txt
++++ b/Documentation/fetch-options.txt
+@@ -64,13 +64,11 @@ ifndef::git-pull[]
+ 	downloaded. The default behavior for a remote may be
+ 	specified with the remote.<name>.tagopt setting. See
+ 	linkgit:git-config[1].
+-endif::git-pull[]
+
+ --[no-]recurse-submodules::
+ 	This option controls if new commits of all populated submodules should
+ 	be fetched too (see linkgit:git-config[1] and linkgit:gitmodules[5]).
+
+-ifndef::git-pull[]
+ --submodule-prefix=<path>::
+ 	Prepend <path> to paths printed in informative messages
+ 	such as "Fetching submodule foo".  This option is used
+diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
+index 3046691..b33e6be 100644
+--- a/Documentation/git-pull.txt
++++ b/Documentation/git-pull.txt
+@@ -84,6 +84,15 @@ must be given before the options meant for 'git fetch'.
+ --verbose::
+ 	Pass --verbose to git-fetch and git-merge.
+
++--[no-]recurse-submodules::
++	This option controls if new commits of all populated submodules should
++	be fetched too (see linkgit:git-config[1] and linkgit:gitmodules[5]).
++	That might be necessary to get the data needed for merging submodule
++	commits, a feature git learned in 1.7.3. Notice that the result of a
++	merge will not be checked out in the submodule, "git submodule update"
++	has to be called afterwards to bring the work tree up to date with the
++	merge result.
 +
- --orphan::
- 	Create a new 'orphan' branch, named <new_branch>, started from
- 	<start_point> and switch to it.  The first commit made on this
-@@ -204,7 +213,7 @@ leave out at most one of `A` and `B`, in which case it defaults to `HEAD`.
- 
- 
- 
--Detached HEAD
-+DETACHED HEAD
- -------------
- 
- It is sometimes useful to be able to 'checkout' a commit that is
+ Options related to merging
+ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 -- 
-1.7.4
+1.7.4.47.g87a200
