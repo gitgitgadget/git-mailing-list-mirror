@@ -1,75 +1,82 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: [1.8.0] Provide proper remote ref namespaces
-Date: Mon, 07 Feb 2011 07:54:36 +0100
-Message-ID: <vpq7hdcjpw3.fsf@bauges.imag.fr>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
-	<201102070022.51403.johan@herland.net>
-	<vpqtyggk9i2.fsf@bauges.imag.fr>
-	<201102070451.37370.johan@herland.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: "git add -u" broken in git 1.7.4?
+Date: Mon, 7 Feb 2011 14:29:23 +0700
+Message-ID: <AANLkTiksXERJ1h2du7Qu27rpKh2=q0GTWix8kSoeC24Y@mail.gmail.com>
+References: <4D4DEDC4.4080708@hartwork.org> <20110206051333.GA3458@sigill.intra.peff.net>
+ <4D4EF7E4.7050303@hartwork.org> <vpq1v3kopn3.fsf@bauges.imag.fr>
+ <7vwrlcv1ea.fsf@alter.siamese.dyndns.org> <20110207055314.GA5511@sigill.intra.peff.net>
+ <7vhbcguytf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Dmitry Potapov <dpotapov@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Mon Feb 07 07:57:28 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Sebastian Pipping <webmaster@hartwork.org>,
+	Git ML <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 07 08:30:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmL2K-0004TZ-JE
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 07:57:24 +0100
+	id 1PmLXs-00071R-3b
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 08:30:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752570Ab1BGG5T (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 01:57:19 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:47395 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752476Ab1BGG5S (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 01:57:18 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p176sahn009859
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 7 Feb 2011 07:54:36 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1PmKzd-0004bZ-Bo; Mon, 07 Feb 2011 07:54:37 +0100
-In-Reply-To: <201102070451.37370.johan@herland.net> (Johan Herland's message of "Mon\, 07 Feb 2011 04\:51\:37 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Mon, 07 Feb 2011 07:54:37 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p176sahn009859
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1297666477.66004@RuH1h2yFPnwsXNt0YYVOgw
+	id S1752303Ab1BGH3z convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Feb 2011 02:29:55 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:41390 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751823Ab1BGH3y convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Feb 2011 02:29:54 -0500
+Received: by wwa36 with SMTP id 36so4486512wwa.1
+        for <git@vger.kernel.org>; Sun, 06 Feb 2011 23:29:53 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=gvbkh6pdq4SeqSzBBbIgmlupFlwgzaY9M7Ql2TXO6vs=;
+        b=suA/eslkdqUwLfW92c1hWDcV9lvYK6KMpfFrwqmWyKxLO1Xng4LYMzLB2KdiNuK/pk
+         fyawsJkdnWS4RP/qPImLYlaHx9XsjmcCtMWQdtmLAVL8kCHTC5z+QQWtWGP5kfFk0rQr
+         tKaS5gLPf4kWmyIfbqTvOgP4cAg9TytxuOGCw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Isj/VnyoWJxk3b7PH+hKLzFPJH93otRU2SbzZ/LQee2tHE5v932sDNbZhImD0VWhlx
+         Mm/uj8pBNn80Hva3QxPLQz0LeAb+ZA43GRa6xKmvNLXhVY3hCbjOBwIfgWR/vB3kqiuH
+         fAApXpA/xeNo8Z91ezkl8lc5UshtDUr3ZGXRg=
+Received: by 10.216.163.69 with SMTP id z47mr13848712wek.43.1297063793647;
+ Sun, 06 Feb 2011 23:29:53 -0800 (PST)
+Received: by 10.216.66.144 with HTTP; Sun, 6 Feb 2011 23:29:23 -0800 (PST)
+In-Reply-To: <7vhbcguytf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166238>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166239>
 
-Johan Herland <johan@herland.net> writes:
+On Mon, Feb 7, 2011 at 1:46 PM, Junio C Hamano <gitster@pobox.com> wrot=
+e:
+> I actually do not mind too much myself if all commands that can take
+> pathspecs consistently defaulted to "full-tree" pathspec given no
+> pathspec. =C2=A0But if we were to go that route, everybody should joi=
+n their
+> voice to defend that decision when outside people say "in 1.8.0 'git =
+grep'
+> run from a subdirectory shows matches from all the irrelevant parts o=
+f the
+> tree; with all the cruft its output is unreadable". I won't be the so=
+le
+> champion of such a behaviour when I do not fully believe in it.
 
-> When you push to "remoteB", you would say "git push remoteB tag v1.7.4", and 
-> it would resolve "v1.7.4" (via "refs/remotes/remoteA/tags/v1.7.4") into the 
-> appropriate SHA-1, and then push the "v1.7.4" tag to the remote.
+That could be one more item for the next git survey (i.e. how do you
+want the defaults to be?). Most of people in this list more or less
+breath git already and therefore are bias (I think).
 
-That means I can fetch git-gui/v1.0, gitk/v1.1 and git/v1.7, my
-subproject tags are well sorted in my local repository, but if they
-don't have the same shortname, they're not "ambiguous", and the
-namespace will be completely flattened when I push (i.e. I'll push
-v1.0, v1.1 and v1.7, and people accessing my repository will not be
-able to say whether they refer to gitk, git-gui or git versions).
-
-This defeats the point in having proper namespaces, and we'll still
-see handmade namespaces like we already have now for git-gui tags in
-git.git.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Personally "git add -u --full-tree" is good enough to me. It does have
+the same problem that git --full-tree has: what *.h in "git grep
+--full-tree -- '*.h'" means. But I'm OK with not supporting that case
+until we agree on something.
+--=20
+Duy
