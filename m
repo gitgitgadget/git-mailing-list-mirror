@@ -1,115 +1,89 @@
-From: Jens Lehmann <Jens.Lehmann@web.de>
-Subject: [PATCH v2] pull: Document the "--[no-]recurse-submodules" options
-Date: Mon, 07 Feb 2011 20:27:57 +0100
-Message-ID: <4D5047BD.6030304@web.de>
-References: <4D4C5EBC.2090100@web.de> <201102042326.08607.j6t@kdbg.org> <4D4D33E7.4000303@web.de> <7vipwwx56r.fsf@alter.siamese.dyndns.org> <4D4F19D0.2000408@web.de> <20110206220939.GC17210@elie> <4D4F273C.8030003@web.de> <20110207074157.GA2736@elie>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "git add -u" broken in git 1.7.4?
+Date: Mon, 07 Feb 2011 11:31:23 -0800
+Message-ID: <7vaai7vdys.fsf@alter.siamese.dyndns.org>
+References: <4D4DEDC4.4080708@hartwork.org>
+ <20110206051333.GA3458@sigill.intra.peff.net> <4D4EF7E4.7050303@hartwork.org>
+ <vpq1v3kopn3.fsf@bauges.imag.fr> <7vwrlcv1ea.fsf@alter.siamese.dyndns.org>
+ <20110207055314.GA5511@sigill.intra.peff.net>
+ <7vhbcguytf.fsf@alter.siamese.dyndns.org> <20110207183412.GB1900@neumann>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-Cc: Junio C Hamano <gitster@pobox.com>, Johannes Sixt <j6t@kdbg.org>,
-	Git Mailing List <git@vger.kernel.org>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 07 20:28:15 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Junio C Hamano <gitster@pobox.com>, Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Sebastian Pipping <webmaster@hartwork.org>,
+	Michael J Gruber <git@drmicha.warpmail.net>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Git ML <git@vger.kernel.org>
+To: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>
+X-From: git-owner@vger.kernel.org Mon Feb 07 20:32:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmWkw-0006yl-Bh
-	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 20:28:14 +0100
+	id 1PmWoa-0000cs-DD
+	for gcvg-git-2@lo.gmane.org; Mon, 07 Feb 2011 20:32:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754672Ab1BGT2I (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 14:28:08 -0500
-Received: from fmmailgate03.web.de ([217.72.192.234]:38039 "EHLO
-	fmmailgate03.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753936Ab1BGT2H (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 14:28:07 -0500
-Received: from smtp04.web.de  ( [172.20.0.225])
-	by fmmailgate03.web.de (Postfix) with ESMTP id 3EB89187573C6;
-	Mon,  7 Feb 2011 20:28:05 +0100 (CET)
-Received: from [93.246.35.64] (helo=[192.168.178.43])
-	by smtp04.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1PmWkn-0007r1-00; Mon, 07 Feb 2011 20:28:05 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux i686; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <20110207074157.GA2736@elie>
-X-Sender: Jens.Lehmann@web.de
-X-Provags-ID: V01U2FsdGVkX18ars0hPHwJ5PIXYy1862lEeMIn62wNZ3bhGs/B
-	ICQnE7idq92sfq5Aq+NTr7Meq1z6R9cxQieiRJj6EkDVuHd4XY
-	PHHJipbF06pLpUp5hwnQ==
+	id S1754757Ab1BGTbs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 7 Feb 2011 14:31:48 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51921 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754712Ab1BGTbr convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Feb 2011 14:31:47 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 0326B3630;
+	Mon,  7 Feb 2011 14:32:41 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=iebdhXNa4KWM
+	V+iSk9GcBjguPvk=; b=WCLQPQ7mKFiRg7sjhPl4eH1NdtQCvUQcipd9xQwk6fMm
+	7hvSc+CWP7qGLdZtRbf0umhV8qblvDXHyMD6uCSOf8lYSX3A+dEPdnEHydmbHBZ0
+	dLkGLtTbJXurkNsxAZyQI1zNl/gF+QjSuHmOcxk8B5rbK9nCOG5lYkDHiqbu7C4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=fWh1LG
+	ZppGf8wmOhIJ1wspMS/uL8YFz03FYsBr/vEsmPa++Cr+5WLp4JydTA3Nd7BSbztQ
+	VEqH5TgMAOMzxSX39EKmnOSXm3kObn57T7rMYs7Td1FZG9uDnq6dmzUulWUISlrb
+	JjFiB9zH4QJ4t245an/AocgknsdtUDkBn3n2g=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 85EB0362C;
+	Mon,  7 Feb 2011 14:32:33 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CF3BC3624; Mon,  7 Feb 2011
+ 14:32:22 -0500 (EST)
+In-Reply-To: <20110207183412.GB1900@neumann> ("SZEDER =?utf-8?Q?G=C3=A1bor?=
+ =?utf-8?Q?=22's?= message of "Mon\, 7 Feb 2011 19\:34\:12 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 02B4AED0-32F1-11E0-BD9E-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166274>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166275>
 
-In commits be254a0ea9 and 7dce19d374 the handling of the new fetch options
-"--[no-]recurse-submodules" had been added to git-pull.sh. But they were
-not documented as the pull options they now are, so let's fix that.
+SZEDER G=C3=A1bor <szeder@ira.uka.de> writes:
 
-Signed-off-by: Jens Lehmann <Jens.Lehmann@web.de>
----
+> _Everything_ relative to the current working directory?  I can't
+> imagine how would that work in practice.  Could you explain what woul=
+d
+> the following commands do, for example, when they are relative to the
+> current working directory?
+>
+>   $ cd t
+>   $ git checkout next
+>   $ git merge somebranch
+>   $ git reset HEAD^
 
-Am 07.02.2011 08:41, schrieb Jonathan Nieder:
-> Jens Lehmann wrote:
->> --- a/Documentation/git-pull.txt
->> +++ b/Documentation/git-pull.txt
->> @@ -84,6 +84,10 @@ must be given before the options meant for 'git fetch'.
->>  --verbose::
->>  	Pass --verbose to git-fetch and git-merge.
->>
->> +--[no-]recurse-submodules::
->> +	This option controls if new commits of all populated submodules should
->> +	be fetched too (see linkgit:git-config[1] and linkgit:gitmodules[5]).
->> +
-> 
-> Is it worth mentioning that this does not (yet) automatically check
-> out the new commits in submodules after a merge, or would such
-> documentation be too likely to be forgotten and left stale in the
-> future?
+Perhaps I stated things badly.  I was only talking about commands that
+take pathspecs, and none of the above are relevant to this thread.  You
+don't check out a branch with pathspec, nor merge another branch, nor
+reset the index and the HEAD pointer.
 
-Good point, here is v2! (And I will add an updated description to the
-relevant commits in my github repo, so we won't forget that later)
-
- Documentation/fetch-options.txt |    2 +-
- Documentation/git-pull.txt      |    9 +++++++++
- 2 files changed, 10 insertions(+), 1 deletions(-)
-
-diff --git a/Documentation/fetch-options.txt b/Documentation/fetch-options.txt
-index 695696d..ab0dbfc 100644
---- a/Documentation/fetch-options.txt
-+++ b/Documentation/fetch-options.txt
-@@ -64,11 +64,11 @@ ifndef::git-pull[]
- 	downloaded. The default behavior for a remote may be
- 	specified with the remote.<name>.tagopt setting. See
- 	linkgit:git-config[1].
--endif::git-pull[]
-
- --[no-]recurse-submodules::
- 	This option controls if new commits of all populated submodules should
- 	be fetched too (see linkgit:git-config[1] and linkgit:gitmodules[5]).
-+endif::git-pull[]
-
- ifndef::git-pull[]
- --submodule-prefix=<path>::
-diff --git a/Documentation/git-pull.txt b/Documentation/git-pull.txt
-index 3046691..b33e6be 100644
---- a/Documentation/git-pull.txt
-+++ b/Documentation/git-pull.txt
-@@ -84,6 +84,15 @@ must be given before the options meant for 'git fetch'.
- --verbose::
- 	Pass --verbose to git-fetch and git-merge.
-
-+--[no-]recurse-submodules::
-+	This option controls if new commits of all populated submodules should
-+	be fetched too (see linkgit:git-config[1] and linkgit:gitmodules[5]).
-+	That might be necessary to get the data needed for merging submodule
-+	commits, a feature git learned in 1.7.3. Notice that the result of a
-+	merge will not be checked out in the submodule, "git submodule update"
-+	has to be called afterwards to bring the work tree up to date with the
-+	merge result.
-+
- Options related to merging
- ~~~~~~~~~~~~~~~~~~~~~~~~~~
-
--- 
-1.7.4.47.g87a200
+I wouldn't point out that "git checkout next -- this-file" is to check =
+out
+a file out of a commit, not to check out a branch, as I think you alrea=
+dy
+know that.
