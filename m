@@ -1,141 +1,131 @@
 From: Dmitry Potapov <dpotapov@gmail.com>
 Subject: Re: [1.8.0] Provide proper remote ref namespaces
-Date: Tue, 8 Feb 2011 04:06:48 +0300
-Message-ID: <20110208010648.GA3132@dpotapov.dyndns.org>
+Date: Tue, 8 Feb 2011 04:20:18 +0300
+Message-ID: <20110208012018.GB3132@dpotapov.dyndns.org>
 References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+ <201102061711.45460.johan@herland.net>
+ <AANLkTi=gd5iu0i=ggqJC++N_rL+nU6RO9PNw=jMpT0NH@mail.gmail.com>
  <201102062312.51655.johan@herland.net>
  <AANLkTi=A-rh+wfg7O4KryydxVuorM8nkuGYmpbgVfVJp@mail.gmail.com>
- <201102070429.05033.johan@herland.net>
+ <20110207190551.GA25413@pcpool00.mathematik.uni-freiburg.de>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
 	Jeff King <peff@peff.net>,
 	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Tue Feb 08 02:07:02 2011
+	Nicolas Pitre <nico@fluxnic.net>,
+	Johan Herland <johan@herland.net>
+To: "Bernhard R. Link" 
+	<brl+ccmadness@pcpool00.mathematik.uni-freiburg.de>
+X-From: git-owner@vger.kernel.org Tue Feb 08 02:20:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pmc2n-0005tJ-0M
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 02:07:01 +0100
+	id 1PmcFq-00044v-Gi
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 02:20:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753417Ab1BHBGz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 20:06:55 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:55637 "EHLO
+	id S1754143Ab1BHBUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Feb 2011 20:20:25 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:60784 "EHLO
 	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753133Ab1BHBGy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 20:06:54 -0500
-Received: by bwz15 with SMTP id 15so5524045bwz.19
-        for <git@vger.kernel.org>; Mon, 07 Feb 2011 17:06:53 -0800 (PST)
+	with ESMTP id S1754037Ab1BHBUY (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Feb 2011 20:20:24 -0500
+Received: by bwz15 with SMTP id 15so5532478bwz.19
+        for <git@vger.kernel.org>; Mon, 07 Feb 2011 17:20:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=Hyz+soHyXfEnKK9ZZawY/4iVIqm9UjTMYQYWNj53Jdc=;
-        b=dNSe5Rbb0+fHbggckhY/Rwr7eoFEiDRGTmmr73phkK6H6huoaMJvchoNKJHdvxtxWQ
-         xzVaToUv8by4dGg1c3kHG+B0xmkpRURxhv0rnxGcufzeMyMQR6ZUQlkk/C/7fROAN99Q
-         dT0g9DB8eg/DsnmJSoE6xNuZXGYkwZhepZnS0=
+        bh=H63pJFqgprSiAABuaz0e2HJk6u8GvUujcZKAok6EJLM=;
+        b=E/ohf/SLjJT8qgMxmKQjQ08bZTDi22fSP/f5CXftZKRBTcGcJEQMfoveC19sin+lVY
+         qYE9U954jE5M6MJ5uMUFJoznvFeW4KbSDFmmzkvmKqkbOWqfGiKC74JPtRxlthXZ3odh
+         UIqJACSc6V46bH+XbgEgMHiBIiRKHfLtmRAYw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=GK3Ar56cOi05eTwL3Le+QxcdW+TzJ2X0YpYTI1AFXOsw1wxZXpKKKdByOHLHRSVqN7
-         C4Y8RMjm+PUXDDe8hTbIAbpbwcrxoEd4nR2Ah21M3ftB7Msaxknu4M9uDxjoczi8DYTu
-         IuGIPHmFv6C0dGyz76dADYpUB0ZKRI2LQ8B7Q=
-Received: by 10.204.72.20 with SMTP id k20mr16177371bkj.184.1297127213317;
-        Mon, 07 Feb 2011 17:06:53 -0800 (PST)
+        b=UyBu16T6UP8CvlLqowPo+Q6juyRyaLAvL37U04VcLp+gJL64BwXMRYAriEt1rD5O1D
+         IUP3njRg4WQyDZ2RSDs9P932OthKR9u0UhhuUUnUU9mmz+Uw/D4KyFy0fMOLPGgwKWLH
+         6hH0NMCzK+1/jdNP5iNdOYVshjIH/ye5lZvB0=
+Received: by 10.204.152.22 with SMTP id e22mr1935776bkw.103.1297128023089;
+        Mon, 07 Feb 2011 17:20:23 -0800 (PST)
 Received: from localhost (ppp91-77-227-18.pppoe.mtu-net.ru [91.77.227.18])
-        by mx.google.com with ESMTPS id x38sm2410085bkj.13.2011.02.07.17.06.50
+        by mx.google.com with ESMTPS id j11sm2415471bka.12.2011.02.07.17.20.20
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 07 Feb 2011 17:06:51 -0800 (PST)
+        Mon, 07 Feb 2011 17:20:22 -0800 (PST)
 Content-Disposition: inline
-In-Reply-To: <201102070429.05033.johan@herland.net>
+In-Reply-To: <20110207190551.GA25413@pcpool00.mathematik.uni-freiburg.de>
 User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166323>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166324>
 
-On Mon, Feb 07, 2011 at 04:29:04AM +0100, Johan Herland wrote:
+On Mon, Feb 07, 2011 at 08:05:51PM +0100, Bernhard R. Link wrote:
 > 
-> As I understand your view (I do apologize if I somehow misrepresent it), you 
-> want Git to assume that the common practice of one semantic namespace is 
-> followed. Furthermore, you also want to enforce that practice where 
-> possible, while still improving the handling of the uncommon (but 
-> theoretically inevitable) case (warning and presumably guiding the user when 
-> a tag conflict occurs).
+> So there are those "local tags", which are not to be shared with others.
+> Does that mean an user should always have two repositories, one with
+> those tags for themselves and one without those tags for each other?
 
-Yes, you are correct. I consider a single tag namespace as the common
-case, but it should be possible to have more than one namespace for
-those who needs that. I think our disagreement is due to the fact that
-you believe that if someone added another remote, he or she wants
-another namespace for tags, but I think it depends on whether you treat
-different remotes as one project or different semi-related projects.
+Well, I believe that the best practice is that each developer has
+his/her own private repo and there is also a "bare" repo to which
+is used to share results with others. In this way, local tags are
+stay only inside one's private repo.
 
-There is a fundamental difference between branches and tags is that
-branches are often different (like each co-worker can publish each own
-master that he or she tested), but tags should have same tags as long as
-we work on the same project, otherwise it will lead to confusion.
+If you need to fetch directly from someone working repository, you can
+use "git fetch --no-tags", but obviously it is not an optimal solution
+if you also need to fetch global tags from it, because you will have
+to specify them explicitly.
 
+> > > Granted, if we leave all tags in a single namespace, I can still work around
+> > > this by manually futzing with the configured refspecs to create ad hoc
+> > > namespaces. But I _really_ hate it when I'm forced to hack around the tool,
+> > > because the tool thinks it "knows better".
+> >
+> > I believe that the right interface when the common case is simple, but
+> > an uncommon case is still possible to handle. I don't think that
+> > currently git meets this criterion, but making tag namespaces based on
+> > the remote name strikes me as a really bad idea. Tags are attributes of
+> > a project and not particular remote.
 > 
-> > 2. It complicates things for users (as Matthieu wrote above).
-> 
-> I guess this depends on your POV. Fundamentally, I do NOT want to change how 
-> people refer to tags. I only want to provide them the possibility of doing 
-> so when ambiguity is present.
+> Global tags are. Local tags are not.
 
-IMHO, there are two fundamentally two different use cases:
-- one project with many remotes
-- two (probably semi-related) projects in the same repo
+Sure. I probably should have said that I'd consider only global tags in
+the rest of my email, because local tags should not be normally visible
+outside of one's repo.
 
-In the first case, having two tags pointing to different commits is an
-obvious mistake that should be fixed as soon as possible. I do not think
-that different namespaces are necessary to fix that (or at least I do
-not see how it helps), but my main concern was that resolution of a tag
-conflict may be postponed (because they appear in different namespaces),
-but that does not resolve the confusion and may only prolong it.
+> And even for global tags it can be interesting to see which remote has
+> them, without having to manually look at all those remotes.
 
-> 
-> > 3. git fetch cannot report a tag clash if it happens
-> 
-> Yes it can: For each tag fetched from the remote, if resolving its shorthand 
-> name ("v1.7.4") results in ambiguity (i.e. there exists a conflicting tag 
-> elsewhere in this repo), then warn the user about this conflict, and explain 
-> how to refer to each tag candidate using the full ref name. Also explain how 
-> the user may resolve the ambiguity by creating a local tag 
-> ("refs/tags/v1.7.4") pointing to the preferred target.
-
-It it is possible then I do not have any serious objection here...
-
-> > So, IMHO, the proper solution should be ability to specify the desired
-> > namespace for any remote repository, like this:
-> > 
-> > remote.<name>.tagNameSpace = foo
-> 
-> Interesting. I'm not sure what "foo" means in this context. Would I use it 
-> like this?:
-> 
->     remote.origin.tagNameSpace = refs/tags
-
-I was not sure about the specific when I wrote this, so I just put "foo",
-but it could be something like you wrote above.
+I am not sure why it should be interesting. I mean as long as you do
+not have tag clashes, you should not need to know that. And if you
+really need to know that, you can use "git ls-remote" to check actual
+references.
 
 > 
-> (to place origin's tags in refs/tags/*)
+> > IMHO, it is very confusing, especially for people whose script was
+> > suddenly broken by those namespaces.
 > 
-> If so, what's the difference between this option, and using this?:
-> 
->     remote.origin.fetch = refs/tags/*:refs/tags/*
+> Like it was when remotes where introduced?
 
-I have not tried that, but I suspect that it will cause that all tags
-will be fetched even if they are not belong to tracked branches, i.e.
-"git fetch" will work as "git fetch -t". But maybe I am wrong here.
+How many people used git back then and how many people are using now?
+Have you forgotten what happened when the dash was removed from git
+commands?  There was endless cry about breaking git, though all what
+those people need to do is to add one directory to their PATH to have
+git dash commands back.
+
+So, what may be okay for a young and immature project (used by a small
+group of enthusiasts) may be not okay for a tool on which many people
+rely. Most people who use git now do not read ReleaseNotes. They just
+install a ready package for their favorite distro and expect everything
+to work as before.
+
+So, I think any changes should be introduced as gradual as possible.
 
 
 Dmitry
