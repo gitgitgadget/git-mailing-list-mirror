@@ -1,67 +1,72 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH] rebase: use @{upstream} if no upstream specified
-Date: Tue, 8 Feb 2011 19:27:03 +0100
-Message-ID: <AANLkTikxz1FJcKRkqRHtm3hUfhbQkcWHnNT25Kws1+yi@mail.gmail.com>
-References: <1297125475-19151-1-git-send-email-martin.von.zweigbergk@gmail.com>
- <AANLkTi=Uqkzv+ucBzww6R1V+0ujmfH-dED8XJhyRvWQF@mail.gmail.com> <alpine.DEB.2.00.1102081320350.4475@debian>
+From: Enrico Weigelt <weigelt@metux.de>
+Subject: Re: [1.8.0] Provide proper remote ref namespaces
+Date: Tue, 8 Feb 2011 20:11:48 +0100
+Message-ID: <20110208191147.GA8675@nibiru.local>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com> <201102070429.05033.johan@herland.net> <20110208010648.GA3132@dpotapov.dyndns.org> <201102080915.27484.johan@herland.net>
+Reply-To: weigelt@metux.de
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Yann Dirson <ydirson@altern.org>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 08 19:27:50 2011
+Content-Type: text/plain; charset=us-ascii
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 08 20:21:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmsI2-0001ZI-BF
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 19:27:50 +0100
+	id 1Pmt7g-0002GH-LB
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 20:21:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755019Ab1BHS1p (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Feb 2011 13:27:45 -0500
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:43865 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754835Ab1BHS1o (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Feb 2011 13:27:44 -0500
-Received: by yib18 with SMTP id 18so2379915yib.19
-        for <git@vger.kernel.org>; Tue, 08 Feb 2011 10:27:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=7mGYCddw28F0aN5J6Ty2V9Oz2oWRhtCq78LLbtHbj+g=;
-        b=oGLqruim4p8L9GIdQOwOyapyjBjdWJDXECcTTfIvpJaObwJZFQNJ7lgfmobKQANxCT
-         tcfimSETy8SRSciyHNwfNq+pWuv6Nzbel3xnQ+RvcGMxaOektE0kBBP4Iu2SVprAoIKc
-         DQgOEC94VicNhfci2rMx14vQy6jblp+AaXpAE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=EznnqvLkASvDOf8nFQsKmsMCxXIDxHjujjoxy7enTlcHdptgA1e6Nronjyeb3KY+Mk
-         b4x/LpnFua6NapdL9ZPA7oF4Ld810uddkJtit2rEzQNtW0UQFK8DEpOFbm8OIHdyBRnM
-         EB4zeLgeG9rCZZMBIWc0AButRe2hD4Q8JnTtE=
-Received: by 10.150.229.16 with SMTP id b16mr320630ybh.226.1297189663890; Tue,
- 08 Feb 2011 10:27:43 -0800 (PST)
-Received: by 10.150.51.6 with HTTP; Tue, 8 Feb 2011 10:27:03 -0800 (PST)
-In-Reply-To: <alpine.DEB.2.00.1102081320350.4475@debian>
+	id S1754047Ab1BHTVF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Feb 2011 14:21:05 -0500
+Received: from caprica.metux.de ([82.165.128.25]:36992 "EHLO
+	mailgate.caprica.metux.de" rhost-flags-OK-OK-OK-FAIL)
+	by vger.kernel.org with ESMTP id S1750923Ab1BHTVE (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Feb 2011 14:21:04 -0500
+Received: from mailgate.caprica.metux.de (localhost.localdomain [127.0.0.1])
+	by mailgate.caprica.metux.de (8.14.4/8.14.4) with ESMTP id p18JHeHm001253
+	for <git@vger.kernel.org>; Tue, 8 Feb 2011 20:17:44 +0100
+Received: (from uucp@localhost)
+	by mailgate.caprica.metux.de (8.14.4/8.14.4/Submit) with UUCP id p18JHVMt001249
+	for git@vger.kernel.org; Tue, 8 Feb 2011 20:17:31 +0100
+Received: (from weigelt@localhost)
+	by nibiru.metux.de (8.12.10/8.12.10) id p18JBmVX021447
+	for git@vger.kernel.org; Tue, 8 Feb 2011 20:11:48 +0100
+Mail-Followup-To: git@vger.kernel.org
+Content-Disposition: inline
+In-Reply-To: <201102080915.27484.johan@herland.net>
+User-Agent: Mutt/1.4.1i
+X-Terror: bin laden, kill bush, Briefbombe, Massenvernichtung, KZ, 
+X-Nazi: Weisse Rasse, Hitlers Wiederauferstehung, 42, 
+X-Antichrist: weg mit schaeuble, ausrotten, heiliger krieg, al quaida, 
+X-Killer: 23, endloesung, Weltuntergang, 
+X-Doof: wer das liest ist doof
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166364>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166365>
 
-Heya,
+* Johan Herland <johan@herland.net> wrote:
 
-On Tue, Feb 8, 2011 at 19:23, Martin von Zweigbergk
-<martin.von.zweigbergk@gmail.com> wrote:
-> Thanks, but that was stolen from git-pull.sh ;-). Federico Mena
-> Quintero added it there in 8fc293c (Make git-pull complain and give
-> advice when there is nothing to merge with, 2007-10-02).
+> Ah, yes, I should have been more specific:
+> 
+>     remote.origin.fetch = ~refs/tags/*:refs/tags/*
+> 
+> In my proposal, I suggest using a "~" prefix to signal auto-following 
+> behavior. This is needed in order to be able to explicitly specify the 
+> current fetch behavior in the configuration.
 
-Credit where credit is due :), nonetheless, glad to see it here as well.
+Under the hood, this line could be automatically "added" (internally)
+unless some "fetch.autotag = false" is given.
 
+
+cu
 -- 
-Cheers,
+----------------------------------------------------------------------
+ Enrico Weigelt, metux IT service -- http://www.metux.de/
 
-Sverre Rabbelier
+ phone:  +49 36207 519931  email: weigelt@metux.de
+ mobile: +49 151 27565287  icq:   210169427         skype: nekrad666
+----------------------------------------------------------------------
+ Embedded-Linux / Portierung / Opensource-QM / Verteilte Systeme
+----------------------------------------------------------------------
