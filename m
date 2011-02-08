@@ -1,99 +1,64 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: rebase planning: determining blobs changed by multiple branches
-Date: Mon, 07 Feb 2011 19:27:54 -0600
-Message-ID: <4D509C1A.50801@gmail.com>
-References: <iiq3kb$aiv$1@dough.gmane.org> <1297126350-sup-6606@localhost.localdomain>
+From: Eric Raible <raible@nextest.com>
+Subject: Re: Re: "git add -u" broken in git 1.7.4?
+Date: Mon, 7 Feb 2011 17:25:31 -0800
+Message-ID: <4D509B8B.6090607@nextest.com>
+References: <4D4DEDC4.4080708@hartwork.org> <20110206051333.GA3458@sigill.intra.peff.net> <4D4EF7E4.7050303@hartwork.org> <vpq1v3kopn3.fsf@bauges.imag.fr> <7vwrlcv1ea.fsf@alter.siamese.dyndns.org> <20110207055314.GA5511@sigill.intra.peff.net> <7vhbcguytf.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="ISO-8859-1"
 Content-Transfer-Encoding: 7bit
-Cc: git <git@vger.kernel.org>
-To: Marc Weber <marco-oweber@gmx.de>
-X-From: git-owner@vger.kernel.org Tue Feb 08 02:30:18 2011
+Cc: Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Sebastian Pipping <webmaster@hartwork.org>,
+	Git ML <git@vger.kernel.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Tue Feb 08 02:30:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmcPJ-0008U3-Mf
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 02:30:18 +0100
+	id 1PmcPm-0000I7-HZ
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 02:30:46 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754574Ab1BHBaK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 20:30:10 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:42014 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753168Ab1BHBaJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 20:30:09 -0500
-Received: by gyb11 with SMTP id 11so2004883gyb.19
-        for <git@vger.kernel.org>; Mon, 07 Feb 2011 17:30:08 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version
-         :newsgroups:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=nDHdngZ4JHtN29rHptdBJygXNyCKo7LLS93/cxyXRrs=;
-        b=Wior0z//Cm7JsGZjmm7hjjASTtpiimVc9QSc0UadFUGmK/FQnqs3rwR0MiJhvPYN8v
-         MCJ47HaRvYbqvMP5cpUILDojwD7dZkt30dkkzPgbHENFLxRwzEjmPAGSyDN6eH+u3fqv
-         bZYi6VWxw6ZY1iDQ+qKlAW7Gmpq3cyyk9e1fo=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        b=D8F5n3zydd8veF7utWrjEk3tPNrrLAtvOf4SkkvfFBU+a0RAXUqdEWguxUq0CXr1Y2
-         fhLKYnYFcvZxSbAYNKnJA8mC8JTbQhs45H08EbRttS0kIpBfjhT6k0pthUGBlWea8ThH
-         7mZjNPh1AAOu+aFrEw8q9B+ccqyaTCSrxr9eI=
-Received: by 10.90.63.6 with SMTP id l6mr20146412aga.125.1297128608732;
-        Mon, 07 Feb 2011 17:30:08 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id c39sm6346654anc.7.2011.02.07.17.30.07
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 07 Feb 2011 17:30:07 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <1297126350-sup-6606@localhost.localdomain>
+	id S1754769Ab1BHBal (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Feb 2011 20:30:41 -0500
+Received: from exchange.domain1.nextest.com ([12.96.234.114]:45240 "EHLO
+	Exchange.DOMAIN1.nextest.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1754671Ab1BHBak (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 7 Feb 2011 20:30:40 -0500
+X-Greylist: delayed 308 seconds by postgrey-1.27 at vger.kernel.org; Mon, 07 Feb 2011 20:30:40 EST
+Received: from [131.101.20.211] (131.101.20.211) by
+ Exchange.DOMAIN1.nextest.com (131.101.21.39) with Microsoft SMTP Server (TLS)
+ id 8.2.254.0; Mon, 7 Feb 2011 17:26:33 -0800
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
+In-Reply-To: <7vhbcguytf.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166326>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166327>
 
-On 2/7/2011 6:59 PM, Marc Weber wrote:
-> Hi Neal,
->
-> I'm not quite sure what you want to do?
-> rebase all branches on top of commit l so that they are up to date?
->
-> Why do you want to find common blobs?
-> If the same conflict happens you could use gitrere and reuse a conflict
-> resolution.
->
-> git ls-files --with $HASH
-> gives you a list of files
->
-> git diff --name-only
-> should  give you a nice list of modified files.
->
-> So using the intersection of  ls-files of branch and tip should give you
-> common files. Substracting changed files using --name-only should yield
-> the files which were not modified.
-> Maybe there are nicer solutions though.
->
-> Rebasing is always bad. Have you considered using top-git?
-> This way you can merge with tip and create the rebased patches using the
-> export function.
+On 11:59 AM, Junio C Hamano wrote:
 
-Our master represents our new system and we want to have a linear 
-history so we use rebase.  Each branch is a project.  If a project does 
-not have any merges with other projects then it can rebase with little 
-impact.  If projects are changing alot of the same blobs then they will 
-have alot of merged blobs and can be rebased on eachother in 
-throw-away-integration branches.  In this way the branches can be 
-grouped into appropriate rebase groups so the merge-conflict resolutions 
-of these groups can be resolved simultaneously in different integration 
-repos.  So lets say you have 5 groups, then you can rebase those 5 
-integration-branches onto master one-by-one instead of doing 15 project 
-branches one-by-one.  I thought maybe git had a cool command for 
-analyzing this in one fell swoop.
+> I actually do not mind too much myself if all commands that can take
+> pathspecs consistently defaulted to "full-tree" pathspec given no
+> pathspec.  But if we were to go that route, everybody should join their
+> voice to defend that decision when outside people say "in 1.8.0 'git grep'
+> run from a subdirectory shows matches from all the irrelevant parts of the
+> tree; with all the cruft its output is unreadable". I won't be the sole
+> champion of such a behaviour when I do not fully believe in it.
 
-v/r,
-Neal
+IFUC this shouldn't affect any (correctly written) scripts,
+and so the only downside is that (when run in a subdir) commands
+that are currently spelled:
+
+	git xxx
+
+would with this change need to be spelled:
+
+	git xxx .
+
+One advantage of this approach is that one's fingers would
+learn the "only this dir" two char sequence very quickly.
+
+So FWIW, I will do my best to help defend such a decision.
