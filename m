@@ -1,131 +1,168 @@
-From: Dmitry Potapov <dpotapov@gmail.com>
-Subject: Re: [1.8.0] Provide proper remote ref namespaces
-Date: Tue, 8 Feb 2011 04:20:18 +0300
-Message-ID: <20110208012018.GB3132@dpotapov.dyndns.org>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
- <201102061711.45460.johan@herland.net>
- <AANLkTi=gd5iu0i=ggqJC++N_rL+nU6RO9PNw=jMpT0NH@mail.gmail.com>
- <201102062312.51655.johan@herland.net>
- <AANLkTi=A-rh+wfg7O4KryydxVuorM8nkuGYmpbgVfVJp@mail.gmail.com>
- <20110207190551.GA25413@pcpool00.mathematik.uni-freiburg.de>
+From: Pete Wyckoff <pw@padd.com>
+Subject: Re: [PATCH] Support different branch layouts in git-p4
+Date: Mon, 7 Feb 2011 20:22:08 -0500
+Message-ID: <20110208012208.GA28329@arf.padd.com>
+References: <4D489068.2040704@vmware.com>
+ <AANLkTi=ozDk9SqYaYWKHXSjVChV-93-88F_LUCwfSiDc@mail.gmail.com>
+ <4D4F3738.7010603@vmware.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>,
-	Johan Herland <johan@herland.net>
-To: "Bernhard R. Link" 
-	<brl+ccmadness@pcpool00.mathematik.uni-freiburg.de>
-X-From: git-owner@vger.kernel.org Tue Feb 08 02:20:31 2011
+Cc: Tor Arvid Lund <torarvid@gmail.com>, git@vger.kernel.org
+To: Ian Wienand <ianw@vmware.com>
+X-From: git-owner@vger.kernel.org Tue Feb 08 02:22:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmcFq-00044v-Gi
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 02:20:30 +0100
+	id 1PmcHf-00054v-6P
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 02:22:23 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754143Ab1BHBUZ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 20:20:25 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:60784 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754037Ab1BHBUY (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 20:20:24 -0500
-Received: by bwz15 with SMTP id 15so5532478bwz.19
-        for <git@vger.kernel.org>; Mon, 07 Feb 2011 17:20:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=H63pJFqgprSiAABuaz0e2HJk6u8GvUujcZKAok6EJLM=;
-        b=E/ohf/SLjJT8qgMxmKQjQ08bZTDi22fSP/f5CXftZKRBTcGcJEQMfoveC19sin+lVY
-         qYE9U954jE5M6MJ5uMUFJoznvFeW4KbSDFmmzkvmKqkbOWqfGiKC74JPtRxlthXZ3odh
-         UIqJACSc6V46bH+XbgEgMHiBIiRKHfLtmRAYw=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=UyBu16T6UP8CvlLqowPo+Q6juyRyaLAvL37U04VcLp+gJL64BwXMRYAriEt1rD5O1D
-         IUP3njRg4WQyDZ2RSDs9P932OthKR9u0UhhuUUnUU9mmz+Uw/D4KyFy0fMOLPGgwKWLH
-         6hH0NMCzK+1/jdNP5iNdOYVshjIH/ye5lZvB0=
-Received: by 10.204.152.22 with SMTP id e22mr1935776bkw.103.1297128023089;
-        Mon, 07 Feb 2011 17:20:23 -0800 (PST)
-Received: from localhost (ppp91-77-227-18.pppoe.mtu-net.ru [91.77.227.18])
-        by mx.google.com with ESMTPS id j11sm2415471bka.12.2011.02.07.17.20.20
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Mon, 07 Feb 2011 17:20:22 -0800 (PST)
+	id S1754212Ab1BHBWR (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Feb 2011 20:22:17 -0500
+Received: from honk.padd.com ([74.3.171.149]:53462 "EHLO honk.padd.com"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1752594Ab1BHBWR (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Feb 2011 20:22:17 -0500
+Received: from arf.padd.com (pool-71-111-208-86.rlghnc.dsl-w.verizon.net [71.111.208.86])
+	by honk.padd.com (Postfix) with ESMTPSA id 5B624EF;
+	Mon,  7 Feb 2011 17:22:15 -0800 (PST)
+Received: by arf.padd.com (Postfix, from userid 7770)
+	id 8B6BF31ADE; Mon,  7 Feb 2011 20:22:08 -0500 (EST)
 Content-Disposition: inline
-In-Reply-To: <20110207190551.GA25413@pcpool00.mathematik.uni-freiburg.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <4D4F3738.7010603@vmware.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166324>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166325>
 
-On Mon, Feb 07, 2011 at 08:05:51PM +0100, Bernhard R. Link wrote:
+ianw@vmware.com wrote on Sun, 06 Feb 2011 16:05 -0800:
+> I did consider this at first.  My only issue is that it is a bit
+> confusing to use the client spec for filtering (and in this case
+> re-writing), but not for actually selecting the depots to clone, which
+> I still need to replicate on the command line.  However that is a much
+> larger change.
 > 
-> So there are those "local tags", which are not to be shared with others.
-> Does that mean an user should always have two repositories, one with
-> those tags for themselves and one without those tags for each other?
-
-Well, I believe that the best practice is that each developer has
-his/her own private repo and there is also a "bare" repo to which
-is used to share results with others. In this way, local tags are
-stay only inside one's private repo.
-
-If you need to fetch directly from someone working repository, you can
-use "git fetch --no-tags", but obviously it is not an optimal solution
-if you also need to fetch global tags from it, because you will have
-to specify them explicitly.
-
-> > > Granted, if we leave all tags in a single namespace, I can still work around
-> > > this by manually futzing with the configured refspecs to create ad hoc
-> > > namespaces. But I _really_ hate it when I'm forced to hack around the tool,
-> > > because the tool thinks it "knows better".
-> >
-> > I believe that the right interface when the common case is simple, but
-> > an uncommon case is still possible to handle. I don't think that
-> > currently git meets this criterion, but making tag namespaces based on
-> > the remote name strikes me as a really bad idea. Tags are attributes of
-> > a project and not particular remote.
+> What do you think of this one?
 > 
-> Global tags are. Local tags are not.
-
-Sure. I probably should have said that I'd consider only global tags in
-the rest of my email, because local tags should not be normally visible
-outside of one's repo.
-
-> And even for global tags it can be interesting to see which remote has
-> them, without having to manually look at all those remotes.
-
-I am not sure why it should be interesting. I mean as long as you do
-not have tag clashes, you should not need to know that. And if you
-really need to know that, you can use "git ls-remote" to check actual
-references.
-
+> In this case, my client view is
 > 
-> > IMHO, it is very confusing, especially for people whose script was
-> > suddenly broken by those namespaces.
+> //depot/project/branch/...  //client/branch/project/...
+> //depot/project2/branch/...  //client/branch/project2/...
 > 
-> Like it was when remotes where introduced?
+> and my git directory layout ends up as
+> 
+> branch/project/...
+> branch/project2/...
 
-How many people used git back then and how many people are using now?
-Have you forgotten what happened when the dash was removed from git
-commands?  There was endless cry about breaking git, though all what
-those people need to do is to add one directory to their PATH to have
-git dash commands back.
+We had such terrible p4 mappings too, before the last
+rearrangement put us into a single-line view spec.  I think
+it would help others to include such support, though.
 
-So, what may be okay for a young and immature project (used by a small
-group of enthusiasts) may be not okay for a tool on which many people
-rely. Most people who use git now do not read ReleaseNotes. They just
-install a ready package for their favorite distro and expect everything
-to work as before.
+Back then, I hacked together similar code to deal with the
+annoyance.  My code was not pretty and not complete, either.
 
-So, I think any changes should be introduced as gradual as possible.
+If you look at "p4 help views", they have lots of oddities
+that in theory should be accounted for here.  It doesn't
+even mention the thing about quotes, but obviously that is
+supported.  Wildcards ... and * can appear multiple
+times.  And %%[1-9] can be used to reorder the path.  Also the
+order of lines matters, and "+" can be used to merge entries.
+Whew.
 
+In practice, I think you get most everything we care about.  A
+few comments below, beyond the bits that Tor Arvid caught.
 
-Dmitry
+		-- Pete
+
+> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+> index 04ce7e3..eb9620c 100755
+> --- a/contrib/fast-import/git-p4
+> +++ b/contrib/fast-import/git-p4
+> @@ -878,6 +878,7 @@ class P4Sync(Command):
+>          self.cloneExclude = []
+>          self.useClientSpec = False
+>          self.clientSpecDirs = []
+> +        self.clientName = None
+
+Unused.
+
+>          if gitConfig("git-p4.syncFromOrigin") == "false":
+>              self.syncWithOrigin = False
+> @@ -910,6 +911,22 @@ class P4Sync(Command):
+>          return files
+>  
+>      def stripRepoPath(self, path, prefixes):
+> +        if self.useClientSpec:
+> +
+> +            # if using the client spec, we use the output directory
+> +            # specified in the client.  For example, a view
+> +            #   //depot/foo/branch/... //client/branch/foo/...
+> +            # will end up putting all foo/branch files into
+> +            #  branch/foo/
+> +            for val in self.clientSpecDirs:
+> +                if path.startswith(val[0]):
+> +                    # replace the depot path with the client path
+> +                    path = path.replace(val[0], val[1][1])
+> +                    # now strip out the client (//client/...)
+> +                    path = re.sub("^(//[^/]+/)", '', path)
+> +                    # the rest is all path
+> +                    return path
+
+That's clever.  Better than having to remember Client: and build
+//client/ out of it.  You could do this down in getClientSpec()
+so that val[1] starts with the git-relative path.
+
+>          if self.keepRepoPath:
+>              prefixes = [re.sub("^(//[^/]+/).*", r'\1', prefixes[0])]
+>  
+> @@ -1032,7 +1049,7 @@ class P4Sync(Command):
+>              includeFile = True
+>              for val in self.clientSpecDirs:
+>                  if f['path'].startswith(val[0]):
+> -                    if val[1] <= 0:
+> +                    if val[1][0] <= 0:
+>                          includeFile = False
+>                      break
+>  
+> @@ -1474,20 +1491,36 @@ class P4Sync(Command):
+>          temp = {}
+>          for entry in specList:
+>              for k,v in entry.iteritems():
+> +                if k.startswith("Client"):
+> +                    self.clientName = v
+
+Oh maybe here is where you thought you would need client, but
+don't.
+
+>                  if k.startswith("View"):
+>                      if v.startswith('"'):
+>                          start = 1
+>                      else:
+>                          start = 0
+>                      index = v.find("...")
+> +
+> +                    # save the "client view"; i.e the RHS of the view
+> +                    # line that tells the client where to put the
+> +                    # files for this view.
+> +                    cv = v[index+4:] # +4 to remove previous '... '
+> +                    cv_index = cv.find("...")
+> +                    cv=cv[:cv_index]
+> +
+> +                    # now save the view; +index means included, -index
+> +                    # means it should be filtered out.
+>                      v = v[start:index]
+>                      if v.startswith("-"):
+>                          v = v[1:]
+> -                        temp[v] = -len(v)
+> +                        include = -len(v)
+>                      else:
+> -                        temp[v] = len(v)
+> +                        include = len(v)
+> +
+> +                    temp[v] = (include, cv)
+> +
+>          self.clientSpecDirs = temp.items()
+> -        self.clientSpecDirs.sort( lambda x, y: abs( y[1] ) - abs( x[1] ) )
+> +        self.clientSpecDirs.sort( lambda x, y: abs( y[1][0] ) - abs( x[1][0] ) )
