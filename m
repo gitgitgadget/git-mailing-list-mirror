@@ -1,113 +1,82 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 Subject: Re: [1.8.0] git checkout refs/heads/foo checks out branch foo
-Date: Mon, 7 Feb 2011 18:01:52 -0600
-Message-ID: <20110208000151.GA19944@elie>
-References: <alpine.DEB.1.10.1102062234010.3788@debian>
- <20110207205934.GD13461@sigill.intra.peff.net>
- <AANLkTinmqTi4cYbR6PtSxt6itCvFQDuT_sE1tjx45a3h@mail.gmail.com>
- <20110207220030.GA19357@elie>
- <7vaai7s9g4.fsf@alter.siamese.dyndns.org>
- <20110207234526.GA28336@sigill.intra.peff.net>
+Date: Mon, 7 Feb 2011 19:22:21 -0500 (EST)
+Message-ID: <alpine.DEB.1.10.1102071918430.3788@debian>
+References: <alpine.DEB.1.10.1102062234010.3788@debian> <20110207211127.GG63976@book.hvoigt.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
 	git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Tue Feb 08 01:02:08 2011
+To: Heiko Voigt <hvoigt@hvoigt.net>
+X-From: git-owner@vger.kernel.org Tue Feb 08 01:22:32 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pmb20-00078E-5i
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 01:02:08 +0100
+	id 1PmbLi-0000zr-Gp
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 01:22:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755377Ab1BHACB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 7 Feb 2011 19:02:01 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:55064 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755178Ab1BHACA (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 7 Feb 2011 19:02:00 -0500
-Received: by qyj19 with SMTP id 19so1947420qyj.19
-        for <git@vger.kernel.org>; Mon, 07 Feb 2011 16:02:00 -0800 (PST)
+	id S1755407Ab1BHAW0 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 7 Feb 2011 19:22:26 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:35973 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755125Ab1BHAWZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 7 Feb 2011 19:22:25 -0500
+Received: by vxb37 with SMTP id 37so1947802vxb.19
+        for <git@vger.kernel.org>; Mon, 07 Feb 2011 16:22:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=xOj0m5cSUPTACJxVKL5g8W91jOLOrGmkWYw9qV5Re6o=;
-        b=d+qLufioMR8mjjiyVIsnJd2D3BVbvJ7MsHmF421b8b7d/DZzp15F7cg5hNfzs6AUKd
-         WZlzJ0QVLjfLfKAuUQnhvx5tsvYRTic6zYRuQqWXSo7ebYu7+NMCxD+Nqj5/BLGheU2c
-         g8k55mMtmXAkqqC2S7GsuTvdW8truN/Rh1KaI=
+        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
+         :message-id:references:user-agent:mime-version:content-type;
+        bh=jpxzbNVTf8/+2mk6mQkg3pRCG7Pqw5CAqbGuZjjTIdg=;
+        b=H8y4axRHIPt8+bB21W7Qpk9GsWarof2LvWmbN4ivTtgoj+fa90MxMpquE4FV2CIml2
+         IIN7YuKJRo4n8SDMo9sJrA12IdbO81cb+/v5pkJdIUI2p6IXS2B0HY1/p9UKtw/2FjPB
+         Rsbr5QZlnjwAy75aZQ4NqaqI9usT6/K1/Ai+A=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=jlsgQ/nPi8z1cUHSzNIxMRyKB/wkH3Q/XXzKyxRi7gnY3t61Fpcru07CVu7oghs7Wf
-         QImwZfgljARUD862AuZki7UWlIK/GEKqmDiadnKQjQCxSyf2rwkrtGd3+K5Gvv4iCmME
-         s/wkg3MLs5sX73EoE7kc6V24GZuonPhklMcVg=
-Received: by 10.224.20.2 with SMTP id d2mr14562172qab.300.1297123319373;
-        Mon, 07 Feb 2011 16:01:59 -0800 (PST)
-Received: from elie ([76.206.235.233])
-        by mx.google.com with ESMTPS id g32sm3128976qck.34.2011.02.07.16.01.56
-        (version=SSLv3 cipher=RC4-MD5);
-        Mon, 07 Feb 2011 16:01:57 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110207234526.GA28336@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.20 (2009-06-14)
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        b=KGI8NFuf3ZgniGi5FdT9GmWAD65tkzQgVl3Ew5wGK3ISKw3oyGBzyKfcUTLnOlcOSh
+         ahBEE8MrmQS03z29ZsqJnx6FEtt0dRUO98FGu3VtLOp0fcCL06cVdGlVvB4Z8T+TLvN+
+         1H3NhWG0H0Oo2m6Tc/zz536b0laWWvYVgnNmk=
+Received: by 10.220.188.135 with SMTP id da7mr4453063vcb.146.1297124544231;
+        Mon, 07 Feb 2011 16:22:24 -0800 (PST)
+Received: from [192.168.1.104] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id u6sm3690134vby.17.2011.02.07.16.22.22
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Mon, 07 Feb 2011 16:22:23 -0800 (PST)
+X-X-Sender: martin@debian
+In-Reply-To: <20110207211127.GG63976@book.hvoigt.net>
+User-Agent: Alpine 1.10 (DEB 962 2008-03-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166312>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166313>
 
-Jeff King wrote:
+On Mon, 7 Feb 2011, Heiko Voigt wrote:
 
-> Jonathan, do you want to roll all of these up into a single patch?
+> Hallo Martin,
+> 
+> On Mon, Feb 07, 2011 at 06:01:51AM -0500, Martin von Zweigbergk wrote:
+> > Proposal:
+> > 
+> > 'git checkout refs/heads/foo' (or 'git checkout heads/foo' for that
+> > matter) does not check out the branch, but instead detaches HEAD at
+> > foo. This is quite counter-intuitive (at least to me) and the same
+> > functionality can be achieved by using e.g. foo~0. Change the behavior
+> > so that the branch is actually checked out. This also applies to
+> > e.g. 'git rebase master refs/heads/topic', which currently rebases a
+> > detached HEAD. There are probably other examples as well that I'm not
+> > aware of.
+> 
+> Just to clarify: You are not proposing that 'git checkout origin/master'
+> would also not checkout to a detached head, right? Because that is a
+> feature I am using frequently to test branches that have been pushed by
+> another developer to a remote server. If that would create a new local
+> branch that would be confusing.
 
-Sounds good.
+Nope, I'm not proposing that. I wouldn't want that either.
 
-> +++ b/t/t2020-checkout-detach.sh
-[...]
-> +check_detached() {
-> +	! git symbolic-ref -q HEAD >/dev/null
-> +}
-> +
-> +check_not_detached() {
-> +	! check_detached
-> +}
-
-To be pedantic, I'll put
-
- check_detached () {
-	test_must_fail git symbolic-ref -q HEAD >/dev/null
- }
-
- check_not_detached () {
-	git symbolic-ref -q HEAD >/dev/null
- }
-
-and add some more paranoid tests:
-
- test_expect_success 'checkout --detach without branch name detaches' '
-        reset &&
-	git checkout --detach &&
-	check_detached
- '
-
- test_expect_success 'checkout --detach catches error in usage' '
-	reset &&
-	git checkout master &&
-	test_must_fail git checkout --detach tag nonsense &&
-	check_not_detached
- '
-
- test_expect_success 'checkout --detach moves HEAD' '
-	reset &&
-	git checkout one &&
-	git checkout --detach two &&
-	git diff --exit-code HEAD &&
-	git diff --exit-code two
- '
+/Martin
