@@ -1,68 +1,224 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: What's cooking in git.git (Jan 2011, #06; Sun, 30)
-Date: Tue, 08 Feb 2011 11:27:15 -0800
-Message-ID: <7v4o8eqqcs.fsf@alter.siamese.dyndns.org>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org>
- <AANLkTik4jZWLt6T-SwMgK94FJ77ujyUC4-oFD46-eqN=@mail.gmail.com>
- <AANLkTikyHANL3y8VZ3LWu7bXkJwEHiiDLJ5NDZaA7z=b@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	git@vger.kernel.org
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 08 20:27:35 2011
+From: Jared Hance <jaredhance@gmail.com>
+Subject: [PATCH v2] Add support for merging from upstream by default.
+Date: Tue,  8 Feb 2011 15:48:49 -0500
+Message-ID: <1297198129-3403-1-git-send-email-jaredhance@gmail.com>
+Cc: Jared Hance <jaredhance@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Tue Feb 08 21:49:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmtDp-0006XE-4r
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 20:27:33 +0100
+	id 1PmuUv-0007Sz-FW
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 21:49:18 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755353Ab1BHT12 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Feb 2011 14:27:28 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:45919 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750923Ab1BHT11 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Feb 2011 14:27:27 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DBFAA3A25;
-	Tue,  8 Feb 2011 14:28:23 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=NyritE3BrDi1
-	L2l89pk3r98m7mc=; b=KzJPvbfpsQaQsE94eLcaf+VYbufWa9/1bgbJURH/Dqy4
-	CtBCJ92WN0Z6rCnYz861qD5oBLMo3RR3oWNhhyqt23cqhLW0IKcRKcCkQ37iyBNW
-	KqAjTS5S4KlhkJ/ptopxoepDQv8MTTQRBjhIKxkFMFDpPZboXKUgV3Y7hEUxwjw=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=D8ddJE
-	AJxQtthQV5IY5zVIe4SKll3vltgmcA9puL0d+BFBncO17Zjm60rMhehJDx7TrZ2r
-	mZGN+1hdGjTbG6xKBCDcGODpyuPiBZXQaY6wyP4MxzRxvcTB24eLPQyE6uVWWAr5
-	AZbxDXb0LJcq8Oy1iGcxDoUCrweV5dhnCUdO0=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id A6B1C3A1C;
-	Tue,  8 Feb 2011 14:28:20 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 89D293A13; Tue,  8 Feb 2011
- 14:28:16 -0500 (EST)
-In-Reply-To: <AANLkTikyHANL3y8VZ3LWu7bXkJwEHiiDLJ5NDZaA7z=b@mail.gmail.com>
- (Sverre Rabbelier's message of "Tue\, 8 Feb 2011 18\:48\:24 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 9666FAE8-33B9-11E0-8A53-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
+	id S1755693Ab1BHUtM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Feb 2011 15:49:12 -0500
+Received: from mail-qw0-f46.google.com ([209.85.216.46]:47003 "EHLO
+	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755457Ab1BHUtL (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Feb 2011 15:49:11 -0500
+Received: by qwa26 with SMTP id 26so4528337qwa.19
+        for <git@vger.kernel.org>; Tue, 08 Feb 2011 12:49:10 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=GCreor65bmrbjEv9kjC0dLMI8O3NJXNi5aIau/upyEQ=;
+        b=Gnf2MvwdzhQquN3Uob1rV5xZ9ahKSZ+lURCaCVLCwWXxr+ikRoKu2h0XaZeYE1Tf5X
+         lCHkLiiU3rFrdR9lX+HTqNsxIl5IWdh8Eo9aSIlOWUD1IQLtw8jcpfSWWWt9QRr4ffav
+         PMVuMHbA/TFH7acljpFsMO4EmHUqSjp/wRbgw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=AmWpX5WgObVkRBWHovadCeNAh16q1/8q/lQrXSt2bztv0uT8Ap+ZUrtEF2vBtYbZTW
+         aOImen0kmKEHGF9gT/bsVgRbPpZr/QfpLoBRLEZ2gTMkoWTY2MgNcE3U7nRRVIfF0W9L
+         GeRKiyx7cj1Y2L9laYgvHTD0e3yqYxqvZqJ4s=
+Received: by 10.229.186.20 with SMTP id cq20mr12639416qcb.12.1297198150585;
+        Tue, 08 Feb 2011 12:49:10 -0800 (PST)
+Received: from localhost.localdomain (cpe-75-186-7-248.cinci.res.rr.com [75.186.7.248])
+        by mx.google.com with ESMTPS id s10sm3929136qco.11.2011.02.08.12.49.08
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Tue, 08 Feb 2011 12:49:09 -0800 (PST)
+X-Mailer: git-send-email 1.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166366>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166367>
 
-Sverre Rabbelier <srabbelier@gmail.com> writes:
+Adds the option merge.defaultupstream to add support for merging from the
+upstream branch by default. The upstream branch is found using
+branch.[name].merge.
 
->> =C3=86var, you didn't respond to that message. Junio, do I understan=
-d
->> correctly that if this problem is addressed the topic is ready to be
->> merged to next?
+Also add helper functions `per_branch_config` and `setup_merge_commit` to
+reduce reduncancy and impove clarity.
 
-Necessary? yes. Sufficient? I dunno, but it is a good start, I think.
+Signed-off-by: Jared Hance <jaredhance@gmail.com>
+---
+ Documentation/config.txt |    5 +++
+ builtin/merge.c          |   81 +++++++++++++++++++++++++++++++++-------------
+ 2 files changed, 63 insertions(+), 23 deletions(-)
+
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index c5e1835..25c8292 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -1389,6 +1389,11 @@ man.<tool>.path::
+ 
+ include::merge-config.txt[]
+ 
++merge.defaultUpstream::
++	If merge is called without any ref arguments, merge from the branch
++	specified in branch.<current branch>.merge, which is considered to be
++	the upstream branch for the current branch.
++
+ mergetool.<tool>.path::
+ 	Override the path for the given tool.  This is useful in case
+ 	your tool is not in the PATH.
+diff --git a/builtin/merge.c b/builtin/merge.c
+index 42fff38..2b4fd4f 100644
+--- a/builtin/merge.c
++++ b/builtin/merge.c
+@@ -37,7 +37,7 @@ struct strategy {
+ };
+ 
+ static const char * const builtin_merge_usage[] = {
+-	"git merge [options] <remote>...",
++	"git merge [options] [<remote>...]",
+ 	"git merge [options] <msg> HEAD <remote>",
+ 	NULL
+ };
+@@ -58,6 +58,8 @@ static int option_renormalize;
+ static int verbosity;
+ static int allow_rerere_auto;
+ static int abort_current_merge;
++static int default_upstream;
++static const char *upstream_branch;
+ 
+ static struct strategy all_strategy[] = {
+ 	{ "recursive",  DEFAULT_TWOHEAD | NO_TRIVIAL },
+@@ -498,11 +500,15 @@ cleanup:
+ 	strbuf_release(&bname);
+ }
+ 
+-static int git_merge_config(const char *k, const char *v, void *cb)
++static int per_branch_config(const char *k, const char *v, void *cb)
+ {
+-	if (branch && !prefixcmp(k, "branch.") &&
+-		!prefixcmp(k + 7, branch) &&
+-		!strcmp(k + 7 + strlen(branch), ".mergeoptions")) {
++	const char *variable;
++	if(!branch || prefixcmp(k, "branch.")
++	   || prefixcmp(k + 7, branch))
++		return 1; /* ignore me */
++
++	variable = k + 7 + strlen(branch);
++	if(!strcmp(variable, ".mergeoptions")) {
+ 		const char **argv;
+ 		int argc;
+ 		char *buf;
+@@ -518,9 +524,26 @@ static int git_merge_config(const char *k, const char *v, void *cb)
+ 		parse_options(argc, argv, NULL, builtin_merge_options,
+ 			      builtin_merge_usage, 0);
+ 		free(buf);
++
++		return 0;
+ 	}
++	else if(strcmp(variable, ".merge")) {
++		return git_config_string(&upstream_branch, k, v);
++	}
++
++	return 1; /* not what I handle */
++}
+ 
+-	if (!strcmp(k, "merge.diffstat") || !strcmp(k, "merge.stat"))
++static int git_merge_config(const char *k, const char *v, void *cb)
++{
++	int status = per_branch_config(k, v, cb);
++
++	if (status <= 0)
++		return status;
++
++	if (!strcmp(k, "merge.defaultupstream"))
++		default_upstream = git_config_bool(k, v);
++	else if (!strcmp(k, "merge.diffstat") || !strcmp(k, "merge.stat"))
+ 		show_diffstat = git_config_bool(k, v);
+ 	else if (!strcmp(k, "pull.twohead"))
+ 		return git_config_string(&pull_twohead, k, v);
+@@ -911,6 +934,24 @@ static int evaluate_result(void)
+ 	return cnt;
+ }
+ 
++static void setup_merge_commit(struct strbuf *buf,
++	struct commit_list ***remotes, const char *s)
++{
++	struct object *o;
++	struct commit *commit;
++
++	o = peel_to_type(s, 0, NULL, OBJ_COMMIT);
++	if (!o)
++		die("%s - not something we can merge", s);
++	commit = lookup_commit(o->sha1);
++	commit->util = (void *)s;
++	*remotes = &commit_list_insert(commit, *remotes)->next;
++
++	strbuf_addf(buf, "GITHEAD_%s", sha1_to_hex(o->sha1));
++	setenv(buf->buf, s, 1);
++	strbuf_reset(buf);
++}
++
+ int cmd_merge(int argc, const char **argv, const char *prefix)
+ {
+ 	unsigned char result_tree[20];
+@@ -983,9 +1024,15 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	if (!allow_fast_forward && fast_forward_only)
+ 		die("You cannot combine --no-ff with --ff-only.");
+ 
+-	if (!argc)
+-		usage_with_options(builtin_merge_usage,
+-			builtin_merge_options);
++	if (!argc) {
++		if(default_upstream && upstream_branch) {
++			setup_merge_commit(&buf, &remotes, upstream_branch);
++		}
++		else {
++			usage_with_options(builtin_merge_usage,
++					builtin_merge_options);
++		}
++	}
+ 
+ 	/*
+ 	 * This could be traditional "merge <msg> HEAD <commit>..."  and
+@@ -1048,7 +1095,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 		}
+ 	}
+ 
+-	if (head_invalid || !argc)
++	if (head_invalid || (!argc && !(default_upstream && upstream_branch)))
+ 		usage_with_options(builtin_merge_usage,
+ 			builtin_merge_options);
+ 
+@@ -1059,19 +1106,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	strbuf_reset(&buf);
+ 
+ 	for (i = 0; i < argc; i++) {
+-		struct object *o;
+-		struct commit *commit;
+-
+-		o = peel_to_type(argv[i], 0, NULL, OBJ_COMMIT);
+-		if (!o)
+-			die("%s - not something we can merge", argv[i]);
+-		commit = lookup_commit(o->sha1);
+-		commit->util = (void *)argv[i];
+-		remotes = &commit_list_insert(commit, remotes)->next;
+-
+-		strbuf_addf(&buf, "GITHEAD_%s", sha1_to_hex(o->sha1));
+-		setenv(buf.buf, argv[i], 1);
+-		strbuf_reset(&buf);
++		setup_merge_commit(&buf, &remotes, argv[i]);
+ 	}
+ 
+ 	if (!use_strategies) {
+-- 
+1.7.4
