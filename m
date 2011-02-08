@@ -1,170 +1,147 @@
-From: Tor Arvid Lund <torarvid@gmail.com>
-Subject: Re: [PATCH 8/8] git-p4: support clone --bare
-Date: Tue, 8 Feb 2011 10:18:13 +0100
-Message-ID: <AANLkTinmttwtgF+RdG7Sr9aMi=awKeWZnHVME+9Z_Np+@mail.gmail.com>
-References: <20110205224848.GA30963@arf.padd.com>
-	<20110205225247.GI30963@arf.padd.com>
+From: SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>
+Subject: Re: "git add -u" broken in git 1.7.4?
+Date: Tue, 8 Feb 2011 11:05:18 +0100
+Message-ID: <20110208100518.GA9505@neumann>
+References: <4D4DEDC4.4080708@hartwork.org>
+	<20110206051333.GA3458@sigill.intra.peff.net>
+	<4D4EF7E4.7050303@hartwork.org> <vpq1v3kopn3.fsf@bauges.imag.fr>
+	<7vwrlcv1ea.fsf@alter.siamese.dyndns.org>
+	<20110207055314.GA5511@sigill.intra.peff.net>
+	<7vhbcguytf.fsf@alter.siamese.dyndns.org>
+	<20110207195035.GA13461@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Tue Feb 08 10:18:31 2011
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Sebastian Pipping <webmaster@hartwork.org>,
+	Git ML <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Tue Feb 08 11:05:39 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmjiQ-0004aU-Cs
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 10:18:30 +0100
+	id 1PmkRy-0004ZX-0x
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 11:05:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752563Ab1BHJSR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Feb 2011 04:18:17 -0500
-Received: from mail-gx0-f174.google.com ([209.85.161.174]:40065 "EHLO
-	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752561Ab1BHJSO convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Feb 2011 04:18:14 -0500
-Received: by gxk9 with SMTP id 9so2119740gxk.19
-        for <git@vger.kernel.org>; Tue, 08 Feb 2011 01:18:14 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=ez29m2Pk4HTIlJZvoAJrfSF/7oIjUx/m1JVKBgOKb2s=;
-        b=kgKEqTnmnZNe2vAmjDCwa6vfOGWRkN8N9CC2WToraAH8Oe1MxqnusuuuCO9PSVuB3Y
-         U/oxHUJ4CjAIQpNh3VZAAtROPNkskdOzmPfDlDVBG4WIbgsHiTcCLdNTiHaunElNTlHA
-         AAD+rdv2x8Wk5u6g7rk3ToUMXy8Chk1n82aVU=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=IE482cFKAyJ0W1U6SPFyS4nMEP5RsOogPkbxvC3DM7B6r6dnna56Bg366QV06xgj2V
-         Yr8cBfPj5ic/RVR3Gxd84gZupmz4XYK9+wmxMDG91escqlgyh9IsayRd2piaL0QOiWyU
-         ezFf7h5U4x3MkFzWp0rBpJO7DNf9M0pWuI7nY=
-Received: by 10.101.133.20 with SMTP id k20mr10348580ann.250.1297156693857;
- Tue, 08 Feb 2011 01:18:13 -0800 (PST)
-Received: by 10.101.1.19 with HTTP; Tue, 8 Feb 2011 01:18:13 -0800 (PST)
-In-Reply-To: <20110205225247.GI30963@arf.padd.com>
+	id S1753081Ab1BHKF2 convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Feb 2011 05:05:28 -0500
+Received: from moutng.kundenserver.de ([212.227.126.187]:55904 "EHLO
+	moutng.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752450Ab1BHKFZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Feb 2011 05:05:25 -0500
+Received: from localhost6.localdomain6 (p5B130D29.dip0.t-ipconnect.de [91.19.13.41])
+	by mrelayeu.kundenserver.de (node=mrbap0) with ESMTP (Nemesis)
+	id 0ME4A3-1PukGO1NnD-00HKX2; Tue, 08 Feb 2011 11:05:19 +0100
+Content-Disposition: inline
+In-Reply-To: <20110207195035.GA13461@sigill.intra.peff.net>
+User-Agent: Mutt/1.5.20 (2009-06-14)
+X-Provags-ID: V02:K0:QJHHqzd9EY9dpQKsVEfIaVURmzXRf40GIA+quLfY0EW
+ J20iJpe/Fkq441DGANoTdejXw3KFLuxgnNRAsRowxpYXKpGDe7
+ 3lnqB88+tRqWmmgmYCIfuNZwm5jvIlsgm7pg6wdVlGwCdQnQvG
+ lPXzSv4PBgDcW2TQLQASzeoAhEESG45B11LrvhT0VpAnLltMfe
+ uM1icDMHSRL4qfb9GDQwQ==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166342>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166344>
 
-On Sat, Feb 5, 2011 at 11:52 PM, Pete Wyckoff <pw@padd.com> wrote:
-> Just like git clone --bare, build a .git directory but no
-> checked out files.
->
-> Signed-off-by: Pete Wyckoff <pw@padd.com>
+On Mon, Feb 07, 2011 at 02:50:35PM -0500, Jeff King wrote:
+> On Sun, Feb 06, 2011 at 10:46:20PM -0800, Junio C Hamano wrote:
+>=20
+> > I actually do not mind too much myself if all commands that can tak=
+e
+> > pathspecs consistently defaulted to "full-tree" pathspec given no
+> > pathspec.  But if we were to go that route, everybody should join t=
+heir
+> > voice to defend that decision when outside people say "in 1.8.0 'gi=
+t grep'
+> > run from a subdirectory shows matches from all the irrelevant parts=
+ of the
+> > tree; with all the cruft its output is unreadable". I won't be the =
+sole
+> > champion of such a behaviour when I do not fully believe in it.
+>=20
+> The problem is that I don't feel comfortable writing an RFC that says
+> "in 1.8.0 we will default to full-tree because it is somehow better".
+> Because I don't think it is better; it is simply a different way of
+> thinking about it, and different people will have different preferenc=
+es.
+>=20
+> I think even the same people may different preferences from project t=
+o
+> project. For most of my projects, the scope of the repo is well-defin=
+ed,
+> and I want full-tree semantics (e.g., I hack on a bug, go into t/ to
+> tweak and run the tests, and then want to "git add -u" the whole thin=
+g
+> when everything looks good). But I also recently worked on a gigantic
+> project that was split into several sub-components. I would cd 3 or 4
+> levels deep into the sub-component that I was working on, and I would
+> prefer my "git add -u" to stay in that sub-component, and my "git gre=
+p"
+> to look only in that sub-component.
 
-Acked-By: Tor Arvid Lund <torarvid@gmail.com>
+It sounds like your work focused solely on the sub-component you cd-d
+into.  Did you have any other changes outside of that sub-component?
+Because when not, then both the current and the whole-tree "git add -u"
+would have the same effect.
 
-> ---
-> =C2=A0contrib/fast-import/git-p4 | =C2=A0 17 +++++++++++++----
-> =C2=A0t/t9800-git-p4.sh =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 10=
- ++++++++++
-> =C2=A02 files changed, 23 insertions(+), 4 deletions(-)
->
-> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-> index 5b08cd6..efc5dce 100755
-> --- a/contrib/fast-import/git-p4
-> +++ b/contrib/fast-import/git-p4
-> @@ -1771,10 +1771,13 @@ class P4Clone(P4Sync):
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0help=3D"where to leave=
- result of the clone"),
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 optparse.make_option("-/", =
-dest=3D"cloneExclude",
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0action=3D"append", typ=
-e=3D"string",
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 help=3D"exclude depot path")
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 help=3D"exclude depot path")=
-,
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0optparse.make_option("--ba=
-re", dest=3D"cloneBare",
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 action=3D"store_true", defau=
-lt=3DFalse),
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 ]
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.cloneDestination =3D None
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.needsGit =3D False
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0self.cloneBare =3D False
->
-> =C2=A0 =C2=A0 # This is required for the "append" cloneExclude action
-> =C2=A0 =C2=A0 def ensure_value(self, attr, value):
-> @@ -1814,11 +1817,16 @@ class P4Clone(P4Sync):
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.cloneDestination =3D s=
-elf.defaultDestination(args)
->
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 print "Importing from %s into %s" % (', '=
-=2Ejoin(depotPaths), self.cloneDestination)
-> +
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 if not os.path.exists(self.cloneDestinati=
-on):
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 os.makedirs(self.cloneDesti=
-nation)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 chdir(self.cloneDestination)
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0system("git init")
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0self.gitdir =3D os.getcwd() + "/.git"
-> +
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0init_cmd =3D [ "git", "init" ]
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0if self.cloneBare:
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0init_cmd.append("--bare")
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0subprocess.check_call(init_cmd)
-> +
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 if not P4Sync.run(self, depotPaths):
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return False
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 if self.branch !=3D "master":
-> @@ -1828,7 +1836,8 @@ class P4Clone(P4Sync):
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 masterbranch =
-=3D "refs/heads/p4/master"
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if gitBranchExists(masterbr=
-anch):
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 system("git b=
-ranch master %s" % masterbranch)
-> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0system("git =
-checkout -f")
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if not self.=
-cloneBare:
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
-system("git checkout -f")
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 print "Could =
-not detect main branch. No checkout/master branch created."
->
-> diff --git a/t/t9800-git-p4.sh b/t/t9800-git-p4.sh
-> index 72c38af..1e7639b 100755
-> --- a/t/t9800-git-p4.sh
-> +++ b/t/t9800-git-p4.sh
-> @@ -87,6 +87,16 @@ test_expect_success 'wildcard files git-p4 clone' =
-'
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0rm -rf "$git" && mkdir "$git"
-> =C2=A0'
->
-> +test_expect_success 'clone bare' '
-> + =C2=A0 =C2=A0 =C2=A0 "$GITP4" clone --dest=3D"$git" --bare //depot =
-&&
-> + =C2=A0 =C2=A0 =C2=A0 cd "$git" &&
-> + =C2=A0 =C2=A0 =C2=A0 test ! -d .git &&
-> + =C2=A0 =C2=A0 =C2=A0 bare=3D`git config --get core.bare` &&
-> + =C2=A0 =C2=A0 =C2=A0 test "$bare" =3D true &&
-> + =C2=A0 =C2=A0 =C2=A0 cd "$TRASH_DIRECTORY" &&
-> + =C2=A0 =C2=A0 =C2=A0 rm -rf "$git" && mkdir "$git"
-> +'
-> +
-> =C2=A0test_expect_success 'shutdown' '
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0pid=3D`pgrep -f p4d` &&
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0test -n "$pid" &&
-> --
-> 1.7.2.3
->
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
-ml
->
+The current and the whole-tree "git grep" would behave differently, of
+course.  But even then a whole-tree "git grep" would be harmless and
+easy to limit in scope, though might be a bit annoying in the "cd deep
+down" case.  In that case you would immediately see the matches
+outside of cwd, know that you forgot to limit the operation to cwd, so
+you hit the up key, simply append the "." to the last command, and you
+get what you wanted.
+
+As mentioned in this or other related threads, this is not at all that
+simple the other way around, i.e. with current "git grep" when you are
+in the sub-component and you happen to need a grep on the whole tree,
+because you have to pay attention to use the right number of "../"s.
+
+A whole-tree "git add -u" is just as easy to limit in scope as the
+whole-tree "git grep" would be, but certainly more annoying when you
+forget to limit it to cwd.  But even in that case there is no harm
+done, because all the changes you've made are there, but you have to
+unstage changes from the index or split the commit.
+
+Current "git add -u" is worst of all, because it's not just difficult
+to circumvent (how many "../" do I need?), but it's downright
+dangerous, because you can lose changes when forget that it's limited
+in scope.  I managed to do something like this while fixing two
+already bisected bugs:
+
+  git checkout deadbeef         # BugA was introduced in that commit
+  vim git.c                     # fix BugA
+  cd t
+  test ; vim test ; test
+  git add -u                    # again forgetting that a
+                                # fundamentally whole-tree oriented=20
+                                # tool has operations with
+                                # non-whole-tree defaults...
+  git commit -m 'Fix BugA'      # will write proper commit msg later
+  git branch fix_BugA           # to find the commit later
+  git reset --hard babefeed     # instead of "git checkout babefeed"
+                                # BugB was introduced there
+                                # goodbye bugfix!
+  # hack away to fix BugB       # until realisation sets in
+  # Damn.
+
+You could argue that there are several ways I could have prevented
+shooting myself in the foot, e.g. using "git checkout" instead of "git
+reset --hard", or by using plain "git commit" without the "-m" option
+I might have noticed the unstaged changes in the commit template.  I
+would even tend to agree, but I still think that git should be
+consistent with _itself_ in the first place, and since git's
+fundamental concepts are whole-tree oriented and there are many
+commands that only make sense on the whole tree, defaulting to
+whole-tree operations for commands taking a pathspec is indeed better.
+And safer too.
+
+
+Best,
+G=E1bor
