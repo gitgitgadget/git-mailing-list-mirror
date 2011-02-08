@@ -1,154 +1,157 @@
 From: Tor Arvid Lund <torarvid@gmail.com>
-Subject: Re: [PATCH 7/8] git-p4: decode p4 wildcard characters
-Date: Tue, 8 Feb 2011 10:09:42 +0100
-Message-ID: <AANLkTi=Gah9yeYYnHPZ2Z6-OZQ2-CU5Kub=o5SqWAXht@mail.gmail.com>
+Subject: Re: [PATCH 8/8] git-p4: support clone --bare
+Date: Tue, 8 Feb 2011 10:18:13 +0100
+Message-ID: <AANLkTinmttwtgF+RdG7Sr9aMi=awKeWZnHVME+9Z_Np+@mail.gmail.com>
 References: <20110205224848.GA30963@arf.padd.com>
-	<20110205225237.GH30963@arf.padd.com>
+	<20110205225247.GI30963@arf.padd.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: git@vger.kernel.org
 To: Pete Wyckoff <pw@padd.com>
-X-From: git-owner@vger.kernel.org Tue Feb 08 10:09:51 2011
+X-From: git-owner@vger.kernel.org Tue Feb 08 10:18:31 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pmja3-00006I-B2
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 10:09:51 +0100
+	id 1PmjiQ-0004aU-Cs
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 10:18:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752110Ab1BHJJp convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Feb 2011 04:09:45 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:40477 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751880Ab1BHJJn convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Feb 2011 04:09:43 -0500
-Received: by yxt3 with SMTP id 3so2121569yxt.19
-        for <git@vger.kernel.org>; Tue, 08 Feb 2011 01:09:42 -0800 (PST)
+	id S1752563Ab1BHJSR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Feb 2011 04:18:17 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:40065 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752561Ab1BHJSO convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Feb 2011 04:18:14 -0500
+Received: by gxk9 with SMTP id 9so2119740gxk.19
+        for <git@vger.kernel.org>; Tue, 08 Feb 2011 01:18:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:date
          :message-id:subject:from:to:cc:content-type
          :content-transfer-encoding;
-        bh=HYQhar6L/hyG8s3E3hayiy1P7HVcmeCr7uSlBITEbuc=;
-        b=c5wTwmoL7hqBq1/pjC8N8B0Jf4iZWOmOi9HRTQ0ABCXmJplv0wHZycwUzUFCwkXyTB
-         hATZ8+pqkwKpS41NqqqUs6/3tN7zAJek6QsEXM3x2iyeu1K+US6kHGYM+vcsFVBU6kA9
-         m7S8uNlPxltyvBJFkeTPNh6MsISBN2M55s148=
+        bh=ez29m2Pk4HTIlJZvoAJrfSF/7oIjUx/m1JVKBgOKb2s=;
+        b=kgKEqTnmnZNe2vAmjDCwa6vfOGWRkN8N9CC2WToraAH8Oe1MxqnusuuuCO9PSVuB3Y
+         U/oxHUJ4CjAIQpNh3VZAAtROPNkskdOzmPfDlDVBG4WIbgsHiTcCLdNTiHaunElNTlHA
+         AAD+rdv2x8Wk5u6g7rk3ToUMXy8Chk1n82aVU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
          :cc:content-type:content-transfer-encoding;
-        b=gFYrLFDxDQsuYllZUqRCusnRYLwQ9Hx7KNK5FOe5t13ccOpQlbqsF2H5qXah4vFlCe
-         gR3v3cVyoH4+WcEk012Sgg+gFNITsOhD5vRX6KXxzgDg2O6FR8xS09Nv8rv+C6u4ukKH
-         RmUtqocOijtRdKPPbAJNqqHz65sUaDBjTgb+M=
-Received: by 10.100.165.20 with SMTP id n20mr10253991ane.114.1297156182595;
- Tue, 08 Feb 2011 01:09:42 -0800 (PST)
-Received: by 10.101.1.19 with HTTP; Tue, 8 Feb 2011 01:09:42 -0800 (PST)
-In-Reply-To: <20110205225237.GH30963@arf.padd.com>
+        b=IE482cFKAyJ0W1U6SPFyS4nMEP5RsOogPkbxvC3DM7B6r6dnna56Bg366QV06xgj2V
+         Yr8cBfPj5ic/RVR3Gxd84gZupmz4XYK9+wmxMDG91escqlgyh9IsayRd2piaL0QOiWyU
+         ezFf7h5U4x3MkFzWp0rBpJO7DNf9M0pWuI7nY=
+Received: by 10.101.133.20 with SMTP id k20mr10348580ann.250.1297156693857;
+ Tue, 08 Feb 2011 01:18:13 -0800 (PST)
+Received: by 10.101.1.19 with HTTP; Tue, 8 Feb 2011 01:18:13 -0800 (PST)
+In-Reply-To: <20110205225247.GI30963@arf.padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166341>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166342>
 
 On Sat, Feb 5, 2011 at 11:52 PM, Pete Wyckoff <pw@padd.com> wrote:
-> There are four wildcard characters in p4. =C2=A0Files with these
-> characters can be added to p4 repos using the "-f" option.
-> They are stored in %xx notation, and when checked out, p4
-> converts them back to normal.
->
-> This patch does the same thing when importing into git,
-> converting the four special characters. =C2=A0Without this change,
-> the files appear with literal %xx in their names.
+> Just like git clone --bare, build a .git directory but no
+> checked out files.
 >
 > Signed-off-by: Pete Wyckoff <pw@padd.com>
+
+Acked-By: Tor Arvid Lund <torarvid@gmail.com>
+
 > ---
-> =C2=A0contrib/fast-import/git-p4 | =C2=A0 13 +++++++++++++
-> =C2=A0t/t9800-git-p4.sh =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 22=
- ++++++++++++++++++++++
-> =C2=A02 files changed, 35 insertions(+), 0 deletions(-)
+> =C2=A0contrib/fast-import/git-p4 | =C2=A0 17 +++++++++++++----
+> =C2=A0t/t9800-git-p4.sh =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| =C2=A0 10=
+ ++++++++++
+> =C2=A02 files changed, 23 insertions(+), 4 deletions(-)
 >
 > diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-> index 04e6c3d..5b08cd6 100755
+> index 5b08cd6..efc5dce 100755
 > --- a/contrib/fast-import/git-p4
 > +++ b/contrib/fast-import/git-p4
-> @@ -884,6 +884,18 @@ class P4Sync(Command):
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 if gitConfig("git-p4.syncFromOrigin") =3D=
-=3D "false":
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.syncWithOrigin =3D Fal=
-se
->
-> + =C2=A0 =C2=A0# The p4 wildcards are not allowed in filenames. =C2=A0=
-It complains
-> + =C2=A0 =C2=A0# if you try to add them, but you can override with "-=
-f", in
-> + =C2=A0 =C2=A0# which case it translates them into %xx encoding. =C2=
-=A0Search for
-> + =C2=A0 =C2=A0# and fix just these four characters. =C2=A0Do % last =
-so it does
-> + =C2=A0 =C2=A0# not inadvertantly create new %-escapes.
-> + =C2=A0 =C2=A0def wildcard_decode(self, path):
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0path =3D path.replace("%23", "#") \
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .rep=
-lace("%2A", "*") \
-
-This probably works fine on UNIX platforms, but the asterisk '*'
-character is not allowed in windows filenames. I don't really know
-what perforce does in that scenario. Does it make the most sense to
-just keep the %2A in the filename if we are running on windows (??)
-
-    -- Tor Arvid
-
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .rep=
-lace("%40", "@") \
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 .rep=
-lace("%25", "%")
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0return path
-> +
-> =C2=A0 =C2=A0 def extractFilesFromCommit(self, commit):
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.cloneExclude =3D [re.sub(r"\.\.\.$",=
- "", path)
+> @@ -1771,10 +1771,13 @@ class P4Clone(P4Sync):
 > =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
- =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0for path in self.cloneExclude]
-> @@ -962,6 +974,7 @@ class P4Sync(Command):
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0help=3D"where to leave=
+ result of the clone"),
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 optparse.make_option("-/", =
+dest=3D"cloneExclude",
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0action=3D"append", typ=
+e=3D"string",
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 help=3D"exclude depot path")
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 help=3D"exclude depot path")=
+,
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0optparse.make_option("--ba=
+re", dest=3D"cloneBare",
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 action=3D"store_true", defau=
+lt=3DFalse),
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 ]
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.cloneDestination =3D None
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.needsGit =3D False
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0self.cloneBare =3D False
 >
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 relPath =3D self.stripRepoPath(file['depo=
-tFile'], self.branchPrefixes)
-> + =C2=A0 =C2=A0 =C2=A0 =C2=A0relPath =3D self.wildcard_decode(relPath=
-)
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 if verbose:
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 sys.stderr.write("%s\n" % r=
-elPath)
+> =C2=A0 =C2=A0 # This is required for the "append" cloneExclude action
+> =C2=A0 =C2=A0 def ensure_value(self, attr, value):
+> @@ -1814,11 +1817,16 @@ class P4Clone(P4Sync):
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 self.cloneDestination =3D s=
+elf.defaultDestination(args)
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 print "Importing from %s into %s" % (', '=
+=2Ejoin(depotPaths), self.cloneDestination)
+> +
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 if not os.path.exists(self.cloneDestinati=
+on):
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 os.makedirs(self.cloneDesti=
+nation)
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 chdir(self.cloneDestination)
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0system("git init")
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0self.gitdir =3D os.getcwd() + "/.git"
+> +
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0init_cmd =3D [ "git", "init" ]
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0if self.cloneBare:
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0init_cmd.append("--bare")
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0subprocess.check_call(init_cmd)
+> +
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 if not P4Sync.run(self, depotPaths):
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return False
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 if self.branch !=3D "master":
+> @@ -1828,7 +1836,8 @@ class P4Clone(P4Sync):
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 masterbranch =
+=3D "refs/heads/p4/master"
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if gitBranchExists(masterbr=
+anch):
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 system("git b=
+ranch master %s" % masterbranch)
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0system("git =
+checkout -f")
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0if not self.=
+cloneBare:
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+system("git checkout -f")
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 else:
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 print "Could =
+not detect main branch. No checkout/master branch created."
 >
 > diff --git a/t/t9800-git-p4.sh b/t/t9800-git-p4.sh
-> index 41e57bb..72c38af 100755
+> index 72c38af..1e7639b 100755
 > --- a/t/t9800-git-p4.sh
 > +++ b/t/t9800-git-p4.sh
-> @@ -65,6 +65,28 @@ test_expect_success 'exit when p4 fails to produce=
- marshaled output' '
-> =C2=A0 =C2=A0 =C2=A0 =C2=A0test_must_fail grep -q Traceback errs
+> @@ -87,6 +87,16 @@ test_expect_success 'wildcard files git-p4 clone' =
+'
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0rm -rf "$git" && mkdir "$git"
 > =C2=A0'
 >
-> +test_expect_success 'add p4 files with wildcards in the names' '
-> + =C2=A0 =C2=A0 =C2=A0 cd "$cli" &&
-> + =C2=A0 =C2=A0 =C2=A0 echo file-wild-hash >file-wild#hash &&
-> + =C2=A0 =C2=A0 =C2=A0 echo file-wild-star >file-wild\*star &&
-> + =C2=A0 =C2=A0 =C2=A0 echo file-wild-at >file-wild@at &&
-> + =C2=A0 =C2=A0 =C2=A0 echo file-wild-percent >file-wild%percent &&
-> + =C2=A0 =C2=A0 =C2=A0 p4 add -f file-wild* &&
-> + =C2=A0 =C2=A0 =C2=A0 p4 submit -d "file wildcards" &&
-> + =C2=A0 =C2=A0 =C2=A0 cd "$TRASH_DIRECTORY"
-> +'
-> +
-> +test_expect_success 'wildcard files git-p4 clone' '
-> + =C2=A0 =C2=A0 =C2=A0 "$GITP4" clone --dest=3D"$git" //depot &&
+> +test_expect_success 'clone bare' '
+> + =C2=A0 =C2=A0 =C2=A0 "$GITP4" clone --dest=3D"$git" --bare //depot =
+&&
 > + =C2=A0 =C2=A0 =C2=A0 cd "$git" &&
-> + =C2=A0 =C2=A0 =C2=A0 test -f file-wild#hash &&
-> + =C2=A0 =C2=A0 =C2=A0 test -f file-wild\*star &&
-> + =C2=A0 =C2=A0 =C2=A0 test -f file-wild@at &&
-> + =C2=A0 =C2=A0 =C2=A0 test -f file-wild%percent &&
+> + =C2=A0 =C2=A0 =C2=A0 test ! -d .git &&
+> + =C2=A0 =C2=A0 =C2=A0 bare=3D`git config --get core.bare` &&
+> + =C2=A0 =C2=A0 =C2=A0 test "$bare" =3D true &&
 > + =C2=A0 =C2=A0 =C2=A0 cd "$TRASH_DIRECTORY" &&
 > + =C2=A0 =C2=A0 =C2=A0 rm -rf "$git" && mkdir "$git"
 > +'
