@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 5/7] help: reuse struct column_layout
-Date: Tue,  8 Feb 2011 22:22:19 +0700
-Message-ID: <1297178541-31124-6-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 4/7] add core.column
+Date: Tue,  8 Feb 2011 22:22:18 +0700
+Message-ID: <1297178541-31124-5-git-send-email-pclouds@gmail.com>
 References: <1297178541-31124-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,113 +10,144 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Tue Feb 08 16:24:36 2011
+X-From: git-owner@vger.kernel.org Tue Feb 08 16:24:38 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmpQg-0006vI-GW
+	id 1PmpQf-0006vI-U3
 	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 16:24:34 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754847Ab1BHPYa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Feb 2011 10:24:30 -0500
-Received: from mail-pz0-f46.google.com ([209.85.210.46]:34285 "EHLO
-	mail-pz0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754835Ab1BHPY3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Feb 2011 10:24:29 -0500
-Received: by mail-pz0-f46.google.com with SMTP id 35so1140930pzk.19
-        for <git@vger.kernel.org>; Tue, 08 Feb 2011 07:24:29 -0800 (PST)
+	id S1754831Ab1BHPYX convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Feb 2011 10:24:23 -0500
+Received: from mail-pv0-f174.google.com ([74.125.83.174]:56065 "EHLO
+	mail-pv0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753860Ab1BHPYW (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Feb 2011 10:24:22 -0500
+Received: by mail-pv0-f174.google.com with SMTP id 4so1139311pva.19
+        for <git@vger.kernel.org>; Tue, 08 Feb 2011 07:24:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:mime-version:content-type
          :content-transfer-encoding;
-        bh=zFQRe4Q3O11FdrJ4rBKzV/JputBD1JlZWZpBpJzG7yM=;
-        b=rRChAFddeg4YrkbfqRkG1SJTLgUeCEOrfNaYmCr5E/Bzv6SS47tJoMnk9dG+WP5QIX
-         swdsuIEoc0sr54VFSomPgYdbAW8sGteav7mRYN/j+iT0dK8RUAq5y+qJIMDt/8NlgS3o
-         rm/ICHN5h0uak5EGsp93a9VKoW3spabrS1kks=
+        bh=spPaHZLPykudSpcKtUUpDiI4VhjTlj5GUTYhpDNG+/M=;
+        b=WwLPoF5YeGHS/qgpyaOwUUEQFPNbXq9ihOHhjP9dIzq7Lh61cK0ZUCj+T7UIwivH/K
+         CorV9jE49VVnwoQdp3YnobIX/nkN6vBVndSOz1TCkHaWEcdfhC8S0bsrs42yXpE5CxXS
+         lYN3fke0TMEx9KKMgtRSr/cINDtcqA2RovzzM=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=aszCUmWbdXpfdl9x4uMRBLkacnnazkRjqpSbTeztd0XBhh8VTWeB0FDrPf7t/oroTH
-         15nEcnUKPcQ4H00qlVt44yUA8yLdZ6IJBeOfg5OwCZQXAJXbBI4hX6dJpAIoRA6wNkt4
-         wdvVbbuSKxXnea9BRohvf0dhM/KIVTVFWc++s=
-Received: by 10.142.171.3 with SMTP id t3mr17202959wfe.281.1297178669223;
-        Tue, 08 Feb 2011 07:24:29 -0800 (PST)
+        b=rBoNGNxxAnhTlPz+8IHvaoe5lppZXzKS4PgNiXtcgK7etYDVktDZ2EhEe0hP1MYBMy
+         vSdHRnrmuzAZNEqxaDV98lmzHMG1fmpVkB9Ohzi0mB9SOVFY5b+zB0M4kH1A7DpamUot
+         hiFCDIGpKusBXB3EflXpFD0M+Of0LbvLYFdxc=
+Received: by 10.142.216.1 with SMTP id o1mr17384641wfg.190.1297178662516;
+        Tue, 08 Feb 2011 07:24:22 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.232.10])
-        by mx.google.com with ESMTPS id e14sm7712836wfg.8.2011.02.08.07.24.25
+        by mx.google.com with ESMTPS id c3sm7716780wfa.2.2011.02.08.07.24.19
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Tue, 08 Feb 2011 07:24:28 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 08 Feb 2011 22:23:01 +0700
+        Tue, 08 Feb 2011 07:24:21 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Tue, 08 Feb 2011 22:22:54 +0700
 X-Mailer: git-send-email 1.7.3.4.878.g439c7
 In-Reply-To: <1297178541-31124-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166356>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166357>
 
+This takes auto, never or always to enable column output for
+porcelain commands.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- help.c |   33 +++++++++++----------------------
- 1 files changed, 11 insertions(+), 22 deletions(-)
+ Documentation/config.txt |    8 ++++++++
+ cache.h                  |    1 +
+ config.c                 |   16 ++++++++++++++++
+ environment.c            |    1 +
+ 4 files changed, 26 insertions(+), 0 deletions(-)
 
-diff --git a/help.c b/help.c
-index 1344208..dc06f63 100644
---- a/help.c
-+++ b/help.c
-@@ -4,6 +4,7 @@
- #include "levenshtein.h"
- #include "help.h"
- #include "common-cmds.h"
+diff --git a/Documentation/config.txt b/Documentation/config.txt
+index c5e1835..6d7151b 100644
+--- a/Documentation/config.txt
++++ b/Documentation/config.txt
+@@ -567,6 +567,14 @@ core.sparseCheckout::
+ 	Enable "sparse checkout" feature. See section "Sparse checkout" in
+ 	linkgit:git-read-tree[1] for more information.
+=20
++core.column::
++	Specify whether a command should output in columns. Only commands
++	that support `--column` will be affected by this. This variable can
++	take either `never` (do not output in columns), `auto` (output in
++	columns if the output is to a terminal) or `always` (always output in
++	columns). Setting `--column` or `--no-column` will override this
++	variable. This option defaults to never.
++
+ add.ignore-errors::
+ add.ignoreErrors::
+ 	Tells 'git add' to continue adding files when some files cannot be
+diff --git a/cache.h b/cache.h
+index bcbd5f2..1fa7656 100644
+--- a/cache.h
++++ b/cache.h
+@@ -559,6 +559,7 @@ extern int read_replace_refs;
+ extern int fsync_object_files;
+ extern int core_preload_index;
+ extern int core_apply_sparse_checkout;
++extern int core_column;
+=20
+ enum safe_crlf {
+ 	SAFE_CRLF_FALSE =3D 0,
+diff --git a/config.c b/config.c
+index 625e051..071899f 100644
+--- a/config.c
++++ b/config.c
+@@ -9,6 +9,8 @@
+ #include "exec_cmd.h"
+ #include "strbuf.h"
+ #include "quote.h"
++#include "color.h"
 +#include "column.h"
 =20
- void add_cmdname(struct cmdnames *cmds, const char *name, int len)
- {
-@@ -72,29 +73,17 @@ void exclude_cmds(struct cmdnames *cmds, struct cmd=
-names *excludes)
+ #define MAXNAME (256)
 =20
- static void pretty_print_string_list(struct cmdnames *cmds, int longes=
-t)
- {
--	int cols =3D 1, rows;
--	int space =3D longest + 1; /* min 1 SP between words */
--	int max_cols =3D term_columns() - 1; /* don't print *on* the edge */
--	int i, j;
--
--	if (space < max_cols)
--		cols =3D max_cols / space;
--	rows =3D DIV_ROUND_UP(cmds->cnt, cols);
-+	struct column_layout c;
-+	int i;
+@@ -660,6 +662,20 @@ static int git_default_core_config(const char *var=
+, const char *value)
+ 		return 0;
+ 	}
 =20
--	for (i =3D 0; i < rows; i++) {
--		printf("  ");
-+	memset(&c, 0, sizeof(c));
-+	c.mode =3D COL_COLUMN_FIRST;
-+	c.width =3D term_columns();
-=20
--		for (j =3D 0; j < cols; j++) {
--			int n =3D j * rows + i;
--			int size =3D space;
--			if (n >=3D cmds->cnt)
--				break;
--			if (j =3D=3D cols-1 || n + rows >=3D cmds->cnt)
--				size =3D 1;
--			printf("%-*s", size, cmds->names[n]->name);
--		}
--		putchar('\n');
--	}
-+	for (i =3D 0; i < cmds->cnt; i++)
-+		string_list_append(&c.items, cmds->names[i]->name);
-+	display_columns(&c, 2, "  ");
-+	string_list_clear(&c.items, 0);
++	if (!strcmp(var, "core.column")) {
++		switch (git_config_colorbool(var, value, -1)) {
++		case 0:
++			core_column =3D COL_PLAIN;
++			break;
++		case 1:
++			core_column =3D COL_COLUMN_FIRST;
++			break;
++		case -1:
++			return -1;
++		}
++		return 0;
++	}
++
+ 	/* Add other config variables here and to Documentation/config.txt. *=
+/
+ 	return 0;
  }
+diff --git a/environment.c b/environment.c
+index 9564475..b420ea2 100644
+--- a/environment.c
++++ b/environment.c
+@@ -56,6 +56,7 @@ char *notes_ref_name;
+ int grafts_replace_parents =3D 1;
+ int core_apply_sparse_checkout;
+ struct startup_info *startup_info;
++int core_column;
 =20
- static int is_executable(const char *name)
+ /* Parallel index stat data preload? */
+ int core_preload_index =3D 0;
 --=20
 1.7.2.2
