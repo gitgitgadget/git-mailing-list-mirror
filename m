@@ -1,96 +1,92 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [1.8.0] Provide proper remote ref namespaces
-Date: Tue, 08 Feb 2011 09:15:27 +0100
-Message-ID: <201102080915.27484.johan@herland.net>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
- <201102070429.05033.johan@herland.net>
- <20110208010648.GA3132@dpotapov.dyndns.org>
+From: Tor Arvid Lund <torarvid@gmail.com>
+Subject: Re: [PATCH 3/8] git-p4: add missing newline in initial import message
+Date: Tue, 8 Feb 2011 09:48:50 +0100
+Message-ID: <AANLkTikAqDNwGbFfZ=kNyJ4rxdTmesaOmtPYmM3bLf_6@mail.gmail.com>
+References: <20110205224848.GA30963@arf.padd.com>
+	<20110205225155.GD30963@arf.padd.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Dmitry Potapov <dpotapov@gmail.com>
-X-From: git-owner@vger.kernel.org Tue Feb 08 09:15:36 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Pete Wyckoff <pw@padd.com>
+X-From: git-owner@vger.kernel.org Tue Feb 08 09:48:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmijY-0006IM-Ep
-	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 09:15:36 +0100
+	id 1PmjFo-0006GB-RG
+	for gcvg-git-2@lo.gmane.org; Tue, 08 Feb 2011 09:48:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752116Ab1BHIPb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Feb 2011 03:15:31 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:64904 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751951Ab1BHIPa (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Feb 2011 03:15:30 -0500
-Received: from get-mta-scan04.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LGA006RTHLT0C50@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Tue, 08 Feb 2011 09:15:29 +0100 (MET)
-Received: from get-mta-scan04.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id F05C51EF036F_D50FBA0B	for <git@vger.kernel.org>; Tue,
- 08 Feb 2011 08:15:28 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan04.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id 6DFB61EF035E_D50FBA0F	for <git@vger.kernel.org>; Tue,
- 08 Feb 2011 08:15:28 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LGA00A70HLSYA10@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Tue, 08 Feb 2011 09:15:28 +0100 (MET)
-User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.0; x86_64; ; )
-In-reply-to: <20110208010648.GA3132@dpotapov.dyndns.org>
+	id S1752418Ab1BHIsv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Feb 2011 03:48:51 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:35516 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752341Ab1BHIsu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Feb 2011 03:48:50 -0500
+Received: by ywo7 with SMTP id 7so1846707ywo.19
+        for <git@vger.kernel.org>; Tue, 08 Feb 2011 00:48:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=za0f7FnoObZBO/5kQ9MMUqzoajFfFrIvu4Mf0FQtIyc=;
+        b=K4TFytfEM8X3IhJv72CAcrui8cpAJDVw7qKfq31dsA3GcGpEdkIdq4FbCeSSNLB+Dc
+         JDkfM0p0Qhw+16Afs3BXw8TAkxJ8NRhepL6ocRKUKIwNACI6JZ8Yw+oRhyFXTVUz7H+b
+         x/Z+wvZssOVMqSg3OPmqRtJNa6TQ6zJ0Mm+vY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=k95khBj0nZ21zHsMFwG+ddQNsKpo0nyvTVKDB3fj9VYwYXazVvvS3TYH/YVMKPDrWI
+         GWNEXq1oBwJ7B926GADFdX81HDCjjiarZDjiQcJANITCom8N7wL0tgG36ROBNK6EXeBw
+         P7WXEUzQPZM0A7JITnm8GtFd7qtfo44bbSo+o=
+Received: by 10.101.6.12 with SMTP id j12mr10530404ani.46.1297154930138; Tue,
+ 08 Feb 2011 00:48:50 -0800 (PST)
+Received: by 10.101.1.19 with HTTP; Tue, 8 Feb 2011 00:48:50 -0800 (PST)
+In-Reply-To: <20110205225155.GD30963@arf.padd.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166337>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166338>
 
-On Tuesday 08 February 2011, Dmitry Potapov wrote:
-> On Mon, Feb 07, 2011 at 04:29:04AM +0100, Johan Herland wrote:
-> > > So, IMHO, the proper solution should be ability to specify the
-> > > desired namespace for any remote repository, like this:
-> > > 
-> > > remote.<name>.tagNameSpace = foo
-> > 
-> > Interesting. I'm not sure what "foo" means in this context. Would I use
-> > it
-> > 
-> > like this?:
-> >     remote.origin.tagNameSpace = refs/tags
-> 
-> I was not sure about the specific when I wrote this, so I just put "foo",
-> but it could be something like you wrote above.
-> 
-> > (to place origin's tags in refs/tags/*)
-> > 
-> > If so, what's the difference between this option, and using this?:
-> >     remote.origin.fetch = refs/tags/*:refs/tags/*
-> 
-> I have not tried that, but I suspect that it will cause that all tags
-> will be fetched even if they are not belong to tracked branches, i.e.
-> "git fetch" will work as "git fetch -t". But maybe I am wrong here.
+On Sat, Feb 5, 2011 at 11:51 PM, Pete Wyckoff <pw@padd.com> wrote:
+> The commit message looks wrong without the newline.
+>
+> Signed-off-by: Pete Wyckoff <pw@padd.com>
 
-Ah, yes, I should have been more specific:
+Acked-By: Tor Arvid Lund <torarvid@gmail.com>
 
-    remote.origin.fetch = ~refs/tags/*:refs/tags/*
-
-In my proposal, I suggest using a "~" prefix to signal auto-following 
-behavior. This is needed in order to be able to explicitly specify the 
-current fetch behavior in the configuration.
-
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+> ---
+> =C2=A0contrib/fast-import/git-p4 | =C2=A0 =C2=A02 +-
+> =C2=A01 files changed, 1 insertions(+), 1 deletions(-)
+>
+> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
+> index 2fefea4..d2ba215 100755
+> --- a/contrib/fast-import/git-p4
+> +++ b/contrib/fast-import/git-p4
+> @@ -1429,7 +1429,7 @@ class P4Sync(Command):
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 print "Doing initial import of %s from re=
+vision %s into %s" % (' '.join(self.depotPaths), revision, self.branch)
+>
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 details =3D { "user" : "git perforce impo=
+rt user", "time" : int(time.time()) }
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0details["desc"] =3D ("Initial import of =
+%s from the state at revision %s"
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0details["desc"] =3D ("Initial import of =
+%s from the state at revision %s\n"
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =C2=A0 =C2=A0% (' '.join(self.depotPaths), revision))
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 details["change"] =3D revision
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 newestRevision =3D 0
+> --
+> 1.7.2.3
+>
+> --
+> To unsubscribe from this list: send the line "unsubscribe git" in
+> the body of a message to majordomo@vger.kernel.org
+> More majordomo info at =C2=A0http://vger.kernel.org/majordomo-info.ht=
+ml
+>
