@@ -1,98 +1,132 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH 7/8] git-p4: decode p4 wildcard characters
-Date: Tue, 8 Feb 2011 18:26:06 -0500
-Message-ID: <20110208232606.GA32491@arf.padd.com>
-References: <20110205224848.GA30963@arf.padd.com>
- <20110205225237.GH30963@arf.padd.com>
- <AANLkTi=Gah9yeYYnHPZ2Z6-OZQ2-CU5Kub=o5SqWAXht@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v2] Add support for merging from upstream by default.
+Date: Tue, 08 Feb 2011 16:04:36 -0800
+Message-ID: <7vpqr2oyy3.fsf@alter.siamese.dyndns.org>
+References: <1297198129-3403-1-git-send-email-jaredhance@gmail.com>
+ <20110208223359.GB17981@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Tor Arvid Lund <torarvid@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 09 00:26:19 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jared Hance <jaredhance@gmail.com>, git@vger.kernel.org,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Bert Wesarg <bert.wesarg@gmail.com>, Jeff King <peff@peff.net>,
+	Felipe Contreras <felipe.contreras@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 09 01:05:12 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pmwws-0000DZ-Od
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 00:26:19 +0100
+	id 1PmxYT-0006yo-5n
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 01:05:09 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755501Ab1BHX0N convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Feb 2011 18:26:13 -0500
-Received: from honk.padd.com ([74.3.171.149]:57321 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753802Ab1BHX0M (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Feb 2011 18:26:12 -0500
-Received: from arf.padd.com (pool-71-111-208-86.rlghnc.dsl-w.verizon.net [71.111.208.86])
-	by honk.padd.com (Postfix) with ESMTPSA id 7E47AEF;
-	Tue,  8 Feb 2011 15:26:11 -0800 (PST)
-Received: by arf.padd.com (Postfix, from userid 7770)
-	id 8D66A31ADE; Tue,  8 Feb 2011 18:26:06 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=Gah9yeYYnHPZ2Z6-OZQ2-CU5Kub=o5SqWAXht@mail.gmail.com>
+	id S1755934Ab1BIAFB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Feb 2011 19:05:01 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42543 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755828Ab1BIAFA (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Feb 2011 19:05:00 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 724664040;
+	Tue,  8 Feb 2011 19:05:56 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rHG6CE1ya/QW0knCiGyldiPkbV0=; b=m9nWcj
+	rhkR8toBpITnY2BDWdqBc4eJQXnNe032Fyku9j6dTOT81kcKHC5tdq4uOvHF4w0e
+	S2gPNqYMt6lKd/2SiUcjLWrhXW3w5BJSqBKxsS3VIzQqTZVLmt0QyYjBKunzsZC3
+	00WpMjWWAzWPOhSI4CKQzct23BP6qBZhCwwXo=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=V1JpvPRG3ugv/13YxJ3hz5n/D2OkmI5m
+	G21UrwGP5Yyv6ojIUsVxXKPYfGo+oFj1O/WNl+gOIjqE+jCc9OTvJHXREeo5IXL7
+	1fdWRCz5sxRtqZ3DLR3XqfJathAKTbExLZjJlDCkFJKwqutKN79kPvzqDC1or1/O
+	amSN464QFyo=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E8AE7403B;
+	Tue,  8 Feb 2011 19:05:47 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1D7264034; Tue,  8 Feb 2011
+ 19:05:36 -0500 (EST)
+In-Reply-To: <20110208223359.GB17981@elie> (Jonathan Nieder's message of
+ "Tue\, 8 Feb 2011 16\:33\:59 -0600")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 58F32F8E-33E0-11E0-A596-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166374>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166375>
 
-torarvid@gmail.com wrote on Tue, 08 Feb 2011 10:09 +0100:
-> On Sat, Feb 5, 2011 at 11:52 PM, Pete Wyckoff <pw@padd.com> wrote:
-> > + =A0 =A0# The p4 wildcards are not allowed in filenames. =A0It com=
-plains
-> > + =A0 =A0# if you try to add them, but you can override with "-f", =
-in
-> > + =A0 =A0# which case it translates them into %xx encoding. =A0Sear=
-ch for
-> > + =A0 =A0# and fix just these four characters. =A0Do % last so it d=
-oes
-> > + =A0 =A0# not inadvertantly create new %-escapes.
-> > + =A0 =A0def wildcard_decode(self, path):
-> > + =A0 =A0 =A0 =A0path =3D path.replace("%23", "#") \
-> > + =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0 .replace("%2A", "*") \
->=20
-> This probably works fine on UNIX platforms, but the asterisk '*'
-> character is not allowed in windows filenames. I don't really know
-> what perforce does in that scenario. Does it make the most sense to
-> just keep the %2A in the filename if we are running on windows (??)
+Jonathan Nieder <jrnieder@gmail.com> writes:
 
-I changed it to do the "*" translation if not self.isWindows, so
-%2A will remain in the filename.  Good that you noticed it.
+> Jared Hance wrote:
 
-Just for giggles, I found a windows VM to test perforce on.
-Built two files with different wildcards on a unix box, then
-pointed a windows client at it:
+>>> Subject: Re: [PATCH v2] Add support for merging from upstream by default.
 
-C:\DOCUME~1\ADMINI~1\DESKTOP>set P4PORT=3D192.168.2.1:1666
+Drop full-stop '.' at the end.
 
-C:\DOCUME~1\ADMINI~1\DESKTOP>p4 files //depot/...
-//depot/file%25percent#1 - add change 1 (binary)
-//depot/file%2Astar#1 - add change 1 (binary)
+>> Adds the option merge.defaultupstream to add support for merging from the
+>> upstream branch by default.
+>
+> Could you give an example of breakage this configurability is designed
+> to prevent?
 
-C:\DOCUME~1\ADMINI~1\DESKTOP>p4 client
-Client soulfree saved.
+I think there is no "prevent" or "breakage"; the patch is to give people a
+way to turn the feature on; without the configuration, "git merge" will
+keep the traditional behaviour, no?
 
-C:\DOCUME~1\ADMINI~1\DESKTOP>p4 sync
-//depot/file%25percent#1 - added as c:\Documents and Settings\Administr=
-ator\Desktop\file%percent
-//depot/file%2Astar#1 - added as c:\Documents and Settings\Administrato=
-r\Desktop\file*star
-open for write: c:\Documents and Settings\Administrator\Desktop\file*st=
-ar: The filename, directory name, or volume label syntax is incorrect.
+>> +++ b/builtin/merge.c
+>> @@ -37,7 +37,7 @@ struct strategy {
+>>  };
+>>  
+>>  static const char * const builtin_merge_usage[] = {
+>> -	"git merge [options] <remote>...",
+>> +	"git merge [options] [<remote>...]",
+>>  	"git merge [options] <msg> HEAD <remote>",
+>>  	NULL
+>
+> Side note: these should probably say "<commit>" or "<branch>" rather
+> than "<remote>".  I'm guessing the usage string comes from the days
+> before the separate-remotes ref layout...
 
-And only the one file was synced to the windows client.  So "*" is not
-well handled in perforce on windows anyway.
+Yes, your guess is correct.
 
-Docs are not helpful:
+>> @@ -911,6 +934,24 @@ static int evaluate_result(void)
+>>  	return cnt;
+>>  }
+>>  
+>> +static void setup_merge_commit(struct strbuf *buf,
+>> +	struct commit_list ***remotes, const char *s)
+>> +{
+>> +	struct object *o;
+>> +	struct commit *commit;
+>> +
+>> +	o = peel_to_type(s, 0, NULL, OBJ_COMMIT);
+>> +	if (!o)
+>> +		die("%s - not something we can merge", s);
+>> +	commit = lookup_commit(o->sha1);
+>> +	commit->util = (void *)s;
+>> +	*remotes = &commit_list_insert(commit, *remotes)->next;
+>> +
+>> +	strbuf_addf(buf, "GITHEAD_%s", sha1_to_hex(o->sha1));
+>> +	setenv(buf->buf, s, 1);
+>> +	strbuf_reset(buf);
+>> +}
+>
+> Would be easier to review if this code movement were in a separate
+> patch (separating cleanup from semantic changes).
 
-http://www.perforce.com/perforce/doc.current/manuals/cmdref/o.fspecs.ht=
-ml#1041962
+Probably.  It is a very good idea to move this code out to its own helper
+function, nevertheless; I like this part of the patch.
 
-=46or git, leaving a %2A in a filename is better than an error, I belie=
-ve.
+> Even better would be to use descriptive messages, like so:
+>
+>  if (head_invalid)
+> 	usage_msg_opt("cannot use old-style invocation from an unborn branch",
+> 		...);
+>  if (!argc && ...)
+> 	usage_msg_opt("no commit to merge specified", ...);
 
-Thanks for the other acks.
-
-		-- Pete
+Much better.
