@@ -1,64 +1,62 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: grub-mkrescue: manpage points to non-existent info doc
-Date: Wed, 09 Feb 2011 09:18:45 +0100
-Organization: Bertin Technologies
-Message-ID: <20110209091845.2145da9b@chalon.bertin.fr>
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+	<u.kleine-koenig@pengutronix.de>
+Subject: [PATCH] Documentation/merge subtree How-To: fix typo
+Date: Wed,  9 Feb 2011 10:04:43 +0100
+Message-ID: <1297242283-11532-1-git-send-email-u.kleine-koenig@pengutronix.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-To: git list <git@vger.kernel.org>
-X-From: git-owner@vger.kernel.org Wed Feb 09 09:33:35 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 09 10:04:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pn5UU-0000dq-9l
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 09:33:34 +0100
+	id 1Pn5yp-0004vY-9s
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 10:04:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752835Ab1BIId3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Feb 2011 03:33:29 -0500
-Received: from blois.bertin.fr ([195.68.26.9]:61155 "EHLO blois.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752075Ab1BIId2 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Feb 2011 03:33:28 -0500
-Received: from blois.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id 88F65542B4
-	for <git@vger.kernel.org>; Wed,  9 Feb 2011 09:33:27 +0100 (CET)
-Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
-	by blois.bertin.fr (Postfix) with ESMTP id 6736D542B2
-	for <git@vger.kernel.org>; Wed,  9 Feb 2011 09:33:27 +0100 (CET)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0LGC00BI6D3QD960@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Wed, 09 Feb 2011 09:33:27 +0100 (CET)
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.5.0.1024-17944.005
+	id S1753189Ab1BIJEs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Feb 2011 04:04:48 -0500
+Received: from metis.ext.pengutronix.de ([92.198.50.35]:37131 "EHLO
+	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752618Ab1BIJEq (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Feb 2011 04:04:46 -0500
+Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
+	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1Pn5yf-0002kd-5g; Wed, 09 Feb 2011 10:04:45 +0100
+Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
+	(envelope-from <ukl@pengutronix.de>)
+	id 1Pn5yf-00030X-4R; Wed, 09 Feb 2011 10:04:45 +0100
+X-Mailer: git-send-email 1.7.2.3
+X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: git@vger.kernel.org
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166396>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166397>
 
-Package: grub-common
-Version: 1.99~20110112-1
+Signed-off-by: Uwe Kleine-K=C3=B6nig <u.kleine-koenig@pengutronix.de>
+---
+ Documentation/howto/using-merge-subtree.txt |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-manpage says:
-
-       The full documentation for grub-mkrescue is maintained as a
-       Texinfo manual.  If the info and grub-mkrescue programs are
-       properly installed at your site, the command
-
-              info grub-mkrescue
-
-       should give you access to the complete manual.
-
-info doc is not present, and apt-file confirms it does not exist:
-
-$ apt-file search grub-mkrescue
-grub-common: /usr/bin/grub-mkrescue
-grub-common: /usr/share/man/man1/grub-mkrescue.1.gz
-
-
--- 
-Yann Dirson - Bertin Technologies
+diff --git a/Documentation/howto/using-merge-subtree.txt b/Documentatio=
+n/howto/using-merge-subtree.txt
+index 0953a50..2933056 100644
+--- a/Documentation/howto/using-merge-subtree.txt
++++ b/Documentation/howto/using-merge-subtree.txt
+@@ -71,5 +71,5 @@ Additional tips
+   relevant parts of your tree.
+=20
+ - Please note that if the other project merges from you, then it will
+-  connects its history to yours, which can be something they don't wan=
+t
++  connect its history to yours, which can be something they don't want
+   to.
+--=20
+1.7.2.3
