@@ -1,88 +1,136 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: "git add -u" broken in git 1.7.4?
-Date: Wed, 09 Feb 2011 14:40:47 -0800
-Message-ID: <7vipwsomq8.fsf@alter.siamese.dyndns.org>
-References: <4D4DEDC4.4080708@hartwork.org>
- <20110206051333.GA3458@sigill.intra.peff.net> <4D4EF7E4.7050303@hartwork.org>
- <vpq1v3kopn3.fsf@bauges.imag.fr> <7vwrlcv1ea.fsf@alter.siamese.dyndns.org>
- <20110207055314.GA5511@sigill.intra.peff.net>
- <7vhbcguytf.fsf@alter.siamese.dyndns.org>
- <20110207195035.GA13461@sigill.intra.peff.net>
- <20110208100518.GA9505@neumann> <20110209210312.GB2083@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: [PATCH 1/2] fast-import: clarify documentation of "feature" command
+Date: Wed, 9 Feb 2011 16:43:02 -0600
+Message-ID: <20110209224302.GA17128@elie>
+References: <20110202045826.GC15285@elie>
+ <20110202050735.GE15285@elie>
+ <201102022047.55152.trast@student.ethz.ch>
+ <AANLkTi=bEi6J3wcex8JCowU6PRt3BKix5v67v8Ds-MN2@mail.gmail.com>
+ <20110209214638.GA16716@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Sebastian Pipping <webmaster@hartwork.org>,
-	Git ML <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 09 23:41:16 2011
+Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
+	Johan Herland <johan@herland.net>,
+	Ramkumar Ramachandra <artagnon@gmail.com>,
+	"Shawn O. Pearce" <spearce@spearce.org>,
+	Sam Vilain <sam@vilain.net>, Junio C Hamano <gitster@pobox.com>
+To: Sverre Rabbelier <srabbelier@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 09 23:43:20 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnIio-0003Rx-2p
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 23:41:14 +0100
+	id 1PnIkp-0004yl-QJ
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 23:43:20 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754510Ab1BIWlD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Feb 2011 17:41:03 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62866 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754265Ab1BIWlC (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Feb 2011 17:41:02 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 158834875;
-	Wed,  9 Feb 2011 17:42:01 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=JbepynKWlxzs5nzxXtJXWbIv7xg=; b=eombpt
-	w+C61UZCsda4yx4IDTOyGZMyXVd245GpmFE9pF+FaKE0nDqXFS/lvM7JY3/EorT/
-	/6UrabwQHJ5dB2n9YJ9gREESoGGMPpClNPxGF3P0nrWoKTz4xUyfuCw33iByAcPk
-	O/Gbm0kswxXcCUUIw7cKDrg4+wm4JSmH5oPF8=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=VgHR58btNy51pMhGJx2eoNN4NrnaepuS
-	WHNcSgLg9u1RcpdfReEtUP5BEBQIfrstd0AIkONdkEltLvFDtR3qg4kWzuLaBp7R
-	k1IvL7G4TprAO2CWV94jifa+nW1R3S8KuiCKLH+XdPyTyrFDfT3w8sF1Nafx/t6S
-	0RoEjs7PISs=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B190F486E;
-	Wed,  9 Feb 2011 17:41:55 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2B3984868; Wed,  9 Feb 2011
- 17:41:48 -0500 (EST)
-In-Reply-To: <20110209210312.GB2083@sigill.intra.peff.net> (Jeff King's
- message of "Wed\, 9 Feb 2011 16\:03\:12 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CBEC3BA8-349D-11E0-A0CB-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
+	id S1752833Ab1BIWnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Feb 2011 17:43:15 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:36745 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752160Ab1BIWnO (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Feb 2011 17:43:14 -0500
+Received: by qyk12 with SMTP id 12so583039qyk.19
+        for <git@vger.kernel.org>; Wed, 09 Feb 2011 14:43:13 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=pCixOoAn1Lf8A9NMH/9dy2RdRLKOSljbqKC3O5DUHYw=;
+        b=Odj3nkSc6y427BLdcQjwo2v81XB/5Ep6BHrWfLH+eDa49d0u4LwH1Z/Kg/hqWpBovK
+         wWm++HePgR2qTx1yEuj+WogCD2NM37ostoyFFa7OS5GxCI3kqH4XbIJw2AdhigJqCgYY
+         PTkfrSAyRiwAPuUnEtplvG0BVla+kN8sZ3Dpo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=B7RcMiJ6pzwU2j+9aBtzOReTGuZLSntW6usQq/dSUGckEkFeTxTEyHaeOW2SPFQxGz
+         PnB5Fj8Sz+jNSeDBa7ZhvzB9AVgYKf3xV4QbLCRG8ps8GqmgsP56fwERndQ5Xcve/On8
+         SQP2pJp+oEnmxb5BCLMJGSz3VRAtiKE/jdHOc=
+Received: by 10.229.97.139 with SMTP id l11mr5592202qcn.250.1297291393486;
+        Wed, 09 Feb 2011 14:43:13 -0800 (PST)
+Received: from elie ([76.206.235.233])
+        by mx.google.com with ESMTPS id s10sm520035qco.23.2011.02.09.14.43.09
+        (version=SSLv3 cipher=RC4-MD5);
+        Wed, 09 Feb 2011 14:43:12 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20110209214638.GA16716@elie>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166450>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166451>
 
-Jeff King <peff@peff.net> writes:
+Date: Sun, 28 Nov 2010 13:43:57 -0600
 
-> The most compelling I have seen is "you tend to notice accidental
-> full-tree sooner than accidental relative behavior". Which you mentioned
-> in your email.
+The "feature" command allows streams to specify options for the import
+that must not be ignored.  Logically, they are part of the stream,
+even though technically most supported features are synonyms to
+command-line options.
 
-Hmph.  You earlier mentioned "oops, I just pushed this commit and it turns
-out that I screwed up "git add" five minutes ago and it only had half of
-the files I intended" problem, but "oops, I just pushed this commit and it
-turns out that I screwed up "git add" five minutes ago and it had more
-changes than I intended" problem would be equally annoying, and I don't
-think one is inherently more likely to be noticed than the other; IOW, it
-is not compelling, but is just an arbitrary and a biased observation, no?
+Make this more obvious by being more explicit about how the analogy
+between most "feature" commands and command-line options works.  Treat
+the feature (import-marks) that does not fit this analogy separately.
 
-The most compelling, especially if we _were_ designing from scratch to
-make things consistent across the command set, would be "limiting to cwd
-with single dot is a lot easier to type than counting ../, using / to mean
-the root of the working tree is confusing, and saying --full-tree is
-annoying".  I fully agree with that.
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+Acked-by: Sverre Rabbelier <srabbelier@gmail.com>
+Signed-off-by: Junio C Hamano <gitster@pobox.com>
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+Just a cherry-pick.
 
-Can somebody volunteer to come up with a comprehensive list of operations
-that will change their behaviour when we switch to "full-tree without
-pathspec" semantics?  We mentioned "grep" and "add -u" already.
+ Documentation/git-fast-import.txt |   33 +++++++++++++++------------------
+ 1 files changed, 15 insertions(+), 18 deletions(-)
+
+diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
+index 19082b0..3bf04e3 100644
+--- a/Documentation/git-fast-import.txt
++++ b/Documentation/git-fast-import.txt
+@@ -878,28 +878,25 @@ Require that fast-import supports the specified feature, or abort if
+ it does not.
+ 
+ ....
+-	'feature' SP <feature> LF
++	'feature' SP <feature> ('=' <argument>)? LF
+ ....
+ 
+-The <feature> part of the command may be any string matching
+-^[a-zA-Z][a-zA-Z-]*$ and should be understood by fast-import.
++The <feature> part of the command may be any one of the following:
+ 
+-Feature work identical as their option counterparts with the
+-exception of the import-marks feature, see below.
++date-format::
++export-marks::
++relative-marks::
++no-relative-marks::
++force::
++	Act as though the corresponding command-line option with
++	a leading '--' was passed on the command line
++	(see OPTIONS, above).
+ 
+-The following features are currently supported:
+-
+-* date-format
+-* import-marks
+-* export-marks
+-* relative-marks
+-* no-relative-marks
+-* force
+-
+-The import-marks behaves differently from when it is specified as
+-commandline option in that only one "feature import-marks" is allowed
+-per stream. Also, any --import-marks= specified on the commandline
+-will override those from the stream (if any).
++import-marks::
++	Like --import-marks except in two respects: first, only one
++	"feature import-marks" command is allowed per stream;
++	second, an --import-marks= command-line option overrides
++	any "feature import-marks" command in the stream.
+ 
+ `option`
+ ~~~~~~~~
+-- 
+1.7.4
