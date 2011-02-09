@@ -1,82 +1,57 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: t7006 sometimes hangs in cronjobs on OS X
-Date: Wed, 9 Feb 2011 20:16:54 +0100
-Message-ID: <201102092016.55078.trast@student.ethz.ch>
-References: <201102091538.46594.trast@student.ethz.ch> <20110209190900.GA8314@sigill.intra.peff.net>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: Re: Updating a submodule with a compatible version from
+	another submodule version using the parent meta-repository
+Date: Wed, 9 Feb 2011 20:36:11 +0100
+Message-ID: <20110209193610.GA67890@book.hvoigt.net>
+References: <4D407099.4010805@web.de> <AANLkTinMhvBNrBMJ8vQpJdYxP_NgJU2L7JEW0KhXGjhf@mail.gmail.com> <4D407875.7080607@web.de> <AANLkTik-XdgGM20kFu8KZ5k9ynfNAo8fvL9t7kL_JhQg@mail.gmail.com> <7v7hdrl7nw.fsf@alter.siamese.dyndns.org> <AANLkTik8VrhbBSLwRq9gd39hofnmifk15zSqXVTsSzAp@mail.gmail.com> <7v1v3zjp6w.fsf@alter.siamese.dyndns.org> <20110129110807.GA21864@book.hvoigt.net> <AANLkTimBCeSnR270eWMcrgCVj6rmiRkJizOxQPAPOAnn@mail.gmail.com> <AANLkTim2G0kF+omPZ1_fk0P6oGDaKDWd79XNR5GXUkWG@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: <git@vger.kernel.org>, Jonathan Nieder <jrnieder@gmail.com>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 09 20:17:02 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+To: Julian Ibarz <julian.ibarz@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 09 20:36:23 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnFXC-0006vi-3A
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 20:17:02 +0100
+	id 1PnFpt-0005x6-Jl
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 20:36:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751524Ab1BITQ5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Feb 2011 14:16:57 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:25397 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751067Ab1BITQ5 (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Feb 2011 14:16:57 -0500
-Received: from CAS20.d.ethz.ch (172.31.51.110) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.270.1; Wed, 9 Feb
- 2011 20:16:55 +0100
-Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS20.d.ethz.ch
- (172.31.51.110) with Microsoft SMTP Server (TLS) id 14.1.270.1; Wed, 9 Feb
- 2011 20:16:55 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
-In-Reply-To: <20110209190900.GA8314@sigill.intra.peff.net>
-X-Originating-IP: [129.132.153.233]
+	id S1752263Ab1BITgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Feb 2011 14:36:14 -0500
+Received: from darksea.de ([83.133.111.250]:55538 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1750973Ab1BITgN (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Feb 2011 14:36:13 -0500
+Received: (qmail 26017 invoked from network); 9 Feb 2011 20:36:11 +0100
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 9 Feb 2011 20:36:11 +0100
+Content-Disposition: inline
+In-Reply-To: <AANLkTim2G0kF+omPZ1_fk0P6oGDaKDWd79XNR5GXUkWG@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166436>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166437>
 
-Jeff King wrote:
-> On Wed, Feb 09, 2011 at 03:38:46PM +0100, Thomas Rast wrote:
-> 
-> > I have been running a nightly next&pu smoke tester each on RHEL5 and
-> > OS X.  For quite some time (at least a month), t7006 gets stuck
-> > randomly (i.e., not every night).
+Hi Julian,
 
-BTW, I just noticed when re-reading this that it's a bit confusing.
-It never hangs on RHEL (i.e. Linux), only on OS X.  (And I only
-reported it now because I only just noticed that I had a month's worth
-of zombies hanging around. :-)
+On Wed, Feb 02, 2011 at 11:31:40PM -0500, Julian Ibarz wrote:
+> So now my two questions that could save me some time are:
+> - is there a function that gives the distance between two commits? I'm
+> sure there is something like this coded somewhere but I didn't find it
+> yet
 
-> >   65211   ??  SN     0:00.03 /bin/sh t7006-pager.sh
-> >   65798   ??  SN     0:00.04 /usr/bin/perl /Users/trast/git-smoke/t/test-terminal.perl git --no-pager log
-> >   65846   ??  ZN     0:00.00 (git)
-> >   65847   ??  ZN     0:00.00 (perl5.10.0)
-> 
-> Hmm. The zombie git process implies to me that git has exited, but for
-> some reason we are still stuck in the copy-to-terminal loop and haven't
-> reaped it. But the zombie perl process confuses me.  We fork a second
-> time so that one process copies stderr and the other one copies stdout.
-> Is the second perl process the stderr copier, and we are still blocking
-> on copying stdout for some reason?
+One thing which now came to my mind is that you might be interested in
+is to use merge bases to find the earliest commit that contains a
+certain revision.
 
-How do I find out?
+Have a look at how I implemented the submodule merge strategy that might
+help you. You can find it in commit 68d03e4a. I basically do a search
+for the earliest commit that contains the commits from both sides. You
+could use a similar strategy but limit the possible candidates to a
+restricted list of commits which are contained in the supermodule.
 
-> But then why is the command name
-> different? Is /usr/bin/perl a wrapper script on your platform?
-
-No, it's your average OS X binary (i.e., 'file' says it has an image
-for every platform etc.).
-
-The command name apparently just changes when it becomes a zombie:
-when I run perl -e 'if (fork) {sleep 10;} else {sleep 5;}' they first
-share the command line, but as soon as the child's sleep expires its
-command line changes to '(perl5.10.0)'.
-
-I'll have to put off the more involved experimentation somewhat :-(
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+Cheers Heiko
