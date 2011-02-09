@@ -1,7 +1,7 @@
 From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH 1/2] fast-import: clarify documentation of "feature" command
-Date: Wed, 9 Feb 2011 16:43:02 -0600
-Message-ID: <20110209224302.GA17128@elie>
+Subject: [PATCH 2/2] fast-import: introduce "feature notes" command
+Date: Wed, 9 Feb 2011 16:43:57 -0600
+Message-ID: <20110209224357.GB17128@elie>
 References: <20110202045826.GC15285@elie>
  <20110202050735.GE15285@elie>
  <201102022047.55152.trast@student.ethz.ch>
@@ -15,45 +15,45 @@ Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
 	"Shawn O. Pearce" <spearce@spearce.org>,
 	Sam Vilain <sam@vilain.net>, Junio C Hamano <gitster@pobox.com>
 To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 09 23:43:20 2011
+X-From: git-owner@vger.kernel.org Wed Feb 09 23:44:17 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnIkp-0004yl-QJ
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 23:43:20 +0100
+	id 1PnIlg-0005hb-JK
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 23:44:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752833Ab1BIWnP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Feb 2011 17:43:15 -0500
-Received: from mail-qy0-f181.google.com ([209.85.216.181]:36745 "EHLO
-	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752160Ab1BIWnO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Feb 2011 17:43:14 -0500
-Received: by qyk12 with SMTP id 12so583039qyk.19
-        for <git@vger.kernel.org>; Wed, 09 Feb 2011 14:43:13 -0800 (PST)
+	id S1753560Ab1BIWoH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Feb 2011 17:44:07 -0500
+Received: from mail-qy0-f174.google.com ([209.85.216.174]:42028 "EHLO
+	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752838Ab1BIWoG (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Feb 2011 17:44:06 -0500
+Received: by qyj19 with SMTP id 19so1824745qyj.19
+        for <git@vger.kernel.org>; Wed, 09 Feb 2011 14:44:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:date:from:to:cc:subject:message-id:references
          :mime-version:content-type:content-disposition:in-reply-to
          :user-agent;
-        bh=pCixOoAn1Lf8A9NMH/9dy2RdRLKOSljbqKC3O5DUHYw=;
-        b=Odj3nkSc6y427BLdcQjwo2v81XB/5Ep6BHrWfLH+eDa49d0u4LwH1Z/Kg/hqWpBovK
-         wWm++HePgR2qTx1yEuj+WogCD2NM37ostoyFFa7OS5GxCI3kqH4XbIJw2AdhigJqCgYY
-         PTkfrSAyRiwAPuUnEtplvG0BVla+kN8sZ3Dpo=
+        bh=+VSII7yyT1INWu39nP4bAsaopwdsALXaoJ1YSmMUnJo=;
+        b=HI+UBRrj97TmmLSeGCGrgZHjjO2yS069HDg9SNxemN1EwRBEiwoy/8L/kkWWy1qRrZ
+         HKftb+n/IkCTa10rwPR7nB3m4deFYEg7et6DEnYIwHozVdcSk3b/QzGyExqpogMgk7HT
+         PEmQCK+QCfONVXmjWU3Zp/TEPmkAm2b5UY3gA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-type:content-disposition:in-reply-to:user-agent;
-        b=B7RcMiJ6pzwU2j+9aBtzOReTGuZLSntW6usQq/dSUGckEkFeTxTEyHaeOW2SPFQxGz
-         PnB5Fj8Sz+jNSeDBa7ZhvzB9AVgYKf3xV4QbLCRG8ps8GqmgsP56fwERndQ5Xcve/On8
-         SQP2pJp+oEnmxb5BCLMJGSz3VRAtiKE/jdHOc=
-Received: by 10.229.97.139 with SMTP id l11mr5592202qcn.250.1297291393486;
-        Wed, 09 Feb 2011 14:43:13 -0800 (PST)
+        b=Ej8CLe5lJxUlrunjsXKogKDKlX3i2+uiw64OBDhjy3+zYyGr4FhELLrlkb7PrV+GGB
+         pU4FqQmK+q7TjYHPFa+2f3q0DwDqabnK55VOqANN+AbVoSPAvkyxuy9jcTX6qAzie35t
+         qMrDeVjAw4CtAxSImmGIqp1/gig/Lv8Srn1dQ=
+Received: by 10.224.6.149 with SMTP id 21mr16772607qaz.321.1297291444387;
+        Wed, 09 Feb 2011 14:44:04 -0800 (PST)
 Received: from elie ([76.206.235.233])
-        by mx.google.com with ESMTPS id s10sm520035qco.23.2011.02.09.14.43.09
+        by mx.google.com with ESMTPS id g32sm517771qck.22.2011.02.09.14.44.00
         (version=SSLv3 cipher=RC4-MD5);
-        Wed, 09 Feb 2011 14:43:12 -0800 (PST)
+        Wed, 09 Feb 2011 14:44:03 -0800 (PST)
 Content-Disposition: inline
 In-Reply-To: <20110209214638.GA16716@elie>
 User-Agent: Mutt/1.5.21 (2010-09-15)
@@ -61,76 +61,80 @@ Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166451>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166452>
 
-Date: Sun, 28 Nov 2010 13:43:57 -0600
+Here is a 'feature' command for streams to use to require support for
+the notemodify (N) command.
 
-The "feature" command allows streams to specify options for the import
-that must not be ignored.  Logically, they are part of the stream,
-even though technically most supported features are synonyms to
-command-line options.
+When the 'feature' facility was introduced (v1.7.0-rc0~95^2~4,
+2009-12-04), the notes import feature was old news (v1.6.6-rc0~21^2~8,
+2009-10-09) and it was not obvious it deserved to be a named feature.
+But now that is clear, since all major non-git fast-import backends
+lack support for it.
 
-Make this more obvious by being more explicit about how the analogy
-between most "feature" commands and command-line options works.  Treat
-the feature (import-marks) that does not fit this analogy separately.
+Details: on git version with this patch applied, any "feature notes"
+command in the features/options section at the beginning of a stream
+will be treated as a no-op.  On fast-import implementations without
+the feature (and older git versions), the command instead errors out
+with a message like
 
-Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
-Acked-by: Sverre Rabbelier <srabbelier@gmail.com>
-Signed-off-by: Junio C Hamano <gitster@pobox.com>
+	This version of fast-import does not support feature notes.
+
+So by declaring use of notes at the beginning of a stream, frontends
+can avoid wasting time and other resources when the backend does not
+support notes.  (This would be especially important for backends that
+do not support rewinding history after a botched import.)
+
+Improved-by: Thomas Rast <trast@student.ethz.ch>
+Improved-by: Sverre Rabbelier <srabbelier@gmail.com>
 Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
 ---
-Just a cherry-pick.
-
- Documentation/git-fast-import.txt |   33 +++++++++++++++------------------
- 1 files changed, 15 insertions(+), 18 deletions(-)
+ Documentation/git-fast-import.txt |    6 ++++++
+ fast-import.c                     |    2 ++
+ t/t9301-fast-import-notes.sh      |    1 +
+ 3 files changed, 9 insertions(+), 0 deletions(-)
 
 diff --git a/Documentation/git-fast-import.txt b/Documentation/git-fast-import.txt
-index 19082b0..3bf04e3 100644
+index 3bf04e3..becee8b 100644
 --- a/Documentation/git-fast-import.txt
 +++ b/Documentation/git-fast-import.txt
-@@ -878,28 +878,25 @@ Require that fast-import supports the specified feature, or abort if
- it does not.
+@@ -898,6 +898,12 @@ import-marks::
+ 	second, an --import-marks= command-line option overrides
+ 	any "feature import-marks" command in the stream.
  
- ....
--	'feature' SP <feature> LF
-+	'feature' SP <feature> ('=' <argument>)? LF
- ....
- 
--The <feature> part of the command may be any string matching
--^[a-zA-Z][a-zA-Z-]*$ and should be understood by fast-import.
-+The <feature> part of the command may be any one of the following:
- 
--Feature work identical as their option counterparts with the
--exception of the import-marks feature, see below.
-+date-format::
-+export-marks::
-+relative-marks::
-+no-relative-marks::
-+force::
-+	Act as though the corresponding command-line option with
-+	a leading '--' was passed on the command line
-+	(see OPTIONS, above).
- 
--The following features are currently supported:
--
--* date-format
--* import-marks
--* export-marks
--* relative-marks
--* no-relative-marks
--* force
--
--The import-marks behaves differently from when it is specified as
--commandline option in that only one "feature import-marks" is allowed
--per stream. Also, any --import-marks= specified on the commandline
--will override those from the stream (if any).
-+import-marks::
-+	Like --import-marks except in two respects: first, only one
-+	"feature import-marks" command is allowed per stream;
-+	second, an --import-marks= command-line option overrides
-+	any "feature import-marks" command in the stream.
- 
++notes::
++	Require that the backend support the 'notemodify' (N)
++	subcommand to the 'commit' command.
++	Versions of fast-import not supporting notes will exit
++	with a message indicating so.
++
  `option`
  ~~~~~~~~
+ Processes the specified option so that git fast-import behaves in a
+diff --git a/fast-import.c b/fast-import.c
+index 74f08bd..ff56ea2 100644
+--- a/fast-import.c
++++ b/fast-import.c
+@@ -2821,6 +2821,8 @@ static int parse_one_feature(const char *feature, int from_stream)
+ 		relative_marks_paths = 0;
+ 	} else if (!prefixcmp(feature, "force")) {
+ 		force_update = 1;
++	} else if (!strcmp(feature, "notes")) {
++		; /* do nothing; we have the feature */
+ 	} else {
+ 		return 0;
+ 	}
+diff --git a/t/t9301-fast-import-notes.sh b/t/t9301-fast-import-notes.sh
+index a5c99d8..164edf0 100755
+--- a/t/t9301-fast-import-notes.sh
++++ b/t/t9301-fast-import-notes.sh
+@@ -120,6 +120,7 @@ test_expect_success 'add notes with simple M command' '
+ 
+ test_tick
+ cat >input <<INPUT_END
++feature notes
+ commit refs/notes/test
+ committer $GIT_COMMITTER_NAME <$GIT_COMMITTER_EMAIL> $GIT_COMMITTER_DATE
+ data <<COMMIT
 -- 
 1.7.4
