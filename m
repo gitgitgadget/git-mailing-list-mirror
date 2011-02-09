@@ -1,76 +1,62 @@
-From: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-	<u.kleine-koenig@pengutronix.de>
-Subject: Re: [PATCH] Documentation/merge subtree How-To: fix typo
-Date: Wed, 9 Feb 2011 10:08:22 +0100
-Message-ID: <20110209090821.GP27982@pengutronix.de>
-References: <1297242283-11532-1-git-send-email-u.kleine-koenig@pengutronix.de>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: grub-mkrescue: manpage points to non-existent info doc
+Date: Wed, 9 Feb 2011 10:22:16 +0100
+Message-ID: <AANLkTi=2an-UUXP4wmzrN+AHWRo4aY6MwBYsLUu8baNY@mail.gmail.com>
+References: <20110209091845.2145da9b@chalon.bertin.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Wed Feb 09 10:08:34 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: git list <git@vger.kernel.org>
+To: Yann Dirson <dirson@bertin.fr>
+X-From: git-owner@vger.kernel.org Wed Feb 09 10:23:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pn62I-0007Be-1w
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 10:08:30 +0100
+	id 1Pn6GQ-0000Go-7c
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 10:23:06 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753272Ab1BIJIY convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Feb 2011 04:08:24 -0500
-Received: from metis.ext.pengutronix.de ([92.198.50.35]:51866 "EHLO
-	metis.ext.pengutronix.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752871Ab1BIJIX (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Feb 2011 04:08:23 -0500
-Received: from octopus.hi.pengutronix.de ([2001:6f8:1178:2:215:17ff:fe12:23b0])
-	by metis.ext.pengutronix.de with esmtp (Exim 4.72)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Pn62A-0002wb-5N
-	for git@vger.kernel.org; Wed, 09 Feb 2011 10:08:22 +0100
-Received: from ukl by octopus.hi.pengutronix.de with local (Exim 4.69)
-	(envelope-from <ukl@pengutronix.de>)
-	id 1Pn62A-00035c-1X
-	for git@vger.kernel.org; Wed, 09 Feb 2011 10:08:22 +0100
-Content-Disposition: inline
-In-Reply-To: <1297242283-11532-1-git-send-email-u.kleine-koenig@pengutronix.de>
-User-Agent: Mutt/1.5.20 (2009-06-14)
-X-SA-Exim-Connect-IP: 2001:6f8:1178:2:215:17ff:fe12:23b0
-X-SA-Exim-Mail-From: ukl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: git@vger.kernel.org
+	id S1752223Ab1BIJW7 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Feb 2011 04:22:59 -0500
+Received: from mail-gy0-f174.google.com ([209.85.160.174]:61898 "EHLO
+	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751723Ab1BIJW6 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Feb 2011 04:22:58 -0500
+Received: by gyb11 with SMTP id 11so2688067gyb.19
+        for <git@vger.kernel.org>; Wed, 09 Feb 2011 01:22:57 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=fBgIO7N4ql6QtwBnIe7juD4RVYzoLP2XhOqDd4smeI8=;
+        b=YQeq7x0l5HyMgCwPmGtB+g2XLs1XHpWuR540RmCLVaKcbznBqlabDViXiS0rc9wXb/
+         552L25D4CRgO9/zt2IlI/r1wgmIsZvlnm10vuZOy/zxIsoWIhMo0IEAwYZdUA5DmdFyh
+         vtxC2fG7nqVotkA4mr/BBLc80iQMW+zFOhx2M=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=H60Dk+PM7t/8Jriwsg1dJlaWj4Vi5AekUxZYXRxo0/OxWv15C4t7THvjb+i6k/muj2
+         hkhlW02f3h2WBkZRbQ3sjOIu2tX3PwVjhxqB4zulsYtu/TqohqUwX7ho6rqzCR5Z4bgc
+         SQxFNr3u9i2wA5XdsexHgkjC/81jqfg+ALSw0=
+Received: by 10.151.45.17 with SMTP id x17mr1283530ybj.304.1297243376397; Wed,
+ 09 Feb 2011 01:22:56 -0800 (PST)
+Received: by 10.150.51.6 with HTTP; Wed, 9 Feb 2011 01:22:16 -0800 (PST)
+In-Reply-To: <20110209091845.2145da9b@chalon.bertin.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166398>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166399>
 
-On Wed, Feb 09, 2011 at 10:04:43AM +0100, Uwe Kleine-K=F6nig wrote:
-> Signed-off-by: Uwe Kleine-K=F6nig <u.kleine-koenig@pengutronix.de>
-> ---
->  Documentation/howto/using-merge-subtree.txt |    2 +-
->  1 files changed, 1 insertions(+), 1 deletions(-)
->=20
-> diff --git a/Documentation/howto/using-merge-subtree.txt b/Documentat=
-ion/howto/using-merge-subtree.txt
-> index 0953a50..2933056 100644
-> --- a/Documentation/howto/using-merge-subtree.txt
-> +++ b/Documentation/howto/using-merge-subtree.txt
-> @@ -71,5 +71,5 @@ Additional tips
->    relevant parts of your tree.
-> =20
->  - Please note that if the other project merges from you, then it wil=
-l
-> -  connects its history to yours, which can be something they don't w=
-ant
-> +  connect its history to yours, which can be something they don't wa=
-nt
-AFAIK additionally it should be "your's".  Should I resend?
+Heya,
 
-Uwe
+On Wed, Feb 9, 2011 at 09:18, Yann Dirson <dirson@bertin.fr> wrote:
+> Package: grub-common
 
---=20
-Pengutronix e.K.                           | Uwe Kleine-K=F6nig        =
-    |
-Industrial Linux Solutions                 | http://www.pengutronix.de/=
-  |
+I think you meant to send this to a different list?
+
+-- 
+Cheers,
+
+Sverre Rabbelier
