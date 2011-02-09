@@ -1,86 +1,75 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: [PATCH maint-1.7.0 v2 0/2] fast-import: introduce "feature notes"
- command
-Date: Wed, 9 Feb 2011 15:46:38 -0600
-Message-ID: <20110209214638.GA16716@elie>
-References: <20110202045826.GC15285@elie>
- <20110202050735.GE15285@elie>
- <201102022047.55152.trast@student.ethz.ch>
- <AANLkTi=bEi6J3wcex8JCowU6PRt3BKix5v67v8Ds-MN2@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH 6/7] tag: support column output with --column
+Date: Wed, 09 Feb 2011 13:51:02 -0800
+Message-ID: <7vvd0sop15.fsf@alter.siamese.dyndns.org>
+References: <1297178541-31124-1-git-send-email-pclouds@gmail.com>
+ <1297178541-31124-7-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Johan Herland <johan@herland.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Sam Vilain <sam@vilain.net>, Junio C Hamano <gitster@pobox.com>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 09 22:46:55 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: =?utf-8?B?Tmd1eeG7hW4gVGjDoWkgTmfhu41j?= Duy <pclouds@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 09 22:51:19 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnHsD-0001DG-Bj
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 22:46:53 +0100
+	id 1PnHwS-0004vp-6R
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 22:51:16 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755187Ab1BIVqs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Feb 2011 16:46:48 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:44975 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751419Ab1BIVqr (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Feb 2011 16:46:47 -0500
-Received: by qyj19 with SMTP id 19so1786332qyj.19
-        for <git@vger.kernel.org>; Wed, 09 Feb 2011 13:46:47 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=yBlcbQiO940MIkaKkKpJu6GqwJEoZHXwQALffoF2zhY=;
-        b=MYoY9m0C+FwfM5r+XjBAcT1X7e+0Q9K9Zlc7FRnMySE3hL1XnymFwBWzCpLnYBMwQt
-         7IVkAJ4toTpXOQYdu++63L5ylO03U2Q2tcxtSjygFAK1Xk9UTsgv2m1JLKruxy2sBNnD
-         POHM2kXFViCQZ0den3NU30WJ3gw4vHUS5PN54=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=wh5/MZN6ed3tJD4BysaC4L5yyaYxVPRqPGIvaWvZO6CB3hPTGQ1PqU43Kgsqm+bL5w
-         JuwO7hvl2nst3z8hJ74nJJuqNiB8/BesevJcGHURGD+rTEHrA5636MDjtBWJvYdjAuF7
-         yG79jF1Vpsa1LEhBweAM1aZ/yP8pSsxYIYzp4=
-Received: by 10.229.186.7 with SMTP id cq7mr4756667qcb.239.1297288006878;
-        Wed, 09 Feb 2011 13:46:46 -0800 (PST)
-Received: from elie (adsl-76-206-235-233.dsl.chcgil.sbcglobal.net [76.206.235.233])
-        by mx.google.com with ESMTPS id s10sm481812qco.35.2011.02.09.13.46.43
-        (version=SSLv3 cipher=RC4-MD5);
-        Wed, 09 Feb 2011 13:46:44 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <AANLkTi=bEi6J3wcex8JCowU6PRt3BKix5v67v8Ds-MN2@mail.gmail.com>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1750935Ab1BIVvL convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Feb 2011 16:51:11 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58480 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750794Ab1BIVvK convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Feb 2011 16:51:10 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 3C3F0426E;
+	Wed,  9 Feb 2011 16:52:10 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; s=sasl; bh=15oSF2FSI9Kh
+	aq0oyKPfKR21W18=; b=SjrXQt6YdBCJASuruBy2vkfv3EpL6PizSrd1NUTlIymC
+	yd1vlobKHtu1px5zWFZ17I6fBiuSgEuOBn2W/NzOE8NUfqmy98n/xzHIBTkNGvtz
+	/aBLnUzqGbwzjFU9YjSxrbIxaEzOg9E/b+lOevJNjZXjFtOCe5acpQC0zxiFpl4=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type:content-transfer-encoding; q=dns; s=sasl; b=js+tcn
+	b+rSB4+Vw2u7fXImOz1xK126JlTMy4ydtslJcR4+QtCifYy8e7UIQjJj1qpMr3E8
+	97fmUg3m/wH9gGXlzOZki5/jBHtWY2CIMrXXYoZOOYjYov++f4unvC4/jczR6BLu
+	75Af2l9G3Rre8+bD3Fdtotwv3WEM/2Jgb9rdA=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1ADF6426D;
+	Wed,  9 Feb 2011 16:52:08 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2D545426C; Wed,  9 Feb 2011
+ 16:52:04 -0500 (EST)
+In-Reply-To: <1297178541-31124-7-git-send-email-pclouds@gmail.com>
+ (=?utf-8?B?Ik5ndXnhu4VuIFRow6FpIE5n4buNYw==?= Duy"'s message of "Tue\,  8 Feb
+ 2011 22\:22\:20 +0700")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D72A1ABE-3496-11E0-B225-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166445>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166446>
 
-Sverre Rabbelier wrote:
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy  <pclouds@gmail.com> writes:
 
-> Perhaps we can submit a patch to maint to have it (the
-> oldest git that supports the 'feature' command) recognize 'feature
-> notes' though?
+> @@ -52,7 +54,7 @@ static int show_reference(const char *refname, cons=
+t unsigned char *sha1,
+>  		}
+> =20
+>  		if (!filter->lines) {
+> -			printf("%s\n", refname);
+> +			string_list_append(&layout.items, refname);
 
-Thanks, both.  Here's a series based against v1.7.0.9 to do that
-(since 1.7.0.y is the oldest series with support for 'feature'.)
+Hmm, is this robbing streaming output from people who do not care about
+columnar output?
 
-For ease of patching, patch 1 backports a related documentation tweak
-from v1.7.4-rc0.  Patch 2 introduces the "feature notes" command
-itself.
-
-Jonathan Nieder (2):
-  fast-import: clarify documentation of "feature" command
-  fast-import: introduce "feature notes" command
-
- Documentation/git-fast-import.txt |   37 ++++++++++++++++++++-----------------
- fast-import.c                     |    2 ++
- t/t9301-fast-import-notes.sh      |    1 +
- 3 files changed, 23 insertions(+), 17 deletions(-)
+I tend to agree with others who suggested you to port column to platfor=
+ms
+that lack it.
