@@ -1,116 +1,134 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [1.8.0] Provide proper remote ref namespaces
-Date: Wed, 09 Feb 2011 02:24:45 +0100
-Message-ID: <201102090224.45397.johan@herland.net>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
- <201102080915.27484.johan@herland.net>
- <7vzkq6p1ap.fsf@alter.siamese.dyndns.org>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: [PATCH v3 3/3] Add support for merging from upstream by default.
+Date: Tue, 8 Feb 2011 19:41:29 -0600
+Message-ID: <20110209014129.GB24346@elie>
+References: <1297198129-3403-1-git-send-email-jaredhance@gmail.com>
+ <1297211028-14382-1-git-send-email-jaredhance@gmail.com>
+ <1297211028-14382-4-git-send-email-jaredhance@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: Dmitry Potapov <dpotapov@gmail.com>, git@vger.kernel.org,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Jeff King <peff@peff.net>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Wed Feb 09 02:25:04 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: Jared Hance <jaredhance@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 09 02:41:41 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pmynn-0006KP-1V
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 02:25:03 +0100
+	id 1Pmz3r-0000Pk-VM
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 02:41:40 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755995Ab1BIBYu (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Feb 2011 20:24:50 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:62423 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755918Ab1BIBYt (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Feb 2011 20:24:49 -0500
-Received: from get-mta-scan04.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LGB00B95T9B9Z80@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Wed, 09 Feb 2011 02:24:47 +0100 (MET)
-Received: from get-mta-scan04.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 2EFA51EF03D1_D51ECDFB	for <git@vger.kernel.org>; Wed,
- 09 Feb 2011 01:24:47 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan04.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id DB3571EF0397_D51ECDDF	for <git@vger.kernel.org>; Wed,
- 09 Feb 2011 01:24:45 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LGB00ANNT99F000@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Wed, 09 Feb 2011 02:24:45 +0100 (MET)
-User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.0; x86_64; ; )
-In-reply-to: <7vzkq6p1ap.fsf@alter.siamese.dyndns.org>
+	id S1756022Ab1BIBle (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Feb 2011 20:41:34 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:50455 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755950Ab1BIBle (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Feb 2011 20:41:34 -0500
+Received: by iyj8 with SMTP id 8so3896615iyj.19
+        for <git@vger.kernel.org>; Tue, 08 Feb 2011 17:41:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=bGTGMJbSj6sqmhGL3p5uq1TkAu1P5fYybWfwto160FY=;
+        b=iFOhCbZOXgQVmrrNjZavi+hJtixzdXx20bsZtuB55+FYfw4Wtp7UTZPWZVKjPP63d3
+         5tkzunGbntERO/lROi+Ls0c5hlofwr0Z2jVOQC8AxWuHiss6kFHruzkkrSnfslMVESWY
+         usLLuZgxNW7Vy5ohJBomP706IyCaHuck/ilmY=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=iQSZDqJF8Mj/PlSaD7WVQSdCT60s1GjscJ7+BeBCxVlEQzjGISvzXXp/oV/wFw+fhJ
+         4YuP51tV7haSXfGB0qadj3qjWVGvumCchCodedKVlMPKZulovFFZKEuGQ14ZnNhJBT7w
+         02lzbKemDFl4PWEf8Lg7WkydpYiXIUqYyxCOo=
+Received: by 10.42.227.9 with SMTP id iy9mr14213366icb.128.1297215693447;
+        Tue, 08 Feb 2011 17:41:33 -0800 (PST)
+Received: from elie (adsl-76-206-235-233.dsl.chcgil.sbcglobal.net [76.206.235.233])
+        by mx.google.com with ESMTPS id d21sm178012ibg.15.2011.02.08.17.41.31
+        (version=SSLv3 cipher=OTHER);
+        Tue, 08 Feb 2011 17:41:32 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <1297211028-14382-4-git-send-email-jaredhance@gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166384>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166385>
 
-On Wednesday 09 February 2011, Junio C Hamano wrote:
-> Johan Herland <johan@herland.net> writes:
-> > Ah, yes, I should have been more specific:
-> >     remote.origin.fetch = ~refs/tags/*:refs/tags/*
+Jared Hance wrote:
+
+> --- a/Documentation/config.txt
+> +++ b/Documentation/config.txt
+> @@ -1389,6 +1389,12 @@ man.<tool>.path::
 > 
-> Hmmm, I was in the vicinity of builtin/fetch.c:find_non_local_tags()
-> today, and I had to wonder what the implementation of this would look
-> like....
+>  include::merge-config.txt[]
+> 
+> +merge.defaultUpstream::
+[...]
 
-AFAIK, find_non_local_tags() is called to produce a list of refs to be auto-
-followed. Currently it produces this list by traversing the remote refs, and 
-selecting refs that follow all of these criteria:
+Might make sense to put this in merge-config.txt, to get documentation
+in git-merge(1) for free.
 
-A. Ref name starts with "refs/tags"
+> --- a/builtin/merge.c
+> +++ b/builtin/merge.c
+> @@ -525,6 +527,8 @@ static int per_branch_config(const char *k, const char *v, void *cb)
+>  
+>  		return 0;
+>  	}
+> +	else if (!strcmp(variable, ".merge"))
+> +		return git_config_string(&upstream_branch, k, v);
 
-B. Ref refers (after peeling) to an object that is either already locally 
-available, or is already on the list of objects to be fetched.
+Style:
 
-C. Ref name does not already exist locally.
+	} else if (...) {
+		return git_config_string(...);
+	}
 
+> @@ -1017,9 +1023,13 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+>  	if (!allow_fast_forward && fast_forward_only)
+>  		die("You cannot combine --no-ff with --ff-only.");
+>  
+> -	if (!argc)
+> -		usage_with_options(builtin_merge_usage,
+> -			builtin_merge_options);
+> +	if (!argc) {
+> +		if (!default_upstream || !upstream_branch)
+> +			usage_with_options(builtin_merge_usage,
+> +					builtin_merge_options);
+> +		else
+> +			setup_merge_commit(&buf, &remotes, upstream_branch);
 
-Now, here's roughly how I would change it to implement the "~from:to"-style 
-refspecs:
+Why the "else"?  usage_msg_opt doesn't return to the caller.
 
-0. Change its name from find_non_local_tags() to find_auto_follow_refs().
+Hopefully someone will chime in with some tests to complement
+t5520-pull (hint, hint). :)
 
-1. At the top, enumerate the auto-following refspecs 
-("~refs/tags/*:refs/tags/*" in this case)
+Jonathan
 
-2. When traversing the remote refs, instead of criteria A above, we want to 
-check if ref->name matches the remote side of any of the auto-following 
-refspecs enumerated in step #1. Skip past all non-matches.
-
-3. Criteria B stays unchanged.
-
-4. When checking criteria C, we want to check against the _local_ side of 
-the matched auto-following refspec.
-
-
-AFAICS, that's pretty much what should be needed. There are some other 
-things to consider as well, but IMHO none of those seem like show stoppers:
-
-For example, there may be command-line options for making auto-following 
-refspecs explicit (i.e. corresponding to --tags; basically disables the "~" 
-in the refspec), or disabling auto-following (i.e. corresponding to --no-
-tags; basically disregards refspecs with "~").
-
-Another slight complication is refspecs with _both_ "~" and "+" (i.e. both 
-auto-following and --force behavior), which may be resolved by disregarding 
-criteria C for those refspecs.
-
-
-Have fun! :)
-
-...Johan
-
--- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+diff --git a/Documentation/git-merge.txt b/Documentation/git-merge.txt
+index c1efaaa..bc8ce25 100644
+--- a/Documentation/git-merge.txt
++++ b/Documentation/git-merge.txt
+@@ -11,7 +11,7 @@ SYNOPSIS
+ [verse]
+ 'git merge' [-n] [--stat] [--no-commit] [--squash]
+ 	[-s <strategy>] [-X <strategy-option>]
+-	[--[no-]rerere-autoupdate] [-m <msg>] <commit>...
++	[--[no-]rerere-autoupdate] [-m <msg>] [<commit>...]
+ 'git merge' <msg> HEAD <commit>...
+ 'git merge' --abort
+ 
+@@ -97,7 +97,10 @@ commit or stash your changes before running 'git merge'.
+ 	Commits, usually other branch heads, to merge into our branch.
+ 	You need at least one <commit>.  Specifying more than one
+ 	<commit> obviously means you are trying an Octopus.
+-
+++
++By default, if no commit is specified then git will error out.
++However, the `merge.defaultToUpstream` configuration item (see below)
++changes that.
+ 
+ PRE-MERGE CHECKS
+ ----------------
