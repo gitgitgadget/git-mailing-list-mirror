@@ -1,57 +1,64 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: Re: Re: Re: Updating a submodule with a compatible version from
-	another submodule version using the parent meta-repository
-Date: Wed, 9 Feb 2011 20:36:11 +0100
-Message-ID: <20110209193610.GA67890@book.hvoigt.net>
-References: <4D407099.4010805@web.de> <AANLkTinMhvBNrBMJ8vQpJdYxP_NgJU2L7JEW0KhXGjhf@mail.gmail.com> <4D407875.7080607@web.de> <AANLkTik-XdgGM20kFu8KZ5k9ynfNAo8fvL9t7kL_JhQg@mail.gmail.com> <7v7hdrl7nw.fsf@alter.siamese.dyndns.org> <AANLkTik8VrhbBSLwRq9gd39hofnmifk15zSqXVTsSzAp@mail.gmail.com> <7v1v3zjp6w.fsf@alter.siamese.dyndns.org> <20110129110807.GA21864@book.hvoigt.net> <AANLkTimBCeSnR270eWMcrgCVj6rmiRkJizOxQPAPOAnn@mail.gmail.com> <AANLkTim2G0kF+omPZ1_fk0P6oGDaKDWd79XNR5GXUkWG@mail.gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
-To: Julian Ibarz <julian.ibarz@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 09 20:36:23 2011
+From: Ben Walton <bwalton@artsci.utoronto.ca>
+Subject: Re: t7006 sometimes hangs in cronjobs on OS X
+Date: Wed, 09 Feb 2011 13:30:37 -0500
+Message-ID: <1297276090-sup-7829@pinkfloyd.chass.utoronto.ca>
+References: <201102091538.46594.trast@student.ethz.ch>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Cc: git <git@vger.kernel.org>, Jeff King <peff@peff.net>,
+	Jonathan Nieder <jrnieder@gmail.com>
+To: Thomas Rast <trast@student.ethz.ch>
+X-From: git-owner@vger.kernel.org Wed Feb 09 20:43:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnFpt-0005x6-Jl
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 20:36:21 +0100
+	id 1PnFwj-0002yD-Px
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 20:43:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752263Ab1BITgO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Feb 2011 14:36:14 -0500
-Received: from darksea.de ([83.133.111.250]:55538 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1750973Ab1BITgN (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Feb 2011 14:36:13 -0500
-Received: (qmail 26017 invoked from network); 9 Feb 2011 20:36:11 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 9 Feb 2011 20:36:11 +0100
-Content-Disposition: inline
-In-Reply-To: <AANLkTim2G0kF+omPZ1_fk0P6oGDaKDWd79XNR5GXUkWG@mail.gmail.com>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1752502Ab1BITnS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Feb 2011 14:43:18 -0500
+Received: from garcia.cquest.utoronto.ca ([192.82.128.9]:42690 "EHLO
+	garcia.cquest.utoronto.ca" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752291Ab1BITnR (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Feb 2011 14:43:17 -0500
+X-Greylist: delayed 4355 seconds by postgrey-1.27 at vger.kernel.org; Wed, 09 Feb 2011 14:43:17 EST
+Received: from pinkfloyd.chass.utoronto.ca ([128.100.160.254]:52016 ident=93)
+	by www.cquest.utoronto.ca with esmtp (Exim 4.43)
+	id 1PnEoH-0003yH-KM; Wed, 09 Feb 2011 13:30:37 -0500
+Received: from bwalton by pinkfloyd.chass.utoronto.ca with local (Exim 4.72)
+	(envelope-from <bwalton@cquest.utoronto.ca>)
+	id 1PnEoH-0002Nm-JH; Wed, 09 Feb 2011 13:30:37 -0500
+In-reply-to: <201102091538.46594.trast@student.ethz.ch>
+User-Agent: Sup/git
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166437>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166438>
 
-Hi Julian,
+Excerpts from Thomas Rast's message of Wed Feb 09 09:38:46 -0500 2011:
 
-On Wed, Feb 02, 2011 at 11:31:40PM -0500, Julian Ibarz wrote:
-> So now my two questions that could save me some time are:
-> - is there a function that gives the distance between two commits? I'm
-> sure there is something like this coded somewhere but I didn't find it
-> yet
+> I have been running a nightly next&pu smoke tester each on RHEL5 and
+> OS X.  For quite some time (at least a month), t7006 gets stuck
+> randomly (i.e., not every night).  [This has been a bit of a problem
+> because it keeps a lot of processes stuck on the machine and eats
+> into my ulimit, but that's the case with any stuck process; I'll
+> have to think about a good solution to that.]
 
-One thing which now came to my mind is that you might be interested in
-is to use merge bases to find the earliest commit that contains a
-certain revision.
+I'm also seeing this test fail when runing the packaging tools for
+OpenCSW.  I haven't had a chance to investigate yet, but manual tests
+of the script have run without errors so far.  It's only during the
+automated build that it fails.  The automated build is initiated
+manually but is run through a Makefile wrapper that will drastically
+alter the environment.  Beyond this, I have no further input.  I'm
+hoping to spend some time on it in the next few days.
 
-Have a look at how I implemented the submodule merge strategy that might
-help you. You can find it in commit 68d03e4a. I basically do a search
-for the earliest commit that contains the commits from both sides. You
-could use a similar strategy but limit the possible candidates to a
-restricted list of commits which are contained in the supermodule.
-
-Cheers Heiko
+Thanks
+-Ben
+--
+Ben Walton
+Systems Programmer - CHASS
+University of Toronto
+C:416.407.5610 | W:416.978.4302
