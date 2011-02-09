@@ -1,86 +1,84 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Advices to imlement update hook
-Date: Wed, 9 Feb 2011 12:05:35 -0500
-Message-ID: <20110209170535.GA5254@sigill.intra.peff.net>
-References: <AANLkTimdsCgNBAnJmnzGj3M3Q4RPb==fiWu1+ZQhWenO@mail.gmail.com>
- <4D52C2FA.2030103@viscovery.net>
- <4D52C403.30501@viscovery.net>
- <AANLkTik=Xw3b1i-AranJtfngOsfLvEDSzrMq3jKTy-Yy@mail.gmail.com>
+From: Jeff Adamson <jwa@urbancode.com>
+Subject: Debugging Git push failure
+Date: Wed, 9 Feb 2011 13:57:11 -0500
+Message-ID: <AANLkTimcGtDKZ2YU0Z_pc-aRtp-etXFWZ9-drSzpS3KN@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
-To: Francis Moreau <francis.moro@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 09 18:05:46 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 09 19:57:53 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnDU9-0007Jv-E6
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 18:05:45 +0100
+	id 1PnFEe-000067-By
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 19:57:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753773Ab1BIRFk convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Feb 2011 12:05:40 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:41825 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753039Ab1BIRFk (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Feb 2011 12:05:40 -0500
-Received: (qmail 10869 invoked by uid 111); 9 Feb 2011 17:05:37 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Wed, 09 Feb 2011 17:05:37 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Wed, 09 Feb 2011 12:05:35 -0500
-Content-Disposition: inline
-In-Reply-To: <AANLkTik=Xw3b1i-AranJtfngOsfLvEDSzrMq3jKTy-Yy@mail.gmail.com>
+	id S1750955Ab1BIS5n convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Feb 2011 13:57:43 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:36651 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750786Ab1BIS5n convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Feb 2011 13:57:43 -0500
+Received: by fxm20 with SMTP id 20so520670fxm.19
+        for <git@vger.kernel.org>; Wed, 09 Feb 2011 10:57:41 -0800 (PST)
+Received: by 10.223.95.202 with SMTP id e10mr10611542fan.32.1297277861665;
+ Wed, 09 Feb 2011 10:57:41 -0800 (PST)
+Received: by 10.223.127.18 with HTTP; Wed, 9 Feb 2011 10:57:11 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166433>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166434>
 
-On Wed, Feb 09, 2011 at 05:51:24PM +0100, Francis Moreau wrote:
+Several developers on my team are experiencing an occasional failure
+during push. =A0A subsequent push executed immediately afterward the
+failure will work fine. =A0We are a small team of developers (about 10)
+and only a couple users seem to experience this and then only
+intermittently (every few days).
+This is happening on a LAN environment with otherwise reliable
+connectivity. =A0We have some hook scripts for post-update and update
+configured within the repo.
 
-> >>> =C2=A0 =C2=A0git diff-tree <oldref> <newref> -- ^b || exit 1
-> >>>
-> >>> but it doesn't work.
-> >>
-> >> =C2=A0 git diff-tree --quiet <oldref> <newref> -- b
-> >
-> > should do it; it sets the exit code.
->=20
-> but does that work if a commit modify b/ and another directory ?
+the server has git=A0version 1.7.3.3 installed
+$ cat /etc/issue
+CentOS release 5.5 (Final)
+Kernel \r on an \m
+$ uname -a
+Linux=A0core1.example.com=A02.6.18-194.26.1.el5 #1 SMP Tue Nov 9 12:54:=
+20
+EST 2010 x86_64 x86_64 x86_64 GNU/Linux
 
-No, it just looks for commits that modified b. There is currently no wa=
-y
-to specify a path to say "commit that did not modify b". You need to
-check the output of:
+Here is some output from one of the users during two sequential runs
+of `git push -v`. =A0This user is=A0git version 1.7.3.1.msysgit.0 (thou=
+gh
+similar behavior has been seen by another user with version 1.7.0.4 on
+ubuntu 10.04 LTS)
+>git push -v
+Pushing to ssh://git.example.com/data/git/example/scratch/bdd/cssearch-=
+mockup.git
+Counting objects: 9, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 505 bytes, done.
+Total 5 (delta 4), reused 0 (delta 0)
+fatal: The remote end hung up unexpectedly
+fatal: The remote end hung up unexpectedly
+>git push -v
+Pushing to ssh://git.example.com/data/git/example/scratch/bdd/cssearch-=
+mockup.git
+Counting objects: 9, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (5/5), done.
+Writing objects: 100% (5/5), 505 bytes, done.
+Total 5 (delta 4), reused 0 (delta 0)
+To ssh://git.example.com/data/git/example/scratch/bdd/cssearch-mockup.g=
+it
+=A0 bffa1a7..8fd772d =A0master -> master
 
-  git rev-list | git diff-tree --stdin -m --name-only
 
-which should list all paths modified by all commits. And then you can
-either blacklist or whitelist as appropriate (note that the names can b=
-e
-quoted; you might want to look at the "-z" option and do your
-list-checking in perl).
-
-> > But don't you also want to inspect all commits between oldref and n=
-ewref?
->=20
-> Yes I want to inspect all commits in the range.
-
-see above.
-
-> > Someone could have modified the directory, and then reverted the
-> > modification in a later commit. If these commits arrive in a single=
- push,
-> > the above code wouldn't notice this.
->=20
-> I agree but I thought that git diff-tree would list all changes made
-> between the 2 refs.
-
-Between the two endpoints. It won't even look at the commits in the
-middle, so as long as a later middle commit reverts the change of an
-earlier middle commit, the endpoints won't be affected.
-
--Peff
+Anyone know what could be causing this and, just as important, how to
+debug it and issues like it in the future?
+Thanks for any help/insight which can be offered.
+--Jeff
