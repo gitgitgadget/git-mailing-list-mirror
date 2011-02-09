@@ -1,70 +1,74 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: [PATCH/RFC 0/7] Column output
-Date: Wed, 9 Feb 2011 07:13:45 +0700
-Message-ID: <AANLkTi=WKnj8M2Uh+ACSay1STgOhWAjQbmspYSja3y0+@mail.gmail.com>
-References: <1297178541-31124-1-git-send-email-pclouds@gmail.com> <20110208224745.GA14190@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Wed Feb 09 01:14:25 2011
+From: Jared Hance <jaredhance@gmail.com>
+Subject: [PATCH v3 0/3] Updated patch series for default upstream merge
+Date: Tue,  8 Feb 2011 19:23:45 -0500
+Message-ID: <1297211028-14382-1-git-send-email-jaredhance@gmail.com>
+References: <1297198129-3403-1-git-send-email-jaredhance@gmail.com>
+Cc: Jared Hance <jaredhance@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Wed Feb 09 01:24:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmxhP-0003t7-U8
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 01:14:24 +0100
+	id 1Pmxqx-0001Po-L7
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 01:24:15 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755995Ab1BIAOT convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Feb 2011 19:14:19 -0500
-Received: from mail-wy0-f174.google.com ([74.125.82.174]:38880 "EHLO
-	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755501Ab1BIAOS convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Tue, 8 Feb 2011 19:14:18 -0500
-Received: by wyb28 with SMTP id 28so6350461wyb.19
-        for <git@vger.kernel.org>; Tue, 08 Feb 2011 16:14:17 -0800 (PST)
+	id S1756009Ab1BIAYH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Feb 2011 19:24:07 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:45295 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755995Ab1BIAYG (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Feb 2011 19:24:06 -0500
+Received: by qyk12 with SMTP id 12so5311853qyk.19
+        for <git@vger.kernel.org>; Tue, 08 Feb 2011 16:24:05 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=j8uDrtIdF/He9aMN0vp9EMO8Zg/62Alu9Np4YXWHO3w=;
-        b=HHfs2wWMHgaH2GUfKezfUKXgJfJNxuMOSqerq8IQllZVZ3rpRZdjFyLLVWPtqRXAEB
-         F5D3ZSgfCPYl54kGO2Gqi8csi7bMjqgVvHuQRwh13U5n6dRflJUpcBD8lUyGo1/3SQ2F
-         PHp7zlLtPxWWf5d6OQg1vCWnbO9F6CKb4jifg=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references;
+        bh=nRb3RqsSCk74TvoEmJgREr0s057MPD/raRCCqn6kgt8=;
+        b=KuzG/iBKhwrJ0V7QEv7GVR+XNxYMGXfMdFc8vVfOQuth37SYhao2o1wFCGhbn11jgK
+         CkP7kqtVj8LR08ti1A0SI1ilioWYvHkXLaSMdaOQLXhECs+UB7l5sY2j4fm0H5UjYsDF
+         H4A/aP04j0n0qqYN4Zh9xv/DzoYcRaHdVe06w=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=r6fRoPD4NZ81C+ftkvO1/7GC7m3XvdmYwMmZK8L2M+c730C0W8VgHA4tAwVYjwI89t
-         9huNIvzSRNM4aGIIyLfh50UGquVWLTrdpU8jL5rRdovdvsrI8Zg0MqF2Gn5xpOmiL3St
-         SSbomjvMFcXGAUw8xZBsVFrG2IFz2iJ+8D1ao=
-Received: by 10.216.186.144 with SMTP id w16mr16471013wem.13.1297210456020;
- Tue, 08 Feb 2011 16:14:16 -0800 (PST)
-Received: by 10.216.66.144 with HTTP; Tue, 8 Feb 2011 16:13:45 -0800 (PST)
-In-Reply-To: <20110208224745.GA14190@sigill.intra.peff.net>
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=lTMQhEqV04ZrNsMPodusJGr02wMS79zBjknPPCYuwNYu7JkU/0VZdqpaWLR9LNxZPZ
+         lKHUdGr1FZzX9fVjio95HyUgzflfusjO3uzk897QNCEQHHGu0aR7Os+FFeVU3fNn9pij
+         n18ovH9yyBOhWYl3y7DhWLWRHPBVhWZIekzJA=
+Received: by 10.229.91.147 with SMTP id n19mr14306391qcm.153.1297211044904;
+        Tue, 08 Feb 2011 16:24:04 -0800 (PST)
+Received: from localhost.localdomain (cpe-75-186-7-248.cinci.res.rr.com [75.186.7.248])
+        by mx.google.com with ESMTPS id nb15sm35516qcb.26.2011.02.08.16.24.03
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Tue, 08 Feb 2011 16:24:04 -0800 (PST)
+X-Mailer: git-send-email 1.7.4
+In-Reply-To: <1297198129-3403-1-git-send-email-jaredhance@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166376>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166377>
 
-2011/2/9 Jeff King <peff@peff.net>:
-> On Tue, Feb 08, 2011 at 10:22:14PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=
-=E1=BB=8Dc Duy wrote:
->
->> In short, the series is very simple: give porcelain commands column
->> output, just like good old "ls". There could be a few more candidate=
-s,
->> I believe Ren=C3=A9 Scharfe mentioned other files in "git status".
->
-> I don't really care for column output myself, so maybe you have a goo=
-d
-> reason why my idea won't work. But why not use the BSD column program=
-?
+This patch series allows for `git merge` to default to the upstream branch
+of the current branch.
 
-Solaris did not have one last time I checked. Windows obviously does
-not either, but I don't use msysgit so it does not count.
---=20
-Duy
+Notes/Complications:
+	- I'm not sure whether the option should be merge.defaultUpstream
+	  or merge.defaultToUpstream
+	- Should [remotes] be changed to [branches]? I felt like it was
+	  a completely different change and didn't belong in the patch series.
+	- I left one of the ifs with unnecessary braces for clarity because
+	  of a nested if-else: is this the preferred style?
+
+Jared Hance (3):
+  Add setup_merge_commit function to merge/builtin.c.
+  Add function per_branch_config.
+  Add support for merging from upstream by default.
+
+ Documentation/config.txt |    6 +++
+ builtin/merge.c          |   87 ++++++++++++++++++++++++++++++++-------------
+ 2 files changed, 68 insertions(+), 25 deletions(-)
+
+-- 
+1.7.4
