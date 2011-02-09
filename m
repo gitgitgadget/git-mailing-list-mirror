@@ -1,56 +1,73 @@
-From: Yann Dirson <dirson@bertin.fr>
-Subject: Re: grub-mkrescue: manpage points to non-existent info doc
-Date: Wed, 09 Feb 2011 11:49:30 +0100
-Organization: Bertin Technologies
-Message-ID: <20110209114930.572c4784@chalon.bertin.fr>
-References: <20110209091845.2145da9b@chalon.bertin.fr>
- <AANLkTi=2an-UUXP4wmzrN+AHWRo4aY6MwBYsLUu8baNY@mail.gmail.com>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH 5/7] help: reuse struct column_layout
+Date: Wed, 9 Feb 2011 18:21:33 +0700
+Message-ID: <AANLkTinTvTdng2MpVmPfF3O1c08mFEEr1x_pv1_1unBX@mail.gmail.com>
+References: <1297178541-31124-1-git-send-email-pclouds@gmail.com>
+ <1297178541-31124-6-git-send-email-pclouds@gmail.com> <20110209073953.GB2135@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7BIT
-Cc: git list <git@vger.kernel.org>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 09 12:04:23 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Wed Feb 09 12:22:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pn7qQ-0006JS-CI
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 12:04:22 +0100
+	id 1Pn87h-0003FC-7U
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 12:22:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754582Ab1BILEP (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Feb 2011 06:04:15 -0500
-Received: from blois.bertin.fr ([195.68.26.9]:40217 "EHLO blois.bertin.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753566Ab1BILEO (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Feb 2011 06:04:14 -0500
-Received: from blois.bertin.fr (localhost [127.0.0.1])
-	by postfix.imss70 (Postfix) with ESMTP id DD252542BB
-	for <git@vger.kernel.org>; Wed,  9 Feb 2011 12:04:13 +0100 (CET)
-Received: from yport1.innovation.bertin.fr (yport1.bertin.fr [192.168.1.13])
-	by blois.bertin.fr (Postfix) with ESMTP id BC25C542B2
-	for <git@vger.kernel.org>; Wed,  9 Feb 2011 12:04:13 +0100 (CET)
-Received: from chalon.bertin.fr ([172.16.1.1]) by yport1.innovation.bertin.fr
- (Sun Java System Messaging Server 6.2-8.04 (built Feb 28 2007))
- with ESMTPPA id <0LGC00B3XK31D990@yport1.innovation.bertin.fr> for
- git@vger.kernel.org; Wed, 09 Feb 2011 12:04:14 +0100 (CET)
-In-reply-to: <AANLkTi=2an-UUXP4wmzrN+AHWRo4aY6MwBYsLUu8baNY@mail.gmail.com>
-X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; i486-pc-linux-gnu)
-X-TM-AS-Product-Ver: IMSS-7.0.0.8220-6.5.0.1024-17944.006
+	id S1753887Ab1BILWH convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Feb 2011 06:22:07 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:54712 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752952Ab1BILWF convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Wed, 9 Feb 2011 06:22:05 -0500
+Received: by wwa36 with SMTP id 36so56330wwa.1
+        for <git@vger.kernel.org>; Wed, 09 Feb 2011 03:22:04 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=6Dz4mbpS9boN3uSomlLikqvTFD0TnSvgxikxHaULBpg=;
+        b=PuibRoD0NiyRDJruk5YsTNeTZojJeTLgpiWKA7MbCBgWf+NghnbOw/klRSzzNDYesX
+         k5lDtdhKRCpDMpNdQRzgpCfs3MJBjSCwu+LPqt3sn0tkv3Ld0CCiB4yUHEKDbQQErEsZ
+         q+7DdhpSADWKf8Q0ztX6bfh8C7yWcAFHNjWgo=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=xuKlcUvyQdOsEZ1Sf7gZJSNwSWsCKiRAgiDiDt3iMwu28OSEsMyu6rJNsvqs/hozCa
+         K0uaIZMIguxrDGo8V5WZ1bpgjOV08ESyMBs7XISpstSHYaMRewjZZRSYdlD9u9S7wyro
+         mY+KcF8gQr4VfjrCNmv7/FCoR4RDTvJ7UYMNY=
+Received: by 10.216.89.71 with SMTP id b49mr17008428wef.28.1297250524266; Wed,
+ 09 Feb 2011 03:22:04 -0800 (PST)
+Received: by 10.216.66.144 with HTTP; Wed, 9 Feb 2011 03:21:33 -0800 (PST)
+In-Reply-To: <20110209073953.GB2135@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166402>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166403>
 
-On Wed, 09 Feb 2011 10:22:16 +0100
-Sverre Rabbelier <srabbelier@gmail.com> wrote:
-> On Wed, Feb 9, 2011 at 09:18, Yann Dirson <dirson@bertin.fr> wrote:
-> > Package: grub-common
-> 
-> I think you meant to send this to a different list?
+2011/2/9 Jonathan Nieder <jrnieder@gmail.com>:
+> Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
+>
+> [...]
+>> +++ b/help.c
+>> @@ -72,29 +73,17 @@ void exclude_cmds(struct cmdnames *cmds, struct =
+cmdnames *excludes)
+> [...]
+>> + =C2=A0 =C2=A0 struct column_layout c;
+>> + =C2=A0 =C2=A0 int i;
+>> +
+>> + =C2=A0 =C2=A0 memset(&c, 0, sizeof(c));
+>
+> Might be nice to have a COLUMN_LAYOUT_INIT, I suppose.
+>
+> Looks sane. =C2=A0What output changes would be noticeable, if any?
 
-Oops, sorry, wrong alias :(
--- 
-Yann Dirson - Bertin Technologies
+Two spaces between column instead of one. Will fix.
+--=20
+Duy
