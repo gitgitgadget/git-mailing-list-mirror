@@ -1,8 +1,8 @@
 From: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
-Subject: [PATCH 03/16] display_columns: add COL_MODE_{COLUMN,ROW} mode
-Date: Wed,  9 Feb 2011 19:24:31 +0700
-Message-ID: <1297254284-3729-4-git-send-email-pclouds@gmail.com>
+Subject: [PATCH 04/16] display_columns: add COL_DENSE to do unequal column layout
+Date: Wed,  9 Feb 2011 19:24:32 +0700
+Message-ID: <1297254284-3729-5-git-send-email-pclouds@gmail.com>
 References: <1297254284-3729-1-git-send-email-pclouds@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -10,223 +10,171 @@ Content-Transfer-Encoding: QUOTED-PRINTABLE
 Cc: =?UTF-8?q?Nguy=E1=BB=85n=20Th=C3=A1i=20Ng=E1=BB=8Dc=20Duy?= 
 	<pclouds@gmail.com>
 To: git@vger.kernel.org, Jonathan Niedier <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 09 13:26:49 2011
+X-From: git-owner@vger.kernel.org Wed Feb 09 13:26:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pn98C-00074P-PE
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 13:26:49 +0100
+	id 1Pn98I-00078e-T8
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 13:26:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754789Ab1BIM0j convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Feb 2011 07:26:39 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:35859 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754717Ab1BIM0i (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Feb 2011 07:26:38 -0500
-Received: by mail-iy0-f174.google.com with SMTP id 8so92702iyj.19
-        for <git@vger.kernel.org>; Wed, 09 Feb 2011 04:26:38 -0800 (PST)
+	id S1754796Ab1BIM0s convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Feb 2011 07:26:48 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:47853 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754672Ab1BIM0r (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Feb 2011 07:26:47 -0500
+Received: by iwn9 with SMTP id 9so74477iwn.19
+        for <git@vger.kernel.org>; Wed, 09 Feb 2011 04:26:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references:mime-version:content-type
          :content-transfer-encoding;
-        bh=V4BzE3V3C0xZ7QBq/Qb1+zB+py9vWR/IucB8Efcs3RA=;
-        b=AYf1qxc4pcg1WuMSow99vxMdT8zgsOoFGM8ygt4cPhI0Xz+8Uq4sZkGF3pT9SG7rSB
-         EuUYOGt7TbOC70VsZSXv6GD5S58moYr5FzF3yonjjQHyxodK6xnN0OK7DNh9jfYokTNS
-         EgqQ31cR+DOytgLxFFI4ZoIZk9li36pZGVmCg=
+        bh=0Sk+8rbqIfOp6lJtWXDWDUGOH1E55qP8tYpnpR4Vvy0=;
+        b=j/BOLAcyEot+i1QN2TiIbdx0XcARBXUu2AJGgKXe4ZQMXVdKsa25/S2IiVJ1CPj5ML
+         Ptnzu3g+05OBsu83eyJjUQQS7Ei3HrJfbWvFmqsBiVvlZIKAXLinW8UO5ZYObTHQC+Ta
+         PpPdH/lPMUvWGOpHkX28cJcG1ldCmRPlSQZXo=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references
          :mime-version:content-type:content-transfer-encoding;
-        b=F2IFKDTT8dveLTpEzDU+/EaTdjWifzt75xea1I79meit49y7J7Od4CYCnF6J0BdUVq
-         rco8zaR+71mjTYJq3h3oTjH12BKJTzLVQ7/xSP+zKndyxXToKxaM895n41wsklI9niZK
-         b3ODGT4pTNak6pcnFt90hHiOpKcAXkB061tD8=
-Received: by 10.42.223.202 with SMTP id il10mr6898893icb.143.1297254398566;
-        Wed, 09 Feb 2011 04:26:38 -0800 (PST)
+        b=UwPThKU6jXVNZo/WWoqFS6s7EeTj0onmmKHOJWMXYq3JLfzVD0VbEKeSGDYPI1xoVU
+         tUm7OvZpO9Sk4Tw/tmnHDijVjbD0zMtSCCXytNZL090eTYHV8lgzEHMnreU+mSbphAVY
+         J3iOZ1bXF8MSKH0TO4ZPj1rTBOF0jcGsR0H3g=
+Received: by 10.42.228.73 with SMTP id jd9mr20185620icb.38.1297254406740;
+        Wed, 09 Feb 2011 04:26:46 -0800 (PST)
 Received: from pclouds@gmail.com ([115.73.232.10])
-        by mx.google.com with ESMTPS id u9sm253109ibe.8.2011.02.09.04.26.34
+        by mx.google.com with ESMTPS id 8sm255420iba.4.2011.02.09.04.26.43
         (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 09 Feb 2011 04:26:37 -0800 (PST)
-Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 09 Feb 2011 19:25:07 +0700
+        Wed, 09 Feb 2011 04:26:45 -0800 (PST)
+Received: by pclouds@gmail.com (sSMTP sendmail emulation); Wed, 09 Feb 2011 19:25:15 +0700
 X-Mailer: git-send-email 1.7.3.4.878.g439c7
 In-Reply-To: <1297254284-3729-1-git-send-email-pclouds@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166408>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166409>
 
-COL_MODE_COLUMN and COL_MODE_ROW fill column by column (or row by row
-respectively), given the terminal width and how many space between
-columns.
+shrink_columns() calculate column width just enough to contain
+text and padding.
 
-Strings are supposed in UTF-8. If strings contain ANSI escape strings,
-COL_ANSI must be specified.
+relayout() uses shrink_columns() to try adding more columns after
+columns are shrunk. However it only try that once.
 
 Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gmail=
 =2Ecom>
 ---
- column.c |  107 ++++++++++++++++++++++++++++++++++++++++++++++++++++++=
+ column.c |   70 ++++++++++++++++++++++++++++++++++++++++++++++++++++++=
 ++++++++
- column.h |    3 ++
- 2 files changed, 110 insertions(+), 0 deletions(-)
+ column.h |    1 +
+ 2 files changed, 71 insertions(+), 0 deletions(-)
 
 diff --git a/column.c b/column.c
-index c7d9a84..d6e2d70 100644
+index d6e2d70..e7facf4 100644
 --- a/column.c
 +++ b/column.c
-@@ -1,8 +1,58 @@
- #include "cache.h"
- #include "column.h"
-+#include "parse-options.h"
- #include "string-list.h"
-+#include "utf8.h"
+@@ -54,6 +54,68 @@ static void layout(const struct string_list *list,
+ 	*rows =3D DIV_ROUND_UP(list->nr, *cols);
+ }
 =20
- #define MODE(mode) ((mode) & COL_MODE)
-+#define XY2SCALAR(mode,x,y,cols,rows) (MODE(mode) =3D=3D COL_MODE_COLU=
-MN ? (x) * (rows) + (y) : (y) * (cols) + (x))
-+
-+/* return length of 's' in letters, ANSI escapes stripped */
-+static int item_length(const struct string_list *list, int mode, const=
- char *s)
-+{
-+	int len, i =3D 0;
-+	struct strbuf str =3D STRBUF_INIT;
-+
-+	if (!(mode & COL_ANSI))
-+		return utf8_strwidth(s);
-+
-+	strbuf_addstr(&str, s);
-+	while ((s =3D strstr(str.buf + i, "\033[")) !=3D NULL) {
-+		int len =3D strspn(s + 2, "0123456789;");
-+		i =3D s - str.buf;
-+		strbuf_remove(&str, i, len + 3); /* \033[<len><func char> */
-+	}
-+	len =3D utf8_strwidth(str.buf);
-+	strbuf_release(&str);
-+	return len;
-+}
-+
 +/*
-+ * Calculate cell width, rows and cols for a table of equal cells, giv=
-en
-+ * table width and how many spaces between cells.
++ * Tighten columns just wide enough to fit its data and padding
++ * Return number of chars saved after shrinking.
 + */
-+static void layout(const struct string_list *list,
-+		   int mode, int total_width, int padding,
-+		   int *width, int *rows, int *cols)
++static int shrink_columns(const struct string_list *list, int mode,
++			   int *width, int padding, int rows, int cols)
 +{
-+	int i;
++	int x, y, i, len, item_len, spare =3D 0;
++	const char *s;
 +
-+	*width =3D 0;
-+	/* Find maximum column width */
-+	for (i =3D 0; i < list->nr; i++) {
-+		const char *s =3D list->items[i].string;
-+		int len =3D item_length(list, mode, s);
-+		if (*width < len)
-+			*width =3D len;
++	for (x =3D 0; x < cols; x++) {
++		for (y =3D len =3D 0; y < rows; y++) {
++			i =3D XY2SCALAR(mode, x, y, cols, rows);
++			if (i >=3D list->nr)
++				break;
++			s =3D list->items[i].string;
++			item_len =3D item_length(list, mode, s);
++			if (len < item_len)
++				len =3D item_len;
++		}
++		len +=3D padding;
++
++		assert(len <=3D width[x]);
++		spare +=3D width[x] - len;
++		width[x] =3D len;
 +	}
-+	*width +=3D padding;
-+
-+	*cols =3D total_width / *width;
-+	if (*cols =3D=3D 0)
-+		*cols =3D 1;
-+
-+	*rows =3D DIV_ROUND_UP(list->nr, *cols);
++	return spare;
 +}
-=20
++
++/* Try to tighten the layout and see if more columns can be added.*/
++static void relayout(const struct string_list *list,
++		     int mode, int original_width, int padding, int spare,
++		     int *initial_width, int **width, int *rows, int *cols)
++{
++	int new_rows, new_cols, new_initial_width;
++	int i, *new_width, new_spare, total_width;
++
++	/*
++	 * Assume all columns have same width, we would need
++	 * initial_width*cols. But then after shrinking, we have
++	 * "spare" more chars. Assume a new total_width with
++	 * additional chars, then re-shrink to see if it fits
++	 * c->width.
++	 */
++	total_width =3D (*initial_width)*(*cols) + spare;
++	layout(list, mode, total_width, padding,
++	       &new_initial_width, &new_rows, &new_cols);
++	new_width =3D xmalloc(sizeof(*new_width) * new_cols);
++	for (i =3D 0; i < new_cols; i++)
++		new_width[i] =3D new_initial_width;
++	new_spare =3D shrink_columns(list, mode, new_width, padding, new_rows=
+, new_cols);
++
++	/* Does it fit? */
++	if (total_width - new_spare < original_width) {
++		free(*width);
++		*width =3D new_width;
++		*initial_width =3D new_initial_width;
++		*rows =3D new_rows;
++		*cols =3D new_cols;
++	}
++}
++
  /* Display without layout, COL_MODE_PLAIN */
  static void display_plain(const struct string_list *list, const char *=
 indent)
-@@ -13,6 +63,58 @@ static void display_plain(const struct string_list *=
-list, const char *indent)
- 		printf("%s%s\n", indent, list->items[i].string);
- }
-=20
-+static int display_cell(const struct string_list *list, int mode,
-+			int *width, int initial_width,
-+			const char *indent, const char *empty_cell,
-+			int x, int y, int cols, int rows)
-+{
-+	const char *s;
-+	int i, len, newline;
-+
-+	i =3D XY2SCALAR(mode, x, y, cols, rows);
-+	if (i >=3D list->nr)
-+		return -1;
-+	s =3D list->items[i].string;
-+	len =3D item_length(list, mode, s);
-+	if (width[x] < initial_width)
-+		len +=3D initial_width - width[x];
-+	if (MODE(mode) =3D=3D COL_MODE_COLUMN)
-+		newline =3D i + rows >=3D list->nr;
-+	else
-+		newline =3D x =3D=3D cols - 1 || i =3D=3D list->nr - 1;
-+
-+	printf("%s%s%s",
-+			x =3D=3D 0 ? indent : "",
-+			list->items[i].string,
-+			newline ? "\n" : empty_cell + len);
-+	return 0;
-+}
-+
-+/* Display COL_MODE_COLUMN or COL_MODE_ROW */
-+static void display_table(const struct string_list *list,
-+			  int mode, int total_width,
-+			  int padding, const char *indent)
-+{
-+	int x, y, i, cols, rows, initial_width, *width;
-+	char *empty_cell;
-+
-+	layout(list, mode, total_width, padding, &initial_width, &rows, &cols=
-);
-+	width =3D xmalloc(sizeof(*width) * cols);
-+	for (i =3D 0; i < cols; i++)
-+		width[i] =3D initial_width;
-+
-+	empty_cell =3D xmalloc(initial_width + 1);
-+	memset(empty_cell, ' ', initial_width);
-+	empty_cell[initial_width] =3D '\0';
-+	for (y =3D 0; y < rows; y++) {
-+		for (x =3D 0; x < cols; x++)
-+			if (display_cell(list, mode, width,
-+					 initial_width, indent, empty_cell,
-+					 x, y, cols, rows))
-+				break;
-+	}
-+}
-+
- void display_columns(const struct string_list *list, int mode, int wid=
-th, int padding, const char *indent)
  {
- 	int real_mode =3D MODE(mode);
-@@ -25,6 +127,11 @@ void display_columns(const struct string_list *list=
-, int mode, int width, int pa
- 		display_plain(list, indent);
- 		break;
+@@ -103,6 +165,14 @@ static void display_table(const struct string_list=
+ *list,
+ 	for (i =3D 0; i < cols; i++)
+ 		width[i] =3D initial_width;
 =20
-+	case COL_MODE_ROW:
-+	case COL_MODE_COLUMN:
-+		display_table(list, mode, width, padding, indent);
-+		break;
++	if (mode & COL_DENSE) {
++		int spare =3D shrink_columns(list, mode, width, padding, rows, cols)=
+;
++		/* is it worth relayout? */
++		if (spare >=3D initial_width/2)
++			relayout(list, mode, total_width, padding, spare,
++				 &initial_width, &width, &rows, &cols);
++	}
 +
- 	default:
- 		die("BUG: invalid mode %d", MODE(mode));
- 	}
+ 	empty_cell =3D xmalloc(initial_width + 1);
+ 	memset(empty_cell, ' ', initial_width);
+ 	empty_cell[initial_width] =3D '\0';
 diff --git a/column.h b/column.h
-index da0bf9a..3ed5731 100644
+index 3ed5731..cef354d 100644
 --- a/column.h
 +++ b/column.h
-@@ -3,6 +3,9 @@
-=20
- #define COL_MODE          0x000F
- #define COL_MODE_PLAIN         0   /* Single column */
-+#define COL_MODE_COLUMN        1   /* Fill columns before rows */
-+#define COL_MODE_ROW           2   /* Fill rows before columns */
-+#define COL_ANSI         (1 << 4) /* Remove ANSI escapes from string l=
+@@ -6,6 +6,7 @@
+ #define COL_MODE_COLUMN        1   /* Fill columns before rows */
+ #define COL_MODE_ROW           2   /* Fill rows before columns */
+ #define COL_ANSI         (1 << 4) /* Remove ANSI escapes from string l=
 ength */
++#define COL_DENSE        (1 << 5) /* Shrink columns when possible, mak=
+ing space for more columns */
 =20
  extern int term_columns(void);
  extern void display_columns(const struct string_list *list, int mode, =
