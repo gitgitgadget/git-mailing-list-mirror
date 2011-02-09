@@ -1,105 +1,117 @@
-From: Pat Notz <patnotz@gmail.com>
-Subject: Re: [1.8.0] git-stash invocation changes
-Date: Wed, 9 Feb 2011 07:35:38 -0700
-Message-ID: <AANLkTineuxosCRRRJosziv9umgtO9uN3nAAh_v=f3Vfk@mail.gmail.com>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <AANLkTimu=drR+4v+B_aB+Y4jVqzaBghh1XYSZoACsBry@mail.gmail.com>
- <vpqtygmwbee.fsf@bauges.imag.fr> <201102021951.31883.trast@student.ethz.ch>
+From: Thomas Rast <trast@student.ethz.ch>
+Subject: t7006 sometimes hangs in cronjobs on OS X
+Date: Wed, 9 Feb 2011 15:38:46 +0100
+Message-ID: <201102091538.46594.trast@student.ethz.ch>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Shawn Pearce <spearce@spearce.org>,
-	Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Thomas Rast <trast@student.ethz.ch>
-X-From: git-owner@vger.kernel.org Wed Feb 09 15:36:16 2011
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+Cc: Jeff King <peff@peff.net>, Jonathan Nieder <jrnieder@gmail.com>
+To: <git@vger.kernel.org>
+X-From: git-owner@vger.kernel.org Wed Feb 09 15:38:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnB9U-0005DT-EG
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 15:36:16 +0100
+	id 1PnBC2-0007Dz-Nq
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 15:38:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755728Ab1BIOgB convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Feb 2011 09:36:01 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:53503 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755679Ab1BIOgA convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Feb 2011 09:36:00 -0500
-Received: by bwz15 with SMTP id 15so1017176bwz.19
-        for <git@vger.kernel.org>; Wed, 09 Feb 2011 06:35:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=VIzZ0DKytXvRm+KBHXpKQ3dfp+qabD80/mrNTeaqSPs=;
-        b=D4NjWu/tDVPgGdUtEVXXZc9/m7fOpebRNDwa2d09wSBITItjcT5T/DTQrI/bLYs/2C
-         0WRXg4ipNZ1R6c0S36Y9yUolegVP1rmMH9j8xmF8gfSI3I7amVigxc/NXez2etg3gQJT
-         /vO91cf5l7Y0aT/YVN58rgr0nrZIVU1lycsnk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=Od687Yf6miUca1Lvk8YLvpBc5kwFXPqKGsSi6bOHWisYZZIQEmply6C5KVf5M59yeh
-         ay4IB6zs6P5enuwrWQI6pAkkoZmlYQ2AHjK6CXxYIqUaNKZdkJDuiEgIMseo6aIoBuZD
-         vwfwnv8FfcEhfrvsaF5MdNWTFcrIaHJAArHDc=
-Received: by 10.204.59.8 with SMTP id j8mr18952330bkh.26.1297262159129; Wed,
- 09 Feb 2011 06:35:59 -0800 (PST)
-Received: by 10.204.51.19 with HTTP; Wed, 9 Feb 2011 06:35:38 -0800 (PST)
-In-Reply-To: <201102021951.31883.trast@student.ethz.ch>
+	id S1755323Ab1BIOit (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Feb 2011 09:38:49 -0500
+Received: from edge20.ethz.ch ([82.130.99.26]:2800 "EHLO edge20.ethz.ch"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+	id S1755174Ab1BIOis (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Feb 2011 09:38:48 -0500
+Received: from CAS21.d.ethz.ch (172.31.51.111) by edge20.ethz.ch
+ (82.130.99.26) with Microsoft SMTP Server (TLS) id 14.1.270.1; Wed, 9 Feb
+ 2011 15:38:46 +0100
+Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
+ (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.270.1; Wed, 9 Feb
+ 2011 15:38:46 +0100
+User-Agent: KMail/1.13.5 (Linux/2.6.37-desktop; KDE/4.5.4; x86_64; ; )
+X-Originating-IP: [129.132.153.233]
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166422>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166423>
 
-On Wed, Feb 2, 2011 at 11:51 AM, Thomas Rast <trast@student.ethz.ch> wr=
-ote:
-> Matthieu Moy wrote:
->> Shawn Pearce <spearce@spearce.org> writes:
->>
->> > On Wed, Feb 2, 2011 at 09:23, Thomas Rast <trast@student.ethz.ch> =
-wrote:
->> >> Proposal:
->> >>
->> >> 1. Change 'git stash <not-a-stash-command>' to give a usage messa=
-ge
->> >> =A0 instead of using <not-a-stash-command> as the stash message.
->> >
->> > Oh please, yes, please do this. =A0We should have done this long, =
-long
->> > ago. =A0Its easy enough to train your fingers or fix your scripts =
-to say
->> > `git stash save list` rather than `git stash lsit` once stash erro=
-rs
->> > out and gives you a usage message once.
->>
->> Err, hasn't this been fixed long ago already?
->
-> Oh, you're actually right. =A0I have totally missed this, and should
-> obviously have tested first.
->
-> Still, I think the change to 'git stash -p' is also worthwhile.
->
+Hi *,
 
-There's still something annoyingly different about git-stash. Most git
-commands that take sub-commands simply list useful information when
-you don't provide a sub-command:
+I have been running a nightly next&pu smoke tester each on RHEL5 and
+OS X.  For quite some time (at least a month), t7006 gets stuck
+randomly (i.e., not every night).  [This has been a bit of a problem
+because it keeps a lot of processes stuck on the machine and eats into
+my ulimit, but that's the case with any stuck process; I'll have to
+think about a good solution to that.]
 
-git branch --> lists local branches
-git tag --> lists tags
-git remote --> lists remotes
-git stash --> creates a new stash
+The relevant part of 'ps xwww' is
 
-It would be much more predictable if git-stash without a sub-command
-just listed the current stashes. But, at this point it's probably too
-late to change that behavior.
+  65211   ??  SN     0:00.03 /bin/sh t7006-pager.sh
+  65798   ??  SN     0:00.04 /usr/bin/perl /Users/trast/git-smoke/t/test-terminal.perl git --no-pager log
+  65846   ??  ZN     0:00.00 (git)
+  65847   ??  ZN     0:00.00 (perl5.10.0)
 
-> --
-> Thomas Rast
-> trast@{inf,student}.ethz.ch
-> --
-> To unsubscribe from this list: send the line "unsubscribe git" in
-> the body of a message to majordomo@vger.kernel.org
-> More majordomo info at =A0http://vger.kernel.org/majordomo-info.html
->
+Everything runs from a cronjob, so it does not have a terminal.  If I
+SIGTERM the first perl process, the script continues and I eventually
+get the normal results (upload to smoke.nix.git.is and emailed
+report).
+
+The Cc list is a bit of a random guess based on who worked on this;
+from the 'git --no-pager log' you can see that the test got stuck in
+the 'no pager with --no-pager' test, but that was introduced 10 months
+ago.  It may very well have been broken all the time, or also for
+other commands.
+
+So if you have any idea what the problem could be or what I should be
+looking for, help would be much appreciated...
+
+
+Some files that may be relevant:
+
+Crontab entry:
+0 5 * * * cd ~ && . .bashrc && ./do-the-smoke.sh
+
+---- 8< ---- ~/do-the-smoke.sh ---- 8< ----
+#!/bin/bash
+
+cd ~/git-smoke
+git fetch -q
+
+doit () {
+    branch="$1"
+    git checkout origin/"$branch" || exit 1
+
+    make -j12 || exit 1
+    cd t
+    make clean
+    TEST_JOBS=6 nice make smoke
+    TEST_JOBS=6 nice make smoke_report SMOKE_COMMENT="Darwin 10.5 $branch" SMOKE_TAGS="$branch, Darwin 10.5, NO_SVN_TESTS, NO_EXPAT"
+}
+
+( doit next )
+( doit pu )
+---- >8 ---- >8 ----
+
+---- 8< ---- ~/git-smoke/config.mak ---- 8< ----
+CFLAGS = -Wall -O3 -g
+THREADED_DELTA_SEARCH = 1
+NO_SVN_TESTS = 1
+ASCIIDOC8 = 1
+ASCIIDOC_NO_ROFF = 1
+GNU_ROFF = 1
+BLK_SHA1 = 1
+prefix = /home/thomas/.local
+NO_EXPAT = 1
+NO_GETTEXT = 1
+SMOKE_USERNAME = trast
+SMOKE_PASSWORD = I'm not telling you :-)
+SMOKE_COMMENT = RHEL5.5
+---- >8 ---- >8 ----
+
+(I just noticed that the above 'prefix' makes no sense because $HOME
+is /Users/trast, but I'm not installing it anyway...)
+
+-- 
+Thomas Rast
+trast@{inf,student}.ethz.ch
