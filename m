@@ -1,71 +1,81 @@
-From: Sverre Rabbelier <srabbelier@gmail.com>
-Subject: Re: [PATCH 2/2] fast-import: introduce "feature notes" command
-Date: Thu, 10 Feb 2011 00:06:51 +0100
-Message-ID: <AANLkTikML-1UsMttWUyLNWWWnTAT5NiOVhzQReeejg=g@mail.gmail.com>
-References: <20110202045826.GC15285@elie> <20110202050735.GE15285@elie>
- <201102022047.55152.trast@student.ethz.ch> <AANLkTi=bEi6J3wcex8JCowU6PRt3BKix5v67v8Ds-MN2@mail.gmail.com>
- <20110209214638.GA16716@elie> <20110209224357.GB17128@elie>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH v3 1/3] Add setup_merge_commit function to
+ merge/builtin.c.
+Date: Wed, 09 Feb 2011 15:24:54 -0800
+Message-ID: <7v8vxookop.fsf@alter.siamese.dyndns.org>
+References: <1297198129-3403-1-git-send-email-jaredhance@gmail.com>
+ <1297211028-14382-1-git-send-email-jaredhance@gmail.com>
+ <1297211028-14382-2-git-send-email-jaredhance@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org,
-	Johan Herland <johan@herland.net>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	"Shawn O. Pearce" <spearce@spearce.org>,
-	Sam Vilain <sam@vilain.net>, Junio C Hamano <gitster@pobox.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 10 00:07:37 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Jared Hance <jaredhance@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 10 00:25:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnJ8L-0006MI-Hl
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 00:07:37 +0100
+	id 1PnJPM-0002dA-3R
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 00:25:12 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755640Ab1BIXHd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Feb 2011 18:07:33 -0500
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:56209 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750738Ab1BIXHc (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Feb 2011 18:07:32 -0500
-Received: by yib18 with SMTP id 18so323701yib.19
-        for <git@vger.kernel.org>; Wed, 09 Feb 2011 15:07:31 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type;
-        bh=tCwRLCwf6o1i72fArdaINLESDzfOuX5laGIjYievIgc=;
-        b=V2+XUY9ZL8Ci0LBaWkyDhfB2u9RFbCP4YdlXckgfs7SIfreeUIm29Z/1Jq3N+M71XM
-         PbDVGfVmHbHIN7w55aH3+MCIM5SI0RRAGBXTllPi/2EMFOojIoYEj7/sXz8RhzUDCmh5
-         2w4RsOFL9ZDXMY1kcR9y2AxiMFDfCoyXuNLk0=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type;
-        b=JC2sdGugoboSTQQM+j8ysVLGQrjMI4dzKpwwk8HuQR6Zml7gO5WUOMbIhNS+Yal4Fc
-         tKiWlzmDJ+zVKxtSe8B7XPbmaKcrQ+XpTTjgLtqqDJOdUHXUfGUH8d13buZYZfG+T5MR
-         g8uUx6BIH4S1DG4sThUk2EjzdXO552zUFML6Q=
-Received: by 10.150.54.20 with SMTP id c20mr2550006yba.55.1297292851545; Wed,
- 09 Feb 2011 15:07:31 -0800 (PST)
-Received: by 10.150.51.6 with HTTP; Wed, 9 Feb 2011 15:06:51 -0800 (PST)
-In-Reply-To: <20110209224357.GB17128@elie>
+	id S1754245Ab1BIXZE (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Feb 2011 18:25:04 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:61346 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755684Ab1BIXZD (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Feb 2011 18:25:03 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 136284E3F;
+	Wed,  9 Feb 2011 18:26:02 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=PJI/jv9bIlcCp0JOznO6D3YZFRg=; b=VU6wX/
+	gU7I45Nmexxt4yFTsBpvCp+sWJNm8KIiIqWbOJL10f8VjGexzggvxvl7r0Pi7ovy
+	gy68h2Y1K6htKxTutPuGzwfLOHuWp/2JAHOpUIrxwiH491cofzVNcgBMuy9mRo58
+	KuwXIWKKja249drfqjuRO3IfA8f9lC8evd6nU=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=LXMhRa/6Rg7x88OgyNyCqV0Q47qw5+fX
+	742H8MQggFT2/uAu5AZd47TvtLLJ3PvUvHvTfa3znb2Hh1IRD+aUuhu3+Kt+TKdq
+	rXBvRyf7LllGlgtMicEZQLcSW1JkfqWCj6FFJkirL5+GzWGdHoZv95sh7Eaq5WLL
+	Jk26MKtNt3E=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DBB674E3E;
+	Wed,  9 Feb 2011 18:25:59 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 086564E3B; Wed,  9 Feb 2011
+ 18:25:56 -0500 (EST)
+In-Reply-To: <1297211028-14382-2-git-send-email-jaredhance@gmail.com> (Jared
+ Hance's message of "Tue\,  8 Feb 2011 19\:23\:46 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: F3F92B0A-34A3-11E0-9826-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166453>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166454>
 
-Heya,
+Jared Hance <jaredhance@gmail.com> writes:
 
-On Wed, Feb 9, 2011 at 23:43, Jonathan Nieder <jrnieder@gmail.com> wrote:
-> Improved-by: Thomas Rast <trast@student.ethz.ch>
-> Improved-by: Sverre Rabbelier <srabbelier@gmail.com>
-> Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+> Subject: Re: [PATCH v3 1/3] Add setup_merge_commit function to merge/builtin.c.
 
-Acked as well. Thanks for backporting this!
+Please spell the name of the file you are touching correctly ;-).
 
+	Subject: builtin/merge.c: Add setup_merge_commit function
 
--- 
-Cheers,
+> Adds a new function that will be used in a later patch as well as the
+> current code to reduce redundancy.
 
-Sverre Rabbelier
+Redandunt.  If you say "add", we know the function is "new" ;-)
+
+State what that function does instead of a vague "reduce redundancy",
+perhaps like...
+
+	Refactor the loop to parse list of commits given from the command
+        line into a separate helper function.
+
+The patch itself looks good.
+
+Thanks.
