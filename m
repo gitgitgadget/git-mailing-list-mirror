@@ -1,232 +1,90 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH] rebase: use @{upstream} if no upstream specified
-Date: Tue, 8 Feb 2011 20:50:31 -0500 (EST)
-Message-ID: <alpine.DEB.2.00.1102081959210.14152@debian>
-References: <1297125475-19151-1-git-send-email-martin.von.zweigbergk@gmail.com> <AANLkTi=Uqkzv+ucBzww6R1V+0ujmfH-dED8XJhyRvWQF@mail.gmail.com> <alpine.DEB.2.00.1102081320350.4475@debian> <20110208220505.GA17981@elie>
- <alpine.DEB.2.00.1102081916330.9042@debian>
-Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>, git@vger.kernel.org,
-	Junio C Hamano <gitster@pobox.com>,
-	Yann Dirson <ydirson@altern.org>
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 09 02:50:44 2011
+From: Michael Witten <mfwitten@gmail.com>
+Subject: [PATCH] request-pull: Include newline in output
+Date: Tue, 08 Feb 2011 18:35:13 -0800 (PST)
+Message-ID: <4d51fd61.8937e30a.096e.0a65@mx.google.com>
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Wed Feb 09 03:35:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmzCe-0005xm-1g
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 02:50:44 +0100
+	id 1Pmztr-00072S-P6
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 03:35:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756170Ab1BIBuj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Feb 2011 20:50:39 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:55764 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755919Ab1BIBui (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Feb 2011 20:50:38 -0500
-Received: by vws16 with SMTP id 16so3269331vws.19
-        for <git@vger.kernel.org>; Tue, 08 Feb 2011 17:50:37 -0800 (PST)
+	id S1756187Ab1BICfQ (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Tue, 8 Feb 2011 21:35:16 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:56333 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754160Ab1BICfP (ORCPT <rfc822;git@vger.kernel.org>);
+	Tue, 8 Feb 2011 21:35:15 -0500
+Received: by wyb28 with SMTP id 28so6440396wyb.19
+        for <git@vger.kernel.org>; Tue, 08 Feb 2011 18:35:14 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
-         :message-id:references:user-agent:mime-version:content-type;
-        bh=6GGyRg7hU+NvJqMSOu/vMh+lDPVaol4AVaoSb1y99vI=;
-        b=TZwR0L9YRG71cA77ZNFBfhM2h1FG4YvdT9Hq2pGSD6LPHlBg7y6cU4vzEoflAZkpAN
-         W3Wasb7EiGRnVrAqe6Y5zIQgvOpFY18lXTghLh2eaTi6W4iRBcK4mVfYvVpjg4G6TZ4d
-         iEqe+XEcbK3Qn2jmyF4pZ1zrpX1rb/bxBlm6k=
+        h=domainkey-signature:message-id:date:subject:from:to:cc;
+        bh=ol1dVOnPOEdG3pFdXMGcp3Wc3LgwTwdTiIaXDJm6Wq4=;
+        b=urJBWzIKd5iIQcZ2z/DNSpxX5nqXmEH1E9NGx8w1ZDlhINQRPX+XCsnWsPtWhScSIS
+         zC0FclhI4n3vV0MBV0KrHBR8pIS1918dL6QgmZ5E5kGbBS/+MCSzNi2Cqe30BQlwJ2tR
+         PKL2rJTipwHCcsT+bRX60aWfUAIUmPznleR2M=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=wlRCC5cR6SFbrZbWdUpZDnz3XM4+Ej0y5L7XMLhyRdfzcvsHI4aBwHGWYanm8aw/Is
-         liYdH34fMnFWb3JSQS64Ein+ggenOOB/srDEtSRwMjlDXJo1boXm/RTTUltKdPGNHxyZ
-         DMWbSlZk+zwcFeo/elnbM1fFDbX2B5SKyAAZU=
-Received: by 10.220.187.69 with SMTP id cv5mr4722716vcb.200.1297216237335;
-        Tue, 08 Feb 2011 17:50:37 -0800 (PST)
-Received: from [192.168.1.104] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id ft27sm162520vbb.8.2011.02.08.17.50.35
+        h=message-id:date:subject:from:to:cc;
+        b=TpXTKSI/JtRHTDUjFooSgLX++H9M2GnGCIe/jQpYkLh72dAFMn4csQuPNxvxtPQiWk
+         h230ZIbfkqtGUHvXPtKof6MU8Eq+Y60raHfHNtie1AXPdBrZMDnHTE/fFEHynLL6s9sm
+         Lsgr35qvQBKJmgjAM6tHHlFBSZuXuMC83hU5g=
+Received: by 10.227.157.79 with SMTP id a15mr3261496wbx.157.1297218914260;
+        Tue, 08 Feb 2011 18:35:14 -0800 (PST)
+Received: from gmail.com ([109.169.29.56])
+        by mx.google.com with ESMTPS id u9sm235140wbg.18.2011.02.08.18.35.11
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Tue, 08 Feb 2011 17:50:36 -0800 (PST)
-X-X-Sender: martin@debian
-In-Reply-To: <alpine.DEB.2.00.1102081916330.9042@debian>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+        Tue, 08 Feb 2011 18:35:13 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166387>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166388>
 
-On Tue, 8 Feb 2011, Martin von Zweigbergk wrote:
+Date: Tue, 9 Feb 2011 02:17:47 +0000
+Output looked like this:
 
-> On Tue, 8 Feb 2011, Jonathan Nieder wrote:
-> 
-> > Martin von Zweigbergk wrote:
-> > > On Tue, 8 Feb 2011, Sverre Rabbelier wrote:
-> > 
-> > >> I particularly like that you explain to the user clearly what they
-> > >> have to do to make this work (e.g., configure the upstream). Nice.
-> > >
-> > > Thanks, but that was stolen from git-pull.sh ;-)
-> > 
-> > Doesn't that suggest it might belong in some common git-upstream--lib.sh
-> > (or git-sh-setup.sh)?
-> 
-> Maybe it does...
+    The following changes since commit 7811d9600f02e70c9f835719c71156c967a684f7:
 
-Maybe something like this on top? I put it in git-parse-remote.sh for
-now. There were some related functions there, so maybe it's not so
-bad. Should I put it there (and rename to git-upstream--lib.sh?), in
-new git-upstream--lib.sh or in git-sh-setup.sh.
+      pull: Document the "--[no-]recurse-submodules" options (2011-02-07 15:19:09 -0800)
 
-Changes to the text compared to before:
+    are available in the git repository at:
+      git://git.kernel.org/pub/scm/git/git.git something
 
- * "remote branch" became "upstream branch", even for git pull
+Now it looks like this:
 
- * "You asked me to pull" became "You asked me to merge" or "You asked
-   me to rebase", even for git pull
+    The following changes since commit 7811d9600f02e70c9f835719c71156c967a684f7:
 
- * Now printed to stderr, because I simply didn't think about it. Good
-   or bad?
+      pull: Document the "--[no-]recurse-submodules" options (2011-02-07 15:19:09 -0800)
 
-What do you think?
+    are available in the git repository at:
 
+      git://git.kernel.org/pub/scm/git/git.git something
 
--- 8< --
+Isn't that nice?
 
+Signed-off-by: Michael Witten <mfwitten@gmail.com>
+---
+ git-request-pull.sh |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/git-parse-remote.sh b/git-parse-remote.sh
-index 1cc2ba6..ff58d5b 100644
---- a/git-parse-remote.sh
-+++ b/git-parse-remote.sh
-@@ -99,3 +99,40 @@ get_remote_merge_branch () {
- 	    esac
- 	esac
- }
-+
-+error_on_missing_default_upstream () {
-+	op_type="$1"
-+	op_prep="$2"
-+	example="$3"
-+	documentation="$4"
-+	branch_name=$(git symbolic-ref -q HEAD)
-+	if test -z "$branch_name"
-+	then
-+		die "You are not currently on a branch, so I cannot use any
-+'branch.<branchname>.merge' in your configuration file.
-+Please specify which upstream branch you want to use on the command
-+line and try again (e.g. '$example').
-+See $documentation for details."
-+	else
-+		echo &2> "You asked me to $op_type without telling me which branch you
-+want to $op_type $op_prep, and 'branch.${branch_name#refs/heads/}.merge' in
-+your configuration file does not tell me, either. Please
-+specify which branch you want to use on the command line and
-+try again (e.g. '$example').
-+See $documentation for details.
-+
-+If you often $op_type $op_prep the same branch, you may want to
-+use something like the following in your configuration file:
-+    [branch \"${branch_name#refs/heads/}\"]
-+    remote = <nickname>
-+    merge = <remote-ref>"
-+		test rebase = "$op_type" &&
-+		echo &2> "    rebase = true"
-+		die "
-+    [remote \"<nickname>\"]
-+    url = <url>
-+    fetch = <refspec>
-+
-+See git-config(1) for details."
-+	fi
-+}
-diff --git a/git-pull.sh b/git-pull.sh
-index eb87f49..8ec1d3d 100755
---- a/git-pull.sh
-+++ b/git-pull.sh
-@@ -163,34 +163,10 @@ error_on_no_merge_candidates () {
- 		echo "You asked to pull from the remote '$1', but did not specify"
- 		echo "a branch. Because this is not the default configured remote"
- 		echo "for your current branch, you must specify a branch on the command line."
--	elif [ -z "$curr_branch" ]; then
--		echo "You are not currently on a branch, so I cannot use any"
--		echo "'branch.<branchname>.merge' in your configuration file."
--		echo "Please specify which remote branch you want to use on the command"
--		echo "line and try again (e.g. 'git pull <repository> <refspec>')."
--		echo "See git-pull(1) for details."
--	elif [ -z "$upstream" ]; then
--		echo "You asked me to pull without telling me which branch you"
--		echo "want to $op_type $op_prep, and 'branch.${curr_branch}.merge' in"
--		echo "your configuration file does not tell me, either. Please"
--		echo "specify which branch you want to use on the command line and"
--		echo "try again (e.g. 'git pull <repository> <refspec>')."
--		echo "See git-pull(1) for details."
--		echo
--		echo "If you often $op_type $op_prep the same branch, you may want to"
--		echo "use something like the following in your configuration file:"
--		echo
--		echo "    [branch \"${curr_branch}\"]"
--		echo "    remote = <nickname>"
--		echo "    merge = <remote-ref>"
--		test rebase = "$op_type" &&
--			echo "    rebase = true"
--		echo
--		echo "    [remote \"<nickname>\"]"
--		echo "    url = <url>"
--		echo "    fetch = <refspec>"
--		echo
--		echo "See git-config(1) for details."
-+	elif [ -z "$curr_branch" -o -z "$upstream" ]; then
-+		. git-parse-remote
-+		error_on_missing_default_upstream $op_type $op_prep \
-+			"git pull <repository> <refspec>" "git-pull(1)"
- 	else
- 		echo "Your configuration specifies to $op_type $op_prep the ref '${upstream#refs/heads/}'"
- 		echo "from the remote, but no such ref was fetched."
-diff --git a/git-rebase.sh b/git-rebase.sh
-index 5975642..8b39cab 100755
---- a/git-rebase.sh
-+++ b/git-rebase.sh
-@@ -144,25 +144,6 @@ run_pre_rebase_hook () {
- 	fi
- }
+diff --git a/git-request-pull.sh b/git-request-pull.sh
+index 6fdea39..d8e7ba3 100755
+--- a/git-request-pull.sh
++++ b/git-request-pull.sh
+@@ -70,7 +70,7 @@ git show -s --format='The following changes since commit %H:
  
--error_on_missing_default_upstream () {
--	branch_name=$(git symbolic-ref -q HEAD)
--	if test -z "$branch_name"
--	then
--		die "You are not currently on a branch, so I cannot use any
--'branch.<branchname>.merge' in your configuration file.
--Please specify which upstream branch you want to use on the command
--line and try again (e.g. 'git rebase <upstream branch>').
--See git-rebase(1) for details."
--	else
--		die "You asked me to rebase without telling me which branch you
--want to rebase against, and 'branch.${branch_name#refs/heads/}.merge' in
--your configuration file does not tell me, either. Please
--specify which branch you want to use on the command line and
--try again (e.g. 'git rebase <upstream branch>').
--See git-rebase(1) for details."
--	fi
--}
--
- test -f "$apply_dir"/applying &&
- 	die 'It looks like git-am is in progress. Cannot rebase.'
+   %s (%ci)
  
-@@ -381,8 +362,13 @@ if test -z "$rebase_root"
- then
- 	case "$#" in
- 	0)
--		upstream_name=$(git rev-parse --symbolic-full-name --verify -q \
--		@{upstream}) || error_on_missing_default_upstream
-+		if ! upstream_name=$(git rev-parse --symbolic-full-name \
-+			--verify -q @{upstream})
-+		then
-+			. git-parse-remote
-+			error_on_missing_default_upstream "rebase" "against" \
-+				"git rebase <upstream branch>" "git-rebase(1)"
-+		fi
- 		;;
- 	*)	upstream_name="$1"
- 		shift
+-are available in the git repository at:' $baserev &&
++are available in the git repository at:%n' $baserev &&
+ echo "  $url $branch" &&
+ echo &&
+ 
+-- 
+1.7.4.15.g7811d.dirty
