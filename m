@@ -1,132 +1,70 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v2] Add support for merging from upstream by default.
-Date: Tue, 08 Feb 2011 16:04:36 -0800
-Message-ID: <7vpqr2oyy3.fsf@alter.siamese.dyndns.org>
-References: <1297198129-3403-1-git-send-email-jaredhance@gmail.com>
- <20110208223359.GB17981@elie>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: [PATCH/RFC 0/7] Column output
+Date: Wed, 9 Feb 2011 07:13:45 +0700
+Message-ID: <AANLkTi=WKnj8M2Uh+ACSay1STgOhWAjQbmspYSja3y0+@mail.gmail.com>
+References: <1297178541-31124-1-git-send-email-pclouds@gmail.com> <20110208224745.GA14190@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jared Hance <jaredhance@gmail.com>, git@vger.kernel.org,
-	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Bert Wesarg <bert.wesarg@gmail.com>, Jeff King <peff@peff.net>,
-	Felipe Contreras <felipe.contreras@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Wed Feb 09 01:05:12 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Wed Feb 09 01:14:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PmxYT-0006yo-5n
-	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 01:05:09 +0100
+	id 1PmxhP-0003t7-U8
+	for gcvg-git-2@lo.gmane.org; Wed, 09 Feb 2011 01:14:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755934Ab1BIAFB (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Tue, 8 Feb 2011 19:05:01 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:42543 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755828Ab1BIAFA (ORCPT <rfc822;git@vger.kernel.org>);
-	Tue, 8 Feb 2011 19:05:00 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 724664040;
-	Tue,  8 Feb 2011 19:05:56 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=rHG6CE1ya/QW0knCiGyldiPkbV0=; b=m9nWcj
-	rhkR8toBpITnY2BDWdqBc4eJQXnNe032Fyku9j6dTOT81kcKHC5tdq4uOvHF4w0e
-	S2gPNqYMt6lKd/2SiUcjLWrhXW3w5BJSqBKxsS3VIzQqTZVLmt0QyYjBKunzsZC3
-	00WpMjWWAzWPOhSI4CKQzct23BP6qBZhCwwXo=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=V1JpvPRG3ugv/13YxJ3hz5n/D2OkmI5m
-	G21UrwGP5Yyv6ojIUsVxXKPYfGo+oFj1O/WNl+gOIjqE+jCc9OTvJHXREeo5IXL7
-	1fdWRCz5sxRtqZ3DLR3XqfJathAKTbExLZjJlDCkFJKwqutKN79kPvzqDC1or1/O
-	amSN464QFyo=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E8AE7403B;
-	Tue,  8 Feb 2011 19:05:47 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1D7264034; Tue,  8 Feb 2011
- 19:05:36 -0500 (EST)
-In-Reply-To: <20110208223359.GB17981@elie> (Jonathan Nieder's message of
- "Tue\, 8 Feb 2011 16\:33\:59 -0600")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 58F32F8E-33E0-11E0-A596-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
+	id S1755995Ab1BIAOT convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Tue, 8 Feb 2011 19:14:19 -0500
+Received: from mail-wy0-f174.google.com ([74.125.82.174]:38880 "EHLO
+	mail-wy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755501Ab1BIAOS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Tue, 8 Feb 2011 19:14:18 -0500
+Received: by wyb28 with SMTP id 28so6350461wyb.19
+        for <git@vger.kernel.org>; Tue, 08 Feb 2011 16:14:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=j8uDrtIdF/He9aMN0vp9EMO8Zg/62Alu9Np4YXWHO3w=;
+        b=HHfs2wWMHgaH2GUfKezfUKXgJfJNxuMOSqerq8IQllZVZ3rpRZdjFyLLVWPtqRXAEB
+         F5D3ZSgfCPYl54kGO2Gqi8csi7bMjqgVvHuQRwh13U5n6dRflJUpcBD8lUyGo1/3SQ2F
+         PHp7zlLtPxWWf5d6OQg1vCWnbO9F6CKb4jifg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=r6fRoPD4NZ81C+ftkvO1/7GC7m3XvdmYwMmZK8L2M+c730C0W8VgHA4tAwVYjwI89t
+         9huNIvzSRNM4aGIIyLfh50UGquVWLTrdpU8jL5rRdovdvsrI8Zg0MqF2Gn5xpOmiL3St
+         SSbomjvMFcXGAUw8xZBsVFrG2IFz2iJ+8D1ao=
+Received: by 10.216.186.144 with SMTP id w16mr16471013wem.13.1297210456020;
+ Tue, 08 Feb 2011 16:14:16 -0800 (PST)
+Received: by 10.216.66.144 with HTTP; Tue, 8 Feb 2011 16:13:45 -0800 (PST)
+In-Reply-To: <20110208224745.GA14190@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166375>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166376>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
-
-> Jared Hance wrote:
-
->>> Subject: Re: [PATCH v2] Add support for merging from upstream by default.
-
-Drop full-stop '.' at the end.
-
->> Adds the option merge.defaultupstream to add support for merging from the
->> upstream branch by default.
+2011/2/9 Jeff King <peff@peff.net>:
+> On Tue, Feb 08, 2011 at 10:22:14PM +0700, Nguy=E1=BB=85n Th=C3=A1i Ng=
+=E1=BB=8Dc Duy wrote:
 >
-> Could you give an example of breakage this configurability is designed
-> to prevent?
-
-I think there is no "prevent" or "breakage"; the patch is to give people a
-way to turn the feature on; without the configuration, "git merge" will
-keep the traditional behaviour, no?
-
->> +++ b/builtin/merge.c
->> @@ -37,7 +37,7 @@ struct strategy {
->>  };
->>  
->>  static const char * const builtin_merge_usage[] = {
->> -	"git merge [options] <remote>...",
->> +	"git merge [options] [<remote>...]",
->>  	"git merge [options] <msg> HEAD <remote>",
->>  	NULL
+>> In short, the series is very simple: give porcelain commands column
+>> output, just like good old "ls". There could be a few more candidate=
+s,
+>> I believe Ren=C3=A9 Scharfe mentioned other files in "git status".
 >
-> Side note: these should probably say "<commit>" or "<branch>" rather
-> than "<remote>".  I'm guessing the usage string comes from the days
-> before the separate-remotes ref layout...
+> I don't really care for column output myself, so maybe you have a goo=
+d
+> reason why my idea won't work. But why not use the BSD column program=
+?
 
-Yes, your guess is correct.
-
->> @@ -911,6 +934,24 @@ static int evaluate_result(void)
->>  	return cnt;
->>  }
->>  
->> +static void setup_merge_commit(struct strbuf *buf,
->> +	struct commit_list ***remotes, const char *s)
->> +{
->> +	struct object *o;
->> +	struct commit *commit;
->> +
->> +	o = peel_to_type(s, 0, NULL, OBJ_COMMIT);
->> +	if (!o)
->> +		die("%s - not something we can merge", s);
->> +	commit = lookup_commit(o->sha1);
->> +	commit->util = (void *)s;
->> +	*remotes = &commit_list_insert(commit, *remotes)->next;
->> +
->> +	strbuf_addf(buf, "GITHEAD_%s", sha1_to_hex(o->sha1));
->> +	setenv(buf->buf, s, 1);
->> +	strbuf_reset(buf);
->> +}
->
-> Would be easier to review if this code movement were in a separate
-> patch (separating cleanup from semantic changes).
-
-Probably.  It is a very good idea to move this code out to its own helper
-function, nevertheless; I like this part of the patch.
-
-> Even better would be to use descriptive messages, like so:
->
->  if (head_invalid)
-> 	usage_msg_opt("cannot use old-style invocation from an unborn branch",
-> 		...);
->  if (!argc && ...)
-> 	usage_msg_opt("no commit to merge specified", ...);
-
-Much better.
+Solaris did not have one last time I checked. Windows obviously does
+not either, but I don't use msysgit so it does not count.
+--=20
+Duy
