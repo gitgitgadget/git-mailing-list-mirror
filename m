@@ -1,75 +1,75 @@
-From: Johannes Sixt <j.sixt@viscovery.net>
+From: Joshua Juran <jjuran@gmail.com>
 Subject: Re: "git add -u" broken in git 1.7.4?
-Date: Thu, 10 Feb 2011 08:46:35 +0100
-Message-ID: <4D5397DB.3060609@viscovery.net>
+Date: Thu, 10 Feb 2011 00:13:13 -0800
+Message-ID: <5C96089F-7CEF-44EB-98ED-C5FB9F641180@gmail.com>
 References: <20110206051333.GA3458@sigill.intra.peff.net> <4D4EF7E4.7050303@hartwork.org> <vpq1v3kopn3.fsf@bauges.imag.fr> <7vwrlcv1ea.fsf@alter.siamese.dyndns.org> <20110207055314.GA5511@sigill.intra.peff.net> <7vhbcguytf.fsf@alter.siamese.dyndns.org> <20110207195035.GA13461@sigill.intra.peff.net> <20110208100518.GA9505@neumann> <20110209210312.GB2083@sigill.intra.peff.net> <7vipwsomq8.fsf@alter.siamese.dyndns.org> <20110209234621.GA12575@sigill.intra.peff.net>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed
 Content-Transfer-Encoding: 7bit
 Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?B?U1pFREVSIEfDoWJvcg==?= <szeder@ira.uka.de>,
+	=?ISO-8859-1?Q?SZEDER_G=E1bor?= <szeder@ira.uka.de>,
 	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
 	Sebastian Pipping <webmaster@hartwork.org>,
 	Git ML <git@vger.kernel.org>
 To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 10 08:46:49 2011
+X-From: git-owner@vger.kernel.org Thu Feb 10 09:13:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnREm-0001bR-Na
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 08:46:49 +0100
+	id 1PnReW-0001uQ-Mh
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 09:13:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751067Ab1BJHqm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Feb 2011 02:46:42 -0500
-Received: from lilzmailso01.liwest.at ([212.33.55.23]:44328 "EHLO
-	lilzmailso01.liwest.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750738Ab1BJHql (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Feb 2011 02:46:41 -0500
-Received: from cpe228-254-static.liwest.at ([81.10.228.254] helo=theia.linz.viscovery)
-	by lilzmailso01.liwest.at with esmtpa (Exim 4.69)
-	(envelope-from <j.sixt@viscovery.net>)
-	id 1PnREZ-0005Wj-Sx; Thu, 10 Feb 2011 08:46:36 +0100
-Received: from [127.0.0.1] (J6T.linz.viscovery [192.168.1.95])
-	by theia.linz.viscovery (Postfix) with ESMTP id 992F01660F;
-	Thu, 10 Feb 2011 08:46:35 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+	id S1752269Ab1BJINT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Feb 2011 03:13:19 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:48377 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751123Ab1BJINS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Feb 2011 03:13:18 -0500
+Received: by iwn9 with SMTP id 9so1029095iwn.19
+        for <git@vger.kernel.org>; Thu, 10 Feb 2011 00:13:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        bh=uRMgN6fOvDzgKwvmdGiIxIRe/AJ9Qm6g67HXKEGJkBU=;
+        b=Sd51IiJ/GKs3Ce1Luk+OzewyRYxGB2HsWaVG2cCPsQyPDJBe+zcy8nlNs5HTM30Rui
+         Aeu8xW3hqDDLpjbsIGYVsHQdKdMXoPQ07b2R8Xf/VexyrHa3yBPoBuNy4H1wdyZyIaL8
+         ymHfTKA4mlZJo6f1MxMgPUn1qECR1Ox1y40LA=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=cc:message-id:from:to:in-reply-to:content-type
+         :content-transfer-encoding:mime-version:subject:date:references
+         :x-mailer;
+        b=wtA9evyswp0BndCAlqgxd5q4ugwrCs5uJaFk7B9XooVcftSBe0JkmbzEfmcjjgukxN
+         pqL/nJBEt3CYrpWPkqwrqv+rek3mzlClXt8VlHk59jmJWyIUvcmBXfcdHOvivgYp3QWk
+         Lgm/x/zguTXkxS42+ZIXOWpBg7uI4WwdaB7P8=
+Received: by 10.42.174.70 with SMTP id u6mr3743326icz.214.1297325597290;
+        Thu, 10 Feb 2011 00:13:17 -0800 (PST)
+Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
+        by mx.google.com with ESMTPS id k42sm874059ick.8.2011.02.10.00.13.14
+        (version=TLSv1/SSLv3 cipher=RC4-MD5);
+        Thu, 10 Feb 2011 00:13:15 -0800 (PST)
 In-Reply-To: <20110209234621.GA12575@sigill.intra.peff.net>
-X-Spam-Score: -1.4 (-)
+X-Mailer: Apple Mail (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166475>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166476>
 
-Am 2/10/2011 0:46, schrieb Jeff King:
+On Feb 9, 2011, at 3:46 PM, Jeff King wrote:
+
 > The current behavior is:
-> 
->   add:    error (and suggest "git add .")
->   add -u: relative
->   add -A: relative
->   add -i: full-tree
->   add -p: full-tree
->   archive: relative
->   checkout: full-tree (e.g., "git checkout -f")[1]
->   checkout-index: n/a (only checks out arguments)
->   clean: relative
->   commit -a: full-tree[2]
->   diff: full-tree
->   diff-files: full-tree
->   grep: relative
->   ls-files: relative
->   ls-tree: relative[3]
->   status: shows full-tree, relative by default, absolute
->           with status.relativePaths
->   reset --hard: full-tree[4]
->   log/show/etc: full-tree[5]
->   blame: error[6]
+>
+>  add:    error (and suggest "git add .")
+>  add -u: relative
+>  add -A: relative
+>  add -i: full-tree
+>  add -p: full-tree
 
-    rerere forget: relative
+add -e: full-tree
 
-It is a destructive command, and the rerere cache is precious, IMO.
-Therefore, I'd vote to make 'git rerere forget' without a pathspec an error.
-
--- Hannes
+Josh
