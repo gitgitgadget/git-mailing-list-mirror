@@ -1,70 +1,84 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: Challenges for an octopus merge
-Date: Thu, 10 Feb 2011 08:09:00 -0800
-Message-ID: <7v8vxn6fdv.fsf@alter.siamese.dyndns.org>
-References: <4D53F694.1060105@web.de>
+From: "Hillel (Sabba) Markowitz" <sabbahillel@gmail.com>
+Subject: Question about git svn handling svn external
+Date: Thu, 10 Feb 2011 11:44:28 -0500
+Message-ID: <AANLkTi=TsWQh95MgFCW6ap05-NheVga4et_6h2w1A0VB@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Markus Elfring <Markus.Elfring@web.de>
-X-From: git-owner@vger.kernel.org Thu Feb 10 17:09:24 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 10 17:44:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnZ57-00044Q-D1
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 17:09:21 +0100
+	id 1PnZdU-0001kI-Hf
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 17:44:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756565Ab1BJQJK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Feb 2011 11:09:10 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58167 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756361Ab1BJQJJ (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Feb 2011 11:09:09 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6989F3F9D;
-	Thu, 10 Feb 2011 11:10:08 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=YeJzd9BznkEPmp9i5hm4oXrZPZ8=; b=dgF0t6
-	/a2i3Ler3E7Qv71VDBBwQy+ZvZJuZ4uLeq5P/NOxIabIhq2SVTpd5Qlme/RWm+IN
-	WHrIwK6OQgWELdS9jJU0u6vIK5TC/9AwzvIQHoi6T0cAXHSS5ANY32YR6olC5duf
-	kh4Wwr9qecFD1s6Vg7+zH7hboHCxxDarM0L4s=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=MI/at57Dypqc728UBHaVxrKHOcXB2zx0
-	H6ZwpCOx8heawhCTve7y21DrkHuhS6IvnrWWCYAoeaOF8F/mOzMyOw+T+edbO+QU
-	wdlhN/257KlQPO3r4fvs9MBZQ7dKgtDct8oaZDlBri2l/G/T9aObDUupif3QHnov
-	3kYGTSAH/2M=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 484CA3F9A;
-	Thu, 10 Feb 2011 11:10:06 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 713773F92; Thu, 10 Feb 2011
- 11:10:03 -0500 (EST)
-In-Reply-To: <4D53F694.1060105@web.de> (Markus Elfring's message of "Thu\, 10
- Feb 2011 15\:30\:44 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 399FB8F4-3530-11E0-9718-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
+	id S1756561Ab1BJQoa convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Feb 2011 11:44:30 -0500
+Received: from mail-ew0-f46.google.com ([209.85.215.46]:52555 "EHLO
+	mail-ew0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750820Ab1BJQoa convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Feb 2011 11:44:30 -0500
+Received: by ewy5 with SMTP id 5so877327ewy.19
+        for <git@vger.kernel.org>; Thu, 10 Feb 2011 08:44:29 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:date:message-id:subject:from:to
+         :content-type:content-transfer-encoding;
+        bh=bXoGUC9iEPy7P2L649JBPkzrazvjzVNvdTOXmLHq22M=;
+        b=V2VpYUUM8BgUbgKGh8nzswV9wFM+jClsNcXtftfO5iams1B5kX6ef5gCy+ARr38lrP
+         Fri131it16iq72OtzT/FcIBSn/o93TUyz+UG3dyZBiJnF2Ga33Nzq+TnfUNBfCO2NGAh
+         TpYtASBMPlzsjhfDCxJ3GCbaOujASEsG7Kfqs=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:date:message-id:subject:from:to:content-type
+         :content-transfer-encoding;
+        b=yDrK/fViERApvg3VlsPyMRqZZWRby8BCmlx6MPn87eVl6MnpHVlDDCucv9+sYacfRo
+         IvQMiqwWPRAjfXOO7knfbX0dLYr74koGTg0MwTckzqPqMQdISrmUMIVM5YGo/SbSUJCh
+         C9I61igFMEzi0xVLiztvrs62USmxgA8FCwNog=
+Received: by 10.213.108.204 with SMTP id g12mr3859816ebp.99.1297356268150;
+ Thu, 10 Feb 2011 08:44:28 -0800 (PST)
+Received: by 10.213.28.71 with HTTP; Thu, 10 Feb 2011 08:44:28 -0800 (PST)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166487>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166488>
 
-Markus Elfring <Markus.Elfring@web.de> writes:
+I use a python script which calls git svn clone based on a text file
+built from the svn externals of the form
 
-> ...
-> Automated merge did not work.
-> Should not be doing an Octopus.
-> Merge with strategy octopus failed.
->
->
-> The merge description was missing (no commit message) in this case.
+dir1 url1
+dir2 url2
 
-The second-to-last line of the output needs to be rephrased.
+to create a git project. Each subdirectory of course will have its own
+=2Egit and point back to the original svn repository so that I can
+change a particular subdirectory.
 
-Octopus is not for recording conflicting merges and when it punts you
-shouldn't be attempting to resolve and record it as an octopus merge.
+=46or example, I have dirn from urln/trunk built and I want to change i=
+t
+to urln/branches/mybranch.
+
+Is there a good way of doing this without deleting everything under it?
+
+If I wipe out the dirn directory, I would wipe out the externals that
+came in with urln and I would have to pick up all the entries that
+follow. I do not want to pick up the external pointer from svn as I
+might not actually be using all of those. I want to only bring in the
+entries from the configuration file.  Of course, it would be more
+useful if someone has already done it.
+
+The project that I am on would like to use python for this, but if
+someone has already written something, the language would not matter.
+
+
+
+--
+=C2=A0 =C2=A0 =C2=A0=C2=A0 Sabba=C2=A0 =C2=A0=C2=A0 -=C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 =C2=A0 =D7=A1=D7=91=D7=90 =D7=94=D7=9C=D7=9C=C2=A0 =C2=A0 =C2=A0=
+ =C2=A0 -=C2=A0 =C2=A0=C2=A0 Hillel
+Hillel (Sabba) Markowitz | Said the fox to the fish, "Join me ashore"
+=C2=A0SabbaHillel@gmail.com | The fish are the Jews, Torah is our water
+http://sabbahillel.blogspot.com
