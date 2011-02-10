@@ -1,91 +1,94 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: [1.8.0] Remove deprecated commands
-Date: Thu, 10 Feb 2011 20:42:44 +0100
-Message-ID: <4D543FB4.1040709@lsrfire.ath.cx>
-References: <7vzkqh8vqw.fsf@alter.siamese.dyndns.org> <7vwrll57ha.fsf@alter.siamese.dyndns.org> <4D4852EE.6080605@lsrfire.ath.cx> <20110202005748.GA13803@elie>
+From: Neal Kreitzinger <nkreitzinger@gmail.com>
+Subject: Re: git fetch,git merge and git rebase
+Date: Thu, 10 Feb 2011 14:00:17 -0600
+Message-ID: <4D5443D1.9000904@gmail.com>
+References: <1297315789338-6010561.post@n2.nabble.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 10 20:42:55 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Akash <bcakashguru@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 10 21:02:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PncPm-0004Rm-DW
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 20:42:54 +0100
+	id 1Pncj6-0004sn-CW
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 21:02:52 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755790Ab1BJTmt convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Feb 2011 14:42:49 -0500
-Received: from india601.server4you.de ([85.25.151.105]:33280 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752313Ab1BJTms (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Feb 2011 14:42:48 -0500
-Received: from [192.168.2.103] (p4FFDAF81.dip.t-dialin.net [79.253.175.129])
-	by india601.server4you.de (Postfix) with ESMTPSA id E90BC2F804F;
-	Thu, 10 Feb 2011 20:42:46 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <20110202005748.GA13803@elie>
+	id S1756842Ab1BJUCo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Feb 2011 15:02:44 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:50929 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756375Ab1BJUCo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Feb 2011 15:02:44 -0500
+Received: by gxk9 with SMTP id 9so764412gxk.19
+        for <git@vger.kernel.org>; Thu, 10 Feb 2011 12:02:42 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version
+         :newsgroups:to:cc:subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        bh=Vu0NhK8u+JqiwAzkq6rvyWl+doZ/sqpqWcXbbVmBI/8=;
+        b=m5f48VgpoSAk87j+f3uaWjRnJcJLif6LIek3Ih7sgpqrlWESW486JqkMDEtfWVtqgO
+         6YmnfsQDM5582I3PB9EcVkzLzgvCq4LHkhPKJlzR4dLg6JcUD3VJaSL0NoDeIkLQJBLQ
+         V3S2uyO8SeGMWUaCYBS2TXY4zWduS7d2ZG+H4=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
+         :subject:references:in-reply-to:content-type
+         :content-transfer-encoding;
+        b=e379oDtvSLiZ195iZjZJk/wroF4+v4/rrKFkXsuSMvZQHnmT57WSb4AlgKSGB1a3Y0
+         xFLs2RNFmao6yAe69K9oRE8oXl/rJi7MZhT+k5l5+6AOGPx8EMowJ+q/jOcdHkTEW6qK
+         STHy2aIsoLx14GxEHvWFF2oc63AS5Zz9mLodY=
+Received: by 10.90.232.6 with SMTP id e6mr3194919agh.52.1297368162236;
+        Thu, 10 Feb 2011 12:02:42 -0800 (PST)
+Received: from [172.25.2.210] ([67.63.162.200])
+        by mx.google.com with ESMTPS id z12sm376128anp.39.2011.02.10.12.02.40
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 10 Feb 2011 12:02:41 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+Newsgroups: gmane.comp.version-control.git
+In-Reply-To: <1297315789338-6010561.post@n2.nabble.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166495>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166497>
 
-Am 02.02.2011 01:57, schrieb Jonathan Nieder:
->>     git-lost-found   2007-11-08       git fsck --lost-found
+On 2/9/2011 11:29 PM, Akash wrote:
 >
-> It can stay in contrib/examples for inspiration.
-
-Sure.
-
->>     git-peek-remote  2007-11-24       git ls-remote
+> Hi,
 >
-> No one seems to be using it
-> (github.com/gitpan/App-GitHub-FindRepository.git uses it as a fallbac=
-k
-> when ls-remote is not present).
-
-How did you search for current usage?  How comprehensive are the result=
-s?
-
->>     git-repo-config  2008-01-17       git config
+> I am new to git .Can someone explain in simple terms what git fetch,git
+> merge and git rebase do?..I tried googling but was very confused after going
+> thro it.
 >
-> giggle[1] still uses it --- see libgiggle-git/giggle-git-config-read.=
-c
-> and giggle-git-config-write.c.
+> Also, can someone prescribe a link which explains git in detail right from
+> scratch.
 >
-> Likewise darcs2git[2] and the stgit testsuite.
 >
-> webkit's VCSUtils.pm only uses repo-config as a fallback when git
-> config is not present.
+git fetch:  retrieve the latest version of a branch and store it in the 
+/remotes/* "remote tracking branches" of your local repo.  you can view 
+these branches with "git branch -a".  Once you have that local copy, you 
+can merge it into other branches, checkout objects from it, and run 
+diffs against it.  You are not supposed to EVER make commits on a 
+remote/* branch.  its sole purpose in life is to maintain an image the 
+the corresponding branchs that its tracking in the remote repo.  you 
+update that image by performing git fetch.  see man-page for details.
 
-Well, the release notes for 1.5.4 promised that the "next feature=20
-release will remove it".  Perhaps notifying the developers of the=20
-projects you discovered is enough?
+git merge:  merges branch(s) into your current branch.  see man-page for 
+details.  lots and lots of details...
 
-That said, the benefit for final removal of this command, which is=20
-effectively just an alias, is the smallest of the four.
+git rebase:  takes all the local commits you've made on an old history 
+and rewrites them on-top of the new history.  it makes it look like you 
+did your work based on the new history instead of the old history.  it 
+keeps your history 'linear' instead of having all these merge DAG's in 
+your history like git-merge produces.  see man page for details.  lots 
+and lots of details are not easy to understand at first...
 
->>     git-tar-tree     2007-11-08       git archive
->
-> Already prints a deprecation notice.  WWW::PkgFind from CPAN uses it
-> but doesn't seem to be maintained.
->
-> pilgrim[3] uses tar-tree in its "make dist" target.  I wouldn't be
-> surprised if some other projects use it in a similar way.
+hope this helps.
 
-Possibly, and this shows that deprecation warnings don't fully solve th=
-e=20
-problem of educating users to switch to the replacements.
-
-I think it's relatively safe to remove the command anyway because the=20
-users in this case are developers and packagers, i.e. the ones who put=20
-the command in the Makefile in the first place.  They should be able to=
-=20
-cope easily.
-
-Ren=C3=A9
+v/r,
+neal
