@@ -1,67 +1,101 @@
 From: Jeff King <peff@peff.net>
-Subject: Re: git fetch,git merge and git rebase
-Date: Thu, 10 Feb 2011 18:03:38 -0500
-Message-ID: <20110210230337.GB21335@sigill.intra.peff.net>
-References: <1297315789338-6010561.post@n2.nabble.com>
- <4D5464E7.2010407@gmail.com>
+Subject: Re: Unknown software revision
+Date: Thu, 10 Feb 2011 18:22:35 -0500
+Message-ID: <20110210232235.GC21335@sigill.intra.peff.net>
+References: <733D558A-0935-42A8-BA5B-7B97703656F6@gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Cc: git@vger.kernel.org
-To: Neal Kreitzinger <nkreitzinger@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 11 00:03:44 2011
+To: Jason Brooks <jasonbbrooks@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 11 00:22:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnfY8-0002uQ-5s
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 00:03:44 +0100
+	id 1PnfqT-000169-Ne
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 00:22:42 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757272Ab1BJXDj (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Feb 2011 18:03:39 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:46308 "EHLO peff.net"
+	id S1757160Ab1BJXWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Feb 2011 18:22:37 -0500
+Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:57875 "EHLO peff.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755794Ab1BJXDi (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Feb 2011 18:03:38 -0500
-Received: (qmail 22308 invoked by uid 111); 10 Feb 2011 23:03:37 -0000
+	id S1751169Ab1BJXWg (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Feb 2011 18:22:36 -0500
+Received: (qmail 22477 invoked by uid 111); 10 Feb 2011 23:22:35 -0000
 Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
   (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 10 Feb 2011 23:03:37 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Feb 2011 18:03:38 -0500
+  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 10 Feb 2011 23:22:35 +0000
+Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Feb 2011 18:22:35 -0500
 Content-Disposition: inline
-In-Reply-To: <4D5464E7.2010407@gmail.com>
+In-Reply-To: <733D558A-0935-42A8-BA5B-7B97703656F6@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166513>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166514>
 
-On Thu, Feb 10, 2011 at 04:21:27PM -0600, Neal Kreitzinger wrote:
+On Thu, Feb 10, 2011 at 02:33:47PM -0800, Jason Brooks wrote:
 
-> another definition of git-rebase:
-> 
-> git-rebase:  the MOST DANGEROUS command in git.  you can easily
-> DESTROY your repo if you don't know what you're doing!  Until you get
-> the hang of it, always make a copy of the before-image of the branch
-> your rebasing (mybranch) by doing a "git checkout mybranch" and then
-> "git branch copy-of-mybranch".  Then if you destroy mybranch you can
-> recover it from copy-of-mybranch.
+> I have a software deployment that was copied out of a git repository
+> but without the .git directories.  Thus, I have no idea what revision
+> this deployment is, so I don't know how to upgrade from git.  Is there a
+> method, or script out there that can help me?
 
-I won't claim that rebase isn't easy to shoot yourself in the foot with,
-but I think this advice is a little over-the-top. Rather than backing up
-branches, you would do better to learn about reflogs, as the reflog of
-mybranch will contain the original version. As will the reflog of HEAD,
-though if you have screwed up too badly, the reflog of mybranch will
-probably be a lot simpler to read.
+Does your set of files match what was in the git tree _exactly_? Or
+might there be minor changes, new files, etc?
 
-You can see it with "git reflog show mybranch"; when you see the commit
-that you want to restore to, you can:
+If it should match exactly, you can figure out what tree git would have
+made out of this content:
 
-  git branch -f mybranch mybranch@{whatever}
+  git init
+  git add .
+  git commit -m foo
+  tree=`git rev-parse HEAD^{tree}`
 
-to restore it there. That provides more-or-less the same safety as a
-backup branch (reflogs do expire, but something like three months
-later), plus it helps you in all the cases where you forgot to make a
-backup before screwing things up. :)
+And now you can search in the actual git repository for that tree:
+
+  $ git log --pretty=raw -z | perl -0lne 'print $_, "\n" if /^tree '$tree'$/m'
+
+But obviously that is all based on the hashes of the content, so if even
+a single byte is missing, added, or different in your deployed copy, you
+won't find a match.
+
+In that case, your best bet is probably to script a bunch of diffs and
+see which commit ends up closest. I would do something like:
+
+  1. From the deployed version, prepare your best guess about what the
+     git directory would have looked like. Put it in a directory
+     "deployed".
+
+  2. Now make a git commit from the deployed state:
+
+       cd deployed
+       git init
+       git add .
+       git commit -m 'deployed version'
+
+  3. In the original git repo, fetch the deployed version in so you
+     can diff against it.
+
+       cd /path/to/real/git/repo
+       git fetch /path/to/deployed master:deployed
+
+  4. Now you can try diffing "deployed" against every commit in the real
+     repo and see what comes closest. Here I'll just count up changed
+     lines to assign a score to each commit and show the one with the
+     fewest changes:
+
+       git rev-list HEAD | while read commit; do
+         git diff-tree --numstat $commit deployed |
+         perl -ane '$total += $F[0] + $F[1];
+                    END { print $total }'
+         echo " $commit"
+       done | sort -n
+
+The top of the resulting list is the closest commit. Check it out with
+"git show" to see if it makes sense.
+
+Hope that helps.
 
 -Peff
