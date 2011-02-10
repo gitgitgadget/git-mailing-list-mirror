@@ -1,101 +1,70 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Unknown software revision
-Date: Thu, 10 Feb 2011 18:22:35 -0500
-Message-ID: <20110210232235.GC21335@sigill.intra.peff.net>
-References: <733D558A-0935-42A8-BA5B-7B97703656F6@gmail.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: Jason Brooks <jasonbbrooks@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 11 00:22:43 2011
+From: Jared Hance <jaredhance@gmail.com>
+Subject: [PATCH v4 0/4] Updated patch series for default upstream merge
+Date: Thu, 10 Feb 2011 18:40:00 -0500
+Message-ID: <1297381209-6377-1-git-send-email-jaredhance@gmail.com>
+Cc: Jared Hance <jaredhance@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 11 00:40:49 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnfqT-000169-Ne
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 00:22:42 +0100
+	id 1Png7z-0005G9-07
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 00:40:47 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757160Ab1BJXWh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Feb 2011 18:22:37 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:57875 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751169Ab1BJXWg (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Feb 2011 18:22:36 -0500
-Received: (qmail 22477 invoked by uid 111); 10 Feb 2011 23:22:35 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Thu, 10 Feb 2011 23:22:35 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Thu, 10 Feb 2011 18:22:35 -0500
-Content-Disposition: inline
-In-Reply-To: <733D558A-0935-42A8-BA5B-7B97703656F6@gmail.com>
+	id S932426Ab1BJXkW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Feb 2011 18:40:22 -0500
+Received: from mail-vx0-f174.google.com ([209.85.220.174]:50690 "EHLO
+	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932163Ab1BJXkS (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Feb 2011 18:40:18 -0500
+Received: by vxb37 with SMTP id 37so1028081vxb.19
+        for <git@vger.kernel.org>; Thu, 10 Feb 2011 15:40:18 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer;
+        bh=Z/TpycX0ffgdir/sABTwik+hDhhxCgoIgh0yNQW7yyo=;
+        b=LnUL+6z8jm3eAp9jnps++N8YGcY73uuapOyzTJeYF7ozDpNPdzAo3CdTLUMqSZCatT
+         b1dqwxFsf2YRy0N/Ne6PW4Ej7CsZUrRKd2WmXbcMdfuTNXTAxRHaOwkIFcu2qGBVMXl/
+         6ThT89tzs+FYnwhRgI6RLeFXqZBsIUQdBKE/I=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:date:message-id:x-mailer;
+        b=oPSgHxcXc2WBam6SIusb1KSqu35j2fcvqSv5PRAf+bZYQT+lyLn3d3qxonFkRMClPx
+         lCFswaq0i5pcree+xsr8SBEULdKD+gi9pwYDbOyq7Pa4WGLyPSXONM5mMfv1ZDNpiVmy
+         Ctqie22NuaWuE48qdubWUJPce0dZiXpNpgH9w=
+Received: by 10.220.91.198 with SMTP id o6mr5988424vcm.22.1297381218057;
+        Thu, 10 Feb 2011 15:40:18 -0800 (PST)
+Received: from localhost.localdomain (cpe-75-186-7-248.cinci.res.rr.com [75.186.7.248])
+        by mx.google.com with ESMTPS id r7sm126736vbx.19.2011.02.10.15.40.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 10 Feb 2011 15:40:16 -0800 (PST)
+X-Mailer: git-send-email 1.7.4
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166514>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166515>
 
-On Thu, Feb 10, 2011 at 02:33:47PM -0800, Jason Brooks wrote:
+This patch series allows for `git merge` to default to the upstream of the
+current branch.
 
-> I have a software deployment that was copied out of a git repository
-> but without the .git directories.  Thus, I have no idea what revision
-> this deployment is, so I don't know how to upgrade from git.  Is there a
-> method, or script out there that can help me?
+This update adds fixes based on all of the style-feedback from the previous
+patch series; functionally it is equivalent (except for the first patch).
 
-Does your set of files match what was in the git tree _exactly_? Or
-might there be minor changes, new files, etc?
+Should I have put the patch submitted by Jonathan Nieder in this series? I
+didn't place it in the tree but it should apply on top if it.
 
-If it should match exactly, you can figure out what tree git would have
-made out of this content:
+Jared Hance (4):
+  merge: update the usage information to be more modern
+  merge: introduce setup_merge_commit helper function
+  merge: introduce per-branch-configuration helper function
+  merge: add support for merging from upstream by default
 
-  git init
-  git add .
-  git commit -m foo
-  tree=`git rev-parse HEAD^{tree}`
+ Documentation/config.txt |    6 +++
+ builtin/merge.c          |   90 ++++++++++++++++++++++++++++++++--------------
+ 2 files changed, 69 insertions(+), 27 deletions(-)
 
-And now you can search in the actual git repository for that tree:
-
-  $ git log --pretty=raw -z | perl -0lne 'print $_, "\n" if /^tree '$tree'$/m'
-
-But obviously that is all based on the hashes of the content, so if even
-a single byte is missing, added, or different in your deployed copy, you
-won't find a match.
-
-In that case, your best bet is probably to script a bunch of diffs and
-see which commit ends up closest. I would do something like:
-
-  1. From the deployed version, prepare your best guess about what the
-     git directory would have looked like. Put it in a directory
-     "deployed".
-
-  2. Now make a git commit from the deployed state:
-
-       cd deployed
-       git init
-       git add .
-       git commit -m 'deployed version'
-
-  3. In the original git repo, fetch the deployed version in so you
-     can diff against it.
-
-       cd /path/to/real/git/repo
-       git fetch /path/to/deployed master:deployed
-
-  4. Now you can try diffing "deployed" against every commit in the real
-     repo and see what comes closest. Here I'll just count up changed
-     lines to assign a score to each commit and show the one with the
-     fewest changes:
-
-       git rev-list HEAD | while read commit; do
-         git diff-tree --numstat $commit deployed |
-         perl -ane '$total += $F[0] + $F[1];
-                    END { print $total }'
-         echo " $commit"
-       done | sort -n
-
-The top of the resulting list is the closest commit. Check it out with
-"git show" to see if it makes sense.
-
-Hope that helps.
-
--Peff
+-- 
+1.7.4
