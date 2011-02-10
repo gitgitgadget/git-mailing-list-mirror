@@ -1,77 +1,132 @@
 From: Jared Hance <jaredhance@gmail.com>
-Subject: [PATCH v4 2/5] merge: update the usage information to be more modern
-Date: Thu, 10 Feb 2011 18:40:04 -0500
-Message-ID: <1297381209-6377-5-git-send-email-jaredhance@gmail.com>
+Subject: [PATCH v4 2/4] merge: introduce setup_merge_commit helper function
+Date: Thu, 10 Feb 2011 18:40:03 -0500
+Message-ID: <1297381209-6377-4-git-send-email-jaredhance@gmail.com>
 References: <1297381209-6377-1-git-send-email-jaredhance@gmail.com>
 Cc: Jared Hance <jaredhance@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 11 00:42:34 2011
+X-From: git-owner@vger.kernel.org Fri Feb 11 00:42:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Png9i-0006eN-CX
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 00:42:34 +0100
+	id 1Png9i-0006eN-UR
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 00:42:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932434Ab1BJXk3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Feb 2011 18:40:29 -0500
+	id S932440Ab1BJXka (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Feb 2011 18:40:30 -0500
 Received: from mail-vx0-f174.google.com ([209.85.220.174]:50690 "EHLO
 	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932421Ab1BJXk1 (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Feb 2011 18:40:27 -0500
+	with ESMTP id S932163Ab1BJXkZ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Feb 2011 18:40:25 -0500
 Received: by mail-vx0-f174.google.com with SMTP id 37so1028081vxb.19
-        for <git@vger.kernel.org>; Thu, 10 Feb 2011 15:40:27 -0800 (PST)
+        for <git@vger.kernel.org>; Thu, 10 Feb 2011 15:40:25 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=OX8BKaucr1meAhevhQONFB3eCQWxTAAU7IF/GVENj4A=;
-        b=Y2wL4pJDuDSVmHxkE+eU9xzfIcPFXlgRCnndxKCYmeHmvZDr7pHEyL29PKz1Xd2YpZ
-         C80uDla+r/a60nrITWbQgF77cMusRCmOWrcpknZxM51BdnSn24RazT0DLR59fjSm0GYN
-         XGiu92EoI0TsU2n/eWI9dnWBuhuYjSrzRq7SA=
+        bh=trg5qFrg+N3mC813Mfk1pvUH+qq+KKCXHzgnmz+ojhM=;
+        b=VDFdbF+USSpTjTnvMz6GTogYlIWski8Uv6wPuPL7TPJ8lQulMp1Oq96iBWd9+KefMO
+         gkmF87jdS5VMBSQcBdlKZbvX7M+wHi9/jOWfL6ZQjPkj2IFF+g6ewtIet+E2DCkZY6m2
+         uaG/+XBEdprf84oFqduAGkv0nUAqFS5qZoxaA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=lR+099iSWMTkUGu6tTfmUENzNy3gczNTukiLv1kwGFgXTLwViLOqX3BHX2VcljbkxR
-         LoQcK235bkrt8Amb+BBCHr2ADFOlIj10e8T5WGpzKGQmXN7tB8Y6QaM5u5tLkDolETNA
-         0vzBosju2c13g9NzWVGY5MN3qJIRIHwVrg5Lk=
-Received: by 10.220.188.4 with SMTP id cy4mr2208989vcb.43.1297381227035;
-        Thu, 10 Feb 2011 15:40:27 -0800 (PST)
+        b=oOD9Ls3CbCWCKG4fN3vlEtQCyG7dTKBWck/c7Ks5/fopPXnDSknAOwqAxo25Ifxnvq
+         ktMl1GzCMddysIl9M8OWrJhXCwuB9sOtMQr3GNah87tjZP54tGv7qOIOJ65xJoMtemRV
+         OUH7QwJANs4dn27mTU+Wgb7KLTnSQVSfeejas=
+Received: by 10.220.200.135 with SMTP id ew7mr6017928vcb.37.1297381225112;
+        Thu, 10 Feb 2011 15:40:25 -0800 (PST)
 Received: from localhost.localdomain (cpe-75-186-7-248.cinci.res.rr.com [75.186.7.248])
-        by mx.google.com with ESMTPS id r7sm126736vbx.19.2011.02.10.15.40.25
+        by mx.google.com with ESMTPS id r7sm126736vbx.19.2011.02.10.15.40.24
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 10 Feb 2011 15:40:26 -0800 (PST)
+        Thu, 10 Feb 2011 15:40:24 -0800 (PST)
 X-Mailer: git-send-email 1.7.4
 In-Reply-To: <1297381209-6377-1-git-send-email-jaredhance@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166520>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166521>
 
-Apparantly, merge's usage information was outdated and used old terminology.
-Fix it.
+Add a new function to set up a merge commit given a branch
+or commit, which is currently used when parsing argv.
 
 Signed-off-by: Jared Hance <jaredhance@gmail.com>
 ---
- builtin/merge.c |    4 ++--
- 1 files changed, 2 insertions(+), 2 deletions(-)
+ builtin/merge.c |   44 +++++++++++++++++++++++++++-----------------
+ 1 files changed, 27 insertions(+), 17 deletions(-)
 
 diff --git a/builtin/merge.c b/builtin/merge.c
-index 42fff38..439d2c7 100644
+index 439d2c7..cd23880 100644
 --- a/builtin/merge.c
 +++ b/builtin/merge.c
-@@ -37,8 +37,8 @@ struct strategy {
- };
+@@ -498,11 +498,15 @@ cleanup:
+ 	strbuf_release(&bname);
+ }
  
- static const char * const builtin_merge_usage[] = {
--	"git merge [options] <remote>...",
--	"git merge [options] <msg> HEAD <remote>",
-+	"git merge [options] <branch>...",
-+	"git merge [options] <msg> HEAD <branch>",
- 	NULL
- };
+-static int git_merge_config(const char *k, const char *v, void *cb)
++static int per_branch_config(const char *k, const char *v, void *cb)
+ {
+-	if (branch && !prefixcmp(k, "branch.") &&
+-		!prefixcmp(k + 7, branch) &&
+-		!strcmp(k + 7 + strlen(branch), ".mergeoptions")) {
++	const char *variable;
++	if (!branch || prefixcmp(k, "branch.") ||
++	   prefixcmp(k + 7, branch))
++		return 1; /* not what I handle */
++
++	variable = k + 7 + strlen(branch);
++	if (!strcmp(variable, ".mergeoptions")) {
+ 		const char **argv;
+ 		int argc;
+ 		char *buf;
+@@ -911,6 +915,24 @@ static int evaluate_result(void)
+ 	return cnt;
+ }
  
++static void setup_merge_commit(struct strbuf *buf,
++	struct commit_list ***remotes, const char *s)
++{
++	struct object *o;
++	struct commit *commit;
++
++	o = peel_to_type(s, 0, NULL, OBJ_COMMIT);
++	if (!o)
++		die("%s - not something we can merge", s);
++	commit = lookup_commit(o->sha1);
++	commit->util = (void *)s;
++	*remotes = &commit_list_insert(commit, *remotes)->next;
++
++	strbuf_addf(buf, "GITHEAD_%s", sha1_to_hex(o->sha1));
++	setenv(buf->buf, s, 1);
++	strbuf_reset(buf);
++}
++
+ int cmd_merge(int argc, const char **argv, const char *prefix)
+ {
+ 	unsigned char result_tree[20];
+@@ -1059,19 +1081,7 @@ int cmd_merge(int argc, const char **argv, const char *prefix)
+ 	strbuf_reset(&buf);
+ 
+ 	for (i = 0; i < argc; i++) {
+-		struct object *o;
+-		struct commit *commit;
+-
+-		o = peel_to_type(argv[i], 0, NULL, OBJ_COMMIT);
+-		if (!o)
+-			die("%s - not something we can merge", argv[i]);
+-		commit = lookup_commit(o->sha1);
+-		commit->util = (void *)argv[i];
+-		remotes = &commit_list_insert(commit, remotes)->next;
+-
+-		strbuf_addf(&buf, "GITHEAD_%s", sha1_to_hex(o->sha1));
+-		setenv(buf.buf, argv[i], 1);
+-		strbuf_reset(&buf);
++		setup_merge_commit(&buf, &remotes, argv[i]);
+ 	}
+ 
+ 	if (!use_strategies) {
 -- 
 1.7.4
