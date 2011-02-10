@@ -1,139 +1,77 @@
-From: John Wiegley <johnw@boostpro.com>
-Subject: Using Origin hashes to improve rebase behavior
-Date: Thu, 10 Feb 2011 16:13:10 -0500
-Message-ID: <m21v3fvbix.fsf@hermes.luannocracy.com>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: Adding default remotes to a bare repository
+Date: Thu, 10 Feb 2011 22:24:20 +0100
+Message-ID: <AANLkTimg0YZ7eQ=hsxqSYJPipahLpiqZqSVkFz25=A2k@mail.gmail.com>
+References: <AANLkTikVtSFs+qRiWJwxre8urOJs7q2HXBGPZkiTmn=i@mail.gmail.com>
+	<4D5437C4.6000401@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 10 22:13:25 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Thu Feb 10 22:24:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PndpI-0005rj-IH
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 22:13:20 +0100
+	id 1Pne02-0007EN-84
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 22:24:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757115Ab1BJVNO (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Feb 2011 16:13:14 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:33460 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757065Ab1BJVNO (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Feb 2011 16:13:14 -0500
-Received: by qyj19 with SMTP id 19so2786459qyj.19
-        for <git@vger.kernel.org>; Thu, 10 Feb 2011 13:13:13 -0800 (PST)
-Received: by 10.224.74.80 with SMTP id t16mr17736781qaj.0.1297372392924;
-        Thu, 10 Feb 2011 13:13:12 -0800 (PST)
-Received: from localhost (207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com [207.172.223.249])
-        by mx.google.com with ESMTPS id g28sm8235qck.37.2011.02.10.13.13.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 10 Feb 2011 13:13:12 -0800 (PST)
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.2 (darwin)
+	id S1755364Ab1BJVYV convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Feb 2011 16:24:21 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:47566 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752629Ab1BJVYU convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Feb 2011 16:24:20 -0500
+Received: by pwj3 with SMTP id 3so431392pwj.19
+        for <git@vger.kernel.org>; Thu, 10 Feb 2011 13:24:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=gx7Fn573ZStcNmMZZEDUNlh6GGMSbfSuN2Ak9ein7BE=;
+        b=Ii1AnPyhn4q7vI3jV1kZgS+rY7avjtEXb4kMX/cA6qYzG3rEKrjk1IA59JqDSDFq4c
+         g374glI2GZFxrd43eAc7pGMkJuqLQ6GOEaKfis/ZILKoMwkXefhqFGoU504wY/EDpiAj
+         pGWEmLdjdZeCD3VnEtIcf6UHCZ2K3gl+k6/tU=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=f+a9BNQlHSUGLSWob3CxMjmOW9BOe2nYuPENz3rYHe3Ux9O62Kw1xXBA+nbirfnMF3
+         RPfPTOWY5pzC6JiK2qLPRSefZzeKNCzvnJyxmehxmEUFV1aZLlyheS671eps8Z8RWjPj
+         vvIxX19UQppnLZOe3Fai9p4T1ZoJW+N4VlIuU=
+Received: by 10.142.223.8 with SMTP id v8mr825720wfg.182.1297373060290; Thu,
+ 10 Feb 2011 13:24:20 -0800 (PST)
+Received: by 10.142.44.3 with HTTP; Thu, 10 Feb 2011 13:24:20 -0800 (PST)
+In-Reply-To: <4D5437C4.6000401@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166500>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166501>
 
-The following proposal is a check to see if this approach would be sane and
-whether someone is already doing similar work.  If not, I offer to implement
-this solution.
+On Thu, Feb 10, 2011 at 8:08 PM, Neal Kreitzinger
+<nkreitzinger@gmail.com> wrote:
+>
+> You could write a script that does the clone and then adds the remote=
+s. =A0We
+> have a "menu" written in bash scripts and it does the clones and adds=
+ the
+> default remotes automatically. =A0So instead of just doing "git clone=
+", people
+> would run that script to do the clone and add the remotes.
+>
 
-THE PROBLEM
+Sure.
 
-Say I have a master from which I have branched locally, and that this private
-branch has four commits:
+But I'm wondering why cloning operation can't import the remote
+branches of the cloned repository.
 
-    a   b   c
-    o---o---o
-             \
-              o---o---o---o
-              1   2   3   4
+Actually I'm wondering the same thing for hooks. If a repository setup
+some hooks, can't these hooks be installed by default in the new
+repositories ?
 
-I then decide to cherry pick commit 3 onto master.  Please believe that my
-situation is such that I cannot immediately rebase the private branch to drop
-the now-duplicated change.  I end up with this:
-
-    a   b   c   3'
-    o---o---o---o
-             \
-              o---o---o---o
-              1   2   3   4
-
-Later, there is work on master which changes the same lines of code that 3'
-has changed.  The commit which changes 3' is e*
-
-    a   b   c   3'  d   e*  f
-    o---o---o---o---o---o---o
-             \
-              o---o---o---o
-              1   2   3   4
-
-At a later date, I want to rebase the private branch onto master.  What will
-happen is that the changes in 3 will conflict with the rewritten changes in
-e*.  However, I'd like Git to know that 3 was already incorporated at some
-earlier time, and *not consider it during the rebase*, since it doesn't need
-to.
-
-THE SOLUTION
-
-For the purposes of this discussion, I'd like to define the term "aggregate
-identity" (insert better name here) as a set including: a commit's sha, and
-zero or more shas stored in a new field named "Origin-Ids".
-
-If, when cherry-picking, the originating's commit id is stored in the
-Origin-Ids field of the cherry-picked commit, then rebase could know whether a
-given commit's changes had already been applied.  The logic would look like
-this:
-
-  1. When rebasing a branch A onto B, find the common ancestor of A and B.
-  2. Examine every commit on B since that common ancestor, collecting a
-     set of their aggregate identities.
-  3. For each commit on A, ignore it if its aggregate identity occurs in
-     that set.
-
-This would cause commit 3 to be ignored during the rebase above, since 3'
-would have an origin id referring to 3.
-
-IMPLEMENTATION
-
-A few things need to be done:
-
- - Extend commit objects to have an Origin field, which can be zero, one or a
-   list of hashes.
-
- - Add an option to git commit so that one or more origin ids can be specified
-   at the time any commit is made.  There may be occasions when it's useful to
-   explicitly state that a new commit should somehow 'override' the contents
-   of another during a rebase.
-
- - git cherry-pick and git am should add this Origin field, showing the commit
-   their contents originated from.
-
- - git merge --squash would store the commit ids, and the origin ids, of every
-   commit involved in the merge into the resulting commit's Origin field.
-
-   Note that nothing can be done about rebasing a squashed merge commit onto
-   another squashed merge commit, even though it could be detected that they
-   had common changes.  I don't believe it would even be useful to warn about
-   this, the user would just have to resolve the conflicts manually.
-
- - git log could be extended to show the "parentage" (really, the aunt/uncle)
-   of commits with origin info, assuming those origin commits are not dangling
-   (which is OK, and likely to occur after the originating branch is deleted,
-   or if the originating branch is in another repository).
-
-   Where there are multiple Origin ids, a search could be done to find the set
-   of most descendent commits, so that history could be usefully shown after
-   an octopus squash, for example.
-
-QUESTIONS
-
-Is it allowable to add new metadata fields to a commit, and would this require
-bumping the repository version number?  Or should this be implemented by
-appending a Header-style textual field at the end of the commit message?
-
---
-  John Wiegley
-  BoostPro Computing
-  http://www.boostpro.com
+--=20
+=46rancis
