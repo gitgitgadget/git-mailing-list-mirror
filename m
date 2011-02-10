@@ -1,93 +1,99 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: "git add -u" broken in git 1.7.4?
-Date: Thu, 10 Feb 2011 19:00:48 +0100
-Message-ID: <vpqpqqzahwv.fsf@bauges.imag.fr>
-References: <20110206051333.GA3458@sigill.intra.peff.net>
-	<4D4EF7E4.7050303@hartwork.org> <vpq1v3kopn3.fsf@bauges.imag.fr>
-	<7vwrlcv1ea.fsf@alter.siamese.dyndns.org>
-	<20110207055314.GA5511@sigill.intra.peff.net>
-	<7vhbcguytf.fsf@alter.siamese.dyndns.org>
-	<20110207195035.GA13461@sigill.intra.peff.net>
-	<20110208100518.GA9505@neumann>
-	<20110209210312.GB2083@sigill.intra.peff.net>
-	<7vipwsomq8.fsf@alter.siamese.dyndns.org>
-	<20110209234621.GA12575@sigill.intra.peff.net>
+From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
+Subject: Re: Can't find the revelant commit with git-log
+Date: Thu, 10 Feb 2011 19:50:35 +0100
+Message-ID: <4D54337B.6040307@lsrfire.ath.cx>
+References: <m2ipxd2w78.fsf@gmail.com> <4D3EF650.20407@lsrfire.ath.cx> <m2ipxc27zi.fsf@gmail.com> <m239og12pe.fsf@gmail.com> <4D4063EC.7090509@lsrfire.ath.cx> <4D432735.8000208@lsrfire.ath.cx> <7v1v3wd1al.fsf@alter.siamese.dyndns.org> <4D437CA0.1070006@lsrfire.ath.cx> <7vsjwcb6rh.fsf@alter.siamese.dyndns.org> <4D4477E4.6020006@lsrfire.ath.cx> <7vk4hbsbjr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Junio C Hamano <gitster@pobox.com>,
-	SZEDER =?iso-8859-1?Q?G=E1bor?= <szeder@ira.uka.de>,
-	Sebastian Pipping <webmaster@hartwork.org>,
-	Git ML <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Thu Feb 10 19:03:53 2011
+Content-Type: text/plain; charset=UTF-8;
+	format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Francis Moreau <francis.moro@gmail.com>, git@vger.kernel.org,
+	Johannes Sixt <j6t@kdbg.org>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Thu Feb 10 19:50:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pnarx-00041l-E8
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 19:03:53 +0100
+	id 1PnbbO-0001iD-VR
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 19:50:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756652Ab1BJSDq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Feb 2011 13:03:46 -0500
-Received: from mx2.imag.fr ([129.88.30.17]:46314 "EHLO rominette.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750991Ab1BJSDp (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Feb 2011 13:03:45 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by rominette.imag.fr (8.13.8/8.13.8) with ESMTP id p1AI0lOJ021429
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Thu, 10 Feb 2011 19:00:47 +0100
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Pnaoz-0008R9-BI; Thu, 10 Feb 2011 19:00:49 +0100
-In-Reply-To: <20110209234621.GA12575@sigill.intra.peff.net> (Jeff King's message of "Wed\, 9 Feb 2011 18\:46\:21 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-4.2.2 (rominette.imag.fr [129.88.30.17]); Thu, 10 Feb 2011 19:00:48 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM  for more information
-X-MailScanner-ID: p1AI0lOJ021429
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
-MailScanner-NULL-Check: 1297965650.15286@LMcRJEYyBoSQl2GUegaErA
+	id S1752110Ab1BJSup convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Feb 2011 13:50:45 -0500
+Received: from india601.server4you.de ([85.25.151.105]:38289 "EHLO
+	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751296Ab1BJSuo (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Feb 2011 13:50:44 -0500
+Received: from [192.168.2.103] (p4FFDAF81.dip.t-dialin.net [79.253.175.129])
+	by india601.server4you.de (Postfix) with ESMTPSA id 962A52F804F;
+	Thu, 10 Feb 2011 19:50:42 +0100 (CET)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
+In-Reply-To: <7vk4hbsbjr.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166490>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166491>
 
-Jeff King <peff@peff.net> writes:
+Am 07.02.2011 23:51, schrieb Junio C Hamano:
+> Ren=C3=A9 Scharfe<rene.scharfe@lsrfire.ath.cx>  writes:
+>
+>> diff --git a/t/t6016-rev-list-graph-simplify-history.sh b/t/t6016-re=
+v-list-graph-simplify-history.sh
+>> index f7181d1..50ffcf4 100755
+>> --- a/t/t6016-rev-list-graph-simplify-history.sh
+>> +++ b/t/t6016-rev-list-graph-simplify-history.sh
+>> @@ -168,6 +168,7 @@ test_expect_success '--graph --full-history --si=
+mplify-merges -- bar.txt' '
+>>   	echo "|\\  ">>  expected&&
+>>   	echo "| * $C4">>  expected&&
+>>   	echo "* | $A5">>  expected&&
+>> +	echo "* | $A4">>  expected&&
+>>   	echo "* | $A3">>  expected&&
+>>   	echo "|/  ">>  expected&&
+>>   	echo "* $A2">>  expected&&
+>
+> Thanks for a patch with a test; I am not sure if this is quite correc=
+t,
+> though.
+>
+> A4 has three parents, C2, A3 and B2, and does not introduce any chang=
+e
+> with respect to bar.txt.  A6 has bar.txt identical to that of A5, but=
+ we
+> cannot omit it because we are showing its two parents (A5 and C4), an=
+d
+> that is why we show it.  A4 isn't even gets shown as a merge, so I do=
+n't
+> understand why we need to show it?
 
-> I don't think it's worth moving ls-files/ls-tree. They're plumbing that
-> people don't use frequently. So the cost of moving them is high (because
-> we are breaking something meant to be scriptable) and the benefit is low
-> (because users don't type them a lot).
+Yes, this looks a bit silly on closer look.  I thought that it matches=20
+=46rancis' use case, but that's wrong -- having --simplify-merges inste=
+ad=20
+of -Sstring makes a difference, obviously.
 
-Right. At some point, we may want to introduce a porcelain version of
-"git ls-files", but we shouldn't change its default behavior.
+After looking at the case again, I think I have a simpler solution: no=20
+code change, just add --sparse (include all walked commits).  This give=
+s=20
+the same results as the patched version:
 
-> The archive behavior surprised me, and I would think it should be full-tree
-> by default. But it is sort of plumbing-ish, in that people have probably
-> scripted around and people _don't_ tend to create archives a lot.
+	$ git log --oneline -m --sparse --full-history \
+		-Sblacklist_iommu v2.6.26..v2.6.29 -- \
+		drivers/pci/intel-iommu.c | wc -l
+	    160
 
-Right. There are probably more calls to "git archive" in cron jobs and
-web interface than directly from the command-line.
+Sorry for the noise.
 
-> That leaves clean. I would say from a consistency standpoint that it
-> should go full-tree to match the other commands. But it is one of the
-> most destructive commands, and making it full-tree makes it easier to
-> accidentally delete, instead of accidentally fail to delete.
+So, the lesson would be: If you want to find commits that removed a=20
+certain string in a certain set of files, add --full-history, -m and=20
+--sparse to your "git log -Sstring -- files" command.  This allows you=20
+to catch merges that reverted those files to a state before the string=20
+was introduced in the first place, otherwise history simplification can=
+=20
+hide them.
 
-Agreed. That would be really bad surprise for an experience user to
-upgrade Git, type "git clean -fdx" from a subdirectory, and to notice
-the new behavior afterwards ;-).
+I'm not sure if there's a way to make the flags and their interactions=20
+more intituitive.
 
-> So depending on your view of the above, it may just be "add -u/-A" and
-> "grep" that are worth switching.
-
-Agreed.
-
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+Ren=C3=A9
