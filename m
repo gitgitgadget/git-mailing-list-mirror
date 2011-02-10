@@ -1,83 +1,109 @@
-From: Joshua Juran <jjuran@gmail.com>
-Subject: Re: [PATCH] compat: helper for detecting unsigned overflow
-Date: Thu, 10 Feb 2011 05:23:25 -0800
-Message-ID: <E84FF9D8-92D7-4CA0-9CF4-77FF33893977@gmail.com>
-References: <1286263450-5372-1-git-send-email-kusmabite@gmail.com> <20110210093536.GB365@elie> <AANLkTinqkSxj0C+GyMVR4a7d=yy_mh+oDuar0moZjZ8_@mail.gmail.com>
-Mime-Version: 1.0 (Apple Message framework v936)
-Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
-Content-Transfer-Encoding: 7bit
-Cc: Jonathan Nieder <jrnieder@gmail.com>, git@vger.kernel.org,
-	Erik Faye-Lund <kusmabite@gmail.com>,
-	Jeff King <peff@peff.net>, Nicolas Pitre <nico@fluxnic.net>,
-	Pierre Habouzit <madcoder@debian.org>,
-	Ilari Liusvaara <ilari.liusvaara@elisanet.fi>
-To: Sverre Rabbelier <srabbelier@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 10 14:23:37 2011
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: Advices to imlement update hook
+Date: Thu, 10 Feb 2011 14:24:49 +0100
+Message-ID: <AANLkTin0p77wd3dOdF6h3+Gw7vphj=CTvn0UUtRwf5un@mail.gmail.com>
+References: <AANLkTimdsCgNBAnJmnzGj3M3Q4RPb==fiWu1+ZQhWenO@mail.gmail.com>
+	<4D52C2FA.2030103@viscovery.net>
+	<4D52C403.30501@viscovery.net>
+	<AANLkTik=Xw3b1i-AranJtfngOsfLvEDSzrMq3jKTy-Yy@mail.gmail.com>
+	<20110209170535.GA5254@sigill.intra.peff.net>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johannes Sixt <j.sixt@viscovery.net>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 10 14:24:56 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnWUi-00086l-EE
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 14:23:36 +0100
+	id 1PnWVz-0000aT-7Y
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 14:24:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752383Ab1BJNXb (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Feb 2011 08:23:31 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:52144 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751147Ab1BJNXa (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Feb 2011 08:23:30 -0500
-Received: by iwn9 with SMTP id 9so1289361iwn.19
-        for <git@vger.kernel.org>; Thu, 10 Feb 2011 05:23:29 -0800 (PST)
+	id S1754070Ab1BJNYv convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Feb 2011 08:24:51 -0500
+Received: from mail-pw0-f46.google.com ([209.85.160.46]:45902 "EHLO
+	mail-pw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751965Ab1BJNYu convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Feb 2011 08:24:50 -0500
+Received: by pwj3 with SMTP id 3so348533pwj.19
+        for <git@vger.kernel.org>; Thu, 10 Feb 2011 05:24:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        bh=nVvdDa2N1AA069jAnZNbELZ75p2MDWngSx4KF/47VmA=;
-        b=c3hkgk+qWz469EP0wQUT0K7XQtJuz9mSQ1B+VWmnZNiR1YKaJfBAiYbn2meJVGvrGY
-         RSZhDdl0AVXZ4q/amLo4NnpUQzSlTcAsbNZt9aLid2c/jMcHlKsdbUU+mTlyD5X7kyqp
-         SR33bs6kiXm8CAwikK6DcJAt08X8kRIuqyEgI=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=dNcEs2RPUAyUezERmSv7SruEmYFjfIb1yXUOSgvcln0=;
+        b=Xp9+tmZC1ZWZzR1vkmPgrlRWcNpb8+TwQpCVab6lmKHMlMSplzRcNPFQLOin+x3C3k
+         XJy2Hnl2rwzFd8uTvDH0sQkJOcI7sKbu93rOKjimmP+Co9HbMPQt5M+kfNMdqIqe6Qzw
+         8VpIZbgLWkLeeVkCXr94W7EPG05eFSFqkU9ek=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=cc:message-id:from:to:in-reply-to:content-type
-         :content-transfer-encoding:mime-version:subject:date:references
-         :x-mailer;
-        b=S1AzPh7o7AfQKwPMjvzgf3+NT1BoEDbyJY6SMsGd0yh4rjpviA3xgRFBIsC+oCfES/
-         0tUcC8pVB+zQVW9rOU2HWsGEMiI9iO+SWHF56FZ0e/99waW18VPEl4YEl9RFBQ3NS0GW
-         Jf7SoLgEqDW+iDnUJ++xB16OIea3VbvMn4FTg=
-Received: by 10.42.222.71 with SMTP id if7mr11551817icb.50.1297344209556;
-        Thu, 10 Feb 2011 05:23:29 -0800 (PST)
-Received: from zaphod.jjuran.dyndns.org (c-71-227-175-60.hsd1.wa.comcast.net [71.227.175.60])
-        by mx.google.com with ESMTPS id y8sm5177ica.2.2011.02.10.05.23.26
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 10 Feb 2011 05:23:28 -0800 (PST)
-In-Reply-To: <AANLkTinqkSxj0C+GyMVR4a7d=yy_mh+oDuar0moZjZ8_@mail.gmail.com>
-X-Mailer: Apple Mail (2.936)
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=ZqWlkjJV/hYbpa/++QrAk/fdHrC3igDUYHs1OxipYv8ETuj2oXI/Fw5DsUzS6B9ZGn
+         Z6efAgmTbQvL8LOKdjErqoEN/pAw1Vku5IY8yU6xcbLjl0hqg2pW0Uh1sYlh62kIRXlQ
+         l+fvc6bhBBzOdUng20UsUdJtLxN/4Z23NZ4ek=
+Received: by 10.142.52.5 with SMTP id z5mr8488143wfz.239.1297344289876; Thu,
+ 10 Feb 2011 05:24:49 -0800 (PST)
+Received: by 10.142.44.3 with HTTP; Thu, 10 Feb 2011 05:24:49 -0800 (PST)
+In-Reply-To: <20110209170535.GA5254@sigill.intra.peff.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166481>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166482>
 
-On Feb 10, 2011, at 4:11 AM, Sverre Rabbelier wrote:
+Hello,
 
-> On Thu, Feb 10, 2011 at 10:35, Jonathan Nieder <jrnieder@gmail.com>  
-> wrote:
->>       unsigned_add_overflows(a, b)
+On Wed, Feb 9, 2011 at 6:05 PM, Jeff King <peff@peff.net> wrote:
+> On Wed, Feb 09, 2011 at 05:51:24PM +0100, Francis Moreau wrote:
 >
->> Define such a macro, expanding roughly to ((a) < UINT_MAX - (b)).
->> Because the expansion uses each argument only once outside of  
->> sizeof()
->> expressions, it is safe to use with arguments that have side effects.
+>> >>> =A0 =A0git diff-tree <oldref> <newref> -- ^b || exit 1
+>> >>>
+>> >>> but it doesn't work.
+>> >>
+>> >> =A0 git diff-tree --quiet <oldref> <newref> -- b
+>> >
+>> > should do it; it sets the exit code.
+>>
+>> but does that work if a commit modify b/ and another directory ?
 >
->> +#define unsigned_add_overflows(a, b) \
->> +    ((b) > maximum_unsigned_value_of_type(a) - (a))
+> No, it just looks for commits that modified b. There is currently no =
+way
+> to specify a path to say "commit that did not modify b". You need to
+> check the output of:
 >
-> I'm confused, you say you won't use it twice, and then you do use it  
-> twice?
+> =A0git rev-list | git diff-tree --stdin -m --name-only
+>
+> which should list all paths modified by all commits. And then you can
+> either blacklist or whitelist as appropriate (note that the names can=
+ be
+> quoted; you might want to look at the "-z" option and do your
+> list-checking in perl).
+>
+>> > But don't you also want to inspect all commits between oldref and =
+newref?
+>>
+>> Yes I want to inspect all commits in the range.
+>
+> see above.
+>
+>> > Someone could have modified the directory, and then reverted the
+>> > modification in a later commit. If these commits arrive in a singl=
+e push,
+>> > the above code wouldn't notice this.
+>>
+>> I agree but I thought that git diff-tree would list all changes made
+>> between the 2 refs.
+>
+> Between the two endpoints. It won't even look at the commits in the
+> middle, so as long as a later middle commit reverts the change of an
+> earlier middle commit, the endpoints won't be affected.
 
-The author is asserting that maximum_unsigned_value_of_type() is a  
-function of sizeof a, which would have no runtime effect.
+Oh, I see. I undestand why the git-rev-list is needed now.
 
-Josh
+Thanks for your help !
+--=20
+=46rancis
