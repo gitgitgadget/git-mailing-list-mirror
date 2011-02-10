@@ -1,85 +1,71 @@
-From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
-Subject: Re: "git add -u" broken in git 1.7.4?
-Date: Thu, 10 Feb 2011 09:24:55 +0700
-Message-ID: <AANLkTi=dmqRQqBD2HZfv2x-kxaqrxvSx3r62d09KMP1k@mail.gmail.com>
-References: <20110206051333.GA3458@sigill.intra.peff.net> <4D4EF7E4.7050303@hartwork.org>
- <vpq1v3kopn3.fsf@bauges.imag.fr> <7vwrlcv1ea.fsf@alter.siamese.dyndns.org>
- <20110207055314.GA5511@sigill.intra.peff.net> <7vhbcguytf.fsf@alter.siamese.dyndns.org>
- <20110207195035.GA13461@sigill.intra.peff.net> <20110208100518.GA9505@neumann>
- <20110209210312.GB2083@sigill.intra.peff.net> <7vipwsomq8.fsf@alter.siamese.dyndns.org>
- <20110209234621.GA12575@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] rebase: use @{upstream} if no upstream specified
+Date: Wed, 09 Feb 2011 18:25:37 -0800
+Message-ID: <7voc6k62xq.fsf@alter.siamese.dyndns.org>
+References: <1297125475-19151-1-git-send-email-martin.von.zweigbergk@gmail.com>
+ <1297302842-11296-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Junio C Hamano <gitster@pobox.com>,
-	=?UTF-8?Q?SZEDER_G=C3=A1bor?= <szeder@ira.uka.de>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Sebastian Pipping <webmaster@hartwork.org>,
-	Git ML <git@vger.kernel.org>
-To: Jeff King <peff@peff.net>
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org, Yann Dirson <ydirson@altern.org>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>
+To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 X-From: git-owner@vger.kernel.org Thu Feb 10 03:26:01 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnMEJ-0006U1-Nc
+	id 1PnMEK-0006U1-7s
 	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 03:26:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754731Ab1BJCZa convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Wed, 9 Feb 2011 21:25:30 -0500
-Received: from mail-ww0-f44.google.com ([74.125.82.44]:34035 "EHLO
-	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754646Ab1BJCZ1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Wed, 9 Feb 2011 21:25:27 -0500
-Received: by wwa36 with SMTP id 36so911229wwa.1
-        for <git@vger.kernel.org>; Wed, 09 Feb 2011 18:25:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:from:date
-         :message-id:subject:to:cc:content-type:content-transfer-encoding;
-        bh=n/qkcQZ5he8XQpkl4EMNZ0UjpwCUGCbMWyHo1XEYi2Q=;
-        b=hc56m3rJqQw7tIbez5+E9BOMYGucRJm0n4+MCSBEEvor/wjEY+IPblg9dGsRaS9U+e
-         4/gMGC6LL0N8z9tagPSN816gvz+wm7LfzlIIZ1sK+3xAN1EsLUP2f8VMsykr3vrpcxBY
-         aaxkp/M49BxbtrHhZqcKJAB2dd2FmYjPv3f5I=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
-         :cc:content-type:content-transfer-encoding;
-        b=vcvI86+OJedAnRzctebSjaCfTpBXUIWbuU7j1gZfg7rM2/wdkZkEu2d4Qrr5rcNZpf
-         y6sZs85wr+4phk5vSTMc2AlNDpSTwFA01g9PYU0jSRpInurBhduZMEBmFJnTp6CySSta
-         tEGUKdlzhxKvtGbPhSEPPsFiwiAI4ab0XmMrE=
-Received: by 10.227.127.132 with SMTP id g4mr586202wbs.169.1297304725959; Wed,
- 09 Feb 2011 18:25:25 -0800 (PST)
-Received: by 10.216.66.144 with HTTP; Wed, 9 Feb 2011 18:24:55 -0800 (PST)
-In-Reply-To: <20110209234621.GA12575@sigill.intra.peff.net>
+	id S1754245Ab1BJCZx (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Feb 2011 21:25:53 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:34842 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753892Ab1BJCZw (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Feb 2011 21:25:52 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8BBFC4187;
+	Wed,  9 Feb 2011 21:26:51 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=p7sTtCSSolhRhb+uKpsRg7YgC2k=; b=mfvXLS
+	CBo3y1RrOTK5cEWWNKYmFCJ60wYteimRZw40CmTP9zvtepG25afM0JObOuXZMpqf
+	H9moS2Y0qcFSBTwrforo0pRKhvJhQ3JApY94RmeLnkun36MBKWsVsjNKauOF0Tno
+	dlE7SspKQSmBCzuMWdD+wNEq+6SkqQD8nV07o=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MXvQY3dilt/5czM3F7NmCEFq3pGj/+Pp
+	yMBlpz147wNQYL/0k7PI4kimfOKhbB+49yEGb9w3diIewH1XKEeTXoRpcI3ybsfm
+	dBt5v5Lfh5j+x7XA4QvrA9VYBH8U5EzZ9lIyGNX2p3dn+YQD1ROO/X/Qhoclpa7r
+	MaUoga944CE=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 39B01416C;
+	Wed,  9 Feb 2011 21:26:46 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id BF694416B; Wed,  9 Feb 2011
+ 21:26:39 -0500 (EST)
+In-Reply-To: <1297302842-11296-1-git-send-email-martin.von.zweigbergk@gmail.com> (Martin
+ von Zweigbergk's message of "Wed\,  9 Feb 2011 20\:54\:02 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 34E4A20C-34BD-11E0-A9CD-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166464>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166465>
 
-On Thu, Feb 10, 2011 at 6:46 AM, Jeff King <peff@peff.net> wrote:
-> Assuming we move from relative to full-tree, I think the possible thi=
-ngs
-> to move are:
->
-> =C2=A0add -u/-A
-> =C2=A0archive
-> =C2=A0grep
-> =C2=A0clean
-> =C2=A0ls-files/ls-tree
->
-> I don't think it's worth moving ls-files/ls-tree. They're plumbing th=
-at
-> people don't use frequently. So the cost of moving them is high (beca=
-use
-> we are breaking something meant to be scriptable) and the benefit is =
-low
-> (because users don't type them a lot).
+Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
 
-No we should not, but we should add --full-tree to
-ls-files/ls-tree/archive. I'd love "ls-files --full-tree
-'*somefile*'".
---=20
-Duy
+> 'git rebase' without arguments is currently not supported. Make it
+> default to 'git rebase @{upstream}'. That is also what 'git pull
+> [--rebase]' defaults to, so it only makes sense that 'git rebase'
+> defaults to the same thing.
+
+Not that I am fundamentally opposed to the proposed change, but the above is
+not a very convincing argument, when the corresponding change to "git merge"
+is just started getting discussed.
+
+On top of what commit does this patch apply, by the way?
