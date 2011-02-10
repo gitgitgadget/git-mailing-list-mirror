@@ -1,99 +1,85 @@
-From: =?UTF-8?B?UmVuw6kgU2NoYXJmZQ==?= <rene.scharfe@lsrfire.ath.cx>
-Subject: Re: Can't find the revelant commit with git-log
-Date: Thu, 10 Feb 2011 19:50:35 +0100
-Message-ID: <4D54337B.6040307@lsrfire.ath.cx>
-References: <m2ipxd2w78.fsf@gmail.com> <4D3EF650.20407@lsrfire.ath.cx> <m2ipxc27zi.fsf@gmail.com> <m239og12pe.fsf@gmail.com> <4D4063EC.7090509@lsrfire.ath.cx> <4D432735.8000208@lsrfire.ath.cx> <7v1v3wd1al.fsf@alter.siamese.dyndns.org> <4D437CA0.1070006@lsrfire.ath.cx> <7vsjwcb6rh.fsf@alter.siamese.dyndns.org> <4D4477E4.6020006@lsrfire.ath.cx> <7vk4hbsbjr.fsf@alter.siamese.dyndns.org>
+From: Ramsay Jones <ramsay@ramsay1.demon.co.uk>
+Subject: Re: [PATCH] Handle rename of case only, for Windows
+Date: Thu, 10 Feb 2011 18:58:14 +0000
+Message-ID: <4D543546.1030207@ramsay1.demon.co.uk>
+References: <1296344717.25999.1417928123@webmail.messagingengine.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
-	format=flowed
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Francis Moreau <francis.moro@gmail.com>, git@vger.kernel.org,
-	Johannes Sixt <j6t@kdbg.org>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 10 19:50:52 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org, Erik Faye-Lund <kusmabite@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	msysGit <msysgit@googlegroups.com>
+To: Tim Abell <tim@timwise.co.uk>
+X-From: git-owner@vger.kernel.org Thu Feb 10 20:04:16 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnbbO-0001iD-VR
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 19:50:51 +0100
+	id 1PnboL-0004hu-Pf
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 20:04:14 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752110Ab1BJSup convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Feb 2011 13:50:45 -0500
-Received: from india601.server4you.de ([85.25.151.105]:38289 "EHLO
-	india601.server4you.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751296Ab1BJSuo (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Feb 2011 13:50:44 -0500
-Received: from [192.168.2.103] (p4FFDAF81.dip.t-dialin.net [79.253.175.129])
-	by india601.server4you.de (Postfix) with ESMTPSA id 962A52F804F;
-	Thu, 10 Feb 2011 19:50:42 +0100 (CET)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; de; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <7vk4hbsbjr.fsf@alter.siamese.dyndns.org>
+	id S1754752Ab1BJTEI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Feb 2011 14:04:08 -0500
+Received: from lon1-post-1.mail.demon.net ([195.173.77.148]:36827 "EHLO
+	lon1-post-1.mail.demon.net" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1752212Ab1BJTEH (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Feb 2011 14:04:07 -0500
+Received: from ramsay1.demon.co.uk ([193.237.126.196])
+	by lon1-post-1.mail.demon.net with esmtp (Exim 4.69)
+	id 1PnboD-0007iB-WI; Thu, 10 Feb 2011 19:04:05 +0000
+User-Agent: Thunderbird 1.5.0.2 (Windows/20060308)
+In-Reply-To: <1296344717.25999.1417928123@webmail.messagingengine.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166491>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166492>
 
-Am 07.02.2011 23:51, schrieb Junio C Hamano:
-> Ren=C3=A9 Scharfe<rene.scharfe@lsrfire.ath.cx>  writes:
->
->> diff --git a/t/t6016-rev-list-graph-simplify-history.sh b/t/t6016-re=
-v-list-graph-simplify-history.sh
->> index f7181d1..50ffcf4 100755
->> --- a/t/t6016-rev-list-graph-simplify-history.sh
->> +++ b/t/t6016-rev-list-graph-simplify-history.sh
->> @@ -168,6 +168,7 @@ test_expect_success '--graph --full-history --si=
-mplify-merges -- bar.txt' '
->>   	echo "|\\  ">>  expected&&
->>   	echo "| * $C4">>  expected&&
->>   	echo "* | $A5">>  expected&&
->> +	echo "* | $A4">>  expected&&
->>   	echo "* | $A3">>  expected&&
->>   	echo "|/  ">>  expected&&
->>   	echo "* $A2">>  expected&&
->
-> Thanks for a patch with a test; I am not sure if this is quite correc=
-t,
-> though.
->
-> A4 has three parents, C2, A3 and B2, and does not introduce any chang=
-e
-> with respect to bar.txt.  A6 has bar.txt identical to that of A5, but=
- we
-> cannot omit it because we are showing its two parents (A5 and C4), an=
-d
-> that is why we show it.  A4 isn't even gets shown as a merge, so I do=
-n't
-> understand why we need to show it?
+[Sorry for the late reply to this... I'm somewhat backed-up!]
 
-Yes, this looks a bit silly on closer look.  I thought that it matches=20
-=46rancis' use case, but that's wrong -- having --simplify-merges inste=
-ad=20
-of -Sstring makes a difference, obviously.
+Tim Abell wrote:
+>>From ddab003ede9f25d93f4e7eea833523a0aa29d16d Mon Sep 17 00:00:00 2001
+> From: Tim Abell <tim@timwise.co.uk>
+> Date: Thu, 27 Jan 2011 22:53:31 +0000
+> Subject: [PATCH] Handle rename of case only, for Windows
 
-After looking at the case again, I think I have a simpler solution: no=20
-code change, just add --sparse (include all walked commits).  This give=
-s=20
-the same results as the patched version:
+This should not work with the MinGW or msvc build, since they *always* set
+the st_ino to zero (see do_lstat() and mingw_fstat() in compat/mingw.c).
+Also, *with default configuration*, it will also not work on cygwin... so
+saying that this works on Windows may be overstating things a bit ... ;-)
 
-	$ git log --oneline -m --sparse --full-history \
-		-Sblacklist_iommu v2.6.26..v2.6.29 -- \
-		drivers/pci/intel-iommu.c | wc -l
-	    160
+[Hmm, I can't check, but it would probably work on Mac OS X ...]
 
-Sorry for the noise.
+> Added test to show rename failing in windows.
 
-So, the lesson would be: If you want to find commits that removed a=20
-certain string in a certain set of files, add --full-history, -m and=20
---sparse to your "git log -Sstring -- files" command.  This allows you=20
-to catch merges that reverted those files to a state before the string=20
-was introduced in the first place, otherwise history simplification can=
-=20
-hide them.
+This fails for me. (er... just to be clear, test #30 fails with your patch
+applied).
 
-I'm not sure if there's a way to make the flags and their interactions=20
-more intituitive.
+> Added test to show that this patch doesn't break protection against overwriting
+> an existing file, and another to show that "mv --force" still works.
+> 
+> Altered mv.c to check whether the source and destination file are actually
+> the same file based on inode number before failing.
+> If the inode is zero then the data is no use so old behaviour is maintained.
 
-Ren=C3=A9
+With default configuration, the st_ino will always be zero on cygwin. (see for
+example the "schizophrenic l/stat() functions" commits adbc0b6, 7faee6b and
+7974843, along with the "force core.filemode" commit c869753).
+
+So, you must have core.filemode or core.ignorecygwinfstricks set somewhere in
+your environment (in the system or global (user) config files?).
+
+[I *always* set core.filemode after git-init or git-clone, so this patch may
+actually work for me *in practice* (I haven't tested it), but I may well not
+be a typical user...]
+
+>> Hmm, not so good. st_ino is always 0 on Windows, so this would make
+>> false positives, no?
+> 
+> I tested this on windows 7 under cygwin (which is what I have available) and st_ino reports real numbers for me,
+
+Again, you must have non-default configuration set...
+
+ATB,
+Ramsay Jones
