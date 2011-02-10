@@ -1,115 +1,70 @@
-From: Markus Elfring <Markus.Elfring@web.de>
-Subject: Challenges for an octopus merge
-Date: Thu, 10 Feb 2011 15:30:44 +0100
-Message-ID: <4D53F694.1060105@web.de>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Challenges for an octopus merge
+Date: Thu, 10 Feb 2011 08:09:00 -0800
+Message-ID: <7v8vxn6fdv.fsf@alter.siamese.dyndns.org>
+References: <4D53F694.1060105@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-15; format=flowed
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Thu Feb 10 15:32:19 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Markus Elfring <Markus.Elfring@web.de>
+X-From: git-owner@vger.kernel.org Thu Feb 10 17:09:24 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnXZC-0003MQ-HB
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 15:32:18 +0100
+	id 1PnZ57-00044Q-D1
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 17:09:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751591Ab1BJOcN (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Feb 2011 09:32:13 -0500
-Received: from fmmailgate02.web.de ([217.72.192.227]:51940 "EHLO
-	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751110Ab1BJOcM (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Feb 2011 09:32:12 -0500
-Received: from smtp08.web.de  ( [172.20.5.216])
-	by fmmailgate02.web.de (Postfix) with ESMTP id 5C773196E4F01
-	for <git@vger.kernel.org>; Thu, 10 Feb 2011 15:31:14 +0100 (CET)
-Received: from [78.48.201.189] (helo=[192.168.1.46])
-	by smtp08.web.de with asmtp (WEB.DE 4.110 #2)
-	id 1PnXYA-00031p-00
-	for git@vger.kernel.org; Thu, 10 Feb 2011 15:31:14 +0100
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.13) Gecko/20101206 SUSE/3.1.7 Thunderbird/3.1.7
-X-Sender: Markus.Elfring@web.de
-X-Provags-ID: V01U2FsdGVkX1+xdpgPa2rgnt5LKacHH8uNDooyqbp+98zVu9Es
-	1xGaWr4frPbfyvk/qvKfqxPGKrAftfRt9cPVEOS/Tr7UYVfw8X
-	47/jv4Lha4EkOYrZaz4Q==
+	id S1756565Ab1BJQJK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Feb 2011 11:09:10 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:58167 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756361Ab1BJQJJ (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Feb 2011 11:09:09 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6989F3F9D;
+	Thu, 10 Feb 2011 11:10:08 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=YeJzd9BznkEPmp9i5hm4oXrZPZ8=; b=dgF0t6
+	/a2i3Ler3E7Qv71VDBBwQy+ZvZJuZ4uLeq5P/NOxIabIhq2SVTpd5Qlme/RWm+IN
+	WHrIwK6OQgWELdS9jJU0u6vIK5TC/9AwzvIQHoi6T0cAXHSS5ANY32YR6olC5duf
+	kh4Wwr9qecFD1s6Vg7+zH7hboHCxxDarM0L4s=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=MI/at57Dypqc728UBHaVxrKHOcXB2zx0
+	H6ZwpCOx8heawhCTve7y21DrkHuhS6IvnrWWCYAoeaOF8F/mOzMyOw+T+edbO+QU
+	wdlhN/257KlQPO3r4fvs9MBZQ7dKgtDct8oaZDlBri2l/G/T9aObDUupif3QHnov
+	3kYGTSAH/2M=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 484CA3F9A;
+	Thu, 10 Feb 2011 11:10:06 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 713773F92; Thu, 10 Feb 2011
+ 11:10:03 -0500 (EST)
+In-Reply-To: <4D53F694.1060105@web.de> (Markus Elfring's message of "Thu\, 10
+ Feb 2011 15\:30\:44 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 399FB8F4-3530-11E0-9718-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166485>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166487>
 
-Hello,
+Markus Elfring <Markus.Elfring@web.de> writes:
 
-I have got an update history like the following in a local repository with ten 
-patches in separate topic branches on my openSUSE 11.3 system.
+> ...
+> Automated merge did not work.
+> Should not be doing an Octopus.
+> Merge with strategy octopus failed.
+>
+>
+> The merge description was missing (no commit message) in this case.
 
-master -> tag: v3.0 -> compilation_maintenance
-               /->  errno => C1
-              /->   braces => C2
-             /->    string => C3
-            /->     binary_search => C4
-  -> route1 --->    temporary_files => C5
-            \->     make_functions_static => C6
-             \->    const-correctness => C7
-              \->   signal_handling => C8
-               \->  enum => C9
-                \-> double_declaration_deletion => C10
+The second-to-last line of the output needs to be rephrased.
 
-
-elfring@Sonne:~/Projekte/BtYacc/lokal2> git --version && git checkout -b test3
-git version 1.7.3.4
-Switched to a new branch 'test3'
-elfring@Sonne:~/Projekte/BtYacc/lokal2> git merge --no-ff --stat --verbose --log 
--m 'Combination of six topics' errno braces string binary_search temporary_files 
-make_functions_static
-Fast-forwarding to: errno
-Trying simple merge with braces
-Trying simple merge with string
-Trying simple merge with binary_search
-Trying simple merge with temporary_files
-Simple merge did not work, trying automatic merge.
-Auto-merging defs.h
-Trying simple merge with make_functions_static
-Simple merge did not work, trying automatic merge.
-Auto-merging defs.h
-ERROR: content conflict in defs.h
-Auto-merging main.c
-Auto-merging mkpar.c
-fatal: merge program failed
-Automatic merge failed; fix conflicts and then commit the result.
-
-
-The merge description (suggested commit message) was fine in the display of the 
-tool "Git GUI 0.13.0" (Tcl/Tk version 8.5.8).
-I delete the conflict section in the header file "defs.h" completely.
-
-
-elfring@Sonne:~/Projekte/BtYacc/lokal2> git merge --no-ff --stat --verbose --log 
--m 'Combination of four topics' const-correctness double_declaration_deletion 
-enum signal_handling
-Trying simple merge with const-correctness
-Simple merge did not work, trying automatic merge.
-Auto-merging defs.h
-Auto-merging output.c
-Auto-merging reader.c
-Trying simple merge with double_declaration_deletion
-Simple merge did not work, trying automatic merge.
-Auto-merging mkpar.c
-ERROR: content conflict in mkpar.c
-fatal: merge program failed
-Automated merge did not work.
-Should not be doing an Octopus.
-Merge with strategy octopus failed.
-
-
-The merge description was missing (no commit message) in this case.
-Is this omission acceptable?
-
-I have also got the impression that the corresponding source files did not 
-contain enough conflict markers.
-Is my use case relevant for further considerations of details with this merging 
-process?
-
-Regards,
-Markus
+Octopus is not for recording conflicting merges and when it punts you
+shouldn't be attempting to resolve and record it as an octopus merge.
