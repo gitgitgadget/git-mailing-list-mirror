@@ -1,82 +1,75 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: git fetch,git merge and git rebase
-Date: Thu, 10 Feb 2011 16:21:27 -0600
-Message-ID: <4D5464E7.2010407@gmail.com>
-References: <1297315789338-6010561.post@n2.nabble.com>
-Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+From: Jason Brooks <jasonbbrooks@gmail.com>
+Subject: Unknown software revision
+Date: Thu, 10 Feb 2011 14:33:47 -0800
+Message-ID: <733D558A-0935-42A8-BA5B-7B97703656F6@gmail.com>
+Mime-Version: 1.0 (Apple Message framework v936)
+Content-Type: text/plain; charset=US-ASCII; format=flowed; delsp=yes
 Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Akash <bcakashguru@gmail.com>
-X-From: git-owner@vger.kernel.org Thu Feb 10 23:23:59 2011
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Thu Feb 10 23:33:59 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pneve-0005mu-CK
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 23:23:58 +0100
+	id 1Pnf5I-00059l-Ew
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 23:33:56 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757226Ab1BJWXy (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Feb 2011 17:23:54 -0500
-Received: from mail-yx0-f174.google.com ([209.85.213.174]:48669 "EHLO
-	mail-yx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757222Ab1BJWXx (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Feb 2011 17:23:53 -0500
-Received: by yxt3 with SMTP id 3so815131yxt.19
-        for <git@vger.kernel.org>; Thu, 10 Feb 2011 14:23:52 -0800 (PST)
+	id S1757247Ab1BJWdv (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Feb 2011 17:33:51 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:41569 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757161Ab1BJWdv (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Feb 2011 17:33:51 -0500
+Received: by ywo7 with SMTP id 7so816005ywo.19
+        for <git@vger.kernel.org>; Thu, 10 Feb 2011 14:33:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version
-         :newsgroups:to:cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=ZvJ6jkZr9AGY6F2RHxIJAorCGwaTGhnzEbN/hvhfM2k=;
-        b=NL5EhHQRNHjiBxBAX2LKkH2fdIIBhVKNp7y863uaPXRm8uFd7NCcyd0pkO96CJ/IqA
-         qX1JyI96NICGbqGORJ9Z63MUhDN50ipW5jqGy7HQwRvpKxStENUyXK7K46VFOL8H1/qd
-         J8GHJn3h0YYkA8hNKI9d5C4bhtN0RAWFAhWow=
+        h=domainkey-signature:message-id:from:to:content-type
+         :content-transfer-encoding:mime-version:subject:date:x-mailer;
+        bh=uRx79bakTnSvo3Us0biDUJKmojNZpEGHi9NktdUeHt0=;
+        b=m1rDRPvnXhSTHyoA4vtLGFsPOwWxWnqygj+XohZPpCUNfevDV91S6bugW1b3D7Bkr9
+         8PyqcQNBxZpRuLDBi91695OErpLn5438nt1uYkLZnAZ3mqA01IhzmlPJ8DOrnXpXVXe4
+         LQSGgUTF5cpRoMwjluCAabqOB+mbSQjU/hCiA=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:newsgroups:to:cc
-         :subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        b=ntZY/yXh+oJngduYW6/LSyW02DAF9BbOwMLdjIvCzNPfQJ1ZLnO/jXowLA1S39JHG/
-         z/KIDbRPoN9EeYKCiziRLNKVWRFJtm9quQXb7sSUJX+5x1xezxBqcstdve47bCoJRbEI
-         OGlUaCBgNORl2KGouuTpK4pq0Tjdc3lLLnoyE=
-Received: by 10.150.196.8 with SMTP id t8mr3983203ybf.175.1297376632551;
-        Thu, 10 Feb 2011 14:23:52 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id k2sm108004ybj.22.2011.02.10.14.23.51
+        h=message-id:from:to:content-type:content-transfer-encoding
+         :mime-version:subject:date:x-mailer;
+        b=i23Dh0NxwItaBzrvyqhJI3v8AE1Pd7IabWeFXY+KLceeMAbMqM914c7OHUabP+xtlS
+         eTVD6VyY3B4r4rQq+zTGATOt67JWgfqji1hNQ0RBRj+bqY4dMhDFD7qNKYxj5khWLDyB
+         WNceuz077VOdEttzJ7nM5IR5Ow5MfXp/LtaSE=
+Received: by 10.150.189.17 with SMTP id m17mr4057310ybf.250.1297377230370;
+        Thu, 10 Feb 2011 14:33:50 -0800 (PST)
+Received: from [192.168.1.3] (pool-98-108-149-135.ptldor.fios.verizon.net [98.108.149.135])
+        by mx.google.com with ESMTPS id r24sm352164yba.6.2011.02.10.14.33.48
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 10 Feb 2011 14:23:51 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-Newsgroups: gmane.comp.version-control.git
-In-Reply-To: <1297315789338-6010561.post@n2.nabble.com>
+        Thu, 10 Feb 2011 14:33:49 -0800 (PST)
+X-Mailer: Apple Mail (2.936)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166506>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166507>
 
-On 2/9/2011 11:29 PM, Akash wrote:
->
-> Hi,
->
-> I am new to git .Can someone explain in simple terms what git fetch,git
-> merge and git rebase do?..I tried googling but was very confused after going
-> thro it.
->
-> Also, can someone prescribe a link which explains git in detail right from
-> scratch.
->
->
-another definition of git-rebase:
+Hello,
 
-git-rebase:  the MOST DANGEROUS command in git.  you can easily DESTROY 
-your repo if you don't know what you're doing!  Until you get the hang 
-of it, always make a copy of the before-image of the branch your 
-rebasing (mybranch) by doing a "git checkout mybranch" and then "git 
-branch copy-of-mybranch".  Then if you destroy mybranch you can recover 
-it from copy-of-mybranch.
+I am not sure what I am asking, so I thought I would start here.  If I
+knew the name of this operation, I would look for it.  :)
 
-v/r,
-neal
+I have also posted to the git-users google group, but signs there tell  
+me this is the better place.
+
+I have a software deployment that was copied out of a git repository
+but without the .git directories.  Thus, I have no idea what revision
+this deployment is, so I don't know how to upgrade from git.  Is there a
+method, or script out there that can help me?
+
+The trouble is, I should have made a branch or tag when I deployed it  
+to at
+least freeze that version.  At the very least so I can rebase and re-
+deploy it again.  (I could be wrong about this last statement: I am  
+definitely new to git)
+
+I appreciate any assistance you all can give me...
+
+--jason
