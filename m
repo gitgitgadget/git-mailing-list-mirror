@@ -1,85 +1,92 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH] rebase: use @{upstream} if no upstream specified
-Date: Wed, 9 Feb 2011 21:46:14 -0500 (EST)
-Message-ID: <alpine.DEB.2.00.1102092136580.20937@debian>
-References: <1297125475-19151-1-git-send-email-martin.von.zweigbergk@gmail.com> <1297302842-11296-1-git-send-email-martin.von.zweigbergk@gmail.com> <7voc6k62xq.fsf@alter.siamese.dyndns.org>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: "git add -u" broken in git 1.7.4?
+Date: Wed, 09 Feb 2011 18:46:38 -0800
+Message-ID: <7vd3n061yp.fsf@alter.siamese.dyndns.org>
+References: <vpq1v3kopn3.fsf@bauges.imag.fr>
+ <7vwrlcv1ea.fsf@alter.siamese.dyndns.org>
+ <20110207055314.GA5511@sigill.intra.peff.net>
+ <7vhbcguytf.fsf@alter.siamese.dyndns.org>
+ <20110207195035.GA13461@sigill.intra.peff.net>
+ <20110208100518.GA9505@neumann> <20110209210312.GB2083@sigill.intra.peff.net>
+ <7vipwsomq8.fsf@alter.siamese.dyndns.org>
+ <20110209234621.GA12575@sigill.intra.peff.net>
+ <AANLkTi=dmqRQqBD2HZfv2x-kxaqrxvSx3r62d09KMP1k@mail.gmail.com>
+ <20110210023132.GB5073@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org, Yann Dirson <ydirson@altern.org>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Thu Feb 10 03:46:28 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	SZEDER =?utf-8?Q?G=C3=A1bor?= <szeder@ira.uka.de>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Sebastian Pipping <webmaster@hartwork.org>,
+	Git ML <git@vger.kernel.org>
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Thu Feb 10 03:47:02 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnMY6-0002Kh-UP
-	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 03:46:27 +0100
+	id 1PnMYf-0002eB-NV
+	for gcvg-git-2@lo.gmane.org; Thu, 10 Feb 2011 03:47:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754929Ab1BJCqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Wed, 9 Feb 2011 21:46:20 -0500
-Received: from mail-vx0-f174.google.com ([209.85.220.174]:60370 "EHLO
-	mail-vx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1754319Ab1BJCqT (ORCPT <rfc822;git@vger.kernel.org>);
-	Wed, 9 Feb 2011 21:46:19 -0500
-Received: by vxb37 with SMTP id 37so441143vxb.19
-        for <git@vger.kernel.org>; Wed, 09 Feb 2011 18:46:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
-         :message-id:references:user-agent:mime-version:content-type;
-        bh=4TbrenNXUahpcmw30NIu7fc5hs+hOWj6IFcGOhS5AUk=;
-        b=xoNFimOMzGmF/CipKWAFKHk1VNxZWxQHnVKas6Ln+dH2Un7wHJ+v4OuIaETBQtO1zK
-         l/GXtemjamcuYmuvb95iGkooQ7SHnNCIXLU6U0Lxo6qByvxU01wGtVPrYRlnDd07w5Fg
-         2WIvWpYtDc2vdUKzKo+8Mol8It9j1m53YeCXk=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=rM4f/M0TUNRd96YtYX9fIHX/6N8KnEe6sZ2N4iU1StGX+AO9XyM8QHgTl/TVVrzDp5
-         YkATAmw/mAKB1jzc4vTU1clAroQrxQejHnqYA7+skRU64LyQ+WpKvS7htqoY7TtBpYQN
-         w6aW3fZHE32uv0d7YmL6GkYQuwiwx3oIS6fqg=
-Received: by 10.220.181.135 with SMTP id by7mr5305563vcb.258.1297305977147;
-        Wed, 09 Feb 2011 18:46:17 -0800 (PST)
-Received: from [192.168.1.104] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id v26sm406490vcr.13.2011.02.09.18.46.15
-        (version=TLSv1/SSLv3 cipher=RC4-MD5);
-        Wed, 09 Feb 2011 18:46:16 -0800 (PST)
-X-X-Sender: martin@debian
-In-Reply-To: <7voc6k62xq.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+	id S1754320Ab1BJCq4 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Wed, 9 Feb 2011 21:46:56 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:50414 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753319Ab1BJCq4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Wed, 9 Feb 2011 21:46:56 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2F1274382;
+	Wed,  9 Feb 2011 21:47:55 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=yWX/p2q//hx3uZYyUScMb4YMFWM=; b=Cnqt6l
+	G5Kk+lDrHlWSx58HDpMM3d5iu9oNPwwtNESH22A6Ug5kNrdUuMqNRRfIbiuh7Yj1
+	rjOh91aO5plb8HHz30yxLE2bvT8Fa8rkf3T+qYCVU/hqfWY7e5eExxNQlK1oO7bz
+	oPGyk9NVafWCCKaFtPZwhwE1bpxC42StmwCjg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=yNDaNvDgj+X2K670uPKRpGbRoU1SG2IC
+	RsGvRCZEGjdQOUuuBRTuJJjRgNAk5KFMAKiw1MiMCE2GvAJwljEPtrYsPtO6fqNe
+	Q0R4y+5weediAn6ty1B6jvvdMvRrqctAFKARw1ReBgzQow0kmcP1XD5U9tME2N+v
+	CUEp+I+PJko=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id C12E04380;
+	Wed,  9 Feb 2011 21:47:48 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id CE323437E; Wed,  9 Feb 2011
+ 21:47:39 -0500 (EST)
+In-Reply-To: <20110210023132.GB5073@sigill.intra.peff.net> (Jeff King's
+ message of "Wed\, 9 Feb 2011 21\:31\:32 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 256DEA60-34C0-11E0-B308-F13235C70CBC-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166469>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166470>
 
-On Wed, 9 Feb 2011, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
-> 
-> > 'git rebase' without arguments is currently not supported. Make it
-> > default to 'git rebase @{upstream}'. That is also what 'git pull
-> > [--rebase]' defaults to, so it only makes sense that 'git rebase'
-> > defaults to the same thing.
-> 
-> Not that I am fundamentally opposed to the proposed change, but the above is
-> not a very convincing argument, when the corresponding change to "git merge"
-> is just started getting discussed.
+> ls-tree already has --full-tree (and --full-name, which just gives full
+> pathnames but still restricts output to files in the current directory).
+> ls-files. ls-files has --full-name, but AFAIK needs a matching
+> --full-tree.
 
-There was a little more motivation later in the commit message, like
-using it with 'git rebase -i'. I have been using it for a few months
-now, and I also find it quite useful e.g. when rebasing all my
-branches on top of your master.
+... and --no-full-tree, if we were to make the default tweakable from the
+configuration mechanism for Porcelain commands.  The convoluted logic
+would go like this:
 
-> 
-> On top of what commit does this patch apply, by the way?
+ 1. 'git clean' can be made default to the full-tree operation by
+    setting "porcelain.fullTreeOnNoPathspec = yes";
 
-On top of the rebase refactoring series I posted a few days ago. See
-http://thread.gmane.org/gmane.comp.version-control.git/166161/.
+ 2. a script may want to defeat random configuration the user may have and
+    'git clean --full-tree' and 'git clean --no-full-tree' are the ways to
+    force the semantics it wants;
 
-
-/Martin
+ 3. 'git ls-files' will keep the default of cwd-relativeness, but will gain
+    'git ls-files --full-tree'; naturally people expect --no-full-tree to
+    work, even though the command will not be affected by the configuration
+    variable porcelain.fullTreeOnNoPathspec.
