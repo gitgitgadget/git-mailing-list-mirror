@@ -1,114 +1,113 @@
-From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: Re: [PATCH] mergetool: don't skip modify/remove conflicts
-Date: Thu, 10 Feb 2011 21:46:12 -0500 (EST)
-Message-ID: <alpine.DEB.2.00.1102102130040.29809@debian>
-References: <1297134518-4387-1-git-send-email-martin.von.zweigbergk@gmail.com> <7vzkq4opaw.fsf@alter.siamese.dyndns.org>
+From: John Wiegley <johnw@boostpro.com>
+Subject: Re: Using Origin hashes to improve rebase behavior
+Date: Thu, 10 Feb 2011 22:14:15 -0500
+Message-ID: <m2oc6jtg8o.fsf@hermes.luannocracy.com>
+References: <m21v3fvbix.fsf@hermes.luannocracy.com>
+	<20110210225428.GA21335@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: TEXT/PLAIN; charset=US-ASCII
-Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 11 03:46:33 2011
+Content-Type: text/plain
+Cc: git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Fri Feb 11 04:14:29 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pnj1k-0008Vr-KT
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 03:46:32 +0100
+	id 1PnjSn-0000X6-4W
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 04:14:29 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932356Ab1BKCqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Feb 2011 21:46:20 -0500
-Received: from mail-vw0-f46.google.com ([209.85.212.46]:49696 "EHLO
-	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932231Ab1BKCqT (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Feb 2011 21:46:19 -0500
-Received: by vws16 with SMTP id 16so1381077vws.19
-        for <git@vger.kernel.org>; Thu, 10 Feb 2011 18:46:19 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
-         :message-id:references:user-agent:mime-version:content-type;
-        bh=r+4ns9ZbEodw37iX0+nLPMHlEZ2k2QcluKsPke0wgIs=;
-        b=mIXgVtN7sIsxMercZiIxMayXWsbo51r+vsgijc3s62plN0p4y3FJQsvIW4Rsdgcxet
-         a99IngjJ+Vh6gA398cJWb0nneFMOZZjl2tzvQdpVEfhUh/EpKK/Anwi9gEktpyQwptMd
-         SpILQr5oFnsVyiolv/AnyyxVMVgenOmAGlN70=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
-         :references:user-agent:mime-version:content-type;
-        b=yC3Qljdf+ZEk+j6nTIWOys1uUMYGhOBuUi2TrTD/CarIsCowfrPl2affOKvnpsCfUK
-         EBFChRXnFwE69GPWxUz6812Qi8Lm+BbR3ux4V2GIU/1QYBCuq4Ix9Rvsa467jzwQzXiF
-         8R+Lz8nD2F0TS4ZJDyQh4rLrHQZNKD9XKyn7s=
-Received: by 10.220.76.132 with SMTP id c4mr5523657vck.252.1297392378854;
-        Thu, 10 Feb 2011 18:46:18 -0800 (PST)
-Received: from [192.168.1.104] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id l6sm167536vcp.14.2011.02.10.18.46.16
+	id S1750837Ab1BKDOV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Feb 2011 22:14:21 -0500
+Received: from mail-qy0-f181.google.com ([209.85.216.181]:52237 "EHLO
+	mail-qy0-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750699Ab1BKDOU (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Feb 2011 22:14:20 -0500
+Received: by qyk12 with SMTP id 12so1737320qyk.19
+        for <git@vger.kernel.org>; Thu, 10 Feb 2011 19:14:19 -0800 (PST)
+Received: by 10.229.217.11 with SMTP id hk11mr99109qcb.248.1297394059310;
+        Thu, 10 Feb 2011 19:14:19 -0800 (PST)
+Received: from localhost (207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com [207.172.223.249])
+        by mx.google.com with ESMTPS id g32sm240728qck.46.2011.02.10.19.14.17
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 10 Feb 2011 18:46:17 -0800 (PST)
-X-X-Sender: martin@debian
-In-Reply-To: <7vzkq4opaw.fsf@alter.siamese.dyndns.org>
-User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
+        Thu, 10 Feb 2011 19:14:18 -0800 (PST)
+In-Reply-To: <20110210225428.GA21335@sigill.intra.peff.net> (Jeff King's
+	message of "Thu, 10 Feb 2011 17:54:28 -0500")
+User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.2 (darwin)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166535>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166536>
 
-On Wed, 9 Feb 2011, Junio C Hamano wrote:
+Jeff King <peff@peff.net> writes:
 
-> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
-> 
-> > +extern void *RERERE_UTIL_STAGED;
-> 
-> This is for what kind?  The contents on the filesystem is ready to go,
-> added to the index, but still in MERGE_RR (i.e. "git rerere" not run yet)?
+> Now, in step 2 we could record "X" as an origin ID of X'' and during the
+> rebase in step 3, calculate the intersection of the origins of X'' and X',
+> and see that they are both just X. And I think maybe you already realize
+> that, since you talk about Origin-IDs as sets.
 
-Correct.
+Right.
 
-> Is the real problem that git-mergetool is not running rerere when it
-> should, I wonder...
+> And there are lots of other cases. What about "git cherry-pick -n"? What
+> about rebasing? If there are no conflicts, is it OK to copy the origin
+> field? How about if there are conflicts? How about in a "git rebase -i",
+> where we may stop and the user can arbitrarily split, amend, or add new
+> commits. How do the old commits map to the new ones with respect to
+> origin fields?
 
-You mean that maybe it should call rerere for files that are added to
-the index?
+During rebasing, any commits which can be rebased without conflict have their
+origin transferred (and each time it would cause the origin id list to grow by
+one), but any commits which are squashed or edited would not transfer.
 
-> >  		it = string_list_insert(conflict, (const char *)e->name);
-> > -		it->util = NULL;
-> > +		it->util = RERERE_UTIL_PUNTED;
-> >  		if (ce_stage(e) == 1) {
-> > +			it->util = RERERE_UTIL_STAGED;
-> 
-> Hmm, I thought that you were taling about paths that the user
-> hand-resolved and then ran "git add" on.  Why is this marked "STAGED"?
+For cherry-pick -n, if the index is empty at the time the cherry-pick is done
+(is this required?), then a file is created under .git/ with the SHA of the
+changes placed in the index, so that when git-commit is later run and the
+index has not been changed, then the Origin-Id for that originating commit
+gets placed at the bottom of the commit message.
 
-Very good question. It shouldn't.
+> So there are lots of corner cases where it won't work, because git is
+> more than happy to give you lots of ways to tweak tree state and
+> history, and it fundamentally doesn't care as much about process as it
+> does about the end states that you reach. That's part of what makes git
+> so flexible, but it also makes niceties like "did I already apply this
+> commit on this branch" much harder to make sense of.
 
-> Either your logic is wrong, or the name of the symbol is.
+I think we'd want to restrict this system to those commits which were
+automatically rewritten without conflicts.  Any user intervention in the
+process would invalidate the meaning of the Origin-Id.
 
-The former. What I really wanted to check is if the file has been
-added to the index. I am currently struggling with how to do this
-correctly. My inexperience with the git internals makes it a very slow
-process with a lot of guesses and trial and error.
+> It probably shouldn't be a new header field, but rather a text-style
+> pseudo-header at the end of the commit.
 
-> > -		if (!conflict.items[i].util)
-> > -			continue; /* punted */
-> > +		if (conflict.items[i].util == RERERE_UTIL_PUNTED ||
-> > +			conflict.items[i].util == RERERE_UTIL_STAGED)
-> > +			continue;
-> 
-> There are a few repetition of "if it is marked with PUNTED or STAGED"; can
-> you make it into a small helper function and give it a _meaningful_ name?
-> What does it mean for an entry to be marked with either of these marks?
+I understand.
 
-There is another big problem here. I had not realized that the util
-field would be freed later (being spoilt by GCing languages, I guess)
-and that will of course fail if it is one of the two constants I
-defined. I stupidly did not run the commands manually, but relied only
-on the test cases, so I didn't notice the segfault at the end. Somehow
-all the test cases still pass.
+> But consider for a moment whether you actually want this field in the
+> resulting commit at all, or whether it should be an external annotation.
+> For example, let's say I cherry-pick from a private branch that is going
+> to end up rebased anyway. Now the history for all time will have a
+> commit that refers to some totally useless sha1 that nobody even knows
+> about.
 
-I think this means that anyone intending to run rerere should not
-build pu at the moment, right? I'm really sorry about the
-inconvenience :-(. 
+The problem with an external annotation is that if developers are sharing
+feature branches, as a branch maintainer I want to know whether commits coming
+from those feature branches are already in the branch I'm maintaining.
 
-/Martin
+> There may be reasons why that isn't a good idea, and I haven't thought it
+> through. But I think you should consider it as an alternate implementation
+> and tell me why I'm dumb in that case. ;)
+
+I'll give it a bit more thought as I consider the implementation of this.
+
+> Whew, that turned out long. I hope it's helpful. I think the problem
+> you're trying to solve is a real one, and I think your approach is the
+> right direction. I just think we can leverage existing git features to
+> do most of it, and because it is sort of a heuristic, we should be
+> conservative in how it's introduced.
+
+That's all extremely helpful, thank you!  You've brought up several use cases
+I hadn't thought of, and perhaps this feature will indeed never cover
+everything, but if it can reliably ease maintenance 80% of the time, I think
+it's a relatively simple addition.
+
+John
