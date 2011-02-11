@@ -1,56 +1,56 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: Using Origin hashes to improve rebase behavior
-Date: Fri, 11 Feb 2011 14:45:41 -0500
-Message-ID: <20110211194541.GA32023@sigill.intra.peff.net>
-References: <m21v3fvbix.fsf@hermes.luannocracy.com>
- <AANLkTikrVPCr92XHirn1u=73eM--T190V-7nbE6fo8ng@mail.gmail.com>
- <201102111240.29746.johan@herland.net>
- <20110211190326.GB29203@sigill.intra.peff.net>
- <7v4o8a1i6k.fsf@alter.siamese.dyndns.org>
+From: kev <kev@riseup.net>
+Subject: i18n examples howto?
+Date: Fri, 11 Feb 2011 14:01:57 -0600
+Organization: riseup
+Message-ID: <20110211140157.150a6f10@riseup.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: Johan Herland <johan@herland.net>, skillzero@gmail.com,
-	git@vger.kernel.org, John Wiegley <johnw@boostpro.com>
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Fri Feb 11 20:45:50 2011
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Fri Feb 11 21:20:35 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pnyw9-0000kP-NY
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 20:45:50 +0100
+	id 1PnzTm-0007vc-Uc
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 21:20:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1758016Ab1BKTpo (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Feb 2011 14:45:44 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:60446 "EHLO peff.net"
+	id S1757873Ab1BKUUa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Feb 2011 15:20:30 -0500
+Received: from mx1.riseup.net ([204.13.164.18]:38164 "EHLO mx1.riseup.net"
 	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1757264Ab1BKTpn (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Feb 2011 14:45:43 -0500
-Received: (qmail 27510 invoked by uid 111); 11 Feb 2011 19:45:42 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Fri, 11 Feb 2011 19:45:42 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Fri, 11 Feb 2011 14:45:41 -0500
-Content-Disposition: inline
-In-Reply-To: <7v4o8a1i6k.fsf@alter.siamese.dyndns.org>
+	id S1756989Ab1BKUU3 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Feb 2011 15:20:29 -0500
+X-Greylist: delayed 1100 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Feb 2011 15:20:29 EST
+Received: from tern.riseup.net (tern-pn.riseup.net [10.0.1.12])
+	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
+	(Client CN "*.riseup.net", Issuer "Gandi Standard SSL CA" (verified OK))
+	by mx1.riseup.net (Postfix) with ESMTPS id 774AE18D5A3
+	for <git@vger.kernel.org>; Fri, 11 Feb 2011 12:02:08 -0800 (PST)
+Received: from [127.0.0.1] (localhost [127.0.0.1])
+	(Authenticated sender: kev@tern.riseup.net)
+	with ESMTPSA id 7A66914C156
+X-Mailer: Claws Mail 3.7.6 (GTK+ 2.20.1; x86_64-pc-linux-gnu)
+X-Virus-Scanned: clamav-milter 0.96.5 at mx1
+X-Virus-Status: Clean
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166571>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166572>
 
-On Fri, Feb 11, 2011 at 11:32:03AM -0800, Junio C Hamano wrote:
+hi. 
+im having trouble understanding the git i18n.
 
-> Jeff King <peff@peff.net> writes:
-> 
-> > Exactly. One other possible solution to this problem would be to somehow
-> > make patch-ids handle fuzzy situations better. I doubt it is possible to
-> > do that without introducing a lot of false positives, though.
-> 
-> We need to remember that we would want to tolerate _no_ false positive.
+i understand the ab/i18n has been gettextized and translated to at
+least a couple of languages. 
 
-Yeah, I agree with everything you say here. My original message should
-have been s/a lot of// in the last line.
+ive found references in the list archives to this, but nothing in the
+source code. i do see translations of git-gui, however. but im looking
+for some clue as to how to translate git itself. 
 
--Peff
+thanks
+
+-- 
+kev
