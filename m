@@ -1,109 +1,70 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [PATCH (version C) 1/2] gitweb: Prepare for splitting gitweb
-Date: Sat, 12 Feb 2011 00:21:56 +0100
-Message-ID: <201102120021.58250.jnareb@gmail.com>
-References: <1296579016-13356-1-git-send-email-jnareb@gmail.com> <1296579016-13356-4-git-send-email-jnareb@gmail.com> <4D49AB9C.2050307@mit.edu>
+From: Sverre Rabbelier <srabbelier@gmail.com>
+Subject: Re: [PATCH v3] fast-import: add 'ls' command
+Date: Sat, 12 Feb 2011 00:51:07 +0100
+Message-ID: <AANLkTikfAmFJoEXK1OYE7mKpY6xw=Xw830xS4jzk5mnQ@mail.gmail.com>
+References: <20110211224339.GA9973@elie> <AANLkTimReMYu7QYZEuunmH6WqUz=C0nOnAZHzB6cddXt@mail.gmail.com>
+ <20110211225904.GA22391@elie>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org,
-	"John 'Warthog9' Hawley" <warthog9@kernel.org>,
-	"John 'Warthog9' Hawley" <warthog9@eaglescrag.net>
-To: "Alejandro R. =?utf-8?q?Sede=C3=B1o?=" <asedeno@mit.edu>
-X-From: git-owner@vger.kernel.org Sat Feb 12 00:22:21 2011
+Cc: git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>,
+	David Barr <david.barr@cordelta.com>,
+	Ramkumar Ramachandra <artagnon@gmail.com>
+To: Jonathan Nieder <jrnieder@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 12 00:51:55 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Po2Jg-0001aI-HO
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Feb 2011 00:22:20 +0100
+	id 1Po2mJ-0006jj-2A
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Feb 2011 00:51:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932256Ab1BKXWN convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Feb 2011 18:22:13 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:58666 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932223Ab1BKXWL (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Feb 2011 18:22:11 -0500
-Received: by fxm20 with SMTP id 20so3265946fxm.19
-        for <git@vger.kernel.org>; Fri, 11 Feb 2011 15:22:10 -0800 (PST)
+	id S1758054Ab1BKXvs convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Feb 2011 18:51:48 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:62105 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756887Ab1BKXvs convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Feb 2011 18:51:48 -0500
+Received: by iyj8 with SMTP id 8so2944423iyj.19
+        for <git@vger.kernel.org>; Fri, 11 Feb 2011 15:51:47 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:subject:date:user-agent:cc:references
-         :in-reply-to:mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        bh=bb5TxIARnvaP17KHYT0sy2ybU2mnVD5KttAg5qM9vGA=;
-        b=YbqsoUY6Eq8L/XvlEfBKc+JIjLfHtoCtEC1Fsx2zad2RxWc3e5TU15XfVcN5/e6cT6
-         L31JTiMpWbJNnT8hkMbqN55dFTYlwn0jgkXcLw7Tcq1k2X4RH5OSPPleI21mJO6iVdrc
-         rZUwVRLl6V9qs79SGeSEr/I42J/BBX6jcfSWw=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=aZGph2vg9c1fJBEnOEh1grEsalbtldgVa8lIYBtJiPc=;
+        b=XcpgvnA19tHF0Gpc+OLe+qunsmFfc1VjLYL1SPZ1hr7ttcnhddUHnMhSuOfa3UMVsJ
+         1DT0xN+8Xq4IkQE/PKpbOvcCLLn9nzt2cHmrpXmbfdk/og2HjHaAgQ1SV4pbciqJqaXV
+         PMm+WbHBDxRCAowoB/UyHu/nOM7GciAlDP/Sg=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:subject:date:user-agent:cc:references:in-reply-to
-         :mime-version:content-type:content-transfer-encoding
-         :content-disposition:message-id;
-        b=vUZ+GDldcsOkXonmQLuzGGlrekDIX8f9FvvXESvUgRR8CBIrMJMlON4f7b+HG5mnc4
-         I9nMY0EVm2Pyy2XB+wpBdRsiDhMc1tJSIr6UWZYhLaE8Iic7zt8hhnpUXOBNgseBlFcy
-         /IHuP8U/piTHqw9rvX+ozy/BAVR/XlJ23mRuA=
-Received: by 10.223.95.203 with SMTP id e11mr1187735fan.60.1297466529154;
-        Fri, 11 Feb 2011 15:22:09 -0800 (PST)
-Received: from [192.168.1.13] (abws241.neoplus.adsl.tpnet.pl [83.8.242.241])
-        by mx.google.com with ESMTPS id 17sm658521far.43.2011.02.11.15.22.02
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 11 Feb 2011 15:22:03 -0800 (PST)
-User-Agent: KMail/1.9.3
-In-Reply-To: <4D49AB9C.2050307@mit.edu>
-Content-Disposition: inline
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=S3loJHcpJKcdCaRK4AD2a+LVXsV+jOgtInpWf/w6MwvM+uQBMjN0itQPE3fflZztR9
+         kTrjE7e41hTnTc9/5sY9rwYiw9i5yFELQRi39vnMkRO1jjvXht9+Y6v5e7fLGldoJxz3
+         yaAJmA2E+RhmbtPvA/0MfD9bRM2m6eRLitHh8=
+Received: by 10.42.170.137 with SMTP id f9mr1454691icz.43.1297468307515; Fri,
+ 11 Feb 2011 15:51:47 -0800 (PST)
+Received: by 10.231.11.132 with HTTP; Fri, 11 Feb 2011 15:51:07 -0800 (PST)
+In-Reply-To: <20110211225904.GA22391@elie>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166578>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166579>
 
-On Wed, 2 Feb 2011, Alejandro R. Sede=C3=B1o wrote:
-> On 2/1/2011 11:50 AM, Jakub Narebski wrote:
-> >
-> > Prepare gitweb for being split into modules that would be installed
-> > in gitweblibdir, by default alongside gitweb in 'lib/' subdirectory=
-=2E
-> >=20
-> > Gitweb would search first in 'lib/' subdirectory from where it is
-> > installed, via
-> >=20
-> >   use lib __DIR__.'/lib';
-> >=20
-> > (This allow for tests to work with source version of gitweb without
-> > changes.)  Then it searches in $(gitweblibdir) directory (set durin=
-g
-> > build time), by default "$(gitwebdir)/lib", via
-> >=20
-> >   use lib "++GITWEBLIBDIR++";
-> >=20
-> > "++GITWEBLIBDIR++" is set to appropriate value during build time
-> > (generating gitweb.cgi).  This allows to select where to install
-> > gitweb modules via 'gitweblibdir' build time configuration variable
->=20
-> I would personally prefer to see this path taken, as it seems the mos=
-t
-> flexible and would fulfill a use case I have.
->=20
-> I maintain a build of git in an AFS volume at MIT. One of its uses is
-> symlinking to the current gitweb.cgi to instantly deploy a gitweb in =
-a
-> shared hosting environment (example: http://git.scripts.mit.edu/).
->=20
-> __DIR__ would point to the directory containing a user symlink to
-> gitweb, which would allow users to add their own libraries, while
-> ++GITWEBLIBDIR++ would allow the standard gitweb libraries to be
-> hosted at a common path without placing additional burdens on the
-> user at upgrade time.
+Heya,
 
-Note however that if you want __DIR__ version to take preference over
-gitweblibdir version, then the 'use lib' statements have to be in=20
-reverse order, i.e.:
+On Fri, Feb 11, 2011 at 23:59, Jonathan Nieder <jrnieder@gmail.com> wro=
+te:
+> Hmm, the documentation was not at all clear, then. =C2=A0Good catch.
+>
+> The answer is that it always prints a single dirent, whether the path
+> supplied names a file or a directory.
 
-  +use lib "++GITWEBLIBDIR++";
-  +use lib __DIR__ . '/lib';
+Ok, makes sense :).
 
 --=20
-Jakub Narebski
-Poland
+Cheers,
+
+Sverre Rabbelier
