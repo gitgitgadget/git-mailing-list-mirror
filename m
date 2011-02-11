@@ -1,89 +1,89 @@
-From: Pete Wyckoff <pw@padd.com>
-Subject: Re: [PATCH] Teach git-p4 to ignore case in perforce filenames if
- configured.
-Date: Fri, 11 Feb 2011 07:22:53 -0500
-Message-ID: <20110211122253.GA14662@mew.padd.com>
-References: <1297163499-18776-1-git-send-email-torarvid@gmail.com>
+From: Felipe Contreras <felipe.contreras@gmail.com>
+Subject: Re: git fetch,git merge and git rebase
+Date: Fri, 11 Feb 2011 14:32:47 +0200
+Message-ID: <AANLkTinsBz0Yi5XXYUcaJMTvkjuhtNjotx0VWRFcKX3d@mail.gmail.com>
+References: <1297315789338-6010561.post@n2.nabble.com>
+	<4D5464E7.2010407@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org
-To: Tor Arvid Lund <torarvid@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 11 13:23:05 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Akash <bcakashguru@gmail.com>, git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 11 13:32:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pns1g-00083y-5R
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 13:23:04 +0100
+	id 1PnsBD-0006XM-3t
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 13:32:55 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753581Ab1BKMW5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Feb 2011 07:22:57 -0500
-Received: from honk.padd.com ([74.3.171.149]:55800 "EHLO honk.padd.com"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1752567Ab1BKMW4 (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Feb 2011 07:22:56 -0500
-Received: from mew.padd.com (pool-71-111-208-86.rlghnc.dsl-w.verizon.net [71.111.208.86])
-	by honk.padd.com (Postfix) with ESMTPSA id 91AEDBC;
-	Fri, 11 Feb 2011 04:22:55 -0800 (PST)
-Received: by mew.padd.com (Postfix, from userid 7770)
-	id 60A922138F; Fri, 11 Feb 2011 07:22:53 -0500 (EST)
-Content-Disposition: inline
-In-Reply-To: <1297163499-18776-1-git-send-email-torarvid@gmail.com>
+	id S1754291Ab1BKMcu convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Feb 2011 07:32:50 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:59259 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753842Ab1BKMct convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Feb 2011 07:32:49 -0500
+Received: by fxm20 with SMTP id 20so2634302fxm.19
+        for <git@vger.kernel.org>; Fri, 11 Feb 2011 04:32:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=HsniTXs9eyP2AMmQCGNTfHDfvczE2pWIqbc1Tpsx7MI=;
+        b=aeeG+syzngjEA+mTfEcTUv5rXYJ3oK48XEM8sdFD+2TCV3iPz2NpaCMkGLSuXF9Lpp
+         wbPJysDiFIpEcn8ZsrVqJPzUnp2id3QagN1/8432RJAUOTZSvhsnu34Fc+nbf9mEneYh
+         nje2Qclvg6NDVswg+UshGIOSZtoNC17Ik3Sq0=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=uLzXRXsePEJ/wRtw+aKj1AxYMoLtrOwuc0HoKrXZTfSxo+tUq+qK9hdhhZ5cCM1/zh
+         qdBE6E3+/Loe8ePWzINcvEKblVihcWFmNmCFNsmArqMg5UAAKIN+x6aE1yf+j4bnm8vO
+         LBZ+5jyODT21h0hbMMZtCdqAbHpVg/3dqmkTY=
+Received: by 10.223.83.6 with SMTP id d6mr466948fal.95.1297427568086; Fri, 11
+ Feb 2011 04:32:48 -0800 (PST)
+Received: by 10.223.105.78 with HTTP; Fri, 11 Feb 2011 04:32:47 -0800 (PST)
+In-Reply-To: <4D5464E7.2010407@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166555>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166556>
 
-torarvid@gmail.com wrote on Tue, 08 Feb 2011 12:11 +0100:
-> When files are added to perforce, the path to that file has whichever case
-> configuration that exists on the machine of the user who added the file.
-> What does that mean? It means that when Alice adds a file
-> 
-> //depot/DirA/FileA.txt
-> 
-> ... and Bob adds:
-> 
-> //depot/dirA/FileB.txt
-> 
-> ... we may or may not get a problem. If a user sets the config variable
-> git-p4.ignorecase to "true", we will consider //depot/DirA and //depot/dirA
-> to be the same directory.
+On Fri, Feb 11, 2011 at 12:21 AM, Neal Kreitzinger
+<nkreitzinger@gmail.com> wrote:
+> On 2/9/2011 11:29 PM, Akash wrote:
+>>
+>> Hi,
+>>
+>> I am new to git .Can someone explain in simple terms what git fetch,=
+git
+>> merge and git rebase do?..I tried googling but was very confused aft=
+er
+>> going
+>> thro it.
+>>
+>> Also, can someone prescribe a link which explains git in detail righ=
+t from
+>> scratch.
+>>
+>>
+> another definition of git-rebase:
+>
+> git-rebase: =C2=A0the MOST DANGEROUS command in git. =C2=A0you can ea=
+sily DESTROY your
+> repo if you don't know what you're doing! =C2=A0Until you get the han=
+g of it,
+> always make a copy of the before-image of the branch your rebasing
+> (mybranch) by doing a "git checkout mybranch" and then "git branch
+> copy-of-mybranch". =C2=A0Then if you destroy mybranch you can recover=
+ it from
+> copy-of-mybranch.
 
-That's horrid.  Seriously?  A and B can both generate mixed-case
-paths, but with a different mix?
+What about 'git rebase --hard', or 'git branch -D'? In all cases you
+can recover by using the reflog.
 
-If it's all just cast to lower, does it make sense to use
-core.ignorecase for this?
-
-> ---
->  contrib/fast-import/git-p4     |   22 ++++++++++++++--------
->  contrib/fast-import/git-p4.txt |   12 ++++++++++++
->  2 files changed, 26 insertions(+), 8 deletions(-)
-> 
-> diff --git a/contrib/fast-import/git-p4 b/contrib/fast-import/git-p4
-> index 04ce7e3..ca3cea0 100755
-> --- a/contrib/fast-import/git-p4
-> +++ b/contrib/fast-import/git-p4
-> @@ -452,6 +452,12 @@ def p4ChangesForPaths(depotPaths, changeRange):
->      changelist.sort()
->      return changelist
->  
-> +def p4PathStartsWith(path, prefix):
-> +    ignorecase = gitConfig("git-p4.ignorecase").lower()
-> +    if ignorecase in ["true", "yes", "1"]:
-> +        return path.lower().startswith(prefix.lower())
-> +    return path.startswith(prefix)
-
-git config --bool will always return "true" or "false" (or "").
-I think we should start looking for "true" that rather than
-checking for all four possible versions of true (+ "on").
-
-Can you put a comment in this function explaining the mixed-case
-problem?  When reading the code, it's easier than searching
-through the doc to learn about it.
-
-Rest of patch looks fine.
-
-		-- Pete
+--=20
+=46elipe Contreras
