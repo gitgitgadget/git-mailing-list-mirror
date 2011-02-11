@@ -1,125 +1,71 @@
-From: Thomas Rast <tr@thomasrast.ch>
-Subject: t7610 is no longer valgrind-clean in pu
-Date: Fri, 11 Feb 2011 11:46:07 +0100
-Message-ID: <201102111146.07303.tr@thomasrast.ch>
+From: Frank Li <lznuaa@gmail.com>
+Subject: Re: [msysGit] git-svn.perl should check GIT_ASKPASS environment
+Date: Fri, 11 Feb 2011 19:34:13 +0800
+Message-ID: <AANLkTim3fdevQYuE5R12D0b-AxVKaksPWDcMUedG-t6+@mail.gmail.com>
+References: <1c47e93c-5b7c-4aed-8a78-807d3aff2700@n36g2000pre.googlegroups.com>
+	<AANLkTinkv0dNxNxehud0Byuu9tpqxp1kBMJ1OyEcfVQ_@mail.gmail.com>
+	<AANLkTik9mFNsqFQn5SEZkYd_uxDeoY-9nqgV_PJ+nNsi@mail.gmail.com>
+	<AANLkTinWLTfU_WmxTCvz+P=rcXY=2u25Eo2QZWmDMdSh@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain;
-  charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-Cc: git@vger.kernel.org
-To: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 11 11:54:13 2011
+Content-Type: text/plain; charset=ISO-8859-1
+Cc: Jose Roberto Garcia Chico <jose@toro-asia.com>,
+	msysGit <msysgit@googlegroups.com>,
+	Git Mailing List <git@vger.kernel.org>,
+	Eric Wong <normalperson@yhbt.net>
+To: kusmabite@gmail.com
+X-From: git-owner@vger.kernel.org Fri Feb 11 12:40:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pnqdh-0001n1-94
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 11:54:13 +0100
+	id 1PnrMO-0001kf-C8
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 12:40:24 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755211Ab1BKKyH (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Feb 2011 05:54:07 -0500
-Received: from psi.thgersdorf.net ([188.40.92.130]:52038 "EHLO mail.psioc.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750848Ab1BKKyG (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Feb 2011 05:54:06 -0500
-X-Greylist: delayed 474 seconds by postgrey-1.27 at vger.kernel.org; Fri, 11 Feb 2011 05:54:05 EST
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.psioc.net (Postfix) with ESMTP id DF2E453608;
-	Fri, 11 Feb 2011 12:39:02 +0100 (CET)
-X-Virus-Scanned: amavisd-new at psioc.net
-Received: from mail.psioc.net ([127.0.0.1])
-	by localhost (mail.psioc.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 4ylFmb25LAAg; Fri, 11 Feb 2011 12:38:59 +0100 (CET)
-Received: from pctrast.inf.ethz.ch (pctrast.inf.ethz.ch [129.132.153.233])
-	(using TLSv1 with cipher DHE-RSA-AES256-SHA (256/256 bits))
-	(Client did not present a certificate)
-	by mail.psioc.net (Postfix) with ESMTPSA id 0A8CC53600;
-	Fri, 11 Feb 2011 12:38:59 +0100 (CET)
-User-Agent: KMail/1.13.5 (Linux/2.6.37-9-desktop; KDE/4.5.4; x86_64; ; )
+	id S1756047Ab1BKLkS (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Feb 2011 06:40:18 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:45895 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755759Ab1BKLkQ (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Feb 2011 06:40:16 -0500
+Received: by iyj8 with SMTP id 8so2320824iyj.19
+        for <git@vger.kernel.org>; Fri, 11 Feb 2011 03:40:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=z1acqsSrMhJONGamYUNFyKyUxN8GLzz1AvoSCZCieKM=;
+        b=AXyKpEJguhgHY767z7tMJTLjXm88mpWJPe2GvB5VFhW6i9flJ8qeV2P5HawMIck0/F
+         jWCZb3INr++ciOwx0vfJ60Xjh4AP9T0PRjmoDIjfArCS0qwfLIRiEek/KJ5sfKtjAImc
+         tkcCo2PR78UAjawUrt8TBbj+eci7r7WEK94TM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=VuuGeD0ww4G6VRisRj/eGmfIvE6z+gicIR7Kr98dHvTzMcpQZLqzS7LAgSevSdvmNq
+         WLgq3FVqAWeeLbitjF+FGyb5SRW4dN49URfIXeu3KNcHV0kF/jYoD/yw/dc4P4HX/TG6
+         j8uIeru6+nuC/NQiGBX+yeWgmq2hjmHGcl1sE=
+Received: by 10.231.10.200 with SMTP id q8mr276381ibq.122.1297424053619; Fri,
+ 11 Feb 2011 03:34:13 -0800 (PST)
+Received: by 10.231.33.73 with HTTP; Fri, 11 Feb 2011 03:34:13 -0800 (PST)
+In-Reply-To: <AANLkTinWLTfU_WmxTCvz+P=rcXY=2u25Eo2QZWmDMdSh@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166551>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166552>
 
-Hello Martin
+>> SSH_ASKPASS is used to accept "Enter your OpenSSH passphrase".
+>> refer to git-gui/git-gui--askpass
+>>
+>
+> git-gui--askpass can ask for a password, or yes/no questions. But this
+> is neither, it's a reject/accept temporary/accept permanently
+> question.
+>
+> Perhaps the prompt could be rewritten as two yes/no questions, though?
+> Something like "Accept certificate? (yes/no)" and if the answer is
+> "yes", query with something like "Store certificate? (yes/no)".
 
-My valgrind tester cronjob tells me the output below (some cruft
-trimmed).  If you need any more data just ask :-)
-
-- Thomas
-
-> expecting success: 
->     git config rerere.enabled true &&
->     rm -rf .git/rr-cache &&
->     git checkout -b test5 branch1
->     test_must_fail git merge master >/dev/null 2>&1 &&
->     ( yes "d" "d" | git mergetool --no-prompt >/dev/null 2>&1 ) &&
->     output="$(yes "n" | git mergetool --no-prompt)" &&
->     test "$output" = "No files need merging" &&
->     git reset --hard
-> 
-> Switched to a new branch 'test5'
-> ==25695== Invalid free() / delete / delete[]
-> ==25695==    at 0x4C20A31: free (vg_replace_malloc.c:325)
-> ==25695==    by 0x4F2538: string_list_clear (string-list.c:115)
-> ==25695==    by 0x466CE8: cmd_rerere (rerere.c:182)
-> ==25695==    by 0x404771: run_builtin (git.c:290)
-> ==25695==    by 0x4048FC: handle_internal_command (git.c:448)
-> ==25695==    by 0x4049E7: run_argv (git.c:492)
-> ==25695==    by 0x404B43: main (git.c:565)
-> ==25695==  Address 0x772388 is 0 bytes inside data symbol "RERERE_UTIL_STAGED"
-> ==25695== 
-> ==25702== Invalid free() / delete / delete[]
-> ==25702==    at 0x4C20A31: free (vg_replace_malloc.c:325)
-> ==25702==    by 0x4F2538: string_list_clear (string-list.c:115)
-> ==25702==    by 0x466CE8: cmd_rerere (rerere.c:182)
-> ==25702==    by 0x404771: run_builtin (git.c:290)
-> ==25702==    by 0x4048FC: handle_internal_command (git.c:448)
-> ==25702==    by 0x4049E7: run_argv (git.c:492)
-> ==25702==    by 0x404B43: main (git.c:565)
-> ==25702==  Address 0x772388 is 0 bytes inside data symbol "RERERE_UTIL_STAGED"
-> ==25702== 
-> ==26111== Invalid free() / delete / delete[]
-> ==26111==    at 0x4C20A31: free (vg_replace_malloc.c:325)
-> ==26111==    by 0x4F2538: string_list_clear (string-list.c:115)
-> ==26111==    by 0x466CE8: cmd_rerere (rerere.c:182)
-> ==26111==    by 0x404771: run_builtin (git.c:290)
-> ==26111==    by 0x4048FC: handle_internal_command (git.c:448)
-> ==26111==    by 0x4049E7: run_argv (git.c:492)
-> ==26111==    by 0x404B43: main (git.c:565)
-> ==26111==  Address 0x772388 is 0 bytes inside data symbol "RERERE_UTIL_STAGED"
-> ==26111== 
-> ==26118== Invalid free() / delete / delete[]
-> ==26118==    at 0x4C20A31: free (vg_replace_malloc.c:325)
-> ==26118==    by 0x4F2538: string_list_clear (string-list.c:115)
-> ==26118==    by 0x466CE8: cmd_rerere (rerere.c:182)
-> ==26118==    by 0x404771: run_builtin (git.c:290)
-> ==26118==    by 0x4048FC: handle_internal_command (git.c:448)
-> ==26118==    by 0x4049E7: run_argv (git.c:492)
-> ==26118==    by 0x404B43: main (git.c:565)
-> ==26118==  Address 0x772388 is 0 bytes inside data symbol "RERERE_UTIL_STAGED"
-> ==26118== 
-> ./test-lib.sh: line 1033: echo: write error: Broken pipe
-> not ok - 8 mergetool skips resolved paths when rerere is active
-> #	
-> #	    git config rerere.enabled true &&
-> #	    rm -rf .git/rr-cache &&
-> #	    git checkout -b test5 branch1
-> #	    test_must_fail git merge master >/dev/null 2>&1 &&
-> #	    ( yes "d" "d" | git mergetool --no-prompt >/dev/null 2>&1 ) &&
-> #	    output="$(yes "n" | git mergetool --no-prompt)" &&
-> #	    test "$output" = "No files need merging" &&
-> #	    git reset --hard
-> #	
-> 6a53d958f3fa0ee2671517dca10837f42e1c57c1 is first bad commit
-> commit 6a53d958f3fa0ee2671517dca10837f42e1c57c1
-> Author: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-> Date:   Mon Feb 7 22:08:38 2011 -0500
-> 
->     mergetool: don't skip modify/remove conflicts
-
--- 
-Thomas Rast
-trast@{inf,student}.ethz.ch
+I think that's fine.
+Frank Li
