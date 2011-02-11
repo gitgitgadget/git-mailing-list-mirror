@@ -1,87 +1,77 @@
-From: Neal Kreitzinger <nkreitzinger@gmail.com>
-Subject: Re: git fetch,git merge and git rebase
-Date: Fri, 11 Feb 2011 11:13:58 -0600
-Message-ID: <4D556E56.30702@gmail.com>
-References: <1297315789338-6010561.post@n2.nabble.com>	<4D5464E7.2010407@gmail.com> <AANLkTinsBz0Yi5XXYUcaJMTvkjuhtNjotx0VWRFcKX3d@mail.gmail.com>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Challenges for an octopus merge
+Date: Fri, 11 Feb 2011 10:22:21 -0800
+Message-ID: <7vd3my1leq.fsf@alter.siamese.dyndns.org>
+References: <4D53F694.1060105@web.de>
+ <7v8vxn6fdv.fsf@alter.siamese.dyndns.org> <4D55627F.30305@web.de>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Cc: Akash <bcakashguru@gmail.com>, git@vger.kernel.org
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 11 18:14:09 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Markus Elfring <Markus.Elfring@web.de>
+X-From: git-owner@vger.kernel.org Fri Feb 11 19:22:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnwZM-0007h4-FP
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 18:14:08 +0100
+	id 1Pnxdk-0006pl-Vy
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 19:22:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757778Ab1BKROD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Feb 2011 12:14:03 -0500
-Received: from mail-yi0-f46.google.com ([209.85.218.46]:64587 "EHLO
-	mail-yi0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757114Ab1BKROB (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Feb 2011 12:14:01 -0500
-Received: by yib18 with SMTP id 18so1162027yib.19
-        for <git@vger.kernel.org>; Fri, 11 Feb 2011 09:14:01 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
-         :cc:subject:references:in-reply-to:content-type
-         :content-transfer-encoding;
-        bh=H+KsvXPYceN3/Bx7q5Yjr0AdJE6T4SMn9BU7vXbIjgE=;
-        b=KjaPCnrhjL5b8RzfgqElbfH+VIP3cHLw2OcBAGTOVj7fojGlc56WwBQuafIc+JTLXQ
-         bdbBnpMu+W4BZveuKrf8FbnJw/NksKCXXMROqNphTJ9QdQLxbKznNHW5CekvCPBRxVgZ
-         FnlqzUWHZT8Gp4YgJ8foUUUq/VtAJNKXMxQbE=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:cc:subject
-         :references:in-reply-to:content-type:content-transfer-encoding;
-        b=JhfCaTFSMwMYogGQUO1G1o/TqY6pfKLJIMtgoveRQaTXWY/1GC+pA2v0lOqvPb7NFi
-         nZcucGDi8szYUjisAik+99sVqmzb0gZsMPjN7ZcVVjvptc2HzJBI48rhsmKusn6bGKkK
-         4tYTwKXYnnJ1SlVMsd9ycH8wPvhf9fboRtIck=
-Received: by 10.150.206.2 with SMTP id d2mr794438ybg.167.1297444440893;
-        Fri, 11 Feb 2011 09:14:00 -0800 (PST)
-Received: from [172.25.2.210] ([67.63.162.200])
-        by mx.google.com with ESMTPS id v8sm690100ybe.13.2011.02.11.09.13.59
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 11 Feb 2011 09:13:59 -0800 (PST)
-User-Agent: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
-In-Reply-To: <AANLkTinsBz0Yi5XXYUcaJMTvkjuhtNjotx0VWRFcKX3d@mail.gmail.com>
+	id S1757946Ab1BKSWd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Feb 2011 13:22:33 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59015 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757906Ab1BKSWb (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Feb 2011 13:22:31 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 379BC4A02;
+	Fri, 11 Feb 2011 13:23:30 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=48i9LDvoUTQwQBj6hvjsrWQ9N4U=; b=ekgfMu
+	wRtezrG08IfMlfLUan11M10rIA7wJZCBOI7bs8ajvLfhMDSiZtXX/Jgk2lVqZUop
+	roljA4pVkvWOsmJFH7I1iU6G7airO+1aYFm87tFsv8zOK0t6VdT2yRfoV62DQhJY
+	OMwwQxxUtUMzhJwQC3jSslCSxL+nGBGibzsHE=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=TbYkbyjUOtRBjl1xButGthjw/r+2Y50e
+	5lEV4Kfvj5RlLbnBmouMK0yv0GgAdLxQksMKj7gnEyFesH+WWnkxIKE4YBnjBq7i
+	pR9qF0cmwJRO6NeP02rZU/pKJHT9XPwDFuC9rEKD+YmS+Ql5ac5yEimZEqa6urpz
+	EbOe9tNooAk=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 139DA49FB;
+	Fri, 11 Feb 2011 13:23:28 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 2F0E249FA; Fri, 11 Feb 2011
+ 13:23:24 -0500 (EST)
+In-Reply-To: <4D55627F.30305@web.de> (Markus Elfring's message of "Fri\, 11
+ Feb 2011 17\:23\:27 +0100")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: 05785DB0-360C-11E0-9D79-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166565>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166566>
 
-On 2/11/2011 6:32 AM, Felipe Contreras wrote:
-> On Fri, Feb 11, 2011 at 12:21 AM, Neal Kreitzinger
-> <nkreitzinger@gmail.com>  wrote:
->> On 2/9/2011 11:29 PM, Akash wrote:
->>> Hi,
->>>
->>> I am new to git .Can someone explain in simple terms what git fetch,git
->>> merge and git rebase do?..I tried googling but was very confused after
->>> going
->>> thro it.
->>>
->>> Also, can someone prescribe a link which explains git in detail right from
->>> scratch.
->>>
->>>
->> another definition of git-rebase:
->>
->> git-rebase:  the MOST DANGEROUS command in git.  you can easily DESTROY your
->> repo if you don't know what you're doing!  Until you get the hang of it,
->> always make a copy of the before-image of the branch your rebasing
->> (mybranch) by doing a "git checkout mybranch" and then "git branch
->> copy-of-mybranch".  Then if you destroy mybranch you can recover it from
->> copy-of-mybranch.
-> What about 'git rebase --hard', or 'git branch -D'? In all cases you
-> can recover by using the reflog.
+Markus Elfring <Markus.Elfring@web.de> writes:
+
+>> The second-to-last line of the output needs to be rephrased.
 >
-i take you meant 'git reset --hard'...
+> Which wording adjustment have you got in mind?
 
-v/r,
-neal
+Something along the two lines below to rephase the second-to-last line of
+the output I quoted from your original message.
+
+>> Octopus is not for recording conflicting merges and when it punts you
+>> shouldn't be attempting to resolve and record it as an octopus merge.
+
+> Would it make sense to specify that the merging process may switch to the
+> strategy "resolve" on demand?
+
+Depends on what you mean by "on demand", but if you mean "git merge A B C"
+automagically turns into "git merge A; git merge B; git merge C" then I
+don't think that makes much sense.  The user needs to decide what to do
+next; the user may choose to do "git merge A C ; git merge B" instead, but
+*after* inspecting the situation.
