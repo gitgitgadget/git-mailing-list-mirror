@@ -1,112 +1,90 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: Using Origin hashes to improve rebase behavior
-Date: Fri, 11 Feb 2011 12:40:29 +0100
-Message-ID: <201102111240.29746.johan@herland.net>
-References: <m21v3fvbix.fsf@hermes.luannocracy.com>
- <AANLkTikrVPCr92XHirn1u=73eM--T190V-7nbE6fo8ng@mail.gmail.com>
+From: Francis Moreau <francis.moro@gmail.com>
+Subject: Re: Adding default remotes to a bare repository
+Date: Fri, 11 Feb 2011 13:09:33 +0100
+Message-ID: <m21v3eojr6.fsf@gmail.com>
+References: <AANLkTikVtSFs+qRiWJwxre8urOJs7q2HXBGPZkiTmn=i@mail.gmail.com>
+	<4D5437C4.6000401@gmail.com>
+	<AANLkTimg0YZ7eQ=hsxqSYJPipahLpiqZqSVkFz25=A2k@mail.gmail.com>
+	<4D5460B9.9070300@gmail.com>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=utf-8
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, John Wiegley <johnw@boostpro.com>
-To: skillzero@gmail.com
-X-From: git-owner@vger.kernel.org Fri Feb 11 12:40:39 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: git@vger.kernel.org
+To: Neal Kreitzinger <nkreitzinger@gmail.com>
+X-From: git-owner@vger.kernel.org Fri Feb 11 13:09:47 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnrMd-0001y0-D3
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 12:40:39 +0100
+	id 1Pnron-0006gT-6x
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 13:09:45 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756120Ab1BKLkd (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Feb 2011 06:40:33 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:59948 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1755759Ab1BKLkc (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Feb 2011 06:40:32 -0500
-Received: from get-mta-scan04.get.basefarm.net ([10.5.16.4])
- by get-mta-out03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LGG005DQB3JYU80@get-mta-out03.get.basefarm.net> for
- git@vger.kernel.org; Fri, 11 Feb 2011 12:40:31 +0100 (MET)
-Received: from get-mta-scan04.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id DA41C1EEEFBF_D55202EB	for <git@vger.kernel.org>; Fri,
- 11 Feb 2011 11:40:30 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan04.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id B54B91EEEFAF_D55202EF	for <git@vger.kernel.org>; Fri,
- 11 Feb 2011 11:40:30 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in02.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LGG008BCB3IUO00@get-mta-in02.get.basefarm.net> for
- git@vger.kernel.org; Fri, 11 Feb 2011 12:40:30 +0100 (MET)
-User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.0; x86_64; ; )
-In-reply-to: <AANLkTikrVPCr92XHirn1u=73eM--T190V-7nbE6fo8ng@mail.gmail.com>
+	id S1755684Ab1BKMJk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Feb 2011 07:09:40 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:64956 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752719Ab1BKMJj (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Feb 2011 07:09:39 -0500
+Received: by fxm20 with SMTP id 20so2612378fxm.19
+        for <git@vger.kernel.org>; Fri, 11 Feb 2011 04:09:38 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:from:to:cc:subject:references:date:in-reply-to
+         :message-id:user-agent:mime-version:content-type;
+        bh=96A9hwhowWia6gRMjpsJ8UvtpyWxxlQDQadSeO+v6jQ=;
+        b=qtCPbkUEEAQ3Z/UxI6sEXbtE9Cf22EyvwLWbSPXifA3HPmVIdsHAzjr24ASax2cTQR
+         5EC6HUOCCf6aaGJLolOa+QygRJlxle2bCC21XhskNLhtLQasWYKmahFkgllWVsyyAoRV
+         UUfi1pXv+blOgsnGjHgom01Nh2UKIHxBjXNC8=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=from:to:cc:subject:references:date:in-reply-to:message-id
+         :user-agent:mime-version:content-type;
+        b=YhgGBhtzeOgyvFYDgCllG8+leEj69O56kf25y8fFPMObgyYkVsWA1SztvgArnqphTR
+         +98oYNT/EUVumcYtqkH7WIM+e40pNhe0omFX3ZPI/cHXE93JkFXq6kJY7uD59sh7UjDN
+         rCfFAIiinlEWM63O7+Sv7fsUO4Le+BbZxtlfg=
+Received: by 10.223.96.6 with SMTP id f6mr405989fan.22.1297426178493;
+        Fri, 11 Feb 2011 04:09:38 -0800 (PST)
+Received: from localhost (au213-1-82-235-205-153.fbx.proxad.net [82.235.205.153])
+        by mx.google.com with ESMTPS id o17sm318333fal.1.2011.02.11.04.09.35
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Fri, 11 Feb 2011 04:09:37 -0800 (PST)
+In-Reply-To: <4D5460B9.9070300@gmail.com> (Neal Kreitzinger's message of "Thu,
+	10 Feb 2011 16:03:37 -0600")
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/23.2 (gnu/linux)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166553>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166554>
 
-On Friday 11 February 2011, skillzero@gmail.com wrote:
-> On Thu, Feb 10, 2011 at 1:13 PM, John Wiegley <johnw@boostpro.com> wrote:
-> >    a   b   c   3'  d   e*  f
-> >    o---o---o---o---o---o---o
-> >             \
-> >              o---o---o---o
-> >              1   2   3   4
-> > 
-> > At a later date, I want to rebase the private branch onto master.  What
-> > will happen is that the changes in 3 will conflict with the rewritten
-> > changes in e*.  However, I'd like Git to know that 3 was already
-> > incorporated at some earlier time, and *not consider it during the
-> > rebase*, since it doesn't need to.
-> 
-> I don't know very much about how git really works so what I'm saying
-> may be dumb, but rather than record where a commit came from, would it
-> be reasonable for rebase to look at the patch-id for each change on
-> the topic branch after the merge base and automatically remove topic
-> branch commits that match that patch-id? So in your example, rebase
-> would check each topic branch commit against 3', d, e*, and f and see
-> that the 3' patch-id is the same as the topic branch 3 and remove
-> topic branch 3 before it gets to e*?
+Neal Kreitzinger <nkreitzinger@gmail.com> writes:
 
-I believe "git rebase" already does exactly what you describe [1].
+[...]
 
-However, comparing patch-ids stops working when the cherry-pick (3 -> 3') 
-has conflicts. IINM, it is the conflicting cases that John is interested in 
-solving...
+> you can do some hook setup automation using git templates.  see the
+> --template option of git-clone manpage and 'template directory'
+> section of git-init manpage.  There is some big reason why they don't
+> let you inherit hooks from the origin repo of the clone repo.  I think
+> its basically because you could have security risks or compromise git
+> integrity/workflow with hook inheritance.  If you look in the
+> newsgroup people have talked about this alot before.
 
+Ok I'll look at what have been said.
 
-...Johan
+> As far as your request for automatic remotes, a flaw in your logic may
+> be that you think the functionality you want would let you clone from
+> an already-setup clone (1) which points to remote (a) then the new
+> clone (2) would point to the remote (a) of clone(1).  Not so.  When
+> you make a clone it does get an automatic remote to the repo it was
+> cloned from.  This is called 'origin' remote.  Therefore, clone(2) has
+> an origin remote to clone (1).  Your idea on automatic remote setup is
+> in direct conflict with the way git currently does automatic origin
+> remote setup.  You can't do both because that would turn in to a real
+> mess pretty quickly.
 
-[1]: I tested the above scenario, and got no conflicts:
+I don't understand your last sentence. Why do you think it's going to be
+messy ?
 
-$ git init
-$ FOO=a && echo $FOO > $FOO && git add $FOO && git commit -m $FOO
-$ FOO=b && echo $FOO > $FOO && git add $FOO && git commit -m $FOO
-$ FOO=c && echo $FOO > $FOO && git add $FOO && git commit -m $FOO
-$ git checkout -b topic
-$ FOO=1 && echo $FOO > $FOO && git add $FOO && git commit -m $FOO
-$ FOO=2 && echo $FOO > $FOO && git add $FOO && git commit -m $FOO
-$ FOO=3 && echo $FOO > $FOO && git add $FOO && git commit -m $FOO
-$ FOO=4 && echo $FOO > $FOO && git add $FOO && git commit -m $FOO
-$ git checkout master
-$ git cherry-pick topic^
-$ FOO=d && echo $FOO > $FOO && git add $FOO && git commit -m $FOO
-$ echo e >> 3 && git add 3
-$ FOO=e && echo $FOO > $FOO && git add $FOO && git commit -m $FOO
-$ FOO=f && echo $FOO > $FOO && git add $FOO && git commit -m $FOO
-$ git checkout topic
-$ git rebase master
-First, rewinding head to replay your work on top of it...
-Applying: 1
-Applying: 2
-Applying: 4
-$ # Look, no conflicts.
-
+Thanks
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+Francis
