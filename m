@@ -1,77 +1,113 @@
-From: John Wiegley <johnw@boostpro.com>
-Subject: Re: Using Origin hashes to improve rebase behavior
-Date: Fri, 11 Feb 2011 00:26:10 -0500
-Message-ID: <m2fwrvta4t.fsf@hermes.luannocracy.com>
-References: <m21v3fvbix.fsf@hermes.luannocracy.com>
-	<20110210225428.GA21335@sigill.intra.peff.net>
-	<m2oc6jtg8o.fsf@hermes.luannocracy.com>
-	<20110211044539.GA2071@sigill.intra.peff.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: git-blame.el: format of date strings
+Date: Fri, 11 Feb 2011 00:42:47 -0600
+Message-ID: <20110211064247.GA26091@elie>
+References: <87vdgm3e1k.fsf@osv.gnss.ru>
+ <20110204014315.GB28525@elie>
+ <87tygkm8h7.fsf@krank.kagedal.org>
+ <201102041103.10770.jnareb@gmail.com>
+ <87r5bom7g3.fsf@krank.kagedal.org>
+ <87oc6sm1ef.fsf@krank.kagedal.org>
+ <20110211022928.GA24775@elie>
 Mime-Version: 1.0
-Content-Type: text/plain
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Fri Feb 11 06:26:25 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Jakub Narebski <jnareb@gmail.com>, Xavier Maillard <zedek@gnu.org>,
+	Alexandre Julliard <julliard@winehq.org>,
+	Martin Nordholts <enselic@gmail.com>,
+	Kevin Ryde <user42@zip.com.au>, git@vger.kernel.org,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Sergei Organov <osv@javad.com>
+To: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Fri Feb 11 07:43:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnlWQ-0008Bq-KK
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 06:26:22 +0100
+	id 1Pnmic-0000sg-1U
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 07:43:02 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751197Ab1BKF0P (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Feb 2011 00:26:15 -0500
-Received: from mail-qw0-f46.google.com ([209.85.216.46]:40045 "EHLO
-	mail-qw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750871Ab1BKF0P (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Feb 2011 00:26:15 -0500
-Received: by qwa26 with SMTP id 26so1311643qwa.19
-        for <git@vger.kernel.org>; Thu, 10 Feb 2011 21:26:14 -0800 (PST)
-Received: by 10.229.213.146 with SMTP id gw18mr60941qcb.211.1297401973820;
-        Thu, 10 Feb 2011 21:26:13 -0800 (PST)
-Received: from localhost (207-172-223-249.c3-0.smr-ubr3.sbo-smr.ma.static.cable.rcn.com [207.172.223.249])
-        by mx.google.com with ESMTPS id nb15sm332731qcb.2.2011.02.10.21.26.12
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Thu, 10 Feb 2011 21:26:13 -0800 (PST)
-In-Reply-To: <20110211044539.GA2071@sigill.intra.peff.net> (Jeff King's
-	message of "Thu, 10 Feb 2011 23:45:40 -0500")
-User-Agent: Gnus/5.110011 (No Gnus v0.11) Emacs/23.2 (darwin)
+	id S1752298Ab1BKGm5 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Feb 2011 01:42:57 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:47286 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751810Ab1BKGm4 (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Feb 2011 01:42:56 -0500
+Received: by gwj20 with SMTP id 20so943917gwj.19
+        for <git@vger.kernel.org>; Thu, 10 Feb 2011 22:42:55 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=LIffWEKxlwYZ2i8NiQFvL6R9OFwSOIc2D9bqCVkxLI4=;
+        b=mc6Gqb5vG2q4bwur5kAlMTFgPKuiiZbRbjsaleVrn4T3fkM3702d57eTymd8jbjSOc
+         OCmJDofirVhWnvKPq2fCl1rwKTmgrJN2cK1R3IrMHytSK0Up6aj410JAmQ9bnjMaThMS
+         szpQzaU9cSbyVq49TGMMD8NF2yRN97ExINRto=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=tuphjYjUBy+6H8amL0TAiYFqs93mLpzOl/rMluxHHT2Ob6fCZ4uSAs3r6KefdRJdzq
+         OJKG12NofsSYbZcyAY9yBtKO+MfGn1Qvdu17EH1dcw2zQdv3s5kji+8WFAWQKMQo9yVO
+         KWmFliz7SdzRlc+PGwltDjt6Q16odxg87LaI4=
+Received: by 10.236.110.1 with SMTP id t1mr266385yhg.94.1297406575505;
+        Thu, 10 Feb 2011 22:42:55 -0800 (PST)
+Received: from elie (adsl-76-206-235-233.dsl.chcgil.sbcglobal.net [76.206.235.233])
+        by mx.google.com with ESMTPS id a11sm333718yhd.36.2011.02.10.22.42.52
+        (version=SSLv3 cipher=OTHER);
+        Thu, 10 Feb 2011 22:42:54 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20110211022928.GA24775@elie>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166538>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166539>
 
-Jeff King <peff@peff.net> writes:
+Jonathan Nieder wrote:
 
-> OK. That's certainly the conservative answer, and where we should start.
-> But I wonder in practice how many times we'll hit all the criteria just
-> right for this feature to kick in (i.e., a cherry pick or rebase with no
-> conflicts, followed by one that would cause a conflict). But I think
-> there's nothing to do but implement and see how it works.
->
-> After thinking about this a bit more, the whole idea of "is this
-> cherry-picked/rebased/whatever commit the same as the one before" is
-> really the same as the notes-rewriting case (i.e., copying notes on
-> commit A when it is rebased into A'). Which makes me excited about using
-> notes for this, because the rules that you do figure out to work in
-> practice will be good rules for notes rewriting in general.
->
->> The problem with an external annotation is that if developers are sharing
->> feature branches, as a branch maintainer I want to know whether commits coming
->> from those feature branches are already in the branch I'm maintaining.
->
-> In that case, I would suggest putting it in git-notes and sharing the
-> notes with each other. The notes code should happily merge them all
-> together, and then everyone gets to see everybody else's
-> cherry-pick/rebase annotations.
+>  - The time format (%c) is rather verbose.  I think I prefer %D
+>    (so maybe this is a potential tweakable?).
 
-The more I've talked this over with my friend, the more we discover how
-difficult this is to get right in certain situations, and also how rare the
-actual use cases that require storage within the commit message are -- but at
-the same time, how valuable that information is when those cases occur!
+Here's what that might look like.  Sadly, format-time-string does not
+seem to have an equivalent to git log's %ar format.
 
-This may be a bit more than I can chew right now, so thank you for bringing to
-my attention the depth of this problem.  That's exactly why I posted here
-before beginning to punch out code that might solve just the naive cases. :)
+Signed-off-by: Jonathan Nieder <jrnieder@gmail.com>
+---
+ contrib/emacs/git-blame.el |   10 ++++++++--
+ 1 files changed, 8 insertions(+), 2 deletions(-)
 
-Thanks, John
+diff --git a/contrib/emacs/git-blame.el b/contrib/emacs/git-blame.el
+index 9f60a6f..a43981e 100644
+--- a/contrib/emacs/git-blame.el
++++ b/contrib/emacs/git-blame.el
+@@ -121,6 +121,12 @@ mode. See `git-blame-format' for more information.
+ `git-blame' mode. See `git-blame-format' for more information."
+   :group 'git-blame)
+ 
++(defcustom git-blame-date-format
++  "%c"
++  "The format of dates specified with %t or %T passed to `git-blame-format'.
++See `format-time-string' for more information."
++  :group 'git-blame)
++
+ (defun git-blame-format (info format)
+   "Use format-spec to format the blame info in INFO with the following keys:
+ 
+@@ -146,10 +152,10 @@ mode. See `git-blame-format' for more information.
+                    (?H . ,(car info))
+                    (?a . ,(git-blame-get-info info 'author))
+                    (?A . ,(git-blame-get-info info 'author-mail))
+-                   (?t . ,(format-time-string "%c" author-time))
++                   (?t . ,(format-time-string git-blame-date-format author-time))
+                    (?c . ,(git-blame-get-info info 'committer))
+                    (?C . ,(git-blame-get-info info 'committer-mail))
+-                   (?T . ,(format-time-string "%c" committer-time))
++                   (?T . ,(format-time-string git-blame-date-format committer-time))
+                    (?s . ,(git-blame-get-info info 'summary))))))
+ 
+ (defun git-blame-color-scale (&rest elements)
+-- 
+1.7.4
