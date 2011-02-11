@@ -1,193 +1,445 @@
-From: Jakub Narebski <jnareb@gmail.com>
-Subject: Re: [1.8.0] Provide proper remote ref namespaces
-Date: Fri, 11 Feb 2011 07:13:36 -0800 (PST)
-Message-ID: <m3mxm28v3i.fsf@localhost.localdomain>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
-	<201102070958.11551.johan@herland.net>
-	<20110207201912.GB13461@sigill.intra.peff.net>
-	<201102080159.02153.johan@herland.net>
+From: Ramkumar Ramachandra <artagnon@gmail.com>
+Subject: Re: Plans for the vcs-svn-pu branch
+Date: Fri, 11 Feb 2011 21:19:15 +0530
+Message-ID: <20110211154910.GB7335@kytes>
+References: <20101107112129.GA30042@burratino>
+ <20101121063149.GA15449@burratino>
+ <20101205113717.GH4332@burratino>
+ <20110105233915.GB22975@burratino>
+ <20110211090931.GA27410@elie>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, git@vger.kernel.org,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
+Cc: git@vger.kernel.org, David Barr <david.barr@cordelta.com>,
 	Sverre Rabbelier <srabbelier@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Johan Herland <johan@herland.net>
-X-From: git-owner@vger.kernel.org Fri Feb 11 16:13:49 2011
+	Tomas Carnecky <tom@dbservice.com>
+To: Jonathan Nieder <jrnieder@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 11 16:48:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pnugt-0006S1-8N
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 16:13:47 +0100
+	id 1PnvEP-0002Ou-3j
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 16:48:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757117Ab1BKPNm (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Feb 2011 10:13:42 -0500
-Received: from mail-bw0-f46.google.com ([209.85.214.46]:41529 "EHLO
-	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1757139Ab1BKPNl (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Feb 2011 10:13:41 -0500
-Received: by bwz15 with SMTP id 15so3296651bwz.19
-        for <git@vger.kernel.org>; Fri, 11 Feb 2011 07:13:40 -0800 (PST)
+	id S1757379Ab1BKPsT (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Feb 2011 10:48:19 -0500
+Received: from mail-gx0-f174.google.com ([209.85.161.174]:56446 "EHLO
+	mail-gx0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1757234Ab1BKPsS (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Feb 2011 10:48:18 -0500
+Received: by gxk9 with SMTP id 9so1123147gxk.19
+        for <git@vger.kernel.org>; Fri, 11 Feb 2011 07:48:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:x-authentication-warning:to:cc:subject
-         :references:from:date:in-reply-to:message-id:lines:user-agent
-         :mime-version:content-type;
-        bh=iGMX279TYJxky3Iz6zxeWIun5TdfCNiOmRtJAkvF5zU=;
-        b=T6Wcsabj0kch1W9KCWxrhEFEeZw0pIbd0fUSR/5Jc5oYg2QRFzrtwMlr9mOKj849UR
-         XNqOSPzr/6/F3Onurxd0esmwV43A3qkTT1x0FMfp41hZ9rN+J+N2SHHqUiD8D69Wt7lM
-         9fzt5bTRemb77J2x51NCCNeBn9UrfCS8cjiJ8=
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=blLUkvB6AMVNUvnpT4y0cWIs46YkgeuFv2Ss+Ul77YE=;
+        b=PlarkD9BMUn/bsUORRp3N7SU7Nxo6h3FXZScLnYkcN0DRmwCMHIoljKnPiUDASYzSg
+         OClgzfU5V89eFlmwcHARxt3A1uLKM+OaFETqRwCqDET16Wjz8LP8djNdeub9m1FIiX2s
+         61FEzZZ8mMBxa+IP1rJdkzN0+ITxKXxHZ3VGc=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=x-authentication-warning:to:cc:subject:references:from:date
-         :in-reply-to:message-id:lines:user-agent:mime-version:content-type;
-        b=AZv9BB9zjomFQ3ihWJY/XzfQBenjpPNMkxQxFtX8JEWKbSBlegQjDR5gEOgdDrKQV6
-         gc0ZbmRMSILTTJZXeJrJ1ddniTDf/g1u9DnZpLHvdzzepTROfozrDPl4U8QrwvHNu6Fp
-         EZQAdhhOiAvGfmEq7x9xfKAUiwy8vsXtwdnkU=
-Received: by 10.204.68.76 with SMTP id u12mr572152bki.57.1297437218489;
-        Fri, 11 Feb 2011 07:13:38 -0800 (PST)
-Received: from localhost.localdomain (abwo193.neoplus.adsl.tpnet.pl [83.8.238.193])
-        by mx.google.com with ESMTPS id q18sm539130bka.3.2011.02.11.07.13.24
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=hHMQ64VGVJ31CI8tON8Vkx3OYBTq2oT5q8/v4LnE4e1lNp856ugC7fFGxFl2MFyMWy
+         sadm1TG+XTNp4hZAOXJY9YZ5rHP9QRoHRVFPMtJmj+m0OyPuKiOxo9uFVRKIizbyqpBT
+         eW11s14+gb3aOXg+1oR8NA+zP/DwcXy+dO4WM=
+Received: by 10.90.54.14 with SMTP id c14mr739213aga.14.1297439297428;
+        Fri, 11 Feb 2011 07:48:17 -0800 (PST)
+Received: from kytes ([203.110.240.41])
+        by mx.google.com with ESMTPS id g28sm575871yhd.42.2011.02.11.07.48.11
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Fri, 11 Feb 2011 07:13:36 -0800 (PST)
-Received: from localhost.localdomain (localhost.localdomain [127.0.0.1])
-	by localhost.localdomain (8.13.4/8.13.4) with ESMTP id p1BFCDxP008065;
-	Fri, 11 Feb 2011 16:12:23 +0100
-Received: (from jnareb@localhost)
-	by localhost.localdomain (8.13.4/8.13.4/Submit) id p1BFBEAL008057;
-	Fri, 11 Feb 2011 16:11:14 +0100
-X-Authentication-Warning: localhost.localdomain: jnareb set sender to jnareb@gmail.com using -f
-In-Reply-To: <201102080159.02153.johan@herland.net>
-User-Agent: Gnus/5.09 (Gnus v5.9.0) Emacs/21.4
+        Fri, 11 Feb 2011 07:48:15 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <20110211090931.GA27410@elie>
+User-Agent: Mutt/1.5.20 (2009-06-14)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166561>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166562>
 
-Johan Herland <johan@herland.net> writes:
-> On Monday 07 February 2011, Jeff King wrote:
-> > On Mon, Feb 07, 2011 at 09:58:11AM +0100, Johan Herland wrote:
+Hi,
 
-> > > This is the same technique we use when talking about branch names: On
-> > > this mailing list, nobody is confused when I refer to 'maint',
-> > > 'master', 'next' and 'pu'. Still, in our own work repos (at least in
-> > > mine), these branches are actually called "refs/remotes/origin/<name>"
-> > > (commonly referred to by their shorthands "origin/<name>"). Here we
-> > > are, juggling the same kind of namespaces that I propose for tags, and
-> > > it seems to work well without causing much confusion.
-> > 
-> > Just playing devil's advocate for a moment: isn't this namespace
-> > distinction one of the more confusing things in git for new users? That
-> > is, I have seen new-ish git users say "OK, so I cloned from upstream.
-> > How come I can't say "git log maint" now?"
-
-Or "where are all the branches?" ('git branch' doesn't show
-remote-tracking branches).
-
-> > Or it used to be "how come I can't "git checkout maint" now?" The
-> > latter is now handled by some very specific magic in "git
-> > checkout", but in general ref lookup does not automagically look
-> > in remotes namespaces, and it has caused some confusion.
-
-One has to be very careful with DWIM-mery, lest it would increase
-confusion instead of reducing it.
-
-[...]
-
-> First, although the separate-remotes may at first be confusing to newbies 
-> coming from a centralized VCS, I don't think this is the _main_ source of 
-> confusion. And, as you imply, we cannot eliminate this kind of conceptual 
-> confusion in any case, without violating core DVCS principles (like Bazaar 
-> does in its "centralized workflow"). The best way to address this is, as you 
-> say, by keeping it "simple, orthogonal, and distributed" (and try very hard 
-> to keep the common use cases minimally affected).
-
-Well, I think the confusion was greater and more dangerous in
-pre-separate remotes era ('master' mapped to 'origin', branches mapped
-to themselves, for single 'origin' remote).
-
-> - Lack of consistency in the ref namespace (refs/remotes/$remote/* vs. 
-> refs/tags/*). Also not clear from the current layout where to add new types 
-> of refs (e.g. notes, replace). My proposal tries to address this issue.
-
-The lack of consistency is there because tags should USUALLY be global
-(there should be only one v1.7.4), while branch names should be local
-(my 'master' branch is not your 'master' branch).
- 
-In some cases, like joining or subtree-merging unrelated projects we
-would want local / per-remote tags: 'v1.7.4' in main project is not
-'v1.7.4' in 'foo' subproject (in 'foo' remote).  Currently we lack a
-way to specify that (the 'autofollow' refspec proposal, default
-behaviour would be equivalent to '~refs/tags/*:refs/tags/*"), and lack
-support from porcelain: MY PROPOSAL is to add '--use-separate-tags'
-(like old '--use-separate-remote') to "git clone" and "git remote add",
-and perhaps '--alternate' as equivalent to '--no-separate-tags' to 
-"git remote add".
-
-> - Lack of consistency in which fetch refspecs must be listed in the 
-> configuration. (i.e. implicit vs. explicit fetch refspecs). My proposal 
-> tries to address this as well.
-
-Could you repeat your proposal?  Do I remember it correctly that with
-'autofollow' refspec (valid only for tags... well, perhaps also for
-notes and replacements) you want to specify defaults in config
-explicitely
-
-  [remote "origin"]
-        url = git://git.example.com/repo.git
-        fetch = +refs/heads/*:refs/remotes/origin/*
-        fetch = ~refs/tags/*:refs/tags/*
-
-Perhaps with
-
-        fetch = +refs/heads/*:refs/remotes/origin/heads/*
-
+Jonathan Nieder writes:
+> Jonathan Nieder wrote:
 > 
-> - Lack of consistency in porcelain interfaces. Some of these have been fixed 
-> in recent Git version, but some are yet to be fixed: E.g. some find the use 
-> of FETCH_HEAD confusing (when does fetch update the remote refs, and when 
-> does it update FETCH_HEAD instead?).
+> > Here are the topics that are cooking in vcs-svn-pu.
 
-One of problems is how to keep the fact that
+Thanks for the elaborate email. Some updates from my side:
+- I've rewritten most of the svnload parser to resemble fast-import,
+  and I'd like some preliminary feedback on the design.
+- Although most of the dependent infrastructure is in place now, the
+  remote-helper branch is still lagging. I'll shortly look into this.
 
-  $ git pull <URL> <branch>
+Signed-off-by: Ramkumar Ramachandra <artagnon@gmail.com>
+--8<--
+/*
+ * Produce a dumpfile v3 from a fast-import stream.
+ * Load the dump into the SVN repository with:
+ * svnrdump load <URL> <dumpfile
+ *
+ * Licensed under a two-clause BSD-style license.
+ * See LICENSE for details.
+ */
 
-does one-off pull without creating remote or remote-tracking branch.
-But I agree that behavior of
+#include "cache.h"
+#include "quote.h"
+#include "git-compat-util.h"
+#include "dump_export.h"
+#include "dir_cache.h"
 
-  $ git pull <remote> <branch>
+#define SVN_DATE_FORMAT "%Y-%m-%dT%H:%M:%S.000000Z"
+#define SVN_DATE_LEN 27
 
-can be confusing.
+struct ident
+{
+	struct strbuf name, email;
+	char date[SVN_DATE_LEN + 1];
+};
 
->  Others (myself included) wonder why 'git push' by default updates
-> remote branches with matching names, while 'git pull' relies on the
-> explicitly configured upstreams to update the local refs. (FWIW,
-> I've mitigated this last complaint insisting that all users at
-> $dayjob run "git config --global push.default tracking" immediately
-> after installing Git.) There are other UI inconsistencies too that
-> escape me ATM.
+static FILE *infile;
+static struct strbuf command_buf = STRBUF_INIT;
+static struct strbuf log_buf = STRBUF_INIT;
+static struct strbuf path_s = STRBUF_INIT;
+static struct strbuf path_d = STRBUF_INIT;
+static struct strbuf svn_author = STRBUF_INIT;
+static struct ident author = {STRBUF_INIT, STRBUF_INIT, ""};
+static struct ident committer = {STRBUF_INIT, STRBUF_INIT, ""};
 
-IMHO that's not inconsisnency in Git, this is just reflection of the
-fact that in most common case the situation is *assymetric* with
-respect to fetch and push; you fetch from other people repositories,
-but you push to (usually single, perhaps mirrored) your own publishing
-repository.  For this situation 'push.default = matching' works
-perfectly.
+static int read_next_command(void)
+{
+	return strbuf_getline(&command_buf, infile, '\n');
+}
 
-> 
-> When it comes to your second question, I believe it's definitely worth 
-> looking closer at whether we can exploit unambiguity across namespaces for 
-> all types of refs (not just tags). I expect there are some non-trivial 
-> issues down that road (some of these being discussed elsewhere in this 
-> thread), but we may still end up with something better.
+static void populate_revprops(struct strbuf *props, size_t author_len,
+			const char *author, size_t log_len, const char *log,
+			size_t date_len, const char *date)
+{
+	strbuf_reset(props);
+	strbuf_addf(props, "K 10\nsvn:author\nV %lu\n%s\n", author_len, author);
+	strbuf_addf(props, "K 7\nsvn:log\nV %lu\n%s\n", log_len, log);
+	if (date_len)
+		/* SVN doesn't like an empty svn:date value */
+		strbuf_addf(props, "K 8\nsvn:date\nV %lu\n%s\n", date_len, date);
+	strbuf_add(props, "PROPS-END\n", 10);
+}
 
--- 
-Jakub Narebski
-Poland
-ShadeHawk on #git
+static void parse_ident(const char *buf, struct ident *identp)
+{
+	char *t, *tz_off;
+	int tz_off_buf;
+	const struct tm *tm_time;
+
+	/* John Doe <johndoe@email.com> 1170199019 +0530 */
+	strbuf_reset(&(identp->name));
+	strbuf_reset(&(identp->email));
+
+	if (!buf)
+		goto error;
+	if (!(tz_off = strrchr(buf, ' ')))
+		goto error;
+	*tz_off++ = '\0';
+	if (!(t = strrchr(buf, ' ')))
+		goto error;
+	*(t - 1) = '\0'; /* Ignore '>' from email */
+	t++;
+	tz_off_buf = atoi(tz_off);
+	if (tz_off_buf > 1200 || tz_off_buf  < -1200)
+		goto error;
+	tm_time = time_to_tm(strtoul(t, NULL, 10), tz_off_buf);
+	strftime(identp->date, SVN_DATE_LEN + 1, SVN_DATE_FORMAT, tm_time);
+	if (!(t = strchr(buf, '<')))
+		goto error;
+	*(t - 1) = '\0'; /* Ignore ' <' from email */
+	t++;
+
+	strbuf_add(&(identp->email), t, strlen(t));
+	strbuf_add(&(identp->name), buf, strlen(buf));
+	return;
+error:
+	die("Malformed ident line: %s", buf);
+}
+
+static void skip_optional_lf(void)
+{
+	int term_char = fgetc(stdin);
+	if (term_char != '\n' && term_char != EOF)
+		ungetc(term_char, stdin);
+}
+
+static void parse_data(struct strbuf *dst)
+{
+	if (prefixcmp(command_buf.buf, "data "))
+		die("Expected 'data n' command, found: %s", command_buf.buf);
+
+	if (!prefixcmp(command_buf.buf + 5, "<<")) {
+		char *term = xstrdup(command_buf.buf + 5 + 2);
+		size_t term_len = command_buf.len - 5 - 2;
+
+		strbuf_reset(&command_buf);
+		for (;;) {
+			if (read_next_command() == EOF)
+				die("EOF in data (terminator '%s' not found)", term);
+			if (term_len == command_buf.len
+			    && !memcmp(term, command_buf.buf, term_len))
+				break;
+			if (dst) {
+				strbuf_addbuf(dst, &command_buf);
+				strbuf_addch(dst, '\n');
+			} else
+				printf("%s\n", command_buf.buf);
+		}
+		free(term);
+	} else {
+		uintmax_t length;
+
+		length = strtoumax(command_buf.buf + 5, NULL, 10);
+		if ((size_t)length < length)
+			die("Data is too large to use in this context");
+		if (!dst) {
+			strbuf_reset(&command_buf);
+			/* buffer_copy_bytes(&command_buf, (size_t)length); */
+		} else
+			strbuf_fread(dst, (size_t)length, stdin);
+	}
+
+	skip_optional_lf();
+}
+
+static const char *get_mode(const char *str, uint16_t *modep)
+{
+	unsigned char c;
+	uint16_t mode = 0;
+
+	while ((c = *str++) != ' ') {
+		if (c < '0' || c > '7')
+			return NULL;
+		mode = (mode << 3) + (c - '0');
+	}
+	*modep = mode;
+	return str;
+}
+
+static void file_change_m(void)
+{
+	const char *p;
+	const char *endp;
+	uint16_t mode;
+	enum node_kind kind;
+
+	p = get_mode(command_buf.buf + 2, &mode);
+	if (!p)
+		die("Corrupt mode: %s", command_buf.buf);
+	switch (mode) {
+	case 0644:
+	case 0755:
+		mode |= S_IFREG;
+	case S_IFREG | 0644:
+		kind = NODE_KIND_NORMAL;
+		break;
+	case S_IFREG | 0755:
+		kind = NODE_KIND_EXECUTABLE;
+		break;
+	case S_IFLNK:
+		kind = NODE_KIND_SYMLINK;
+		break;
+	case S_IFGITLINK:
+		die("Gitlinks unsupported"); /* TODO */
+	case S_IFDIR:
+		die("Subdirectories unsupported"); /* TODO */
+	default:
+		die("Corrupt mode: %s", command_buf.buf);
+	}
+
+	if (!prefixcmp(p, "inline"))
+		p += 6;
+	else
+		die ("Non-inlined data unsupported");
+	if (*p++ != ' ')
+		die("Missing space after dataref: %s", command_buf.buf);
+
+	/* parse out path into path_d */
+	strbuf_reset(&path_d);
+	if (!unquote_c_style(&path_d, p, &endp)) {
+		if (*endp)
+			die("Garbage after path in: %s", command_buf.buf);
+	} else
+		strbuf_addstr(&path_d, p);
+
+	dump_export_m(path_d.buf, kind);
+	read_next_command();
+	parse_data(NULL); /* parse data and write it to stdout */
+}
+
+static void file_change_d(void)
+{
+	const char *p;
+	const char *endp;
+	
+	p = command_buf.buf + 2;
+	/* parse out path into path_d */
+	strbuf_reset(&path_d);
+	if (!unquote_c_style(&path_d, p, &endp)) {
+		if (*endp)
+			die("Garbage after path in: %s", command_buf.buf);
+	} else
+		strbuf_addstr(&path_d, p);
+	dump_export_d(path_d.buf);
+}
+
+static void file_change_cr(int rename)
+{
+	const char *p;
+	const char *endp;
+
+	p = command_buf.buf + 2;
+	strbuf_reset(&path_s);
+	if (!unquote_c_style(&path_s, p, &endp)) {
+		if (*endp != ' ')
+			die("Missing space after source: %s", command_buf.buf);
+	} else {
+		endp = strchr(p, ' ');
+		if (!endp)
+			die("Missing space after source: %s", command_buf.buf);
+		strbuf_add(&path_s, p, endp - p);
+	}
+
+	endp++;
+	if (!*endp)
+		die("Missing destination: %s", command_buf.buf);
+
+	p = endp;
+	strbuf_reset(&path_d);
+	if (!unquote_c_style(&path_d, p, &endp)) {
+		if (*endp)
+			die("Garbage after destination in: %s", command_buf.buf);
+	} else
+		strbuf_addstr(&path_d, p);
+
+	/* TODO: Check C "path/to/subdir" "" */
+	if (rename)
+		dump_export_d(path_s.buf);
+	dump_export_c(path_d.buf, path_s.buf, 0);
+}
+
+static void parse_new_commit()
+{
+	char *branch;
+
+	/* parse and ignore branch name */
+	branch = strchr(command_buf.buf, ' ') + 1;
+	read_next_command();
+	if (!prefixcmp(command_buf.buf, "mark :"))
+		/* parse and ignore mark line */
+		read_next_command();
+	if (!prefixcmp(command_buf.buf, "author ")) {
+		parse_ident(command_buf.buf + 7, &author);
+		read_next_command();
+	}
+	if (!prefixcmp(command_buf.buf, "committer ")) {
+		parse_ident(command_buf.buf + 10, &committer);
+		read_next_command();
+	}
+	if (!committer.name.len)
+		die("Missing committer line in stream");
+	parse_data(&log_buf);
+	read_next_command();
+	if (!prefixcmp(command_buf.buf, "from "))
+		/* TODO: Support copyfrom */
+		read_next_command();
+	while (!prefixcmp(command_buf.buf, "merge "))
+		/* TODO: Support merges */
+		read_next_command();
+
+	/* file_change_* */
+	while (command_buf.len > 0) {
+		if (!prefixcmp(command_buf.buf, "M "))
+			file_change_m();
+		else if (!prefixcmp(command_buf.buf, "D "))
+			file_change_d();
+		else if (!prefixcmp(command_buf.buf, "R "))
+			file_change_cr(1);
+		else if (!prefixcmp(command_buf.buf, "C "))
+			file_change_cr(0);
+		else if (!prefixcmp(command_buf.buf, "N "))
+			; /* ignored */
+		else if (!prefixcmp(command_buf.buf, "ls "))
+			goto error; /* TODO */
+		else if (!strcmp("deleteall", command_buf.buf))
+			goto error; /* TODO */
+		else
+			break;
+		if (read_next_command() == EOF)
+			break;
+	}
+	return;
+error:
+	die("Unsupported command: %s", command_buf.buf);
+}
+
+void parse_new_tag()
+{
+	/* TODO: Support tags */
+	return;
+}
+
+void parse_reset_branch()
+{
+	/* TODO */
+	return;
+}
+
+void build_svn_author(struct ident *author, struct ident *committer)
+{
+	char *t, *email;
+
+	strbuf_reset(&svn_author);
+	email = author->email.len ? author->email.buf : committer->email.buf;
+	if ((t = strchr(email, '@')))
+		strbuf_add(&svn_author, email, t - email);
+	else
+		strbuf_addstr(&svn_author, t);
+}
+
+void svnload_read(void)
+{
+	char *val;
+	while (read_next_command() != EOF) {
+		if ((val = strchr(command_buf.buf, ' ')))
+			*val++ = '\0';
+
+		if (!strcmp("blob", command_buf.buf))
+			die("Non-inlined blobs unsupported");
+		else if (!prefixcmp(command_buf.buf, "ls "))
+			goto error; /* TODO */
+		else if (!prefixcmp(command_buf.buf, "cat-blob "))
+			goto error; /* TODO */
+		else if (!prefixcmp(command_buf.buf, "commit "))
+			parse_new_commit(val);
+		else if (!prefixcmp(command_buf.buf, "tag "))
+			parse_new_tag(val);
+		else if (!prefixcmp(command_buf.buf, "reset "))
+			parse_reset_branch(val);
+		else if (!strcmp(command_buf.buf, "checkpoint")
+			|| !prefixcmp(command_buf.buf, "progress ")
+			|| !prefixcmp(command_buf.buf, "feature ")
+			|| !prefixcmp(command_buf.buf, "option "))
+			; /* ignored */
+		else
+			goto error;
+	}
+error:
+	die("Unsupported command: %s", command_buf.buf);
+}
+
+int svnload_init(const char *filename)
+{
+	if (!(infile = filename ? fopen(filename, "r") : stdin))
+		die("Cannot open %s: %s", filename, strerror(errno));
+	dump_export_init();
+	return 0;
+}
