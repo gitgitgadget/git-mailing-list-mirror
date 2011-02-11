@@ -1,70 +1,116 @@
-From: Frank Li <lznuaa@gmail.com>
-Subject: Re: [msysGit] git-svn.perl should check GIT_ASKPASS environment
-Date: Fri, 11 Feb 2011 17:37:03 +0800
-Message-ID: <AANLkTik9mFNsqFQn5SEZkYd_uxDeoY-9nqgV_PJ+nNsi@mail.gmail.com>
-References: <1c47e93c-5b7c-4aed-8a78-807d3aff2700@n36g2000pre.googlegroups.com>
-	<AANLkTinkv0dNxNxehud0Byuu9tpqxp1kBMJ1OyEcfVQ_@mail.gmail.com>
+From: skillzero@gmail.com
+Subject: Re: Using Origin hashes to improve rebase behavior
+Date: Fri, 11 Feb 2011 02:02:52 -0800
+Message-ID: <AANLkTikrVPCr92XHirn1u=73eM--T190V-7nbE6fo8ng@mail.gmail.com>
+References: <m21v3fvbix.fsf@hermes.luannocracy.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Cc: Jose Roberto Garcia Chico <jose@toro-asia.com>,
-	msysGit <msysgit@googlegroups.com>,
-	Git Mailing List <git@vger.kernel.org>,
-	Eric Wong <normalperson@yhbt.net>
-To: kusmabite@gmail.com
-X-From: git-owner@vger.kernel.org Fri Feb 11 10:37:17 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org
+To: John Wiegley <johnw@boostpro.com>
+X-From: git-owner@vger.kernel.org Fri Feb 11 11:03:00 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnpRF-0003Yf-D8
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 10:37:17 +0100
+	id 1Pnpq8-0005Mq-6x
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 11:03:00 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755364Ab1BKJhG (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Feb 2011 04:37:06 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:39678 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755002Ab1BKJhE (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Feb 2011 04:37:04 -0500
-Received: by iwn9 with SMTP id 9so2221269iwn.19
-        for <git@vger.kernel.org>; Fri, 11 Feb 2011 01:37:04 -0800 (PST)
+	id S1755436Ab1BKKCz convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Fri, 11 Feb 2011 05:02:55 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:38422 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754291Ab1BKKCy convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Fri, 11 Feb 2011 05:02:54 -0500
+Received: by wwa36 with SMTP id 36so2382761wwa.1
+        for <git@vger.kernel.org>; Fri, 11 Feb 2011 02:02:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type;
-        bh=DwUhDoIeeApAqVCJ84pZY5KhdiUTzF7k9+rHw63G1rE=;
-        b=ENu9qTCcBorXaw4NctVvuY4it3xbr8ZFEbM3OF2kJ+izHcFW+ZKyEtJz0m01MsEWcv
-         6f6CUhGvK1qLgNqRAaqeMfMKjpb5uaNCpcTAO81j7FUUvmcwbr3jshBPOKbe45Qk3rVo
-         8XyZ6luRRw5bHzXjnHYO+vVi5mcrVfX0nSagE=
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=GAmwvPVUDEek1BbZvfK2qEGum8g1xLsr+LK1I8UFszk=;
+        b=DDBr2/D36faWqaavcHO83lE79RHd76rFqXgO6L62C9nNn9YwL/C7sN3/PxuqUg6ujq
+         LGRoPPvQaXVCP26ja9Or9/HY21IdRfm1Y35v3hu2ncbDaxNfsgFxB9ND3EcXtyOJ2vnY
+         eawfc0cnZ/ijfa+7GHLVBFv711VYbinW3cJ2g=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type;
-        b=AySAc3pIHNMq2kUDJrgfSIdaqEPAJUecjpquP2YtjSSCmrBi512ZQshUYKjSmAYl8G
-         veZBqLux8xCHN2Tx502jH3lxufnHeil2UDYgs40Fo8OU3ykstqHbpLNZrLG3kkFk56M8
-         Uj9AB6jT7SKHJIEaJN8JNjoMx2HCIabFIBoc0=
-Received: by 10.231.10.197 with SMTP id q5mr189382ibq.197.1297417023942; Fri,
- 11 Feb 2011 01:37:03 -0800 (PST)
-Received: by 10.231.33.73 with HTTP; Fri, 11 Feb 2011 01:37:03 -0800 (PST)
-In-Reply-To: <AANLkTinkv0dNxNxehud0Byuu9tpqxp1kBMJ1OyEcfVQ_@mail.gmail.com>
+         :cc:content-type:content-transfer-encoding;
+        b=sYtiaUPD9XP9vJsjrnohJPCMNtHXpERRp5dJrHtYd1yyTACSpWclFGdfT5jTqfio8n
+         nUN9bHyLGWlpmbT5LHuCPTqVQUE9xXJ8ITB/gEiSFqGaExERcFocAqGyuk0YYF8p4wlf
+         uZQSW69BponuWQP/wkV0Hlgkh+3n8vK/vIBMg=
+Received: by 10.216.51.130 with SMTP id b2mr261255wec.42.1297418572772; Fri,
+ 11 Feb 2011 02:02:52 -0800 (PST)
+Received: by 10.216.13.79 with HTTP; Fri, 11 Feb 2011 02:02:52 -0800 (PST)
+In-Reply-To: <m21v3fvbix.fsf@hermes.luannocracy.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166547>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166548>
 
-> But I don't think it should check GIT_ASKPASS, GIT_ASKPASS isn't a
-> general-purpose dialog-box hook, it's a hook for getting *passwords*.
-> To allow git-svn to query the user of a non-terminal user, another
-> mechanism would probably be created. But in any case, I we should do
-> something other than just waiting if we're not connected to a TTY. I
-> don't really know Perl that well, but perhaps something like this does
-> the trick?
+On Thu, Feb 10, 2011 at 1:13 PM, John Wiegley <johnw@boostpro.com> wrot=
+e:
+> The following proposal is a check to see if this approach would be sa=
+ne and
+> whether someone is already doing similar work. =C2=A0If not, I offer =
+to implement
+> this solution.
 >
+> THE PROBLEM
+>
+> Say I have a master from which I have branched locally, and that this=
+ private
+> branch has four commits:
+>
+> =C2=A0 =C2=A0a =C2=A0 b =C2=A0 c
+> =C2=A0 =C2=A0o---o---o
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0o---o---o---o
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A01 =C2=A0 2 =C2=A0 3 =C2=
+=A0 4
+>
+> I then decide to cherry pick commit 3 onto master. =C2=A0Please belie=
+ve that my
+> situation is such that I cannot immediately rebase the private branch=
+ to drop
+> the now-duplicated change. =C2=A0I end up with this:
+>
+> =C2=A0 =C2=A0a =C2=A0 b =C2=A0 c =C2=A0 3'
+> =C2=A0 =C2=A0o---o---o---o
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0o---o---o---o
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A01 =C2=A0 2 =C2=A0 3 =C2=
+=A0 4
+>
+> Later, there is work on master which changes the same lines of code t=
+hat 3'
+> has changed. =C2=A0The commit which changes 3' is e*
+>
+> =C2=A0 =C2=A0a =C2=A0 b =C2=A0 c =C2=A0 3' =C2=A0d =C2=A0 e* =C2=A0f
+> =C2=A0 =C2=A0o---o---o---o---o---o---o
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 \
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0o---o---o---o
+> =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A01 =C2=A0 2 =C2=A0 3 =C2=
+=A0 4
+>
+> At a later date, I want to rebase the private branch onto master. =C2=
+=A0What will
+> happen is that the changes in 3 will conflict with the rewritten chan=
+ges in
+> e*. =C2=A0However, I'd like Git to know that 3 was already incorporat=
+ed at some
+> earlier time, and *not consider it during the rebase*, since it doesn=
+'t need
+> to.
 
-SSH_ASKPASS is used to accept "Enter your OpenSSH passphrase".
-refer to git-gui/git-gui--askpass
-
-GIT_ASKPASS should be similar with SSH_ASKPASS.
-git-svn can use GIT_ASKPASS hook to launch third part application to
-accept certification.
+I don't know very much about how git really works so what I'm saying
+may be dumb, but rather than record where a commit came from, would it
+be reasonable for rebase to look at the patch-id for each change on
+the topic branch after the merge base and automatically remove topic
+branch commits that match that patch-id? So in your example, rebase
+would check each topic branch commit against 3', d, e*, and f and see
+that the 3' patch-id is the same as the topic branch 3 and remove
+topic branch 3 before it gets to e*?
