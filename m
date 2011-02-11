@@ -1,114 +1,114 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: git-blame.el: does not show one-line summary in echo area
-Date: Thu, 10 Feb 2011 20:29:28 -0600
-Message-ID: <20110211022928.GA24775@elie>
-References: <87vdgm3e1k.fsf@osv.gnss.ru>
- <20110204014315.GB28525@elie>
- <87tygkm8h7.fsf@krank.kagedal.org>
- <201102041103.10770.jnareb@gmail.com>
- <87r5bom7g3.fsf@krank.kagedal.org>
- <87oc6sm1ef.fsf@krank.kagedal.org>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH] mergetool: don't skip modify/remove conflicts
+Date: Thu, 10 Feb 2011 21:46:12 -0500 (EST)
+Message-ID: <alpine.DEB.2.00.1102102130040.29809@debian>
+References: <1297134518-4387-1-git-send-email-martin.von.zweigbergk@gmail.com> <7vzkq4opaw.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: Jakub Narebski <jnareb@gmail.com>, Xavier Maillard <zedek@gnu.org>,
-	Alexandre Julliard <julliard@winehq.org>,
-	Martin Nordholts <enselic@gmail.com>,
-	Kevin Ryde <user42@zip.com.au>, git@vger.kernel.org,
-	Andreas Schwab <schwab@linux-m68k.org>,
-	Sergei Organov <osv@javad.com>
-To: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
-X-From: git-owner@vger.kernel.org Fri Feb 11 03:29:51 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Fri Feb 11 03:46:33 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PnilY-0006lc-Bu
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 03:29:48 +0100
+	id 1Pnj1k-0008Vr-KT
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 03:46:32 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932379Ab1BKC3m convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Feb 2011 21:29:42 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:65346 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932349Ab1BKC3l convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Thu, 10 Feb 2011 21:29:41 -0500
-Received: by ywo7 with SMTP id 7so881139ywo.19
-        for <git@vger.kernel.org>; Thu, 10 Feb 2011 18:29:40 -0800 (PST)
+	id S932356Ab1BKCqU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Thu, 10 Feb 2011 21:46:20 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:49696 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932231Ab1BKCqT (ORCPT <rfc822;git@vger.kernel.org>);
+	Thu, 10 Feb 2011 21:46:19 -0500
+Received: by vws16 with SMTP id 16so1381077vws.19
+        for <git@vger.kernel.org>; Thu, 10 Feb 2011 18:46:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition
-         :content-transfer-encoding:in-reply-to:user-agent;
-        bh=zKCbmXpN+IBw85zAl1kS4ztoGbljZnkt7+qs6w9c6q8=;
-        b=cRXORybPTlfrr1Dmul/3VT5vzomKudGADHseUD8v4+mylq1h0rIZz7BXFTfSj2QtNM
-         mVPzIenl6PketiG0+wEFGMfgNgpm9Nt2D/4Qf0L+H5ExSFXtshHIXMK2+CP7cpH8YLBZ
-         pOePdiZTNn0BqYMrMOF+USwmm8KYQEKE/RKNM=
+        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
+         :message-id:references:user-agent:mime-version:content-type;
+        bh=r+4ns9ZbEodw37iX0+nLPMHlEZ2k2QcluKsPke0wgIs=;
+        b=mIXgVtN7sIsxMercZiIxMayXWsbo51r+vsgijc3s62plN0p4y3FJQsvIW4Rsdgcxet
+         a99IngjJ+Vh6gA398cJWb0nneFMOZZjl2tzvQdpVEfhUh/EpKK/Anwi9gEktpyQwptMd
+         SpILQr5oFnsVyiolv/AnyyxVMVgenOmAGlN70=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:content-transfer-encoding
-         :in-reply-to:user-agent;
-        b=IiqeT+D+T3KXyp902hKYiLlUBsTjHNeQRDsH04YZ35ehLa10t+mNe63cicLzWLPR6D
-         gDPvr7POxgZZgX3pVLC2IjRa3cj04MlgyWvdE15oyVMrWstQ9U5euw8RT/eo3oZQAkSh
-         VfUYUCQIJ9I1916Cj3xTuO9RBAqboPHLVAs+g=
-Received: by 10.90.53.13 with SMTP id b13mr131322aga.131.1297391379992;
-        Thu, 10 Feb 2011 18:29:39 -0800 (PST)
-Received: from elie (adsl-76-206-235-233.dsl.chcgil.sbcglobal.net [76.206.235.233])
-        by mx.google.com with ESMTPS id w6sm298951anf.26.2011.02.10.18.29.36
-        (version=SSLv3 cipher=OTHER);
-        Thu, 10 Feb 2011 18:29:37 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <87oc6sm1ef.fsf@krank.kagedal.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        b=yC3Qljdf+ZEk+j6nTIWOys1uUMYGhOBuUi2TrTD/CarIsCowfrPl2affOKvnpsCfUK
+         EBFChRXnFwE69GPWxUz6812Qi8Lm+BbR3ux4V2GIU/1QYBCuq4Ix9Rvsa467jzwQzXiF
+         8R+Lz8nD2F0TS4ZJDyQh4rLrHQZNKD9XKyn7s=
+Received: by 10.220.76.132 with SMTP id c4mr5523657vck.252.1297392378854;
+        Thu, 10 Feb 2011 18:46:18 -0800 (PST)
+Received: from [192.168.1.104] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id l6sm167536vcp.14.2011.02.10.18.46.16
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Thu, 10 Feb 2011 18:46:17 -0800 (PST)
+X-X-Sender: martin@debian
+In-Reply-To: <7vzkq4opaw.fsf@alter.siamese.dyndns.org>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166534>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166535>
 
-David K=C3=A5gedal wrote:
+On Wed, 9 Feb 2011, Junio C Hamano wrote:
 
-> I whipped up a patch anyway. This adds an echo area message shown aft=
-er
-> 0.5 seconds of idleness, using the git-blame-echo-format format strin=
-g.
-> Try it and see if makes sense. I can clean it up (and split it up)
-> later.
+> Martin von Zweigbergk <martin.von.zweigbergk@gmail.com> writes:
+> 
+> > +extern void *RERERE_UTIL_STAGED;
+> 
+> This is for what kind?  The contents on the filesystem is ready to go,
+> added to the index, but still in MERGE_RR (i.e. "git rerere" not run yet)?
 
-Sorry for the slow response.
+Correct.
 
-Some quick impressions:
+> Is the real problem that git-mergetool is not running rerere when it
+> should, I wonder...
 
- - The 0.5 second delay is noticeable but not terrible.
+You mean that maybe it should call rerere for files that are added to
+the index?
 
-   The instantaneous response from the older point-entered based
-   code was kind of nice --- too bad it has to go.
+> >  		it = string_list_insert(conflict, (const char *)e->name);
+> > -		it->util = NULL;
+> > +		it->util = RERERE_UTIL_PUNTED;
+> >  		if (ce_stage(e) == 1) {
+> > +			it->util = RERERE_UTIL_STAGED;
+> 
+> Hmm, I thought that you were taling about paths that the user
+> hand-resolved and then ran "git add" on.  Why is this marked "STAGED"?
 
- - There is no obvious way to copy the (abbreviated or full) hash
-   associated to the current line to the clipboard (for pasting in
-   another terminal).
+Very good question. It shouldn't.
 
-   People more familiar with emacs might want "git show" output in
-   another buffer when the line is double-clicked or something. :)
-   That would work for me, too (since I could copy the hash from
-   there).
+> Either your logic is wrong, or the name of the symbol is.
 
- - A nice brief oneline format is
+The former. What I really wanted to check is if the file has been
+added to the index. I am currently struggling with how to do this
+correctly. My inexperience with the git internals makes it a very slow
+process with a lot of guesses and trial and error.
 
-	[%h] %a: %s
+> > -		if (!conflict.items[i].util)
+> > -			continue; /* punted */
+> > +		if (conflict.items[i].util == RERERE_UTIL_PUNTED ||
+> > +			conflict.items[i].util == RERERE_UTIL_STAGED)
+> > +			continue;
+> 
+> There are a few repetition of "if it is marked with PUNTED or STAGED"; can
+> you make it into a small helper function and give it a _meaningful_ name?
+> What does it mean for an entry to be marked with either of these marks?
 
-   which goes well with a git-blame-prefix-format of
+There is another big problem here. I had not realized that the util
+field would be freed later (being spoilt by GCing languages, I guess)
+and that will of course fail if it is one of the two constants I
+defined. I stupidly did not run the commands manually, but relied only
+on the test cases, so I didn't notice the segfault at the end. Somehow
+all the test cases still pass.
 
-	%t
+I think this means that anyone intending to run rerere should not
+build pu at the moment, right? I'm really sorry about the
+inconvenience :-(. 
 
- - The time format (%c) is rather verbose.  I think I prefer %D
-   (so maybe this is a potential tweakable?).
-
- - email addresses are often longer than 20 characters.  Does
-   format-spec provide a way to truncate to a certain length,
-   so the prefixes can line up?
-
- - in general, I like it.  Thanks.
-
-Jonathan
+/Martin
