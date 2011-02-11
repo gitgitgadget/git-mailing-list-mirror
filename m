@@ -1,57 +1,114 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: recurse_submodules vs recurse-submodules
-Date: Thu, 10 Feb 2011 17:54:10 -0800
-Message-ID: <7vk4h71gl9.fsf@alter.siamese.dyndns.org>
-References: <AANLkTimppKC_CsN6hc4xGqtMBk8p2QEFjHYRWesKK8_r@mail.gmail.com>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: git-blame.el: does not show one-line summary in echo area
+Date: Thu, 10 Feb 2011 20:29:28 -0600
+Message-ID: <20110211022928.GA24775@elie>
+References: <87vdgm3e1k.fsf@osv.gnss.ru>
+ <20110204014315.GB28525@elie>
+ <87tygkm8h7.fsf@krank.kagedal.org>
+ <201102041103.10770.jnareb@gmail.com>
+ <87r5bom7g3.fsf@krank.kagedal.org>
+ <87oc6sm1ef.fsf@krank.kagedal.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: GIT <git@vger.kernel.org>, Jens.Lehmann@web.de
-To: Chris Packham <judge.packham@gmail.com>
-X-From: git-owner@vger.kernel.org Fri Feb 11 02:54:28 2011
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Jakub Narebski <jnareb@gmail.com>, Xavier Maillard <zedek@gnu.org>,
+	Alexandre Julliard <julliard@winehq.org>,
+	Martin Nordholts <enselic@gmail.com>,
+	Kevin Ryde <user42@zip.com.au>, git@vger.kernel.org,
+	Andreas Schwab <schwab@linux-m68k.org>,
+	Sergei Organov <osv@javad.com>
+To: David =?utf-8?Q?K=C3=A5gedal?= <davidk@lysator.liu.se>
+X-From: git-owner@vger.kernel.org Fri Feb 11 03:29:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PniDL-0001nI-B6
-	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 02:54:27 +0100
+	id 1PnilY-0006lc-Bu
+	for gcvg-git-2@lo.gmane.org; Fri, 11 Feb 2011 03:29:48 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S932259Ab1BKByW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Thu, 10 Feb 2011 20:54:22 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:63982 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S932258Ab1BKByV (ORCPT <rfc822;git@vger.kernel.org>);
-	Thu, 10 Feb 2011 20:54:21 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 774E247ED;
-	Thu, 10 Feb 2011 20:55:21 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=z/+F4GwlIIa6ORA2YaYzQvYZHas=; b=sJPf2D
-	xvtl87nwpL6XQUKUba/m6Kwt3nCubWSIfoAe4aZ/J+Gg2+alJqMP/dGrL0/g5Ke1
-	GMAZkyowxQVIo9H7HhK8/G1qkjY3B8weWzS7PBNTFzb2rI2e60DcGebUpwLHIFNB
-	2QagdsBh9klYhRpkKEfH1WbnjHSgB2LUT6sy4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=QFiTcX8kt0CiOpsDmVXRXVlBj69tVY/Q
-	jMS3jU0rmzikll4LSyled08FfBV/gfemqncPjImC0DRfDuChzN18CKHcz7KVCO3Y
-	ZtviDF3tQ2Wq3uvjYWBQGfcnTSxLPMW1WeXcbUpNJwc4nLlydMD7sfEjk9k3ajPi
-	4ETGiw7qZww=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 44BE947EC;
-	Thu, 10 Feb 2011 20:55:18 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0DA8B47EB; Thu, 10 Feb 2011
- 20:55:13 -0500 (EST)
-In-Reply-To: <AANLkTimppKC_CsN6hc4xGqtMBk8p2QEFjHYRWesKK8_r@mail.gmail.com>
- (Chris Packham's message of "Fri\, 11 Feb 2011 11\:59\:31 +1300")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: F9F05AC2-3581-11E0-82CA-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S932379Ab1BKC3m convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Thu, 10 Feb 2011 21:29:42 -0500
+Received: from mail-yw0-f46.google.com ([209.85.213.46]:65346 "EHLO
+	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S932349Ab1BKC3l convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Thu, 10 Feb 2011 21:29:41 -0500
+Received: by ywo7 with SMTP id 7so881139ywo.19
+        for <git@vger.kernel.org>; Thu, 10 Feb 2011 18:29:40 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition
+         :content-transfer-encoding:in-reply-to:user-agent;
+        bh=zKCbmXpN+IBw85zAl1kS4ztoGbljZnkt7+qs6w9c6q8=;
+        b=cRXORybPTlfrr1Dmul/3VT5vzomKudGADHseUD8v4+mylq1h0rIZz7BXFTfSj2QtNM
+         mVPzIenl6PketiG0+wEFGMfgNgpm9Nt2D/4Qf0L+H5ExSFXtshHIXMK2+CP7cpH8YLBZ
+         pOePdiZTNn0BqYMrMOF+USwmm8KYQEKE/RKNM=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:content-transfer-encoding
+         :in-reply-to:user-agent;
+        b=IiqeT+D+T3KXyp902hKYiLlUBsTjHNeQRDsH04YZ35ehLa10t+mNe63cicLzWLPR6D
+         gDPvr7POxgZZgX3pVLC2IjRa3cj04MlgyWvdE15oyVMrWstQ9U5euw8RT/eo3oZQAkSh
+         VfUYUCQIJ9I1916Cj3xTuO9RBAqboPHLVAs+g=
+Received: by 10.90.53.13 with SMTP id b13mr131322aga.131.1297391379992;
+        Thu, 10 Feb 2011 18:29:39 -0800 (PST)
+Received: from elie (adsl-76-206-235-233.dsl.chcgil.sbcglobal.net [76.206.235.233])
+        by mx.google.com with ESMTPS id w6sm298951anf.26.2011.02.10.18.29.36
+        (version=SSLv3 cipher=OTHER);
+        Thu, 10 Feb 2011 18:29:37 -0800 (PST)
+Content-Disposition: inline
+In-Reply-To: <87oc6sm1ef.fsf@krank.kagedal.org>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166533>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166534>
 
-Sounds like a sane thing to do.  Thanks.
+David K=C3=A5gedal wrote:
+
+> I whipped up a patch anyway. This adds an echo area message shown aft=
+er
+> 0.5 seconds of idleness, using the git-blame-echo-format format strin=
+g.
+> Try it and see if makes sense. I can clean it up (and split it up)
+> later.
+
+Sorry for the slow response.
+
+Some quick impressions:
+
+ - The 0.5 second delay is noticeable but not terrible.
+
+   The instantaneous response from the older point-entered based
+   code was kind of nice --- too bad it has to go.
+
+ - There is no obvious way to copy the (abbreviated or full) hash
+   associated to the current line to the clipboard (for pasting in
+   another terminal).
+
+   People more familiar with emacs might want "git show" output in
+   another buffer when the line is double-clicked or something. :)
+   That would work for me, too (since I could copy the hash from
+   there).
+
+ - A nice brief oneline format is
+
+	[%h] %a: %s
+
+   which goes well with a git-blame-prefix-format of
+
+	%t
+
+ - The time format (%c) is rather verbose.  I think I prefer %D
+   (so maybe this is a potential tweakable?).
+
+ - email addresses are often longer than 20 characters.  Does
+   format-spec provide a way to truncate to a certain length,
+   so the prefixes can line up?
+
+ - in general, I like it.  Thanks.
+
+Jonathan
