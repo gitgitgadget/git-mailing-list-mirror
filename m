@@ -1,101 +1,151 @@
 From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH v3] fast-import: add 'ls' command
-Date: Fri, 11 Feb 2011 16:40:04 -0800
-Message-ID: <7vlj1mytjv.fsf@alter.siamese.dyndns.org>
-References: <20110211224339.GA9973@elie>
+Subject: [ANNOUNCE] Git 1.7.4.1
+Date: Fri, 11 Feb 2011 16:53:20 -0800
+Message-ID: <7vei7eysxr.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: git@vger.kernel.org, David Barr <david.barr@cordelta.com>,
-	Ramkumar Ramachandra <artagnon@gmail.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>
-To: Jonathan Nieder <jrnieder@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 12 01:40:27 2011
-Return-path: <git-owner@vger.kernel.org>
-Envelope-to: gcvg-git-2@lo.gmane.org
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+To: git@vger.kernel.org
+X-From: linux-kernel-owner@vger.kernel.org Sat Feb 12 01:53:45 2011
+Return-path: <linux-kernel-owner@vger.kernel.org>
+Envelope-to: glk-linux-kernel-3@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
-	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Po3XF-0001OY-H9
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Feb 2011 01:40:25 +0100
+	(envelope-from <linux-kernel-owner@vger.kernel.org>)
+	id 1Po3k8-0006aP-J4
+	for glk-linux-kernel-3@lo.gmane.org; Sat, 12 Feb 2011 01:53:44 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756047Ab1BLAkU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Feb 2011 19:40:20 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:57223 "EHLO
+	id S1757875Ab1BLAxd convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;glk-linux-kernel-3@m.gmane.org>);
+	Fri, 11 Feb 2011 19:53:33 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:36133 "EHLO
 	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753842Ab1BLAkT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Feb 2011 19:40:19 -0500
+	with ESMTP id S1757088Ab1BLAxb convert rfc822-to-8bit (ORCPT
+	<rfc822;linux-kernel@vger.kernel.org>);
+	Fri, 11 Feb 2011 19:53:31 -0500
 Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id E89C43402;
-	Fri, 11 Feb 2011 19:41:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=yZV38y1hYz4cFzNM0cfClMGQjbU=; b=wfjJOC
-	WfSjqCz8OQeFDDG7BPbRxgPLvwf0U2HGPgVgbS4gn+bN9Fwu8eOO1La4W289T2D0
-	A6VWXRrUxdWDpF8FUmXPStTGZ5NqH3ARjtbK9HMN3OuhUuBJFnRjuItFTDijqS1b
-	+AcWuOXl/nqwqO1dRqq6LZKoYsOTqmUi9EjDQ=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=OcuKSQsTY2Ep7MZDlPafBds0a8IMsRJU
-	Dvk1GuArEk7IQtVgw8dz/AWB8xZT3umjNIS3AlUhwuk69AwEclPCQi0nh/wjBs/+
-	Bo/s30brMU8FjxBjrQu4wTq2sKY1qBkBXrSNIAq9YaEnNDQxqRdMpZ2zaMm86cKG
-	Aj8aGG3DsIc=
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2CAAE3536;
+	Fri, 11 Feb 2011 19:54:31 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:subject
+	:from:date:message-id:mime-version:content-type
+	:content-transfer-encoding; s=sasl; bh=A7wikAIrJBWXJzolgPxlRXS/a
+	Lo=; b=gVM3U4lO8iWiUtV+ZkyPiuMb1ZokCKN0NrC5c2LoRxNgpWAtLJOD7Eyag
+	Xkclq+DwHT9uN9n/1gvQk9Ae3YlkHEzDZFNjc2NI2B5ycDEhqHBYuFbs/OBTf+Qx
+	44cGeZBh/a5y9+oAuT7OtjJpVYJuW52TqA8pvovdDjxpIzTtpg=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:subject:from
+	:date:message-id:mime-version:content-type
+	:content-transfer-encoding; q=dns; s=sasl; b=XNfas63X5WeBgcZMiC+
+	XnZZphW5Pm+g+hieFYNSRZplOmmenurYe9lvmoESTYNw97204nIgAZ7FfwZ3sCTS
+	0GMWB/OxjqbaUF8s1Iw6QKzemVOeL91rXLwBpMUdmN5jBTNbVJ/iyT3kF4lcbW6o
+	J7Hx2+zOW2T72kgUXLKtaNrY=
 Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 9872C3401;
-	Fri, 11 Feb 2011 19:41:14 -0500 (EST)
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EF9CE3535;
+	Fri, 11 Feb 2011 19:54:27 -0500 (EST)
 Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
  DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 0C1C43400; Fri, 11 Feb 2011
- 19:41:07 -0500 (EST)
-In-Reply-To: <20110211224339.GA9973@elie> (Jonathan Nieder's message of
- "Fri\, 11 Feb 2011 16\:43\:39 -0600")
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 88A4B3534; Fri, 11 Feb 2011
+ 19:54:23 -0500 (EST)
 User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: CBC8B7E2-3640-11E0-8F42-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
-Sender: git-owner@vger.kernel.org
+X-Pobox-Relay-ID: A4A986A8-3642-11E0-97E3-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+Sender: linux-kernel-owner@vger.kernel.org
 Precedence: bulk
-List-ID: <git.vger.kernel.org>
-X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166582>
+List-ID: <linux-kernel.vger.kernel.org>
+X-Mailing-List: linux-kernel@vger.kernel.org
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166583>
 
-Jonathan Nieder <jrnieder@gmail.com> writes:
+The first maintenance release Git 1.7.4.1 is available at the usual
+places:
 
-> From: David Barr <david.barr@cordelta.com>
-> Date: Thu, 2 Dec 2010 21:40:20 +1100
->
-> Introduce an "ls" command to read directory entries from the active
-> commit or a named commit.  This allows printing a blob from the active
-> commit or copying a blob or tree from a previous commit for use in the
-> current one.
->
-> There are two forms of the 'ls' command: the two-argument form prints
-> the entry at <path> for the tree underlying the tree, commit, or tag
-> named by <dataref>:
->
-> 	'ls' SP <dataref> SP <path> LF
->
-> The one-argument form prints the entry at <path> in fast-import's
-> active commit.
->
-> 	'ls' SP <path> LF
+  http://www.kernel.org/pub/software/scm/git/
 
-Is this really "ls"?
+  git-1.7.4.1.tar.{gz,bz2}			(source tarball)
+  git-htmldocs-1.7.4.1.tar.{gz,bz2}		(preformatted docs)
+  git-manpages-1.7.4.1.tar.{gz,bz2}		(preformatted docs)
 
-Obviously, an extended SHA-1 that is accepted by the normal git does not
-have a notion of "marks", but modulo that, the first one looks to me very
-similar to "rev-parse <ref>:<path>" in spirit, which suggests that "the
-path in the current one" might be better spelled as "rev-parse :<path>" to
-make the syntax and the concept more consistent across parts of the
-system.  If it makes sense to allow arbitary <committish> (or <treeish>
-for that matter) for the <dataref> part of the parameter, this observation
-becomes even more true, no?
+The RPM binary packages for a few architectures are found in:
 
-Having said that, I do not deeply care about the token "ls" itself.  I
-just reacted to "<dataref> SP <path>" part.
+  RPMS/$arch/git-*-1.7.4.1-1.fc13.$arch.rpm	(RPM)
 
-> Dirty hack: for now, git fast-import will treat missing paths as empty
-> subtrees and print them as
->
->  040000 tree 4b825dc642cb6eb9a060e54bf8d69288fbee4904	path/to/nowhere
->
-> to avoid confusing frontends that inserted such a path before.
 
-Sorry, but I am not quite sure what this paragraph is trying to say.
+Git v1.7.4.1 Release Notes
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D
+
+=46ixes since v1.7.4
+------------------
+
+ * On Windows platform, the codepath to spawn a new child process forgo=
+t
+   to first flush the output buffer.
+
+ * "git bundle" did not use OFS_DELTA encoding, making its output a few
+   per-cent larger than necessarily.
+
+ * The option to tell "git clone" to recurse into the submodules was
+   misspelled with an underscore "--recurse_submodules".
+
+ * "git diff --cached HEAD" before the first commit does what an end us=
+er
+   would expect (namely, show what would be committed without further "=
+git
+   add").
+
+ * "git fast-import" didn't accept the command to ask for "notes" featu=
+re
+   to be present in its input stream, even though it was capable of the
+   feature.
+
+ * "git fsck" gave up scanning loose object files in directories with
+   garbage files.
+
+And other minor fixes and documentation updates.
+
+----------------------------------------------------------------
+
+Changes since v1.7.4 are as follows:
+
+Chris Packham (1):
+      clone: fixup recurse_submodules option
+
+Jakub Narebski (1):
+      gitweb: Mention optional Perl modules in INSTALL
+
+Jens Lehmann (2):
+      t5526: Fix wrong argument order in "git config"
+      pull: Document the "--[no-]recurse-submodules" options
+
+Johannes Sixt (2):
+      start_command: flush buffers in the WIN32 code path as well
+      t4120-apply-popt: help systems with core.filemode=3Dfalse
+
+Jonathan Nieder (5):
+      quote.h: simplify the inclusion
+      fast-import: clarify documentation of "feature" command
+      fast-import: introduce "feature notes" command
+      compat: helper for detecting unsigned overflow
+      svn-fe: warn about experimental status
+
+Junio C Hamano (3):
+      fsck: drop unused parameter from traverse_one_object()
+      fsck: do not give up too early in fsck_dir()
+      Git 1.7.4.1
+
+Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy (4):
+      diff: support --cached on unborn branches
+      Add const to parse_{commit,tag}_buffer()
+      sha1_file.c: move find_cached_object up so sha1_object_info can u=
+se it
+      sha1_object_info: examine cached_object store too
+
+Pat Thoyts (2):
+      t3509: use unconstrained initial test to setup repository.
+      t7407: fix line endings for mingw build
+
+Shawn O. Pearce (1):
+      bundle: Use OFS_DELTA in bundle files
+
+Sitaram Chamarty (1):
+      post-receive-email: suppress error if description file missing
+
+Uwe Kleine-K=C3=B6nig (1):
+      Documentation/merge subtree How-To: fix typo
