@@ -1,111 +1,73 @@
-From: Jeff King <peff@peff.net>
-Subject: [PATCH] git-gui: give more advice when detaching HEAD
-Date: Sat, 12 Feb 2011 02:05:38 -0500
-Message-ID: <20110212070538.GA2459@sigill.intra.peff.net>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: [PATCH] git-gui: give more advice when detaching HEAD
+Date: Fri, 11 Feb 2011 23:42:47 -0800
+Message-ID: <7v8vxlzojs.fsf@alter.siamese.dyndns.org>
+References: <20110212070538.GA2459@sigill.intra.peff.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Cc: git@vger.kernel.org
-To: "Shawn O. Pearce" <spearce@spearce.org>
-X-From: git-owner@vger.kernel.org Sat Feb 12 08:05:51 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: "Shawn O. Pearce" <spearce@spearce.org>, git@vger.kernel.org
+To: Jeff King <peff@peff.net>
+X-From: git-owner@vger.kernel.org Sat Feb 12 08:43:09 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Po9YD-0007GH-0F
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Feb 2011 08:05:49 +0100
+	id 1PoA8K-0001bF-Ka
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Feb 2011 08:43:08 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751499Ab1BLHFe (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Feb 2011 02:05:34 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:56985 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1750950Ab1BLHFd (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Feb 2011 02:05:33 -0500
-Received: (qmail 31584 invoked by uid 111); 12 Feb 2011 07:05:31 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sat, 12 Feb 2011 07:05:31 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sat, 12 Feb 2011 02:05:38 -0500
-Content-Disposition: inline
+	id S1751768Ab1BLHnA (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Feb 2011 02:43:00 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:44849 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751687Ab1BLHm7 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Feb 2011 02:42:59 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 5ED2D253A;
+	Sat, 12 Feb 2011 02:43:59 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=rG/Qwmv/jPyzU0npqNI5ouP5Ev4=; b=mqpXoF
+	VU93trHKbFl8BJtUa+tHFACjHRM7xX5C4XG0FndDJ2oB9aPAlpKkJ2737GX8JW6l
+	+9RJosD0GM1lmTkCl0SzvCbX+wX9P60mZ3o9PxG2l5T7XP3oyh0h+eF8lQv2VJZt
+	fJFmA+FznzWh3EHMRq7igjJhZS5zsFshxU8hc=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=VHj73tZuN7abXkgG5VRjDhi+jkj2bVIg
+	MZOF/cwI+SImMP8rAXFDOZsbhYuq3CIMnog0erdcRi+H6TUcG2oIJ5bu6Q8x3s0f
+	A9OjAnTl5uxrb/86vkaLu4o7x9txmkOl0zO2R9GrWtAwYZszWmvXfV0/deTtLjZP
+	38/kwyEPBfM=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 2EDAD2539;
+	Sat, 12 Feb 2011 02:43:56 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1D54B2538; Sat, 12 Feb 2011
+ 02:43:51 -0500 (EST)
+In-Reply-To: <20110212070538.GA2459@sigill.intra.peff.net> (Jeff King's
+ message of "Sat\, 12 Feb 2011 02\:05\:38 -0500")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D874F538-367B-11E0-BA0B-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166595>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166596>
 
-The current advice is a little sparse and dates back to
-d41b43e (git-gui: Refactor branch switch to support detached
-head, 2007-07-08). In the meantime, command-line git grew
-much more detailed advice for this situation, especially in
-13be3e3 (Reword "detached HEAD" notification, 2010-01-29).
+Jeff King <peff@peff.net> writes:
 
-Let's use that more detailed advice here.
+>   2. When leaving the detached state, notice that we have commits not
+>      contained in any other ref and pop up an "are you sure you want to
+>      lose these commits" dialog, with an option to create a branch. This
+>      is something we considered and rejected for the CLI, but I wonder
+>      if it makes more sense for git-gui.
 
-Signed-off-by: Jeff King <peff@peff.net>
----
-I recently helped somebody who had detached HEAD via git-gui, made a
-bunch of commits, switched to another branch, and then became confused
-about where his work went.
+Hmm, I don't recall the discussion on this for the CLI, but it intuitively
+feels like a good thing to do, unless it incurs an unacceptable cost.
+Temporarily detaching HEAD by scripts like rebase and am that know what
+they are doing should never have to pay the penalty, but an expert user
+who worked interactively on the detached HEAD can be made to wait for 0.2
+second more.
 
-After working through what happened with him, I think this is one place
-where we could have prevented the problem. And given that we saw the
-need for more advice in the CLI, I think this change is a no-brainer.
-
-I also think we could have saved him by doing one or more of:
-
-  1. Give some indication or warning during commit that you're in a
-     detached state. The CLI template says "You are not on any branch"
-     when editing the commit message, and mentions "detached HEAD" as
-     the branch in the post-commit summary. As far as I can tell,
-     git-gui says nothing at all.
-
-  2. When leaving the detached state, notice that we have commits not
-     contained in any other ref and pop up an "are you sure you want to
-     lose these commits" dialog, with an option to create a branch. This
-     is something we considered and rejected for the CLI, but I wonder
-     if it makes more sense for git-gui.
-
-  3. Make it easier to create a new branch from the checkout dialog.
-     Obviously I can go to "Branch->Create" and make a new branch from a
-     remote one. But if my mental model is "Checkout", then I pick a
-     remote branch, we may want to present the user with the decision
-     _then_ about detaching or creating. Something as simple as a "make
-     local branch from remote" checkbox would help. Or perhaps the
-     "you're going to a detached HEAD" dialog should actually have a
-     button to create a local branch right then and there instead. I
-     dunno.
-
-All of those things are too far beyond my scope of caring about git-gui
-and wanting to write tcl to actually implement myself. But I thought I
-would share them as thoughts that came from a real confused-user
-interaction. Feel free to ignore.
-
- lib/checkout_op.tcl |   13 ++++++++++---
- 1 files changed, 10 insertions(+), 3 deletions(-)
-
-diff --git a/lib/checkout_op.tcl b/lib/checkout_op.tcl
-index 9e7412c..9c95208 100644
---- a/lib/checkout_op.tcl
-+++ b/lib/checkout_op.tcl
-@@ -449,9 +449,16 @@ method _after_readtree {} {
- 	}
- 
- 	if {$is_detached} {
--		info_popup [mc "You are no longer on a local branch.
--
--If you wanted to be on a branch, create one now starting from 'This Detached Checkout'."]
-+		info_popup [mc \
-+"You are no longer on a local branch. You can look
-+around, make experimental changes and commit,
-+and you can discard any commits you make in this
-+state without impacting any branches by
-+performing another checkout.
-+
-+If you want to create a new branch to retain
-+commits you create, you may do so (now or later)
-+by starting from 'This Detached Checkout'."]
- 	}
- 
- 	# -- Run the post-checkout hook.
--- 
-1.7.4
+Your 1 and 3 both sound like sensible things to do, but I am not a good
+judge on them as I rarely if ever work in GUI.
