@@ -1,154 +1,83 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: t7006 sometimes hangs in cronjobs on OS X
-Date: Sat, 12 Feb 2011 02:37:44 -0600
-Message-ID: <20110212083731.GB5182@elie>
-References: <201102091538.46594.trast@student.ethz.ch>
- <20110209190900.GA8314@sigill.intra.peff.net>
- <201102092016.55078.trast@student.ethz.ch>
- <201102092122.19178.trast@student.ethz.ch>
- <20110209205056.GA2083@sigill.intra.peff.net>
- <20110212020321.GA24629@elie>
- <20110212051239.GA31606@sigill.intra.peff.net>
+From: Nguyen Thai Ngoc Duy <pclouds@gmail.com>
+Subject: Re: grep --no-index and pathspec
+Date: Sat, 12 Feb 2011 15:39:31 +0700
+Message-ID: <AANLkTikZuRyyZ4tErYuo1itmEs1X_gT5aogpTM3s4gON@mail.gmail.com>
+References: <20110211095938.360726y1zinab9gk@webmail.df.eu>
+ <4D55500B.1070603@drmicha.warpmail.net> <7v8vxm1l6q.fsf@alter.siamese.dyndns.org>
+ <7vwrl6z20p.fsf@alter.siamese.dyndns.org> <AANLkTikG1C=7NRGoi+HWz8rE9RN8-pF6o0=S29GZA3eK@mail.gmail.com>
+ <7vvd0py7xy.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 12 09:38:01 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Lars Noschinski <lars@public.noschinski.de>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 12 09:40:10 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PoAzQ-0008LA-GM
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Feb 2011 09:38:00 +0100
+	id 1PoB1V-0000VK-N0
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Feb 2011 09:40:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752606Ab1BLIhz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Feb 2011 03:37:55 -0500
-Received: from mail-iy0-f174.google.com ([209.85.210.174]:57651 "EHLO
-	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751801Ab1BLIhy (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Feb 2011 03:37:54 -0500
-Received: by iyj8 with SMTP id 8so3185696iyj.19
-        for <git@vger.kernel.org>; Sat, 12 Feb 2011 00:37:53 -0800 (PST)
+	id S1752893Ab1BLIkF convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Feb 2011 03:40:05 -0500
+Received: from mail-ww0-f44.google.com ([74.125.82.44]:37379 "EHLO
+	mail-ww0-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752390Ab1BLIkD convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Feb 2011 03:40:03 -0500
+Received: by wwa36 with SMTP id 36so3366153wwa.1
+        for <git@vger.kernel.org>; Sat, 12 Feb 2011 00:40:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=xzgyEMarEqSLY28KQUzL9sXc9gUjSi3h+lg85CjfqhQ=;
-        b=q5PNi4XPhYMW7FSX0DRBZR2Vgj2bdDRUfchaiHXjoHIOQSATZLSKUn8JJJ1eIMUcYi
-         0E62wXWjMAoMrY8Ej0qExqt5VKlTcIQTvwknhHrCnLZrRd3ccHupv9HMJctYRwKID2JA
-         HuONgR2IJSfqfvCrFJQTZmpPheklwOe+/CHYY=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=lk2p/W5Tg4KFJgS8ExsY0a5s0Qf3BRarXH8rihjm1rM=;
+        b=gfzvZaQ/zMP4IJIeOw8cjlRDR8oWi5EM65a0pP3aFtsoqU7Y6W7Di7ZgoSRCf1zoeL
+         1IJSkZYI7W/GEfm24alxTGKjHuBpXokGWZ6ihCHIu7FCB3WBKpZXRHq4tt6z+HUQ79hW
+         OQ2+bnL1DGhzICsiIbTLdE2pcvA5/Sv2C38BU=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=t1zvVS7CzPHKBVG/c6lYE9j51J+DqhdleCqpfsDodvYkpr3o8DzYfBJ4wBeKXhR8ea
-         CmB5+bqPd2eAYAXPPEjNlZ1OD6VhkbWhFNlhVbwlcP7MVGXjzrViYwrBI4PKbmYzbFV1
-         0wARF+ZF1yOJjD9M2fc7wMLCEkP0CZFgUM01A=
-Received: by 10.42.172.198 with SMTP id o6mr1908312icz.132.1297499873602;
-        Sat, 12 Feb 2011 00:37:53 -0800 (PST)
-Received: from elie (adsl-76-206-235-233.dsl.chcgil.sbcglobal.net [76.206.235.233])
-        by mx.google.com with ESMTPS id i16sm295027ibl.18.2011.02.12.00.37.48
-        (version=SSLv3 cipher=OTHER);
-        Sat, 12 Feb 2011 00:37:49 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110212051239.GA31606@sigill.intra.peff.net>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=Vo/mTBtFwIvLKptHurqaFeHx1R+S+K7DUQ27hrzrR2AbPmhahSQDjoxPULR2VXd3/B
+         t45qCJpG3QF6UxMz9ucSS4cih5kQGfUKQGN9+1s8I2DE65B5HTw7b2h1qNDPph6f1czY
+         IN+wPmf0mafAxLZLSSs/kwdrY7mHAtTXHF6Gw=
+Received: by 10.216.89.71 with SMTP id b49mr1469285wef.28.1297500001753; Sat,
+ 12 Feb 2011 00:40:01 -0800 (PST)
+Received: by 10.216.66.144 with HTTP; Sat, 12 Feb 2011 00:39:31 -0800 (PST)
+In-Reply-To: <7vvd0py7xy.fsf@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166603>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166604>
 
-Jeff King wrote:
-
->   1. In your Copy.pm log above, it says read gives it 4 characters. But
->      "hi\n" has only 3.
-
-Yes, it's "hi\r\n".
-
-> I would first try this patch:
-[...]
-> +++ b/t/test-terminal.perl
-> @@ -15,6 +15,7 @@ sub start_child {
->  		open STDOUT, ">&", $out;
->  		open STDERR, ">&", $err;
->  		close $out;
-> +		close $err;
->  		exec(@$argv) or die "cannot exec '$argv->[0]': $!"
-
-Good idea.  No change, alas (and likewise with the change to close
-the pty master in the child).  It seems I have some reading to do.
-
-Jonathan
-
-> and then try this more drastic one:
-[...]
-> --- a/t/test-terminal.perl
-> +++ b/t/test-terminal.perl
-> @@ -12,9 +12,12 @@ sub start_child {
-[...]
-> @@ -69,7 +72,7 @@ if ($#ARGV < 1) {
->  }
->  my $master_out = new IO::Pty;
->  my $master_err = new IO::Pty;
-> -my $pid = start_child(\@ARGV, $master_out->slave, $master_err->slave);
-> +my $pid = start_child(\@ARGV, $master_out, $master_err);
-
-Runs through ~1000 iterations instead of 100 before hanging.
-
-> Also, I don't know what kind of support you have for stuff like lsof,
-> but in theory we should be able to get a hung process, find the open
-> descriptor for the pty using lsof, match that descriptor with the other
-> end of the pty, and then see which processes have that pty still open.
-
-Trial 1
-~~~~~~~
- PID 49145 (which has successfully pumped stdout):
-
-  0	/dev/ttys001
-  1 write-only	out.1707
-  2 write-only	out.1707
-  3	/dev/ptmx	@ offset 4
-  5 write-only	debug.log
-
- PID 49147 (which is stuck in sysread trying to read stderr):
-
-  0	/dev/ttys001
-  1 write-only	out.1707
-  2 write-only	out.1707
-  5 write-only	debug.log
-  6	/dev/ptmx	@ offset 0
-
-Trial 2
-~~~~~~~
- PID 51091 (which is stuck in sysread trying to read stdout):
-
-  0	/dev/ttys001
-  1 write-only	out.2017
-  2 write-only	out.2017
-  3	/dev/ptmx	@ offset 4
-  5 write-only	debug.log
-
- PID 591093 (which successfully pumped stderr) is a zombie
-
-(echo was a zombie in both cases.)
-
->> Redirecting stderr by using 'xsendfile("elsewhere", $err);' avoids
->> trouble.
+On Sat, Feb 12, 2011 at 3:26 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Nguyen Thai Ngoc Duy <pclouds@gmail.com> writes:
+>> =C2=A0 =C2=A0 NOTE! This does *not* obviate the need for the caller =
+to do the *exact*
+>> =C2=A0 =C2=A0 pathspec match later. It's a first-level filter on "re=
+ad_directory()", but
+>> =C2=A0 =C2=A0 it does not do the full pathspec thing. Maybe it shoul=
+d. But in the
+>> =C2=A0 =C2=A0 meantime,...
 >
-> That seems doubly weird, since you are changing the _output_, not the
-> input. But the input is what is causing the hang.
-
-False alarm --- after about 2500 iterations it hangs.  Probably just
-changed the timing.
-
->> Sometimes output includes some streams of null bytes, which makes me
->> suspect something awry in the kernel.
+> I was around back then, so I know how the code came about ;-)
 >
-> Yuck.
+> The pieces used in the pathspec limiting logic have been restructured=
+ well
+> enough that I suspect it may now be feasible for us to revisit the "M=
+aybe
+> it should" part in the above quote. =C2=A0Thanks to nd/struct-pathspe=
+c topic, I
+> think we are already half-way there.
 
-Was my mistake --- apparently I was writing files with holes.  Now I
-send debug output to a separate file with O_APPEND and it hasn't
-happened again.
+I was around too, just oblivious about things. I can look into that.
+Need to think a bit how to save what pathspecs are "seen", so that
+prune_directory() in builtin/add.c can be dropped.
+--=20
+Duy
