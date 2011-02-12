@@ -1,139 +1,144 @@
-From: Thomas Rast <trast@student.ethz.ch>
-Subject: Re: [PATCH 2/2] Make hash-object more robust against malformed objects
-Date: Sat, 12 Feb 2011 12:42:21 +0100
-Message-ID: <201102121242.21339.trast@student.ethz.ch>
-References: <1296903141-27075-1-git-send-email-pclouds@gmail.com> <1296903141-27075-2-git-send-email-pclouds@gmail.com>
+From: Michael J Gruber <git@drmicha.warpmail.net>
+Subject: Re: How you can translate things now, and a plan for the i18n series
+ going forward
+Date: Sat, 12 Feb 2011 13:12:15 +0100
+Message-ID: <4D56791F.2090004@drmicha.warpmail.net>
+References: <AANLkTim+_zRisVRfnv_Xe69xof3e8rL_BAXxmAsCwins@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>
-To: =?utf-8?q?Nguy=E1=BB=85n_Th=C3=A1i_Ng=E1=BB=8Dc_Duy?= 
-	<pclouds@gmail.com>
-X-From: git-owner@vger.kernel.org Sat Feb 12 12:42:38 2011
+Cc: Sverre Rabbelier <srabbelier@gmail.com>, kev <kev@riseup.net>,
+	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
+To: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+X-From: git-owner@vger.kernel.org Sat Feb 12 13:11:27 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PoDs5-0004Ge-V7
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Feb 2011 12:42:38 +0100
+	id 1PoEJz-0006BO-Ai
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Feb 2011 13:11:27 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752895Ab1BLLma convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Feb 2011 06:42:30 -0500
-Received: from edge10.ethz.ch ([82.130.75.186]:16091 "EHLO edge10.ethz.ch"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751988Ab1BLLm1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Feb 2011 06:42:27 -0500
-Received: from CAS21.d.ethz.ch (172.31.51.111) by edge10.ethz.ch
- (82.130.75.186) with Microsoft SMTP Server (TLS) id 14.1.270.1; Sat, 12 Feb
- 2011 12:42:15 +0100
-Received: from pctrast.inf.ethz.ch (129.132.153.233) by CAS21.d.ethz.ch
- (172.31.51.111) with Microsoft SMTP Server (TLS) id 14.1.270.1; Sat, 12 Feb
- 2011 12:42:21 +0100
-User-Agent: KMail/1.13.5 (Linux/2.6.37-9-desktop; KDE/4.5.4; x86_64; ; )
-In-Reply-To: <1296903141-27075-2-git-send-email-pclouds@gmail.com>
-X-Originating-IP: [129.132.153.233]
+	id S1753527Ab1BLMLR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Feb 2011 07:11:17 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:52914 "EHLO
+	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+	by vger.kernel.org with ESMTP id S1751940Ab1BLMLP (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Feb 2011 07:11:15 -0500
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id 73AC220FBB;
+	Sat, 12 Feb 2011 07:11:14 -0500 (EST)
+Received: from frontend1.messagingengine.com ([10.202.2.160])
+  by compute2.internal (MEProxy); Sat, 12 Feb 2011 07:11:14 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=tUi+iydCgxpycpHaL3prZFDkdUs=; b=IhAhnRsCThsoIoeYC9gGKPZSAiI+DqNCGHvmrF7/ZZnsZoEV60NBphCqowS74+/dnmGxvoeKne5QDl97VKUe9BKHMT/wrxHD6Z2ZSkp7NE9hJAN8jJ9DxwHjG2pNZpPo7bvpHebusUlA+fgdHhMZyKa1YZjys9iDYnZmRXbicF0=
+X-Sasl-enc: uq79lNAKg2RrgKymggl1L8Jgks6pHpIO3DtqHwd3B42p 1297512673
+Received: from localhost.localdomain (p54859B52.dip0.t-ipconnect.de [84.133.155.82])
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 1D6AF401E70;
+	Sat, 12 Feb 2011 07:11:12 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
+In-Reply-To: <AANLkTim+_zRisVRfnv_Xe69xof3e8rL_BAXxmAsCwins@mail.gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166608>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166609>
 
-Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy wrote:
-> Commits, trees and tags have structure. Don't let users feed git
-> with malformed ones. Sooner or later git will die() when
-> encountering them.
+=C3=86var Arnfj=C3=B6r=C3=B0 Bjarmason venit, vidit, dixit 12.02.2011 1=
+2:19:
+> On Fri, Feb 11, 2011 at 21:22, Sverre Rabbelier <srabbelier@gmail.com=
+> wrote:
+>> On Fri, Feb 11, 2011 at 21:01, kev <kev@riseup.net> wrote:
+>>> i understand the ab/i18n has been gettextized and translated to at
+>>> least a couple of languages.
+>>>
+>>> ive found references in the list archives to this, but nothing in t=
+he
+>>> source code. i do see translations of git-gui, however. but im look=
+ing
+>>> for some clue as to how to translate git itself.
+>>
+>> Currently the ab/i18n branch has not been merged to master, so it's
+>> not available to the general public. =C3=86var has been working on i=
+t but
+>> we haven't heard from him recently on this topic.
 >=20
-> Note that this patch does not check semantics. A tree that points
-> to non-existent objects is perfectly OK (and should be so, users
-> may choose to add commit first, then its associated tree for example)
+> Hi both. I've been on a hiatus from Git development, so I haven't
+> picked up ab/i18n again, but I still plan to and to get it included i=
+n
+> Git.
 >=20
-> Signed-off-by: Nguy=E1=BB=85n Th=C3=A1i Ng=E1=BB=8Dc Duy <pclouds@gma=
-il.com>
+> Meanwhile Kev, if you want to translate Git you can:
+>=20
+>     git clone git://github.com/avar/git.git &&
+>     cd git &&
+>     git checkout -t origin/ab/i18n
+>=20
+> And follow the instructions in po/README. This branch is relatively
+> out of date and hasn't been rebased on the upstream master in a while=
+,
+> but most of the strings you'll be translating will still be there onc=
+e
+> I do that, so your work won't go to waste.
+>=20
+> For everyone else, I plan to re-submit ab/i18n, but re-do it so that
+> it isn't all one huge patch series but can be applied in smaller
+> steps. Here's the outline of my current plan:
+>=20
+>     ** TODO Re-do the i18n series so it can be applied in piecemeal s=
+teps
+>=20
+>        I.e. these:
+>=20
+>     *** TODO Introduce a skeleton no-op gettext, just the
+> infrastructure minus the interesting stuff
+>=20
+>         I.e. just add:
+>=20
+>             #define N_(s) (s)
+>             #define _(s) (s)
+>=20
+>     *** TODO Add no-op C gettextize patches
+>=20
+>         This will change "foo" to _("foo") everywhere, but will be a =
+no-op
+>         due to it being macroed out.
+>=20
+>     *** TODO Add no-op Shell/Perl gettextize patches
+>=20
+>         Due to the nature of these languages these can't be macroed o=
+ut,
+>         but it's still easy to have a no-op wrapper function.
+>=20
+>     *** TODO Add po/README etc.
+>=20
+>         The documentation about how to add translations etc.
+>=20
+>     *** TODO Add translations
+>=20
+>         Add the po/*.po files. Since we have no-op translations every=
+where
+>         we can translate git with xgettext + po editing, even though =
+the
+>         translations aren't being used yet.
+>=20
+>     *** TODO Introduce the real gettext in a later patch + tests
+>=20
+>         Once the rest is all in this will be a much smaller change.
+>=20
+> I think doing it this way will be much easier for everyone, what do
+> you think Junio?
 
-This patch makes t9350 fail under valgrind:
+Disclaimer: I'm not Junio :)
 
-expecting success:=20
+Sounds like a good plan, though I'm wondering whether reversing the
+order of the last two would make sense review-wise (with having 1
+translation for the tests), i.e. for reviewing the translations. In cas=
+e
+those last two should be orthogonal so that it doesn't matter.
 
-        TAG=3D$(git hash-object -t tag -w tag-content) &&
-        git update-ref refs/tags/sonnenschein $TAG &&
-        git fast-export -C -C --signed-tags=3Dstrip --all > output &&
-        test $(grep -c "^tag " output) =3D 4 &&
-        ! grep "Unspecified Tagger" output &&
-        git fast-export -C -C --signed-tags=3Dstrip --all \
-                --fake-missing-tagger > output &&
-        test $(grep -c "^tag " output) =3D 4 &&
-        grep "Unspecified Tagger" output
+What does matter (at least to me) is my old pet-peave suggestion for
+having consistent, systematic translations: translate a/the glossary
+first, then translate git messages.
 
-
-=3D=3D2862=3D=3D Invalid read of size 1
-=3D=3D2862=3D=3D    at 0x4F0C34: prefixcmp (strbuf.c:9)
-=3D=3D2862=3D=3D    by 0x4F4FB3: parse_tag_buffer (tag.c:109)
-=3D=3D2862=3D=3D    by 0x4EC686: check_tag (sha1_file.c:2499)
-=3D=3D2862=3D=3D    by 0x4EC77F: index_mem (sha1_file.c:2529)
-=3D=3D2862=3D=3D    by 0x4EC934: index_fd (sha1_file.c:2563)
-=3D=3D2862=3D=3D    by 0x4379C9: hash_fd (hash-object.c:17)
-=3D=3D2862=3D=3D    by 0x437A86: hash_object (hash-object.c:33)
-=3D=3D2862=3D=3D    by 0x437E82: cmd_hash_object (hash-object.c:126)
-=3D=3D2862=3D=3D    by 0x404771: run_builtin (git.c:290)
-=3D=3D2862=3D=3D    by 0x4048FC: handle_internal_command (git.c:448)
-=3D=3D2862=3D=3D    by 0x4049E7: run_argv (git.c:492)
-=3D=3D2862=3D=3D    by 0x404B43: main (git.c:565)
-=3D=3D2862=3D=3D  Address 0x55abb77 is 0 bytes after a block of size 71=
- alloc'd
-=3D=3D2862=3D=3D    at 0x4C20E1C: malloc (vg_replace_malloc.c:195)
-=3D=3D2862=3D=3D    by 0x504A7C: xmalloc (wrapper.c:35)
-=3D=3D2862=3D=3D    by 0x4EC8E8: index_fd (sha1_file.c:2561)
-=3D=3D2862=3D=3D    by 0x4379C9: hash_fd (hash-object.c:17)
-=3D=3D2862=3D=3D    by 0x437A86: hash_object (hash-object.c:33)
-=3D=3D2862=3D=3D    by 0x437E82: cmd_hash_object (hash-object.c:126)
-=3D=3D2862=3D=3D    by 0x404771: run_builtin (git.c:290)
-=3D=3D2862=3D=3D    by 0x4048FC: handle_internal_command (git.c:448)
-=3D=3D2862=3D=3D    by 0x4049E7: run_argv (git.c:492)
-=3D=3D2862=3D=3D    by 0x404B43: main (git.c:565)
-=3D=3D2862=3D=3D=20
-=3D=3D2862=3D=3D Invalid read of size 1
-=3D=3D2862=3D=3D    at 0x4F0C50: prefixcmp (strbuf.c:10)
-=3D=3D2862=3D=3D    by 0x4F4FB3: parse_tag_buffer (tag.c:109)
-=3D=3D2862=3D=3D    by 0x4EC686: check_tag (sha1_file.c:2499)
-=3D=3D2862=3D=3D    by 0x4EC77F: index_mem (sha1_file.c:2529)
-=3D=3D2862=3D=3D    by 0x4EC934: index_fd (sha1_file.c:2563)
-=3D=3D2862=3D=3D    by 0x4379C9: hash_fd (hash-object.c:17)
-=3D=3D2862=3D=3D    by 0x437A86: hash_object (hash-object.c:33)
-=3D=3D2862=3D=3D    by 0x437E82: cmd_hash_object (hash-object.c:126)
-=3D=3D2862=3D=3D    by 0x404771: run_builtin (git.c:290)
-=3D=3D2862=3D=3D    by 0x4048FC: handle_internal_command (git.c:448)
-=3D=3D2862=3D=3D    by 0x4049E7: run_argv (git.c:492)
-=3D=3D2862=3D=3D    by 0x404B43: main (git.c:565)
-=3D=3D2862=3D=3D  Address 0x55abb77 is 0 bytes after a block of size 71=
- alloc'd
-=3D=3D2862=3D=3D    at 0x4C20E1C: malloc (vg_replace_malloc.c:195)
-=3D=3D2862=3D=3D    by 0x504A7C: xmalloc (wrapper.c:35)
-=3D=3D2862=3D=3D    by 0x4EC8E8: index_fd (sha1_file.c:2561)
-=3D=3D2862=3D=3D    by 0x4379C9: hash_fd (hash-object.c:17)
-=3D=3D2862=3D=3D    by 0x437A86: hash_object (hash-object.c:33)
-=3D=3D2862=3D=3D    by 0x437E82: cmd_hash_object (hash-object.c:126)
-=3D=3D2862=3D=3D    by 0x404771: run_builtin (git.c:290)
-=3D=3D2862=3D=3D    by 0x4048FC: handle_internal_command (git.c:448)
-=3D=3D2862=3D=3D    by 0x4049E7: run_argv (git.c:492)
-=3D=3D2862=3D=3D    by 0x404B43: main (git.c:565)
-=3D=3D2862=3D=3D=20
-not ok - 15 cope with tagger-less tags
-#      =20
-#      =20
-#               TAG=3D$(git hash-object -t tag -w tag-content) &&
-#               git update-ref refs/tags/sonnenschein $TAG &&
-#               git fast-export -C -C --signed-tags=3Dstrip --all > out=
-put &&
-#               test $(grep -c "^tag " output) =3D 4 &&
-#               ! grep "Unspecified Tagger" output &&
-#               git fast-export -C -C --signed-tags=3Dstrip --all \
-#                       --fake-missing-tagger > output &&
-#               test $(grep -c "^tag " output) =3D 4 &&
-#               grep "Unspecified Tagger" output
-#      =20
-#      =20
-
---=20
-Thomas Rast
-trast@{inf,student}.ethz.ch
+_("Cheers,")
+Michael
