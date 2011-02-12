@@ -1,69 +1,56 @@
-From: Jonathan Nieder <jrnieder@gmail.com>
-Subject: Re: t7006 sometimes hangs in cronjobs on OS X
-Date: Fri, 11 Feb 2011 20:05:13 -0600
-Message-ID: <20110212020513.GB24629@elie>
-References: <201102091538.46594.trast@student.ethz.ch>
- <20110209190900.GA8314@sigill.intra.peff.net>
- <201102092016.55078.trast@student.ethz.ch>
- <201102092122.19178.trast@student.ethz.ch>
- <20110209205056.GA2083@sigill.intra.peff.net>
- <20110212020321.GA24629@elie>
+From: Markus Elfring <Markus.Elfring@web.de>
+Subject: Re: Challenges for an octopus merge
+Date: Sat, 12 Feb 2011 05:50:16 +0100
+Message-ID: <4D561188.4000109@web.de>
+References: <4D53F694.1060105@web.de> <7v8vxn6fdv.fsf@alter.siamese.dyndns.org> <4D55627F.30305@web.de> <7vd3my1leq.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Thomas Rast <trast@student.ethz.ch>, git@vger.kernel.org
-To: Jeff King <peff@peff.net>
-X-From: git-owner@vger.kernel.org Sat Feb 12 03:05:28 2011
+Content-Type: text/plain; charset=ISO-8859-1; format=flowed
+Content-Transfer-Encoding: 7bit
+Cc: git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Sat Feb 12 05:51:13 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Po4rU-0007yV-Ot
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Feb 2011 03:05:25 +0100
+	id 1Po7Rv-0008NN-Al
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Feb 2011 05:51:11 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1757027Ab1BLCFU (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Fri, 11 Feb 2011 21:05:20 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:51877 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1756209Ab1BLCFT (ORCPT <rfc822;git@vger.kernel.org>);
-	Fri, 11 Feb 2011 21:05:19 -0500
-Received: by ywo7 with SMTP id 7so1339060ywo.19
-        for <git@vger.kernel.org>; Fri, 11 Feb 2011 18:05:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:date:from:to:cc:subject:message-id:references
-         :mime-version:content-type:content-disposition:in-reply-to
-         :user-agent;
-        bh=s23wYmmOHXSjWXwjzfoGTcUAfQTZCIo+w7U/pD8drME=;
-        b=JDlJ5nZM17aDOPaHFQLm3gI6X6bVZTcpuQ/+9juOGrFqEVoa9YFmLSdp5c/c0NM8z2
-         OUe4eJl+8aWxgl95WKVyOHhJ4mbtXXk5pLA+0YNjPICkBqUmQf9AhjwXxC3MsrMM4jhz
-         MaYfYhkYfZimERLAyc/XtioSn7LzXqixCYj8g=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-type:content-disposition:in-reply-to:user-agent;
-        b=Cf910vLcmwUCBE5o6VmJ99oRrejfaxbtvTjI0J6obJum5QGKDEPx7dS/kuRK6xln0T
-         Ln25fpNE7oj/ss7GZASn9lCV/ybtAcNSfaMo2R0VzyenMxBh/mkWHNMMRnjtcT07tJsh
-         jsV04QhZ/0nqccIqQkdbXwOr6bqKGGOgfY1DE=
-Received: by 10.236.110.39 with SMTP id t27mr2263837yhg.31.1297476318506;
-        Fri, 11 Feb 2011 18:05:18 -0800 (PST)
-Received: from elie (adsl-76-206-235-233.dsl.chcgil.sbcglobal.net [76.206.235.233])
-        by mx.google.com with ESMTPS id i59sm3117yhd.3.2011.02.11.18.05.16
-        (version=SSLv3 cipher=OTHER);
-        Fri, 11 Feb 2011 18:05:17 -0800 (PST)
-Content-Disposition: inline
-In-Reply-To: <20110212020321.GA24629@elie>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+	id S1758238Ab1BLEuz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Fri, 11 Feb 2011 23:50:55 -0500
+Received: from fmmailgate02.web.de ([217.72.192.227]:48063 "EHLO
+	fmmailgate02.web.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1756892Ab1BLEuz (ORCPT <rfc822;git@vger.kernel.org>);
+	Fri, 11 Feb 2011 23:50:55 -0500
+Received: from smtp08.web.de  ( [172.20.5.216])
+	by fmmailgate02.web.de (Postfix) with ESMTP id 95FA219724C62;
+	Sat, 12 Feb 2011 05:50:28 +0100 (CET)
+Received: from [92.228.198.199] (helo=[192.168.1.46])
+	by smtp08.web.de with asmtp (WEB.DE 4.110 #2)
+	id 1Po7RE-0001Tg-00; Sat, 12 Feb 2011 05:50:28 +0100
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; de; rv:1.9.2.13) Gecko/20101206 SUSE/3.1.7 Thunderbird/3.1.7
+In-Reply-To: <7vd3my1leq.fsf@alter.siamese.dyndns.org>
+X-Sender: Markus.Elfring@web.de
+X-Provags-ID: V01U2FsdGVkX1+lAPAVd2fCIUuePGTmzbaGL6S3x5fN2plPEEnV
+	M1zpOLo6KWo1x/rHQ8WKUy3npebZA/EwzR2rmgW6a36ieVzDpK
+	cGcPh99Csf2L14jefysA==
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166590>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166592>
 
-Jonathan Nieder wrote:
+> The user needs to decide what to do next; the user may choose to do "git merge A C ; git merge B" instead,
+> but *after* inspecting the situation.
 
-> Sometimes output includes some streams of
-> null bytes, which makes me suspect something awry in the kernel.
+I have inspected my situation a bit more. I hope that the merging process can be 
+improved so that it can cope with my update suggestions here.
 
-(or maybe that last part is a consequence of using stderr both for
-standard, unbuffered output and our debugging output) :)
+Would anybody (besides me) like to look into the affected patches and source 
+files if the tool "Git" can provide a better service?
+
+Does it make sense to add these files to your test-suite?
+
+Regards,
+Markus
