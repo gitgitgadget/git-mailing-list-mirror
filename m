@@ -1,84 +1,204 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] git-gui: give more advice when detaching HEAD
-Date: Sat, 12 Feb 2011 00:42:58 -0800
-Message-ID: <7voc6hy771.fsf@alter.siamese.dyndns.org>
-References: <20110212070538.GA2459@sigill.intra.peff.net>
- <7v8vxlzojs.fsf@alter.siamese.dyndns.org>
- <20110212080456.GA18380@sigill.intra.peff.net>
- <7vzkq1y8dv.fsf@alter.siamese.dyndns.org>
+From: xiaozhu <xiaozhu@gmail.com>
+Subject: a bug about format-patch of multibyte characters comment
+Date: Sat, 12 Feb 2011 19:13:15 +0900
+Message-ID: <4D565D3B.7060808@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Jeff King <peff@peff.net>, "Shawn O. Pearce" <spearce@spearce.org>,
-	git@vger.kernel.org
-To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Sat Feb 12 09:43:16 2011
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sat Feb 12 11:13:37 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PoB4V-0001ZT-PF
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Feb 2011 09:43:16 +0100
+	id 1PoCTv-00036j-FL
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Feb 2011 11:13:35 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752932Ab1BLInM (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Feb 2011 03:43:12 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:39721 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752486Ab1BLInK (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Feb 2011 03:43:10 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1C68F2995;
-	Sat, 12 Feb 2011 03:44:11 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=HwWvlLZALUDxFKxKQ7FjmOz7X68=; b=JMvxei
-	XUnYA70XGLl8yeC8C2Ciam3T3TH+dV3vnAgWUzU6JLhjJK2YEQNuBxMLaTXgmEqE
-	IxJy5vo3JFvyFYTnueuc2ne0qMKCjAYwQy0C5M5Q73fTuC0B8mmCQZJ3KsaMA/pY
-	zDHfeNK+GdxYckzr8E7eHD3Uq8EOM1x2CvPEM=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=ioBsalIUG1qsK/RproKHLIOMMvw2qd5w
-	MOigHiun5Ov35vDntwRcAQINTYwaJ71BY33M40Pd5IquLkP51igJan43PDwxSJwy
-	kzeo7kJThi0BtYtBfmvc29ayOrbSfcU4O1SycST85nVYOL2YyunhSlu3/E3pbgjY
-	zmfX+aL+JFc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id DBBC72993;
-	Sat, 12 Feb 2011 03:44:07 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 93FD92992; Sat, 12 Feb 2011
- 03:44:02 -0500 (EST)
-In-Reply-To: <7vzkq1y8dv.fsf@alter.siamese.dyndns.org> (Junio C. Hamano's
- message of "Sat\, 12 Feb 2011 00\:17\:16 -0800")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 413340E0-3684-11E0-9C79-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1752217Ab1BLKNW (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Feb 2011 05:13:22 -0500
+Received: from mail-iy0-f174.google.com ([209.85.210.174]:38983 "EHLO
+	mail-iy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750739Ab1BLKNU (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Feb 2011 05:13:20 -0500
+Received: by iyj8 with SMTP id 8so3231121iyj.19
+        for <git@vger.kernel.org>; Sat, 12 Feb 2011 02:13:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
+         :subject:content-type:content-transfer-encoding;
+        bh=2vJd7X+7LqjV2wKe92p+vgSqTdnSbf9TMj7+m4cDB6M=;
+        b=PU49F7SSeJEUB/YDYKTZ7KW8aUOdX8yXWGMiIM0ILo7iiabRyqcgLu11XnaOOMuABt
+         mmrY1WGAHQk8jl2KCfGIT1EukvAXtDj2bdURW30VlB/HC3OAd+je7aH+ulcihZQzIngd
+         Pfzn/XRn9Mc3+9wghGiV8DjZc/Fc2pH4KaPRI=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=message-id:date:from:user-agent:mime-version:to:subject
+         :content-type:content-transfer-encoding;
+        b=DIj8y2W1EMCVKqTHIllY9l84iMYXeTQIw6wbIxrUfU33Rq3fFKjNS5Z7/4+zNM5167
+         l0e5vzG112ueLa7DLMCXwH7z6+sEzE7hYifFK9GJlqyHYnwaTgroGvxgmRqXyZYQdZ9c
+         gBUohQRQGl8vOgXuyztC74yKrC1ob9fyT7V8g=
+Received: by 10.42.178.135 with SMTP id bm7mr2009510icb.101.1297505599850;
+        Sat, 12 Feb 2011 02:13:19 -0800 (PST)
+Received: from [192.168.11.57] (softbank126036243176.bbtec.net [126.36.243.176])
+        by mx.google.com with ESMTPS id ca7sm342250icb.0.2011.02.12.02.13.18
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sat, 12 Feb 2011 02:13:19 -0800 (PST)
+User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.13) Gecko/20101207 Thunderbird/3.1.7
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166605>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166606>
 
-Junio C Hamano <gitster@pobox.com> writes:
+Hi,
 
-> You only need to dig until you hit a merge base, no?
-> ...
-> And merge-base has an interface to compute exactly that, I think.
+I found a bug when I use format-patch to export a patch which contains comment with
+some multibyte characters. I also found the relation source, but I can't understand
+the source clearly, so I think I need a help to know how can I fix it.
 
-Ah, forget "merge-base".  In the kernel repository, the very old "v2.6.12"
-will participate in the (imaginary) merge across all the refs, and
-computing merge-base means we need to traverse down to it.
+At first, the symptom.
 
-We only need to prime a "struct revisions" with the detached HEAD as the
-sole positive, and the refs as negatives (i.e. UNINTERESTING), and walk
-the history the usual way, until we either
+I commit a fix to my repository with comment like following:
+-----------------------------------------------------
+XXXXXXXXXXXX
+YYYYYY
+-----------------------------------------------------
 
- (1) see HEAD painted uninteresting; or
- (2) the queue becomes all uninteresting.
+two lines of multibyte language comment.
 
-As soon as (1) happens, we know the HEAD is reachable from some ref, and
-we can immediately stop.  When (2) happens, we inspect the HEAD again and
-if it is painted uninteresting then we know HEAD is reachable from some
-ref.  Otherwise HEAD will become dangling when you leave it.
+then I use format-patch to export this fix, I get a patch file like following:
 
-That way, the traversal will terminate much sooner than computing the true
-merge base.
+------------------------------------------------------------------------------
+ From d3532c3263a02a2367a3aa5c9cc3f0bd738b79b1 Mon Sep 17 00:00:00 2001
+From: xz <xz>
+Date: Fri, 11 Feb 2011 21:30:35 +0900
+Subject: [PATCH] =?UTF-8?q?=E6=97=A5=E6=9C=AC=E8=AA=9E=E3=81=8C=E5=A4=A7=E4=B8=88=E5=A4=AB
+=20=E6=94=B9=E8=A1=8C=E3=81=99=E3=82=8B?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+  testfile.txt |    4 +++-
+  1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/testfile.txt b/testfile.txt
+index 1e5d832..da982fd 100644
+--- a/testfile.txt
++++ b/testfile.txt
+@@ -1 +1,3 @@
+-sadfasdf
+\ No newline at end of file
++sadfasdf
+
+..........
+
+-------------------------------------------------------------------------------
+
+If I use am to apply this patch, am can't analyze the comment correctly, then the
+committed comment will become
+"=?UTF-8?q?=E6=97=A5=E6=9C=AC=E8=AA=9E=E3=81=8C=E5=A4=A7=E4=B8=88=E5=A4=AB".
+
+Above is the symptom.
+
+Then I did some try, I modify the comment to 3 lines:
+-----------------------------------------------------
+XXXXXXXXXXXX
+
+YYYYYY
+-----------------------------------------------------
+
+add a empty line, then I get a patch like following:
+------------------------------------------------------------------------------
+ From d3532c3263a02a2367a3aa5c9cc3f0bd738b79b1 Mon Sep 17 00:00:00 2001
+From: xz <xz>
+Date: Fri, 11 Feb 2011 21:30:35 +0900
+Subject: [PATCH] =?UTF-8?q?=E6=97=A5=E6=9C=AC=E8=AA=9E=E3=81=8C=E5=A4=A7=E4=B8=88=E5=A4=AB?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+YYYYYY
+---
+  testfile.txt |    4 +++-
+  1 files changed, 3 insertions(+), 1 deletions(-)
+
+diff --git a/testfile.txt b/testfile.txt
+index 1e5d832..da982fd 100644
+--- a/testfile.txt
++++ b/testfile.txt
+@@ -1 +1,3 @@
+-sadfasdf
+\ No newline at end of file
++sadfasdf
+
+..........
+
+-------------------------------------------------------------------------------
+
+this patch will be applied successfully. So I know the problem is about the subject creating.
+I search the source, then I found the following function at "pretty.c:655":
+
+const char *format_subject(struct strbuf *sb, const char *msg,
+			   const char *line_separator)
+{
+	int first = 1;
+
+	for (;;) {
+		const char *line = msg;
+		int linelen = get_one_line(line);
+
+		msg += linelen;
+		
+		if (!linelen || is_empty_line(line, &linelen))
+			break;
+
+		if (!sb)cat
+			continue;
+		strbuf_grow(sb, linelen + 2);
+		if (!first)
+			strbuf_addstr(sb, line_separator);
+		strbuf_add(sb, line, linelen);
+		first = 0;
+	}
+	return msg;
+}
+
+At first I want to know: Does this function means that always add the first line
+of comment to the argument sb, then return the rest? Is there any other thing that I
+didn't considered?
+
+I found 4 place where to call this function, I think there is no problem about 3
+of them, but I don't know is there any other problem to the rest one which is
+at "pretty.c:931".
+
+At last, if what I think is correct, I plan to fix it as following:
+
+const char *format_subject(struct strbuf *sb, const char *msg,
+			   const char *line_separator)
+{
+	int first = 1;
+
+	//for (;;) {
+		const char *line = msg;
+		int linelen = get_one_line(line);
+
+		msg += linelen;
+		
+		if (!linelen || is_empty_line(line, &linelen)) return msg;
+			//break;
+
+		if (!sb) return msg;
+			//continue;
+		strbuf_grow(sb, linelen + 2);
+		if (!first)
+			strbuf_addstr(sb, line_separator);
+		strbuf_add(sb, line, linelen);
+		first = 0;
+	//}
+	return msg;
+}
+
+I dont't think it is necessary to have a loop here, so I want to remove
+the loop. Is there anybody can confirm my fix for me?
