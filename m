@@ -1,90 +1,76 @@
-From: Vasyl' Vavrychuk <vvavrychuk@gmail.com>
-Subject: [PATCH 1/4] Reduce url_len variable scope
-Date: Sun, 13 Feb 2011 00:38:28 +0200
-Message-ID: <1297550311-17723-2-git-send-email-vvavrychuk@gmail.com>
-References: <1297550311-17723-1-git-send-email-vvavrychuk@gmail.com>
-Cc: Vasyl' Vavrychuk <vvavrychuk@gmail.com>
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 13 00:01:31 2011
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: [PATCH v3] Porcelain scripts: Rewrite cryptic "needs update"
+ error message
+Date: Sun, 13 Feb 2011 00:14:22 +0100
+Message-ID: <AANLkTikuQdJykM7MUV=C5DR7HO5xseBifrY_w2ZWsCiR@mail.gmail.com>
+References: <8835ADF9-45E5-4A26-9F7F-A72ECC065BB2@gmail.com>
+	<1287499168-26569-1-git-send-email-artagnon@gmail.com>
+Mime-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Git List <git@vger.kernel.org>, Junio C Hamano <gitster@pobox.com>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Joshua Jensen <jjensen@workspacewhiz.com>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Thore Husfeldt <thore.husfeldt@gmail.com>
+To: Ramkumar Ramachandra <artagnon@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 13 00:14:30 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PoOT4-0003DP-Qe
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Feb 2011 00:01:31 +0100
+	id 1PoOfd-0008N1-P9
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Feb 2011 00:14:30 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752839Ab1BLXBY (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Feb 2011 18:01:24 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:53004 "EHLO
-	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751070Ab1BLXBW (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Feb 2011 18:01:22 -0500
-Received: by fxm20 with SMTP id 20so3938740fxm.19
-        for <git@vger.kernel.org>; Sat, 12 Feb 2011 15:01:21 -0800 (PST)
+	id S1752965Ab1BLXOZ convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Sat, 12 Feb 2011 18:14:25 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:51846 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752103Ab1BLXOY convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Sat, 12 Feb 2011 18:14:24 -0500
+Received: by bwz15 with SMTP id 15so4382736bwz.19
+        for <git@vger.kernel.org>; Sat, 12 Feb 2011 15:14:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
-         :in-reply-to:references;
-        bh=Y4HnR73c3RwhLvWhMnwlYm05YVaZT4AKt85RyqDzMuA=;
-        b=pbvnifP3D+Sy418sAfM3/6mhDYSGCuU/pTs61CJOLZRG5s/S8Pu9TpnpshHJwDk/nn
-         mcJQjl9FagWwaoVPi8Lir0Io7Ofg4xbXDhEKvFFi5jF0Cdo7wNcoiNuJACq8kEOJpJPY
-         FFqbBGSz9Hka0jUzxj2/1RbFeQu31PHIuPlaM=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=kNl+nVJCZLSMjzyQAhR74xUB5cmcrYaY8nrqQV6by1w=;
+        b=r8Ez8KCd99OiAJJp1Xg7VFLFF6xOuQG4nCuFnKL+CXI6/ripiChHbEmS0cr4/covsg
+         yA0rsUsO89LwBHD5poTrTkEFDklPehxm545UAftQ70mWz7TkkvoUKXEw+mBUacNPHP/h
+         GrwIcOJv07CYhWopvuw5gtzuMPFWctidCrgWs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=nukVaNztVKSAGL2ZrQTLs3CcARiNssQNi/CWZrH9iyoa3om6xquG/6c7sFL2KY6Ti1
-         aI93vZU1lESFFYyjLlc0H+3DuXo3+FFVv8ZvJ+e7N6ZrKkhZtF24VspX52D5a5x03W1s
-         7IXNE+1Qe1tGoFQypJTOBNksBn1UcOLv5cu9c=
-Received: by 10.223.71.200 with SMTP id i8mr1294719faj.142.1297550321364;
-        Sat, 12 Feb 2011 14:38:41 -0800 (PST)
-Received: from localhost.localdomain ([91.200.115.239])
-        by mx.google.com with ESMTPS id n7sm369494fam.35.2011.02.12.14.38.40
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 12 Feb 2011 14:38:41 -0800 (PST)
-X-Mailer: git-send-email 1.7.4.1.30.ga83dc
-In-Reply-To: <1297550311-17723-1-git-send-email-vvavrychuk@gmail.com>
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=bqeOW+id5AAjvrzzSa5ijU8aVV9c8L98RIfhZlliLeT5C6L9GoOmTGxcb8RdX7v2OT
+         4E1Yb2sQf3mO2UPnWHJVsVmyO6RT/PQhQ4X0ViHCQrNOMaQlGvfWCKRRq0aGwRZrNn0S
+         jFOXX5DgYDzdcUfm9cNGY/HTdtnASeh8r7Z5g=
+Received: by 10.204.14.14 with SMTP id e14mr1911657bka.4.1297552462757; Sat,
+ 12 Feb 2011 15:14:22 -0800 (PST)
+Received: by 10.204.52.135 with HTTP; Sat, 12 Feb 2011 15:14:22 -0800 (PST)
+In-Reply-To: <1287499168-26569-1-git-send-email-artagnon@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166629>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166630>
 
-Signed-off-by: Vasyl' Vavrychuk <vvavrychuk@gmail.com>
----
- builtin/fetch.c |    6 +++---
- 1 files changed, 3 insertions(+), 3 deletions(-)
+On Tue, Oct 19, 2010 at 16:39, Ramkumar Ramachandra <artagnon@gmail.com=
+> wrote:
 
-diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 357f3cd..2b0b11e 100644
---- a/builtin/fetch.c
-+++ b/builtin/fetch.c
-@@ -385,6 +385,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 		url_len = i + 1;
- 		if (4 < i && !strncmp(".git", url + i - 3, 4))
- 			url_len = i - 3;
-+		url[url_len] = '\0';
- 
- 		note_len = 0;
- 		if (*what) {
-@@ -399,7 +400,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 				    rm->old_sha1),
- 			rm->merge ? "" : "not-for-merge",
- 			note);
--		for (i = 0; i < url_len; ++i)
-+		for (i = 0; url[i]; ++i)
- 			if ('\n' == url[i])
- 				fputs("\\n", fp);
- 			else
-@@ -415,8 +416,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 				 REFCOL_WIDTH, *what ? what : "HEAD");
- 		if (*note) {
- 			if (verbosity >= 0 && !shown_url) {
--				fprintf(stderr, "From %.*s\n",
--						url_len, url);
-+				fprintf(stderr, "From %s\n", url);
- 				shown_url = 1;
- 			}
- 			if (verbosity >= 0)
--- 
-1.7.1
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git update-index -=
+-ignore-submodules --refresh &&
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git diff-files --i=
+gnore-submodules --quiet &&
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 git diff-index --i=
+gnore-submodules --cached --quiet HEAD -- ||
+> - =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 die "refusing to p=
+ull with rebase: your working tree is not up-to-date"
+> + =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 require_clean_work=
+_tree "pull with rebase" "Please commit or stash them."
+
+Doing this sort of thing is basically incompatible with doing
+i18n. I'll work around this when rebasing the ab/i18n series, but in
+the long term we shouldn't be doing stuff like this.
