@@ -1,124 +1,98 @@
 From: Vasyl' Vavrychuk <vvavrychuk@gmail.com>
-Subject: [PATCH 2/4] Extract function trim_url and optimize calls of it.
-Date: Sun, 13 Feb 2011 00:38:29 +0200
-Message-ID: <1297550311-17723-3-git-send-email-vvavrychuk@gmail.com>
+Subject: [PATCH 3/4] Dont use the same variable for different things
+Date: Sun, 13 Feb 2011 00:38:30 +0200
+Message-ID: <1297550311-17723-4-git-send-email-vvavrychuk@gmail.com>
 References: <1297550311-17723-1-git-send-email-vvavrychuk@gmail.com>
 Cc: Vasyl' Vavrychuk <vvavrychuk@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sat Feb 12 23:39:02 2011
+X-From: git-owner@vger.kernel.org Sat Feb 12 23:39:03 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PoO7J-00033k-OL
-	for gcvg-git-2@lo.gmane.org; Sat, 12 Feb 2011 23:39:02 +0100
+	id 1PoO7K-00033k-Ok
+	for gcvg-git-2@lo.gmane.org; Sat, 12 Feb 2011 23:39:03 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752803Ab1BLWir (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Feb 2011 17:38:47 -0500
-Received: from mail-fx0-f46.google.com ([209.85.161.46]:34759 "EHLO
+	id S1752839Ab1BLWi6 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Feb 2011 17:38:58 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:50167 "EHLO
 	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751571Ab1BLWim (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Feb 2011 17:38:42 -0500
-Received: by mail-fx0-f46.google.com with SMTP id 20so3929984fxm.19
-        for <git@vger.kernel.org>; Sat, 12 Feb 2011 14:38:42 -0800 (PST)
+	with ESMTP id S1752584Ab1BLWio (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Feb 2011 17:38:44 -0500
+Received: by fxm20 with SMTP id 20so3929996fxm.19
+        for <git@vger.kernel.org>; Sat, 12 Feb 2011 14:38:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=JUPSHQuAy+5y9WwdP7jMyFHWBTdhOVjHzEcuc8Izgkw=;
-        b=u3QQMIFClnESKwwFr9380/UqJU3zYhGIeuOSHHUgLZnA4h2Lx6djwwBn3ZCp7jQwy4
-         H0XBXgpK97SSLGzasXD+dKCNhJ48wWswWXGoojL9w+XK4Zv0dXMnSCWS7drmXAQ7mC8a
-         PlvFuzfAO0Q7ilywgGCwuEyjH/JvR1ZPY/Ric=
+        bh=6BNb0bIQcBvwIFlaKADP6oz+eeO1SPg+a+G8qbGB3PM=;
+        b=VfAB/e6kdwMpX1G6svgyZpxya1gKGm+8aYLHqWsbzynXsnXsyFk2FZGD2AEID8hEA6
+         4OF63dkRk5/7Wi9GtMbE5eVYTp0gm/U3lx3JpsINabjf3jZSsxzD0w1Ut8F+6ld9Ed7S
+         6rqtrMckI2sGkQua2rey8HQRuM2KSZqc4qAvw=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=BTUyBLzSdJkTn6NJNkD1MxhP5ynccKDiQCxK2/CHjFWtkQqBbd2p424XYqAAkZpv81
-         R3u/3GrLk0tSicYLPsQ0raaYOPdM7CIV9KomE/kyYY/iLqMfkcIEOwVA+Is961c1JhLZ
-         Y3PERl6tFfwjFNGfcK4IFrJxKt8FfHyaeCTt8=
-Received: by 10.223.112.79 with SMTP id v15mr22148565fap.143.1297550322222;
+        b=Qr7E9mc9Wr4pl4w0ULvsX48+OyEw0sMo84+3w2STgiGs3SadYWBPWmRyylA4tsJlU5
+         zwT6Lhx2rhZX7LIDCb1pSaM6Z1FsZI/Qk4dTXlVQ3bbOj2j3UMSNLGl9TsvkWtz+lfO0
+         hPs5bLNc3zzjeMg8AXDxmKDq+mO2CqzValZMk=
+Received: by 10.223.74.200 with SMTP id v8mr7352784faj.144.1297550322980;
         Sat, 12 Feb 2011 14:38:42 -0800 (PST)
 Received: from localhost.localdomain ([91.200.115.239])
-        by mx.google.com with ESMTPS id n7sm369494fam.35.2011.02.12.14.38.41
+        by mx.google.com with ESMTPS id n7sm369494fam.35.2011.02.12.14.38.42
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 12 Feb 2011 14:38:41 -0800 (PST)
+        Sat, 12 Feb 2011 14:38:42 -0800 (PST)
 X-Mailer: git-send-email 1.7.4.1.30.ga83dc
 In-Reply-To: <1297550311-17723-1-git-send-email-vvavrychuk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166625>
-
-Extract compact code into trim_url. Dont call it every iteration in the loop since no reason.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166626>
 
 Signed-off-by: Vasyl' Vavrychuk <vvavrychuk@gmail.com>
 ---
- builtin/fetch.c |   29 ++++++++++++++++++-----------
- 1 files changed, 18 insertions(+), 11 deletions(-)
+ builtin/fetch.c |   13 +++++++------
+ 1 files changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/builtin/fetch.c b/builtin/fetch.c
-index 2b0b11e..46d8fd6 100644
+index 46d8fd6..ddb40c6 100644
 --- a/builtin/fetch.c
 +++ b/builtin/fetch.c
-@@ -89,6 +89,19 @@ static void unlock_pack_on_signal(int signo)
- 	raise(signo);
- }
- 
-+static void trim_url(char *url)
-+{
-+	int i, url_len;
-+
-+	url_len = strlen(url);
-+	for (i = url_len - 1; url[i] == '/' && 0 <= i; i--)
-+		;
-+	url_len = i + 1;
-+	if (4 < i && !strncmp(".git", url + i - 3, 4))
-+		url_len = i - 3;
-+	url[url_len] = '\0';
-+}
-+
- static void add_merge_config(struct ref **head,
- 			   const struct ref *remote_refs,
- 		           struct branch *branch,
-@@ -329,7 +342,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- {
+@@ -343,7 +343,7 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
  	FILE *fp;
  	struct commit *commit;
--	int url_len, i, note_len, shown_url = 0, rc = 0;
-+	int i, note_len, shown_url = 0, rc = 0;
- 	char note[1024];
+ 	int i, note_len, shown_url = 0, rc = 0;
+-	char note[1024];
++	char note[1024], display[1024];
  	const char *what, *kind;
  	struct ref *rm;
-@@ -339,10 +352,12 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 	if (!fp)
- 		return error("cannot open %s: %s\n", filename, strerror(errno));
+ 	char *url, *filename = dry_run ? "/dev/null" : git_path("FETCH_HEAD");
+@@ -415,19 +415,20 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
+ 		fputc('\n', fp);
  
--	if (raw_url)
-+	if (raw_url) {
- 		url = transport_anonymize_url(raw_url);
--	else
-+		trim_url(url);
-+	} else {
- 		url = xstrdup("foreign");
-+	}
- 	for (rm = ref_map; rm; rm = rm->next) {
- 		struct ref *ref = NULL;
- 
-@@ -379,14 +394,6 @@ static int store_updated_refs(const char *raw_url, const char *remote_name,
- 			what = rm->name;
+ 		if (ref) {
+-			rc |= update_local_ref(ref, what, note);
++			rc |= update_local_ref(ref, what, display);
+ 			free(ref);
+-		} else
+-			sprintf(note, "* %-*s %-*s -> FETCH_HEAD",
++		} else {
++			sprintf(display, "* %-*s %-*s -> FETCH_HEAD",
+ 				TRANSPORT_SUMMARY_WIDTH, *kind ? kind : "branch",
+ 				 REFCOL_WIDTH, *what ? what : "HEAD");
+-		if (*note) {
++		}
++		if (*display) {
+ 			if (verbosity >= 0 && !shown_url) {
+ 				fprintf(stderr, "From %s\n", url);
+ 				shown_url = 1;
+ 			}
+ 			if (verbosity >= 0)
+-				fprintf(stderr, " %s\n", note);
++				fprintf(stderr, " %s\n", display);
  		}
- 
--		url_len = strlen(url);
--		for (i = url_len - 1; url[i] == '/' && 0 <= i; i--)
--			;
--		url_len = i + 1;
--		if (4 < i && !strncmp(".git", url + i - 3, 4))
--			url_len = i - 3;
--		url[url_len] = '\0';
--
- 		note_len = 0;
- 		if (*what) {
- 			if (*kind)
+ 	}
+ 	free(url);
 -- 
 1.7.1
