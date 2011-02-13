@@ -1,72 +1,71 @@
-From: Josh Oldenburg <josh.legogeek@gmail.com>
-Subject: Re: Updating git on os x
-Date: Sat, 12 Feb 2011 19:43:23 -0500
-Message-ID: <A6C0F1EC-04C3-4F6F-99C7-0F485A849F6C@gmail.com>
-References: <D67F2DFB-610B-4408-A249-D53F1AC90A68@gmail.com> <4D56DC4E.3030106@dbservice.com>
-Mime-Version: 1.0 (Apple Message framework v1082)
-Content-Type: text/plain; charset=us-ascii
-Content-Transfer-Encoding: 8BIT
-Cc: git@vger.kernel.org
-To: Tomas Carnecky <tom@dbservice.com>
-X-From: git-owner@vger.kernel.org Sun Feb 13 01:43:36 2011
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: [PATCH v2 0/2] mergetool: don't skip modify/remove conflicts
+Date: Sat, 12 Feb 2011 23:09:56 -0500
+Message-ID: <1297570198-21103-1-git-send-email-martin.von.zweigbergk@gmail.com>
+References: <1297134518-4387-1-git-send-email-martin.von.zweigbergk@gmail.com>
+Cc: Junio C Hamano <gitster@pobox.com>, Thomas Rast <tr@thomasrast.ch>,
+	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+To: git@vger.kernel.org
+X-From: git-owner@vger.kernel.org Sun Feb 13 05:10:43 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PoQ3r-0003sg-6z
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Feb 2011 01:43:35 +0100
+	id 1PoTII-0006L3-MS
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Feb 2011 05:10:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752972Ab1BMAn2 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Feb 2011 19:43:28 -0500
-Received: from mail-gy0-f174.google.com ([209.85.160.174]:34052 "EHLO
-	mail-gy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752514Ab1BMAn0 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Sat, 12 Feb 2011 19:43:26 -0500
-Received: by gyb11 with SMTP id 11so1602476gyb.19
-        for <git@vger.kernel.org>; Sat, 12 Feb 2011 16:43:26 -0800 (PST)
+	id S1753811Ab1BMEK3 (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Feb 2011 23:10:29 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:57724 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753529Ab1BMEK2 (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Feb 2011 23:10:28 -0500
+Received: by vws16 with SMTP id 16so2440224vws.19
+        for <git@vger.kernel.org>; Sat, 12 Feb 2011 20:10:27 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:subject:mime-version:content-type:from
-         :in-reply-to:date:cc:content-transfer-encoding:message-id:references
-         :to:x-mailer;
-        bh=ObserSDo80RffTo49sFOB5fYGmdX+DIl0FGhGUItf8Y=;
-        b=kzwA7AiKZLgbGNiUxOqk2J8NswJpTvSijM1AipoxNGHTAQjSUE4BLZU8Hcf7igSge3
-         4sWXWZ+i7guPDvDJtNLjXqlAimtd5A9aKNek56Q31GEfxCvCU63qBSAZakFb8NlrOPdt
-         IJCIxQvAQI50NPj4z8WT5+LxrEnCZo0aB1tos=
+        h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
+         :in-reply-to:references;
+        bh=ZTrcXfCN3fGHcph3pw7O1a13aU4EN7L8K3xq84srMXQ=;
+        b=dJS7r8At2SFpnrPnHYbYxblr2jbsIdwo/9Efq03v8Rb0GFDbMbGKxK8RBFjoFUGf7B
+         lcvkD9NdTmjOYTYwIsJDAZKtw7uTNJQgwAIIEn+TiahaG8En9zMxa3xRe7HsgNtMwQe6
+         yqzIrJyUKSNId6us19vNufStP8S3QWh6VGXU4=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=subject:mime-version:content-type:from:in-reply-to:date:cc
-         :content-transfer-encoding:message-id:references:to:x-mailer;
-        b=aa9WmVdo0IWVlJ5hhAiKV8Oqwa1TBJWsLz32bPddq1IzkSHzB4wU7Duv7vIdUUI0do
-         EOfMZcTBSpVHskcjc+dH914M9tMrlksVM2bd+nMPN31ljQB+ivrX93T+9wtAJ/FQtodr
-         CjVMcSkjIH20yCNyXuk2TLnNT1n9o08Le5Wwc=
-Received: by 10.100.248.13 with SMTP id v13mr950012anh.56.1297557805894;
-        Sat, 12 Feb 2011 16:43:25 -0800 (PST)
-Received: from www.d7.joshuaoldenburg.com (pool-173-65-255-227.tampfl.fios.verizon.net [173.65.255.227])
-        by mx.google.com with ESMTPS id b27sm1345897ana.28.2011.02.12.16.43.24
+        h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
+        b=c9V2D4K1LpTAqMOrux8WZP8y8PaW3CiSEyFbevh5COYnH0qb/MXajfMCyj7cFF7b5h
+         +lofILIgcWu9d4/yynIi+Z8a3l17qU7Gw37p3Rjl6aYeKqW+0QQh2OQFIiOlqrtCOkkI
+         qPSW8ANHE4V/Q6jV2m6ibA2Fsnc+G3sq4xrUA=
+Received: by 10.220.183.10 with SMTP id ce10mr2976582vcb.45.1297570227035;
+        Sat, 12 Feb 2011 20:10:27 -0800 (PST)
+Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id i1sm823215vby.11.2011.02.12.20.10.24
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 12 Feb 2011 16:43:25 -0800 (PST)
-In-Reply-To: <4D56DC4E.3030106@dbservice.com>
-X-Mailer: Apple Mail (2.1082)
+        Sat, 12 Feb 2011 20:10:25 -0800 (PST)
+X-Mailer: git-send-email 1.7.4.rc2.33.g8a14f
+In-Reply-To: <1297134518-4387-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166636>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166637>
 
-I used the mac installer
-Josh The Geek
-josh.legogeek@gmail.com
+Trying again. I hope it looks better this time. The second patch could
+be squashed with the first one.
 
+This applies on top of jc/rerere-remaining.
 
+Martin von Zweigbergk (2):
+  mergetool: don't skip modify/remove conflicts
+  rerere: factor out common conflict search code
 
-On Feb 12, 2011, at 2:15 PM, Tomas Carnecky wrote:
+ builtin/rerere.c     |   21 +++++-----
+ git-mergetool.sh     |    2 +-
+ rerere.c             |  109 +++++++++++++++++++++++++++++---------------------
+ rerere.h             |    8 ++++
+ t/t7610-mergetool.sh |   40 +++++++++++++++---
+ 5 files changed, 117 insertions(+), 63 deletions(-)
 
-> On 2/12/11 2:15 AM, Josh Oldenburg wrote:
->> How do you update git on os x? I have 1.7.3.1. It's not critical, but I like to keep software up to date.
-> How did you install it? macports? homebrew? Compiled it yourself?
-> 
-> tom
-> 
-> 
+-- 
+1.7.4.rc2.33.g8a14f
