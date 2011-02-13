@@ -1,74 +1,97 @@
-From: Jeff King <peff@peff.net>
-Subject: Re: a bug about format-patch of multibyte characters comment
-Date: Sun, 13 Feb 2011 03:52:36 -0500
-Message-ID: <20110213085236.GA2251@sigill.intra.peff.net>
-References: <4D565D3B.7060808@gmail.com>
- <20110213075337.GA12112@sigill.intra.peff.net>
- <20110213083137.GB12112@sigill.intra.peff.net>
- <4D579A35.1000007@gmail.com>
+From: =?UTF-8?B?w4Z2YXIgQXJuZmrDtnLDsCBCamFybWFzb24=?= <avarab@gmail.com>
+Subject: Re: remote branches
+Date: Sun, 13 Feb 2011 10:17:48 +0100
+Message-ID: <AANLkTi=WPAYXg1NCyO+XDw8Jk5v=QBH3nM78CEHytuVQ@mail.gmail.com>
+References: <4D578B6D.9090803@inria.fr>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=UTF-8
 Cc: git@vger.kernel.org
-To: xiaozhu <xiaozhu@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 13 09:52:42 2011
+To: Matthieu Imbert <matthieu.imbert@inria.fr>
+X-From: git-owner@vger.kernel.org Sun Feb 13 10:17:57 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PoXhB-0003bk-Ui
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Feb 2011 09:52:42 +0100
+	id 1PoY5d-0002Xr-03
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Feb 2011 10:17:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753555Ab1BMIwh (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Feb 2011 03:52:37 -0500
-Received: from xen6.gtisc.gatech.edu ([143.215.130.70]:57119 "EHLO peff.net"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1753382Ab1BMIwg (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Feb 2011 03:52:36 -0500
-Received: (qmail 11806 invoked by uid 111); 13 Feb 2011 08:52:35 -0000
-Received: from 99-108-226-0.lightspeed.iplsin.sbcglobal.net (HELO sigill.intra.peff.net) (99.108.226.0)
-  (smtp-auth username relayok, mechanism cram-md5)
-  by peff.net (qpsmtpd/0.40) with ESMTPA; Sun, 13 Feb 2011 08:52:35 +0000
-Received: by sigill.intra.peff.net (sSMTP sendmail emulation); Sun, 13 Feb 2011 03:52:36 -0500
-Content-Disposition: inline
-In-Reply-To: <4D579A35.1000007@gmail.com>
+	id S1753747Ab1BMJRw (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Feb 2011 04:17:52 -0500
+Received: from mail-fx0-f46.google.com ([209.85.161.46]:33452 "EHLO
+	mail-fx0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1753584Ab1BMJRu (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Feb 2011 04:17:50 -0500
+Received: by fxm20 with SMTP id 20so4131984fxm.19
+        for <git@vger.kernel.org>; Sun, 13 Feb 2011 01:17:49 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type;
+        bh=m7CAVPQUrkDjSKVaZakeyXqIo71GPuDrJ6jcXUSJsKQ=;
+        b=SDpqysRRRrSePmrLTGEdd3g72BjVZIu4Bsh8gHtDFheUsA/he0sUZNrNS+j63smY3Z
+         GFyafLSxwvre2/orKCTxgf9dLhWYgI313k7TU3fjFwRGtxSR1Cs5KZpQ/vc+ef52wjuM
+         B2JwYOQkYZXbZfxtTXlMwnJQa8GMIHOoJN820=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type;
+        b=YSrZskNtd87B8iuRqCprTmFch6qAZcX3bDUSYXdwJFTDr87RUnZVvx86NvRK36sfJy
+         CsjQI4UfomzlJHoBRvSHa5KBr0b6j0wLEGQf3vfqHIXRqJGASZJXAaK8+xScAf5I9PH9
+         oUKeNJ9vlk3D7oT5eLVKcJeU8ock1/hCKpOEA=
+Received: by 10.223.111.137 with SMTP id s9mr2911393fap.98.1297588668157; Sun,
+ 13 Feb 2011 01:17:48 -0800 (PST)
+Received: by 10.223.2.201 with HTTP; Sun, 13 Feb 2011 01:17:48 -0800 (PST)
+In-Reply-To: <4D578B6D.9090803@inria.fr>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166646>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166647>
 
-On Sun, Feb 13, 2011 at 05:45:41PM +0900, xiaozhu wrote:
+On Sun, Feb 13, 2011 at 08:42, Matthieu Imbert <matthieu.imbert@inria.fr> wrote:
 
-> >Shouldn't we still be generating "one two three", encoding it via
-> >rfc2047 if necessary, and _then_ deciding if folding is required? Yes,
-> >individual lines in a multi-line subject are good candidates for
-> >folding, but don't we need to be checking for and folding long lines
-> >anyway?
-> 
-> It seems that by rfc2047 there is no multi-line subject spec. A subject
-> with multi-line will be always conflated to one single line.
+> $ git clone
+> git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux-2.6.git
+> linux-2.6.git
+>
+> - then i add a remote tracking branch:
+>
+> $ git remote add --tags drm-intel
+> git://git.kernel.org/pub/scm/linux/kernel/git/ickle/drm-intel.git
 
-Sorry, I don't quite parse what you're saying. If the header takes up
-multiple lines, then yes, that gets decoded as a single line by rfc822
-header folding. I would then expect that result to be rfc2047-decoded if
-necessary, and in theory it could contain encoded newlines.
+You're adding a remote repository and tracking branches and tags from
+it.
 
-> And also that if we just generate the subject within multi-line just
-> like the current implemention, yes, we can modify the git-am to decode
-> it correctly, but most of the mail client will can not show it
-> correctly.
+> - Then i do git fetch or git fetch drm-intel, but nothing happens, and git
+> branch -r still only show me origin/HEAD and origin/master, no drm-intel
+> branches, though these branches do exist since i can see them with git
+> remote -v show drm-intel
 
-Again, I don't quite understand what you're saying. The output generated
-by format-patch now is _not_ valid according to rfc2822. Changing git-am
-to parse its bogus output won't help that.
+You didn't add any remote tracking *branch*, you added a remote and
+gave it the name "drm-intel". You could just as well do:
 
-> So it seems that there is only one way that combining the whole first
-> paragraph to a single line? But it will be a nightmare for some long comment.
+    git remote add --tags some-random-name
+git://git.kernel.org/pub/scm/linux/kernel/git/ickle/drm-intel.git
 
-It's not the only way, but it is how we treat multi-line subjects in all
-other parts of git, so it is at least consistent (and that behavior was
-agreed upon after seeing what is worse: truncating to a single line, or
-merging lines).
+Also because you specified --tags you're only getting the tags on "git
+fetch", if you don't do that then:
 
--Peff
+    $ git fetch some-random-name
+    remote: Counting objects: 567, done.
+    remote: Compressing objects: 100% (377/377), done.
+    remote: Total 488 (delta 371), reused 146 (delta 111)
+    Receiving objects: 100% (488/488), 91.42 KiB, done.
+    Resolving deltas: 100% (371/371), completed with 53 local objects.
+    From git://git.kernel.org/pub/scm/linux/kernel/git/ickle/drm-intel
+     * [new branch]      drm-intel-fixes -> some-random-name/drm-intel-fixes
+     * [new branch]      drm-intel-fixes-2 -> some-random-name/drm-intel-fixes-2
+     * [new branch]      drm-intel-next -> some-random-name/drm-intel-next
+     * [new branch]      drm-intel-staging -> some-random-name/drm-intel-staging
+
+Which allows you to do:
+
+    $ git checkout --track some-random-name/drm-intel-fixes
+    Branch drm-intel-fixes set up to track remote branch
+drm-intel-fixes from some-random-name.
+    Switched to a new branch 'drm-intel-fixes'
