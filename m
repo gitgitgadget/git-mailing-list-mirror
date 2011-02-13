@@ -1,337 +1,249 @@
 From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
-Subject: [PATCH v2 1/2] mergetool: don't skip modify/remove conflicts
-Date: Sat, 12 Feb 2011 23:09:57 -0500
-Message-ID: <1297570198-21103-2-git-send-email-martin.von.zweigbergk@gmail.com>
+Subject: [PATCH v2 2/2] rerere: factor out common conflict search code
+Date: Sat, 12 Feb 2011 23:09:58 -0500
+Message-ID: <1297570198-21103-3-git-send-email-martin.von.zweigbergk@gmail.com>
 References: <1297134518-4387-1-git-send-email-martin.von.zweigbergk@gmail.com>
  <1297570198-21103-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Cc: Junio C Hamano <gitster@pobox.com>, Thomas Rast <tr@thomasrast.ch>,
 	Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Sun Feb 13 05:10:44 2011
+X-From: git-owner@vger.kernel.org Sun Feb 13 05:10:58 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PoTIJ-0006L3-6g
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Feb 2011 05:10:43 +0100
+	id 1PoTIW-0006Ot-Sr
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Feb 2011 05:10:57 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1753915Ab1BMEKk (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sat, 12 Feb 2011 23:10:40 -0500
+	id S1753957Ab1BMEKn (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sat, 12 Feb 2011 23:10:43 -0500
 Received: from mail-vw0-f46.google.com ([209.85.212.46]:57724 "EHLO
 	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1753876Ab1BMEKe (ORCPT <rfc822;git@vger.kernel.org>);
-	Sat, 12 Feb 2011 23:10:34 -0500
+	with ESMTP id S1753896Ab1BMEKj (ORCPT <rfc822;git@vger.kernel.org>);
+	Sat, 12 Feb 2011 23:10:39 -0500
 Received: by mail-vw0-f46.google.com with SMTP id 16so2440224vws.19
-        for <git@vger.kernel.org>; Sat, 12 Feb 2011 20:10:33 -0800 (PST)
+        for <git@vger.kernel.org>; Sat, 12 Feb 2011 20:10:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
         h=domainkey-signature:from:to:cc:subject:date:message-id:x-mailer
          :in-reply-to:references;
-        bh=qecPZrA07ndYsWjUlFh0KggJMb2tjZcX3fkvkpQjCH0=;
-        b=C+DwiZwv40nbZ8jHiyuD5vVAj2onFdWmnQRIh4/36R7m3LTiKW8J+qeNE+t/QrLtnG
-         jGVWmGqnIwcxVi08BOAGP2hxscw+2+CF7xcwVRxQUobBLepmXcpVeLK8btue9UFwrCqH
-         tlth6f+VkSvb9xiF0EuTd5qBjM0RkBhV0keCs=
+        bh=zK7N6M+EWyTnQHMZSAPNxDFtAPTySV3ZByh3jKkqOy0=;
+        b=wk4/6vn+8pG476Vm3ArSnnmDbs6COHTpr3yl8/5/Z6VTlYpecu8EPn1fzA8kT3TAcK
+         3Sv0bg6dBtx2FZztsfjIfRv+WXMzo2Ic2hPkvPRmxRIk9pvkCjJmyqY7XT6fRJtzcpqC
+         ONmbNATf4kHy7eZTsAMCBEIWMZmYOv8RocZrE=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
         h=from:to:cc:subject:date:message-id:x-mailer:in-reply-to:references;
-        b=eLMpWEk3QPaU6wY7XKWve/Yth3RMPY1vCi93dQ6hmq6F9arGD0lKQy102jeMlevCxT
-         6zo66wv/UNVRWwsAevQo/PNpZpX4up5aWlHyELaamJMA5eZh0oGG33vdtOax8Wihavx2
-         zk2L2j2tknZM2g0xde8MYyXgi7EyrOjG5W54k=
-Received: by 10.220.178.69 with SMTP id bl5mr3002175vcb.50.1297570233571;
-        Sat, 12 Feb 2011 20:10:33 -0800 (PST)
+        b=uIRSZQm1k3YrHo094v3ds8w3d9nFgOiVSUQc1mdD4oqLOgyGd2+JEVJDCPdYqSU3tX
+         baeBKQL2K74XIfjXSMqNXBidDetidsf2tgUELJJeqHey6N8x0ibwjrn75Mj7EanB2vQo
+         WIw9yRk4bdA/jQLSH58hBbfiT4KwiMmsNoGCs=
+Received: by 10.220.201.197 with SMTP id fb5mr2985221vcb.53.1297570237927;
+        Sat, 12 Feb 2011 20:10:37 -0800 (PST)
 Received: from localhost.localdomain (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
-        by mx.google.com with ESMTPS id i1sm823215vby.11.2011.02.12.20.10.31
+        by mx.google.com with ESMTPS id i1sm823215vby.11.2011.02.12.20.10.36
         (version=TLSv1/SSLv3 cipher=OTHER);
-        Sat, 12 Feb 2011 20:10:32 -0800 (PST)
+        Sat, 12 Feb 2011 20:10:37 -0800 (PST)
 X-Mailer: git-send-email 1.7.4.rc2.33.g8a14f
 In-Reply-To: <1297570198-21103-1-git-send-email-martin.von.zweigbergk@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166638>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166639>
 
-Since bb0a484 (mergetool: Skip autoresolved paths, 2010-08-17),
-mergetool uses different ways of figuring out the list of files with
-merge conflicts depending on whether rerere is active. If rerere is
-active, mergetool will use 'git rerere status' to list the files with
-remaining conflicts. However, the output from that command does not
-list conflicts of types that rerere does not handle, such as
-modify/remove conflicts.
-
-Another problem with solely relying on the output from 'git rerere
-status' is that, for new conflicts that are not yet known to rerere,
-the output from the command will list the files even after adding them
-to the index. This means that if the conflicts in some files have been
-resolved and 'git mergetool' is run again, it will ask the user
-something like the following for each of those files.
-
- file1: file does not need merging
- Continue merging other unresolved paths (y/n) ?
-
-Solve the first of these problems by replacing the call to 'git rerere
-status' with a call to the new 'git rerere remaining' that was
-introduced in the previous commit. Solve the second problem by
-modifying 'git rerere remaining' not to output files that have already
-been staged.
+A little bit of the code in the new rerere_remaining function is
+shared with find_conflicts. Factor this out into a new function that
+is called from the two mentioned functions. Apart from reducing code
+duplication, it also means that the callers of find_conflict do not
+need to handle the case when the util pointer is NULL, because that is
+only set in rerere_remaining now.
 
 Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
 ---
+ rerere.c |  105 +++++++++++++++++++++++++++++++------------------------------
+ rerere.h |    2 +-
+ 2 files changed, 54 insertions(+), 53 deletions(-)
 
-Ideally, I would have liked to just remove the resolved elements from
-the string_list, but since there is no function that drops an element,
-I marked it by pointing its util field to a special address. Is this a
-good way of doing it or can/should I manually unlink the element from
-the list instead?
-
- builtin/rerere.c     |   21 +++++++++++----------
- git-mergetool.sh     |    2 +-
- rerere.c             |   24 ++++++++++++++++++++----
- rerere.h             |    8 ++++++++
- t/t7610-mergetool.sh |   40 ++++++++++++++++++++++++++++++++++------
- 5 files changed, 74 insertions(+), 21 deletions(-)
-
-diff --git a/builtin/rerere.c b/builtin/rerere.c
-index 081fccc..7b9fe18 100644
---- a/builtin/rerere.c
-+++ b/builtin/rerere.c
-@@ -147,8 +147,6 @@ int cmd_rerere(int argc, const char **argv, const char *prefix)
- 	if (!strcmp(argv[0], "clear")) {
- 		for (i = 0; i < merge_rr.nr; i++) {
- 			const char *name = (const char *)merge_rr.items[i].util;
--			if (!name)
--				continue;
- 			if (!has_rerere_resolution(name))
- 				unlink_rr_item(name);
- 		}
-@@ -157,19 +155,22 @@ int cmd_rerere(int argc, const char **argv, const char *prefix)
- 		garbage_collect(&merge_rr);
- 	else if (!strcmp(argv[0], "status"))
- 		for (i = 0; i < merge_rr.nr; i++) {
--			if (!merge_rr.items[i].util)
--				continue;
- 			printf("%s\n", merge_rr.items[i].string);
- 		}
--	else if (!strcmp(argv[0], "remaining"))
--		for (i = 0; i < merge_rr.nr; i++)
--			printf("%s\n", merge_rr.items[i].string);
--	else if (!strcmp(argv[0], "diff"))
-+	else if (!strcmp(argv[0], "remaining")) {
-+		rerere_remaining(&merge_rr);
-+		for (i = 0; i < merge_rr.nr; i++) {
-+			if (merge_rr.items[i].util != RERERE_RESOLVED)
-+				printf("%s\n", merge_rr.items[i].string);
-+			else
-+				/* prepare for later call to
-+				 * string_list_clear() */
-+				merge_rr.items[i].util = NULL;
-+		}
-+	} else if (!strcmp(argv[0], "diff"))
- 		for (i = 0; i < merge_rr.nr; i++) {
- 			const char *path = merge_rr.items[i].string;
- 			const char *name = (const char *)merge_rr.items[i].util;
--			if (!name)
--				continue;
- 			diff_two(rerere_path(name, "preimage"), path, path, path);
- 		}
- 	else
-diff --git a/git-mergetool.sh b/git-mergetool.sh
-index 2f8dc44..bacbda2 100755
---- a/git-mergetool.sh
-+++ b/git-mergetool.sh
-@@ -269,7 +269,7 @@ rerere=false
- files_to_merge() {
-     if test "$rerere" = true
-     then
--	git rerere status
-+	git rerere remaining
-     else
- 	git ls-files -u | sed -e 's/^[^	]*	//' | sort -u
-     fi
 diff --git a/rerere.c b/rerere.c
-index eb47f97..e5bccd5 100644
+index e5bccd5..d14fd9a 100644
 --- a/rerere.c
 +++ b/rerere.c
-@@ -7,6 +7,8 @@
+@@ -7,6 +7,9 @@
  #include "ll-merge.h"
  #include "attr.h"
  
-+void *RERERE_RESOLVED = &RERERE_RESOLVED;
-+
- /* if rerere_enabled == -1, fall back to detection of .git/rr-cache */
- static int rerere_enabled = -1;
++#define RESOLVED 0
++#define PUNTED 1
++#define THREE_STAGED 2
+ void *RERERE_RESOLVED = &RERERE_RESOLVED;
  
-@@ -388,16 +390,31 @@ static int find_conflict(struct string_list *conflict)
+ /* if rerere_enabled == -1, fall back to detection of .git/rr-cache */
+@@ -347,75 +350,79 @@ static int handle_cache(const char *path, unsigned char *sha1, const char *outpu
+ 	return hunk_no;
+ }
+ 
++
++static int check_one_conflict(int i, int *type)
++{
++	struct cache_entry *e = active_cache[i];
++	struct string_list_item *it;
++
++	if (!ce_stage(e)) {
++		*type = RESOLVED;
++		return i + 1;
++	}
++
++	*type = PUNTED;
++	if (ce_stage(e) == 1) {
++		if (active_nr <= ++i)
++			return i + 1;
++	}
++
++	/* Only handle regular files with both stages #2 and #3 */
++	if (i + 1 < active_nr) {
++		struct cache_entry *e2 = active_cache[i];
++		struct cache_entry *e3 = active_cache[i + 1];
++		if (ce_stage(e2) == 2 &&
++		    ce_stage(e3) == 3 &&
++		    ce_same_name(e, e3) &&
++		    S_ISREG(e2->ce_mode) &&
++		    S_ISREG(e3->ce_mode))
++			*type = THREE_STAGED;
++	}
++
++	/* Skip the entries with the same name */
++	while (i < active_nr && ce_same_name(e, active_cache[i]))
++		i++;
++	return i;
++}
++
+ static int find_conflict(struct string_list *conflict)
+ {
+ 	int i;
+ 	if (read_cache() < 0)
+ 		return error("Could not read index");
+ 
+-	/*
+-	 * Collect paths with conflict, mark them with NULL (punted) or
+-	 * !NULL (eligible) in their ->util field.
+-	 */
+-	for (i = 0; i < active_nr; i++) {
++	for (i = 0; i < active_nr;) {
++		int conflict_type;
+ 		struct cache_entry *e = active_cache[i];
+-		struct string_list_item *it;
+-
+-		if (!ce_stage(e))
+-			continue;
+-		it = string_list_insert(conflict, (const char *)e->name);
+-		it->util = NULL;
+-		if (ce_stage(e) == 1) {
+-			if (active_nr <= ++i)
+-				break;
+-		}
+-
+-		/* Only handle regular files with both stages #2 and #3 */
+-		if (i + 1 < active_nr) {
+-			struct cache_entry *e2 = active_cache[i];
+-			struct cache_entry *e3 = active_cache[i + 1];
+-			if (ce_stage(e2) == 2 &&
+-			    ce_stage(e3) == 3 &&
+-			    ce_same_name(e, e3) &&
+-			    S_ISREG(e2->ce_mode) &&
+-			    S_ISREG(e3->ce_mode))
+-				it->util = (void *) 1;
+-		}
+-
+-		/* Skip the entries with the same name */
+-		while (i < active_nr && ce_same_name(e, active_cache[i]))
+-			i++;
+-		i--; /* compensate for the outer loop */
++		i = check_one_conflict(i, &conflict_type);
++		if (conflict_type == THREE_STAGED)
++			string_list_insert(conflict, (const char *)e->name);
+ 	}
  	return 0;
  }
  
--static void add_punted(struct string_list *merge_rr)
-+void rerere_remaining(struct string_list *merge_rr)
+-void rerere_remaining(struct string_list *merge_rr)
++int rerere_remaining(struct string_list *merge_rr)
  {
  	int i;
- 	struct string_list conflict = STRING_LIST_INIT_DUP;
+-	struct string_list conflict = STRING_LIST_INIT_DUP;
+-
+-	/* Add punted paths */
+-	find_conflict(&conflict);
+-	for (i = 0; i < conflict.nr; i++) {
+-		if (!conflict.items[i].util)
+-			string_list_insert(merge_rr, conflict.items[i].string);
+-	}
++	if (read_cache() < 0)
++		return error("Could not read index");
  
-+	/* Add punted paths */
+-	/* Mark already resolved paths */
+-	for (i = 0; i < active_nr; i++) {
++	for (i = 0; i < active_nr;) {
++		int conflict_type;
+ 		struct cache_entry *e = active_cache[i];
+-
+-		if (!ce_stage(e)) {
++		i = check_one_conflict(i, &conflict_type);
++		if (conflict_type == PUNTED)
++			string_list_insert(merge_rr, (const char *)e->name);
++		else if (conflict_type == RESOLVED) {
+ 			struct string_list_item *it;
+ 			it = string_list_lookup(merge_rr, (const char *)e->name);
+ 			if (it != NULL) {
+ 				free(it->util);
+ 				it->util = RERERE_RESOLVED;
+ 			}
+-			continue;
+ 		}
+ 	}
++	return 0;
+ }
+ 
+ static int merge(const char *name, const char *path)
+@@ -504,8 +511,6 @@ static int do_plain_rerere(struct string_list *rr, int fd)
+ 
+ 	for (i = 0; i < conflict.nr; i++) {
+ 		const char *path = conflict.items[i].string;
+-		if (!conflict.items[i].util)
+-			continue; /* punted */
+ 		if (!string_list_has_string(rr, path)) {
+ 			unsigned char sha1[20];
+ 			char *hex;
+@@ -533,8 +538,6 @@ static int do_plain_rerere(struct string_list *rr, int fd)
+ 		const char *path = rr->items[i].string;
+ 		const char *name = (const char *)rr->items[i].util;
+ 
+-		if (!name)
+-			continue;
+ 		if (has_rerere_resolution(name)) {
+ 			if (!merge(name, path)) {
+ 				if (rerere_autoupdate)
+@@ -664,8 +667,6 @@ int rerere_forget(const char **pathspec)
  	find_conflict(&conflict);
  	for (i = 0; i < conflict.nr; i++) {
--		if (conflict.items[i].util)
-+		if (!conflict.items[i].util)
-+			string_list_insert(merge_rr, conflict.items[i].string);
-+	}
-+
-+	/* Mark already resolved paths */
-+	for (i = 0; i < active_nr; i++) {
-+		struct cache_entry *e = active_cache[i];
-+
-+		if (!ce_stage(e)) {
-+			struct string_list_item *it;
-+			it = string_list_lookup(merge_rr, (const char *)e->name);
-+			if (it != NULL) {
-+				free(it->util);
-+				it->util = RERERE_RESOLVED;
-+			}
+ 		struct string_list_item *it = &conflict.items[i];
+-		if (!conflict.items[i].util)
+-			continue; /* punted */
+ 		if (!match_pathspec(pathspec, it->string, strlen(it->string),
+ 				    0, NULL))
  			continue;
--		string_list_insert(merge_rr, conflict.items[i].string);
-+		}
- 	}
- }
- 
-@@ -592,7 +609,6 @@ int setup_rerere(struct string_list *merge_rr, int flags)
- 	fd = hold_lock_file_for_update(&write_lock, merge_rr_path,
- 				       LOCK_DIE_ON_ERROR);
- 	read_rr(merge_rr);
--	add_punted(merge_rr);
- 	return fd;
- }
- 
 diff --git a/rerere.h b/rerere.h
-index eaa9004..ea2618b 100644
+index ea2618b..595f49f 100644
 --- a/rerere.h
 +++ b/rerere.h
-@@ -6,11 +6,19 @@
- #define RERERE_AUTOUPDATE   01
- #define RERERE_NOAUTOUPDATE 02
- 
-+/*
-+ * Marks paths that have been hand-resolved and added to the
-+ * index. Set in the util field of such paths after calling
-+ * rerere_remaining.
-+ */
-+extern void *RERERE_RESOLVED;
-+
- extern int setup_rerere(struct string_list *, int);
- extern int rerere(int);
+@@ -18,7 +18,7 @@ extern int rerere(int);
  extern const char *rerere_path(const char *hex, const char *file);
  extern int has_rerere_resolution(const char *hex);
  extern int rerere_forget(const char **);
-+extern void rerere_remaining(struct string_list *);
+-extern void rerere_remaining(struct string_list *);
++extern int rerere_remaining(struct string_list *);
  
  #define OPT_RERERE_AUTOUPDATE(v) OPT_UYN(0, "rerere-autoupdate", (v), \
  	"update the index with reused conflict resolution if possible")
-diff --git a/t/t7610-mergetool.sh b/t/t7610-mergetool.sh
-index d78bdec..dc838c9 100755
---- a/t/t7610-mergetool.sh
-+++ b/t/t7610-mergetool.sh
-@@ -16,23 +16,33 @@ Testing basic merge tool invocation'
- test_expect_success 'setup' '
-     git config rerere.enabled true &&
-     echo master >file1 &&
-+    echo master file11 >file11 &&
-+    echo master file12 >file12 &&
-+    echo master file13 >file13 &&
-+    echo master file14 >file14 &&
-     mkdir subdir &&
-     echo master sub >subdir/file3 &&
--    git add file1 subdir/file3 &&
--    git commit -m "added file1" &&
-+    git add file1 file1[1-4] subdir/file3 &&
-+    git commit -m "add initial versions" &&
- 
-     git checkout -b branch1 master &&
-     echo branch1 change >file1 &&
-     echo branch1 newfile >file2 &&
-+    echo branch1 change file11 >file11 &&
-+    echo branch1 change file13 >file13 &&
-     echo branch1 sub >subdir/file3 &&
--    git add file1 file2 subdir/file3 &&
-+    git add file1 file11 file13 file2 subdir/file3 &&
-+    git rm file12 &&
-     git commit -m "branch1 changes" &&
- 
-     git checkout master &&
-     echo master updated >file1 &&
-     echo master new >file2 &&
-+    echo master updated file12 >file12 &&
-+    echo master updated file14 >file14 &&
-     echo master new sub >subdir/file3 &&
--    git add file1 file2 subdir/file3 &&
-+    git add file1 file12 file14 file2 subdir/file3 &&
-+    git rm file11 &&
-     git commit -m "master updates" &&
- 
-     git config merge.tool mytool &&
-@@ -46,6 +56,8 @@ test_expect_success 'custom mergetool' '
-     ( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
-     ( yes "" | git mergetool file2 >/dev/null 2>&1 ) &&
-     ( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
-+    ( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
-     test "$(cat file1)" = "master updated" &&
-     test "$(cat file2)" = "master new" &&
-     test "$(cat subdir/file3)" = "master new sub" &&
-@@ -59,6 +71,8 @@ test_expect_success 'mergetool crlf' '
-     ( yes "" | git mergetool file1 >/dev/null 2>&1 ) &&
-     ( yes "" | git mergetool file2 >/dev/null 2>&1 ) &&
-     ( yes "" | git mergetool subdir/file3 >/dev/null 2>&1 ) &&
-+    ( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
-+    ( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
-     test "$(printf x | cat file1 -)" = "$(printf "master updated\r\nx")" &&
-     test "$(printf x | cat file2 -)" = "$(printf "master new\r\nx")" &&
-     test "$(printf x | cat subdir/file3 -)" = "$(printf "master new sub\r\nx")" &&
-@@ -82,6 +96,8 @@ test_expect_success 'mergetool on file in parent dir' '
- 	cd subdir &&
- 	( yes "" | git mergetool ../file1 >/dev/null 2>&1 ) &&
- 	( yes "" | git mergetool ../file2 >/dev/null 2>&1 ) &&
-+	( yes "d" | git mergetool ../file11 >/dev/null 2>&1 ) &&
-+	( yes "d" | git mergetool ../file12 >/dev/null 2>&1 ) &&
- 	test "$(cat ../file1)" = "master updated" &&
- 	test "$(cat ../file2)" = "master new" &&
- 	git commit -m "branch1 resolved with mergetool - subdir"
-@@ -92,6 +108,8 @@ test_expect_success 'mergetool skips autoresolved' '
-     git checkout -b test4 branch1 &&
-     test_must_fail git merge master &&
-     test -n "$(git ls-files -u)" &&
-+    ( yes "d" | git mergetool file11 >/dev/null 2>&1 ) &&
-+    ( yes "d" | git mergetool file12 >/dev/null 2>&1 ) &&
-     output="$(git mergetool --no-prompt)" &&
-     test "$output" = "No files need merging" &&
-     git reset --hard
-@@ -102,13 +120,23 @@ test_expect_success 'mergetool merges all from subdir' '
- 	cd subdir &&
- 	git config rerere.enabled false &&
- 	test_must_fail git merge master &&
--	git mergetool --no-prompt &&
-+	( yes "d" "d" | git mergetool --no-prompt ) &&
- 	test "$(cat ../file1)" = "master updated" &&
- 	test "$(cat ../file2)" = "master new" &&
- 	test "$(cat file3)" = "master new sub" &&
--	git add ../file1 ../file2 file3 &&
- 	git commit -m "branch2 resolved by mergetool from subdir"
-     )
- '
- 
-+test_expect_success 'mergetool skips resolved paths when rerere is active' '
-+    git config rerere.enabled true &&
-+    rm -rf .git/rr-cache &&
-+    git checkout -b test5 branch1
-+    test_must_fail git merge master >/dev/null 2>&1 &&
-+    ( yes "d" "d" | git mergetool --no-prompt >/dev/null 2>&1 ) &&
-+    output="$(yes "n" | git mergetool --no-prompt)" &&
-+    test "$output" = "No files need merging" &&
-+    git reset --hard
-+'
-+
- test_done
 -- 
 1.7.4.rc2.33.g8a14f
