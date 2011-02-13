@@ -1,120 +1,99 @@
-From: Henrique de Moraes Holschuh <hmh@hmh.eng.br>
-Subject: [STGIT] AssertionError on stg rebase
-Date: Sun, 13 Feb 2011 17:35:34 -0200
-Message-ID: <20110213193534.GA2437@khazad-dum.debian.net>
+From: Jonathan Nieder <jrnieder@gmail.com>
+Subject: Re: Consistent terminology: cached/staged/index
+Date: Sun, 13 Feb 2011 13:37:38 -0600
+Message-ID: <20110213193738.GA26868@elie>
+References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Cc: git@vger.kernel.org
-To: Catalin Marinas <catalin.marinas@gmail.com>
-X-From: git-owner@vger.kernel.org Sun Feb 13 20:35:51 2011
+To: Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>
+X-From: git-owner@vger.kernel.org Sun Feb 13 20:37:51 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pohja-0008CT-I4
-	for gcvg-git-2@lo.gmane.org; Sun, 13 Feb 2011 20:35:50 +0100
+	id 1PohlW-0000ZO-Uc
+	for gcvg-git-2@lo.gmane.org; Sun, 13 Feb 2011 20:37:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1754836Ab1BMTfq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Feb 2011 14:35:46 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:35079 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1754762Ab1BMTfo (ORCPT
-	<rfc822;git@vger.kernel.org>); Sun, 13 Feb 2011 14:35:44 -0500
-Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id DFD7720936;
-	Sun, 13 Feb 2011 14:35:43 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute2.internal (MEProxy); Sun, 13 Feb 2011 14:35:43 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=date:from:to:cc:subject:message-id:mime-version:content-type; s=smtpout; bh=KghWDxDx6Hc7ViczQV2s8jNpE+g=; b=gA3IbL+9fTUb5Bs+SSFKdrwzRYnzIKE9d7//pN+COQ12SNnwh3uczwOcKezHdNwXtQ7tm1+eqgIhC4xvIevEiQSZgnVBHSPshK7rziZqkgS9vK72CyrQKvBmlTg0qMBEhL79jZ/sjqJpGkRspIPivjQqAWCUkbYSoj9WBxPMJSw=
-X-Sasl-enc: QsjZ9fdZDcENr7xUAWxkdUhroYXV8phu9D3jtIvA08or 1297625743
-Received: from khazad-dum.debian.net (unknown [201.82.68.120])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 9082B401586;
-	Sun, 13 Feb 2011 14:35:43 -0500 (EST)
-Received: from localhost (localhost [127.0.0.1])
-	by localhost.khazad-dum.debian.net (Postfix) with ESMTP id B9729E0104;
-	Sun, 13 Feb 2011 17:35:41 -0200 (BRST)
-X-Virus-Scanned: Debian amavisd-new at khazad-dum.debian.net
-Received: from khazad-dum.debian.net ([127.0.0.1])
-	by localhost (khazad-dum2.khazad-dum.debian.net [127.0.0.1]) (amavisd-new, port 10024)
-	with LMTP id 51NHmvYGaMFv; Sun, 13 Feb 2011 17:35:34 -0200 (BRST)
-Received: by khazad-dum.debian.net (Postfix, from userid 1000)
-	id 93CE0E1A4A; Sun, 13 Feb 2011 17:35:34 -0200 (BRST)
+	id S1754853Ab1BMThq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Feb 2011 14:37:46 -0500
+Received: from mail-gw0-f46.google.com ([74.125.83.46]:40231 "EHLO
+	mail-gw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754762Ab1BMThp (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Feb 2011 14:37:45 -0500
+Received: by gwj20 with SMTP id 20so1774148gwj.19
+        for <git@vger.kernel.org>; Sun, 13 Feb 2011 11:37:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:to:cc:subject:message-id:references
+         :mime-version:content-type:content-disposition:in-reply-to
+         :user-agent;
+        bh=+FZ1xtA9O8oKznZgEH/Np/T9q/tsOjoh77s1132f5Yo=;
+        b=aNaYhRunw+7Ck0+7zxN4M0Mloxqb6Lxc1qNiqS2f2atvYV3A3Zo/WgrwjFkwNDKbgd
+         PoFFs1DuGn4LnN/P2HABTNLjEc8EvDiY/UJtKUOmysLLE9lItN7LRL9ViSQtyZtIFwUW
+         ML8YtIa09Q8CdB6ZZ+DkS44CQBlRoWufNmVOQ=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-type:content-disposition:in-reply-to:user-agent;
+        b=ZwZM+8/gm9Z6Ke5XRKl1oBoBU10pIt8dkSNST1gy8ZZW0Tj+8gw81f2QypDKenxqLS
+         BwV2JnfTQaVrZIkAlyPeZm4BCY+WrcK8djC5M8y2vrjii2TR2zgjvGFEO2k/Mes0wSTx
+         jvwJDwZiCGGQiBiBIMsjVYPKFr/0euUJ1fuN0=
+Received: by 10.150.211.17 with SMTP id j17mr3387354ybg.225.1297625864649;
+        Sun, 13 Feb 2011 11:37:44 -0800 (PST)
+Received: from elie (adsl-69-209-71-45.dsl.chcgil.sbcglobal.net [69.209.71.45])
+        by mx.google.com with ESMTPS id 8sm995831yhl.44.2011.02.13.11.37.43
+        (version=SSLv3 cipher=OTHER);
+        Sun, 13 Feb 2011 11:37:43 -0800 (PST)
 Content-Disposition: inline
-X-GPG-Fingerprint: 1024D/1CDB0FE3 5422 5C61 F6B7 06FB 7E04  3738 EE25 DE3F
- 1CDB 0FE3
-User-Agent: Mutt/1.5.20 (2009-06-14)
+In-Reply-To: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
+User-Agent: Mutt/1.5.21 (2010-09-15)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166677>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166678>
 
-(please keep me CC'd, I am currently not subscribed to the git ML)
+Piotr Krukowiecki wrote:
 
-It appears stgit dislikes something on the v2.6.27 longterm tree, or
-something else is hosed on my system.  It is causing me a lot of
-trouble, I now have a few backport branches that are unusable, and that
-I'd like very much to fix...
+> is there a plan for using one term instead of three to describe
+> operations on index?
 
-Tested with stgit 0.15, and also stgit "proposed" branch.  Debian
-squeeze, both in ia32 and x86-64.
+No.  But ideas (and especially patches) for improving the
+documentation would be appreciated.
 
+> From quick search:
+> * "add" mentions index and staging
+> * all commands except one take "--cached" only
+> * "diff" also takes "--staged"
+> * "diff" mentions index and staging
+> * "log" mentions index
+> * "reset" mentions index
 
-Here is a testcase to reproduce the problem:
+If I understand correctly, the intended semantics are:
 
-$ git clone git://git.kernel.org/pub/scm/linux/kernel/git/longterm/linux-2.6.27.y.git
-$ cd linux-2.6.27.y
-$ git reset --hard v2.6.27.53
-$ stg init
-$ stg new test-patch-1
-$ echo "something" > changedfile
-$ git add changedfile
-$ stg refresh
+--index versus --cached
+~~~~~~~~~~~~~~~~~~~~~~~
+The place where changes for the next commit get registered is called
+the "index file".
 
-$ stg rebase v2.6.27.58
+Commands that pay attention to the registered content of files rather
+than the copies in the work tree use the option name "--cached".  This
+is mostly for historical reasons --- early on, it was not obvious that
+making the index not match the worktree was going to be useful.
 
-Checking for changes in the working directory ... done
-Popping all applied patches ... done
-Rebasing to "v2.6.27.58" ... done
-Pushing patch "test-patch-1" ... done
-Now at patch "test-patch-1"
-Traceback (most recent call last):
-  File "/usr/bin/stg", line 44, in <module>
-    main()
-  File "/usr/lib/pymodules/python2.6/stgit/main.py", line 175, in main
-    _main()
-  File "/usr/lib/pymodules/python2.6/stgit/main.py", line 170, in _main
-    directory.write_log(cmd)
-  File "/usr/lib/pymodules/python2.6/stgit/commands/common.py", line 537, in write_log
-    log.compat_log_entry(msg)
-  File "/usr/lib/pymodules/python2.6/stgit/lib/log.py", line 372, in compat_log_entry
-    log_entry(stack, msg)
-  File "/usr/lib/pymodules/python2.6/stgit/lib/log.py", line 328, in log_entry
-    new_log.write_commit()
-  File "/usr/lib/pymodules/python2.6/stgit/lib/log.py", line 283, in write_commit
-    tree = self.__tree(metadata)
-  File "/usr/lib/pymodules/python2.6/stgit/lib/log.py", line 277, in __tree
-    patches = dict((pn, pf(c)) for pn, c in self.patches.iteritems())
-  File "/usr/lib/pymodules/python2.6/stgit/lib/log.py", line 277, in <genexpr>
-    patches = dict((pn, pf(c)) for pn, c in self.patches.iteritems())
-  File "/usr/lib/pymodules/python2.6/stgit/lib/log.py", line 275, in pf
-    r = patch_file(self.__repo, c.data)
-  File "/usr/lib/pymodules/python2.6/stgit/lib/log.py", line 116, in patch_file
-    'Bottom: %s' % cd.parent.data.tree.sha1,
-  File "/usr/lib/pymodules/python2.6/stgit/lib/git.py", line 426, in data
-    self.__repository.cat_object(self.sha1))
-  File "/usr/lib/pymodules/python2.6/stgit/lib/git.py", line 408, in parse
-    assert False
-AssertionError
+Commands that update the registered content of files in addition to
+the worktree use the option name "--index".
 
+--staged
+~~~~~~~~
+diff takes --staged, but that is only to support some people's habits.
 
-I have other failure modes that also result on assertions, but they all
-look like the same basic problem, and this one is at least easy to
-reproduce.
+The term "to stage" is generally an abbreviation for "to stage in the
+index", meaning "to mark for use in the next commit".  It is used to
+paint a certain picture of the process in which one makes sure
+everything is just right before committing to the result.
 
--- 
-  "One disk to rule them all, One disk to find them. One disk to bring
-  them all and in the darkness grind them. In the Land of Redmond
-  where the shadows lie." -- The Silicon Valley Tarot
-  Henrique Holschuh
+Hope that helps,
+Jonathan
