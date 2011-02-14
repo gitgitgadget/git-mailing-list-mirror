@@ -1,112 +1,132 @@
-From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: Re: Consistent terminology: cached/staged/index
-Date: Mon, 14 Feb 2011 16:24:01 +0100
-Message-ID: <4D594911.40409@drmicha.warpmail.net>
-References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>	<20110213193738.GA26868@elie>	<7v8vxjwnhj.fsf@alter.siamese.dyndns.org>	<87k4h34bhj.fsf@catnip.gol.com>	<7vr5bbupj4.fsf@alter.siamese.dyndns.org>	<AANLkTi=PDhVgpTeFjTxFuVJGbAKTHzHhsNVcquqSD3Qq@mail.gmail.com>	<4D58D2DF.1050205@viscovery.net>	<AANLkTikTfyHBOvQmjhT8yTziL4R67+AAk0O-Nk1tBSaL@mail.gmail.com>	<4D5906FD.7030502@drmicha.warpmail.net>	<AANLkTi=RcJfEGv966VCrOMPE640xyyw1wEFFkdA9fFWq@mail.gmail.com>	<4D59316E.5090203@drmicha.warpmail.net> <AANLkTikWsNgL6dSHueGCXw0jH4hnvai81X=EQERuw3Qi@mail.gmail.com>
+From: Marc Branchaud <marcnarc@xiplink.com>
+Subject: Re: [1.8.0] Provide proper remote ref namespaces
+Date: Mon, 14 Feb 2011 10:45:54 -0500
+Message-ID: <4D594E32.3090208@xiplink.com>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com> <m3mxm28v3i.fsf@localhost.localdomain> <201102140036.42197.johan@herland.net> <201102141040.35819.jnareb@gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: 7bit
-Cc: Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Miles Bader <miles@gnu.org>,
-	Johannes Sixt <j.sixt@viscovery.net>,
-	Jonathan Nieder <jrnieder@gmail.com>,
-	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
-	git@vger.kernel.org, Junio C Hamano <gitster@pobox.com>
-To: Felipe Contreras <felipe.contreras@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 14 16:27:45 2011
+Cc: Johan Herland <johan@herland.net>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Junio C Hamano <gitster@pobox.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Jakub Narebski <jnareb@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 14 16:45:42 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp0Kz-00047R-JB
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 16:27:41 +0100
+	id 1Pp0cP-0008QR-6b
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 16:45:41 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755789Ab1BNP1S (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 10:27:18 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:46395 "EHLO
-	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755566Ab1BNP1G (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Feb 2011 10:27:06 -0500
-Received: from compute3.internal (compute3.nyi.mail.srv.osa [10.202.2.43])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 68AEB201D1;
-	Mon, 14 Feb 2011 10:27:06 -0500 (EST)
-Received: from frontend2.messagingengine.com ([10.202.2.161])
-  by compute3.internal (MEProxy); Mon, 14 Feb 2011 10:27:06 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=message-id:date:from:mime-version:to:cc:subject:references:in-reply-to:content-type:content-transfer-encoding; s=smtpout; bh=vbn5JYFrcmrUh47qQcRkfbqdV6A=; b=r+DfjyXr6/pzFbtq3Kbv4dfdxayt3pexBjcSUQ+PVNalUUk/1Jph8XVEA23P4e1MePttGicK9/gHS36p9KAuNT1yokH9W0r8sIsoh2WNIKMLUVJohJEHx4NlU0Nf1noIesZFaKD5i+txbng6n2wtB+Aoyli3WafzvE8qp01kSBc=
-X-Sasl-enc: NN8Zpe/mKLgH31RCRu/aR6mD4XEdZmMQSwAZ7TjX5zs9 1297697226
-Received: from localhost.localdomain (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id 1607D443D02;
-	Mon, 14 Feb 2011 10:27:04 -0500 (EST)
-User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101209 Fedora/3.1.7-0.35.b3pre.fc14 Lightning/1.0b3pre Thunderbird/3.1.7
-In-Reply-To: <AANLkTikWsNgL6dSHueGCXw0jH4hnvai81X=EQERuw3Qi@mail.gmail.com>
+	id S1754878Ab1BNPpg (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 10:45:36 -0500
+Received: from smtp182.iad.emailsrvr.com ([207.97.245.182]:49500 "EHLO
+	smtp182.iad.emailsrvr.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1754185Ab1BNPpf (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Feb 2011 10:45:35 -0500
+Received: from localhost (localhost.localdomain [127.0.0.1])
+	by smtp48.relay.iad1a.emailsrvr.com (SMTP Server) with ESMTP id A2D581686A6;
+	Mon, 14 Feb 2011 10:45:34 -0500 (EST)
+X-Virus-Scanned: OK
+Received: by smtp48.relay.iad1a.emailsrvr.com (Authenticated sender: mbranchaud-AT-xiplink.com) with ESMTPSA id 33A02168657;
+	Mon, 14 Feb 2011 10:45:34 -0500 (EST)
+User-Agent: Mozilla/5.0 (X11; U; Linux x86_64; en-US; rv:1.9.2.13) Gecko/20101208 Thunderbird/3.1.7
+In-Reply-To: <201102141040.35819.jnareb@gmail.com>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166728>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166729>
 
-Felipe Contreras venit, vidit, dixit 14.02.2011 15:17:
-> On Mon, Feb 14, 2011 at 3:43 PM, Michael J Gruber
-> <git@drmicha.warpmail.net> wrote:
->> Nguyen Thai Ngoc Duy venit, vidit, dixit 14.02.2011 14:14:
->>> On Mon, Feb 14, 2011 at 5:42 PM, Michael J Gruber
->>> <git@drmicha.warpmail.net> wrote:
->>>> Full disclaimer: I have an alias "staged" for "diff --cached" myself...
+On 11-02-14 04:40 AM, Jakub Narebski wrote:
+> On Mon, 14 Feb 2011, Johan Herland wrote:
+>> On Friday 11 February 2011, Jakub Narebski wrote:
+>>> Johan Herland <johan@herland.net> writes:
+> 
+>>>> - Lack of consistency in the ref namespace (refs/remotes/$remote/* vs.
+>>>> refs/tags/*). Also not clear from the current layout where to add new
+>>>> types of refs (e.g. notes, replace). My proposal tries to address this
+>>>> issue.
 >>>
->>> Be careful with your fingers. There's a command named "git stage".
+>>> The lack of consistency is there because tags should USUALLY be global
+>>> (there should be only one v1.7.4), while branch names should be local
+>>> (my 'master' branch is not your 'master' branch).
+>>>
+>>> In some cases, like joining or subtree-merging unrelated projects we
+>>> would want local / per-remote tags: 'v1.7.4' in main project is not
+>>> 'v1.7.4' in 'foo' subproject (in 'foo' remote).  Currently we lack a
+>>> way to specify that (the 'autofollow' refspec proposal, default
+>>> behaviour would be equivalent to '~refs/tags/*:refs/tags/*"), and lack
+>>> support from porcelain: MY PROPOSAL is to add '--use-separate-tags'
+>>> (like old '--use-separate-remote') to "git clone" and "git remote add",
+>>> and perhaps '--alternate' as equivalent to '--no-separate-tags' to
+>>> "git remote add".
 >>
->> I know. Can we remove it as part of 1.8.0? It's our only builtin alias.
+>> That requires you to know about the (potential) tag collision (and remember 
+>> to use your option) before fetching from the remote repo.
 > 
-> I have proposed before to extend 'git stage', so you can do 'git stage
-> diff', or if you alias 'git stage' to 'git s', just 'git s diff'. This
-> would not conflict with the old behavior of 'git stage $file'.
+> No, what you need to know at te point of adding remote with "git remote add"
+> is to know whether the repository is alternative / extra repository of the
+> same project (common tags), or whether it is separate project (separate
+> tags).
 > 
-> case "$1" in
-> add)
->         shift
->         git add $@
->         ;;
-> rm)
->         shift
->         git rm --cached $@
->         ;;
-> diff)
->         shift
->         git diff --cached $@
->         ;;
-> import)
->         shift
->         git ls-files --modified --others --exclude-standard -z $@ | \
->         git update-index --add --remove -z --stdin
->         ;;
-> ls)
->         shift
->         git ls-files --stage $@
->         ;;
-> *)
->         git add $@
->         ;;
-> esac
+> Which you should know at this point.
+>  
+>> Also, even with your added option - which we can use when interfacing 
+>> unrelated projects from a single repo - the expectation (common case) is 
+>> still that Git will pollute your local tag namespace with remote tags. Some 
+>> of us consider this a bug/misfeature in its own right. And we hold that 
+>> opinion while still agreeing with you that tags "should USUALLY be global".
 > 
-> Cheers.
+> I don't think the distinction is between local and per-remote tags.  It
+> is about local (your own) bookmarking tags versus global repository tags
+> (_not_ per-remote) for marking releases.
 > 
+> I guess that current layout might be not best, but per-remote tags isn't it
+> either, in my opinion.
+> 
+> 
+> Please consider this use case:
+> 
+> Let's assume that current maintainer steps aside for a bit, and new interim
+> temporary maintainer takes mantle.  One would add new remote _temporarily_,
+> but one would want for tags that temporary maintainer created to be as good
+> as tags from 'origin' remote... and not be deleted when you remove temp
+> remote and its remote-tracking branches.
 
-In principle I like this a lot: a set of commands operating on/with the
-stage/index/cache consistently. It think it's similar in (good) spirit
-to our earlier attempts at INDEX and WORKTREE pseudo-revs, trying to
-give that somewhat nebulous (for noobs) index a more concrete
-"appearance", not hidden away in options (--index, --cached) and
-defaults (diff against index by default).
+I take it that "origin" here refers to the first maintainer's repository.
 
-In our case, however, I think the design principle deviates from our
-common form:
+I suggest that the correct thing to do in this case is to change the URL of
+the "origin" remote.  Because really that's what you want: the temp
+maintainer's repo is the equivalent of the first maintainer's repo.  When the
+first maintainer returns he'll update his own repo to match the temp
+maintainer's, then everyone can switch their remotes back to the original
+repo.  (Perhaps git-remote could even learn an "import-tags" subcommand to
+help the original maintainer here.)
 
-git foo bar
+For me, having more than one remote be *simultaneously* authoritative for a
+set of tags is the unusual case.  I find that most projects, no matter how
+decentralized, need to agree upon the project's "official" history, and that
+such agreement is almost always encapsulated within a single, "official"
+repository.  To have more than one is, frankly, insane.
 
-usually means "do foo" to "bar", as most of our common commands are
-verbs (being applied to the object "bar"). When it comes to subcommands
-we do have inconsistencies already (double-dashed vs. undashed, e.g.),
-but I'd prefer fewer ;)
+So to me it seems completely natural to think of a project's "official" tags
+as the ones that are obtained from the project's "official" repository.  It
+follows that tags should subscribe to the same remote-ref model as branches.
+ The benefits are powerful: consistency; deals naturally with imported
+histories from different repositories; and allows automatic propagation of
+updated (i.e. moved) tags from remotes to clones (yes tags *should* never
+move, but they do, often for good reason and occasionally as part of a
+project's natural evolution).
 
-Michael
+There have been several comments disparaging per-remote tags, but people are
+clearly dissatisfied with the status quo.  Can anyone propose another
+alternative?
+
+		M.
