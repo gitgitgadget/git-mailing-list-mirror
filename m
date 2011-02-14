@@ -1,188 +1,284 @@
-From: Johan Herland <johan@herland.net>
-Subject: Re: [1.8.0] Provide proper remote ref namespaces
-Date: Mon, 14 Feb 2011 00:36:41 +0100
-Message-ID: <201102140036.42197.johan@herland.net>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
- <201102080159.02153.johan@herland.net> <m3mxm28v3i.fsf@localhost.localdomain>
+From: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+Subject: Re: [PATCH v2 00/31] refactor rebase
+Date: Sun, 13 Feb 2011 20:54:55 -0500 (EST)
+Message-ID: <alpine.DEB.2.00.1102132047500.4253@debian>
+References: <1293528648-21873-1-git-send-email-martin.von.zweigbergk@gmail.com> <1297017841-20678-1-git-send-email-martin.von.zweigbergk@gmail.com> <7vd3mz33xb.fsf@alter.siamese.dyndns.org> <alpine.DEB.2.00.1102111811300.26684@debian>
 Mime-Version: 1.0
-Content-Type: Text/Plain; charset=iso-8859-1
-Content-Transfer-Encoding: 7BIT
-Cc: git@vger.kernel.org, Jeff King <peff@peff.net>,
-	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
-	Dmitry Potapov <dpotapov@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Sverre Rabbelier <srabbelier@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Jakub Narebski <jnareb@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 14 00:37:11 2011
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+Cc: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>,
+	git@vger.kernel.org,
+	Johannes Schindelin <Johannes.Schindelin@gmx.de>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Christian Couder <chriscool@tuxfamily.org>,
+	Thomas Rast <trast@student.ethz.ch>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 14 02:55:11 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1PolV8-00071U-3W
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 00:37:10 +0100
+	id 1Poneg-0007pR-EV
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 02:55:10 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755251Ab1BMXhF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Sun, 13 Feb 2011 18:37:05 -0500
-Received: from smtp.getmail.no ([84.208.15.66]:64479 "EHLO smtp.getmail.no"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1754570Ab1BMXhD (ORCPT <rfc822;git@vger.kernel.org>);
-	Sun, 13 Feb 2011 18:37:03 -0500
-Received: from get-mta-scan02.get.basefarm.net ([10.5.16.4])
- by get-mta-out01.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LGK00FTLXLEFTB0@get-mta-out01.get.basefarm.net> for
- git@vger.kernel.org; Mon, 14 Feb 2011 00:36:50 +0100 (MET)
-Received: from get-mta-scan02.get.basefarm.net
- (localhost.localdomain [127.0.0.1])	by localhost (Email Security Appliance)
- with SMTP id 5E5841EA55B6_D586B12B	for <git@vger.kernel.org>; Sun,
- 13 Feb 2011 23:36:50 +0000 (GMT)
-Received: from smtp.getmail.no (unknown [10.5.16.4])
-	by get-mta-scan02.get.basefarm.net (Sophos Email Appliance)
- with ESMTP id DFBD31EA3AA0_D586B11F	for <git@vger.kernel.org>; Sun,
- 13 Feb 2011 23:36:49 +0000 (GMT)
-Received: from alpha.localnet ([84.215.68.234])
- by get-mta-in03.get.basefarm.net
- (Sun Java(tm) System Messaging Server 7.0-0.04 64bit (built Jun 20 2008))
- with ESMTP id <0LGK00E0KXL6VA20@get-mta-in03.get.basefarm.net> for
- git@vger.kernel.org; Mon, 14 Feb 2011 00:36:49 +0100 (MET)
-User-Agent: KMail/1.13.6 (Linux/2.6.37-ARCH; KDE/4.6.0; x86_64; ; )
-In-reply-to: <m3mxm28v3i.fsf@localhost.localdomain>
+	id S1755365Ab1BNBzF (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Sun, 13 Feb 2011 20:55:05 -0500
+Received: from mail-vw0-f46.google.com ([209.85.212.46]:35711 "EHLO
+	mail-vw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751302Ab1BNBzD (ORCPT <rfc822;git@vger.kernel.org>);
+	Sun, 13 Feb 2011 20:55:03 -0500
+Received: by vws16 with SMTP id 16so2737880vws.19
+        for <git@vger.kernel.org>; Sun, 13 Feb 2011 17:55:02 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:date:from:x-x-sender:to:cc:subject:in-reply-to
+         :message-id:references:user-agent:mime-version:content-type;
+        bh=dh6qjHcBK63hK9NJWmui8aswM5Hd/QC507JLWO0C2JM=;
+        b=qjyYLVi7Tv0pt3LUT9+FI2xJIztlqG8tS0Z6/TycAjaU7Tfju2GXQCwA9E3X9///qb
+         W1AGmwk+hgmmtAuOpnGo08OjY9VCX/XbBbeFHSDw4ZxcHw2zwfBQwWF/pf/uo4r+wqL0
+         ORHselP1kuHM+vB8iWrLklzM+FP/denIfz0ng=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=date:from:x-x-sender:to:cc:subject:in-reply-to:message-id
+         :references:user-agent:mime-version:content-type;
+        b=xI6bF6Ggu178jgT8QQo3vHne+bRFkTu7+xoIzOl8Ve+3LM2+2h8n1721NJXi+Mmm2B
+         DG4bZ7V7xVi1YYgnrT+FLBS2TTe7axRx6qTSeJhmWvcF9vKLYXvI4G4ipCrskNrG5sYF
+         9ir0Y8HUmJ7yx7hK1ewOh4WFCdharNXXNmuYo=
+Received: by 10.220.202.194 with SMTP id ff2mr165188vcb.115.1297648501857;
+        Sun, 13 Feb 2011 17:55:01 -0800 (PST)
+Received: from [192.168.1.103] (modemcable151.183-178-173.mc.videotron.ca [173.178.183.151])
+        by mx.google.com with ESMTPS id u14sm532339vcr.25.2011.02.13.17.54.59
+        (version=TLSv1/SSLv3 cipher=OTHER);
+        Sun, 13 Feb 2011 17:55:00 -0800 (PST)
+X-X-Sender: martin@debian
+In-Reply-To: <alpine.DEB.2.00.1102111811300.26684@debian>
+User-Agent: Alpine 2.00 (DEB 1167 2008-08-23)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166683>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166684>
 
-On Friday 11 February 2011, Jakub Narebski wrote:
-> Johan Herland <johan@herland.net> writes:
-> > - Lack of consistency in the ref namespace (refs/remotes/$remote/* vs.
-> > refs/tags/*). Also not clear from the current layout where to add new
-> > types of refs (e.g. notes, replace). My proposal tries to address this
-> > issue.
+On Fri, 11 Feb 2011, Martin von Zweigbergk wrote:
+
+> On Thu, 10 Feb 2011, Junio C Hamano wrote:
 > 
-> The lack of consistency is there because tags should USUALLY be global
-> (there should be only one v1.7.4), while branch names should be local
-> (my 'master' branch is not your 'master' branch).
->
-> In some cases, like joining or subtree-merging unrelated projects we
-> would want local / per-remote tags: 'v1.7.4' in main project is not
-> 'v1.7.4' in 'foo' subproject (in 'foo' remote).  Currently we lack a
-> way to specify that (the 'autofollow' refspec proposal, default
-> behaviour would be equivalent to '~refs/tags/*:refs/tags/*"), and lack
-> support from porcelain: MY PROPOSAL is to add '--use-separate-tags'
-> (like old '--use-separate-remote') to "git clone" and "git remote add",
-> and perhaps '--alternate' as equivalent to '--no-separate-tags' to
-> "git remote add".
-
-That requires you to know about the (potential) tag collision (and remember 
-to use your option) before fetching from the remote repo.
-
-Also, even with your added option - which we can use when interfacing 
-unrelated projects from a single repo - the expectation (common case) is 
-still that Git will pollute your local tag namespace with remote tags. Some 
-of us consider this a bug/misfeature in its own right. And we hold that 
-opinion while still agreeing with you that tags "should USUALLY be global".
-
-> > - Lack of consistency in which fetch refspecs must be listed in the
-> > configuration. (i.e. implicit vs. explicit fetch refspecs). My proposal
-> > tries to address this as well.
+> > I am not sure if forbidding "-v --continue" adds any value; would it be
+> > too much effort to allow "--continue -v" instead to achieve the same
+> > degree of consistency between the two?
 > 
-> Could you repeat your proposal?
+> I'll have a look at it when
+> I get some time.
 
-http://thread.gmane.org/gmane.comp.version-control.git/165799/focus=165885
+This would apply on top of mz/rebase after dropping 95135b0 (rebase:
+stricter check of standalone sub command, 2011-02-06). If you agree
+with it, I will include it in a future re-roll.
 
-> Do I remember it correctly that with
-> 'autofollow' refspec (valid only for tags... well, perhaps also for
-> notes and replacements) you want to specify defaults in config
-> explicitely
-> 
->   [remote "origin"]
->         url = git://git.example.com/repo.git
->         fetch = +refs/heads/*:refs/remotes/origin/*
->         fetch = ~refs/tags/*:refs/tags/*
+-- 8< --
+Subject: [PATCH/RFC] rebase: allow options to be overridden when resuming
 
-Yes, replicating existing behavior w/explicit refspecs would look like this:
+The sub commands '--continue', '--skip' or '--abort' may only be used
+standalone according to the documentation. Other options following the
+sub command are currently not accepted, but options preceeding them
+are. For example, 'git rebase --continue -v' is not accepted, while
+'git rebase -v --continue' is. In the latter case, the verbose option
+will only be used until the rebase is interrupted (e.g. for editing,
+or due to conflict). From that point on, the intial settings will be
+used again.
 
-  [remote "origin"]
-        url = git://git.example.com/repo.git
-        fetch = +HEAD:refs/remotes/origin/HEAD
-        fetch = +refs/heads/*:refs/remotes/origin/*
-        fetch = ~refs/tags/*:refs/tags/*
+Improve the situation by allowing options to be combined with sub
+commands both before and after the sub command itself. Persist the new
+value to make sure it is remembered across interruptions.
 
-> Perhaps with
-> 
->         fetch = +refs/heads/*:refs/remotes/origin/heads/*
+Fail if options that can not be used together with sub commands, such
+as '-i', are used. For simplicity, allow the same set of options for
+all three sub commands, even though e.g. '-s' makes no sense when
+combined with '--abort'.
 
-FTR, my new/proposed refspecs would look like this:
+Signed-off-by: Martin von Zweigbergk <martin.von.zweigbergk@gmail.com>
+---
+ Documentation/git-rebase.txt |    2 +-
+ git-rebase.sh                |   51 ++++++++++++++++++++++++++++++++----------
+ t/t3418-rebase-continue.sh   |   12 ++++++++++
+ 3 files changed, 52 insertions(+), 13 deletions(-)
 
-  [remote "origin"]
-        url = git://git.example.com/repo.git
-        fetch = +HEAD:refs/remotes/origin/HEAD
-        fetch = +refs/heads/*:refs/remotes/origin/heads*
-        fetch = ~+refs/tags/*:refs/remotes/origin/tags/*
-      ( fetch = +refs/notes/*:refs/remotes/origin/notes/* )
-      ( fetch = +refs/replace/*:refs/remotes/origin/replace/* )
-
-> > - Lack of consistency in porcelain interfaces. Some of these have been
-> > fixed in recent Git version, but some are yet to be fixed: E.g. some
-> > find the use of FETCH_HEAD confusing (when does fetch update the
-> > remote refs, and when does it update FETCH_HEAD instead?).
-> 
-> One of problems is how to keep the fact that
-> 
->   $ git pull <URL> <branch>
-> 
-> does one-off pull without creating remote or remote-tracking branch.
-> But I agree that behavior of
-> 
->   $ git pull <remote> <branch>
-> 
-> can be confusing.
-
-Yes, to me it seems intuitive that when you specify <URL> (even if <URL> 
-corresponds to an existing remote) you do NOT update remote-tracking refs, 
-but if you use <remote>, you should ALWAYS update remote-tracking refs. 
-Others may disagree.
-
-> >  Others (myself included) wonder why 'git push' by default updates
-> > 
-> > remote branches with matching names, while 'git pull' relies on the
-> > explicitly configured upstreams to update the local refs. (FWIW,
-> > I've mitigated this last complaint insisting that all users at
-> > $dayjob run "git config --global push.default tracking" immediately
-> > after installing Git.) There are other UI inconsistencies too that
-> > escape me ATM.
-> 
-> IMHO that's not inconsisnency in Git, this is just reflection of the
-> fact that in most common case the situation is *assymetric* with
-> respect to fetch and push; you fetch from other people repositories,
-> but you push to (usually single, perhaps mirrored) your own publishing
-> repository.  For this situation 'push.default = matching' works
-> perfectly.
-
-It may seem so, but in my experience it doesn't really work perfectly: Even 
-if I fully control the repo I push to, I still want precise control over 
-what I push there. Sometimes I may working on 'next' and 'master' in 
-parallel, and I might have finished and tested some bugfixes on 'master', 
-while I still have unfinished/untested stuff on 'next'. When I 'git push' 
-from 'master', I DO NOT want 'next' to be pushed (unless I have explicitly 
-asked for it).
-
-If I'm pushing to a shared repo (a very common workplace setup), this 
-default is even more potentially damaging (especially if I don't discover 
-what's actually happening by scanning the output from 'git push').
-
-This is one area where Git's current default behavior is less conservative 
-than I would like.
-
-
-Have fun! :)
-
-...Johan
-
+diff --git a/Documentation/git-rebase.txt b/Documentation/git-rebase.txt
+index 96680c8..095a67f 100644
+--- a/Documentation/git-rebase.txt
++++ b/Documentation/git-rebase.txt
+@@ -13,7 +13,7 @@ SYNOPSIS
+ 'git rebase' [-i | --interactive] [options] --onto <newbase>
+ 	--root [<branch>]
+ 
+-'git rebase' --continue | --skip | --abort
++'git rebase' --continue | --skip | --abort [options]
+ 
+ DESCRIPTION
+ -----------
+diff --git a/git-rebase.sh b/git-rebase.sh
+index 34a2a0a..5abfeac 100755
+--- a/git-rebase.sh
++++ b/git-rebase.sh
+@@ -67,6 +67,16 @@ preserve_merges=
+ autosquash=
+ test "$(git config --bool rebase.autosquash)" = "true" && autosquash=t
+ 
++write_options() {
++	echo "$GIT_QUIET" > "$state_dir"/quiet &&
++	test t = "$verbose" && : > "$state_dir"/verbose
++	test -n "$strategy" && echo "$strategy" > "$state_dir"/strategy
++	test -n "$strategy_opts" && echo "$strategy_opts" > \
++		"$state_dir"/strategy_opts
++	test -n "$allow_rerere_autoupdate" && echo "$allow_rerere_autoupdate" > \
++		"$state_dir"/allow_rerere_autoupdate
++}
++
+ read_basic_state () {
+ 	head_name=$(cat "$state_dir"/head-name) &&
+ 	onto=$(cat "$state_dir"/onto) &&
+@@ -78,9 +88,21 @@ read_basic_state () {
+ 		orig_head=$(cat "$state_dir"/orig-head)
+ 	else
+ 		orig_head=$(cat "$state_dir"/head)
+-	fi &&
+-	GIT_QUIET=$(cat "$state_dir"/quiet) &&
+-	test -f "$state_dir"/verbose && verbose=t
++	fi
++	# First write any overriding options from the command line
++	write_options
++	if test -n "$GIT_QUIET"
++	then
++		rm "$state_dir"/verbose
++	else
++		GIT_QUIET=$(cat "$state_dir"/quiet)
++	fi
++	if test t = "$verbose"
++	then
++		rm "$state_dir"/quiet
++	else
++		test -f "$state_dir"/verbose && verbose=t
++	fi
+ 	test -f "$state_dir"/strategy && strategy="$(cat "$state_dir"/strategy)"
+ 	test -f "$state_dir"/strategy_opts &&
+ 		strategy_opts="$(cat "$state_dir"/strategy_opts)"
+@@ -92,13 +114,7 @@ write_basic_state () {
+ 	echo "$head_name" > "$state_dir"/head-name &&
+ 	echo "$onto" > "$state_dir"/onto &&
+ 	echo "$orig_head" > "$state_dir"/orig-head &&
+-	echo "$GIT_QUIET" > "$state_dir"/quiet &&
+-	test t = "$verbose" && : > "$state_dir"/verbose
+-	test -n "$strategy" && echo "$strategy" > "$state_dir"/strategy
+-	test -n "$strategy_opts" && echo "$strategy_opts" > \
+-		"$state_dir"/strategy_opts
+-	test -n "$allow_rerere_autoupdate" && echo "$allow_rerere_autoupdate" > \
+-		"$state_dir"/allow_rerere_autoupdate
++	write_options
+ }
+ 
+ output () {
+@@ -164,6 +180,7 @@ then
+ fi
+ test -n "$type" && in_progress=t
+ 
++resume_incompatible=
+ while test $# != 0
+ do
+ 	case "$1" in
+@@ -174,11 +191,11 @@ do
+ 		ok_to_skip_pre_rebase=
+ 		;;
+ 	--continue|--skip|--abort)
++		test -n "$action" && usage
+ 		action=${1##--}
+-		shift
+-		break
+ 		;;
+ 	--onto)
++		resume_incompatible=t
+ 		test 2 -le "$#" || usage
+ 		onto="$2"
+ 		shift
+@@ -197,6 +214,7 @@ do
+ 		autosquash=
+ 		;;
+ 	-M|-m|--m|--me|--mer|--merg|--merge)
++		resume_incompatible=t
+ 		do_merge=t
+ 		;;
+ 	-X*|--strategy-option*)
+@@ -232,9 +250,11 @@ do
+ 		do_merge=t
+ 		;;
+ 	-n|--no-stat)
++		resume_incompatible=t
+ 		diffstat=
+ 		;;
+ 	--stat)
++		resume_incompatible=t
+ 		diffstat=t
+ 		;;
+ 	-v|--verbose)
+@@ -249,6 +269,7 @@ do
+ 		diffstat=
+ 		;;
+ 	--whitespace=*)
++		resume_incompatible=t
+ 		git_am_opt="$git_am_opt $1"
+ 		case "$1" in
+ 		--whitespace=fix|--whitespace=strip)
+@@ -257,19 +278,24 @@ do
+ 		esac
+ 		;;
+ 	--ignore-whitespace)
++		resume_incompatible=t
+ 		git_am_opt="$git_am_opt $1"
+ 		;;
+ 	--committer-date-is-author-date|--ignore-date)
++		resume_incompatible=t
+ 		git_am_opt="$git_am_opt $1"
+ 		force_rebase=t
+ 		;;
+ 	-C*)
++		resume_incompatible=t
+ 		git_am_opt="$git_am_opt $1"
+ 		;;
+ 	--root)
++		resume_incompatible=t
+ 		rebase_root=t
+ 		;;
+ 	-f|--f|--fo|--for|--forc|--force|--force-r|--force-re|--force-reb|--force-reba|--force-rebas|--force-rebase|--no-ff)
++		resume_incompatible=t
+ 		force_rebase=t
+ 		;;
+ 	--rerere-autoupdate|--no-rerere-autoupdate)
+@@ -288,6 +314,7 @@ test $# -gt 2 && usage
+ 
+ if test -n "$action"
+ then
++	test -n "$resume_incompatible" && "--$action used with incompatible option"
+ 	test -z "$in_progress" && die "No rebase in progress?"
+ 	# Only interactive rebase uses detailed reflog messages
+ 	if test "$type" = interactive && test "$GIT_REFLOG_ACTION" = rebase
+diff --git a/t/t3418-rebase-continue.sh b/t/t3418-rebase-continue.sh
+index 15cef3c..1581f00 100755
+--- a/t/t3418-rebase-continue.sh
++++ b/t/t3418-rebase-continue.sh
+@@ -90,4 +90,16 @@ test_expect_success 'rebase --continue remembers --rerere-autoupdate' '
+ 	git rebase --continue
+ '
+ 
++test_expect_success 'rebase --continue --no-rerere-autoupdate overrides' '
++	rm -fr .git/rebase-* &&
++	git reset --hard topic@{1} &&
++	test_must_fail git rebase -m --rerere-autoupdate master &&
++	test "$(cat F2)" = "Resolved" &&
++	git rebase --continue --no-rerere-autoupdate &&
++	test "$(cat F3)" = "Resolved" &&
++	test_must_fail git rebase --continue &&
++	git add F3 &&
++	git rebase --continue
++'
++
+ test_done
 -- 
-Johan Herland, <johan@herland.net>
-www.herland.net
+1.7.4.rc2.33.g8a14f
