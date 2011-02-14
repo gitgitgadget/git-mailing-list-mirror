@@ -1,116 +1,78 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: remote branches
-Date: Sun, 13 Feb 2011 22:12:04 -0800
-Message-ID: <7vmxlzuouj.fsf@alter.siamese.dyndns.org>
-References: <4D578B6D.9090803@inria.fr>
- <AANLkTi=WPAYXg1NCyO+XDw8Jk5v=QBH3nM78CEHytuVQ@mail.gmail.com>
- <20110213103156.GB4202@atjola.homenet>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: Consistent terminology: cached/staged/index
+Date: Mon, 14 Feb 2011 06:27:55 +0000
+Message-ID: <AANLkTi=PDhVgpTeFjTxFuVJGbAKTHzHhsNVcquqSD3Qq@mail.gmail.com>
+References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
+ <20110213193738.GA26868@elie> <7v8vxjwnhj.fsf@alter.siamese.dyndns.org>
+ <87k4h34bhj.fsf@catnip.gol.com> <7vr5bbupj4.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=ISO-8859-1
 Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: =?utf-8?B?w4Z2YXIgQXJuZmrDtnLDsA==?= Bjarmason <avarab@gmail.com>,
-	Matthieu Imbert <matthieu.imbert@inria.fr>, git@vger.kernel.org
-To: =?utf-8?Q?Bj=C3=B6rn?= Steinbrink <B.Steinbrink@gmx.de>
-X-From: git-owner@vger.kernel.org Mon Feb 14 07:12:22 2011
+Cc: Jonathan Nieder <jrnieder@gmail.com>,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 14 07:28:54 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Porfa-0008Bf-1R
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 07:12:22 +0100
+	id 1PorvY-0004BW-PY
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 07:28:53 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751201Ab1BNGMR convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Feb 2011 01:12:17 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:62960 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750911Ab1BNGMQ convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Feb 2011 01:12:16 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id D17913FD2;
-	Mon, 14 Feb 2011 01:13:19 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; s=sasl; bh=IOHAZnJPDOMR
-	oMLunZVFDzMzU0o=; b=wrmbcgchrkp35g8r19XQ0JocNFJqk1pNYyPxRX56+4O5
-	faq67Vja8jfON8+YNEosOUVAB+/kQlb9+oRPNe0RYK8QDz4nZcg2vjgjN3AWyg8J
-	CdF/xA7GGHUw+KhcFqJi9WpVMJ06odvoyk+ax3Yd6/V1RzS63X4F+q7J6x0+1cA=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type:content-transfer-encoding; q=dns; s=sasl; b=QJAibQ
-	Zg1Hff5+wW4lhemTqQfNW0CAewMSzzYzHItqnbtT59RK4P+VSwJFvLZ35/UZ4Qc1
-	7D0+cImklcw9oT8wVuuY7LEB2iIUf+ctb8veiLUwD80//2MG4MoXfV9BWiMDW2By
-	1+k6UfxZdWVzBzDLU9QzrlGEyTth78RLMA5Kw=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 8F2563FD0;
-	Mon, 14 Feb 2011 01:13:15 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 1C3293FCF; Mon, 14 Feb 2011
- 01:13:09 -0500 (EST)
-In-Reply-To: <20110213103156.GB4202@atjola.homenet> (=?utf-8?Q?=22Bj=C3=B6?=
- =?utf-8?Q?rn?= Steinbrink"'s message of "Sun\, 13 Feb 2011 11\:31\:56 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 826DA04A-3801-11E0-91B1-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1751269Ab1BNG2j convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Feb 2011 01:28:39 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:45284 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1750911Ab1BNG2i convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Feb 2011 01:28:38 -0500
+Received: by bwz15 with SMTP id 15so5168825bwz.19
+        for <git@vger.kernel.org>; Sun, 13 Feb 2011 22:28:36 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:from
+         :date:x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=2jIOaa92X3GFzjRiw+iy9F6FaK+LuBZ1MB2R26iWczg=;
+        b=xkZ0VmhJsV7BNeBkYquiBr8L/YC6g4tAphWwBmGndbbS1HMnPB+dL6G+VNPt80D7rt
+         tQur9g0EysBkCRZeRlCebB0+OcUVDAApkVmBvB3fIDlQq78rBc2L0BfivVkSzBBu8OrY
+         5ODJXh70KG68rGcopVe2vC1LZE8cPP2yvIApg=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=o6ROTFo52Homyd0GEyzMSi+fg7ShTkXTVF5JQePbkjWR57CZE//anK1hNgaCqNqkpn
+         z75ccq4jzJ74oO7baYbAeVGejPXtbOnYC6V5Nc69hehNPPWfKhFdF2m6uRMX3mFM9ZZd
+         ui21HuIvEolMZoX1HCUB7LnaksRI479bj5xXA=
+Received: by 10.204.79.135 with SMTP id p7mr6368067bkk.109.1297664916731; Sun,
+ 13 Feb 2011 22:28:36 -0800 (PST)
+Received: by 10.204.119.130 with HTTP; Sun, 13 Feb 2011 22:27:55 -0800 (PST)
+In-Reply-To: <7vr5bbupj4.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: 8wTfyqjmewOrduQ9bQ5moHCcq3Q
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166690>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166691>
 
-Bj=C3=B6rn Steinbrink <B.Steinbrink@gmx.de> writes:
-
-> It's ok for fetch to treat --tags like a refspec and to have it overr=
-ide
-> the defaults from the config when the user manually specifies it on t=
-he
-> command line. But when it is part of the default configuration it sho=
-uld
-> add to remote.<name>.fetch, not override it.
+On Mon, Feb 14, 2011 at 5:57 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+>> Is there a reason a short version of --cached couldn't be added to
+>> git-diff...? =A0E.g. "git diff -c"?
 >
-> IOW with this configuration:
-> remote.foo.url =3D git://host/repo.git
-> remote.foo.fetch =3D +refs/heads/*:refs/remotes/foo/*
-> remote.foo.tagopt =3D --tags
->
-> "git fetch foo" acts like:
->
-> git fetch --tags git://host/repo.git
->
-> instead of
->
-> git fetch --tags git://host/repo.git +refs/heads/*:refs/remotes/foo/*
+> I'd suspect that we would like to keep the door open for "diff -c" to=
+ do
+> what the users naturally expect, namely, to produce a patch in the co=
+pied
+> context format.
 
-I would agree that the behaviour of tagopt acting exactly as if the
-options were given from the command line is an ungly hack, not an inten=
-ded
-behaviour.  Interested in coming up with a proposed approach for a fix?
+hmm
 
-I would say --tags from the command line probably outlived its original
-purpose; back when we didn't have the reliable automatic following,
-sometimes people needed to say "fetch --tags" to complete the set of ta=
-gs.
-The description in config.txt for --tags also cites another purpose,
-namely, to fetch tags otherwise totally unrelated to the branches you a=
-re
-following, but in reality there is no sensible use case to require such=
- a
-feature.  Yes, you may have many unrelated lines of development with
-separate set of tags on them, but then --tags to fetch _all_ tags from
-all of these unrelated lines of development is a too coarse-grained too=
-l
-to be useful.
+"git diff -s"  ? ... since --staged is an alias for --cached :)
 
-Note that "fetch --tags" without following any of the branches _is_ a
-sensible setting for a rather common workflow.
+-miles
 
-=46or every active developer who will have his own private changes in t=
-he
-repository, there would be 100 passive followers who would fetch the
-branches of the project and build the bleeding edge (i.e. nightly
-builders) and these two classes of people would benefit from having
-"refs/heads/*:refs/remotes/origin/*" refspec.  And for each of these
-people, there would be 100 people who would be interested only in tagge=
-d
-releases.  They of course could download tarballs, but they can instead
-say "fetch --tags", check out the latest tagged release and use it.
+--=20
+Cat is power. =A0Cat is peace.
