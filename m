@@ -1,84 +1,83 @@
-From: Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>
-Subject: Re: Re* [1.8.0] Provide proper remote ref namespaces
-Date: Mon, 14 Feb 2011 22:57:24 +0100
-Message-ID: <vpqr5bath2z.fsf@bauges.imag.fr>
-References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
-	<201102140036.42197.johan@herland.net>
-	<7vfwrrukzq.fsf@alter.siamese.dyndns.org>
-	<201102141018.46527.johan@herland.net>
-	<7vfwrqtrsk.fsf_-_@alter.siamese.dyndns.org>
-	<AANLkTincKapKgcWEE1Z+vQesSjZBFAnfH0uL+a7GhQ6b@mail.gmail.com>
-	<AANLkTi=Fpey7e+E1eKOiSaS1hjW2d8eOy9PVLR34Sc5J@mail.gmail.com>
-	<AANLkTin5ZcZU8iwPSm4A87bYRrSCcXJVLBFGSr2+j30j@mail.gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: future of git-gui as subsytem or submodule, WAS: [PATCH] git-gui:
+	document the gui.maxfilesdisplayed variable
+Date: Mon, 14 Feb 2011 23:03:18 +0100
+Message-ID: <20110214220318.GD50815@book.hvoigt.net>
+References: <20110213125324.GA31986@book.hvoigt.net> <7v39nruk9j.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
-Cc: Sverre Rabbelier <srabbelier@gmail.com>,
-	Junio C Hamano <gitster@pobox.com>,
-	Johan Herland <johan@herland.net>,
-	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
-	Jeff King <peff@peff.net>, Dmitry Potapov <dpotapov@gmail.com>,
-	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
-	Nicolas Pitre <nico@fluxnic.net>
-To: Jay Soffian <jaysoffian@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 14 23:01:15 2011
+Cc: Pat Thoyts <patthoyts@googlemail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 14 23:03:28 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp6Tp-0007B2-Sb
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 23:01:14 +0100
+	id 1Pp6Vy-0008Vb-CV
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 23:03:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751680Ab1BNWBI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 17:01:08 -0500
-Received: from imag.imag.fr ([129.88.30.1]:39194 "EHLO imag.imag.fr"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-	id S1751079Ab1BNWBH (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 17:01:07 -0500
-Received: from mail-veri.imag.fr (mail-veri.imag.fr [129.88.43.52])
-	by imag.imag.fr (8.13.8/8.13.8) with ESMTP id p1ELvPaI021530
-	(version=TLSv1/SSLv3 cipher=AES256-SHA bits=256 verify=NO);
-	Mon, 14 Feb 2011 22:57:25 +0100 (CET)
-Received: from bauges.imag.fr ([129.88.43.5])
-	by mail-veri.imag.fr with esmtp (Exim 4.69)
-	(envelope-from <Matthieu.Moy@grenoble-inp.fr>)
-	id 1Pp6Q9-0006gF-4C; Mon, 14 Feb 2011 22:57:25 +0100
-In-Reply-To: <AANLkTin5ZcZU8iwPSm4A87bYRrSCcXJVLBFGSr2+j30j@mail.gmail.com> (Jay Soffian's message of "Mon\, 14 Feb 2011 14\:50\:17 -0500")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/24.0.50 (gnu/linux)
-X-Greylist: Sender IP whitelisted, not delayed by milter-greylist-3.0 (imag.imag.fr [129.88.30.1]); Mon, 14 Feb 2011 22:57:25 +0100 (CET)
-X-IMAG-MailScanner-Information: Please contact MI2S MIM for more information
-X-IMAG-MailScanner: Found to be clean
-X-IMAG-MailScanner-SpamCheck: 
-X-IMAG-MailScanner-From: matthieu.moy@grenoble-inp.fr
+	id S1752335Ab1BNWDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 17:03:21 -0500
+Received: from darksea.de ([83.133.111.250]:47459 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1751889Ab1BNWDU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Feb 2011 17:03:20 -0500
+Received: (qmail 18306 invoked from network); 14 Feb 2011 23:03:18 +0100
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 14 Feb 2011 23:03:18 +0100
+Content-Disposition: inline
+In-Reply-To: <7v39nruk9j.fsf@alter.siamese.dyndns.org>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166780>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166781>
 
-First, I'd be really glad if push.default changed to "current", that's
-what I want 99% of cases, if not more.
+Hi,
 
-Jay Soffian <jaysoffian@gmail.com> writes:
+On Sun, Feb 13, 2011 at 11:51:04PM -0800, Junio C Hamano wrote:
+> Two opposing thoughts.
+> 
+>  1. We can keep git-gui and git proper separate projects, move git-gui
+>     documentation out of git to git-gui, and with clever Makefile trick
+>     include and build git-gui related documentation conditionally only
+>     when git-gui appears part of the git project tree (this anticipates a
+>     future where git-gui is bound to git not with the subtree merge
+>     strategy as we currently do, but as a submodule).
+> 
+>  2. Just like the Linux kernel project, we can make each subsystem with
+>     separate maintainers just different repositories of the same git
+>     project with their own focus.  We already do this for git-svn (which I
+>     delegate to Eric Wong by pulling from him) and some parts of contrib/
+>     tree; we have already been halfway there for gitweb/ (which I don't
+>     regularly "pull from", but I mainly act as a patch monkey without
+>     actively managing that part myself).  I don't see why we cannot extend
+>     that model to git-gui and gitk.
 
-> Alternately, you could take the wall of text approach, which I was
-> trying to avoid:
->
->   push.default is unset; its implicit value is changing in 1.8.0 from
->   'matching' to 'current'. To squelch this message and maintain the current
->   behavior post-1.8.0, use 'git config [--global] push.default matching'. To
->   squelch this message and adopt the 1.8.0 behavior now, use
->   'git config [--global] push.default current'. See 'git help config' and
->   search for 'push.default' for further information.
+I would vote for 2. Not because I think submodules will not become as easy to
+use so they are ready for that but I think there are mainly two reasons
+for using a submodule
 
-I actually like this, although it's a bit verbose: I think telling the
-user "something will change" without telling what is very frustrating,
-so the "from 'matching' to 'current'" part seems really good.
+  A. The submodule contains shared code which is used by multiple projects
 
-I'd remove the [] around the --global, to make the command
-cut-and-paste ready. Advanced users know whether to remove the
---global, and newbies don't want to remove it.
+  B. A submodule is used to keep large collection of files seperate from
+     a project because most times they are not needed and would
+     interfere with the project.
 
--- 
-Matthieu Moy
-http://www-verimag.imag.fr/~moy/
+There are maybe more but these two do not apply to git-gui and I like
+the way it is currently integrated in one repository with git. It also
+underlines the fact that git-gui is AFAICS the standard and best
+developed gui for git.
+
+Another plus, if we extend that model to gitk, is that both could start
+sharing code between each other (maybe relocate to the same directory).
+
+Although 1. would be a good choice for getting more people involved in
+enhancing submodule support, from a philosophical standpoint, I think 2.
+is the more natural choice.
+
+What do others think?
+
+Cheers Heiko
