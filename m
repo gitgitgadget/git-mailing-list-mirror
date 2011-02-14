@@ -1,135 +1,89 @@
-From: Norbert Thiebaud <nthiebaud@gmail.com>
-Subject: Re: libreoffice merge issue ...
-Date: Mon, 14 Feb 2011 10:52:26 -0600
-Message-ID: <AANLkTik9icGApTP+0C+ANWsLZBb8HVTXo-cyW3kKEppw@mail.gmail.com>
-References: <1297699635.31477.253.camel@lenovo-w500>
+From: Junio C Hamano <gitster@pobox.com>
+Subject: Re: Consistent terminology: cached/staged/index
+Date: Mon, 14 Feb 2011 09:12:45 -0800
+Message-ID: <7vtyg6tu9e.fsf@alter.siamese.dyndns.org>
+References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
+ <20110213193738.GA26868@elie> <7v8vxjwnhj.fsf@alter.siamese.dyndns.org>
+ <87k4h34bhj.fsf@catnip.gol.com> <7vr5bbupj4.fsf@alter.siamese.dyndns.org>
+ <AANLkTi=PDhVgpTeFjTxFuVJGbAKTHzHhsNVcquqSD3Qq@mail.gmail.com>
+ <4D58D2DF.1050205@viscovery.net>
+ <AANLkTikTfyHBOvQmjhT8yTziL4R67+AAk0O-Nk1tBSaL@mail.gmail.com>
+ <4D5906FD.7030502@drmicha.warpmail.net>
+ <buod3muswq7.fsf@dhlpc061.dev.necel.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: QUOTED-PRINTABLE
-Cc: git@vger.kernel.org, kendy <kendy@novell.com>
-To: michael.meeks@novell.com
-X-From: git-owner@vger.kernel.org Mon Feb 14 17:52:38 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	git@vger.kernel.org
+To: Miles Bader <miles@gnu.org>
+X-From: git-owner@vger.kernel.org Mon Feb 14 18:13:14 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp1f8-0002E7-1C
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 17:52:34 +0100
+	id 1Pp1z7-0007AT-Ae
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 18:13:13 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1756087Ab1BNQw2 convert rfc822-to-quoted-printable (ORCPT
-	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Feb 2011 11:52:28 -0500
-Received: from mail-iw0-f174.google.com ([209.85.214.174]:48661 "EHLO
-	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1755965Ab1BNQw1 convert rfc822-to-8bit (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Feb 2011 11:52:27 -0500
-Received: by iwn9 with SMTP id 9so4992997iwn.19
-        for <git@vger.kernel.org>; Mon, 14 Feb 2011 08:52:26 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=gamma;
-        h=domainkey-signature:mime-version:in-reply-to:references:date
-         :message-id:subject:from:to:cc:content-type
-         :content-transfer-encoding;
-        bh=vFGDb4fvXVaD/GGELfke4n1D8sUuDIYViL+J9IvQVy8=;
-        b=OWnbbA8Y3qG6hIOJT8sLlXnmAumxARhlBf/MR7YwbeYmr6aFjgNTQ29lEu00u8mLCh
-         uVlwTF+uwhX3flVCfcsabey7EYptYAqLYZzNEcxOFlSdgn5RGuWtfXIQ1ihdVoi5Mg7k
-         meNPGwHIci/+uKZjx0KLI88Q1KYC5scRqsMa4=
-DomainKey-Signature: a=rsa-sha1; c=nofws;
-        d=gmail.com; s=gamma;
-        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
-         :cc:content-type:content-transfer-encoding;
-        b=uX5Ayj2yet9LjAj4lUL4R5tUlB2S7f00W/RvNCLgQ+V8Z8qE1kPlJWs/wzamhz/z6S
-         SDOtt1YPXdwbtUx79fXBeKX7D67PHbQzQg0OJ8+9ucxJ76KUazcULrvwhJXhh29GodNC
-         Wmlvf5hnAunZEwFBoSOftgbndzXEbBoL+k5UU=
-Received: by 10.231.36.75 with SMTP id s11mr3120203ibd.130.1297702346623; Mon,
- 14 Feb 2011 08:52:26 -0800 (PST)
-Received: by 10.231.14.132 with HTTP; Mon, 14 Feb 2011 08:52:26 -0800 (PST)
-In-Reply-To: <1297699635.31477.253.camel@lenovo-w500>
+	id S1753935Ab1BNRNI (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 12:13:08 -0500
+Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:37337 "EHLO
+	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1752409Ab1BNRNG (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Feb 2011 12:13:06 -0500
+Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id EAE95300A;
+	Mon, 14 Feb 2011 12:14:07 -0500 (EST)
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; s=sasl; bh=uZxgemzHKbCuMC4Mbn1GWkoj2V0=; b=dr5f+a
+	BzBZjF9v8P/OX3lK+hTgk4kzvcUmPELoumdS8Bsz4HcqqHMqG4R7sngJMegPAFwZ
+	bnKEYZFBZHpbPuv4Kyq3kqT8Szt3Oe+njv5s0iMF28iR0hJG1cEsF3AQUbf3YeNE
+	w+Wi/FXdfi4rg5aQKLRgeYbMep5eCG1UwEX2k=
+DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
+	:references:from:date:in-reply-to:message-id:mime-version
+	:content-type; q=dns; s=sasl; b=Md8ZAiMCsgfoWvIl3RFIKNzaOo3gV8SX
+	5mYyMWZFzbkFarbae4g4liQMJRbkfnsN2h0+3iNGWB1TWWIGaUtxd/kaydq7SqEK
+	FdMJdBIGkZZKD0UbZkp7/RU+rHoIR8Tuj6kR5Ws3VUwN7xR9r+6DUVRAcFB3PF/E
+	fyAl9WYEF+4=
+Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
+	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 6C75D3009;
+	Mon, 14 Feb 2011 12:14:01 -0500 (EST)
+Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
+ DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
+ a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id A0CEA3005; Mon, 14 Feb 2011
+ 12:13:53 -0500 (EST)
+In-Reply-To: <buod3muswq7.fsf@dhlpc061.dev.necel.com> (Miles Bader's message
+ of "Mon\, 14 Feb 2011 20\:04\:48 +0900")
+User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
+X-Pobox-Relay-ID: D13211B4-385D-11E0-AFEB-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166735>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166736>
 
-On Mon, Feb 14, 2011 at 10:07 AM, Michael Meeks
-<michael.meeks@novell.com> wrote:
-> Hi guys,
->
-> We are having quite some fun merging git branches with LibreOffice, a=
-nd
-> I stumbled over this just now with master git with hash:
-> 00e6ee724640701b32aca27cc930fd6409c87ae2
->
-> Setup (some large repos):
->
-> =A0 =A0 =A0 =A0git clone git://anongit.freedesktop.org/libreoffice/li=
-bs-core
-> =A0 =A0 =A0 =A0git checkout integration/dev300_m98
-> =A0 =A0 =A0 =A0git remote add stage git://anongit.freedesktop.org/lib=
-reoffice/staging/@REPO@
+Miles Bader <miles@gnu.org> writes:
 
-correction: this should read
-        git remote add stage
-git://anongit.freedesktop.org/libreoffice/staging/libs-core
+> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>> Short options should really not be "wasted" easily. "-s" named after "to
+>> stage" is really problematic, as outlined in this thread.
+>
+> Er, but the point is that this is _such_ a common operation, that a
+> short option for it would not be "wasted" at all.
 
-or you should use ./g instead of git for all these 3 git operations
+True, but I am afraid "-c" is not it, as it would certainly be confusing
+to users who know what "diff" does before they learn "git diff".
 
-Norbert
+And I'd like to also keep "-i" open for "ignore case", which I actually
+wished the other day while reviewing a topic.  Unlike "-c", I might
+implement it myself not in a distant future when I find time.
 
+Using "-I" (as an abbreviation for "index-only") is tempting, though.
 
-> =A0 =A0 =A0 =A0git fetch stage
->
-> =A0 =A0 =A0 =A0Test[1]:
->
-> =A0 =A0 =A0 =A0git merge stage/premerge/dev300_m98
-> =A0 =A0 =A0 =A0git diff idl/source/cmptools/lex.cxx
->
-> =A0 =A0 =A0 =A0yields:
->
-> @@@ -147,11 -147,7 +147,15 @@@ SvToken & SvToken::operator =3D ( cons=
-t S
-> =A0******************************************************************=
-*******/
-> =A0void SvTokenStream::InitCtor()
-> =A0{
-> ++<<<<<<< HEAD
-> =A0+#ifdef DOS
-> =A0+ =A0 =A0SetCharSet( CHARSET_ANSI );
-> =A0+#else
-> =A0 =A0 =A0SetCharSet( gsl_getSystemTextEncoding() );
-> =A0+#endif
-> ++=3D=3D=3D=3D=3D=3D=3D
-> ++ =A0 =A0SetCharSet( gsl_getSystemTextEncoding() );
-> ++>>>>>>> stage/premerge/dev300_m98
-> =A0 =A0 =A0aStrTrue =A0=3D "TRUE";
-> =A0 =A0 =A0aStrFalse =3D "FALSE";
-> =A0 =A0 =A0nLine =A0 =A0 =A0 =3D nColumn =3D 0;
->
-> =A0 =A0 =A0 =A0With the above master hash; whereas with v1.7.3.4 it y=
-ields nothing (as
-> it should IMHO) - we havn't edited things around that chunk in master=
-=2E
->
-> =A0 =A0 =A0 =A0That is slightly concerning; thoughts much appreciated=
-=2E Incidentally,
-> the whole 'make install' installs into ~/bin was extremely unexpected
-> and yielded 30minutes of pain trying to work out what was installed
-> where and why, and the interaction with --prefix, and ... now it seem=
-s I
-> should always run rehash; git --version before any command, and sanit=
-y
-> check things ;-)
->
-> =A0 =A0 =A0 =A0Thanks,
->
-> =A0 =A0 =A0 =A0 =A0 =A0 =A0 =A0Michael.
->
-> [1] - potentially you need:
-> [merge]
-> =A0 =A0renamelimit =3D 20000
-> in your ~/.gitconfig
-> --
-> =A0michael.meeks@novell.com =A0<><, Pseudo Engineer, itinerant idiot
->
->
->
+Both "-i" and "-I" are GNU extensions, and the latter traditionally was
+useful primarily to ignore cruft left in the file with use of "$Id$", but
+we actively discourage its use in git controlled projects, so taking it
+over might not be such a big issue.
