@@ -1,67 +1,115 @@
-From: Adam Monsen <haircut@gmail.com>
-Subject: configuring cherry-pick to always use -x?
-Date: Mon, 14 Feb 2011 09:19:49 -0800
-Message-ID: <4D596435.9020605@gmail.com>
+From: Catalin Marinas <catalin.marinas@gmail.com>
+Subject: Re: [STGIT] AssertionError on stg rebase
+Date: Mon, 14 Feb 2011 17:23:15 +0000
+Message-ID: <AANLkTim2F1B7=Q5wTfxxWod3yyyiMuGxKnEGNyCVjcuZ@mail.gmail.com>
+References: <20110213193534.GA2437@khazad-dum.debian.net>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=ISO-8859-1
-Content-Transfer-Encoding: 7bit
-To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 14 18:19:59 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: git@vger.kernel.org, Karl Wiberg <kha@treskal.com>
+To: Henrique de Moraes Holschuh <hmh@hmh.eng.br>
+X-From: git-owner@vger.kernel.org Mon Feb 14 18:23:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp25f-0003Gd-Gz
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 18:19:59 +0100
+	id 1Pp28z-0005hy-Ke
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 18:23:25 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755127Ab1BNRTz (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 12:19:55 -0500
-Received: from mail-yw0-f46.google.com ([209.85.213.46]:61186 "EHLO
-	mail-yw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1752603Ab1BNRTy (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 12:19:54 -0500
-Received: by ywo7 with SMTP id 7so2156242ywo.19
-        for <git@vger.kernel.org>; Mon, 14 Feb 2011 09:19:53 -0800 (PST)
+	id S1755820Ab1BNRXR convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Feb 2011 12:23:17 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:58776 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1755808Ab1BNRXP convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Feb 2011 12:23:15 -0500
+Received: by iwn9 with SMTP id 9so5022686iwn.19
+        for <git@vger.kernel.org>; Mon, 14 Feb 2011 09:23:15 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
-         :subject:x-enigmail-version:content-type:content-transfer-encoding;
-        bh=GuNh0tc4i3E5Y9QEUNcFZEg2EFclog6k3vfbIViTkIs=;
-        b=NDn3Ru8W0kHm1LQHvdy9uySdIxhEetAIuNPmexXWyrT8VnvAXwLrBM80SdoEdWx9BU
-         KfUunghTZjvykwXfYllrfWMXAzdfFR8+UZ9KPLs50eRxdH1eJNoXeDLZAurJw+AIsdSm
-         3f9kB8nVMN/Mufm8HeguKlyJ7pxcrc44KhAFc=
+        h=domainkey-signature:mime-version:in-reply-to:references:date
+         :message-id:subject:from:to:cc:content-type
+         :content-transfer-encoding;
+        bh=YtkNGnC7Y1b1I2iW3F3VMydcr2MVbnsF9qEXLCQNXV4=;
+        b=MmjESpzK0ecGznpgLi9l/Ejr7wRdm+KCwvNfzKQUH6hFanBZdkvVtNgrcJg9at/U6I
+         QLjTDs5Z3H3lbeObqPxh+7vqW4GsvMI/GZtUGtHgSwTggygSuXTAAK70etOkr7tQFkhX
+         QlajL/APJWDrSj/31lVq12VEnmxIgHJt8XSGs=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject
-         :x-enigmail-version:content-type:content-transfer-encoding;
-        b=Y2MKvXKpperFco+uCy+2YR4DV/ZbHnIk/nk3yn0UbrqgjnOhMhB7hEt7YQOJg7LyFA
-         zl+bvFEy0Hm3BY2Q9zPULA8VaJnC5+BWrZV3j3Jw6gu4nwYVYWeKJCPldAu3V2V3PA/e
-         3TwALKASSSiJVbaddVIjWOkIIZv9ykmt+2TP0=
-Received: by 10.90.54.14 with SMTP id c14mr4823518aga.14.1297703993286;
-        Mon, 14 Feb 2011 09:19:53 -0800 (PST)
-Received: from [192.168.13.8] (c-67-183-136-182.hsd1.wa.comcast.net [67.183.136.182])
-        by mx.google.com with ESMTPS id c34sm3806450anc.10.2011.02.14.09.19.52
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 14 Feb 2011 09:19:52 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
-X-Enigmail-Version: 1.1.1
+        h=mime-version:in-reply-to:references:date:message-id:subject:from:to
+         :cc:content-type:content-transfer-encoding;
+        b=EIBVsY240zs5qJkWW9CHEC5C5Hc+6W88vFKWlQYnqp3BvgckLh8+KKVcS8yeHDR8W4
+         aXXClS4uFNDC2GEqCR77E+RTzEq/U7VskdzBrYiYDDI+tSL9SP5v26nHpHJHYxBBod/e
+         Jy/6uX0XCTQxRLeVpOF21BpkMsyQVxLPesNjs=
+Received: by 10.42.241.131 with SMTP id le3mr5263320icb.478.1297704195157;
+ Mon, 14 Feb 2011 09:23:15 -0800 (PST)
+Received: by 10.42.240.8 with HTTP; Mon, 14 Feb 2011 09:23:15 -0800 (PST)
+In-Reply-To: <20110213193534.GA2437@khazad-dum.debian.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166737>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166738>
 
-Is there a configuration option to make cherry-pick always include the
-source commit hash in the new commit log message?
+Hi,
 
-e.g., make "git cherry-pick" always behave like "git cherry-pick -x"?
+On 13 February 2011 19:35, Henrique de Moraes Holschuh <hmh@hmh.eng.br>=
+ wrote:
+> Here is a testcase to reproduce the problem:
+>
+> $ git clone git://git.kernel.org/pub/scm/linux/kernel/git/longterm/li=
+nux-2.6.27.y.git
+> $ cd linux-2.6.27.y
+> $ git reset --hard v2.6.27.53
+> $ stg init
+> $ stg new test-patch-1
+> $ echo "something" > changedfile
+> $ git add changedfile
+> $ stg refresh
+>
+> $ stg rebase v2.6.27.58
+>
+> Checking for changes in the working directory ... done
+> Popping all applied patches ... done
+> Rebasing to "v2.6.27.58" ... done
+> Pushing patch "test-patch-1" ... done
+> Now at patch "test-patch-1"
+> Traceback (most recent call last):
+[...]
+> =C2=A0File "/usr/lib/pymodules/python2.6/stgit/lib/git.py", line 408,=
+ in parse
+> =C2=A0 =C2=A0assert False
+> AssertionError
 
-My most frequent use case for cherry picking is between publicly visible
-branches.
+StGit is parsing the commit information for some key/value pairs. It
+looks like it found one which it didn't know about - "encoding:
+latin1" and it failed.
 
-I have the following configuration option set:
+=46or now it is OK to just remove the assert. The drawback is that if
+you do some "stg uncommit" on some existing commits, it will lose
+additional information but I don't think it matters to you since you
+create your patches with StGit anyway and it doesn't generate such
+information. Longer term we may want to preserve other things that may
+appear in the commit data. I'll push this to the StGit repository as
+well.
 
-  alias.cpx=cherry-pick -x
 
-but I rarely remember to use it.
+diff --git a/stgit/lib/git.py b/stgit/lib/git.py
+index 3378728..f5ea965 100644
+--- a/stgit/lib/git.py
++++ b/stgit/lib/git.py
+@@ -404,8 +404,6 @@ class CommitData(Immutable, Repr):
+                 cd =3D cd.set_author(Person.parse(value))
+             elif key =3D=3D 'committer':
+                 cd =3D cd.set_committer(Person.parse(value))
+-            else:
+-                assert False
+         assert False
+
+ class Commit(GitObject):
+
+
+Thanks.
+
+--=20
+Catalin
