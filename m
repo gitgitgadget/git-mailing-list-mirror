@@ -1,83 +1,89 @@
-From: Heiko Voigt <hvoigt@hvoigt.net>
-Subject: future of git-gui as subsytem or submodule, WAS: [PATCH] git-gui:
-	document the gui.maxfilesdisplayed variable
-Date: Mon, 14 Feb 2011 23:03:18 +0100
-Message-ID: <20110214220318.GD50815@book.hvoigt.net>
-References: <20110213125324.GA31986@book.hvoigt.net> <7v39nruk9j.fsf@alter.siamese.dyndns.org>
+From: Miles Bader <miles@gnu.org>
+Subject: Re: Consistent terminology: cached/staged/index
+Date: Tue, 15 Feb 2011 07:07:03 +0900
+Message-ID: <AANLkTinnCLVDEZpNPVYZ2fq1BY=257BTxkzNj44-Yz3O@mail.gmail.com>
+References: <AANLkTi=9OWqz66Ab6O9tc4eYSrhZZ1YC_+ta9sutAn30@mail.gmail.com>
+ <20110213193738.GA26868@elie> <7v8vxjwnhj.fsf@alter.siamese.dyndns.org>
+ <87k4h34bhj.fsf@catnip.gol.com> <7vr5bbupj4.fsf@alter.siamese.dyndns.org>
+ <AANLkTi=PDhVgpTeFjTxFuVJGbAKTHzHhsNVcquqSD3Qq@mail.gmail.com>
+ <4D58D2DF.1050205@viscovery.net> <AANLkTikTfyHBOvQmjhT8yTziL4R67+AAk0O-Nk1tBSaL@mail.gmail.com>
+ <4D5906FD.7030502@drmicha.warpmail.net> <buod3muswq7.fsf@dhlpc061.dev.necel.com>
+ <7vtyg6tu9e.fsf@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pat Thoyts <patthoyts@googlemail.com>, git@vger.kernel.org
+Content-Type: text/plain; charset=ISO-8859-1
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Michael J Gruber <git@drmicha.warpmail.net>,
+	Johannes Sixt <j.sixt@viscovery.net>,
+	Jonathan Nieder <jrnieder@gmail.com>,
+	Piotr Krukowiecki <piotr.krukowiecki.news@gmail.com>,
+	git@vger.kernel.org
 To: Junio C Hamano <gitster@pobox.com>
-X-From: git-owner@vger.kernel.org Mon Feb 14 23:03:28 2011
+X-From: git-owner@vger.kernel.org Mon Feb 14 23:07:52 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp6Vy-0008Vb-CV
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 23:03:26 +0100
+	id 1Pp6aF-0002jW-Ek
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 23:07:51 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752335Ab1BNWDV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 17:03:21 -0500
-Received: from darksea.de ([83.133.111.250]:47459 "HELO darksea.de"
-	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
-	id S1751889Ab1BNWDU (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 17:03:20 -0500
-Received: (qmail 18306 invoked from network); 14 Feb 2011 23:03:18 +0100
-Received: from unknown (HELO localhost) (127.0.0.1)
-  by localhost with SMTP; 14 Feb 2011 23:03:18 +0100
-Content-Disposition: inline
-In-Reply-To: <7v39nruk9j.fsf@alter.siamese.dyndns.org>
-User-Agent: Mutt/1.5.19 (2009-01-05)
+	id S1751934Ab1BNWHr convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Feb 2011 17:07:47 -0500
+Received: from mail-bw0-f46.google.com ([209.85.214.46]:57845 "EHLO
+	mail-bw0-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751223Ab1BNWHq convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Feb 2011 17:07:46 -0500
+Received: by bwz15 with SMTP id 15so5966026bwz.19
+        for <git@vger.kernel.org>; Mon, 14 Feb 2011 14:07:44 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:sender:in-reply-to:references:from
+         :date:x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        bh=6jy/QxFtaWxCOnzJZie8s3OWVxlm81RCQfMQqxZQafc=;
+        b=mf1DBA4dihjjwTdzNkojYedT4lIlN699s2kXWMM1ecTmISq/CiebMbPHHC9UZHDdfF
+         6eJf8nuQePiPGIKOCuhhEIlgbWhbjjBF7PbVChJT6omZMSAFuSccDR2pyawvdJxpUhSZ
+         SgZSaPjztW2SmKIeUE5/GBzWi6YakwBbbw2mw=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:sender:in-reply-to:references:from:date
+         :x-google-sender-auth:message-id:subject:to:cc:content-type
+         :content-transfer-encoding;
+        b=vMwo1IWOXL3dBYk3rOjroQBlNX71KeB7Zeu3JHCryZ8OVQdKWqUBmL+csGZxAEGY25
+         SsELpjDigRkDO8a8ulwzy8XhOfuS3RKY+xsM1Gzl0JDFTjtKK8ZZuyu6AhSBox4ZSD0I
+         s/sYWHREj0e6/R09Oxz4WJfdPtZfIuS3ctn74=
+Received: by 10.204.79.135 with SMTP id p7mr7190318bkk.109.1297721264763; Mon,
+ 14 Feb 2011 14:07:44 -0800 (PST)
+Received: by 10.204.119.130 with HTTP; Mon, 14 Feb 2011 14:07:03 -0800 (PST)
+In-Reply-To: <7vtyg6tu9e.fsf@alter.siamese.dyndns.org>
+X-Google-Sender-Auth: j-mtOENmzsRdgvydPIgdI0Ij3cQ
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166781>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166782>
 
-Hi,
+On Tue, Feb 15, 2011 at 2:12 AM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> Miles Bader <miles@gnu.org> writes:
+>> Michael J Gruber <git@drmicha.warpmail.net> writes:
+>>> Short options should really not be "wasted" easily. "-s" named afte=
+r "to
+>>> stage" is really problematic, as outlined in this thread.
+>>
+>> Er, but the point is that this is _such_ a common operation, that a
+>> short option for it would not be "wasted" at all.
+>
+> True, but I am afraid "-c" is not it, as it would certainly be confus=
+ing
+> to users who know what "diff" does before they learn "git diff".
 
-On Sun, Feb 13, 2011 at 11:51:04PM -0800, Junio C Hamano wrote:
-> Two opposing thoughts.
-> 
->  1. We can keep git-gui and git proper separate projects, move git-gui
->     documentation out of git to git-gui, and with clever Makefile trick
->     include and build git-gui related documentation conditionally only
->     when git-gui appears part of the git project tree (this anticipates a
->     future where git-gui is bound to git not with the subtree merge
->     strategy as we currently do, but as a submodule).
-> 
->  2. Just like the Linux kernel project, we can make each subsystem with
->     separate maintainers just different repositories of the same git
->     project with their own focus.  We already do this for git-svn (which I
->     delegate to Eric Wong by pulling from him) and some parts of contrib/
->     tree; we have already been halfway there for gitweb/ (which I don't
->     regularly "pull from", but I mainly act as a patch monkey without
->     actively managing that part myself).  I don't see why we cannot extend
->     that model to git-gui and gitk.
+Er...?
 
-I would vote for 2. Not because I think submodules will not become as easy to
-use so they are ready for that but I think there are mainly two reasons
-for using a submodule
+Here we were talking about using "-s" (inspired by "--staged"), which
+I suggested because you earlier objected to "-c"...
 
-  A. The submodule contains shared code which is used by multiple projects
+-miles
 
-  B. A submodule is used to keep large collection of files seperate from
-     a project because most times they are not needed and would
-     interfere with the project.
-
-There are maybe more but these two do not apply to git-gui and I like
-the way it is currently integrated in one repository with git. It also
-underlines the fact that git-gui is AFAICS the standard and best
-developed gui for git.
-
-Another plus, if we extend that model to gitk, is that both could start
-sharing code between each other (maybe relocate to the same directory).
-
-Although 1. would be a good choice for getting more people involved in
-enhancing submodule support, from a philosophical standpoint, I think 2.
-is the more natural choice.
-
-What do others think?
-
-Cheers Heiko
+--=20
+Cat is power. =A0Cat is peace.
