@@ -1,122 +1,72 @@
-From: Adam Monsen <haircut@gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
 Subject: Re: configuring cherry-pick to always use -x?
-Date: Mon, 14 Feb 2011 13:50:20 -0800
-Message-ID: <4D59A39C.9090402@gmail.com>
+Date: Mon, 14 Feb 2011 16:53:30 -0500
+Message-ID: <AANLkTikKXLBf2HYk2CZmVMzgVhYUAL=URFTZ851eb5do@mail.gmail.com>
 References: <4D596435.9020605@gmail.com> <AANLkTimi=d0qbO3_-BEnPEJ+iy9B=_fksF7TiBE7HorC@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
- protocol="application/pgp-signature";
- boundary="------------enig644B3721A7339BA3B07512AC"
-To: Junio C Hamano <gitster@pobox.com>, git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 14 22:52:39 2011
+Content-Type: text/plain; charset=UTF-8
+Cc: Adam Monsen <haircut@gmail.com>, git@vger.kernel.org
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 14 22:54:08 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp6LS-0001mn-TF
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 22:52:35 +0100
+	id 1Pp6Mx-0002r4-3l
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 22:54:07 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751786Ab1BNVwa (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 16:52:30 -0500
-Received: from mail-qy0-f174.google.com ([209.85.216.174]:51519 "EHLO
-	mail-qy0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751577Ab1BNVw3 (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 16:52:29 -0500
-Received: by qyj19 with SMTP id 19so1837303qyj.19
-        for <git@vger.kernel.org>; Mon, 14 Feb 2011 13:52:28 -0800 (PST)
+	id S1751799Ab1BNVyC (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 16:54:02 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:46960 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751338Ab1BNVyA (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Feb 2011 16:54:00 -0500
+Received: by iwn9 with SMTP id 9so5279401iwn.19
+        for <git@vger.kernel.org>; Mon, 14 Feb 2011 13:54:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=gamma;
-        h=domainkey-signature:message-id:date:from:user-agent:mime-version:to
-         :subject:references:in-reply-to:x-enigmail-version:content-type;
-        bh=ue1B1xmUtSSd0iGXxHzki7lAQ7aySzun8MrlUOTAlkk=;
-        b=toEHwx+2E1a6fLTP8CDYVu/fZwPe4dgd5lHFTXd7jSca9XWPVI01vAJvBIIo0yCEJ+
-         Fj0pp1wNz+3gFLqrOMzCKVUh5orReZzK3jSDnj1f39A1ckB9lHyUSyoehBwHXeVA5bUH
-         +gdkX0ZnGhZ2U24OInNwBv+v51ELF0vU6DzlQ=
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type;
+        bh=iqYvwhVPSB/VSqRBhzDOVGbX5gPagjVBTx92P5kZeBw=;
+        b=MWJwWzdL9R58EXFrYz8LdAjkdx7R34axzs+dMb9B00dTQVMgcUSldYTeZniGRV4LuS
+         q1aW/UoOKfpmg84+8pvRGYiVaeCKqLAX/96mqzEvzDjk+eUVzXdEcEbKhl9HGo9oj4Ys
+         jVI715O5Ff1jKlfxdehhZr9GnFaHn8HPDV0ZY=
 DomainKey-Signature: a=rsa-sha1; c=nofws;
         d=gmail.com; s=gamma;
-        h=message-id:date:from:user-agent:mime-version:to:subject:references
-         :in-reply-to:x-enigmail-version:content-type;
-        b=hCFJJ4REFQrJYb8h54T0+tvK4ezxTk9ZLSvhZvDTtkucsEFUtSf9RKTQuU19BUEkiz
-         m1txRbzj8/tvwNPZFAHA124AxIPmifE+ff3hgcNcAJbrlAPVzRU91j92swHzYFSrolgu
-         Rr9ZwW95hykreCjvd3eP5sOVgckTYTiceNvGQ=
-Received: by 10.224.6.145 with SMTP id 17mr3691680qaz.386.1297720224402;
-        Mon, 14 Feb 2011 13:50:24 -0800 (PST)
-Received: from [192.168.13.8] (c-67-183-136-182.hsd1.wa.comcast.net [67.183.136.182])
-        by mx.google.com with ESMTPS id y17sm2118608qci.9.2011.02.14.13.50.23
-        (version=TLSv1/SSLv3 cipher=OTHER);
-        Mon, 14 Feb 2011 13:50:23 -0800 (PST)
-User-Agent: Mozilla/5.0 (X11; U; Linux i686 (x86_64); en-US; rv:1.9.2.13) Gecko/20101207 Lightning/1.0b2 Thunderbird/3.1.7
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type;
+        b=ImmrIM+c+x21xXWGjBZmbFgHuRjeiOmEOSyFHuMkNJLdbRS4FDCiBEn1ShZziFtKGQ
+         6RYrzwcA8wBjHPtmVhPgOOvmogi47oXhxcm9WYRIjzibq6l9Ktvtm4OwtkJbKYQWYtNg
+         Ome9yMZv0HQ+j2fLOYPx6NzhmkuBsYgkGlnsg=
+Received: by 10.231.36.69 with SMTP id s5mr3294079ibd.167.1297720440234; Mon,
+ 14 Feb 2011 13:54:00 -0800 (PST)
+Received: by 10.231.40.2 with HTTP; Mon, 14 Feb 2011 13:53:30 -0800 (PST)
 In-Reply-To: <AANLkTimi=d0qbO3_-BEnPEJ+iy9B=_fksF7TiBE7HorC@mail.gmail.com>
-X-Enigmail-Version: 1.1.1
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166776>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166777>
 
-This is an OpenPGP/MIME signed message (RFC 2440 and 3156)
---------------enig644B3721A7339BA3B07512AC
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
+On Mon, Feb 14, 2011 at 4:05 PM, Junio C Hamano <gitster@pobox.com> wrote:
+> Not currently, but before we go any further, could you please justify
+> in what workflow it would make sense to use -x most of the time?
 
-Junio C Hamano wrote:
-> could you please justify in what workflow it would make sense to use
-> -x most of the time?
+In one of my repos, most of the time my cherry-picks are between two
+public branches. Perhaps a better enhancement would be something like:
 
-Sure. Summary: two long-lived publicly visible branches.
+  branch.<name>.annotate_cherry_pick = {true, false}
 
-Details:
-Mifos is what I'm usually working on lately. We have branches "master"
-and "f-release" both present in our public git repository called "head"
-(hosted at sf.net). master is the bleeding edge of development,
-f-release is a release maintenance branch recently created off the tip
-of master. I expect both to live on forever (even though commits to
-f-release will eventually cease).
+which could be set to true for source branches that you wish to
+default to -x. Or, maybe it makes sense in cases where the source
+branch is a remote-tracking branch:
 
-Right after f-release was cut, we merged f-release to master every day
-or so to make sure bugfixes for f-release were also propagated to future
-releases. After a while, merging resulted in too many conflicts and we
-started cherry picking instead.
+   cherry_pick.annotate = {local, remote}
 
-This process is described generally at
-http://mifosforge.jira.com/wiki/display/MIFOS/Release+Branch+Merging+Poli=
-cy
-=2E
+I'm not sure how good a remote-tracking branch is as an indicator of
+'public branch', though, so I think explicitly configuring it
+per-branch makes more sense. I hesitate there only because we don't
+currently put remote-tracking branches in the branch section names.
 
-If the source commit is present in the log message of the new (cherry
-picked) commit, it's easy to (1) find the source commit (gitweb creates
-a hyperlink, for instance) and (2) know that, when viewing the log of
-master, a particular commit is also present on another branch. Right now
-I just keep reminding folks to use -x.
-
-For (2), I generally assume that branch is a release branch, but come to
-think of it, it would be nice to know what branch a commit was cherry
-picked from. For example: "(cherry picked from BRANCHNAME commit
-c6e08938e352f3ec99a29a67dd192945d2bcf00d)" would be better than the
-current message generated by -x.
-
-See also:
-http://mifosforge.jira.com/wiki/display/MIFOS/Mifos+Version+Control+Guide=
-
-
-
---------------enig644B3721A7339BA3B07512AC
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1.4.10 (GNU/Linux)
-Comment: Using GnuPG with Mozilla - http://enigmail.mozdev.org/
-
-iQEcBAEBAgAGBQJNWaOcAAoJEJtdmT+DbynAUiYIAL5tKkEzIyYPpxeYPJ0FWh3m
-wQ03GIa3B3OG0YjgTbEEZRJoXBVLOHNlmed5KMuU8Gr/vOgO9/PwNVb05shzacpT
-Raf/g621AcHPpxJaNtASzeXC2Nfalzp7szUqhLSBISJF8Dc4UJn1NDhYoR1fgy7V
-ZkobxGQrZKd5zgLAMptaCFYRQ16qD8tNrAZ8Ufl0geIu4PSPYDclw8XWyRWvkdN3
-SGrgWM2jeia5U8nX+6cXPmEwwbXMlIubW4GZoqxeRmkPufGWq2gjXqGrCQ56cxe1
-V9ot1vv1aQnVzdmusdkydIBnMYy6DY78W8gzl8/5SecZDnSO3/EjR+ZmHNc3Rk0=
-=qxrR
------END PGP SIGNATURE-----
-
---------------enig644B3721A7339BA3B07512AC--
+j.
