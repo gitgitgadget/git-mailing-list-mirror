@@ -1,77 +1,59 @@
 From: Michael J Gruber <git@drmicha.warpmail.net>
-Subject: [PATCH 3/7] clone,init: describe --template using the same wording
-Date: Mon, 14 Feb 2011 16:10:31 +0100
-Message-ID: <4f337165179d071d7c54b442b7d3dd72406239b2.1297695910.git.git@drmicha.warpmail.net>
+Subject: [PATCH 2/7] push: describe --porcelain just like commit and status
+Date: Mon, 14 Feb 2011 16:10:30 +0100
+Message-ID: <3b6a87b585eea1722bd31bc9cf5ba2c80e37aefa.1297695910.git.git@drmicha.warpmail.net>
 References: <cover.1297695910.git.git@drmicha.warpmail.net>
 To: git@vger.kernel.org
-X-From: git-owner@vger.kernel.org Mon Feb 14 16:14:24 2011
+X-From: git-owner@vger.kernel.org Mon Feb 14 16:14:25 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp086-0002oe-AP
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 16:14:22 +0100
+	id 1Pp085-0002oe-8c
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 16:14:21 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1755360Ab1BNPNs (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 10:13:48 -0500
-Received: from out1.smtp.messagingengine.com ([66.111.4.25]:57185 "EHLO
+	id S1755234Ab1BNPNq (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 10:13:46 -0500
+Received: from out1.smtp.messagingengine.com ([66.111.4.25]:42748 "EHLO
 	out1.smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-	by vger.kernel.org with ESMTP id S1755229Ab1BNPNp (ORCPT
-	<rfc822;git@vger.kernel.org>); Mon, 14 Feb 2011 10:13:45 -0500
-Received: from compute1.internal (compute1.nyi.mail.srv.osa [10.202.2.41])
-	by gateway1.messagingengine.com (Postfix) with ESMTP id 5D8FA208B1
-	for <git@vger.kernel.org>; Mon, 14 Feb 2011 10:13:45 -0500 (EST)
-Received: from frontend1.messagingengine.com ([10.202.2.160])
-  by compute1.internal (MEProxy); Mon, 14 Feb 2011 10:13:45 -0500
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:subject:date:message-id:in-reply-to:references; s=smtpout; bh=sv7RKV9r8k4A9nFKVlU7qWHF9h4=; b=FUCMsPgJ2qr7mbNy/JyNj+uS1OaXAQuVrB8S0JUt8Glx41Mz5mZUngAJZf/rcaipQeJpdyagyqeukwOBO2wj+uNEZclUmZnW1YzYiQPDeBE7EV0AUvxMA/bH/u2ALcbLaUg0jIWytdBiDUUS2MH7HYLiwZgU9VLlj8evPx4clZI=
-X-Sasl-enc: NO5p19DTArgmw/dyGiR7STdHkQK+tSpbPLTsvSFyysSn 1297696424
+	by vger.kernel.org with ESMTP id S1753867Ab1BNPNo (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Feb 2011 10:13:44 -0500
+Received: from compute2.internal (compute2.nyi.mail.srv.osa [10.202.2.42])
+	by gateway1.messagingengine.com (Postfix) with ESMTP id AC23A20644
+	for <git@vger.kernel.org>; Mon, 14 Feb 2011 10:13:43 -0500 (EST)
+Received: from frontend2.messagingengine.com ([10.202.2.161])
+  by compute2.internal (MEProxy); Mon, 14 Feb 2011 10:13:43 -0500
+DKIM-Signature: v=1; a=rsa-sha1; c=relaxed/relaxed; d=messagingengine.com; h=from:to:subject:date:message-id:in-reply-to:references; s=smtpout; bh=F3uiNe2OlFp9at/PRbCQXSVAnLg=; b=WSxLZTJpL5gsj+QTdMYgp+Osf/Nh6qb0E587JY2AZ5uqEjb619CAaD9nJhQpxfX54KoxAUCDMdkfib/nqP/FPwxL83law/W4PS1MqHr3hWbj9LWXN74n/MQq0pW5ALtoXItS8+kRe2WPUM8fkeYE6VBLWYmLJJNGJkaP8wrMt6U=
+X-Sasl-enc: qrRlAq3hBBTKAWQKb+UkOJLKBWYkUVmJFgU4H6hAX7Ah 1297696423
 Received: from localhost (whitehead.math.tu-clausthal.de [139.174.44.62])
-	by mail.messagingengine.com (Postfix) with ESMTPSA id DCB5B40D1A8;
-	Mon, 14 Feb 2011 10:13:44 -0500 (EST)
+	by mail.messagingengine.com (Postfix) with ESMTPSA id 34A02441C19;
+	Mon, 14 Feb 2011 10:13:43 -0500 (EST)
 X-Mailer: git-send-email 1.7.4.1.74.gf39475
 In-Reply-To: <cover.1297695910.git.git@drmicha.warpmail.net>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166720>
-
-This also corrects a wrong description for clone.
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166721>
 
 Signed-off-by: Michael J Gruber <git@drmicha.warpmail.net>
 ---
- builtin/clone.c   |    4 ++--
- builtin/init-db.c |    2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ builtin/push.c |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
 
-diff --git a/builtin/clone.c b/builtin/clone.c
-index 82a6938..60d9a64 100644
---- a/builtin/clone.c
-+++ b/builtin/clone.c
-@@ -68,8 +68,8 @@ static struct option builtin_clone_options[] = {
- 		    "initialize submodules in the clone"),
- 	OPT_BOOLEAN(0, "recurse-submodules", &option_recursive,
- 		    "initialize submodules in the clone"),
--	OPT_STRING(0, "template", &option_template, "path",
--		   "path the template repository"),
-+	OPT_STRING(0, "template", &option_template, "template-directory",
-+		   "directory from which templates will be used"),
- 	OPT_STRING(0, "reference", &option_reference, "repo",
- 		   "reference repository"),
- 	OPT_STRING('o', "origin", &option_origin, "branch",
-diff --git a/builtin/init-db.c b/builtin/init-db.c
-index e3af9ea..4f5348e 100644
---- a/builtin/init-db.c
-+++ b/builtin/init-db.c
-@@ -419,7 +419,7 @@ int cmd_init_db(int argc, const char **argv, const char *prefix)
- 	unsigned int flags = 0;
- 	const struct option init_db_options[] = {
- 		OPT_STRING(0, "template", &template_dir, "template-directory",
--				"provide the directory from which templates will be used"),
-+				"directory from which templates will be used"),
- 		OPT_SET_INT(0, "bare", &is_bare_repository_cfg,
- 				"create a bare repository", 1),
- 		{ OPTION_CALLBACK, 0, "shared", &init_shared_repository,
+diff --git a/builtin/push.c b/builtin/push.c
+index e655eb7..e4ff264 100644
+--- a/builtin/push.c
++++ b/builtin/push.c
+@@ -217,7 +217,7 @@ int cmd_push(int argc, const char **argv, const char *prefix)
+ 		OPT_BOOLEAN( 0, "delete", &deleterefs, "delete refs"),
+ 		OPT_BOOLEAN( 0 , "tags", &tags, "push tags (can't be used with --all or --mirror)"),
+ 		OPT_BIT('n' , "dry-run", &flags, "dry run", TRANSPORT_PUSH_DRY_RUN),
+-		OPT_BIT( 0,  "porcelain", &flags, "machine-readable output", TRANSPORT_PUSH_PORCELAIN),
++		OPT_BIT( 0,  "porcelain", &flags, "show porcelain output format", TRANSPORT_PUSH_PORCELAIN),
+ 		OPT_BIT('f', "force", &flags, "force updates", TRANSPORT_PUSH_FORCE),
+ 		OPT_BOOLEAN( 0 , "thin", &thin, "use thin pack"),
+ 		OPT_STRING( 0 , "receive-pack", &receivepack, "receive-pack", "receive pack program"),
 -- 
 1.7.4.1.74.gf39475
