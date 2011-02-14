@@ -1,70 +1,130 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: configuring cherry-pick to always use -x?
-Date: Mon, 14 Feb 2011 13:05:06 -0800
-Message-ID: <AANLkTimi=d0qbO3_-BEnPEJ+iy9B=_fksF7TiBE7HorC@mail.gmail.com>
-References: <4D596435.9020605@gmail.com>
+From: Heiko Voigt <hvoigt@hvoigt.net>
+Subject: Re: Re: Re: Re: Re: Updating a submodule with a compatible version
+	from another submodule version using the parent meta-repository
+Date: Mon, 14 Feb 2011 22:13:18 +0100
+Message-ID: <20110214211317.GA50815@book.hvoigt.net>
+References: <7v7hdrl7nw.fsf@alter.siamese.dyndns.org> <AANLkTik8VrhbBSLwRq9gd39hofnmifk15zSqXVTsSzAp@mail.gmail.com> <7v1v3zjp6w.fsf@alter.siamese.dyndns.org> <20110129110807.GA21864@book.hvoigt.net> <AANLkTimBCeSnR270eWMcrgCVj6rmiRkJizOxQPAPOAnn@mail.gmail.com> <AANLkTim2G0kF+omPZ1_fk0P6oGDaKDWd79XNR5GXUkWG@mail.gmail.com> <20110209193610.GA67890@book.hvoigt.net> <AANLkTimist_GXgRGdUW1PpxpRO=poYgD4HkDC5CsyLra@mail.gmail.com> <20110213133019.GB31986@book.hvoigt.net> <AANLkTikHS95BVV4FUjR6TjZxHOGXsje2iDxEwbt9zckh@mail.gmail.com>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Cc: git@vger.kernel.org
-To: Adam Monsen <haircut@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 14 22:05:19 2011
+Content-Type: text/plain; charset=us-ascii
+Cc: Junio C Hamano <gitster@pobox.com>,
+	Jens Lehmann <Jens.Lehmann@web.de>, git@vger.kernel.org
+To: Julian Ibarz <julian.ibarz@gmail.com>
+X-From: git-owner@vger.kernel.org Mon Feb 14 22:13:26 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp5bf-0004NM-77
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 22:05:15 +0100
+	id 1Pp5jZ-0001fC-T5
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 22:13:26 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1752015Ab1BNVFK (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 16:05:10 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:51046 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1750880Ab1BNVFI (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 16:05:08 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id BA1CE4DD8
-	for <git@vger.kernel.org>; Mon, 14 Feb 2011 16:06:12 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=mime-version
-	:in-reply-to:references:date:message-id:subject:from:to:cc
-	:content-type; s=sasl; bh=0R6HRf0A1NsvGwGdQnltHq079PU=; b=ZSUF8l
-	IjOlLs9zGtrvh0k6O5aw9tippBJPNckhA2ExIueMBbmH/B8FGjv6zo7afxqzWw6W
-	ByKTA80uzmpBXA7kPT2SmnlOGetSiKJq4D/f62Cgbg28eEHM7vUbGVGCWNwHv2zz
-	BNaf9l5WPoDQZW8q6xy5aG2CHA8PDYZqhrTL4=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=mime-version
-	:in-reply-to:references:date:message-id:subject:from:to:cc
-	:content-type; q=dns; s=sasl; b=iWSMf1nOXIeTBxCEQfoib1UBeKEDnbr8
-	Lk1VPz+4A6/2cdXTS/i4OmuD6i8jzzAwbejzR/ltrrCVs06vWw5hM6eCKNz98+1R
-	RgxCaKraQPMamtICATj8R2PMNjOFvPSLGQ3k/LHNa4pt7O8eq2+L7uxugKMFWfvE
-	EcmwpnGqQdk=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id B464D4DD7
-	for <git@vger.kernel.org>; Mon, 14 Feb 2011 16:06:12 -0500 (EST)
-Received: from mail-wy0-f174.google.com (unknown [74.125.82.174]) (using
- TLSv1 with cipher RC4-SHA (128/128 bits)) (No client certificate requested)
- by a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 6FBDE4DD5 for
- <git@vger.kernel.org>; Mon, 14 Feb 2011 16:06:12 -0500 (EST)
-Received: by wyb28 with SMTP id 28so5156278wyb.19 for <git@vger.kernel.org>;
- Mon, 14 Feb 2011 13:05:07 -0800 (PST)
-Received: by 10.216.145.154 with SMTP id p26mr67176wej.11.1297717507091; Mon,
- 14 Feb 2011 13:05:07 -0800 (PST)
-Received: by 10.216.80.213 with HTTP; Mon, 14 Feb 2011 13:05:06 -0800 (PST)
-In-Reply-To: <4D596435.9020605@gmail.com>
-X-Pobox-Relay-ID: 40E69690-387E-11E0-A893-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1752748Ab1BNVNV (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
+	Mon, 14 Feb 2011 16:13:21 -0500
+Received: from darksea.de ([83.133.111.250]:45906 "HELO darksea.de"
+	rhost-flags-OK-OK-OK-OK) by vger.kernel.org with SMTP
+	id S1752692Ab1BNVNU (ORCPT <rfc822;git@vger.kernel.org>);
+	Mon, 14 Feb 2011 16:13:20 -0500
+Received: (qmail 18160 invoked from network); 14 Feb 2011 22:13:18 +0100
+Received: from unknown (HELO localhost) (127.0.0.1)
+  by localhost with SMTP; 14 Feb 2011 22:13:18 +0100
+Content-Disposition: inline
+In-Reply-To: <AANLkTikHS95BVV4FUjR6TjZxHOGXsje2iDxEwbt9zckh@mail.gmail.com>
+User-Agent: Mutt/1.5.19 (2009-01-05)
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166767>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166768>
 
-On Mon, Feb 14, 2011 at 9:19 AM, Adam Monsen <haircut@gmail.com> wrote:
-> Is there a configuration option to make cherry-pick always include the
-> source commit hash in the new commit log message?
+Hi,
 
-Not currently, but before we go any further, could you please justify
-in what workflow it would make sense to use -x most of the time?
+On Sun, Feb 13, 2011 at 01:59:09PM -0500, Julian Ibarz wrote:
+> On Sun, Feb 13, 2011 at 8:30 AM, Heiko Voigt <hvoigt@hvoigt.net> wrote:
+> > Ok lets not be so hard:
+> >
+> > git checkout v1.7.2.3.msysgit.0
+> > cd ..
+> > git submodulecheckout --find-versions git > git-versions.txt
+> > cd git
+> > git submodulecheckout --find-closest < ../git-versions.txt
+> >> 820fd48475eb72cdd4f2
+> >
+> > Close but not quite the right commit. See the output of git log:
+> > 820fd48 Chomp CRLF before feeding to tar when building netinstaller.
+> > 83e164c Avoid quoting environment variable values.
+> > daafc61 (tag: Git-1.7.2.3-preview20100911) Updated git and git documents and ReleaseNotes to v1.7.2.3
+> >
+> > Whats strange is that this commit did not even change the submodule.
+> 
+> Well because it is _exactly_ the commit that point to the current
+> submodule version you have checked out :) So it _is_ the good version.
+> Which version were you thinking was good?
 
-We used to add the "cherry-picked from" by default in the very early
-days, and stopped doing so for a reason, and also deliberately stayed
-away from adding such a configuration to actively discourage the use
-of -x without making the user thinking twice.
+Well I think the interface was/is still confusing me. Once you change to
+one where I can specify the hash I want to search for I will give it
+another try.
+
+> > I think currently it does not make sense to implement the scripting
+> > since the interface is not yet cleaned up enough. It should be possible
+> > to specify a commit as parameter and the path should probably go after
+> > that like the other commands do as well.
+> >
+> > The other issue is that we need to change the working directory. IMO,
+> > everything should be possible to do from superproject. Have a look at
+> > add_submodule_odb() in submodule.c it lets you load the database of a
+> > submodule. This way you can run the --find-closest from the superproject.
+> 
+> I don't think we want to do that. The usual scenario is:
+> 
+> * you are in a submodule
+> * you checkout a specific version
+> * you want the meta-repo and side submodules to be updated accordingly
+> 
+> And in this scenario at the beginning you are at the submodule
+> directory, not the meta repository so... What do you think? Also even
+> if in these low-level commands you need to change directory, if it is
+> hided in an integration in the sh submodule script, it doesn't matter
+> right?
+
+Well I think the interface should be useable by hand also. Lots of tools
+in git were invented by plugging the tools together differently than the
+original developer even had in his mind. So a nice "do only one thing
+but that very good" kind of interface makes sense.
+
+I think a nice thing would be if you could stay in one directory and it
+should not be too hard since we have add_submodule_odb(). Implementation
+would be easier if we started this command from the supermodule since
+searching for a supermodule from a submodule is still missing.
+
+> > So what I would be looking for is something like this:
+> >
+> > # This looks up all commits of <submodule> ever registered in this
+> > # project
+> > git submodulecheckout --find-versions <submodule> > out.tmp
+> >
+> > # This reads the previous list and outputs a list of of all the commits
+> > # that contain <treeish>. Function in_merge_bases(treeish, i&commit, 1)
+> > # can be of help here. Afterwards you have to prune all later commits
+> > # that contain earlier ones. I did this in find_first_merges(). I
+> > # suggest to refactor that code into a function so that you can use it.
+> > git submodulecheckout --find-closest <treeish> -- <submodule> < out.tmp > out2.tmp
+> >
+> > # And now we can search for the commit in the other submodule C
+> > git submodulecheckout --list-commits <other submodule> < out2.tmp > out3.tmp
+> >
+> > And if out3.tmp just contained one line we could checkout that one. I am
+> > still not sure in which command these options could go. Junio do you
+> > maybe have a suggestion? Since its all about submodules it would make
+> > sense to put it in 'git submodule' but thats already the script.
+> >
+> > Maybe a new 'git-submodule-tool' ?
+> 
+> Before I wanted to name it submodule-checkout but I think I hade a
+> naming conflict issue with submodule... not sure if submodule-tool
+> will work...
+
+Since the submodule script might be obsoleted partly and get rewritten
+in C at some point I was thinking of this as a kind of intermediate
+internal submodule helper tool.
+
+Cheers Heiko
