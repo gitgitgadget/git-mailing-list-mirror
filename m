@@ -1,76 +1,85 @@
-From: Junio C Hamano <gitster@pobox.com>
-Subject: Re: [PATCH] Obey p4 views when using client spec
-Date: Mon, 14 Feb 2011 10:33:49 -0800
-Message-ID: <7v7hd2tqia.fsf@alter.siamese.dyndns.org>
-References: <4D55D56C.6050207@vmware.com>
- <20110212215133.GA21494@mew.padd.com>
- <AANLkTinVp3EYFX3Ow2G8dO6Zn5BEWxuYjwO8vW2yOjcF@mail.gmail.com>
+From: Jay Soffian <jaysoffian@gmail.com>
+Subject: Re: Re* [1.8.0] Provide proper remote ref namespaces
+Date: Mon, 14 Feb 2011 13:53:47 -0500
+Message-ID: <AANLkTincKapKgcWEE1Z+vQesSjZBFAnfH0uL+a7GhQ6b@mail.gmail.com>
+References: <AANLkTi=yFwOAQMHhvLsB1_xmYOE9HHP2YB4H4TQzwwc8@mail.gmail.com>
+ <201102140036.42197.johan@herland.net> <7vfwrrukzq.fsf@alter.siamese.dyndns.org>
+ <201102141018.46527.johan@herland.net> <7vfwrqtrsk.fsf_-_@alter.siamese.dyndns.org>
 Mime-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Cc: Pete Wyckoff <pw@padd.com>, Ian Wienand <ianw@vmware.com>,
-	git@vger.kernel.org
-To: Tor Arvid Lund <torarvid@gmail.com>
-X-From: git-owner@vger.kernel.org Mon Feb 14 19:34:23 2011
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: QUOTED-PRINTABLE
+Cc: Johan Herland <johan@herland.net>,
+	Jakub Narebski <jnareb@gmail.com>, git@vger.kernel.org,
+	Jeff King <peff@peff.net>,
+	Matthieu Moy <Matthieu.Moy@grenoble-inp.fr>,
+	Dmitry Potapov <dpotapov@gmail.com>,
+	Sverre Rabbelier <srabbelier@gmail.com>,
+	Nguyen Thai Ngoc Duy <pclouds@gmail.com>,
+	Nicolas Pitre <nico@fluxnic.net>
+To: Junio C Hamano <gitster@pobox.com>
+X-From: git-owner@vger.kernel.org Mon Feb 14 19:54:48 2011
 Return-path: <git-owner@vger.kernel.org>
 Envelope-to: gcvg-git-2@lo.gmane.org
 Received: from vger.kernel.org ([209.132.180.67])
 	by lo.gmane.org with esmtp (Exim 4.69)
 	(envelope-from <git-owner@vger.kernel.org>)
-	id 1Pp3Fe-0001jh-9J
-	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 19:34:22 +0100
+	id 1Pp3ZL-0006M1-J4
+	for gcvg-git-2@lo.gmane.org; Mon, 14 Feb 2011 19:54:43 +0100
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-	id S1751423Ab1BNSeD (ORCPT <rfc822;gcvg-git-2@m.gmane.org>);
-	Mon, 14 Feb 2011 13:34:03 -0500
-Received: from a-pb-sasl-sd.pobox.com ([64.74.157.62]:59871 "EHLO
-	sasl.smtp.pobox.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-	with ESMTP id S1751395Ab1BNSeB (ORCPT <rfc822;git@vger.kernel.org>);
-	Mon, 14 Feb 2011 13:34:01 -0500
-Received: from sasl.smtp.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 691153AE6;
-	Mon, 14 Feb 2011 13:35:05 -0500 (EST)
-DKIM-Signature: v=1; a=rsa-sha1; c=relaxed; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; s=sasl; bh=+SiOJuHIb9BoCp6aoV4CnnRpGLU=; b=pQKD6E
-	cyFbiZsDhVXbwmmI4s9pGXrNvJVTu2LaQ521Rc6kbVvAx/PVT2AQcCxI+2IqybxL
-	YIjdKvVZDVDetPMZl1tuYsIGzKri+GDK0H4qPHpM5NkNn8SKW9+Du7sA5A5+HJeZ
-	92F9AkswqTdp9EUEAbU6PtovaRvMUOpYqdLlI=
-DomainKey-Signature: a=rsa-sha1; c=nofws; d=pobox.com; h=to:cc:subject
-	:references:from:date:in-reply-to:message-id:mime-version
-	:content-type; q=dns; s=sasl; b=trZCEGSzx+6KgHHMm5tR7jP5mwhVrn2k
-	qHFjHpMZuoSDHLwksUm8Pq3DtBaLjfLvrE0gapdHMJB4nUnDOOiAFWHF3bWjnmqV
-	UtPQh22tq5hLsaqO3x++Sm/WznMCo2IR+V3H18RBs3Qb8th67hFqY2dbArdUh1/c
-	/Ysd0UcvAyc=
-Received: from a-pb-sasl-sd.pobox.com (unknown [127.0.0.1])
-	by a-pb-sasl-sd.pobox.com (Postfix) with ESMTP id 1E0273AE3;
-	Mon, 14 Feb 2011 13:35:01 -0500 (EST)
-Received: from pobox.com (unknown [76.102.170.102]) (using TLSv1 with cipher
- DHE-RSA-AES128-SHA (128/128 bits)) (No client certificate requested) by
- a-pb-sasl-sd.pobox.com (Postfix) with ESMTPSA id 8498F3ADF; Mon, 14 Feb 2011
- 13:34:55 -0500 (EST)
-In-Reply-To: <AANLkTinVp3EYFX3Ow2G8dO6Zn5BEWxuYjwO8vW2yOjcF@mail.gmail.com>
- (Tor Arvid Lund's message of "Mon\, 14 Feb 2011 10\:16\:10 +0100")
-User-Agent: Gnus/5.11 (Gnus v5.11) Emacs/22.2 (gnu/linux)
-X-Pobox-Relay-ID: 21B89BCA-3869-11E0-B428-AF401E47CF6F-77302942!a-pb-sasl-sd.pobox.com
+	id S1751997Ab1BNSyU convert rfc822-to-quoted-printable (ORCPT
+	<rfc822;gcvg-git-2@m.gmane.org>); Mon, 14 Feb 2011 13:54:20 -0500
+Received: from mail-iw0-f174.google.com ([209.85.214.174]:50708 "EHLO
+	mail-iw0-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+	with ESMTP id S1751981Ab1BNSyS convert rfc822-to-8bit (ORCPT
+	<rfc822;git@vger.kernel.org>); Mon, 14 Feb 2011 13:54:18 -0500
+Received: by iwn9 with SMTP id 9so5111557iwn.19
+        for <git@vger.kernel.org>; Mon, 14 Feb 2011 10:54:17 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=gamma;
+        h=domainkey-signature:mime-version:in-reply-to:references:from:date
+         :message-id:subject:to:cc:content-type:content-transfer-encoding;
+        bh=G9jGoiTOvd3Jr/KwA4DvZy/OrS4r8W9bk4UE5WwqNfQ=;
+        b=vDl4UGt6nTevVS7NNkcbnMqZ/MDzPQ6lHrF0HlKB9TrX0SKur6MbnlLmrfZgU6tJHM
+         1uTM0U2i+WlY69YHerBpAXvjjOZ/x/bBuRfLtoS4DrKZbn3GdnT5e/Ke50v0GX0Yxy9S
+         qqvbvz0LlaU41JMm6nKho4h+kclaHwcZ6MhHE=
+DomainKey-Signature: a=rsa-sha1; c=nofws;
+        d=gmail.com; s=gamma;
+        h=mime-version:in-reply-to:references:from:date:message-id:subject:to
+         :cc:content-type:content-transfer-encoding;
+        b=QjRkNfqc+bdOnrHYlluNuWKWB3llO2r4JvPs9chCJaCoaTIozfB4AgTl9wQ8tE1zuQ
+         IQoTpUPr9vTSIm5UPhCU5iwIV2KxOo8vRxFATdMfu0H2oupg7Witm/C6bD/8oGr+92ZM
+         6pQ5Wfgs11A8Zv/3wXn1td4ogkvQ6LtcvombI=
+Received: by 10.231.38.2 with SMTP id z2mr3173464ibd.142.1297709657365; Mon,
+ 14 Feb 2011 10:54:17 -0800 (PST)
+Received: by 10.231.40.2 with HTTP; Mon, 14 Feb 2011 10:53:47 -0800 (PST)
+In-Reply-To: <7vfwrqtrsk.fsf_-_@alter.siamese.dyndns.org>
 Sender: git-owner@vger.kernel.org
 Precedence: bulk
 List-ID: <git.vger.kernel.org>
 X-Mailing-List: git@vger.kernel.org
-Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166746>
+Archived-At: <http://permalink.gmane.org/gmane.comp.version-control.git/166747>
 
-Tor Arvid Lund <torarvid@gmail.com> writes:
+On Mon, Feb 14, 2011 at 1:06 PM, Junio C Hamano <gitster@pobox.com> wro=
+te:
+> + =C2=A0 =C2=A0 =C2=A0 warning("You do not have an explicit 'matching=
+' setting for push.default");
+> + =C2=A0 =C2=A0 =C2=A0 warning("Your workflow will be broken at 1.8.0=
+ unless you do so now");
 
->>> ...
->>> p4 can do various other reordering that this change doesn't support,
->>> but we should detect it and at least fail nicely.
->>>
->>> Signed-off-by: Ian Wienand <ianw@vmware.com>
->>
->> Nice, thanks for making the changes.
->>
->> Acked-by: Pete Wyckoff <pw@padd.com>
->
-> Good work, Ian! Thanks.
->
-> Acked-by: Tor Arvid Lund <torarvid@gmail.com>
+That message seems like it would confuse a new user. This seems less
+confusing to me w/o becoming a paragraph of text that no one will
+read:
 
-Will apply; thanks.
+  push.default is unset; its implicit value is changing in 1.8.0. To sq=
+uelch
+  this message, set push.default. See push.default in 'git help config'=
+=2E
+
+And update the git config man page entry for push.default to note that
+matching is the current default behavior and current will be default
+behavior starting with 1.8.0
+
+(Aside, it would be nice if "git help config push.default" did what I w=
+ant. :-)
+
+j.
